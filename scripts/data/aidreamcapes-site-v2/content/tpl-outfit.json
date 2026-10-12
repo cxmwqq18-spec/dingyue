@@ -1,7 +1,7 @@
 {
   "id": "tpl-outfit",
   "title": "AI Fashion Reels for Clothing Try-On | AIVideosUGC",
-  "description": "Make AI fashion reels from one clothing photo for TikTok, Instagram and product pages. Choose 6, 10, 15 or 30 seconds to post.",
+  "description": "Make AI fashion reels from one clothing photo for TikTok, Instagram and product pages. Choose 6, 10, 15 or 30 seconds for each social campaign you run.",
   "h1": "Show the Full Outfit Before You Book a Shoot",
   "eyebrow": "Fashion video template",
   "lead": "Turn one product photo into a clothing try-on video that gives shoppers a clear result, ready for the channel where you sell.",
@@ -16,19 +16,27 @@
   "benefits": [
     {
       "t": "Show the result first",
-      "d": "Show the clothing try-on outcome in one clear moment so buyers know what they get."
+      "d": "Show the clothing try-on outcome in one clear moment so buyers know what they get.",
+      "img": "n:guide:fx22-tpl-outfit-benefit-look",
+      "alt": "Adult model wearing a sage overshirt, cream tee and dark jeans in a full-length studio view."
     },
     {
       "t": "Skip another shoot",
-      "d": "Use the photo you already have instead of booking creators, locations or gear."
+      "d": "Use the photo you already have instead of booking creators, locations or gear.",
+      "img": "n:guide:fx22-tpl-outfit-benefit-noshoot",
+      "alt": "Hands holding an oatmeal knit garment above a plain shipping box."
     },
     {
       "t": "Make more useful versions",
-      "d": "Create another angle from the same source without reshooting."
+      "d": "Create another angle from the same source without reshooting.",
+      "img": "n:guide:fx22-tpl-outfit-benefit-versions",
+      "alt": "Adult model in a rust overshirt and dark trousers taking a side step."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate."
+      "d": "Add exact names, prices, dates or dimensions after download so the listing stays accurate.",
+      "img": "n:guide:fx22-tpl-outfit-benefit-editable",
+      "alt": "Hand straightening a navy blazer beside a plain notebook and fabric swatch."
     }
   ],
   "steps_h2": "How to Make Clothing Try-On Videos in 3 Simple Steps",
@@ -586,15 +594,15 @@
         },
         {
           "t": "Turn a photo into motion",
-          "d": "Use image to video when one source photo needs a simple movement."
+          "d": "Use [image to video](/ai-video-generation/image-to-video) when one source photo needs a simple movement."
         },
         {
           "t": "Keep the clothing details clear",
-          "d": "Use clothing tools for another garment option while the source photo is still ready."
+          "d": "Use [fashion clothing tools](/industries/fashion-clothing) for another garment option while the source photo is still ready."
         },
         {
           "t": "Review before publishing",
-          "d": "Check the final file, caption and offer in your own editor before you post."
+          "d": "Check [pricing](/pricing), the final file, caption and offer in your own editor before you post."
         }
       ]
     }

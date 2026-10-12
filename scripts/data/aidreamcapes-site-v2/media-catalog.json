@@ -49988,6 +49988,86 @@
           640,
           1280
         ]
+      },
+      "fx22-tpl-outfit-benefit-look": {
+        "file": "fx22-tpl-outfit-benefit-look",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model wearing a sage overshirt, cream tee and dark jeans in a full-length studio view.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-outfit-benefit-noshoot": {
+        "file": "fx22-tpl-outfit-benefit-noshoot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands holding an oatmeal knit garment above a plain shipping box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-outfit-benefit-versions": {
+        "file": "fx22-tpl-outfit-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model in a rust overshirt and dark trousers taking a side step.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-outfit-benefit-editable": {
+        "file": "fx22-tpl-outfit-benefit-editable",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand straightening a navy blazer beside a plain notebook and fabric swatch.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-feature-benefit-result": {
+        "file": "fx22-tpl-feature-benefit-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand pressing the pump of a white cleanser bottle by a sink.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-feature-benefit-noshoot": {
+        "file": "fx22-tpl-feature-benefit-noshoot",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hands opening the lid of an olive travel mug.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-feature-benefit-versions": {
+        "file": "fx22-tpl-feature-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult opening the hinged lid of a cream storage box.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx22-tpl-feature-benefit-editable": {
+        "file": "fx22-tpl-feature-benefit-editable",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand rotating a pale blue ceramic container with a clasp.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }
