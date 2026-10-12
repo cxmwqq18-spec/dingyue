@@ -705,9 +705,9 @@
     "contact": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:fx08-contact-hero-r1"
+        "image": "g:lifestyle-scene/example-06"
       },
-      "og": "n:guide:fx08-contact-hero-r1"
+      "og": "g:lifestyle-scene/example-06"
     },
     "about": {
       "hero": {
@@ -719,9 +719,9 @@
     "trust": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:fx08-trust-hero-r1"
+        "image": "n:guide:k8-trust-commercial-lighting-example-05"
       },
-      "og": "n:guide:fx08-trust-hero-r1"
+      "og": "n:guide:k8-trust-commercial-lighting-example-05"
     },
     "pricing": {
       "og": "g:ecommerce-main-image/og"
