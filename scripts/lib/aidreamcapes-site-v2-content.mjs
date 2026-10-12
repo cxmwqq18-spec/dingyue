@@ -2071,6 +2071,12 @@ function payloadFor(model, page) {
       photoOptions: HOME_PHOTO_OPTIONS
     };
     const visual = visualFor(model, page, c.visual, homeMaker, "video", videoHref, c);
+    const toolsShown = !Array.isArray(c.blockOrder) || c.blockOrder.includes("tools");
+    const homeTool = (id) => {
+      const card = toolRef(model, id);
+      if (!toolsShown) return Object.fromEntries(Object.entries(card).filter(([key]) => key !== "image"));
+      return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
+    };
     return { ...base,
       maker: homeMaker,
       ...(visual ? { visual } : {}),
@@ -2081,14 +2087,9 @@ function payloadFor(model, page) {
       make: {
         title: c.make_title,
         lead: c.make_lead,
-        video: VIDEO_TOOLS.map((id) => {
-          const card = toolRef(model, id);
-          return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
-        }),
-        photo: PHOTO_TOOLS.map((id) => {
-          const card = toolRef(model, id);
-          return { ...card, image: { ...card.image, alt: HOME_TOOL_ALTS[id] } };
-        })
+        // The tool lists only carry thumbnails while the "tools" block is shown: the home sitemap reads its images from the page data.
+        video: VIDEO_TOOLS.map((id) => homeTool(id)),
+        photo: PHOTO_TOOLS.map((id) => homeTool(id))
       },
       templates: { title: c.templates_title, lead: c.templates_lead, cards: homeTemplateCards, total: realTemplateCount(model) },
       platforms: { title: c.platforms_title, items: Object.entries(model.plat).map(([slug, label]) => ({ label, href: model.byId[`plat-${slug}`].url, spec: (model.content[`plat-${slug}`].specs || [["", ""]])[0][1] })) },
@@ -2513,7 +2514,9 @@ export function buildSiteV2(source = loadSiteV2Source()) {
         templates: [...(payload.cards ?? []), ...(payload.templates?.cards ?? [])].map((card) => card?.image),
         examples: [...(gallery?.images ?? []), ...(pairs ?? []).flatMap((pair) => [pair?.after, pair?.before]), ...groupItems(payload.examples), ...groupItems(payload.exampleGallery)],
         features: (payload.more_sections ?? []).flatMap((section) => (section.items ?? []).map((item) => item?.img)),
-        reasons: cardImages(payload.reasons), trust: cardImages(payload.trust), reviews: cardImages(payload.reviews)
+        reasons: cardImages(payload.reasons), trust: cardImages(payload.trust), reviews: cardImages(payload.reviews),
+        // The home page's tool lists ("tools" block); hidden there, so their thumbnails stay out of the sitemap.
+        tools: [...(payload.make?.video ?? []), ...(payload.make?.photo ?? [])].map((tool) => tool?.image)
       };
       const srcs = (keep) => new Set(Object.entries(parts).filter(([id]) => listed.has(id) === keep).flatMap(([, images]) => images.map((image) => image?.src)).filter(Boolean));
       const shownSrc = srcs(true); const hiddenSrc = srcs(false);
