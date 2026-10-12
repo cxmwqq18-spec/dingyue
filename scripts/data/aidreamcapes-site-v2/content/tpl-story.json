@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Built for the full phone screen",
-      "d": "The product sits centered on a 9:16 canvas with calm space above and below, so your headline and offer avoid the item."
+      "d": "The product sits centered on a 9:16 canvas with calm space above and below, so your headline and offer avoid the item.",
+      "img": "n:guide:fx26-tpl-story-benefit-phone-screen-r1",
+      "alt": "Adult hand holds a plain sunscreen tube centered with open space above and below on a pale coral wall."
     },
     {
       "t": "Clear of stickers and controls",
-      "d": "The product stays away from the top header and lower action area, keeping stickers and the call-to-action button visible."
+      "d": "The product stays away from the top header and lower action area, keeping stickers and the call-to-action button visible.",
+      "img": "n:guide:fx26-tpl-story-benefit-safe-controls-r1",
+      "alt": "Adult hands hold a plain charcoal phone case with one small round camera opening against a pale blue background."
     },
     {
       "t": "One image, both Story platforms",
-      "d": "Place the same square download in Instagram and Facebook Story layouts, and reuse it in feeds, carousels and listings."
+      "d": "Place the same square download in Instagram and Facebook Story layouts, and reuse it in feeds, carousels and listings.",
+      "img": "n:guide:fx26-tpl-story-benefit-platforms-r1",
+      "alt": "Adult woman with a short copper bob places a plain cleanser pump bottle on a pale square card."
     },
     {
       "t": "Exact offers added by you",
-      "d": "Type prices, dates and codes in Canva or Ads Manager after download. The image carries no watermark."
+      "d": "Type prices, dates and codes in Canva or Ads Manager after download. The image carries no watermark.",
+      "img": "n:guide:fx26-tpl-story-benefit-offers-r1",
+      "alt": "Adult man with short close-cropped hair holds a plain sage sports bottle beside a sunlit gym bench."
     }
   ],
   "secondary_keywords": [
