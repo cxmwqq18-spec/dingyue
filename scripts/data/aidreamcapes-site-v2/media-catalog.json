@@ -14316,6 +14316,72 @@
       1280
     ],
     "items": {
+      "ba1-before-after-videos-hero-r1": {
+        "file": "ba1-before-after-videos-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short honey-blonde bob holds a plain beige concealer stick under one eye.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit1-r1": {
+        "file": "ba1-before-after-videos-benefit1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with a short buzz cut holds a plain closed white cream jar in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit2-r1": {
+        "file": "ba1-before-after-videos-benefit2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands run a plain sage fabric shaver over pills on a camel knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit3-r1": {
+        "file": "ba1-before-after-videos-benefit3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands press garlic through a plain stainless garlic press onto a wood board.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-steps-source-r1": {
+        "file": "ba1-before-after-videos-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A white gas stovetop covered in grease and burnt residue, with four blank black knobs.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-steps-result-r1": {
+        "file": "ba1-before-after-videos-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white gas stovetop after the grease and burnt residue are wiped clean.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "b2f2-ai-actors-benefit-1-r1": {
         "file": "b2f2-ai-actors-benefit-1-r1",
         "w": 1024,

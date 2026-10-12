@@ -49,11 +49,11 @@
   "steps": [
     {
       "t": "Add a Link or a Photo",
-      "d": "Upload the coaster with the ring still on it, and say the after is the same coaster, clean."
+      "d": "Upload the greasy stovetop, and say the after is the same stove, clean."
     },
     {
       "t": "Let the Clip Come Together",
-      "d": "You get a clip of that coaster with the clean result and its spoken line."
+      "d": "You get a clip of that stovetop with the clean result and its spoken line."
     },
     {
       "t": "Download or Publish",
@@ -144,11 +144,11 @@
   ],
   "visual": {
     "steps": {
-      "source": "n:guide:b1-before-after-videos-source",
-      "result": "n:guide:fx48-steps-cable-organizer",
+      "source": "n:guide:ba1-before-after-videos-steps-source-r1",
+      "result": "n:guide:ba1-before-after-videos-steps-result-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Loose cords on the desk, then a hand feeds them through the organizer. The camera stays put, and the desk ends clear."
+      "prompt": "Grease across the stovetop, then the same stove wiped clean. The camera stays put."
     },
     "picker": {
       "title": "See What AIVideosUGC Generates",
@@ -196,22 +196,22 @@
     "lead": "The shopper should see what the product does.",
     "items": [
       {
-        "t": "Show the Product's Visible Change",
-        "d": "A cord-wrap ad should open on the tangle, because that is the problem you sell a fix for. The line has to name that wrap.",
-        "img": "n:guide:fx48-benefit-shoe",
-        "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned."
+        "t": "Show the Cream's Visible Change",
+        "d": "A cream ad should open on the jar, because that is the product you show. The line has to name that cream.",
+        "img": "n:guide:ba1-before-after-videos-benefit1-r1",
+        "alt": "Adult man with a short buzz cut holds a plain closed white cream jar in a bright bathroom."
       },
       {
         "t": "Export the Right Ad Format",
         "d": "A Google Ads buy can take the wide file. TikTok can take the tall one. A Meta square is a third choice. You are not recutting a mystery size somewhere else.",
-        "img": "n:guide:fx48-benefit-tote",
-        "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
+        "img": "n:guide:ba1-before-after-videos-benefit2-r1",
+        "alt": "Adult hands run a plain sage fabric shaver over pills on a camel knit sweater."
       },
       {
         "t": "Test Different Voice Tones",
         "d": "Two versions give the brand a choice of tone for the same mess.",
-        "img": "n:guide:fx48-benefit-watch",
-        "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
+        "img": "n:guide:ba1-before-after-videos-benefit3-r1",
+        "alt": "Adult hands press garlic through a plain stainless garlic press onto a wood board."
       }
     ]
   },
