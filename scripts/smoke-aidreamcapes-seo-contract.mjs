@@ -27,8 +27,6 @@ const SITE_V2_TARGET_PATHS = [
   "/guides",
   "/blog",
   "/inspiration",
-  "/trust-and-safety",
-  "/ai-info",
   "/about-us",
   "/contact-us",
   "/faq",
