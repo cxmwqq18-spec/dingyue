@@ -113,7 +113,7 @@
     "overview": "A creator-style photo shows your product in an everyday moment, ready for social ads and listing galleries.",
     "strip": [
       "n:guide:g1-ugc-running-shoe-review",
-      "n:guide:rc4-tpl-ugc-strip-earring-hands-r1",
+      "n:guide:im04-tpl-ugc-strip-01-r1",
       "n:guide:g1-ugc-phone-stand-review",
       "n:guide:rc4-tpl-ugc-strip-drink-r1",
       "n:guide:rc4-tpl-ugc-strip-pet-r1",
@@ -394,7 +394,7 @@
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+          "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in one frame.",
           "kind": "video"
         },
         {
