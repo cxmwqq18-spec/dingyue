@@ -2559,7 +2559,7 @@ function buildNavigation(model) {
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Browse presenter looks for your next ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 53 AI actors for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["size", "color", "angle"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
