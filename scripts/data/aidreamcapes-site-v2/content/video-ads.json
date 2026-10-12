@@ -15,7 +15,7 @@
     "title": "What Is an AI UGC Video Ad Generator?",
     "paras": [
       "This tool makes a short ad from a product photo, a few words you type about the scene, or a product link. You get a script, an AI actor, a voice, captions and a finished clip. You do not film it, and you do not need another editing app.",
-      "Each ad can be a tall phone (9:16), a square (1:1) or a wide shape (16:9). 4:3 is a little wider than square. 3:4 is tall, but 9:16 is taller. Post on TikTok, Facebook or Instagram, or download the file. You can use it in paid ads and in your own posts. No logo is stamped on it. Plans start at $24.50 a month."
+      "Each ad can be a tall phone (9:16), a square (1:1) or a wide shape (16:9). 3:4 is tall, but 9:16 is taller. Post on TikTok, Facebook or Instagram, or download the file. You can use it in paid ads and in your own posts. No logo is stamped on it. Plans start at $24.50 a month."
     ]
   },
   "steps": [
@@ -136,11 +136,11 @@
       "chips": [
         {
           "id": "hook",
-          "label": "Opening lines"
+          "label": "Opening Lines"
         },
         {
           "id": "demo",
-          "label": "Product demos"
+          "label": "Product Demos"
         },
         {
           "id": "unboxing",
@@ -148,11 +148,11 @@
         },
         {
           "id": "try-on",
-          "label": "Try-ons"
+          "label": "Try-Ons"
         },
         {
           "id": "review",
-          "label": "Creator reviews"
+          "label": "Creator Reviews"
         },
         {
           "id": "interview",
@@ -160,11 +160,11 @@
         },
         {
           "id": "showcase",
-          "label": "Product showcases"
+          "label": "Product Showcases"
         },
         {
           "id": "detail",
-          "label": "Product details"
+          "label": "Product Details"
         }
       ],
       "cards": [
@@ -574,7 +574,7 @@
       ],
       [
         "Usage rights",
-        "Use in ads and your own posts, no stamped logo",
+        "Use in ads and your own posts, no watermark",
         "You agree on rights with each creator"
       ],
       [

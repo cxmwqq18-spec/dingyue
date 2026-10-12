@@ -20,7 +20,7 @@
     },
     {
       "t": "Product Pages",
-      "d": "The presenter explains one feature beside your photos. The same person can answer a short question on the page. They are generated, not a customer.",
+      "d": "The presenter explains one feature beside your photos. The same person can answer a short question on the page.",
       "icon": "target"
     },
     {
@@ -109,7 +109,7 @@
     "steps": {
       "source": "n:guide:q4-spokesperson-source",
       "sourceAlt": "Plain forest-green bottle shown fully from cap to base on a light neutral background.",
-      "sourceTitle": "Your product",
+      "sourceTitle": "Your Product",
       "sourceHint": "Start with a clear view of the full item.",
       "result": "n:guide:im02-spokesperson-videos-step-result-r1",
       "mode": "video",
@@ -764,7 +764,7 @@
     "title": "What Is an AI Spokesperson Video?",
     "paras": [
       "An AI spokesperson video is a short ad. A generated presenter holds your product and says a line you wrote, or a script from your product page. You pick the person from the actor library and an AI voice. You do not film, and you do not hire an actor.",
-      "Use it for product ads on TikTok, Reels, Shorts, or a product page. The presenter is generated, not a customer. Sizes are 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), and 3:4 (a bit tall). You can say the same point in another language."
+      "Use it for product ads on TikTok, Reels, Shorts, or a product page. Sizes are 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3 (a bit wide), and 3:4 (a bit tall). You can say the same point in another language."
     ]
   },
   "reasons": {
@@ -794,27 +794,27 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI UGC (shopper-style) video ads"
+      "label": "AI UGC (Shopper-Style) Video Ads"
     },
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     },
     {
       "id": "before-after-videos",
-      "label": "before and after video maker"
+      "label": "Before and After Video Maker"
     },
     {
       "id": "image-to-video",
-      "label": "AI image to video"
+      "label": "AI Image to Video"
     },
     {
       "id": "url-to-video",
-      "label": "Product link to video"
+      "label": "Product Link to Video"
     }
   ],
   "compare_table": {

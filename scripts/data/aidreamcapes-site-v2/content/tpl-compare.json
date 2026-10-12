@@ -106,7 +106,7 @@
     ],
     "steps": {
       "source": "n:guide:rc6-tpl-compare-source-canisters-r1",
-      "sourceTitle": "Two sizes of a matte storage canister",
+      "sourceTitle": "Two Sizes of a Matte Storage Canister",
       "sourceHint": "Keep the small and large slate-gray canisters, rounded lids and blank surfaces fully visible.",
       "result": "n:guide:rc6-tpl-compare-result-canisters-r1",
       "mode": "video",
@@ -160,7 +160,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -200,7 +200,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -587,7 +587,7 @@
         "example": true,
         "who": "Apparel shop",
         "t": "Presenter turns both",
-        "d": "An apparel shop has an AI presenter turn navy and rust beanies so the knit difference is easy to see."
+        "d": "An apparel shop has an AI actor turn navy and rust beanies so the knit difference is easy to see."
       },
       {
         "example": true,
@@ -611,7 +611,7 @@
         "example": true,
         "who": "Bedding shop",
         "t": "Presenter, not a shoot",
-        "d": "A bedding shop uses an AI presenter to hold two pillow sizes at the same distance."
+        "d": "A bedding shop uses an AI actor to hold two pillow sizes at the same distance."
       },
       {
         "example": true,
@@ -650,27 +650,27 @@
       "lead": "Both options stay in the photo you upload. These are the pieces you can add so the difference is easy to follow.",
       "items": [
         {
-          "t": "AI voiceover",
+          "t": "AI Voiceover",
           "d": "Add a spoken line that names the difference between the two options. You approve the words, and the voice is not a customer recording."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
         },
         {
-          "t": "On-screen people you can pick",
+          "t": "On-Screen People You Can Pick",
           "d": "Pick a generated person from the presenter list, called the actor library, to point at either option. That person is not a real buyer."
         },
         {
-          "t": "A product link or the API",
+          "t": "A Product Link or the API",
           "d": "Paste a product page link to write a first script. Or send the photo through the API, which is how your own shop software starts it. The photo still has to show both options."
         },
         {
-          "t": "Built-in editor and another language",
+          "t": "Built-In Editor and Another Language",
           "d": "Change the script and switch the voice to another language in one editor. The download has no watermark."
         },
         {
-          "t": "More versions, then publish",
+          "t": "More Versions, Then Publish",
           "d": "Make another version for a second audience from the same photo. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]

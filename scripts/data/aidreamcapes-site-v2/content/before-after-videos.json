@@ -119,27 +119,27 @@
   "relatedLinks": [
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     },
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "video-ads",
-      "label": "AI UGC (shopper-style) video ads"
+      "label": "AI UGC (Shopper-Style) Video Ads"
     },
     {
       "id": "spokesperson-videos",
-      "label": "AI spokesperson video"
+      "label": "AI Spokesperson Video"
     },
     {
       "id": "image-to-video",
-      "label": "AI image to video"
+      "label": "AI Image to Video"
     },
     {
       "id": "url-to-video",
-      "label": "Product link to video"
+      "label": "Product Link to Video"
     }
   ],
   "visual": {

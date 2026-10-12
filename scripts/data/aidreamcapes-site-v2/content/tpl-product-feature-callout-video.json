@@ -83,7 +83,7 @@
     },
     {
       "q": "Can I use the video in ads?",
-      "a": "Yes. Downloads have no watermark, and you can use them in your own ads, pages, and posts. Anyone on camera is an AI performer, not a customer."
+      "a": "Yes. Downloads have no watermark, and you can use them in your own ads, pages, and posts. Anyone on camera is an AI actor, not a customer."
     },
     {
       "q": "Why start from a scene?",
@@ -198,7 +198,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -577,7 +577,7 @@
         },
         {
           "t": "Actor Library",
-          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip. The person is generated, not a customer."
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip."
         },
         {
           "t": "Editor, Music, and Languages",
@@ -701,7 +701,7 @@
       },
       {
         "t": "An Actor Can Point to It",
-        "d": "Choose an AI performer to hold the product and draw attention to the part that matters. The person is generated, not a customer.",
+        "d": "Choose an AI actor to hold the product and draw attention to the part that matters.",
         "icon": "Hand"
       },
       {
@@ -722,7 +722,7 @@
     "items": [
       {
         "t": "Credit Cost First",
-        "d": "Credits are the points on your plan. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
+        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
       },
       {
         "t": "No Watermark",
@@ -737,8 +737,8 @@
         "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos and videos share one balance."
       },
       {
-        "t": "AI People, Not Reviews",
-        "d": "Anyone on camera is an AI performer. The clip is a product demo, not a quote from a buyer."
+        "t": "AI Actors, Not Reviews",
+        "d": "Anyone on camera is an AI actor. The clip is a product demo, not a quote from a buyer."
       }
     ]
   }

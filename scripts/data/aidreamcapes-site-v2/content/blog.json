@@ -78,23 +78,23 @@
     "templates",
     "industries"
   ],
-  "steps_h2": "How to turn a guide into a posted ad",
+  "steps_h2": "How to Turn a Guide Into a Posted Ad",
   "steps_lead": "Pick the article for the job, make one file, then download it and add your own price or captions.",
   "steps": [
     {
-      "t": "Pick the article",
+      "t": "Pick the Article",
       "d": "Open the article that matches the job: photos for a product page, a short ad, a launch clip, or a check before you publish."
     },
     {
-      "t": "Make one file",
+      "t": "Make One File",
       "d": "Upload one clear photo in the tool the article names. Credits pay for that photo or video. Read the cost first."
     },
     {
-      "t": "Download and post",
+      "t": "Download and Post",
       "d": "Save the file, add a price or captions in an app you already use, and post it on your store or ad account."
     }
   ],
-  "related_h2": "Tools used in these articles",
+  "related_h2": "Tools Used in These Articles",
   "related_lead": "Make the file, or browse layouts and categories.",
   "cta_title": "Try it on the product you are posting",
   "cta_lead": "Upload one product photo and see the credit cost before you start."

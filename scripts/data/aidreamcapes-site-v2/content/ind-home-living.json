@@ -121,27 +121,27 @@
   "relatedLinks": [
     {
       "id": "tpl-home",
-      "label": "home product videos"
+      "label": "Home Product Videos"
     },
     {
       "id": "tpl-howto",
-      "label": "AI how-to video maker"
+      "label": "AI How-To Video Maker"
     },
     {
       "id": "tpl-compare",
-      "label": "product comparison video"
+      "label": "Product Comparison Video"
     },
     {
       "id": "before-after-videos",
-      "label": "before and after video maker"
+      "label": "Before and After Video Maker"
     },
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     }
   ],
   "reasons": {
@@ -149,19 +149,19 @@
     "lead": "You do not need a decorated room for every product. Start from a product link or a clear photo and name the room.",
     "items": [
       {
-        "t": "No set to book",
+        "t": "No Set to Book",
         "d": "You get one cleaning sweep, like a vacuum over crumbs on a sofa, from one photo. You skip the location and the crew.",
         "img": "n:gen2:fx33-ind-home-living-benefit-vacuum",
         "alt": "Adult hand guiding a plain cordless vacuum over crumbs on a sofa cushion."
       },
       {
-        "t": "A product page and a clip",
+        "t": "A Product Page and a Clip",
         "d": "The same organizer can be a product-page photo, a tall phone clip, and a second version. Use the shape of the place you will post.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
         "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
       },
       {
-        "t": "Show the job, then the size",
+        "t": "Show the Job, Then the Size",
         "d": "A lamp beside a chair, or a rack in a closet, shows how it is used. Put the real size in the listing. The pictured size can be off.",
         "img": "n:gen2:fx33-ind-home-living-benefit-lamp",
         "alt": "Adult hand adjusting a plain ceramic table lamp beside a reading chair."
@@ -173,32 +173,32 @@
     "lead": "A tall clip shows the action, and a listing photo shows the product. Send the clip to TikTok, Facebook, or Instagram from this page. Keep sizes in the listing.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall phone clip (9:16) of organizing or cleaning, for TikTok's main feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square room photo or a tall demo for the feed and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A feed photo with room to add sizes after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short phone-screen demo, one action from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A clean product image for the listing. Keep measurements in the written text.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching room imagery for the product page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -277,7 +277,7 @@
     ]
   },
   "cta_title": "Put the Product in the Room",
-  "related_h2": "Home product videos and room scenes",
+  "related_h2": "Home Product Videos and Room Scenes",
   "maker": {
     "options": [
       [

@@ -24,7 +24,7 @@
     },
     {
       "t": "An Actor and a Voice",
-      "d": "Pick an AI actor and a voice from the list, or make an actor for your brand. The person on screen is not a real customer."
+      "d": "Pick an AI actor and a voice from the list, or make an actor for your brand."
     },
     {
       "t": "A Clip for Each Product",
@@ -35,7 +35,7 @@
       "d": "Change the script, the voice, the captions and the music. Then send the ad to TikTok, Facebook or Instagram."
     }
   ],
-  "steps_h2": "How to Make a Video from a Product Page in 3 Simple Steps",
+  "steps_h2": "How to Make a Video From a Product Page in 3 Simple Steps",
   "steps_lead": "Paste a public product page, pick an actor and a voice, then check the script.",
   "steps": [
     {
@@ -44,7 +44,7 @@
     },
     {
       "t": "Select an AI Actor",
-      "d": "Choose an AI actor and a voice. The person on screen is made by AI, not a real shopper."
+      "d": "Choose an AI actor and a voice."
     },
     {
       "t": "Write the Script",
@@ -107,7 +107,7 @@
     },
     {
       "q": "Which sizes can I pick?",
-      "a": "A tall phone video is 9:16. A square is 1:1. A wide video is 16:9. 4:3 is a little wider than square. 3:4 is tall, but 9:16 is taller."
+      "a": "A tall phone video is 9:16. A square is 1:1. A wide video is 16:9. 3:4 is tall, but 9:16 is taller."
     },
     {
       "q": "Can I make clips for several product links at once?",
@@ -165,7 +165,7 @@
       "mode": "video",
       "length": 15,
       "prompt": "Keep this sage-green divided lunch box the same shape, color and silver clasp. It sits open on a bright kitchen counter, lid behind it, side latches showing, food in the sections, and no hands. Move closer slowly. Quiet room sound only. No music, words or logos.",
-      "sourceTitle": "Paste your product page link",
+      "sourceTitle": "Paste Your Product Page Link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
     "picker": {
@@ -232,7 +232,7 @@
     "title": "What Is URL to Video?",
     "paras": [
       "URL to video means a public product page address becomes a short ad. The page gives the image, the name and any reviews. A script, an actor and a voice are added, and you get a short clip.",
-      "You can edit the script, the captions and the music before you download or post. Choose 6, 10, 15 or 30 seconds. Sizes are a tall phone (9:16), a square (1:1) and a wide shape (16:9). 4:3 is a little wider than square. 3:4 is tall, but 9:16 is taller. Anyone on screen is AI, not a customer."
+      "You can edit the script, the captions and the music before you download or post. Choose 6, 10, 15 or 30 seconds. Sizes are a tall phone (9:16), a square (1:1) and a wide shape (16:9). 3:4 is tall, but 9:16 is taller. Anyone on screen is AI, not a customer."
     ]
   },
   "reasons": {

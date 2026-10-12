@@ -221,69 +221,69 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to create Christmas product photos in 3 simple steps"
+        "h2": "How to Create Christmas Product Photos in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a Holiday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions about holiday ad photos and videos"
+        "h2": "Questions About Holiday Ad Photos and Videos"
       }
     }
   },
-  "benefits_h2": "Reasons to use holiday video ads",
+  "benefits_h2": "Reasons to Use Holiday Video Ads",
   "benefits": [
     {
-      "t": "An actor for the gift message",
+      "t": "An Actor for the Gift Message",
       "d": "Choose an actor from the library, or describe a festive outfit and an age. A short clip of you can become the person who says the holiday message.",
       "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
       "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
-      "t": "A script from the gift page",
+      "t": "A Script From the Gift Page",
       "d": "Paste the product link or describe the gift. AIVideosUGC drafts an opening line, why the item makes a good present, and a short story. Change any line before you post.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
-      "t": "A spoken voice for shoppers far away",
+      "t": "A Spoken Voice for Shoppers Far Away",
       "d": "Pick an AI voice for the holiday message. The same script can be spoken in another language for shoppers who are not nearby.",
       "img": "n:guide:fx02-occ-holidays-benefit-shipping",
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
-      "t": "More than one festive opening",
+      "t": "More Than One Festive Opening",
       "d": "Make several versions and compare the first line, the actor, and the script. See what other shops post this season, then keep the one you want live.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
   ],
-  "steps_h2": "How to create Christmas product photos in 3 simple steps",
+  "steps_h2": "How to Create Christmas Product Photos in 3 Simple Steps",
   "steps_lead": "Paste the product link, choose an actor, then set the voice, the track, and where it goes live. Credits are what each holiday photo or video uses, and the cost shows before you start.",
   "relatedLinks": [
     {
       "id": "occ-black-friday",
-      "label": "Black Friday ad creatives"
+      "label": "Black Friday Ad Creatives"
     },
     {
       "id": "occ-sale-discount",
-      "label": "sale ad creatives"
+      "label": "Sale Ad Creatives"
     },
     {
       "id": "occ-product-launch",
-      "label": "product launch video and photos"
+      "label": "Product Launch Video and Photos"
     },
     {
       "id": "video-ads",
-      "label": "Casual-style AI video ads"
+      "label": "Casual-Style AI Video Ads"
     },
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     },
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     }
   ],
   "reviews": {
@@ -311,36 +311,36 @@
     ]
   },
   "trust": {
-    "h2": "What to check before you publish",
+    "h2": "What to Check Before You Publish",
     "lead": "Check the file and the credit cost before the ad goes live.",
     "items": [
       {
-        "t": "A file you can run as an ad",
+        "t": "A File You Can Run as an Ad",
         "d": "The download has no AIVideosUGC watermark. You can use it in seasonal ads. Each app still has its own ad rules."
       },
       {
-        "t": "The credit cost before you start",
+        "t": "The Credit Cost Before You Start",
         "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       },
       {
-        "t": "Credits come back if it fails",
+        "t": "Credits Come Back If It Fails",
         "d": "If it fails, those credits come back to your balance on their own."
       },
       {
-        "t": "The upload stays in your account",
+        "t": "The Upload Stays in Your Account",
         "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "Generated people, not real customers",
-        "d": "Actors from the library are generated. You can also build an actor from a short clip of yourself. That person is not a real shopper and not a celebrity."
+        "t": "Generated People, Not Real Customers",
+        "d": "Actors from the library are generated. You can also build an actor from a short clip of yourself."
       },
       {
-        "t": "Voice, captions, and a track",
+        "t": "Voice, Captions, and a Track",
         "d": "A spoken voice, automatic captions, and a track from the music library can go on the clip. Edit them in the editor before the ad goes live."
       }
     ]
   },
-  "cta_title": "Publish festive Instagram Story ads",
+  "cta_title": "Publish Festive Instagram Story Ads",
   "blockOrder": [
     "hero",
     "benefits",

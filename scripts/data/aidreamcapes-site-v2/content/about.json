@@ -37,7 +37,7 @@
       ]
     },
     {
-      "h2": "For Shopify sellers and small shops",
+      "h2": "For Shopify Sellers and Small Shops",
       "paras": [
         "It is built for small shops on Shopify, Amazon, and Etsy, and for the people who run their ads. Sellers who ship goods they do not keep in stock use it too. So do small businesses, marketers, creators, and teams that build apps, when they need a photo or video this week.",
         "You do not need editing skills. A clear product photo and one sentence about the scene are enough to start. When an Etsy listing changes, you can make a new photo or video here."
@@ -46,7 +46,7 @@
       "alt": "Adult small-shop owner prepares a plain product for a listing at a packing table."
     },
     {
-      "h2": "A private AI product photo tool",
+      "h2": "A Private AI Product Photo Tool",
       "paras": [
         "Everything you upload and everything you make stays in your own account. Your product photos and results are not shown to other customers or published.",
         "Some requests are turned down. That includes a celebrity or another public figure, and a logo or brand name you do not own. Make the photo or video for a product you sell."
@@ -55,7 +55,7 @@
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
     },
     {
-      "h2": "Credit costs on screen before you start",
+      "h2": "Credit Costs on Screen Before You Start",
       "paras": [
         "A credit is one unit from your plan. Every photo and video shows how many credits it will use before it starts, so you see the number before anything is spent. Plans start at $24.50 a month with 200 credits. Pro is $35 a month with 300 credits. Premium is $63 a month with 600 credits.",
         "Credits are set aside while the work runs, and used when the file arrives. Each run is called a job. A finished file is not refunded, which is why the number is on screen first. If a job fails, the credits come back to your balance on their own. A batch uses credits for each version."
@@ -102,9 +102,9 @@
       "a": "Your own software can start a photo or video through the API. An API is a connection that lets other software talk to this tool. Email support@aivideosugc.com if you need access. There is no free plan. Plans start at $24.50 a month with 200 credits."
     }
   ],
-  "ctaTitle": "Start with one product photo",
+  "ctaTitle": "Start With One Product Photo",
   "ctaLead": "Pick a photo or a short ad, see how many credits it uses before you start, and make a file you can publish.",
-  "cta_title": "Start with one product photo",
+  "cta_title": "Start With One Product Photo",
   "cta_lead": "Pick a photo or a short ad, see how many credits it uses before you start, and make a file you can publish.",
   "relatedLinks": [
     "pricing",

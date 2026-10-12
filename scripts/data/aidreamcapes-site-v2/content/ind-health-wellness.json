@@ -111,27 +111,27 @@
   "relatedLinks": [
     {
       "id": "tpl-ugc",
-      "label": "Casual creator-style photos"
+      "label": "Casual Creator-Style Photos"
     },
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     },
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "video-ads",
-      "label": "Casual creator-style video ads"
+      "label": "Casual Creator-Style Video Ads"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     }
   ],
   "steps_cta": {
@@ -143,19 +143,19 @@
     "lead": "Show the bottle in a routine people recognize. One photo can make a square picture and a few short clips. Leave health results and dose wording out of the picture.",
     "items": [
       {
-        "t": "A routine, not a result",
+        "t": "A Routine, Not a Result",
         "d": "Hands unroll a yoga mat beside a roller. Do not show a body change or a medical outcome.",
         "img": "n:guide:fx32-health-benefit-yoga",
         "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio."
       },
       {
-        "t": "A photo and a short clip",
+        "t": "A Photo and a Short Clip",
         "d": "The same bottle can become a table photo, a tall phone story (9:16), and another version for a second place.",
         "img": "n:guide:b2f3-ind-health-breakfast-r1",
         "alt": "A plain sage bottle stands beside a bowl of breakfast fruit on a wooden table."
       },
       {
-        "t": "Gear set down, not a result",
+        "t": "Gear Set Down, Not a Result",
         "d": "Bands next to a mat show the product being placed. The scene stops there. It does not show a body change.",
         "img": "n:guide:fx32-health-benefit-bands",
         "alt": "Hands set up plain resistance bands beside a rolled mat."
@@ -167,32 +167,32 @@
     "lead": "Start with a square photo or a tall phone story. Send the clip to TikTok, Facebook, or Instagram from this page. Or download it for the listing.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall phone routine (9:16) for a wellness post in TikTok's main feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square photo or a tall story of the product in use.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A feed photo with room to add an approved claim after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short phone-screen routine, one action from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A clean product image for the listing. Keep claims in the written text.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching routine imagery for the product page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -271,7 +271,7 @@
     ]
   },
   "cta_title": "Place the Product in a Routine",
-  "related_h2": "Wellness lifestyle photos",
+  "related_h2": "Wellness Lifestyle Photos",
   "maker": {
     "options": [
       [

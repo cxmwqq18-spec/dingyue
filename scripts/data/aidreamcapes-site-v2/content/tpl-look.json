@@ -149,7 +149,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -189,7 +189,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -554,7 +554,7 @@
         "h2": "Add collection details after download"
       },
       "faq": {
-        "h2": "Questions about full-outfit photos"
+        "h2": "Questions About Full-Outfit Photos"
       }
     }
   },
@@ -629,27 +629,27 @@
   "relatedLinks": [
     {
       "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "label": "AI Model Photos for Clothing"
     },
     {
       "id": "tpl-tryon",
-      "label": "AI virtual try-on for clothing"
+      "label": "AI Virtual Try-On for Clothing"
     },
     {
       "id": "tpl-outfit",
-      "label": "AI fashion reels"
+      "label": "AI Fashion Reels"
     },
     {
       "id": "tpl-sale",
-      "label": "sale banner maker"
+      "label": "Sale Banner Maker"
     },
     {
       "id": "ind-fashion-clothing",
-      "label": "AI model photos and videos for fashion brands"
+      "label": "AI Model Photos and Videos for Fashion Brands"
     },
     {
       "id": "plat-instagram",
-      "label": "AI Instagram ads"
+      "label": "AI Instagram Ads"
     }
   ],
   "cta_title": "Show the Full Outfit on the Collection Page",
@@ -671,32 +671,32 @@
       "items": [
         {
           "icon": "play",
-          "t": "Spoken voice, words on screen, and music",
+          "t": "Spoken Voice, Words on Screen, and Music",
           "d": "On the video, add a spoken voice, words on screen, and a track from the music library. The outfit photo stays a picture."
         },
         {
           "icon": "users",
-          "t": "AI actors and a digital twin",
-          "d": "An AI actor, a generated person, wears the outfit. A digital twin, that same person, can repeat across the set. The person is not a customer you booked."
+          "t": "AI Actors and a Digital Twin",
+          "d": "An AI actor, a generated person, wears the outfit. A digital twin, that same person, can repeat across the set."
         },
         {
           "icon": "sparkle",
-          "t": "A script from a line or a link",
+          "t": "A Script From a Line or a Link",
           "d": "Ask for a short script, the words to say. Or paste a product page link and start from that page's outfit photo."
         },
         {
           "icon": "layers",
-          "t": "A batch of framings from one outfit",
+          "t": "A Batch of Framings From One Outfit",
           "d": "Make another photo from the same shot when the next slide needs a new framing. Each photo is 24 credits, shown first. Credits are what the job spends."
         },
         {
           "icon": "check",
-          "t": "Edit the clip, then publish",
+          "t": "Edit the Clip, Then Publish",
           "d": "Trim the short clip in the editor, then post it to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
         },
         {
           "icon": "globe",
-          "t": "Another language, or the catalog API",
+          "t": "Another Language, or the Catalog API",
           "d": "Speak the line in another language. Or use the API so your product list can start the next outfit."
         }
       ]

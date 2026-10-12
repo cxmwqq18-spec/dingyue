@@ -4,7 +4,7 @@
   "description": "Find product ad templates for a photo or a short video. Pick a style, add one product photo, and get a new file for your store or a social post.",
   "h1": "Product Ad Templates: Pick a Look, Rebuild It, Post It",
   "eyebrow": "Product ad templates",
-  "lead": "Find a product ad template you like, add the item you sell, and get a spoken ad. The words, the voice, the captions, and a presenter made by the tool come with it. The presenter is not a real customer. You do not type instructions.",
+  "lead": "Find a product ad template you like, add the item you sell, and get a spoken ad. The words, the voice, the captions, and a presenter made by the tool come with it. You do not type instructions.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
@@ -104,7 +104,7 @@
         },
         {
           "id": "e-commerce",
-          "label": "Online store"
+          "label": "Online Store"
         },
         {
           "id": "education",
@@ -112,7 +112,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -152,7 +152,7 @@
         },
         {
           "id": "ugc",
-          "label": "Phone-style"
+          "label": "Phone-Style"
         },
         {
           "id": "viral",
@@ -498,7 +498,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to make a product ad from a template in 3 steps"
+        "h2": "How to Make a Product Ad From a Template in 3 Steps"
       },
       "m3": {
         "h2": "Browse Product Photo and Video Templates",
@@ -565,10 +565,10 @@
       "d": "Check the item and the words, then download it with no logo, or send it to TikTok, Facebook, or Instagram."
     }
   ],
-  "steps_h2": "How to make a product ad from a template in 3 steps",
+  "steps_h2": "How to Make a Product Ad From a Template in 3 Steps",
   "steps_lead": "Add a photo or a product link, pick a layout, and download or post the ad. Credits are what a plan spends on each file. You see the cost before you start.",
-  "benefits_h2": "What these product ad templates include",
-  "benefits_lead": "A template is a full ad, not only an empty layout. The words, the voice, and a presenter come with it. The presenter is not a real customer.",
+  "benefits_h2": "What These Product Ad Templates Include",
+  "benefits_lead": "A template is a full ad, not only an empty layout. The words, the voice, and a presenter come with it.",
   "benefits": [
     {
       "t": "An AI Script",
@@ -576,14 +576,14 @@
     },
     {
       "t": "A Spoken Voice",
-      "d": "The clip comes with a voice made by the tool. It reads the script. It is not a real customer."
+      "d": "The clip comes with a voice made by the tool. It reads the script."
     },
     {
       "t": "Captions on the Video",
       "d": "Captions are written on the clip, so shoppers can read the words while the voice plays."
     },
     {
-      "t": "A presenter from the actor library",
+      "t": "A Presenter From the Actor Library",
       "d": "Pick a presenter made by the tool to hold the product or say the line. The person is not a real buyer."
     },
     {
@@ -591,7 +591,7 @@
       "d": "Shorten the clip and add a song from the music library, without leaving the page."
     },
     {
-      "t": "Link, languages, batch, and API",
+      "t": "Link, Languages, Batch, and API",
       "d": "Paste a product link, or make the ad in another language. A batch is several versions at once. You can send the file to TikTok or Meta. Meta is Facebook and Instagram. The API is a connection that lets your own shop system start the work."
     }
   ],
@@ -671,36 +671,36 @@
       }
     ]
   },
-  "related_h2": "Tools and pages for these templates",
+  "related_h2": "Tools and Pages for These Templates",
   "related_lead": "Open a photo tool or a video tool, or browse by category and by where you post.",
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "Phone-style video ads"
+      "label": "Phone-Style Video Ads"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "white-background",
-      "label": "White background product photos"
+      "label": "White Background Product Photos"
     },
     {
       "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "label": "AI Model Photos for Clothing"
     },
     {
       "id": "industries",
-      "label": "Browse by industry"
+      "label": "Browse by Industry"
     },
     {
       "id": "platforms",
-      "label": "Browse by platform"
+      "label": "Browse by Platform"
     }
   ],
-  "cta_title": "Pick a template and add your product",
+  "cta_title": "Pick a Template and Add Your Product",
   "cta_lead": "Upload one product photo, choose a layout, and see the credit cost before you start.",
-  "gallery_h2": "All product ad templates by type",
+  "gallery_h2": "All Product Ad Templates by Type",
   "gallery_lead": "Each card opens a template page with an example and the steps to use it."
 }

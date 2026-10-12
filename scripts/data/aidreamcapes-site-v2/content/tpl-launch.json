@@ -13,7 +13,7 @@
     "home decor promo video"
   ],
   "steps_h2": "How to Make a Product Launch Video in 3 Simple Steps",
-  "steps_lead": "A launch video starts with one photo of the finished item, a short reveal line, and a file you can post. Credits are the points a paid plan spends.",
+  "steps_lead": "A launch video starts with one photo of the finished item, a short reveal line, and a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -80,7 +80,7 @@
     },
     {
       "q": "What does the clip cost?",
-      "a": "Credits are the points your plan spends. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark (no logo stamped on the file)."
+      "a": "A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark."
     },
     {
       "q": "Can I publish it to TikTok, Instagram, or Facebook?",
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "Shopper-style"
+          "label": "Shopper-Style"
         },
         {
           "id": "viral",
@@ -636,27 +636,27 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI shopper-style video ads"
+      "label": "AI Shopper-Style Video Ads"
     },
     {
       "id": "tpl-howto",
-      "label": "AI how-to video maker"
+      "label": "AI How-To Video Maker"
     },
     {
       "id": "tpl-home",
-      "label": "home product videos"
+      "label": "Home Product Videos"
     },
     {
       "id": "tpl-compare",
-      "label": "product comparison video"
+      "label": "Product Comparison Video"
     },
     {
       "id": "occ-product-launch",
-      "label": "product launch video and photos"
+      "label": "Product Launch Video and Photos"
     },
     {
       "id": "plat-instagram",
-      "label": "AI Instagram ads"
+      "label": "AI Instagram Ads"
     }
   ],
   "cta_title": "Ready to Announce the Item?",
@@ -664,7 +664,7 @@
     "title": "What Is a Product Launch Video?",
     "paras": [
       "A new product promo video is the reveal you post when the item is finished and the date is real.",
-      "Start from a photo or a product link. Add a script (the words), an AI voice, captions, and an AI actor for the first look. Put the confirmed date and the offer in after you download. Captions can show the product name. The file has no watermark (no logo stamped on it)."
+      "Start from a photo or a product link. Add a script (the words), an AI voice, captions, and an AI actor for the first look. Put the confirmed date and the offer in after you download. Captions can show the product name. The file has no watermark."
     ]
   },
   "more_sections": [
@@ -674,27 +674,27 @@
       "lead": "The reveal can include a voice, a script, and an actor.",
       "items": [
         {
-          "t": "AI voice",
+          "t": "AI Voice",
           "d": "A voice can say the reveal line, including a date you have already confirmed."
         },
         {
-          "t": "Auto captions",
+          "t": "Auto Captions",
           "d": "Captions can show the product name while the reveal plays."
         },
         {
-          "t": "AI script",
+          "t": "AI Script",
           "d": "Ask for a launch script, then fix the date and the offer before the clip is made."
         },
         {
-          "t": "Actor library",
-          "d": "Choose an AI actor to reveal the item. The clip is your shop's ad, not a buyer review."
+          "t": "Actor Library",
+          "d": "Choose an AI actor to reveal the item."
         },
         {
-          "t": "Link, many at once, and API",
+          "t": "Link, Many at Once, and API",
           "d": "Paste the product link, make many reveals at once, or send launches from your own software (the API)."
         },
         {
-          "t": "Editor, music, and languages",
+          "t": "Editor, Music, and Languages",
           "d": "Trim in the built-in editor, add a track from the music library, and make the clip in a second language."
         }
       ]
@@ -705,32 +705,32 @@
     "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before you start.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
         "d": "Publish the launch clip to TikTok in one step, in a tall phone shape.",
         "href": "page:plat-tiktok"
       },
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
         "d": "Send a tall or square launch clip to Instagram.",
         "href": "page:plat-instagram"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
         "d": "Send the same launch clip to Facebook in one step.",
         "href": "page:plat-facebook"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "Download a tall file for YouTube Shorts, or a wide file when the post needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
         "d": "Open the channel list when the next post is not one of these four.",
         "href": "page:platforms"
       }

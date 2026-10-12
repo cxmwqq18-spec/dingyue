@@ -32,7 +32,7 @@
   "cases": [
     {
       "id": "travel-mug",
-      "t": "Desk photo: Matte travel mug",
+      "t": "Desk Photo: Matte Travel Mug",
       "d": "A matte white mug on a clean desk, so the listing shows a place a shopper recognizes.",
       "imageRefs": [
         "g:ecommerce-main-image/source-input",
@@ -49,7 +49,7 @@
     },
     {
       "id": "linen-tote",
-      "t": "Lifestyle photo: Linen tote beside an outfit",
+      "t": "Lifestyle Photo: Linen Tote Beside an Outfit",
       "d": "The tote sits next to everyday clothes, so the size is easy to judge in a social post.",
       "imageRefs": [
         "g:lifestyle-scene/source-input",
@@ -66,7 +66,7 @@
     },
     {
       "id": "fluted-vase",
-      "t": "Room photo: Fluted vase with flowers",
+      "t": "Room Photo: Fluted Vase With Flowers",
       "d": "A white fluted vase with flowers in a bright room, for a home listing that needs a setting.",
       "imageRefs": [
         "g:background-remove-replace/source-input",
@@ -83,7 +83,7 @@
     },
     {
       "id": "leather-wallet",
-      "t": "Close-up photo: Brown leather wallet",
+      "t": "Close-Up Photo: Brown Leather Wallet",
       "d": "A close view of the leather, the stitching, and the finish.",
       "imageRefs": [
         "g:macro-details/source-input",
@@ -100,7 +100,7 @@
     },
     {
       "id": "running-shoe",
-      "t": "Social photo: Gray running shoe",
+      "t": "Social Photo: Gray Running Shoe",
       "d": "A simple social ad image of a gray knit shoe. Check the sole and the shape before you post it.",
       "imageRefs": [
         "g:feed-ad-still/example-02",
@@ -117,7 +117,7 @@
     },
     {
       "id": "sunscreen",
-      "t": "Tall photo: Sunscreen tube in daylight",
+      "t": "Tall Photo: Sunscreen Tube in Daylight",
       "d": "A tall photo of a plain sunscreen tube in daylight. This card is a photo, not a video.",
       "imageRefs": [
         "g:story-ad-vertical/source-input",

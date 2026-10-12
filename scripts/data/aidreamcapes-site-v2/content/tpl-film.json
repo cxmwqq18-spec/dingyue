@@ -70,11 +70,11 @@
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "Each video uses one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. 4:3 is a shorter wide size, and 3:4 is a little taller than a square. Make a wide 16:9 file for a page, and a tall 9:16 file for a phone post. Those are two files from the same photo. Lengths are 6, 10, 15, or 30 seconds. You see the credit cost before it starts."
+      "a": "Each video uses one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. Make a wide 16:9 file for a page, and a tall 9:16 file for a phone post. Those are two files from the same photo. Lengths are 6, 10, 15, or 30 seconds. You see the credit cost before it starts."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are the balance on your monthly plan. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. If the clip fails, those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Does the clip include a voice, music, or my logo?",
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -559,27 +559,27 @@
   "relatedLinks": [
     {
       "id": "image-to-video",
-      "label": "AI image to video"
+      "label": "AI Image to Video"
     },
     {
       "id": "tpl-angle",
-      "label": "clean product photos"
+      "label": "Clean Product Photos"
     },
     {
       "id": "tpl-bf",
-      "label": "Black Friday video ads"
+      "label": "Black Friday Video Ads"
     },
     {
       "id": "tpl-product-feature-callout-video",
-      "label": "feature highlight video"
+      "label": "Feature Highlight Video"
     },
     {
       "id": "plat-facebook",
-      "label": "AI Facebook ad generator"
+      "label": "AI Facebook Ad Generator"
     },
     {
       "id": "ind-electronics",
-      "label": "AI product videos for electronics"
+      "label": "AI Product Videos for Electronics"
     }
   ],
   "blockOrder": [
@@ -649,7 +649,7 @@
         "example": true,
         "who": "Founder",
         "t": "A presenter, not a quote",
-        "d": "Example: if a person appears, they come from the actor library, a list of AI presenters. The film is the brand's ad, not a customer quote."
+        "d": "Example: if a person appears, they come from the actor library, a list of AI actors."
       },
       {
         "example": true,
@@ -667,7 +667,7 @@
     "title": "What Is a Cinematic Product Video?",
     "paras": [
       "A cinematic product video gives one photo a light you choose and a slow camera move, so the product opens like a short film.",
-      "You can add a calm voice, captions, and background music in the editor. The clip is your ad, not a customer quote."
+      "You can add a calm voice, captions, and background music in the editor."
     ]
   },
   "reasons": {
@@ -675,32 +675,32 @@
     "lead": "One sharp photo replaces the crew, the rental, and a new shoot.",
     "items": [
       {
-        "t": "No crew for the first look",
+        "t": "No Crew for the First Look",
         "d": "The set, the light, and the camera move come from the photo you already have.",
         "icon": "Clapperboard"
       },
       {
-        "t": "The edge stays readable",
+        "t": "The Edge Stays Readable",
         "d": "A clear outline gives the slow move something to follow, so the finish stays easy to see.",
         "icon": "Eye"
       },
       {
-        "t": "Sound without another app",
+        "t": "Sound Without Another App",
         "d": "Add a voice, captions, and background music in the same editor, then download.",
         "icon": "Music"
       },
       {
-        "t": "Wide page, then a phone size",
+        "t": "Wide Page, Then a Phone Size",
         "d": "Make the wide cut for the product page, then make a tall 9:16 cut from the same photo for a phone post.",
         "icon": "Smartphone"
       },
       {
-        "t": "A dark scene you can check",
+        "t": "A Dark Scene You Can Check",
         "d": "Look at shiny shots before you post, so a bright spot does not hide the edge.",
         "icon": "Sun"
       },
       {
-        "t": "Credits, not a rental day",
+        "t": "Credits, Not a Rental Day",
         "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
         "icon": "Coins"
       }
@@ -713,39 +713,39 @@
       "lead": "Light, movement, a voice, and a music track can all come from the one photo you upload.",
       "items": [
         {
-          "t": "A calm voice on the reveal",
-          "d": "Add an AI voice that names the product while the camera moves. It is a spoken line, not a buyer quote."
+          "t": "A Calm Voice on the Reveal",
+          "d": "Add an AI voice that names the product while the camera moves."
         },
         {
-          "t": "Captions on the slow move",
+          "t": "Captions on the Slow Move",
           "d": "Put a short line on screen in the built-in editor, then download the file."
         },
         {
-          "t": "Several products, one light",
+          "t": "Several Products, One Light",
           "d": "Reuse one dark setup for the products you sell. Each clip shows its credit cost before it starts."
         },
         {
-          "t": "Start from the product link",
+          "t": "Start From the Product Link",
           "d": "Paste a public product page when the photo is already online. The camera move uses the product shown there."
         },
         {
-          "t": "A script for the opening",
+          "t": "A Script for the Opening",
           "d": "Ask for a short line about the finish, then edit the words before the voice reads them."
         },
         {
-          "t": "A presenter from the actor library",
-          "d": "If a person should appear, pick an AI actor from the actor library. That person is not a customer and not a review."
+          "t": "A Presenter From the Actor Library",
+          "d": "If a person should appear, pick an AI actor from the actor library."
         },
         {
-          "t": "A track from the music library",
+          "t": "A Track From the Music Library",
           "d": "Add background music under the quiet room sound, or keep only that room sound."
         },
         {
-          "t": "Finish it in the built-in editor",
+          "t": "Finish It in the Built-In Editor",
           "d": "Trim the move, place the caption, and set the voice without a second app."
         },
         {
-          "t": "The same light in another language",
+          "t": "The Same Light in Another Language",
           "d": "Keep the shot and switch the spoken line and captions to the language you sell in."
         },
         {
@@ -753,7 +753,7 @@
           "d": "Send the finished file to TikTok, or to Meta (Facebook and Instagram), from your account. Or download it for the product page."
         },
         {
-          "t": "An API for a product line",
+          "t": "An API for a Product Line",
           "d": "The API lets your own software send photos when a product line needs the same opening. Each one still shows its credit cost."
         }
       ]

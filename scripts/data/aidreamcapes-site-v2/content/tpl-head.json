@@ -66,7 +66,7 @@
     },
     {
       "q": "What does a team headshot cost?",
-      "a": "Each photo costs 24 credits. Credits are the balance on your monthly plan. The cost is shown before you start, and a failed photo returns those credits. The download has no watermark, so our name is not stamped on the file. You can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed photo returns those credits. The download has no watermark, so our name is not stamped on the file. You can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
     },
     {
       "q": "Do I need permission from each teammate?",
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -559,27 +559,27 @@
   "relatedLinks": [
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "change-background",
-      "label": "AI product background changer"
+      "label": "AI Product Background Changer"
     },
     {
       "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "label": "AI Model Photos for Clothing"
     },
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     }
   ],
   "reviews": {
@@ -648,7 +648,7 @@
       }
     ]
   },
-  "related_h2": "Photo tools for backgrounds and portraits",
+  "related_h2": "Photo Tools for Backgrounds and Portraits",
   "related_lead": "Product photo tools for a clean background, a model photo, and a white background.",
   "cta_title": "Ready for Matching Team Headshots?",
   "blockOrder": [
@@ -674,32 +674,32 @@
     "lead": "One background and one framing, so the About page looks like one team.",
     "items": [
       {
-        "t": "One look across the row",
+        "t": "One Look Across the Row",
         "d": "Share one background, one framing, and one light. Each person keeps the features in their own photo.",
         "icon": "Users"
       },
       {
-        "t": "A new hire joins without a reshoot",
+        "t": "A New Hire Joins Without a Reshoot",
         "d": "Reuse the same background and framing on the new photo. The rest of the team stays as it is.",
         "icon": "UserCheck"
       },
       {
-        "t": "The whole set in one batch",
+        "t": "The Whole Set in One Batch",
         "d": "Upload the approved photos together and get the same framing back, instead of booking a studio for each person.",
         "icon": "Layers"
       },
       {
-        "t": "Names stay easy to change",
+        "t": "Names Stay Easy to Change",
         "d": "Put the name and the role in text beside the portrait, so a title change is not a new image.",
         "icon": "Type"
       },
       {
-        "t": "You still need a yes",
+        "t": "You Still Need a Yes",
         "d": "Upload only a photo that person agreed you can use, and let them check the result before it goes live.",
         "icon": "ShieldCheck"
       },
       {
-        "t": "The cost shows before you start",
+        "t": "The Cost Shows Before You Start",
         "d": "Each photo uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
         "icon": "Coins"
       }
@@ -712,47 +712,47 @@
       "lead": "The portraits stay photos of your teammates. A short intro beside them can have a voice, captions, and a music track.",
       "items": [
         {
-          "t": "A voice for a short intro",
+          "t": "A Voice for a Short Intro",
           "d": "Add an AI voice on a short team intro that sits beside the portraits. The portrait itself stays a photo."
         },
         {
-          "t": "Captions on that intro",
+          "t": "Captions on That Intro",
           "d": "Put a name line or a one-sentence intro on the clip in the built-in editor. Keep job titles out of the portrait."
         },
         {
-          "t": "The whole team at once",
+          "t": "The Whole Team at Once",
           "d": "Run every approved photo with the same background and framing. Each photo shows its credit cost first."
         },
         {
-          "t": "Start from a public page link",
+          "t": "Start From a Public Page Link",
           "d": "Paste a public about-page link when you want a short intro clip. Headshots still come from photos each person approved."
         },
         {
-          "t": "A script for the intro",
+          "t": "A Script for the Intro",
           "d": "Ask for one spoken line about the team, then edit it before the voice reads it."
         },
         {
-          "t": "A presenter, not a replacement",
+          "t": "A Presenter, Not a Replacement",
           "d": "The portrait follows the uploaded person. A separate AI actor can introduce the team. That actor is not the teammate."
         },
         {
-          "t": "A track under the intro",
+          "t": "A Track Under the Intro",
           "d": "Add background music from the music library under the intro clip. The square portraits stay photos on the page."
         },
         {
-          "t": "Framing and background in the editor",
+          "t": "Framing and Background in the Editor",
           "d": "Set the framing, the light, and the background in one place, then reuse those notes for the next person."
         },
         {
-          "t": "An intro in another language",
+          "t": "An Intro in Another Language",
           "d": "Keep the portraits and switch the spoken intro and its captions to another language. Names on the page stay text you edit."
         },
         {
-          "t": "Post the intro to TikTok or Meta",
+          "t": "Post the Intro to TikTok or Meta",
           "d": "Send the intro clip to TikTok, or to Meta (Facebook and Instagram), from your account. The square portraits stay for the site, the slide deck, and the profile."
         },
         {
-          "t": "An API for approved photos",
+          "t": "An API for Approved Photos",
           "d": "The API lets your own software send photos when a staff page needs the same framing. Send only photos the person agreed to. Each one shows its credit cost."
         }
       ]

@@ -55,15 +55,15 @@
   "cta_lead": "Choose the Facebook shape, then get the file ready for Ads Manager (Facebook's ad tool).",
   "steps": [
     {
-      "t": "Add a product link",
+      "t": "Add a Product Link",
       "d": "Paste your product page link so the pictures and description come in, or upload one photo."
     },
     {
-      "t": "Choose an actor",
+      "t": "Choose an Actor",
       "d": "Pick a presenter from the actor library, or make one for your buyers. They are made by AI, not a creator you hired."
     },
     {
-      "t": "Finish and publish",
+      "t": "Finish and Publish",
       "d": "Add a script, a spoken voice, captions, and music, then publish to Meta (Facebook's ads) or download with no watermark."
     }
   ],
@@ -93,58 +93,58 @@
       ],
       "items": [
         {
-          "t": "Add a product link",
+          "t": "Add a Product Link",
           "d": "Paste your product page link so the pictures and description come in, or upload one photo."
         },
         {
-          "t": "Choose an actor",
+          "t": "Choose an Actor",
           "d": "Pick a presenter from the actor library, or make one for your buyers. They are made by AI, not a creator you hired."
         },
         {
-          "t": "Finish and publish",
+          "t": "Finish and Publish",
           "d": "Add a script, a spoken voice, captions, and music, then publish to Meta (Facebook's ads) or download with no watermark."
         }
       ]
     },
     "titles": {
       "faq": {
-        "h2": "Questions before you upload a Facebook ad"
+        "h2": "Questions Before You Upload a Facebook Ad"
       }
     }
   },
-  "benefits_h2": "Reasons to use clips that look customer-made",
+  "benefits_h2": "Reasons to Use Clips That Look Customer-Made",
   "benefits": [
     {
-      "t": "Another ad without a new shoot",
+      "t": "Another Ad Without a New Shoot",
       "d": "Make the next version from the same link or photo. You see the credit cost before it starts, and a failed job gives those credits back."
     },
     {
-      "t": "A file whenever the home screen needs one",
+      "t": "A File Whenever the Home Screen Needs One",
       "d": "There is no creator to book. Paste a link or upload a photo when you want a new opening."
     },
     {
-      "t": "A new opening before shoppers tire of the old ad",
+      "t": "A New Opening Before Shoppers Tire of the Old Ad",
       "d": "Swap the actor, the line or the scene so the ad does not repeat the same first second."
     }
   ],
-  "steps_h2": "Steps to make Facebook ads that look customer-made",
+  "steps_h2": "Steps to Make Facebook Ads That Look Customer-Made",
   "steps_lead": "Start from a link or a photo, pick an actor, then publish or download.",
   "more_sections": [
     {
       "eyebrow": "Why video",
-      "h2": "Why a Facebook video ad can help",
+      "h2": "Why a Facebook Video Ad Can Help",
       "lead": "A clip can show the product in use. It is not a promise of cheaper clicks.",
       "items": [
         {
-          "t": "Show one action a photo cannot",
+          "t": "Show One Action a Photo Cannot",
           "d": "A short clip can show a pour, an open, or a fit, with an actor holding the item. We do not promise more clicks."
         },
         {
-          "t": "Many versions from one link",
+          "t": "Many Versions From One Link",
           "d": "Turn one product link into many clips at once. Each file shows its credit cost first. If a file fails, those credits come back."
         },
         {
-          "t": "Edit, then publish to Facebook",
+          "t": "Edit, Then Publish to Facebook",
           "d": "Change the script, voice, captions, music, or actor in the editor. Then publish to Meta (Facebook's ads) or download the file yourself."
         }
       ]
@@ -162,63 +162,63 @@
   ],
   "benefits_lead": "UGC means the ad looks like a customer filmed it. Skip the photo shoot. The next file can start from a link or a picture you already have.",
   "reasons": {
-    "h2": "Why use AIVideosUGC for Facebook ads that look customer-made",
+    "h2": "Why Use AIVideosUGC for Facebook Ads That Look Customer-Made",
     "lead": "Templates, languages, and a presenter made by AI, with no creator to wait on.",
     "items": [
       {
-        "t": "No wait for a creator",
+        "t": "No Wait for a Creator",
         "d": "Nothing to mail and no date to book. The next file starts from a link or a photo you already have.",
         "icon": "Clock"
       },
       {
-        "t": "Facebook ad templates",
+        "t": "Facebook Ad Templates",
         "d": "Start from a template made for the home screen, then change the actor, the line, and how the photo is trimmed. One run can make more than one version.",
         "icon": "LayoutGrid"
       },
       {
-        "t": "The language your buyers use",
+        "t": "The Language Your Buyers Use",
         "d": "Write the script and the spoken voice in the language your buyers use. You do not book a new filming day for each language.",
         "icon": "Languages"
       }
     ]
   },
   "platforms": {
-    "h2": "Create customer-style video ads for your other sites",
+    "h2": "Create Customer-Style Video Ads for Your Other Sites",
     "lead": "Facebook is one place an ad can run. The same link can start a file for the other ad sites too.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
         "d": "A tall phone-shaped ad for short video, started from the same upload.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
         "d": "A square photo or a tall clip for the post screen.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "A tall clip for a short video. A wide video that plays inside a YouTube video is a separate job.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
-        "label": "Amazon product photos",
+        "t": "Amazon Product Photos",
+        "label": "Amazon Product Photos",
         "d": "A plain main image, a detail, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
-        "label": "Shopify product photos",
+        "t": "Shopify Product Photos",
+        "label": "Shopify Product Photos",
         "d": "Square product photos, collection photos, and a clip you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
         "d": "Open the full list and pick where the next file goes.",
         "href": "/platforms"
       }
@@ -290,7 +290,7 @@
       }
     ]
   },
-  "related_h2": "Related tools for a Facebook ad",
+  "related_h2": "Related Tools for a Facebook Ad",
   "related_lead": "Pick the tool or template that matches where the ad will show.",
   "relatedLinks": [
     "video-ads",

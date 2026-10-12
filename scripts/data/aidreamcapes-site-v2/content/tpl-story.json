@@ -35,7 +35,7 @@
       ],
       [
         "Output",
-        "Square product photo"
+        "Square Product Photo"
       ],
       [
         "Text",
@@ -67,7 +67,7 @@
     },
     {
       "q": "What does a Story photo cost?",
-      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
     },
     {
       "q": "Will the full product stay visible?",
@@ -111,7 +111,7 @@
     "steps": {
       "source": "n:guide:c1-tpl-story-m2-source",
       "sourceAlt": "Single hot sauce bottle photographed upright on a plain pale background.",
-      "sourceTitle": "Square product photo",
+      "sourceTitle": "Square Product Photo",
       "sourceHint": "Center the full product with open space around it.",
       "result": "n:guide:c1-tpl-story-m2-result-square",
       "options": [
@@ -205,7 +205,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -570,7 +570,7 @@
         "h2": "Add the Story date and offer after download"
       },
       "faq": {
-        "h2": "Questions about Instagram story ad images"
+        "h2": "Questions About Instagram Story Ad Images"
       },
       "examples": {
         "h2": "Instagram Story ad image examples"
@@ -584,27 +584,27 @@
   "relatedLinks": [
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     },
     {
       "id": "tpl-box",
-      "label": "product bundle photos"
+      "label": "Product Bundle Photos"
     },
     {
       "id": "tpl-light",
-      "label": "product photo lighting"
+      "label": "Product Photo Lighting"
     },
     {
       "id": "tpl-beauty",
-      "label": "beauty product video ads"
+      "label": "Beauty Product Video Ads"
     },
     {
       "id": "ind-beauty-skincare",
-      "label": "AI product videos and photos for beauty brands"
+      "label": "AI Product Videos and Photos for Beauty Brands"
     },
     {
       "id": "plat-instagram",
-      "label": "AI Instagram ads"
+      "label": "AI Instagram Ads"
     }
   ],
   "reviews": {
@@ -657,7 +657,7 @@
         "example": true,
         "who": "Indie brand",
         "t": "A generated presenter",
-        "d": "They choose a generated person to hold the bottle. That person is not a customer and not someone they hired."
+        "d": "They choose a generated person to hold the bottle."
       },
       {
         "example": true,
@@ -673,7 +673,7 @@
       }
     ]
   },
-  "related_h2": "Beauty templates for a Story ad",
+  "related_h2": "Beauty Templates for a Story Ad",
   "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty industry page, and Instagram ads.",
   "cta_title": "Ready to Build Your Story Ad?",
   "cta_lead": "Upload one product photo. Add the headline after you download the square image.",
@@ -693,27 +693,27 @@
       "lead": "The square photo is the Story frame. A script, a presenter, and a spoken line can go with it when you publish.",
       "items": [
         {
-          "t": "A product link starts it",
+          "t": "A Product Link Starts It",
           "d": "Paste the product page. It picks up the item and keeps this square as the frame for the Story."
         },
         {
-          "t": "A presenter from the library",
-          "d": "Choose a generated person to hold the product. That person is not a customer and not someone you hired."
+          "t": "A Presenter From the Library",
+          "d": "Choose a generated person to hold the product."
         },
         {
-          "t": "A spoken line",
+          "t": "A Spoken Line",
           "d": "Add a spoken line in the language your shoppers use, then edit any word before the Story goes up."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "Describe the offer in a sentence. The script writer drafts the line, and you can change it in the editor."
         },
         {
-          "t": "Trim it in the editor",
+          "t": "Trim It in the Editor",
           "d": "Shape the Story in the built-in editor, then download a file with no watermark."
         },
         {
-          "t": "Several versions, then publish",
+          "t": "Several Versions, Then Publish",
           "d": "Run the same photo for another setting or another language, then publish to Instagram, Facebook, or TikTok."
         }
       ]

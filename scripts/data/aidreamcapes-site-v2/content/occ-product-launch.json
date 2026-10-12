@@ -34,7 +34,7 @@
     },
     {
       "q": "Can the countdown use an actor from the library?",
-      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That person is generated, not a real customer or a celebrity."
+      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That person is generated."
     },
     {
       "q": "Can I bring my own product clip into the countdown?",
@@ -275,73 +275,73 @@
     ],
     "titles": {
       "m2": {
-        "h2": "How to create a launch teaser video in 3 simple steps"
+        "h2": "How to Create a Launch Teaser Video in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a product launch scene"
       },
       "faq": {
-        "h2": "Questions about a new product launch video"
+        "h2": "Questions About a New Product Launch Video"
       }
     }
   },
-  "benefits_h2": "Reasons to use a product reveal video",
+  "benefits_h2": "Reasons to Use a Product Reveal Video",
   "benefits": [
     {
-      "t": "An actor for the countdown",
+      "t": "An Actor for the Countdown",
       "d": "Pick an actor to introduce the launch, or describe the look, the age, and the outfit. A short clip of you can become that person, with a face and a voice of their own.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
     },
     {
-      "t": "A script that builds the wait",
+      "t": "A Script That Builds the Wait",
       "d": "Paste the product page or describe the item. AIVideosUGC writes an opening line and the reasons to care. You can edit every line of the countdown.",
       "img": "n:guide:fx01-occ-product-launch-benefit-packaging",
       "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
       "frame": "none"
     },
     {
-      "t": "A voice that builds the wait",
+      "t": "A Voice That Builds the Wait",
       "d": "Choose an AI voice, then set the pace and the mood so the launch feels more urgent as the day gets closer.",
       "img": "n:guide:fx01-occ-product-launch-benefit-details",
       "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
       "frame": "none"
     },
     {
-      "t": "Several versions before you choose",
+      "t": "Several Versions Before You Choose",
       "d": "Make more than one countdown and compare the opening line and the script. Look at how other shops set a deadline, then keep the opening you want.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
-  "steps_h2": "How to create a launch teaser video in 3 simple steps",
+  "steps_h2": "How to Create a Launch Teaser Video in 3 Simple Steps",
   "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where it goes live. Credits are what each launch photo or video uses, and the cost shows before you start.",
   "relatedLinks": [
     {
       "id": "occ-holidays",
-      "label": "holiday ad photos and videos"
+      "label": "Holiday Ad Photos and Videos"
     },
     {
       "id": "occ-sale-discount",
-      "label": "sale ad creatives"
+      "label": "Sale Ad Creatives"
     },
     {
       "id": "occ-black-friday",
-      "label": "Black Friday ad creatives"
+      "label": "Black Friday Ad Creatives"
     },
     {
       "id": "video-ads",
-      "label": "Casual-style AI video ads"
+      "label": "Casual-Style AI Video Ads"
     },
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     },
     {
       "id": "tpl-launch",
-      "label": "AI promo video maker"
+      "label": "AI Promo Video Maker"
     }
   ],
   "reviews": {
@@ -364,41 +364,41 @@
         "example": true,
         "who": "An accessories shop",
         "t": "Set the sunglasses in daylight",
-        "d": "They keep the sunglasses' shape and color in an outdoor preview. If a person is in the picture, that actor is generated, not a real customer."
+        "d": "They keep the sunglasses' shape and color in an outdoor preview."
       }
     ]
   },
   "trust": {
-    "h2": "What you check before the first look goes out",
+    "h2": "What You Check Before the First Look Goes Out",
     "lead": "The photo stays in your account, and the date stays yours to add.",
     "items": [
       {
-        "t": "The unreleased photo stays in your account",
+        "t": "The Unreleased Photo Stays in Your Account",
         "d": "The upload and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "A timer you can move",
+        "t": "A Timer You Can Move",
         "d": "Set the end time on the countdown and change it in the editor if launch day moves. The clock is not printed on the product."
       },
       {
-        "t": "A file for paid ads, with no watermark",
+        "t": "A File for Paid Ads, With No Watermark",
         "d": "The download has no AIVideosUGC watermark. You can use it in launch posts and paid ads. Each app still has its own ad rules."
       },
       {
-        "t": "The credit cost before you start",
+        "t": "The Credit Cost Before You Start",
         "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       },
       {
-        "t": "Credits come back if it fails",
+        "t": "Credits Come Back If It Fails",
         "d": "If it fails, those credits come back on their own. A finished file is not refunded just because you dislike it."
       },
       {
-        "t": "An actor only if you want one",
-        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that person is generated, not a real customer or a celebrity."
+        "t": "An Actor Only If You Want One",
+        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that person is generated."
       }
     ]
   },
-  "cta_title": "Publish the launch teaser video when the date is set",
+  "cta_title": "Publish the Launch Teaser Video When the Date Is Set",
   "blockOrder": [
     "hero",
     "benefits",

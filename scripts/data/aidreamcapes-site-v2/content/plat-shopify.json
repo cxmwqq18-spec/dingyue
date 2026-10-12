@@ -50,15 +50,15 @@
   "cta_lead": "Start with one product, or update many collection photos from pictures you already have.",
   "steps": [
     {
-      "t": "Upload your product or describe it",
+      "t": "Upload Your Product or Describe It",
       "d": "Write the scene you want, or upload one clear photo of the whole item."
     },
     {
-      "t": "Choose your image style",
+      "t": "Choose Your Image Style",
       "d": "Pick a square photo for the page, a small photo for the collection, or a video of 6, 10, 15, or 30 seconds."
     },
     {
-      "t": "Download and add it",
+      "t": "Download and Add It",
       "d": "Tweak it, then download with no watermark, meaning no logo on the file. Add the photo or video in Shopify yourself."
     }
   ],
@@ -92,64 +92,64 @@
       ],
       "items": [
         {
-          "t": "Upload your product or describe it",
+          "t": "Upload Your Product or Describe It",
           "d": "Write the scene you want, or upload one clear photo of the whole item."
         },
         {
-          "t": "Choose your image style",
+          "t": "Choose Your Image Style",
           "d": "Pick a square photo for the page, a small photo for the collection, or a video of 6, 10, 15, or 30 seconds."
         },
         {
-          "t": "Download and add it",
+          "t": "Download and Add It",
           "d": "Tweak it, then download with no watermark, meaning no logo on the file. Add the photo or video in Shopify yourself."
         }
       ]
     },
     "titles": {
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
-  "benefits_h2": "Give your Shopify product a fresh look",
+  "benefits_h2": "Give Your Shopify Product a Fresh Look",
   "benefits": [
     {
-      "t": "One look across the collection",
+      "t": "One Look Across the Collection",
       "d": "Use the same square shape so the collection photos line up. The collection should look like one shop.",
       "img": "n:guide:fx42-shopify-benefit-collection",
       "alt": "Three plain ceramic home goods arranged as a consistent ecommerce collection grid."
     },
     {
-      "t": "A page file and an ad file",
+      "t": "A Page File and an Ad File",
       "d": "Download the store image and the ad image separately, so the page stays square and the ad can use its own shape.",
       "img": "n:guide:fx42-shopify-benefit-versions",
       "alt": "Plain reusable water bottle shown in a clean product view and a handheld lifestyle angle."
     },
     {
-      "t": "A coast, a desert, or a room",
+      "t": "A Coast, a Desert, or a Room",
       "d": "Keep the product, and place it by the sea, in a desert, on a plain background, or in a room.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "Adult hands place a plain linen storage basket on a bright shelf."
     }
   ],
-  "steps_h2": "Steps to make a Shopify photo or video",
+  "steps_h2": "Steps to Make a Shopify Photo or Video",
   "steps_lead": "Describe a scene or upload a photo, pick a style, then download.",
   "more_sections": [
     {
       "eyebrow": "Example files",
-      "h2": "Examples of Shopify product photos",
+      "h2": "Examples of Shopify Product Photos",
       "lead": "A product page usually needs more than one file. Make each one as its own download.",
       "items": [
         {
-          "t": "Plain square photo",
+          "t": "Plain Square Photo",
           "d": "A clean photo of the whole item for the collection. Keep the same shape as the photos beside it."
         },
         {
-          "t": "Product in use",
+          "t": "Product in Use",
           "d": "The same product in a room, by the sea, or on a plain background, saved as its own file."
         },
         {
-          "t": "Short video",
+          "t": "Short Video",
           "d": "A video of 6, 10, 15, or 30 seconds that you add on the product page. You can also start that video from the photo you just made."
         }
       ]
@@ -166,36 +166,36 @@
   ],
   "benefits_lead": "Put the same product by the sea, in a desert, on a plain background, or in a room.",
   "reasons": {
-    "h2": "Benefits of Shopify product photos",
+    "h2": "Benefits of Shopify Product Photos",
     "lead": "Here is what you can do with the photos you already have.",
     "items": [
       {
-        "t": "See the cost first",
+        "t": "See the Cost First",
         "d": "A photo costs 24 credits. Credits are what your monthly plan gives you to spend. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start. If a file fails, those credits come back.",
         "icon": "Coins"
       },
       {
-        "t": "Skip another film day",
+        "t": "Skip Another Film Day",
         "d": "Older products can use the picture they already have. You do not book another film day to refresh the collection.",
         "icon": "Images"
       },
       {
-        "t": "Many products at once",
+        "t": "Many Products at Once",
         "d": "Make photos for many products at one time. Each item still starts from its own photo.",
         "icon": "Layers"
       },
       {
-        "t": "No model and no props",
+        "t": "No Model and No Props",
         "d": "You do not hire a model, or rent extra items, just to try a new background. The scene starts from the photo you upload.",
         "icon": "Sparkles"
       },
       {
-        "t": "Start when the photo is ready",
+        "t": "Start When the Photo Is Ready",
         "d": "There is no studio appointment. Make the file in the evening, on a weekend, or between orders.",
         "icon": "Clock"
       },
       {
-        "t": "Test another background",
+        "t": "Test Another Background",
         "d": "Make a second photo with a wider or tighter view, a new look, or a new layout. Compare it with the first. You pick which file goes on the product page.",
         "icon": "RefreshCw"
       }
@@ -309,7 +309,7 @@
       }
     ]
   },
-  "related_h2": "Related tools for the page and the video",
+  "related_h2": "Related Tools for the Page and the Video",
   "related_lead": "Open the tool for the next file.",
   "relatedLinks": [
     "product-videos",

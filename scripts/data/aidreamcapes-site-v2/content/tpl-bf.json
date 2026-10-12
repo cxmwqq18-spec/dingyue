@@ -82,7 +82,7 @@
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. It has no watermark, which means no logo is stamped on the file. If a person appears, that person is an AI performer, not a shopper who bought the deal."
+      "a": "Yes. It has no watermark, which means no logo is stamped on the file. If a person appears, that person is an AI actor, not a shopper who bought the deal."
     },
     {
       "q": "Can I start from a product link, many products at once, or my own software?",
@@ -154,7 +154,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -194,7 +194,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -651,27 +651,27 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI creator-style video ads"
+      "label": "AI Creator-Style Video Ads"
     },
     {
       "id": "tpl-film",
-      "label": "cinematic product video"
+      "label": "Cinematic Product Video"
     },
     {
       "id": "tpl-carousel-video-ad",
-      "label": "carousel video ad"
+      "label": "Carousel Video Ad"
     },
     {
       "id": "tpl-retargeting-video-ad",
-      "label": "retargeting video ad"
+      "label": "Retargeting Video Ad"
     },
     {
       "id": "occ-black-friday",
-      "label": "Black Friday ad creatives"
+      "label": "Black Friday Ad Creatives"
     },
     {
       "id": "plat-facebook",
-      "label": "AI Facebook ad generator"
+      "label": "AI Facebook Ad Generator"
     }
   ],
   "reasons": {
@@ -679,17 +679,17 @@
     "lead": "Start from the photo you have. Add your words and a spoken voice. Add the offer only after you confirm the numbers.",
     "items": [
       {
-        "t": "Start from a ready setup",
+        "t": "Start From a Ready Setup",
         "d": "Open a ready setup, keep your product, and add your words, stickers, and captions. A song from the music library can play under the clip. The layout is already there, so you do not start from a blank file.",
         "icon": "LayoutGrid"
       },
       {
-        "t": "Show the product right away",
+        "t": "Show the Product Right Away",
         "d": "Turn the photo into a clip with an AI actor, a script, and a spoken voice. Publish it to TikTok, Facebook, or Instagram in one step. Type the real price only after download.",
         "icon": "Play"
       },
       {
-        "t": "Website, many products, or your software",
+        "t": "Website, Many Products, or Your Software",
         "d": "Make the same deal setup on the website. When you have many products, run them at once (a batch), or start jobs from your own software (the API). In the editor on this site you can edit, resize, change the background, and try another language. Plans start at $24.50 a month.",
         "icon": "Layers"
       }

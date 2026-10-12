@@ -30,7 +30,7 @@
     },
     {
       "q": "How long can a video be?",
-      "a": "You can pick 6, 10, 15, or 30 seconds. Credits are the points a file spends. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before you start. If it fails, the credits come back."
+      "a": "You can pick 6, 10, 15, or 30 seconds. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before you start. If it fails, the credits come back."
     },
     {
       "q": "What should I make for a marketplace listing?",
@@ -109,10 +109,10 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "How to make a file for one app in 3 steps"
+        "h2": "How to Make a File for One App in 3 Steps"
       },
       "m3": {
-        "h2": "Ads for each app you sell on",
+        "h2": "Ads for Each App You Sell On",
         "lead": "Open the app you post on. TikTok, Instagram Reels, Facebook, YouTube Shorts, Amazon, and Shopify each show the shape they expect."
       }
     },
@@ -150,31 +150,31 @@
   "benefits_h2": "What Each App's Ad Can Include",
   "benefits": [
     {
-      "t": "Words for the post",
+      "t": "Words for the Post",
       "d": "Describe the product and the app. The tool writes the spoken line, and you edit it."
     },
     {
-      "t": "An AI actor",
-      "d": "Use an actor when you do not want to be on camera. The person is made by AI, not a real customer."
+      "t": "An AI Actor",
+      "d": "Use an actor when you do not want to be on camera."
     },
     {
-      "t": "Music from the library",
+      "t": "Music From the Library",
       "d": "Put a song under the video and swap it in the editor."
     },
     {
-      "t": "Captions you can edit",
+      "t": "Captions You Can Edit",
       "d": "Captions come on the file. Change them so the price matches your store now."
     },
     {
-      "t": "A start from a link",
+      "t": "A Start From a Link",
       "d": "Paste a public product page. Its main image and name start the video for this app."
     },
     {
-      "t": "A shape that matches",
+      "t": "A Shape That Matches",
       "d": "Photos are square. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4, at 6, 10, 15, or 30 seconds."
     }
   ],
-  "steps_h2": "How to make a file for one app in 3 steps",
+  "steps_h2": "How to Make a File for One App in 3 Steps",
   "steps_lead": "Add a photo or a link, pick the shape, then publish or download.",
   "steps": [
     {
@@ -191,7 +191,7 @@
     }
   ],
   "directory_specs": {
-    "title": "Shapes you can make for each app",
+    "title": "Shapes You Can Make for Each App",
     "lead": "The photo or video shape depends on the app. Photos from this tool are square. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4, with a voice, captions, and music. If the app wants a 4:5 photo (a bit taller than square), crop the square photo in the editor. You can send the file to TikTok or Meta (Facebook and Instagram), or download it.",
     "columns": [
       "App",
@@ -252,7 +252,7 @@
     "closing",
     "cta"
   ],
-  "related_h2": "More tools and pages to browse",
+  "related_h2": "More Tools and Pages to Browse",
   "related_lead": "Start from a link or an actor, or browse by layout and category.",
   "relatedLinks": [
     "url-to-video",
@@ -269,22 +269,22 @@
     "lead": "Start from the product you sell, then match the shape the app expects.",
     "items": [
       {
-        "t": "A photo or a link",
+        "t": "A Photo or a Link",
         "d": "Upload the product photo, or paste the public product page. The video starts from that item.",
         "icon": "Link"
       },
       {
-        "t": "A style you describe",
+        "t": "A Style You Describe",
         "d": "Describe a look you are allowed to use, then put your product in it for this app.",
         "icon": "Palette"
       },
       {
-        "t": "You stay off camera",
+        "t": "You Stay off Camera",
         "d": "Pick an AI actor when you do not want to film. Say the person is made by AI if the app asks.",
         "icon": "UserRound"
       },
       {
-        "t": "A page becomes a video",
+        "t": "A Page Becomes a Video",
         "d": "A product page can become the social video. Prices on that page are not copied. You type the price.",
         "icon": "Film"
       }
@@ -295,7 +295,7 @@
     "lead": "The app changes the shape. The product stays the one in your photo.",
     "items": [
       {
-        "t": "Beauty and lifestyle",
+        "t": "Beauty and Lifestyle",
         "d": "A jar, a routine, or the product being worn, sized for Reels, TikTok, or a square shop gallery."
       },
       {
@@ -307,7 +307,7 @@
         "d": "The garment on a person the tool makes. The picture does not replace the size chart on the product page."
       },
       {
-        "t": "Food and drink",
+        "t": "Food and Drink",
         "d": "A pour, a sip, or the package, in a tall video or a square listing photo."
       },
       {
@@ -315,7 +315,7 @@
         "d": "The item in a room, then a shape that fits the post list or the store gallery."
       },
       {
-        "t": "No one on camera",
+        "t": "No One on Camera",
         "d": "A product video with a voice, captions, and music, and no person you filmed."
       }
     ]
@@ -327,35 +327,35 @@
       "lead": "Eight kinds of post. Use the one that fits the app, and keep the product easy to recognize.",
       "items": [
         {
-          "t": "A repeatable action",
+          "t": "A Repeatable Action",
           "d": "A short action people can copy, with your product, for a full-screen post."
         },
         {
-          "t": "A short how-to",
+          "t": "A Short How-To",
           "d": "One useful step, spoken and captioned, so the action is easy to follow."
         },
         {
-          "t": "A story around one use",
+          "t": "A Story Around One Use",
           "d": "A single everyday moment with the item, not a long plot."
         },
         {
-          "t": "A reaction to the product",
+          "t": "A Reaction to the Product",
           "d": "An AI actor responds to one real detail, such as the texture or the sound."
         },
         {
-          "t": "A short list",
+          "t": "A Short List",
           "d": "Two or three real features, each on screen long enough to read."
         },
         {
-          "t": "Behind the product",
+          "t": "Behind the Product",
           "d": "The package, the material, or the setup, from the photo you uploaded."
         },
         {
-          "t": "A calm product look",
+          "t": "A Calm Product Look",
           "d": "The item, held simply, with light music and few words."
         },
         {
-          "t": "A short skit",
+          "t": "A Short Skit",
           "d": "An AI actor in a brief scene that ends on the product."
         }
       ]
@@ -366,19 +366,19 @@
       "lead": "Adjust the picture, the words, and the next version before you publish.",
       "items": [
         {
-          "t": "A clean background",
+          "t": "A Clean Background",
           "d": "Put the product on a plain background when the app wants a simple photo. Photos are square."
         },
         {
-          "t": "The product in a scene",
+          "t": "The Product in a Scene",
           "d": "Place the same item in a setting shoppers on that app already know."
         },
         {
-          "t": "Words in the editor",
+          "t": "Words in the Editor",
           "d": "Add the headline and the captions in the editor on this site. Type the price yourself."
         },
         {
-          "t": "Several versions",
+          "t": "Several Versions",
           "d": "A batch is several versions from one photo, when you need another shape or another first line."
         }
       ]

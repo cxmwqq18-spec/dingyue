@@ -112,19 +112,19 @@
     "lead": "A side photo on a table does not show the ankle opening or the step. Paste a product link, or start from the pair you already photographed.",
     "items": [
       {
-        "t": "Fit check, no new booking",
+        "t": "Fit Check, No New Booking",
         "d": "Show an adult holding the pair, using one clear photo. You skip hiring a model and another studio day for every color.",
         "img": "n:guide:fx30-shoes-benefit-fit-r1",
         "alt": "Adult man holds a pair of plain gray walking shoes for a fit check."
       },
       {
-        "t": "Angles you actually shot",
+        "t": "Angles You Actually Shot",
         "d": "A step, an unboxing, or a close-up of the material can reuse the pair, and you can make a second version. The sole pattern and the heel appear only if those views are in the photo.",
         "img": "n:guide:fx30-shoes-benefit-material-r1",
         "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge."
       },
       {
-        "t": "The pair on a foot",
+        "t": "The Pair on a Foot",
         "d": "One measured step shows the side, the ankle opening, and how the shoe is built. Comfort claims stay in the listing, not in the clip.",
         "img": "n:guide:fx30-shoes-benefit-step-r1",
         "alt": "Adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
@@ -136,32 +136,32 @@
     "lead": "Send the step to TikTok, Facebook, or Instagram from this page. For the main image, show the shoe alone on white, and put size notes in the listing.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall phone step (9:16) for a shoe ad in TikTok's main feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A side-view photo or a short step for the feed and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A feed image with room to add the offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short phone-screen step, one pace from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "The shoe alone on white for a main image, with no extra objects and no text on the photo.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching pair imagery for the product page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -243,30 +243,30 @@
   "relatedLinks": [
     {
       "id": "tpl-color",
-      "label": "product color variations"
+      "label": "Product Color Variations"
     },
     {
       "id": "tpl-limited-drop-alert-video",
-      "label": "limited drop alert video"
+      "label": "Limited Drop Alert Video"
     },
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "video-ads",
-      "label": "Casual creator-style video ads"
+      "label": "Casual Creator-Style Video Ads"
     }
   ],
-  "related_h2": "Shoe colors, listings, and ad pages",
+  "related_h2": "Shoe Colors, Listings, and Ad Pages",
   "maker": {
     "options": [
       [

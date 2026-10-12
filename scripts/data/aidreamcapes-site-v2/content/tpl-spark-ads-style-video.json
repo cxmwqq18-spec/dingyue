@@ -79,7 +79,7 @@
     },
     {
       "q": "What does the clip cost?",
-      "a": "Credits are the points that pay for a clip. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. You see the cost first. A failed run puts those credits back. Plans start at $24.50 a month."
+      "a": "A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. You see the cost first. A failed run puts those credits back. Plans start at $24.50 a month."
     },
     {
       "q": "Can I boost the file?",
@@ -115,7 +115,7 @@
     "steps": {
       "source": "n:guide:c1-tpl-spark-ads-style-video-m2-source",
       "sourceAlt": "Sage-green insulated bottle with a hinged loop lid on a pale background.",
-      "sourceTitle": "Your starting product",
+      "sourceTitle": "Your Starting Product",
       "sourceHint": "Keep the whole bottle and hinged lid sharp in natural light.",
       "result": "n:guide:q14-spark-step-hiker-r2",
       "resultPosition": "center 20%",
@@ -211,7 +211,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -572,27 +572,27 @@
   "relatedLinks": [
     {
       "id": "url-to-video",
-      "label": "Product link to video"
+      "label": "Product Link to Video"
     },
     {
       "id": "image-to-video",
-      "label": "Image to video"
+      "label": "Image to Video"
     },
     {
       "id": "spokesperson-videos",
-      "label": "AI presenter ads"
+      "label": "AI Actor Ads"
     },
     {
       "id": "video-ads",
-      "label": "Creator-style video ads"
+      "label": "Creator-Style Video Ads"
     },
     {
       "id": "plat-tiktok",
-      "label": "AI TikTok ads generator"
+      "label": "AI TikTok Ads Generator"
     },
     {
       "id": "product-videos",
-      "label": "Product videos"
+      "label": "Product Videos"
     }
   ],
   "blockOrder": [
@@ -620,7 +620,7 @@
         "example": true,
         "who": "Bag shop",
         "t": "Tote to camera",
-        "d": "A bag shop shows an AI presenter holding the tote and facing the camera. The presenter is generated, not a customer."
+        "d": "A bag shop shows an AI actor holding the tote and facing the camera."
       },
       {
         "example": true,
@@ -673,7 +673,7 @@
     ]
   },
   "related_h2": "Explore Related Tools",
-  "related_lead": "A product link, image to video, an AI presenter, creator-style video ads, TikTok ads, and product videos.",
+  "related_lead": "A product link, image to video, an AI actor, creator-style video ads, TikTok ads, and product videos.",
   "more_sections": [
     {
       "eyebrow": "Six ways in",
@@ -685,64 +685,64 @@
           "d": "Paste the product page. The clip is built around the item on that page, ready for a TikTok post."
         },
         {
-          "t": "Several clips at once",
+          "t": "Several Clips at Once",
           "d": "Make several Spark-style clips from one product in a single run, then keep the opening you want to post."
         },
         {
-          "t": "Edit footage you filmed",
+          "t": "Edit Footage You Filmed",
           "d": "Bring footage you already filmed and shape it into a tall TikTok clip without opening another editor."
         },
         {
-          "t": "Type a line, get a clip",
+          "t": "Type a Line, Get a Clip",
           "d": "Type the moment you want to show. You get a clip that matches that line for the TikTok post."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "Describe the point of the ad. You get a script you can edit before the clip is generated."
         },
         {
-          "t": "A spoken voice",
+          "t": "A Spoken Voice",
           "d": "Turn the script into a spoken line, and pick a voice that fits the shopper you are addressing."
         }
       ]
     }
   ],
-  "benefits_h2": "More Clips from the Same Product",
+  "benefits_h2": "More Clips From the Same Product",
   "benefits_lead": "Try another opening, another look, and a frame size that fits the post.",
   "benefits": [
     {
-      "t": "Several openings",
-      "d": "Make more than one version and post the opening that fits. Credits are the points that pay for a clip, and each clip shows that cost before it starts."
+      "t": "Several Openings",
+      "d": "Make more than one version and post the opening that fits. Each clip shows its credit cost before it starts."
     },
     {
-      "t": "A look of your own",
+      "t": "A Look of Your Own",
       "d": "Start from a script or from footage, then pick a style such as cartoon, pixel art, or a 3D scene."
     },
     {
-      "t": "This product, not a stand-in",
+      "t": "This Product, Not a Stand-In",
       "d": "Paste a product link, a script, or the photo you shot. The clip stays about the item on that source."
     },
     {
-      "t": "Post it where you sell",
+      "t": "Post It Where You Sell",
       "d": "Save a tall 9:16, a square 1:1, or 16:9, 4:3, or 3:4. Then send the file to TikTok, Instagram, Facebook, or YouTube in one click."
     }
   ],
   "reasons": {
-    "h2": "Why Should You Make Spark Ads with AI?",
+    "h2": "Why Should You Make Spark Ads With AI?",
     "lead": "Start from what you already have, and see the credit cost before the job runs.",
     "items": [
       {
-        "t": "Use what you already have",
+        "t": "Use What You Already Have",
         "d": "A product link, a short script, or one photo is enough to start. A missing piece can be generated before the clip.",
         "icon": "Link"
       },
       {
-        "t": "No shoot on the calendar",
+        "t": "No Shoot on the Calendar",
         "d": "You are not booking a creator or a studio for this file. The credit cost is on screen before the job starts.",
         "icon": "Calendar"
       },
       {
-        "t": "The price, and another language",
+        "t": "The Price, and Another Language",
         "d": "The clip on this page is 15 seconds, which is 60 credits. A 6-second clip is 24 credits. Plans start at $24.50 a month. The spoken line can use the language your shoppers use.",
         "icon": "Coins"
       }

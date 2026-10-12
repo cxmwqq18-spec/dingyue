@@ -15,7 +15,7 @@
   "summary": "Shoot at product height in window light, with filters off and the label readable, then try a new setting from that same photo.",
   "sections": [
     {
-      "h2": "New scenes from one phone photo",
+      "h2": "New Scenes From One Phone Photo",
       "paras": [
         "Once the source photo is sharp, you can place the same item somewhere new. The product should still be the one you ship.",
         "A coast or a bright outdoor table. Use it when the product is about sun, travel, or summer. Check that the color did not turn more orange.",
@@ -27,10 +27,10 @@
       "alt": "Adult hands place a plain gray running shoe on a white board in daylight."
     },
     {
-      "h2": "Reasons to make the photo here",
+      "h2": "Reasons to Make the Photo Here",
       "paras": [
         "You already did the hard part with your phone. The rest replaces the studio day. It does not change the real product.",
-        "A smaller bill than a photo studio day. You are not hiring a studio set, a stylist, or a model for every color. A job is one time the tool makes a file. Credits are the points your monthly plan uses up for that file. They are not a cash price. One image is 24 credits, and that cost shows before the job starts. Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300. Premium is $63 a month for 600.",
+        "A smaller bill than a photo studio day. You are not hiring a studio set, a stylist, or a model for every color. A job is one time the tool makes a file. They are not a cash price. One image is 24 credits, and that cost shows before the job starts. Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300. Premium is $63 a month for 600.",
         "No waiting on a studio booking. You get a usable listing image from a photo you took today. You still compare it with the real item before you publish.",
         "Use this when your product list is long. Make several pictures from one photo. Each image is its own job and costs 24 credits. If a job fails, the credits come back. A developer can start those jobs through the API, a connection from your shop system.",
         "No model hire, unless you want a person. Skip props you do not own. If you do want someone holding the item, pick a generated presenter and do not call them a customer. The [actor library](page:ai-actors) is a list of generated people, for when the picture needs a person.",
@@ -41,7 +41,7 @@
       "alt": "Plain gray running shoe centered with its full shape and edges in focus."
     },
     {
-      "h2": "How to make the product photo in 3 steps",
+      "h2": "How to Make the Product Photo in 3 Steps",
       "paras": [
         "The three steps are: get the phone photo right, choose the look, then check the result against the real item.",
         "Step 1. Describe the picture you want, or upload the photo you took. Use the regular camera and keep the whole product sharp.",
@@ -77,7 +77,7 @@
       "alt": "Adult cleans a plain gray running shoe beside an indirect daylight window."
     },
     {
-      "h2": "Examples of the photos you can make",
+      "h2": "Examples of the Photos You Can Make",
       "paras": [
         "Same item, different rooms. None of these should add a detail that was not in your photo.",
         "A sunscreen tube on a bright outdoor table, label forward, with the shade left alone.",
@@ -97,7 +97,7 @@
       "alt": "Adult hands rotate a plain gray running shoe through several source-photo angles."
     },
     {
-      "h2": "How shops use these photos",
+      "h2": "How Shops Use These Photos",
       "paras": [
         "These are examples of how a shop would use it, not quotes from a customer.",
         "Example. A skincare shop puts the bottle in a bright bathroom and in a gym bag, then checks the label against the real bottle.",
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "h2": "The short version",
+      "h2": "The Short Version",
       "paras": [
         "Photograph at product height, in window light, with filters off and the label readable. Then pick a place and compare the new image with the real item.",
         "Each image is 24 credits, shown before the job starts. If a job fails, the credits come back. Downloads have no watermark stamped on the file. There is no free plan."
@@ -160,7 +160,7 @@
       "a": "Yes. Downloaded photos are yours to use in listings and ads. They have no watermark stamped on them. You still need permission to use the product photo you uploaded. Leave other brands' logos and famous people out of the photo."
     }
   ],
-  "cta_title": "One product, more than one photo",
+  "cta_title": "One Product, More Than One Photo",
   "cta_lead": "Start with a clear phone photo, try a new place, and compare the result with the real item before you list it.",
   "relatedLinks": [
     "product-videos",

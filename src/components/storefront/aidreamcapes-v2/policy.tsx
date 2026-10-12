@@ -102,7 +102,7 @@ export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r, 
             {POLICY_LINKS.filter(([, href]) => href !== pagePath).map(([label, href]) => (
               <a href={r.href(href)} key={href}>{label}</a>
             ))}
-            <a href={r.href("/contact-us")}>Contact support</a>
+            <a href={r.href("/contact-us")}>Contact Support</a>
           </div>
         </div>
       </section>

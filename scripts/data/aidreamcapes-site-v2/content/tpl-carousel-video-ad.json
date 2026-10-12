@@ -156,7 +156,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -196,7 +196,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -552,7 +552,7 @@
       }
     }
   },
-  "cta_title": "Post the clip where people scroll",
+  "cta_title": "Post the Clip Where People Scroll",
   "cta_lead": "Upload one product photo, add a voice if you want one, and see the credit cost before you start. A credit is a unit your plan spends.",
   "blockOrder": [
     "hero",
@@ -585,7 +585,7 @@
         "example": true,
         "who": "Drinkware shop",
         "t": "After the run",
-        "d": "A drinkware shop has an AI presenter raise the bottle after a park run.",
+        "d": "A drinkware shop has an AI actor raise the bottle after a park run.",
         "img": "n:guide:fx19-carousel-benefit-versions-03"
       },
       {
@@ -639,7 +639,7 @@
       }
     ]
   },
-  "related_h2": "Pages for a one-product video",
+  "related_h2": "Pages for a One-Product Video",
   "related_lead": "Video ads, fashion scenes, and Instagram posts for one product shown in order.",
   "relatedLinks": [
     "video-ads",
@@ -656,27 +656,27 @@
       "lead": "The clip still follows one product. These are the pieces you can add before you download.",
       "items": [
         {
-          "t": "AI voiceover",
+          "t": "AI Voiceover",
           "d": "Add a spoken line about the one product in the clip. You approve the words, and the voice is not a customer recording."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
         },
         {
-          "t": "On-screen people you can pick",
+          "t": "On-Screen People You Can Pick",
           "d": "Pick a generated person from the presenter list, called the actor library, to hold or show the product. That person is not a real buyer."
         },
         {
-          "t": "A product link or the API",
+          "t": "A Product Link or the API",
           "d": "Paste a product page link to write a first scene and script. Or send the photo through the API, which is how your own shop software starts it. You still check the file."
         },
         {
-          "t": "Built-in editor and another language",
+          "t": "Built-In Editor and Another Language",
           "d": "Change the script, the voice, and the words on screen in one editor. You can also use a voice in another language. The download has no watermark."
         },
         {
-          "t": "More versions, then publish",
+          "t": "More Versions, Then Publish",
           "d": "Make another version for a second audience from the same photo. Publish the file on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]

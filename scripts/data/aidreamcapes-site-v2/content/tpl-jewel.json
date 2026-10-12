@@ -75,7 +75,7 @@
     },
     {
       "q": "What does a jewelry photo cost?",
-      "a": "Credits are the points your plan spends. Each photo costs 24 credits. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark (no logo stamped on the file), and you can use it in your ads, pages, and posts."
+      "a": "Each photo costs 24 credits. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark, and you can use it in your ads, pages, and posts."
     },
     {
       "q": "Can I try the API on one piece first?",
@@ -556,7 +556,7 @@
         "h2": "Add jewelry details after download"
       },
       "faq": {
-        "h2": "Questions about AI jewelry model photos"
+        "h2": "Questions About AI Jewelry Model Photos"
       }
     }
   },
@@ -577,27 +577,27 @@
   "relatedLinks": [
     {
       "id": "model-photos",
-      "label": "Clothing photos on a person"
+      "label": "Clothing Photos on a Person"
     },
     {
       "id": "tpl-detail",
-      "label": "product detail photos"
+      "label": "Product Detail Photos"
     },
     {
       "id": "tpl-size",
-      "label": "product size reference photo"
+      "label": "Product Size Reference Photo"
     },
     {
       "id": "ind-jewelry-accessories",
-      "label": "AI photos for jewelry and accessories"
+      "label": "AI Photos for Jewelry and Accessories"
     },
     {
       "id": "plat-instagram",
-      "label": "AI Instagram ads"
+      "label": "AI Instagram Ads"
     },
     {
       "id": "plat-shopify",
-      "label": "Shopify product photos"
+      "label": "Shopify Product Photos"
     }
   ],
   "cta_title": "Show the Piece Worn",
@@ -629,34 +629,34 @@
       "lead": "The API lets your own software run the edit. Try one piece, and read the credit cost before you continue.",
       "items": [
         {
-          "t": "Upload the piece",
+          "t": "Upload the Piece",
           "d": "Send one sharp photo of the full item, with the clasp and the stones inside the photo."
         },
         {
-          "t": "Run one edit",
+          "t": "Run One Edit",
           "d": "Try removing the background, adding a shadow, or showing the piece worn. Then look at the result beside the original."
         },
         {
-          "t": "Read the cost first",
-          "d": "A photo spends 24 credits. If it fails, those credits come back. The download has no watermark (no logo stamped on the file)."
+          "t": "Read the Cost First",
+          "d": "A photo spends 24 credits. If it fails, those credits come back. The download has no watermark."
         }
       ]
     }
   ],
   "trust": {
     "h2": "What a Jewelry Shop Gets From One Photo",
-    "lead": "You do less editing by hand, the photos match, and you skip a new shoot. Credits are the points a paid plan spends on each photo.",
+    "lead": "You do less editing by hand, the photos match, and you skip a new shoot.",
     "items": [
       {
-        "t": "Less time on each piece",
+        "t": "Less Time on Each Piece",
         "d": "Background removal, shadows, and framing start from the photo you already have, so the team spends less time on each piece."
       },
       {
-        "t": "One look everywhere you post",
+        "t": "One Look Everywhere You Post",
         "d": "The same background and framing can go on the product page and the social feed, so the photos match."
       },
       {
-        "t": "You decide what matches",
+        "t": "You Decide What Matches",
         "d": "Compare the metal, stone, and clasp with the original photo, and keep only the photos that still match."
       }
     ]
@@ -666,17 +666,17 @@
     "lead": "One piece photo can remove the background, keep the real shine, and match the rest of the set.",
     "items": [
       {
-        "t": "Clean edges on metal",
+        "t": "Clean Edges on Metal",
         "d": "Lift a chain, a hoop, or a shiny band off the table. Check the edge against the original photo before you publish.",
         "icon": "Gem"
       },
       {
-        "t": "Color and shine kept",
+        "t": "Color and Shine Kept",
         "d": "Gold, stones, and texture should still match the piece you uploaded, on a table or on a generated person.",
         "icon": "Sparkles"
       },
       {
-        "t": "One look across the set",
+        "t": "One Look Across the Set",
         "d": "Use the same background, shadow, and framing on the pieces you upload. Many at once is a batch, and the API lets your own software run it.",
         "icon": "Layers"
       }
@@ -684,27 +684,27 @@
   },
   "benefits": [
     {
-      "t": "Remove the background and the props",
+      "t": "Remove the Background and the Props",
       "d": "Clear the table, pins, and markers. Leave the piece itself, and compare the edge with the original photo."
     },
     {
-      "t": "Shadows and lighting",
+      "t": "Shadows and Lighting",
       "d": "Add a soft shadow and a light that keeps gold and stones easy to see."
     },
     {
-      "t": "Leave the piece intact",
+      "t": "Leave the Piece Intact",
       "d": "Edit the background and the light. Compare the stone, the mount, and the clasp at full size."
     },
     {
-      "t": "Center every size",
+      "t": "Center Every Size",
       "d": "Line up rings, earrings, and chains so each size sits in the same place on the listing."
     },
     {
-      "t": "Show it on a generated person",
+      "t": "Show It on a Generated Person",
       "d": "Place the piece on a neck, a hand, or a wrist so the size is easier to judge."
     },
     {
-      "t": "Many at once, and API",
+      "t": "Many at Once, and API",
       "d": "Run the same edits on many pieces, or connect your own software (the API) when the catalog is large."
     }
   ],

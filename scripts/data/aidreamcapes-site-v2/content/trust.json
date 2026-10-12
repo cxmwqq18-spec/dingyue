@@ -15,7 +15,7 @@
   ],
   "sections": [
     {
-      "h2": "What AIVideosUGC is for",
+      "h2": "What AIVideosUGC Is For",
       "paras": [
         "Online stores use AIVideosUGC to turn their own product photos into short video ads and images for a store page. A clip can include a script, a spoken voice, captions, and a music track. A person shown with the product is made by the tool, not a real customer. Make ads for products you sell or are allowed to promote. Use them on your store, on a marketplace, or on social media."
       ],
@@ -23,7 +23,7 @@
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
     },
     {
-      "h2": "AI content rules: what we refuse",
+      "h2": "AI Content Rules: What We Refuse",
       "paras": [
         "We can refuse a request that uses a celebrity or another well-known person. We can also refuse logos and trademarks you do not own. A trademark is a brand name or a logo. You cannot pretend to be a real person. You cannot trick buyers. Do not make sexual content about any person. Content aimed at anyone under 18 is not allowed. Content that encourages harm is not allowed."
       ],
@@ -31,7 +31,7 @@
       "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop."
     },
     {
-      "h2": "Photos you can upload, and who sees them",
+      "h2": "Photos You Can Upload, and Who Sees Them",
       "paras": [
         "Only upload photos you own or are allowed to use. Private uploads and the files made from them stay in your account. They are not shown to other customers. Compare every result with your real product before you publish it."
       ],
@@ -39,7 +39,7 @@
       "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock."
     },
     {
-      "h2": "Follow the rules for ads made with AI",
+      "h2": "Follow the Rules for Ads Made With AI",
       "paras": [
         "Show what your product really does. Add prices, dates, and what the product does yourself, so those words stay exact. Do that in your design tool or your ad tool. Follow the rules where you post. That includes a label that says the ad was made with AI. Use the [AI content checklist](page:blog-ai-video-review-checklist) before you post."
       ],
@@ -47,7 +47,7 @@
       "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop."
     },
     {
-      "h2": "Report a problem",
+      "h2": "Report a Problem",
       "paras": [
         "If you see content made with AIVideosUGC that breaks these rules, email support@aivideosugc.com with what you saw. If you think it uses something of yours without permission, email the same address."
       ],
@@ -55,7 +55,7 @@
       "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop."
     },
     {
-      "h2": "Checks for scripts, voices, and posting",
+      "h2": "Checks for Scripts, Voices, and Posting",
       "paras": [
         "You can start from a product link, make several versions, or start through the API. The API is a connection that lets your own shop system start the work. You still need permission to use that page, the photos, and any voice you add. The presenter is made by the tool, not a real customer, and the voice is made by the tool too. Read the captions. Compare the item with the real product. Follow the rules for TikTok or Meta before you send the file. Meta is Facebook and Instagram."
       ]
@@ -103,9 +103,9 @@
       "a": "No. A post to TikTok or Meta does not check your words for you. Meta is Facebook and Instagram. Read the captions, check the price, and follow that place's rules for ads made with AI."
     }
   ],
-  "ctaTitle": "Start with your own product photo",
+  "ctaTitle": "Start With Your Own Product Photo",
   "ctaLead": "Upload a photo you are allowed to use, then compare every result with the real item before you publish it.",
-  "cta_title": "Start with your own product photo",
+  "cta_title": "Start With Your Own Product Photo",
   "cta_lead": "Upload a photo you are allowed to use, then compare every result with the real item before you publish it.",
   "relatedLinks": [
     "contact",

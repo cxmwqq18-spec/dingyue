@@ -78,7 +78,7 @@
     "steps": {
       "source": "n:gen2:rb1-industries-steps-source-r1",
       "sourceAlt": "Soft sage insulated lunch bag standing on a bright kitchen counter.",
-      "sourceTitle": "Your starting product",
+      "sourceTitle": "Your Starting Product",
       "sourceHint": "Keep the full bag, handle, and zipper visible.",
       "result": "n:gen2:rb1-industries-steps-result-r1",
       "mode": "video",
@@ -104,10 +104,10 @@
     "outputs": [],
     "titles": {
       "m2": {
-        "h2": "How to make a product photo or video in 3 steps"
+        "h2": "How to Make a Product Photo or Video in 3 Steps"
       },
       "m3": {
-        "h2": "Ideas for what you sell",
+        "h2": "Ideas for What You Sell",
         "lead": "Open a category, then make a photo or a video from one photo of the item."
       }
     },
@@ -151,7 +151,7 @@
     },
     "overview": "Pick the category. Then make a photo or a video from one photo, with a spoken line, an actor, and captions if you want them."
   },
-  "steps_h2": "How to make a product photo or video in 3 steps",
+  "steps_h2": "How to Make a Product Photo or Video in 3 Steps",
   "steps_lead": "Open your category, add a photo or a link, and download a file you can post.",
   "steps": [
     {
@@ -186,35 +186,35 @@
   ],
   "trust": {
     "h2": "Built for Shops That Need the Next Ad",
-    "lead": "Six kinds of sellers. Open the category for the product you have. You see the credit cost before it starts. Credits are the points each file spends.",
+    "lead": "Six kinds of sellers. Open the category for the product you have. You see the credit cost before it starts.",
     "items": [
       {
-        "t": "An online store",
+        "t": "An Online Store",
         "d": "Show one product with a square photo or a short video. Add an AI actor and a spoken line when motion helps the shopper decide."
       },
       {
-        "t": "A seller testing new items",
+        "t": "A Seller Testing New Items",
         "d": "Make a short video for the listing before you decide to keep that product. Run the same photo again with another scene."
       },
       {
-        "t": "A small shop",
+        "t": "A Small Shop",
         "d": "Explain the item with a person on screen when you have the photo and no studio. You download the file or publish it yourself."
       },
       {
-        "t": "Marketers and agencies",
+        "t": "Marketers and Agencies",
         "d": "Make several versions of one product for the apps a client already uses. Each one shows its own credit cost."
       },
       {
-        "t": "People who post often",
-        "d": "Pick an AI actor and keep a similar person across posts in this category. The person is made by AI, not a real customer."
+        "t": "People Who Post Often",
+        "d": "Pick an AI actor and keep a similar person across posts in this category."
       },
       {
-        "t": "Apps and software",
+        "t": "Apps and Software",
         "d": "Show one action of the product, with a spoken line and captions. The video does not replace the real screen of your app."
       }
     ]
   },
-  "related_h2": "Make your ad, or browse another way",
+  "related_h2": "Make Your Ad, or Browse Another Way",
   "related_lead": "Start from a link, an actor, or a template, or open the pages for each app.",
   "relatedLinks": [
     "url-to-video",
@@ -231,32 +231,32 @@
     "lead": "The same category page can start a photo or a full video.",
     "items": [
       {
-        "t": "An AI actor",
-        "d": "Pick a person to show the product. That person is made by AI, not a real customer. The picture does not replace a size chart.",
+        "t": "An AI Actor",
+        "d": "Pick a person to show the product. The picture does not replace a size chart.",
         "icon": "UserRound"
       },
       {
-        "t": "A video from the photo",
+        "t": "A Video From the Photo",
         "d": "Turn the product photo into a short video. Shapes: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4. Lengths: 6, 10, 15, or 30 seconds.",
         "icon": "Film"
       },
       {
-        "t": "The language you write",
+        "t": "The Language You Write",
         "d": "The actor speaks the language of the line you type. You do not pay extra for another language.",
         "icon": "Languages"
       },
       {
-        "t": "Tone in the line",
+        "t": "Tone in the Line",
         "d": "Type the mood you want. The actor says your line in that mood. Edit the sentence before you publish.",
         "icon": "Mic"
       },
       {
-        "t": "A built-in editor",
+        "t": "A Built-In Editor",
         "d": "Change the words, the captions, the voice, or the person on screen, without another app.",
         "icon": "Scissors"
       },
       {
-        "t": "Captions on the file",
+        "t": "Captions on the File",
         "d": "Captions come with the video. Change the words so any price matches the price in your store now.",
         "icon": "Captions"
       }
@@ -265,27 +265,27 @@
   "benefits_h2": "What You Can Count On Before You Post",
   "benefits": [
     {
-      "t": "An actor library",
+      "t": "An Actor Library",
       "d": "Browse actors for this category and pick one. The face is made by AI."
     },
     {
-      "t": "A line in your language",
+      "t": "A Line in Your Language",
       "d": "Write the spoken line in the language you want heard."
     },
     {
-      "t": "Help with one file",
+      "t": "Help With One File",
       "d": "Email support about one file and we can look that file up."
     },
     {
-      "t": "A shape for the app",
+      "t": "A Shape for the App",
       "d": "Photos are square. A video can be 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4."
     },
     {
-      "t": "Publish or download",
+      "t": "Publish or Download",
       "d": "Send the file to TikTok or Meta (Facebook and Instagram) in one click, or save it and upload it yourself."
     },
     {
-      "t": "Your brand on the file",
+      "t": "Your Brand on the File",
       "d": "Add a logo, colors, and the tone of the line in the editor."
     }
   ],
@@ -296,27 +296,27 @@
       "lead": "Six starts. Each one uses the product you actually sell.",
       "items": [
         {
-          "t": "A photo or a short note",
+          "t": "A Photo or a Short Note",
           "d": "A photo of your product, or a short note about it, becomes a picture or a video."
         },
         {
-          "t": "Words written for you",
+          "t": "Words Written for You",
           "d": "Describe the product and the buyer. The tool writes the spoken line, and you can edit every sentence."
         },
         {
-          "t": "A style you can use",
+          "t": "A Style You Can Use",
           "d": "Describe a look you are allowed to use, then put your product in that look."
         },
         {
-          "t": "A product link",
+          "t": "A Product Link",
           "d": "Paste a public product page. The main image and the name start the video. Open [URL to video](page:url-to-video)."
         },
         {
-          "t": "An actor library",
+          "t": "An Actor Library",
           "d": "Browse actors and pick one for this item. Open [AI actors](page:ai-actors)."
         },
         {
-          "t": "A person you keep using",
+          "t": "A Person You Keep Using",
           "d": "Describe the person you want to keep using for this category."
         }
       ]
@@ -324,30 +324,30 @@
     {
       "eyebrow": "Compared with a shoot",
       "h2": "AIVideosUGC vs Booking a Shoot",
-      "lead": "Credits are the points you see before you start. Booking a camera shoot is separate from those credits.",
+      "lead": "Booking a camera shoot is separate from those credits.",
       "items": [
         {
-          "t": "How you start",
+          "t": "How You Start",
           "d": "Upload a photo or paste a link, instead of booking a person and a place to film."
         },
         {
-          "t": "What you confirm first",
+          "t": "What You Confirm First",
           "d": "You see the credit cost before it starts. If it fails, those credits come back."
         },
         {
-          "t": "What a file costs",
+          "t": "What a File Costs",
           "d": "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
         },
         {
-          "t": "Another version",
+          "t": "Another Version",
           "d": "Run the same photo again for a new scene, a new actor, or a new first line."
         },
         {
-          "t": "Who says the line",
+          "t": "Who Says the Line",
           "d": "You write it. An AI actor is not a quote from a customer."
         },
         {
-          "t": "Two first lines",
+          "t": "Two First Lines",
           "d": "Make a second version and compare the files in your ad account."
         }
       ]

@@ -56,7 +56,7 @@
     },
     {
       "q": "Who is this scene for?",
-      "a": "Skincare sellers, beauty teams, agencies, and founders. Any person on screen is an AI performer, not a customer who reviewed the product."
+      "a": "Skincare sellers, beauty teams, agencies, and founders. Any person on screen is an AI actor, not a customer who reviewed the product."
     },
     {
       "q": "Can I do this on the first try?",
@@ -100,7 +100,7 @@
     "steps": {
       "source": "n:guide:rc5-tpl-beauty-source-r1",
       "sourceAlt": "Matte ivory cleanser pump bottle with a pale sage pump on a clean white background.",
-      "sourceTitle": "Your product",
+      "sourceTitle": "Your Product",
       "sourceHint": "Keep the full bottle and pump head visible.",
       "result": "n:guide:rc5-tpl-beauty-result-r1",
       "resultAlt": "Matte ivory cleanser pump pressed beside a bright sink with white foam on fingertips.",
@@ -152,7 +152,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -192,7 +192,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -551,27 +551,27 @@
   "relatedLinks": [
     {
       "id": "video-ads",
-      "label": "AI creator-style video ads"
+      "label": "AI Creator-Style Video Ads"
     },
     {
       "id": "tpl-box",
-      "label": "product bundle photos"
+      "label": "Product Bundle Photos"
     },
     {
       "id": "tpl-light",
-      "label": "product photo lighting"
+      "label": "Product Photo Lighting"
     },
     {
       "id": "tpl-story",
-      "label": "Instagram story ad images"
+      "label": "Instagram Story Ad Images"
     },
     {
       "id": "plat-tiktok",
-      "label": "AI TikTok ads generator"
+      "label": "AI TikTok Ads Generator"
     },
     {
       "id": "ind-beauty-skincare",
-      "label": "AI product videos and photos for beauty brands"
+      "label": "AI Product Videos and Photos for Beauty Brands"
     }
   ],
   "blockOrder": [
@@ -584,7 +584,7 @@
   ],
   "reviews": {
     "h2": "How Beauty Shops Use a Routine Video",
-    "lead": "Each card is one way a beauty shop turns one product photo into a routine ad. People on screen are AI performers.",
+    "lead": "Each card is one way a beauty shop turns one product photo into a routine ad. People on screen are AI actors.",
     "items": [
       {
         "example": true,
@@ -625,8 +625,8 @@
       {
         "example": true,
         "who": "Agency",
-        "t": "An AI presenter",
-        "d": "An agency builds an AI presenter for a client's serum and keeps that person as the brand's ad, not a customer."
+        "t": "An AI actor",
+        "d": "An agency builds an AI actor for a client's serum and keeps that person as the brand's ad, not a customer."
       },
       {
         "example": true,
@@ -644,7 +644,7 @@
         "example": true,
         "who": "First-time seller",
         "t": "Chat for the routine",
-        "d": "A first-time seller describes the routine in chat. The chat helper sends back a script, pictures, and a video to review."
+        "d": "A first-time seller describes the routine in chat. The video agent sends back a script, pictures, and a video to review."
       }
     ]
   },

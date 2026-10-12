@@ -51,15 +51,15 @@
   "cta_lead": "Choose Reels, Stories, or the profile posts first, then make a photo or clip that fits.",
   "steps": [
     {
-      "t": "Add a product link",
+      "t": "Add a Product Link",
       "d": "Paste the product page. We bring in the pictures and the description, or you upload a photo."
     },
     {
-      "t": "Choose an actor",
+      "t": "Choose an Actor",
       "d": "Pick someone from the actor library, or make a presenter that looks like you. A voice can match the language you sell in."
     },
     {
-      "t": "Download and publish",
+      "t": "Download and Publish",
       "d": "Publish to Instagram or download with no watermark. Captions, a spoken voice, and music can already be on the file."
     }
   ],
@@ -93,64 +93,64 @@
       ],
       "items": [
         {
-          "t": "Add a product link",
+          "t": "Add a Product Link",
           "d": "Paste the product page. We bring in the pictures and the description, or you upload a photo."
         },
         {
-          "t": "Choose an actor",
+          "t": "Choose an Actor",
           "d": "Pick someone from the actor library, or make a presenter that looks like you. A voice can match the language you sell in."
         },
         {
-          "t": "Download and publish",
+          "t": "Download and Publish",
           "d": "Publish to Instagram or download with no watermark. Captions, a spoken voice, and music can already be on the file."
         }
       ]
     },
     "titles": {
       "faq": {
-        "h2": "Questions before you post an Instagram ad"
+        "h2": "Questions Before You Post an Instagram Ad"
       }
     }
   },
-  "benefits_h2": "Why AIVideosUGC for Instagram ads",
+  "benefits_h2": "Why AIVideosUGC for Instagram Ads",
   "benefits": [
     {
-      "t": "A shorter path to the next Reel",
+      "t": "A Shorter Path to the Next Reel",
       "d": "Start from a product link or a photo like this. No photo shoot to schedule, and you can make many openings at once.",
       "img": "n:guide:fx40-plat-instagram-benefit-time",
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
-      "t": "Credits, not a photo shoot",
+      "t": "Credits, Not a Photo Shoot",
       "d": "A photo is 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the number before the job runs.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
-      "t": "More than one opening",
+      "t": "More Than One Opening",
       "d": "Change the actor, how the items sit together, or how the photo is trimmed, and run it again. The product still comes from your link or upload.",
       "img": "n:guide:fx40-plat-instagram-benefit-variations",
       "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
-  "steps_h2": "Make Instagram ads with AI in 3 steps",
+  "steps_h2": "Make Instagram Ads With AI in 3 Steps",
   "steps_lead": "Paste a link, pick an actor, then publish or download.",
   "more_sections": [
     {
       "eyebrow": "In one place",
-      "h2": "A video ad maker for Instagram",
+      "h2": "A Video Ad Maker for Instagram",
       "lead": "A product link, a talking presenter, and the editor are in one place.",
       "items": [
         {
-          "t": "Turn a link into a video",
+          "t": "Turn a Link Into a Video",
           "d": "Paste a product page and get a clip. You can also start from a photo if you do not have a link."
         },
         {
-          "t": "An actor holding the product",
+          "t": "An Actor Holding the Product",
           "d": "A person made by AI can hold the item and explain it. They are not a creator you hired."
         },
         {
-          "t": "Edit script, voice and music",
+          "t": "Edit Script, Voice and Music",
           "d": "Change the script, the voice, the captions, the actor and the music, then publish to Instagram or download."
         }
       ]
@@ -168,63 +168,63 @@
   ],
   "benefits_lead": "Make the next Reel from a link or a photo, then test another actor or line.",
   "reasons": {
-    "h2": "Why customer-style videos help Instagram ads",
+    "h2": "Why Customer-Style Videos Help Instagram Ads",
     "lead": "A spoken voice, a template, and no creator to book.",
     "items": [
       {
-        "t": "No wait for a creator",
+        "t": "No Wait for a Creator",
         "d": "The next Story or Reel starts when you paste a link. You do not wait on a booking.",
         "icon": "Clock"
       },
       {
-        "t": "Spoken voices",
+        "t": "Spoken Voices",
         "d": "Add a natural spoken voice in the language you sell in. You do not book a new recording for each language.",
         "icon": "Mic"
       },
       {
-        "t": "Instagram templates",
+        "t": "Instagram Templates",
         "d": "Start from a Reel, Story, or post template, then make many versions when you need more than one.",
         "icon": "LayoutGrid"
       }
     ]
   },
   "platforms": {
-    "h2": "Create ads for your other sites",
+    "h2": "Create Ads for Your Other Sites",
     "lead": "Instagram is one place to post. The same link can start a file for the other ad sites too.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
         "d": "A tall phone-shaped ad for short video, started from the same upload.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
         "d": "A square photo for the home screen, or a tall clip that fills the phone.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "A tall clip for a short video. A wide video that plays inside a YouTube video is a separate job.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
-        "label": "Amazon product photos",
+        "t": "Amazon Product Photos",
+        "label": "Amazon Product Photos",
         "d": "A plain main image, a detail, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
-        "label": "Shopify product photos",
+        "t": "Shopify Product Photos",
+        "label": "Shopify Product Photos",
         "d": "Square product photos, collection photos, and a clip you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
         "d": "Open the full list and pick where the next file goes.",
         "href": "/platforms"
       }
@@ -296,7 +296,7 @@
       }
     ]
   },
-  "related_h2": "Related tools for an Instagram ad",
+  "related_h2": "Related Tools for an Instagram Ad",
   "related_lead": "Open the tool or template that matches where the ad will show.",
   "relatedLinks": [
     "video-ads",

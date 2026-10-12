@@ -71,7 +71,7 @@
     },
     {
       "q": "What does a creator-style photo cost, and can it run as an ad?",
-      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts. You are still responsible for the claims in the ad and for any note the ad must show."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts. You are still responsible for the claims in the ad and for any note the ad must show."
     },
     {
       "q": "When should I make a video instead?",
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -546,34 +546,34 @@
         "lead": "Each card is a tall 9:16 video ad, not a square creator-style photo. Use the upload above for the photo, and write the caption after you download."
       },
       "faq": {
-        "h2": "Questions about UGC style product photos"
+        "h2": "Questions About UGC Style Product Photos"
       }
     }
   },
   "relatedLinks": [
     {
       "id": "url-to-video",
-      "label": "Product link to video"
+      "label": "Product Link to Video"
     },
     {
       "id": "spokesperson-videos",
-      "label": "AI presenter ads"
+      "label": "AI Actor Ads"
     },
     {
       "id": "video-ads",
-      "label": "Creator-style video ads"
+      "label": "Creator-Style Video Ads"
     },
     {
       "id": "product-videos",
-      "label": "Product videos"
+      "label": "Product Videos"
     },
     {
       "id": "plat-tiktok",
-      "label": "AI TikTok ads generator"
+      "label": "AI TikTok Ads Generator"
     },
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     }
   ],
   "reviews": {
@@ -608,13 +608,13 @@
         "example": true,
         "who": "Agency",
         "t": "Several scenes, one product photo",
-        "d": "The agency tests a routine, an unboxing, and a demo from the same upload. Each run shows its credit cost first. Credits are the points that pay for that run."
+        "d": "The agency tests a routine, an unboxing, and a demo from the same upload. Each run shows its credit cost first."
       },
       {
         "example": true,
         "who": "Small brand",
         "t": "No sample shipment",
-        "d": "They skip sending a sample to a creator for this photo. The person in frame is generated, not a customer and not an influencer they hired."
+        "d": "They skip sending a sample to a creator for this photo."
       },
       {
         "example": true,
@@ -631,7 +631,7 @@
     ]
   },
   "related_h2": "Explore More Tools",
-  "related_lead": "A product link, an AI presenter, creator-style video ads, a product video, TikTok ads, and the ad image tool.",
+  "related_lead": "A product link, an AI actor, creator-style video ads, a product video, TikTok ads, and the ad image tool.",
   "cta_title": "Ready to Create Your First UGC Style Photo?",
   "cta_lead": "Upload one product photo and pick a scene. The credit cost is on screen before the job starts.",
   "blockOrder": [
@@ -647,12 +647,12 @@
   "more_sections": [
     {
       "eyebrow": "Full control",
-      "h2": "What you can add",
+      "h2": "What You Can Add",
       "lead": "The photo on this page is the creator-style photo. Voice, captions, music, and a publish step sit with it.",
       "items": [
         {
-          "t": "A generated presenter",
-          "d": "Pick a generated presenter that fits the product. The person is not a hired creator and not a customer."
+          "t": "A Generated Presenter",
+          "d": "Pick a generated presenter that fits the product."
         },
         {
           "t": "More Than One Language",
@@ -663,7 +663,7 @@
           "d": "Add background music from the library, or make a short track that plays under this ad."
         },
         {
-          "t": "Built-in Editor",
+          "t": "Built-In Editor",
           "d": "Trim and tidy the clip in the editor on this site before you download it."
         },
         {
@@ -680,7 +680,7 @@
   "definition": {
     "title": "AI Ethics and Safety Standards",
     "paras": [
-      "Anyone on screen is generated for the ad. They are not a creator you hired, and they are not a customer.",
+      "Anyone on screen is generated for the ad.",
       "You still choose the claim, and any note the ad must show. Uploads stay in your account. The details are on [AI content trust and safety](page:trust)."
     ]
   }

@@ -11,60 +11,60 @@
     "ecommerce product photo AI",
     "AI product photo templates"
   ],
-  "benefits_h2": "Benefits of an AI product image generator",
+  "benefits_h2": "Benefits of an AI Product Image Generator",
   "benefits": [
     {
       "icon": "coins",
-      "t": "See the cost before you make the photo",
-      "d": "Each product photo uses 24 credits, the units your plan spends. You see that number before you start. If the photo fails, those credits come back."
+      "t": "See the Cost Before You Make the Photo",
+      "d": "Each product photo uses 24 credits. You see that number before you start. If the photo fails, those credits come back."
     },
     {
       "icon": "clock",
-      "t": "Skip the shoot date",
+      "t": "Skip the Shoot Date",
       "d": "Move from a plain product photo to a room scene or a square ad without booking a photographer."
     },
     {
       "icon": "layers",
-      "t": "Make a batch of product photos",
+      "t": "Make a Batch of Product Photos",
       "d": "Make a listing, a room scene, and a square ad from one upload. Each photo is its own file and uses 24 credits."
     },
     {
       "icon": "users",
-      "t": "Skip models and extra props",
-      "d": "Describe the scene instead of arranging a set and props. If a person appears, that person is generated, not a booked model."
+      "t": "Skip Models and Extra Props",
+      "d": "Describe the scene instead of arranging a set and props. Any person in the scene is generated, so you do not book a model."
     },
     {
       "icon": "refresh",
-      "t": "Make another photo when the listing changes",
+      "t": "Make Another Photo When the Listing Changes",
       "d": "Make a new scene when the product, a sale offer, or the season changes. You do not wait on a studio calendar."
     },
     {
       "icon": "target",
-      "t": "Compare two scenes before you post",
+      "t": "Compare Two Scenes Before You Post",
       "d": "Make a second background, then choose the file for the product page or the ad."
     }
   ],
-  "steps_h2": "Steps to make an AI product image",
+  "steps_h2": "Steps to Make an AI Product Image",
   "steps_lead": "Describe or upload the product, choose a style, then download the photo or make a video.",
   "steps": [
     {
-      "t": "Describe or upload your product",
+      "t": "Describe or Upload Your Product",
       "d": "Type the scene you want, or upload a photo with the whole item visible on a simple background."
     },
     {
-      "t": "Choose a photo style",
-      "d": "Pick a listing, a lifestyle scene (a photo in a room), or the item on a person. Choose that before you start."
+      "t": "Choose a Photo Style",
+      "d": "Pick a listing photo, a lifestyle scene, or the item on a model."
     },
     {
-      "t": "Check the photo, then use it",
-      "d": "Review the file, ask for another version, or turn the photo into a product video. Downloads have no stamped logo."
+      "t": "Check the Photo, Then Use It",
+      "d": "Review the file, ask for another version, or turn the photo into a product video. Downloads have no watermark."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "Square (1:1, equal sides)"
+        "Square (1:1)"
       ],
       [
         "Start with",
@@ -88,7 +88,7 @@
     },
     {
       "q": "Is there a free AI product photo generator plan?",
-      "a": "No. There is no free plan. Each image uses 24 credits, the units your plan spends. Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "No. There is no free plan. Each image uses 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are the photos usable on a product page?",
@@ -100,23 +100,23 @@
     },
     {
       "q": "Do these photos replace a studio shoot?",
-      "a": "They take the place of the studio booking for a new scene. You still compare the file with the product you ship. Add prices in your own editor after download."
+      "a": "They replace the studio booking for a new scene. You still compare the file with the product you ship. Add prices in your own editor after download."
     },
     {
       "q": "Can I use the downloads on my store?",
-      "a": "Downloads have no stamped logo. You can use them on your store and in ads, under our terms. You still need the rights to the photo you upload. The notes in [AI product photography](page:blog-ai-product-photography-guide) explain that check."
+      "a": "Downloads have no watermark. You can use them on your store and in ads, under our terms. You still need the rights to the photo you upload. Our [AI product photography guide](page:blog-ai-product-photography-guide) explains that check."
     },
     {
       "q": "Can I add a price or a logo on the photo?",
-      "a": "Add prices, sale offers, and logo text in your editor after download. Words the tool writes on the photo can be wrong. [Shopify product photos](page:plat-shopify) shows one place those files can go."
+      "a": "Add prices, sale offers, and logo text in your editor after download. Words the tool writes on the photo can be wrong. See [Shopify product photos](page:plat-shopify) for where those files go."
     },
     {
       "q": "Where are the AI product photo templates?",
-      "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes (photos set in a room), and ad layouts. Then upload your product photo here and describe the scene."
+      "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your product photo here and describe the scene."
     },
     {
-      "q": "Can I make a batch, or connect my store software (an API)?",
-      "a": "Yes. A batch makes several scenes from the photos you upload. An API is a connection that lets your store software send the photos. Each photo still uses 24 credits, shown before you start."
+      "q": "Can I make photos in bulk or connect my store through an API?",
+      "a": "Yes. Upload several photos to make scenes in one batch, or send photos from your store software through the API. Each photo still uses 24 credits, shown before you start."
     },
     {
       "q": "Can I turn the photo into a video with a voiceover?",
@@ -124,7 +124,7 @@
     }
   ],
   "examples": {
-    "h2": "Examples of AI product photos",
+    "h2": "Examples of AI Product Photos",
     "lead": "More beach, desert, studio, and room scenes. Upload your product photo and describe the setting you want.",
     "groups": [
       {
@@ -138,7 +138,7 @@
           },
           {
             "ref": "n:guide:k3-social-picker-sandals",
-            "title": "Coastal: summer sandals on sand",
+            "title": "Coastal: Summer Sandals on Sand",
             "kind": "photo",
             "product": "summer sandals"
           }
@@ -155,7 +155,7 @@
           },
           {
             "ref": "n:guide:mx1w-photo-hub-desert-2-r1",
-            "title": "Desert: hat and sandals on sand",
+            "title": "Desert: Hat and Sandals on a Dune",
             "kind": "photo",
             "product": "woven hat and leather sandals"
           }
@@ -172,7 +172,7 @@
           },
           {
             "ref": "n:guide:plat-facebook-size-square-backpack",
-            "title": "Plain studio: commuter backpack in studio",
+            "title": "Plain Studio: Commuter Backpack",
             "kind": "photo",
             "product": "commuter backpack"
           }
@@ -189,7 +189,7 @@
           },
           {
             "ref": "n:guide:mx1w-photo-hub-indoor-1-r1",
-            "title": "Indoor: diffuser on side table",
+            "title": "Indoor: Diffuser on Side Table",
             "kind": "photo",
             "product": "ceramic diffuser"
           }
@@ -222,7 +222,7 @@
       "options": [
         [
           "Size",
-          "Square (1:1, equal sides)"
+          "Square (1:1)"
         ],
         [
           "Start with",
@@ -235,7 +235,7 @@
       ]
     },
     "picker": {
-      "title": "Give your product a new setting",
+      "title": "Give Your Product a New Setting",
       "lead": "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting.",
       "chips": [],
       "cards": [],
@@ -243,15 +243,15 @@
     },
     "titles": {
       "m3": {
-        "h2": "Give your product a new setting",
+        "h2": "Give Your Product a New Setting",
         "lead": "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting."
       },
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
-  "cta_title": "One product photo, then more scenes",
+  "cta_title": "One Product Photo, Then More Scenes",
   "cta_lead": "Upload a clear photo and make a batch of scenes. You see the credit cost before you start. You can turn that photo into a product video next.",
   "blockOrder": [
     "hero",
@@ -283,7 +283,7 @@
         "example": true,
         "who": "Gadget shop",
         "t": "Show a generated person holding the product",
-        "d": "Use the photo so the product stays the same. A generated adult can hold it in a short video from [image to video](page:image-to-video). That person is not a real customer."
+        "d": "Use the photo so the product stays the same. A generated adult can hold it in a short video from [image to video](page:image-to-video)."
       },
       {
         "example": true,
@@ -301,7 +301,7 @@
         "example": true,
         "who": "Solo seller",
         "t": "See the credit cost before you start",
-        "d": "A product photo is 24 credits, the units your plan spends. Starter is $24.50 for 200 credits a month. There is no free plan."
+        "d": "A product photo is 24 credits. Starter is $24.50 for 200 credits a month. There is no free plan."
       },
       {
         "example": true,
@@ -337,7 +337,7 @@
     "image-to-video",
     "video-hub"
   ],
-  "benefits_lead": "A small shop can make the next scene from a photo it already has. A batch means several scenes at once.",
-  "related_h2": "Related tools",
+  "benefits_lead": "Make the next scene from a photo you already have, one at a time or several at once.",
+  "related_h2": "Related Tools",
   "related_lead": "From this product photo you can make a short video, pick a generated person, or start from a product page link."
 }

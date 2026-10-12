@@ -14,7 +14,7 @@
   ],
   "intro": "Choose a monthly plan by how many photos and videos you need. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A listing photo and a vertical ad draw from the same balance.",
   "credits_explained": [
-    "Credits are what you spend to make a photo or a video. A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see that number before you start. A job on this page means one photo or one video. The size names are the shape of the video. 9:16 is a tall phone video. 1:1 is a square. 16:9 is wide. 4:3 is a little wider than it is tall. 3:4 is a tall shape. Product photos are square. Each video includes a script, a spoken voice, and captions on the screen. It also includes a presenter made by the tool, not a real customer, and a song from the music library.",
+    "Credits are what you spend to make a photo or a video. A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see that number before you start. A job on this page means one photo or one video. The size names are the shape of the video. 9:16 is a tall phone video. 1:1 is a square. 16:9 is wide. 3:4 is a tall shape. Product photos are square. Each video includes a script, a spoken voice, and captions on the screen. It also includes an AI actor and a song from the music library.",
     "We set the credits aside when you start, and we take them when the file is ready. If the work fails, the credits come back by themselves. The same credits pay for a video made from a product link. They also pay for a batch, which means several versions at once. They also pay for the API. The API is a connection that lets your own shop system start the work. Downloads have no watermark, so there is no logo on the file. You can send the finished file to TikTok or to Meta. Meta is Facebook and Instagram."
   ],
   "teams": "Need more credits than Premium includes? Email support@aivideosugc.com with how many photos and videos you make in a month.",
@@ -41,7 +41,7 @@
     },
     {
       "q": "How many credits does a photo or video use?",
-      "a": "A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see the number before you start. 9:16 is a tall phone video, 1:1 is a square, and 16:9 is wide. 4:3 is a little wider than it is tall, and 3:4 is a tall shape. Product photos are square."
+      "a": "A product photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40 credits. A 15-second video costs 60 credits. A 30-second video costs 120 credits. You see the number before you start. 9:16 is a tall phone video, 1:1 is a square, and 16:9 is wide. Product photos are square."
     },
     {
       "q": "Can I use the photos and videos in ads?",
@@ -53,7 +53,7 @@
     },
     {
       "q": "What does a video include?",
-      "a": "You get a script written from your product, a spoken voice, and captions on the screen. You also get a presenter made by the tool, not a real customer, and a music track. You see the credit cost before you start. A photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40, a 15-second video costs 60, and a 30-second video costs 120."
+      "a": "You get a script written from your product, a spoken voice, and captions on the screen. You also get an AI actor and a music track. You see the credit cost before you start. A photo costs 24 credits. A 6-second video costs 24 credits. A 10-second video costs 40, a 15-second video costs 60, and a 30-second video costs 120."
     },
     {
       "q": "Can I paste a product link?",
@@ -68,7 +68,7 @@
       "a": "Yes. You can make several versions of one product at once. That is a batch. You can also use the API, a connection that lets your shop system start the work. Both use the same credits. If the work fails, the credits come back."
     }
   ],
-  "cta_title": "Pick the plan that covers this month",
+  "cta_title": "Pick the Plan That Covers This Month",
   "cta_lead": "Check how many credits the next photo or video will use, then pick the monthly plan that covers it.",
   "relatedLinks": [
     "faq",

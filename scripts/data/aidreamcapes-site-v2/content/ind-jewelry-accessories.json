@@ -111,27 +111,27 @@
   "relatedLinks": [
     {
       "id": "tpl-jewel",
-      "label": "Jewelry photos on a person"
+      "label": "Jewelry Photos on a Person"
     },
     {
       "id": "tpl-detail",
-      "label": "product detail photos"
+      "label": "Product Detail Photos"
     },
     {
       "id": "tpl-size",
-      "label": "product size reference photo"
+      "label": "Product Size Reference Photo"
     },
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     }
   ],
   "reasons": {
@@ -139,19 +139,19 @@
     "lead": "Skip booking a model. A product link or a sharp photo is enough for a close view or a worn photo. Then compare it with the real item.",
     "items": [
       {
-        "t": "Close-up without a studio day",
+        "t": "Close-Up Without a Studio Day",
         "d": "A pendant on linen can become a tight detail from one sharp photo. You skip a new setup for every piece.",
         "img": "n:guide:fx31-ind-jewelry-benefit-macro",
         "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
       },
       {
-        "t": "Worn on a wrist",
+        "t": "Worn on a Wrist",
         "d": "A straight watch photo can sit on an adult wrist in daylight. Check the watch face and the strap joints against the real watch before you list it.",
         "img": "n:guide:fx31-ind-jewelry-benefit-watch",
         "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
       },
       {
-        "t": "Scale beside something familiar",
+        "t": "Scale Beside Something Familiar",
         "d": "A ring next to a coin, or a bag on a shoulder, shows size without printing numbers into the picture. Exact measurements stay in the listing.",
         "img": "n:guide:fx31-ind-jewelry-benefit-bag",
         "alt": "Adult hand carrying a plain brown leather shoulder bag outdoors."
@@ -163,32 +163,32 @@
     "lead": "A square close-up fits a listing. A tall phone photo fits a story. Send the clip to TikTok, Facebook, or Instagram from this page, then download the photo. Match the metal color.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A short worn or unboxing photo for a jewelry post in TikTok's main feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square detail or a tall try-on for the feed and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A feed photo with room to add the offer after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A tight phone-screen detail, one piece from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A sharp gallery image. Keep size charts in the listing, not printed on the photo.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching product imagery for the piece and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -266,7 +266,7 @@
       }
     ]
   },
-  "related_h2": "Jewelry templates and listing photos",
+  "related_h2": "Jewelry Templates and Listing Photos",
   "maker": {
     "options": [
       [

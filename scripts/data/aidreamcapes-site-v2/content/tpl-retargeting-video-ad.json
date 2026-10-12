@@ -103,7 +103,7 @@
     "steps": {
       "source": "n:guide:c1-tpl-retargeting-video-ad-m2-source",
       "sourceAlt": "Dark navy over-ear headphones with padded ear cups on a pale background.",
-      "sourceTitle": "Your starting product",
+      "sourceTitle": "Your Starting Product",
       "sourceHint": "Keep the complete headband and both ear cups in clear focus.",
       "result": "n:guide:q14-retarget-step",
       "mode": "video",
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -602,7 +602,7 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Jar beside the cheek",
-        "d": "A beauty shop holds a coral cream jar beside a cheek for a closer look. The person is an AI performer."
+        "d": "A beauty shop holds a coral cream jar beside a cheek for a closer look. The person is an AI actor."
       },
       {
         "example": true,
@@ -672,7 +672,7 @@
       },
       {
         "t": "An AI Actor for the Second Look",
-        "d": "An AI performer can hold the product for the closer shot. That person is generated, not a past buyer.",
+        "d": "An AI actor can hold the product for the closer shot. That person is generated, not a past buyer.",
         "icon": "UserRound"
       },
       {
@@ -702,7 +702,7 @@
         },
         {
           "t": "Actor Library",
-          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip. The person is generated, not a customer."
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can use that same person in the next clip."
         },
         {
           "t": "Editor, Music, and Languages",
@@ -721,7 +721,7 @@
     "items": [
       {
         "t": "Credit Cost First",
-        "d": "Credits are the points on your plan. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
+        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number before you confirm."
       },
       {
         "t": "No Watermark",
@@ -737,7 +737,7 @@
       },
       {
         "t": "No Viewer List in the File",
-        "d": "The clip does not receive browsing or cart data. Anyone on camera is an AI performer, not a past buyer."
+        "d": "The clip does not receive browsing or cart data. Anyone on camera is an AI actor, not a past buyer."
       }
     ]
   }

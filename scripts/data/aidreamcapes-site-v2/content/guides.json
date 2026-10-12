@@ -14,37 +14,37 @@
   ],
   "intro": [
     "Each guide ends in a file you download and post yourself. Read the one for the job you are doing today.",
-    "A guide can send you to a [template](page:templates) (a ready-made layout), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). The clip can include a generated presenter from the [actor library](page:ai-actors), a person the tool creates, not a real customer. It can include a script (the words) written from your product. It can include a voiceover (a spoken voice) in the language you sell in, and captions (timed words on the video). You can then post it on TikTok or Meta (Facebook and Instagram). There is no free plan for making files."
+    "A guide can send you to a [template](page:templates) (a ready-made layout), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). The clip can include an AI actor from the [actor library](page:ai-actors). It can include a script (the words) written from your product. It can include a voiceover (a spoken voice) in the language you sell in, and captions (timed words on the video). You can then post it on TikTok or Meta (Facebook and Instagram). There is no free plan for making files."
   ],
-  "benefits_h2": "Reasons to read a guide first",
+  "benefits_h2": "Reasons to Read a Guide First",
   "benefits_lead": "If the photo is the problem, start with the product photography tips for online sellers. Open the Amazon main-image tips before you list. Open the tips for testing ad versions before you pay for a test.",
   "benefits": [
     {
-      "t": "Fewer redos",
+      "t": "Fewer Redos",
       "d": "A sharp, well-lit starting photo makes the first file easier to use, so you spend fewer credits on a redo. Credits are what each file costs.",
       "img": "n:guide:fx03-guides-benefit-source",
       "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload."
     },
     {
-      "t": "No studio required",
+      "t": "No Studio Required",
       "d": "The setups use a phone, a window, and a table you already have. You take the photo and post the file yourself.",
       "img": "n:guide:fx03-guides-benefit-studio",
       "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table."
     },
     {
-      "t": "Rules you can check",
+      "t": "Rules You Can Check",
       "d": "Amazon main image rules and ad sizes are checks you do on the file before you upload.",
       "img": "n:guide:fx03-guides-benefit-rules",
       "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
     },
     {
-      "t": "A fair test",
+      "t": "A Fair Test",
       "d": "The testing guide changes one thing at a time. You then keep the version that got the sales.",
       "img": "n:guide:fx03-guides-benefit-testing",
       "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
     }
   ],
-  "steps_h2": "How to make product video ads or photos",
+  "steps_h2": "How to Make Product Video Ads or Photos",
   "steps_lead": "Take one clear photo, make the file, then post it.",
   "steps": [
     {
@@ -94,7 +94,7 @@
       "a": "Yes. You need a phone photo, not a studio. The first-ad guide stops at a file you can post. Setting up the ad account stays in that platform's own help pages."
     },
     {
-      "q": "Do the guides cover an AI presenter, a script, and a spoken voice?",
+      "q": "Do the guides cover an AI actor, a script, and a spoken voice?",
       "a": "Yes. The video guides send you to a generated presenter from the actor library. They also cover a script written from your product or your link, and a spoken voice in the language you sell in."
     },
     {
@@ -118,7 +118,7 @@
     "templates",
     "platforms"
   ],
-  "related_h2": "Tools used in these guides",
+  "related_h2": "Tools Used in These Guides",
   "related_lead": "Make the file, or browse layouts and the places you post.",
   "cta_title": "Try the step you just read",
   "cta_lead": "Upload one product photo and see the credit cost before you start."

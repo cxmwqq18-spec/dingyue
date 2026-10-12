@@ -22,7 +22,7 @@
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "The actor library is a list of made-up people. Pick one and set skin tone, age, and look. This is not a real customer."
+      "d": "The actor library is a list of made-up people. Pick one and set skin tone, age, and look."
     },
     {
       "t": "Add a Spoken Voice and Captions",
@@ -137,32 +137,32 @@
     "lead": "Pick the video shape that channel already uses, then publish the clip to TikTok or Meta (Facebook and Instagram). The same photo can also make a still image for the listing.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall 9:16 routine or color sample for a beauty video ad on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square photo, or a tall clip of the product being applied, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A photo for the feed, with space to type the offer in your editor after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short vertical demo, one action from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A clean main image of the package, plus extra views in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching product and collection imagery from the same source photo.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -238,30 +238,30 @@
   "relatedLinks": [
     {
       "id": "tpl-beauty",
-      "label": "beauty product video ads"
+      "label": "Beauty Product Video Ads"
     },
     {
       "id": "tpl-light",
-      "label": "product photo lighting"
+      "label": "Product Photo Lighting"
     },
     {
       "id": "tpl-story",
-      "label": "Instagram story ad images"
+      "label": "Instagram Story Ad Images"
     },
     {
       "id": "video-ads",
-      "label": "AI creator-style video ads"
+      "label": "AI Creator-Style Video Ads"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     }
   ],
-  "related_h2": "Routines, color samples, and listing photos",
+  "related_h2": "Routines, Color Samples, and Listing Photos",
   "blockOrder": [
     "hero",
     "strip",
@@ -280,27 +280,27 @@
       "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
       "items": [
         {
-          "t": "A link becomes the clip",
+          "t": "A Link Becomes the Clip",
           "d": "Paste the product page. The job uses the item on that page and starts a routine, a color sample, or an unboxing."
         },
         {
-          "t": "A presenter from the library",
-          "d": "Choose a made-up person to appear with the product. The face is not a real customer, and not someone from a public list."
+          "t": "A Presenter From the Library",
+          "d": "Choose a made-up person to appear with the product."
         },
         {
-          "t": "Voice and captions included",
+          "t": "Voice and Captions Included",
           "d": "A spoken line and on-screen captions come with the clip. Prices and shade names are still safer when you type them."
         },
         {
-          "t": "A script for one action",
+          "t": "A Script for One Action",
           "d": "Ask for a short script about a pump or a color sample. Change a word in the editor before the file is posted."
         },
         {
-          "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
+          "t": "Edit on the Same Page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
         },
         {
-          "t": "Another language, then publish",
+          "t": "Another Language, Then Publish",
           "d": "Make the same routine again in another language, then publish the file to TikTok or Meta."
         }
       ]

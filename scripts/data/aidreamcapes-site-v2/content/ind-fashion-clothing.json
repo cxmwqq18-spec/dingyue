@@ -137,32 +137,32 @@
     "lead": "One garment photo can make a product-page photo and a tall try-on video. Publish the clip to TikTok or Meta (Facebook and Instagram) after the print checks out.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall 9:16 turn or short walk for a clothing try-on on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "An outfit photo, or a tall fit-check video, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A feed image with space to add the offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short vertical look, one turn from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "Extra gallery views of the garment, with the full piece and the color easy to see.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Photos of someone wearing the garment, and photos of it laid flat, that match across the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -170,7 +170,7 @@
   },
   "reviews": {
     "h2": "Where Outfit Photos Help a Clothing Shop",
-    "lead": "How clothing sellers use one garment photo or a product link. The model is generated, not a customer.",
+    "lead": "How clothing sellers use one garment photo or a product link.",
     "items": [
       {
         "example": true,
@@ -238,30 +238,30 @@
   "relatedLinks": [
     {
       "id": "tpl-outfit",
-      "label": "AI short fashion videos"
+      "label": "AI Short Fashion Videos"
     },
     {
       "id": "tpl-tryon",
-      "label": "AI clothing try-on"
+      "label": "AI Clothing Try-On"
     },
     {
       "id": "tpl-look",
-      "label": "AI outfit photos"
+      "label": "AI Outfit Photos"
     },
     {
       "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "label": "AI Model Photos for Clothing"
     },
     {
       "id": "video-ads",
-      "label": "AI creator-style video ads"
+      "label": "AI Creator-Style Video Ads"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     }
   ],
-  "related_h2": "Templates and tools for clothing ads",
+  "related_h2": "Templates and Tools for Clothing Ads",
   "blockOrder": [
     "hero",
     "strip",
@@ -280,27 +280,27 @@
       "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
       "items": [
         {
-          "t": "A link becomes the try-on",
+          "t": "A Link Becomes the Try-On",
           "d": "Paste the product page. The job uses the garment on that page and starts a turn, a fit check, or a short clip of the outfit."
         },
         {
-          "t": "A model from the library",
-          "d": "Choose a made-up model and describe height and build. The person is not a real customer."
+          "t": "A Model From the Library",
+          "d": "Choose a made-up model and describe height and build."
         },
         {
-          "t": "Voice and captions included",
+          "t": "Voice and Captions Included",
           "d": "A spoken line and on-screen captions come with the clip. Size notes are still safer when you type them."
         },
         {
-          "t": "A script for the look",
+          "t": "A Script for the Look",
           "d": "Ask for a short script about one turn or one walk. Change a word in the editor before you post."
         },
         {
-          "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
+          "t": "Edit on the Same Page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
         },
         {
-          "t": "Another language, then publish",
+          "t": "Another Language, Then Publish",
           "d": "Make the same turn again in another language, then publish the file to TikTok or Meta."
         }
       ]

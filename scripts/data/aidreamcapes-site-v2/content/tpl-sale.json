@@ -612,27 +612,27 @@
   "relatedLinks": [
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     },
     {
       "id": "tpl-tryon",
-      "label": "AI virtual try-on for clothing"
+      "label": "AI Virtual Try-On for Clothing"
     },
     {
       "id": "tpl-look",
-      "label": "AI lookbook photos"
+      "label": "AI Lookbook Photos"
     },
     {
       "id": "tpl-outfit",
-      "label": "AI fashion reels"
+      "label": "AI Fashion Reels"
     },
     {
       "id": "occ-sale-discount",
-      "label": "sale ad creatives"
+      "label": "Sale Ad Creatives"
     },
     {
       "id": "ind-fashion-clothing",
-      "label": "Fashion model photos and videos"
+      "label": "Fashion Model Photos and Videos"
     }
   ],
   "reviews": {
@@ -677,9 +677,9 @@
       }
     ]
   },
-  "related_h2": "Fashion Pages to Use with a Sale Banner",
+  "related_h2": "Fashion Pages to Use With a Sale Banner",
   "related_lead": "The ad-image tool, fashion templates, the sale page, and the fashion page.",
-  "cta_title": "Set the scene, then add the offer",
+  "cta_title": "Set the Scene, Then Add the Offer",
   "blockOrder": [
     "hero",
     "features",

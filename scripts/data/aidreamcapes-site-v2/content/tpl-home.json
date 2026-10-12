@@ -68,15 +68,15 @@
     },
     {
       "q": "What does the clip actually show?",
-      "a": "One storage task in a drawer, on a shelf, in a closet, or on a desk. It is a single tidy-up, not a tour of the whole house. A person on screen is an AI presenter, not a real customer."
+      "a": "One storage task in a drawer, on a shelf, in a closet, or on a desk. It is a single tidy-up, not a tour of the whole house. A person on screen is an AI actor, not a real customer."
     },
     {
       "q": "Which size can I pick, and where can I post it?",
-      "a": "Pick one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. 4:3 is a shorter wide size, and 3:4 is a little taller than a square. Lengths are 6, 10, 15, or 30 seconds. Send the file to TikTok, or to Meta (Facebook and Instagram), from your account. You can also download it. You see the credit cost before it starts."
+      "a": "Pick one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds. Send the file to TikTok, or to Meta (Facebook and Instagram), from your account. You can also download it. You see the credit cost before it starts."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are the balance on your monthly plan. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. If the clip fails, those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Can I add sizes, and can I run the file in ads?",
@@ -188,7 +188,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -597,7 +597,7 @@
       {
         "example": true,
         "who": "Small team",
-        "t": "No rented room",
+        "t": "No Rented Room",
         "d": "Example: the tidy-up is made from the organizer photo, with no film crew and no borrowed room."
       },
       {
@@ -610,7 +610,7 @@
         "example": true,
         "who": "Founder",
         "t": "A presenter, not a tour",
-        "d": "Example: a person on screen is an AI presenter from the actor library. The clip is the brand's ad, not a client story."
+        "d": "Example: a person on screen is an AI actor from the actor library. The clip is the brand's ad, not a client story."
       },
       {
         "example": true,
@@ -625,27 +625,27 @@
   "relatedLinks": [
     {
       "id": "before-after-videos",
-      "label": "before and after video maker"
+      "label": "Before and After Video Maker"
     },
     {
       "id": "tpl-howto",
-      "label": "AI how-to video maker"
+      "label": "AI How-To Video Maker"
     },
     {
       "id": "tpl-launch",
-      "label": "AI promo video maker"
+      "label": "AI Promo Video Maker"
     },
     {
       "id": "tpl-compare",
-      "label": "product comparison video"
+      "label": "Product Comparison Video"
     },
     {
       "id": "plat-tiktok",
-      "label": "AI TikTok ads generator"
+      "label": "AI TikTok Ads Generator"
     },
     {
       "id": "ind-home-living",
-      "label": "AI product videos for home brands"
+      "label": "AI Product Videos for Home Brands"
     }
   ],
   "definition": {
@@ -660,32 +660,32 @@
     "lead": "Shoppers see one mess become one neater spot, from the organizer photo you already have.",
     "items": [
       {
-        "t": "No rented room",
+        "t": "No Rented Room",
         "d": "The tidy-up is made from the organizer photo, so you do not borrow a kitchen or book a crew.",
         "icon": "House"
       },
       {
-        "t": "One mess, one fix",
+        "t": "One Mess, One Fix",
         "d": "Name a single drawer, shelf, closet, or desk. The clip ends on that neater spot.",
         "icon": "Sparkles"
       },
       {
-        "t": "Sizes stay editable",
+        "t": "Sizes Stay Editable",
         "d": "Add sizes and how much it holds as captions, or as text after download, so a size change is not a new shoot.",
         "icon": "Type"
       },
       {
-        "t": "The same photo, another room",
+        "t": "The Same Photo, Another Room",
         "d": "Reuse the organizer photo for a drawer and then a closet, instead of a second shoot.",
         "icon": "Repeat"
       },
       {
-        "t": "A voice that names the spot",
+        "t": "A Voice That Names the Spot",
         "d": "A short spoken line can say which drawer or shelf changed, with captions for people watching with the sound off.",
         "icon": "Mic"
       },
       {
-        "t": "You see the cost first",
+        "t": "You See the Cost First",
         "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
         "icon": "Coins"
       }
@@ -698,39 +698,39 @@
       "lead": "The tidy-up, the spoken line, and the post can all start from one organizer photo.",
       "items": [
         {
-          "t": "A voice on the tidy-up",
+          "t": "A Voice on the Tidy-Up",
           "d": "Add an AI voice that names the drawer or the shelf as it turns neat. It is a spoken line, not a client story."
         },
         {
-          "t": "Captions when the sound is off",
+          "t": "Captions When the Sound Is Off",
           "d": "Put the result on screen as captions in the editor, so the tidy-up still reads when the sound is off."
         },
         {
-          "t": "Several storage spots",
+          "t": "Several Storage Spots",
           "d": "Reuse the organizer for a drawer, a shelf, and a closet. Each clip shows its credit cost before it starts."
         },
         {
-          "t": "Start from the product link",
+          "t": "Start From the Product Link",
           "d": "Paste the listing link when the organizer photo is already on the page. The tidy-up uses that product."
         },
         {
-          "t": "A script for the one change",
+          "t": "A Script for the One Change",
           "d": "Ask for a line about the single tidy-up, then edit the words before the voice reads them."
         },
         {
-          "t": "A presenter from the actor library",
-          "d": "Choose an AI actor from the actor library to slide the organizer in. That person is not a customer, and this is not a home tour."
+          "t": "A Presenter From the Actor Library",
+          "d": "Choose an AI actor from the actor library to slide the organizer in."
         },
         {
-          "t": "A track from the music library",
+          "t": "A Track From the Music Library",
           "d": "Add background music under the drawer sound, or keep only the sound of the room."
         },
         {
-          "t": "Trim it in the built-in editor",
+          "t": "Trim It in the Built-In Editor",
           "d": "Cut the length, move the caption, and set the voice without another app."
         },
         {
-          "t": "The same tidy-up in another language",
+          "t": "The Same Tidy-Up in Another Language",
           "d": "Keep the organizing shot and switch the spoken line and captions to the language you sell in."
         },
         {
@@ -738,7 +738,7 @@
           "d": "Send the finished tidy-up to TikTok, or to Meta (Facebook and Instagram), from your account. Or download it for the product page."
         },
         {
-          "t": "An API for a storage line",
+          "t": "An API for a Storage Line",
           "d": "The API lets your own software send organizer photos when a catalog needs many tidy-ups. Each one still shows its credit cost."
         }
       ]

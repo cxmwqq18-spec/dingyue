@@ -73,7 +73,7 @@
     },
     {
       "q": "What does a lighting photo cost?",
-      "a": "Credits are the points your plan spends. Each photo is 24 credits. You see that cost before you start. If it fails, those credits come back. Starter is $24.50 a month with 200 credits. The download has no watermark (no logo stamped on the file)."
+      "a": "Each photo is 24 credits. You see that cost before you start. If it fails, those credits come back. Starter is $24.50 a month with 200 credits. The download has no watermark."
     },
     {
       "q": "Can I light several photos at once?",
@@ -116,7 +116,7 @@
           "Described in your words"
         ]
       ],
-      "sourceTitle": "Your product",
+      "sourceTitle": "Your Product",
       "sourceHint": "Show the full mug, rim and handle in focus."
     },
     "picker": {
@@ -193,7 +193,7 @@
         },
         {
           "id": "ugc",
-          "label": "Shopper-style"
+          "label": "Shopper-Style"
         },
         {
           "id": "viral",
@@ -551,7 +551,7 @@
     }
   },
   "steps_h2": "How to Set Product Photo Lighting in 3 Simple Steps",
-  "steps_lead": "Start with one clear snapshot, a short note about the light, and a square file you compare with the real item. Credits are the points a paid plan spends.",
+  "steps_lead": "Start with one clear snapshot, a short note about the light, and a square file you compare with the real item.",
   "blockOrder": [
     "hero",
     "picker",
@@ -634,30 +634,30 @@
   "relatedLinks": [
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "tpl-box",
-      "label": "product bundle photos"
+      "label": "Product Bundle Photos"
     },
     {
       "id": "tpl-story",
-      "label": "Instagram story ad images"
+      "label": "Instagram Story Ad Images"
     },
     {
       "id": "tpl-beauty",
-      "label": "beauty product video ads"
+      "label": "Beauty Product Video Ads"
     },
     {
       "id": "ind-beauty-skincare",
-      "label": "AI product videos and photos for beauty brands"
+      "label": "AI Product Videos and Photos for Beauty Brands"
     },
     {
       "id": "plat-amazon",
-      "label": "Amazon product photos"
+      "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Start from One Clear Snapshot",
+  "cta_title": "Start From One Clear Snapshot",
   "cta_lead": "Upload one photo of the whole product. See the credit cost before you start.",
   "definition": {
     "title": "What Is Product Photo Lighting?",
@@ -673,27 +673,27 @@
       "lead": "The square photo is the lighting result. The same upload can also start a clip.",
       "items": [
         {
-          "t": "AI voice",
+          "t": "AI Voice",
           "d": "The square photo is only the new lighting. A clip made from that photo can use an AI voice."
         },
         {
-          "t": "Auto captions",
+          "t": "Auto Captions",
           "d": "Captions on the clip can name the surface, the material, or the scent."
         },
         {
-          "t": "AI script",
+          "t": "AI Script",
           "d": "Ask for a short script about the lit product, then edit it before the clip is made."
         },
         {
-          "t": "Actor library",
+          "t": "Actor Library",
           "d": "An AI actor can hold the lit product in the clip. Present that clip as your ad."
         },
         {
-          "t": "Link, many photos, and API",
+          "t": "Link, Many Photos, and API",
           "d": "Paste a product link, light many photos at once, or start them from your own software (the API)."
         },
         {
-          "t": "Editor, music, and languages",
+          "t": "Editor, Music, and Languages",
           "d": "Trim the clip in the built-in editor, add a track from the music library, and make it in another language."
         }
       ]
@@ -704,32 +704,32 @@
     "lead": "The square photo is for the listing. Send a clip to TikTok, Instagram, or Facebook in one step, or download it for YouTube.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
         "d": "Publish a clip of the lit product to TikTok in one step.",
         "href": "page:plat-tiktok"
       },
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
         "d": "Send a square photo or a tall clip to Instagram.",
         "href": "page:plat-instagram"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
         "d": "Send the lit product to Facebook as a still or a clip.",
         "href": "page:plat-facebook"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "Download a tall clip for YouTube Shorts when the listing photo is not enough.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "Amazon product photos",
-        "label": "Amazon product photos",
+        "t": "Amazon Product Photos",
+        "label": "Amazon Product Photos",
         "d": "Use the square lighting photo as a listing image, and compare it with the real item first.",
         "href": "page:plat-amazon"
       }

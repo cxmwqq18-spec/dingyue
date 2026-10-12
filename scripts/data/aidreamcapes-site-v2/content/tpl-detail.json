@@ -155,7 +155,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -195,7 +195,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -583,7 +583,7 @@
         "example": true,
         "who": "Wallet shop",
         "t": "Presenter points",
-        "d": "A wallet shop has an AI presenter point at a painted edge that already fills the picture."
+        "d": "A wallet shop has an AI actor point at a painted edge that already fills the picture."
       },
       {
         "example": true,
@@ -607,7 +607,7 @@
         "example": true,
         "who": "Jacket shop",
         "t": "Presenter, not a shoot",
-        "d": "A jacket shop uses an AI presenter beside zipper teeth that fill the picture."
+        "d": "A jacket shop uses an AI actor beside zipper teeth that fill the picture."
       },
       {
         "example": true,
@@ -634,27 +634,27 @@
   "relatedLinks": [
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "tpl-size",
-      "label": "product size reference photo"
+      "label": "Product Size Reference Photo"
     },
     {
       "id": "tpl-jewel",
-      "label": "AI jewelry model photos"
+      "label": "AI Jewelry Model Photos"
     },
     {
       "id": "tpl-light",
-      "label": "product photo lighting"
+      "label": "Product Photo Lighting"
     },
     {
       "id": "ind-jewelry-accessories",
-      "label": "AI photos for jewelry and accessories"
+      "label": "AI Photos for Jewelry and Accessories"
     },
     {
       "id": "plat-amazon",
-      "label": "Amazon product photos"
+      "label": "Amazon Product Photos"
     }
   ],
   "cta_title": "Create Your First Detail Photo",
@@ -666,27 +666,27 @@
       "lead": "The close-up still comes from a sharp photo of one feature. These are the pieces you can add around it.",
       "items": [
         {
-          "t": "AI voiceover",
+          "t": "AI Voiceover",
           "d": "The same photo can start a clip with a spoken line about that feature. You approve the words, and the voice is not a customer recording."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "A script can be drafted from your note or from the product page link. Change any line before you download."
         },
         {
-          "t": "On-screen people you can pick",
+          "t": "On-Screen People You Can Pick",
           "d": "Pick a generated person from the presenter list, called the actor library, to point at the feature. That person is not a real buyer."
         },
         {
-          "t": "A product link or the API",
+          "t": "A Product Link or the API",
           "d": "Paste a product page link to write a first script. Or send the photo through the API, which is how your own shop software starts it. The close-up still needs a sharp photo."
         },
         {
-          "t": "Built-in editor and another language",
+          "t": "Built-In Editor and Another Language",
           "d": "Change the script and switch the voice to another language in the built-in editor. The download has no watermark."
         },
         {
-          "t": "More versions, then publish",
+          "t": "More Versions, Then Publish",
           "d": "Make another version for a second feature or a second market. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]

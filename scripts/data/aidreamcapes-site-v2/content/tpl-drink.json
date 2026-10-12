@@ -72,15 +72,15 @@
     },
     {
       "q": "Which size can I pick, and where can I post it?",
-      "a": "Pick one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. 4:3 is a shorter wide size, and 3:4 is a little taller than a square. Use 6 seconds for one pour, or 10, 15, or 30 seconds for a longer sip. Send the file to TikTok, or to Meta (Facebook and Instagram), from your account. You can also download it. You see the credit cost before it starts."
+      "a": "Pick one size: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4. Use 6 seconds for one pour, or 10, 15, or 30 seconds for a longer sip. Send the file to TikTok, or to Meta (Facebook and Instagram), from your account. You can also download it. You see the credit cost before it starts."
     },
     {
       "q": "What does the clip cost?",
-      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Credits are the balance on your monthly plan. If the clip fails, those credits come back. Plans start at $24.50 a month."
+      "a": "A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. If the clip fails, those credits come back. Plans start at $24.50 a month."
     },
     {
       "q": "Where do flavor and allergen lines go?",
-      "a": "Add the approved flavor, ingredients, allergy notes, and price as captions, or on the product page. The download has no AIVideosUGC watermark, so our name is not stamped on the file. You can use it in your ads. A person on screen is an AI presenter, not a real customer."
+      "a": "Add the approved flavor, ingredients, allergy notes, and price as captions, or on the product page. The download has no AIVideosUGC watermark, so our name is not stamped on the file. You can use it in your ads. A person on screen is an AI actor, not a real customer."
     },
     {
       "q": "Can I make several at once, switch language, or use the API?",
@@ -188,7 +188,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -544,27 +544,27 @@
   "relatedLinks": [
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "tpl-pack",
-      "label": "packaging picture maker"
+      "label": "Packaging Picture Maker"
     },
     {
       "id": "tpl-spark-ads-style-video",
-      "label": "TikTok in-feed style video"
+      "label": "TikTok In-Feed Style Video"
     },
     {
       "id": "ind-food-drinks",
-      "label": "AI food and drink product videos"
+      "label": "AI Food and Drink Product Videos"
     },
     {
       "id": "plat-tiktok",
-      "label": "AI TikTok ads generator"
+      "label": "AI TikTok Ads Generator"
     },
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     }
   ],
   "blockOrder": [
@@ -634,7 +634,7 @@
         "example": true,
         "who": "Founder",
         "t": "A presenter, not a taster",
-        "d": "Example: the person who sips is an AI presenter from the actor library, not a real customer."
+        "d": "The person who sips is an AI actor from the actor library."
       },
       {
         "example": true,
@@ -652,7 +652,7 @@
     "title": "What Is a Food and Drink Video?",
     "paras": [
       "A food and drink video shows one moment with your drink: a pour, a cold glass, or a first sip. It is made from a photo of the bottle or can you sell.",
-      "You can add a spoken line, words on screen, and background music in the same place, then post the file. A person on screen is an AI presenter, not a real taster's review."
+      "You can add a spoken line, words on screen, and background music in the same place, then post the file. A person on screen is an AI actor, not a real taster's review."
     ]
   },
   "reasons": {
@@ -660,32 +660,32 @@
     "lead": "You already have the package photo. The pour, the voice, and the caption come from that, before anyone books a kitchen.",
     "items": [
       {
-        "t": "Skip the kitchen day",
+        "t": "Skip the Kitchen Day",
         "d": "The pour is built from the bottle photo you already have, so you do not book a sink, a creator, or a reshoot.",
         "icon": "Utensils"
       },
       {
-        "t": "The package stays easy to see",
+        "t": "The Package Stays Easy to See",
         "d": "The can or bottle stays beside the glass, so shoppers see the product they will get.",
         "icon": "Eye"
       },
       {
-        "t": "Voice and captions in one place",
+        "t": "Voice and Captions in One Place",
         "d": "Add a spoken line and on-screen words before you download, instead of sending the file to another app.",
         "icon": "Captions"
       },
       {
-        "t": "The next flavor reuses the glass",
+        "t": "The Next Flavor Reuses the Glass",
         "d": "Keep the same glass and light for another flavor. Each clip is its own job, and the credit cost shows first.",
         "icon": "Droplet"
       },
       {
-        "t": "A size for the feed or the page",
+        "t": "A Size for the Feed or the Page",
         "d": "Pick a tall 9:16, a square 1:1, or a wide 16:9 size. 4:3 and 3:4 are there too. Lengths are 6, 10, 15, or 30 seconds.",
         "icon": "Ratio"
       },
       {
-        "t": "You see the cost before it runs",
+        "t": "You See the Cost Before It Runs",
         "d": "A 6-second clip uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
         "icon": "Coins"
       }
@@ -698,39 +698,39 @@
       "lead": "The pour can include a voice, words on screen, a music track, and a post, without another editing app.",
       "items": [
         {
-          "t": "A voice on the pour",
-          "d": "Add an AI voice that names the flavor while the glass fills. It is a spoken line, not a customer review."
+          "t": "A Voice on the Pour",
+          "d": "Add an AI voice that names the flavor while the glass fills."
         },
         {
-          "t": "Captions before you download",
+          "t": "Captions Before You Download",
           "d": "Put the flavor or the pour on screen as captions in the editor, then download the file."
         },
         {
-          "t": "Several bottles, one scene",
+          "t": "Several Bottles, One Scene",
           "d": "Reuse the same glass scene for the bottles you sell. Each clip shows its credit cost before it starts."
         },
         {
-          "t": "Start from the product link",
+          "t": "Start From the Product Link",
           "d": "Paste the listing link when you do not have a file on hand. The pour uses the bottle shown on that page."
         },
         {
-          "t": "A short script for the sip",
+          "t": "A Short Script for the Sip",
           "d": "Ask for a line about the pour, then change the words before the voice reads them."
         },
         {
-          "t": "A presenter from the actor library",
+          "t": "A Presenter From the Actor Library",
           "d": "Choose someone to hold the glass or take the sip. That person is an AI actor from the actor library, not a real buyer."
         },
         {
-          "t": "A track from the music library",
+          "t": "A Track From the Music Library",
           "d": "Add background music under the fizz, or keep only the sound of the drink."
         },
         {
-          "t": "Trim it in the built-in editor",
+          "t": "Trim It in the Built-In Editor",
           "d": "Cut the length, move the caption, and set the voice without opening another tool."
         },
         {
-          "t": "The same pour in another language",
+          "t": "The Same Pour in Another Language",
           "d": "Keep the pour and switch the spoken line and the captions to the language you sell in."
         },
         {
@@ -738,7 +738,7 @@
           "d": "Send the finished file to TikTok, or to Meta (Facebook and Instagram), from your account. Or download it and post it yourself."
         },
         {
-          "t": "An API for many bottles",
+          "t": "An API for Many Bottles",
           "d": "The API lets your own software send bottle photos when you have many pours. Each one still shows its credit cost."
         }
       ]

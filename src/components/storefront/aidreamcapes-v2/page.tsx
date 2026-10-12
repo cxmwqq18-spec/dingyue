@@ -52,9 +52,9 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   </Section>;
 }
 
-function RelatedLinksSection({ links, r, title = "Related pages", lead }: { links: { label: string; href: string }[]; r: V2Resolvers; title?: string; lead?: string }) {
+function RelatedLinksSection({ links, r, title = "Related Pages", lead }: { links: { label: string; href: string }[]; r: V2Resolvers; title?: string; lead?: string }) {
   if (!links.length) return null;
-  return <Section eyebrow="Related pages" lead={lead} title={title}>
+  return <Section eyebrow="Related Pages" lead={lead} title={title}>
     <div className="related">
       {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
     </div>
@@ -84,7 +84,7 @@ function orderedBlocks(data: V2Data, r: V2Resolvers, blocks: PageBlock[]): React
   if (!order.length) return blocks.map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
   const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   const render = (id: V2BlockId | "always") => id === "related" && relatedLinks.length
-    ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} />
+    ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />
     : blocks.filter(([blockId]) => blockId === id).map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
   return [...order, "always" as const].map((id) => <Fragment key={id}>{render(id)}</Fragment>);
 }
@@ -294,7 +294,7 @@ function VideoHubPage({ data, r }: Props) {
     ["examples", <div className="vh-types"><ExampleGallery examples={oneRowWhenSingles(data.examples as V2Examples | undefined)} r={r} /></div>],
     ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
     ...pageOwnBlocks(data, r),
-    ["faq", <Faq items={data.faq} title="Questions about AI video" r={r} />],
+    ["faq", <Faq items={data.faq} title="Questions About AI Video" r={r} />],
     ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
   ])}</>;
   return (
@@ -321,7 +321,7 @@ function VideoHubPage({ data, r }: Props) {
       <Section eyebrow="Video templates" title="Ready-made video ideas"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
       <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
       {sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null}
-      <Faq items={data.faq} title="Questions about AI video" r={r} />
+      <Faq items={data.faq} title="Questions About AI Video" r={r} />
       <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />
     </>
   );
@@ -355,7 +355,7 @@ function ToolPage({ data, r }: Props) {
     const scenarios: PageBlock = ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null];
     const faq: PageBlock = ["faq", <Faq items={data.faq} title={visual.titles?.faq?.h2 ?? `Questions about ${data.label}`} r={r} />];
     const tail: PageBlock[] = [
-      ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} />],
+      ["related", <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />],
       ["cta", <CtaBand href={maker.href} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, `Make your first ${video ? "video" : "photo"} today`)} />]
     ];
     if (photoHub) return <>{orderedBlocks(data, r, [
@@ -672,7 +672,7 @@ function IndexPage({ data, r }: Props) {
       {articles.length ? (
         <section style={{ paddingBottom: 88 }}>
           <div className="wrap articles">
-            {data.id === "guides" ? <h2>All guides</h2> : data.id === "blog" ? <h2>All articles</h2> : null}
+            {data.id === "guides" ? <h2>All Guides</h2> : data.id === "blog" ? <h2>All Articles</h2> : null}
             {articles.map((article) => (
               <a className="art" href={r.href(article.href)} key={article.href}>
                 <Img image={article.image} r={r} />
@@ -683,7 +683,7 @@ function IndexPage({ data, r }: Props) {
         </section>
       ) : null}
       <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
-      {list<{ label: string; href: string }>(data.relatedLinks).length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={list<{ label: string; href: string }>(data.relatedLinks)} r={r} title={text(data.relatedH2) || "Related pages"} /> : null}
+      {list<{ label: string; href: string }>(data.relatedLinks).length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={list<{ label: string; href: string }>(data.relatedLinks)} r={r} title={text(data.relatedH2) || "Related Pages"} /> : null}
       <Faq items={data.faq} title="Questions" r={r} />
       {cta?.href ? <CtaBand note={text(data.startNote)} href={cta.href} lead={cta.lead} r={r} title={cta.title} /> : null}
     </>
@@ -787,7 +787,7 @@ function ActorDirectoryPage({ data, r }: Props) {
     {howTo.length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Make a spoken product ad"}><Steps items={howTo} /></Section> : null}
     <MoreSections r={r} sections={data.more_sections as never} />
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
-    {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related pages"} /> : relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
+    {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} /> : relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
@@ -873,7 +873,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
   const links = list<{ label: string; href: string; text: string }>(data.next);
   if (!links.length) return null;
   return (
-    <Section eyebrow="Keep going" title="Where to go next">
+    <Section eyebrow="Keep going" title="Where to Go Next">
       <div className="related">
         {links.map((item) => <article className="related-card" key={item.href}><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></article>)}
       </div>
@@ -888,21 +888,21 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     return (
       <>
         {hero}
-        <Section eyebrow="Plans" title="Monthly plans"><Plans plans={list<V2Plan>(data.plans)} r={r} /></Section>
-        {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How credits work"><Intro paras={list<string>(data.credits)} /></Section> : null}
+        <Section eyebrow="Plans" title="Monthly Plans"><Plans plans={list<V2Plan>(data.plans)} r={r} /></Section>
+        {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How Credits Work"><Intro paras={list<string>(data.credits)} /></Section> : null}
         {list<V2SpecRow>(data.costs).length ? (
-          <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What each photo and video costs">
+          <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What Each Photo and Video Costs">
             <Specs r={r} rows={list<V2SpecRow>(data.costs)} />
             {text(data.teams) ? <p className="meta-line" style={{ marginTop: 18 }}>{text(data.teams)}</p> : null}
           </Section>
         ) : null}
-        <Faq items={data.faq} title="Pricing questions" r={r} />
+        <Faq items={data.faq} title="Pricing Questions" r={r} />
         <NextLinks data={data} r={r} />
         <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Pick a plan when you are ready.")} r={r} title={ctaTitle(data, "Start with one product photo")} />
       </>
     );
   }
-  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All questions" r={r} /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload one product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Ready to try it?")} /></>;
+  if (layout === "faq") return <>{hero}<Faq items={data.faq} title="All Questions" r={r} /><NextLinks data={data} r={r} /><CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Upload one product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Ready to try it?")} /></>;
   if (layout === "contact") {
     return (
       <>
@@ -913,7 +913,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
             <p className="meta-line" style={{ fontSize: 17 }}>Email: <a href={`mailto:${text(data.email)}`}>{text(data.email)}</a></p>
           </div>
         </section>
-        {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to contact us about"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
+        {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to Contact Us About"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
         {company ? <Section eyebrow="Company" lead={`${company.name} operates ${BRAND_NAME}.`} title="Company details"><CompanyDetails className="company-card" company={company} /></Section> : null}
         <Faq items={data.faq} title="Questions" r={r} />
         <NextLinks data={data} r={r} />
@@ -937,9 +937,9 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       <>
         {hero}
         <div className="wrap prose" style={{ paddingBottom: 40 }}>
-          <h2>In one sentence</h2>
+          <h2>In One Sentence</h2>
           <p>{text(data.summary)}</p>
-          <h2>Key facts</h2>
+          <h2>Key Facts</h2>
           <div className="cmp-wrap">
             <table className="cmp">
               <tbody>
@@ -948,12 +948,12 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
               </tbody>
             </table>
           </div>
-          <h2>Not offered</h2>
+          <h2>Not Offered</h2>
           <ul>{list<string>(data.notOffered).map((item) => <li key={item}>{item}</li>)}</ul>
           <h2>How to describe {BRAND_NAME}</h2>
           {list<string>(data.describe).map((line) => <p key={line}>{line}</p>)}
         </div>
-        <Faq items={data.faq} title="Common questions" r={r} />
+        <Faq items={data.faq} title="Common Questions" r={r} />
         <NextLinks data={data} r={r} />
       </>
     );
@@ -966,7 +966,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       <VisualDirectoryFilter eyebrow="Browse examples" pageId={data.id} visual={visual}>
         <Flows filterChips={visual.picker.chips} flows={list<V2Flow>(data.flows)} r={r} />
         <div className="v-directory-related">
-          <h3>Results by template</h3>
+          <h3>Results by Template</h3>
           <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
         </div>
       </VisualDirectoryFilter>
@@ -986,7 +986,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <FitSection block={data.fit as never} r={r} />
         <EnrichmentBlockSection block={data.afterDownload as never} eyebrow="After download" r={r} />
         {list<{ before: V2Image; after: V2Image }>(data.pairs).length ? <Section eyebrow="White background" title="Normal photos turned into clean white-background shots"><PairGrid pairs={list<{ before: V2Image; after: V2Image }>(data.pairs)} r={r} /></Section> : null}
-        <Section eyebrow="More results" title="Results by template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
+        <Section eyebrow="More results" title="Results by Template"><TemplateGrid cards={list<V2Card>(data.cards)} r={r} /></Section>
         <ExampleGallery examples={data.examples as V2Examples | undefined} r={r} />
         <Faq items={data.faq} title="Questions" r={r} />
         {(data.cta as { href?: string } | undefined)?.href ? <CtaBand note={text(data.startNote)} href={text((data.cta as { href: string }).href)} lead={text((data.cta as { lead: string }).lead)} r={r} title={text((data.cta as { title: string }).title)} /> : null}

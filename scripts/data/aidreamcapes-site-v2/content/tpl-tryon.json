@@ -71,7 +71,7 @@
     },
     {
       "q": "What does a try-on photo cost, and can I use it in ads?",
-      "a": "Each photo costs 24 credits. Credits are the points that pay for the photo. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed run puts those credits back. The download has no watermark, and you can use it in your own ads, pages, and posts."
     },
     {
       "q": "Can I use the square photo in an Instagram feed?",
@@ -118,7 +118,7 @@
           "Product page or social"
         ]
       ],
-      "sourceTitle": "Your product"
+      "sourceTitle": "Your Product"
     },
     "picker": {
       "title": "Browse Video Templates by Category",
@@ -194,7 +194,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -551,7 +551,7 @@
         "lead": "Each card is a tall 9:16 video ad, not a square photo of your garment on a model. Use the upload above, then check the collar, hem, and color against the piece."
       },
       "faq": {
-        "h2": "Questions about AI virtual try-on for clothing"
+        "h2": "Questions About AI Virtual Try-On for Clothing"
       }
     }
   },
@@ -611,7 +611,7 @@
         "example": true,
         "who": "Weekly launch",
         "t": "Several poses",
-        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first. Credits are the points that pay for that run."
+        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first."
       },
       {
         "example": true,
@@ -621,32 +621,32 @@
       }
     ]
   },
-  "related_h2": "Clothing templates and Shopify photos",
+  "related_h2": "Clothing Templates and Shopify Photos",
   "related_lead": "Other fashion templates, the model-photo tool, and Shopify listing photos.",
   "relatedLinks": [
     {
       "id": "model-photos",
-      "label": "AI model photos for clothing"
+      "label": "AI Model Photos for Clothing"
     },
     {
       "id": "tpl-look",
-      "label": "AI styled outfit photos"
+      "label": "AI Styled Outfit Photos"
     },
     {
       "id": "tpl-outfit",
-      "label": "AI fashion reels"
+      "label": "AI Fashion Reels"
     },
     {
       "id": "tpl-sale",
-      "label": "sale banner maker"
+      "label": "Sale Banner Maker"
     },
     {
       "id": "ind-fashion-clothing",
-      "label": "AI model photos and videos for fashion brands"
+      "label": "AI Model Photos and Videos for Fashion Brands"
     },
     {
       "id": "plat-shopify",
-      "label": "Shopify product photos"
+      "label": "Shopify Product Photos"
     }
   ],
   "cta_title": "Show the Next Garment on a Person",
@@ -667,27 +667,27 @@
       "lead": "The square file shows the garment on a generated person. A script and a spoken line can go with the ad when you publish.",
       "items": [
         {
-          "t": "A product link starts the look",
+          "t": "A Product Link Starts the Look",
           "d": "Paste the product page so this uses the right garment. The on-model photo still starts from your hanger or flat-lay shot."
         },
         {
-          "t": "A generated person wears it",
-          "d": "Pick a generated person for the jacket or dress. They are not a hired model and not a customer."
+          "t": "A Generated Person Wears It",
+          "d": "Pick a generated person for the jacket or dress."
         },
         {
-          "t": "A spoken line for the ad",
+          "t": "A Spoken Line for the Ad",
           "d": "Add a spoken line in the language your buyers use when you turn the photo into the ad."
         },
         {
-          "t": "A script for the launch",
+          "t": "A Script for the Launch",
           "d": "Describe the piece in a sentence. The script writer drafts the line, and you can change it before you post."
         },
         {
-          "t": "Edit before you post",
+          "t": "Edit Before You Post",
           "d": "Trim the ad in the built-in editor. The download has no watermark. Check seams and color against the real garment."
         },
         {
-          "t": "Several versions, then publish",
+          "t": "Several Versions, Then Publish",
           "d": "Run the same photo for another pose or another language, then publish to TikTok, Instagram, or Facebook."
         }
       ]

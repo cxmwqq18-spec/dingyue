@@ -58,7 +58,7 @@
     },
     {
       "q": "Can I post the image on Amazon, Shopify, or Etsy?",
-      "a": "Yes, after you check that store's current image rule. The download has no watermark (no logo added on top), and you can use it in your shop and ads. Read the [Amazon white background photo](page:guide-white-background-amazon) guide before you set a main image."
+      "a": "Yes, after you check that store's current image rule. The download has no watermark, and you can use it in your shop and ads. Read the [Amazon white background photo](page:guide-white-background-amazon) guide before you set a main image."
     },
     {
       "q": "How many credits does one photo use?",
@@ -111,12 +111,12 @@
       ]
     },
     "picker": {
-      "title": "Choose a white background main image for marketplaces",
+      "title": "Choose a White Background Main Image for Marketplaces",
       "lead": "Start from one clear photo. Pick a main image for a marketplace, a store page, or a catalog photo that matches the others.",
       "chips": [
         {
           "id": "more-listings",
-          "label": "More listing photos"
+          "label": "More Listing Photos"
         },
         {
           "id": "marketplace",
@@ -124,7 +124,7 @@
         },
         {
           "id": "store-page",
-          "label": "Store page"
+          "label": "Store Page"
         },
         {
           "id": "catalog",
@@ -191,7 +191,7 @@
     },
     "titles": {
       "m3": {
-        "h2": "Choose a white background main image for marketplaces",
+        "h2": "Choose a White Background Main Image for Marketplaces",
         "lead": "Start from one clear photo. Pick a main image for a marketplace, a store page, or a catalog photo that matches the others."
       },
       "m4": {
@@ -219,7 +219,7 @@
         "lead": "Choose a square product layout that keeps the item and its edges in view."
       },
       "faq": {
-        "h2": "Questions about white background product photos"
+        "h2": "Questions About White Background Product Photos"
       }
     },
     "input": [
@@ -254,118 +254,118 @@
     {
       "img": "n:guide:k2-white-use-mug",
       "alt": "Plain cream ceramic mug with a broad handle on pure white.",
-      "t": "A clean background behind every product photo",
+      "t": "A Clean Background Behind Every Product Photo",
       "d": "Plain white behind the product makes the outline, the color, and the surface easy to compare when products sit in a list."
     },
     {
       "img": "n:guide:k2-white-picker-desk-lamp",
       "alt": "Curved brass desk lamp with a simple shade on pure white.",
-      "t": "Product shots with a more professional finish",
+      "t": "Product Shots With a More Professional Finish",
       "d": "Center the item and keep a soft shadow so it sits on the page the way shoppers expect from a catalog."
     },
     {
       "img": "n:guide:k2-white-picker-serving-bowl",
       "alt": "Cream stoneware serving bowl with a softly rounded rim on white.",
-      "t": "The same white across every listing in the catalog",
+      "t": "The Same White Across Every Listing in the Catalog",
       "d": "Use the same white, the same empty space around the item, and the same shadow on each photo. Or apply that to the whole catalog at once."
     },
     {
       "img": "n:guide:rx2-white-benefit-jewelry-dish",
       "alt": "Small matte deep teal stoneware jewelry dish with a shallow oval shape on pure white.",
-      "t": "A white base for the next version of the image",
+      "t": "A White Base for the Next Version of the Image",
       "d": "Start the next version from this file. Add a shadow, change the background color, or crop it for a store page and an ad."
     }
   ],
-  "benefits_h2": "Get product photos ready for a white listing",
-  "steps_h2": "How to add a white background in 3 steps",
+  "benefits_h2": "Get Product Photos Ready for a White Listing",
+  "steps_h2": "How to Add a White Background in 3 Steps",
   "steps_lead": "Upload the photo, choose white, and download the listing image.",
   "more_sections": [
     {
       "eyebrow": "From the first listing",
-      "h2": "From the first listing to the whole catalog",
+      "h2": "From the First Listing to the Whole Catalog",
       "lead": "Start with one product. The same white file can go to your store, to your own software (the API), or across many photos at once.",
       "items": [
         {
-          "t": "Send it to your stores",
+          "t": "Send It to Your Stores",
           "d": "Send the white file to your Shopify store and to the files your marketplace reads, from the same saved work."
         },
         {
-          "t": "Send it from your software",
+          "t": "Send It From Your Software",
           "d": "Ask for a white background from your catalog system. This is the API. Each photo is 24 credits, and the cost shows first."
         },
         {
-          "t": "Edit many at once",
+          "t": "Edit Many at Once",
           "d": "Put the same white background on a set of photos at once, in the app or from your own software (the API)."
         },
         {
-          "t": "Grow past one plan",
+          "t": "Grow Past One Plan",
           "d": "Premium includes 600 credits. When you need more, email support@aivideosugc.com with how many photos you make in a month."
         }
       ]
     },
     {
       "eyebrow": "The rest of the kit",
-      "h2": "A full AI kit for product images",
+      "h2": "A Full AI Kit for Product Images",
       "lead": "Make and edit product images for the store, the marketplace, and the ad, from one photo up to the whole catalog.",
       "items": [
         {
-          "t": "Remove the background",
+          "t": "Remove the Background",
           "d": "Cut away the old setting and leave the product ready for a plain background."
         },
         {
-          "t": "Make a new background",
+          "t": "Make a New Background",
           "d": "Ask for a new setting behind the product, or switch the color, and keep the item itself."
         },
         {
-          "t": "Place it in a lifestyle scene",
+          "t": "Place It in a Lifestyle Scene",
           "d": "Put the product in a real-life scene so shoppers can picture using it."
         },
         {
-          "t": "Brighten, clean, and resize",
+          "t": "Brighten, Clean, and Resize",
           "d": "Make a dark photo brighter, remove a stray object, and resize the file for the store or ad that needs it."
         },
         {
-          "t": "Show it on an AI model",
+          "t": "Show It on an AI Model",
           "d": "Show clothes on a generated person when the listing should show someone wearing them."
         },
         {
-          "t": "Download and share",
-          "d": "Download a file for your site, a marketplace listing, or an ad. There is no watermark (no logo added on top)."
+          "t": "Download and Share",
+          "d": "Download a file for your site, a marketplace listing, or an ad. There is no watermark."
         },
         {
-          "t": "Clean up the shot",
+          "t": "Clean Up the Shot",
           "d": "Even out the light, the small details, and the color before you publish the photo."
         },
         {
-          "t": "Change the photo shape",
+          "t": "Change the Photo Shape",
           "d": "Turn a tall photo into a wide one, or the other way around, without cutting the product off."
         },
         {
-          "t": "Connect your own software",
+          "t": "Connect Your Own Software",
           "d": "Connect your store software, called the API, and request the edit from there. Each photo is 24 credits, shown first."
         },
         {
-          "t": "Add a line of text",
+          "t": "Add a Line of Text",
           "d": "Place a short line on the image, then read it before you publish."
         },
         {
-          "t": "Edit a set together",
+          "t": "Edit a Set Together",
           "d": "Apply one background, one look, or one size to a set of photos at once."
         },
         {
-          "t": "Work with your team",
+          "t": "Work With Your Team",
           "d": "Share the design so a teammate can comment and edit it with you."
         },
         {
-          "t": "Keep a brand library",
+          "t": "Keep a Brand Library",
           "d": "Keep the logo, the fonts, and the colors together so the next image matches the last."
         },
         {
-          "t": "Make a logo with AI",
+          "t": "Make a Logo With AI",
           "d": "Make a simple logo from a short description when the shop still needs one."
         },
         {
-          "t": "Open it on any screen",
+          "t": "Open It on Any Screen",
           "d": "Use the same account in a browser on a computer or a phone."
         }
       ]
@@ -383,7 +383,7 @@
     "related"
   ],
   "definition": {
-    "title": "What a white background product photo is",
+    "title": "What a White Background Product Photo Is",
     "paras": [
       "A white background product photo keeps the item easy to scan in a grid of listings. Color, outline, and small details stay visible because the area behind the product is plain.",
       "It is a listing image, not a lifestyle scene. The same plain file can go to your store, across many photos at once, or through your own software (the API). Check the photo rules for your product category before you publish a main image."
@@ -422,21 +422,21 @@
     "tpl-angle"
   ],
   "reasons": {
-    "h2": "From one photo to every marketplace requirement",
+    "h2": "From One Photo to Every Marketplace Requirement",
     "lead": "One white background can cover one listing, a large catalog, or a request from your own software (the API).",
     "items": [
       {
-        "t": "For sellers",
+        "t": "For Sellers",
         "d": "Put one product on white for the main image. You skip the studio, and you still check the photo rules for your product category before you publish.",
         "icon": "Store"
       },
       {
-        "t": "For your own software",
-        "d": "Ask your catalog system for a white background. One photo costs 24 credits, the units your plan spends. You see that cost before it starts.",
+        "t": "For Your Own Software",
+        "d": "Ask your catalog system for a white background. One photo costs 24 credits. You see that cost before it starts.",
         "icon": "Laptop"
       },
       {
-        "t": "For large catalogs",
+        "t": "For Large Catalogs",
         "d": "Keep the same white, the same empty space around the item, and the same shadow as new products come in. Past Premium's 600 credits, email support@aivideosugc.com with how many photos you make in a month.",
         "icon": "Layers"
       }

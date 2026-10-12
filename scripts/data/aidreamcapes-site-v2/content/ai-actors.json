@@ -916,28 +916,28 @@
       "lead": "Four places to put the video after you pick the face, the voice, and the words.",
       "items": [
         {
-          "t": "Paid ads",
+          "t": "Paid Ads",
           "d": "Match the face, voice, and background to the shopper you want. Use the same photo in another language, then post to TikTok, Facebook, or Instagram.",
           "img": "n:guide:cwa-uses-paid-01-r1",
           "alt": "Adult Black woman with short natural curls holds a plain coral running shoe in a bright home entryway for a paid social ad.",
           "frame": "phone"
         },
         {
-          "t": "Product pages",
+          "t": "Product Pages",
           "d": "Put the actor on the product page to explain one feature. Shoppers can read the words on screen.",
           "img": "n:guide:cwa-uses-product-page-02-r1",
           "alt": "Adult East Asian man with hair in a tight bun holds a plain stainless travel mug beside a wooden desk for a product page video.",
           "frame": "browser"
         },
         {
-          "t": "Social posts",
+          "t": "Social Posts",
           "d": "Use the same face on each post. Change the opening line or the language when people have seen that post a lot.",
           "img": "n:guide:cwa-uses-social-03-r1",
           "alt": "Adult Latina woman with a short wavy auburn bob holds a plain sage canvas tote for a vertical social clip.",
           "frame": "phone"
         },
         {
-          "t": "Product guides",
+          "t": "Product Guides",
           "d": "Use the actor for one setup step. A buyer can follow the voice and the words on screen.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "Adult white man with close-cropped red hair points to the button on a plain blue portable lamp for a product guide.",
@@ -946,7 +946,7 @@
       ]
     }
   ],
-  "cta_title": "Pick an actor and make your first video",
+  "cta_title": "Pick an Actor and Make Your First Video",
   "cta_lead": "Pick an actor and a voice. You see the credit cost before you start. Credits are what you spend on each video.",
   "faq": [
     {
@@ -955,7 +955,7 @@
     },
     {
       "q": "How do the words become a video?",
-      "a": "Upload one product photo, or paste a product page link. Pick an actor and a voice, then approve what they will say. The video on this page is 10 seconds and tall for a phone (9:16). You can edit the words on screen. It costs 40 credits. Credits are the balance you spend. If the video fails, those credits come back."
+      "a": "Upload one product photo, or paste a product page link. Pick an actor and a voice, then approve what they will say. The video on this page is 10 seconds and tall for a phone (9:16). You can edit the words on screen. It costs 40 credits. If the video fails, those credits come back."
     },
     {
       "q": "Where can I use the video?",
@@ -1023,13 +1023,13 @@
         "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
       },
       {
-        "t": "More versions",
+        "t": "More Versions",
         "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "Your words",
+        "t": "Your Words",
         "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
@@ -1056,13 +1056,13 @@
       "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
     },
     {
-      "t": "More versions",
+      "t": "More Versions",
       "d": "Keep the same product photo. Change the actor, the first line, or the language when you want another video to test.",
       "img": "n:guide:fx50-ai-actors-benefit-2",
       "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
     },
     {
-      "t": "Your words",
+      "t": "Your Words",
       "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."

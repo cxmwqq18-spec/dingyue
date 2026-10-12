@@ -62,7 +62,7 @@
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "The actor library is a list of made-up people. Pick one for the demo. The hand or the face is not a customer."
+      "d": "The actor library is a list of made-up people. Pick one for the demo."
     },
     {
       "t": "Add a Spoken Voice, Then Post",
@@ -109,27 +109,27 @@
   "relatedLinks": [
     {
       "id": "tpl-product-feature-callout-video",
-      "label": "product feature video"
+      "label": "Product Feature Video"
     },
     {
       "id": "tpl-angle",
-      "label": "plain product photos"
+      "label": "Plain Product Photos"
     },
     {
       "id": "tpl-film",
-      "label": "cinematic product video"
+      "label": "Cinematic Product Video"
     },
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "unboxing-videos",
-      "label": "AI unboxing video"
+      "label": "AI Unboxing Video"
     },
     {
       "id": "video-ads",
-      "label": "AI creator-style video ads"
+      "label": "AI Creator-Style Video Ads"
     }
   ],
   "reasons": {
@@ -161,32 +161,32 @@
     "lead": "Pick the video shape that channel already uses, then publish the clip to TikTok or Meta (Facebook and Instagram). A tall clip fits a phone feed, and a wide shape fits a product page.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall 9:16 unboxing or button press for a gadget ad on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square photo, or a tall setup video, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A photo for the feed, with space to add the spec line after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short vertical demo, one action from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A clean main image of the gadget, with extra views in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching product imagery for the device page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -194,7 +194,7 @@
   },
   "reviews": {
     "h2": "How Sellers Use a Gadget Lifestyle Video",
-    "lead": "How electronics sellers use one product photo or a product link. The hand or presenter is generated, not a customer.",
+    "lead": "How electronics sellers use one product photo or a product link.",
     "items": [
       {
         "example": true,
@@ -258,7 +258,7 @@
       }
     ]
   },
-  "related_h2": "Feature clips, plain product photos, and product videos",
+  "related_h2": "Feature Clips, Plain Product Photos, and Product Videos",
   "blockOrder": [
     "hero",
     "strip",
@@ -277,27 +277,27 @@
       "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
       "items": [
         {
-          "t": "A link becomes the demo",
+          "t": "A Link Becomes the Demo",
           "d": "Paste the product page. The job uses the gadget on that page and starts an unboxing, a setup, or a desk scene."
         },
         {
-          "t": "A presenter from the library",
-          "d": "Choose a made-up presenter for the demo. The hand or the face is not a customer."
+          "t": "A Presenter From the Library",
+          "d": "Choose a made-up presenter for the demo."
         },
         {
-          "t": "Voice and captions included",
+          "t": "Voice and Captions Included",
           "d": "A spoken line and on-screen captions come with the clip. Battery, wattage, and compatibility stay in the listing."
         },
         {
-          "t": "A script for one action",
+          "t": "A Script for One Action",
           "d": "Ask for a short script about a button press or an unboxing. Change a word in the editor before you post."
         },
         {
-          "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
+          "t": "Edit on the Same Page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
         },
         {
-          "t": "Another language, then publish",
+          "t": "Another Language, Then Publish",
           "d": "Make the same demo again in another language, then publish the file to TikTok or Meta."
         }
       ]

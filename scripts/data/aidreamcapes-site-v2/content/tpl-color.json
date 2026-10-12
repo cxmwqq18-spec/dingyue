@@ -155,7 +155,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -195,7 +195,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator style"
+          "label": "Creator Style"
         },
         {
           "id": "viral",
@@ -607,7 +607,7 @@
         "example": true,
         "who": "Frame shop",
         "t": "Presenter, not a shoot",
-        "d": "A frame shop shows brass, black and silver from photos of those finishes, with an AI presenter instead of a booked shoot."
+        "d": "A frame shop shows brass, black and silver from photos of those finishes, with an AI actor instead of a booked shoot."
       },
       {
         "example": true,
@@ -634,27 +634,27 @@
   "relatedLinks": [
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "tpl-limited-drop-alert-video",
-      "label": "limited drop alert video"
+      "label": "Limited Drop Alert Video"
     },
     {
       "id": "tpl-tryon",
-      "label": "AI virtual try-on for clothing"
+      "label": "AI Virtual Try-On for Clothing"
     },
     {
       "id": "plat-amazon",
-      "label": "Amazon product photos"
+      "label": "Amazon Product Photos"
     },
     {
       "id": "ind-shoes",
-      "label": "AI product photos for shoe brands"
+      "label": "AI Product Photos for Shoe Brands"
     },
     {
       "id": "plat-shopify",
-      "label": "Shopify product photos"
+      "label": "Shopify Product Photos"
     }
   ],
   "cta_title": "Create Your First Shade Set",
@@ -666,27 +666,27 @@
       "lead": "The squares still come from real shade photos. These are the extras you can add around that set.",
       "items": [
         {
-          "t": "AI voiceover",
+          "t": "AI Voiceover",
           "d": "Turn the same shade photos into a clip and add a spoken line. You approve the words, and the voice is not a customer recording."
         },
         {
-          "t": "A script you can edit",
+          "t": "A Script You Can Edit",
           "d": "A script can be drafted from your note or from the product page link. Change any line before you download the clip."
         },
         {
-          "t": "On-screen people you can pick",
+          "t": "On-Screen People You Can Pick",
           "d": "Pick a generated person from the presenter list, called the actor library, to hold one color. That person is not a real buyer."
         },
         {
-          "t": "A product link or the API",
+          "t": "A Product Link or the API",
           "d": "Paste a product page link to write a first script. Or send a color photo through the API, which is how your own shop software starts it. The color photos still need a real photo of that color."
         },
         {
-          "t": "Built-in editor and another language",
+          "t": "Built-In Editor and Another Language",
           "d": "Change the script and switch the voice to another language in the built-in editor. The download has no watermark."
         },
         {
-          "t": "More versions, then publish",
+          "t": "More Versions, Then Publish",
           "d": "Make another version for a second market from the same photos. Publish on TikTok, Instagram, Facebook, or YouTube. There is no free plan."
         }
       ]

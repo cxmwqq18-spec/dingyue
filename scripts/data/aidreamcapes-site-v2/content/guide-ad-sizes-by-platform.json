@@ -16,7 +16,7 @@
   "summary": "Make 9:16 first for full-screen phone ads, add 1:1 for feeds, and make 16:9 only when the screen is wide.",
   "sections": [
     {
-      "h2": "Social video styles that make shoppers stop",
+      "h2": "Social Video Styles That Make Shoppers Stop",
       "paras": [
         "Pick the format that shows one reason to buy. The shape comes after that.",
         "Trend challenges. When a song is popular right now, show your product in that trend and time the edit to the music. A hand snapping a stand open is enough.",
@@ -30,10 +30,10 @@
       ]
     },
     {
-      "h2": "A shape that fits each app",
+      "h2": "A Shape That Fits Each App",
       "paras": [
         "Each place the ad shows gets its own file, built at that shape. Do not cut a wide video down by hand and hope the product stays in view.",
-        "YouTube and Shorts. Use 16:9 when the screen is wide, and 9:16 for Shorts. A tall file is its own job. A job is one file you make. Credits are the points your plan uses up for that file. They are not a cash price. Cutting the wide version down afterward often loses the product. See [YouTube Shorts](page:plat-youtube-shorts) for where the tall shape is used.",
+        "YouTube and Shorts. Use 16:9 when the screen is wide, and 9:16 for Shorts. A tall file is its own job. A job is one file you make. They are not a cash price. Cutting the wide version down afterward often loses the product. See [YouTube Shorts](page:plat-youtube-shorts) for where the tall shape is used.",
         "Instagram and Facebook. Reels wants 9:16, the tall phone shape. Do not put the square post file there. You will get empty bars above and below. The feed, the scrolling list of posts, wants a square, 1:1. A carousel is a post you swipe card by card. Every card should be the same shape.",
         "TikTok. Ads in the scrolling list use 9:16. A wide 16:9 video on an upright phone shrinks to a thin strip, and the product looks small. Make the tall file with [AI UGC video ads](page:video-ads). UGC means the video looks like a phone video a shopper might film. Anyone on screen is generated, not a real buyer.",
         "A feed where people stop and read. The same product can sit in a square post or a wide post. Keep the words large. The claim must match the product page."
@@ -42,19 +42,19 @@
       "alt": "Adult woman with a short dark bob holds a plain white sunscreen tube in a tall phone-shaped composition."
     },
     {
-      "h2": "Shapes that keep the product on screen",
+      "h2": "Shapes That Keep the Product on Screen",
       "paras": [
         "Match the shape to the screen. Then check what gets cut off before you pay to run the ad. These are shapes, not a promise of an exact width and height. Check the crop, the part that gets cut off, on the screen where you set up the ad. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30.",
         "16:9, the wide shape. Use it for a laptop, a TV-style ad, a longer demo, or a desktop feed. It is a poor fit for a full phone screen.",
         "9:16, the tall shape. This fills TikTok, Reels, Stories, and Shorts. Words on screen run along the bottom. The like and share buttons sit on the right. Keep the product and any words in the middle. Cover the bottom and the right side of your phone with your fingers. If you can still see the product and read the offer, the shape is safe.",
         "1:1, the square shape. Use it for Facebook and Instagram feeds, for a swipeable carousel, and when you are not sure where the ad will run. A still photo of the same product can sit beside the video.",
-        "4:3 is a little wider than a square. 3:4 is a little taller than a square. Use them only when that ad spot lists them. If the screen where you set up the ad does not list that shape, stay with 9:16, 1:1, or 16:9. All five shapes are available. For current Shorts file rules, see [YouTube Shorts size rules](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
+        " 3:4 is a little taller than a square. Use them only when that ad spot lists them. If the screen where you set up the ad does not list that shape, stay with 9:16, 1:1, or 16:9. All five shapes are available. For current Shorts file rules, see [YouTube Shorts size rules](https://support.google.com/google-ads/answer/16041697?hl=en-GB)."
       ],
       "img": "n:guide:fx05-guide-shapes",
       "alt": "Plain white sunscreen tube shown inside vertical, square, and wide blank frame shapes."
     },
     {
-      "h2": "Reasons to make each size here",
+      "h2": "Reasons to Make Each Size Here",
       "paras": [
         "You skip the evening of trimming. The same photo can be used for every place the ad shows. Each shape shows its credit cost before it starts.",
         "See what is popular in your product category right now. Put the product into a song or a challenge while people still know it. You are not guessing from last month's post.",
@@ -66,7 +66,7 @@
       "alt": "Adult woman with short curly hair holds a plain white sunscreen tube upright in a vertical social ad scene."
     },
     {
-      "h2": "How shops put this to work",
+      "h2": "How Shops Put This to Work",
       "paras": [
         "These are examples of how a shop would use it, not quotes from a customer.",
         "Example. A home shop used to spend an evening cutting one video. Now they paste the product page. They make a 9:16 file and a 1:1 file as two jobs. They watch both on a phone before they pay to run the ad.",
@@ -74,19 +74,19 @@
       ]
     },
     {
-      "h2": "A setup for the product you actually sell",
+      "h2": "A Setup for the Product You Actually Sell",
       "paras": [
         "The speed should match the product. A joke that hides the label is the wrong style.",
         "Beauty and skincare. Show a routine, a texture, or a before-and-after of the surface. That means the surface first, then after the product. Hold the real item next to the screen and check the color.",
         "Fashion. Change the outfit in time with the music, or show the garment flat on a door and then worn. Do not add a side of the item that the photo never showed.",
         "Home and living. Show the product in the room it belongs in, plus one close-up of the joint, the cord, or the finish.",
         "Food and drinks. The pour, the steam, the first bite. Six or ten seconds is often enough.",
-        "Jewelry. Show it on a hand or a collar, with the clasp visible. A generated person wearing it is not a customer review.",
+        "Jewelry. Show it on a hand or a collar, with the clasp visible.",
         "Electronics and gadgets. One action, such as a stand unfolding or a case closing. Words stay in the middle so the buttons do not cover them."
       ]
     },
     {
-      "h2": "Features that build the social video",
+      "h2": "Features That Build the Social Video",
       "paras": [
         "This tool does the chores that used to take three different apps.",
         "A trend watch for your product category. It points at a song and an opening line that fit the product, so you are not posting last month's joke.",
@@ -98,7 +98,7 @@
       ]
     },
     {
-      "h2": "From a link to today's post in 5 steps",
+      "h2": "From a Link to Today's Post in 5 Steps",
       "paras": [
         "You are not cutting the video picture by picture. There are five steps, then a check on your phone.",
         "Step 1. Paste a product link, a short video whose speed you want, or a photo of the item.",
@@ -113,7 +113,7 @@
       "alt": "Adult hand checks a plain white sunscreen tube inside a simple blank preview frame with generous margins."
     },
     {
-      "h2": "The short version",
+      "h2": "The Short Version",
       "paras": [
         "Use 9:16 for full-screen phone ads, 1:1 for the scrolling feed, and 16:9 for wide screens. Use 4:3 or 3:4 only when that ad spot lists them. Keep the product in the middle.",
         "A script, words on screen, a spoken voice, and a song from the music library can be included. A second shape is another job. The cost shows first. If a job fails, the credits come back. The download has no watermark."
@@ -160,7 +160,7 @@
       "a": "Yes. The same script can be written on screen and spoken in another language. You do not need to film again. The shape rules do not change for a new language. Use 4:3 or 3:4 only when the ad setup screen lists that shape. Downloads have no watermark."
     }
   ],
-  "cta_title": "Make the right size, then post it",
+  "cta_title": "Make the Right Size, Then Post It",
   "cta_lead": "Start from a product photo or a product link, pick 9:16, 1:1, or 16:9, and download a file with no watermark.",
   "relatedLinks": [
     "plat-tiktok",

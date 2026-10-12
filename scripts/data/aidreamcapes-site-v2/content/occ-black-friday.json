@@ -6,7 +6,7 @@
   "eyebrow": "Black Friday ad creatives",
   "lead": "Black Friday ad creatives are the pictures and videos for your sale. Paste a product link and get an AI script, an actor, and a spoken voice, while you are still setting the discount.",
   "secondary_keywords": [
-    "Black Friday video ads",
+    "Black Friday Video Ads",
     "Black Friday banner ideas",
     "Black Friday sale ads for ecommerce",
     "Cyber Monday ad creatives"
@@ -39,7 +39,7 @@
     },
     {
       "q": "Can my own tools request these ads?",
-      "a": "Yes. An API is a connection that lets your own tools ask for a sale ad from a product link. You approve the file before anyone else sees it."
+      "a": "Yes. Your own tools can also request a sale ad from a product link through the API. You approve the file before anyone else sees it."
     },
     {
       "q": "Can I publish to TikTok, Instagram, or Meta from here?",
@@ -215,69 +215,69 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to create Black Friday banners in 3 simple steps"
+        "h2": "How to Create Black Friday Banners in 3 Simple Steps"
       },
       "m3": {
         "h2": "Choose a Black Friday Ad Creative Scene"
       },
       "faq": {
-        "h2": "Questions about Black Friday ad creatives"
+        "h2": "Questions About Black Friday Ad Creatives"
       }
     }
   },
-  "benefits_h2": "Reasons to use Black Friday video ads",
+  "benefits_h2": "Reasons to Use Black Friday Video Ads",
   "benefits": [
     {
-      "t": "An actor for the sale ad",
+      "t": "An Actor for the Sale Ad",
       "d": "Choose an actor from the library, or describe the age and a deal-day outfit. A short clip of you can become the person who speaks the script.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
-      "t": "A script from the sale page",
+      "t": "A Script From the Sale Page",
       "d": "Paste the product link or describe the deal in a sentence. AIVideosUGC drafts an opening line, the product points, and a short story. You can rewrite any line.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
-      "t": "A spoken voice shoppers can understand",
+      "t": "A Spoken Voice Shoppers Can Understand",
       "d": "Pick an AI voice for the Black Friday message. The same script can be spoken again for shoppers who use another language.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
-      "t": "Several versions, then you pick",
+      "t": "Several Versions, Then You Pick",
       "d": "Make more than one opening and compare the first line, the actor, and the script. Look at what other shops post for the sale, then keep the version you want to run.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa."
     }
   ],
-  "steps_h2": "How to create Black Friday banners in 3 simple steps",
+  "steps_h2": "How to Create Black Friday Banners in 3 Simple Steps",
   "steps_lead": "Paste the sale link, choose an actor, then set the voice, the track, and where it goes live. Credits are what each photo or video uses, and the cost shows before you start.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
-      "label": "sale ad creatives"
+      "label": "Sale Ad Creatives"
     },
     {
       "id": "occ-holidays",
-      "label": "holiday ad photos and videos"
+      "label": "Holiday Ad Photos and Videos"
     },
     {
       "id": "occ-product-launch",
-      "label": "product launch video and photos"
+      "label": "Product Launch Video and Photos"
     },
     {
       "id": "video-ads",
-      "label": "Casual-style AI video ads"
+      "label": "Casual-Style AI Video Ads"
     },
     {
       "id": "tpl-bf",
-      "label": "Black Friday video ads"
+      "label": "Black Friday Video Ads"
     },
     {
       "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "label": "AI Ad Image Generator"
     }
   ],
   "reviews": {
@@ -305,36 +305,36 @@
     ]
   },
   "trust": {
-    "h2": "What you check before the deal goes live",
+    "h2": "What You Check Before the Deal Goes Live",
     "lead": "Confirm the file and the credit cost before the deal goes public.",
     "items": [
       {
-        "t": "You type the offer yourself",
+        "t": "You Type the Offer Yourself",
         "d": "The picture does not include the discount. You type the price, the code, and the end date in the editor, then check every character."
       },
       {
-        "t": "A file for paid ads, with no watermark",
+        "t": "A File for Paid Ads, With No Watermark",
         "d": "The download has no AIVideosUGC watermark. You can use it in paid ads. Each app still has its own ad rules."
       },
       {
-        "t": "The credit cost before you start",
+        "t": "The Credit Cost Before You Start",
         "d": "Credits are what each photo or video uses. A photo uses 24 credits. A video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
       },
       {
-        "t": "Credits come back if it fails",
+        "t": "Credits Come Back If It Fails",
         "d": "If it fails, those credits come back on their own."
       },
       {
-        "t": "The upload stays in your account",
+        "t": "The Upload Stays in Your Account",
         "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "Voice, captions, and a track",
+        "t": "Voice, Captions, and a Track",
         "d": "A spoken voice, automatic captions, and a track from the music library can go out with the clip. You can still change them in the editor before you publish."
       }
     ]
   },
-  "cta_title": "Publish Black Friday sale ads for ecommerce",
+  "cta_title": "Publish Black Friday Sale Ads for Ecommerce",
   "blockOrder": [
     "hero",
     "benefits",

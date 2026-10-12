@@ -12,41 +12,41 @@
     "new background for Etsy photos",
     "AI backdrop for product shots"
   ],
-  "steps_h2": "How to change a product background in 3 simple steps",
+  "steps_h2": "How to Change a Product Background in 3 Simple Steps",
   "steps_lead": "Upload the item, name the new setting, and download a finished photo.",
   "steps": [
     {
-      "t": "Upload your image",
+      "t": "Upload Your Image",
       "d": "Add one photo that shows the whole item. A clear shape around the item helps the new background meet it cleanly."
     },
     {
-      "t": "Describe the new setting",
+      "t": "Describe the New Setting",
       "d": "Name one surface, room, or outdoor place. Keep the note short so the product stays easy to see."
     },
     {
-      "t": "Download your photo",
+      "t": "Download Your Photo",
       "d": "Compare the new setting with the original photo. Download the square image for the store or the ad editor."
     }
   ],
-  "benefits_h2": "Why sellers use this product background changer",
+  "benefits_h2": "Why Sellers Use This Product Background Changer",
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
       "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
-      "t": "24 credits a photo",
+      "t": "24 Credits a Photo",
       "d": "One photo costs 24 credits, shown before you start. If the photo fails, those credits come back. You can also make several backgrounds from that same photo."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
       "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
-      "t": "Check the item's shape",
+      "t": "Check the Item's Shape",
       "d": "The shape should still match the photo you uploaded. Small printed words can change, so compare them before you publish."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
       "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
-      "t": "A sharp finished photo",
-      "d": "You download a square photo with the new setting filled in, and no watermark (no logo stamped on the file). It is not a see-through file with an empty background."
+      "t": "A Sharp Finished Photo",
+      "d": "You download a square photo with the new setting filled in, and no watermark. It is not a see-through file with an empty background."
     }
   ],
   "maker": {
@@ -183,7 +183,7 @@
     "uses": [],
     "titles": {
       "faq": {
-        "h2": "Questions about the AI product background changer"
+        "h2": "Questions About the AI Product Background Changer"
       }
     },
     "input": [
@@ -222,23 +222,23 @@
     "faq"
   ],
   "reasons": {
-    "h2": "When a new background helps the photo",
+    "h2": "When a New Background Helps the Photo",
     "lead": "Start with a quiet surface, a shelf for an ad, or one outdoor table. Use it when the product photo is already fine.",
     "items": [
       {
-        "t": "Show the product first",
+        "t": "Show the Product First",
         "d": "Swap a cluttered counter for a quiet surface, so the listing starts on the product.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Blue ceramic vase on a sunny windowsill."
       },
       {
-        "t": "Match the next ad",
+        "t": "Match the Next Ad",
         "d": "Use a warmer surface or a holiday shelf for the next ad, and keep the product easy to see.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Plain face cream jar on wet stone."
       },
       {
-        "t": "Spend less on the shoot",
+        "t": "Spend Less on the Shoot",
         "d": "Use the photo you already have. A new background does not mean unpacking the product or booking lights.",
         "img": "n:guide:k5-background-case-3",
         "alt": "Brown leather wallet on a cafe table."
@@ -320,6 +320,6 @@
     "product-videos"
   ],
   "benefits_lead": "See the credit cost, check the item against the original, and download a sharp square photo.",
-  "related_h2": "Related tools",
+  "related_h2": "Related Tools",
   "related_lead": "Turn the new photo into an ad or a video, including one with a person presenting the product."
 }

@@ -1507,10 +1507,10 @@ const START_NOTE_PLAIN = START_NOTE_TEXT(`Plans from ${PLANS[0].price} a month`)
 // The closing banner of each list page.
 const INDEX_CTA = {
   templates: { title: "Pick a template and add your product", lead: "Upload one product photo, choose any template and see the cost before you start." },
-  industries: { title: "Make content for your products", lead: "Upload one product photo and pick a template made for your category." },
-  platforms: { title: "Make ads for the platforms you sell on", lead: "Upload one product photo and pick the size for where your ad will run." },
-  blog: { title: "Try it with your own product", lead: "Upload one product photo and turn it into a video ad or store-ready photos." },
-  guides: { title: "Put the guides into practice", lead: "Upload one product photo and try what you just read." }
+  industries: { title: "Make Content for Your Products", lead: "Upload one product photo and pick a template made for your category." },
+  platforms: { title: "Make Ads for the Platforms You Sell On", lead: "Upload one product photo and pick the size for where your ad will run." },
+  blog: { title: "Try It With Your Own Product", lead: "Upload one product photo and turn it into a video ad or store-ready photos." },
+  guides: { title: "Put the Guides Into Practice", lead: "Upload one product photo and try what you just read." }
 };
 
 // The tool each article puts into practice, offered in a box halfway through the article and in its closing banner.
@@ -1528,7 +1528,7 @@ const FLOW_TOOL = {
   phonecase: "lifestyle-photos", yogamat: "lifestyle-photos", hotsauce: "social-ad-photos"
 };
 
-// "Where to go next" links on the simple pages, so each one leads on to the pages a
+// "Where to Go Next" links on the simple pages, so each one leads on to the pages a
 // visitor is most likely to need next.
 const NEXT_LINKS = {
   about: [
@@ -1542,8 +1542,8 @@ const NEXT_LINKS = {
     ["Pricing", "/pricing", "Plans, credits and what each job costs."],
     ["Glossary", "/glossary", "Plain-English definitions for credits, formats and product content."],
     ["Image to Video", "/ai-video-generation/image-to-video", "Start a video from one product photo."],
-    ["Product photo tips", "/guides/product-photo-tips", "How to take a photo that gives good results."],
-    ["Contact support", "/contact-us", "Email us if your question isn't answered here."],
+    ["Product Photo Tips", "/guides/product-photo-tips", "How to take a photo that gives good results."],
+    ["Contact Support", "/contact-us", "Email us if your question isn't answered here."],
     ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
   contact: [
@@ -1558,13 +1558,13 @@ const NEXT_LINKS = {
     ["Glossary", "/glossary", "Understand credits and the formats used across the site."],
     ["Templates", "/templates", "See what your credits can make."],
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
-    ["Contact support", "/contact-us", "Questions about a plan or a charge."]
+    ["Contact Support", "/contact-us", "Questions about a plan or a charge."]
   ],
   trust: [
     ["Privacy Policy", "/privacy", "What we collect and how long we keep it."],
     ["Content Policy", "/content", "What you can and can't upload."],
     ["Refund Policy", "/refunds", "How refund reviews and credit returns work."],
-    ["Contact support", "/contact-us", "Report a problem with a result."],
+    ["Contact Support", "/contact-us", "Report a problem with a result."],
     ["Company Facts", "/ai-info", "The key facts about AIVideosUGC in one place."],
     ["About AIVideosUGC", "/about-us", "Who we are and why we built it."]
   ],
@@ -2112,8 +2112,8 @@ function payloadFor(model, page) {
     const linkedCopy = autoLinkPage(model, page, c.intro, [c.benefits]);
     const hubAppHref = appHref({ tool: "video-ads", size: "9:16", length: "15" }, true);
     const relatedGroups = [
-      { title: "Video templates", links: templateLinksFor(model, "video", 8) },
-      { title: "Channels and campaigns", links: pageLinksFor(model, ["plat-tiktok", "tpl-bf"]) }
+      { title: "Video Templates", links: templateLinksFor(model, "video", 8) },
+      { title: "Channels and Campaigns", links: pageLinksFor(model, ["plat-tiktok", "tpl-bf"]) }
     ];
     const maker = {
       options: c.maker?.options ?? [["Frame", "9:16 · 1:1 · 16:9"], ["Length", "6, 10, or 15 seconds"]],
@@ -2377,7 +2377,7 @@ function payloadFor(model, page) {
     const relatedTemplates = [...templateLinksFor(model, "photo", 6), ...templateLinksFor(model, "video", 6)];
     const realTemplateKeys = CARD_ORDER.filter((key) => model.byId[model.cardByKey[key]?.pageId]?.type === "template");
     return { ...base, intro: c.intro || [], flows, relatedTemplates, cards: pickCards(model, realTemplateKeys, 12), ...(visual ? { visual } : {}),
-      cta: { title: "Make this with your own product", lead: "Upload one product photo and pick the look you liked.", href: "/app/create" } };
+      cta: { title: "Make This With Your Own Product", lead: "Upload one product photo and pick the look you liked.", href: "/app/create" } };
   }
   if (t === "glossary") {
     const entries = (c.entries || []).slice().sort((a, b) => String(a.term).localeCompare(String(b.term))).map((entry) => ({

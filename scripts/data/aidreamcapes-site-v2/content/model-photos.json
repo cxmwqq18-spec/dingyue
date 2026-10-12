@@ -12,70 +12,70 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Get worn photos ready sooner for a new clothing release",
+  "benefits_h2": "Get Worn Photos Ready Sooner for a New Clothing Release",
   "benefits": [
     {
       "img": "n:guide:fx16-model-photos-benefit-studio-r1",
       "alt": "Adult woman with short silver hair wearing a plain heather-gray hoodie in a neutral studio.",
-      "t": "See the piece worn, not only laid flat",
+      "t": "See the Piece Worn, Not Only Laid Flat",
       "d": "Shoppers see the color and the shape on a person. Keep the flat photo beside it for seams and measurements."
     },
     {
       "img": "n:guide:fx16-model-photos-benefit-street-r1",
       "alt": "Adult man with short auburn hair wearing a plain denim jacket on a city sidewalk.",
-      "t": "Make the whole release in one batch",
-      "d": "Upload several photos of clothes laid flat. Reuse one generated person on all of them. Each image uses 24 credits. Credits are the units your plan spends, and you see that number before you start."
+      "t": "Make the Whole Release in One Batch",
+      "d": "Upload several photos of clothes laid flat. Reuse one generated person on all of them. Each image uses 24 credits. You see the credit cost before you start."
     },
     {
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
       "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
-      "t": "Use one worn photo on the page and the ad",
+      "t": "Use One Worn Photo on the Page and the Ad",
       "d": "Put the same item on a product page, a marketplace listing, or a square ad. The person is a generated adult."
     }
   ],
   "more_sections": [
     {
       "eyebrow": "A bigger catalog",
-      "h2": "Make more fashion photos with generated models",
+      "h2": "Make More Fashion Photos With Generated Models",
       "lead": "Make worn photos for a Shopify page or an Amazon listing. Then edit a batch from the same clothing photos.",
       "items": [
         {
           "img": "n:guide:fx16-model-photos-scale-tote-pair-r1",
           "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
           "frame": "none",
-          "t": "Check a bag while it is carried",
+          "t": "Check a Bag While It Is Carried",
           "d": "Put the tote laid flat beside the worn photo and look at the handles, color, and outline. The next bag can go in the same batch."
         },
         {
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
           "alt": "Split view of a plain denim jacket laid flat and the same jacket worn by an adult model.",
           "frame": "none",
-          "t": "Check the jacket at the seams",
+          "t": "Check the Jacket at the Seams",
           "d": "Lay the denim jacket beside the worn photo and look at the collar, seams, and color before you post."
         },
         {
           "img": "n:guide:im13-model-photos-after-r1",
           "alt": "Adult South Asian woman with a tight low bun wearing the same heather-gray pullover hoodie in a bright courtyard.",
           "frame": "none",
-          "t": "Try another room or street",
+          "t": "Try Another Room or Street",
           "d": "Keep the same garment photo and change the courtyard or the sidewalk. A white background or a color option, meaning another color of the same item, can come from that photo too."
         }
       ]
     }
   ],
-  "steps_h2": "How to use AI fashion model photos in 3 steps",
+  "steps_h2": "How to Use AI Fashion Model Photos in 3 Steps",
   "steps_lead": "Upload the garment, choose a generated adult, and download a square photo of it worn.",
   "steps": [
     {
-      "t": "Upload a clothing product photo",
+      "t": "Upload a Clothing Product Photo",
       "d": "Use a photo of the garment laid flat or hanging, with the whole piece visible. Seams and color should be easy to see."
     },
     {
-      "t": "Choose a generated model",
+      "t": "Choose a Generated Model",
       "d": "Pick an adult look, a pose, and a scene. Save that look to reuse. The person is generated, not booked."
     },
     {
-      "t": "Download the worn photo",
+      "t": "Download the Worn Photo",
       "d": "Download the square file for the page or the ad. Keep a size chart beside it. It does not show how it fits."
     }
   ],
@@ -91,7 +91,7 @@
       ],
       [
         "Size",
-        "Square (equal sides)"
+        "Square (1:1)"
       ]
     ],
     "cta": "Show my item on a person"
@@ -125,7 +125,7 @@
     },
     {
       "q": "Can I publish these photos on my store?",
-      "a": "Yes, on a product page or a social post. Keep a plain product photo for measurements. Downloads have no stamped logo. You can use them on your store, in social posts, and in ads."
+      "a": "Yes, on a product page or a social post. Keep a plain product photo for measurements. Downloads have no watermark. You can use them on your store, in social posts, and in ads."
     },
     {
       "q": "Can I choose the look and save it?",
@@ -146,7 +146,7 @@
       "result": "n:guide:ra4-model-photos-steps-result-r1",
       "mode": "photo",
       "prompt": "Show this gray hoodie on an adult man facing the camera on a tree-lined street. Keep the hood, the two drawstrings, the pocket, the seams, and the gray color. Show his face and the whole hoodie.",
-      "sourceTitle": "Your clothing photo",
+      "sourceTitle": "Your Clothing Photo",
       "sourceHint": "Keep the complete hoodie, hood, drawstrings and pocket visible.",
       "options": [
         [
@@ -159,17 +159,17 @@
         ],
         [
           "Size",
-          "Square (equal sides)"
+          "Square (1:1)"
         ]
       ]
     },
     "picker": {
-      "title": "See your garments on generated fashion models",
+      "title": "See Your Garments on Generated Fashion Models",
       "lead": "Start with the garment laid flat or hanging in the photo. Compare the worn photo with the real color and shape before you publish.",
       "chips": [
         {
           "id": "more-looks",
-          "label": "More worn looks"
+          "label": "More Worn Looks"
         },
         {
           "id": "studio",
@@ -244,10 +244,10 @@
     },
     "titles": {
       "faq": {
-        "h2": "Frequently asked questions"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
-        "h2": "See your garments on generated fashion models",
+        "h2": "See Your Garments on Generated Fashion Models",
         "lead": "Start with the garment laid flat or hanging in the photo. Compare the worn photo with the real color and shape before you publish."
       }
     },
@@ -300,131 +300,131 @@
     "related"
   ],
   "benefits_lead": "Upload photos of the clothes laid flat. Skip hiring a model. See each piece on a generated person.",
-  "related_h2": "More tools for product photos",
+  "related_h2": "More Tools for Product Photos",
   "reasons": {
-    "h2": "Use the same worn photos on your site and your marketplaces",
+    "h2": "Use the Same Worn Photos on Your Site and Your Marketplaces",
     "lead": "Keep one generated person so your site, your marketplace, and your lookbook (a set of outfit photos) feel like the same shop.",
     "items": [
       {
-        "t": "Save the person's look and reuse it",
+        "t": "Save the Person's Look and Reuse It",
         "d": "Save a generated adult and a scene in your brand library, the folder of saved looks. Use them on the next release.",
         "icon": "UserCheck"
       },
       {
-        "t": "Cover clothing, jewelry, and eyewear",
+        "t": "Cover Clothing, Jewelry, and Eyewear",
         "d": "Tops, dresses, bags, and [jewelry](page:tpl-jewel) start from a clear product photo. Eyewear works the same way.",
         "icon": "Shirt"
       },
       {
-        "t": "Use one look on the site and the marketplace",
+        "t": "Use One Look on the Site and the Marketplace",
         "d": "The worn photo can go on your page, an [Amazon](page:plat-amazon) listing, or a [Shopify](page:plat-shopify) collection.",
         "icon": "Store"
       },
       {
-        "t": "Hold the pose and the light steady",
+        "t": "Hold the Pose and the Light Steady",
         "d": "Pick the pose and the scene once. The next garment uses them, so you do not hire a new model.",
         "icon": "Sun"
       }
     ]
   },
   "trust": {
-    "h2": "Show how the fabric hangs on a generated person",
+    "h2": "Show How the Fabric Hangs on a Generated Person",
     "lead": "Shoppers see the piece on a body. The photo does not prove a size, and it is not a picture of a real customer.",
     "items": [
       {
-        "t": "See how the fabric hangs, next to the flat photo",
+        "t": "See How the Fabric Hangs, Next to the Flat Photo",
         "d": "Compare fabric, color, and outline with the garment photo before you publish."
       },
       {
-        "t": "Pair it with a flat listing image",
+        "t": "Pair It With a Flat Listing Image",
         "d": "Keep a [white background photo](page:white-background) for measurements. Use the worn photo in the gallery."
       },
       {
-        "t": "Choose the generated adult",
+        "t": "Choose the Generated Adult",
         "d": "Pick a gender, an age, and a body type. The person is generated. Do not present the photo as a real customer."
       },
       {
-        "t": "Do not treat it as a fit guarantee",
+        "t": "Do Not Treat It as a Fit Guarantee",
         "d": "Publish measurements and a size chart with the photo. The image does not show your body. It also does not promise how the fabric will hang."
       }
     ]
   },
   "platforms": {
-    "h2": "Your complete photo toolkit",
+    "h2": "Your Complete Photo Toolkit",
     "lead": "Create, edit, and reuse product images for the page, the marketplace, and the ad.",
     "items": [
       {
-        "t": "Remove a photo background",
+        "t": "Remove a Photo Background",
         "d": "Remove the room and leave a plain background for the listing.",
         "href": "page:white-background",
         "label": "White background photos"
       },
       {
-        "t": "Make a new background",
+        "t": "Make a New Background",
         "d": "Keep the product and describe a studio, a street, or a room behind it.",
         "href": "page:change-background",
         "label": "Change the background"
       },
       {
-        "t": "Place the product in a scene",
+        "t": "Place the Product in a Scene",
         "d": "Show the item in a room or outdoors so shoppers see where it belongs.",
         "href": "page:lifestyle-photos",
         "label": "Lifestyle photos"
       },
       {
-        "t": "Brighten the product shot",
+        "t": "Brighten the Product Shot",
         "d": "Ask for cleaner light, then compare color and seams with the photo you uploaded.",
         "href": "page:photo-hub",
         "label": "Product photo generator"
       },
       {
-        "t": "Show the garment being worn",
+        "t": "Show the Garment Being Worn",
         "d": "Start from the flat photo. The person is generated, and the image does not replace a size chart.",
         "href": "page:tpl-tryon",
         "label": "Try-on template"
       },
       {
-        "t": "Download with no stamped logo",
-        "d": "The file has no stamped logo. You can use it on your store and in ads."
+        "t": "Download With No Stamped Logo",
+        "d": "The file has no watermark. You can use it on your store and in ads."
       },
       {
-        "t": "Check the shot, then run it again",
+        "t": "Check the Shot, Then Run It Again",
         "d": "If a print or a seam looks different, compare it with the photo you uploaded and make the photo again."
       },
       {
-        "t": "Keep the photo square",
+        "t": "Keep the Photo Square",
         "d": "Product photos are square, also called 1:1. A video made from that photo can be a tall phone shape (9:16), a square (1:1), or a wide shape (16:9). It can also be 4:3 (wider than tall) or 3:4 (taller than wide).",
         "href": "page:image-to-video",
         "label": "Image to video"
       },
       {
-        "t": "Connect your store software (API)",
+        "t": "Connect Your Store Software (API)",
         "d": "An API is a connection. Your store software can send clothing photos here and bring the worn photos back to the listing."
       },
       {
-        "t": "Add the price in your editor",
+        "t": "Add the Price in Your Editor",
         "d": "Add the price or a sale offer in your own editor after download. Words the tool writes on the photo can be wrong.",
         "href": "page:social-ad-photos",
         "label": "Social ad photos"
       },
       {
-        "t": "Edit a batch of images",
+        "t": "Edit a Batch of Images",
         "d": "Use the same generated person on each garment you upload, then check every file before you publish."
       },
       {
-        "t": "Share a saved look with your team",
+        "t": "Share a Saved Look With Your Team",
         "d": "The next person continues from the same generated adult and scene, instead of booking another day."
       },
       {
-        "t": "Save looks to reuse later",
+        "t": "Save Looks to Reuse Later",
         "d": "Keep the person, the scene, and the colors in your brand library, the folder of saved looks, for the next release."
       },
       {
-        "t": "Make a simple logo",
+        "t": "Make a Simple Logo",
         "d": "Make a simple logo for the shop, then place it on the ad in your editor after you download."
       },
       {
-        "t": "Start from the browser",
+        "t": "Start From the Browser",
         "d": "Open a worn photo when a listing needs a new picture. You see the credit cost before you start.",
         "href": "page:pricing",
         "label": "Pricing"

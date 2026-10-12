@@ -109,27 +109,27 @@
   "relatedLinks": [
     {
       "id": "tpl-drink",
-      "label": "AI food and drink videos"
+      "label": "AI Food and Drink Videos"
     },
     {
       "id": "tpl-pack",
-      "label": "packaging photo maker"
+      "label": "Packaging Photo Maker"
     },
     {
       "id": "tpl-spark-ads-style-video",
-      "label": "in-feed style product video"
+      "label": "In-Feed Style Product Video"
     },
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "label": "AI Lifestyle Product Photos"
     },
     {
       "id": "white-background",
-      "label": "white background product photos"
+      "label": "White Background Product Photos"
     }
   ],
   "steps_cta": {
@@ -165,32 +165,32 @@
     "lead": "A short pour fits a phone feed. A photo of the pack fits a listing. Publish the clip to TikTok or Meta (Facebook and Instagram) after the pack color checks out.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
         "d": "A tall 9:16 pour or first bite for a snack post on the TikTok home feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "AI Instagram ads",
+        "t": "AI Instagram Ads",
         "d": "A square photo of the pack, or a tall serving video, for the profile grid and for Instagram Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
         "d": "A photo for the feed, with space to add the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
         "d": "A short vertical serving moment, one pour or bite from the first second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
+        "t": "Amazon Product Photos",
         "d": "A clean package image for the listing. Nutrition facts stay in the copy.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
+        "t": "Shopify Product Photos",
         "d": "Matching pack imagery for the product page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -198,7 +198,7 @@
   },
   "reviews": {
     "h2": "How Sellers Use Snack Brand TikTok Videos",
-    "lead": "How food and drink sellers use one package photo or a product link. The hands are generated, not a customer.",
+    "lead": "How food and drink sellers use one package photo or a product link.",
     "items": [
       {
         "example": true,
@@ -263,7 +263,7 @@
     ]
   },
   "cta_title": "Turn a Package Photo Into a Serving",
-  "related_h2": "Pours, packs, and listing photos",
+  "related_h2": "Pours, Packs, and Listing Photos",
   "blockOrder": [
     "hero",
     "strip",
@@ -282,27 +282,27 @@
       "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
       "items": [
         {
-          "t": "A link becomes the pour",
+          "t": "A Link Becomes the Pour",
           "d": "Paste the product page. The job uses the pack on that page and starts a pour, a bite, or a shelf moment."
         },
         {
-          "t": "A presenter from the library",
-          "d": "Choose a made-up presenter for the serving. The hands are not a customer."
+          "t": "A Presenter From the Library",
+          "d": "Choose a made-up presenter for the serving."
         },
         {
-          "t": "Voice and captions included",
+          "t": "Voice and Captions Included",
           "d": "A spoken line and on-screen captions come with the clip. Allergens and ingredients stay on the real package."
         },
         {
-          "t": "A script for one bite",
+          "t": "A Script for One Bite",
           "d": "Ask for a short script about one pour or one bite. Change a word in the editor before you post."
         },
         {
-          "t": "Edit on the same page",
-          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark (no logo stamped on it)."
+          "t": "Edit on the Same Page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a file with no watermark."
         },
         {
-          "t": "Another language, then publish",
+          "t": "Another Language, Then Publish",
           "d": "Make the same pour again in another language, then publish the file to TikTok or Meta."
         }
       ]

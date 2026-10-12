@@ -54,15 +54,15 @@
   "cta_lead": "Paste a product link or upload a photo, pick an AI actor and a voice, and download a TikTok video.",
   "steps": [
     {
-      "t": "Add a product link",
+      "t": "Add a Product Link",
       "d": "Paste a product page link, or upload one photo when you already have the picture."
     },
     {
-      "t": "Select an actor",
+      "t": "Select an Actor",
       "d": "Pick an AI actor we already have, or make a custom one for this shop."
     },
     {
-      "t": "Download or post",
+      "t": "Download or Post",
       "d": "Download the file with no watermark, or send the file to TikTok. You still set the budget there."
     }
   ],
@@ -93,64 +93,64 @@
       ],
       "items": [
         {
-          "t": "Add a product link",
+          "t": "Add a Product Link",
           "d": "Paste a product page link, or upload one photo when you already have the picture."
         },
         {
-          "t": "Select an actor",
+          "t": "Select an Actor",
           "d": "Pick an AI actor we already have, or make a custom one for this shop."
         },
         {
-          "t": "Download or post",
+          "t": "Download or Post",
           "d": "Download the file with no watermark, or send the file to TikTok. You still set the budget there."
         }
       ]
     },
     "titles": {
       "faq": {
-        "h2": "FAQs about the TikTok ad generator"
+        "h2": "FAQs About the TikTok Ad Generator"
       }
     }
   },
-  "benefits_h2": "A simple way to make TikTok ad videos",
+  "benefits_h2": "A Simple Way to Make TikTok Ad Videos",
   "benefits": [
     {
-      "t": "Start the next ad quickly",
+      "t": "Start the Next Ad Quickly",
       "d": "When you want new first seconds, start again from the picture or the product link you already added.",
       "img": "n:guide:fx40-plat-tiktok-benefit-trend",
       "alt": "Hand lifting a coral windbreaker from folded streetwear on a mint tabletop"
     },
     {
-      "t": "A spoken voice for the ad",
+      "t": "A Spoken Voice for the Ad",
       "d": "Add an AI voice and on-screen words in the language you sell in. The credit cost depends on the video length, not the language. Credits are what your monthly plan gives you to spend.",
       "img": "n:guide:fx40-plat-tiktok-benefit-clips",
       "alt": "Hand repositioning a cobalt reusable water bottle beside a tabletop light"
     },
     {
-      "t": "Ready to post on TikTok",
+      "t": "Ready to Post on TikTok",
       "d": "Download a file with no watermark, or send it to TikTok from the editor. Music and on-screen words are already in the file.",
       "img": "n:guide:fx40-plat-tiktok-benefit-ready",
       "alt": "Hand placing a green leaf beside a mint insulated tumbler on a kitchen counter"
     }
   ],
-  "steps_h2": "From a product link to a TikTok ad in 3 steps",
+  "steps_h2": "From a Product Link to a TikTok Ad in 3 Steps",
   "steps_lead": "Paste a link or upload a photo. The credit cost appears before the file is made.",
   "more_sections": [
     {
       "eyebrow": "How the video is made",
-      "h2": "How a TikTok video gets made here",
+      "h2": "How a TikTok Video Gets Made Here",
       "lead": "A product link, a script, an actor, and a download.",
       "items": [
         {
-          "t": "Several videos from one product",
+          "t": "Several Videos From One Product",
           "d": "Make several TikTok videos from one item, so you can try different first seconds without filming again."
         },
         {
-          "t": "Start while the idea is current",
+          "t": "Start While the Idea Is Current",
           "d": "Make a video that fits TikTok while the idea is still fresh. You do not wait for a day to film."
         },
         {
-          "t": "Change the words, voice, or scene",
+          "t": "Change the Words, Voice, or Scene",
           "d": "Try another script, voice, on-screen words, or scene without paying someone to film each change."
         }
       ]
@@ -169,63 +169,63 @@
   ],
   "benefits_lead": "Make the next ad from a picture or a product link, in the tall shape TikTok uses.",
   "reasons": {
-    "h2": "Why sellers use an AI TikTok ads generator",
+    "h2": "Why Sellers Use an AI TikTok Ads Generator",
     "lead": "You are trying first seconds, not booking a film day.",
     "items": [
       {
-        "t": "Skip hiring a video maker",
+        "t": "Skip Hiring a Video Maker",
         "d": "Post a test before you hire anyone. The product on screen is still the one from your photo or link.",
         "icon": "Rocket"
       },
       {
-        "t": "Make several ads at once",
+        "t": "Make Several Ads at Once",
         "d": "Make several TikTok videos from one product, so you are not waiting on someone else to film them.",
         "icon": "Copy"
       },
       {
-        "t": "Another language, same length price",
+        "t": "Another Language, Same Length Price",
         "d": "Write the script and the voice in another language. The number of credits depends on the seconds, not the language.",
         "icon": "Languages"
       }
     ]
   },
   "platforms": {
-    "h2": "Make video ads for your other channels too",
+    "h2": "Make Video Ads for Your Other Channels Too",
     "lead": "TikTok is one place to post. The same product can start a file for other channels, including one you post on Instagram or Facebook.",
     "items": [
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
         "d": "A square photo or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
         "d": "A square photo for Facebook, or a tall video that fills the screen.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "A tall short video. A wide ad that plays in the YouTube player is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon product photos",
-        "label": "Amazon product photos",
+        "t": "Amazon Product Photos",
+        "label": "Amazon Product Photos",
         "d": "A plain main image, a detail, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify product photos",
-        "label": "Shopify product photos",
+        "t": "Shopify Product Photos",
+        "label": "Shopify Product Photos",
         "d": "Square photos for the page and the collection, and a video you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
         "d": "Open the full channel list and choose where the next file will run.",
         "href": "/platforms"
       }
@@ -297,7 +297,7 @@
       }
     ]
   },
-  "related_h2": "Related tools for a TikTok ad",
+  "related_h2": "Related Tools for a TikTok Ad",
   "related_lead": "Open the link tool, the actor tool, or a template once the product is added.",
   "relatedLinks": [
     "video-ads",

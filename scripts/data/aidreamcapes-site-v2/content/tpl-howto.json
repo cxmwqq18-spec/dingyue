@@ -13,7 +13,7 @@
     "instructional product video"
   ],
   "steps_h2": "How to Make a Product How-To Video in 3 Simple Steps",
-  "steps_lead": "You need one photo, one short task line, and a file you can post. Credits are the points a paid plan spends, and the step shows how many.",
+  "steps_lead": "You need one photo, one short task line, and a file you can post. The step shows how many credits it uses.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -76,7 +76,7 @@
     },
     {
       "q": "What does the clip cost?",
-      "a": "Credits are the points your plan spends. A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark (no logo stamped on the file)."
+      "a": "A video costs 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before you start. If it fails, those credits come back. The download has no watermark."
     },
     {
       "q": "Can I run the file in ads?",
@@ -197,7 +197,7 @@
         },
         {
           "id": "ugc",
-          "label": "Shopper-style"
+          "label": "Shopper-Style"
         },
         {
           "id": "viral",
@@ -556,27 +556,27 @@
   "relatedLinks": [
     {
       "id": "product-videos",
-      "label": "AI product video generator"
+      "label": "AI Product Video Generator"
     },
     {
       "id": "tpl-home",
-      "label": "home product videos"
+      "label": "Home Product Videos"
     },
     {
       "id": "tpl-launch",
-      "label": "AI promo video maker"
+      "label": "AI Promo Video Maker"
     },
     {
       "id": "tpl-compare",
-      "label": "product comparison video"
+      "label": "Product Comparison Video"
     },
     {
       "id": "plat-youtube-shorts",
-      "label": "YouTube Shorts ads"
+      "label": "YouTube Shorts Ads"
     },
     {
       "id": "ind-home-living",
-      "label": "AI product videos for home brands"
+      "label": "AI Product Videos for Home Brands"
     }
   ],
   "blockOrder": [
@@ -664,7 +664,7 @@
     "title": "What Is an AI How-To Video?",
     "paras": [
       "An AI how-to video shows one product task a shopper can follow, from the setup to the result.",
-      "Start with a photo or a product link. Add a short script (the words), an AI voice, captions, and an AI actor if the task needs a person. The download has no watermark (no logo stamped on the file), and you can use it in ads and on your pages."
+      "Start with a photo or a product link. Add a short script (the words), an AI voice, captions, and an AI actor if the task needs a person. The download has no watermark, and you can use it in ads and on your pages."
     ]
   },
   "more_sections": [
@@ -674,27 +674,27 @@
       "lead": "The same photo can carry a voice, a script, and an actor.",
       "items": [
         {
-          "t": "AI voice",
+          "t": "AI Voice",
           "d": "A voice can read the task out loud, so the shopper hears each move."
         },
         {
-          "t": "Auto captions",
+          "t": "Auto Captions",
           "d": "Words on the screen can name the step while the clip plays."
         },
         {
-          "t": "AI script",
+          "t": "AI Script",
           "d": "Ask for a short script, then edit the line before the clip is made."
         },
         {
-          "t": "Actor library",
+          "t": "Actor Library",
           "d": "Choose an AI actor to show the task. Post the clip as your shop's ad."
         },
         {
-          "t": "Link, many photos, and API",
+          "t": "Link, Many Photos, and API",
           "d": "Paste a product link, run one task on many photos at once, or start them from your own software (the API)."
         },
         {
-          "t": "Editor, music, and languages",
+          "t": "Editor, Music, and Languages",
           "d": "Trim in the built-in editor, pick a track from the music library, and repeat the task in another language."
         }
       ]
@@ -705,32 +705,32 @@
     "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before you start.",
     "items": [
       {
-        "t": "AI TikTok ads generator",
-        "label": "AI TikTok ads generator",
+        "t": "AI TikTok Ads Generator",
+        "label": "AI TikTok Ads Generator",
         "d": "Publish the how-to to TikTok in one step, in a tall phone shape.",
         "href": "page:plat-tiktok"
       },
       {
-        "t": "AI Instagram ads",
-        "label": "AI Instagram ads",
+        "t": "AI Instagram Ads",
+        "label": "AI Instagram Ads",
         "d": "Send a tall or square how-to to Instagram.",
         "href": "page:plat-instagram"
       },
       {
-        "t": "AI Facebook ad generator",
-        "label": "AI Facebook ad generator",
+        "t": "AI Facebook Ad Generator",
+        "label": "AI Facebook Ad Generator",
         "d": "Send the same how-to to Facebook in one step.",
         "href": "page:plat-facebook"
       },
       {
-        "t": "YouTube Shorts ads",
-        "label": "YouTube Shorts ads",
+        "t": "YouTube Shorts Ads",
+        "label": "YouTube Shorts Ads",
         "d": "Download a tall file for YouTube Shorts, or a wide file when the post needs it.",
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "AI ads and product photos by platform",
-        "label": "AI ads and product photos by platform",
+        "t": "AI Ads and Product Photos by Platform",
+        "label": "AI Ads and Product Photos by Platform",
         "d": "Open the channel list when the next post is not one of these four.",
         "href": "page:platforms"
       }

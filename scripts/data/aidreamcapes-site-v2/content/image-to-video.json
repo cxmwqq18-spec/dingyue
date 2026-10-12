@@ -4,7 +4,7 @@
   "description": "Turn a product photo into a phone-style video with a script, an AI person, a spoken voice and captions. Post to TikTok or Meta, or download with no watermark.",
   "h1": "AI Image to Video Generator: From a Still to an Ad",
   "eyebrow": "Image to video",
-  "lead": "AIVideosUGC turns a product photo into a short ad with a casual phone-video look (called UGC). You get one motion, a script, an AI person on screen (an avatar, not a real customer), a spoken voice and captions. No camera crew. Pick a video shape: tall 9:16, square 1:1 or wide 16:9. 4:3 is a little wide, and 3:4 is a little tall. Pick 6, 10, 15 or 30 seconds. Then post to TikTok or Meta (Facebook and Instagram), or download the file with no watermark.",
+  "lead": "AIVideosUGC turns a product photo into a short ad with a casual phone-video look (UGC style). You get one motion, a script, an AI actor on screen, a spoken voice and captions. No camera crew. Pick a video shape: tall 9:16, square 1:1 or wide 16:9. Pick 6, 10, 15 or 30 seconds. Then post to TikTok or Meta (Facebook and Instagram), or download the file with no watermark.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
@@ -30,7 +30,7 @@
       "d": "Reuse that photo in 9:16, 1:1, 16:9, 4:3 or 3:4 for a feed, a listing or a product page."
     }
   ],
-  "steps_h2": "How to Make a Video from a Photo in 3 Simple Steps",
+  "steps_h2": "How to Make a Video From a Photo in 3 Simple Steps",
   "steps_lead": "Share the idea, answer a few questions, and download a phone-style clip.",
   "steps": [
     {
@@ -43,7 +43,7 @@
     },
     {
       "t": "Get a Phone-Style Video",
-      "d": "You get a script, an AI person, a spoken voice, captions, scenes and extra shots, ready for an ad."
+      "d": "You get a script, an AI actor, a spoken voice, captions, scenes and extra shots, ready for an ad."
     }
   ],
   "maker": {
@@ -66,7 +66,7 @@
   "faq": [
     {
       "q": "What is an AI image to video tool?",
-      "a": "It turns a product photo into a moving video with a casual phone-video look (called UGC). You can add a script, an AI person, a spoken voice, captions and a song from the music library. Then post it, or download it with no watermark."
+      "a": "It turns a product photo into a moving video with a casual phone-video look (UGC style). You can add a script, an AI actor, a spoken voice, captions and a song from the music library. Then post it, or download it with no watermark."
     },
     {
       "q": "How does a photo become a video?",
@@ -74,7 +74,7 @@
     },
     {
       "q": "What do you gain by making video from a photo?",
-      "a": "You can make several versions from a photo you already sell. Credits are the points a video spends. A 6-second clip is 24 credits. Starter is $24.50 a month for 200 credits. You are not booking a filming day. The same photo can run as tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4."
+      "a": "You can make several versions from a photo you already sell. A 6-second clip is 24 credits. Starter is $24.50 a month for 200 credits. You are not booking a filming day. The same photo can run as tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4."
     },
     {
       "q": "Can I post these clips on social?",
@@ -86,15 +86,15 @@
     },
     {
       "q": "Can I make explainers and tutorials?",
-      "a": "Yes. Use the same AI person and script to explain a feature or a short how-to. Each lesson then looks the same."
+      "a": "Yes. Use the same AI actor and script to explain a feature or a short how-to. Each lesson then looks the same."
     },
     {
       "q": "Can I add a spoken voice or a person on screen?",
-      "a": "Yes. A script writer, a spoken voice, captions and the actor library are included. The actor library is a set of ready-made AI people. You can speak the script in another language. You can swap a song from the music library. You can trim the clip in the built-in editor. An API is a connection that lets your own tools start the same job."
+      "a": "Yes. A script writer, a spoken voice, captions and the actor library are included. You can speak the script in another language. You can swap a song from the music library. You can trim the clip in the built-in editor. Your own tools can also start the same job through the API."
     },
     {
       "q": "Which shapes and lengths can I pick?",
-      "a": "Pick a video shape: tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4. 4:3 is a little wide, and 3:4 is a little tall. Lengths are 6, 10, 15 or 30 seconds. Those cost 24, 40, 60 or 120 credits, in that order. Credits are the points a video spends. If a video fails, those credits come back."
+      "a": "Pick a video shape: tall 9:16, square 1:1, wide 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds. Those cost 24, 40, 60 or 120 credits, in that order. If a video fails, those credits come back."
     }
   ],
   "cta_lead": "Upload a product photo or paste a link, and see the credit cost before you start.",
@@ -113,7 +113,7 @@
     },
     {
       "t": "Explainers and How-To Clips",
-      "d": "Show a feature or a short how-to with the same AI person and script each time, so the lesson stays clear."
+      "d": "Show a feature or a short how-to with the same AI actor and script each time, so the lesson stays clear."
     }
   ],
   "visual": {
@@ -124,7 +124,7 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. The camera moves in a little. An AI person adds a one-line spoken voice, and captions name the mug. Keep the mug's shape, color and label as in the photo."
+      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. The camera moves in a little. An AI actor adds a one-line spoken voice, and captions name the mug. Keep the mug's shape, color and label as in the photo."
     },
     "picker": {
       "title": "Product Photo to Video Examples",
@@ -157,7 +157,7 @@
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-example-03",
         "h": "Explainers and How-To Clips",
-        "d": "Show a feature or a short how-to with the same AI person and script each time, so the lesson stays clear."
+        "d": "Show a feature or a short how-to with the same AI actor and script each time, so the lesson stays clear."
       }
     ],
     "input": [],
@@ -194,24 +194,24 @@
     "items": [
       {
         "t": "Looks Like a Phone Video",
-        "d": "The clip shows your product and an AI person, with a line that sounds like a tip from a friend. That person is not a real customer.",
+        "d": "The clip shows your product and an AI actor, with a line that sounds like a tip from a friend.",
         "icon": "Smartphone"
       },
       {
         "t": "The Next Test Without Filming",
-        "d": "Change the motion, the AI person or the spoken line, and keep the same photo. The next test does not need a filming day.",
+        "d": "Change the motion, the AI actor or the spoken line, and keep the same photo. The next test does not need a filming day.",
         "icon": "Zap"
       },
       {
         "t": "Credits, Not a Filming Bill",
-        "d": "Credits are the points each video spends. A 6-second clip is 24 credits, and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before you start.",
+        "d": "A 6-second clip is 24 credits, and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before you start.",
         "icon": "Coins"
       }
     ]
   },
   "benefits_lead": "More versions from a photo you already sell, at a credit price you can see first.",
   "related_h2": "Related Tools",
-  "related_lead": "An AI person, a product link, phone-style ads, and the apps you post on.",
+  "related_lead": "An AI actor, a product link, phone-style ads, and the apps you post on.",
   "relatedLinks": [
     "spokesperson-videos",
     "url-to-video",
@@ -263,13 +263,13 @@
   },
   "reviews": {
     "h2": "How Shops Use AI Image to Video",
-    "lead": "How a shop uses one product photo when it needs a moving ad, an AI person or a second language.",
+    "lead": "How a shop uses one product photo when it needs a moving ad, an AI actor or a second language.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Balm in motion",
-        "d": "A beauty shop turns a balm photo into a phone-style clip, with an AI person and a short spoken voice, for a paid ad test."
+        "d": "A beauty shop turns a balm photo into a phone-style clip, with an AI actor and a short spoken voice, for a paid ad test."
       },
       {
         "example": true,
@@ -281,13 +281,13 @@
         "example": true,
         "who": "Apparel shop",
         "t": "Shirt in hand",
-        "d": "An apparel shop has an AI person hold the shirt so shoppers can see how the fabric hangs, then posts the clip."
+        "d": "An apparel shop has an AI actor hold the shirt so shoppers can see how the fabric hangs, then posts the clip."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Pump and a line",
-        "d": "A skincare shop picks an AI person from the actor library, a set of ready-made faces, to press the pump and read a short script."
+        "d": "A skincare shop picks an AI actor from the actor library, a set of ready-made faces, to press the pump and read a short script."
       },
       {
         "example": true,
@@ -305,7 +305,7 @@
         "example": true,
         "who": "Agency",
         "t": "A Custom Face for a Client",
-        "d": "An agency builds a custom AI person for a client and reuses that face on the next product video."
+        "d": "An agency builds a custom AI actor for a client and reuses that face on the next product video."
       },
       {
         "example": true,
@@ -317,7 +317,7 @@
         "example": true,
         "who": "New seller",
         "t": "Link, then a clip",
-        "d": "A new seller pastes a product link and gets a script, an AI person and a clip without filming."
+        "d": "A new seller pastes a product link and gets a script, an AI actor and a clip without filming."
       },
       {
         "example": true,

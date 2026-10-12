@@ -42,7 +42,7 @@
       "d": "Download the square file. It has no watermark, nothing stamped on it. Compare it with your design and a sample print before you approve."
     }
   ],
-  "steps_h2": "Make a Shelf Preview from One Package Photo in 3 Steps",
+  "steps_h2": "Make a Shelf Preview From One Package Photo in 3 Steps",
   "steps_lead": "One photo of the real package, one scene, then a square file you compare with a sample print.",
   "faq": [
     {
@@ -133,7 +133,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-to"
+          "label": "How-To"
         },
         {
           "id": "financial-services",
@@ -173,7 +173,7 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-style"
+          "label": "Creator-Style"
         },
         {
           "id": "viral",
@@ -522,7 +522,7 @@
       "result": "n:f15-r10-tpl-pack-steps-open-r1",
       "mode": "photo",
       "prompt": "A plain paper coffee pouch sits on a cafe counter with the front panel facing forward.",
-      "sourceTitle": "Your product"
+      "sourceTitle": "Your Product"
     },
     "input": [],
     "outputs": [],
@@ -617,27 +617,27 @@
   "relatedLinks": [
     {
       "id": "photo-hub",
-      "label": "AI product photo generator"
+      "label": "AI Product Photo Generator"
     },
     {
       "id": "tpl-drink",
-      "label": "AI food and drink videos"
+      "label": "AI Food and Drink Videos"
     },
     {
       "id": "tpl-spark-ads-style-video",
-      "label": "TikTok post ad (Spark Ads style)"
+      "label": "TikTok Post Ad (Spark Ads Style)"
     },
     {
       "id": "tpl-box",
-      "label": "product bundle photos"
+      "label": "Product Bundle Photos"
     },
     {
       "id": "ind-food-drinks",
-      "label": "AI food and drink product videos"
+      "label": "AI Food and Drink Product Videos"
     },
     {
       "id": "plat-shopify",
-      "label": "Shopify product photos"
+      "label": "Shopify Product Photos"
     }
   ],
   "cta_title": "Ready to Preview the Pack on a Shelf?",
@@ -650,32 +650,32 @@
       "items": [
         {
           "icon": "play",
-          "t": "Spoken voice, words on screen, and music",
+          "t": "Spoken Voice, Words on Screen, and Music",
           "d": "On the video, add a spoken voice, words on screen, and a track from the music library. The preview itself is a still."
         },
         {
           "icon": "users",
-          "t": "AI actors and a digital twin",
+          "t": "AI Actors and a Digital Twin",
           "d": "An AI actor, a generated person, can hold the pack in the video. A digital twin, that same person, can return for the next version. They are not buyers."
         },
         {
           "icon": "sparkle",
-          "t": "A script from a line or a link",
+          "t": "A Script From a Line or a Link",
           "d": "Ask for a short script, the words to say. Or paste a product page link and start from that page's package photo."
         },
         {
           "icon": "layers",
-          "t": "A batch of versions from one scene",
+          "t": "A Batch of Versions From One Scene",
           "d": "Make a second pack in the same shelf scene when you want to compare the front. Each photo is 24 credits, shown first. Credits are what the job spends."
         },
         {
           "icon": "check",
-          "t": "Edit the clip, then publish",
+          "t": "Edit the Clip, Then Publish",
           "d": "Trim the clip in the editor, then post it to TikTok or Meta (Facebook and Instagram). The file has no watermark, nothing stamped on it."
         },
         {
           "icon": "globe",
-          "t": "Another language, or the catalog API",
+          "t": "Another Language, or the Catalog API",
           "d": "Speak the line in another language. Or use the API so your product list can start the next preview."
         }
       ]
