@@ -4,7 +4,7 @@
   "description": "A product content blog for small shops: photos for a product page, short ads, and launch clips. Use a ready-made ad with words, a voice, and a person on screen.",
   "h1": "An Ecommerce Product Content Blog for Small Shops",
   "eyebrow": "Seller articles",
-  "lead": "Five guides cover product-page photos, short ads, launch clips, and the last look before you publish. When a guide points at a layout, drop in your product and get a script, a voice, and an avatar.",
+  "lead": "This ecommerce product content blog has five guides on product-page photos, short ads, launch clips, and the last look before you publish. Drop in your product and get a script, a voice, and an avatar.",
   "card": "Articles on product photos, short ads, and launches.",
   "secondary_keywords": [
     "product photo tips for online stores",
@@ -13,7 +13,7 @@
     "AI product content tips"
   ],
   "intro": [
-    "You get a still for the product page, or a clip that talks, from a guide that names the tool. These five pieces are for a shop that writes its own captions and photographs its own goods. You bring the item.",
+    "You get a product-page still, or a clip that talks, from a guide that names the tool. These five pieces are for a shop that writes its own captions and photographs its own goods. You bring the item.",
     "Open the guide that matches the job, then open the tool it names. Paste a [product link](page:url-to-video), choose a face in the [actor library](page:ai-actors), or begin from a layout in the [template gallery](page:templates). Downloads do not carry a watermark. [Plans are on the pricing page](page:pricing)."
   ],
   "faq": [
@@ -51,7 +51,7 @@
     },
     {
       "q": "Do I pay before I can use a layout?",
-      "a": "Yes. Layouts sit on a paid plan. Starter is $24.50 a month for 200 credits. Credits pay for each photo or video, and the cost shows before every job."
+      "a": "Yes. Layouts sit on a paid plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits pay for each photo or video, and the cost shows before every job."
     },
     {
       "q": "Can I use the file in a paid ad?",
@@ -79,23 +79,23 @@
     "industries"
   ],
   "steps_h2": "How to Turn a Guide Into a Posted Ad",
-  "steps_lead": "You get a file you can post, with the price typed in the app you already use.",
+  "steps_lead": "You get a file you can post, and you type the price in the app you already use.",
   "steps": [
     {
       "t": "Pick the Article",
-      "d": "Open the piece that matches the job: stills for a product page, a short ad, a launch clip, or the check before anything goes live."
+      "d": "Open the guide that matches the job: a product still, a short ad, or a launch clip. You leave with the next file to make."
     },
     {
       "t": "Make One File",
-      "d": "Upload one clear photo in the tool the guide names. You see the credit cost for the still or clip before it runs."
+      "d": "Upload one clear photo in the tool the guide names. You see the credit cost for the still or the clip before it runs."
     },
     {
       "t": "Download and Post",
-      "d": "Save the file, add the price and caption in the app you already use, then publish to your store or ad account."
+      "d": "Save the file, add the price and caption in the app you already use, then publish it to your store or your ad account."
     }
   ],
-  "related_h2": "Tools the Guides Send You To",
+  "related_h2": "Open the Tool the Guide Names",
   "related_lead": "The guides land you in the tool that finishes the file, or in layouts and shop categories.",
-  "cta_title": "Put Your Product on a Layout You Like",
+  "cta_title": "Start From a Layout You Like",
   "cta_lead": "Open a guide, add one product photo, and check the credit cost before anything is rendered."
 }

@@ -4,7 +4,7 @@
   "description": "Turn one garment photo into a try-on, a fit check, or a short look. Download watermark-free photos and clips for fashion brands, social feeds, and paid ads.",
   "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
   "eyebrow": "Clothing",
-  "lead": "A buyer hesitates on a wool coat until she can see the hem move. Upload the flat photo and an AI avatar can walk it down a hallway.",
+  "lead": "AI model photos and videos for fashion brands start from one flat photo. A buyer trusts a wool coat once the hem moves, and an AI avatar can walk it down a hallway with no casting day.",
   "card": "Try-ons, fit checks, outfit photos, and review-style clips from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
@@ -16,11 +16,11 @@
   "faq": [
     {
       "q": "Can one garment photo make both a vertical clip and a listing image?",
-      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing it. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
+      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing the piece. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
     },
     {
       "q": "Can a flat-lay photo become a photo of someone wearing the piece?",
-      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the avatar and the room."
+      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the avatar and the room. You can pick from 53 AI actors when you want a face that already exists."
     },
     {
       "q": "Will the print or the fabric change?",
@@ -28,45 +28,45 @@
     },
     {
       "q": "Can I show a plus-size or petite build?",
-      "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for the ad."
+      "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for that ad, and you can ask again if the outline is off."
     },
     {
       "q": "What photo works when someone should appear in the clothes?",
-      "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear."
+      "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear before you start."
     },
     {
       "q": "How do I keep the fabric color accurate?",
-      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words."
+      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words so the file can be checked against the sample."
     },
     {
       "q": "Can I run the clips as paid clothing ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Size and fabric details have to match the real item."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Size and fabric details have to match the real garment you ship."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "You pick an AI avatar and pay the credits shown before the job, not a creator fee. Post the clip as an ad."
+      "a": "You pick an AI avatar and pay the credits shown before the job, not a creator fee. Post the clip as an ad once the hem and the color match the sample."
     },
     {
       "q": "Can a try-on include a voice and captions?",
-      "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook."
+      "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     }
   ],
-  "templates_lead": "Pick a try-on, a fit check, a review-style clip, or a fabric close-up.",
-  "cta_lead": "The next drop can go on an AI avatar from one garment photo.",
+  "templates_lead": "Pick a try-on, a fit check, a review-style clip, or a close look at the cloth.",
+  "cta_lead": "The next drop can go on an AI avatar from one garment photo, with the credit cost on screen first.",
   "steps_h2": "Short Fashion Outfit Videos in Three Steps",
-  "steps_lead": "You download an ad you can post. Lay the piece out, then choose who wears it.",
+  "steps_lead": "You download an ad you can post. Lay the hoodie and sweatpants out, then choose who wears the set.",
   "steps": [
     {
       "t": "Add the Garment Photo or Link",
-      "d": "Spread the linen shirt on a bed, front up, sleeves in frame. That photo is the piece the try-on uses."
+      "d": "Lay the pale blue hoodie and sweatpants flat, front up, both pieces in frame. That photo is what the try-on wears."
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "Describe a taller frame if the line is long. You can change the face before the clip is made."
+      "d": "Pick an AI avatar, and describe a taller frame if the line runs long. You can change the face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "Download the file and put it where that shop already sells."
+      "d": "Add a spoken voice and captions that name the fabric. Then download the file and post it where the shop already sells."
     }
   ],
   "visual": {
@@ -110,20 +110,20 @@
   },
   "reasons": {
     "h2": "When a Drop Cannot Wait on a Fitting",
-    "lead": "The next color can still be shown on a body if the fitting from Tuesday never happened.",
+    "lead": "The next color can still be shown on a body when the fitting never happened. You skip the casting day and the invoice.",
     "items": [
       {
-        "t": "Faster Than a Casting Day",
+        "t": "Skip the Casting Day",
         "d": "A striped knit can leave as a try-on from the flat photo alone. The credit cost is on screen before the job runs, so the test does not start with a model invoice.",
         "img": "n:guide:fx30-fashion-benefit-fit-r1"
       },
       {
-        "t": "Looks for Every Channel",
-        "d": "A flat photo can also make the still for the product page. The second file does not wait on a separate crew.",
+        "t": "One Photo, Every Channel",
+        "d": "A flat photo can also make the still for the product page. The second file does not wait on a separate crew or a second booking.",
         "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Help the Shopper Decide",
+        "t": "Show How the Piece Moves",
         "d": "Let the jacket turn once so the buyer sees the lining, then send her to the product page. She sees how it moves and has a place to buy it.",
         "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
@@ -131,11 +131,11 @@
   },
   "platforms": {
     "h2": "Where a Try-On Can Run",
-    "lead": "One flat lay can feed a phone feed and a product page. Match the shape to the place.",
+    "lead": "One flat lay can feed a phone feed and a product page. Match the shape to the place you already sell.",
     "items": [
       {
         "t": "TikTok Try-Ons",
-        "d": "A tall phone video of a turn or a short walk for a clothing ad in the TikTok feed.",
+        "d": "A tall TikTok video of one turn or a short walk, made from the garment photo you already have.",
         "href": "/platforms/tiktok-ads"
       },
       {
@@ -145,12 +145,12 @@
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed image with room to add the offer after you download.",
+        "d": "A feed image with room to add the offer after you download the file.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Looks",
-        "d": "A short vertical look that opens on one turn.",
+        "d": "A short vertical look that opens on one full turn of the piece.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -160,7 +160,7 @@
       },
       {
         "t": "Shopify Outfit Photos",
-        "d": "Worn photos and flat lays that match across the collection.",
+        "d": "Worn photos and flat lays that match across the whole collection.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -231,7 +231,7 @@
       }
     ]
   },
-  "cta_title": "Put the Next Drop on a Model",
+  "cta_title": "Put the Next Drop on an Avatar",
   "relatedLinks": [
     {
       "id": "tpl-outfit",
@@ -274,19 +274,19 @@
     {
       "eyebrow": "With the clip",
       "h2": "What a Clothing Ad Can Include",
-      "lead": "A spoken line can come with the try-on, so the ad is ready to post.",
+      "lead": "A spoken line can come with the try-on, so the ad is ready to post on the channel you already use.",
       "items": [
         {
           "t": "A Product Link Opens the Try-On",
-          "d": "A product page is enough to start a turn, a short walk, or a closer look."
+          "d": "A product page is enough to start a turn, a short walk, or a closer look at the cloth."
         },
         {
           "t": "An Avatar From the Library",
-          "d": "Name the build in a few words and an AI avatar wears the skirt."
+          "d": "Name the build in a few words and an AI avatar wears the hoodie. The library holds 53 AI actors."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "Captions can still name the fabric when the sound is off."
+          "d": "A voice can name the fabric, and captions can still say it when the sound is off."
         },
         {
           "t": "A Script for the Look",

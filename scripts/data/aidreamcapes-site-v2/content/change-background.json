@@ -4,7 +4,7 @@
   "description": "Change a product photo background from one clear image. Keep the item recognizable, create a new setting for listings or ads, and avoid another studio shoot.",
   "h1": "AI product background changer for a new setting",
   "eyebrow": "Photo tool",
-  "lead": "The bottle is fine. The kitchen behind it is not. Ask for a stone slab, and the photo stays the bottle you sell. One photo is 24 credits, shown before you start.",
+  "lead": "The vase is fine. The room behind it is not. Name pale wood, and the AI product background changer keeps the vase you sell. One photo is 24 credits, shown before you start.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -13,40 +13,40 @@
     "AI backdrop for product shots"
   ],
   "steps_h2": "How to Change a Product Background in 3 Simple Steps",
-  "steps_lead": "The bottle you already photographed is the start.",
+  "steps_lead": "You get a new setting behind the same vase, from the photo you already took.",
   "steps": [
     {
       "t": "Upload Your Image",
-      "d": "A side-on photo of a soap bottle, with the whole bottle in frame, is enough."
+      "d": "Upload a side photo of the blue ceramic vase with the whole vase in frame. That photo is the product the new setting keeps."
     },
     {
       "t": "Describe the New Setting",
-      "d": "Say stone slab, or a pale wood counter. A short ask keeps the bottle easy to see."
+      "d": "Say pale wood, a linen shelf, or a shaded garden table. You get the same vase with that setting filled in behind it."
     },
     {
       "t": "Download Your Photo",
-      "d": "Save the square for the listing, or take the finished photo into an ad."
+      "d": "Download the square with no watermark and use it on the listing. You can also take that vase photo into an ad."
     }
   ],
-  "benefits_h2": "AI Product Background Changer Benefits",
+  "benefits_h2": "Why This Background Swap Holds Up",
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
       "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall.",
-      "t": "Create a New Background With Credits",
-      "d": "A new backdrop is a short job, not a studio booking. If the photo fails, those credits come back."
+      "t": "Save the Hours and the Fee",
+      "d": "A pale wood studio table behind the vase is a short job, not a studio booking. If the photo fails, those credits come back."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
       "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage.",
-      "t": "Keep Product Details in View",
-      "d": "The new setting leaves the label in the frame, so the product is easier to recognize."
+      "t": "Keep Edges and Small Details",
+      "d": "The seasonal shelf leaves the vase rim and the blue color in frame, so the product is still easy to recognize."
     },
     {
       "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
       "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage.",
-      "t": "Download a Finished Product Photo",
-      "d": "The download is a finished photo with the setting painted in, and it has no watermark. It is not an empty cutout."
+      "t": "Download a Sharp Finished Photo",
+      "d": "The garden-table photo is a finished file with the setting already in it, and it has no watermark. It is sharp enough for a listing or a paid ad."
     }
   ],
   "maker": {
@@ -68,60 +68,44 @@
   },
   "faq": [
     {
-      "q": "What happens to the old room in my photo?",
-      "a": "It removes the old room and fills that space with a setting you name. A soap bottle on a messy counter can come back on a gray sweep."
+      "q": "What is an AI product background changer?",
+      "a": "It finds the product in your photo and replaces the room behind it. A blue ceramic vase on a messy counter can come back on pale wood, and the vase stays the one you sell."
     },
     {
-      "q": "Does the AI product background changer include a background library?",
-      "a": "No. There is no free backdrop library. Describe the surface you want; one photo costs 24 credits, shown before you start, and a failed job returns those credits."
+      "q": "Where do I get backgrounds for a product photo?",
+      "a": "Yes. Choose a ready setting, such as pale wood or a shaded garden table, or describe a surface in one short line. One photo is 24 credits, shown before you start, and a failed job returns those credits."
     },
     {
-      "q": "What should I check on the first photo?",
-      "a": "Check whether the soap bottle still looks like the one on your shelf. The credit cost is on screen before the photo is made."
+      "q": "How sharp is the cut around the product?",
+      "a": "Check the vase rim against the photo you uploaded. The new setting should leave the shape and the color alone, and the credit cost is on screen before the photo is made."
     },
     {
-      "q": "What prompt should I use to change a product photo background?",
-      "a": "Name one surface, such as pale wood under a candle. You get a square with that wood filled in behind the candle."
+      "q": "How do I add a background to a photo online?",
+      "a": "Upload the vase photo and name one surface, such as pale wood. You get a square with that wood filled in behind the vase, ready to put on the listing."
     },
     {
-      "q": "Can the area behind the product become white?",
-      "a": "Yes. Ask for white and you get a finished photo of the item on white, not an empty cutout. A studio table is a different ask."
+      "q": "How do I replace a product background online?",
+      "a": "Upload the product photo. The old room comes off, and you can place white, a studio table, or a setting you name behind it. You download a finished photo."
     },
     {
       "q": "Can I make a new background for an Etsy photo?",
-      "a": "Yes. Upload one product photo, name the surface or the room, and download the square. The cost shows before the job starts."
+      "a": "Yes. Upload one vase photo, name the surface or the room, and download the square. The cost shows before the job starts, and a failed job returns those credits."
     },
     {
       "q": "Will the product itself change?",
-      "a": "The product should keep its angle and shape. Small printed words can shift, so compare the label with the photo you uploaded."
+      "a": "The vase should keep its angle, color, and shape. Small printed words can shift, so compare the result with the photo you uploaded before you list it."
     },
     {
-      "q": "Can I download a transparent product image?",
-      "a": "No. You download a finished photo with the new setting already filled in. For a plain main photo, make a separate white image."
+      "q": "Can the new photo become a video with a voice?",
+      "a": "Yes. Open a moving clip from the vase photo, or start from a product link. Add a written script, a spoken voice, captions, and music, then publish a tall cut on TikTok or a square on Meta. You can add a short line in another language in the editor."
     },
     {
-      "q": "Which settings suit a product photo?",
-      "a": "Use simple surfaces such as light wood, stone, linen, or one quiet color. A busy scene can make the product harder to see."
+      "q": "Can I run several backgrounds from one photo?",
+      "a": "Yes. Ask for a studio surface, a wood counter, and a garden table from the same vase photo. You can run them as a batch. Each photo is 24 credits, shown before you start. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Can I use the new photo in a paid ad?",
-      "a": "Yes. The download has no watermark. You can use it for your business. Add any price or offer in your ad editor."
-    },
-    {
-      "q": "Can I choose a seasonal or outdoor setting?",
-      "a": "Yes. Name one room, one surface, or one outdoor scene, such as a holiday shelf or a shaded table."
-    },
-    {
-      "q": "How is this different from a new photo shoot?",
-      "a": "A new photo shoot needs space and lights. Here the new setting comes from a photo you already own. If it is blurry, start with [how to take product photos for AI](page:guide-product-photo-tips)."
-    },
-    {
-      "q": "Can the new photo become a video?",
-      "a": "Yes. Open [a page-to-ad tool](page:url-to-video) from a product link, or [a moving clip](page:image-to-video) from the photo. Add a written script, a spoken AI voice, on-screen words, and music. Then publish a tall cut on TikTok, or a square on Meta."
-    },
-    {
-      "q": "Can I edit the photo without another app?",
-      "a": "Yes. Add a short line of text or crop the photo here, then write that line in another language without opening a separate editor."
+      "a": "Yes. The download has no watermark. You can use it for your business. Add any price or offer in your ad editor after you download."
     }
   ],
   "visual": {
@@ -234,24 +218,24 @@
     "faq"
   ],
   "reasons": {
-    "h2": "Why Use an AI Product Background Changer",
-    "lead": "Use it when the product is fine and only the area behind it is wrong.",
+    "h2": "Why Sellers Swap a Product Background",
+    "lead": "Use it when the vase is fine and only the area behind it is wrong.",
     "items": [
       {
-        "t": "Remove a Distracting Background",
-        "d": "A soap bottle shot on a busy kitchen gets a quiet gray sweep you can use on the listing.",
+        "t": "Clear a Distracting Backdrop",
+        "d": "A blue ceramic vase on a sunny windowsill gets a quiet gray sweep. The listing shows the vase, not the clutter behind it.",
         "img": "n:guide:k5-background-case-1",
         "alt": "Blue ceramic vase on a sunny windowsill."
       },
       {
-        "t": "Match Backgrounds to Campaigns",
-        "d": "The holiday week can put the same candle on a pine shelf. Next month the shelf can be plain linen. The candle does not move.",
+        "t": "Match the Backdrop to the Ad",
+        "d": "Put the face cream jar on wet stone for one campaign, then on linen the next month. The jar stays the product you sell, and only the surface changes.",
         "img": "n:guide:k5-background-case-2",
         "alt": "Plain face cream jar on wet stone."
       },
       {
-        "t": "Save on Background Production",
-        "d": "A new setting is a short job, not a designer's afternoon. The charge appears before the photo is made.",
+        "t": "Spend Credits, Not a Day Rate",
+        "d": "A new cafe-table setting for the leather wallet is a short credit job, not a designer's afternoon. The charge appears before the photo is made.",
         "img": "n:guide:k5-background-case-3",
         "alt": "Brown leather wallet on a cafe table."
       }
@@ -331,7 +315,9 @@
     "spokesperson-videos",
     "product-videos"
   ],
-  "benefits_lead": "A consistent product image keeps the listing focused.",
-  "related_h2": "After the New Background",
-  "related_lead": "The square can keep working after you save it."
+  "benefits_lead": "You get a sharp photo of the same vase, with the setting swapped and the shape still easy to recognize.",
+  "related_h2": "Related Tools for the New Photo",
+  "related_lead": "The saved square can start a video, a script, or an avatar ad without shooting the vase again.",
+  "cta_title": "Change the Background on Your Photo",
+  "cta_lead": "Upload the vase photo, name the setting, and download the square. The credit cost shows before it runs."
 }

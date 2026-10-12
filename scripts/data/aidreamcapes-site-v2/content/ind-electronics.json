@@ -4,7 +4,7 @@
   "description": "Turn one electronics photo into an unboxing, a setup, or a desk scene. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Product Videos for Electronics, From the Box to Daily Use",
   "eyebrow": "Tech & Electronics",
-  "lead": "A new charger can get its own demo before anyone replies to a casting email. Upload a clear photo of the brick and let an AI avatar point at the ports.",
+  "lead": "A speaker can get its own demo before anyone replies to a casting email. Upload a clear photo and let an AI avatar press the one control.",
   "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -16,57 +16,57 @@
   "faq": [
     {
       "q": "Do I need a shoot before I can make an electronics ad?",
-      "a": "No. Upload one photo or paste a product link, name the action, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A failed job returns its credits."
+      "a": "No. Upload one photo of the speaker or paste a product link, name the press, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns its credits."
     },
     {
       "q": "Do I need video editing experience?",
-      "a": "No. A spoken voice and captions come with the clip, and you can fix them in the editor before you export."
+      "a": "No. A spoken voice and captions come with the speaker clip, and you can fix them in the editor before you export."
     },
     {
       "q": "Can I make several versions of the same gadget?",
-      "a": "Yes. One photo can become an unboxing, a setup, and a travel scene."
+      "a": "Yes. One speaker photo can become an unboxing, a button press, and a desk scene."
     },
     {
       "q": "Which electronics can I show from one photo?",
-      "a": "Stands, phone cases, docks, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
+      "a": "Speakers, cables, docks, and other gadgets with a clear shape. Use that product's own photo, and name one action, such as a button press or an unboxing."
     },
     {
       "q": "Can I make an electronics ad without hiring a creator?",
-      "a": "Yes. Upload one product photo or paste a link, pick an AI avatar, and pay the credits shown before the job. Post the clip as an ad."
+      "a": "Yes. Upload one speaker photo or paste a link, pick an AI avatar, and pay the credits shown before the job. Post the clip as an ad."
     },
     {
       "q": "Will the clip state my battery life or wattage?",
-      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices it fits in the listing or the editor, where you can check them."
+      "a": "Do not trust the picture for the numbers. Add battery life, watts, and which devices the cable fits in the listing or the editor, where you can check them."
     },
     {
       "q": "Can I run the clips as paid gadget ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how the gadget performs."
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how the speaker performs."
     },
     {
       "q": "What video shape should I pick?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide product page, and 4:3 or 3:4 when the page asks for them."
+      "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Use 4:3 or 3:4 when the page asks for them."
     },
     {
       "q": "Can the gadget ad include a voice and captions?",
-      "a": "Yes. Pick an AI avatar and the clip can include a spoken line and captions."
+      "a": "Yes. Pick an AI avatar and the speaker clip can include a spoken line and captions."
     }
   ],
-  "templates_lead": "Pick an unboxing, a desk setup, or a travel scene that keeps the ports and the shape clear.",
-  "cta_lead": "A gadget demo can start from a product link or one clear photo.",
+  "templates_lead": "Pick an unboxing or a desk demo that keeps the speaker's shape and the ports clear.",
+  "cta_lead": "A speaker demo can start from a product link or one clear photo.",
   "steps_h2": "An Electronics Product Demo Video in Three Steps",
-  "steps_lead": "You download an ad you can post. Add the device, then choose who holds it.",
+  "steps_lead": "You get a speaker ad you can post, with a voice and a face already chosen.",
   "steps": [
     {
       "t": "Add the Gadget Photo or Link",
-      "d": "Lay the earbuds on a plain desk and photograph them from above. That picture is the product the demo is about."
+      "d": "Photograph the speaker from the front corner on a plain desk. That picture is the product the demo is about."
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "Pick an AI avatar unpacking a power bank at a kitchen table. You can change that face before the clip is made."
+      "d": "Pick an AI avatar pressing the speaker's one control at a cafe table. You can change that face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "The file is ready to download, and it goes on the channel you sell on."
+      "d": "You add a spoken voice and captions, then download the speaker clip. You get a file to post on TikTok or Meta."
     }
   ],
   "visual": {
@@ -105,7 +105,7 @@
       }
     }
   },
-  "cta_title": "Run a Gadget Ad This Week",
+  "cta_title": "Post a Speaker Ad This Week",
   "relatedLinks": [
     {
       "id": "tpl-product-feature-callout-video",
@@ -133,58 +133,58 @@
     }
   ],
   "reasons": {
-    "h2": "A Device Demo That Does Not Start With Outreach",
-    "lead": "Device teams use them when the calendar and the creator invoices get in the way.",
+    "h2": "Why Electronics Sellers Use These Ads",
+    "lead": "Use them when the creator calendar and the day rate get in the way of a speaker demo.",
     "items": [
       {
-        "t": "Save the Hunt",
-        "d": "A compact speaker can be the demo. You film nothing: the product photo is the source, and the credit cost is on screen before you start.",
+        "t": "Skip the Creator Hunt",
+        "d": "A compact speaker can be the demo without a creator hunt. You film nothing: the product photo is the source, and the credit cost is on screen before you start.",
         "img": "n:guide:fx31-ind-electronics-benefit-speaker"
       },
       {
         "t": "Credits, Not Day Rates",
-        "d": "The gadget ad spends credits on your plan, so more of the budget can stay on reaching buyers.",
+        "d": "The cable demo spends credits on your plan, so more of the budget can stay on reaching buyers instead of a day rate.",
         "img": "n:guide:fx31-ind-electronics-benefit-cable"
       },
       {
-        "t": "You Set Every Detail",
-        "d": "You decide the desk a keyboard sits on, and you write the one line about the dial.",
+        "t": "You Set the Ports Yourself",
+        "d": "You decide the desk the ports sit on, and you write the one line about the connector.",
         "img": "n:guide:fx31-ind-electronics-benefit-ports"
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Device Demo Can Run",
-    "lead": "One device can feed a phone feed and a product page. Match the shape to the place.",
+    "h2": "Electronics Ads for the Channels You Use",
+    "lead": "One speaker can feed a phone feed and a product page. Match the shape to the place you post it.",
     "items": [
       {
         "t": "TikTok Unboxings",
-        "d": "A tall phone video of an unboxing or a button press for a gadget ad in the TikTok feed.",
+        "d": "A tall phone video of the speaker, unboxed or with a button press, for a gadget ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "Instagram Setup Clips",
-        "d": "A square still, or a tall setup video, for the grid and for Stories.",
+        "d": "A square still of the speaker, or a tall setup video, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed image with room to add the spec line after you download.",
+        "d": "A feed image of the speaker with room to add the spec line after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Demos",
-        "d": "A short vertical demo that opens on one action.",
+        "d": "A short vertical demo that opens on the speaker's one control.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Listing Photos",
-        "d": "A clean photo of the gadget, with extra views in the gallery.",
+        "d": "A clean photo of the speaker for Amazon, with extra views of the ports in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Device Photos",
-        "d": "Matching images for the device page and the collection.",
+        "d": "Matching images for the speaker page and the collection on your own store.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -255,7 +255,7 @@
       }
     ]
   },
-  "related_h2": "Demos, Plain Photos, and Product Videos",
+  "related_h2": "Speaker Demos, Photos, and Clips",
   "blockOrder": [
     "hero",
     "strip",

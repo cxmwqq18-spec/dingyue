@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into tight close-ups, worn try-ons, and gift scenes. Make images with no watermark for listings, social posts, and paid ads.",
   "h1": "AI Photos for Jewelry and Accessories, Up Close and Worn",
   "eyebrow": "Jewelry and accessories",
-  "lead": "Shoppers can see a hoop on an adult ear, made from the sharp photo you already took.",
+  "lead": "AI photos for jewelry and accessories can show the bracelet on an adult wrist, from the sharp photo you already took.",
   "card": "Tight close-ups, worn photos, and gift scenes from one jewelry photo.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -16,7 +16,7 @@
   "faq": [
     {
       "q": "Can I photograph jewelry without hiring a model?",
-      "a": "Yes. One sharp photo can become a tight close-up, a worn frame, or a styled scene."
+      "a": "Yes. One sharp photo can become a tight close-up, a worn frame, or a styled scene. The bracelet on the wrist starts from the photo you already have."
     },
     {
       "q": "Will the stones and the metal color stay true?",
@@ -44,29 +44,29 @@
     },
     {
       "q": "Can these files run as paid jewelry ads?",
-      "a": "Yes. Files download without a watermark, so you can use them in paid ads and on listings."
+      "a": "Yes. Files download without a watermark, so you can use them in paid ads and on listings. Starter is $24.50 a month for 200 credits."
     },
     {
       "q": "Can I begin from a product link and make several versions?",
-      "a": "Yes. Paste the product page, or send it from your shop software through the API. Ask for the hoops on an ear in one version and flat on linen in the other."
+      "a": "Yes. Paste the product page, or send it from your shop software through the API. Ask for the bracelet on a wrist in one version and flat on linen in the other."
     }
   ],
   "templates_lead": "Pick a close-up, a worn try-on, or a gift scene that suits the piece.",
-  "cta_lead": "Download a worn frame you can run as an ad. You start from the sharp photo you already took, and the credit cost is on screen before you confirm.",
+  "cta_lead": "Download a worn frame you can run as an ad. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost is on screen before you confirm.",
   "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Simple Steps",
-  "steps_lead": "You see the bracelet on a wrist, then you choose what the voice says.",
+  "steps_lead": "You see the silver ring on a hand, then you choose what the voice says.",
   "steps": [
     {
       "t": "Upload Your Piece",
-      "d": "Use a photo where the links and the clasp are both sharp. Name the metal in a short note."
+      "d": "Use a sharp photo of the silver solitaire ring. That photo becomes the close frame, once you name the metal."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick an AI avatar with a plain sleeve so the bracelet stays visible on the wrist. Keep that face for a second metal."
+      "d": "Pick an AI avatar with a plain sleeve so the silver ring stays easy to see. You can reuse that face on the next metal."
     },
     {
       "t": "Generate and Publish",
-      "d": "The worn frame downloads with a spoken line and captions, and you can send that file to the feed you already sell on."
+      "d": "The worn frame downloads with a spoken line and captions. You can send that file to the feed you already sell on."
     }
   ],
   "visual": {
@@ -135,17 +135,17 @@
     }
   ],
   "reasons": {
-    "h2": "A Worn Frame Before You Call a Model",
-    "lead": "A worn frame comes from the photo already on the listing, and you can run it without booking a model.",
+    "h2": "A Worn Frame Before You Book a Model",
+    "lead": "A worn frame comes from the photo already on the listing, so the next piece does not wait on a studio day.",
     "items": [
       {
-        "t": "Close-Up of the Clasp",
-        "d": "A tight view of the clasp comes from the linen photo of the pendant you already have, which saves a fresh studio day on the next piece.",
+        "t": "A Tight View of the Clasp",
+        "d": "A tight view of the clasp comes from the linen photo of the pendant you already have. That saves a fresh studio day on the next piece.",
         "img": "n:guide:fx31-ind-jewelry-benefit-macro",
         "alt": "Plain silver pendant necklace resting on natural linen in a close macro view."
       },
       {
-        "t": "Wrist Clip and Gallery Still",
+        "t": "One Watch, Two Frames",
         "d": "One watch photo becomes a wrist clip for the phone feed and a square of the dial for the gallery.",
         "img": "n:guide:fx31-ind-jewelry-benefit-watch",
         "alt": "Unbranded silver wristwatch shown on an adult wrist in soft daylight."
@@ -159,37 +159,37 @@
     ]
   },
   "platforms": {
-    "h2": "Frames for a Worn Piece",
+    "h2": "Where a Worn Piece Can Run",
     "lead": "Use the same worn shot across feeds, listings, and the product page, each one framed for that spot.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
-        "d": "A vertical try-on or unboxing for TikTok, opening on the piece itself.",
+        "d": "A vertical try-on of the bracelet for TikTok, opening on the wrist itself.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
-        "d": "A square detail or a tall worn frame for the grid and Stories.",
+        "d": "A square detail of the ring, or a tall worn frame, for the grid and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
-        "d": "A feed image of the piece, with room to place your offer after download.",
+        "d": "A feed image of the pendant, with room to place your offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Ads",
-        "d": "A tight Short that stays on one piece from the first moment.",
+        "d": "A tight Short that stays on the watch from the first moment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
-        "d": "A sharp gallery image you can put on the listing.",
+        "d": "A sharp gallery image of the piece you can put on the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
-        "d": "Consistent imagery for the piece and the collection around it.",
+        "d": "Consistent imagery for the bag and the pieces around it.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
