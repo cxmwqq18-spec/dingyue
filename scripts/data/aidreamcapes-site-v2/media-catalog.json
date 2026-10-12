@@ -51383,6 +51383,325 @@
           640,
           1280
         ]
+      },
+      "fx02-occ-bf-replace": {
+        "file": "fx02-occ-bf-replace",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman opens a plain gift box with a pump bottle and mug for a Black Friday ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-benefit-gift": {
+        "file": "fx02-occ-bf-benefit-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a blank pump bottle from a kraft gift box for a Black Friday ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-benefit-shoe": {
+        "file": "fx02-occ-bf-benefit-shoe",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-benefit-lunch": {
+        "file": "fx02-occ-bf-benefit-lunch",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands place a plain insulated lunch bag into a kraft shipping box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-benefit-pet": {
+        "file": "fx02-occ-bf-benefit-pet",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand uses a plain pet-hair roller beside a calm dog on a sofa.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-picker-gift": {
+        "file": "fx02-occ-bf-picker-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a plain skincare gift bundle from tissue in a kraft box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-picker-demo": {
+        "file": "fx02-occ-bf-picker-demo",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand demonstrates a plain garment steamer smoothing a neutral shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-picker-phone": {
+        "file": "fx02-occ-bf-picker-phone",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a generic single-camera smartphone beside a product parcel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-good-a": {
+        "file": "fx02-occ-bf-good-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sharp full view of a plain charcoal travel duffel on a neutral table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-bad-a": {
+        "file": "fx02-occ-bf-bad-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Tightly cropped underexposed view of charcoal travel duffel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-output-a": {
+        "file": "fx02-occ-bf-output-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands pack charcoal travel duffel for a Black Friday gift reveal.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-good-b": {
+        "file": "fx02-occ-bf-good-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sharp higher-angle full view of a plain charcoal travel duffel on pale wood.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-bad-b": {
+        "file": "fx02-occ-bf-bad-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Soft motion-blurred and cropped view of charcoal travel duffel.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-bf-output-b": {
+        "file": "fx02-occ-bf-output-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold charcoal travel duffel open beside a gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-replace": {
+        "file": "fx02-occ-holidays-replace",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult model opens a plain cream gift box for a holiday ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-benefit-lipstick": {
+        "file": "fx02-occ-holidays-benefit-lipstick",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift a plain lipstick tube from a cream gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-benefit-jacket": {
+        "file": "fx02-occ-holidays-benefit-jacket",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult creator holds a plain wool winter jacket beside a gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-benefit-shipping": {
+        "file": "fx02-occ-holidays-benefit-shipping",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands tie cream ribbon around a plain parcel beside a jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-benefit-guide": {
+        "file": "fx02-occ-holidays-benefit-guide",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands arrange a blank jar, tube and scarf gift guide set.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-picker-gift": {
+        "file": "fx02-occ-holidays-picker-gift",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands reveal a plain lipstick gift box beside evergreen branches.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-picker-use": {
+        "file": "fx02-occ-holidays-picker-use",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand applies plain lip balm beside a wrapped gift.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-picker-pack": {
+        "file": "fx02-occ-holidays-picker-pack",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands hold a wrapped parcel beside a blank candle jar by a snowy window.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-good-a": {
+        "file": "fx02-occ-holidays-good-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sharp full view of a plain white candle jar with wax and wick.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-bad-a": {
+        "file": "fx02-occ-holidays-bad-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cropped blurred dim view of white candle jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-output-a": {
+        "file": "fx02-occ-holidays-output-a",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands add tissue around white candle jar in an open gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-good-b": {
+        "file": "fx02-occ-holidays-good-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Sharp front view of plain white candle jar with wax and wick.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-bad-b": {
+        "file": "fx02-occ-holidays-bad-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Dark obstructed view of white candle jar behind tissue.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-output-b": {
+        "file": "fx02-occ-holidays-output-b",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands lift white candle jar beside evergreen and wrapping paper.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
+      },
+      "fx02-occ-holidays-g2": {
+        "file": "fx02-occ-holidays-g2",
+        "w": 1280,
+        "h": 2276,
+        "alt": "Adult model with short dark pixie holds a plain sage bottle beside an open gift box.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "fx02-20261011"
       }
     }
   }
