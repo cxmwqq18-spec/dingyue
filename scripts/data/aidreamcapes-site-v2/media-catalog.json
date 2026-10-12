@@ -50068,6 +50068,94 @@
           640,
           1280
         ]
+      },
+      "fx23-retarget-benefit-detail": {
+        "file": "fx23-retarget-benefit-detail",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman turns the lid of a plain speckled ceramic travel mug toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-retarget-benefit-angle": {
+        "file": "fx23-retarget-benefit-angle",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man adjusts the front pocket zipper on an olive canvas duffel bag.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-retarget-benefit-format": {
+        "file": "fx23-retarget-benefit-format",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman slides a charcoal desk organizer into a drawer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-retarget-benefit-editable": {
+        "file": "fx23-retarget-benefit-editable",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult holds a plain coral cream jar beside their cheek.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-spark-benefit-result": {
+        "file": "fx23-spark-benefit-result",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman uses a handheld garment steamer on a cream shirt.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-spark-benefit-account": {
+        "file": "fx23-spark-benefit-account",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man speaks to camera while holding a plain canvas tote.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-spark-benefit-versions": {
+        "file": "fx23-spark-benefit-versions",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman fits a sage phone case with one circular camera opening.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
+      },
+      "fx23-spark-benefit-details": {
+        "file": "fx23-spark-benefit-details",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man routes a charging cable through a gray desk cable tray.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "Codex imagegen"
       }
     }
   }

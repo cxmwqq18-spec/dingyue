@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Show the detail they missed",
-      "d": "Bring a viewed product back with one useful detail in focus. Show a seam, pocket, finish or everyday use moment instead of repeating the same product shot."
+      "d": "Bring a viewed product back with one useful detail in focus. Show a seam, pocket, finish or everyday use moment instead of repeating the same product shot.",
+      "img": "n:guide:fx23-retarget-benefit-detail",
+      "alt": "Adult woman turns the lid of a plain speckled ceramic travel mug toward the camera."
     },
     {
       "t": "Test another angle quickly",
-      "d": "Create a routine version and a close-detail version from the source photo. Compare the creative in your campaign without booking another shoot."
+      "d": "Create a routine version and a close-detail version from the source photo. Compare the creative in your campaign without booking another shoot.",
+      "img": "n:guide:fx23-retarget-benefit-angle",
+      "alt": "Adult man adjusts the front pocket zipper on an olive canvas duffel bag."
     },
     {
       "t": "Fit the feed you buy",
-      "d": "Prepare a clear product moment for feed or Reels. Use 1:1 for feed or 9:16 for Reels, then choose 6, 10, 15 or 30 seconds for the story."
+      "d": "Prepare a clear product moment for feed or Reels. Use 1:1 for feed or 9:16 for Reels, then choose 6, 10, 15 or 30 seconds for the story.",
+      "img": "n:guide:fx23-retarget-benefit-format",
+      "alt": "Adult woman slides a charcoal desk organizer into a drawer."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add the confirmed offer, price, date or product link after download. Your audience rules and frequency stay in the ad platform where the campaign runs."
+      "d": "Add the confirmed offer, price, date or product link after download. Your audience rules and frequency stay in the ad platform where the campaign runs.",
+      "img": "n:guide:fx23-retarget-benefit-editable",
+      "alt": "Adult holds a plain coral cream jar beside their cheek."
     }
   ],
   "secondary_keywords": [

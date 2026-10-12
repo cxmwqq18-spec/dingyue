@@ -9,19 +9,27 @@
   "benefits": [
     {
       "t": "Show the result first",
-      "d": "Open with one clear product moment so viewers understand what they get. A hands-on action gives the post a useful reason to stop the scroll."
+      "d": "Open with one clear product moment so viewers understand what they get. A hands-on action gives the post a useful reason to stop the scroll.",
+      "img": "n:guide:fx23-spark-benefit-result",
+      "alt": "Adult woman uses a handheld garment steamer on a cream shirt."
     },
     {
       "t": "Skip another shoot",
-      "d": "Use the product photo you already have instead of booking a creator, location or gear. Start a new version when the next angle matters."
+      "d": "Use the product photo you already have instead of booking a creator, location or gear. Start a new version when the next angle matters.",
+      "img": "n:guide:fx23-spark-benefit-account",
+      "alt": "Adult man speaks to camera while holding a plain canvas tote."
     },
     {
       "t": "Make more useful versions",
-      "d": "Create another scene from the same source photo and test the versions from your own account. Keep the product and the action easy to recognize."
+      "d": "Create another scene from the same source photo and test the versions from your own account. Keep the product and the action easy to recognize.",
+      "img": "n:guide:fx23-spark-benefit-versions",
+      "alt": "Adult woman fits a sage phone case with one circular camera opening."
     },
     {
       "t": "Keep live details editable",
-      "d": "Add the exact caption, offer, price or date after download. Update the post in TikTok or your editor without rebuilding the product scene."
+      "d": "Add the exact caption, offer, price or date after download. Update the post in TikTok or your editor without rebuilding the product scene.",
+      "img": "n:guide:fx23-spark-benefit-details",
+      "alt": "Adult man routes a charging cable through a gray desk cable tray."
     }
   ],
   "secondary_keywords": [
