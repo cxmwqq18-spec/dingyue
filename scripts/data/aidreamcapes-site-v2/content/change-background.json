@@ -33,17 +33,20 @@
     {
       "t": "Keep every listing polished",
       "d": "Move one item from a cluttered counter to a clean surface so each listing starts with a clear product view.",
-      "icon": "layers"
+      "img": "n:guide:fx17-change-background-benefit-studio-r1",
+      "alt": "Matte blue ceramic vase on a clean pale wood studio table against a warm neutral wall."
     },
     {
       "t": "Market more angles",
       "d": "Create a seasonal, studio or outdoor setting from the product photo you already have.",
-      "icon": "refresh"
+      "img": "n:guide:fx17-change-background-benefit-seasonal-r1",
+      "alt": "Matte blue ceramic vase on a simple seasonal shelf with oatmeal linen and muted green foliage."
     },
     {
       "t": "Skip another shoot",
       "d": "Refresh a campaign without unpacking stock, booking space or waiting for a new photo session.",
-      "icon": "clock"
+      "img": "n:guide:fx17-change-background-benefit-outdoor-r1",
+      "alt": "Matte blue ceramic vase on a shaded garden table with oatmeal linen and soft green foliage."
     }
   ],
   "more_sections": [
@@ -55,17 +58,20 @@
         {
           "t": "Create a setting that fits the next listing",
           "d": "Move the vase to a bright windowsill when the next listing needs a warmer scene.",
-          "img": "n:guide:k5-background-case-1"
+          "img": "n:guide:k5-background-case-1",
+          "alt": "Blue ceramic vase on a sunny windowsill."
         },
         {
           "t": "Keep the item easy to inspect",
           "d": "A plain face cream jar on wet stone keeps the product surface and edge in view.",
-          "img": "n:guide:k5-background-case-2"
+          "img": "n:guide:k5-background-case-2",
+          "alt": "Plain face cream jar on wet stone."
         },
         {
           "t": "Download a scene ready for the feed",
           "d": "A brown leather wallet on a cafe table gives a social post a believable setting.",
-          "img": "n:guide:k5-background-case-3"
+          "img": "n:guide:k5-background-case-3",
+          "alt": "Brown leather wallet on a cafe table."
         }
       ]
     }
@@ -126,7 +132,7 @@
       "source": "n:guide:ra3-change-background-steps-1-r1",
       "result": "n:guide:ra3-change-background-steps-2-r2",
       "mode": "photo",
-      "prompt": "Place this blue ceramic vase on a shaded outdoor garden table covered with an oatmeal linen cloth, with soft green foliage in the distance.",
+      "prompt": "Place this blue ceramic vase on a shaded garden table with an oatmeal linen cloth and soft green foliage beyond.",
       "options": [
         [
           "Photo",
@@ -145,8 +151,48 @@
     "picker": {
       "title": "Choose a new product setting",
       "lead": "Try a clean studio, warm counter or seasonal scene around one product photo.",
-      "chips": [],
-      "cards": [],
+      "chips": [
+        {
+          "id": "clean-setting",
+          "label": "Clean setting"
+        },
+        {
+          "id": "background-swap",
+          "label": "Background swap"
+        }
+      ],
+      "cards": [
+        {
+          "ref": "n:guide:fx17-change-background-picker-studio-r1",
+          "label": "Clean studio",
+          "chips": [
+            "clean-setting",
+            "background-swap"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded matte blue ceramic vase as the exact product. Keep its shape, color and rim unchanged on a clean neutral studio surface with soft warm light."
+        },
+        {
+          "ref": "n:guide:fx17-change-background-picker-wood-r1",
+          "label": "Warm wood counter",
+          "chips": [
+            "clean-setting",
+            "background-swap"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded matte blue ceramic vase as the exact product. Keep its shape, color and rim unchanged on a warm wood counter with folded linen."
+        },
+        {
+          "ref": "n:guide:fx17-change-background-picker-garden-r1",
+          "label": "Seasonal garden",
+          "chips": [
+            "clean-setting",
+            "background-swap"
+          ],
+          "kind": "photo",
+          "prompt": "Use the uploaded matte blue ceramic vase as the exact product. Keep its shape, color and rim unchanged on a shaded garden table with oatmeal linen and soft foliage."
+        }
+      ],
       "button": "Try this background"
     },
     "uses": [],
@@ -157,6 +203,32 @@
       "faq": {
         "h2": "Frequently asked questions"
       }
-    }
+    },
+    "input": [
+      {
+        "good": "n:guide:fx17-change-background-input-good-r1",
+        "bad": "n:guide:fx17-change-background-input-bad-r1",
+        "good_label": "Whole product, clean starting photo",
+        "bad_label": "Whole product, distracting background"
+      },
+      {
+        "good": "n:guide:fx17-change-background-input-good-alt-r1",
+        "bad": "n:guide:fx17-change-background-input-bad-alt-r1",
+        "good_label": "Clear product with room around it",
+        "bad_label": "Product lost in clutter"
+      }
+    ],
+    "outputs": [
+      {
+        "ref": "n:guide:fx17-change-background-output-studio-r1",
+        "frame": "1:1",
+        "label": "Clean studio setting"
+      },
+      {
+        "ref": "n:guide:fx17-change-background-output-garden-r1",
+        "frame": "1:1",
+        "label": "Seasonal garden setting"
+      }
+    ]
   }
 }

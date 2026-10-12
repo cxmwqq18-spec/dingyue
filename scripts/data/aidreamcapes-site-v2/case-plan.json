@@ -188,17 +188,20 @@
       {
         "ref": "n:guide:k5-change-background-strip-1",
         "product": "hand cream tube",
-        "title": "Bathroom Counter: hand cream tube in a clean setting"
+        "title": "Bathroom Counter: hand cream tube in a clean setting",
+        "prompt": "Use the uploaded hand cream product photo as the exact reference. Keep its shape and color while placing it beside a bright bathroom sink on a clean counter."
       },
       {
         "ref": "n:guide:k5-change-background-strip-2",
         "product": "matcha bowl set",
-        "title": "Kitchen Demo: matcha bowl set on linen"
+        "title": "Kitchen Demo: matcha bowl set on linen",
+        "prompt": "Use the uploaded matcha bowl set photo as the exact reference. Keep its shape and color while placing it on a warm kitchen linen surface."
       },
       {
         "ref": "n:guide:q6-cbg-case-3",
         "product": "brown leather wallet",
-        "title": "Hand Demo: Open a leather wallet"
+        "title": "Hand Demo: Open a leather wallet",
+        "prompt": "Use the uploaded brown leather wallet photo as the exact reference. Keep its shape and color while placing it on a cafe counter with soft window light."
       }
     ],
     "social-ad-photos": [
