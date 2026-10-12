@@ -10,7 +10,7 @@
       {
         "ref": "n:guide:q1-photo-case-pillow",
         "product": "reusable pet hair remover",
-        "title": "Problem to Fix: Pet Hair Cleared From Sofa",
+        "title": "Pet hair cleared from sofa",
         "kind": "action"
       },
       {
@@ -35,7 +35,7 @@
       {
         "ref": "n:guide:q2-image-to-video-case-03",
         "product": "tinted lip balm",
-        "title": "GRWM applies tinted lip balm before leaving",
+        "title": "Tinted lip balm before leaving",
         "kind": "scene"
       }
     ],
@@ -43,7 +43,7 @@
       {
         "ref": "k3-video-ads-case-citrus",
         "product": "sparkling citrus drink",
-        "title": "Hands pour sparkling citrus drink over ice"
+        "title": "Sparkling citrus poured over ice"
       },
       {
         "ref": "n:guide:q2-video-ads-case-02",
@@ -54,7 +54,7 @@
       {
         "ref": "n:guide:k3-video-case-lunchbag",
         "product": "insulated lunch bag",
-        "title": "Sage lunch bag packed on a kitchen counter before work"
+        "title": "Sage lunch bag packed for work"
       }
     ],
     "product-videos": [
@@ -122,7 +122,7 @@
       {
         "ref": "n:guide:q4-spokesperson-case-03",
         "product": "protein shaker",
-        "title": "Gym use demo: shaker cap and grip"
+        "title": "Protein shaker cap and grip"
       },
       {
         "ref": "n:guide:q4-spokesperson-case-04",
@@ -134,19 +134,19 @@
       {
         "ref": "n:guide:k2-white-case-steel-bottle",
         "product": "steel water bottle",
-        "title": "Listing Hero: steel water bottle on white",
+        "title": "Steel bottle on white",
         "prompt": "Use the uploaded steel water bottle as the product reference. Keep its shape, cap, brushed finish and colors accurate. Place it upright on an even white background with a soft contact shadow for a clean listing image."
       },
       {
         "ref": "n:guide:white-background-soap-dispenser",
         "product": "sage ceramic soap dispenser",
-        "title": "Clean Listing: sage ceramic soap dispenser on white",
+        "title": "Sage soap dispenser on white",
         "prompt": "Use the uploaded sage ceramic soap dispenser as the product reference. Preserve its pump, shape, glaze and sage color. Place it upright on an even white background with a soft contact shadow for a clean listing image."
       },
       {
         "ref": "n:guide:k2-white-case-wood-train",
         "product": "wooden toy train",
-        "title": "Product Set: wooden toy train on white",
+        "title": "Wooden toy train on white",
         "prompt": "Use the uploaded wooden toy train as the product reference. Preserve its wood grain, shape and colors. Place it centered on an even white background with a soft contact shadow for a clear product set image."
       }
     ],
@@ -154,7 +154,7 @@
       {
         "ref": "n:guide:q5-life-case-unbox",
         "product": "moisturizer jar",
-        "title": "Plain moisturizer jar lifted from a carton",
+        "title": "Moisturizer lifted from a carton",
         "prompt": "Use the uploaded moisturizer jar as the exact product reference. Show two hands lifting the plain jar out of an open white carton onto a counter; preserve its shape and color, with no readable text or logos."
       },
       {
@@ -166,7 +166,7 @@
       {
         "ref": "n:guide:k5-lifestyle-case-3",
         "product": "canvas weekender bag",
-        "title": "Camel canvas weekender on a car seat",
+        "title": "Camel weekender on a car seat",
         "prompt": "Use the uploaded canvas weekender bag as the exact product reference. Set the camel canvas weekender on a car back seat in daylight; keep the full bag visible, with no readable text or logos."
       }
     ],
@@ -174,7 +174,7 @@
       {
         "ref": "n:guide:im13-model-case-1-r1",
         "product": "camel wool coat",
-        "title": "Fashion Style OOTD: camel coat on a city walk"
+        "title": "Camel coat on a city walk"
       },
       {
         "ref": "n:guide:k5-model-case-2",
@@ -191,13 +191,13 @@
       {
         "ref": "n:guide:k5-change-background-strip-1",
         "product": "hand cream tube",
-        "title": "Bathroom Counter: hand cream tube in a clean setting",
+        "title": "Hand cream on a bathroom counter",
         "prompt": "Use the uploaded hand cream product photo as the exact reference. Keep its shape and color while placing it beside a bright bathroom sink on a clean counter."
       },
       {
         "ref": "n:guide:k5-change-background-strip-2",
         "product": "matcha bowl set",
-        "title": "Kitchen Demo: matcha bowl set on linen",
+        "title": "Matcha bowl set on linen",
         "prompt": "Use the uploaded matcha bowl set photo as the exact reference. Keep its shape and color while placing it on a warm kitchen linen surface."
       },
       {
@@ -211,12 +211,12 @@
       {
         "ref": "n:guide:im13-social-case-1-r1",
         "product": "cold brew coffee",
-        "title": "First-Sip Reaction: Open a cold brew can"
+        "title": "Opening a cold brew can"
       },
       {
         "ref": "n:guide:im13-social-case-2-r1",
         "product": "ceramic pet bowl",
-        "title": "Pet Feeding: pour kibble into a ceramic bowl"
+        "title": "Kibble poured into a ceramic bowl"
       },
       {
         "ref": "n:guide:q6-social-case-3",
@@ -404,44 +404,44 @@
       {
         "ref": "n:guide:tpl-jewel-round4-case-gold-ring",
         "product": "polished gold band",
-        "title": "Polished gold band on an ivory stone dish"
+        "title": "Gold band on an ivory dish"
       },
       {
         "ref": "n:guide:tpl-jewel-round4-case-cufflinks",
         "product": "silver cufflinks",
-        "title": "Brushed-silver cufflinks beside a white shirt cuff"
+        "title": "Silver cufflinks by a shirt cuff"
       },
       {
         "ref": "n:guide:tpl-jewel-round4-stud-earrings",
         "product": "silver stud earrings",
-        "title": "Pair of silver studs on a pale ceramic dish"
+        "title": "Silver studs on a pale dish"
       },
       {
         "ref": "n:guide:tpl-jewel-round4-case-necklace-clasp",
         "product": "necklace clasp",
-        "title": "Gold necklace clasp with fine chain links"
+        "title": "Gold clasp with fine chain"
       }
     ],
     "tpl-look": [
       {
         "ref": "n:guide:tpl-look-round4-case-studio-outfit",
         "product": "tailored suit",
-        "title": "Gray tailored outfit in a neutral studio"
+        "title": "Gray tailored outfit in studio"
       },
       {
         "ref": "n:guide:q9-look-alt-navy-suit",
         "product": "navy tailored suit and work bag",
-        "title": "Navy suit and structured bag on a city walk"
+        "title": "Navy suit and bag, city walk"
       },
       {
         "ref": "g:fashion-editorial/example-07",
         "product": "fashion portrait",
-        "title": "Close fashion portrait with an editorial crop"
+        "title": "Close editorial fashion portrait"
       },
       {
         "ref": "n:guide:q9-look-alt-office-bag",
         "product": "messenger bag",
-        "title": "Messenger bag carried through a bright office lobby"
+        "title": "Messenger bag in the office lobby"
       }
     ],
     "tpl-head": [
@@ -458,34 +458,34 @@
       {
         "ref": "n:guide:q9-head-case-consultant",
         "product": "consultant portrait",
-        "title": "Consultant portrait by a pale blue-gray office window"
+        "title": "Consultant by a blue-gray window"
       },
       {
         "ref": "n:guide:q9-head-case-operations",
         "product": "operations portrait",
-        "title": "Operations portrait in a warm wood workshop"
+        "title": "Operations portrait in workshop"
       }
     ],
     "tpl-ugc": [
       {
         "ref": "n:guide:k6-tpl-ugc-case-water-bottle",
         "product": "reusable water bottle",
-        "title": "Water bottle snapped on a cluttered work desk"
+        "title": "Water bottle on a cluttered desk"
       },
       {
         "ref": "n:guide:q9-ugc-case-phone-grip",
         "product": "phone grip",
-        "title": "Plain phone grip attached at a cafe table"
+        "title": "Phone grip on a cafe table"
       },
       {
         "ref": "n:guide:k6-tpl-ugc-case-breakfast-mug",
         "product": "ceramic mug",
-        "title": "Ceramic mug at breakfast, shot across the table"
+        "title": "Ceramic mug at breakfast"
       },
       {
         "ref": "n:guide:k6-tpl-ugc-case-face-mist",
         "product": "face mist",
-        "title": "Face mist on a gym bench after a workout"
+        "title": "Face mist on a gym bench"
       }
     ],
     "tpl-story": [
@@ -580,7 +580,7 @@
       {
         "ref": "n:guide:q11-beauty-case-01-square-r2",
         "product": "toner",
-        "title": "Toner patted onto skin with a cotton pad"
+        "title": "Toner patted with a cotton pad"
       },
       {
         "ref": "n:guide:q11-beauty-case-02-square-r2",
@@ -590,12 +590,12 @@
       {
         "ref": "n:guide:q11-beauty-case-03-square-r2",
         "product": "jade face roller",
-        "title": "Jade roller used beside a cream jar"
+        "title": "Jade roller beside a cream jar"
       },
       {
         "ref": "n:guide:q11-beauty-case-04-square-r2",
         "product": "sheet mask",
-        "title": "Sheet mask lifted from a travel pouch"
+        "title": "Sheet mask from a travel pouch"
       }
     ],
     "tpl-drink": [
@@ -624,7 +624,7 @@
       {
         "ref": "n:guide:rc6-tpl-home-case-organizer-r1",
         "product": "drawer organizer",
-        "title": "Drawer organizer fitted to a kitchen drawer"
+        "title": "Organizer in a kitchen drawer"
       },
       {
         "ref": "n:guide:q11-home-case-02-square-r2",
@@ -651,12 +651,12 @@
       {
         "ref": "n:guide:rc6-tpl-outfit-case-denim-r1",
         "product": "denim jacket",
-        "title": "Denim jacket laid out for a fit check"
+        "title": "Denim jacket laid out"
       },
       {
         "ref": "n:guide:rc6-tpl-outfit-case-puffer-r1",
         "product": "puffer coat",
-        "title": "Ivory puffer shown for a fit check"
+        "title": "Ivory puffer for a fit check"
       },
       {
         "ref": "n:guide:rc6-tpl-outfit-case-bag-r1",
@@ -668,7 +668,7 @@
       {
         "ref": "n:guide:q12-tpl-launch-case-phone-case-r2",
         "product": "phone case",
-        "title": "Plain phone case held up for a camera-opening check"
+        "title": "Checking the case camera opening"
       },
       {
         "ref": "n:guide:q12-tpl-launch-case-earbuds-r2",
@@ -683,41 +683,41 @@
       {
         "ref": "n:guide:im05-tpl-launch-case-pendant-r1",
         "product": "silver pendant",
-        "title": "Hands reveal a brushed-silver pendant from a gift box"
+        "title": "Silver pendant from a gift box"
       }
     ],
     "tpl-compare": [
       {
         "ref": "n:guide:q12-tpl-compare-case-headphone-finishes-r1",
         "product": "over-ear headphones",
-        "title": "Creator compares black and silver headphone finishes"
+        "title": "Black and silver headphone finishes"
       },
       {
         "ref": "n:guide:q12-tpl-compare-case-legging-colors-r1",
         "product": "athletic leggings",
-        "title": "Two legging colors shown in matched try-on views"
+        "title": "Two legging colors in try-on"
       },
       {
         "ref": "n:guide:rc6-tpl-compare-case-harness-r1",
         "product": "dog harnesses",
-        "title": "Two green harness sizes beside a dog"
+        "title": "Two harness sizes by a dog"
       },
       {
         "ref": "n:guide:q12-tpl-compare-case-phone-colors-r1",
         "product": "phone cases",
-        "title": "Compare sage and blush phone cases with one round opening"
+        "title": "Sage blush cases with one opening"
       }
     ],
     "tpl-bf": [
       {
         "ref": "n:guide:q12-tpl-bf-case-skincare-set-unboxing-r1",
         "product": "skincare gift set",
-        "title": "Gift Unboxing: Hands Reveal a Skincare Set"
+        "title": "Hands reveal a skincare set"
       },
       {
         "ref": "n:guide:q12-tpl-bf-case-supplement-review-r1",
         "product": "supplement tub",
-        "title": "Talking-Head Offer: Supplement Tub Held to Camera"
+        "title": "Supplement tub held to camera"
       },
       {
         "ref": "n:guide:q12-tpl-bf-case-pet-lint-demo-r1",
@@ -734,7 +734,7 @@
       {
         "ref": "n:guide:q13-limited-more-3",
         "product": "coral trail shoes",
-        "title": "Coral trail shoes tied before a hike"
+        "title": "Coral shoes tied before a hike"
       },
       {
         "ref": "n:guide:q13-limited-more-4",
@@ -744,12 +744,12 @@
       {
         "ref": "n:guide:rc6-tpl-limited-case-skincare-r1",
         "product": "moisturizer",
-        "title": "Moisturizer jar opened beside a matching jar"
+        "title": "Moisturizer beside a matching jar"
       },
       {
         "ref": "n:guide:q13-limited-more-6",
         "product": "coral trail shoe tread",
-        "title": "Coral tread shown after a rocky hike"
+        "title": "Coral tread after a rocky hike"
       }
     ],
     "tpl-product-feature-callout-video": [
@@ -822,7 +822,7 @@
       {
         "ref": "n:guide:q14-retarget-case-boot",
         "product": "plain brown trail boots",
-        "title": "Trail Boots on Rocky Ground: Fit Check"
+        "title": "Trail boots on rocky ground"
       },
       {
         "ref": "n:guide:q14-retarget-case-mug-talk",
@@ -844,12 +844,12 @@
       {
         "ref": "n:guide:q15-beauty-case1-clay-mask",
         "product": "clay mask",
-        "title": "Evening routine: clay mask applied by hand"
+        "title": "Clay mask applied by hand"
       },
       {
         "ref": "n:guide:q15-beauty-case2-lipsticks",
         "product": "lipsticks",
-        "title": "Shade swatches: lipstick on varied skin tones"
+        "title": "Lipstick on varied skin tones"
       },
       {
         "ref": "n:guide:q15-beauty-case3-sunscreen",
@@ -866,24 +866,24 @@
       {
         "ref": "n:gen2:rb2-ind-fashion-clothing-case-skirt-r2",
         "product": "pleated skirt",
-        "title": "Pleated skirt worn on a sunny sidewalk"
+        "title": "Pleated skirt on a sunny sidewalk"
       },
       {
         "ref": "n:guide:rb2-ind-fashion-clothing-case-jeans-r2",
         "product": "denim jeans",
-        "title": "Denim jeans: waist and cuff fit check"
+        "title": "Jeans waist and cuff fit check"
       }
     ],
     "ind-shoes": [
       {
         "ref": "n:gen2:ind-shoes-15",
         "product": "hiking boot",
-        "title": "Tan hiking boot on a mossy rock"
+        "title": "Tan boot on a mossy rock"
       },
       {
         "ref": "n:guide:q15-shoes-case2-court-sneaker",
         "product": "court sneaker",
-        "title": "Product hero: colored court sneaker in use"
+        "title": "Colored court sneaker in use"
       },
       {
         "ref": "n:guide:q15-shoes-case3-suede-loafers",
@@ -895,18 +895,18 @@
       {
         "ref": "n:guide:im10-ind-jewelry-accessories-card-necklace-tryon-r1",
         "product": "silver pendant necklace",
-        "title": "Try-on: Silver pendant necklace before the mirror",
+        "title": "Silver pendant before the mirror",
         "prompt": "A woman adjusts a plain silver pendant necklace before a bedroom mirror."
       },
       {
         "ref": "n:gen2:ind-jewelry-accessories-c2",
         "product": "leather watch",
-        "title": "Day-in-life: Leather watch on a morning walk"
+        "title": "Leather watch on a morning walk"
       },
       {
         "ref": "n:guide:q16-jewelry-scarf-tote",
         "product": "silk scarf",
-        "title": "Styling demo: Silk scarf tied to a tote"
+        "title": "Silk scarf tied to a tote"
       },
       {
         "ref": "n:guide:rb2-ind-jewelry-accessories-case-sunglasses-r1",
@@ -940,12 +940,12 @@
       {
         "ref": "n:guide:k7-ind-health-wellness-case-plan-0-ref-n-gen2-ind-health-wellness-6",
         "product": "yoga mat",
-        "title": "Product showcase: Yoga mat in a bright studio"
+        "title": "Yoga mat in a bright studio"
       },
       {
         "ref": "n:gen2:ind-health-wellness-21",
         "product": "foam roller",
-        "title": "Gear detail: Foam roller beside running shoes"
+        "title": "Foam roller beside running shoes"
       },
       {
         "ref": "n:guide:q16-wellness-bottle-after-workout",
@@ -955,37 +955,37 @@
       {
         "ref": "n:gen2:ind-health-wellness-c4",
         "product": "resistance bands",
-        "title": "Product setup: Resistance bands on a door"
+        "title": "Resistance bands on a door"
       }
     ],
     "ind-food-drinks": [
       {
         "ref": "food-beverage",
         "product": "citrus soda",
-        "title": "Sparkling citrus drink poured into a glass",
+        "title": "Sparkling citrus poured into a glass",
         "prompt": "Use the uploaded citrus drink photo as the product. Show an adult hand pouring once into an ice-filled glass, then set the plain bottle beside the glass. Bright morning window light, close product-video framing, natural pour and ice sounds, no text or logos."
       },
       {
         "ref": "n:guide:q17-ind-food-drinks-case-granola",
         "product": "granola",
-        "title": "ASMR crunch as granola falls over berries"
+        "title": "Granola falls over the berries"
       },
       {
         "ref": "n:guide:k7-ind-food-drinks-case-plan-2-ref-n-gen2-ind-food-drinks-c3",
         "product": "hot sauce",
-        "title": "A spicy finishing touch for a taco plate"
+        "title": "Hot sauce on a taco plate"
       },
       {
         "ref": "n:guide:q17-ind-food-drinks-case-tea",
         "product": "loose-leaf tea",
-        "title": "Tea steeped after the pouch is opened"
+        "title": "Tea steeped from an open pouch"
       }
     ],
     "ind-home-living": [
       {
         "ref": "f:q17-ind-home-living-case-0",
         "product": "cordless vacuum",
-        "title": "Vacuum clears crumbs from a sofa cushion"
+        "title": "Vacuum clears crumbs from sofa"
       },
       {
         "ref": "n:guide:q17-ind-home-living-case-2",
@@ -995,12 +995,12 @@
       {
         "ref": "n:guide:q17-ind-home-living-r2-case-3",
         "product": "table lamp",
-        "title": "A ceramic table lamp switched on beside a reading chair"
+        "title": "Lamp on beside a reading chair"
       },
       {
         "ref": "n:guide:q17-ind-home-living-r2-case-4",
         "product": "linen bedding",
-        "title": "Linen bedding arranged neatly across a made bed"
+        "title": "Linen bedding on a made bed"
       }
     ],
     "plat-tiktok": [
@@ -1034,105 +1034,105 @@
       {
         "ref": "f:q18-instagram-uses-skincare-set-scale",
         "product": "travel skincare minis",
-        "title": "Product Scale — Travel Skincare Minis in Hand"
+        "title": "Travel skincare minis in hand"
       },
       {
         "ref": "f:q18-instagram-case-matcha-whisk",
         "product": "matcha set",
-        "title": "Matcha Whisked in a Bowl — Recipe Demo"
+        "title": "Matcha whisked in a bowl"
       },
       {
         "ref": "n:guide:k4-plat-instagram-04-cards-6-image",
         "product": "gold-rim eyeglasses",
-        "title": "Close-Up Detail — Gold-Rim Eyeglasses on a Tray"
+        "title": "Gold-rim eyeglasses on a tray"
       }
     ],
     "plat-facebook": [
       {
         "ref": "retargeting-urgency-v",
         "product": "dark blue over-ear headphones",
-        "title": "Daily-Carry Demo — Dark Blue Headphones Packed"
+        "title": "Dark blue headphones packed"
       },
       {
         "ref": "f:q18-facebook-case-hose-demo",
         "product": "garden hose nozzle",
-        "title": "Product Demo — Garden Hose Nozzle Spraying the Lawn"
+        "title": "Garden hose nozzle spraying the lawn"
       },
       {
         "ref": "f:q18-facebook-case-boots-cleanup",
         "product": "yellow rain boot",
-        "title": "Mud Clean-Up — Yellow Rain Boot Wiped Clean"
+        "title": "Yellow rain boot wiped clean"
       },
       {
         "ref": "f:q18-facebook-case-skillet-eggs",
         "product": "cast-iron skillet",
-        "title": "Eggs Turned in a Cast-Iron Skillet — Recipe Demo"
+        "title": "Eggs turned in a cast-iron skillet"
       }
     ],
     "plat-youtube-shorts": [
       {
         "ref": "k4-plat-youtube-shorts-03-cards-3-image",
         "product": "steam iron",
-        "title": "Steam iron smoothing a shirt in a vertical cut"
+        "title": "Steam iron smoothing a shirt"
       },
       {
         "ref": "n:guide:q19-yt-case-toothbrush",
         "product": "electric toothbrush",
-        "title": "Electric toothbrush demo at a bathroom mirror"
+        "title": "Electric toothbrush at the mirror"
       },
       {
         "ref": "n:guide:q19-yt-case-camp-cook",
         "product": "camp stove",
-        "title": "Camper heats a pot on a compact camp stove outdoors"
+        "title": "Pot heated on a camp stove"
       },
       {
         "ref": "n:guide:q19-yt-case-bike-pump",
         "product": "mini bike pump",
-        "title": "Cyclist tops up a trail-bike tire with a hand pump"
+        "title": "Hand pump tops up the tire"
       }
     ],
     "plat-amazon": [
       {
         "ref": "n:guide:plat-amazon-c3-m2-source-angle",
         "product": "ceramic mug",
-        "title": "Square white mug main image on a seamless background"
+        "title": "Square white mug, seamless background"
       },
       {
         "ref": "n:guide:q19-amz-case-blanket-texture",
         "product": "throw blanket",
-        "title": "Hand checks the weave of a forest-green throw blanket"
+        "title": "Hand checks a forest-green throw"
       },
       {
         "ref": "n:guide:q19-amz-case-kitchen-scale",
         "product": "kitchen scale",
-        "title": "Adult adds flour to a bowl on a digital kitchen scale"
+        "title": "Weighing flour on a kitchen scale"
       },
       {
         "ref": "n:guide:q19-amz-case-dog-harness",
         "product": "dog harness",
-        "title": "Adult clips a plain harness onto a dog before a walk"
+        "title": "Clipping a harness on a dog"
       }
     ],
     "plat-shopify": [
       {
         "ref": "n:guide:q19-shop-case-espresso-demo",
         "product": "espresso maker",
-        "title": "Adult pours coffee from a compact espresso maker"
+        "title": "Pouring coffee from an espresso maker"
       },
       {
         "ref": "n:gen2:plat-shopify-c2",
         "product": "linen apron",
-        "title": "Linen apron worn in a home kitchen"
+        "title": "Linen apron worn in the kitchen"
       },
       {
         "ref": "n:guide:q19-shop-case-supplement-routine",
         "product": "supplement pouch",
-        "title": "Supplement pouch prepared with water before a walk"
+        "title": "Supplement mixed before a walk"
       },
       {
         "ref": "n:guide:q19-shop-case-glasses",
         "product": "reading glasses",
-        "title": "Adult adjusts reading glasses in a bedroom mirror"
+        "title": "Reading glasses at the mirror"
       }
     ],
     "occ-product-launch": [
@@ -1149,7 +1149,7 @@
       {
         "ref": "n:guide:im11-occ-product-launch-case-03-r1",
         "product": "ceramic travel mug",
-        "title": "Ceramic travel mug revealed from a launch package"
+        "title": "Travel mug from a launch package"
       },
       {
         "ref": "n:guide:b2f4-occ-product-launch-lipdemo-r1",
@@ -1171,7 +1171,7 @@
       {
         "ref": "n:guide:q20-occ-sale-discount-card-06-r2",
         "product": "trail shoes",
-        "title": "Review scene: trail shoes tied at entry"
+        "title": "Trail shoes tied at entry"
       },
       {
         "ref": "n:guide:f13-r10-occ-sale-discount-bowl",
@@ -1183,7 +1183,7 @@
       {
         "ref": "black-friday-countdown-v",
         "product": "folding e-bike",
-        "title": "Folding e-bike checked over before the big deal"
+        "title": "Folding e-bike checked over"
       },
       {
         "ref": "n:guide:q20-occ-bf-output-02",
@@ -1198,29 +1198,29 @@
       {
         "ref": "n:guide:f13-r10-occ-black-friday-delivery-unbox",
         "product": "wool scarf",
-        "title": "Wool scarf opened from a delivery box"
+        "title": "Wool scarf opened from the box"
       }
     ],
     "occ-holidays": [
       {
         "ref": "n:guide:q20-occ-holidays-case-01",
         "product": "lipstick",
-        "title": "Lipstick revealed from a holiday gift box"
+        "title": "Lipstick from a holiday gift box"
       },
       {
         "ref": "n:guide:q20-occ-holidays-case-02",
         "product": "gold bracelet",
-        "title": "Gold bracelet revealed from tissue in a gift box"
+        "title": "Gold bracelet lifted from tissue"
       },
       {
         "ref": "n:guide:f13-occ-holidays-rework-card-16-r2",
         "product": "winter jacket",
-        "title": "Man tries on a winter jacket beside a gift box"
+        "title": "Trying a jacket beside the gift"
       },
       {
         "ref": "n:guide:q20-occ-holidays-case-04",
         "product": "dog sweater",
-        "title": "Plain warm sweater gently fitted on a calm dog"
+        "title": "Warm sweater fitted on a dog"
       }
     ],
     "url-to-video": [
