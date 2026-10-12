@@ -50244,6 +50244,86 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "fx28-tpl-beauty-benefit-1-r1": {
+        "file": "fx28-tpl-beauty-benefit-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand presses a matte ivory cleanser pump beside a bright ceramic sink with white foam.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-beauty-benefit-2-r1": {
+        "file": "fx28-tpl-beauty-benefit-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand spreads ivory face cream beside a plain cream jar on pale stone.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-beauty-benefit-3-r1": {
+        "file": "fx28-tpl-beauty-benefit-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with a short copper pixie holds a plain pale-blue sunscreen tube at a sunlit vanity.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-beauty-benefit-4-r1": {
+        "file": "fx28-tpl-beauty-benefit-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand presents a plain muted-rose moisturizer tube over a clean bathroom counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-drink-benefit-1-r1": {
+        "file": "fx28-tpl-drink-benefit-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand pours clear citrus soda from a plain teal can into an ice-filled tumbler.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-drink-benefit-2-r1": {
+        "file": "fx28-tpl-drink-benefit-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a plain cold brew bottle beside an ice-filled glass on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-drink-benefit-3-r1": {
+        "file": "fx28-tpl-drink-benefit-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult with short silver-gray hair raises a plain coral sports bottle after a workout.",
+        "variants": [
+          640,
+          1280
+        ]
+      },
+      "fx28-tpl-drink-benefit-4-r1": {
+        "file": "fx28-tpl-drink-benefit-4-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand holds a plain lilac tea bottle beside a lemon-and-ice glass on a sunlit table.",
+        "variants": [
+          640,
+          1280
+        ]
       }
     }
   }

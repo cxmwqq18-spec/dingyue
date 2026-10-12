@@ -16,19 +16,27 @@
   "benefits": [
     {
       "t": "Show the serving moment",
-      "d": "Turn one package photo into a pour, first sip or simple preparation so shoppers see how the drink is enjoyed."
+      "d": "Turn one package photo into a pour, first sip or simple preparation so shoppers see how the drink is enjoyed.",
+      "img": "n:guide:fx28-tpl-drink-benefit-1-r1",
+      "alt": "Adult hand pours clear citrus soda from a plain teal can into an ice-filled tumbler."
     },
     {
       "t": "Create feed-ready clips",
-      "d": "Use a vertical 9:16 video paced around one action for TikTok, Instagram Reels and product pages."
+      "d": "Use a vertical 9:16 video paced around one action for TikTok, Instagram Reels and product pages.",
+      "img": "n:guide:fx28-tpl-drink-benefit-2-r1",
+      "alt": "Adult hand lifts a plain cold brew bottle beside an ice-filled glass on a bright counter."
     },
     {
       "t": "Choose the length you need",
-      "d": "Use 6 seconds for one pour, 10 or 15 seconds for a tasting beat, or 30 seconds for a fuller serving story."
+      "d": "Use 6 seconds for one pour, 10 or 15 seconds for a tasting beat, or 30 seconds for a fuller serving story.",
+      "img": "n:guide:fx28-tpl-drink-benefit-3-r1",
+      "alt": "Adult with short silver-gray hair raises a plain coral sports bottle after a workout."
     },
     {
       "t": "Use it in your own ads",
-      "d": "Download clips without an AIVideosUGC watermark and add approved flavor, price and allergen details in your editor."
+      "d": "Download clips without an AIVideosUGC watermark and add approved flavor, price and allergen details in your editor.",
+      "img": "n:guide:fx28-tpl-drink-benefit-4-r1",
+      "alt": "Adult hand holds a plain lilac tea bottle beside a lemon-and-ice glass on a sunlit table."
     }
   ],
   "steps_h2": "How to Make AI Food and Drink Videos in 3 Simple Steps",
