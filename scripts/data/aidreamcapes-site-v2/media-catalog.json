@@ -53740,6 +53740,72 @@
           640,
           1280
         ]
+      },
+      "b2f3-plat-shopify-drop-r1": {
+        "file": "b2f3-plat-shopify-drop-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand clips a plain magnetic cable organizer onto a tidy desk cable.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f3-plat-shopify-health-r1": {
+        "file": "b2f3-plat-shopify-health-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with a short buzz cut stretches a plain sage fabric resistance band at a kitchen table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f3-ind-electronics-videoad-r1": {
+        "file": "b2f3-ind-electronics-videoad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short ash-blonde pixie holds a compact matte-graphite device beside her cheek in daylight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f3-guides-triptych-r1": {
+        "file": "b2f3-guides-triptych-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Three-panel story of the same plain matte blue water bottle being photographed with a blank phone, placed on a chosen linen cloth, and held as a finished print.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f3-ind-jewelry-model-r1": {
+        "file": "b2f3-ind-jewelry-model-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short silver-blonde bob wears a plain silver pendant over a gray crew-neck top.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f3-ind-health-breakfast-r1": {
+        "file": "b2f3-ind-health-breakfast-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain sage bottle stands beside a bowl of breakfast fruit on a wooden table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
       }
     }
   }
