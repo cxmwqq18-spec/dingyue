@@ -1,10 +1,10 @@
 {
   "id": "tpl-howto",
-  "title": "AI How-To Video Maker for Product Demos | AIVideosUGC",
-  "description": "Turn one product photo into a how-to demo for Shorts and ads, with no presenter to film. Pick a tall 9:16 or a wide 16:9, at 6, 10, 15, or 30 seconds.",
-  "h1": "AI How-To Video Maker for a Task You Can Follow",
+  "title": "AI How-To Video Templates for Demos | AIVideosUGC",
+  "description": "Drop your product into a how-to video template that already shows one step. An AI avatar runs the demo, and you download a clip you can post.",
+  "h1": "AI How-To Video Maker for a Product Demo",
   "eyebrow": "How-to video template",
-  "lead": "A how-to is easier when the frame is already the demo. Drop in the white steamer, say how you press the blue shirt, and let an AI avatar show that one pass.",
+  "lead": "Drop the white steamer into a beauty demo that already shows one press, and let an AI avatar do that pass. Say how the press should look on the blue shirt.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -13,7 +13,7 @@
     "instructional product video"
   ],
   "steps_h2": "How to Make a Product How-To Video in 3 Simple Steps",
-  "steps_lead": "You leave with a how-to of the steamer pressing the blue shirt, ready to post.",
+  "steps_lead": "You leave with a how-to of the steamer pressing the blue shirt, ready to post. The frame already shows that one step.",
   "steps": [
     {
       "t": "Upload Your Product Photo",

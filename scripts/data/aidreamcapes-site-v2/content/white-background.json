@@ -1,10 +1,10 @@
 {
   "id": "white-background",
   "title": "White Background Product Photos | AIVideosUGC",
-  "description": "Create white background product photos from one clear image for Amazon, Shopify, or Etsy. Keep the whole item visible and ready for listings.",
-  "h1": "White background product photos for a listing main image",
+  "description": "Put a product photo on white for Amazon, Shopify, or Etsy. Keep every edge of the item, then download the file and set it as the main image.",
+  "h1": "Put a Product Photo on a White Background",
   "eyebrow": "White background photos",
-  "lead": "The wallet you shot on the desk can be the main image, with the clutter gone. The edges stay, and the file is ready to list. When the folder is bigger than one photo, the API can take the rest.",
+  "lead": "The mug you shot on the counter can be the main image, with the clutter gone. The edges stay, and the file is ready to list. When the folder is bigger than one photo, the API can take the rest.",
   "secondary_keywords": [
     "white background product photo maker",
     "white background main image for marketplaces",
@@ -49,7 +49,7 @@
       "a": "Upload it and download a file where the product sits on white. On a wallet, every edge stays inside the frame and the desk is gone."
     },
     {
-      "q": "How can I create white-background product photos?",
+      "q": "How do I put a product photo onto pure white?",
       "a": "Make them here: upload a photo, choose the white field, and download the finished file. The product shape stays the one in your photo."
     },
     {
@@ -79,6 +79,10 @@
     {
       "q": "Can I post the file on Amazon, Shopify, or Etsy?",
       "a": "Yes. The download has no watermark, so you can put it on Amazon, Shopify, or Etsy, and in your ads."
+    },
+    {
+      "q": "Which tool fits a pure white product photo?",
+      "a": "Use AIVideosUGC when you want the room gone and the item kept. Upload one clear photo. One photo spends 24 credits, and you see that cost before it starts."
     }
   ],
   "visual": {
@@ -351,22 +355,6 @@
         {
           "t": "One Square for a Whole Folder",
           "d": "Twelve spoon photos can all become the same square in one run. The set matches in the grid without resizing each file by hand."
-        },
-        {
-          "t": "A Note Left for a Teammate",
-          "d": "The person who writes the product title can leave a note on the crop and save the next version in this same account. The listing does not stall while you wait on a file."
-        },
-        {
-          "t": "Save the Brand Pieces Once",
-          "d": "The next banner can pull a wordmark you saved once, instead of a second version typed in a different weight."
-        },
-        {
-          "t": "A Logo for a New Line",
-          "d": "A spice line can get a simple mark from one sentence about the tin and the shop. Place that mark on the label area and the line looks finished."
-        },
-        {
-          "t": "The Same Login on Every Device",
-          "d": "The phone in the stock room uses the same login, so the scarf file the desktop job just finished is already there. You can approve it between boxes."
         }
       ]
     }

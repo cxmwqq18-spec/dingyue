@@ -1,8 +1,8 @@
 {
   "id": "ind-shoes",
   "title": "AI Shoe UGC Ads From a Product Photo | AIVideosUGC",
-  "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and listing photos. Download clips and photos with no watermark for posts and product pages.",
-  "h1": "AI Product Photos for Shoe Brands, On Foot and in Motion",
+  "description": "Use this AI shoe UGC ad generator to turn one shoe photo into on-foot ads and listing photos. Download the clips with no watermark and post them.",
+  "h1": "AI UGC Ads for Shoe Brands, On Foot and in Motion",
   "eyebrow": "Footwear",
   "lead": "One measured step from the side photo of a brown boot shows the stride, so shoppers see more than the color on white.",
   "card": "On-foot steps, unboxings, fit checks, and listing photos from one shoe photo.",
@@ -108,24 +108,24 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Show the Pair From the Photo You Shot",
-    "lead": "The walking clip starts from the side photo you already shot. Add an AI actor when someone should wear the pair, and make the ad before you book a model.",
+    "h2": "Why Shoe Brands Skip Another Model Day",
+    "lead": "Start from the shoe photo you already shot, and add an AI actor when someone should wear the pair. Skip the model day, use that pair in more than one placement, and keep the shoot money for the ads.",
     "items": [
       {
-        "t": "Both Shoes in One Frame",
-        "d": "An adult hand holds both gray walking shoes so the toe shape and the sole edge show together. The photo you already took of this color is the source. Shoppers can compare the pair before they read sizes.",
+        "t": "Skip Another Shoe Shoot",
+        "d": "An adult holds both gray walking shoes from the side photo you already took, so the toe and the sole show together. You are not waiting on a creator, or booking a model, for this pair.",
         "img": "n:guide:fx30-shoes-benefit-fit-r1",
         "alt": "Adult man holds a pair of plain gray walking shoes for a fit check."
       },
       {
-        "t": "Show the Grain, Then a Step",
-        "d": "The leather grain stays in the gallery still, and a separate tall file carries the step. Use the still on the product page and the clip where the ad runs.",
+        "t": "One Pair Across Placements",
+        "d": "The taupe shoe keeps its grain in the gallery still, and the same pair becomes the tall clip for the ad. One photo set covers the product page and the placements you pay for.",
         "img": "n:guide:fx30-shoes-benefit-material-r1",
         "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge."
       },
       {
-        "t": "One Step a Shopper Can Read",
-        "d": "A single step on a clean sidewalk shows the ankle opening and the side profile of the shoe. That is the view a shopper uses to judge the pair before they buy.",
+        "t": "Keep the Shoot Budget for Ads",
+        "d": "One step on a clean sidewalk comes from the shoe photo, not from a model day on a set. The money that day would have cost can stay on the ads you run.",
         "img": "n:guide:fx30-shoes-benefit-step-r1",
         "alt": "Adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
       }

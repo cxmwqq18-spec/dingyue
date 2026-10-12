@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
-  "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
-  "description": "Build a Black Friday sale scene from one product photo. Type the confirmed discount, code, and end date in the editor, then publish the version you approve.",
-  "h1": "Create Black Friday Ad Creatives Fast",
+  "title": "Festive Holiday Video With Avatar Voice | AIVideosUGC",
+  "description": "Make a festive holiday video from your product link, with an avatar and a voice. Export a tall file, and add the offer only when that number is final.",
+  "h1": "Festive Holiday Video With an Avatar and Voice",
   "eyebrow": "Black Friday ad creatives",
-  "lead": "Build Black Friday ad creatives from the product photo you already use. You type the code when the number is final.",
+  "lead": "Make a festive holiday video from the product link. An AI avatar stands beside the item and says the offer. You export a tall file, and you type the code only when the number is final.",
   "secondary_keywords": [
     "Black Friday Video Ads",
     "Black Friday banner ideas",
@@ -95,19 +95,19 @@
       }
     ]
   },
-  "cta_lead": "Finish the sale scene with space left for the offer. Type the code, the price, and the end date when those numbers are real. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+  "cta_lead": "Export the festive holiday video, and leave space for the offer. Type the code, the price, and the end date when those numbers are real. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Open the listing that will go on sale. Its photo becomes the scene, and the price stays yours to type."
+      "d": "Open the product link for the holiday offer. Its photo becomes the video, and the price stays yours to type."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose an AI avatar who stands to the side so the product stays fully visible. The offer stays yours to type."
+      "d": "Choose an AI avatar who stands beside the item in a festive look you describe. You can upload a short clip for that face."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Type the code and the end date in the editor, then send the file to the feed you use."
+      "d": "Set the voice and the script in the editor, then export a tall file to the feed you use."
     }
   ],
   "visual": {
@@ -225,35 +225,35 @@
       }
     }
   },
-  "benefits_h2": "What a Black Friday Ad Includes",
+  "benefits_h2": "What a Festive Holiday Video Includes",
   "benefits": [
     {
-      "t": "An Avatar Beside the Deal",
-      "d": "An AI avatar can stand beside the pump bottle while the bottle stays large in the frame. Leave clear space in the kraft box for the code you will type.",
+      "t": "Describe a Festive Avatar",
+      "d": "An AI avatar can stand beside the pump bottle and say the holiday offer, while the bottle stays large in the frame. Describe a festive outfit, or upload a short clip of yourself for that face, and leave the kraft box clear until the code is final.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for a Black Friday ad."
     },
     {
       "t": "A Script in Your Own Words",
-      "d": "The first sentence about the knit slip-on is yours, in words you would actually say, and you can rewrite any line after you hear it.",
+      "d": "The first sentence about the knit slip-on is yours, in words you would actually say, and you can rewrite any line after you hear it. Two openings of that holiday line let you keep the one you would run.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe toward camera in a deal-day demo."
     },
     {
       "t": "The Sale Line in Two Languages",
-      "d": "The lunch-bag line can play as a voiceover or captions in the listing language. Then play it in another language, while the bag in the box stays the same.",
+      "d": "The lunch-bag line can play as a voiceover or captions in the listing language. Then play that festive line in another language, while the bag in the box stays the same.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box."
     },
     {
       "t": "Two Openings, You Keep One",
-      "d": "A second opening about the calm dog on the sofa gives you two lines, and you keep the one you would actually run.",
+      "d": "A second opening about the calm dog on the sofa gives you two lines, and you keep the one you would actually run. Look at other holiday ads in your category, then change this opening before you export.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa."
     }
   ],
   "steps_h2": "How to Create Black Friday Banners in 3 Simple Steps",
-  "steps_lead": "You leave room in the scene for the code. The product photo comes from the sale page, and you type the offer when it is final.",
+  "steps_lead": "You get a festive holiday video from the product link. An AI avatar says the offer, and you type the code only when the number is final.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
@@ -334,7 +334,7 @@
       }
     ]
   },
-  "cta_title": "Build the Scene, Then Add the Code",
+  "cta_title": "Export the Holiday Video",
   "blockOrder": [
     "hero",
     "benefits",

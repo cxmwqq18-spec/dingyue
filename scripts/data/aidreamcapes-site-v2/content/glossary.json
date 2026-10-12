@@ -1,10 +1,10 @@
 {
   "id": "glossary",
-  "title": "Product Video and Photo Glossary | AIVideosUGC",
-  "description": "Plain-English definitions for the product photo, video, advertising, and ecommerce terms used across AIVideosUGC and links to the pages where each term matters.",
+  "title": "AI UGC and Digital Marketing Glossary | AIVideosUGC",
+  "description": "Plain definitions of AI UGC and digital marketing terms, from video ads to product photos. Open a term, follow the link, and make the photo or video.",
   "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
   "eyebrow": "Glossary",
-  "lead": "Plain definitions for the photo, video, and ad words you will meet here. Open a term when it is new, then follow the linked page when you are ready to make the file.",
+  "lead": "Plain definitions for the photo, video, and ad words you will meet here. Open a term when an ad account uses it, follow the link, and make the file.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -305,6 +305,110 @@
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook"
+      ]
+    },
+    {
+      "term": "Ad cloning",
+      "definition": "Ad cloning means making a new ad that follows a look you already like, with your own product in the frame. Start from a template, then swap in the photo you ship.",
+      "related_page_ids": [
+        "templates",
+        "video-ads"
+      ]
+    },
+    {
+      "term": "AI video agent",
+      "definition": "The AI video agent asks who the product is for, then drafts a script you can edit. You still approve the line before anyone hears it.",
+      "related_page_ids": [
+        "video-hub",
+        "url-to-video"
+      ]
+    },
+    {
+      "term": "A/B testing",
+      "definition": "A/B testing means showing two versions of an ad and keeping the one you prefer. Change a single piece, such as the first line, so the test stays fair.",
+      "related_page_ids": [
+        "guide-testing-ad-versions",
+        "video-ads"
+      ]
+    },
+    {
+      "term": "Ad copy",
+      "definition": "Ad copy is the words in the ad: the spoken line, the caption, and the offer. Write the offer you are actually running, then read it back before you post.",
+      "related_page_ids": [
+        "video-ads",
+        "guide-testing-ad-versions"
+      ]
+    },
+    {
+      "term": "Ad spend",
+      "definition": "Ad spend is the budget you set in the ad account for who sees the ad. It is separate from the credits a photo or a video uses on your plan.",
+      "related_page_ids": [
+        "pricing",
+        "plat-facebook"
+      ]
+    },
+    {
+      "term": "CTR",
+      "definition": "CTR means click-through rate. It is how many people clicked after they saw the ad. Read it in the ad account. It is not a promise about the next ad.",
+      "related_page_ids": [
+        "guide-testing-ad-versions",
+        "plat-facebook"
+      ]
+    },
+    {
+      "term": "CPC",
+      "definition": "CPC means cost per click: the charge in the ad account when someone clicks. That charge is not the same as the credits a file spends here.",
+      "related_page_ids": [
+        "pricing",
+        "plat-facebook"
+      ]
+    },
+    {
+      "term": "Conversion rate",
+      "definition": "Conversion rate is how many clicks become an order, as the ad account counts them. Use it to compare two of your own ads.",
+      "related_page_ids": [
+        "guide-testing-ad-versions",
+        "plat-shopify"
+      ]
+    },
+    {
+      "term": "Creative testing",
+      "definition": "Creative testing means running more than one opening, scene, or line, then keeping the ad you want. Change one piece at a time so you know what you changed.",
+      "related_page_ids": [
+        "guide-testing-ad-versions",
+        "video-ads"
+      ]
+    },
+    {
+      "term": "Content marketing",
+      "definition": "Content marketing is the posts and videos you publish so shoppers learn the product before they buy. A short product clip can be one of those posts.",
+      "related_page_ids": [
+        "blog",
+        "video-hub"
+      ]
+    },
+    {
+      "term": "Display ad",
+      "definition": "A display ad is a paid picture on a website or in an app, outside a social feed. The product should still be easy to see in that picture.",
+      "related_page_ids": [
+        "plat-facebook",
+        "social-ad-photos"
+      ]
+    },
+    {
+      "term": "Facebook ad",
+      "definition": "Facebook ads are paid posts shown on Facebook. A square or a tall file can run there after you download it, or you can send it from here.",
+      "related_page_ids": [
+        "plat-facebook",
+        "video-ads"
+      ]
+    },
+    {
+      "term": "Deep learning",
+      "definition": "Deep learning is the training that lets a tool build a new picture or clip from what it has learned. You still upload your own photo and approve the file.",
+      "related_page_ids": [
+        "video-hub",
+        "image-to-video"
       ]
     }
   ],

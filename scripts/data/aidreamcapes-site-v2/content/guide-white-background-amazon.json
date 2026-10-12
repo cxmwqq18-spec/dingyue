@@ -1,10 +1,10 @@
 {
   "id": "guide-white-background-amazon",
-  "title": "Amazon White Background Photo Guide | AIVideosUGC",
-  "description": "Make an Amazon white-background main image from a phone photo. Use pure white (RGB 255), fill 85% or more of the square, and add nothing extra.",
-  "h1": "How to Make an Amazon White Background Photo for Your Main Image",
+  "title": "Compliant Amazon Main Images at Scale | AIVideosUGC",
+  "description": "Follow Amazon's product image requirements with one compliant white main image. Use that setup at scale, then send every backpack to Seller Central.",
+  "h1": "Amazon Product Image Requirements for Every Listing",
   "eyebrow": "Amazon guide",
-  "lead": "Shoppers meet your olive canvas backpack in a square that fills the frame. Put the backpack you ship large on white, and keep the sale badge off this picture.",
+  "lead": "Give every olive canvas backpack the same pure-white main image, then send the set to Seller Central. Keep the sale badge off this picture, and put the pack you ship large in the square.",
   "secondary_keywords": [
     "Amazon main image requirements",
     "pure white background product photo",
@@ -12,12 +12,12 @@
     "white background for product listings"
   ],
   "read_minutes": 5,
-  "summary": "A large backpack on white is what shoppers see first. The square stays white, the product stays large, and the frame stays limited to what the box contains.",
+  "summary": "One white setup covers the whole backpack catalog, not just the first color. The square stays white, the product stays large, and the frame stays limited to what the box contains.",
   "sections": [
     {
-      "h2": "What Amazon Wants on the Main Image",
+      "h2": "One White Main Image for Every Backpack",
       "paras": [
-        "Shoppers see the olive canvas backpack you sell, on pure white, with nothing extra in the square. Sale stickers, badges, and extra objects stay off this picture.",
+        "Give every olive canvas backpack the same pure-white main image, then send that set to Seller Central. Sale stickers, badges, and extra objects stay off this picture.",
         "Start with the corners of that backpack square. Amazon's image guide wants those corners at 255 on red, green, and blue, and the backpack should fill most of the square, about 85 percent or more. The product in the frame should be the one you ship, straps included when the straps ship, with no text drawn on. Small lettering on a label should still be readable when you zoom. When the square matches the backpack in your hand, you can publish that file as the main image. Later pictures can show the pack in use. This first picture stays the clean white one."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec01",
@@ -54,7 +54,7 @@
       "h2": "Use the Same White Setup on Every SKU",
       "paras": [
         "A white main image keeps a backpack listing easy to find in search. Replace a gray main image and the listing can show in search again. The later photos are not the ones this rule is about.",
-        "Once the first backpack's square is right, use that same square on the next color. An API can start the job from the catalog you already keep, so a new color uses the setup you already checked."
+        "Once the first backpack's square is right, use that same square on the next color. The API is not a separate install. It can start the job from the catalog you already keep, so a new color uses the setup you already checked."
       ]
     },
     {
@@ -78,7 +78,7 @@
         "A two-person shop can give the olive canvas backpack a white main image with the plan it already pays for. The white square is a job in that product, not a separate build.",
         "The bill you already know is the plan and the credits. That is the cost of the white square, including a quiet month.",
         "When the photo tools improve, that shows up in the product you already open, on the day you open it. You do not maintain a separate image pipeline.",
-        "November is when thirty new colors show up at once. The white setup from October still applies, and an API can start those files from the catalog.",
+        "November is when thirty new colors show up at once. The white setup from October still applies. The API is not a separate build. It can start those files from the catalog.",
         "The navy on a later Amazon photo should be the navy on your own store. Set it once. The white main image stays free of lettering."
       ]
     },
@@ -125,7 +125,7 @@
       "h2": "The Short Version",
       "paras": [
         "A large backpack, white corners, the right straps, and a readable label are the file you upload. Check the pack in your hand against that file.",
-        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. A failed job returns those credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The same white setup can repeat across the catalog, and an API can start the next color."
+        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. A failed job returns those credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The same white setup can repeat across the catalog. The API is not an extra fee, and it can start the next color."
       ]
     }
   ],

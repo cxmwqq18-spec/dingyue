@@ -1,10 +1,10 @@
 {
   "id": "guides",
-  "title": "Product Photo and Video Guides | AIVideosUGC",
-  "description": "Product photo and video guides for online sellers. Take a clear phone photo, meet Amazon's main-image rules, pick the ad size, and test versions.",
-  "h1": "Product Photo and Video Guides for Sellers Doing It Themselves",
+  "title": "UGC Templates and Seller Guides | AIVideosUGC",
+  "description": "Open UGC video templates and seller guides, drop in your product, and make one file. Pick a phone photo, a white main image, a first video, or a fair test.",
+  "h1": "UGC Video Templates and Guides You Can Recreate",
   "eyebrow": "How-to guides",
-  "lead": "You finish one job at a time. Pick a usable phone photo, a plain main image, a first paid video, the frame each app wants, or a fair test.",
+  "lead": "Pick the guide that matches today's job, then make that one file. A phone photo, a white main image, a first video, the right frame, or a fair test.",
   "card": "Short how-to guides, from the first photo to the first paid ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
@@ -16,8 +16,8 @@
     "Each guide ends in a file you can download and post. Open the one that matches the job in front of you.",
     "You land on the tool that makes the file: a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). For a video, an AI actor from the [actor library](page:ai-actors) is there when that guide calls for a person in the frame."
   ],
-  "benefits_h2": "Reasons to Read a Guide First",
-  "benefits_lead": "Open the one guide that matches today's job, whether that is the phone photo, the main image, or the test.",
+  "benefits_h2": "Product Video Templates for Today's Job",
+  "benefits_lead": "Open the guide that matches today's job, drop in the product photo, and make that one file. A long prompt is not the first step.",
   "benefits": [
     {
       "t": "Fewer Retries on the Tote",

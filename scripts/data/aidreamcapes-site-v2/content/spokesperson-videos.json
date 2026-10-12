@@ -1,10 +1,10 @@
 {
   "id": "spokesperson-videos",
-  "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Make an AI spokesperson video from a product photo or a product link. Choose a presenter and a voice, then download a talking ad for TikTok or Meta.",
-  "h1": "AI Spokesperson Video: Explain One Product Point on Camera",
+  "title": "AI Actor Generator for Product Ads | AIVideosUGC",
+  "description": "Pick an AI actor, add one line about your product, and download a spokesperson video for TikTok or Meta. The credit cost shows before it runs.",
+  "h1": "Pick an AI Actor to Say One Product Line",
   "eyebrow": "AI spokesperson video",
-  "lead": "Make an AI spokesperson video from the bottle photo. An AI actor holds it and says your line, so you can test a spoken ad without a studio booking.",
+  "lead": "Pick an AI actor for one line about your bottle. An AI actor holds it and says your line, so you can test a spoken ad without a studio booking.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
@@ -14,22 +14,22 @@
   "benefits_h2": "Where an AI Spokesperson Video Runs",
   "benefits": [
     {
-      "t": "Ads Without Another Hire",
+      "t": "Run the Shoe Line on TikTok",
       "icon": "bolt",
       "d": "A running-shoe ad can run on TikTok with the actor saying the cushion line. A second cut in another language you sell does not mean hiring a new crew."
     },
     {
-      "t": "A Voice on the Product Page",
+      "t": "Answer in Your Own Voice",
       "icon": "target",
       "d": "Next to the coffee-maker photo, the actor can answer the question buyers ask in chat. That spoken answer stays on the product page."
     },
     {
-      "t": "The Same Face in the Feed",
+      "t": "Keep One Face in the Feed",
       "icon": "refresh",
       "d": "Monday's lipstick clip can show the bullet. Friday can show the same actor with a new sentence about the shade. The face stays, so the feed still looks like your shop."
     },
     {
-      "t": "A Guide You Can Update",
+      "t": "Update the Air-Fryer Steps",
       "icon": "check",
       "d": "The actor can show an air fryer's basket, then the dial, then the start button, in that order. When a step changes, replace that sentence and publish the guide again."
     }

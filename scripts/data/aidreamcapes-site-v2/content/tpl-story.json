@@ -1,10 +1,10 @@
 {
   "id": "tpl-story",
-  "title": "Instagram Story Ad Images with Square Photos | AIVideosUGC",
-  "description": "Turn one product photo into a square Instagram Story ad image with room for a headline and price. Place that square on a tall 9:16 phone frame after download.",
-  "h1": "Instagram Story Ad Images from a Square Product Photo",
+  "title": "Instagram Story Video Maker | AIVideosUGC",
+  "description": "Turn a product link into an Instagram Story video with an avatar, a script, and a voice. Export the tall file and post it on Instagram Stories.",
+  "h1": "Turn a Product Link Into an Instagram Story Video",
   "eyebrow": "Ad photo template",
-  "lead": "Instagram Story ad images can start from one hot sauce bottle photo, with room for a headline and a price. You place that square on a tall frame after download.",
+  "lead": "Turn a hot sauce link or one bottle photo into an Instagram Story video with an avatar and a voice. The bottle in the file is the one you ship.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
@@ -12,19 +12,19 @@
     "summer product story ads"
   ],
   "steps_h2": "How to Make a Square Story Image in 3 Simple Steps",
-  "steps_lead": "The hot sauce goes into a square, and that square is what you drop onto the tall Story.",
+  "steps_lead": "You get a tall Story video of the hot sauce, with an avatar and a voice, ready to post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use the photo where the whole hot sauce bottle is visible, label included. That photo is what the Story frame is waiting for."
+      "d": "Use the photo where the whole hot sauce bottle is visible. That photo is the product in the Story video."
     },
     {
       "t": "Describe the Setting",
-      "d": "If someone should hold the hot sauce, pick a face and have them say the heat. Rewrite that sentence to match the Story price."
+      "d": "Pick an avatar to hold the hot sauce and say one line about the heat. Set the voice before you export."
     },
     {
       "t": "Download and Post",
-      "d": "Take the square image, set it on a tall 9:16 Story frame, and add the price there. A spoken clip can go out with it."
+      "d": "Download the tall Story video and post it. The bottle stays full in frame, with no watermark."
     }
   ],
   "maker": {
@@ -47,35 +47,35 @@
   "faq": [
     {
       "q": "What is a Story ad template?",
-      "a": "A Story ad template is a square frame with room for the hot sauce and for a price you add later. The product stays fully visible, and you skip filming a new clip just to fill that frame. When you need a taller motion ad, start from [creator-style video ads](page:video-ads)."
+      "a": "A Story ad template is a tall video for the hot sauce, with an avatar and a voice. The bottle stays fully visible, and you skip filming a new clip just to fill that frame. When you need another motion style, start from [creator-style video ads](page:video-ads)."
     },
     {
       "q": "How does a Story template become something I can post?",
-      "a": "You leave with a square you can place on the Story. Put the hot sauce photo in the frame, set the weekend price as the line you will read, and download."
+      "a": "You leave with a tall Story video you can post. Put the hot sauce photo in, set the price as the line you will read, and download."
     },
     {
       "q": "Why a template instead of filming a creator for Stories?",
-      "a": "Stories go stale when the offer changes and the creator is booked. Rewrite the price on this frame and post the new Story while that booking is still ahead."
+      "a": "Stories go stale when the offer changes and the creator is booked. Change the spoken line and post the new Story video while that booking is still ahead."
     },
     {
       "q": "Who should build a Story from this frame?",
-      "a": "A shop that posts Stories every week, and the person who writes those posts. A hot sauce brand and the helper who handles its Instagram both need the product fully in frame."
+      "a": "A shop that posts Stories every week, and the person who writes those posts. A hot sauce brand and the helper who handles its Instagram both need the bottle fully in the video."
     },
     {
       "q": "Can a beginner assemble a Story this way?",
-      "a": "Yes. Someone who has never opened a timeline can still do it. The three steps turn one sharp photo into a Story square, and you type the price on the Story after the square downloads."
+      "a": "Yes. Someone who has never opened a timeline can still do it. The three steps turn one sharp photo into a Story video, and you add the price after you download."
     },
     {
       "q": "Which shops post this kind of Story?",
-      "a": "Shops that sell something a viewer should see in full. Hot sauce, a small pouch, and a folded scarf can each take this frame, with the price typed on the Story."
+      "a": "Shops that sell something a viewer should see in full. Hot sauce, a small pouch, and a folded scarf can each become a Story video, with the price added after download."
     },
     {
       "q": "Can the Story use the photo I already shoot for the shop?",
-      "a": "Yes. The hot sauce in the frame should be the hot sauce you ship, label and all. Your logo can sit in a corner the layout leaves open, and you do not need a new shoot for that."
+      "a": "Yes. The hot sauce in the video should be the hot sauce you ship, label and all. Your logo can be added after download, and you do not need a new shoot for that."
     },
     {
       "q": "Which apps is the Story frame meant for?",
-      "a": "Instagram Stories is the home for this square. Set it on a tall 9:16 frame there. A Facebook Story can use the same square, and a feed post can keep it at 1:1. Use 16:9, 4:3, or 3:4 only when the placement is no longer a Story."
+      "a": "Instagram Stories is the home for this tall video. A Facebook Story can use the same file, and a feed post can use a square cut. Use 16:9, 4:3, or 3:4 only when the placement is no longer a Story."
     },
     {
       "q": "Do I need a paid subscription for Story templates?",
@@ -83,14 +83,14 @@
     },
     {
       "q": "Can the Story run as a paid ad or as client work?",
-      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the square to a client who sells the same hot sauce."
+      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the video to a client who sells the same hot sauce."
     },
     {
       "q": "Why use a Story template instead of starting from scratch?",
-      "a": "Your time goes into the price and the heat, which are the words shoppers read. The hot sauce already has a place in the frame, so you can spend the edit on those words."
+      "a": "Your time goes into the price and the heat, which are the words shoppers hear. The hot sauce already has a place in the video, so you can spend the edit on those words."
     }
   ],
-  "output": "Square product photo · Story layout",
+  "output": "Tall Story video with an avatar and a voice",
   "visual": {
     "strip": [
       "n:q10-story-picker-1",
@@ -667,8 +667,8 @@
   },
   "related_h2": "Templates to Use With a Story Ad",
   "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty page, and Instagram ads sit beside this Story template.",
-  "cta_title": "Create Your First Story Square",
-  "cta_lead": "Place the hot sauce in a Story layout you like, then download the square and add the headline and price. The file has no watermark.",
+  "cta_title": "Create Your First Story Video",
+  "cta_lead": "Turn the hot sauce photo into a Story video with an avatar and a voice. The file has no watermark.",
   "blockOrder": [
     "hero",
     "picker",
@@ -678,12 +678,12 @@
   "more_sections": [
     {
       "eyebrow": "With the frame",
-      "h2": "Features on a Story Ad Template",
-      "lead": "The square is the Story frame. A script, an avatar, and a spoken line can publish with it.",
+      "h2": "Features on a Story Video",
+      "lead": "The Story video carries a script, an avatar, and a spoken line you can publish with it.",
       "items": [
         {
           "t": "A Product Link Can Start It",
-          "d": "Paste the product page. The item comes through, and this square stays the frame for the Story."
+          "d": "Paste the product page. The hot sauce comes through, and this video is the Story you post."
         },
         {
           "t": "An Avatar From the Library",

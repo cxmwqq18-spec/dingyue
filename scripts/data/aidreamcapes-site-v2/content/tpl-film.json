@@ -1,10 +1,10 @@
 {
   "id": "tpl-film",
-  "title": "AI Cinematic Product Video From One Photo | AIVideosUGC",
-  "description": "AI cinematic product video from one photo: moody light and a slow camera move. Use wide 16:9 on the web or tall 9:16 on a phone, in 6, 10, 15 or 30 seconds.",
-  "h1": "Cinematic Product Video From One Still Photo",
+  "title": "Cinematic Ads With Studio Light | AIVideosUGC",
+  "description": "Make cinematic ads with studio-style light from one product photo. Set a slow dark move, then download the clip and post it where you already sell.",
+  "h1": "Cinematic Ads With Studio Light, From One Photo",
   "eyebrow": "Film-style video template",
-  "lead": "A cinematic product video can open on the black speaker before anyone names it. Pick a slow dark move and use the photo you already sell with.",
+  "lead": "A slow dark move on the black speaker, with studio-style light, from the photo you already sell. No set to book.",
   "secondary_keywords": [
     "cinematic product ad",
     "moody product video",
@@ -750,6 +750,37 @@
         {
           "t": "An API for a Product Line",
           "d": "Shop software can send photos through the API when a line needs the same open."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Creative control",
+      "h2": "Full Creative Control From One Photo",
+      "lead": "You set the scene, the spoken line, and the frame size. The product photo is the only thing you need to bring.",
+      "items": [
+        {
+          "t": "Any Scene From the Photo",
+          "d": "Put the black speaker in a dark room, or the perfume on a night table. The scene comes from the photo you already have, so there is no set to rent."
+        },
+        {
+          "t": "The Language You Sell In",
+          "d": "Speak the line in the language on the product page. The same slow move stays, and the captions follow that language."
+        },
+        {
+          "t": "Start From a Ready Open",
+          "d": "The slow push and the low light are already in the template. You bring the watch photo and the one line you want heard."
+        },
+        {
+          "t": "Change It in the Editor",
+          "d": "Trim the move, shift the caption, and swap the track in the built-in editor. A wording fix does not start a new crew call."
+        },
+        {
+          "t": "Captions on the Slow Move",
+          "d": "Captions land on the move in time with the spoken line. Read them, and fix a wrong word before the file goes out."
+        },
+        {
+          "t": "A Size for the Placement",
+          "d": "Export the travel mug wide for the product page, or tall for a phone feed. The same photo covers both cuts."
         }
       ]
     }

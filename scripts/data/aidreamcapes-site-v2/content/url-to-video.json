@@ -1,8 +1,8 @@
 {
   "id": "url-to-video",
-  "title": "URL to Video AI Generator for Product Ads | AIVideosUGC",
-  "description": "Turn a public product URL into a short video with a script, an AI actor and a voice. Make demos, paid ads and social posts without a studio shoot.",
-  "h1": "URL to Video: A Finished Ad From a Product Page",
+  "title": "Convert a Link to Video Ads | AIVideosUGC",
+  "description": "Convert a link to video from a public product page. Paste your product link, approve the script and the actor, and download an ad you can post.",
+  "h1": "Convert a Link to Video From the Product Page",
   "eyebrow": "URL to video",
   "lead": "A URL to video run turns a public product page into a spoken ad. Paste that page, and the lunch box photo there stays the product in the clip.",
   "secondary_keywords": [
@@ -12,27 +12,27 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Why Shops Start From the Listing",
+  "benefits_h2": "Why a URL to Video Starts From the Listing",
   "benefits": [
     {
       "t": "The Page Does the Gathering",
-      "d": "You do not re-upload the lunch box photo. The picture on the public page is the one that enters the project."
+      "d": "Paste the lunch box page once and the clip starts from that page. The picture on the public page is the one that enters the project, so you do not re-upload the lunch box photo."
     },
     {
       "t": "Scripts in the Languages You Sell",
-      "d": "The script can use a fact the listing already states. If you also sell that lunch box in French, the draft can be written in French and the wording stays yours."
+      "d": "The script comes back with the lunch box page, and it can use a fact the listing already states. If you also sell that lunch box in French, the draft can be written in French."
     },
     {
       "t": "Actors That Can Carry an Ad",
       "d": "Use one actor for the lunch box and the next color so the two ads look like one shop. The library has 53 AI actors."
     },
     {
-      "t": "More of the Budget Stays on Ads",
-      "d": "A 15-second clip is 60 credits, and a 6-second cut is 24 when the ad only needs a short hold. You see that cost before it runs, and the crew money stays in the ad budget."
+      "t": "Ready for the Paid Ad",
+      "d": "The lunch box clip can go out as a paid ad or a listing video once you approve it. A 15-second clip is 60 credits, and a 6-second cut is 24. You see that cost before it runs."
     },
     {
       "t": "You Still Hold the Edit",
-      "d": "If the draft says the lunch box is deep and the page says shallow, keep the page word. You can also change the voice without starting a new project."
+      "d": "You can change the voice after the draft comes back. The edit still says what the lunch box page says, and you do not start a new project."
     }
   ],
   "steps_h2": "How to Make a Video From a Product Page in 3 Simple Steps",
@@ -225,7 +225,7 @@
     ]
   },
   "reasons": {
-    "h2": "Why a Product Link Saves the Prep",
+    "h2": "Why URL to Video Saves the Prep",
     "lead": "Paste a public product page and the heavy prep is already done for you.",
     "items": [
       {
@@ -250,7 +250,7 @@
       }
     ]
   },
-  "benefits_lead": "A product that already has a page can feed the next ad, demo, and social clip.",
+  "benefits_lead": "Paste the lunch box page once. The draft script, the pictures, and a voice come back together, and you approve them before the clip runs.",
   "related_h2": "When You Are Not Starting From a Link",
   "related_lead": "If you already have a photo, or you want a presenter-led clip, start in one of these tools.",
   "relatedLinks": [

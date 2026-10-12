@@ -120,7 +120,7 @@
     "lead": "One clip of each kind. Start the same kind from your own product photo.",
     "groups": [
       {
-        "label": "Ads With a Person On Camera",
+        "label": "A Spoken Ad With a Person on Camera",
         "items": [
           {
             "ref": "n:gen2:video-hub-g1",
@@ -131,7 +131,7 @@
         ]
       },
       {
-        "label": "The Same Walkthrough Each Time",
+        "label": "The Same Product Walkthrough",
         "items": [
           {
             "ref": "n:guide:im01-video-hub-bento-r1",
@@ -142,7 +142,7 @@
         ]
       },
       {
-        "label": "The Product in a Real Room",
+        "label": "A Showcase in a Real Room",
         "items": [
           {
             "ref": "n:gen2:video-hub-g7",
@@ -153,7 +153,7 @@
         ]
       },
       {
-        "label": "An Actor Chosen for the Buyer",
+        "label": "An Actor Matched to the Buyer",
         "items": [
           {
             "ref": "n:gen2:spokesperson-videos-c3",
@@ -164,7 +164,7 @@
         ]
       },
       {
-        "label": "A Frame for Where It Posts",
+        "label": "A Clip Sized for the Feed",
         "items": [
           {
             "ref": "n:gen2:video-hub-g3",
@@ -183,8 +183,8 @@
       "lead": "Pick the shape that matches the job, then bring your own photo.",
       "items": [
         {
-          "t": "Create Presenter Product Videos",
-          "d": "The insulated bottle stays in a hand while someone talks about the cold commute. You approve that sentence before it posts."
+          "t": "A Spoken Ad on Camera",
+          "d": "An adult holds the insulated bottle, and the line you approved is the line the face says. You check that sentence before the clip posts."
         },
         {
           "t": "Repeat a Product Walkthrough",
@@ -724,7 +724,7 @@
     "cta"
   ],
   "definition": {
-    "title": "What an AI Video Generator Does",
+    "title": "What Does This AI Video Generator Do?",
     "paras": [
       "A shop takes the listing photo and gets a clip a buyer can watch. Nobody on the team has to stand in for that product. Pick an AI actor, clone a voice you have rights to in the languages you sell in, and publish the file to Meta or TikTok.",
       "You can edit the clip before you download it. Choose an AI actor, keep the approved line, and use the language they sell in. Downloads have no watermark, and commercial use is on paid plans."

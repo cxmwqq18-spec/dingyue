@@ -1,10 +1,10 @@
 {
   "id": "ind-food-drinks",
-  "title": "AI Food and Drink Product Videos | AIVideosUGC",
-  "description": "Turn one food or drink photo into a pour, a first bite, or a shelf shot. Download watermark-free clips for listings, social feeds, and paid ads.",
-  "h1": "AI Food and Drink Product Videos for the Pour and the Plate",
+  "title": "AI UGC Videos for Food and Beverage | AIVideosUGC",
+  "description": "Make AI UGC videos for food and beverage products from one package photo. Show a pour or a plate, then download a clip you can post without a kitchen day.",
+  "h1": "AI UGC Videos for Food and Beverage Products",
   "eyebrow": "Food & Beverage",
-  "lead": "Upload the citrus bottle and let an AI avatar pour it over ice. You get a clip you can post, without booking a kitchen for the pour.",
+  "lead": "Upload the citrus bottle and let an AI avatar pour it over ice for an AI UGC video. You get a clip you can post, without booking a kitchen for the pour.",
   "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
     "drink pour video",
@@ -62,7 +62,7 @@
     },
     {
       "t": "Pick a Made-Up Person",
-      "d": "Pick an AI avatar at a kitchen counter who would drink this citrus. You can change that face before the clip is made."
+      "d": "Choose an AI avatar at the kitchen counter who pours this citrus. You can change that face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice, Then Post",

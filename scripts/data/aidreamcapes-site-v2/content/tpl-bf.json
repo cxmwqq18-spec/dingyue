@@ -1,10 +1,10 @@
 {
   "id": "tpl-bf",
-  "title": "Black Friday Video Ads From One Photo | AIVideosUGC",
-  "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a setup for social posts and product pages.",
-  "h1": "Black Friday Video Ads You Can Post Before the Rush",
+  "title": "Black Friday Templates and Video Ads | AIVideosUGC",
+  "description": "Build a Black Friday template from one product photo. The promo stays easy to read, and you add the price in the editor before you post the video ad.",
+  "h1": "Black Friday Templates You Can Read at a Glance",
   "eyebrow": "Black Friday template",
-  "lead": "Build a Black Friday video ad from the pump-bottle photo you already have. The sale scene comes back ready for the holiday feed, and you add the offer after download.",
+  "lead": "Turn the pump-bottle photo into a Black Friday promo you can read at a glance. Add the price and a sticker in the editor, then post it.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -23,7 +23,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip and add captions if you still need them. Type the price, the code, or the end date yourself."
+      "d": "Download the clip, add captions, and place a sticker with the price. You set the code and the end date in the editor."
     }
   ],
   "maker": {
@@ -567,7 +567,7 @@
     "title": "What This Sale Template Is For",
     "paras": [
       "A pump bottle from your product page can sit in a scene made for the Black Friday post, without a rented camera.",
-      "The pump bottle and the headphones can share one setup, so the shop grid looks like one sale. You add your own words after download."
+      "The pump bottle and the headphones can share one setup, so the shop grid looks like one sale. Add your words and a sticker on the scene before you post."
     ]
   },
   "reviews": {
@@ -686,12 +686,12 @@
       {
         "t": "Words That Sound Like Your Shop",
         "icon": "Type",
-        "d": "The headphone clip can carry your shop's own wording, not a generic sale banner. Put that wording on it, and the post reads as yours."
+        "d": "The headphone clip can carry your shop's own wording and a sticker, not a generic sale banner. Put that wording on it, and the post reads as yours."
       },
       {
         "t": "One Sale Look Across the Shop",
         "icon": "Palette",
-        "d": "Sale posts can match across the shop when they reuse one setup. You can edit the wording, try another language, or start the next product through the API."
+        "d": "Sale posts can match across the shop when they reuse one setup. You can edit the wording, try another language, or start the next product. The API is not a second plan. Your shop system starts the next product from this account."
       }
     ]
   }

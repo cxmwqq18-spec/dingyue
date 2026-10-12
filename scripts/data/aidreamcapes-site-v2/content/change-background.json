@@ -1,10 +1,10 @@
 {
   "id": "change-background",
-  "title": "AI Product Background Changer | AIVideosUGC",
-  "description": "Change a product photo background from one clear image. Keep the item recognizable, create a new setting for listings or ads, and avoid another studio shoot.",
-  "h1": "AI product background changer for a new setting",
+  "title": "AI Image Background Changer | AIVideosUGC",
+  "description": "Remove and replace the room behind a product with the AI image background changer. Keep the item you sell, then download a sharp photo for the listing.",
+  "h1": "AI Image Background Changer to Remove and Replace",
   "eyebrow": "Photo tool",
-  "lead": "The vase is fine. The room behind it is not. Name pale wood, and the AI product background changer keeps the vase you sell. One photo is 24 credits, shown before you start.",
+  "lead": "The vase is fine. The room behind it is not. Name pale wood, and the AI image background changer keeps the vase you sell. One photo is 24 credits, shown before you start.",
   "secondary_keywords": [
     "change product photo background",
     "replace the background of a product image",
@@ -28,7 +28,7 @@
       "d": "Download the square with no watermark and use it on the listing. You can also take that vase photo into an ad."
     }
   ],
-  "benefits_h2": "Why This Background Swap Holds Up",
+  "benefits_h2": "Why This Product Background Replacer Holds Up",
   "benefits": [
     {
       "img": "n:guide:fx17-change-background-benefit-studio-r1",
@@ -68,8 +68,8 @@
   },
   "faq": [
     {
-      "q": "What is an AI product background changer?",
-      "a": "It finds the product in your photo and replaces the room behind it. A blue ceramic vase on a messy counter can come back on pale wood, and the vase stays the one you sell."
+      "q": "How does the AI image background changer work?",
+      "a": "It finds the product in your photo and can remove or replace the room behind it. A blue ceramic vase on a messy counter can come back on pale wood, and the vase stays the one you sell."
     },
     {
       "q": "Where do I get backgrounds for a product photo?",
@@ -219,26 +219,26 @@
     "cta"
   ],
   "reasons": {
-    "h2": "Why Sellers Swap a Product Background",
+    "h2": "AI Image Background Changer for a Clean Shot",
     "lead": "Use it when the vase is fine and only the area behind it is wrong.",
     "items": [
       {
-        "t": "Clear a Distracting Backdrop",
-        "d": "A blue ceramic vase on a sunny windowsill gets a quiet gray sweep. The listing shows the vase, not the clutter behind it.",
+        "t": "Clear the Counter Behind the Cleanser",
+        "d": "A mint cleanser tube on a plant-filled counter comes back on a quiet gray sweep. The listing shows the tube, not the leaves.",
         "img": "n:guide:k5-background-case-1",
-        "alt": "Blue ceramic vase on a sunny windowsill."
+        "alt": "Mint cleanser tube on a plant-filled counter."
       },
       {
-        "t": "Match the Backdrop to the Ad",
-        "d": "Put the face cream jar on wet stone for one campaign, then on linen the next month. The jar stays the product you sell, and only the surface changes.",
+        "t": "Pair the Sneakers With the Bag",
+        "d": "Set the black and white sneakers beside the purple handbag on one pale sweep. Both stay the products you sell, and only the floor behind them changes.",
         "img": "n:guide:k5-background-case-2",
-        "alt": "Plain face cream jar on wet stone."
+        "alt": "Black and white sneakers beside a purple handbag."
       },
       {
-        "t": "Spend Credits, Not a Day Rate",
-        "d": "A new cafe-table setting for the leather wallet is a short credit job, not a designer's afternoon. The charge appears before the photo is made.",
+        "t": "Move Serum and Sunscreen",
+        "d": "Place the serum among green leaves, then the two sunscreen bottles on the beach. Each new setting is a short credit job, and the charge appears before the photo is made.",
         "img": "n:guide:k5-background-case-3",
-        "alt": "Brown leather wallet on a cafe table."
+        "alt": "Serum bottle among green leaves and two sunscreen bottles on sand."
       }
     ]
   },

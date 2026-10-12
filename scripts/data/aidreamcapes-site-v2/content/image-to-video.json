@@ -1,8 +1,8 @@
 {
   "id": "image-to-video",
-  "title": "Image to Video AI for Product Ads | AIVideosUGC",
-  "description": "Turn a product photo into a phone-style video with a script, an AI person, a spoken voice and captions. Post to TikTok or Meta, or download with no watermark.",
-  "h1": "AI Image to Video Generator: From a Still to an Ad",
+  "title": "Image to Video for Product Ads | AIVideosUGC",
+  "description": "Make an image to video ad from one product photo, with a script, a voice, and captions. Post it to TikTok or Meta, or download it with no watermark.",
+  "h1": "Image to Video Generator: From a Still to an Ad",
   "eyebrow": "Image to video",
   "lead": "One product photo is enough for an AI image to video ad. The matte teal bottle can turn toward the camera as a clip you post, with no shoot to book.",
   "secondary_keywords": [
@@ -195,7 +195,7 @@
     "items": [
       {
         "t": "Built Like a Shopper Video",
-        "d": "Every clip is shaped like a shopper video: a face, a voice, and a reason to want the product. That is the ad shape people already stop to watch.",
+        "d": "A face, a voice, and one reason to want the teal bottle. That is the shopper-style clip people already stop to watch.",
         "icon": "Users"
       },
       {

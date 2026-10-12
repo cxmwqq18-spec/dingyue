@@ -1,10 +1,10 @@
 {
   "id": "occ-sale-discount",
-  "title": "Sale Ad Creatives With Editable Offers | AIVideosUGC",
-  "description": "Build a sale ad from one product photo. Type the confirmed price, code, and end date in the editor, then reuse the same scene when the offer changes.",
-  "h1": "Create Sale Ad Creatives Fast",
+  "title": "Countdown Sale Video Maker | AIVideosUGC",
+  "description": "Make a countdown sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and download the file.",
+  "h1": "Create a Countdown Sale Video",
   "eyebrow": "Sale ad creatives",
-  "lead": "Get a sale video that says the last day out loud. An AI avatar can hold the candle from your page, and you can change the offer line before anyone else sees the file.",
+  "lead": "Get a sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and change the offer line before you download.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -94,7 +94,7 @@
       }
     ]
   },
-  "cta_lead": "Download a sale video that says the end date out loud. Paste a product page, choose an AI avatar, and you are done.",
+  "cta_lead": "Download a countdown video that says the end date out loud. Paste the product page, pick an avatar, and set the end date before you download.",
   "steps": [
     {
       "t": "Add Your Product Link",
@@ -255,7 +255,7 @@
       }
     }
   },
-  "benefits_h2": "A Deadline Turns a Sale Into an Event",
+  "benefits_h2": "A Countdown Turns a Sale Into an Event",
   "benefits": [
     {
       "t": "One AI Avatar for the Sale",
@@ -339,36 +339,36 @@
     ]
   },
   "trust": {
-    "h2": "Sale Clips a Small Team Can Ship",
-    "lead": "A small team can ship sale videos from one setup, without a separate production desk.",
+    "h2": "How Sellers Ship a Countdown Clip",
+    "lead": "Sellers use this countdown page to say the end date, without a separate production desk.",
     "items": [
       {
-        "t": "Openings People Stay With",
-        "d": "The first seconds carry the deadline and the product, so a viewer gets the offer before the swipe. You can redo that opening without booking another film day."
+        "t": "Say the Last Day Out Loud",
+        "d": "A denim seller pastes the jacket page, and the opening says the last day while the jacket stays in frame. They redo that opening without booking another film day."
       },
       {
-        "t": "Spend the Credits You Already Have",
-        "d": "Each job draws from the credit balance you already have, so a new offer does not start with a new creator invoice."
+        "t": "Use the Credits Already There",
+        "d": "A home seller keeps the picnic blanket scene and draws the new offer from the credit balance they already have. A new code does not start with a new creator invoice."
       },
       {
-        "t": "A Full Slate of Sale Clips",
-        "d": "Once the look is chosen, you can make a sale clip for each product in the catalog instead of waiting on one editor."
+        "t": "A Clip for Each Product",
+        "d": "A small team makes a sale clip for the charging pad and the tea pouch, instead of waiting on one editor for the whole catalog."
       },
       {
-        "t": "Sale Clips Without a Shoot Day",
-        "d": "A product page and a few choices stand in for a location day, a talent call, and an edit queue."
+        "t": "Set the Date, Skip the Shoot",
+        "d": "A skincare seller pastes the cream page and sets the end date in the editor. That stands in for a location day, a talent call, and an edit queue."
       },
       {
-        "t": "A New Test When the Code Changes",
-        "d": "Try another opening or another voice when the offer changes. You are not stuck with one sale video for the whole month."
+        "t": "Try Another Voice",
+        "d": "A tea seller tries another opening and another voice when the end date moves. They are not stuck with one sale video for the whole month."
       },
       {
         "t": "One Person Finishes the Set",
-        "d": "You can brief, generate, and export the weekend set after the orders are packed. One person can cover it, so nobody else has to stay late."
+        "d": "One person can brief, generate, and export the weekend set of sale clips after the orders are packed. Nobody else has to stay late for the denim jacket or the tea pouch."
       }
     ]
   },
-  "cta_title": "Put a Deadline on the Next Offer",
+  "cta_title": "Download Your Countdown Sale Video",
   "blockOrder": [
     "hero",
     "benefits",

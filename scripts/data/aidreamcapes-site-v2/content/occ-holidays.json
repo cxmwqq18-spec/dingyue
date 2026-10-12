@@ -1,8 +1,8 @@
 {
   "id": "occ-holidays",
-  "title": "Holiday Ad Photos and Videos for Gift Season | AIVideosUGC",
-  "description": "Make holiday ad photos and videos from one product photo. Type dates, prices, or offers in the editor, then reuse the scene when those details change.",
-  "h1": "Create Holiday Ad Photos and Videos Fast",
+  "title": "Holiday Video Maker for Gift Season | AIVideosUGC",
+  "description": "Use this holiday video maker on one gift photo, then post before the ship date is final. An avatar can hold the product while you add the date later.",
+  "h1": "Holiday Video Maker for a Festive Gift Ad",
   "eyebrow": "Holiday ad photos and videos",
   "lead": "Holiday ad photos and videos can go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
   "secondary_keywords": [
@@ -218,25 +218,25 @@
   "benefits_h2": "Make Holiday Ad Photos Feel Festive",
   "benefits": [
     {
-      "t": "An AI Avatar Holds the Gift",
+      "t": "Hold the Gift With an Avatar",
       "d": "You get a face for the gift without hiring a model. An AI avatar sits beside the lipstick so the tube stays easy to see in the cream box.",
       "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
       "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
-      "t": "A Gift Line for the Jacket",
+      "t": "Speak a Gift Line",
       "d": "Shoppers hear a gift line for this wool jacket, in words you would write on a card. You can change any word before the ad goes up.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
-      "t": "A Note in Their Language",
+      "t": "Add a Voice in Their Language",
       "d": "The note can be spoken in the language they read, and the jar by the ribbon stays the same. You pick the voice before you export.",
       "img": "n:guide:fx02-occ-holidays-benefit-shipping",
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
-      "t": "Two Lines on One Gift Set",
+      "t": "Test a Second Gift Opening",
       "d": "The jar, the tube, and the scarf share one gift scene. A second opening line gives you a choice, and you publish the one you like.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."

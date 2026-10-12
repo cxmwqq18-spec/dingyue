@@ -1,10 +1,10 @@
 {
   "id": "model-photos",
-  "title": "AI Model Photos for Fashion | AIVideosUGC",
-  "description": "Make fashion photos that show clothes on a generated person, using one photo of the garment laid flat. Put the result on product pages and in ads.",
-  "h1": "AI model photos for clothing from a flat garment photo",
+  "title": "AI Virtual Fashion Model Photography | AIVideosUGC",
+  "description": "Dress clothes and accessories on a lifelike virtual fashion model. Upload one flat photo and download product photography for the page or the ad.",
+  "h1": "Product Photography on Virtual Fashion Models",
   "eyebrow": "AI fashion model photos",
-  "lead": "AI model photos for clothing can put a canvas backpack on a person before the listing goes up. Upload the flat photo and AIVideosUGC places that pack on a virtual model.",
+  "lead": "A virtual fashion model can put a canvas backpack on a person for product photography before the listing goes up. Upload the flat photo and AIVideosUGC places that pack on a lifelike model.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -30,7 +30,7 @@
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
       "alt": "Adult woman with a tight bun wearing a plain cream knit top on a bright terrace.",
       "t": "Show How the Piece Sits",
-      "d": "Buyers can see where the hem of the cream knit lands, and how the shoulder sits, instead of guessing from a flat photo. Leave the flat file in the gallery when they want the stitch."
+      "d": "Show where the hem and the shoulder of the cream knit sit, on a gender, age, and build you describe. Leave the flat file in the gallery when they want the stitch."
     }
   ],
   "more_sections": [
@@ -44,7 +44,7 @@
           "alt": "Split view of an unbranded rust-orange tote laid flat and the same tote carried by an adult model.",
           "frame": "none",
           "t": "Flat Lay Beside the Worn View",
-          "d": "Shoppers can compare the rust tote laid flat with the same tote on a shoulder, handles and color included. The next bag can use that pairing."
+          "d": "Shoppers can compare the rust tote laid flat, on a ghost mannequin, or on a shoulder, handles and color included. The next color can reuse that pairing."
         },
         {
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
@@ -312,7 +312,7 @@
       },
       {
         "t": "Jewelry on a Virtual Model",
-        "d": "Shoppers can see how a thin chain sits at the collarbone. Place that photo on a model for the [jewelry](page:tpl-jewel) page, and keep a tight frame for the clasp.",
+        "d": "Shoppers can see how a thin chain or a pair of glasses sits. Place that photo on a model for the [jewelry](page:tpl-jewel) page, and keep a tight frame for the clasp.",
         "icon": "Shirt"
       },
       {

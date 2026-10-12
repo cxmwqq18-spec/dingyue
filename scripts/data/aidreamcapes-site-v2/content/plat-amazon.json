@@ -1,8 +1,8 @@
 {
   "id": "plat-amazon",
-  "title": "Amazon Product Photos for Listings | AIVideosUGC",
-  "description": "Create Amazon product photos for a clean main image, detail views, and in-use shots from one upload. You pay in credits, and you see the cost before each file.",
-  "h1": "Amazon Product Photos for the Main Image and the Gallery",
+  "title": "Amazon Product Image Requirements | AIVideosUGC",
+  "description": "Amazon product image requirements: a compliant white background, with the product large in the frame. Download the file and add it in Seller Central.",
+  "h1": "Amazon Listing Photos That Follow Image Requirements",
   "eyebrow": "Amazon listings",
   "lead": "From one photo you already have, make the Amazon main image, a detail, and an in-use view, then repeat that set across the catalog. A batch, or the API, can take the rest. The cost shows before each file.",
   "card": "Amazon listing photos from one product photo: main, detail and in-use.",
@@ -15,7 +15,7 @@
   "faq": [
     {
       "q": "What should the Amazon main image show?",
-      "a": "The main image is the product on pure white, filling most of the square, with no words, logos, or props. Keep a spec line for a later image, and publish the file in Seller Central after you check it. Make the long side large enough for zoom, then confirm the current rule before you upload."
+      "a": "The main image is the product on pure white, filling about eighty-five percent of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Keep a spec line for a later image, and publish the file in Seller Central after you check the current rule."
     },
     {
       "q": "What happens if a photo breaks those rules?",

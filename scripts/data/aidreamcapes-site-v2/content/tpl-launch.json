@@ -1,7 +1,7 @@
 {
   "id": "tpl-launch",
   "title": "AI Promo Video Maker for New Products | AIVideosUGC",
-  "description": "Turn one product photo into a launch video. Pick a tall 9:16 or a square 1:1, at 6, 10, 15, or 30 seconds. Add the real date and offer after download.",
+  "description": "Use the promo video maker on one product photo. Keep the sage-green bag in frame, pick a tall 9:16 or a square 1:1, and download the announcement.",
   "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
   "lead": "Have the announcement ready when the sage-green canvas bag ships. Put the finished bag in the frame, say the name the way the label does, and download. You do not start from a blank page.",
@@ -17,11 +17,11 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "The frame is already an announcement, with a gap where the sage-green bag sits. You fill that gap instead of building the ad from nothing."
+      "d": "Upload one photo of the whole sage-green bag, handles included. The announcement keeps that bag in frame."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Use one photo of the whole canvas bag, or paste the product page. The copy can name the color and the ship date."
+      "d": "Describe the scene, or paste the product page, and name the ship date. You get a line you can fix before it renders."
     },
     {
       "t": "Download and Post",

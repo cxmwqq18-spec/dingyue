@@ -1,8 +1,8 @@
 {
   "id": "video-ads",
-  "title": "AI UGC Video Ads for TikTok, Reels and Shorts | AIVideosUGC",
-  "description": "Make AI UGC video ads from a product photo or a link, with a script, an actor and a voice. Publish to TikTok or Meta, or download with no watermark.",
-  "h1": "AI UGC Video Ads Generator: Scroll-Stopping Ads From a Photo or Link",
+  "title": "AI Video Ads Generator for TikTok and Reels | AIVideosUGC",
+  "description": "Use this AI video ads generator to turn a product photo or a link into an ad with an actor and a voice. Download it for TikTok or Reels, with no watermark.",
+  "h1": "AI Video Ads Generator for Scroll-Stopping Ads",
   "eyebrow": "Phone-style video ads",
   "lead": "AI UGC video ads can start from a product photo or a product page. AIVideosUGC builds each one with a script, an AI actor, a voice, and captions.",
   "secondary_keywords": [
@@ -538,7 +538,7 @@
     "outputs": [],
     "after": null
   },
-  "benefits_h2": "What You Get From AI Video Ads",
+  "benefits_h2": "What This AI Video Ads Generator Gives You",
   "benefits": [
     {
       "t": "A Finished Ad, Quickly",
@@ -557,7 +557,7 @@
     },
     {
       "t": "A Fresh Cut Before the Ad Tires",
-      "d": "A candle clip that has been up for a while can feel familiar. Change the first sentence, keep the same candle in frame, and replace the tired cut.",
+      "d": "When a candle ad starts to feel familiar, change the first line and keep the same candle in frame. Swap that opening before the cut goes stale, and leave the product where shoppers already know it.",
       "icon": "refresh"
     },
     {
@@ -566,8 +566,8 @@
       "icon": "target"
     },
     {
-      "t": "Cleared for Paid Use",
-      "d": "On a paid plan the clip can be the ad you fund. You do not need a creator to sign off before the buy starts.",
+      "t": "Commercial Use on a Paid Plan",
+      "d": "A paid plan includes commercial use, so the clip can run as the ad you fund. You do not need a creator to sign off before that buy starts.",
       "icon": "shield"
     }
   ],
@@ -635,7 +635,7 @@
     "cta"
   ],
   "reasons": {
-    "h2": "Reasons These Video Ads Are Ready to Run",
+    "h2": "What Makes This AI Video Ads Generator Ready",
     "lead": "The script comes from the product you sell, the file matches the placement, and one photo can yield more than one style.",
     "items": [
       {

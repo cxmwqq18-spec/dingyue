@@ -15,9 +15,9 @@
   ],
   "sections": [
     {
-      "h2": "What AIVideosUGC Is For",
+      "h2": "Consent First, Then Say the Clip Is AI",
       "paras": [
-        "Online stores use AIVideosUGC to turn a photo they own into a short ad for a store page. A clip can carry a script, a spoken voice, captions, and a music track. Four rules sit under that work. Use a face or a voice only with permission. Do not hide that the clip is AI. We can refuse a request that breaks the rules. A person looks at reports. Make ads for products you sell or are allowed to promote. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+        "Use a face or a voice only with permission, and say the clip is AI before you publish. Online stores use AIVideosUGC to turn a photo they own into a short ad for a store page. A clip can carry a script, a spoken voice, captions, and a music track. We can refuse a request that breaks the rules, and a person looks at each report. Make ads only for products you sell or are allowed to promote. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       ],
       "img": "n:guide:b2f5-trust-what-it-is-for-r1",
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
@@ -57,7 +57,7 @@
     {
       "h2": "Voices, Scripts, and Where You Post",
       "paras": [
-        "You can start from a product link, make several versions, or start through the API when your shop system has the right to that page. The voice on the clip is made by the tool. Do not upload another person's voice unless they agreed. There are 53 AI actors to choose from, and you can add up to 7 reference photos. You can clone a voice only when you have the right to it. Read the captions and compare the item with the real product. Sending a file to TikTok or Meta does not check your claims. Meta covers Facebook and Instagram, and you still follow each place's rules for ads made with AI."
+        "You can start from a product link and make several versions when your shop system has the right to that page. The API is not a second login. Your shop system starts the job from this account. The voice on the clip is made by the tool. Do not upload another person's voice unless they agreed. There are 53 AI actors to choose from, and you can add up to 7 reference photos. You can clone a voice only when you have the right to it. Read the captions and compare the item with the real product. Sending a file to TikTok or Meta does not check your claims. Meta covers Facebook and Instagram, and you still follow each place's rules for ads made with AI."
       ]
     }
   ],

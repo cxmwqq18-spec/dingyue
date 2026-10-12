@@ -1,8 +1,8 @@
 {
   "id": "ind-fashion-clothing",
-  "title": "AI Fashion Video Ads From a Garment Photo | AIVideosUGC",
-  "description": "Turn one garment photo into a try-on, a fit check, or a short look. Download watermark-free photos and clips for fashion brands, social feeds, and paid ads.",
-  "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
+  "title": "AI UGC Ads for Beauty and Cosmetics | AIVideosUGC",
+  "description": "Show a skincare step, a makeup look, or hair care in a beauty and cosmetics UGC ad. Start from one product photo, then download a clip you can post.",
+  "h1": "Beauty UGC Ad Generator for Cosmetics",
   "eyebrow": "Clothing",
   "lead": "AI model photos and videos for fashion brands start from one flat photo. A buyer trusts a wool coat once the hem moves, and an AI avatar can walk it down a hallway with no casting day.",
   "card": "Try-ons, fit checks, outfit photos, and review-style clips from one garment photo.",
@@ -123,8 +123,8 @@
         "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Show How the Piece Moves",
-        "d": "Let the jacket turn once so the buyer sees the lining, then send her to the product page. She sees how it moves and has a place to buy it.",
+        "t": "Send Her to the Product Page",
+        "d": "Let the jacket turn once, then send her to the product page, so she sees the lining and where to buy. The turn is there to make the piece easier to want.",
         "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
     ]

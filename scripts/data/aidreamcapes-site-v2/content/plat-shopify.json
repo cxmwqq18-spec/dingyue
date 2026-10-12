@@ -1,10 +1,10 @@
 {
   "id": "plat-shopify",
-  "title": "AI Shopify Product Photos and Videos | AIVideosUGC",
-  "description": "Make Shopify product photos in a new background, or many at once, plus a short video for your store. See the cost first, then download with no logo on the file.",
-  "h1": "Shopify Product Photos for Pages, Grids and Clips",
+  "title": "Shopify AI Product Photo Generator | AIVideosUGC",
+  "description": "Make Shopify images for the product page with your shop's AI product photo generator. Upload one photo, pick the scene, and download the product image.",
+  "h1": "Shopify Product Image Generator for Store Pages",
   "eyebrow": "Shopify stores",
-  "lead": "Make a Shopify product photo in a room you never rented, then place that file on the product page.",
+  "lead": "Your shop's AI product photo generator can make a Shopify product image in a room you never rented, then place that file on the product page.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
@@ -142,18 +142,18 @@
     {
       "eyebrow": "Shopify files",
       "h2": "Examples of Shopify Product Photos",
-      "lead": "A collection tile, a table scene, and a Shopify product video are separate downloads.",
+      "lead": "Use the square of the four bowls on the collection grid, the table scene with fruit, and a short clip on the product page. Each file is its own download.",
       "items": [
         {
-          "t": "The Tile Shoppers See",
+          "t": "Post the Collection Square",
           "d": "You get the whole set of ceramic bowls, square, with nothing fighting them. Use this as the image in the collection."
         },
         {
-          "t": "Lifestyle Photo Beside the Grid",
+          "t": "Show the Table With Fruit",
           "d": "The gallery frame shows the bowls on a dining table with a little fruit, not on the white sweep used in the grid. Shoppers see the size against something familiar."
         },
         {
-          "t": "Product Video on the Page",
+          "t": "Add the Clip on the Page",
           "d": "Turn the still into a 6, 10, 15, or 30 second clip and add that Shopify product video on the page. A video spends 24, 40, 60, or 120 credits."
         }
       ]

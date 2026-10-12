@@ -1,10 +1,10 @@
 {
   "id": "tpl-tryon",
-  "title": "AI Virtual Try-On for Clothing | AIVideosUGC",
-  "description": "Show clothing on a model without a booking. AI virtual try-on turns a flat-lay or hanger photo into an on-model view for your listing and social ads.",
-  "h1": "AI Virtual Try-On for Clothing, from a Flat Lay",
+  "title": "AI Clothing Video Templates for Brands | AIVideosUGC",
+  "description": "Clothing brands use these AI video templates to turn a flat garment photo into a clip you can post. Upload the piece, skip the model booking, and download.",
+  "h1": "Clothing Video Templates Your Brand Can Post",
   "eyebrow": "Model photo template",
-  "lead": "An olive bomber that only exists as a flat lay can still be the ad. Upload that photo, choose an AI avatar, and the try-on carries a spoken line.",
+  "lead": "Turn a flat photo of the olive bomber into a clothing video your shop can post, with no model booking. Choose an AI avatar, and the clip can still carry a spoken line.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
@@ -12,7 +12,7 @@
     "jacket product photos on a model"
   ],
   "steps_h2": "How to Make a Garment on Model Photo in 3 Simple Steps",
-  "steps_lead": "You leave with an on-model photo the shop can post. The olive bomber goes in as a flat lay.",
+  "steps_lead": "You leave with a clothing video the shop can post. The olive bomber goes in as a flat lay.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
@@ -637,8 +637,8 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Show the Bomber on a Person",
-  "cta_lead": "Upload the flat olive bomber and get an on-model try-on you can post. The credit cost is on screen first.",
+  "cta_title": "Post the Bomber as a Video",
+  "cta_lead": "Upload the flat olive bomber and get a clothing video you can post. The credit cost is on screen first.",
   "blockOrder": [
     "hero",
     "picker",

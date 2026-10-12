@@ -1,10 +1,10 @@
 {
   "id": "tpl-angle",
-  "title": "Product Packshot Photos for Multiple Views | AIVideosUGC",
-  "description": "A packshot is a clean product photo on a plain background. Turn one photo of each side into front, back, top, and base views for your gallery or ads.",
-  "h1": "Product Packshot Photos for Every Side You Photographed",
+  "title": "Beauty Video Templates for Products | AIVideosUGC",
+  "description": "Pick a beauty video template, drop in your own product, and download a clip with the frame and the voice already set. Skip a blank timeline and post it.",
+  "h1": "Beauty Video Templates for the Product You Sell",
   "eyebrow": "Product photo template",
-  "lead": "The speaker you already photographed, buttons and USB-C port included, can sit on a square with the backdrop you will reuse for the front. When the ad needs speech, those photos can carry a voice later.",
+  "lead": "Pick a beauty video template, drop in the serum or lipstick you sell, and download a clip that already has the frame and the voice. The steps below still show the speaker photo, buttons and USB-C port included, until you upload your own item.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -46,7 +46,7 @@
   "faq": [
     {
       "q": "What does this side-view template include?",
-      "a": "It is a square setup for sides you already shot. Add the speaker photo that shows the buttons or the USB-C port, and download that view. Speech can be added later if the listing also needs a short ad."
+      "a": "You get a beauty video template with the frame and the crop already set. Add a serum, a lipstick, or a compact you sell, and download that clip. Speech can be added later if the ad also needs a short spoken line."
     },
     {
       "q": "How do these templates get made?",
@@ -58,7 +58,7 @@
     },
     {
       "q": "Who is this template for?",
-      "a": "Shops, listing managers, and agencies that need the speaker's front and port side, plus a spoken clip when the ad needs one. A person on screen is an AI avatar. Beginners can start from one clear photo."
+      "a": "Shops, listing managers, and agencies that sell skincare, makeup, or hair care, plus a spoken clip when the ad needs one. A person on screen is an AI avatar. Beginners can start from one clear photo of the product."
     },
     {
       "q": "Can beginners use this template?",
@@ -66,7 +66,7 @@
     },
     {
       "q": "Which products work with this template?",
-      "a": "The square layout fits the speaker and other goods with a front and a back, including the running shoe and the headphones in this set. Beauty, food, and fitness scenes sit in the same gallery when you want a video instead of a side photo."
+      "a": "The template fits a serum, a lipstick, a compact, and other beauty goods you already photograph. A daily skincare step, a street-ready makeup look, and a dressier evening look can each use it. Food and fitness scenes sit in the same gallery when you want a different video."
     },
     {
       "q": "Can I use photos and clips I already shot?",
@@ -86,7 +86,7 @@
     },
     {
       "q": "Why use a template instead of starting from scratch?",
-      "a": "The square crop and the shared backdrop are already chosen. Your job is the speaker side you photographed, not building a frame from a blank file."
+      "a": "The frame, the crop, and the voice setup are already chosen. Your job is the beauty product you sell, not building an ad from a blank file. You drop in the photo, check the words, and download."
     },
     {
       "q": "Can one photo show a port that was hidden?",
@@ -554,7 +554,7 @@
     }
   },
   "steps_h2": "How to Make Side Photos in 3 Simple Steps",
-  "steps_lead": "Each pass gives you one square photo of that side, with the same backdrop on every upload. The speaker is the walk-through below.",
+  "steps_lead": "A beauty video template already holds the frame and the voice. The steps below still walk through the speaker side you photographed.",
   "blockOrder": [
     "hero",
     "picker",
@@ -655,6 +655,6 @@
       "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Make the Next Side From Your Photo",
-  "cta_lead": "Upload one photo of one speaker side and get that square back. Add a spoken voice or captions if the ad needs them. The credit cost is on screen first."
+  "cta_title": "Fill a Beauty Video Template",
+  "cta_lead": "Drop the product you sell into a beauty video template and download the clip. Add a spoken voice or captions if the ad needs them. The credit cost is on screen first."
 }

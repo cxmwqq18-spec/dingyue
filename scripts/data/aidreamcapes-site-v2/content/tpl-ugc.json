@@ -1,10 +1,10 @@
 {
   "id": "tpl-ugc",
-  "title": "UGC Style Product Photos for Ads and Listings | AIVideosUGC",
-  "description": "Turn one product photo into UGC style product photos: a review, unboxing, or demo photo for ads and listings. Write the caption after you download.",
-  "h1": "UGC Style Product Photos for Ads and Listings",
+  "title": "AI UGC Generator for Video Ads | AIVideosUGC",
+  "description": "Create AI UGC video ads from one product photo with the AI UGC generator. Pick the face, the language, and the line, then download a cut you can test.",
+  "h1": "Create AI UGC Video Ads on Demand",
   "eyebrow": "Ad photo template",
-  "lead": "A workout bottle that needs a new opening line can become UGC style product photos from that one shot. Pick an AI avatar and send that cut into the test.",
+  "lead": "Create an AI UGC ad from one product photo. Pick the AI avatar, the language, and the line. Download a cut you can test on TikTok, or a square for the grid.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
@@ -12,7 +12,7 @@
     "fitness product lifestyle photos"
   ],
   "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
-  "steps_lead": "You download an ad sized for the feed. Add the bottle, then choose who presents it.",
+  "steps_lead": "You download an AI UGC ad sized for the feed. Add the bottle, pick the face and the language, then choose who presents it.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -645,7 +645,7 @@
   "related_h2": "Explore More Ad Tools",
   "related_lead": "Move on from a product link to an AI actor, a creator-style video, a product video, TikTok ads, or the ad image tool.",
   "cta_title": "Start Your First UGC Ad",
-  "cta_lead": "Start from a bottle photo or a product link, and download a cut you can test.",
+  "cta_lead": "Start from a bottle photo or a product link, pick the line, and download a cut you can test on TikTok.",
   "blockOrder": [
     "hero",
     "picker",
