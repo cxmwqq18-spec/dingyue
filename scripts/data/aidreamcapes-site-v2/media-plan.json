@@ -270,9 +270,9 @@
     "before-after-videos": {
       "hero": {
         "kind": "image",
-        "image": "n:ra2-before-after-videos-hero-r1"
+        "image": "n:guide:ba1b-before-after-videos-hero-r1"
       },
-      "og": "n:t33-before-after-videos-og-r2",
+      "og": "n:guide:ba1b-before-after-videos-hero-r1",
       "gallery": []
     },
     "spokesperson-videos": {

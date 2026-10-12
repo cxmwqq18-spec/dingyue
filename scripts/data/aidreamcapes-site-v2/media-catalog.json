@@ -14316,6 +14316,116 @@
       1280
     ],
     "items": {
+      "ba1-before-after-videos-hero-r1": {
+        "file": "ba1-before-after-videos-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short honey-blonde bob holds a plain beige concealer stick under one eye.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit1-r1": {
+        "file": "ba1-before-after-videos-benefit1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult man with a short buzz cut holds a plain closed white cream jar in a bright bathroom.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit2-r1": {
+        "file": "ba1-before-after-videos-benefit2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands run a plain sage fabric shaver over pills on a camel knit sweater.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-benefit3-r1": {
+        "file": "ba1-before-after-videos-benefit3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hands press garlic through a plain stainless garlic press onto a wood board.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-steps-source-r1": {
+        "file": "ba1-before-after-videos-steps-source-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A white gas stovetop covered in grease and burnt residue, with four blank black knobs.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1-before-after-videos-steps-result-r1": {
+        "file": "ba1-before-after-videos-steps-result-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same white gas stovetop after the grease and burnt residue are wiped clean.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-hero-r1": {
+        "file": "ba1b-before-after-videos-hero-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult woman with a short honey-blonde bob, full face in frame: dark circles and small spots on the left half, even skin on the right half, with a plain beige concealer stick.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit1-r1": {
+        "file": "ba1b-before-after-videos-benefit1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same adult hand: dry flaky skin on the left half, a soft moisturized look on the right half, with a plain white cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit2-r1": {
+        "file": "ba1b-before-after-videos-benefit2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same camel knit sweater: pills on the left half, a smooth surface on the right half, with a plain sage electric fabric shaver.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "ba1b-before-after-videos-benefit3-r1": {
+        "file": "ba1b-before-after-videos-benefit3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "The same wood cutting board: whole garlic cloves and skins on the left half, pressed garlic and a plain stainless garlic press on the right half.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "b2f2-ai-actors-benefit-1-r1": {
         "file": "b2f2-ai-actors-benefit-1-r1",
         "w": 1024,
