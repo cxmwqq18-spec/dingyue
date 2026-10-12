@@ -698,9 +698,9 @@
     "faq": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:fx07-faq-hero-r1"
+        "image": "g:lifestyle-scene/example-07"
       },
-      "og": "n:guide:fx07-faq-hero-r1"
+      "og": "g:lifestyle-scene/example-07"
     },
     "contact": {
       "hero": {
@@ -712,9 +712,9 @@
     "about": {
       "hero": {
         "kind": "image",
-        "image": "n:guide:fx08-about-hero-r1"
+        "image": "g:macro-details/example-07"
       },
-      "og": "n:guide:fx08-about-hero-r1"
+      "og": "g:macro-details/example-07"
     },
     "trust": {
       "hero": {
