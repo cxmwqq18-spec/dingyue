@@ -14316,6 +14316,61 @@
       1280
     ],
     "items": {
+      "b2f2-ai-actors-benefit-1-r1": {
+        "file": "b2f2-ai-actors-benefit-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f2-ai-actors-benefit-3-r1": {
+        "file": "b2f2-ai-actors-benefit-3-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f2-tpl-film-hero-r1": {
+        "file": "b2f2-tpl-film-hero-r1",
+        "w": 1280,
+        "h": 720,
+        "alt": "Plain matte product bottle reflected in dark water beneath a bronze highlight.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f2-ind-food-drinks-white-r1": {
+        "file": "b2f2-ind-food-drinks-white-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain kraft snack pouch centered on white with a soft studio shadow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f2-tpl-drink-benefit-2-r1": {
+        "file": "b2f2-tpl-drink-benefit-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand lifts a plain matte aluminum cold-brew can beside an ice-filled glass on a bright counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "im01-video-hub-grwm-r2": {
         "file": "im01-video-hub-grwm-r2",
         "w": 864,
