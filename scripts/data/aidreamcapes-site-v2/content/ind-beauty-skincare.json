@@ -21,15 +21,21 @@
   "benefits": [
     {
       "t": "Faster and cheaper production",
-      "d": "Ghosting, delays and big invoices drop out of the routine. A creator-style ad is ready in minutes from one photo, for far less than a booking."
+      "d": "Ghosting, delays and big invoices drop out of the routine. A creator-style ad is ready in minutes from one photo, for far less than a booking.",
+      "img": "n:guide:fx29-beauty-benefit-routine",
+      "alt": "Plain pump-bottle moisturizers arranged beside a bathroom mirror with a hand reaching for one."
     },
     {
       "t": "Scalable across platforms",
-      "d": "One photo feeds a routine, a swatch, a review and an unboxing. Each clip fits a different feed without a reshoot."
+      "d": "One photo feeds a routine, a swatch, a review and an unboxing. Each clip fits a different feed without a reshoot.",
+      "img": "n:guide:fx29-beauty-benefit-versions",
+      "alt": "Adult seller holds a plain sage pump-bottle moisturizer beside a matching bottle."
     },
     {
       "t": "Show the shade in use",
-      "d": "Put the product beside a hand, face, or routine moment so shoppers can judge the shade and texture before they buy."
+      "d": "Put the product beside a hand, face, or routine moment so shoppers can judge the shade and texture before they buy.",
+      "img": "n:guide:fx29-beauty-benefit-swatch",
+      "alt": "Cream texture swatch on a hand beside a plain moisturizer tube."
     }
   ],
   "steps_h2": "How to Make AI Beauty UGC Ads in 3 Simple Steps",
