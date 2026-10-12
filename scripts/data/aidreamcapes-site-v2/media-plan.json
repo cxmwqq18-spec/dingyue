@@ -311,7 +311,7 @@
     "tpl-film": {
       "hero": {
         "kind": "image",
-        "image": "n:q10-film-hero"
+        "image": "n:guide:b2f2-tpl-film-hero-r1"
       },
       "og": "n:t33-tpl-film-og-r2",
       "gallery": [
