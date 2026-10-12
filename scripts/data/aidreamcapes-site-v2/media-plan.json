@@ -830,9 +830,9 @@
     "story": "g:story-ad-vertical/example-01",
     "sale": "n:sh1-sale-r1",
     "howto": "f:how-to-video",
-    "film": "f:cinematic-video",
+    "film": "n:im09-film-main",
     "beauty": "n:guide:rc5-tpl-beauty-source-r1",
-    "drink": "f:food-video",
+    "drink": "n:im09-drink-card",
     "home": "f:home-organization",
     "outfit": "f:fashion-try-on-reel",
     "launch": "f:promo-video",
@@ -893,9 +893,9 @@
       "f:how-to-video-t10"
     ],
     "film": [
-      "f:cinematic-video-t06",
-      "f:cinematic-video-t11",
-      "f:cinematic-video-t14"
+      "n:im09-film-alt-1",
+      "n:im09-film-alt-2",
+      "n:im09-film-alt-3"
     ],
     "beauty": [
       "n:sh1-beauty-alt0-r1",
