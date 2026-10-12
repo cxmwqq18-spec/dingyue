@@ -689,9 +689,9 @@
     "faq": {
       "hero": {
         "kind": "image",
-        "image": "g:lifestyle-scene/example-07"
+        "image": "n:guide:fx07-faq-hero-r1"
       },
-      "og": "g:lifestyle-scene/example-07"
+      "og": "n:guide:fx07-faq-hero-r1"
     },
     "contact": {
       "hero": {
