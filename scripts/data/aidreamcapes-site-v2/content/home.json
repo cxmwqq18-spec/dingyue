@@ -45,7 +45,7 @@
       "icon": "refresh"
     },
     {
-      "t": "Test hooks without reshooting",
+      "t": "Hand off ready-to-post files",
       "d": "Swap the opening, actor or scene and compare the downloads in your ad platform.",
       "icon": "target"
     }
@@ -134,7 +134,7 @@
       },
       {
         "t": "App and SaaS companies",
-        "d": "Show one product feature with a presenter or demo that gives prospects a concrete next step.",
+        "d": "Show one product feature in a short demo that tells shoppers what to do next.",
         "img": "n:gen2:ind-electronics-g2",
         "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
         "frame": "browser"
@@ -271,8 +271,8 @@
         {
           "t": "Keep each channel on its own format",
           "d": "Create a vertical ad for social, a square image for a listing or a wider frame where the tool supports it.",
-          "img": "n:gen2:product-videos-c2",
-          "alt": "Handheld vacuum lifts crumbs from a dark sofa in a close product demonstration.",
+          "img": "n:guide:im03-home-more-vacuum-r1",
+          "alt": "Adult man uses a plain handheld cordless vacuum to lift crumbs from a dark sofa.",
           "frame": "phone"
         },
         {
@@ -318,7 +318,7 @@
   "visual": {
     "strip": [
       "f:carousel-storytelling-v",
-      "f:tiktok-reels-shorts-v",
+      "f:im03-home-strip-trailshoe-r1",
       "n:gen2:photo-hub-c1",
       "f:img3-home-strip-serum-r3",
       "f:q1-home-strip-trailshoe",
@@ -446,23 +446,23 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q1-home-output-steamer",
+          "ref": "n:guide:im03-home-picker-steamer-r1",
           "label": "Shirt Steamer UGC",
           "chips": [
             "apparel"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult uses a plain handheld steamer on a wrinkled shirt hanging on a person, with a visibly smooth section beside the remaining creases. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show a handheld steamer smoothing a shirt in a clear before-and-after ad.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-apparel-3-r1",
+          "ref": "n:guide:im03-home-picker-cardigan-r1",
           "label": "Cardigan Turn Reel",
           "chips": [
             "apparel"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult model wears a plain navy cardigan and turns to show the full sleeves and hem. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show the navy cardigan from front, side and back so shoppers can see the fit.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -523,12 +523,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-clothing-2-r1",
+          "ref": "n:guide:im03-home-picker-trousers-r1",
           "label": "Trousers Fold Demo",
           "chips": [
             "clothing"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult folds plain charcoal trousers on a clean bed with the full garment visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show charcoal trousers folded flat with the full garment visible.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -556,12 +556,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-education-1-r1",
+          "ref": "n:guide:im03-home-picker-kitchen-r1",
           "label": "Kitchen Tool Lesson Demo",
           "chips": [
             "education"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A calm adult instructor demonstrates a plain kitchen tool beside a blank board with abstract shapes only. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Teach shoppers how a box grater works with a clear kitchen demo.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -633,12 +633,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-food-beverage-3-r1",
+          "ref": "n:guide:im03-home-picker-citrus-r1",
           "label": "Citrus Drink Pour UGC",
           "chips": [
             "food-beverage"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult pours a plain citrus drink from an unbranded glass bottle into a clear glass with ice. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show a plain citrus drink poured over ice in a bright kitchen scene.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -655,12 +655,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:mx1w-home-footwear-3-r1",
+          "ref": "n:guide:im03-home-picker-shoes-r1",
           "label": "Running Shoe Color Lineup",
           "chips": [
             "footwear"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult ties an unbranded charcoal running shoe at a doorway, with the complete shoe and laces visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show three running-shoe color options lined up for a quick comparison.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -677,12 +677,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:k6-tpl-ugc-picker-water-bottle",
+          "ref": "n:guide:im03-home-picker-bottle-r1",
           "label": "Trail Bottle Detail",
           "chips": [
             "health-fitness"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Unbranded sage-green water bottle beside a runner’s hand and folded towel at a quiet trail rest stop, no face visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show a plain sage bottle held at a trail rest stop.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -743,12 +743,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:q3-product-videos-board-04-pet-brush-demo",
+          "ref": "n:guide:im03-home-picker-dog-r1",
           "label": "Dog Brush Care Demo",
           "chips": [
             "pet"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult brushes a golden retriever with a plain pet brush. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show a calm dog being brushed with a plain pet brush.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -776,12 +776,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:k5-home-picker-cards-2-image",
+          "ref": "n:guide:im03-home-picker-earbuds-r1",
           "label": "Stemless Earbud Desk Demo",
           "chips": [
             "tech-electronics"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two rounded black stemless earbuds on a pale oak desk beside a laptop. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show stemless earbuds beside a laptop in a clean desk detail.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
@@ -820,12 +820,12 @@
           "videoTool": "video-ads"
         },
         {
-          "ref": "n:guide:k5-home-lipstick-swatch",
+          "ref": "n:guide:im03-home-picker-lipstick-r1",
           "label": "Coral Lipstick Swatch",
           "chips": [
             "trending"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Coral lipstick beside a matching color swatch. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
+          "prompt": "Show a coral-orange lipstick beside its matching swatch.",
           "kind": "video",
           "template": "creator",
           "videoTool": "video-ads"
