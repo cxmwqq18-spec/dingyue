@@ -959,19 +959,15 @@ function toolRef(model, id, withImage = true, imageOverride) {
   const image = imageOverride?.ref ? mediaImage(model, imageOverride.ref, "inset") : toolPicture(model, id);
   return { id, group: page.group, label: page.label, description: TOOL_DESC[id] ?? "", href: page.url, image: { ...image, alt: imageOverride?.alt ?? "" } };
 }
+// Public links into the workspace carry only the tool (and a short template key), like the competitor's clean /app links;
+// prompts, templates, sizes and lengths stay out of the address bar.
+const APP_LINK_KEYS = new Set(["tool_id", "tool", "template"]);
 function appHref(params, video) {
-  const query = new URLSearchParams(Object.entries(params).filter(([, value]) => value));
+  const query = new URLSearchParams(Object.entries(params).filter(([key, value]) => value && APP_LINK_KEYS.has(key)));
   return `/app/create?${query.toString()}${video ? "#step-video" : ""}`;
 }
-function hrefWithPrompt(href, prompt) {
-  if (typeof href !== "string" || !href.trim() || typeof prompt !== "string" || !prompt.trim()) return href;
-  try {
-    const url = new URL(href, "https://aivideosugc.com");
-    url.searchParams.set("prompt", prompt);
-    return `${url.pathname}${url.search}${url.hash}`;
-  } catch {
-    return href;
-  }
+function hrefWithPrompt(href) {
+  return href;
 }
 function toolAppHref(model, page, templateKey, options = {}) {
   if (!page) return "/app/create";
@@ -2883,9 +2879,10 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video card link uses image_generator (${label})`);
       const size = params.get("size");
       if (size && !VIDEO_SIZES.includes(size)) errors.push(`${pageId}: video card link has unsupported size ${size} (${label})`);
-    } else if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) {
-      errors.push(`${pageId}: photo card link must include image_generator and a prompt (${label})`);
+    } else if (params.get("tool_id") !== "image_generator") {
+      errors.push(`${pageId}: photo card link must include image_generator (${label})`);
     }
+    if (["prompt", "size", "length"].some((key) => params.has(key))) errors.push(`${pageId}: workspace link must carry only the tool (${label})`);
   };
   const checkPhotoCardLines = (value, pageId) => {
     if (Array.isArray(value)) return value.forEach((item) => checkPhotoCardLines(item, pageId));
@@ -2942,20 +2939,21 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!Array.isArray(card.chips) || !card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
         if (card.tool) {
           const target = validationSource.master.pages.find((page) => page.id === card.tool);
-          // Hub cards are make-this examples: they open the workspace on their own tool with their prompt.
-          const opensOwnTool = typeof card.href === "string" && card.href.startsWith("/app/create?") && new URLSearchParams(card.href.split("?")[1].split("#")[0]).get("tool") === card.tool && /[?&]prompt=/.test(card.href);
-          if (!isHub || !target || !opensOwnTool) errors.push(`${pageId}: tool card does not open the workspace on its matching tool with its prompt (${card.label})`);
+          // Hub cards are make-this examples: they open the workspace on their own tool (no prompt in the link).
+          const opensOwnTool = typeof card.href === "string" && card.href.startsWith("/app/create?") && new URLSearchParams(card.href.split("?")[1].split("#")[0]).get("tool") === card.tool && !/[?&]prompt=/.test(card.href);
+          if (!isHub || !target || !opensOwnTool) errors.push(`${pageId}: tool card does not open the workspace on its matching tool (${card.label})`);
           if (pageId === "video-hub" && !VIDEO_TOOLS.includes(card.tool)) errors.push(`${pageId}: card links to a non-video tool (${card.tool})`);
           if (pageId === "photo-hub" && !PHOTO_TOOLS.slice(1).includes(card.tool)) errors.push(`${pageId}: card links to a non-photo tool (${card.tool})`);
           continue;
         }
         const params = searchParamsForHref(card.href);
         if (card.kind === "photo") {
-          if (params.get("tool_id") !== "image_generator" || !params.get("prompt")?.trim()) errors.push(`${pageId}: photo picker link must use image_generator and include a prompt (${card.label})`);
+          if (params.get("tool_id") !== "image_generator" || params.has("prompt")) errors.push(`${pageId}: photo picker link must use image_generator and carry no prompt (${card.label})`);
         } else {
           const expectedSize = videoSizeForDimensions(card.image.w, card.image.h);
           if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video picker link uses image_generator (${card.label})`);
-          if (!expectedSize || params.get("size") !== expectedSize) errors.push(`${pageId}: video picker link must use the card's supported frame (${card.label})`);
+          if (!expectedSize) errors.push(`${pageId}: video picker card must use a supported frame (${card.label})`);
+          if (["prompt", "size", "length"].some((key) => params.has(key))) errors.push(`${pageId}: video picker link must carry only the tool (${card.label})`);
         }
       }
     }
@@ -3088,9 +3086,8 @@ export function validateSiteV2(build = buildSiteV2()) {
         if (!actor.image || !videoSizeForDimensions(actor.image.width, actor.image.height)) errors.push(`ai-actors: ${actor.name} portrait must use a supported video frame`);
         if (/\b(photo|clip|example)\b/i.test(`${actor.name} ${actor.style} ${actor.image?.alt ?? ""}`)) errors.push(`ai-actors: prohibited image label on ${actor.name}`);
         const params = searchParamsForHref(actor.href);
-        const prompt = params.get("prompt") ?? "";
-        if (params.get("tool") !== "spokesperson-videos" || params.get("size") !== "9:16" || !prompt.includes("says:") || !prompt.includes("Sound:")) {
-          errors.push(`ai-actors: ${actor.name} must link to a 9:16 speaking prompt in the spokesperson workspace`);
+        if (params.get("tool") !== "spokesperson-videos" || params.has("prompt")) {
+          errors.push(`ai-actors: ${actor.name} must link to the spokesperson workspace without a prompt`);
         }
       }
     }
@@ -3110,9 +3107,7 @@ export function validateSiteV2(build = buildSiteV2()) {
     if ((pageMeta?.type === "tool" || pageMeta?.type === "hub-tool" || pageMeta?.type === "template") && pageMeta?.group === "video") {
       const maker = data.maker;
       const displayed = firstVideoSize(maker?.options?.find(([label]) => String(label).toLowerCase() === "size")?.[1]) ?? firstVideoSize(pageMeta.output);
-      const buttonSize = searchParamsForHref(maker?.href).get("size");
       if (!displayed || !VIDEO_SIZES.includes(displayed)) errors.push(`${page.id}: video maker has no supported displayed Size`);
-      else if (buttonSize !== displayed) errors.push(`${page.id}: video maker size ${buttonSize ?? "(missing)"} does not match displayed Size ${displayed}`);
     }
     if (page.id === "tpl-story") {
       const storyMediaAlts = [];
