@@ -1,0 +1,118 @@
+{
+  "id": "trust",
+  "title": "Trust and Safety for AI Product Content | AIVideosUGC",
+  "description": "How AIVideosUGC handles AI product ads. See what you can make, what we refuse, how your uploads stay in your account, and how to report a problem.",
+  "h1": "AI Content Trust and Safety for Product Ads",
+  "eyebrow": "Trust & Safety",
+  "lead": "AI content trust and safety means three checks. Make ads only for products you sell. Upload photos you are allowed to use. Check every result before you publish.",
+  "card": "What you can make, how private uploads stay private, and how to report a problem.",
+  "secondary_keywords": [
+    "AI content rules",
+    "AI generated ads policy",
+    "image rights for AI",
+    "private uploads",
+    "report AI misuse"
+  ],
+  "sections": [
+    {
+      "h2": "What AIVideosUGC Is For",
+      "paras": [
+        "Online stores use AIVideosUGC to turn their own product photos into short video ads and images for a store page. A clip can include a script, a spoken voice, captions, and a music track. A person shown with the product is made by the tool, not a real customer. Make ads for products you sell or are allowed to promote. Use them on your store, on a marketplace, or on social media."
+      ],
+      "img": "n:guide:b2f5-trust-what-it-is-for-r1",
+      "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
+    },
+    {
+      "h2": "AI Content Rules: What We Refuse",
+      "paras": [
+        "We can refuse a request that uses a celebrity or another well-known person. We can also refuse logos and trademarks you do not own. A trademark is a brand name or a logo. You cannot pretend to be a real person. You cannot trick buyers. Do not make sexual content about any person. Content aimed at anyone under 18 is not allowed. Content that encourages harm is not allowed."
+      ],
+      "img": "n:guide:b2f5-trust-what-we-decline-r1",
+      "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop."
+    },
+    {
+      "h2": "Photos You Can Upload, and Who Sees Them",
+      "paras": [
+        "Only upload photos you own or are allowed to use. Private uploads and the files made from them stay in your account. They are not shown to other customers. Compare every result with your real product before you publish it."
+      ],
+      "img": "n:guide:b2f5-trust-uploads-results-r1",
+      "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock."
+    },
+    {
+      "h2": "Follow the Rules for Ads Made With AI",
+      "paras": [
+        "Show what your product really does. Add prices, dates, and what the product does yourself, so those words stay exact. Do that in your design tool or your ad tool. Follow the rules where you post. That includes a label that says the ad was made with AI. Use the [AI content checklist](page:blog-ai-video-review-checklist) before you post."
+      ],
+      "img": "n:guide:b2f5-trust-ai-content-r1",
+      "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop."
+    },
+    {
+      "h2": "Report a Problem",
+      "paras": [
+        "If you see content made with AIVideosUGC that breaks these rules, email support@aivideosugc.com with what you saw. If you think it uses something of yours without permission, email the same address."
+      ],
+      "img": "n:guide:b2f5-trust-report-problem-r1",
+      "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop."
+    },
+    {
+      "h2": "Checks for Scripts, Voices, and Posting",
+      "paras": [
+        "You can start from a product link, make several versions, or start through the API. The API is a connection that lets your own shop system start the work. You still need permission to use that page, the photos, and any voice you add. The presenter is made by the tool, not a real customer, and the voice is made by the tool too. Read the captions. Compare the item with the real product. Follow the rules for TikTok or Meta before you send the file. Meta is Facebook and Instagram."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I download the photos and videos made in my account?",
+      "a": "Yes. Download them while you are signed in. You can use the files for your business. There is no watermark, which means no logo on the file. You still need permission to use the photo you started from. Follow the rules of the place you post them."
+    },
+    {
+      "q": "Are my uploads shown to other customers?",
+      "a": "No. Your uploads and results stay in your account. They are not public and they are not shown to other customers."
+    },
+    {
+      "q": "What should I check before publishing?",
+      "a": "Compare the result with your product. Add the real price and what the product does, in your editor. Follow the rules where you post, including a label that the ad was made with AI."
+    },
+    {
+      "q": "Is the person in the ad a real customer?",
+      "a": "No. The presenter is made by the tool. They are not real customers. Do not post the clip as a review from a real person."
+    },
+    {
+      "q": "Can I make an ad with a celebrity or a brand I do not own?",
+      "a": "No. We can refuse a celebrity, another well-known person, or a logo or brand you do not own. Use the tool for your own products and your own brand."
+    },
+    {
+      "q": "Where are the full content and data-use rules?",
+      "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds)."
+    },
+    {
+      "q": "How do I report AI misuse?",
+      "a": "Email support@aivideosugc.com with the link or a description of the content and what is wrong."
+    },
+    {
+      "q": "Is the voice a real person?",
+      "a": "No. The voice is made by the tool, in the same way as the presenter. Do not post it as a real customer. Do not use a real person's voice unless you have permission."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes, when you are allowed to use that page and its photos. The script and the video still have to match the product you sell. Compare the result before you publish."
+    },
+    {
+      "q": "Does sending a file to TikTok or Meta check the ad for me?",
+      "a": "No. A post to TikTok or Meta does not check your words for you. Meta is Facebook and Instagram. Read the captions, check the price, and follow that place's rules for ads made with AI."
+    }
+  ],
+  "ctaTitle": "Start With Your Own Product Photo",
+  "ctaLead": "Upload a photo you are allowed to use, then compare every result with the real item before you publish it.",
+  "cta_title": "Start With Your Own Product Photo",
+  "cta_lead": "Upload a photo you are allowed to use, then compare every result with the real item before you publish it.",
+  "relatedLinks": [
+    "contact",
+    "about",
+    "ai-info",
+    "faq",
+    "pricing",
+    "glossary"
+  ]
+}

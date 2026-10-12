@@ -45,7 +45,7 @@
     },
     {
       "q": "Are my uploads private on each plan?",
-      "a": "Yes. Uploads and finished files remain in your account on Starter, Pro, and Premium. They are not published to other customers."
+      "a": "Yes. Uploads and finished files remain in your account on Starter, Pro, and Premium. They are not published to other customers. Read the [AI content trust and safety](page:trust) page for the full scope."
     },
     {
       "q": "Can I request a review of a charge?",
@@ -59,6 +59,7 @@
     "glossary",
     "templates",
     "contact",
-    "about"
+    "about",
+    "trust"
   ]
 }
