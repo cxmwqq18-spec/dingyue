@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a sequenced carousel video ad, then add your headline and price after download. Choose a format for feeds and product pages.",
   "h1": "Carousel Video Ad That Walks Through One Product",
   "eyebrow": "Carousel video ad template",
-  "lead": "Place one product photo in a scene and add the headline or price after download. Keep the whole clip on that one product.",
+  "lead": "Place one product photo in a scene, add an AI voice or a script, and keep the whole clip on that one product.",
   "secondary_keywords": [
     "carousel ad video",
     "multi-panel product ad",
@@ -12,7 +12,7 @@
     "sequenced product ad"
   ],
   "steps_h2": "How to Make a Carousel Video Ad in 3 Simple Steps",
-  "steps_lead": "The shots stay in the order you describe. The headline and price stay in your editor until you confirm them.",
+  "steps_lead": "The shots stay in the order you describe. Set the voice and the price in the editor.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -20,11 +20,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the shots in order, then pick a size and a length from 6 to 30 seconds. Keep every shot on the same item."
+      "d": "Describe the shots in order, add a short script, and pick 6, 10, 15 or 30 seconds. Keep every shot on that one item."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add the headline or price in your editor. Post it where shoppers already browse."
+      "d": "Download the file with no watermark, set the voice in the editor, and post it."
     }
   ],
   "maker": {
@@ -47,43 +47,47 @@
   "faq": [
     {
       "q": "What is a carousel video ad?",
-      "a": "One ordered clip about a single product, from an opening look to an in-use shot and a clear finish. It is a video, not a stack of still cards."
+      "a": "One ordered clip about a single product, from an opening look to an in-use shot and a clear finish. It is a video, not a stack of still cards. An AI voice and a presenter can be added, and the person on screen is not a customer."
     },
     {
       "q": "How do I make a carousel video ad?",
-      "a": "Upload one product photo, describe the shots in the order shoppers should see them, pick a size and length, then download."
+      "a": "Upload one product photo, describe the shots in order, add or edit a script, pick a size and a length, then download. You can also paste the product page link to draft the script and the presenter."
     },
     {
-      "q": "Should one carousel video ad show two products?",
-      "a": "No. Keep every shot on the same item so the sequence is easy to follow. Put a second product in another file."
+      "q": "What products can a carousel video ad show?",
+      "a": "One item per file: a bag, a bottle, a beauty product, apparel or electronics. Everyday fashion fits, and so does any product you can photograph. Put a second product in another file."
+    },
+    {
+      "q": "Can I make more than one version?",
+      "a": "Yes. Keep the same photo and make another cut for a second audience, opening or language. Each file shows its credit cost before it runs."
     },
     {
       "q": "Who is a carousel video ad for?",
-      "a": "Fashion and electronics shops that want an Instagram, Facebook or product-page clip to walk through one item."
+      "a": "Fashion and electronics shops, and other stores that want an Instagram, Facebook, TikTok or product-page clip to walk through one item. You do not have to book a shoot."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "One sharp photo of the item that appears on the page you will link to, with the full shape visible."
+      "q": "Can a beginner make one?",
+      "a": "Yes. You do not need editing experience. Upload the photo, adjust the script and the voice in the built-in editor, and download."
     },
     {
-      "q": "Which size and length fit a feed sequence?",
-      "a": "1:1 for a square feed, 9:16 for Reels, plus 16:9, 4:3 or 3:4. Use 6 seconds for a short reveal, 10 or 15 for a few shots, or 30 when the story needs more."
-    },
-    {
-      "q": "Can I place a headline and price on the video?",
-      "a": "Add the headline, price and call to action in your editor after download. The file does not include a headline or price."
-    },
-    {
-      "q": "Do I need a multi-camera shoot?",
-      "a": "No. The shots come from one photo. You do not book a location or a creator to get the sequence."
+      "q": "Where can I post the file?",
+      "a": "On TikTok, Instagram, Facebook, YouTube and your product page. Sizes include 9:16, 1:1, 16:9, 4:3 and 3:4. The download has no watermark."
     },
     {
       "q": "What does the sequence cost?",
       "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Where can I post the file?",
-      "a": "In your own paid ads, feed posts and product pages. The download has no watermark. Captions are added after download, and any person on screen is an AI performer, not a customer."
+      "q": "Is there a free plan?",
+      "a": "No. There is no free plan. Plans start at $24.50 a month, and the download has no watermark."
+    },
+    {
+      "q": "Can I start from a product link or an API?",
+      "a": "Yes. Paste the product page link to draft the scene, the script and the presenter, or send the photo through the API. Review the product in the file before you post."
+    },
+    {
+      "q": "Can the voice be in another language?",
+      "a": "Yes. Make the same sequence with a voice in another language, and approve the words before you post."
     }
   ],
   "visual": {
@@ -544,93 +548,94 @@
         "h2": "Browse Video Ad Templates by Category"
       },
       "faq": {
-        "h2": "Carousel Video Ad Questions"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
-  "cta_title": "Ready to Make the Carousel Video?",
-  "cta_lead": "Upload one product photo and see the credit cost before you start.",
+  "cta_title": "Put the Product Sequence in the Feed",
+  "cta_lead": "Upload one product photo, add a voice if you want one, and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
     "steps",
     "reviews",
+    "features",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Use an Instagram Carousel Video",
-    "lead": "One product per clip. The headline and price go on after download.",
+    "h2": "Shops Switching to a Carousel Video Ad",
+    "lead": "One product per clip. A voice, a script or a presenter can sit on that same item.",
     "items": [
       {
         "example": true,
         "who": "Bag shop",
         "t": "First shot at a cafe",
-        "d": "A bag shop opens the pack at a cafe table as the first shot, and keeps that same pack through the clip.",
+        "d": "A bag shop opens the pack at a cafe table, then adds an AI voiceover that stays on that same pack.",
         "img": "n:guide:fx19-carousel-benefit-story-01"
       },
       {
         "example": true,
         "who": "Food shop",
         "t": "Reveal from the mailer",
-        "d": "A food shop pulls the tote from a kraft mailer as the reveal shot of that same tote.",
+        "d": "A food shop pulls the tote from a kraft mailer and uses a script drafted from the product page.",
         "img": "n:guide:fx19-carousel-benefit-shoot-02"
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "After the run",
-        "d": "A drinkware shop raises the bottle after a park run as the in-use shot.",
+        "d": "A drinkware shop has an AI presenter raise the bottle after a park run.",
         "img": "n:guide:fx19-carousel-benefit-versions-03"
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Tabletop turn",
-        "d": "A beauty shop rotates a coral cream jar on a clean table for a closer look.",
+        "d": "A beauty shop turns a coral cream jar and trims the line in the built-in editor.",
         "img": "n:guide:fx19-carousel-benefit-editable-04"
       },
       {
         "example": true,
         "who": "Beauty shop",
         "t": "Sink open",
-        "d": "A beauty shop opens a canvas toiletry pouch at a sink.",
+        "d": "A beauty shop opens a canvas toiletry pouch and repeats the scene with a voice in another language.",
         "img": "n:guide:fx19-carousel-example-open-01"
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Tissue reveal",
-        "d": "A drinkware shop lifts a blue insulated bottle from tissue.",
+        "d": "A drinkware shop pastes the product link, then shows a blue insulated bottle lifted from tissue.",
         "img": "n:guide:fx19-carousel-example-reveal-02"
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Grooming shot",
-        "d": "A pet shop uses a wooden pet brush in a grooming shot.",
+        "d": "A pet shop makes a second version of the wooden brush grooming shot for another audience.",
         "img": "n:guide:fx19-carousel-example-use-03"
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Same bins, one sequence",
-        "d": "A home shop keeps the same bins in every shot, from the lineup to one bin in use.",
+        "d": "A home shop keeps the same bins in every shot, then publishes the file on TikTok or Instagram.",
         "img": "n:guide:fx19-carousel-example-compare-04"
       },
       {
         "example": true,
         "who": "Apparel shop",
         "t": "Cap hold",
-        "d": "An apparel shop holds the cap up as the last shot.",
+        "d": "An apparel shop picks a presenter from the actor library and ends with the cap held up.",
         "img": "n:guide:fx19-carousel-example-finish-05"
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "Park setup",
-        "d": "A pet shop clips the harness on as the outdoor shot.",
+        "d": "A pet shop describes the harness scene in chat and reviews the clip before posting.",
         "img": "n:guide:fx19-carousel-example-feature-06"
       }
     ]
@@ -644,5 +649,38 @@
     "tpl-retargeting-video-ad",
     "plat-instagram",
     "ind-fashion-clothing"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included with the template",
+      "h2": "Features of a Carousel Video Ad",
+      "lead": "The sequence still follows one product. These are the pieces you can add before you download.",
+      "items": [
+        {
+          "t": "AI voiceover",
+          "d": "Add a spoken line about the one product in the sequence. You approve the words, and the voice is not a customer recording."
+        },
+        {
+          "t": "A script you can edit",
+          "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
+        },
+        {
+          "t": "Presenters from the actor library",
+          "d": "Pick an AI presenter to hold or show the product. The person on screen is a generated performer, not a buyer."
+        },
+        {
+          "t": "A product link or the API",
+          "d": "Paste a product page link, or send the photo through the API, to draft the scene and the script. You still review the file."
+        },
+        {
+          "t": "Built-in editor and another language",
+          "d": "Change the script, the voice and the on-screen line in one editor, including a voice in another language. The download has no watermark."
+        },
+        {
+          "t": "More versions, then publish",
+          "d": "Make another cut for a second audience from the same photo. Publish the file on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+        }
+      ]
+    }
   ]
 }

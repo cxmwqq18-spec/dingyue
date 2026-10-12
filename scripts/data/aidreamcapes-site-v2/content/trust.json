@@ -17,7 +17,7 @@
     {
       "h2": "What AIVideosUGC is for",
       "paras": [
-        "Online stores use AIVideosUGC to turn their own product photos into short video ads and store-ready images. A person shown with the product is generated, not a real customer. Make content for products you sell or are allowed to promote, on your store, on marketplaces, and on social channels."
+        "Online stores use AIVideosUGC to turn their own product photos into short video ads and store-ready images. A clip can carry a script, a spoken voice, captions, and a music track. A person shown with the product is generated, not a real customer. Make content for products you sell or are allowed to promote, on your store, on marketplaces, and on social channels."
       ],
       "img": "n:guide:b2f5-trust-what-it-is-for-r1",
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
@@ -53,6 +53,12 @@
       ],
       "img": "n:guide:b2f5-trust-report-problem-r1",
       "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop."
+    },
+    {
+      "h2": "Checks for scripts, voices, and posting",
+      "paras": [
+        "You can start from a product link, make several versions, or start a job through the API. You still need rights to that page, the photos, and any voice you supply. The presenter is generated, not a real customer, and the voice is generated too. Read the captions, compare the item with the real product, and follow each platform's rules before you send the file to TikTok or Meta."
+      ]
     }
   ],
   "faq": [
@@ -83,6 +89,18 @@
     {
       "q": "How do I report AI misuse?",
       "a": "Email support@aivideosugc.com with the link or a description of the content and what is wrong."
+    },
+    {
+      "q": "Is the voice a real person?",
+      "a": "No. The voice is generated, the same way the presenter is generated. Do not post it as a real customer, and do not use a real person's voice unless you have the rights."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes, when you have the rights to that page and its photos. The script and the video still have to match the product you sell. Compare the result before you publish."
+    },
+    {
+      "q": "Does sending a file to TikTok or Meta skip the review?",
+      "a": "No. A post to TikTok or Meta does not check your claims for you. Read the captions, confirm the price, and follow that platform's rules for AI-generated content."
     }
   ],
   "ctaTitle": "Start with your own product photo",

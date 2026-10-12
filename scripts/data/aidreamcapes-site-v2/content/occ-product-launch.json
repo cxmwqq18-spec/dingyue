@@ -4,7 +4,7 @@
   "description": "Create product launch videos and photos from one product image: make a teaser, reveal, and listing asset before launch day, without a studio booking or reshoot.",
   "h1": "Create Your Product Launch Video and Photos Fast",
   "eyebrow": "New product launch",
-  "lead": "Make a teaser and a first-look scene from one product photo, before the launch date is public.",
+  "lead": "Paste a product link and get a product launch video and photos: a script, an actor, and a voice that tightens the wait, before the date is public.",
   "secondary_keywords": [
     "new product launch video",
     "product reveal video",
@@ -17,8 +17,8 @@
       "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. You see the cost before the job starts, and a failed job returns those credits."
     },
     {
-      "q": "Can I add a countdown to the launch video?",
-      "a": "No. The clip does not include a timer. Add the countdown in your editor or ad platform after download, where you can change the end time."
+      "q": "Can I change the timer on the launch video?",
+      "a": "Yes. Set the end time in the built-in editor and move it if the day slips. You decide when the countdown stops."
     },
     {
       "q": "Will anyone else see my unreleased product?",
@@ -33,20 +33,32 @@
       "a": "Clips run 6, 10, 15, or 30 seconds. Six seconds fits a quick reveal. Use 15 or 30 seconds when the launch needs a fuller product story."
     },
     {
-      "q": "Can a generated presenter introduce the product?",
-      "a": "Yes, if you ask for a person in the scene. That presenter is generated, not a real customer. You can also keep the scene on the product alone."
+      "q": "Can the countdown use an actor from the library?",
+      "a": "Yes. Pick one, describe the look and the outfit, or build one from a short clip of you. That presenter is generated, not a real customer or a celebrity."
+    },
+    {
+      "q": "Can I bring my own product clip into the countdown?",
+      "a": "Yes. Upload the footage or the photo you already have. It can sit in the countdown next to the actor, the script, and the timer."
+    },
+    {
+      "q": "Can I make launch videos for many products at once?",
+      "a": "Yes. Batch mode runs a set of product links and returns one countdown each. Review every file before it is published."
+    },
+    {
+      "q": "Can my store request launch videos through an API?",
+      "a": "Yes. The API lets your store ask for a countdown from a product link. The file stays in your account until you share it."
+    },
+    {
+      "q": "Can I add a voiceover, music, and captions?",
+      "a": "Yes. Choose an AI voice, set the pace, pick a track from the music library, and turn on automatic captions. The same script can be spoken in another language."
+    },
+    {
+      "q": "Can I publish the teaser to TikTok or Meta?",
+      "a": "Yes. Publish in one click to TikTok, Instagram, YouTube, or Meta, or download the file. The download has no AIVideosUGC watermark. Platform ad rules still apply."
     },
     {
       "q": "Can I change the launch date after the video is made?",
-      "a": "Yes. Add the date as text after download, so a new day does not mean a new scene."
-    },
-    {
-      "q": "Can I run the clip as a paid launch ad?",
-      "a": "Yes. The download has no AIVideosUGC watermark. Platform ad rules still apply."
-    },
-    {
-      "q": "Can I generate launch visuals for many products at once?",
-      "a": "No. Each product photo is its own job. Start the next product when you are ready."
+      "a": "Yes. Move the timer or the date line in the editor, so a new day does not mean a new scene."
     }
   ],
   "examples": {
@@ -114,19 +126,19 @@
       }
     ]
   },
-  "cta_lead": "Download the teaser, then add the launch date once it is confirmed.",
+  "cta_lead": "Finish the actor, the script, and the timer. Add the launch date once it is confirmed.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Use a clear photo of the sample or the finished item. Every first look and listing image starts from that shot."
+      "t": "Add Your Product Link",
+      "d": "Start from the product page. Photos and the launch details come in and form a storyboard for the timer."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Ask for a covered first look, an unbox, or a first-use moment. Leave the launch date and the price out of the picture."
+      "t": "Create Your Actor",
+      "d": "Choose a preset actor or describe a custom one. The mouth follows whichever voice you pick."
     },
     {
-      "t": "Download and Post",
-      "d": "Type the name, the date, and the price in your editor. Post the first look when those details are confirmed."
+      "t": "Set Script, Timer, and Publish",
+      "d": "Edit the script, pick a voice and a music-library track, set the timer, then publish to TikTok, Instagram, or YouTube."
     }
   ],
   "visual": {
@@ -263,7 +275,7 @@
     ],
     "titles": {
       "m2": {
-        "h2": "Create a launch teaser video in three steps"
+        "h2": "How to create a launch teaser video in 3 simple steps"
       },
       "m3": {
         "h2": "Choose a product launch scene"
@@ -273,39 +285,39 @@
       }
     }
   },
-  "benefits_h2": "A product reveal video before the item ships",
+  "benefits_h2": "Reasons to use a product reveal video",
   "benefits": [
     {
-      "t": "Show a first look while production finishes",
-      "d": "Start from a sample photo so the first look exists before the full run is packed. You do not need a studio day to get that first visual out.",
+      "t": "An actor for the countdown",
+      "d": "Pick an actor to introduce the drop, or describe the look, the age, and the outfit. A short clip of you can become that presenter, with its own face and voice.",
       "img": "n:guide:fx01-occ-product-launch-benefit-teaser",
       "alt": "Adult hand lifts a fabric cover from a plain desk lamp in warm window light.",
       "frame": "none"
     },
     {
-      "t": "Reveal the product without printing the date",
-      "d": "The scene can show the item coming out of the box. The launch date, the name, and the price stay in your editor until they are confirmed.",
+      "t": "A script that builds the wait",
+      "d": "Paste the product page or describe the item. AIVideosUGC writes a hook and the reasons to care, and you can edit every line of the countdown.",
       "img": "n:guide:fx01-occ-product-launch-benefit-packaging",
       "alt": "Adult hands reveal a plain kraft product pouch from an opened shipping box.",
       "frame": "none"
     },
     {
-      "t": "Move launch day without remaking the scene",
-      "d": "When the day changes, edit the text on the file you already downloaded. The product scene stays put.",
+      "t": "A voice that sounds closer",
+      "d": "Choose an AI voice, then set the pace and the feeling so the launch sounds tighter as the day approaches.",
       "img": "n:guide:fx01-occ-product-launch-benefit-details",
       "alt": "Adult hands arrange a natural canvas tote beside a blank planning card on a sunny desk.",
       "frame": "none"
     },
     {
-      "t": "Show the first use, then post it",
-      "d": "A hand using the product is enough for the launch post. Keep the clip on that one action so the item stays easy to recognize.",
+      "t": "Several cuts before you commit",
+      "d": "Export more than one countdown and compare the hook and the script. Look at how other shops create a deadline, then keep the opening you want.",
       "img": "n:guide:fx01-occ-product-launch-benefit-publish",
       "alt": "Adult hand uses a white garment steamer on a blue shirt in a bright room.",
       "frame": "none"
     }
   ],
-  "steps_h2": "Create a launch teaser video in three steps",
-  "steps_lead": "Upload a sample photo, describe the reveal, and add the launch date after download.",
+  "steps_h2": "How to create a launch teaser video in 3 simple steps",
+  "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where it publishes.",
   "relatedLinks": [
     {
       "id": "occ-holidays",
@@ -339,20 +351,20 @@
       {
         "example": true,
         "who": "A drink brand",
-        "t": "Stand the bottle on a clean ledge",
-        "d": "They upload the bottle and ask for a bright morning scene with open space beside it. The launch line is added after download."
+        "t": "Paste the bottle page first",
+        "d": "They paste the product link and ask for a bright morning ledge with open space beside the bottle. The launch line is added in the editor."
       },
       {
         "example": true,
         "who": "A beauty brand",
-        "t": "Give the jar a first look",
-        "d": "They show the jar in soft light before the full lot ships. No date is printed into the image."
+        "t": "Give the jar a spoken first look",
+        "d": "They pick an actor and a voice to introduce the jar before the full lot ships. No date is printed into the image."
       },
       {
         "example": true,
         "who": "An accessories shop",
         "t": "Set the sunglasses in daylight",
-        "d": "They keep the frame's shape and color in an outdoor teaser. If a person is in frame, that person is generated, not a real customer."
+        "d": "They keep the frame's shape and color in an outdoor teaser. If a person is in frame, that actor is generated, not a real customer."
       }
     ]
   },
@@ -365,8 +377,8 @@
         "d": "The upload and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "No countdown printed into the clip",
-        "d": "The video does not include a timer. Add one in your editor after download if the date should tick down."
+        "t": "A timer you can move",
+        "d": "Set the end time on the countdown and change it in the built-in editor if launch day moves. The clock is not stuck on the product."
       },
       {
         "t": "A commercial file with no watermark",
@@ -381,12 +393,12 @@
         "d": "A failed job returns its credits automatically. A result you simply dislike is not refunded."
       },
       {
-        "t": "A generated presenter, only if you ask",
-        "d": "The scene can stay on the product. If a person appears, that presenter is generated, not a real customer."
+        "t": "An actor only if you want one",
+        "d": "Pick someone from the actor library, or leave the scene on the product. If a person appears, that presenter is generated, not a real customer or a celebrity."
       }
     ]
   },
-  "cta_title": "Share the first look when you are ready",
+  "cta_title": "Publish the launch teaser video when the date is set",
   "blockOrder": [
     "hero",
     "benefits",

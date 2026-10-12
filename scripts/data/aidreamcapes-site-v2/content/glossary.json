@@ -53,7 +53,7 @@
     },
     {
       "term": "UGC",
-      "definition": "UGC means user-generated content. Here, a UGC-style ad uses a casual handheld look, as if someone filmed the product on a phone. The clip is still AI-generated, so it is not a real customer's review. Follow each platform's disclosure rules.",
+      "definition": "UGC means user-generated content. Here, a UGC-style ad uses a casual handheld look. An AI actor can speak a script, with captions and music on the clip. The person is generated, so it is not a real customer's review. Follow each platform's disclosure rules.",
       "related_page_ids": [
         "video-ads",
         "ai-info"
@@ -61,7 +61,7 @@
     },
     {
       "term": "B-roll",
-      "definition": "B-roll is supporting footage of a product, a hand, a detail, or an everyday action, rather than a presenter talking to the camera. Product clips do not include narration, music, or captions. Add those in your editor after download.",
+      "definition": "B-roll is supporting footage of a product, a hand, a detail, or an everyday action, rather than only a presenter facing the camera. That footage can sit under an AI voice, captions, and a music track.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "video-ads"
@@ -69,7 +69,7 @@
     },
     {
       "term": "Spark Ads",
-      "definition": "Spark Ads are TikTok ads that promote an existing post. The Spark Ads style template makes a product clip. It does not publish a TikTok post, connect an account, authorize a creator, or choose targeting. Add narration, music, or captions after download, then finish the campaign in TikTok Ads Manager.",
+      "definition": "Spark Ads are TikTok ads that promote an existing post. You can publish a clip to TikTok from the project, with an AI voice, captions, and music. Targeting, budget, and a Spark authorization still happen in TikTok Ads Manager. Do not present the actor as a customer.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "plat-tiktok"
@@ -93,7 +93,7 @@
     },
     {
       "term": "Feed ad",
-      "definition": "A feed ad is a paid image or video placed in a scrolling social feed. The feed tools make a clear product scene, often square, with open space for your message. Download the file, then add the exact headline, price, or offer in Ads Manager or an editor.",
+      "definition": "A feed ad is a paid image or video in a scrolling social feed. The feed tools make a clear product scene, often square, with room for your message. A clip can already include captions, a voice, and music. Type the exact price yourself.",
       "related_page_ids": [
         "social-ad-photos",
         "plat-facebook"
@@ -101,7 +101,7 @@
     },
     {
       "term": "Ads Manager",
-      "definition": "Ads Manager is the platform screen where you upload an ad and set its text, audience, budget, placement, and schedule. AIVideosUGC gives you the photo or video file. It does not publish the campaign or add prices, captions, music, or targeting.",
+      "definition": "Ads Manager is the screen where an ad account sets audience, budget, placement, and schedule. You can publish the file to TikTok or Meta from AIVideosUGC, or download it. Type the price so it matches the live offer.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook"
@@ -117,7 +117,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video follows the moment a package opens and the product comes out. The box, tissue, insert, and reveal order come from your description. The product photo anchors the item. Add accurate offer text and music after download.",
+      "definition": "An unboxing video follows the moment a package opens and the product comes out. The box, tissue, insert, and reveal order come from your description. The product photo anchors the item. Music can come from the library. Type the offer so it matches the live price.",
       "related_page_ids": [
         "unboxing-videos",
         "blog-unboxing-videos-for-launches"
@@ -181,7 +181,7 @@
     },
     {
       "term": "CTA (call to action)",
-      "definition": "A CTA, or call to action, is the short line that tells someone what to do next, such as shop or view the product. The tool does not put the exact offer, date, or price into the scene. Add the CTA, link, date, and price after download.",
+      "definition": "A CTA, or call to action, is the short line that tells someone what to do next, such as shop or view the product. Put that line in the script or the captions. Type the date and the price so they match the live offer.",
       "related_page_ids": [
         "tpl-limited-drop-alert-video",
         "tpl-carousel-video-ad"
@@ -197,7 +197,7 @@
     },
     {
       "term": "Caption",
-      "definition": "A caption is the written line on a social post, or the timed text inside a video. Product clips do not include captions, music, or narration. Add the caption in TikTok, CapCut, Canva, Ads Manager, or another editor so the price, date, and code match the live offer.",
+      "definition": "A caption is timed text on a video, or the written line of a social post. Clips can include captions. Edit them in the built-in editor so the price, date, and code match the live offer.",
       "related_page_ids": [
         "ai-info",
         "guide-first-tiktok-video-ad"
@@ -205,7 +205,7 @@
     },
     {
       "term": "Spoken narration",
-      "definition": "Spoken narration is a voice track played over a video. Product clips do not include narration, music, or captions, so add those in your editor after download. An AI actor clip is different: the actor speaks the one line you write. Do not present that speech as a customer testimonial.",
+      "definition": "Spoken narration is a voice track on a video. An AI actor speaks the line you write, in the language you choose. That speech is not a customer review. You can change the voice in the editor.",
       "related_page_ids": [
         "ai-info",
         "spokesperson-videos"
@@ -233,6 +233,78 @@
       "related_page_ids": [
         "ai-info",
         "plat-shopify"
+      ]
+    },
+    {
+      "term": "AI actor",
+      "definition": "An AI actor is a generated presenter who can hold, wear, or talk about a product. You pick one from the actor library or describe the look. The person is not a customer and does not replace a size chart.",
+      "related_page_ids": [
+        "ai-actors",
+        "spokesperson-videos"
+      ]
+    },
+    {
+      "term": "AI script",
+      "definition": "An AI script is a spoken line drafted from the product and the buyer you describe. You can edit every sentence before the actor says it. The line should only claim what the real item does.",
+      "related_page_ids": [
+        "video-ads",
+        "spokesperson-videos"
+      ]
+    },
+    {
+      "term": "AI voice",
+      "definition": "An AI voice is the spoken track an actor uses for the line you write. You choose the language by writing the line in it. The voice is generated. It is not a recording of a customer.",
+      "related_page_ids": [
+        "spokesperson-videos",
+        "ai-actors"
+      ]
+    },
+    {
+      "term": "API",
+      "definition": "The API lets your own tools start a product photo or a video job. The credit cost matches the same job in the project. A failed job returns its credits. A product photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds.",
+      "related_page_ids": [
+        "pricing",
+        "faq"
+      ]
+    },
+    {
+      "term": "Batch",
+      "definition": "A batch is several jobs from one product photo, each with its own scene, frame, or opening line. Every job shows its credit cost before it starts. Download the versions you want, or publish a finished file to TikTok or Meta.",
+      "related_page_ids": [
+        "video-ads",
+        "image-to-video"
+      ]
+    },
+    {
+      "term": "Built-in editor",
+      "definition": "The built-in editor changes a finished file without a second app. You can revise the spoken line, the captions, the voice, the music, and the presenter, then export again.",
+      "related_page_ids": [
+        "video-ads",
+        "faq"
+      ]
+    },
+    {
+      "term": "Link to video",
+      "definition": "Link to video starts a clip from a public product page. The page's main image and product name are the reference. Prices and reviews on the page are not copied in. You still pick the frame and the length.",
+      "related_page_ids": [
+        "url-to-video",
+        "product-videos"
+      ]
+    },
+    {
+      "term": "Music library",
+      "definition": "The music library is a set of tracks you can put under a product clip. Swap the track in the editor. You still write the spoken line, and you are responsible for what that line claims.",
+      "related_page_ids": [
+        "video-ads",
+        "unboxing-videos"
+      ]
+    },
+    {
+      "term": "One-click publish",
+      "definition": "One-click publish sends a finished photo or video to TikTok or Meta from the project. You can download the file instead. Audience, budget, placement, and schedule still live in the ad account.",
+      "related_page_ids": [
+        "plat-tiktok",
+        "plat-facebook"
       ]
     }
   ],

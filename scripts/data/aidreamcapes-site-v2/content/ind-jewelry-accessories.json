@@ -4,7 +4,7 @@
   "description": "Turn one jewelry photo into macro details, worn try-ons, and gift scenes. Make watermark-free images for listings, social posts, and paid ads.",
   "h1": "AI Photos for Jewelry and Accessories, Up Close and Worn",
   "eyebrow": "Jewelry and accessories",
-  "lead": "A small piece is hard to judge on a white card. One sharp photo can become a macro detail or a worn crop that shows finish and scale.",
+  "lead": "A small piece is hard to judge on a white card. Paste a product link or one sharp photo and try a macro detail or a worn crop that shows finish and scale.",
   "card": "Macro details, worn crops, and gift scenes from one jewelry photo.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -45,24 +45,28 @@
     {
       "q": "Can I use the photos in paid jewelry ads?",
       "a": "Yes. Downloads are watermark-free and licensed for commercial use, including paid ads and listings. Check stone count and metal tone, and keep size and care claims accurate."
+    },
+    {
+      "q": "Can I start from a product link and make more than one cut?",
+      "a": "Yes. Paste the product page, or send that link through the API. Ask for a short script, pick a presenter, and make a few cuts, including one in another language. Trim the clip, choose a voice and a backing track, and check captions in the editor on the page, then send it to TikTok or Meta. Compare stones, prongs, and metal color with the real piece before you list it."
     }
   ],
   "templates_lead": "Choose a jewelry product photo format for close-up detail, a worn try-on, or a gift scene.",
-  "cta_lead": "Upload a jewelry photo, describe a close-up or a worn crop, and compare the result with the real piece.",
-  "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Steps",
-  "steps_lead": "Three things you do on screen. Stones and metal are checked against the real piece.",
+  "cta_lead": "Paste a product link or upload one sharp photo, pick a presenter, and publish a clip with a voice and captions. Compare the result with the real piece.",
+  "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Simple Steps",
+  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. Stones and metal are checked against the real piece.",
   "steps": [
     {
-      "t": "Upload Your Jewelry Photo",
-      "d": "Fill the frame with a sharp, evenly lit photo. Polish the piece first. Dust and fingerprints show up once a small ring is enlarged."
+      "t": "Upload Your Piece",
+      "d": "Paste the product page, or upload a sharp photo that fills the frame. A short note about the metal works too."
     },
     {
-      "t": "Describe the Close-Up or Try-On",
-      "d": "Ask for a macro detail, a worn crop, or a gift scene. Name the metal plainly. Any person is generated, not a customer."
+      "t": "Choose a Presenter",
+      "d": "Pick a generated adult for a worn crop. Check the piece against the real item. You do not book a model."
     },
     {
-      "t": "Download and Post",
-      "d": "Compare stone count, prongs, and metal color with the real piece, then download. Add size and care notes in your editor."
+      "t": "Generate and Publish",
+      "d": "You get a spoken line and on-screen captions. Send the clip to TikTok or Meta, then compare the stones and the metal."
     }
   ],
   "visual": {
@@ -131,8 +135,8 @@
     }
   ],
   "reasons": {
-    "h2": "AI Jewelry Model Photos Without a Model Call",
-    "lead": "Skip the model booking. A sharp photo of the piece is enough to try a close crop or a worn frame, then you compare it with the real item.",
+    "h2": "Why Jewelry Brands Skip the Model Call",
+    "lead": "Skip the model booking. A product link or a sharp photo is enough to try a close crop or a worn frame, then you compare it with the real item.",
     "items": [
       {
         "t": "Macro without a studio day",
@@ -155,8 +159,8 @@
     ]
   },
   "platforms": {
-    "h2": "Jewelry Photos for Etsy, Stores, and Feeds",
-    "lead": "Download a square close-up for an Etsy listing or a store gallery, and a vertical crop for a story. You upload the file yourself. Match the metal tone in both.",
+    "h2": "Create Jewelry Ads for Every Platform",
+    "lead": "A square close-up fits an Etsy listing or a store gallery, and a vertical crop fits a story. Send the clip to TikTok or Meta from this page, then download the still. Match the metal tone.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -191,7 +195,7 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Show Accessories Lifestyle Photos",
+    "h2": "How Jewelry Brands Switch to AI Ads",
     "lead": "Example ways jewelry and accessory sellers use one photo. These are not quotes.",
     "items": [
       {
@@ -229,10 +233,57 @@
         "who": "Sunglasses line",
         "t": "Pushed up, logo left out",
         "d": "They show the frame on a head only from their own photo, and they do not ask for a mark they do not own."
+      },
+      {
+        "example": true,
+        "who": "Script desk",
+        "t": "A link, then a short line",
+        "d": "They paste the product page, or send that link through the API, and ask for a short script about the piece. Size and care stay out of the spoken line."
+      },
+      {
+        "example": true,
+        "who": "Presenter desk",
+        "t": "A worn crop, then a second look",
+        "d": "They pick a presenter from the actor library for a wrist or collarbone crop, then a second look of that person. Stone count is checked first."
+      },
+      {
+        "example": true,
+        "who": "Edit desk",
+        "t": "Voice, captions, and a track",
+        "d": "They choose a voice or a short sample of their own, check the captions, pick a backing track, and trim the clip in the editor on the page."
+      },
+      {
+        "example": true,
+        "who": "Second market",
+        "t": "The same piece, another language",
+        "d": "They make the worn clip again in a second language from the same photo. Metal color and stone count still have to match the real piece."
+      },
+      {
+        "example": true,
+        "who": "Test desk",
+        "t": "A few cuts, then publish",
+        "d": "They describe the piece in chat, keep a few cuts, and send the one they want to TikTok or Meta. The listing still stays a clean close-up."
       }
     ]
   },
   "related_h2": "Jewelry templates and listing photos",
+  "maker": {
+    "options": [
+      [
+        "Photo",
+        "Your jewelry or accessory"
+      ],
+      [
+        "Look",
+        "On a model or a styled surface"
+      ],
+      [
+        "Size",
+        "Square"
+      ]
+    ],
+    "cta": "Make my jewelry photo"
+  },
   "blockOrder": [
     "hero",
     "strip",

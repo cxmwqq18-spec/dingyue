@@ -4,7 +4,7 @@
   "description": "AIVideosUGC pricing: Starter at $24.50, Pro at $35 or Premium at $63 a month, with 200 to 600 credits for product photos and videos. Compare plans today.",
   "h1": "AIVideosUGC Pricing for Product Photos and Videos",
   "eyebrow": "Plans and credits",
-  "lead": "AIVideosUGC pricing is three monthly plans. Use the credits on product photos or short video ads, and check the credit cost before each job starts.",
+  "lead": "AIVideosUGC pricing is three monthly plans for product photos and spoken video ads. Credits cover the script, the voice, captions, a generated presenter, and a music track. You see the credit cost before each job starts.",
   "card": "Starter, Pro, and Premium, with a set credit balance each month.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -14,8 +14,8 @@
   ],
   "intro": "Choose a monthly plan by how many photos and videos you need. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A listing photo and a vertical ad draw from the same balance.",
   "credits_explained": [
-    "Credits pay for the jobs you run. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm.",
-    "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance on their own."
+    "Credits pay for the jobs you run. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm. A video job includes a script, a spoken voice, captions, a generated presenter, and a track from the music library.",
+    "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance on their own. The same balance covers a product link turned into a video, a batch of versions, and an API job. Downloads have no watermark, and you can send the finished file to TikTok or Meta."
   ],
   "teams": "Need more credits than Premium includes? Email support@aivideosugc.com with how many photos and videos you make in a month.",
   "faq": [
@@ -50,6 +50,22 @@
     {
       "q": "Do downloads include a watermark?",
       "a": "No. Downloaded photos and videos do not include an AIVideosUGC watermark."
+    },
+    {
+      "q": "What does a video job include?",
+      "a": "A script written from your product, a spoken voice, on-screen captions, a generated presenter, and a music track. You still see the credit cost before the job starts. A photo is 24 credits. Video is 24, 40, 60, or 120 credits by length."
+    },
+    {
+      "q": "Can I paste a product link?",
+      "a": "Yes. Paste a link to a product you sell and the tool drafts the script, the voice, and the video from that page. You need the rights to that page and to the photos on it."
+    },
+    {
+      "q": "Can I publish to TikTok or Meta from here?",
+      "a": "Yes. When the file looks right, send it to TikTok or Meta, or download it with no watermark and post it yourself. Follow each platform's rules, including any label for AI-generated content."
+    },
+    {
+      "q": "Do you offer batch runs and an API?",
+      "a": "Yes. You can run a batch of versions from one product, and you can call the API when a shop wants ads made from its own system. Both draw from the same credit balance, and a failed job returns its credits."
     }
   ],
   "cta_title": "Pick the plan that covers this month",

@@ -1,123 +1,173 @@
 {
   "id": "guide-product-photo-tips",
   "title": "How to Take Product Photos for AI | AIVideosUGC",
-  "description": "Take product photos that work with AI using just a phone: daylight setup, framing, focus and a quick pre-upload look, so your first results match the real item.",
+  "description": "How to take product photos for AI with a phone, then try new settings, a batch of looks, and a listing image you can compare with the real item.",
   "h1": "How to Take Product Photos for AI With Just Your Phone",
   "eyebrow": "Photo guide",
-  "lead": "To take product photos for AI, shoot the real item on your phone in window light, fill the frame, and leave filters off so later images still match what you ship.",
+  "lead": "To take product photos for AI, shoot the real item on your phone in window light, then place it in a new setting without a studio. Leave filters off so the later image still matches what you ship.",
   "secondary_keywords": [
     "product photography with a phone",
     "product photo lighting at home",
     "how to photograph products for an online store",
     "product photo angles"
   ],
-  "read_minutes": 5,
-  "summary": "Shoot at product height in window light, with filters off and the label readable, then add a few angles and one plain sentence.",
+  "read_minutes": 8,
+  "summary": "Shoot at product height in window light, with filters off and the label readable, then try a new setting from that same photo.",
   "sections": [
     {
-      "h2": "How do I do product photography with a phone?",
+      "h2": "New settings from one phone photo",
       "paras": [
-        "Use the regular camera, rest the phone so it cannot shake, and keep the whole product sharp.",
-        "A stack of books or a small tripod, plus the volume button or a two-second timer, stops blur on small print. Fill most of the frame and leave a slim margin on every side. Step closer instead of pinching to zoom."
-      ],
-      "img": "n:guide:fx06-guide-product-photo-tips-sec01",
-      "alt": "Adult cleans a plain gray running shoe beside an indirect daylight window."
-    },
-    {
-      "h2": "How do I set product photo lighting at home?",
-      "paras": [
-        "Set the product beside a window in bright, indirect daylight and turn the ceiling lights off.",
-        "If sun lands on the table, tape baking paper or a thin white sheet over the glass. Warm room bulbs mixed with daylight shift the color, and that shift follows the product into every later image. A plain board, gray card, or bare wood top is enough background. Wipe dust, peel stickers, and smooth anything soft before you shoot."
+        "Once the source photo is sharp, you can place the same item somewhere new. The product should still be the one you ship.",
+        "A coast or a bright outdoor table. Use it when the product is about sun, travel, or summer. Check that the color did not shift warm.",
+        "A dry, open setting. Sand, stone, or a pale wall. Good for a rugged item. Watch the shadows so the label stays readable.",
+        "A minimal table. A plain board, gray card, or bare wood. This is the safest listing look, and it is the right start if you are unsure.",
+        "An indoor room. A kitchen counter, a gym bench, a desk. Name the surface and the light in one sentence, such as \"A matte black bottle on a gym bench in early light.\""
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec02-r2",
       "alt": "Adult hands place a plain gray running shoe on a white board in daylight."
     },
     {
-      "h2": "How do I photograph products for an online store?",
+      "h2": "Reasons to make the photo here",
       "paras": [
-        "Hold the phone level with the product, keep every edge inside the frame, and switch portrait mode, filters, and beauty settings off.",
-        "Shooting down on a bottle or a box makes it look as if it is tipping backward. Tap the label to lock focus. If white areas look blown out, lower the brightness until the surface texture comes back. Those phone effects change the edges and the color, and the new image copies what it sees."
+        "You already did the hard part with your phone. The rest replaces the studio day, not the truth of the product.",
+        "A smaller bill than a shoot. You are not hiring a set, a stylist, or a model for every color. One image is 24 credits, and that cost shows before the job starts. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+        "No waiting on a booking. A usable listing image comes back from a photo you took today. You still compare it with the real item before you publish.",
+        "A batch when the catalog is long. Make several shots from one photo. Each image is its own 24-credit job. A failed job returns the credits. A developer can start those jobs through the API from your shop system.",
+        "No model hire, unless you want a person. Skip props you do not own. If you do want someone holding the item, pick a generated presenter and do not call them a customer. There is an [actor library](page:ai-actors) when the picture needs a person.",
+        "Start when the shop is quiet. A Sunday night is fine. Each job still costs 24 credits. There is no free plan.",
+        "Try two backgrounds before you pick a listing. A plain table and a room, or two crops, then run the winners as separate ads. That is a test, not a promise about the return."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec03",
       "alt": "Plain gray running shoe centered with its full shape and edges in focus."
     },
     {
-      "h2": "Which product photo angles should I shoot?",
+      "h2": "How to make the product photo in 3 steps",
       "paras": [
-        "Take a straight front view, then two or three more sides while the setup is still out.",
-        "A mug wants the handle side, a look inside, and the mark on the base. A shoe wants the profile, a three-quarter front, and the sole. Lay clothing flat or hang it on a plain door, then add one close frame of the cloth. Upload each side you care about. Do not ask the tool to invent a side it never saw. Those extra stills also give [AI image to video](page:image-to-video) a clearer start."
+        "Get the phone photo right, choose the look, then check the result against the real item.",
+        "Describe it, or upload it. Use the regular camera and keep the whole product sharp.",
+        "Rest the phone on books or a small tripod. Use the volume button or a two-second timer.",
+        "Fill most of the frame and leave a slim margin. Step closer instead of pinching to zoom.",
+        "Set the product beside a window in bright, indirect daylight. Turn the ceiling lights off.",
+        "If sun hits the table, tape baking paper or a thin white sheet over the glass.",
+        "Warm bulbs mixed with daylight shift the color, and that shift follows into later images.",
+        "A plain board, gray card, or bare wood top is enough background.",
+        "Wipe dust, peel stickers, and smooth anything soft before you shoot.",
+        "Hold the phone level with the product, and keep every edge inside the frame.",
+        "Switch portrait mode, filters, and beauty settings off. They change the edges and the color.",
+        "Shooting down on a bottle or a box makes it look as if it is tipping backward.",
+        "Tap the label to lock focus. If whites blow out, lower the brightness until texture returns.",
+        "Take a straight front, then two or three more sides while the setup is still out.",
+        "A mug wants the handle, a look inside, and the mark on the base.",
+        "A shoe wants the profile, a three-quarter front, and the sole.",
+        "Lay clothing flat or hang it on a plain door, then add one close frame of the cloth.",
+        "Upload each side you care about. Do not ask the tool to invent a side it never saw.",
+        "Zoom until you can read the label. Compare the color with the real item in daylight.",
+        "Upload the original file, not a screenshot or a picture that passed through a chat app.",
+        "JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF files all work, up to 32 MB.",
+        "Name the product, the surface, and the light in one plain sentence. Leave prices out.",
+        "Pick the look before it runs: outdoor table, dry background, minimal surface, or a room.",
+        "A beach scene and a plain table are two choices. You are aiming the picture, not hoping.",
+        "When the image comes back, hold the real item beside the screen.",
+        "Check the color, the label, and the shape. Fix it with a follow-up sentence if needed.",
+        "Add the price later in your own editor, where the spelling stays yours.",
+        "Open [lifestyle photos](page:lifestyle-photos), [change the background](page:change-background), or a [white background](page:white-background).",
+        "The same still can start [AI image to video](page:image-to-video) when the listing also needs a clip."
+      ],
+      "img": "n:guide:fx06-guide-product-photo-tips-sec01",
+      "alt": "Adult cleans a plain gray running shoe beside an indirect daylight window."
+    },
+    {
+      "h2": "Examples of the photos you can make",
+      "paras": [
+        "Same item, different rooms. None of these should invent a detail the source photo did not contain.",
+        "A sunscreen tube on a bright outdoor table, label forward, with the shade left alone.",
+        "A bottle on a gym bench in early light, cap and label both readable.",
+        "A shoe in profile, from a photo that actually showed that side.",
+        "The same shoe from a three-quarter front, then the sole, each from its own source photo.",
+        "A mug with the handle visible, on a bare wood top, room kept simple behind it.",
+        "A candle on wood, wick and label both inside the frame.",
+        "A necklace on a dark top, clasp visible, no invented chain length.",
+        "A snack bag standing up, every edge inside the frame.",
+        "Headphones on a desk, both cups visible if the source photo had them.",
+        "A serum bottle with the dropper on, shade checked against the real bottle.",
+        "A tote laid flat, handles spread, filters left off.",
+        "A small appliance from the front, cord included only if the source photo showed it."
       ],
       "img": "n:guide:fx06-guide-product-photo-tips-sec04",
       "alt": "Adult hands rotate a plain gray running shoe through several source-photo angles."
     },
     {
-      "h2": "What should I check before I upload a product photo?",
+      "h2": "How shops use these photos",
       "paras": [
-        "Zoom until you can read the label, then hold the real item next to the screen and compare the color in daylight.",
-        "Edges should be crisp, not smeared. Move cups, lids, and anything else out of the frame. Upload the original file, not a screenshot or a picture that passed through a chat app, because those copies are usually compressed. JPG, JPEG, PNG, WebP, HEIC, HEIF, BMP, TIF, and TIFF files all work, up to 32 MB."
-      ],
-      "img": "n:guide:fx06-guide-product-photo-tips-sec05-r2",
-      "alt": "Adult hands compare a plain gray running shoe with a blank silhouette card."
-    },
-    {
-      "h2": "How do I describe the scene so the result stays accurate?",
-      "paras": [
-        "Name the product, the surface, and the light in one plain sentence, and leave prices and headlines out.",
-        "\"A matte black bottle on a gym bench in early light\" is useful. \"Make it look premium\" is not. When the new image comes back, hold the real item beside the screen and check the color, the label, and the shape. Add the price later in your own editor, where the spelling stays yours. From this photo you can open the [AI product photo generator](page:photo-hub) for other looks, or make [AI lifestyle product photos](page:lifestyle-photos) when the listing needs a setting."
-      ],
-      "img": "n:guide:fx06-guide-product-photo-tips-sec06-r2",
-      "alt": "Adult hands hold a plain gray running shoe beside a blank notebook."
+        "These are examples of how a shop would use it, not quotes from a customer.",
+        "Example. A skincare shop puts the bottle in a bright bathroom and in a gym bag, then checks the label against the real bottle.",
+        "Example. A home shop starts from a phone photo and gets a clean tabletop without renting a studio.",
+        "Example. A jewelry shop shows the piece worn, from a photo of the piece alone, and does not invent a side the photo never showed.",
+        "Example. A food shop makes a morning scene and a dinner scene from the same pack shot.",
+        "Example. A clothing shop lays the garment flat, then asks for a door and a street setting.",
+        "Example. A supplement shop keeps the label readable and adds the price later in its own editor.",
+        "Example. A furniture shop tries a living room and a patio before it picks a listing image.",
+        "Example. A beauty shop makes two backgrounds and runs them as two ads, same offer, same budget.",
+        "Example. A shoe shop shoots the sole and the profile first, so later images do not invent the tread.",
+        "Example. A small team makes the listing photo and, from that still, a short [product video](page:product-videos) with a voice and captions for TikTok or Meta."
+      ]
     },
     {
       "h2": "The short version",
       "paras": [
-        "Shoot at product height, in window light, with filters off and the label readable. Extra angles and one plain sentence come after that.",
-        "Each image job shows its credit cost before it starts. A failed job returns the credits."
-      ]
+        "Shoot at product height, in window light, with filters off and the label readable. Then pick a setting and compare the new image with the real item.",
+        "Each image is 24 credits, shown before the job starts. A failed job returns the credits. Downloads have no watermark. There is no free plan."
+      ],
+      "img": "n:guide:fx06-guide-product-photo-tips-sec05-r2",
+      "alt": "Adult hands compare a plain gray running shoe with a blank silhouette card."
     }
   ],
   "related": [
-    "guide-white-background-amazon",
-    "blog-ai-product-photography-guide",
-    "blog-model-photos-without-a-photoshoot",
+    "product-videos",
+    "ai-actors",
+    "url-to-video",
+    "lifestyle-photos",
     "change-background",
-    "white-background",
-    "model-photos"
+    "white-background"
   ],
   "faq": [
     {
-      "q": "How do I photograph a shiny product?",
-      "a": "Shoot near a window and stand a white card on the far side so light fills the shadows. Turn the item until the window's reflection sits on an edge, not across the label. Skip the flash, which leaves a hard white spot."
+      "q": "What does this product photo tool do?",
+      "a": "It makes a new product image from a photo you already took and a plain sentence about the setting. You still shoot the real item so the label, the color, and the shape stay honest."
     },
     {
-      "q": "Does the photo need a white background first?",
-      "a": "No. A plain, uncluttered background is enough. Make a white version afterward if a marketplace asks for one."
+      "q": "How does it work?",
+      "a": "You upload a sharp phone photo and say where the product should sit. The new image follows that photo. Hold the real item next to the screen and check the color, the label, and the shape before you list it."
     },
     {
-      "q": "Can the photo include another brand's logo?",
-      "a": "Leave it out. Requests built around logos you do not own, or around famous people, may be refused. Crop them away or reshoot with only your product in frame."
+      "q": "What should I look for in the result?",
+      "a": "The product should match the item you ship, the cost should show before the job starts, and a failed job should return the credits. One image is 24 credits. If the label is wrong, do not publish that file."
     },
     {
-      "q": "What if the color looks wrong on my phone?",
-      "a": "Compare the screen with the real item in daylight before you upload. If the phone turned it yellow or gray, reshoot with the ceiling lights off."
+      "q": "Is there a free plan?",
+      "a": "No. There is no free plan. One image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Downloads have no watermark. See [pricing](page:pricing)."
     },
     {
-      "q": "How many credits does one product photo use?",
-      "a": "One image uses 24 credits. You see that cost before the job starts, and a failed job returns the credits."
+      "q": "Are these photos useful for a shop?",
+      "a": "Yes, for listings, catalogs, and ads, as long as you compare them with the real item. A plain background is enough to start. Make a white version later if a marketplace asks for one."
     },
     {
-      "q": "Should I use portrait mode for a product?",
-      "a": "No. Stay on the regular lens with portrait mode, filters, and beauty settings off so the edges and colors stay honest."
+      "q": "What do I gain by doing it this way?",
+      "a": "A listing image without a studio booking, more than one setting from the same photo, and a file you can use in the shop. You can also send the still into a short video. Each job shows its credit cost first."
+    },
+    {
+      "q": "Can I use the photos in my shop and in ads?",
+      "a": "Yes. Downloaded photos are yours to use in listings and ads, and they do not include a watermark. You still need the right to the product photo you uploaded. Leave other brands' logos and famous people out of the frame."
     }
   ],
-  "cta_title": "Create a product photo you can use",
-  "cta_lead": "Start with one clear phone photo, then make a listing image or a scene you can compare with the real item.",
+  "cta_title": "One product, more than one photo",
+  "cta_lead": "Start with a clear phone photo, try a new setting, and compare the result with the real item before you list it.",
   "relatedLinks": [
-    "guide-white-background-amazon",
-    "blog-ai-product-photography-guide",
-    "blog-model-photos-without-a-photoshoot",
+    "product-videos",
+    "ai-actors",
+    "url-to-video",
+    "lifestyle-photos",
     "change-background",
-    "white-background",
-    "model-photos"
+    "white-background"
   ]
 }

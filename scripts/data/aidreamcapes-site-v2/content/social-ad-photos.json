@@ -18,32 +18,32 @@
       "img": "n:guide:fx18-social-benefit-offer",
       "alt": "A plain charcoal hiking shoe on a clean city curb with open space for a headline.",
       "icon": "check",
-      "t": "See 24 credits before you start",
-      "d": "The cost is on screen before the photo starts. If it fails, the credits come back."
+      "t": "A lower editing bill",
+      "d": "Skip the studio and the retoucher. A square photo is 24 credits, and that cost is on screen before it starts. If it fails, the credits come back."
     },
     {
       "img": "n:guide:fx18-social-benefit-editor",
       "alt": "A plain charcoal hiking shoe on a pale studio surface with clean space above the product.",
       "icon": "bolt",
-      "t": "Keep the offer in your words",
-      "d": "Leave open space for the headline. Type the price and the offer in your ad editor so the picture cannot invent a discount."
+      "t": "You write the offer",
+      "d": "Leave open space for the headline. Type the price and the offer yourself so the picture cannot invent a discount."
     },
     {
       "img": "n:guide:fx18-social-benefit-scene",
       "alt": "A plain charcoal hiking shoe on a warm oak entryway floor beside a neutral mat.",
       "icon": "layers",
-      "t": "Try another scene without a shoot",
+      "t": "Another scene, no new shoot",
       "d": "Move the same product from a curb to a studio surface or an entryway. Each version is a separate photo."
     },
     {
-      "t": "Export a square file for the feed",
+      "t": "A square file for the feed",
       "d": "Download a square image for a common feed placement. Check the crop in your ad tool before the campaign goes live.",
       "icon": "target",
       "img": "n:guide:fx18-social-output-final",
       "alt": "A plain charcoal hiking shoe on a pale stone walkway beside low greenery, framed for a square social ad."
     }
   ],
-  "steps_h2": "Use the product ad creative generator in 3 steps",
+  "steps_h2": "How to make a square social post in 3 steps",
   "steps_lead": "Three actions take one product photo to a square image you can finish.",
   "steps": [
     {
@@ -55,8 +55,8 @@
       "d": "Choose a backdrop that matches how people use the product. Leave an open area for the headline you will add later."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the square image. Add the headline, price, and offer in your ad editor, then place it in the campaign."
+      "t": "Enhance and Download",
+      "d": "Resize the square, add a short text line, and download. Check the price before the ad goes live."
     }
   ],
   "maker": {
@@ -93,7 +93,7 @@
     },
     {
       "q": "Can the image include my headline?",
-      "a": "Leave space for it, then type the exact line yourself. Generated lettering can be wrong, so prices and brand marks stay in your editor."
+      "a": "Yes. Add a short text line on the image, then read it. If a price or a brand mark looks off, type that line in your ad editor before the ad goes live."
     },
     {
       "q": "Can I make several versions from one photo?",
@@ -110,6 +110,10 @@
     {
       "q": "Do I have to label the image as AI?",
       "a": "Rules differ by platform and region. Follow the disclosure your ad account shows for that campaign. For a more casual still, see [UGC style product photos](page:tpl-ugc)."
+    },
+    {
+      "q": "Can a teammate edit the same design?",
+      "a": "Yes. Share the project, keep logos and colors in the brand library, and leave notes on the design from a computer or a phone."
     }
   ],
   "visual": {
@@ -336,7 +340,7 @@
       {
         "img": "n:guide:fx18-social-use-gym",
         "h": "Show it in a second place",
-        "d": "Put the same bottle on a gym bench when the next ad needs a different setting.",
+        "d": "Put the same bottle on a gym bench, or move it to a holiday table when the next post is seasonal.",
         "alt": "Adult hand setting a plain matte teal bottle on a clean gym bench beside a folded towel."
       }
     ],
@@ -369,25 +373,63 @@
   },
   "more_sections": [
     {
-      "eyebrow": "From one photo",
-      "h2": "Square ad images for social media from one photo",
-      "lead": "The item stays recognizable, the setting is one you pick, and the headline waits until download.",
+      "eyebrow": "One place",
+      "h2": "Make the next post in one place",
+      "lead": "Brighten the photo, add a sticker or a line, and finish the square without a second editor for the picture.",
       "items": [
         {
-          "t": "Keep the item recognizable",
-          "d": "The photo you upload is the product in the frame. Shape and color stay easy to check at a small size."
+          "t": "Brighten the photo",
+          "d": "Lift a dark product photo and sharpen the detail before you place it in the feed."
         },
         {
-          "t": "Put it where people use it",
-          "d": "A desk, a sidewalk, or an entryway tells shoppers how someone uses it, instead of a product floating on empty space."
+          "t": "Stickers and a text line",
+          "d": "Add a sticker or a short text line for the post. Read the line before it goes live."
         },
         {
-          "t": "Save the words for your editor",
-          "d": "Keep a calm area empty. You add the headline, the price, and the offer after download."
+          "t": "The picture stays here",
+          "d": "Touch up the photo, set the scene, and finish the square in the same project."
+        }
+      ]
+    },
+    {
+      "eyebrow": "No design job required",
+      "h2": "Polished designs without a design job",
+      "lead": "The editing is handled for you: the old setting, the light, a text line, or a layout you start from.",
+      "items": [
+        {
+          "t": "Remove the background",
+          "d": "Clear the old setting so the product is easy to place on a new one."
         },
         {
-          "t": "Place the file in the campaign",
-          "d": "Download the square and put it in the ad tool. The picture does not schedule the post or write the offer line."
+          "t": "Light and shadow",
+          "d": "Adjust the light and add a soft shadow so the product does not look pasted on."
+        },
+        {
+          "t": "Text and layers",
+          "d": "Stack a text line and a simple shape on the image when the post needs them."
+        },
+        {
+          "t": "A ready layout",
+          "d": "Start from a layout for the feed, a holiday post, or a profile image, then swap in your product."
+        }
+      ]
+    },
+    {
+      "eyebrow": "From a prompt",
+      "h2": "Set the scene from a short prompt",
+      "lead": "Describe the setting, keep the product you uploaded, and add an AI model only when the item should be worn.",
+      "items": [
+        {
+          "t": "A background from a prompt",
+          "d": "Describe the setting in a short prompt and generate a background that fits the product."
+        },
+        {
+          "t": "The product in that scene",
+          "d": "Keep the uploaded item and place it in the setting you described."
+        },
+        {
+          "t": "An AI model in the frame",
+          "d": "When the product should be worn, put it on an AI model. The person in the frame is not a customer."
         }
       ]
     }
@@ -396,9 +438,11 @@
     "hero",
     "picker",
     "benefits",
+    "definition",
     "uses",
     "features",
     "steps",
+    "reasons",
     "reviews",
     "related",
     "faq"
@@ -440,5 +484,30 @@
     "plat-instagram",
     "plat-facebook",
     "tpl-sale"
-  ]
+  ],
+  "definition": {
+    "title": "What a square social ad image is for",
+    "paras": [
+      "A square social ad image puts your product in a setting people recognize, with a consistent look from one post to the next.",
+      "Holiday and event layouts are there when the calendar changes. You still add the headline, the price, and the offer after you check the file."
+    ]
+  },
+  "reasons": {
+    "h2": "Work on the same design together",
+    "lead": "Share the post, keep the brand marks in one place, and leave notes before you download.",
+    "items": [
+      {
+        "t": "Share and edit together",
+        "d": "Invite a teammate to the same design and edit it from a computer or a phone."
+      },
+      {
+        "t": "Shared brand marks",
+        "d": "Keep logos, colors, and shared layouts in one library so the next post matches."
+      },
+      {
+        "t": "Notes in one place",
+        "d": "Leave a note on the design so the next change happens before you download."
+      }
+    ]
+  }
 }

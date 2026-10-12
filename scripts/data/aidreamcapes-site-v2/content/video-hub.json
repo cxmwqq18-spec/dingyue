@@ -4,7 +4,7 @@
   "description": "AI video generator for ads from one product photo. Choose 6, 10, 15, or 30 seconds, see the credit cost first, and download for social or your store.",
   "h1": "AI Video Generator for Ecommerce: Ads from One Product Photo",
   "eyebrow": "AI video tools for online sellers",
-  "lead": "AIVideosUGC is an AI video generator for ecommerce: one product photo becomes a short ad, a demo, or a product story. No filming crew and no editing app for the first cut. Choose a frame, pick 6 to 30 seconds, and download a clip for your store or your ads.",
+  "lead": "AIVideosUGC is an AI video generator for ecommerce. Start from a product photo, a product link, or a short brief, and get a script, a presenter, a voice, and captions. Publish to TikTok or Meta, or download a clip with no watermark. Plans start at $24.50 a month.",
   "maker": {
     "options": [
       [
@@ -26,78 +26,94 @@
     "vertical product videos for TikTok"
   ],
   "intro": [
-    "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. You do not book a shoot for that first clip.",
-    "AIVideosUGC is an ecommerce video maker for store ads and product pages. Commercial use is included, and the file has no watermark. Add captions, a price, and licensed music after you download."
+    "You get a product clip from a short brief, a product link, or a photo you upload. AIVideosUGC adds a presenter from the actor library, an AI voice with lip sync, captions, and a cut you can edit before you download.",
+    "It is built for store ads and product pages. Switch language, send the file to TikTok or Meta, or run a batch across a catalog. A developer can start a job through the API. Commercial use is included, and the download has no watermark. Starter is $24.50 a month for 200 credits."
   ],
-  "steps_h2": "How to Make Short Videos for Online Stores in 3 Simple Steps",
-  "steps_lead": "Go from one clear photo to a clip you can download.",
+  "steps_h2": "How to Create AI Videos in 3 Simple Steps",
+  "steps_lead": "Go from a product link or a photo to a clip you can post.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the whole item visible. The product in the clip comes from this picture."
+      "t": "Share Your Product Idea",
+      "d": "Upload a photo or paste a product link, and say who the clip is for."
     },
     {
-      "t": "Describe the Scene",
-      "d": "Say what happens, pick a format, and choose a frame. Lengths are 6, 10, 15, or 30 seconds."
+      "t": "Chat With the Video Agent",
+      "d": "The agent asks about the offer, the voice, and the look, then writes the script."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip when it is ready. Add captions, a price, or licensed music in your editor, then post it."
+      "t": "Download a Finished Video",
+      "d": "You get the script, presenter, voice, scenes, and captions, ready for TikTok or Meta."
     }
   ],
   "faq": [
     {
-      "q": "What is an AI video generator for ecommerce?",
-      "a": "It makes a short product clip from a photo you upload and a scene you describe. You choose the frame and the length, then download the file."
+      "q": "How do I create an AI video?",
+      "a": "Upload a photo or paste a product link, tell the agent who the clip is for, and download the file. You get a script, a presenter, a voice, scenes, and captions. The credit cost shows before the job starts."
     },
     {
-      "q": "How do I make an AI video from a product photo?",
-      "a": "Upload one clear photo of the whole item, choose a format and a frame, describe one action, and download the clip. The credit cost shows before you start."
+      "q": "How do I write a good brief?",
+      "a": "Say what the product is, who it is for, and what should happen on screen. The agent can turn that note into a full script. A clear, well-lit photo of the whole item still helps."
     },
     {
-      "q": "What kinds of product videos can I make?",
-      "a": "Creator-style ads, explainers, showcases, presenter-led clips, and social clips. Open the matching tool under the format list when you want that kind of clip."
+      "q": "Can I make a news-style video?",
+      "a": "Yes. Pick a tone, a voice, a setting, a frame, a language, and a length, then generate the script. Formats include a promo, a how-to, or a product story. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "Which frames and lengths are available?",
-      "a": "Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, and 30 seconds."
+      "q": "How does the generator build the clip?",
+      "a": "You enter the idea and choose the tone, the style, and the channel. AIVideosUGC writes the script, builds the picture, and hands back a clip you can edit."
+    },
+    {
+      "q": "What is this generator built for?",
+      "a": "Store ads and product pages. You start from a photo or a product link, pick a presenter and a voice, and publish to TikTok or Meta. It is not a general studio for unrelated footage."
+    },
+    {
+      "q": "What kind of voices can I use?",
+      "a": "An AI voice with lip sync. Try a brighter voice or a lower one, and switch language when the buyers are not local. The presenter is generated, not a customer."
+    },
+    {
+      "q": "Do I need to install software?",
+      "a": "No. You work in the browser. The editor, captions, and the music library are on the same job. Download when you want a file, with no watermark."
+    },
+    {
+      "q": "Can I generate a video from a photo I already have?",
+      "a": "Yes. Upload one clear photo you have the right to use. The product in the clip comes from that picture. You can also paste a product link instead."
     },
     {
       "q": "What does a video cost?",
-      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. A failed job gives the credits back."
+      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A clip uses 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. A failed job returns those credits."
     },
     {
-      "q": "Can I make several versions?",
-      "a": "Yes. Run the same photo with a different opening, scene, or presenter, then compare the downloads in your ad account."
-    },
-    {
-      "q": "What product photo works best?",
-      "a": "Use a clear, well-lit photo with the whole product visible. Upload only a photo you own or have permission to use."
-    },
-    {
-      "q": "Can I use the download in a paid ad?",
-      "a": "Yes. Downloads have no watermark and can be used commercially. Add your price and captions after download, and follow each platform's AI rules."
-    },
-    {
-      "q": "Is the person in the video a real customer?",
-      "a": "No. Any presenter is generated for the ad, not a buyer. Do not present the clip as a customer review, and label AI content when a platform asks."
-    },
-    {
-      "q": "Do I choose which AI model makes the video?",
-      "a": "No. You do not pick a model name. Upload a photo, choose a frame and a length, and describe the scene."
+      "q": "Do these clips work for ads?",
+      "a": "You can run them as paid or organic ads. Results depend on the product and the audience. Use them to test openings, and keep a filmed spot when you want a real customer on camera."
     },
     {
       "q": "Can I start from a product page link?",
-      "a": "Not on this page. Upload one product photo and describe the scene. For a product link, use the URL to video page."
+      "a": "Yes. Paste the product link and the tool drafts the script, the presenter, and the voice. The same job is on the [URL to video](page:url-to-video) page if you want that flow on its own."
     },
     {
-      "q": "How long does a video take, and can I add captions?",
-      "a": "There is no fixed wait. It depends on the length and how many jobs are ahead of yours. Add captions, a price, and licensed music in your editor after download. This tool does not add them for you."
+      "q": "Can I make several versions to test?",
+      "a": "Yes. Keep the photo and change the opening, the presenter, the voice, or the frame. Each version is one clip, and the credit cost shows before it starts."
+    },
+    {
+      "q": "Can I run the clip on TikTok or Meta?",
+      "a": "Yes. Publish to TikTok or Meta, or download and post it yourself. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Do not present a generated person as a customer review, and add any label the platform asks for."
+    },
+    {
+      "q": "What is included for an ecommerce ad?",
+      "a": "A product photo or a link, a presenter from the actor library, an AI voice, captions, more than one language, and publishing to TikTok or Meta. Plans start at $24.50 a month. Commercial use is included and the file has no watermark."
+    },
+    {
+      "q": "Which video models can I use?",
+      "a": "Switch the job to fit the clip: motion from a still, a spoken ad, a product demo, an unboxing, or a presenter. You do not type another company's model name. Open the matching tool under Explore AI Video Models."
+    },
+    {
+      "q": "How long does a video take?",
+      "a": "There is no fixed wait. It depends on the length and how many jobs are ahead of yours. Captions, the voice, and a music-library track are part of the job, and you can still change them in the editor."
     }
   ],
   "examples": {
-    "h2": "Videos an Ecommerce Video Maker Can Generate",
-    "lead": "Pick the format that matches what you are making, then start that clip from your own photo.",
+    "h2": "Examples of Each Video Type",
+    "lead": "One sample of each format. Start the same kind of clip from your own photo.",
     "groups": [
       {
         "label": "Creator-style product ads",
@@ -111,7 +127,7 @@
         ]
       },
       {
-        "label": "Product explainers",
+        "label": "Product explainer videos",
         "items": [
           {
             "ref": "n:guide:im01-video-hub-bento-r1",
@@ -122,7 +138,7 @@
         ]
       },
       {
-        "label": "Product showcases",
+        "label": "Product showcase videos",
         "items": [
           {
             "ref": "n:gen2:video-hub-g7",
@@ -133,7 +149,7 @@
         ]
       },
       {
-        "label": "Presenter-led brand clips",
+        "label": "Presenter-led brand videos",
         "items": [
           {
             "ref": "n:gen2:spokesperson-videos-c3",
@@ -144,7 +160,7 @@
         ]
       },
       {
-        "label": "Social clips",
+        "label": "Social clips for feeds",
         "items": [
           {
             "ref": "n:gen2:video-hub-g3",
@@ -156,7 +172,35 @@
       }
     ]
   },
-  "more_sections": null,
+  "more_sections": [
+    {
+      "eyebrow": "Formats",
+      "h2": "Video Types You Can Make",
+      "lead": "Five formats. Each one can include a presenter, a voice, and captions.",
+      "items": [
+        {
+          "t": "Creator-style product ads",
+          "d": "A presenter holds the item and speaks the line you approve. You set the tone. No creator to hire."
+        },
+        {
+          "t": "Product explainer videos",
+          "d": "One action, explained with a voice and captions, so every version says the same thing."
+        },
+        {
+          "t": "Product showcase videos",
+          "d": "Put the product in a setting you describe and point at the feature you want shoppers to notice."
+        },
+        {
+          "t": "Presenter-led brand videos",
+          "d": "Pick a presenter and a voice that fit the shop, and switch language when the buyers are not local."
+        },
+        {
+          "t": "Social clips for feeds",
+          "d": "Make a 9:16, square, or wide cut for TikTok, Reels, or a product page, then publish to TikTok or Meta."
+        }
+      ]
+    }
+  ],
   "visual": {
     "strip": [
       "f:q1-video-strip-protein",
@@ -186,8 +230,8 @@
       ]
     },
     "picker": {
-      "title": "Vertical Product Videos for TikTok and Other Feeds",
-      "lead": "Filter the examples, open a finished clip, and start from your own photo.",
+      "title": "Recreate a Product Clip You Like",
+      "lead": "Swap in your product, keep the kind of scene, and start a clip from your own photo.",
       "chips": [
         {
           "id": "accessories",
@@ -652,14 +696,14 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Make Short Videos for Online Stores in 3 Simple Steps"
+        "h2": "How to Create AI Videos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Vertical Product Videos for TikTok and Other Feeds",
-        "lead": "Filter the examples, open a finished clip, and start from your own photo."
+        "h2": "Recreate a Product Clip You Like",
+        "lead": "Swap in your product, keep the kind of scene, and start a clip from your own photo."
       },
       "faq": {
-        "h2": "Questions About an AI Video Generator for Ecommerce"
+        "h2": "Questions About an AI Video Generator"
       }
     },
     "uses": []
@@ -672,6 +716,7 @@
     "picker",
     "reasons",
     "steps",
+    "features",
     "examples",
     "related",
     "reviews",
@@ -679,27 +724,27 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is an AI Video Generator for Ecommerce?",
+    "title": "What Is an AI Video Generator?",
     "paras": [
-      "An AI video generator for ecommerce makes a short product clip from a photo you upload and a scene you describe. You pick the frame and the length. You do not book a shoot for that first clip.",
-      "AIVideosUGC is an ecommerce video maker for store ads and product pages. Commercial use is included, and the file has no watermark. Add captions, a price, and licensed music after you download."
+      "You get a product clip from a short brief, a product link, or a photo you upload. AIVideosUGC adds a presenter from the actor library, an AI voice with lip sync, captions, and a cut you can edit before you download.",
+      "It is built for store ads and product pages. Switch language, send the file to TikTok or Meta, or run a batch across a catalog. A developer can start a job through the API. Commercial use is included, and the download has no watermark. Starter is $24.50 a month for 200 credits."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Use an Ecommerce Video Maker",
-    "lead": "For sellers who need another product clip without booking a shoot.",
+    "h2": "Reasons to Use an AI Video Generator",
+    "lead": "For sellers who want a spoken product clip without booking a shoot.",
     "items": [
       {
-        "t": "Starts From Your Product Photo",
-        "d": "Every clip begins with the photo you upload, so the item on screen is the one you sell. You do not have to describe its shape and color in words."
+        "t": "Lip Sync on the Spoken Line",
+        "d": "The presenter's mouth follows the words, so the line and the face move together."
       },
       {
-        "t": "Frames Your Channels Already Use",
-        "d": "Make it in 9:16, 1:1, 16:9, 4:3, or 3:4. A vertical file can go to TikTok, and you can make the same photo again as a square or a wide clip."
+        "t": "Start From a Link or a Photo",
+        "d": "Paste a product link or upload a photo. You get more than one cut back, and the credit cost shows before the job starts."
       },
       {
-        "t": "Another Version Without Another Shoot",
-        "d": "Keep the photo and change the scene, the presenter, or the opening. Each version is one clip, priced in credits."
+        "t": "A Library of Presenters",
+        "d": "Pick a presenter who fits the shop, then match a voice. The person is generated, not a customer."
       }
     ]
   },
@@ -730,35 +775,72 @@
     }
   ],
   "reviews": {
-    "h2": "Example AI Video Ads for Shopify Sellers",
-    "lead": "How a type of shop might use one product photo. These are not customer quotes.",
+    "h2": "How Shops Use an AI Video Generator",
+    "lead": "How a type of shop might use one product photo or a product link. These are examples, not customer quotes.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "A short creator clip for a cleanser",
-        "d": "A beauty shop turns one cleanser photo into a creator-style clip for a paid social test."
+        "t": "A cleanser clip with a voice",
+        "d": "A beauty shop turns one cleanser photo into a spoken creator-style ad."
       },
       {
         "example": true,
         "who": "Housewares seller",
-        "t": "One action that shows the bottle",
-        "d": "A housewares seller uses one photo to show the one action shoppers need, such as a bottle folding down."
+        "t": "Photo, then a clip",
+        "d": "A housewares seller uploads one photo and also makes a short clip of the same item."
       },
       {
         "example": true,
-        "who": "Outdoor apparel shop",
-        "t": "A jacket in motion",
-        "d": "An outdoor shop makes a movement clip from one jacket photo, without booking a model day."
+        "who": "Apparel shop",
+        "t": "Presenter library and editor",
+        "d": "An apparel shop picks a presenter and trims the clip in the editor without opening another app."
       },
       {
         "example": true,
-        "who": "Electronics seller",
-        "t": "An unboxing for launch week",
-        "d": "An electronics seller makes an opening clip from one headphone photo for the launch posts."
+        "who": "Skincare shop",
+        "t": "A second language",
+        "d": "A skincare shop makes the same ad in another language for buyers outside its home market."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "Captions in the editor",
+        "d": "A pet shop adds captions and a music-library track, then downloads."
+      },
+      {
+        "example": true,
+        "who": "Small agency",
+        "t": "A presenter per client",
+        "d": "An agency assigns a different presenter to each client's product ad."
+      },
+      {
+        "example": true,
+        "who": "Electronics brand",
+        "t": "A face from team photos",
+        "d": "An electronics brand builds a presenter from a few photos of someone on the team."
+      },
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "Link, script, and voice",
+        "d": "A supplement shop pastes the product link and gets a script, a presenter, and an AI voice."
+      },
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Chat, then a draft",
+        "d": "A marketplace seller describes the offer in chat. The agent drafts the script and the clip."
+      },
+      {
+        "example": true,
+        "who": "Outdoor shop",
+        "t": "Several openings to test",
+        "d": "An outdoor shop keeps the jacket photo and makes another opening, another voice, and another frame."
       }
     ]
   },
-  "related_h2": "More From the AIVideosUGC Toolkit",
-  "relatedH2": "More From the AIVideosUGC Toolkit"
+  "related_h2": "Explore AI Video Models for Store Clips",
+  "related_lead": "Open the job that fits: motion from a still, a product link, a spoken ad, a demo, an unboxing, or a presenter.",
+  "relatedH2": "Explore AI Video Models for Store Clips"
 }

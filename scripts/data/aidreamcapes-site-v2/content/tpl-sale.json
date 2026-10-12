@@ -11,7 +11,7 @@
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "Make a Sale Banner in 3 Steps",
+  "steps_h2": "How to Make a Sale Banner in 3 Simple Steps",
   "steps_lead": "Upload the product, leave an open area, then add the real offer after download.",
   "steps": [
     {
@@ -76,6 +76,18 @@
     {
       "q": "Can I start from a Black Friday scene and change the holiday later?",
       "a": "Yes. Keep the product scene and swap the headline. Seasonal campaign notes live on [Black Friday ad creatives](page:occ-black-friday)."
+    },
+    {
+      "q": "Do I need a paid plan for a sale banner?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A sale photo is 24 credits, shown before you start."
+    },
+    {
+      "q": "Can I batch sale photos or use the API?",
+      "a": "Yes. Run the same scene across a catalog, or send photos through the API. Each photo spends 24 credits from your plan. A failed job returns those credits."
+    },
+    {
+      "q": "Can an AI model appear in the sale scene?",
+      "a": "Yes. Ask for an AI model to wear or hold the product, or keep the product alone. The person is generated. The discount is still typed by you after download."
     }
   ],
   "examples": {
@@ -162,8 +174,8 @@
       "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal."
     },
     "picker": {
-      "title": "Browse Product Scenes by Category",
-      "lead": "These clips are other video scenes. Make the square sale image in the upload box, then add the offer after download.",
+      "title": "Browse Sale Scenes by Category",
+      "lead": "Pick a scene close to the product. Add the offer after you download.",
       "chips": [
         {
           "id": "accessories",
@@ -585,14 +597,14 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make a Sale Banner in 3 Steps"
+        "h2": "How to Make a Sale Banner in 3 Simple Steps"
       },
       "faq": {
-        "h2": "Questions about this sale banner maker"
+        "h2": "Questions About This Sale Banner Maker"
       },
       "m3": {
-        "h2": "Browse Product Scenes by Category",
-        "lead": "These clips are other video scenes. Make the square sale image in the upload box, then add the offer after download."
+        "h2": "Browse Sale Scenes by Category",
+        "lead": "Pick a scene close to the product. Add the offer after you download."
       }
     }
   },
@@ -670,10 +682,165 @@
   "cta_title": "Set the scene, then add the offer",
   "blockOrder": [
     "hero",
-    "reviews",
+    "features",
+    "definition",
+    "reasons",
     "steps",
+    "trust",
+    "reviews",
     "related",
     "faq",
     "cta"
-  ]
+  ],
+  "definition": {
+    "title": "What Is a Sale Banner?",
+    "paras": [
+      "A sale banner is a square product scene with a calm open area beside the item. You type the discount, the code, and the end date after download, so the figures match the promotion you approved.",
+      "Use one scene across a feed post, a product page, and a later headline. When the offer changes, replace the text you added and keep the product picture."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Sale Banner",
+    "lead": "The product stays recognizable, and the offer stays in your hands.",
+    "items": [
+      {
+        "t": "A Layout With Room for the Offer",
+        "d": "The scene leaves a calm open area beside the product. You place the discount, the code, and the dates there after download."
+      },
+      {
+        "t": "A Scene You Can List Today",
+        "d": "One product photo becomes a square image you can put on a feed or a product page once the offer text is yours."
+      },
+      {
+        "t": "Phone, Store, and Feed",
+        "d": "The same square can go to Instagram, Facebook, or your store. A wider header means placing it on a wider canvas in your editor."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Start from a scene",
+      "h2": "Sale Banner Scenes for the Feed",
+      "lead": "Starting scenes for a feed post. None of them paint the discount into the photo.",
+      "items": [
+        {
+          "t": "Holiday Storefront",
+          "d": "A seasonal shop front, with a calm open area beside the product for the offer you add later."
+        },
+        {
+          "t": "Clearance Table",
+          "d": "The product sits on a simple table so a short offer line has room beside it."
+        },
+        {
+          "t": "Weekend Market",
+          "d": "An outdoor stall for a short promotion. You type the dates after download."
+        },
+        {
+          "t": "Gift Table",
+          "d": "A gift-ready setting. The price stays out of the generated file."
+        },
+        {
+          "t": "End of Season",
+          "d": "A late-season setting. Swap the headline when the event changes."
+        },
+        {
+          "t": "New Color Drop",
+          "d": "The hero color is the product you uploaded. The offer line is added after download."
+        },
+        {
+          "t": "Bundle Stack",
+          "d": "Group the products you uploaded, with open space for the bundle terms you type."
+        },
+        {
+          "t": "Member Offer",
+          "d": "A clean scene for a customer offer. You add the code so the digits stay correct."
+        },
+        {
+          "t": "Last Day Look",
+          "d": "A simple scene you can reuse, because the end date is not painted into the file."
+        },
+        {
+          "t": "Square Feed Post",
+          "d": "A square composition for a Facebook or Instagram feed once the offer is in place."
+        },
+        {
+          "t": "Product Page Banner",
+          "d": "The product stays fully visible, with room for a headline you add on the product page."
+        },
+        {
+          "t": "Flat Lay Offer",
+          "d": "The item lies flat with empty space along one edge for the line you type later."
+        },
+        {
+          "t": "On-Model Offer",
+          "d": "An AI model wears or holds the product. The discount is not generated into the photo."
+        },
+        {
+          "t": "Studio Clearance",
+          "d": "A plain studio scene so the product reads first and the offer sits in the open area."
+        },
+        {
+          "t": "Launch Window",
+          "d": "A launch setting for a new item. You add the code and the end date after download."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Also in the project",
+      "h2": "Features for a Sale Banner",
+      "lead": "Scene tools around the square image. The offer text is still typed by you.",
+      "items": [
+        {
+          "t": "Backgrounds and Staging",
+          "d": "Put the product on white, on a transparent ground, in a new setting, or against a softened background. Compare the outline with your original photo."
+        },
+        {
+          "t": "Models, Flat Lays, and Cleanup",
+          "d": "An AI model can wear the item. You can also ask for a flat lay, a garment shown with no visible mannequin, a softer shadow, or a cleaned product shot."
+        },
+        {
+          "t": "Edit, Resize, and Recolor",
+          "d": "Resize the square, recolor a garment, or remove a stray object. Type the offer in the editor so a wrong digit never gets painted in."
+        },
+        {
+          "t": "Product Video Next",
+          "d": "Turn the same photo into a short clip when the feed needs motion, with a voice and captions if you want them. Video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+        },
+        {
+          "t": "Batch for a Catalog",
+          "d": "Run the same sale scene across many products. Each photo is 24 credits, and that cost is shown before the job starts."
+        },
+        {
+          "t": "API for Your Store",
+          "d": "Send product photos through the API and bring the scenes back to your catalog. Jobs spend credits from your plan. Starter starts at $24.50 a month."
+        }
+      ]
+    }
+  ],
+  "trust": {
+    "h2": "What You Can Count On",
+    "lead": "The offer figures stay yours. The credit cost is shown first.",
+    "items": [
+      {
+        "t": "24 Credits a Photo",
+        "d": "Each sale photo is 24 credits. You see that cost before the job starts."
+      },
+      {
+        "t": "No Watermark",
+        "d": "The download has no AIVideosUGC watermark, and you can use it in your own ads, pages, and posts."
+      },
+      {
+        "t": "You Type the Price",
+        "d": "Generated lettering can garble words and digits. Add the discount, code, and end date yourself so they match the promotion you approved."
+      },
+      {
+        "t": "Failed Jobs Return Credits",
+        "d": "If a job fails, the reserved credits return to your balance."
+      },
+      {
+        "t": "Paid Plans",
+        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+      }
+    ]
+  }
 }

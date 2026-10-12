@@ -4,7 +4,7 @@
   "description": "Turn one product photo into a launch video. Pick 9:16 or 1:1, at 6, 10, 15, or 30 seconds. Add the release date and offer in your editor after download.",
   "h1": "AI Promo Video Maker for the Day You Release",
   "eyebrow": "Launch video template",
-  "lead": "Pick a reveal scene and add one photo of the finished item, so the launch clip is ready when the date is set.",
+  "lead": "Pick a reveal scene and add one photo of the finished item, so the promo video is ready when the date is set. A script, a voice, or an AI actor can go in the same file.",
   "secondary_keywords": [
     "product launch video",
     "new product promo video",
@@ -12,8 +12,8 @@
     "Instagram launch ad",
     "home decor promo video"
   ],
-  "steps_h2": "Make a Facebook Promo Video in 3 Steps",
-  "steps_lead": "One photo of the finished item, a short line about the reveal, then a file you can post.",
+  "steps_h2": "How to Make a Product Launch Video in 3 Simple Steps",
+  "steps_lead": "A Facebook promo video starts with one photo of the finished item, a short reveal line, and a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -47,44 +47,48 @@
   },
   "faq": [
     {
-      "q": "What is an AI promo video template?",
-      "a": "A ready reveal, unboxing, or demo scene for a product you are about to release. You add a photo of the finished item, and the clip announces it."
+      "q": "What is a product launch video?",
+      "a": "It is a new product promo video for the day you release a finished item. Add a script, a voice, captions, and an AI actor if you want a presenter."
     },
     {
       "q": "How do I make the launch clip?",
-      "a": "Upload the finished-item photo, name the reveal, pick 9:16 or 1:1 and a length, then download the file and add the date in your editor."
+      "a": "Upload a photo of the finished item, name the reveal, and pick a size and a length. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Why start from a photo instead of a launch shoot?",
-      "a": "The reveal is built from a photo of the final item. You do not book a creator or a studio before release day."
+      "a": "You can cut the reveal before release day without booking a creator. Check that the item on screen matches the finished product."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Shops, including home brands, that need a Facebook or feed announcement and do not have a shoot on the calendar."
+      "a": "Shops and agencies announcing a finished item on Facebook, Instagram, TikTok, or YouTube. A first file does not require an editing background."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Start from a clear photo of the final item. A description alone will not match the real product. Name the reveal, then check the item before you post."
+      "a": "Yes. Use one clear photo, describe a reveal or an unboxing, and download the file. Add the confirmed date in your editor if captions should not carry it."
     },
     {
       "q": "What photo should I upload?",
-      "a": "One clear photo of the finished item, with the whole product in frame. Wait until that photo exists before you make an ad."
+      "a": "One clear photo of the finished item, with the whole product in frame. A product page link works when you want a first draft from the listing."
     },
     {
       "q": "How is a teaser different from release day?",
-      "a": "A teaser can say the item is coming and carry a planned date as text you can edit. Release-day creative should show the live date, the current offer, and the product link."
+      "a": "A teaser can say the item is coming. On release day, add only a date and an offer you have confirmed. Do not let the script invent either one."
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "Use 9:16 or 1:1 for this launch clip. Other sizes are 16:9, 4:3, and 3:4. Use 6 seconds for a quick reveal, or 10, 15, or 30 seconds for a demo. The credit cost is shown before the job runs."
+      "a": "Use 9:16 or 1:1 for this launch clip. Other sizes are 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
+      "a": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before the job starts, and a failed job returns those credits. The download has no watermark."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark. Add the confirmed date, price, and offer after download, and do not state a delivery promise you have not confirmed. A person on screen is an AI performer, not a customer."
+      "q": "Can I publish it to TikTok or Meta?",
+      "a": "Yes. Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. You can use it in ads. People on screen are AI actors."
+    },
+    {
+      "q": "Can I announce several items at once?",
+      "a": "Yes. Run the same reveal across a batch of photos, or send the catalog through the API. Each job shows its credit cost first."
     }
   ],
   "visual": {
@@ -549,79 +553,82 @@
       }
     }
   },
-  "cta_lead": "Upload one photo of the finished item and see the credit cost before you start.",
+  "cta_lead": "Upload one photo of the finished item. Add a voice or an actor if you want one, and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "steps",
+    "features",
+    "platforms",
     "reviews",
-    "related",
     "faq",
+    "related",
     "cta"
   ],
   "reviews": {
     "h2": "How Shops Announce a Finished Item",
-    "lead": "A few ways a shop can announce one finished item when the release date is real.",
+    "lead": "A few ways a shop announces one finished item, including a home decor promo video.",
     "items": [
       {
         "example": true,
         "who": "Home brand",
         "t": "Hands on the new item",
-        "d": "A home brand shows hands revealing a cream jar and tube as the first look at a finished product."
+        "d": "A home brand shows the first look at a finished jar, with captions naming the product."
       },
       {
         "example": true,
         "who": "Mug shop",
         "t": "First use",
-        "d": "A mug shop opens on a steaming mug as the first beat of a release-day clip."
+        "d": "A mug shop opens on the first sip as the release-day beat, then trims it in the built-in editor."
       },
       {
         "example": true,
         "who": "Decor shop",
         "t": "A home decor promo",
-        "d": "A decor shop shows one finished home item in a room, and types the date on after download."
+        "d": "A decor shop shows one finished home item in a room, and types the real date on after download."
       },
       {
         "example": true,
         "who": "Teaser editor",
         "t": "Coming soon",
-        "d": "A teaser editor can say the item is coming, with the planned date typed in after download."
+        "d": "A teaser editor can say the item is coming. The planned date is typed in after download, not invented by the script."
       },
       {
         "example": true,
         "who": "Release editor",
-        "t": "Live date, live offer",
-        "d": "On release day, the editor adds the confirmed date, price, and offer. A teaser does not invent them."
+        "t": "Date and offer",
+        "d": "On release day the editor adds the confirmed date and offer. A teaser does not invent them."
       },
       {
         "example": true,
         "who": "Feed buyer",
-        "t": "Vertical and square",
-        "d": "A feed buyer uses 9:16 for a story placement and 1:1 in the feed. Each size is its own job."
+        "t": "Tall and square",
+        "d": "A feed buyer uses a tall frame for a story placement and a square frame in the feed. Each size is its own job."
       },
       {
         "example": true,
-        "who": "Shop owner",
-        "t": "Confirmed date only",
-        "d": "A shop owner waits for a confirmed date before the clip says when the item arrives."
+        "who": "Export brand",
+        "t": "Another language",
+        "d": "An export brand cuts the same reveal in a second language for another market."
       },
       {
         "example": true,
-        "who": "Launch shop",
-        "t": "Start from the real item",
-        "d": "A launch shop waits for a clear photo of the final item. Words alone will not match the product."
+        "who": "Catalog seller",
+        "t": "Start from the link",
+        "d": "A catalog seller pastes the product link, checks the script and the voice, and keeps the finished-item photo as the source."
       },
       {
         "example": true,
         "who": "Small team",
         "t": "No shoot before launch",
-        "d": "A small team makes the reveal from the finished-item photo, with no creator booking before release day."
+        "d": "A small team makes the reveal from the finished-item photo, with an AI actor and no creator booking."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Present it as your ad",
-        "d": "A founder treats a person on screen as an AI performer and presents the clip as the shop's ad, not as a buyer review."
+        "t": "Presented as your ad",
+        "d": "A founder treats the person on screen as an AI actor and presents the clip as the shop's ad, not as a buyer review."
       }
     ]
   },
@@ -653,5 +660,81 @@
       "label": "AI Instagram ads"
     }
   ],
-  "cta_title": "Ready to Announce the Item?"
+  "cta_title": "Ready to Announce the Item?",
+  "definition": {
+    "title": "What Is a Product Launch Video?",
+    "paras": [
+      "A new product promo video is the reveal you post when the item is finished and the date is real.",
+      "Start from a photo or a product link. Add a script, an AI voice, captions, and an AI actor for the first look. Put the confirmed date and the offer in after you download, or let captions carry the name. The file has no watermark."
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "What you can add",
+      "h2": "Features for a Product Launch Video",
+      "lead": "The reveal can include a voice, a script, and an actor.",
+      "items": [
+        {
+          "t": "AI voice",
+          "d": "A voice can say the reveal line, including a date you have already confirmed."
+        },
+        {
+          "t": "Auto captions",
+          "d": "Captions can show the product name while the reveal plays."
+        },
+        {
+          "t": "AI script",
+          "d": "Ask for a launch script, then fix the date and the offer before you generate."
+        },
+        {
+          "t": "Actor library",
+          "d": "Choose an AI actor to reveal the item. The clip is your shop's ad, not a buyer review."
+        },
+        {
+          "t": "Link, batch, and API",
+          "d": "Paste the product link, make a batch of reveals, or send launches through the API."
+        },
+        {
+          "t": "Editor, music, and languages",
+          "d": "Trim in the built-in editor, add a track from the music library, and cut a second language."
+        }
+      ]
+    }
+  ],
+  "platforms": {
+    "h2": "Publish the Launch Clip to TikTok, Meta, and YouTube",
+    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before the job starts.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "label": "AI TikTok ads generator",
+        "d": "Publish the launch clip to TikTok in one step, in a tall frame.",
+        "href": "page:plat-tiktok"
+      },
+      {
+        "t": "AI Instagram ads",
+        "label": "AI Instagram ads",
+        "d": "Send a tall or square launch clip to Instagram.",
+        "href": "page:plat-instagram"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "label": "AI Facebook ad generator",
+        "d": "Send the same launch clip to Facebook in one step.",
+        "href": "page:plat-facebook"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "label": "YouTube Shorts ads",
+        "d": "Download a tall file for YouTube Shorts, or a wide file when the post needs it.",
+        "href": "page:plat-youtube-shorts"
+      },
+      {
+        "t": "AI ads and product photos by platform",
+        "label": "AI ads and product photos by platform",
+        "d": "Open the channel list when the next post is not one of these four.",
+        "href": "page:platforms"
+      }
+    ]
+  }
 }

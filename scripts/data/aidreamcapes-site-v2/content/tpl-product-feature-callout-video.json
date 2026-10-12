@@ -4,27 +4,27 @@
   "description": "Show one product detail in a focused callout video from a single photo. Choose 6, 10, 15 or 30 seconds for feeds, listings and product pages.",
   "h1": "Product Feature Callout Video for One Clear Detail",
   "eyebrow": "Feature callout video template",
-  "lead": "Keep one function in frame, then add the feature name after the file downloads.",
+  "lead": "Keep one function in frame, add a voice and captions if you want them, and post a clip shoppers can follow.",
   "secondary_keywords": [
     "feature callout ad",
     "product feature video",
     "single benefit product video",
     "ecommerce feature video"
   ],
-  "steps_h2": "Make a Product Feature Callout Video in 3 Steps",
-  "steps_lead": "One action, one function. The feature name and any measurement go on after download.",
+  "steps_h2": "How to Make a Product Feature Callout Video in 3 Simple Steps",
+  "steps_lead": "One moving part, then a script, a voice, and captions if you want them.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one sharp photo that shows the whole product and the moving part. Skip glare and tight crops."
+      "d": "Upload one sharp photo of the whole item, or paste a product page link. Keep the moving part visible."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the one action around that feature, then pick a size and a length from 6 to 30 seconds."
+      "d": "Name the one action. Add a script, a voice, and captions if you want them, then pick a size and length."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip and add the feature name or measurement in your editor. Check it against the real item."
+      "d": "Download the file, check it against the real item, and publish to TikTok, Instagram, or Facebook."
     }
   ],
   "maker": {
@@ -47,43 +47,47 @@
   "faq": [
     {
       "q": "What is a product feature callout video?",
-      "a": "A short clip built around one visible function, such as a pump, a lid, a hinge or a clasp. The name of that function is added after download."
+      "a": "A short clip about one moving part, such as a pump, a lid, a hinge, or a clasp. An AI actor can demonstrate it, with a script, a voice, and captions. You can still edit the feature name."
     },
     {
       "q": "How do I make a product feature callout video?",
-      "a": "Upload a photo that shows the whole item and the moving part, describe that one action, pick a size and length, then download."
+      "a": "Upload a photo or paste a product page link, describe that one action, pick a voice and a length, then download. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "How many features should one callout video cover?",
-      "a": "One action stays readable on a phone. A second feature belongs in another version, made from the same photo if you want."
+      "q": "Why use this instead of filming a creator?",
+      "a": "You can ship another version without booking a shoot or waiting on a creator's calendar. Review the file against the real product before you post."
     },
     {
       "q": "Which shops use a product feature callout video?",
-      "a": "Beauty, electronics and other shops that need a listing or a paid ad to show how one part works."
+      "a": "Beauty, electronics, home, and other shops that need a listing or a paid ad to show how one part works."
     },
     {
-      "q": "What product photo works for a feature callout?",
-      "a": "A sharp, evenly lit photo with the full product and the moving part visible. Glare, a tight crop or a hidden hinge makes the function hard to read."
+      "q": "Can a beginner make one?",
+      "a": "Yes. Pick a scene, upload a clear photo, and follow the three steps. You do not need an editing background to get a first file."
     },
     {
-      "q": "Which size and length should I pick?",
-      "a": "9:16 for TikTok and Reels, 1:1 for a feed or listing, 16:9 for a product page, plus 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds."
+      "q": "Which industries does this template fit?",
+      "a": "Ecommerce shops in beauty, home, food, fitness, and other consumer goods. The same photo can be cut again when the audience changes."
     },
     {
-      "q": "Can I add the feature name on the video here?",
-      "a": "Add the feature name, size or claim in your editor after download, and check it against the real product before you post."
+      "q": "Can I upload my own photo or start from a link?",
+      "a": "Yes. Upload your product photo, or paste a public product page link so the clip starts from that page's main image and product name."
     },
     {
-      "q": "Do I need a shoot to show the motion?",
-      "a": "Start from one still photo and describe the action. Review the result before you decide a separate shoot is needed."
+      "q": "Where can I publish it?",
+      "a": "Publish to TikTok, Instagram, or Facebook from the project, or download and post it yourself. Frames include 9:16, 1:1, 16:9, 4:3, and 3:4."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+      "q": "Do I need a paid plan?",
+      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see each job's credit cost first. A failed job returns its credits."
     },
     {
-      "q": "Can I post it as an ad?",
-      "a": "Yes. The download has no AIVideosUGC watermark. Any person in frame is an AI performer, not a customer review, and captions are added after download."
+      "q": "Can I use the video in ads?",
+      "a": "Yes. Downloads have no watermark, and you can use them in your own ads, pages, and posts. Anyone on camera is an AI performer, not a customer."
+    },
+    {
+      "q": "Why start from a scene?",
+      "a": "A scene gives you a setup for one feature so you are not inventing the shot from nothing. You still check the motion against the real item."
     }
   ],
   "visual": {
@@ -122,7 +126,7 @@
     },
     "picker": {
       "title": "Browse Product Scenes by Category",
-      "lead": "Pick a scene close to your product, then describe the one moving part. Add the feature name after download.",
+      "lead": "Pick a scene close to your product, then describe the one moving part. Add a voice and captions if you want them.",
       "chips": [
         {
           "id": "accessories",
@@ -541,59 +545,47 @@
     "titles": {
       "m3": {
         "h2": "Browse Product Scenes by Category",
-        "lead": "Pick a scene close to your product, then describe the one moving part. Add the feature name after download."
+        "lead": "Pick a scene close to your product, then describe the one moving part. Add a voice and captions if you want them."
       },
       "faq": {
-        "h2": "Product Feature Video Questions"
+        "h2": "Questions About a Product Feature Callout Video"
+      },
+      "m2": {
+        "h2": "How to Make a Product Feature Callout Video in 3 Simple Steps"
       }
     }
   },
   "cta_title": "Ready to Show One Function?",
-  "cta_lead": "Upload a photo that shows the moving part and see the credit cost before you start.",
+  "cta_lead": "Upload a product photo, pick a scene, and see the credit cost before you start.",
   "more_sections": [
     {
-      "eyebrow": "Build the next asset",
-      "h2": "Use the feature clip across your selling channels",
-      "lead": "Choose the next option after the product feature video is ready.",
+      "eyebrow": "In the same project",
+      "h2": "Features for a Feature Callout Video",
+      "lead": "Use these while you build the clip around one moving part.",
       "items": [
         {
-          "t": "Show the product in a demo",
-          "d": "Use product videos when a listing needs another view of the feature in use."
+          "t": "AI Voice",
+          "d": "Pick a voice for the line, or clone a voice you are allowed to use. The spoken line can name the product while the picture shows it."
         },
         {
-          "t": "Add an unboxing moment",
-          "d": "Use unboxing videos when the first reveal helps shoppers understand the product."
+          "t": "Auto Captions",
+          "d": "Captions can sit with the spoken line so the point is readable while the clip plays. You can edit the wording before you publish."
         },
         {
-          "t": "Turn a photo into motion",
-          "d": "Use image to video when one source photo needs a simple movement."
+          "t": "AI Script",
+          "d": "Describe the shot in a sentence. A script draft turns that into the line an actor says, and you can rewrite it before the render."
         },
         {
-          "t": "Compare a visible result",
-          "d": "Use before-and-after videos when the feature changes what shoppers can see."
-        }
-      ]
-    },
-    {
-      "eyebrow": "Prepare each version",
-      "h2": "Match the format to the next place you sell",
-      "lead": "Keep the product and its confirmed details consistent as you make each version.",
-      "items": [
-        {
-          "t": "Support the clip with a feed ad still",
-          "d": "Use social ad photos for a supporting image beside the feature clip."
+          "t": "Actor Library",
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can keep a branded persona for the next clip. The person is generated, not a customer."
         },
         {
-          "t": "Keep the product page clear",
-          "d": "Use [ecommerce main images](/ai-image-generation/ecommerce-main-image) when the listing needs a clean product view."
+          "t": "Editor, Music, and Languages",
+          "d": "Trim in the built-in editor, drop in a track from the music library, and cut the same spot again in another language."
         },
         {
-          "t": "Make another product cut",
-          "d": "Use [Shopify product photos](/platforms/shopify-product-photos) when a storefront needs a second product cut without another shoot."
-        },
-        {
-          "t": "Review before publishing",
-          "d": "Check [pricing](/pricing), the final file, caption and offer in your own editor before you post."
+          "t": "Batch, Publish, and API",
+          "d": "Render several versions from one photo, publish to TikTok, Instagram, or Facebook from the project, or send the job through the API. Each job spends [credits](page:pricing)."
         }
       ]
     }
@@ -601,14 +593,19 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
+    "reasons",
+    "features",
     "steps",
+    "trust",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Ways Shops Show One Product Feature",
-    "lead": "Each clip keeps one moving part in frame. Add the feature name after download.",
+    "h2": "Shops Switching to One-Feature Videos",
+    "lead": "Each card is how one type of shop shows a single moving part. These are examples, not customer quotes.",
     "items": [
       {
         "example": true,
@@ -681,5 +678,64 @@
     "tpl-box",
     "ind-beauty-skincare",
     "plat-shopify"
-  ]
+  ],
+  "definition": {
+    "title": "What Is a Product Feature Callout Video?",
+    "paras": [
+      "A product feature callout video is a short clip built around one moving part, such as a pump, a lid, a hinge, or a clasp. An AI actor can demonstrate it, with a script, a voice, and captions.",
+      "Start from your product photo or a public product page link. Pick the frame and the length, then download a file you can post on a listing or in a paid ad."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Feature Callout Video",
+    "lead": "For a shop that needs one function to be obvious on a phone.",
+    "items": [
+      {
+        "t": "One Part Stays Readable",
+        "d": "A single pump, zipper, or clasp is easier to follow than a pile of benefits squeezed into one clip."
+      },
+      {
+        "t": "Your Photo or a Product Link",
+        "d": "The item on screen starts from the photo you upload, or from the main image on a [product page link](page:url-to-video)."
+      },
+      {
+        "t": "An Actor Can Point to It",
+        "d": "Choose an AI performer to hold the product and draw attention to the part that matters. The person is generated, not a customer."
+      },
+      {
+        "t": "Voice, Script, and Captions",
+        "d": "A draft script, a spoken line, and on-screen captions can ship with the clip. You can still edit the line."
+      },
+      {
+        "t": "Another Version, Same Photo",
+        "d": "Change the actor, the language, or the opening and make a second clip without booking a shoot."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "What You Can Count On",
+    "lead": "The numbers below are the plan and the credit cost, shown before a job starts.",
+    "items": [
+      {
+        "t": "Credit Cost First",
+        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm."
+      },
+      {
+        "t": "No Watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in your own ads, on product pages, and in social posts."
+      },
+      {
+        "t": "Failed Jobs Return Credits",
+        "d": "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance."
+      },
+      {
+        "t": "Paid Plans",
+        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos and videos share one balance."
+      },
+      {
+        "t": "AI People, Not Reviews",
+        "d": "Anyone on camera is an AI performer. The clip is a product demo, not a quote from a buyer."
+      }
+    ]
+  }
 }

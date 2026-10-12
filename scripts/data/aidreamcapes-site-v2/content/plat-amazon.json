@@ -4,7 +4,7 @@
   "description": "Create Amazon product photos for a clean main image, detail views, and lifestyle shots from one upload. See the credit cost before you make each file.",
   "h1": "Amazon Product Photos for the Main Image and the Gallery",
   "eyebrow": "Amazon listings",
-  "lead": "Build a plain main image, a detail, and an in-use view from one product photo. See the credit cost before each file, then download with no watermark.",
+  "lead": "Build a plain main image, a detail, and an in-use view from one product photo. Run a single file, a batch, or the API, see the credit cost first, and download with no watermark.",
   "card": "Amazon listing photos from one product photo: main, detail and in-use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -27,7 +27,7 @@
     },
     {
       "q": "Can I process a whole catalog in one job?",
-      "a": "No. Each file is its own job from one upload, and the credit cost shows before that job."
+      "a": "Yes. A batch applies the same backdrop and crop across many products. Credits are charged per file, and the cost shows before each job. A failed job returns those credits."
     },
     {
       "q": "Which images should follow the main image?",
@@ -44,22 +44,26 @@
     {
       "q": "Will you upload the photos to Amazon for me?",
       "a": "No. Download the file and add it in Seller Central yourself. We do not connect a seller account, and we do not send the gallery for you."
+    },
+    {
+      "q": "Can the API prepare Amazon images?",
+      "a": "Yes. The API can remove a backdrop and apply the same size and crop your listings use. You still place the files in Seller Central yourself."
     }
   ],
   "templates_lead": "Choose a listing image purpose: a clean main view, a detail, or a product-use scene.",
   "cta_lead": "Build a listing photo set around the main view, useful details, and product use.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one clear picture of the whole item. Every gallery file starts from that single upload."
+      "t": "Upload and clean up",
+      "d": "Upload the product photo, remove the old backdrop, and set pure white for the main image."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Choose a plain main, a tight detail, or an in-use scene. The credit cost shows before the file is made."
+      "t": "Style the gallery frames",
+      "d": "For later frames, stage the item in use or on a generated model, and match the square size."
     },
     {
-      "t": "Download and Post",
-      "d": "Save the square file with no watermark. Add callouts yourself, and only on images after the main."
+      "t": "Batch, then export",
+      "d": "Apply those choices in a batch or through the API, then download and add the files in Seller Central."
     }
   ],
   "visual": {
@@ -92,16 +96,16 @@
       ],
       "items": [
         {
-          "t": "Upload Your Product Photo",
-          "d": "Add one clear picture of the whole item. Every gallery file starts from that single upload."
+          "t": "Upload and clean up",
+          "d": "Upload the product photo, remove the old backdrop, and set pure white for the main image."
         },
         {
-          "t": "Describe Your Scene",
-          "d": "Choose a plain main, a tight detail, or an in-use scene. The credit cost shows before the file is made."
+          "t": "Style the gallery frames",
+          "d": "For later frames, stage the item in use or on a generated model, and match the square size."
         },
         {
-          "t": "Download and Post",
-          "d": "Save the square file with no watermark. Add callouts yourself, and only on images after the main."
+          "t": "Batch, then export",
+          "d": "Apply those choices in a batch or through the API, then download and add the files in Seller Central."
         }
       ]
     },
@@ -111,11 +115,11 @@
       }
     }
   },
-  "benefits_h2": "Amazon main image white background, plus the views after it",
+  "benefits_h2": "How AIVideosUGC helps you meet Amazon image rules",
   "benefits": [
     {
       "t": "A plain main image",
-      "d": "Put the whole item on a pure white backdrop so the search grid stays consistent. Do not add badges or props on that frame.",
+      "d": "Put the whole item on a pure white backdrop so the search grid stays even. Badges and props stay off this frame.",
       "img": "n:coffee-pack",
       "alt": "Kraft coffee bag with a blank label and beans on a light studio background."
     },
@@ -132,31 +136,58 @@
       "alt": "Woven picnic basket opened on a blanket with simple foods arranged beside it."
     }
   ],
-  "steps_h2": "Build Amazon listing images in 3 steps",
-  "steps_lead": "One upload. One listing view per job. You place the files in the gallery.",
+  "steps_h2": "How to make Amazon product photos in 3 steps",
+  "steps_lead": "Clean the main image, style the gallery, then export a batch.",
   "more_sections": [
     {
-      "eyebrow": "How the set is made",
-      "h2": "How Amazon lifestyle product photos fit the gallery",
-      "lead": "An in-use frame shows scale. It belongs later in the gallery, not in the main image slot.",
+      "eyebrow": "Main image",
+      "h2": "A white backdrop for every product",
+      "lead": "The main image sits on a plain field. Confirm the live rule in Seller Central before you publish.",
       "items": [
         {
-          "t": "Lifestyle stays out of the main slot",
-          "d": "Use the in-use scene for size and context. Leave the main image free of props, badges and slogans."
+          "t": "Remove the old backdrop",
+          "d": "Start from a regular photo. The item is cut out so the main frame is not a busy room."
         },
         {
-          "t": "Match the crop across products",
-          "d": "Use a similar scale for each item so the search grid does not jump from one product to the next."
+          "t": "Set the field to pure white",
+          "d": "The main image stays free of badges, slogans and props. Callouts belong on later frames."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Catalog",
+      "h2": "The same rules across the catalog",
+      "lead": "Apply one backdrop and one crop to many products.",
+      "items": [
+        {
+          "t": "Run a batch",
+          "d": "Send a group of products through the same main-image choices. Credits are charged per file, and a failed job returns them."
         },
         {
-          "t": "One product at a time",
-          "d": "Each product is its own file. Make the next one with the same crop choices."
+          "t": "Or use the API",
+          "d": "Connect the catalog you already have and apply the same backdrop and size without rebuilding a pipeline."
+        }
+      ]
+    },
+    {
+      "eyebrow": "One look",
+      "h2": "One look across the listings",
+      "lead": "The search grid should not jump from product to product.",
+      "items": [
+        {
+          "t": "Match the crop",
+          "d": "Keep a similar scale and padding so the search grid reads as one catalog."
+        },
+        {
+          "t": "On-model frames stay secondary",
+          "d": "A generated model can show fit later in the gallery. That frame is not the pure white main image."
         }
       ]
     }
   ],
   "blockOrder": [
     "hero",
+    "trust",
     "benefits",
     "features",
     "steps",
@@ -165,22 +196,30 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Give the listing a plain main image, then answer the next question with a detail or an in-use view.",
+  "benefits_lead": "A plain main image, then a detail and an in-use view. The same choices can run as a batch.",
   "reasons": {
-    "h2": "Build Amazon secondary images here, or book a studio",
-    "lead": "A studio day and a file made here can fill the same gallery. The difference is whether you book a studio.",
+    "h2": "Build the pipeline yourself, or make the files here",
+    "lead": "You can stand up your own image stack, or start from the photo you already have.",
     "items": [
       {
-        "t": "Start from a photo you have",
-        "d": "The next frame uses the picture already on your computer. You do not hold the listing for a shoot date."
+        "t": "A file without a build cycle",
+        "d": "On your own, a generator waits on engineering before the first image. Here, you upload a photo and make the listing frame."
       },
       {
-        "t": "See the cost before the file",
-        "d": "A still is 24 credits. A listing video is a separate file at 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. If it fails, those credits come back."
+        "t": "No engineering bill",
+        "d": "On your own, you hire people and host models. Here, a still is 24 credits and a video is 24, 40, 60 or 120 by length."
       },
       {
-        "t": "You place every file",
-        "d": "Download it with no watermark, then add it in Seller Central yourself. Nothing is sent to Amazon for you."
+        "t": "Model care included",
+        "d": "On your own, someone retrains and redeploys. Here, model updates are included, and you keep making files."
+      },
+      {
+        "t": "Room for a big catalog",
+        "d": "On your own, a seasonal push needs a queue you build. Here, batch and the API take the same backdrop and crop across products."
+      },
+      {
+        "t": "One brand look",
+        "d": "On your own, padding rules live in custom code. Here, the crop and backdrop you set apply to each new file."
       }
     ]
   },
@@ -268,7 +307,7 @@
       }
     ]
   },
-  "related_h2": "Tools for the main image and the gallery",
+  "related_h2": "Related tools for an Amazon listing",
   "related_lead": "Open the tool or template for the frame you need next.",
   "relatedLinks": [
     "white-background",
@@ -277,5 +316,27 @@
     "tpl-angle",
     "tpl-detail",
     "tpl-pack"
-  ]
+  ],
+  "trust": {
+    "h2": "Built for a full catalog",
+    "lead": "The same choices can cover many products. This is not a promise about speed or sales.",
+    "items": [
+      {
+        "t": "Move through the catalog",
+        "d": "Run a batch so the next product does not wait on a separate shoot. Each file still shows its credit cost first."
+      },
+      {
+        "t": "Keep the product recognizable",
+        "d": "The item in the file comes from your photo. We do not promise a sales lift from the picture."
+      },
+      {
+        "t": "One setup, many files",
+        "d": "Use the same backdrop, crop and padding across the catalog, including through the API."
+      },
+      {
+        "t": "You check, then you upload",
+        "d": "Download with no watermark and place the file in Seller Central yourself. Nothing is sent to Amazon for you."
+      }
+    ]
+  }
 }

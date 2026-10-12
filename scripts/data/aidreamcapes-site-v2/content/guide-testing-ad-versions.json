@@ -4,7 +4,7 @@
   "description": "Test ad creatives on a small budget without guessing: change one thing at a time, make a few versions from one photo, run them together, and read the results.",
   "h1": "How to Test Ad Creatives Without Guessing",
   "eyebrow": "Ad testing guide",
-  "lead": "To test ad creatives, change one thing at a time, make a few versions from the same photo, and run them together before you spend more.",
+  "lead": "To test ad creatives, change one thing at a time, make a few versions from the same photo or a product link, and run them together before you spend more. A version can include a script, an AI presenter, and a voiceover.",
   "secondary_keywords": [
     "ad creative testing for small business",
     "compare ad versions",
@@ -15,6 +15,86 @@
   "summary": "Change one thing, run a few versions on the same audience and budget, and read the result only after each version has actually played.",
   "sections": [
     {
+      "h2": "What is an AI video ad you can test?",
+      "paras": [
+        "An AI video ad is a short paid clip made from your product: words for the opening, a presenter, a spoken voice, and the cut, starting from a photo, a short description, or the product page link.",
+        "The test rules do not change. One difference between files, the same audience and budget, and a result you read only after each file has actually played."
+      ]
+    },
+    {
+      "h2": "How do I compare ad versions from one product?",
+      "paras": [
+        "Keep the photo, the length, and the shape the same, and change only how the clip starts.",
+        "For a plain round wall clock, one version can open on the face coming into focus at dawn, another on a hand hanging it on kitchen tile, and a third on the clock leaving its box. Photo ads work the same way. A mug can sit on a counter, on a desk, or as a wrapped gift, with the same mug and the same line added later. When the single change is the presenter or the tone, ask for that and leave the product still. Build the still versions with the [AI ad image generator](page:social-ad-photos)."
+      ],
+      "img": "n:guide:b2f6-guide-testing-ad-versions-sec02-r1",
+      "alt": "Adult woman with a short silver pixie holds a plain round wall clock beside simple kitchen setups."
+    },
+    {
+      "h2": "Reasons to make the versions here",
+      "paras": [
+        "Starts from your product. The opening is written from the item you upload or the page you paste, so the test is about that product.",
+        "Sized for the placement. A file can be 9:16, 1:1, 16:9, 4:3, or 3:4, which covers a TikTok slot, a Meta slot, and a YouTube slot.",
+        "More than one style. Ask for another presenter, another opening, or another tone from the same product, and test that single change."
+      ]
+    },
+    {
+      "h2": "How to create video ad versions in 3 steps",
+      "paras": [
+        "You do not need three shoots. Split test video ads by making each opening as its own job from the same product.",
+        "Paste the product link or upload one photo, and name the single change this version should carry.",
+        "AIVideosUGC writes a script, pairs an AI presenter and a voiceover, and renders that version.",
+        "Download 9:16, 1:1, or 16:9 and publish the file to TikTok, Meta, or YouTube.",
+        "Each clip is its own job: 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost is on screen before you start, and a failed job returns the credits. Keep the caption, the on-screen line, and the music the same on every file. If one version gets a different headline, you are no longer testing the opening. [AI image to video](page:image-to-video) makes another clip from that photo. [URL to video](page:url-to-video) makes one from the product page link. Pick the presenter on [AI actors](page:ai-actors)."
+      ],
+      "img": "n:guide:b2f6-guide-testing-ad-versions-sec03-r1",
+      "alt": "Hands hold the same plain round wall clock up as the source photo."
+    },
+    {
+      "h2": "Benefits of testing more than one ad",
+      "paras": [
+        "The next version is another job, not another booking. You send the photo or the link again and change one thing.",
+        "The price is the credit count on screen. A clip is 24, 40, 60, or 120 credits by length. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+        "One product can feed several tests. Change the opening, the presenter, the script, or the frame, and keep the product itself still.",
+        "When a file gets tired, swap the presenter, the opening, or the frame before you put more budget on it.",
+        "You keep the choices. You set the script, the tone, the presenter, and the frame. The item in the photo stays the item you sell.",
+        "The download is yours to use commercially and has no watermark, so the winning file can run as a paid ad."
+      ]
+    },
+    {
+      "h2": "More tools for the next version",
+      "paras": [
+        "Move the same product when the question changes.",
+        "[Video ads](page:video-ads) for a creator-style clip. [Image to video](page:image-to-video) when the still already exists. [URL to video](page:url-to-video) when you start from the product page. [AI actors](page:ai-actors) when the test is the presenter. [Ad images](page:social-ad-photos) when the version is a still. [Templates](page:templates) when you want a layout already in use."
+      ]
+    },
+    {
+      "h2": "AIVideosUGC or a fresh shoot",
+      "paras": [
+        "A version here is one job from a photo or a link. A shoot waits on a person, a place, and a date.",
+        "You spend credits you can see before the job, 24, 40, 60, or 120 for a clip. A shoot bills the day, the person on camera, and the edit that follows.",
+        "Each extra opening is another job, so a small test does not need a second shoot.",
+        "You set the script, the tone, and the presenter. A filmed spot follows someone else's read of the brief.",
+        "The file is yours to use commercially. A creator clip often needs a separate note about where it may run.",
+        "Batch can repeat the same test setup across products, and the API can start those jobs from your catalog."
+      ]
+    },
+    {
+      "h2": "How shops set up one test",
+      "paras": [
+        "Skincare shop. Example: three openings of the same bottle, and only the first second changes.",
+        "Home brand. Example: one still becomes a clip, and the room stays the room in the photo.",
+        "Gadget shop. Example: a hand holds the product in one version and sets it on a desk in the next.",
+        "Apparel shop. Example: the presenter changes, and the garment color stays the color you photographed.",
+        "Food brand. Example: the voiceover language changes for a second market, and the dish stays the same.",
+        "Supplement shop. Example: the script names only what is on the label, and leaves health promises off.",
+        "Beauty brand. Example: the presenter is an AI actor from the library, not a customer quote.",
+        "Kitchen brand. Example: one photo stands in for a set build, and the next opening is another job.",
+        "Pet shop. Example: the product stays in frame while the opening line changes.",
+        "Catalog seller. Example: the same brief runs across several products in a batch, then the API repeats it for new arrivals."
+      ]
+    },
+    {
       "h2": "How do I keep ad creative testing fair for a small business?",
       "paras": [
         "Change only one thing between versions. If the opening, the setting, and the offer all move at once, you spend money and learn nothing.",
@@ -22,24 +102,6 @@
       ],
       "img": "n:guide:b2f6-guide-testing-ad-versions-sec01-r1",
       "alt": "Adult hands place the same plain round wall clock beside blank color cards."
-    },
-    {
-      "h2": "How do I compare ad versions from one product?",
-      "paras": [
-        "Keep the photo, the length, and the shape the same, and change only how the clip starts.",
-        "For a plain round wall clock, one version can open on the face coming into focus at dawn, another on a hand hanging it on kitchen tile, and a third on the clock leaving its box. Photo ads work the same way. A mug can sit on a counter, on a desk, or as a wrapped gift, with the same mug and the same line added later. Build the still versions with the [AI ad image generator](page:social-ad-photos)."
-      ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec02-r1",
-      "alt": "Adult woman with a short silver pixie holds a plain round wall clock beside simple kitchen setups."
-    },
-    {
-      "h2": "How do I split test video ads without three shoots?",
-      "paras": [
-        "You do not need three shoots. Each opening is another job from the same photo.",
-        "Each clip is its own job: 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost is on screen before you start, and a failed job returns the credits. Name the files so you can tell them apart, such as clock-dawn-vertical. Then add the same caption, the same on-screen line, and the same music to every file. If one version gets a different headline, you are no longer testing the opening. [AI image to video](page:image-to-video) makes another clip from that photo. [URL to video](page:url-to-video) makes one from the product page link."
-      ],
-      "img": "n:guide:b2f6-guide-testing-ad-versions-sec03-r1",
-      "alt": "Hands hold the same plain round wall clock up as the source photo."
     },
     {
       "h2": "How should the versions run side by side?",
@@ -72,17 +134,17 @@
       "h2": "The short version",
       "paras": [
         "One difference, a few versions, the same audience and budget, and no edits while they run.",
-        "Judge after several days, write down the result, and let the next round change only the next thing."
+        "A version can include a script, a presenter, and a voiceover. Judge after several days, write down the result, and let the next round change only the next thing."
       ]
     }
   ],
   "related": [
-    "guide-first-tiktok-video-ad",
-    "guide-ad-sizes-by-platform",
-    "blog-ai-ugc-video-ads-guide",
-    "blog-ai-video-review-checklist",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips"
+    "video-ads",
+    "social-ad-photos",
+    "ai-actors",
+    "url-to-video",
+    "image-to-video",
+    "guide-first-tiktok-video-ad"
   ],
   "faq": [
     {
@@ -108,16 +170,40 @@
     {
       "q": "How many credits does a test round use?",
       "a": "Each clip is its own job: 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before every job, and a failed job returns the credits."
+    },
+    {
+      "q": "What is inside a generated version?",
+      "a": "A script, an AI presenter, a voiceover, and the edit, made from a photo, a short description, or a product link. Captions can be in the file when you ask for them."
+    },
+    {
+      "q": "Can I publish a version to TikTok or Meta?",
+      "a": "Yes. Export 9:16, 1:1, or 16:9 and publish it to TikTok, Meta, or YouTube. Frames also include 4:3 and 3:4."
+    },
+    {
+      "q": "Is there a free generation plan?",
+      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A download has no watermark."
+    },
+    {
+      "q": "Can I run these files as paid ads?",
+      "a": "Yes. The file is yours to use commercially and has no watermark."
+    },
+    {
+      "q": "Can I make versions for many products at once?",
+      "a": "Yes. Batch repeats one setup across products, and the API can start that work from your catalog. Each clip still shows its credit cost before it runs."
+    },
+    {
+      "q": "Do I have to say the presenter is generated?",
+      "a": "If the line could be read as a real customer, say the presenter is generated. Check the current rules on TikTok or Meta before you scale spend."
     }
   ],
   "cta_title": "Test one change at a time",
   "cta_lead": "Make a few versions from one product photo, keep everything else the same, and use your ad account to see which opening people respond to.",
   "relatedLinks": [
-    "guide-first-tiktok-video-ad",
-    "guide-ad-sizes-by-platform",
-    "blog-ai-ugc-video-ads-guide",
-    "blog-ai-video-review-checklist",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips"
+    "video-ads",
+    "social-ad-photos",
+    "ai-actors",
+    "url-to-video",
+    "image-to-video",
+    "guide-first-tiktok-video-ad"
   ]
 }

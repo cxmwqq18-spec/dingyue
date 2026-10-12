@@ -4,15 +4,15 @@
   "description": "Show every item in your kit in one square bundle photo. Use it on Amazon, Shopify, gift pages, social ads and posts without another styled shoot.",
   "h1": "Product Bundle Photos That Show Every Shipped Piece",
   "eyebrow": "Product photo template",
-  "lead": "Open a bundle scene, add one photo of the complete kit, and download a square image shoppers can count.",
+  "lead": "Open a bundle scene, add one photo of the complete kit, and download a square image you can also turn into a spoken kit video.",
   "secondary_keywords": [
     "what's in the box photo",
     "skincare set product photo",
     "gift set product photography",
     "kit and bundle listing images"
   ],
-  "steps_h2": "Make Kit and Bundle Listing Images in 3 Steps",
-  "steps_lead": "Every piece in one photo, one arrangement, then a square file you can price in your editor.",
+  "steps_h2": "How to Make a Bundle Photo in 3 Simple Steps",
+  "steps_lead": "Every piece in one photo, then a square file you can price, or a kit video with a script.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -20,11 +20,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name an arrangement that keeps each piece visible, on a clean or light backdrop if that matches the listing. A long description is optional."
+      "d": "Name an arrangement that keeps each piece visible. Add a script and an AI voice if you make a kit video."
     },
     {
       "t": "Download and Post",
-      "d": "Download the square image and compare each object with your written contents list. Add the current price in your editor before posting."
+      "d": "Download the square image and compare each object with your contents list. Add the price after download."
     }
   ],
   "maker": {
@@ -47,43 +47,47 @@
   "faq": [
     {
       "q": "What is a product bundle photo template?",
-      "a": "It is a ready-made set scene. Add one photo of the kit you ship and download a square image that shows those pieces together."
+      "a": "A ready scene for the kit you ship. Add one photo of every piece and download a square image. You can also add an AI actor, a voiceover, and a script for a kit video."
     },
     {
-      "q": "Do I have to write a long description?",
-      "a": "No. Open this bundle template and upload the kit photo. Add one short line about the arrangement only if you want to."
+      "q": "How do I make the bundle photo?",
+      "a": "Upload one photo of the full kit, name an arrangement that keeps each piece visible, and download the square image. A long description is optional."
+    },
+    {
+      "q": "Why use this instead of a styled shoot?",
+      "a": "The scene comes from the kit photo you already have, so you skip lights, a camera, and a new set for every gift drop."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Shops and gift brands that need a contents view for a listing, a bundle page or an ad, and agencies making that image for them."
+      "a": "Shops, gift brands, and agencies that need a contents view for a listing, a bundle page, or an ad."
+    },
+    {
+      "q": "Can I do this on the first try?",
+      "a": "Yes. If every piece is already in the photo, follow the three steps. Captions, a track from the music library, and an AI voice can be set in the built-in editor when you also make a video."
     },
     {
       "q": "Can one photo show every item?",
       "a": "Yes, when each piece is visible and the full set fits in the frame. The image should not add a piece that was not in the photo."
     },
     {
-      "q": "Can I put the price on the photo?",
-      "a": "Add the current price, offer or contents line in your editor after download. The generator does not write that live text for you."
+      "q": "Can I upload my own photos and clips?",
+      "a": "Yes. Use a JPG, PNG, or WebP of the complete kit, or a short clip you have rights to. Keep the box and insert in frame when they ship."
     },
     {
-      "q": "Can the bundle sit on a white background?",
-      "a": "Yes. Choose a clean scene when a white or light backdrop matches the listing."
-    },
-    {
-      "q": "Do I need props or a second shoot?",
-      "a": "No. The scene is generated from the kit photo you upload. You are not booking a styled shoot for each gift set."
+      "q": "Where can I publish the file?",
+      "a": "The photo is square for a gallery. A video of the same kit can be 9:16, 1:1, 16:9, 4:3, or 3:4. Publish it to TikTok or Meta, or to YouTube, in one step."
     },
     {
       "q": "What does a bundle photo cost?",
-      "a": "Each product photo costs 24 credits. The charge is shown before the job starts, and a failed job returns those credits."
+      "a": "Each product photo costs 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month with 200 credits. A failed job returns its credits."
     },
     {
       "q": "Can I use the image in paid ads?",
-      "a": "Yes. Downloads have no watermark and can run in your own ads, pages and posts. You remain responsible for the contents and any claims."
+      "a": "Yes. Downloads have no watermark and can run in your own ads, pages, and posts. You remain responsible for the contents and any claims."
     },
     {
-      "q": "Can shoppers count every piece?",
-      "a": "Arrange the full kit so each piece is visible, then compare the download with your written contents list before you post it."
+      "q": "Can I start from a product link or a batch?",
+      "a": "Yes. Paste the kit's product link for a script and a cloned voice, or send several kits through the AIVideosUGC API. Add the current price in your editor after download. Another language can reuse the same photo."
     }
   ],
   "visual": {
@@ -545,7 +549,7 @@
         "lead": "Open a card for a short video of your product. The square bundle photo starts in the upload box: one photo of the full kit."
       },
       "faq": {
-        "h2": "Questions About Product Bundle Photos"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
@@ -559,68 +563,68 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Gift Set Product Photography for Kits You Already Pack",
-    "lead": "Each card is a kit the shop already packs, then photographs.",
+    "h2": "Shops Are Moving to AI Video Ads",
+    "lead": "Each card is one way a shop shows the kit it already packs, then makes an ad around that photo. People on screen are AI performers.",
     "items": [
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Starter kit",
-        "d": "A skincare shop lays out cleanser, serum and cream, then counts them against the contents list."
+        "t": "Every piece stays in frame",
+        "d": "A skincare shop lays out cleanser, serum, and cream, then counts them against the contents list."
       },
       {
         "example": true,
         "who": "Gift shop",
-        "t": "Holiday set",
-        "d": "A gift shop shows the box with every insert visible, and adds the price in an editor before the seasonal post."
+        "t": "A still and a video together",
+        "d": "A gift shop makes the square kit photo and a short unboxing video in one place, then adds the price after download."
       },
       {
         "example": true,
         "who": "Hair shop",
-        "t": "Refill pack",
-        "d": "A hair shop lays out shampoo, a mask and a refill pouch so each piece can be counted."
+        "t": "The set held up",
+        "d": "A hair shop uploads the refill photo, then makes a clip of the pouch held up so each piece stays visible."
       },
       {
         "example": true,
         "who": "Coffee shop",
-        "t": "Brew kit",
-        "d": "A coffee shop frames beans, a filter and a mug from a photo that already included all three."
+        "t": "AI actors and the editor",
+        "d": "A coffee shop picks an AI actor beside the full kit, then trims that clip in the built-in editor."
       },
       {
         "example": true,
         "who": "Baby shop",
-        "t": "Care set",
-        "d": "A baby shop shows three care items plus the carton, and does not add an accessory that was not in the photo."
+        "t": "More than one language",
+        "d": "A baby shop shows the same three care items with an AI voice in the languages its shoppers use, and does not add an extra piece."
       },
       {
         "example": true,
         "who": "Tool shop",
-        "t": "Bit set",
-        "d": "A tool shop opens the case so every bit is visible, then uses that photo as the second image in the gallery."
+        "t": "Quick, on a paid plan",
+        "d": "A tool shop opens the case so every bit is visible. Starter is $24.50 a month, and each photo is 24 credits."
       },
       {
         "example": true,
         "who": "Candle shop",
-        "t": "Trio",
-        "d": "A candle shop shows three candles and the box lid in one clean scene."
+        "t": "An AI presenter",
+        "d": "A candle shop pairs the three candles with an AI presenter. That person is the brand's ad, not a buyer."
       },
       {
         "example": true,
         "who": "Stationery shop",
-        "t": "Desk kit",
-        "d": "A stationery shop arranges a notebook, a pen and clips so the count matches the listing."
+        "t": "A digital double from photos",
+        "d": "A stationery shop uploads the notebook, pen, and clips and skips lights, a camera, and a styled set."
       },
       {
         "example": true,
         "who": "Spice shop",
-        "t": "Rack set",
-        "d": "A spice shop shows the rack and the jars that ship with it, all from the source photo."
+        "t": "Link, script, and voice",
+        "d": "A spice shop pastes its product link. AIVideosUGC drafts a script, chooses an AI actor, and adds a cloned voice while the jars stay the ones in the photo."
       },
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Travel set",
-        "d": "A beauty shop photographs the minis in their pouch and posts that square image on a gift page."
+        "t": "Chat for the gift clip",
+        "d": "A beauty shop describes the mini pouch in chat. The AI agent returns a script, visuals, and a video to check before the gift page goes up."
       }
     ]
   },
@@ -652,6 +656,6 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Start a Bundle Photo from the Full Kit",
-  "cta_lead": "Upload one photo of every piece you ship and see the credit cost before you start."
+  "cta_title": "Ready to Create Your First Kit Photo?",
+  "cta_lead": "Upload one photo of every piece you ship. Add a script or an AI voice for the kit video, and see the credit cost first."
 }

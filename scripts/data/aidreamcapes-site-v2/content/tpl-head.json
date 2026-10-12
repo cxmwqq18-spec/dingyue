@@ -4,7 +4,7 @@
   "description": "Make matching team headshots in one shared light, crop and backdrop, each from a teammate's own photo. AI portraits for About and team pages.",
   "h1": "AI Team Headshots That Match Across the Page",
   "eyebrow": "Team photo template",
-  "lead": "A team page looks unfinished when every portrait has a different crop and light. Upload each approved photo and get matching AI team headshots.",
+  "lead": "A team page looks unfinished when every portrait has a different crop and light. Upload the approved photos in a batch and get matching AI team headshots.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -22,7 +22,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download each portrait for the team page, deck or profile. Add names and roles as text beside the portraits, not inside them."
+      "d": "Download the set for the page or a deck. Keep names in text beside each portrait."
     }
   ],
   "maker": {
@@ -45,16 +45,20 @@
   },
   "faq": [
     {
+      "q": "What is an AI team headshot?",
+      "a": "A square portrait from an approved photo, with a backdrop, crop, and light you can reuse for every teammate. Each person keeps their own features. It is not an official identity document."
+    },
+    {
       "q": "What should each teammate upload?",
-      "a": "A recent face-and-shoulders photo with even light, and no hat, sunglasses or hand covering the face. Use a photo that person has approved for the company to upload."
+      "a": "A recent face-and-shoulders photo with even light, and no hat, sunglasses, or hand covering the face. Use a photo that person has approved for the company to upload."
     },
     {
       "q": "How can the team page feel consistent?",
-      "a": "Share one backdrop, one crop, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it."
+      "a": "Share one backdrop, one crop, and one light across every portrait, while each person keeps their own features. Write that setup once and reuse it, including as a batch."
     },
     {
       "q": "Can I put names inside the headshot?",
-      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new generation."
+      "a": "Add names and job titles as text beside each image. Keeping them out of the portrait makes a role change a text edit, not a new generation. A caption belongs on a short intro clip, not inside the still."
     },
     {
       "q": "Will this match a specific person exactly?",
@@ -62,7 +66,7 @@
     },
     {
       "q": "What does a team headshot cost?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
+      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages, and posts. Plan sizes are listed on [AIVideosUGC pricing](page:pricing)."
     },
     {
       "q": "Do I need permission from each teammate?",
@@ -74,7 +78,15 @@
     },
     {
       "q": "Can I use the portraits in a pitch deck?",
-      "a": "Yes. The square file can sit on an About page, a profile or a slide. Keep contact details as text next to the image."
+      "a": "Yes. The square file can sit on an About page, a profile, or a slide. Keep contact details as text next to the image."
+    },
+    {
+      "q": "Can a short intro have a voice, captions, and music?",
+      "a": "Yes. Keep the portraits as stills, and add an AI voice, captions, and a music bed on a short intro clip beside them. You can post that clip to TikTok or Meta, or download it. The portrait is not a customer quote."
+    },
+    {
+      "q": "Can I run the team through the API?",
+      "a": "Yes. Send approved photos through the API when a directory needs the same crop. Each photo still needs that person's permission, and each job shows its credit cost first."
     }
   ],
   "cta_lead": "Upload an approved photo for each person. You see the credit cost before the job starts.",
@@ -108,8 +120,8 @@
       ]
     },
     "picker": {
-      "title": "Short Video Scenes, Not Headshots",
-      "lead": "These cards are vertical video ads. They do not turn a teammate photo into a portrait. For the square headshot, use the upload at the top.",
+      "title": "Browse Templates by Category",
+      "lead": "Open a scene to turn the same photo into a short video ad. For a square team headshot, use the upload above.",
       "chips": [
         {
           "id": "accessories",
@@ -531,18 +543,18 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About AI Team Headshots"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
-        "h2": "Short Video Scenes, Not Headshots",
-        "lead": "These cards are vertical video ads. They do not turn a teammate photo into a portrait. For the square headshot, use the upload at the top."
+        "h2": "Browse Templates by Category",
+        "lead": "Open a scene to turn the same photo into a short video ad. For a square team headshot, use the upload above."
       },
       "m2": {
-        "h2": "Make Matching Team Headshots in 3 Steps"
+        "h2": "How to Make Team Headshots in 3 Simple Steps"
       }
     }
   },
-  "steps_h2": "Make Matching Team Headshots in 3 Steps",
+  "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
   "steps_lead": "Upload each approved photo, reuse one backdrop, then download a matching set.",
   "relatedLinks": [
     {
@@ -571,7 +583,7 @@
     }
   ],
   "reviews": {
-    "h2": "Professional Headshots for Small Business",
+    "h2": "How Small Teams Use Matching Headshots",
     "lead": "Example setups for a small team that wants one portrait style.",
     "items": [
       {
@@ -607,8 +619,8 @@
       {
         "example": true,
         "who": "Small office",
-        "t": "Profile, not a second shoot",
-        "d": "Example: the office reuses the square file on a profile page and keeps the phone number in the page text."
+        "t": "The set in one batch",
+        "d": "Example: the office uploads the approved photos together and gets one shared crop back for the team page."
       },
       {
         "example": true,
@@ -619,8 +631,8 @@
       {
         "example": true,
         "who": "Recruiter",
-        "t": "Jobs page row",
-        "d": "Example: the jobs page uses the same crop for every portrait, and the role names stay as editable text."
+        "t": "A short intro beside the row",
+        "d": "Example: the jobs page keeps the portraits, and a short clip with a voice and captions introduces the team."
       },
       {
         "example": true,
@@ -642,10 +654,103 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "reviews",
+    "reasons",
+    "features",
     "steps",
     "related",
     "faq",
     "cta"
+  ],
+  "definition": {
+    "title": "What Is an AI Team Headshot?",
+    "paras": [
+      "An AI team headshot is a square portrait that follows an approved photo of that person, with one shared backdrop, crop, and light.",
+      "Names and roles stay as text beside the image. A short intro clip next to the row can carry a voice, captions, and a music bed. The portrait is not an official identity document."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use Matching Team Headshots",
+    "lead": "One backdrop and one crop, so the About page looks like one team.",
+    "items": [
+      {
+        "t": "One look across the row",
+        "d": "Share a backdrop, a crop, and a light, while each person keeps the features in their own photo."
+      },
+      {
+        "t": "A new hire joins without a reshoot",
+        "d": "Reuse those same notes on the new photo. The rest of the team stays as it is."
+      },
+      {
+        "t": "The whole set in one batch",
+        "d": "Upload the approved photos together and get the same crop back, instead of booking a studio for each person."
+      },
+      {
+        "t": "Names stay easy to change",
+        "d": "Put the name and the role in text beside the portrait, so a title change is not a new image."
+      },
+      {
+        "t": "You still need a yes",
+        "d": "Upload only a photo that person agreed you can use, and let them check the result before it goes live."
+      },
+      {
+        "t": "The cost shows before you start",
+        "d": "Each photo is 24 credits. A failed job returns those credits. Plans start at $24.50 a month."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Features",
+      "h2": "Features for Team Headshots",
+      "lead": "The portraits stay stills of your teammates. A short intro beside them can carry a voice, captions, and a track.",
+      "items": [
+        {
+          "t": "A voice for a short intro",
+          "d": "Add an AI voice on a team intro clip that sits beside the portraits. The still itself stays a photo."
+        },
+        {
+          "t": "Captions on that intro",
+          "d": "Put a name line or a one-sentence intro on the clip in the built-in editor. Keep job titles out of the portrait."
+        },
+        {
+          "t": "A batch for the whole team",
+          "d": "Run every approved photo through the same backdrop and crop. Each photo shows its credit cost first."
+        },
+        {
+          "t": "Start from a public page link",
+          "d": "Paste a public about-page link when you want a short intro clip. Headshots still come from photos each person approved."
+        },
+        {
+          "t": "A script for the intro",
+          "d": "Ask for one spoken line about the team, then edit it before the voice reads it."
+        },
+        {
+          "t": "A presenter, not a replacement",
+          "d": "The portrait follows the uploaded person. A separate AI actor can introduce the team and is not that teammate."
+        },
+        {
+          "t": "A track under the intro",
+          "d": "Add a music bed from the library under the intro clip. The square portraits stay photos on the page."
+        },
+        {
+          "t": "Crop and backdrop in the editor",
+          "d": "Set the crop, the light, and the backdrop in one place, then reuse those notes for the next person."
+        },
+        {
+          "t": "An intro in another language",
+          "d": "Keep the portraits and switch the spoken intro and its captions to another language. Names on the page stay text you edit."
+        },
+        {
+          "t": "Post the intro to TikTok or Meta",
+          "d": "Send the intro clip to TikTok or Meta from the workspace. The square portraits stay for the site, the deck, and the profile."
+        },
+        {
+          "t": "An API for approved photos",
+          "d": "Send photos through the API when a directory needs the same crop. Upload only photos the person agreed to, and each job shows its credit cost."
+        }
+      ]
+    }
   ]
 }

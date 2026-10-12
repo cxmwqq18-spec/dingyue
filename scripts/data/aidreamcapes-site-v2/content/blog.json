@@ -1,10 +1,10 @@
 {
   "id": "blog",
   "title": "Ecommerce Product Content Blog for Sellers | AIVideosUGC",
-  "description": "Guides for small online shops: listing photos, short ads, launch clips, and the check before you publish. Each article starts from a photo you already have.",
+  "description": "Ecommerce product content blog for small shops: listing photos, short ads, and launch clips. Use a template with a script, a voice, and a presenter.",
   "h1": "An Ecommerce Product Content Blog for Small Shops",
   "eyebrow": "Seller articles",
-  "lead": "Five articles on listing photos, short ads, launch clips, and the check you do before you publish. Each one starts from a product photo you already have.",
+  "lead": "Five articles on listing photos, short ads, launch clips, and the check you do before you publish. Pick a template, add your product, and make a file with a script, a voice, and a presenter.",
   "card": "Articles on product photos, short ads, and launches.",
   "secondary_keywords": [
     "product photo tips for online stores",
@@ -13,41 +13,61 @@
     "AI product content tips"
   ],
   "intro": [
-    "These articles are for shops that make their own listing photos and short ads. They cover a usable source photo, a creator-style ad, a pre-publish check, a launch reveal, and a person wearing the item without a shoot.",
-    "Read the piece that matches the job, then make the file in the tool it names. You download it and post it yourself."
+    "These articles are for shops that make their own listing photos and short ads. A template brings a hook, a script, a voice, and a presenter. You add your product, then post the file on TikTok, Instagram, Facebook, or YouTube Shorts.",
+    "Read the piece that matches the job, then open the tool it names. You can paste a [product link](page:url-to-video), pick someone from the [actor library](page:ai-actors), or start from the [template gallery](page:templates). There is no free plan. Downloads have no watermark, and [plans start at $24.50 a month](page:pricing)."
   ],
   "faq": [
     {
-      "q": "Where do I start if I am new to this?",
-      "a": "If you only have a phone photo, start with the photography article. If you already have a clear product photo and need a clip, start with the ad article."
+      "q": "What is an ad template in these articles?",
+      "a": "A ready-made ad shape with a hook, a script, a voice, and a presenter. You add your product instead of filming a creator or cutting the ad from a blank file."
     },
     {
-      "q": "Should I read the article or open the tool?",
-      "a": "Read the article for the job, then open the tool it names. The article explains the job. The tool is where the file is made."
+      "q": "How does a template become a file?",
+      "a": "Upload a photo of your product, or paste the product page link. Set the line you want said. The tool returns a creator-style clip you can post."
     },
     {
-      "q": "What should I check before I publish?",
-      "a": "Use the checklist article. Confirm the product matches what you ship, watch a clip more than once, and add prices only after download."
+      "q": "Why not film a creator?",
+      "a": "You can try another hook, another presenter, or another line without waiting on a shoot. A creator can still film a flagship piece. These files are the versions you need for a test."
     },
     {
-      "q": "Which piece is about a launch?",
-      "a": "The unboxing article plans three clips around launch day, from one product photo. You add the offer after download."
+      "q": "Who are the articles for?",
+      "a": "Shops, marketers, and agencies that sell online. The pieces cover a listing photo, a short ad, a launch clip, a pre-publish check, and a person wearing the item."
     },
     {
-      "q": "Can I show the item on a person without a shoot?",
-      "a": "Yes. One article shows how to start from a clear garment photo and describe the person and the setting. Check the fit before you post."
+      "q": "Can a beginner follow them?",
+      "a": "Yes. Upload one photo and follow the article into the tool it names. You do not need to edit a timeline before the first file."
+    },
+    {
+      "q": "Which kinds of products do the articles cover?",
+      "a": "They point at [beauty](page:ind-beauty-skincare), [fashion](page:ind-fashion-clothing), [food and drinks](page:ind-food-drinks), [home](page:ind-home-living), and [electronics](page:ind-electronics). The same tools work for other products you ship."
+    },
+    {
+      "q": "Can I upload my own photo or a product page?",
+      "a": "Yes. A clear photo of the product you ship is the right start. You can also paste a product page link when the article names that tool."
+    },
+    {
+      "q": "Which platforms can I post to?",
+      "a": "Post on [TikTok](page:plat-tiktok), [Instagram](page:plat-instagram), [Facebook](page:plat-facebook), [YouTube Shorts](page:plat-youtube-shorts), [Amazon](page:plat-amazon), or [Shopify](page:plat-shopify). Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Product photos come out square."
+    },
+    {
+      "q": "Is there a free plan?",
+      "a": "No. Plans start at $24.50 a month for 200 credits. A download has no watermark. You see the credit cost before every job."
+    },
+    {
+      "q": "Can I use the file in a paid ad?",
+      "a": "Yes. A finished photo or clip is commercially usable and has no watermark. Do not present a generated person as a customer. The [Content Policy](/content) says what you can upload."
+    },
+    {
+      "q": "Why start from a template?",
+      "a": "The hook and the shape are already there, so you spend the time on your product and your line. You are not building every ad from nothing."
     },
     {
       "q": "How much does a photo or a clip cost?",
-      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start, and a failed job returns its credits."
+      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A failed job returns its credits."
     },
     {
       "q": "Are the people in the clips real customers?",
       "a": "No. The person is generated. Do not give them a name or a line that says they bought the product."
-    },
-    {
-      "q": "Which size should I use for TikTok or a product grid?",
-      "a": "Product photos come out square. Video frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The ad-size guide and the platform pages say which frame a placement uses."
     }
   ],
   "relatedLinks": [
@@ -77,5 +97,71 @@
   "related_h2": "Tools the articles point to",
   "related_lead": "Make the file, or browse layouts and categories.",
   "cta_title": "Try it on the product you are posting",
-  "cta_lead": "Upload one product photo and see the credit cost before you start."
+  "cta_lead": "Upload one product photo and see the credit cost before you start.",
+  "reviews": {
+    "h2": "How shops use a template",
+    "lead": "Examples of how a shop uses a template, a voice, and a presenter. Not quotes from a named customer.",
+    "items": [
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Jar stays in frame",
+        "d": "A beauty shop keeps the jar in frame for the whole clip, then compares it with the jar they ship."
+      },
+      {
+        "example": true,
+        "who": "Home brand",
+        "t": "Photo and a clip",
+        "d": "A home brand makes a listing photo and a short ad from one upload."
+      },
+      {
+        "example": true,
+        "who": "Gadget shop",
+        "t": "Held toward the lens",
+        "d": "A gadget shop starts with a photo, then a clip of a presenter holding the product up."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "Worn without a fitting",
+        "d": "A jewelry shop picks a presenter from the actor library when the piece should be worn."
+      },
+      {
+        "example": true,
+        "who": "Supplements brand",
+        "t": "Another language",
+        "d": "A supplements brand keeps the scene and has the script spoken in another language."
+      },
+      {
+        "example": true,
+        "who": "Clothing shop",
+        "t": "Skip the studio day",
+        "d": "A clothing shop makes the next listing set from a garment photo instead of booking a studio."
+      },
+      {
+        "example": true,
+        "who": "Fashion shop",
+        "t": "A face for the drop",
+        "d": "A fashion shop uses a generated presenter as the face of a drop and does not name them as a buyer."
+      },
+      {
+        "example": true,
+        "who": "Food brand",
+        "t": "A scene per flavor",
+        "d": "A food brand makes a new table scene for each flavor from the same kind of pack photo."
+      },
+      {
+        "example": true,
+        "who": "Store owner",
+        "t": "Start from the page link",
+        "d": "A store pastes the product page link and gets a clip with a script and a voice."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Script, voice, and cut",
+        "d": "A home shop gets one ad with a script, a voice, and a cut, then posts it on TikTok."
+      }
+    ]
+  }
 }

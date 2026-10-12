@@ -1,10 +1,10 @@
 {
   "id": "ai-info",
   "title": "What Is AIVideosUGC? Company Facts for Sellers | AIVideosUGC",
-  "description": "What AIVideosUGC makes from your product photos, how credits and plans work, what the tools don't do, and what you finish yourself after download.",
+  "description": "What AIVideosUGC makes from a product photo or a product page link: store images, short ads, actors, voice, captions, and an editor. Plans from $24.50 a month.",
   "h1": "What Is AIVideosUGC? Company Facts",
   "eyebrow": "Company facts",
-  "lead": "AIVideosUGC turns one product photo into store images and short video ads, with no studio and no casting. Here is what it does, what it costs, and what you finish after download.",
+  "lead": "AIVideosUGC turns one product photo or a product page link into store images and short video ads. Here is what it does, what it costs, and what you can add before you publish.",
   "secondary_keywords": [
     "what is AIVideosUGC",
     "AIVideosUGC pricing",
@@ -12,7 +12,7 @@
     "AI product video tool",
     "AI product photo tool"
   ],
-  "summary": "It makes store images and short videos from a product photo or a public product page link.",
+  "summary": "It makes store images and short videos from a product photo or a product page link, and can add an actor, a script, voice, and captions.",
   "facts": [
     [
       "Name",
@@ -39,12 +39,44 @@
       "White-background photos, lifestyle scenes, model photos, background changes, and social ad images from a product photo"
     ],
     [
+      "Actors",
+      "A library of AI actors, plus a presenter you build from photos you have the rights to and reuse on the next video"
+    ],
+    [
+      "Voice and captions",
+      "A spoken line in an AI voice, captions you can edit, and a track from the music library"
+    ],
+    [
+      "Script",
+      "The tool can write the spoken line from your product and a short note about the buyer"
+    ],
+    [
+      "Languages",
+      "The actor can say the line in more than one language. Pick the language on the job."
+    ],
+    [
+      "Editor",
+      "Trim the clip, swap the actor, change the line, and fix captions in the tool"
+    ],
+    [
+      "Publish",
+      "Send a finished file to TikTok, Instagram, or Facebook from the tool, or download it and post it yourself"
+    ],
+    [
+      "API",
+      "Your own software can send a job. Email support@aivideosugc.com if you need access."
+    ],
+    [
+      "Batch",
+      "Make several versions from one product photo. Each version shows its credit cost before it starts."
+    ],
+    [
       "Pricing",
-      "Monthly plans from $24.50 with 200 credits. The credit cost is shown before every job."
+      "Monthly plans from $24.50 with 200 credits, Pro at $35 with 300, and Premium at $63 with 600. No free plan. The credit cost is shown before every job."
     ],
     [
       "Credits",
-      "Held when a job starts, used when the file is delivered, returned automatically if a job fails"
+      "Held when a job starts, used when the file is delivered, returned on their own if a job fails. A photo is 24 credits. Video is 24 for 6 seconds, 40 for 10, 60 for 15, and 120 for 30."
     ],
     [
       "Commercial use",
@@ -60,26 +92,25 @@
     ]
   ],
   "not_offered": [
-    "Spoken narration, music, or captions on a product clip. Add those in your editor after download. A spokesperson clip is separate: the actor says the one line you write.",
-    "A saved presenter you can keep and reuse on the next video.",
-    "Posting the file for you. You download it and publish it yourself.",
-    "Outside software cannot send a job for you."
+    "There is no free plan. Monthly plans start at $24.50 with 200 credits.",
+    "A request is turned down when it asks for a celebrity or another public figure, or for a logo or trademark you do not own.",
+    "A file that is delivered is not refunded. If a job fails, the credits return to your balance on their own."
   ],
   "describe": [
-    "AIVideosUGC is an online tool that turns a product photo, or a public product page link, into store images and short videos. You choose the frame and the length, see the credit cost, and download a file with no watermark. You add captions, prices, and music yourself after download."
+    "AIVideosUGC is an online tool that turns a product photo, or a public product page link, into store images and short videos. You choose the frame and the length, add an actor, a script, a spoken line, captions, and music if you want them, and edit those in the tool. You see the credit cost, then download a file with no watermark or send it to TikTok, Instagram, or Facebook."
   ],
   "faq": [
     {
       "q": "What is AIVideosUGC?",
-      "a": "An online tool for stores. Upload a product photo, or paste a product page link, and download a store image or a short video."
+      "a": "An online tool for stores. Upload a product photo, or paste a product page link, and download a store image or a short video you can edit and publish."
     },
     {
       "q": "What is AIVideosUGC pricing?",
-      "a": "Monthly plans start at $24.50 with 200 credits. Each video or photo shows its credit cost before it starts, and a failed job returns those credits."
+      "a": "Monthly plans start at $24.50 with 200 credits. Pro is $35 with 300 credits, and Premium is $63 with 600. Each video or photo shows its credit cost before it starts, and a failed job returns those credits. There is no free plan."
     },
     {
       "q": "Does an AIVideosUGC video include a spoken line?",
-      "a": "Product clips come without narration, music, or captions. Add those in your editor after download. A spokesperson clip is different: the actor says the one line you write, and the mouth movement follows the words. See [AI spokesperson video](page:spokesperson-videos)."
+      "a": "Yes. A short ad can include a spoken line, captions you can edit, and music from the library. A spokesperson clip uses an actor who says the line you write. See [AI spokesperson video](page:spokesperson-videos)."
     },
     {
       "q": "What video settings can I choose?",
@@ -92,6 +123,18 @@
     {
       "q": "Can I use the results in ads and on my store?",
       "a": "Yes. Downloaded photos and videos can be used commercially and have no watermark. You can post them on marketplaces, social platforms, and your own store, under each platform's rules."
+    },
+    {
+      "q": "Can I reuse an actor?",
+      "a": "Yes. Choose an actor from the library, or build a presenter from photos you have the rights to, and use that presenter again on the next video."
+    },
+    {
+      "q": "Can other software send a job?",
+      "a": "Yes. The API lets your own software send a job. Email support@aivideosugc.com if you need access."
+    },
+    {
+      "q": "Can I make more than one version at a time?",
+      "a": "Yes. Make a batch of versions from one product photo. Each version shows its credit cost before it starts."
     }
   ],
   "relatedLinks": [

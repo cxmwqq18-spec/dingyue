@@ -4,7 +4,7 @@
   "description": "AI how-to video maker: turn one product photo into a clear demo for Shorts and ads without filming a presenter. Choose 9:16 or 16:9 for 6, 10, 15 or 30 seconds.",
   "h1": "AI How-To Video Maker for a Task You Can Follow",
   "eyebrow": "How-to video template",
-  "lead": "Pick a product how-to scene and add one photo, so the clip shows the task from setup to the result.",
+  "lead": "Pick a product how-to video scene and add one photo, so the clip shows the task from setup to the result. A voice, captions, or an AI actor can join the same file.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -12,8 +12,8 @@
     "YouTube Shorts product tutorial",
     "instructional product video"
   ],
-  "steps_h2": "Make a Product Demo Video From a Photo in 3 Steps",
-  "steps_lead": "One product photo, a short line about the task, then a file you can post.",
+  "steps_h2": "How to Make a Product How-To Video in 3 Simple Steps",
+  "steps_lead": "A product demo video from a photo needs one picture, a short task line, and a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -47,44 +47,48 @@
   },
   "faq": [
     {
-      "q": "What is an AI how-to video template?",
-      "a": "A ready scene that shows one product task from setup to result. You add a photo of your item, and the clip lets a shopper watch the job."
+      "q": "What is an AI how-to video?",
+      "a": "It shows one task from the first move to the result. You can add an AI actor, a script, a voice, and captions. Start from a product photo or a product link."
     },
     {
       "q": "How do I make the how-to clip?",
-      "a": "Upload the photo, name the task and one visible change, pick a size and a length, then download the file."
+      "a": "Upload the photo, name the task, and pick a size and a length. Lengths are 6, 10, 15, or 30 seconds. Sizes are 9:16, 1:1, 16:9, 4:3, or 3:4."
     },
     {
-      "q": "Why start from a photo instead of filming a presenter?",
-      "a": "The demonstration is built from the photo you already have. You do not book a presenter, a studio day, or a reshoot to explain one task."
+      "q": "Why start here instead of filming a presenter?",
+      "a": "Try a version before you book a creator. Change the line, the actor, or the language and make another file. Check the action against the real product before you post."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Sellers, support teams, and agencies that need a clear how-to for a listing, a Short, or an ad."
+      "a": "Shops, agencies, and founders who need to show how a product works. A first file does not require an editing background."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Pick a task scene, upload one clear photo, and add a short line about the action. Check the working part before you post."
+      "a": "Yes. Upload one clear photo, describe the single task, and download the file. Type a price in your editor if the listing needs one."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "A sharp photo of the whole product, with the working part visible and no important edge cut off."
+      "q": "What can I upload?",
+      "a": "A product photo, a short clip you already filmed, or a product page link. The task should match the real item."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Use 9:16 or 16:9 for this how-to. You can also pick 1:1, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
+      "q": "Where can I publish it?",
+      "a": "Publish to TikTok, Instagram, or Facebook in one step, or download a file for YouTube. Pick the frame before the job starts."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
-    },
-    {
-      "q": "Will the file speak the instructions?",
-      "a": "No. The template makes the picture. Add narration, captions, or step labels in your editor after download."
+      "a": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits. You see the cost before the job starts, and a failed job returns those credits. The download has no watermark."
     },
     {
       "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark and can run in your listings and paid ads. You are responsible for the instructions and any claim. If a person appears, that person is an AI performer, not a customer."
+      "a": "Yes. Use the download in your ads, pages, and posts. People on screen are AI actors, so present the clip as your shop's ad."
+    },
+    {
+      "q": "Can I make several products at once?",
+      "a": "Yes. Run the same task across a batch of photos, or send the catalog through the API. Each job shows its credit cost first."
+    },
+    {
+      "q": "Will the file speak the steps?",
+      "a": "Yes. Turn on an AI voice and captions so the steps are heard and read. You can still type a price in your editor after download."
     }
   ],
   "visual": {
@@ -578,10 +582,13 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "steps",
+    "features",
+    "platforms",
     "reviews",
-    "related",
     "faq",
+    "related",
     "cta"
   ],
   "reviews": {
@@ -591,67 +598,143 @@
       {
         "example": true,
         "who": "Home shop",
-        "t": "One pass, one result",
-        "d": "A home shop shows a fabric shaver crossing a knit once, then holds on the smoother patch."
-      },
-      {
-        "example": true,
-        "who": "Cleaning shop",
-        "t": "Problem, then fix",
-        "d": "A cleaning shop shows a brush on one grout line, and ends on the cleaner seam."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Setup to result",
-        "d": "An apparel shop starts a handheld steamer beside a wrinkled shirt and finishes on the flat cloth."
-      },
-      {
-        "example": true,
-        "who": "Desk brand",
-        "t": "Tool in use",
-        "d": "A desk brand sets a compact tool next to a laptop and shows one short action."
-      },
-      {
-        "example": true,
-        "who": "Support team",
-        "t": "The question buyers ask",
-        "d": "A support team shows how the item works, with one task and no tour of other features."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Another task, same photo",
-        "d": "An agency uses the same product photo for a second task instead of booking another shoot."
-      },
-      {
-        "example": true,
-        "who": "Listing editor",
-        "t": "Labels after download",
-        "d": "A listing editor types step words and safety lines after the file downloads."
-      },
-      {
-        "example": true,
-        "who": "Ad buyer",
-        "t": "A frame for the feed",
-        "d": "An ad buyer exports a 9:16 task clip for a short feed placement and checks the credit cost first."
-      },
-      {
-        "example": true,
-        "who": "Founder",
-        "t": "Shown as your ad",
-        "d": "A founder who includes a person shows that person as an AI performer, and presents the clip as the shop's own ad."
+        "t": "One move, then the result",
+        "d": "A home shop shows one pass across the fabric, and holds on the smoother patch so the task is easy to follow."
       },
       {
         "example": true,
         "who": "First-time seller",
-        "t": "A short line is enough",
-        "d": "A first-time seller names the task in one line, makes the clip, and checks the working part before posting."
+        "t": "A photo and a clip",
+        "d": "A first-time seller uploads the product photo and gets a still plus a how-to clip, with no filming background."
+      },
+      {
+        "example": true,
+        "who": "Tool brand",
+        "t": "From still to in hand",
+        "d": "A tool brand starts from the product photo, then an AI actor holds the item while the task runs."
+      },
+      {
+        "example": true,
+        "who": "Desk brand",
+        "t": "Actor and editor",
+        "d": "A desk brand picks an AI actor from the library and trims the how-to in the built-in editor."
+      },
+      {
+        "example": true,
+        "who": "Export brand",
+        "t": "Another language",
+        "d": "An export brand repeats the same task in a second language for another market."
+      },
+      {
+        "example": true,
+        "who": "Support team",
+        "t": "Edit on this page",
+        "d": "A support team adjusts the clip in the built-in editor instead of moving the file to another app."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Presented as your ad",
+        "d": "A founder lets an AI actor present the task and posts the clip as the shop's own ad."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "No studio day",
+        "d": "A small team skips a camera day and starts the how-to from the photo already on the listing."
+      },
+      {
+        "example": true,
+        "who": "Catalog seller",
+        "t": "Start from the link",
+        "d": "A catalog seller pastes the product link, checks the script and the voice, then exports a second version."
+      },
+      {
+        "example": true,
+        "who": "Solo seller",
+        "t": "Describe it in chat",
+        "d": "A solo seller types the task in chat and gets a script, a scene, and a clip to check before posting."
       }
     ]
   },
   "related_h2": "Pages for a YouTube Shorts Product Tutorial",
   "related_lead": "Product videos, home scenes, and a Shorts page that sit next to a how-to clip.",
   "cta_title": "Ready to Show the Task?",
-  "cta_lead": "Upload one product photo and see the credit cost before you start."
+  "cta_lead": "Upload one product photo. Add a voice or an actor if you want one, and see the credit cost before you start.",
+  "definition": {
+    "title": "What Is an AI How-To Video?",
+    "paras": [
+      "An AI how-to video shows one product task a shopper can follow, from the setup to the result.",
+      "Start with a photo or a product link. Add a script, an AI voice, captions, and an AI actor when the task needs a person. The download has no watermark, and you can use it in ads and on your pages."
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "What you can add",
+      "h2": "Features for a Product How-To Video",
+      "lead": "The same photo can carry a voice, a script, and an actor.",
+      "items": [
+        {
+          "t": "AI voice",
+          "d": "A voice can read the task out loud, so the shopper hears each move."
+        },
+        {
+          "t": "Auto captions",
+          "d": "Captions can name the step on the clip while it plays."
+        },
+        {
+          "t": "AI script",
+          "d": "Ask for a short script, then edit the line before the clip is made."
+        },
+        {
+          "t": "Actor library",
+          "d": "Choose an AI actor to show the task. Post the clip as your shop's ad."
+        },
+        {
+          "t": "Link, batch, and API",
+          "d": "Paste a product link, run one task across a batch of photos, or send the catalog through the API."
+        },
+        {
+          "t": "Editor, music, and languages",
+          "d": "Trim in the built-in editor, pick a track from the music library, and repeat the task in another language."
+        }
+      ]
+    }
+  ],
+  "platforms": {
+    "h2": "Publish the How-To to TikTok, Meta, and YouTube",
+    "lead": "Send the file in one step, or download it and post it yourself. You see the credit cost before the job starts.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "label": "AI TikTok ads generator",
+        "d": "Publish the how-to to TikTok in one step, in a tall frame.",
+        "href": "page:plat-tiktok"
+      },
+      {
+        "t": "AI Instagram ads",
+        "label": "AI Instagram ads",
+        "d": "Send a tall or square how-to to Instagram.",
+        "href": "page:plat-instagram"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "label": "AI Facebook ad generator",
+        "d": "Send the same how-to to Facebook in one step.",
+        "href": "page:plat-facebook"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "label": "YouTube Shorts ads",
+        "d": "Download a tall file for YouTube Shorts, or a wide file when the post needs it.",
+        "href": "page:plat-youtube-shorts"
+      },
+      {
+        "t": "AI ads and product photos by platform",
+        "label": "AI ads and product photos by platform",
+        "d": "Open the channel list when the next post is not one of these four.",
+        "href": "page:platforms"
+      }
+    ]
+  }
 }

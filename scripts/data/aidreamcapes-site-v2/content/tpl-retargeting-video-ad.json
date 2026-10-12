@@ -4,27 +4,27 @@
   "description": "Bring viewed products back with a retargeting video from one photo. Show a clear detail, add a confirmed offer after download, and post where they shop.",
   "h1": "Retargeting Video Ad for Shoppers Who Already Looked",
   "eyebrow": "Retargeting video template",
-  "lead": "Make a new clip for a product people already saw, then add the current offer after download.",
+  "lead": "Give shoppers who already saw the product a closer look. You choose the audience, and you type the offer.",
   "secondary_keywords": [
     "remarketing video ad",
     "cart reminder video",
     "returning shopper ad",
     "retargeting creative"
   ],
-  "steps_h2": "Make a Retargeting Video Ad in 3 Steps",
-  "steps_lead": "Upload the product, describe one closer look, and add the current offer after download.",
+  "steps_h2": "How to Make a Retargeting Video Ad in 3 Simple Steps",
+  "steps_lead": "One closer detail, a voice if you want one, and the offer typed by you.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one photo that shows the product and the detail worth a second look. Keep that detail in frame."
+      "d": "Upload one photo of the detail worth a second look, or paste a product page link."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe one closer look, then pick a size and a length from 6 to 30 seconds. The scene shows only the product."
+      "d": "Describe one closer look, pick a voice and captions, then choose a size and a length."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip and add the current offer in your editor. Choose the audience in your ad platform."
+      "d": "Download the clip, type the offer yourself, and choose the audience in your ad platform."
     }
   ],
   "maker": {
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "What is a retargeting video ad?",
-      "a": "A new product clip for people who already saw an item. A cart reminder video can use this creative, but the file has no viewer list. You choose the audience, exclusions and frequency in your ad platform."
+      "a": "A new product clip for people who already saw an item. It can run as a cart reminder, but the file has no viewer list. You choose the audience, exclusions, and frequency in your ad platform."
     },
     {
       "q": "Does AIVideosUGC know who viewed a product or left a cart?",
@@ -55,35 +55,39 @@
     },
     {
       "q": "How do I make a retargeting video ad?",
-      "a": "Upload a photo that shows the detail worth revisiting, describe that one closer look, pick a size and length, then download."
+      "a": "Upload a photo or paste a product page link, describe one closer look, pick a voice and a length, then download. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Which shops use a retargeting video ad?",
-      "a": "Electronics and fashion shops running remarketing on Facebook or Instagram, and anyone who needs a fresh creative rather than a repeat of the first ad."
+      "a": "Electronics, fashion, and other shops running remarketing on Facebook or Instagram, and anyone who needs a fresh creative rather than a repeat of the first ad."
     },
     {
       "q": "What should the scene show?",
-      "a": "One detail the first view may have missed: a lid, a zipper, a finish or a daily-use moment. Keep the product as the subject."
+      "a": "One detail the first view may have missed: a lid, a zipper, a finish, or a daily-use moment. Keep the product as the subject."
     },
     {
       "q": "Which size and length should I pick?",
-      "a": "1:1 for a feed and 9:16 for Reels are the usual pair, plus 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds."
+      "a": "1:1 for a feed and 9:16 for Reels are the usual pair, plus 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "Can I put the current offer on the video here?",
-      "a": "Add the confirmed price, date or link after download. If the offer changes, edit that text on the file you already have."
+      "q": "Can I put the current offer on the video?",
+      "a": "Type the confirmed price, date, or code yourself. A spoken line can describe the product, and you keep the figures under your control if the offer changes."
     },
     {
-      "q": "Can I test more than one second look?",
-      "a": "Yes. Make another scene from the same photo and compare the files in your ad platform. You do not need a new shoot for each angle."
+      "q": "Can the clip include a voice, captions, and an actor?",
+      "a": "Yes. Add a script, a voice, captions, music, and an AI actor in the same project. The person on camera is generated, not a past buyer."
+    },
+    {
+      "q": "Can I make several versions or use the API?",
+      "a": "Yes. Render more than one closer look from the same photo, in more than one language, or send the job through the API. Each version spends credits."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Where do I run it?",
-      "a": "As creative in a remarketing campaign, a feed post or a Reels ad. The download has no watermark. Any person on screen is an AI performer, not a past buyer."
+      "q": "Where do I publish it?",
+      "a": "Publish to TikTok, Instagram, or Facebook from the project, or download it for a remarketing ad. The file has no watermark."
     }
   ],
   "visual": {
@@ -543,12 +547,15 @@
         "lead": "Pick a scene close to your product, then show one detail worth a second look. You choose the audience in your ad platform."
       },
       "faq": {
-        "h2": "Retargeting Video Ad Questions"
+        "h2": "Questions About a Retargeting Video Ad"
+      },
+      "m2": {
+        "h2": "How to Make a Retargeting Video Ad in 3 Simple Steps"
       }
     }
   },
-  "cta_title": "Ready to Add the Current Offer?",
-  "cta_lead": "Upload one product photo and see the credit cost before you set the audience.",
+  "cta_title": "Ready for a Closer Look?",
+  "cta_lead": "Upload one product photo and see the credit cost before you choose the audience.",
   "relatedLinks": [
     "video-ads",
     "tpl-carousel-video-ad",
@@ -560,14 +567,19 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
+    "reasons",
+    "features",
     "steps",
+    "trust",
     "reviews",
     "related",
-    "faq"
+    "faq",
+    "cta"
   ],
   "reviews": {
-    "h2": "Closer Looks for Shoppers Who Already Viewed",
-    "lead": "Each card is one detail worth a second look. The audience is chosen in the ad platform.",
+    "h2": "Shops Making a Second-Look Video",
+    "lead": "Each card is one detail worth another look. These are examples, not customer quotes. The audience is chosen in the ad platform.",
     "items": [
       {
         "example": true,
@@ -632,5 +644,97 @@
     ]
   },
   "related_h2": "Pages for Retargeting Creative",
-  "related_lead": "Video ads, electronics scenes, and Facebook placements for a second look."
+  "related_lead": "Video ads, electronics scenes, and Facebook placements for a second look.",
+  "definition": {
+    "title": "What Is a Retargeting Video Ad?",
+    "paras": [
+      "A retargeting video ad is a new clip for a product people already saw. It shows one closer detail. It does not know who viewed the product or left a cart.",
+      "You choose the audience in your ad platform. On the clip you can add an AI actor, a script, a voice, and captions, then publish to TikTok, Instagram, or Facebook."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Retargeting Video Ad",
+    "lead": "A new creative for people who already looked, without pretending the file knows who they are.",
+    "items": [
+      {
+        "t": "A Closer Look at a Known Product",
+        "d": "Shoppers already saw the item. This clip shows one detail the first ad rushed past."
+      },
+      {
+        "t": "The Audience Stays in Your Ad Tool",
+        "d": "The file has no viewer list and no cart data. You choose who sees it, and how often, in your ad platform."
+      },
+      {
+        "t": "Voice and Captions on the Detail",
+        "d": "A script, a spoken line, and captions can explain the detail. You still type the price and the code yourself."
+      },
+      {
+        "t": "An AI Actor for the Second Look",
+        "d": "An AI performer can hold the product for the closer shot. That person is generated, not a past buyer."
+      },
+      {
+        "t": "Several Cuts From One Photo",
+        "d": "Change the angle, the language, or the opening and render another version without a new shoot."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "In the same project",
+      "h2": "Features for a Retargeting Video Ad",
+      "lead": "The creative can speak and carry captions. The audience list still lives in your ad platform.",
+      "items": [
+        {
+          "t": "AI Voice",
+          "d": "Pick a voice for the line, or clone a voice you are allowed to use. The spoken line can name the product while the picture shows it."
+        },
+        {
+          "t": "Auto Captions",
+          "d": "Captions can sit with the spoken line so the point is readable while the clip plays. You can edit the wording before you publish."
+        },
+        {
+          "t": "AI Script",
+          "d": "Describe the shot in a sentence. A script draft turns that into the line an actor says, and you can rewrite it before the render."
+        },
+        {
+          "t": "Actor Library",
+          "d": "Browse [AI actors](page:ai-actors) and pick someone to hold or point at the product. You can keep a branded persona for the next clip. The person is generated, not a customer."
+        },
+        {
+          "t": "Editor, Music, and Languages",
+          "d": "Trim in the built-in editor, drop in a track from the music library, and cut the same spot again in another language."
+        },
+        {
+          "t": "Batch, Publish, and API",
+          "d": "Render several versions from one photo, publish to TikTok, Instagram, or Facebook from the project, or send the job through the API. Each job spends [credits](page:pricing)."
+        }
+      ]
+    }
+  ],
+  "trust": {
+    "h2": "What You Can Count On",
+    "lead": "The numbers below are the plan and the credit cost, shown before a job starts.",
+    "items": [
+      {
+        "t": "Credit Cost First",
+        "d": "A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. That number is on screen before you confirm."
+      },
+      {
+        "t": "No Watermark",
+        "d": "The download has no AIVideosUGC watermark. You can use it in your own ads, on product pages, and in social posts."
+      },
+      {
+        "t": "Failed Jobs Return Credits",
+        "d": "Credits are held when a job starts and spent when the file arrives. If the job fails, those credits return to your balance."
+      },
+      {
+        "t": "Paid Plans",
+        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Photos and videos share one balance."
+      },
+      {
+        "t": "No Viewer List in the File",
+        "d": "The clip does not receive browsing or cart data. Anyone on camera is an AI performer, not a past buyer."
+      }
+    ]
+  }
 }

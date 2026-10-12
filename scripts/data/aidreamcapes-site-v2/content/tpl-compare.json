@@ -4,7 +4,7 @@
   "description": "Show shoppers the difference between your colors, sizes or sets. One photo of both options becomes a comparison clip for listings, Shorts and paid ads.",
   "h1": "Make a Product Comparison Video Shoppers Can Judge",
   "eyebrow": "Comparison video template",
-  "lead": "Use one photo that already shows both options, so the difference is the whole clip.",
+  "lead": "Use one photo that already shows both options, then add a voice and a script so the difference is the whole clip.",
   "secondary_keywords": [
     "side by side product video",
     "product variant comparison video",
@@ -12,7 +12,7 @@
     "product size comparison video"
   ],
   "steps_h2": "How to Make a Product Comparison Video in 3 Simple Steps",
-  "steps_lead": "One photo of both options, a short description of the difference, then a file you can post.",
+  "steps_lead": "One photo of both options, a short script about the difference, then a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -20,11 +20,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the difference shoppers should notice, then pick a size and a length from 6 to 30 seconds."
+      "d": "Name the difference, pick a size and 6, 10, 15 or 30 seconds, and add a short script."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add variant names or prices in your editor. Post it where shoppers choose."
+      "d": "Download the file with no watermark, add names in the editor, and post it."
     }
   ],
   "maker": {
@@ -46,44 +46,52 @@
   },
   "faq": [
     {
-      "q": "What is a product comparison video template?",
-      "a": "A ready scene that puts two visible options in one clip. You bring a single photo that already shows both, and the result helps a shopper choose."
+      "q": "What is a product comparison video?",
+      "a": "A clip that puts two visible options in one frame so a shopper can judge the difference. You bring a single photo that already shows both."
     },
     {
       "q": "How do I make a product comparison video?",
-      "a": "Upload that photo, name the difference you want people to notice, pick a size and a length, then download the file."
+      "a": "Upload that photo, name the difference, add or edit a script and a voice, pick a size and a length, then download."
     },
     {
       "q": "Why start from a photo instead of a studio day?",
-      "a": "The clip is built from the photo you already have. You skip a second shoot when both options are already in that frame."
+      "a": "The clip is built from the photo you already have. You skip another shoot when both options are already in that frame. An AI presenter can point at the difference."
     },
     {
       "q": "Who is a product comparison video for?",
-      "a": "Shops that sell two sizes, colors, finishes or a set, and need the choice to read on a listing, a Short or a paid ad."
+      "a": "Shops that sell two sizes, colors, finishes or a set, and need the choice to read on a listing, a Short, TikTok, Instagram or a paid ad."
     },
     {
-      "q": "What do I need for the first comparison?",
-      "a": "Put both options in one clear photo and name the difference in a short line. Download the file and check that both options are still easy to see."
+      "q": "Can a beginner make one?",
+      "a": "Yes. No editing experience is required. Put both options in one clear photo, then adjust the script in the built-in editor."
     },
     {
-      "q": "What photo should I upload?",
+      "q": "What should the photo include?",
       "a": "One sharp frame with both options complete, at a similar scale, in even light. A photo of only one option cannot show the comparison."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Use 1:1, 16:9, 9:16, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "q": "Can I upload my own photo and start from a link?",
+      "a": "Yes. Upload your own photo of both options, or paste the product page link to draft the script and the presenter. You can also send the photo through the API."
     },
     {
-      "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
+      "q": "Which size, length and platforms can I use?",
+      "a": "Use 1:1, 16:9, 9:16, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds. Post the file on TikTok, Instagram, Facebook, YouTube or the product page."
     },
     {
-      "q": "Can I add names and prices later?",
-      "a": "Yes. Add variant names, measurements and prices in your editor after download. The file does not include names or prices."
+      "q": "Is there a free plan?",
+      "a": "No. There is no free plan. A clip costs 24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark and can be used in your own listings and paid ads. If a person appears, that person is an AI performer, not a customer."
+      "q": "Can I use the file commercially?",
+      "a": "Yes. The download has no watermark and can run in your listings and paid ads. If a person appears, that person is an AI performer, not a customer. Add names and prices in the editor."
+    },
+    {
+      "q": "Why use a template instead of building the ad from nothing?",
+      "a": "The scene already holds both options in one frame, so you spend your time on the difference shoppers should notice. You can still make a second version for another audience or language."
+    },
+    {
+      "q": "Can the voice be in another language?",
+      "a": "Yes. Make the same comparison with a voice in another language, and approve the words before you post."
     }
   ],
   "visual": {
@@ -544,84 +552,85 @@
         "h2": "Browse Video Ad Templates by Category"
       },
       "faq": {
-        "h2": "Product Comparison Video Questions"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
-  "cta_title": "Ready to Compare Two Options?",
+  "cta_title": "Create Your First Comparison Video",
   "cta_lead": "Upload one photo of both options and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
     "steps",
     "reviews",
+    "features",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "Side-by-Side Setups for Sizes, Colors and Sets",
-    "lead": "Use it as a color options video or a product size comparison video. Names and prices go on after download.",
+    "h2": "Shops Switching to a Comparison Video",
+    "lead": "Both options stay in one frame. A voice, a script or a presenter can name the difference.",
     "items": [
       {
         "example": true,
         "who": "Home shop",
-        "t": "Size check",
-        "d": "A home shop puts two stainless bottles in one frame so a listing can show small next to large."
+        "t": "Small next to large",
+        "d": "A home shop puts two stainless bottles in one frame so small sits next to large, then checks both are still visible."
       },
       {
         "example": true,
         "who": "Drinkware shop",
-        "t": "Color choice",
-        "d": "A drinkware shop lines up charcoal and cream tumblers so the color choice is the whole clip."
+        "t": "Photo, then the clip",
+        "d": "A drinkware shop starts from one photo of charcoal and cream tumblers and makes the comparison clip from it."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Finish check",
-        "d": "An apparel shop turns navy and rust beanies in one clip so the knit is easy to compare."
+        "t": "Presenter turns both",
+        "d": "An apparel shop has an AI presenter turn navy and rust beanies so the knit difference is easy to see."
       },
       {
         "example": true,
         "who": "Bag shop",
-        "t": "Capacity check",
-        "d": "A bag shop opens two canvas packs together so shoppers can judge which holds more."
+        "t": "Line trimmed in the editor",
+        "d": "A bag shop opens two canvas packs together and trims the spoken line in the built-in editor."
       },
       {
         "example": true,
         "who": "Kitchen shop",
-        "t": "Set contents",
-        "d": "A kitchen shop shows a two-piece canister set in one frame so the listing shows what is included."
+        "t": "A second language",
+        "d": "A kitchen shop shows a two-piece canister set, then a voice in another language for a second market."
       },
       {
         "example": true,
         "who": "Storage shop",
-        "t": "Height check",
-        "d": "A storage shop places short and tall bins in one scene for a shelf-fit decision."
+        "t": "Script on the same page",
+        "d": "A storage shop places short and tall bins in one scene and edits the script on the same page."
       },
       {
         "example": true,
         "who": "Bedding shop",
-        "t": "Scale check",
-        "d": "A bedding shop holds two pillow sizes at the same distance so scale reads in one glance."
+        "t": "Presenter, not a shoot",
+        "d": "A bedding shop uses an AI presenter to hold two pillow sizes at the same distance."
       },
       {
         "example": true,
         "who": "Tool shop",
-        "t": "Grip check",
-        "d": "A tool shop shows two handle finishes in one clip for a shopper choosing by feel."
+        "t": "No new light setup",
+        "d": "A tool shop uploads one photo of two handle finishes and skips a new lighting setup."
       },
       {
         "example": true,
         "who": "Furniture shop",
-        "t": "Width check",
-        "d": "A furniture shop frames a narrow shelf and a wide shelf together, then puts the clip on the product page."
+        "t": "Link and a second cut",
+        "d": "A furniture shop pastes the product link for a narrow shelf and a wide shelf, then makes a second version."
       },
       {
         "example": true,
         "who": "Pet shop",
-        "t": "Bowl size",
-        "d": "A pet shop shows two bowl diameters in one shot for a feeding-station choice."
+        "t": "Described in chat",
+        "d": "A pet shop describes two bowl sizes in chat and reviews the clip before it goes on the listing."
       }
     ]
   },
@@ -634,5 +643,38 @@
     "tpl-launch",
     "ind-home-living",
     "plat-amazon"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included with the template",
+      "h2": "Features of a Product Comparison Video",
+      "lead": "Both options stay in the photo you upload. These are the pieces you can add so the difference is easy to follow.",
+      "items": [
+        {
+          "t": "AI voiceover",
+          "d": "Add a spoken line that names the difference between the two options. You approve the words, and the voice is not a customer recording."
+        },
+        {
+          "t": "A script you can edit",
+          "d": "A script can be drafted from your note or from the product page link. Change any line in the built-in editor before you download."
+        },
+        {
+          "t": "Presenters from the actor library",
+          "d": "Pick an AI presenter to point at either option. The person on screen is a generated performer, not a buyer."
+        },
+        {
+          "t": "A product link or the API",
+          "d": "Paste a product page link, or send the photo through the API, to draft the script. The photo still has to show both options."
+        },
+        {
+          "t": "Built-in editor and another language",
+          "d": "Change the script and switch the voice to another language in one editor. The download has no watermark."
+        },
+        {
+          "t": "More versions, then publish",
+          "d": "Make another cut for a second audience from the same photo. Publish on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+        }
+      ]
+    }
   ]
 }

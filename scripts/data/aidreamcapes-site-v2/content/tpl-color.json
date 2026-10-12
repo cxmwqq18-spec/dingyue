@@ -4,7 +4,7 @@
   "description": "Create one coordinated photo for every product color from your own shade photos, so shoppers can compare options in the same scene. Square AI images.",
   "h1": "Product Color Variations in One Shared Square Scene",
   "eyebrow": "Product photo template",
-  "lead": "Open one scene, add a photo of each shade you actually sell, and download a square set shoppers can compare.",
+  "lead": "Open one scene, add a photo of each shade you actually sell, and download a square set shoppers can compare. The same photos can start a voiced clip.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -44,44 +44,52 @@
   },
   "faq": [
     {
-      "q": "How do I keep product color variations consistent?",
-      "a": "Use one shared view, light and background for every shade. Shoppers then compare the finish instead of a changing setup."
+      "q": "What are product color variation photos?",
+      "a": "A square set of one product in the shades you actually sell, shown in one shared scene so shoppers compare the finish. Each shade starts from a photo of that color."
     },
     {
-      "q": "Can a color I never photographed be a real option?",
-      "a": "No. A generated shade cannot stand in for a color you sell. Upload a photo of each shade and compare the result with the physical swatch."
+      "q": "How do I make product color variations?",
+      "a": "Upload one photo per real shade, describe the setting once, and download a square for each. The same photos can also start a clip with a script and a voice."
     },
     {
-      "q": "Do I need a photo for every color?",
-      "a": "Yes, when the dye, glaze, fabric or finish changes. Upload a photo of that actual color, then compare the result with the item. The file is not a guaranteed color match."
+      "q": "Why use this instead of a new shoot for every color?",
+      "a": "The scene is applied to photos you already have, so you skip a styled reshoot. A generated color cannot stand in for a shade you never photographed."
     },
     {
-      "q": "How should the gallery be ordered?",
-      "a": "Lead with one clear product photo, then group the matching shade images so shoppers can compare options without hunting."
+      "q": "Who is a color set for?",
+      "a": "Shops that sell more than one finish, including sneakers, apparel, mugs, cases and yarn, on Shopify or Amazon."
     },
     {
-      "q": "Will the generated colors match my products?",
-      "a": "Check every result against the physical item or swatch. Keep the real shade photo available when exact color matters."
+      "q": "Can a beginner make the set?",
+      "a": "Yes. Upload the shade photos and use the same description on each. No editing background is required. Compare every file with the physical swatch before you publish."
     },
     {
-      "q": "What does each variation photo cost?",
-      "a": "Each product photo costs 24 credits. The total is shown before you create the set, and a failed job returns those credits."
+      "q": "Which products fit a color set?",
+      "a": "Any product whose dye, glaze, fabric or finish changes, as long as you photograph the real shade. One scene can cover several products when each source photo is real."
     },
     {
-      "q": "Can I use the set in a listing gallery?",
-      "a": "Yes. Add each image to its matching option. The download has no watermark."
+      "q": "Can I upload my own photos?",
+      "a": "Yes. Upload your own shade photos. A file is not a guaranteed color match, so keep the real swatch nearby and compare before you publish."
     },
     {
-      "q": "Do I need a reshoot for every color?",
-      "a": "No styled reshoot is required once the real shades are photographed. Apply the same scene to those sources, then check each file."
+      "q": "Which platforms can I use the files on?",
+      "a": "Listing galleries on Amazon and Shopify, plus TikTok, Instagram, Facebook and YouTube when you also make a clip from the same photos."
     },
     {
-      "q": "How do I compare actual swatches?",
-      "a": "Place each real shade photo in the same scene, download the set, and compare every file with the physical swatch before you publish."
+      "q": "Is there a free plan?",
+      "a": "No. There is no free plan. Each product photo costs 24 credits, the total is shown first, and a failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Can one scene cover several products?",
-      "a": "Yes. Describe one setting and apply it to each uploaded product and shade. Check every result against the real item."
+      "q": "Can I use the set commercially?",
+      "a": "Yes. Add each image to the matching option in your own listing or ads. The download has no watermark."
+    },
+    {
+      "q": "Why start from a shared scene?",
+      "a": "The shared scene keeps the view, light and background steady, so shoppers compare color instead of a changing setup. You still check every hue against the item."
+    },
+    {
+      "q": "Can a voice, a presenter or a product link be part of this?",
+      "a": "Yes. Paste the product page link, or send a photo through the API, to draft a script, a presenter and a voice in another language. The shade squares still come from real photos."
     }
   ],
   "visual": {
@@ -536,7 +544,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About Product Color Variations"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
@@ -551,73 +559,74 @@
     "picker",
     "steps",
     "reviews",
+    "features",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "Shade Sets from Photos the Shop Already Sells",
-    "lead": "Sneaker color options photos work the same way as mugs, cases or yarn: each shade starts from a photo the shop already sells.",
+    "h2": "Shops Switching Shade Photos into Ads",
+    "lead": "Each shade still starts from a photo the shop sells. A voice, a presenter or a second language can use that same photo.",
     "items": [
       {
         "example": true,
         "who": "Sneaker shop",
-        "t": "Three uppers",
-        "d": "A sneaker shop puts white, black and navy in one scene, each from its own shoe photo."
+        "t": "Checked squares",
+        "d": "A sneaker shop places white, black and navy in one scene, each from its own shoe photo, and checks the squares before posting."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Tee dyes",
-        "d": "An apparel shop shows four tee dyes in one setup, so shoppers compare the color."
+        "t": "Photo, then a clip",
+        "d": "An apparel shop makes the tee-dye squares first, then a clip from those same photos."
       },
       {
         "example": true,
         "who": "Mug shop",
-        "t": "Glaze set",
-        "d": "A mug shop shows three glazes in one square style and checks them against the real glaze chips."
+        "t": "Presenter holds one mug",
+        "d": "A mug shop uploads each glaze photo, then has an AI presenter hold one mug in a follow-up clip."
       },
       {
         "example": true,
         "who": "Lip color shop",
-        "t": "Bullet shades",
-        "d": "A lip-color shop shows a row of bullets from photos of the actual colors, not invented dyes."
+        "t": "Library and editor",
+        "d": "A lip-color shop shows real bullet shades, picks a presenter from the actor library, and edits the line in place."
       },
       {
         "example": true,
         "who": "Case shop",
-        "t": "Phone colors",
-        "d": "A case shop shows clear, black and sand cases in one setting for a Shopify option gallery."
+        "t": "A second language",
+        "d": "A case shop shows clear, black and sand from real photos, then a voice in another language for a second market."
       },
       {
         "example": true,
         "who": "Bag shop",
-        "t": "Canvas colors",
-        "d": "A bag shop frames olive and sand canvas totes the same way for an Amazon color image."
+        "t": "Script on this page",
+        "d": "A bag shop frames olive and sand totes the same way and changes the script without opening another tool."
       },
       {
         "example": true,
         "who": "Frame shop",
-        "t": "Metal finishes",
-        "d": "A frame shop shows brass, black and silver from photos of those finishes."
+        "t": "Presenter, not a shoot",
+        "d": "A frame shop shows brass, black and silver from photos of those finishes, with an AI presenter instead of a booked shoot."
       },
       {
         "example": true,
         "who": "Yarn shop",
-        "t": "Skein row",
-        "d": "A yarn shop uploads each skein, so the dye is not guessed."
+        "t": "No new light setup",
+        "d": "A yarn shop uploads each skein photo and skips a new light setup for the shade row."
       },
       {
         "example": true,
         "who": "Helmet shop",
-        "t": "Shell colors",
-        "d": "A helmet shop shows matte black and gloss white shells in one shared view."
+        "t": "Link and a second cut",
+        "d": "A helmet shop pastes the product link, reviews the script and voice, and makes a second version of the shell colors."
       },
       {
         "example": true,
         "who": "Bottle shop",
-        "t": "Powder coats",
-        "d": "A bottle shop shows two powder coats of the same shape and compares them with the physical bottles before publishing."
+        "t": "Described in chat",
+        "d": "A bottle shop describes the powder-coat pair in chat, then compares both files with the physical bottles."
       }
     ]
   },
@@ -649,6 +658,39 @@
       "label": "Shopify product photos"
     }
   ],
-  "cta_title": "Start a Color Set from Photos of Real Shades",
-  "cta_lead": "Upload one photo per shade you sell and see the credit cost before you start."
+  "cta_title": "Create Your First Shade Set",
+  "cta_lead": "Upload one photo per shade you sell and see the credit cost before you start.",
+  "more_sections": [
+    {
+      "eyebrow": "Included with the template",
+      "h2": "Features of Product Color Variations",
+      "lead": "The squares still come from real shade photos. These are the extras you can add around that set.",
+      "items": [
+        {
+          "t": "AI voiceover",
+          "d": "Turn the same shade photos into a clip and add a spoken line. You approve the words, and the voice is not a customer recording."
+        },
+        {
+          "t": "A script you can edit",
+          "d": "A script can be drafted from your note or from the product page link. Change any line before you download the clip."
+        },
+        {
+          "t": "Presenters from the actor library",
+          "d": "Pick an AI presenter to hold one shade. The person on screen is a generated performer, not a buyer."
+        },
+        {
+          "t": "A product link or the API",
+          "d": "Paste a product page link, or send a shade photo through the API, to draft the script. The color squares still need a real source photo."
+        },
+        {
+          "t": "Built-in editor and another language",
+          "d": "Change the script and switch the voice to another language in the built-in editor. The download has no watermark."
+        },
+        {
+          "t": "More versions, then publish",
+          "d": "Make another cut for a second market from the same photos. Publish on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+        }
+      ]
+    }
+  ]
 }

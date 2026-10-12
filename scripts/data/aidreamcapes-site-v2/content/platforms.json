@@ -4,7 +4,7 @@
   "description": "Turn one product photo into ads and photos for TikTok, Instagram, Facebook, Shorts, Amazon, and Shopify. See the specs and download a watermark-free file.",
   "h1": "AI Ads and Product Photos by Platform, Sized for Where You Post",
   "eyebrow": "Choose your channel",
-  "lead": "One product photo, then a file for that channel, including vertical video ads for TikTok and Reels. Choose the frame, download it, and upload it where you sell.",
+  "lead": "One product photo, then a file for that channel, including vertical video ads for TikTok and Reels. Pick the frame, then download it or publish it to TikTok or Meta.",
   "card": "Frames and ideas for the six channels this directory covers.",
   "secondary_keywords": [
     "social media ad sizes for products",
@@ -13,7 +13,7 @@
     "ecommerce ads by channel"
   ],
   "intro": [
-    "Give each channel the frame it expects without rebuilding the product. Open a channel, check the table, then download and upload the file yourself."
+    "Open the channel, check the frame, and make a still or a clip from one photo or a product link. A clip can include a script, an AI actor, a voice, captions, and music."
   ],
   "faq": [
     {
@@ -41,8 +41,8 @@
       "a": "Keep gallery stills square so the grid lines up. Add a short clip when motion explains the product better than another still."
     },
     {
-      "q": "Do you post the file to my ad account?",
-      "a": "No. You download the file and upload it yourself. Add the headline, the price, and any licensed music in your editor first."
+      "q": "Can you publish the file to my ad account?",
+      "a": "You can publish the finished file to TikTok or Meta in one click. You can also download it. Audience, budget, and schedule still live in the ad account. Type the price so it matches the live offer."
     },
     {
       "q": "Can one file run on every channel unchanged?",
@@ -58,11 +58,23 @@
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. Finished files can be used commercially and have no watermark. You are responsible for the claims and the music you add."
+      "a": "Yes. Finished files can be used commercially and have no watermark. Music can come from the library. You are responsible for the claims in the line."
     },
     {
       "q": "Where do captions go?",
-      "a": "Add them after download in your editor or in the ad account. This tool does not put captions on the file."
+      "a": "Captions are written on the clip. Edit them in the built-in editor so the price matches the live offer. You can still change the post text in the ad account."
+    },
+    {
+      "q": "Can one batch cover more than one channel?",
+      "a": "Yes. Run a batch from the same photo when the frame changes. Two channels that both take 9:16 can share one download if their file rules match. Each job shows its credit cost."
+    },
+    {
+      "q": "Does the clip include a voice?",
+      "a": "Yes, when you write a line and pick an AI actor or a voice. The speech is generated. It is not a customer review."
+    },
+    {
+      "q": "Can my own tools start a channel file?",
+      "a": "Yes. The API can start a photo or video job. The credit cost matches the same job in the project."
     }
   ],
   "visual": {
@@ -135,52 +147,52 @@
       }
     }
   },
-  "benefits_h2": "What you choose before you start",
+  "benefits_h2": "What the Channel File Can Include",
   "benefits": [
     {
-      "t": "The frame is chosen up front",
-      "d": "A photo is square. A clip can be 9:16, 1:1, 16:9, 4:3, or 3:4. You pick the clip frame before the job runs.",
-      "img": "f:k4-plat-tiktok-18-visual-uses-1-image",
-      "alt": "Open snack pouch on a car dashboard during a vertical product demo."
+      "t": "A script for the post",
+      "d": "Describe the product and the channel. The AI drafts the spoken line, and you edit it."
     },
     {
-      "t": "One photo, more than one frame",
-      "d": "Use the same photo for a second job when you want another frame. A gallery still and a full-screen clip are two separate files.",
-      "img": "f:q18-facebook-card-feed-jar",
-      "alt": "Small matte white insulated food jar beside a packed lunch on a bright kitchen counter."
+      "t": "An AI presenter",
+      "d": "Use an actor when you do not want to be on camera. The person is generated, not a customer."
     },
     {
-      "t": "Length and credits are on screen",
-      "d": "A clip is 6, 10, 15, or 30 seconds. Credits are 24, 40, 60, or 120, and that cost is shown before you start.",
-      "img": "n:guide:b2f7-platforms-benefits-2-r1",
-      "alt": "Plain white ceramic jar with a lid on a light studio background."
+      "t": "Music from the library",
+      "d": "Put a track under the clip and swap it in the editor."
     },
     {
-      "t": "You upload it yourself",
-      "d": "Nothing is posted to your ad account. Download the file, add a headline in your editor, and upload it on the channel.",
-      "img": "n:planter-pack",
-      "alt": "Leafy houseplant in a white ceramic planter on a light studio background."
+      "t": "Captions you can edit",
+      "d": "Captions arrive on the file. Change them so the price matches the live offer."
+    },
+    {
+      "t": "A start from a link",
+      "d": "Paste a public product page. Its main image and name start the clip for this channel."
+    },
+    {
+      "t": "A frame that matches",
+      "d": "Photos are square. A clip can be 9:16, 1:1, 16:9, 4:3, or 3:4, at 6, 10, 15, or 30 seconds."
     }
   ],
   "steps_h2": "How to make a channel file in 3 steps",
-  "steps_lead": "Add one photo, pick the frame, and download a file you upload yourself.",
+  "steps_lead": "Add a photo or a link, pick the frame, then publish or download.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one photo that shows the whole item, including its color and shape."
+      "t": "Add the Product",
+      "d": "Upload one photo or paste the product page for the channel you sell on."
     },
     {
-      "t": "Choose the Frame",
-      "d": "A photo is square. For a clip, pick 9:16, 1:1, 16:9, 4:3, or 3:4, and a length of 6, 10, 15, or 30 seconds."
+      "t": "Pick the Frame",
+      "d": "A photo is square. For a clip, pick 9:16, 1:1, 16:9, 4:3, or 3:4."
     },
     {
-      "t": "Download and Post",
-      "d": "Save the file, add a headline in your editor, and upload it where you sell."
+      "t": "Publish or Download",
+      "d": "Send the file to TikTok or Meta, or download it and type the price yourself."
     }
   ],
   "directory_specs": {
     "title": "Frames you can export for each channel",
-    "lead": "Social media ad sizes for products depend on the channel. Photos from this tool are square. Clips can be 9:16, 1:1, 16:9, 4:3, or 3:4. If a feed wants 4:5, crop the square file in your editor.",
+    "lead": "Social media ad sizes for products depend on the channel. Photos from this tool are square. Clips can be 9:16, 1:1, 16:9, 4:3, or 3:4, with a voice, captions, and music. If a feed wants 4:5, crop the square file in the editor. You can publish to TikTok or Meta, or download the file.",
     "columns": [
       "Channel",
       "Where it runs",
@@ -192,31 +204,31 @@
         "TikTok",
         "In-feed clip",
         "9:16",
-        "9:16 clip at 6, 10, 15, or 30 seconds. You upload the file yourself."
+        "9:16 clip at 6, 10, 15, or 30 seconds. Publish to TikTok, or download the file."
       ],
       [
         "Instagram",
         "Feed still or a full-screen clip such as Reels",
         "4:5 for many feed stills, or 9:16 for the full-screen slot",
-        "Square stills. Crop to 4:5 in your editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4."
+        "Square stills. Crop to 4:5 in the editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4. Publish to Meta, or download."
       ],
       [
         "Facebook",
         "Feed still or a full-screen clip",
         "4:5 for many feed stills, or 9:16 for the full-screen slot",
-        "Square stills. Crop to 4:5 in your editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4."
+        "Square stills. Crop to 4:5 in the editor if the feed asks for it. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4. Publish to Meta, or download."
       ],
       [
         "YouTube Shorts",
         "Shorts placement",
         "9:16",
-        "9:16 clip at 6, 10, 15, or 30 seconds. You upload the file yourself."
+        "9:16 clip at 6, 10, 15, or 30 seconds, with captions and a voice if you ask for them. Download the file and upload it to Shorts."
       ],
       [
         "Amazon",
         "Listing gallery or a sponsored clip",
         "A square main image, plus a wide clip where ads allow it",
-        "Square stills. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4, at 6, 10, 15, or 30 seconds."
+        "Square stills. Clips in 9:16, 1:1, 16:9, 4:3, or 3:4, at 6, 10, 15, or 30 seconds. You add them to the listing."
       ],
       [
         "Shopify",
@@ -229,23 +241,193 @@
   "blockOrder": [
     "hero",
     "directory",
+    "features",
     "sizes",
+    "reasons",
+    "trust",
     "benefits",
     "steps",
+    "reviews",
     "related",
     "faq",
+    "closing",
     "cta"
   ],
   "related_h2": "Tools for the file, plus other directories",
-  "related_lead": "Make the still or the clip, or browse by layout and category.",
+  "related_lead": "Start from a link or an actor, or browse by layout and category.",
   "relatedLinks": [
+    "url-to-video",
+    "spokesperson-videos",
     "video-ads",
     "social-ad-photos",
-    "white-background",
-    "image-to-video",
     "templates",
     "industries"
   ],
   "cta_title": "Make the file for the channel you sell on",
-  "cta_lead": "Upload one product photo, pick the frame, and see the credit cost before you start."
+  "cta_lead": "Upload one product photo, pick the frame, and see the credit cost before you start.",
+  "reasons": {
+    "h2": "Reasons to Make the Channel File Here",
+    "lead": "Start from the product you sell, then fit the frame the channel expects.",
+    "items": [
+      {
+        "t": "A photo or a link",
+        "d": "Upload the product photo, or paste the public product page, and the clip starts from that item."
+      },
+      {
+        "t": "A style you describe",
+        "d": "Describe a look you have the right to use, then place your product in it for this channel."
+      },
+      {
+        "t": "A presenter off camera",
+        "d": "Pick an AI actor when you do not want to film. Disclose a generated person if the platform asks."
+      },
+      {
+        "t": "A page becomes a clip",
+        "d": "A product page can become the social clip. Prices on that page are not copied in. You type the offer."
+      }
+    ]
+  },
+  "trust": {
+    "h2": "Shops That Post on These Channels",
+    "lead": "The channel changes the frame. The product stays the one in your photo.",
+    "items": [
+      {
+        "t": "Beauty and lifestyle",
+        "d": "A jar, a routine, or a worn look, sized for Reels, TikTok, or a square shop gallery."
+      },
+      {
+        "t": "Gadgets",
+        "d": "One action of the device, with the feature name in the captions, for a full-screen or a wide frame."
+      },
+      {
+        "t": "Fashion",
+        "d": "The garment on a generated person. The picture does not replace the size chart on the product page."
+      },
+      {
+        "t": "Food and drink",
+        "d": "A pour, a sip, or the package, in a vertical clip or a square listing still."
+      },
+      {
+        "t": "Home",
+        "d": "The item in a room, then a frame that fits the feed or the store gallery."
+      },
+      {
+        "t": "No one on camera",
+        "d": "A product clip with voice, captions, and music, and no filmed host."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Formats",
+      "h2": "Social Formats for a Product Post",
+      "lead": "Eight shapes. Use the one that fits the channel, and keep the product recognizable.",
+      "items": [
+        {
+          "t": "A challenge-style clip",
+          "d": "A short repeatable action with the product, for a full-screen feed."
+        },
+        {
+          "t": "A short how-to",
+          "d": "One useful step, spoken and captioned, so the action is easy to follow."
+        },
+        {
+          "t": "A story around one use",
+          "d": "A single everyday moment with the item, not a long plot."
+        },
+        {
+          "t": "A reaction to the product",
+          "d": "An AI actor responds to one real detail, such as the texture or the sound."
+        },
+        {
+          "t": "A short list",
+          "d": "Two or three real features, each on screen long enough to read."
+        },
+        {
+          "t": "Behind the product",
+          "d": "The package, the material, or the setup, from the photo you uploaded."
+        },
+        {
+          "t": "A calm product look",
+          "d": "The item, held simply, with light music and few words."
+        },
+        {
+          "t": "A short skit",
+          "d": "An AI actor in a brief scene that ends on the product."
+        }
+      ]
+    },
+    {
+      "eyebrow": "In one place",
+      "h2": "Finish the Post Without a Second App",
+      "lead": "Adjust the picture, the words, and the next version before you publish.",
+      "items": [
+        {
+          "t": "A clean background",
+          "d": "Put the product on a plain field when the channel wants a simple still. Photos are square."
+        },
+        {
+          "t": "The product in a scene",
+          "d": "Place the same item in a setting the channel's shoppers recognize."
+        },
+        {
+          "t": "Words in the editor",
+          "d": "Add the headline and the captions in the built-in editor. Type the price yourself."
+        },
+        {
+          "t": "Several versions",
+          "d": "Run a batch from one photo when you need another frame or another opening."
+        }
+      ]
+    }
+  ],
+  "reviews": {
+    "h2": "How a Shop Uses Each Channel",
+    "lead": "Examples of the job, not quotes from named customers.",
+    "items": [
+      {
+        "example": true,
+        "who": "TikTok seller",
+        "t": "A vertical clip",
+        "d": "A TikTok seller makes a 9:16 clip with a spoken line and captions, then publishes it to TikTok or downloads it."
+      },
+      {
+        "example": true,
+        "who": "Reels seller",
+        "t": "The same full-screen frame",
+        "d": "A shop that posts Reels uses a 9:16 file. If the feed wants 4:5, they crop the square still in the editor."
+      },
+      {
+        "example": true,
+        "who": "Facebook shop",
+        "t": "Feed and full screen",
+        "d": "A Facebook shop makes a square still for the feed and a separate 9:16 clip for the full-screen placement."
+      },
+      {
+        "example": true,
+        "who": "Shorts seller",
+        "t": "One action, vertical",
+        "d": "A Shorts seller picks 9:16 and 6, 10, 15, or 30 seconds, with captions for the one action."
+      },
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Square first",
+        "d": "A marketplace seller leads with a square still, then adds a clip beside the gallery."
+      },
+      {
+        "example": true,
+        "who": "Store owner",
+        "t": "A square gallery",
+        "d": "A store owner keeps gallery stills square and adds a short clip when motion explains the product."
+      }
+    ]
+  },
+  "closing": {
+    "h2": "Check the File Before You Pay for Traffic",
+    "paras": [
+      "Play the clip on a phone and read the captions before you spend on a campaign. Plans start at $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600.",
+      "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see that cost before the job starts."
+    ]
+  }
 }

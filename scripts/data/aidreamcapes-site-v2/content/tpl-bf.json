@@ -4,7 +4,7 @@
   "description": "Build a Black Friday video ad from one product photo, then add the confirmed offer after download. Choose a scene for social feeds and product pages.",
   "h1": "Black Friday Video Ads You Can Post Before the Rush",
   "eyebrow": "Black Friday template",
-  "lead": "Place your product photo in a scene, then add the price, code and end date after the file downloads.",
+  "lead": "Place your product photo in a scene, add an AI voice if you want one, then put the price, code, and end date on after download.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -19,11 +19,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe the deal setting, then pick a size and a length from 6 to 30 seconds. Leave the exact price out of the scene."
+      "d": "Describe the setting, pick an AI voice, and choose 6 to 30 seconds. Leave the exact price out."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip and add the confirmed price, code or end date in your editor before you post."
+      "d": "Download the clip, add captions if needed, and type the confirmed price, code, or end date."
     }
   ],
   "maker": {
@@ -46,43 +46,47 @@
   "faq": [
     {
       "q": "What does this Black Friday template make?",
-      "a": "A product clip for a deal post. The scene shows the item. You type the confirmed price, code and end date after download."
+      "a": "A deal clip from your product photo, with an AI actor, a script, and a voiceover if you want them. You still type the confirmed price, code, and end date after download."
     },
     {
       "q": "How does the scene come together?",
-      "a": "Upload one product photo, describe the setting, pick a size and a length, then download and add the offer in your editor."
+      "a": "Upload one product photo, describe the setting, pick a size and a length, then add captions or the offer in the built-in editor."
     },
     {
       "q": "Why not book a shoot for the sale?",
-      "a": "The clip starts from a photo you already have, so you can prepare the creative before the sale week without a studio day."
+      "a": "AI backgrounds build the scene from the photo you have, so you can skip a studio camera and a large set before sale week."
     },
     {
       "q": "Who should use it?",
-      "a": "Shops that need a product clip for Black Friday, Cyber Monday or a later holiday offer, on Facebook, Instagram or a product page."
+      "a": "Shops that need a product clip for Black Friday, Cyber Monday, or a later holiday offer, on Facebook, Instagram, TikTok, or a product page."
     },
     {
       "q": "Can I do this without editing experience?",
-      "a": "Yes. The generator builds the product scene. You add the offer text afterward in an editor you already use."
+      "a": "Yes. The scene is built for you. Add stickers, captions, a track from the music library, or an AI voice in the editor, and put the offer on only after you confirm it."
     },
     {
       "q": "What photo should I upload?",
-      "a": "One sharp photo of the item that is actually in the offer, with the full shape and finish visible."
+      "a": "One sharp photo of the item that is actually in the offer, with the full shape and finish visible. A short clip you have rights to can be uploaded too."
     },
     {
       "q": "Which size and length fit a deal post?",
-      "a": "9:16 for Stories and Reels, 1:1 for a square feed, or 16:9, 4:3 or 3:4 when the placement needs them. Lengths are 6, 10, 15 or 30 seconds."
+      "a": "9:16 for Stories and Reels, 1:1 for a square feed, or 16:9, 4:3, or 3:4 when the placement needs them. Lengths are 6, 10, 15, or 30 seconds. Publish to TikTok or Meta from the same project."
     },
     {
       "q": "Does the generator write the discount?",
-      "a": "No. Add the live price, code and end date after download. If the offer changes, edit that text instead of making a new clip."
+      "a": "No. Add the live price, code, and end date after download. If the offer changes, edit that text instead of trusting an old file."
     },
     {
       "q": "What does a clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. You see the cost first. A failed job returns its credits. Plans start at $24.50 a month."
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. A failed job returns its credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
     },
     {
       "q": "Can I use the download in paid ads?",
-      "a": "Yes. It has no AIVideosUGC watermark. If a person appears, that person is an AI performer, not a shopper who bought the deal."
+      "a": "Yes. It has no watermark. If a person appears, that person is an AI performer, not a shopper who bought the deal."
+    },
+    {
+      "q": "Can I start from a link, a batch, or the API?",
+      "a": "Yes. Paste a product page link for a script and a cloned voice, run a batch when many products share the sale scene, or send the catalog through the AIVideosUGC API. Another language can reuse the same photo. The offer text is still yours to confirm."
     }
   ],
   "visual": {
@@ -539,21 +543,22 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Black Friday Video Ad Questions"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
         "h2": "Choose a Scene for a Black Friday Sale Video"
       }
     }
   },
-  "steps_h2": "Build Black Friday Video Ad Ideas in 3 Steps",
-  "steps_lead": "The product stays in the scene. The price, code and end date stay in your editor until you confirm them.",
-  "cta_lead": "Upload the product in your offer and see the credit cost before you start.",
-  "cta_title": "Ready to Make the Deal Clip?",
+  "steps_h2": "How to Make a Black Friday Ad in 3 Simple Steps",
+  "steps_lead": "The product stays in the scene. The price, code, and end date wait until you confirm them.",
+  "cta_lead": "Upload the product in your offer, add a voiceover if you want one, and see the credit cost before you start.",
+  "cta_title": "Ready to Sell from the First Look?",
   "blockOrder": [
     "hero",
     "picker",
     "definition",
+    "reasons",
     "steps",
     "reviews",
     "related",
@@ -561,9 +566,9 @@
     "cta"
   ],
   "definition": {
-    "title": "Get the Right Look from the Photo You Have",
+    "title": "Get a Sale-Ready Look Instantly",
     "paras": [
-      "The sale clip starts from the product photo you upload, so you can skip a studio camera and a large set. The download has no watermark. Add the price, code and end date in your editor afterward."
+      "AI backgrounds turn the photo you upload into a sale-ready scene, so you can skip a studio camera and a large budget. The download has no watermark. Add the confirmed price, code, and end date afterward."
     ]
   },
   "reviews": {
@@ -669,5 +674,23 @@
       "id": "plat-facebook",
       "label": "AI Facebook ad generator"
     }
-  ]
+  ],
+  "reasons": {
+    "h2": "Add Your Brand in Three Easy Moves",
+    "lead": "Start from the photo you have. Add your line, your voice, and the offer only after you confirm the numbers.",
+    "items": [
+      {
+        "t": "Master the sale post",
+        "d": "Open a ready scene, keep your product, and add your line, stickers, and captions. A track from the music library can sit under the clip. The layout is already there, so the sale post does not start from a blank file."
+      },
+      {
+        "t": "Sell from the first glance",
+        "d": "Turn the photo into a listing-ready clip with an AI actor, a script, and a voiceover. Publish it to TikTok or Meta in one step, and type the real price only after download."
+      },
+      {
+        "t": "Apps, batch, and API",
+        "d": "Make the same deal scene on the web, run a batch when the catalog is large, or send products through the AIVideosUGC API. Edit, resize, swap the background, and try another language in the built-in editor. Plans start at $24.50 a month."
+      }
+    ]
+  }
 }

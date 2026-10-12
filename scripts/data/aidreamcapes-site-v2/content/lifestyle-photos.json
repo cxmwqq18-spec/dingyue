@@ -2,9 +2,9 @@
   "id": "lifestyle-photos",
   "title": "AI Lifestyle Product Photos | AIVideosUGC",
   "description": "Create AI lifestyle product photos from one plain image. Place the item in a room, table or cafe scene so shoppers picture using it without a shoot.",
-  "h1": "AI lifestyle product photos that show where the item belongs",
+  "h1": "AI lifestyle product photos that bring a catalog to life",
   "eyebrow": "Lifestyle photo maker",
-  "lead": "Place one plain product photo in a room, on a table, or at a cafe. Shoppers can picture using it, and you do not book a location.",
+  "lead": "Place one plain product photo in a room, in a hand, or on a table. Shoppers can picture using it, and you do not book a location.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,7 +12,7 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Realistic scenes shoppers can judge",
+  "benefits_h2": "Realistic visuals shoppers can picture",
   "benefits": [
     {
       "img": "n:guide:fx15-lifestyle-benefit-context-r1",
@@ -37,16 +37,16 @@
   "steps_lead": "Upload the product, name the place, and download a square scene.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
+      "t": "Upload your photo",
       "d": "Use one photo with the whole item in frame. Shape and small details should be easy to see."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a room, a table, or a market moment. Name the surface, the light, and one prop so the setting supports the product."
+      "t": "Try different scenes",
+      "d": "Try a room, a table, or a market. Name the surface and one prop so the scene supports the product."
     },
     {
-      "t": "Download and Post",
-      "d": "Compare the scene with your plain photo. Add a caption, a link, or a price in your own editor after download."
+      "t": "Download your image",
+      "d": "Check the scene against your plain photo, then download the square image for the store or an ad."
     }
   ],
   "maker": {
@@ -106,6 +106,10 @@
     {
       "q": "Can I post the scene on Instagram?",
       "a": "Yes. These square images work as Instagram product scene photos. Add the caption in Instagram, and add any price in your own editor."
+    },
+    {
+      "q": "Can I add text, a logo, or run many photos?",
+      "a": "Yes. Add a short line of text or your logo on the scene, or edit a set of photos together. You can also connect an API so the store requests new scenes. Each photo is 24 credits, shown before it starts. There is no free plan."
     }
   ],
   "visual": {
@@ -132,8 +136,8 @@
       ]
     },
     "picker": {
-      "title": "Choose the setting for your AI lifestyle product photos",
-      "lead": "Pick a room, a cafe table, or a market moment. The product photo stays the reference.",
+      "title": "Put your product in the right context",
+      "lead": "A room shelf, a cafe table, or a market stall. The product photo stays the reference.",
       "chips": [
         {
           "id": "room-shelf",
@@ -219,11 +223,11 @@
     ],
     "titles": {
       "m3": {
-        "h2": "Choose the setting for your AI lifestyle product photos",
-        "lead": "Pick a room, a cafe table, or a market moment. The product photo stays the reference."
+        "h2": "Put your product in the right context",
+        "lead": "A room shelf, a cafe table, or a market stall. The product photo stays the reference."
       },
       "m4": {
-        "h2": "Show a product in a home setting photo"
+        "h2": "Picture the product in everyday use"
       },
       "faq": {
         "h2": "Questions about AI lifestyle product photos"
@@ -325,15 +329,88 @@
     "benefits",
     "features",
     "steps",
-    "related",
-    "faq"
+    "platforms",
+    "faq",
+    "related"
   ],
   "relatedLinks": [
-    "photo-hub",
     "change-background",
     "white-background",
+    "model-photos",
     "social-ad-photos",
     "plat-instagram",
     "plat-shopify"
-  ]
+  ],
+  "platforms": {
+    "h2": "Your full set of product image tools",
+    "lead": "Create, edit, and prepare product photos for the store, a marketplace, and ads, from one picture or a whole catalog.",
+    "items": [
+      {
+        "t": "Remove photo backgrounds",
+        "d": "Take the old backdrop off and put a clean studio setting behind the item.",
+        "href": "page:change-background"
+      },
+      {
+        "t": "Generate new backgrounds",
+        "d": "Describe a color or a surface while the product stays recognizable from the photo you uploaded.",
+        "href": "page:white-background"
+      },
+      {
+        "t": "Create lifestyle images",
+        "d": "Put the item on a table, on a shelf, or in a hand so shoppers see daily use. That is the scene this page makes."
+      },
+      {
+        "t": "Enhance and resize",
+        "d": "Lift the light, clear a stray object, and size the photo for a store page or an ad.",
+        "href": "page:social-ad-photos"
+      },
+      {
+        "t": "Show products on models",
+        "d": "Place clothing or an accessory on an AI model so shoppers can judge the fit.",
+        "href": "page:model-photos"
+      },
+      {
+        "t": "Export and share",
+        "d": "Download a square photo with no watermark and use it on the site, a marketplace, or an ad. You add the price yourself."
+      },
+      {
+        "t": "Refine product shots",
+        "d": "Even out light, detail, and color on the photo you already have before the scene goes up."
+      },
+      {
+        "t": "Change the frame",
+        "d": "Reframe a tall shot into a wider one, or the other way, when a channel wants a different shape."
+      },
+      {
+        "t": "Connect an API",
+        "d": "Connect an API to the store or marketplace so a new scene can be requested from the catalog. Each photo is still 24 credits, shown first."
+      },
+      {
+        "t": "Add text to a photo",
+        "d": "Place a short offer or the product name on the finished scene. The price still comes from you, not from the photo."
+      },
+      {
+        "t": "Edit photos in batches",
+        "d": "Apply one backdrop or one size to a set of photos together, instead of opening them one by one."
+      },
+      {
+        "t": "Share with your team",
+        "d": "Hand a scene to a teammate for a look before it goes on the product page."
+      },
+      {
+        "t": "Keep a brand kit",
+        "d": "Save the logo, the type, and the colors you reuse so the next scene stays recognizably yours."
+      },
+      {
+        "t": "Make a logo",
+        "d": "Draft a simple logo when the shop does not have one yet, then place it on later photos."
+      },
+      {
+        "t": "Use phone or desktop",
+        "d": "Open the same photos from a phone or a computer and keep going."
+      }
+    ]
+  },
+  "related_h2": "More tools for your product photos",
+  "related_lead": "Backgrounds, models, ad stills, and the stores where the scene can go."
 }

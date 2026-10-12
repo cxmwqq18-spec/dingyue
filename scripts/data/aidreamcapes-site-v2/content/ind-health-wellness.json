@@ -4,7 +4,7 @@
   "description": "Turn one wellness product photo into lifestyle photos and creator-style ads for routines, product pages and social feeds. Watermark-free files ready to post.",
   "h1": "AI Lifestyle Photos for Wellness Brands, Set in a Real Routine",
   "eyebrow": "Health and wellness",
-  "lead": "A plain packshot does not show when the product is used. One photo can sit in a morning routine without a claim about what it does to the body.",
+  "lead": "A plain packshot does not show when the product is used. Paste a product link or one photo, and set it in a morning routine without a claim about the body.",
   "card": "Routine stills and short clips for supplements, tea, and gear.",
   "secondary_keywords": [
     "supplement lifestyle photos",
@@ -28,7 +28,7 @@
     },
     {
       "q": "Do I need a model or a creator?",
-      "a": "No for these scenes. Hands and people are generated, at the credit cost shown before the job. Hire a real creator if you need a true customer story."
+      "a": "No hire for these scenes. Pick a generated presenter, and the clip can include a spoken line and captions. Hire a real person only for a true customer story. Health claims stay in copy you can check."
     },
     {
       "q": "Can I make a Story from this?",
@@ -45,22 +45,26 @@
     {
       "q": "What should the scene avoid?",
       "a": "Avoid before-and-after bodies, medical outcomes, and dosage text inside the image. Show the product in a routine, and write the claims where you can check them."
+    },
+    {
+      "q": "Can I start from a product link and make more than one cut?",
+      "a": "Yes. Paste the product page, or send that link through the API. Ask for a short script, pick a presenter, and make a few cuts, including one in another language. Trim the clip, choose a voice and a backing track, and check captions in the editor on the page, then send it to TikTok or Meta. The credit cost is shown before you start. Do not show a health result."
     }
   ],
-  "steps_h2": "How to Make Wellness Product Photos in 3 Steps",
-  "steps_lead": "Three things you do on screen. The scene shows use, not a health result.",
+  "steps_h2": "How to Make Wellness Product Photos in 3 Simple Steps",
+  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. The scene shows the routine, not a health result.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Shoot the bottle or the gear upright, label centered, in soft side light. Glare on a glossy label usually starts in this photo."
+      "t": "Upload Your Product",
+      "d": "Paste the product page, or upload a bottle or mat photo with the label centered. A short note about the item works too."
     },
     {
-      "t": "Describe the Routine Scene",
-      "d": "Name the moment, like a mat by a window or a bottle beside breakfast. Show the routine only, no body change. People are generated."
+      "t": "Choose a Presenter",
+      "d": "Pick a generated adult for the routine. That look is not a health result, and you do not hire anyone."
     },
     {
-      "t": "Download and Post",
-      "d": "Check the label and the product shape, then download. Add claims or offers in your editor. Captions are not added for you."
+      "t": "Generate and Publish",
+      "d": "You get a spoken line and on-screen captions in the frame you chose. Send the clip to TikTok or Meta from this page."
     }
   ],
   "visual": {
@@ -103,7 +107,7 @@
     }
   },
   "templates_lead": "Pick a routine scene for your wellness product.",
-  "cta_lead": "Upload one product photo, describe a daily moment, and leave health claims out of the picture.",
+  "cta_lead": "Paste a product link or upload one photo, pick a presenter, and publish a routine clip with a voice and captions. Leave health claims out of the picture.",
   "relatedLinks": [
     {
       "id": "tpl-ugc",
@@ -131,22 +135,22 @@
     }
   ],
   "steps_cta": {
-    "label": "Create lifestyle photo",
+    "label": "Create a lifestyle photo",
     "href": "/app/create?industry=health-wellness"
   },
   "reasons": {
-    "h2": "Supplement Lifestyle Photos Without a Shoot",
-    "lead": "Show the bottle in a routine people recognize. Leave health results and dosage wording out of the picture.",
+    "h2": "Why Wellness Brands Skip the Shoot",
+    "lead": "Show the bottle in a routine people recognize. One photo can feed a still and a few clips. Leave health results and dosage wording out of the picture.",
     "items": [
       {
         "t": "A routine, not a result",
-        "d": "Hands unroll a mat beside a roller. Do not show a body change or a medical outcome.",
+        "d": "Hands unroll a yoga mat beside a roller. Do not show a body change or a medical outcome.",
         "img": "n:guide:fx32-health-benefit-yoga",
         "alt": "Hands unroll a plain teal yoga mat beside a foam roller in a bright studio."
       },
       {
         "t": "A still and a short clip",
-        "d": "The same bottle can become a table still and a short routine clip. Use a square still on the product page, or 9:16 for a story.",
+        "d": "The same bottle can become a table still, a 9:16 story, and another cut for a second placement.",
         "img": "n:guide:b2f3-ind-health-breakfast-r1",
         "alt": "A plain sage bottle stands beside a bowl of breakfast fruit on a wooden table."
       },
@@ -159,8 +163,8 @@
     ]
   },
   "platforms": {
-    "h2": "Fitness Product Lifestyle Images on Every Channel",
-    "lead": "A square still fits a product page. A vertical clip fits a story. Keep the routine honest.",
+    "h2": "Create Wellness Ads for Every Platform",
+    "lead": "Fitness product lifestyle images start as a square still or a vertical story. Send the clip to TikTok or Meta from this page, or download it for the listing.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -195,7 +199,7 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use UGC Style Supplement Photos",
+    "h2": "How Wellness Brands Switch to AI Ads",
     "lead": "Example ways wellness sellers use one product photo. These are not quotes, and they are not health claims.",
     "items": [
       {
@@ -233,11 +237,58 @@
         "who": "Careful brand",
         "t": "Reject a result scene",
         "d": "If a preview implies a body change or a medical effect, they discard it and describe only the routine."
+      },
+      {
+        "example": true,
+        "who": "Script desk",
+        "t": "A link, then a short script",
+        "d": "They paste the product page, or send that link through the API, and ask for a short routine script. Dosage stays out of the spoken line."
+      },
+      {
+        "example": true,
+        "who": "Presenter desk",
+        "t": "One look, then a second",
+        "d": "They pick a presenter from the actor library for the breakfast scene, then a second look of that same person. Neither clip shows a body change."
+      },
+      {
+        "example": true,
+        "who": "Edit desk",
+        "t": "Voice, captions, and a track",
+        "d": "They choose a voice or a short sample of their own, check the captions, pick a backing track, and trim the clip in the editor on the page."
+      },
+      {
+        "example": true,
+        "who": "Second market",
+        "t": "The same bottle, another language",
+        "d": "They make the breakfast clip again in a second language from the same photo. Approved claims stay in the listing, not in the picture."
+      },
+      {
+        "example": true,
+        "who": "Test desk",
+        "t": "A few cuts, then publish",
+        "d": "They describe the routine in chat, keep a few cuts, and send the one they want to TikTok or Meta. A 10-second clip is 40 credits."
       }
     ]
   },
   "cta_title": "Place the Product in a Routine",
   "related_h2": "Wellness lifestyle photos",
+  "maker": {
+    "options": [
+      [
+        "Photo",
+        "Your product shot"
+      ],
+      [
+        "Scene",
+        "Morning routine"
+      ],
+      [
+        "Size",
+        "Square"
+      ]
+    ],
+    "cta": "Create a lifestyle photo"
+  },
   "blockOrder": [
     "hero",
     "strip",

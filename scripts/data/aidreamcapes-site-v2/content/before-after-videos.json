@@ -4,60 +4,60 @@
   "description": "Show a product change in one short ad: clean a stain, route loose cords or lift dust. Keep the same item and camera for TikTok, Reels or your product page.",
   "h1": "Before and After Video Maker: One Photo, One Clear Change",
   "eyebrow": "Before & after video",
-  "lead": "AIVideosUGC turns one product photo into a before and after video: the same item stays in frame while a stain lifts, cords settle, or dust clears. No second setup, no matched reshoot, no crew. Choose a frame, pick 6 to 30 seconds, and download a clip for TikTok, Reels, or a product page.",
+  "lead": "AIVideosUGC turns a product photo or a product link into a before and after video. The script, an AI voice, captions, and the edit come with the clip, and the same item stays in frame while a stain lifts, cords settle, or dust clears. Choose a frame, pick 6 to 30 seconds, then download with no watermark or publish to TikTok or Meta.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
     "transformation video for ads",
     "before and after TikTok video"
   ],
-  "benefits_h2": "Benefits of a Before and After TikTok Video",
+  "benefits_h2": "Benefits of Using a Before and After Video",
   "benefits": [
     {
-      "t": "Start From One Photo",
-      "d": "Upload the photo, name the change, and download the clip. You do not book a filming date.",
+      "t": "Start From a Photo or a Link",
+      "d": "Bring a photo, a prompt, or a product link. The script, the voice, and the edit are handled before you download. You do not book a filming date.",
       "icon": "bolt"
     },
     {
-      "t": "Pay for the Clip, Not a Reshoot",
-      "d": "Credits replace a second crew call. A 15-second clip uses 60 credits, and a failed job gives those credits back.",
+      "t": "Pay for the Clip, Not a Crew",
+      "d": "Plans start at $24.50 a month. A 15-second clip uses 60 credits, and a failed job returns them. Another version spends its own credits.",
       "icon": "coins"
     },
     {
-      "t": "More Hooks from One Photo",
-      "d": "Keep the product and try another opening, such as a dust pass, a cord reset, or a stain wipe. Each version spends its own credits.",
+      "t": "More Versions From One Input",
+      "d": "Keep the product and try another hook, presenter, voice, or language. Send a group of photos through when you have more than one item.",
       "icon": "layers"
     },
     {
       "t": "A New Opening Before the Ad Tires",
-      "d": "When shoppers have seen one change too often, swap the action or the setting. You do not rebuild the set.",
+      "d": "When shoppers have seen one change too often, swap the action, the face, or the line. You do not rebuild the set.",
       "icon": "refresh"
     },
     {
-      "t": "Labels You Add Yourself",
-      "d": "Add a before or after label, a price, or licensed music after download, so the words stay spelled the way you want.",
+      "t": "The Edit Stays on Brief",
+      "d": "You pick the script, the tone, the presenter, and the captions. Change them in the built-in editor, and add a track from the music library.",
       "icon": "check"
     },
     {
       "t": "Yours to Run, With No Watermark",
-      "d": "Finished clips can be used in paid and organic ads. They carry no watermark.",
+      "d": "Finished clips can be used in paid and organic ads. They carry no watermark. Publish to TikTok or Meta from the same editor.",
       "icon": "shield"
     }
   ],
-  "steps_h2": "How to Use a Before and After Video Maker in 3 Simple Steps",
-  "steps_lead": "Upload one photo, name the change, and download a clip you can post.",
+  "steps_h2": "How to Make a Before and After Video in 3 Simple Steps",
+  "steps_lead": "Start from a photo or a link, then leave with a clip you can post.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Keep one product through the whole clip. Upload one clear photo with the full item in frame."
+      "t": "Add a Link or a Photo",
+      "d": "Paste a product link or upload one clear photo of the item you want to change."
     },
     {
-      "t": "Describe the Change",
-      "d": "Name the start, the action, and the result, like a dusty shelf turning clear. Then pick a frame and length from 6 to 30 seconds."
+      "t": "Let the Clip Come Together",
+      "d": "A script, a voice, and captions are added, then the change is rendered in the frame you picked."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip when it is ready. Add a before or after label, a price, or licensed music in your editor."
+      "t": "Download or Publish",
+      "d": "Download the clip with no watermark, or send it to TikTok or Meta from the editor."
     }
   ],
   "maker": {
@@ -75,54 +75,46 @@
   },
   "faq": [
     {
-      "q": "What is a before and after video?",
-      "a": "It is a short clip with a starting state, one practical action, and a visible result. You make it from one product photo and use it as a product demonstration."
+      "q": "What is a before and after video maker?",
+      "a": "A tool that builds a short change-ad from a product photo, a prompt, or a product link. Script, presenter, voice, captions, and the edit are part of the clip. Show a change your product really makes to an item or the space around it, not a health, skin, or body result."
     },
     {
-      "q": "How do I make one from a product photo?",
-      "a": "Upload one clear photo of the whole item, describe the start, the action, and the result, pick a frame and a length, then download the clip."
+      "q": "How do I make a before and after video?",
+      "a": "Add a product link or a photo, name the start and the result, then download or publish. You can edit the script, the captions, and the music in the built-in editor before it goes out."
     },
     {
-      "q": "How is this different from filming two setups?",
-      "a": "A shoot stages the item twice and tries to match the camera. Here both states come from the same photo, with no second booking."
+      "q": "Which maker should I use for this kind of ad?",
+      "a": "Use AIVideosUGC when you want several before and after versions from photos or links you already have, in the frames TikTok, Reels, Shorts, and Meta use."
     },
     {
-      "q": "Who should use a before and after video?",
-      "a": "Sellers whose product fixes something visible, such as a stain, dust, loose cords, or a stuck zipper. It suits a product page or a paid ad."
+      "q": "Is a before and after video free to make?",
+      "a": "No. Plans start at $24.50 a month. A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. You see that cost before the job starts, and a failed job returns the credits."
     },
     {
-      "q": "What should the clip not claim?",
-      "a": "Show a change to an item or the space around it, not a health, skin, or body result. A cleaned shoe, a routed cable, or a dust-free shelf should match what the product really does."
+      "q": "Do I own the clip?",
+      "a": "Yes. Finished clips can run as paid or organic ads and carry no watermark."
     },
     {
-      "q": "Which frames and lengths can I choose?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4, and 6, 10, 15, or 30 seconds. Downloads have no watermark."
+      "q": "Which frames can I publish, and where?",
+      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4. You can also switch the spoken line and the captions to another language and pick a matching voice. Send the file to TikTok or Meta from the editor, or download it."
     },
     {
-      "q": "How many credits does one clip use?",
-      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The cost shows before you start, and a failed job gives the credits back."
+      "q": "Can I make one for every product at once?",
+      "a": "Yes. Add a group of photos or product links and get a clip for each item. Every clip spends its own credits. A store can also send photos through the API and take the clips back."
     },
     {
-      "q": "Can I add Before and After labels?",
-      "a": "Yes. Add them in your editor after download, so the words stay spelled the way you want."
+      "q": "Will this do as well as filming the change?",
+      "a": "Results vary by product and audience. Many shops use these clips to try hooks quickly, and still film a hero spot when they want a real set."
     },
     {
-      "q": "Can I add captions, a price, or music?",
-      "a": "Yes. Add captions, your price, and licensed music in your editor. This tool does not add them for you."
-    },
-    {
-      "q": "Is anyone on screen a real customer?",
-      "a": "No. Any person in the clip is generated for the ad, not a buyer. Do not present the result as a customer review."
-    },
-    {
-      "q": "Will TikTok or Meta reject this kind of AI ad?",
-      "a": "Check the current rule on TikTok and Meta before you spend more. Some ask for a label when a clip could be read as a real customer."
+      "q": "Will TikTok or Meta reject an AI before and after ad?",
+      "a": "Check the current rule before you spend more. Some placements ask for a label when a clip could be read as a real customer. Anyone on screen is a generated presenter, not a buyer."
     }
   ],
   "actor_scene_picker": {
-    "title": "Choose a Person and a Scene",
-    "lead": "Pick who is in the frame and where. On the next step, describe one start, one action, and one result.",
-    "button": "Use this person and scene"
+    "title": "Choose a Presenter From the Actor Library",
+    "lead": "Pick who shows the change, and where they stand. Then name one start, one action, and one result.",
+    "button": "Use this presenter and scene"
   },
   "relatedLinks": [
     {
@@ -159,8 +151,8 @@
       "prompt": "Loose cords on the desk, then a hand feeds them through the organizer. The camera stays put, and the desk ends clear."
     },
     "picker": {
-      "title": "See a Before and After Product Video",
-      "lead": "Each example keeps one item and one camera, then shows the result. Pick a change your product really makes.",
+      "title": "See What AIVideosUGC Generates",
+      "lead": "Look through finished changes, then make one from your own photo or link.",
       "chips": [],
       "cards": [],
       "button": "Try this video idea"
@@ -168,13 +160,13 @@
     "uses": [],
     "titles": {
       "m2": {
-        "h2": "How to Use a Before and After Video Maker in 3 Simple Steps"
+        "h2": "How to Make a Before and After Video in 3 Simple Steps"
       },
       "m4": {
         "h2": "Where a Visible Change Helps the Sale"
       },
       "faq": {
-        "h2": "Questions About a Before and After Video Maker"
+        "h2": "Before and After Video Maker - Frequently Asked Questions"
       }
     }
   },
@@ -185,71 +177,73 @@
     "reasons",
     "steps",
     "benefits",
+    "features",
     "related",
     "compare",
     "reviews",
+    "closing",
     "faq",
     "cta"
   ],
   "definition": {
-    "title": "What Is an AI Before and After Video?",
+    "title": "What Is a Before and After Video Maker?",
     "paras": [
-      "An AI before and after video shows one starting state, one practical action, and one visible result, made from a single product photo. The item and the camera stay steady so a shopper can judge the change.",
-      "Use it as a before and after product video, and as a transformation video for ads, on TikTok, Reels, Shorts, or a product page. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. The change has to be something your product really does to an item or the space around it, not a health, skin, or body result."
+      "A before and after video maker turns one product photo, a short prompt, or a product link into a short ad. You see the start, one practical action, and the result, with an AI voice and a presenter from the actor library if you want someone on camera.",
+      "Use it as a before and after product video or a transformation video for ads. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4, ready for TikTok, Reels, Shorts, and Meta. Show a change the product really makes to an item or the space around it, not a health, skin, or body result."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Make a Transformation Video for Ads",
+    "h2": "Reasons to Use AIVideosUGC as Your Before and After Video Maker",
     "lead": "For sellers whose product fixes something a shopper can see.",
     "items": [
       {
-        "t": "Both States in One Shot",
-        "d": "The scuffed side and the cleaned side stay in one frame, so the result is easy to judge. The item does not leave the shot.",
+        "t": "Written From Your Product",
+        "d": "The hook is written from your photo, your prompt, or a product link, so the change matches the item you sell.",
         "img": "n:guide:fx48-benefit-shoe",
         "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned."
       },
       {
-        "t": "No Second Shoot to Match",
-        "d": "You start from one photo. You do not restage the light, the crop, or the camera for a clean take.",
+        "t": "Ready for TikTok and Meta",
+        "d": "Clips come out in 9:16, 1:1, 16:9, 4:3, or 3:4. Publish to TikTok or Meta from the editor, with captions already on.",
         "img": "n:guide:fx48-benefit-tote",
         "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
       },
       {
-        "t": "A Change the Product Really Makes",
-        "d": "You name the start, the action, and the result. The change stays on the item, or on the space around it.",
+        "t": "Several Looks From One Photo",
+        "d": "Try another presenter, voice, hook, or language from the same photo. Each version is its own clip.",
         "img": "n:guide:fx48-benefit-watch",
         "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
       }
     ]
   },
   "compare_table": {
-    "title": "AIVideosUGC vs. Matching Two Shoots",
-    "lead": "One photo instead of two matched setups. See what you skip when the change is directed, not restaged.",
+    "title": "AIVideosUGC vs. Traditional Before and After Shoots",
+    "lead": "One photo or one product link, instead of staging the item twice.",
     "columns": [
       "",
       "AIVideosUGC",
-      "Two matched shoots"
+      "A traditional shoot"
     ],
     "rows": [
       [
         "How the first clip happens",
-        "From the photo you uploaded",
+        "From your photo, prompt, or product link",
         "Stage the before, reset the after, then edit"
       ],
       [
-        "What you need",
-        "One product photo and one change to describe",
-        "The item staged twice, plus a camera and a crew"
+        "Cost of a clip",
+        "Credits per clip, from 24 for 6 seconds",
+        "A crew, a location, and editing hours"
       ],
       [
-        "Cost of another version",
-        "Credits for one clip (60 for 15 seconds)",
+        "New versions",
+        "Another hook, voice, presenter, or language",
         "Another setup and more editing time"
       ],
       [
-        "Frames",
-        "9:16, 1:1, 16:9, 4:3, or 3:4 on each clip",
-        "Recut both states for every placement"
+        "Script and edit",
+        "AI script, captions, a music library, and a built-in editor",
+        "A brief, then a separate edit bay"
       ],
       [
         "Rights",
@@ -257,44 +251,127 @@
         "Agreed with whoever filmed it"
       ],
       [
-        "A take that fails",
-        "The credits go back to your balance",
-        "Both setups are already spent"
+        "Publish",
+        "Send the file to TikTok or Meta from the editor",
+        "One export, then a manual upload"
       ]
     ]
   },
   "reviews": {
-    "h2": "Example Changes Sellers Test",
+    "h2": "How Shops Use a Before and After Video",
     "lead": "Sample setups for a type of shop, not a buyer review and not a skin or body result.",
     "items": [
       {
         "example": true,
         "who": "Home seller",
-        "t": "Dust on a shelf, then a clear shelf",
-        "d": "A 15-second ad keeps one camera while the shelf goes from dusty to clear."
+        "t": "Dust, then a clear shelf",
+        "d": "A home shop uploads one shelf photo. A script and a voice name the change, and the clip is tested on TikTok."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "One scuff, then a cleaner shoe",
-        "d": "Show the brush and the shoe in one frame so the result is easy to compare."
+        "t": "A scuff, then a cleaner shoe",
+        "d": "The shoe stays in one frame. Captions mark the before and the after inside the editor."
       },
       {
         "example": true,
         "who": "Organizer brand",
-        "t": "Loose cords, then a routed bundle",
-        "d": "Keep the same desk and the same holder, and show only the cords settling into place."
+        "t": "Loose cords, then a neat bundle",
+        "d": "The desk does not move. A second version swaps the hook and the presenter."
       },
       {
         "example": true,
         "who": "Cleaning brand",
-        "t": "A dark grout line, then a clean section",
-        "d": "Hold the camera still so the scrubbed section can be compared with the line beside it."
+        "t": "Dark grout, then a clean section",
+        "d": "The camera holds still so the scrubbed part can be compared with the line beside it."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "A dull chain, then a brighter one",
+        "d": "They paste the product link, pick a voice, and publish the clip to Meta."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "A matted bed, then a smooth one",
+        "d": "A presenter from the actor library stands beside the bed. The line only says what the product does."
+      },
+      {
+        "example": true,
+        "who": "Electronics shop",
+        "t": "A tangled desk, then a clear one",
+        "d": "One clip is made for each cable kit, then each file is sent out from the editor."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "A sticky bottle, then a clean one",
+        "d": "Auto captions and a track from the music library go on before the download."
+      },
+      {
+        "example": true,
+        "who": "Bag shop",
+        "t": "A stained panel, then a clean one",
+        "d": "The same wipe is rendered again in another language, with a matching voice."
+      },
+      {
+        "example": true,
+        "who": "Kitchen brand",
+        "t": "A cloudy board, then a clear one",
+        "d": "The photo goes out through the API, and the finished clip comes back to the shop tools."
+      },
+      {
+        "example": true,
+        "who": "Fitness brand",
+        "t": "A chalky bar, then a wiped one",
+        "d": "The built-in editor trims the wipe, then the clip is posted to Reels."
       }
     ]
   },
-  "cta_title": "Ready to Show the Change?",
+  "cta_title": "Ready to Make Your Next Before and After Video?",
   "cta_lead": "Upload a product photo and see the credit cost before you start.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "relatedH2": "More From the AIVideosUGC Toolkit"
+  "relatedH2": "More From the AIVideosUGC Toolkit",
+  "benefits_lead": "For a shop that needs another visible change on screen without booking a second shoot.",
+  "closing": {
+    "h2": "Your Next Change Does Not Need Two Shoots",
+    "paras": [
+      "Start from a product link or one photo. You get the script, the voice, the captions, and a clip that shows one real change."
+    ]
+  },
+  "related_lead": "Other ways to turn a product photo or a product link into a clip.",
+  "more_sections": [
+    {
+      "eyebrow": "Features",
+      "h2": "Features of a Before and After Video Maker",
+      "lead": "The parts that used to mean a second shoot now sit in this one clip.",
+      "items": [
+        {
+          "t": "An AI Script From Your Product",
+          "d": "The hook is written from your photo, your prompt, or a product link. Edit any line before the voice is recorded."
+        },
+        {
+          "t": "An AI Voice on the Change",
+          "d": "Pick a voice and the presenter says the line. Shoppers hear the change explained, not just shown."
+        },
+        {
+          "t": "Captions, Music, and the Editor",
+          "d": "Auto captions land on the clip. Choose a track from the music library and trim the wipe in the built-in editor."
+        },
+        {
+          "t": "A Presenter From the Actor Library",
+          "d": "Choose who is in the frame. Swap the person later without staging the product again."
+        },
+        {
+          "t": "A Group of Products, a Link, or the API",
+          "d": "Paste one product link, or send a group of photos. Each clip spends its own credits. Your tools can request a clip through the API."
+        },
+        {
+          "t": "Another Language, Then Publish",
+          "d": "Render the same change in another language with a matching voice, then send the file to TikTok or Meta."
+        }
+      ]
+    }
+  ]
 }

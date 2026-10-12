@@ -4,7 +4,7 @@
   "description": "Turn one garment photo into a try-on, a fit check, or a short look. Download watermark-free photos and clips for fashion brands, social feeds, and paid ads.",
   "h1": "AI Model Photos and Videos for Fashion Brands, Without a Casting Day",
   "eyebrow": "Fashion and clothing",
-  "lead": "A flat garment photo can become a try-on, a fit check, or a short look. You skip the casting call and check the print before you post.",
+  "lead": "A flat garment photo or a product link can become a try-on, a fit check, or a short look, with a voiceover and captions. Check the print before you post.",
   "card": "Try-ons, fit checks, lookbooks, and review-style clips from one garment photo.",
   "secondary_keywords": [
     "AI on-model clothing photos",
@@ -20,7 +20,7 @@
     },
     {
       "q": "Can a flat-lay photo become an on-model photo?",
-      "a": "Yes. Smooth the garment, shoot the whole piece in even light, and describe the person and the room. Check seams and hems before you list it."
+      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the person and the room. Check seams and hems before you list it."
     },
     {
       "q": "Will the print or the fabric change?",
@@ -44,25 +44,29 @@
     },
     {
       "q": "How is an on-model clip different from a creator?",
-      "a": "You pay the credits shown before the job, not a creator fee. The person is generated, so post it as an ad, not as a customer's review."
+      "a": "You pick a generated model from the actor library and pay the credits shown before the job, not a creator fee. Post it as an ad, not as a customer's review."
+    },
+    {
+      "q": "Can a try-on include a voice and captions?",
+      "a": "Yes. Choose a generated model, and the clip can include a spoken line and captions. Check the print, then publish the file to TikTok or Meta. A failed job returns its credits."
     }
   ],
   "templates_lead": "Choose a fashion video ad format for try-ons, fit checks, review-style clips, or fabric details.",
-  "cta_lead": "Upload one garment photo, describe the person and the room, and check the credit cost before you start.",
+  "cta_lead": "Paste a product link or upload one garment photo, pick a model, and check the credit cost before you start.",
   "steps_h2": "Fashion Outfit Reels in Three Moves",
-  "steps_lead": "Go from a flat photo to a clip you can post. Check the print before it goes live.",
+  "steps_lead": "Go from a flat photo to a clip you can post. Three steps, and check the print before it goes live.",
   "steps": [
     {
-      "t": "Upload Your Garment Photo",
-      "d": "Lay the piece flat or hang it on a plain wall, front up, in even light. The whole garment, hems and fastenings included, stays visible."
+      "t": "Upload the Garment Photo",
+      "d": "Paste a product link, or lay the piece flat in even light, whole garment and fastenings visible."
     },
     {
-      "t": "Describe the Model and Scene",
-      "d": "Name the person and setting plainly, like a petite woman in her 40s in a bright hallway. The model is generated, not a customer."
+      "t": "Choose a Creator Avatar",
+      "d": "Pick a generated model from the actor library and name the room. Height and build are yours to set."
     },
     {
-      "t": "Download and Post",
-      "d": "Check the print, buttons, and color against the real garment, then download. Add size notes in your editor. Captions are not added for you."
+      "t": "Generate Voice and Captions",
+      "d": "A voiceover and captions come with the frame you picked. Post the file to TikTok or Meta after the print matches."
     }
   ],
   "visual": {
@@ -106,22 +110,22 @@
   },
   "reasons": {
     "h2": "AI On-Model Clothing Photos, Checked Before You Post",
-    "lead": "Fit is hard to judge on a hanger. Put the garment on a generated adult and keep the fabric recognizable.",
+    "lead": "Fit is hard to judge on a hanger. Put the garment on a generated adult, from a photo or a product link, and keep the fabric recognizable.",
     "items": [
       {
-        "t": "No casting call",
-        "d": "Start with one garment photo and show it on an adult model. You skip talent booking and a new studio day for every color.",
+        "t": "Faster Than a Casting Day",
+        "d": "Start with one garment photo or a product link and show it on an adult model. You skip talent booking and a new studio day for every color.",
         "img": "n:guide:fx30-fashion-benefit-fit-r1",
         "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible."
       },
       {
-        "t": "Fit you can see move",
-        "d": "A turn, a short walk, or a hem close-up shows drape and fastenings. Fine print is easier to check when the upload is sharp.",
+        "t": "More Looks, Every Channel",
+        "d": "A turn, a short walk, or a hem close-up can ship together as a batch. Fine print is easier to check when the upload is sharp.",
         "img": "n:guide:fx30-fashion-benefit-detail-r1",
         "alt": "Hands pinch the hem and sleeve seam of a plain olive overshirt to show drape and stitching."
       },
       {
-        "t": "More looks, same piece",
+        "t": "Check the Print Yourself",
         "d": "Test a try-on, a lookbook frame, and a fit check while the garment stays recognizable. Reject any result that changes the print.",
         "img": "n:guide:fx30-fashion-benefit-review-r1",
         "alt": "Adult woman holds a plain denim jacket by the shoulders for a fit check."
@@ -130,7 +134,7 @@
   },
   "platforms": {
     "h2": "Clothing Product Photos for Shopify and Social",
-    "lead": "One garment photo can feed a product-page still and a vertical try-on. Pick the frame for the shelf you use.",
+    "lead": "One garment photo can feed a product-page still and a vertical try-on. Publish the clip to TikTok or Meta after the print checks out.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -166,7 +170,7 @@
   },
   "reviews": {
     "h2": "Where an AI Lookbook for Clothing Brands Helps",
-    "lead": "How clothing sellers use one garment photo. The model is generated, not a customer.",
+    "lead": "How clothing sellers use one garment photo or a product link. The model is generated, not a customer.",
     "items": [
       {
         "example": true,
@@ -183,26 +187,50 @@
       {
         "example": true,
         "who": "Small line",
-        "t": "Three frames, one piece",
-        "d": "The same shirt photo feeds a lookbook still, a 10-second turn (40 credits), and a 15-second walk (60 credits)."
+        "t": "Two lengths, one shirt",
+        "d": "The same shirt photo feeds a 10-second turn (40 credits) and a 15-second walk (60 credits)."
       },
       {
         "example": true,
         "who": "Size run",
-        "t": "Say the build in the scene",
-        "d": "They describe height and build in the scene text, then compare the silhouette with the sample before listing."
+        "t": "Build named in the script",
+        "d": "They ask for a short script that names height and build, then compare the silhouette with the sample."
       },
       {
         "example": true,
         "who": "Marketplace desk",
-        "t": "Still and clip together",
-        "d": "One hanging photo guides an on-model still for the product page and a vertical clip for a reel."
+        "t": "Presenter kept for the line",
+        "d": "One generated model from the library wears the new color and the next piece."
       },
       {
         "example": true,
         "who": "Print-heavy brand",
-        "t": "Reject a changed pattern",
-        "d": "Stripes and embroidery are checked against the upload. If the repeat shifts, they run another version instead of posting it."
+        "t": "Captions, then a print check",
+        "d": "They fix captions in the editor and reject the file if the repeat has shifted."
+      },
+      {
+        "example": true,
+        "who": "Lookbook desk",
+        "t": "A link for the new color",
+        "d": "They paste the product page instead of rebooking a fitting, and still check the hems."
+      },
+      {
+        "example": true,
+        "who": "Region desk",
+        "t": "The turn in another language",
+        "d": "The same turn is rendered for another market. The garment color is checked both times."
+      },
+      {
+        "example": true,
+        "who": "Photo set",
+        "t": "A few flats, no casting",
+        "d": "Several garment photos stand in for a casting day. The model stays generated."
+      },
+      {
+        "example": true,
+        "who": "Chat desk",
+        "t": "Describe the hallway, get the reel",
+        "d": "They describe the room in a short back-and-forth and get a script with the try-on."
       }
     ]
   },
@@ -240,9 +268,43 @@
     "reasons",
     "steps",
     "platforms",
+    "features",
     "related",
     "reviews",
     "faq",
     "cta"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included in the job",
+      "h2": "Features Clothing Sellers Get With the Clip",
+      "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
+      "items": [
+        {
+          "t": "A link becomes the try-on",
+          "d": "Paste the product page. The job reads the garment and starts a turn, a fit check, or a short look from that link."
+        },
+        {
+          "t": "A model from the library",
+          "d": "Choose a generated model and describe height and build. The person is not a real customer."
+        },
+        {
+          "t": "Voice and captions included",
+          "d": "A spoken line and on-screen captions come with the clip. Size notes are still safer when you type them."
+        },
+        {
+          "t": "A script for the look",
+          "d": "Ask for a short script about one turn or one walk. Change a word in the editor before you post."
+        },
+        {
+          "t": "Edit on the same page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a watermark-free file."
+        },
+        {
+          "t": "Another language, then publish",
+          "d": "Render the same turn in another language, then publish the file to TikTok or Meta."
+        }
+      ]
+    }
   ]
 }

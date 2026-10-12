@@ -4,7 +4,7 @@
   "description": "Make an Instagram ad from one product photo. Choose a 9:16 Reel or square still, see the credit cost first, and download without a watermark.",
   "h1": "AI Instagram Ads from One Product Photo",
   "eyebrow": "Instagram ads",
-  "lead": "Turn one product photo into an Instagram ad. Choose a tall clip or a square still, see the credit cost first, and download a file with no watermark.",
+  "lead": "Paste a product link or start from one photo. Pick an actor and a voice, see the credit cost first, and publish the Instagram ad or download it with no watermark.",
   "card": "Instagram ads from one product photo, as a tall clip or a square still.",
   "secondary_keywords": [
     "Instagram Reels ads",
@@ -15,31 +15,31 @@
   "faq": [
     {
       "q": "What can I make here for Instagram?",
-      "a": "A tall clip for full-screen placements, or a square still for the grid, both from one product photo. You pick the shape. The credit cost shows first."
+      "a": "A tall clip for Reels and Stories, or a square still for the grid, from a product link or one photo. You can add an actor, a script, a voiceover and captions. The credit cost shows first."
     },
     {
-      "q": "How do I make an Instagram ad from one photo?",
-      "a": "Upload a clear picture, describe one moment, choose the tall clip or the square still, and download the file when it is ready."
+      "q": "How do I make an Instagram ad from a link?",
+      "a": "Paste the product page. A script, pictures and captions can be drafted for you. Pick an actor and a voice, choose the tall clip or the square still, then publish or download."
     },
     {
       "q": "Do you have ready-made Reel layouts?",
-      "a": "No. Describe one moment, choose a tall clip, and download it. No Reel layout is applied for you."
+      "a": "Yes. Start from a Reel, Story or feed template, then swap the product, the actor and the line. You can also describe one moment with no template."
     },
     {
       "q": "What does a file cost?",
       "a": "A still costs 24 credits. A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a job fails, those credits return on their own."
     },
     {
-      "q": "Are music and captions included?",
-      "a": "No. Add the caption, sticker and soundtrack after download. The file has no watermark and is yours to use in organic posts and paid ads."
+      "q": "Are music, captions and a voice included?",
+      "a": "Yes. A clip can include captions, a voiceover and a music track. Change them in the editor before you publish or download. The file has no watermark."
     },
     {
-      "q": "Can I run the same file in a paid campaign?",
-      "a": "Yes. Download it, then upload it yourself. Follow the current ad-review prompts for the market where the ad will run."
+      "q": "Can I publish the file as a paid ad?",
+      "a": "Yes. Publish it to Instagram or Meta from here, or download it and upload it yourself. Follow the current ad-review prompts for the market where the ad will run."
     },
     {
       "q": "Do I need a creator or a studio?",
-      "a": "No. If a person appears, that presenter is generated. It is not a real customer and not a creator you booked."
+      "a": "No. Pick someone from the actor library, or make your own twin. If a person appears, that presenter is generated. It is not a real customer and not a creator you booked."
     },
     {
       "q": "Which frame should I check before export?",
@@ -51,16 +51,16 @@
   "cta_lead": "Choose Reels, Stories or the Feed first, then make a still or clip that fits it.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one sharp picture of the whole item. Shoppers should recognize it in the first frame."
+      "t": "Add a product link",
+      "d": "Paste the product page. We pull the pictures and the description, and you can upload a photo instead."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Name one moment, then choose a tall clip or a square still. The credit cost shows before the file is made."
+      "t": "Choose an actor",
+      "d": "Pick someone from the actor library, or make your own twin. A voice can match the language you sell in."
     },
     {
-      "t": "Download and Post",
-      "d": "Save the file with no watermark. Add the caption and offer yourself, then post it where the ad will run."
+      "t": "Export and publish",
+      "d": "Publish to Instagram or download with no watermark. Captions, voice and music can already be on the file."
     }
   ],
   "visual": {
@@ -89,16 +89,16 @@
       ],
       "items": [
         {
-          "t": "Upload Your Product Photo",
-          "d": "Add one sharp picture of the whole item. Shoppers should recognize it in the first frame."
+          "t": "Add a product link",
+          "d": "Paste the product page. We pull the pictures and the description, and you can upload a photo instead."
         },
         {
-          "t": "Describe Your Scene",
-          "d": "Name one moment, then choose a tall clip or a square still. The credit cost shows before the file is made."
+          "t": "Choose an actor",
+          "d": "Pick someone from the actor library, or make your own twin. A voice can match the language you sell in."
         },
         {
-          "t": "Download and Post",
-          "d": "Save the file with no watermark. Add the caption and offer yourself, then post it where the ad will run."
+          "t": "Export and publish",
+          "d": "Publish to Instagram or download with no watermark. Captions, voice and music can already be on the file."
         }
       ]
     },
@@ -108,11 +108,11 @@
       }
     }
   },
-  "benefits_h2": "Why product ads for Instagram start from one photo",
+  "benefits_h2": "Why AIVideosUGC for Instagram ads",
   "benefits": [
     {
-      "t": "One upload, two shapes",
-      "d": "Make a tall clip for full-screen placements or a square still for the grid. Both start from the same picture.",
+      "t": "A shorter path to the next Reel",
+      "d": "Start from a product link or a photo like this. No shoot on the calendar, and you can run a batch of openings.",
       "img": "n:guide:fx40-plat-instagram-benefit-time",
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
@@ -123,31 +123,31 @@
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
-      "t": "Another cut without a reshoot",
-      "d": "Change the scene or the shape and run the job again. The item still comes from your upload.",
+      "t": "More than one opening",
+      "d": "Change the actor, the grouping or the crop and run it again. The item still comes from your link or upload.",
       "img": "n:guide:fx40-plat-instagram-benefit-variations",
       "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
-  "steps_h2": "Make Instagram Reels ads in 3 steps",
-  "steps_lead": "Upload, choose the shape, download. You add the caption after that.",
+  "steps_h2": "Generate Instagram ads with AI in 3 steps",
+  "steps_lead": "Paste a link, pick an actor, then publish or download.",
   "more_sections": [
     {
-      "eyebrow": "What the file includes",
-      "h2": "What an Instagram feed ad image includes",
-      "lead": "You get a still or a clip made from your photo. The caption and the soundtrack stay with you.",
+      "eyebrow": "In one place",
+      "h2": "An AI video ads generator for Instagram",
+      "lead": "A link, a talking actor and the edit live in one place.",
       "items": [
         {
-          "t": "9:16 for Reels and Stories",
-          "d": "A square still is for the grid. A Reel or Story clip lasts 6, 10, 15 or 30 seconds."
+          "t": "Turn a link into a video",
+          "d": "Paste a product page and get a clip. You can also start from a photo if you do not have a link."
         },
         {
-          "t": "A generated person, if one appears",
-          "d": "That presenter is made for the frame. They are not a creator you hired, and they are not a real customer."
+          "t": "An actor holding the product",
+          "d": "A generated person can hold the item and explain it. They are not a creator you hired."
         },
         {
-          "t": "No caption and no soundtrack",
-          "d": "Add the caption, sticker and soundtrack after download. The file has no watermark, and you post it yourself."
+          "t": "Edit script, voice and music",
+          "d": "Change the script, the voice, the captions, the actor and the music, then publish to Instagram or download."
         }
       ]
     }
@@ -163,28 +163,28 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "Pick the placement first, then make a file that fits it.",
+  "benefits_lead": "Make the next Reel from a link or a photo, then test another actor or line.",
   "reasons": {
-    "h2": "Why an Instagram Story ad video needs no creator",
-    "lead": "Stories move on. The next tall file can start from the same product photo, with no booking.",
+    "h2": "Why AI UGC videos help Instagram ads",
+    "lead": "A voice, a template and no creator booking.",
     "items": [
       {
-        "t": "No creator hold",
-        "d": "You do not wait on a booking. The next file starts when you describe a new moment."
+        "t": "No creator wait",
+        "d": "The next Story or Reel starts when you paste a link. You do not hold the ad for a booking."
       },
       {
-        "t": "A still and a clip from one source",
-        "d": "Make the square still and the tall clip as two files, so each crop stays clean."
+        "t": "AI voiceovers",
+        "d": "Add a natural voice in the language you sell in. You do not book a separate voice session for each market."
       },
       {
-        "t": "You add the words and the sound",
-        "d": "Add captions, prices, stickers and sound in Instagram after download. The file comes without them."
+        "t": "Instagram templates",
+        "d": "Start from a Reel, Story or feed template, then make a batch when you need more than one cut."
       }
     ]
   },
   "platforms": {
-    "h2": "Use one upload on the other channels too",
-    "lead": "Instagram is one stop. The same picture can start files for the other places you sell.",
+    "h2": "Create ads for your other channels",
+    "lead": "Instagram is one stop. The same link can start a file you publish on the other channels too.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -225,8 +225,8 @@
     ]
   },
   "reviews": {
-    "h2": "How shops prepare an Instagram file before a shoot",
-    "lead": "A few ways shops use one upload.",
+    "h2": "How shops put an Instagram ad together",
+    "lead": "A few ways shops use a link or a photo. These are examples, not quotes from a named customer.",
     "items": [
       {
         "example": true,
@@ -263,10 +263,34 @@
         "who": "Jewelry shop",
         "t": "One piece, tight and bright",
         "d": "Example: a necklace upload becomes a worn detail with the chain still complete."
+      },
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "Hold the bottle and explain it",
+        "d": "Example: a bottle link becomes an actor holding it for a Reel."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "The same item, another language",
+        "d": "Example: one link becomes two voiceovers so each market hears its own language."
+      },
+      {
+        "example": true,
+        "who": "Outdoor shop",
+        "t": "A Story from a template",
+        "d": "Example: a pack photo starts from a Story template, with the full shape still in frame."
+      },
+      {
+        "example": true,
+        "who": "Grocery shop",
+        "t": "A pour with a voice",
+        "d": "Example: a tin link becomes a pour, with a short voiceover and captions."
       }
     ]
   },
-  "related_h2": "Tools for the still and the clip",
+  "related_h2": "Related tools for an Instagram ad",
   "related_lead": "Open the tool or template that matches the placement you picked.",
   "relatedLinks": [
     "video-ads",

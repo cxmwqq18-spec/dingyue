@@ -4,7 +4,7 @@
   "description": "Turn one bottle or can photo into a vertical pour video with ice and fizz. Use 9:16 for TikTok and Reels, with clips of 6, 10, 15 or 30 seconds.",
   "h1": "AI Food and Drink Videos From a Bottle Photo",
   "eyebrow": "Food & drink template",
-  "lead": "Pick a serving scene and add one bottle or can photo, so the pour, the fizz, or the sip is the clip.",
+  "lead": "Pick a serving scene and add one bottle or can photo. The pour can include a voice, captions, and a music bed.",
   "secondary_keywords": [
     "drink pour video",
     "beverage video ad",
@@ -12,8 +12,8 @@
     "food product video for TikTok",
     "beverage product video"
   ],
-  "steps_h2": "Make a Beverage Product Video in 3 Steps",
-  "steps_lead": "One package photo, a short line about the serve, then a file you can post.",
+  "steps_h2": "How to Make a Beverage Video in 3 Simple Steps",
+  "steps_lead": "One package photo, a line about the serve, then a voice and a file you can post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -25,7 +25,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add flavor or allergen lines in your editor. Keep health claims off the clip."
+      "d": "Add a voice, captions, and a track, then post. Keep allergen lines in text, and health claims off."
     }
   ],
   "maker": {
@@ -44,15 +44,15 @@
   "faq": [
     {
       "q": "What is a food and drink video template?",
-      "a": "A ready serving scene for a pour, a cold glass, or a first sip. You add a photo of your bottle or can, and the clip shows that serve."
+      "a": "A ready serving scene for a pour, a cold glass, or a first sip. You add a photo of your bottle or can, and you can add a voice, captions, and a music bed before you post."
     },
     {
       "q": "How do I make the pour clip?",
-      "a": "Upload the package, name the glass and one action, pick a size and a length, then download the file."
+      "a": "Upload the package or paste the product link, name the glass and one action, pick a size and a length, add a voice or captions if you want them, then download or post the file."
     },
     {
       "q": "Why start from a photo instead of a kitchen shoot?",
-      "a": "The serve is built from the package photo you already have. You do not book a kitchen, a creator, or a reshoot."
+      "a": "The serve is built from the package photo you already have. You do not book a kitchen, a creator, or a reshoot to try the next flavor."
     },
     {
       "q": "Who is this scene for?",
@@ -63,16 +63,16 @@
       "a": "Start with a sharp photo of the full package and name one action, such as a pour or a sip. Check that the package stays recognizable before you post."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "A sharp photo of the full bottle or can, with the shape, the cap, and the visible label area clear."
+      "q": "What can I upload?",
+      "a": "A sharp photo of the full bottle or can, with the shape, the cap, and the label area clear. You can also paste a public product link and use the bottle shown on that page."
     },
     {
-      "q": "Can the clip show ice, fizz, or a sip?",
-      "a": "Yes. A cold scene can include ice, bubbles, or condensation. Keep the package visible beside the glass. A sip is a serving moment, not a health claim."
+      "q": "Can the clip show ice, a voice, and captions?",
+      "a": "Yes. A cold scene can include ice, bubbles, or condensation, with the package visible beside the glass. A voice and captions can name the serve. A sip is a serving moment, not a health claim."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Start at 9:16 for a feed, or pick 1:1, 16:9, 4:3, or 3:4. A square cut can sit in a gallery. Use 6 seconds for one pour, or 10, 15, or 30 seconds when the sip needs longer. The credit cost is shown before the job runs."
+      "q": "Which size can I pick, and where can I post it?",
+      "a": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4. Use 6 seconds for one pour, or 10, 15, or 30 seconds when the sip needs longer. Send the file to TikTok or Meta from the workspace, or download it. The credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -80,7 +80,11 @@
     },
     {
       "q": "Where do flavor and allergen lines go?",
-      "a": "Add approved flavor, ingredient, allergen, and price text in your editor or on the listing after download. The download has no AIVideosUGC watermark and can run in your ads. A person on screen is an AI performer, not a customer."
+      "a": "Add approved flavor, ingredient, allergen, and price text as captions or on the listing. The download has no AIVideosUGC watermark and can run in your ads. A person on screen is an AI performer, not a customer."
+    },
+    {
+      "q": "Can I run a batch, switch language, or use the API?",
+      "a": "Yes. Reuse the scene across a set of bottles, switch the spoken line and captions to another language, or send photos through the API. Each job shows its credit cost first."
     }
   ],
   "visual": {
@@ -98,7 +102,7 @@
       "result": "f:q11-drink-step-result-r2",
       "mode": "video",
       "length": 6,
-      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pours citrus soda from the silver can into one ice-filled tumbler. Frame at counter height, then make a slow push-in as the glass fills. Bright window light stays visible beside the can. End with the can and full tumbler in frame. Sound: crisp fizz and a soft pour. No music.",
+      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand pours citrus soda from the silver can into one ice-filled tumbler. Frame at counter height, then make a slow push-in as the glass fills. Bright window light stays visible beside the can. End with the can and full tumbler in frame. Sound: crisp fizz and a soft pour, and a music bed if you add one.",
       "options": [
         [
           "Size",
@@ -533,7 +537,7 @@
         "h2": "Choose a Scene for a Drink Pour Video"
       },
       "faq": {
-        "h2": "Questions About a Food Product Video for TikTok"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
@@ -566,15 +570,18 @@
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "reviews",
+    "reasons",
+    "features",
     "steps",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Drink Sellers Use a Beverage Video Ad",
-    "lead": "Example setups. Each one shows how a drink shop could stage one serve.",
+    "h2": "How Drink Sellers Use a Pour Video",
+    "lead": "Example setups. Each one shows how a drink shop could stage one serve, then add a voice or a post.",
     "items": [
       {
         "example": true,
@@ -590,56 +597,146 @@
       },
       {
         "example": true,
-        "who": "Sports drink",
-        "t": "After the session",
-        "d": "Example: a bottle is raised after a workout, with the shape of the bottle unchanged."
+        "who": "Juice seller",
+        "t": "A spoken flavor line",
+        "d": "Example: a short voice names the flavor while the pour finishes, and the bottle stays in frame."
       },
       {
         "example": true,
         "who": "Tea brand",
-        "t": "Citrus and ice",
-        "d": "Example: a tea bottle sits by a lemon-and-ice glass in daylight."
-      },
-      {
-        "example": true,
-        "who": "Juice seller",
-        "t": "Allergen line after download",
-        "d": "Example: a juice seller adds flavor and allergen text in an editor after the file downloads."
+        "t": "Words on the sip",
+        "d": "Example: a caption names the citrus note while the glass sits in daylight."
       },
       {
         "example": true,
         "who": "Wellness drink",
-        "t": "Sip, not a health claim",
-        "d": "Example: a wellness drink shows the sip as a serve and leaves health wording off the clip."
+        "t": "Another language, same sip",
+        "d": "Example: the same sip is voiced again in the language the shop sells in. Health wording stays off the clip."
       },
       {
         "example": true,
         "who": "Listing manager",
-        "t": "Package stays in frame",
-        "d": "Example: the bottle remains visible next to the glass so the serve is tied to the product."
+        "t": "Start from the listing",
+        "d": "Example: the shop pastes the product link, and the pour uses the bottle photo from that page."
       },
       {
         "example": true,
         "who": "Short-form shop",
-        "t": "One pour, six seconds",
-        "d": "Example: the shop uses a 6-second clip for one pour, and a longer cut when the sip needs more time."
+        "t": "A track under the fizz",
+        "d": "Example: a music bed sits under the pour, and the shop posts the 9:16 cut."
       },
       {
         "example": true,
         "who": "Catalog seller",
-        "t": "Square on the product page",
-        "d": "Example: a square cut sits in the product gallery, and 9:16 is the feed cut."
+        "t": "One glass, several flavors",
+        "d": "Example: the same glass scene is reused for each flavor, without a new kitchen setup."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a taster's review",
-        "d": "Example: a person who sips on screen is an AI performer, not a customer review."
+        "t": "A presenter, not a taster",
+        "d": "Example: the person who sips is an AI presenter from the actor library, not a customer review."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Out to TikTok or Meta",
+        "d": "Example: the finished pour is sent to TikTok or Meta from the same workspace."
       }
     ]
   },
   "related_h2": "Pages for a Juice Commercial Video",
   "related_lead": "Product videos, packaging stills, and the food-and-drink industry page.",
   "cta_title": "Ready to Show the Pour?",
-  "cta_lead": "Upload one bottle or can photo and see the credit cost before you start."
+  "cta_lead": "Upload one bottle or can photo, add a voice if you want one, and see the credit cost before you start.",
+  "definition": {
+    "title": "What Is a Food and Drink Video?",
+    "paras": [
+      "A food and drink video is one serve: a pour, a cold glass, or a first sip, made from a photo of the bottle or can you sell.",
+      "You can add a spoken line, on-screen words, and a music bed in the same place, then post the file. A person on screen is an AI presenter, not a taster's review."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Drink Pour Video",
+    "lead": "You already have the package photo. The pour, the voice, and the caption come from that, before anyone books a kitchen.",
+    "items": [
+      {
+        "t": "Skip the kitchen day",
+        "d": "The pour is built from the bottle photo you already have, so you do not book a sink, a creator, or a reshoot."
+      },
+      {
+        "t": "The package stays easy to see",
+        "d": "The can or bottle stays beside the glass, so the serve points at the product shoppers will actually get."
+      },
+      {
+        "t": "Voice and captions in one place",
+        "d": "Add a spoken line and on-screen words before you download, instead of sending the file to another app."
+      },
+      {
+        "t": "The next flavor reuses the glass",
+        "d": "Keep the same glass and light for another flavor. Each clip is its own job, and the credit cost shows first."
+      },
+      {
+        "t": "A size for the feed or the page",
+        "d": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4, and a length of 6, 10, 15, or 30 seconds."
+      },
+      {
+        "t": "You see the cost before it runs",
+        "d": "A 6-second clip is 24 credits. A failed job returns those credits. Plans start at $24.50 a month."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Features",
+      "h2": "Features for a Drink Pour Video",
+      "lead": "The serve can carry a voice, words on screen, a track, and a post, without a separate edit bay.",
+      "items": [
+        {
+          "t": "A voice on the pour",
+          "d": "Add an AI voice that names the flavor while the glass fills. It is a spoken line, not a customer review."
+        },
+        {
+          "t": "Captions before you download",
+          "d": "Put the flavor or the serve on screen as captions in the built-in editor, then download the file."
+        },
+        {
+          "t": "A batch for the whole line",
+          "d": "Reuse the same glass scene across the bottles you sell. Each clip shows its credit cost before it runs."
+        },
+        {
+          "t": "Start from the product link",
+          "d": "Paste the listing link when you do not have a file on hand. The pour uses the bottle shown on that page."
+        },
+        {
+          "t": "A short script for the sip",
+          "d": "Ask for a line about the serve, then change the words before the voice reads them."
+        },
+        {
+          "t": "A presenter from the actor library",
+          "d": "Choose someone to hold the glass or take the sip. That person is an AI actor, not a real buyer."
+        },
+        {
+          "t": "A track from the music library",
+          "d": "Lay a music bed under the fizz, or leave the pour with only the sound of the drink."
+        },
+        {
+          "t": "Trim it in the built-in editor",
+          "d": "Cut the length, move the caption, and set the voice without opening another tool."
+        },
+        {
+          "t": "The same serve in another language",
+          "d": "Keep the pour and switch the spoken line and the captions to the language you sell in."
+        },
+        {
+          "t": "Post to TikTok or Meta",
+          "d": "Send the finished file to TikTok or Meta from the workspace, or download it and post it yourself."
+        },
+        {
+          "t": "An API for a large catalog",
+          "d": "Send bottle photos through the API when a catalog needs many pours. Each job still shows its credit cost."
+        }
+      ]
+    }
+  ]
 }

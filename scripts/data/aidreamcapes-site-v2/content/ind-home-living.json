@@ -4,7 +4,7 @@
   "description": "Turn one home product photo into a room scene, a cleaning demo, or an organizing clip. Download watermark-free files for listings, social feeds, and paid ads.",
   "h1": "AI Product Videos for Home Brands, Shown in the Room They Fit",
   "eyebrow": "Home and living",
-  "lead": "Home shoppers need the product in a room, doing one job. One clear photo can become that scene without building a set.",
+  "lead": "Home shoppers need the product in a room, doing one job. Paste a product link or one clear photo and get that scene without building a set.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -44,25 +44,29 @@
     },
     {
       "q": "Do I need a studio or a model?",
-      "a": "No for these clips. Rooms and adult hands are generated around your photo, at the credit cost shown before the job. A 6-second clip is 24 credits, 15 seconds is 60, and 30 seconds is 120. A failed job returns its credits."
+      "a": "No studio and no hire. Pick a generated presenter for the room, with a spoken line and captions if you want them. A 6-second clip is 24 credits, 15 seconds is 60, and 30 seconds is 120. A failed job returns its credits."
+    },
+    {
+      "q": "Can I start from a product link and make more than one cut?",
+      "a": "Yes. Paste the product page, or send that link through the API. Ask for a short script, pick a presenter, and make a few room cuts, including one in another language. Trim the clip, choose a voice and a backing track, and check captions in the editor on the page, then send it to TikTok or Meta. Put real dimensions in the listing, because scale can drift."
     }
   ],
   "templates_lead": "Choose a room or organizing step that fits the home product.",
-  "cta_lead": "Upload one home product photo, describe a single room action, and check the shape before you post.",
-  "steps_h2": "How to Make a Home Product Video in 3 Steps",
-  "steps_lead": "Three things you do on screen. Dimensions stay in the listing.",
+  "cta_lead": "Paste a product link or upload one photo, pick a presenter, and publish a room clip with a voice and captions. Check the product shape before you post.",
+  "steps_h2": "How to Make a Home Product Video in 3 Simple Steps",
+  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. Dimensions stay in the listing.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Keep the whole item in frame, including legs, handles, and cords. A white-background photo is a fine start if nothing is cut off."
+      "t": "Upload Your Product",
+      "d": "Paste the product page, or upload a photo with legs, handles, and cords in frame. A short note about the item works too."
     },
     {
-      "t": "Describe the Room Action",
-      "d": "Name the room, the light, and one action, such as a hand placing pillows or a vacuum passing over crumbs. Hands are generated."
+      "t": "Choose a Presenter",
+      "d": "Pick a generated adult for the room. Hands can set the product down. You do not book a model."
     },
     {
-      "t": "Download and Post",
-      "d": "Check the product shape, then download. Add dimensions and materials in your editor. Captions are not added for you."
+      "t": "Generate and Publish",
+      "d": "You get a spoken line and on-screen captions. Send the room clip to TikTok or Meta, and keep the size notes in the listing."
     }
   ],
   "visual": {
@@ -92,16 +96,16 @@
       ],
       "items": [
         {
-          "t": "Upload Your Product Photo",
-          "d": "Keep the whole item in frame, including legs, handles, and cords. A white-background photo is a fine start if nothing is cut off."
+          "t": "Upload Your Product",
+          "d": "Paste the product page, or upload a photo with legs, handles, and cords in frame. A short note about the item works too."
         },
         {
-          "t": "Describe the Room Action",
-          "d": "Name the room, the light, and one action, such as a hand placing pillows or a vacuum passing over crumbs. Hands are generated."
+          "t": "Choose a Presenter",
+          "d": "Pick a generated adult for the room. Hands can set the product down. You do not book a model."
         },
         {
-          "t": "Download and Post",
-          "d": "Check the product shape, then download. Add dimensions and materials in your editor. Captions are not added for you."
+          "t": "Generate and Publish",
+          "d": "You get a spoken line and on-screen captions. Send the room clip to TikTok or Meta, and keep the size notes in the listing."
         }
       ]
     },
@@ -141,8 +145,8 @@
     }
   ],
   "reasons": {
-    "h2": "Home Decor Product Videos Without a Set",
-    "lead": "You do not need a styled location for every product. Start from a clear photo and name the room.",
+    "h2": "Why Home Brands Skip the Set",
+    "lead": "You do not need a styled location for every product. Start from a product link or a clear photo and name the room.",
     "items": [
       {
         "t": "No set to book",
@@ -152,7 +156,7 @@
       },
       {
         "t": "A product page and a clip",
-        "d": "The same organizer can sit in a product-page scene and a vertical clip. Use the frame that placement already takes.",
+        "d": "The same organizer can sit in a product-page scene, a vertical clip, and a second cut. Use the frame that placement already takes.",
         "img": "n:gen2:fx33-ind-home-living-benefit-organizer",
         "alt": "Adult hands placing folded shirts into a plain fabric closet organizer."
       },
@@ -165,8 +169,8 @@
     ]
   },
   "platforms": {
-    "h2": "Home Product Video Ads on Every Channel",
-    "lead": "A vertical clip shows the action. A listing still shows the product. Use the frame that placement wants.",
+    "h2": "Create Home Ads for Every Platform",
+    "lead": "A vertical clip shows the action and a listing still shows the product. Send the clip to TikTok or Meta from this page, and keep dimensions in the listing.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -201,7 +205,7 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use Room Scenes and Organizing Clips",
+    "h2": "How Home Brands Switch to AI Ads",
     "lead": "Example ways home sellers use one product photo. These are not quotes. The after state has to match what the product really does.",
     "items": [
       {
@@ -239,11 +243,58 @@
         "who": "Listing desk",
         "t": "White still, then a room",
         "d": "One cutout photo guides a clean listing image and a room clip. Materials and capacity stay in the product description."
+      },
+      {
+        "example": true,
+        "who": "Script desk",
+        "t": "A link, then the room script",
+        "d": "They paste the product page, or send that link through the API, and ask for a short script about one room action. Dimensions stay in the listing."
+      },
+      {
+        "example": true,
+        "who": "Presenter desk",
+        "t": "Hands, then the same person again",
+        "d": "They pick a presenter from the actor library to set the product down, then a second look of that person in the same room."
+      },
+      {
+        "example": true,
+        "who": "Edit desk",
+        "t": "Voice, captions, and a track",
+        "d": "They choose a voice or a short sample of their own, check the captions, pick a backing track, and trim the room clip in the editor on the page."
+      },
+      {
+        "example": true,
+        "who": "Second market",
+        "t": "The same room, another language",
+        "d": "They make the organizing clip again in a second language from the same photo. The after state still has to be something the product does."
+      },
+      {
+        "example": true,
+        "who": "Test desk",
+        "t": "A few cuts, then publish",
+        "d": "They describe the room in chat, keep a few cuts, and send the one they want to TikTok or Meta. A 10-second clip is 40 credits."
       }
     ]
   },
   "cta_title": "Put the Product in the Room",
   "related_h2": "Home product videos and room scenes",
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16"
+      ],
+      [
+        "Length",
+        "10 seconds"
+      ],
+      [
+        "Scene",
+        "One room action"
+      ]
+    ],
+    "cta": "Create a room scene"
+  },
   "blockOrder": [
     "hero",
     "strip",

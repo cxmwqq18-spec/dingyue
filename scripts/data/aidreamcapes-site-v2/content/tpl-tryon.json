@@ -11,8 +11,8 @@
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "Make a Garment on Model Photo for Shopify in 3 Steps",
-  "steps_lead": "Upload the garment, choose a scene, then download a photo you can check against the real piece.",
+  "steps_h2": "How to Make a Garment on Model Photo in 3 Simple Steps",
+  "steps_lead": "Upload the garment, choose a scene, then download a photo you can check against the real piece before it goes on Shopify.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
@@ -76,6 +76,18 @@
     {
       "q": "Can I use the square photo in an Instagram feed?",
       "a": "Yes. The same square file can sit in a feed post and on the product page. Placement notes for that channel are on [AI Instagram ads](page:plat-instagram)."
+    },
+    {
+      "q": "How soon can I use the on-model photo?",
+      "a": "The credit cost is on screen before the job starts, and a failed job returns those credits. You are not booking a model or a studio on this path."
+    },
+    {
+      "q": "Can I add a spoken line and publish the ad?",
+      "a": "Yes. This template downloads a square on-model photo. Add a spoken line when you build the ad, then publish to TikTok, Instagram, or Facebook. Check the garment against the real piece first."
+    },
+    {
+      "q": "Is there an API?",
+      "a": "Yes. The API can send a garment from your catalog and bring the finished photo back into your own setup."
     }
   ],
   "visual": {
@@ -532,7 +544,7 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Make a Garment on Model Photo for Shopify in 3 Steps"
+        "h2": "How to Make a Garment on Model Photo in 3 Simple Steps"
       },
       "m3": {
         "h2": "Video previews, not the on-model photo",
@@ -544,8 +556,8 @@
     }
   },
   "reviews": {
-    "h2": "How Shops Use AI Fashion Model Photos",
-    "lead": "A few ways clothing sellers put one garment photo to work.",
+    "h2": "Shops Switching to AI On-Model Photos",
+    "lead": "Example ways a clothing shop uses one garment photo. These cards are not customer quotes.",
     "items": [
       {
         "example": true,
@@ -582,6 +594,30 @@
         "who": "Outerwear brand",
         "t": "Coat that needs a body",
         "d": "A puffer or coat is shown on a person instead of another hanger crop. Cuffs, pockets and hem stay inside the source frame so the result can be compared fairly."
+      },
+      {
+        "example": true,
+        "who": "Activewear label",
+        "t": "A generated person",
+        "d": "They pick a generated person for the jacket instead of booking a model. Collar, hem, and color are checked against the garment."
+      },
+      {
+        "example": true,
+        "who": "Two-country brand",
+        "t": "A line in another language",
+        "d": "The same on-model photo is paired with a spoken line in the language that country uses, without a second shoot."
+      },
+      {
+        "example": true,
+        "who": "Weekly drop",
+        "t": "Several poses",
+        "d": "They run the hanger photo again for another pose and another collection. Each run shows its credit cost first."
+      },
+      {
+        "example": true,
+        "who": "Shop manager",
+        "t": "Publish after a check",
+        "d": "They check the hem against the real coat, trim the ad in the editor, and publish it to Instagram in one click."
       }
     ]
   },
@@ -613,15 +649,49 @@
       "label": "Shopify product photos"
     }
   ],
-  "cta_title": "Put your next garment on a model",
-  "cta_lead": "Upload one garment photo. You see the credit cost before the job starts.",
+  "cta_title": "Show the Next Garment on a Person",
+  "cta_lead": "Upload one garment photo. The credit cost is on screen before the job starts.",
   "blockOrder": [
     "hero",
     "picker",
+    "features",
     "reviews",
     "steps",
-    "related",
     "faq",
+    "related",
     "cta"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included with the photo",
+      "h2": "Features for an On-Model Clothing Photo",
+      "lead": "The square file shows the garment on a generated person. A script and a spoken line can go with the ad when you publish.",
+      "items": [
+        {
+          "t": "A product link starts the look",
+          "d": "Paste the product page so the job knows which garment this is. The on-model photo still starts from your hanger or flat-lay shot."
+        },
+        {
+          "t": "A generated person wears it",
+          "d": "Pick a generated person for the jacket or dress. They are not a hired model and not a customer."
+        },
+        {
+          "t": "A spoken line for the ad",
+          "d": "Add a spoken line in the language that market uses when you turn the photo into the ad."
+        },
+        {
+          "t": "A script for the drop",
+          "d": "Describe the piece in a sentence. The script writer drafts the line, and you can change it before you post."
+        },
+        {
+          "t": "Edit before you post",
+          "d": "Trim the ad in the built-in editor. The download has no watermark. Check seams and color against the real garment."
+        },
+        {
+          "t": "Several versions, then publish",
+          "d": "Run the same photo for another pose or another language, then publish to TikTok, Instagram, or Facebook."
+        }
+      ]
+    }
   ]
 }

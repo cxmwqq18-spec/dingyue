@@ -1,57 +1,49 @@
 {
   "id": "image-to-video",
   "title": "Image to Video AI for Product Ads | AIVideosUGC",
-  "description": "Animate one product photo into a short video ad for TikTok, Reels, or product pages. Add clear movement without booking a new shoot or camera crew.",
-  "h1": "AI Image to Video: Move a Product Photo Into an Ad",
+  "description": "Turn a product photo into a UGC-style video with a script, an avatar, a voiceover and captions. Publish to TikTok or Meta, or download with no watermark.",
+  "h1": "AI Image to Video Generator: From a Still to an Ad",
   "eyebrow": "Image to video",
-  "lead": "AIVideosUGC adds one clear motion to a product photo you already have, such as a pour, a turn, a lid opening or a stretch. No camera crew and no new shoot. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip for a feed, a listing or a product page.",
+  "lead": "AIVideosUGC turns a product photo into a UGC-style ad: one clear motion, a script, an avatar, a voiceover and captions. No camera crew. Pick 9:16, 1:1, 16:9, 4:3 or 3:4, and 6, 10, 15 or 30 seconds, then publish to TikTok or Meta or download the file with no watermark.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
     "turn image into video ad",
     "AI photo animation for ads"
   ],
-  "benefits_h2": "See the Cost, Then Check the Clip",
+  "benefits_h2": "What You Gain When a Photo Starts Moving",
   "benefits": [
     {
-      "t": "See the Credit Cost First",
-      "d": "A 6-second clip uses 24 credits and a 15-second clip uses 60. You see that cost before the job starts."
+      "t": "Several Versions From One Photo",
+      "d": "Make more than one opening from a photo already on the listing, and keep the one you want to run."
     },
     {
-      "t": "A Failed Job Returns the Credits",
-      "d": "If the clip does not generate, those credits come back to your balance. You can name a simpler motion and try again."
+      "t": "A Credit Price You Can See",
+      "d": "A 6-second clip is 24 credits and a 15-second clip is 60. Starter is $24.50 a month for 200 credits."
     },
     {
-      "t": "Match It to the Source Photo",
-      "d": "Compare the shape, color and label with the photo you uploaded. If a detail drifts, make another version before you post."
+      "t": "No Camera Day to Book",
+      "d": "You start from the photo you have, so the next test does not wait on a shoot."
     },
     {
-      "t": "Add Sound and a Price Later",
-      "d": "The clip does not add sound, captions or a price. Put those on in your editor, and use music you have the rights to."
-    },
-    {
-      "t": "You Name the Motion",
-      "d": "You decide what moves and how long the clip runs. The tool does not invent a script or add a presenter."
-    },
-    {
-      "t": "Clear to Post",
-      "d": "Finished clips can run in a paid or organic placement, and they carry no watermark."
+      "t": "One Photo, More Than One Frame",
+      "d": "Reuse that photo in 9:16, 1:1, 16:9, 4:3 or 3:4 for a feed, a listing or a product page."
     }
   ],
-  "steps_h2": "How to Make an Image-to-Video Ad in 3 Simple Steps",
-  "steps_lead": "Upload one clear product image, name one motion and download the clip.",
+  "steps_h2": "How to Generate a Video from an Image in 3 Simple Steps",
+  "steps_lead": "Share the idea, talk with the video agent, and download a UGC-style clip.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the full item visible. The motion is applied to this image."
+      "t": "Share the Video Idea",
+      "d": "Name the product, the goal and who it is for, or paste a product link."
     },
     {
-      "t": "Describe the Motion",
-      "d": "Name one movement, like a pour or a lid opening. Then pick a size and a 6, 10, 15 or 30 second length."
+      "t": "Talk With the Video Agent",
+      "d": "Answer questions about the brand, the line you want said and the look of the clip."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip when it is ready. Add captions, a price or licensed music in your editor, then post it."
+      "t": "Get a UGC-Style Video",
+      "d": "You get a script, an avatar, a voiceover, captions, scenes and extra shots, ready for an ad."
     }
   ],
   "maker": {
@@ -73,67 +65,55 @@
   },
   "faq": [
     {
-      "q": "What is AI image to video?",
-      "a": "It adds one focused motion to a still product photo, such as a turn, a pour, a lid opening or a stretch."
+      "q": "What is an AI image to video tool?",
+      "a": "It turns a still product photo into a moving UGC-style video. You can add a script, an avatar, a voiceover, captions and a music-library track, then publish or download with no watermark."
     },
     {
-      "q": "How do I turn a product photo into a video?",
-      "a": "Upload a clear photo, name one motion, pick a size and a length, then download the clip."
+      "q": "How does a photo become a video?",
+      "a": "Upload the image or paste a product link. Motion is added from what you describe, and you can set captions, a script and a voiceover before you download."
     },
     {
-      "q": "Does image to video write a script or add audio?",
-      "a": "No. The tool only animates the photo. Add a script, narration, music or captions in your editor after download."
+      "q": "What do you gain by making video from a photo?",
+      "a": "You can make several versions from a photo you already sell. A 6-second clip is 24 credits, and Starter is $24.50 a month for 200 credits, so you are not booking a shoot. That photo can also run in 9:16, 1:1, 16:9, 4:3 or 3:4."
     },
     {
-      "q": "Which photo should I upload?",
-      "a": "Use a clear, well-lit photo with the full product visible and the important details in the frame."
+      "q": "Can I post these clips on social?",
+      "a": "Yes. Make them for TikTok, Reels, Shorts and feed posts, then publish to TikTok or Meta in one click or download the file. Check each channel's current rules."
     },
     {
-      "q": "Which sizes can I make?",
-      "a": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4."
+      "q": "How can a store use this for product marketing?",
+      "a": "Make a product showcase, a before-and-after, a social ad or a listing video for Amazon and other marketplaces that allow video. A batch of versions lets you see which opening to keep."
     },
     {
-      "q": "Which lengths can I choose?",
-      "a": "Choose 6, 10, 15 or 30 seconds."
+      "q": "Can I make explainers and tutorials?",
+      "a": "Yes. Use the same avatar and script to explain a feature or walk through a short how-to, so each lesson looks consistent."
     },
     {
-      "q": "How many credits does a clip use?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns its credits."
+      "q": "Can I add a voiceover or an avatar?",
+      "a": "Yes. A script writer, a voiceover, captions and the actor library are included. You can voice the script in another language, swap a track from the music library, and edit in the built-in editor. An API can start the same job from your own tools."
     },
     {
-      "q": "Can I make more than one version from one photo?",
-      "a": "Yes. Change the motion, the size or the length and keep the same photo."
-    },
-    {
-      "q": "Where can I use the clip?",
-      "a": "In a TikTok, Instagram, Facebook or product listing, after you check that channel's current rules."
-    },
-    {
-      "q": "What if the motion looks wrong?",
-      "a": "Describe a simpler motion and generate again. Compare the product with the source photo before you post."
-    },
-    {
-      "q": "Can I use the clip in paid ads?",
-      "a": "Yes. Finished clips can be used commercially and they have no watermark."
+      "q": "Which frames and lengths can I pick?",
+      "a": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, at 24, 40, 60 or 120 credits. A failed job returns those credits."
     }
   ],
-  "cta_lead": "Upload one product image and see the credit cost before you start.",
+  "cta_lead": "Upload a product photo or paste a link, and see the credit cost before you start.",
   "uses": [
     {
-      "t": "A Paid Social Test",
-      "d": "Run the clip in a TikTok, Instagram, Facebook or Shorts test after you check that channel's rules."
+      "t": "Test Paid Ads Side by Side",
+      "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or Shorts. Publish the keeper to TikTok or Meta in one click, or download it with no watermark."
     },
     {
-      "t": "The Product Page",
-      "d": "Put the motion next to the photos already on the product page."
+      "t": "Marketplace Listings That Move",
+      "d": "Add a video on Amazon, Etsy and other listings that allow one, so the product is not only a still. Check that marketplace's video rules first."
     },
     {
-      "t": "A Marketplace Listing",
-      "d": "Add the download where that marketplace allows a video, then check its current video rules."
+      "t": "Social Feeds From One Photo",
+      "d": "Turn one product photo into teasers and short visual stories for the feeds you sell on. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for each placement."
     },
     {
-      "t": "An Organic Post",
-      "d": "Post the clip on your store or in an organic feed. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for that placement."
+      "t": "Explainers and How-To Clips",
+      "d": "Show a feature or a short how-to with the same avatar and script each time, so the lesson stays clear."
     }
   ],
   "visual": {
@@ -144,7 +124,7 @@
       "result": "n:guide:b1-image-to-video-result",
       "mode": "video",
       "length": 6,
-      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. One gentle push-in. Keep the mug's shape, color and label as in the photo, and leave music, text and logos off."
+      "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. One gentle push-in. An avatar adds a one-line voiceover, and captions name the mug. Keep the mug's shape, color and label as in the photo."
     },
     "picker": {
       "title": "Product Photo to Video Examples",
@@ -158,26 +138,26 @@
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-uses-00",
-        "h": "A Paid Social Test",
-        "d": "Run the clip in a TikTok, Instagram, Facebook or Shorts test after you check that channel's rules."
+        "h": "Test Paid Ads Side by Side",
+        "d": "Make several versions from one photo and run them on TikTok, Instagram, Facebook or Shorts. Publish the keeper to TikTok or Meta in one click, or download it with no watermark."
       },
       {
         "frame": "browser",
         "ref": "n:guide:q2-image-to-video-example-01",
-        "h": "The Product Page",
-        "d": "Put the motion next to the photos already on the product page."
+        "h": "Marketplace Listings That Move",
+        "d": "Add a video on Amazon, Etsy and other listings that allow one, so the product is not only a still. Check that marketplace's video rules first."
       },
       {
         "frame": "reels",
         "ref": "n:guide:q2-image-to-video-example-02",
-        "h": "A Marketplace Listing",
-        "d": "Add the download where that marketplace allows a video, then check its current video rules."
+        "h": "Social Feeds From One Photo",
+        "d": "Turn one product photo into teasers and short visual stories for the feeds you sell on. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for each placement."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-image-to-video-example-03",
-        "h": "An Organic Post",
-        "d": "Post the clip on your store or in an organic feed. Pick 9:16, 1:1, 16:9, 4:3 or 3:4 for that placement."
+        "h": "Explainers and How-To Clips",
+        "d": "Show a feature or a short how-to with the same avatar and script each time, so the lesson stays clear."
       }
     ],
     "input": [],
@@ -188,20 +168,17 @@
         "h2": "Questions About AI Image to Video"
       },
       "m4": {
-        "h2": "Where to Place an AI Image to Video"
+        "h2": "Where Can You Place an AI Image to Video?"
       }
     },
     "overview": ""
   },
   "blockOrder": [
     "hero",
-    "definition",
     "reasons",
     "steps",
     "uses",
-    "benefits",
     "related",
-    "compare",
     "reviews",
     "faq",
     "cta"
@@ -209,41 +186,41 @@
   "definition": {
     "title": "What Is AI Image to Video?",
     "paras": [
-      "AI image to video adds movement to a still product photo. Shoppers see one action, such as a lid lifting, liquid pouring or fabric stretching, instead of a frozen frame.",
-      "AIVideosUGC keeps the item from your upload. It does not write a script and it does not add sound. Put captions, a price or licensed music on the file in your editor after download."
+      "AI image to video turns a still product photo into a moving UGC-style clip. Shoppers see one action, and they can also hear a short script from an avatar.",
+      "AIVideosUGC can add a voiceover, captions and a track from the music library. You can edit in the built-in editor, voice the script in another language, and publish to TikTok or Meta, or download the file with no watermark."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Animate a Product Photo",
+    "h2": "Why Choose AIVideosUGC for Image to Video?",
     "items": [
       {
-        "t": "The Photo You Already Sell",
-        "d": "The clip starts from the photo you already sell. One motion, such as a pour, a turn or a stretch, is what the shopper follows."
+        "t": "UGC That Builds Trust",
+        "d": "The clip is built like a UGC ad: the product you sell, a person on screen, and a line that sounds like a recommendation."
       },
       {
-        "t": "A Size for Each Placement",
-        "d": "Make that motion in 9:16, 1:1, 16:9, 4:3 or 3:4. You do not re-crop a filmed shot for every feed."
+        "t": "The Next Test Without a Shoot",
+        "d": "Change the motion, the avatar or the spoken line and keep the same photo. The next test does not wait on a camera day."
       },
       {
-        "t": "A New Opening Without a New Shoot",
-        "d": "Change the motion or the length and keep the same photo. The next test does not need a camera day."
+        "t": "Credits, Not a Creator Invoice",
+        "d": "A 6-second clip is 24 credits and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before the job starts."
       }
     ]
   },
-  "benefits_lead": "The cost is clear before you start, and sound, captions and a price go on after download.",
-  "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Other video tools that start from the same kind of product photo.",
+  "benefits_lead": "More versions from a photo you already sell, at a credit price you can see first.",
+  "related_h2": "Related Tools",
+  "related_lead": "Avatar, a product link, UGC ads and the feeds you publish to.",
   "relatedLinks": [
-    "video-ads",
-    "product-videos",
-    "url-to-video",
-    "unboxing-videos",
     "spokesperson-videos",
-    "before-after-videos"
+    "url-to-video",
+    "video-ads",
+    "plat-instagram",
+    "product-videos",
+    "unboxing-videos"
   ],
   "compare_table": {
-    "title": "Product Photo to Video vs. a Camera Day",
-    "lead": "A still photo and one motion, instead of a camera day or a frame-by-frame edit.",
+    "title": "A Photo-Led Ad vs. a Camera Day",
+    "lead": "A product photo, a script and an avatar, instead of a camera day.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -252,12 +229,12 @@
     "rows": [
       [
         "First clip",
-        "One photo and one motion, then the clip is made",
+        "One photo, one motion, a script and an avatar",
         "A shoot day or a long manual edit"
       ],
       [
         "What you need",
-        "One product photo and one motion",
+        "A product photo, or a product link",
         "A camera setup or animation software"
       ],
       [
@@ -271,8 +248,8 @@
         "A new crop for each placement"
       ],
       [
-        "Sound",
-        "Added in your editor after download",
+        "Voice and captions",
+        "A voiceover, captions and a music-library track",
         "Recorded on set or built in the edit"
       ],
       [
@@ -283,34 +260,70 @@
     ]
   },
   "reviews": {
-    "h2": "How Shops Use AI Photo Animation for Ads",
-    "lead": "How a shop uses one product photo when it needs a moving detail for a listing or a paid test.",
+    "h2": "How Shops Use AI Image to Video",
+    "lead": "How a shop uses one product photo when it needs a moving ad, an avatar or a second language.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "Balm swatch",
-        "d": "A beauty shop uses a short balm movement in a paid feed test."
+        "t": "Balm in motion",
+        "d": "A beauty shop turns a still balm photo into a UGC-style clip, with an avatar and a short voiceover, for a paid feed test."
       },
       {
         "example": true,
         "who": "Drink seller",
-        "t": "Pour for a listing",
-        "d": "A drink seller shows a hydration mix pouring into a glass on a listing."
+        "t": "Pour on a listing",
+        "d": "A drink seller starts from the bottle photo, pastes the listing link, and shows the pour with captions."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Shirt stretch",
-        "d": "An apparel shop uses a linen shirt stretch for a TikTok or Reel."
+        "t": "Shirt in hand",
+        "d": "An apparel shop has an avatar hold the shirt so shoppers can see the drape, then posts the clip."
       },
       {
         "example": true,
         "who": "Skincare shop",
-        "t": "Pump press",
-        "d": "A skincare shop shows a cleanser pump dispensing one dose."
+        "t": "Pump and a line",
+        "d": "A skincare shop picks an avatar from the actor library to press the pump and read a short script."
+      },
+      {
+        "example": true,
+        "who": "Multi-country shop",
+        "t": "Another language",
+        "d": "A shop that sells in more than one country voices the same script in each language it needs."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "Edit in one place",
+        "d": "A small team trims the clip, swaps a music-library track and adds the logo in the built-in editor."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "A client avatar",
+        "d": "An agency builds a custom avatar for a client and reuses that face on the next product video."
+      },
+      {
+        "example": true,
+        "who": "Home brand",
+        "t": "No set to light",
+        "d": "A home brand uploads a few product photos and gets ad-ready clips without lights or a camera day."
+      },
+      {
+        "example": true,
+        "who": "New seller",
+        "t": "Link, then a clip",
+        "d": "A new seller pastes a product link and gets a script, an avatar and a clip without filming."
+      },
+      {
+        "example": true,
+        "who": "Ad tester",
+        "t": "A batch of openings",
+        "d": "A store runs a batch of openings from one photo, then publishes the keeper to TikTok or Meta."
       }
     ]
   },
-  "cta_title": "Ready to Add One Motion?"
+  "cta_title": "Ready to Scale Your Next Ad?"
 }

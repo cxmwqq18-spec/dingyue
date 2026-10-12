@@ -45,19 +45,19 @@
   "faq": [
     {
       "q": "Is the size in the photo exact?",
-      "a": "No. Treat it as a visual guide. Generated scale can be slightly off, so put the real length, width, height or capacity in the listing text."
+      "a": "No. Treat it as a visual guide. Generated scale can be slightly off, so put the real length, width, height, or capacity in the listing text."
     },
     {
       "q": "Which object makes a useful cue?",
-      "a": "Name one familiar, unbranded object shoppers recognize fastest for that product, such as a hand, a notebook, a carry-on or a common bottle."
+      "a": "Name one familiar, unbranded object shoppers recognize for that product, such as a hand, a notebook, a carry-on, or a common mug."
     },
     {
       "q": "Should each image use one reference object?",
-      "a": "Yes. One object keeps the comparison easy to read. Use a second image when you need a different cue."
+      "a": "Yes. One object keeps the comparison easy to read. Make a second image when you need a different cue."
     },
     {
       "q": "Where do exact measurements go?",
-      "a": "Put length, width, height and capacity in the listing text or a dimension table. Keep the reference photo as the quick visual beside those facts."
+      "a": "Put length, width, height, and capacity in the listing text or a dimension table. Keep the reference photo as the quick visual beside those facts."
     },
     {
       "q": "Can I use this as an Amazon listing image?",
@@ -65,23 +65,27 @@
     },
     {
       "q": "Where else can the square image go?",
-      "a": "Use it on a product page, in a Shopify gallery, or in a feed post or carousel, always next to the exact measurements."
+      "a": "Use it on a product page, in a Shopify gallery, or in a feed post, always next to the exact measurements."
     },
     {
-      "q": "Can I try another object from the same photo?",
-      "a": "Yes. Reuse one clear product photo and name a different familiar object. Compare each result with your measured dimensions before posting."
+      "q": "Can I make several cues or use the API?",
+      "a": "Yes. Reuse one product photo and name another object, or send listing photos through the API. Each photo is 24 credits. A failed job returns those credits."
     },
     {
       "q": "Do I need props or a studio?",
-      "a": "No. The reference object and setting are generated from your product photo. A hand in the frame is a generated scale cue, not a customer. Downloads have no watermark."
+      "a": "No. The reference object and the setting are generated from your product photo. A hand in the frame is a generated cue, not a customer. Downloads have no watermark."
     },
     {
       "q": "Can shoppers judge fit from the image alone?",
-      "a": "They can orient themselves faster. A purchase decision still needs the exact measurements in the listing."
+      "a": "They can orient themselves. A purchase decision still needs the exact measurements in the listing, and a size chart where fit depends on it."
     },
     {
       "q": "What does a size reference photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
+      "a": "Each product photo costs 24 credits. The cost is shown before the job starts. Plans start at $24.50 a month for 200 credits."
+    },
+    {
+      "q": "Can I also make a spoken clip from this photo?",
+      "a": "Yes. The same photo can become a short video with a script, a voice, captions, music, and an AI actor. Publish that clip to TikTok, Instagram, or Facebook, or download it. Video credits are 24, 40, 60, or 120 for 6, 10, 15, or 30 seconds."
     }
   ],
   "visual": {
@@ -114,8 +118,8 @@
       ]
     },
     "picker": {
-      "title": "Browse Product Scenes by Category",
-      "lead": "These clips are other video scenes. For the size photo, use the upload box and name one familiar object.",
+      "title": "Browse Size Scenes by Familiar Object",
+      "lead": "Name one familiar object beside the product. Put the real measurements in the listing.",
       "chips": [
         {
           "id": "accessories",
@@ -539,24 +543,31 @@
         "h2": "Questions About a Product Size Reference Photo"
       },
       "m3": {
-        "h2": "Browse Product Scenes by Category",
-        "lead": "These clips are other video scenes. For the size photo, use the upload box and name one familiar object."
+        "h2": "Browse Size Scenes by Familiar Object",
+        "lead": "Name one familiar object beside the product. Put the real measurements in the listing."
+      },
+      "m2": {
+        "h2": "How to Make a Product Size Reference Photo in 3 Simple Steps"
       }
     }
   },
-  "steps_h2": "Make a Product Size Reference Photo in 3 Steps",
+  "steps_h2": "How to Make a Product Size Reference Photo in 3 Simple Steps",
   "steps_lead": "The whole item in frame, one familiar object, then a square image beside your real measurements.",
   "blockOrder": [
     "hero",
+    "features",
+    "definition",
+    "reasons",
     "steps",
+    "trust",
     "reviews",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "A Product Next to an Everyday Object",
-    "lead": "Each card uses one reference object. None of them replace measured dimensions.",
+    "h2": "Shops Showing Scale With One Object",
+    "lead": "Each card uses one reference object. None of them replace measured dimensions. These are examples, not customer quotes.",
     "items": [
       {
         "example": true,
@@ -649,5 +660,124 @@
     }
   ],
   "cta_title": "Start a Scale Photo from One Full Product Shot",
-  "cta_lead": "Upload one photo of the whole item, name one familiar object, and see the credit cost before you start."
+  "cta_lead": "Upload one photo of the whole item, name one familiar object, and see the credit cost before you start.",
+  "definition": {
+    "title": "What Is a Product Size Reference Photo?",
+    "paras": [
+      "A product size reference photo places your item beside one familiar object so shoppers can judge scale at a glance. It is a visual cue, not a measured drawing.",
+      "Put the real length, width, height, or capacity in the listing text. Check the picture against those numbers before you post it on Amazon or your product page."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Size Reference Photo",
+    "lead": "Shoppers get a quick cue. The listing still carries the real measurements.",
+    "items": [
+      {
+        "t": "Scale at a Glance",
+        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no cue at all."
+      },
+      {
+        "t": "No Props to Collect",
+        "d": "The reference object and the setting are generated from your product photo. You do not need a studio or a borrowed suitcase."
+      },
+      {
+        "t": "One Photo, Another Cue",
+        "d": "Reuse a clear product photo and name a different object. Compare each result with your measured dimensions before posting."
+      },
+      {
+        "t": "The Numbers Stay in the Listing",
+        "d": "The picture does not replace length, width, height, or capacity. Those facts stay in the listing text."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Pick a cue",
+      "h2": "Browse Size Scenes by Familiar Object",
+      "lead": "Start from one object. The picture is a cue, and the measured dimensions stay in the listing.",
+      "items": [
+        {
+          "t": "Palm or Hand",
+          "d": "A bottle or a small tool sits beside an open palm. The hand is generated, not a photo of a customer."
+        },
+        {
+          "t": "Closed Notebook",
+          "d": "A planner or a small bag sits beside a notebook so the page size is easier to picture."
+        },
+        {
+          "t": "Carry-on Outline",
+          "d": "A daypack sits beside a carry-on outline. The picture does not prove it fits an overhead bin."
+        },
+        {
+          "t": "Common Coin",
+          "d": "A pendant or a compact sits beside a common coin so the face size is easier to see."
+        },
+        {
+          "t": "Phone Outline",
+          "d": "A small case sits next to a phone outline. Millimeters stay in the listing text."
+        },
+        {
+          "t": "Familiar Mug",
+          "d": "A bowl or a canister sits beside a mug. Write the real capacity next to the image."
+        }
+      ]
+    },
+    {
+      "eyebrow": "Also in the project",
+      "h2": "Features for a Size Reference Photo",
+      "lead": "Ways to make the scale photo, and a clip from the same picture when you need motion.",
+      "items": [
+        {
+          "t": "One Object in the Frame",
+          "d": "Name a single familiar object so the comparison stays easy to read. Use a second image when you need a different cue."
+        },
+        {
+          "t": "Batch Another Cue",
+          "d": "Reuse the same product photo for a palm version and a notebook version. Each photo is 24 credits, shown before you start."
+        },
+        {
+          "t": "Generated Hand or Model",
+          "d": "The scale hand, or an [on-model shot](page:model-photos), is generated. It is not a customer, and it does not replace a size chart."
+        },
+        {
+          "t": "Start From a Product Link",
+          "d": "Paste a public [product page link](page:url-to-video) when you want that page's main image as the starting photo."
+        },
+        {
+          "t": "API for Catalog Photos",
+          "d": "Send listing photos through the API and get scale scenes back. Each job spends credits from your plan, starting at $24.50 a month."
+        },
+        {
+          "t": "A Clip When You Need Motion",
+          "d": "Turn the same photo into a short video with a voice, captions, music, and an AI actor, then publish to TikTok, Instagram, or Facebook."
+        }
+      ]
+    }
+  ],
+  "trust": {
+    "h2": "What You Can Count On",
+    "lead": "A cue in the picture, the real measurements in the listing, and the credit cost up front.",
+    "items": [
+      {
+        "t": "24 Credits a Photo",
+        "d": "Each product photo is 24 credits. The cost is shown before the job starts."
+      },
+      {
+        "t": "No Watermark",
+        "d": "Downloads have no AIVideosUGC watermark. You can use the image in a listing, a gallery, or a feed post."
+      },
+      {
+        "t": "Not a Measured Drawing",
+        "d": "Generated scale can be slightly off. Put the real length, width, height, or capacity in the listing text."
+      },
+      {
+        "t": "Failed Jobs Return Credits",
+        "d": "If a job fails, the reserved credits return to your balance."
+      },
+      {
+        "t": "Paid Plans",
+        "d": "Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600."
+      }
+    ]
+  }
 }

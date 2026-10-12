@@ -4,7 +4,7 @@
   "description": "Turn one food or drink photo into a pour, a first bite, or a shelf shot. Download watermark-free clips for listings, social feeds, and paid ads.",
   "h1": "AI Food and Drink Product Videos for the Pour and the Plate",
   "eyebrow": "Food and drinks",
-  "lead": "Hungry shoppers decide quickly. One package photo can become a pour, a first bite, or a shelf moment without booking a kitchen.",
+  "lead": "Hungry shoppers decide quickly. A package photo or a product link can become a pour, a first bite, or a shelf moment, with a voiceover and captions.",
   "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
     "drink pour video",
@@ -20,7 +20,7 @@
     },
     {
       "q": "Can I show a pour if I only have a photo of the can?",
-      "a": "Yes. Describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
+      "a": "Yes. Upload the can or paste a product link, then describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
     },
     {
       "q": "How long should a food clip be?",
@@ -36,7 +36,7 @@
     },
     {
       "q": "Do I need a creator or a filming kitchen?",
-      "a": "Not for these clips. Hands and the setting are generated from your package photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
+      "a": "Not for these clips. Pick a generated presenter, or let the hands come from your package photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
     },
     {
       "q": "Which frames can I use?",
@@ -45,24 +45,28 @@
     {
       "q": "What should the scene keep visible?",
       "a": "Keep the package shape and the main label area recognizable, and end on the full product when you can. Do not ask the clip to invent a flavor that is not in the photo."
+    },
+    {
+      "q": "Can a drink clip include a voice, captions, and another language?",
+      "a": "Yes. The clip can include a spoken line and captions, and the same pour can be rendered in another language. Allergens stay on the real package. A failed job returns its credits."
     }
   ],
   "templates_lead": "Choose a food ad format that puts one product and one serving moment in focus.",
-  "cta_lead": "Upload one food or drink photo, describe the pour or the plate, and check the pack before you post.",
+  "cta_lead": "Paste a product link or upload one package photo, pick a presenter, and check the pack before you post.",
   "steps_h2": "Food and Drink Video Ads From Pack to Pour",
-  "steps_lead": "Nutrition facts stay on the real package. Three steps take you from that photo to the clip.",
+  "steps_lead": "Nutrition facts stay on the real package. Three steps: a link or a photo, a presenter, then voice and captions.",
   "steps": [
     {
-      "t": "Upload Your Package Photo",
-      "d": "Use a clean photo of the can, bottle, or pouch, label toward the camera. Wipe fingerprints. Leave the can dry."
+      "t": "Upload the Product Photo",
+      "d": "Paste a product link, or use a clean photo of the can, bottle, or pouch, label toward you."
     },
     {
-      "t": "Describe the Pour or Serving",
-      "d": "Name the glass, ice, and liquid color, or the plate and the bite. The hands are generated. Small print on the pack may not match."
+      "t": "Pick a Creator Avatar",
+      "d": "Choose a generated presenter from the actor library for the pour or the bite. Those hands are not a customer."
     },
     {
-      "t": "Download and Post",
-      "d": "Check the package shape and color, then download. Put allergens, ingredients, and the offer in your editor. Captions are not added for you."
+      "t": "Generate and Then Post",
+      "d": "A voiceover and captions come with the frame you picked. Post the file to TikTok or Meta once the pack color matches."
     }
   ],
   "visual": {
@@ -134,23 +138,23 @@
   },
   "reasons": {
     "h2": "Pour Videos and Plate Shots Without a Kitchen Day",
-    "lead": "The next flavor should not wait on a crew. Start from the package photo while the product is still the one you sell.",
+    "lead": "The next flavor should not wait on a crew. Start from the package photo or the product link while the pack is still the one you sell.",
     "items": [
       {
-        "t": "Ready when the flavor is",
-        "d": "Turn a package photo into a pour, a bite, or a shelf shot. There is no kitchen day on the calendar.",
+        "t": "Ready When the Flavor Is",
+        "d": "Turn a package photo or a product link into a pour, a bite, or a shelf shot. There is no kitchen day on the calendar.",
         "img": "n:guide:fx32-food-benefit-packaging",
         "alt": "Adult hands arrange plain kraft snack pouches beside a lunch container on a bright counter."
       },
       {
-        "t": "You pick the action",
-        "d": "Choose the pour, the plate, or the shelf, and keep the package shape readable. Put ingredient text on the real label, not in the clip.",
+        "t": "Look, Language, and Action",
+        "d": "Choose the pour, the presenter, and the language, and keep the package shape readable. Put ingredient text on the real label, not in the clip.",
         "img": "n:guide:fx32-food-benefit-pour",
         "alt": "Clear citrus drink pours into an ice-filled glass beside a plain bottle."
       },
       {
-        "t": "More servings, one photo",
-        "d": "Run one photo through a pour, a bite, and a plated scene. Each length shows its credit cost before it runs.",
+        "t": "More Servings, One Photo",
+        "d": "Run one photo through a pour, a bite, and a plated scene, as a batch if the line needs it. Each length shows its credit cost before it runs.",
         "img": "n:guide:fx32-food-benefit-serve-r2",
         "alt": "Adult hands place three plain oat cookies on a ceramic plate beside berries."
       }
@@ -158,7 +162,7 @@
   },
   "platforms": {
     "h2": "AI Food Product Photos and Clips for Every Channel",
-    "lead": "A short pour fits a phone feed. A still of the pack fits a listing. Pick the frame that shelf already uses.",
+    "lead": "A short pour fits a phone feed. A still of the pack fits a listing. Publish the clip to TikTok or Meta after the pack color checks out.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -194,7 +198,7 @@
   },
   "reviews": {
     "h2": "How Sellers Use Snack Brand TikTok Videos",
-    "lead": "How food and drink sellers use one package photo. The hands are generated, not a customer.",
+    "lead": "How food and drink sellers use one package photo or a product link. The hands are generated, not a customer.",
     "items": [
       {
         "example": true,
@@ -205,14 +209,14 @@
       {
         "example": true,
         "who": "Snack pouch",
-        "t": "Open, then a bite",
+        "t": "Two lengths, one pouch",
         "d": "A pouch photo becomes a 6-second open (24 credits) and a 15-second plated bite (60 credits)."
       },
       {
         "example": true,
         "who": "New flavor",
-        "t": "New flavor, no kitchen day",
-        "d": "The package photo is ready before a kitchen day can be booked. They still proof the flavor name against the real pouch."
+        "t": "A link before any kitchen day",
+        "d": "They paste the product page for a first pour and still proof the flavor name on the pouch."
       },
       {
         "example": true,
@@ -223,14 +227,38 @@
       {
         "example": true,
         "who": "Listing desk",
-        "t": "Pack still and a clip",
-        "d": "One photo guides a white-background pack image and a vertical pour. Allergen lines stay in the listing."
+        "t": "Presenter for the pour",
+        "d": "They pick a generated presenter and keep that look when the next flavor ships."
       },
       {
         "example": true,
         "who": "Careful label",
-        "t": "Legal text stays on the pack",
-        "d": "If the preview redraws the ingredient panel, they post the serving moment and keep allergens and ingredients on the real packaging."
+        "t": "Captions, not the ingredient panel",
+        "d": "Voice and captions are edited in place. Allergens stay on the real pack."
+      },
+      {
+        "example": true,
+        "who": "Region desk",
+        "t": "The pour in another language",
+        "d": "The same pour is rendered for another market. Pack color is checked both times."
+      },
+      {
+        "example": true,
+        "who": "Photo set",
+        "t": "A few packs, no light kit",
+        "d": "Several package photos stand in for a lighting day. The hands on screen stay generated."
+      },
+      {
+        "example": true,
+        "who": "Script desk",
+        "t": "A short script about the bite",
+        "d": "They ask for a few lines about one bite, change a word, and run the job at the credit cost shown."
+      },
+      {
+        "example": true,
+        "who": "Chat desk",
+        "t": "Describe the glass, get the clip",
+        "d": "They describe the glass in a short back-and-forth and get a script with the pour."
       }
     ]
   },
@@ -242,9 +270,43 @@
     "reasons",
     "steps",
     "platforms",
+    "features",
     "related",
     "reviews",
     "faq",
     "cta"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included in the job",
+      "h2": "Features Food Sellers Get With the Clip",
+      "lead": "Voice, captions, a script, and a presenter are part of the clip. You still check the product before it goes live.",
+      "items": [
+        {
+          "t": "A link becomes the pour",
+          "d": "Paste the product page. The job reads the pack and starts a pour, a bite, or a shelf moment from that link."
+        },
+        {
+          "t": "A presenter from the library",
+          "d": "Choose a generated presenter for the serving. The hands are not a customer."
+        },
+        {
+          "t": "Voice and captions included",
+          "d": "A spoken line and on-screen captions come with the clip. Allergens and ingredients stay on the real package."
+        },
+        {
+          "t": "A script for one bite",
+          "d": "Ask for a short script about one pour or one bite. Change a word in the editor before you post."
+        },
+        {
+          "t": "Edit on the same page",
+          "d": "Trim the clip and fix a caption in the built-in editor, then download a watermark-free file."
+        },
+        {
+          "t": "Another language, then publish",
+          "d": "Render the same pour in another language, then publish the file to TikTok or Meta."
+        }
+      ]
+    }
   ]
 }

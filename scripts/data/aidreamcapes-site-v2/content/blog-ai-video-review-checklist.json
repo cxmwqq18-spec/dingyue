@@ -4,7 +4,7 @@
   "description": "A pre-publish AI content checklist for product photos and video ads: match product details, add prices yourself, and follow platform rules. Save it now.",
   "h1": "An AI Content Checklist for Product Photos and Video Ads",
   "eyebrow": "Pre-publish checks",
-  "lead": "An AI content checklist is a last look at the product, the words, and the rights before a photo or a video goes on your store, a marketplace, or an ad account.",
+  "lead": "An AI content checklist is a last look at the product, the words, and the rights before a photo or a video goes on your store, a marketplace, or an ad account. AIVideosUGC can draft the script, match a presenter and a voice, lay captions on the spoken line, and you still run this check before anyone sees the file.",
   "secondary_keywords": [
     "AI video review checklist",
     "check AI product images",
@@ -18,19 +18,26 @@
     {
       "h2": "On this page",
       "paras": [
-        "What to review, how to check a still, how to check a clip, where the price goes, what you need the rights to use, and when to label a generated person."
+        "What the generator makes, how to check a still and a clip, where the price goes, rights, labels, why shops use it, how to start in three steps, and how that compares with booking a shoot."
       ],
       "img": "n:guide:b2f12-blog-review-rules-r1",
       "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone."
     },
     {
-      "h2": "What belongs on an AI content checklist?",
+      "h2": "What Is an AI Video Ad Generator?",
       "paras": [
-        "Check the product against what you ship, then the words, then the rights, then the rule for the site where it will appear.",
-        "A generated photo or video is a new picture built from your upload, not a copy of the original file. A logo letter can shift, a button can move, a piece can appear, or a color can drift. The same pass works for a listing photo, a social post, and a paid ad."
+        "It builds a short ad from your listing link, or from a couple of lines you type, then adds a script, a presenter, a voice, captions, and a cut you can trim, before the file goes on your store or into an ad account.",
+        "The checklist sits on top of that file. Check the product against what you ship, then the words, then the rights, then the rule for the site where it will appear. A generated photo or video is a new picture built from your upload, not a copy of the original file. A logo letter can shift, a button can move, a piece can appear, or a color can drift. The same pass works for a listing photo, a social post, and a paid ad."
       ],
       "img": "n:guide:fx04-blog-review-why-r2",
       "alt": "Hands check the front pocket and zipper of plain black travel backpack."
+    },
+    {
+      "h2": "See What to Review on a Finished Ad",
+      "paras": [
+        "Watch the file the way a shopper will: on a phone, from the first frame, with the voice on and the captions in view. The pictures below are the kinds of stills and hand shots to hold next to the real item.",
+        "Filter the check by where it will run. A [TikTok ad](page:plat-tiktok) and a [Meta ad](page:plat-facebook) need the same product match, even when the frame is different. If you want more finished examples of the format, start from [AI UGC video ads](page:video-ads) and run this page's checks on the result."
+      ]
     },
     {
       "h2": "How do I check AI product images?",
@@ -44,8 +51,8 @@
     {
       "h2": "What is on an AI video review checklist?",
       "paras": [
-        "Play the clip full screen on your phone, then step through it slowly, with extra attention on the hands and the first frame.",
-        "Movement is where a clip tends to slip: a label can blur as the product turns, fingers can blend into a strap, or a zipper can change shape halfway through. Count fingers and watch how they grip. The first frame often becomes the thumbnail. If one short moment is off, trim around it in your editor. If the problem runs through the clip, make a new version. Run this same check on an [AI product video generator](page:product-videos) clip before you post it."
+        "Play the clip on your phone, listen to the voice, read the captions, then step through it slowly, with extra attention on the hands and the first frame.",
+        "The script should name the product you ship, not a feature you do not sell. The presenter is a generated adult, not a customer who bought it. Movement is where a clip tends to slip: a label can blur as the product turns, fingers can blend into a strap, or a zipper can change shape halfway through. Count fingers and watch how they grip. The first frame often becomes the thumbnail. If one short moment is off, trim it in the built-in editor. If the problem runs through the clip, make a new version. Run this same check on an [AI product video generator](page:product-videos) clip before you post it."
       ],
       "img": "n:guide:fx04-blog-review-motion-r1",
       "alt": "Hands open the zipper and flap of plain black travel backpack."
@@ -54,7 +61,7 @@
       "h2": "Which checks should I do before I publish the price?",
       "paras": [
         "Make the picture first, then add the price, the date, the code, and the headline yourself.",
-        "Do not ask for those words inside the image or the clip. Generated lettering is often garbled. Add them in Canva, CapCut, or Ads Manager, where you control every character. Before posting, match the price and the code to the store, and confirm any end date has not already passed. If stray letters appear on packaging or on a sign in the background, crop them out or try again."
+        "Do not ask for those words inside the image or the clip. Generated lettering is often garbled. Captions can follow the spoken line, and you still type the price, the date, and the code yourself so every character is the one on the product page. Before posting, match the price and the code to the store, and confirm any end date has not already passed. If stray letters appear on packaging or on a sign in the background, crop them out or try again."
       ],
       "img": "n:guide:fx04-blog-review-copy-r1",
       "alt": "Plain black travel backpack centered on a white background."
@@ -63,7 +70,7 @@
       "h2": "What do I need to own before an AI ad goes live?",
       "paras": [
         "Upload only photos you took or have the rights to use, and feature only logos that belong to you.",
-        "If you start from a supplier photo, your agreement with them needs to cover ads. Requests built around another company's marks, or around celebrities, may be refused. The [Content Policy](/content) says what can be uploaded. For music, pick a track from the commercial library in your editor or ad account, or a track you have licensed for advertising."
+        "If you start from a supplier photo, your agreement with them needs to cover ads. Requests built around another company's marks, or around celebrities, may be refused. The [Content Policy](/content) says what can be uploaded. For music, pick a track from the music library here, or a track you have already licensed for ads. The presenter and the voice you pick are there for the ads you make on AIVideosUGC."
       ],
       "img": "n:guide:fx04-blog-review-rights-r1",
       "alt": "Hands hold plain black travel backpack beside a plain camera and blank phone."
@@ -76,25 +83,101 @@
       ]
     },
     {
+      "h2": "Reasons to Use AIVideosUGC for a Video Ad",
+      "paras": [
+        "The script starts from your product page or from the lines you type, so the opening is about the item you sell.",
+        "The file is already in a frame a phone feed, a square post, or a product page can use, which is the set listed on [pricing](page:pricing): 9:16, 1:1, 16:9, 4:3, and 3:4.",
+        "One run can offer more than one presenter, hook, and tone. Keep the take that fits the shop and archive the rest."
+      ]
+    },
+    {
+      "h2": "How to Create a Video Ad in 3 Simple Steps",
+      "paras": [
+        "Paste a product link, or describe the item in a line or two. A link pull is the [URL to video](page:url-to-video) start.",
+        "A draft script, a presenter from the [actor library](page:ai-actors), and a voice are matched, and the clip is rendered for you to review.",
+        "Download the frame you need with no watermark, or send it to TikTok or Meta, then walk the checklist on this page."
+      ]
+    },
+    {
+      "h2": "What You Gain From an AI Video Ad",
+      "paras": [
+        "You get a script, a presenter, a voice, and a cut you can trim, without booking a camera day.",
+        "The meter is credits, not a day rate. A photo is 24 credits. A 6, 10, 15, or 30 second clip is 24, 40, 60, or 120. Starter is $24.50 for 200 credits a month, Pro is $35 for 300, and Premium is $63 for 600.",
+        "When you want another hook, another voice, or another frame, make another version from the same photo.",
+        "When a live ad starts to feel familiar, swap the opening line or the presenter and review the new file before it replaces the old one.",
+        "You pick the tone, the presenter, and the colors, and you edit the script before the voice is locked.",
+        "Use the presenter, the voice, and a library track on the ads you export from here. Bring your own licensed track if you prefer it."
+      ]
+    },
+    {
+      "h2": "More You Can Make From the Same Photo",
+      "paras": [
+        "Turn the still into a [product video](page:product-videos), or start from the [video tools](page:video-hub) if you are choosing a format.",
+        "A talking-presenter cut lives with [AI UGC video ads](page:video-ads). A feed-shaped post can follow [Instagram ads](page:plat-instagram).",
+        "Paste the product link when you do not want to retype the details. That path is [URL to video](page:url-to-video).",
+        "Pick the face in the [actor library](page:ai-actors), or save one look and call it back on the next product.",
+        "If the still should simply start moving, use [image to video](page:image-to-video) and then run this checklist.",
+        "A catalog tool can send products through the API and pull the finished files back. The same credit cost is shown before each job."
+      ]
+    },
+    {
+      "h2": "AIVideosUGC vs Filming the Ad",
+      "paras": [
+        "Timing. You upload a photo or paste a link and review a clip, instead of holding a date for a crew.",
+        "Cost. A photo is 24 credits and a clip is 24, 40, 60, or 120 by length. The monthly plans are Starter at $24.50, Pro at $35, and Premium at $63. A filmed spot pays people and a location on top of that.",
+        "Versions. Another hook or presenter is another job from the same photo, not another shoot day.",
+        "Control. You edit the script, choose the voice, and pick the presenter. A hired shoot leaves more of that to the day.",
+        "Rights. You start from photos you can use, and you pick a library track or one you licensed. A creator's face and music often need a separate deal.",
+        "Repeat runs. The next product uses the same steps. You are not holding the launch for one person's calendar."
+      ]
+    },
+    {
+      "h2": "How Shops Use a Checked Video Ad",
+      "paras": [
+        "A skincare shop has a presenter hold the bottle, say what is in it, and then someone checks the label against the real bottle.",
+        "A gadget shop opens the box on a desk and confirms every part in the kit is the part that ships.",
+        "A clothing shop shows the piece on an adult, then matches the neckline and the print to the sample.",
+        "A food shop sets the jar on a counter and has the voice name the flavor that is on the lid.",
+        "A candle shop lets hands lift the lid, and the caption follows that one motion.",
+        "A jewelry shop turns the piece once, and a person counts the stones before the file is posted.",
+        "A shop with buyers in two countries keeps the same presenter and speaks the script in the other language.",
+        "A two-person team makes the next hook from the photo they already checked, instead of booking another afternoon.",
+        "A marketplace seller pastes the listing link, then fixes any line that does not match the live product page.",
+        "A shop testing two openings keeps both clips, posts one, and holds the other until the first has run."
+      ]
+    },
+    {
       "h2": "The short version",
       "paras": [
-        "The product must match the box, the words must be yours, and the photo, logo, and music must be yours or licensed.",
-        "Then follow the current labeling rule for the site you are posting on. If a buyer could feel misled, do not publish that file."
+        "Build the ad from a link or a short prompt, with a script, a presenter, a voice, and captions. Then match the product, type the price yourself, and use only photos, logos, and music you can run.",
+        "Send it to TikTok or Meta, or download it with no watermark, only after that pass. If a buyer could feel misled, do not publish that file."
       ]
     }
   ],
   "related": [
-    "blog-ai-product-photography-guide",
-    "blog-ai-ugc-video-ads-guide",
-    "blog-model-photos-without-a-photoshoot",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips",
-    "guide-testing-ad-versions"
+    "product-videos",
+    "video-ads",
+    "url-to-video",
+    "ai-actors",
+    "plat-instagram",
+    "image-to-video"
   ],
   "faq": [
     {
+      "q": "What does an AI video ad generator make?",
+      "a": "A short ad from your listing link or from lines you type, with a script, a presenter, a voice, and captions. You still check the product, the words, and the rights before it runs."
+    },
+    {
+      "q": "How do I create a video ad with AI?",
+      "a": "Paste your listing link or describe the item, review the draft script and the presenter, then download the frame you need or send it to TikTok or Meta."
+    },
+    {
+      "q": "What should the finished ad include?",
+      "a": "A script about the product you ship, a presenter you are willing to label as generated, a voice, captions on the spoken line, and a frame the placement already accepts."
+    },
+    {
       "q": "What should I check before posting an AI-made video?",
-      "a": "Watch it on your phone from the first frame to the last. Confirm the product, the hands, and the label, then confirm any price you added matches the store."
+      "a": "Watch it on your phone from the first frame to the last. Confirm the product, the hands, the label, the voice, and the captions, then confirm any price you added matches the store."
     },
     {
       "q": "What if a prop looks like it comes with the order?",
@@ -102,7 +185,7 @@
     },
     {
       "q": "Can I ask the tool to draw my discount code?",
-      "a": "No. Add the code, the price, and the date yourself after download so the characters stay correct."
+      "a": "No. Add the code, the price, and the date yourself after download so the characters stay correct. Captions can follow the spoken line, not the offer."
     },
     {
       "q": "Do I have to say a person is generated?",
@@ -114,17 +197,21 @@
     },
     {
       "q": "What if one moment in the clip looks wrong?",
-      "a": "Trim that moment in your editor if it is brief. If the error runs through the clip, make a new version instead of posting it."
+      "a": "Trim that moment in the editor if it is brief. If the error runs through the clip, make a new version instead of posting it."
+    },
+    {
+      "q": "Can I publish the file to TikTok or Meta from here?",
+      "a": "Yes. After the checklist passes, send the file to TikTok or Meta, or download it with no watermark and upload it yourself."
     }
   ],
   "cta_title": "Check every product detail before your next ad",
   "cta_lead": "Upload a product photo, compare the result with the item you ship, and add your own price before it goes live.",
   "relatedLinks": [
-    "blog-ai-product-photography-guide",
-    "blog-ai-ugc-video-ads-guide",
-    "blog-model-photos-without-a-photoshoot",
-    "blog-unboxing-videos-for-launches",
-    "guide-product-photo-tips",
-    "guide-testing-ad-versions"
+    "product-videos",
+    "video-ads",
+    "url-to-video",
+    "ai-actors",
+    "plat-instagram",
+    "image-to-video"
   ]
 }

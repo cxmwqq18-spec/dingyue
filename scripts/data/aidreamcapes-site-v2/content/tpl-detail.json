@@ -4,7 +4,7 @@
   "description": "Turn one sharp photo into a close-up of stitching, grain, hardware or finish. AI product detail photos for listing galleries and paid social ads.",
   "h1": "Product Detail Photos of Stitching, Grain and Finish",
   "eyebrow": "Product photo template",
-  "lead": "Open a close-up scene, add one sharp photo of the feature, and download a square image filled with stitching, grain or hardware.",
+  "lead": "Open a close-up scene, add one sharp photo of the feature, and download a square image. The same photo can start a voiced clip of that feature.",
   "secondary_keywords": [
     "close-up product photos",
     "macro product photography",
@@ -44,44 +44,52 @@
   },
   "faq": [
     {
-      "q": "Which details should a close-up show?",
-      "a": "Pick one feature shoppers use to judge construction: stitching, grain, a clasp, a zipper, a rim or the finish. One close-up should answer one question."
+      "q": "What is a product detail photo?",
+      "a": "A square close-up of one feature shoppers use to judge construction, such as stitching, grain, a clasp, a zipper or the finish. It comes from a sharp photo of that feature."
     },
     {
-      "q": "How close should the source photo be?",
-      "a": "Keep the feature sharp and leave enough of the product to show where it sits. A blurry wide shot will not become a readable macro."
+      "q": "How do I make product detail photos?",
+      "a": "Upload a steady photo where the feature is already visible, name that feature, and download a square where it fills the frame. Check it against the source before you post."
     },
     {
-      "q": "Will the close-up invent texture that was not photographed?",
-      "a": "It should not. If the stitch, grain or clasp is blurry or out of frame, take another photo. Compare the download with the source before you post."
+      "q": "Why use this instead of a macro shoot?",
+      "a": "A sharp phone photo can be the source, so you skip a separate macro session. You still compare color and construction before posting. The close-up should not invent texture that was not photographed."
     },
     {
-      "q": "Can the close-up replace the main photo?",
-      "a": "No. Keep the full product first. Use the close-up after it, where shoppers inspect material or construction."
+      "q": "Who is a detail photo for?",
+      "a": "Shops that need shoppers to inspect material or hardware, including bags, leather goods, jewelry, shoes, watches, apparel and furniture."
     },
     {
-      "q": "Can I use the close-up in a carousel?",
-      "a": "Yes. Pair it with the full product image and a short caption about the feature. The download has no watermark."
+      "q": "Can a beginner make one?",
+      "a": "Yes. No editing experience is required. Upload the photo, name one feature, and download. A blurry wide shot will not become a readable close-up."
     },
     {
-      "q": "Do I need a macro lens?",
-      "a": "No. A sharp phone photo can be the source. The close-up is generated from it, and you still compare color and construction before posting."
+      "q": "Which features should I show?",
+      "a": "One feature per file. Start with the question shoppers ask, such as stitch, grain, clasp, zipper, rim or finish. Add another file only for a different feature."
     },
     {
-      "q": "What does a detail photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
+      "q": "Can I upload my own photo?",
+      "a": "Yes. Upload your own sharp photo. If the stitch or clasp is blurry or out of frame, take another photo. The result should not invent texture."
     },
     {
-      "q": "Where should the close-up sit in the gallery?",
-      "a": "Place it after the full product image and before lifestyle shots, so the quality question is answered while the item is still clear."
+      "q": "Where can I use the close-up?",
+      "a": "After the full product photo in a listing gallery, and in paid social. A clip from the same photo can be posted on TikTok, Instagram, Facebook or YouTube. The download has no watermark."
     },
     {
-      "q": "How many detail views should one product have?",
-      "a": "Start with one close-up per material or construction question. Add another only when it shows a different feature."
+      "q": "Is there a free plan?",
+      "a": "No. There is no free plan. Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits. Plans start at $24.50 a month."
     },
     {
-      "q": "Does the close-up have a watermark?",
-      "a": "No. The download has no watermark. Check the color against the source photo before you publish."
+      "q": "Can I use it commercially?",
+      "a": "Yes. Use the close-up in your own listings and ads. The download has no watermark. It does not replace the full product photo."
+    },
+    {
+      "q": "Why start from a template close-up?",
+      "a": "The frame is already filled by one feature, so you do not build the crop from nothing. You still place the full product photo first."
+    },
+    {
+      "q": "Can I add a voice, a presenter or another language?",
+      "a": "Yes. The same photo can start a clip with an AI presenter, a script and a voice in another language. Paste the product link or use the API to draft it, then review the feature against the source."
     }
   ],
   "visual": {
@@ -536,7 +544,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About Product Detail Photos"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
         "h2": "Browse Video Ad Templates by Category",
@@ -551,73 +559,74 @@
     "picker",
     "steps",
     "reviews",
+    "features",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "The Feature Shoppers Check Up Close",
-    "lead": "Leather goods product photos work this way. A clasp, a zipper or wood grain can too: one feature, taken from a sharp photo.",
+    "h2": "Shops Switching to a Detail Close-Up",
+    "lead": "One feature fills the frame, taken from a sharp photo. A voice or a presenter can point at that same feature.",
     "items": [
       {
         "example": true,
         "who": "Bag shop",
-        "t": "Stitch line",
-        "d": "A bag shop enlarges a handle stitch so the thread and hole spacing fill the square."
+        "t": "Stitch checked",
+        "d": "A bag shop enlarges a handle stitch so the thread fills the square, then checks it against the source."
       },
       {
         "example": true,
         "who": "Belt shop",
-        "t": "Grain",
-        "d": "A belt shop brings the leather grain forward from a sharp photo and leaves the buckle out of this frame."
+        "t": "Photo, then a clip",
+        "d": "A belt shop brings the leather grain forward from a sharp photo, then makes a short clip from that same photo."
       },
       {
         "example": true,
         "who": "Wallet shop",
-        "t": "Edge paint",
-        "d": "A wallet shop fills the frame with a painted edge so the finish is the whole photo."
+        "t": "Presenter points",
+        "d": "A wallet shop has an AI presenter point at a painted edge that already fills the frame."
       },
       {
         "example": true,
         "who": "Jewelry shop",
-        "t": "Clasp",
-        "d": "A jewelry shop enlarges a lobster clasp from a photo where the clasp was already sharp."
+        "t": "Line trimmed in the editor",
+        "d": "A jewelry shop enlarges a lobster clasp and trims the spoken line in the built-in editor."
       },
       {
         "example": true,
         "who": "Shoe shop",
-        "t": "Welt",
-        "d": "A shoe shop shows the welt and stitching along a sole, one construction question in one square."
+        "t": "A second language",
+        "d": "A shoe shop shows the welt and stitching, then a voice in another language for a second market."
       },
       {
         "example": true,
         "who": "Watch shop",
-        "t": "Crown",
-        "d": "A watch shop enlarges the crown and case edge, then checks them against the source before posting."
+        "t": "Script on this page",
+        "d": "A watch shop enlarges the crown and edits the script without leaving the page."
       },
       {
         "example": true,
         "who": "Jacket shop",
-        "t": "Zipper",
-        "d": "A jacket shop fills the frame with zipper teeth and tape as the texture shot on the listing."
+        "t": "Presenter, not a shoot",
+        "d": "A jacket shop uses an AI presenter beside zipper teeth that fill the frame."
       },
       {
         "example": true,
         "who": "Home shop",
-        "t": "Wood grain",
-        "d": "A home shop makes a tabletop grain close-up from a photo that already showed the surface."
+        "t": "No new light setup",
+        "d": "A home shop makes a tabletop grain close-up from a photo that already showed the surface, with no new light setup."
       },
       {
         "example": true,
         "who": "Hardware shop",
-        "t": "Knob",
-        "d": "A hardware shop enlarges a metal knob so shoppers can judge the sheen."
+        "t": "Link and a second cut",
+        "d": "A hardware shop pastes the product link, enlarges a metal knob, and makes a second version."
       },
       {
         "example": true,
         "who": "Apparel shop",
-        "t": "Seam",
-        "d": "An apparel shop shows a hem seam in one square and keeps the full garment photo as the first image."
+        "t": "Described in chat",
+        "d": "An apparel shop describes the hem seam in chat, keeps the full garment photo first, and reviews the close-up."
       }
     ]
   },
@@ -649,6 +658,39 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Start a Close-Up from a Sharp Source Photo",
-  "cta_lead": "Upload one photo where the feature is already visible, and see the credit cost before you start."
+  "cta_title": "Create Your First Detail Photo",
+  "cta_lead": "Upload one photo where the feature is already visible, and see the credit cost before you start.",
+  "more_sections": [
+    {
+      "eyebrow": "Included with the template",
+      "h2": "Features for Product Detail Photos",
+      "lead": "The close-up still comes from a sharp photo of one feature. These are the pieces you can add around it.",
+      "items": [
+        {
+          "t": "AI voiceover",
+          "d": "The same photo can start a clip with a spoken line about that feature. You approve the words, and the voice is not a customer recording."
+        },
+        {
+          "t": "A script you can edit",
+          "d": "A script can be drafted from your note or from the product page link. Change any line before you download."
+        },
+        {
+          "t": "Presenters from the actor library",
+          "d": "Pick an AI presenter to point at the feature. The person on screen is a generated performer, not a buyer."
+        },
+        {
+          "t": "A product link or the API",
+          "d": "Paste a product page link, or send the photo through the API, to draft the script. The close-up still needs a sharp source."
+        },
+        {
+          "t": "Built-in editor and another language",
+          "d": "Change the script and switch the voice to another language in the built-in editor. The download has no watermark."
+        },
+        {
+          "t": "More versions, then publish",
+          "d": "Make another cut for a second feature or a second market. Publish on TikTok, Instagram, Facebook or YouTube. There is no free plan."
+        }
+      ]
+    }
+  ]
 }

@@ -11,7 +11,7 @@
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "steps_h2": "Make User-Generated Content Style Images in 3 Steps",
+  "steps_h2": "How to Make UGC Style Product Photos in 3 Simple Steps",
   "steps_lead": "Upload the product, pick a creator-style scene, then download a still for the feed.",
   "steps": [
     {
@@ -20,7 +20,7 @@
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Pick a routine, unboxing or demo style. Add one line about the setting if you want, then generate."
+      "d": "Pick a routine, unboxing, or demo. Add a script line if you want one."
     },
     {
       "t": "Download and Post",
@@ -75,7 +75,23 @@
     },
     {
       "q": "When should I make a video instead?",
-      "a": "Choose video when the ad needs motion, a voice or a sequence. That path starts at [AI UGC video ads](page:video-ads). This template stops at a still."
+      "a": "This template starts as a still. Add a spoken line, captions, and music here, and open [AI UGC video ads](page:video-ads) when the ad needs motion."
+    },
+    {
+      "q": "Can the line use another language?",
+      "a": "Yes. Write or generate the line in the language you sell in. The same product photo can be the source."
+    },
+    {
+      "q": "Can I edit what comes back?",
+      "a": "Yes. Trim a clip in the built-in editor, or change the caption after download. The square photo does not bake a price into the file."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste a product page and the script writer drafts the line. The still on this page still starts from your product photo."
+    },
+    {
+      "q": "Is there an API?",
+      "a": "Yes. The API can connect your catalog so a finished file comes back into your own setup."
     }
   ],
   "visual": {
@@ -523,7 +539,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make User-Generated Content Style Images in 3 Steps"
+        "h2": "How to Make UGC Style Product Photos in 3 Simple Steps"
       },
       "m3": {
         "h2": "Video previews, not the creator-style photo",
@@ -536,33 +552,33 @@
   },
   "relatedLinks": [
     {
-      "id": "social-ad-photos",
-      "label": "AI ad image generator"
+      "id": "url-to-video",
+      "label": "Product link to video"
     },
     {
-      "id": "ind-health-wellness",
-      "label": "AI lifestyle photos for wellness brands"
+      "id": "spokesperson-videos",
+      "label": "AI presenter ads"
+    },
+    {
+      "id": "video-ads",
+      "label": "AI UGC video ads"
+    },
+    {
+      "id": "product-videos",
+      "label": "Product videos"
     },
     {
       "id": "plat-tiktok",
       "label": "AI TikTok ads generator"
     },
     {
-      "id": "plat-instagram",
-      "label": "AI Instagram ads"
-    },
-    {
-      "id": "unboxing-videos",
-      "label": "AI unboxing video"
-    },
-    {
-      "id": "lifestyle-photos",
-      "label": "AI lifestyle product photos"
+      "id": "social-ad-photos",
+      "label": "AI ad image generator"
     }
   ],
   "reviews": {
-    "h2": "How sellers use a UGC style product photo",
-    "lead": "A few ways sellers turn one product photo into a creator-style still.",
+    "h2": "How AIVideosUGC Helps Real Shops",
+    "lead": "Example ways a shop uses one product photo. These cards are not customer quotes and not performance scores.",
     "items": [
       {
         "example": true,
@@ -599,20 +615,74 @@
         "who": "Small brand",
         "t": "No sample shipment",
         "d": "They skip sending a sample to a creator for this still. The person in frame is generated, not a customer and not an influencer they hired."
+      },
+      {
+        "example": true,
+        "who": "Beauty seller",
+        "t": "Voice and captions",
+        "d": "They add a spoken line and captions, then post the scene from the shop account."
+      },
+      {
+        "example": true,
+        "who": "Wellness shop",
+        "t": "One person publishes",
+        "d": "One person trims the clip in the editor and publishes it to TikTok and Instagram."
       }
     ]
   },
-  "related_h2": "Lifestyle photos for Instagram and TikTok",
-  "related_lead": "The ad-image tool, wellness photos, TikTok, Instagram, unboxing video, and lifestyle photos.",
-  "cta_title": "Ready to make a creator-style photo?",
-  "cta_lead": "Upload one product photo and pick a scene. You see the credit cost before the job starts.",
+  "related_h2": "Explore More Tools",
+  "related_lead": "A product link, an AI presenter, UGC video ads, a product video, TikTok ads, and the ad image tool.",
+  "cta_title": "Ready to Create Your First UGC Style Photo?",
+  "cta_lead": "Upload one product photo and pick a scene. The credit cost is on screen before the job starts.",
   "blockOrder": [
     "hero",
     "picker",
+    "features",
+    "definition",
     "reviews",
     "steps",
     "related",
     "faq",
     "cta"
-  ]
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Full control",
+      "h2": "Full Creative Control",
+      "lead": "The still on this page is the creator-style photo. Voice, captions, music, and a publish step sit with it.",
+      "items": [
+        {
+          "t": "AI Actors",
+          "d": "Pick a generated presenter that fits the product. The person is not a hired creator and not a customer."
+        },
+        {
+          "t": "More Than One Language",
+          "d": "Write or generate the line in the language your buyers use, and keep the same product photo as the source."
+        },
+        {
+          "t": "Music Library",
+          "d": "Add a music bed from the library, or generate a short track that sits under this ad."
+        },
+        {
+          "t": "Built-in Editor",
+          "d": "Trim and tidy the clip in the editor on this site before you download it."
+        },
+        {
+          "t": "Auto Captions",
+          "d": "Turn captions on so the line still reads when the viewer has the sound down."
+        },
+        {
+          "t": "Ready for Each Platform",
+          "d": "Save a cut for TikTok, Reels, Facebook, or Shorts, and publish to TikTok or Meta in one click."
+        }
+      ]
+    }
+  ],
+  "definition": {
+    "title": "AI Ethics and Safety Standards",
+    "paras": [
+      "Anyone on screen is generated for the ad. They are not a creator you hired, and they are not a customer.",
+      "You still choose the claim and the disclosure. Uploads stay in your account. The details are on [AI content trust and safety](page:trust)."
+    ]
+  }
 }

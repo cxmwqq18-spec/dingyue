@@ -1,11 +1,11 @@
 {
   "id": "plat-youtube-shorts",
   "title": "YouTube Shorts Ads from Product Photos | AIVideosUGC",
-  "description": "Make a YouTube Shorts ad from one product photo. Choose a 6, 10, 15 or 30 second vertical clip, see the credit cost first, and download without a watermark.",
-  "h1": "YouTube Shorts Ads from One Product Photo",
+  "description": "Make YouTube Shorts ads from a product photo or a product link. Pick an actor, a voice, and 6, 10, 15 or 30 seconds, then see the credit cost.",
+  "h1": "YouTube Shorts Ads from a Photo or a Link",
   "eyebrow": "YouTube Shorts",
-  "lead": "Turn one product photo into a YouTube Shorts ad. Choose 6, 10, 15 or 30 seconds, see the credit cost first, and download a tall file with no watermark.",
-  "card": "YouTube Shorts ads from one product photo, in a tall frame.",
+  "lead": "Make YouTube Shorts ads from a product photo or a product link. Pick an actor and a voice, choose 6, 10, 15 or 30 seconds, and download a tall file with no watermark.",
+  "card": "YouTube Shorts ads from a photo or a product link, in a tall frame.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
     "vertical video ads for YouTube",
@@ -14,32 +14,32 @@
   ],
   "faq": [
     {
-      "q": "Can I make a YouTube Shorts ad from one product photo?",
-      "a": "Yes. Upload one clear picture, describe one action, and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
+      "q": "What is an AI clip for YouTube Shorts ads?",
+      "a": "A tall product video made from your photo or your product link, with an [AI actor](/ai-video-generation/ai-actors) and a voice you can edit. It is not a real customer review."
     },
     {
-      "q": "Is this the same as a skippable in-stream ad?",
-      "a": "No. This page is for a tall Shorts file. A 16:9 in-stream ad is a separate wide file. Do not crop a wide ad and use it as a Short."
-    },
-    {
-      "q": "Do Shorts ads need a creator or narration?",
-      "a": "No. You do not book a creator. The file has no voice track, music or captions. If a person appears, that presenter is generated, not a real customer."
+      "q": "Can I customize the script, actor, and visuals?",
+      "a": "Yes. Rewrite the script, swap the actor, change the voice, and adjust the scene before you download."
     },
     {
       "q": "What does a Short cost in credits?",
-      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds, and the price shows before you start. If a file fails, those credits return on their own."
-    },
-    {
-      "q": "Can I customize the scene?",
-      "a": "Yes. You write the action, choose the length, and can make another file with a different scene. You choose which opening to publish."
+      "a": "A clip costs 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds. The price shows before you start. If a file fails, those credits return on their own. There is no free plan."
     },
     {
       "q": "Are AI clips allowed in YouTube ads?",
-      "a": "Follow Google's current ad-review and disclosure rules on the day you publish. We do not submit the ad, and we do not guarantee approval."
+      "a": "Follow Google's current ad-review and disclosure rules on the day you publish. We do not submit the ad, and we do not guarantee approval. Do not present a generated actor as a real customer."
     },
     {
-      "q": "Can the same tall file run somewhere else?",
-      "a": "A 9:16 file can be tried in other tall placements, but preview it in each player. The buttons sit in different places, so check the product each time."
+      "q": "How should I treat the actors and voices?",
+      "a": "They are generated presenters, not people you hired. You can change the tone and the language. Do not claim a shopper will mistake them for a customer."
+    },
+    {
+      "q": "Does a Short start from a product link?",
+      "a": "Yes. Paste a product page link, or upload a photo. A 16:9 in-stream ad is a separate wide file. Do not crop a wide ad and use it as a Short."
+    },
+    {
+      "q": "Will this raise watch time?",
+      "a": "We do not promise a longer watch. You can try another opening, actor, or script, and you choose which file to publish."
     },
     {
       "q": "Which sizes should I compare?",
@@ -48,19 +48,19 @@
   ],
   "examples": null,
   "templates_lead": "Choose a template that shows one useful product action from the opening frame.",
-  "cta_lead": "Start with one product action, then shape a full-screen clip for YouTube Shorts.",
+  "cta_lead": "Paste a product link or upload a photo, pick an actor, and download a tall Shorts file.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Add one sharp picture of the whole item, with space around it for player controls."
+      "t": "Add a product URL",
+      "d": "Paste a product page link, or upload one sharp picture of the whole item."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
+      "t": "Select an actor",
+      "d": "Pick an AI actor who can hold the product, or show the item with no person."
     },
     {
-      "t": "Download and Post",
-      "d": "Save the file with no watermark. Add sound and words yourself, then upload it where the Short will run."
+      "t": "Render and download",
+      "d": "Save the tall file with no watermark. Make a wide in-stream ad as its own file."
     }
   ],
   "maker": {
@@ -103,59 +103,59 @@
       ],
       "items": [
         {
-          "t": "Upload Your Product Photo",
-          "d": "Add one sharp picture of the whole item, with space around it for player controls."
+          "t": "Add a product URL",
+          "d": "Paste a product page link, or upload one sharp picture of the whole item."
         },
         {
-          "t": "Describe Your Scene",
-          "d": "Name one action and choose 6, 10, 15 or 30 seconds. The credit cost shows before you start."
+          "t": "Select an actor",
+          "d": "Pick an AI actor who can hold the product, or show the item with no person."
         },
         {
-          "t": "Download and Post",
-          "d": "Save the file with no watermark. Add sound and words yourself, then upload it where the Short will run."
+          "t": "Render and download",
+          "d": "Save the tall file with no watermark. Make a wide in-stream ad as its own file."
         }
       ]
     },
     "titles": {
       "faq": {
-        "h2": "Questions before you publish a Short"
+        "h2": "FAQs about the YouTube Shorts ad"
       }
     }
   },
-  "benefits_h2": "YouTube Shorts video ads without a film day",
+  "benefits_h2": "Why YouTube Shorts advertisers start with an AI video",
   "benefits": [
     {
-      "t": "A tall file, ready to preview",
-      "d": "The clip is a full-screen vertical file. Check it in the player so controls do not cover the item."
+      "t": "Faster turnaround",
+      "d": "Start the next Short from a photo or a product link, without booking a film day."
     },
     {
-      "t": "Swap the opening, keep the item",
-      "d": "Run the same photo with a new action when you want another test. The item on screen is still the product from that photo."
+      "t": "More versions to test",
+      "d": "Run the same product with a new action, actor, or script. You choose which opening to publish."
     },
     {
-      "t": "No queue for a shoot",
+      "t": "No production delays",
       "d": "You are not waiting on a location, a creator, or an editor. Describe the scene and start the next file."
     }
   ],
-  "steps_h2": "Make vertical video ads for YouTube in 3 steps",
+  "steps_h2": "Generate YouTube Shorts ads in 3 steps",
   "steps_lead": "This path is for Shorts. A wide in-stream ad is a separate file.",
   "more_sections": [
     {
       "eyebrow": "How the Short is finished",
-      "h2": "How short product videos for YouTube get finished",
-      "lead": "You bring the photo and one line about the action. Then you pick the length and download the file.",
+      "h2": "What makes AIVideosUGC exceptional for Shorts?",
+      "lead": "You bring the product. Then you set the script, the actor, and the length.",
       "items": [
         {
-          "t": "Lead with the action",
-          "d": "Open on the product in use. A logo is a weak first frame."
+          "t": "Built for people running ads",
+          "d": "Turn a product link into a Short. A clip is 24, 40, 60 or 120 credits for 6, 10, 15 or 30 seconds."
         },
         {
-          "t": "Keep the product recognizable",
-          "d": "Describe the action so the item stays clear for the whole clip."
+          "t": "Actors that hold the product",
+          "d": "Start from the product photo and have an AI actor hold it, or keep the frame on the item alone."
         },
         {
-          "t": "You add sound after",
-          "d": "The download has no soundtrack, no captions, and no watermark. Add sound and words in your editor."
+          "t": "An editor for the whole spot",
+          "d": "Change the script, the voice, the actor, captions, and music, then download the file."
         }
       ]
     }
@@ -171,28 +171,28 @@
     "related",
     "faq"
   ],
-  "benefits_lead": "A Shorts test can start from the picture you already use on the product page.",
+  "benefits_lead": "A Shorts test can start from the picture on the product page, or from the product link.",
   "reasons": {
-    "h2": "Why product demo Shorts are easier to replace",
-    "lead": "Keep one action obvious, then try a different opening.",
+    "h2": "Why choose AIVideosUGC for YouTube Shorts ads?",
+    "lead": "Pick the face, the voice, and the opening. You decide what gets published.",
     "items": [
       {
-        "t": "One action, clearly",
-        "d": "A Short has little time. Describe a single use so the item is understood before the viewer moves on."
+        "t": "An actor library for your brand",
+        "d": "Pick a different AI actor when you want a new face, or build a custom one for the shop."
       },
       {
-        "t": "A new test is a new file",
-        "d": "Change the scene or the length and run it again. You choose which opening to publish."
+        "t": "Voices shoppers can follow",
+        "d": "Use an AI voice and captions in the language you sell in, with a tone that fits the product."
       },
       {
-        "t": "The wide frame is separate",
-        "d": "16:9 is for a regular in-stream slot, not for Shorts. Make that wide file on its own if you need it."
+        "t": "Test the opening yourself",
+        "d": "Make another file to try a new script, actor, or voice. You choose which opening to publish."
       }
     ]
   },
   "platforms": {
-    "h2": "Make a file for the other places you sell",
-    "lead": "Shorts is one placement. The same picture can start a file for the other channels.",
+    "h2": "Make creator-style video ads for other channels",
+    "lead": "Shorts is one placement. Publish a tall file to TikTok, Instagram, or Facebook, or make a separate file for a wide YouTube ad.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -233,8 +233,8 @@
     ]
   },
   "reviews": {
-    "h2": "How shops open a Shorts test before filming",
-    "lead": "A few ways shops use one upload.",
+    "h2": "How shops use YouTube Shorts ads",
+    "lead": "A few ways shops open a Short from one product.",
     "items": [
       {
         "example": true,
@@ -271,17 +271,41 @@
         "who": "Fitness shop",
         "t": "Unfold, then hold",
         "d": "A fitness shop uses a mat photo for an unroll, so the length is easy to see."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "One zip, collar in frame",
+        "d": "An apparel shop uses a jacket photo for one zip, with the collar kept in frame."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "One grooming pass",
+        "d": "A pet shop uses a brush photo for a short grooming pass so the size is easy to see."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "Clasp, chain in frame",
+        "d": "A jewelry shop uses a necklace photo for a clasp close-up, with the chain fully visible."
+      },
+      {
+        "example": true,
+        "who": "Outdoor shop",
+        "t": "One sip on a trail",
+        "d": "An outdoor shop uses a bottle photo for a sip, so the logo stays easy to read."
       }
     ]
   },
-  "related_h2": "Tools that sit next to a Short",
-  "related_lead": "Open a tool or a how-to template after you know the action.",
+  "related_h2": "Related tools for a Shorts ad",
+  "related_lead": "Open the link tool, the actor tool, or a how-to template after you know the action.",
   "relatedLinks": [
     "video-ads",
-    "product-videos",
-    "unboxing-videos",
-    "tpl-howto",
+    "url-to-video",
     "spokesperson-videos",
+    "product-videos",
+    "tpl-howto",
     "image-to-video"
   ]
 }

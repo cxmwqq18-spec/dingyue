@@ -4,7 +4,7 @@
   "description": "Turn one product photo into AI UGC video ads and store-ready product photos. Pick a scene, see the credit cost first, and download files for every channel.",
   "h1": "AI Product Videos and Photos for Online Stores",
   "eyebrow": "Launch more product ads from one clear photo",
-  "lead": "Pick a scene or an AI presenter, then download a file for the next campaign. The credit cost is on screen before the job starts.",
+  "lead": "Pick a scene or an AI presenter, add a script and a voice, then download the file. The credit cost is on screen before the job starts.",
   "secondary_keywords": [
     "AI product video generator",
     "AI product photo generator",
@@ -17,124 +17,124 @@
   "templates_title": null,
   "templates_lead": null,
   "platforms_title": null,
-  "benefits_h2": "Every AI UGC Video and Product Photo Tool You Need",
+  "benefits_h2": "Everything for Your Next UGC Ad",
   "benefits": [
     {
-      "t": "AI UGC Video Ads",
-      "d": "Upload a product photo and get a creator-style [UGC video ad](/ai-video-generation/ugc-ad-video) for [TikTok ads](/platforms/tiktok-ads) and other vertical placements.",
-      "icon": "play"
-    },
-    {
-      "t": "AI Actors and Spokespeople",
-      "d": "Pick an AI presenter to hold or use your product on camera. If they speak, you write the line. No casting call and no shoot day.",
-      "icon": "users"
-    },
-    {
-      "t": "URL to Video",
-      "d": "Paste a public product page link. The clip starts from the main product image and the product name on that page.",
-      "icon": "layers"
-    },
-    {
-      "t": "Image to Video",
-      "d": "Give a still product shot a short movement you describe in one line, like a slow turn or a hand pick-up.",
-      "icon": "refresh"
-    },
-    {
-      "t": "Product Photos",
-      "d": "Make listing and social images with the [AI product photo generator](/ai-image-generation): white backgrounds, lifestyle scenes and on-model shots.",
+      "t": "Product photos and clips",
+      "d": "Turn one photo or a short prompt into a listing image or a product clip. Start in the [AI product photo generator](/ai-image-generation).",
       "icon": "sparkle"
     },
     {
-      "t": "Background Changer",
-      "d": "Put your product in a new setting, then compare the color and outline with your original photo before you post.",
-      "icon": "target"
+      "t": "AI video agent",
+      "d": "Brief the ad the way you would brief a teammate. It drafts a script, lines up a presenter and a voice, and opens the edit.",
+      "icon": "play"
+    },
+    {
+      "t": "Recreate a scene",
+      "d": "See a look you want for your own product? Rebuild that scene around your photo, then download your version.",
+      "icon": "refresh"
+    },
+    {
+      "t": "URL to Video",
+      "d": "Paste a public product page link. The clip uses the main image and the product name on that page. Open [URL to Video](/ai-video-generation/url-to-video).",
+      "icon": "layers"
+    },
+    {
+      "t": "AI actors",
+      "d": "Pick a presenter from the [AI actor library](/ai-video-generation/ai-actors). They say the script you approve, in the voice you choose.",
+      "icon": "users"
+    },
+    {
+      "t": "Your AI twin",
+      "d": "Put a presenter on camera in your place, with a voice you have rights to use, so you are not filming every take. Start from [spokesperson videos](/ai-video-generation/ai-actor-product-ads).",
+      "icon": "shield"
     }
   ],
   "steps_h2": "How to Make AI Product Videos and Photos in 3 Simple Steps",
-  "steps_lead": "Upload one product photo, describe the scene, and download the file. Add your price and captions in your editor before you post.",
+  "steps_lead": "Upload one product photo, brief the ad, and download a clip with voice and captions.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Keep the product you sell at the center. Upload a clear full-item photo, or start with a product page link in URL to Video."
+      "d": "Upload a clear product photo, or paste a public product page link."
     },
     {
-      "t": "Share Your Ad Idea",
-      "d": "Describe who holds the product and where the action happens. Pick a template and size, then see the credit cost before the job starts."
+      "t": "Brief the Ad",
+      "d": "Set the script, presenter, voice, and scene. The credit cost shows before the job."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the file. Add your price, offer and captions in your editor, then post it."
+      "t": "Edit and Publish",
+      "d": "Adjust captions and library music in the editor, then publish to TikTok or Meta."
     }
   ],
   "ugc": {
     "eyebrow": "A clear way to make creator-style ads",
     "title": "What is AI UGC?",
     "paras": [
-      "A creator-style ad: an AI presenter shows your product in a scene you describe, and you write any line they say. A store can show the product without booking a new shoot.",
-      "Upload the product photo and choose a scene or actor. Get a 6, 10, 15 or 30 second clip built around your real product for a paid ad, product page or social post.",
-      "The presenter is AI-generated, not a real customer; use the clip to show your product."
+      "A creator-style ad starts from your product. An AI presenter, a script, and a voice cover the on-camera part, so the store can skip a new shoot.",
+      "Begin with a photo, a short prompt, or a product page link. Choose a scene or an actor and get a 6, 10, 15, or 30 second clip for a paid ad, a product page, or a social post.",
+      "The presenter is generated, not a real customer. Gestures follow the line you approved. Use the clip to show the product, and label it as AI when the channel asks."
     ],
     "formats": [
       {
         "t": "Direct-to-camera ads",
-        "d": "An AI presenter explains the item and shows how it is used."
+        "d": "An AI presenter explains the item on camera, with a voice and captions."
       },
       {
         "t": "Problem-to-solution ads",
-        "d": "Open with a shopper problem, then show the product handling it."
+        "d": "Open on a shopper problem, then show the product handling it."
       },
       {
         "t": "Product demos",
-        "d": "Use a short demonstration to make a feature or routine easy to understand."
+        "d": "Walk through one feature so a viewer can see how it is used."
       },
       {
         "t": "Unboxing ads",
-        "d": "Reveal the product as it leaves the box and show the first-use moment."
+        "d": "Open the package on camera and show the product as it comes out."
       }
     ]
   },
   "audience": {
     "title": "Built for Teams That Launch Fast",
-    "lead": "Start from the product photo you already have and pick the channel. Download the ad, then add captions and a price before you post.",
+    "lead": "Start from the product photo you already have. Make the ad, edit captions, and publish it.",
     "items": [
       {
         "t": "Ecommerce and D2C brands",
-        "d": "Refresh a product page or paid ad without booking a new shoot for every campaign.",
+        "d": "Refresh a product page or a paid ad from one photo, then publish the file to TikTok or Meta.",
         "img": "n:img3-gen2-unboxing-videos-g2-r3",
         "alt": "Plain white cream tube, round white cream jar and white soap bar revealed in an open gift box.",
         "frame": "browser"
       },
       {
         "t": "Dropshippers",
-        "d": "Try a few scenes for a new product before you book a shoot. Keep the cuts you want to post.",
+        "d": "Try a few scenes and languages for a new product before you book a shoot. Keep the cuts you want.",
         "img": "n:gen2:video-ads-g3",
         "alt": "Snack pouch set down beside a lunch container on an office desk.",
         "frame": "phone"
       },
       {
         "t": "Small businesses",
-        "d": "Explain what the product does in a short demo, without booking a studio.",
+        "d": "Explain the product in a short demo with an AI presenter and auto captions, without booking a studio.",
         "img": "n:gen2:ind-food-drinks-g3",
         "alt": "Pasta sauce jar beside a finished plate of pasta.",
         "frame": "browser"
       },
       {
         "t": "Marketers and agencies",
-        "d": "Make a few versions from the same product photo, then give each channel the frame it needs.",
+        "d": "Make several versions from the same product photo, then give each channel the frame it needs.",
         "img": "n:img3-gen2-spokesperson-videos-g3-r2",
         "alt": "Adult presenter with short curls holds a plain blank snack pouch at chest height in a bright kitchen.",
         "frame": "phone"
       },
       {
         "t": "Content creators",
-        "d": "Turn a product photo into a creator-style clip without filming every take yourself.",
+        "d": "Use an AI twin and a voice you have rights to, instead of filming every take yourself.",
         "img": "n:gen2:video-ads-g2",
         "alt": "Canvas tote bag packed item by item on a hallway bench.",
         "frame": "phone"
       },
       {
         "t": "App and SaaS companies",
-        "d": "Show one feature from a still, so a viewer can see what the product does.",
+        "d": "Show one feature from a still, with a script the presenter reads on camera.",
         "img": "n:gen2:ind-electronics-g2",
         "alt": "Tablet stand holds a dark-screen tablet on a tidy desk.",
         "frame": "browser"
@@ -143,39 +143,54 @@
   },
   "compare": [
     [
-      "Time to first ad",
-      "Days to weeks of shoot coordination",
-      "You pick 6, 10, 15 or 30 seconds and see the credit cost first"
+      "Time to a first ad",
+      "Days of booking a creator and a set",
+      "A new job from the product photo you already have"
     ],
     [
-      "Upfront cost",
-      "Creators, studio time and gear before launch",
-      "The credit price shown before the job, not a studio day or a creator booking"
+      "Wait for the file",
+      "Often another day after the shoot",
+      "The job runs, then you download the file"
     ],
     [
-      "New versions",
-      "Another shoot for each new angle",
-      "Run the same photo again with a new scene, opening or presenter"
+      "What you pay",
+      "Creator fees, studio time, and gear",
+      "The credit price on screen. A photo or 6 seconds is 24 credits"
     ],
     [
-      "Product control",
-      "Changes mean another take or reshoot",
-      "You set the product and scene"
+      "How many versions",
+      "Each new angle needs another shoot",
+      "Run the same photo again with a new scene, line, or language"
     ],
     [
-      "Where it runs",
-      "Export and resize for each channel",
-      "A file in the frame and length you pick"
+      "Who writes the line",
+      "The creator interprets the brief",
+      "You write the script, or AI drafts one you can edit"
+    ],
+    [
+      "Look of the ad",
+      "Limited to how that creator films",
+      "Captions, colors, fonts, and music in the editor"
+    ],
+    [
+      "Same message each time",
+      "Tone can drift between people",
+      "The presenter says the line you approved"
+    ],
+    [
+      "Try another opening",
+      "A new booking for each test",
+      "Change the hook, the actor, or the voice and run again"
+    ],
+    [
+      "Off-brief lines",
+      "A person may miss the point",
+      "You approve the script before the clip is made"
     ],
     [
       "Who is on camera",
-      "A creator you book and brief",
-      "An AI presenter. You write the line. Not a real customer."
-    ],
-    [
-      "Captions and price",
-      "Added during the edit, or by the creator",
-      "You add captions, a price, and music in your editor after download."
+      "A person you hire",
+      "An AI presenter with a voice you choose. Not a real customer"
     ]
   ],
   "pricingSummary": {
@@ -224,11 +239,11 @@
     },
     {
       "q": "Can I make more than one version of an ad?",
-      "a": "Yes. Run the same photo with a different scene, presenter or opening, then compare the downloads in your ad account. Each run shows its credit cost first."
+      "a": "Yes. Run the same photo with another scene, presenter, voice, or language. Each run shows its credit cost first."
     },
     {
       "q": "Can I run these videos as paid ads?",
-      "a": "Yes. Downloads have no watermark and can be used commercially on TikTok, Instagram, Facebook, YouTube and marketplaces. Add your own captions, prices and offers, then follow each platform's AI labeling rules."
+      "a": "Yes. Downloads have no watermark and can be used commercially on TikTok, Instagram, Facebook, YouTube, and marketplaces. Adjust captions and any price in the editor, then follow each platform's rules for ads and for AI labels."
     },
     {
       "q": "Do I need to hire a model or creator?",
@@ -236,11 +251,31 @@
     },
     {
       "q": "Do the videos include captions?",
-      "a": "No. Download the file, then add captions, a price, and an offer in your own editor before you post."
+      "a": "Yes. Auto captions come with the clip. Change the wording, color, and font in the built-in editor, and proofread every price before you post."
     },
     {
       "q": "Can I edit the clip after it is made?",
-      "a": "No. Download the file, then change text and music in your editor. To try a new scene, presenter, frame, or length, start another job. You see the credit cost before that job."
+      "a": "Yes. Change text, captions, colors, and music in the editor on this site. A new scene, presenter, frame, or length is a new job, and you see the credit cost before it starts."
+    },
+    {
+      "q": "Can AI write the script?",
+      "a": "Yes. Type your own line, or ask for a draft from the product name and the photo. Edit that draft before the presenter reads it."
+    },
+    {
+      "q": "Can the presenter speak another language?",
+      "a": "Yes. Write the script in the language you sell in and pick a voice for that line. Run the same photo again when you need another language."
+    },
+    {
+      "q": "Can I publish to TikTok or Meta from here?",
+      "a": "Yes. When the file looks right, publish it to TikTok or Meta from your account. You still follow each platform's rules for ads and for labeling AI."
+    },
+    {
+      "q": "Does the editor include music?",
+      "a": "Yes. Pick a track from the music library, then proofread captions and any price on screen."
+    },
+    {
+      "q": "Can I generate videos from my own app?",
+      "a": "Yes. Send a product photo or a page link through the AIVideosUGC API and get a video back. The same credit price applies, and a failed call returns its credits."
     }
   ],
   "limitations": {
@@ -263,7 +298,7 @@
       },
       {
         "t": "Words, prices and offers",
-        "d": "Add final text in your editor and proofread every number.",
+        "d": "Proofread captions, prices, and offers in the built-in editor before you post.",
         "supported": false
       },
       {
@@ -275,30 +310,33 @@
   },
   "more_sections": [
     {
-      "eyebrow": "One place for every channel",
-      "h2": "One Upload, a Version for Each Channel",
-      "lead": "Make a version for each place you sell, and a fresh angle when an ad starts to feel familiar.",
+      "eyebrow": "In the same workspace",
+      "h2": "Features That Finish the Ad",
+      "lead": "Actors, languages, gestures, captions, music, and the editor sit with the clip.",
       "items": [
         {
-          "t": "Make the next ad from the asset you have",
-          "d": "Turn a product photo into a creator-style clip, a demo or a social image without another shoot.",
-          "img": "n:gen2:product-videos-g4",
-          "alt": "Collapsible silicone water bottle expanded to full size on a desk.",
-          "frame": "phone"
+          "t": "An actor for the brand",
+          "d": "Pick a presenter whose look fits the product. They read the script you approve."
         },
         {
-          "t": "Keep each channel on its own format",
-          "d": "Create a vertical ad for social, a square image for a listing, or a wider frame when that shape is offered.",
-          "img": "n:guide:im03-home-more-vacuum-r1",
-          "alt": "Adult man uses a plain handheld cordless vacuum to lift crumbs from a dark sofa.",
-          "frame": "phone"
+          "t": "Product shots",
+          "d": "Turn a product photo into a clip or a listing image. Compare the color with your original before you post."
         },
         {
-          "t": "Refresh the message when an ad feels familiar",
-          "d": "Swap the opening, scene, or actor, then compare the downloads in your ad platform.",
-          "img": "n:gen2:before-after-videos-g3",
-          "alt": "Closet shelf shown messy on one side and neatly folded on the other.",
-          "frame": "none"
+          "t": "Speak their language",
+          "d": "Write the line in the language you sell in, and choose a voice for it. Run the photo again for another language."
+        },
+        {
+          "t": "Gestures and emotion",
+          "d": "Note the feeling in the script. The presenter follows that tone, with gestures that match the line."
+        },
+        {
+          "t": "A built-in editor",
+          "d": "Change text, captions, and music on this site. A new scene, face, or length is a new job, and the credit cost shows first."
+        },
+        {
+          "t": "Auto captions",
+          "d": "Captions come with the clip. Change the color and the font so the words are easy to read."
         }
       ]
     }
@@ -847,41 +885,41 @@
   },
   "cta_lead": "Upload one product photo, pick a result and see the cost before you start.",
   "cta_title": "Start your next ad with one product photo",
-  "benefits_lead": "No studio booking and no creator search. Videos, product photos and AI presenters all start from the same upload.",
+  "benefits_lead": "Script, presenter, voice, photos, and the edit start from the same upload. No studio day and no creator search.",
   "closing": {
-    "h2": "The AI UGC Video Generator Built for Product Sellers",
+    "h2": "The AI UGC Video Generator for Product Sellers",
     "paras": [
-      "Most stores do not need a studio to test a new ad. They need a clear product photo, an idea for the scene and a clear price per try.",
-      "AIVideosUGC keeps that in one place: videos up to 30 seconds, product photos for your listings, and the cost on screen before each job."
+      "Most stores do not need a studio to test a new ad. They need a product photo, a script, and a price they can see before the job.",
+      "AIVideosUGC keeps the actor, the voice, the captions, and the editor together. Videos run up to 30 seconds, photos cover your listings, and the cost is on screen first."
     ]
   },
   "trust": {
-    "h2": "What Sellers Can Count On With AIVideosUGC",
+    "h2": "Why Sellers Trust AIVideosUGC",
     "lead": "The details that matter when you pay per ad.",
     "items": [
       {
-        "t": "Five Frame Sizes",
-        "d": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4 before you start, so the file matches the place you will post it."
+        "t": "Actor library",
+        "d": "Pick an adult presenter and a voice. The person is generated, not a real customer, and you write the line."
       },
       {
-        "t": "Videos Up to 30 Seconds",
-        "d": "Choose 6, 10, 15 or 30 seconds. Use a 6-second clip as a hook, or a 30-second clip to show the product in use."
+        "t": "More languages",
+        "d": "Write the script in the language you sell in and pick a matching voice. Run the same photo again when you need another language."
       },
       {
-        "t": "Cost on Screen First",
-        "d": "A 6-second video is 24 credits and a 30-second one is 120. You see the cost before every job."
+        "t": "Help when a job fails",
+        "d": "Email support@aivideosugc.com if a balance looks wrong. A failed job returns its credits to your balance on its own."
       },
       {
-        "t": "Credits Back on Failed Jobs",
-        "d": "If a job fails, its credits return to your balance on their own. Finished files are charged at the price shown before the job."
+        "t": "A frame for the post",
+        "d": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4 before you start. Publish that file to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads) from your account."
       },
       {
-        "t": "Commercial Use, No Watermark",
-        "d": "Run your videos and photos in paid ads, on product pages and in posts. Downloads carry no watermark."
+        "t": "A clean download",
+        "d": "Photos and videos download with no watermark and can run in ads. A photo or a 6-second clip is 24 credits, and 30 seconds is 120. You see that cost first. Uploads stay in your account."
       },
       {
-        "t": "Private by Default",
-        "d": "Your uploads and results stay in your own account. Nothing goes to a public gallery."
+        "t": "Your brand on the clip",
+        "d": "Set captions, colors, and fonts in the editor, and add a track from the music library. Proofread every price before you post."
       }
     ]
   },
@@ -892,31 +930,63 @@
     "items": [
       {
         "example": true,
-        "who": "Shopify skincare shop",
+        "who": "Skincare shop",
         "t": "A clean shot and a social ad from one jar",
-        "d": "A skincare shop uploads one jar photo, makes a clean product shot, then makes a separate social ad from that same photo.",
-        "img": "n:rx3-home-scenario-1-r1"
+        "d": "A skincare shop uploads one jar photo, makes a clean product shot, then makes a separate social ad from that same photo."
       },
       {
         "example": true,
         "who": "Home goods seller",
         "t": "A tidy drawer without staging a room",
-        "d": "A home goods shop turns one organizer photo into a short video of that organizer in a tidy drawer.",
-        "img": "n:rx3-home-scenario-2-r1"
+        "d": "A home goods shop turns one organizer photo into a short video of that organizer in a tidy drawer."
       },
       {
         "example": true,
         "who": "Accessories seller",
         "t": "A launch clip without booking a model",
-        "d": "An accessories shop turns one canvas bag photo into a launch clip with an AI presenter, without booking a model.",
-        "img": "n:rx3-home-scenario-3-r1"
+        "d": "An accessories shop turns one bag photo into a launch clip with an AI presenter, without booking a model."
       },
       {
         "example": true,
         "who": "Snack brand",
-        "t": "A first-taste unboxing from one pouch",
-        "d": "A snack brand turns one pouch photo into an unboxing clip that opens the package and shows the product. Captions go on in an editor before posting.",
-        "img": "n:rx3-home-scenario-4-r1"
+        "t": "An unboxing with captions on the page",
+        "d": "A snack brand turns one pouch photo into an unboxing clip, then adjusts auto captions in the editor before posting."
+      },
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "The same jar in another language",
+        "d": "A supplement shop keeps the jar photo, writes the line in a second language, and picks a voice for that line."
+      },
+      {
+        "example": true,
+        "who": "Beauty brand",
+        "t": "Edits without a second app",
+        "d": "A beauty brand changes caption color, a price, and a music track in the editor, then publishes the file."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "Several actor cuts for one client",
+        "d": "An agency runs the same product photo with a different presenter and opening, and sends the client the downloads."
+      },
+      {
+        "example": true,
+        "who": "Kitchen brand",
+        "t": "A product clip without a light kit",
+        "d": "A kitchen brand makes a presenter clip from one appliance photo, instead of setting up lights for every post."
+      },
+      {
+        "example": true,
+        "who": "Catalog seller",
+        "t": "A link, a script, and a clip",
+        "d": "A catalog seller pastes a product page link, edits the draft script, and downloads a presenter clip."
+      },
+      {
+        "example": true,
+        "who": "Apparel brand",
+        "t": "A brief instead of a shot list",
+        "d": "An apparel brand describes the fit and the scene in a short brief, then reviews the script before the presenter reads it."
       }
     ]
   },
@@ -935,5 +1005,15 @@
     "reviews",
     "faq",
     "cta"
+  ],
+  "related_h2": "Related tools",
+  "related_lead": "Other ways to start a product video from a photo or a page link.",
+  "relatedLinks": [
+    "url-to-video",
+    "spokesperson-videos",
+    "product-videos",
+    "image-to-video",
+    "video-ads",
+    "video-hub"
   ]
 }

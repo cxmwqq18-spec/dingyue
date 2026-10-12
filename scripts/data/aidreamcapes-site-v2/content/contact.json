@@ -4,7 +4,7 @@
   "description": "Questions about credits, a failed job, billing or your account? Email support@aivideosugc.com for a written answer and help with your next ad.",
   "h1": "Contact AIVideosUGC Support",
   "eyebrow": "Customer support",
-  "lead": "Need help with a photo, a video, your credits, or your account? Email support@aivideosugc.com and we will help you sort it out.",
+  "lead": "Need help with a photo, a video, an actor, captions, publishing, your credits, or your account? Email support@aivideosugc.com and we will help you sort it out.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,7 +12,7 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Contact AIVideosUGC by email at support@aivideosugc.com. Include the details below so we can answer without asking you to write again. You also keep a written record of the question and the answer.",
+    "Contact AIVideosUGC by email at support@aivideosugc.com. Write if a photo, a video, an actor, captions, a publish to TikTok or Instagram, the API, your credits, or your account needs a look. Include the details below so we can answer without asking you to write again. You also keep a written record of the question and the answer.",
     "Include the email address on your account, a short description of what happened and, if it is about a specific photo or video, roughly when you made it. A screenshot of any error message helps too."
   ],
   "topics": [
@@ -38,7 +38,7 @@
     },
     {
       "t": "Results that missed the mark",
-      "d": "A photo or video came out very different from what you described. Send the details and we will look.",
+      "d": "A photo or video came out very different from what you described, or the actor, the spoken line, or the captions missed. Send the details and we will look.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -58,7 +58,7 @@
     },
     {
       "t": "Partnerships",
-      "d": "You run a store, an agency, or a creator channel and want to work with us. Email a short note about the business and what you have in mind.",
+      "d": "You run a store, an agency, or a creator channel and want to work with us, or you have a question about the API. Email a short note about the business and what you have in mind.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
         "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
@@ -86,11 +86,19 @@
     },
     {
       "q": "What if a failed job did not return credits?",
-      "a": "Failed jobs return their credits automatically. If you do not see them, email support with the time of the job and we will check it."
+      "a": "Failed jobs return their credits on their own. If you do not see them, email support with the time of the job and we will check it."
     },
     {
       "q": "Do I contact AIVideosUGC by email only?",
       "a": "Yes. Email support@aivideosugc.com from the address on your account. We do not offer phone support."
+    },
+    {
+      "q": "Can you help me publish to TikTok or Facebook?",
+      "a": "Yes. If a send to TikTok, Instagram, or Facebook did not go through, email the account address, what you tried, and about when it happened."
+    },
+    {
+      "q": "Who do I email about an actor, captions, or the API?",
+      "a": "Email support@aivideosugc.com. Include the account email and what you were trying to do, such as reusing a presenter, editing captions, or sending a job from your own software."
     }
   ],
   "relatedLinks": [

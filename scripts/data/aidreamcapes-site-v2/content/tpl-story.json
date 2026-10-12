@@ -11,7 +11,7 @@
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "Make a Square Story Product Image in 3 Steps",
+  "steps_h2": "How to Make a Square Story Image in 3 Simple Steps",
   "steps_lead": "Upload the product, describe a simple setting, then place the square photo in your Story layout.",
   "steps": [
     {
@@ -84,6 +84,18 @@
     {
       "q": "Can a beginner make a Story image?",
       "a": "Yes. Upload one product photo, name a simple setting, and download the square. Add the price and button in your editor after that."
+    },
+    {
+      "q": "Can I start from a product link and a script?",
+      "a": "Yes. Paste the product page or a short brief, edit the drafted line, and keep this square as the Story frame."
+    },
+    {
+      "q": "Can I publish the Story to Instagram or TikTok?",
+      "a": "Yes. Place the square on a tall canvas, add a spoken line if you want one, and publish to Instagram, Facebook, or TikTok."
+    },
+    {
+      "q": "Is there an API?",
+      "a": "Yes. The API can send a product from your catalog and bring the finished Story file back into your own setup."
     }
   ],
   "output": "Square product photo · Story layout",
@@ -539,7 +551,7 @@
     },
     "titles": {
       "m2": {
-        "h2": "Make a Square Story Product Image in 3 Steps"
+        "h2": "How to Make a Square Story Image in 3 Simple Steps"
       },
       "m3": {
         "h2": "Video previews, not the square Story photo",
@@ -596,8 +608,8 @@
     }
   ],
   "reviews": {
-    "h2": "How sellers use a square Story ad image",
-    "lead": "A few ways sellers place one square product photo in an Instagram or Facebook Story.",
+    "h2": "Shops Switching to AI Story Ad Images",
+    "lead": "Example ways a shop uses one square Story image. These cards are not customer quotes.",
     "items": [
       {
         "example": true,
@@ -634,20 +646,78 @@
         "who": "Small team",
         "t": "Text stays editable",
         "d": "Price, code and button are added in their design tool. Nothing is baked into the image, so a typo is a text fix."
+      },
+      {
+        "example": true,
+        "who": "Global beauty shop",
+        "t": "A second language",
+        "d": "The shop keeps the same square and pairs it with a spoken line in the language that market uses."
+      },
+      {
+        "example": true,
+        "who": "Indie brand",
+        "t": "A generated presenter",
+        "d": "They choose a generated person to hold the bottle. That person is not a customer and not someone they hired."
+      },
+      {
+        "example": true,
+        "who": "Catalog team",
+        "t": "Link, then a script",
+        "d": "They paste the product page, edit the drafted line, and keep the square photo as the Story frame."
+      },
+      {
+        "example": true,
+        "who": "Social manager",
+        "t": "Publish after a trim",
+        "d": "They trim the Story in the editor and publish it to Instagram or Facebook in one click."
       }
     ]
   },
   "related_h2": "Beauty templates for a Story ad",
   "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty industry page, and Instagram ads.",
-  "cta_title": "Build the Story around your product",
-  "cta_lead": "Upload one product photo. Add the headline and offer after you download the square image.",
+  "cta_title": "Ready to Build Your Story Ad?",
+  "cta_lead": "Upload one product photo. Add the headline after you download the square image.",
   "blockOrder": [
     "hero",
     "picker",
+    "features",
     "reviews",
     "steps",
-    "related",
     "faq",
+    "related",
     "cta"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Included with the image",
+      "h2": "Features for a Square Story Ad Image",
+      "lead": "The square photo is the Story frame. A script, a presenter, and a spoken line can go with it when you publish.",
+      "items": [
+        {
+          "t": "A product link starts it",
+          "d": "Paste the product page. The job reads the item and keeps this square as the frame for the Story."
+        },
+        {
+          "t": "A presenter from the library",
+          "d": "Choose a generated person to hold the product. That person is not a customer and not someone you hired."
+        },
+        {
+          "t": "A spoken line",
+          "d": "Add a spoken line in the language your shoppers use, then edit any word before the Story goes up."
+        },
+        {
+          "t": "A script you can edit",
+          "d": "Describe the offer in a sentence. The script writer drafts the line, and you can change it in the editor."
+        },
+        {
+          "t": "Trim it in the editor",
+          "d": "Shape the Story in the built-in editor, then download a file with no watermark."
+        },
+        {
+          "t": "Several versions, then publish",
+          "d": "Run the same photo for another setting or another language, then publish to Instagram, Facebook, or TikTok."
+        }
+      ]
+    }
   ]
 }

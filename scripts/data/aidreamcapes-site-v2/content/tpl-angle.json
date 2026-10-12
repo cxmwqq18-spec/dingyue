@@ -4,7 +4,7 @@
   "description": "Turn one photo per side into clean packshots of the front, back, top and base. AI multi-angle product photos for galleries and paid social ads.",
   "h1": "Product Packshot Photos for Every Side You Photographed",
   "eyebrow": "Product photo template",
-  "lead": "Open a packshot scene, add one photo of each real side, and download square views of the front, back, top and base.",
+  "lead": "Open a packshot scene, add one photo of each real side, and download square views you can also turn into a spoken product video.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -19,11 +19,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the view and one clean backdrop, then reuse that wording for every side. Compare the downloads before grouping, because the background can still shift."
+      "d": "Name the view and one backdrop, then reuse that wording. Add a script and an AI voice if you make an ad."
     },
     {
       "t": "Download and Post",
-      "d": "Download each view and check buttons and ports against your photos. Place the set after the main image on your listing or ad."
+      "d": "Download each view and check ports against your photos. Add captions if you turn a view into a video."
     }
   ],
   "maker": {
@@ -45,44 +45,48 @@
   },
   "faq": [
     {
+      "q": "What is a multi-angle packshot template?",
+      "a": "A ready scene for the sides you photographed. It can also add an AI actor, a voiceover, and a script when that still should become a short ad."
+    },
+    {
       "q": "How do I make product packshot photos of every side?",
-      "a": "Upload one photo of each side, name one shared backdrop, and download the square set. Put the front first, then the sides that answer questions about ports, buttons or the base."
+      "a": "Upload one photo of each side, name one shared backdrop, and download the square set. Put the front first, then the sides that show ports, buttons, or the base."
     },
     {
       "q": "Can one photo show a port that was hidden?",
-      "a": "No. Photograph that side and upload it. A generated view is not a reliable way to reveal a connector, latch or control that was never in frame."
+      "a": "No. Photograph that side and upload it. A generated view is not a reliable way to reveal a connector, latch, or control that was never in frame."
     },
     {
-      "q": "Which file types can I upload?",
-      "a": "Use a JPG, PNG or WebP that shows the whole product clearly. Keep the item fully in frame so corners and handles are not cut off."
+      "q": "Who is this scene for?",
+      "a": "Electronics shops, listing managers, and agencies that need front, back, and detail views, plus a spoken clip when the ad needs one. A person on screen is an AI performer."
     },
     {
-      "q": "How many views does a listing need?",
-      "a": "Three or four cover many galleries: front, back, and one or two detail sides. Add a base or control view when shoppers usually ask about it."
+      "q": "Can I do this on the first try?",
+      "a": "Yes. Upload a clear photo of each side. You do not need a turntable. Captions, a track from the music library, and an AI voice can be set in the built-in editor if you make a video too."
+    },
+    {
+      "q": "Which shops can use these views?",
+      "a": "Any product with sides shoppers ask about, including chargers, audio, and cameras. Open another scene when the product is not electronics."
+    },
+    {
+      "q": "Which files can I upload?",
+      "a": "Use a JPG, PNG, or WebP that shows the whole product. You can also upload a short clip you have rights to when the ad needs motion you already filmed."
+    },
+    {
+      "q": "Where can I publish the file?",
+      "a": "Each photo download is square. A video from the same photos can be 9:16, 1:1, 16:9, 4:3, or 3:4. Publish it to TikTok or Meta, or to YouTube, in one step."
     },
     {
       "q": "What does each angle photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
+      "a": "Each product photo costs 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Starter is $24.50 a month with 200 credits. A failed job returns its credits."
     },
     {
-      "q": "Where should the set sit in a gallery?",
-      "a": "Keep a clear main image first. Add the packshot set after it so shoppers see the full item before the side views."
+      "q": "Can I run these files in ads?",
+      "a": "Yes. Downloads have no watermark and can be used in your listings and your own paid ads. Compare the controls with the source before you launch."
     },
     {
-      "q": "Do the source photos already have to be square?",
-      "a": "No. Upload a clear JPG, PNG or WebP with the whole side in frame. Each download is a square 1:1 image."
-    },
-    {
-      "q": "Can I run these images as paid ads?",
-      "a": "Yes. Downloaded photos have no watermark and can be used in your listings and your own paid ads. Compare the controls with the source before you launch."
-    },
-    {
-      "q": "Do I need a turntable or a studio?",
-      "a": "No. The square views come from the side photos you upload and the backdrop you name. You do not book a reshoot for the set."
-    },
-    {
-      "q": "Will every view share the same background?",
-      "a": "Name one backdrop and reuse that wording on every side, then compare the downloads. The background can still shift, so do not post a set that does not match."
+      "q": "Can I start from a product link or a batch?",
+      "a": "Yes. Paste the product page link for a script, an AI actor, and a cloned voice, or send several products through the AIVideosUGC API. The photos still have to show the sides you claim."
     }
   ],
   "visual": {
@@ -537,7 +541,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About Product Packshot Photos"
+        "h2": "Frequently Asked Questions"
       },
       "m3": {
         "h2": "Browse Scenes by Category",
@@ -545,8 +549,8 @@
       }
     }
   },
-  "steps_h2": "Make Product Photos from Different Angles in 3 Steps",
-  "steps_lead": "One photo per side, one shared backdrop, then files you can place after the main listing image.",
+  "steps_h2": "How to Make Angle Photos in 3 Simple Steps",
+  "steps_lead": "One photo per side, one shared backdrop, then a square set you can also turn into a spoken ad.",
   "blockOrder": [
     "hero",
     "picker",
@@ -557,68 +561,68 @@
     "cta"
   ],
   "reviews": {
-    "h2": "Electronics Product Photography Setups",
-    "lead": "Each card is one way a shop uses a multi-angle set.",
+    "h2": "Shops Are Moving to AI Video Ads",
+    "lead": "Each card is one way a shop uses the side views it photographed, then keeps going into an ad. People on screen are AI performers.",
     "items": [
       {
         "example": true,
         "who": "Charger shop",
-        "t": "Port check",
-        "d": "A charger shop uploads the front and the rear so the USB-C port is a side they photographed."
+        "t": "Frames that stay on the product",
+        "d": "A charger shop builds the front and the rear from photos it shot, so the port is a side that was really in frame."
       },
       {
         "example": true,
         "who": "Speaker shop",
-        "t": "Control check",
-        "d": "A speaker shop posts the grille and the rear panel in one square set, and leaves the buttons as they are in the source."
+        "t": "A still and a video together",
+        "d": "A speaker shop makes the square side views and a short product video in one place, without a complicated setup."
       },
       {
         "example": true,
         "who": "Laptop stand shop",
-        "t": "Base check",
-        "d": "A laptop-stand shop adds a top view and a base view so shoppers can see the feet, hinges and underside."
+        "t": "Photo, then the product held up",
+        "d": "A laptop-stand shop uploads the base photo, then makes a clip of the stand held up so the feet stay visible."
       },
       {
         "example": true,
         "who": "Headphone shop",
-        "t": "Earcup check",
-        "d": "A headphone shop uses the outer cup and the inner cushion as two views, each from its own photo."
+        "t": "AI actors and the editor",
+        "d": "A headphone shop picks an AI actor to hold the earcup, then trims that clip in the built-in editor."
       },
       {
         "example": true,
         "who": "Keyboard shop",
-        "t": "Edge check",
-        "d": "A keyboard shop shows the top deck and a side edge so the ports along the rim are not guessed."
+        "t": "More than one language",
+        "d": "A keyboard shop keeps the same side views and tells the ad with an AI voice in the languages its buyers use."
       },
       {
         "example": true,
         "who": "Camera shop",
-        "t": "Dial check",
-        "d": "A camera shop pairs the front lens and the top dial for an Amazon gallery."
+        "t": "Quick, on a paid plan",
+        "d": "A camera shop makes the dial view in AIVideosUGC. Starter is $24.50 a month, and each photo is 24 credits."
       },
       {
         "example": true,
         "who": "Router shop",
-        "t": "Back panel",
-        "d": "A router shop uploads the front lights and the rear jack panel as two photos."
+        "t": "An AI presenter",
+        "d": "A router shop pairs the jack panel with an AI presenter. That person is the brand's ad, not a customer."
       },
       {
         "example": true,
         "who": "Power bank shop",
-        "t": "End cap",
-        "d": "A power-bank shop shows the long face and the short end, and shows the connector only where it was photographed."
+        "t": "A digital double from photos",
+        "d": "A power-bank shop uploads the end-cap photos and skips lights, a camera, and a fresh set."
       },
       {
         "example": true,
         "who": "Monitor shop",
-        "t": "Stand check",
-        "d": "A monitor shop shows the screen and the rear stand, and names the same plain backdrop for both."
+        "t": "Link, script, and voice",
+        "d": "A monitor shop pastes its product link. AIVideosUGC drafts a script, chooses an AI actor, and adds a cloned voice."
       },
       {
         "example": true,
         "who": "Drive shop",
-        "t": "Label side",
-        "d": "A drive shop uses the shell and the port end on Shopify, and reads the label from the source photo."
+        "t": "Chat for the next clip",
+        "d": "A drive shop describes the port side in chat. The AI agent returns a script, visuals, and a video to check before posting."
       }
     ]
   },
@@ -650,6 +654,6 @@
       "label": "Amazon product photos"
     }
   ],
-  "cta_title": "Start a Packshot from the Sides You Photographed",
-  "cta_lead": "Upload one photo per side and see the credit cost before you start."
+  "cta_title": "Ready to Create Your First Set?",
+  "cta_lead": "Upload one photo per side. Add a voiceover or captions if the ad needs them, and see the credit cost before you start."
 }

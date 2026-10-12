@@ -1,7 +1,7 @@
 {
   "id": "guides",
   "title": "Product Photo and Video Guides | AIVideosUGC",
-  "description": "Free product photo and video guides for online sellers: shoot a usable phone photo, meet Amazon's main image rules, pick the ad size, and test versions.",
+  "description": "Product photo and video guides for online sellers: shoot a usable phone photo, meet Amazon's main image rules, pick the ad size, and test versions.",
   "h1": "Product Photo and Video Guides for Sellers Doing It Themselves",
   "eyebrow": "How-to guides",
   "lead": "Five short guides for one job at a time: a usable phone photo, a plain-background main image, a first paid clip, the right frame, and a fair test.",
@@ -13,7 +13,8 @@
     "Amazon main image tips"
   ],
   "intro": [
-    "Each guide ends in a file you download and post yourself. Read the one for the job you are doing today."
+    "Each guide ends in a file you download and post yourself. Read the one for the job you are doing today.",
+    "A guide can send you to a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). The clip can include an AI presenter from the [actor library](page:ai-actors), a script written from your product, a voiceover in the language you sell in, and captions. You can then publish it to TikTok or Meta. There is no free generation plan."
   ],
   "benefits_h2": "Reasons to read a guide first",
   "benefits_lead": "If the photo is the problem, start with product photography tips for online sellers. Open the Amazon main image tips before you list, and the ecommerce ad creative tips before you pay for a test.",
@@ -52,11 +53,11 @@
     },
     {
       "t": "Make the File",
-      "d": "Upload the photo, pick a layout or describe the scene, and read the credit cost before you start."
+      "d": "Upload the photo or paste a product link, pick a template, and read the credit cost before you start."
     },
     {
       "t": "Download and Post",
-      "d": "Save the still or the clip, add text in your editor, and post it. Files can be used commercially and have no watermark."
+      "d": "Save the file and post it to TikTok, Meta, or your store. Commercial use is allowed, and there is no watermark."
     }
   ],
   "faq": [
@@ -74,7 +75,7 @@
     },
     {
       "q": "How much do the files in the guides cost?",
-      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. The exact cost is shown before every job, and a failed job returns its credits."
+      "a": "There is no free generation plan. A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The exact cost is shown before every job, and a failed job returns its credits."
     },
     {
       "q": "Can one source photo feed every guide?",
@@ -82,7 +83,7 @@
     },
     {
       "q": "Can I add captions and music later?",
-      "a": "Yes. Add captions, a price, and licensed music after download. The tools do not burn captions into the file."
+      "a": "Yes. Ask for captions or a voiceover in the clip, or add a price and licensed music after download. The download has no watermark."
     },
     {
       "q": "Where do I make the file after I read a guide?",
@@ -90,7 +91,23 @@
     },
     {
       "q": "Can I follow these if I have never run an ad?",
-      "a": "Yes. The first-ad guide assumes you are starting from zero. It stops at a file you can upload. Your ad account setup stays in that channel's own help pages."
+      "a": "Yes. You need a phone photo, not a studio. The first-ad guide stops at a file you can post. Your ad account setup stays in that channel's own help pages."
+    },
+    {
+      "q": "Do the guides cover an AI presenter, a script, and a voiceover?",
+      "a": "Yes. The video guides send you to an actor from the library, a script written from your product or your link, and a voiceover in the language you sell in."
+    },
+    {
+      "q": "Can I post the file on TikTok or Meta?",
+      "a": "Yes. Make the frame that channel uses, then publish it there. The [platform pages](page:platforms) list the usual frames."
+    },
+    {
+      "q": "Which kinds of shops are the guides for?",
+      "a": "The photo job and the video job are the same kind of task across categories. Category rules differ, so check the current page for yours on [industries](page:industries) before you upload."
+    },
+    {
+      "q": "Why read a guide instead of starting from a blank box?",
+      "a": "The guide names the one job, the file you should end with, and the checks to make before you spend credits on a second try."
     }
   ],
   "relatedLinks": [
@@ -104,5 +121,71 @@
   "related_h2": "Tools these guides send you to",
   "related_lead": "Make the file, or browse layouts and channels.",
   "cta_title": "Try the step you just read",
-  "cta_lead": "Upload one product photo and see the credit cost before you start."
+  "cta_lead": "Upload one product photo and see the credit cost before you start.",
+  "reviews": {
+    "h2": "How sellers use these guides",
+    "lead": "Example setups. Each card is how a shop of that kind could follow a guide.",
+    "items": [
+      {
+        "example": true,
+        "who": "Skincare shop",
+        "t": "One change between clips",
+        "d": "Example: the shop follows the testing guide and keeps a single change between two clips of the same bottle."
+      },
+      {
+        "example": true,
+        "who": "Home goods shop",
+        "t": "A still and a clip",
+        "d": "Example: one phone photo becomes a listing still and a short clip. They are separate jobs."
+      },
+      {
+        "example": true,
+        "who": "Gadget shop",
+        "t": "Product held up",
+        "d": "Example: image to video shows the product held up, starting from the same photo the guide asked for."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "A presenter, not a quote",
+        "d": "Example: an AI actor carries the line. The card is not a customer review."
+      },
+      {
+        "example": true,
+        "who": "Food brand",
+        "t": "A second language",
+        "d": "Example: the voiceover switches to the language of a second market, and the dish stays the same."
+      },
+      {
+        "example": true,
+        "who": "Supplement shop",
+        "t": "Credits instead of a shoot",
+        "d": "Example: the shop spends credits on a 15-second clip instead of booking a half day on set."
+      },
+      {
+        "example": true,
+        "who": "Beauty brand",
+        "t": "An actor from the library",
+        "d": "Example: the presenter comes from the actor library. Nobody is hired for this test."
+      },
+      {
+        "example": true,
+        "who": "Kitchen brand",
+        "t": "One photo, then another job",
+        "d": "Example: the source photo replaces a set build, and the next opening is another job."
+      },
+      {
+        "example": true,
+        "who": "Pet shop",
+        "t": "A creator-style file",
+        "d": "Example: a creator-style clip is the file the first-ad guide ends on, ready to post."
+      },
+      {
+        "example": true,
+        "who": "Catalog seller",
+        "t": "The line, then the file",
+        "d": "Example: the guide names the line, the tool writes that script into the clip, and the shop posts the file."
+      }
+    ]
+  }
 }

@@ -11,20 +11,20 @@
     "Spark Ads video template",
     "TikTok product footage"
   ],
-  "steps_h2": "Make a Native TikTok Ad in 3 Steps",
-  "steps_lead": "You get a product clip. Posting, sound, and the Spark authorization happen in TikTok.",
+  "steps_h2": "Get Started in 3 Steps",
+  "steps_lead": "You get a product clip for TikTok. Publish it there, or send the same file to Meta.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the full product in view. Keep the detail the TikTok moment needs."
+      "t": "Add a Link, Script, or Photo",
+      "d": "Paste a product link, paste a script, or upload one clear product photo."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Describe one everyday action, then pick 9:16 and 6, 10, 15, or 30 seconds. The campaign stays in TikTok Ads Manager."
+      "t": "Choose an AI Actor",
+      "d": "Pick a generated presenter, or leave the person out and keep the product in frame."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the file, post it from your TikTok account, and finish authorization in Ads Manager. Add the caption there."
+      "t": "Generate and Publish",
+      "d": "Generate the clip, then publish it to TikTok or Meta. A paid boost still needs Ads Manager."
     }
   ],
   "maker": {
@@ -55,7 +55,7 @@
     },
     {
       "q": "Does this publish a Spark Ad for me?",
-      "a": "No. Download the file, post it from your account, and finish authorization and campaign setup in TikTok Ads Manager."
+      "a": "You can send the finished clip to TikTok or Meta in one click. A paid Spark campaign still has to be authorized in TikTok Ads Manager."
     },
     {
       "q": "Who is it for?",
@@ -63,7 +63,7 @@
     },
     {
       "q": "Will it include captions or trending audio?",
-      "a": "No. Add captions, a spoken line, sound or an offer in TikTok or your editor after download."
+      "a": "Yes. Add an AI voice, and turn captions on in the editor, before you publish. A TikTok sound can still be attached in TikTok."
     },
     {
       "q": "What photo should I upload?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "Do I need to write a long script?",
-      "a": "Pick a scene and describe the action in one or two lines. Add the TikTok caption yourself after download."
+      "a": "No. Describe the point of the clip and the script writer drafts the words. Edit them, then generate."
     },
     {
       "q": "What does the clip cost?",
@@ -84,6 +84,22 @@
     {
       "q": "Can I boost the file?",
       "a": "Yes, after you post it from your own account and complete TikTok's authorization. The download has no watermark. Any person on screen is an AI performer, not a customer."
+    },
+    {
+      "q": "Can I post the clip beyond TikTok?",
+      "a": "Yes. Use 9:16, 1:1, 16:9, 4:3, or 3:4, and publish to TikTok, Instagram, Facebook, or YouTube."
+    },
+    {
+      "q": "What if the job fails or the file is wrong?",
+      "a": "A failed job returns its credits. If the delivered file does not match what you asked for, use the [Refund Policy](/refunds)."
+    },
+    {
+      "q": "Can I use the download in my own ads?",
+      "a": "Yes. The download has no watermark, and you can use it in your own ads and posts. You are responsible for the claims you add and for logos in the photo you upload."
+    },
+    {
+      "q": "Is there an API?",
+      "a": "Yes. The API can send a product from your catalog and bring the finished clip back into your own setup."
     }
   ],
   "visual": {
@@ -123,7 +139,7 @@
     },
     "picker": {
       "title": "Choose a Scene for a TikTok Spark Ads Creative",
-      "lead": "Open a product scene you can post from your own TikTok account. Add the caption after download.",
+      "lead": "Open a product scene you can post from your own TikTok account. A spoken line and captions can go on before you publish.",
       "chips": [
         {
           "id": "accessories",
@@ -551,41 +567,44 @@
       }
     }
   },
-  "cta_title": "Ready to make the TikTok clip?",
-  "cta_lead": "Upload one product photo and see the credit cost before you post it yourself.",
+  "cta_title": "Ready to Make the Spark Ads Clip?",
+  "cta_lead": "Paste a link or upload one product photo. The credit cost is on screen before you start.",
   "relatedLinks": [
+    {
+      "id": "url-to-video",
+      "label": "Product link to video"
+    },
+    {
+      "id": "image-to-video",
+      "label": "Image to video"
+    },
+    {
+      "id": "spokesperson-videos",
+      "label": "AI presenter ads"
+    },
     {
       "id": "video-ads",
       "label": "AI UGC video ads"
-    },
-    {
-      "id": "tpl-drink",
-      "label": "AI food and drink videos"
-    },
-    {
-      "id": "tpl-film",
-      "label": "cinematic product video"
-    },
-    {
-      "id": "tpl-pack",
-      "label": "packaging mockup generator"
     },
     {
       "id": "plat-tiktok",
       "label": "AI TikTok ads generator"
     },
     {
-      "id": "ind-food-drinks",
-      "label": "AI food and drink product videos"
+      "id": "product-videos",
+      "label": "Product videos"
     }
   ],
   "blockOrder": [
     "hero",
     "picker",
+    "features",
+    "benefits",
+    "reasons",
     "steps",
-    "reviews",
     "faq",
     "related",
+    "reviews",
     "cta"
   ],
   "reviews": {
@@ -638,7 +657,7 @@
         "example": true,
         "who": "Pet shop",
         "t": "Leash clip",
-        "d": "A pet shop shows a leash clipped on in a hallway. Sound is added after download."
+        "d": "A pet shop shows a leash clipped on in a hallway, then adds an AI voice before the post."
       },
       {
         "example": true,
@@ -654,6 +673,77 @@
       }
     ]
   },
-  "related_h2": "Pages for TikTok Product Footage",
-  "related_lead": "UGC video ads, food and drink scenes, a brand film, packaging previews, TikTok ads, and the food industry page."
+  "related_h2": "Explore Related Tools",
+  "related_lead": "A product link, image to video, an AI presenter, UGC video ads, TikTok ads, and product videos.",
+  "more_sections": [
+    {
+      "eyebrow": "Six ways in",
+      "h2": "6 Ways to Make a Spark Ads Style Video",
+      "lead": "Start from the asset you already have, then post the clip from your TikTok account.",
+      "items": [
+        {
+          "t": "Link to Video",
+          "d": "Paste the product page. The clip is built around the item on that page, ready for a TikTok post."
+        },
+        {
+          "t": "Batch Mode",
+          "d": "Make several Spark-style clips from one product in a single run, then keep the opening you want to post."
+        },
+        {
+          "t": "AI Editing",
+          "d": "Bring footage you already filmed and shape it into a vertical TikTok clip without opening another editor."
+        },
+        {
+          "t": "Text to Video",
+          "d": "Type the moment you want to show. You get a visual that matches that line for the TikTok post."
+        },
+        {
+          "t": "AI Scriptwriter",
+          "d": "Describe the point of the ad. You get a script you can edit before the clip is generated."
+        },
+        {
+          "t": "AI Voice",
+          "d": "Turn the script into a spoken line, and pick a voice that fits the shopper you are addressing."
+        }
+      ]
+    }
+  ],
+  "benefits_h2": "Boost Your Shop with a Spark Ads Style Video",
+  "benefits_lead": "Try more than one clip, look, and placement from the same product.",
+  "benefits": [
+    {
+      "t": "Several openings",
+      "d": "Make more than one version and post the opening that fits. Each clip shows its credit cost before it starts."
+    },
+    {
+      "t": "A look of your own",
+      "d": "Start from a script or from footage, then pick a treatment such as cartoon, pixel art, or a 3D scene."
+    },
+    {
+      "t": "This product, not a stand-in",
+      "d": "Paste a product link, a script, or the photo you shot. The clip stays about the item on that source."
+    },
+    {
+      "t": "Publish to the placement",
+      "d": "Export 9:16, 1:1, 16:9, 4:3, or 3:4, then send the file to TikTok, Instagram, Facebook, or YouTube in one click."
+    }
+  ],
+  "reasons": {
+    "h2": "Why Should You Make Spark Ads with AI?",
+    "lead": "Start from what you already have, and see the credit cost before the job runs.",
+    "items": [
+      {
+        "t": "Use what you already have",
+        "d": "A product link, a short script, or one photo is enough to start. A missing piece can be generated before the clip."
+      },
+      {
+        "t": "No shoot on the calendar",
+        "d": "You are not booking a creator or a studio for this file. The credit cost is on screen before the job starts."
+      },
+      {
+        "t": "Credits, and another language",
+        "d": "A 6-second clip is 24 credits. Plans start at $24.50 a month. The spoken line can use the language your shoppers use."
+      }
+    ]
+  }
 }

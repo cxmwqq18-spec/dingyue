@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
   "title": "AI UGC Video Ads for TikTok, Reels and Shorts | AIVideosUGC",
-  "description": "Turn one product photo into a creator-style ad for TikTok, Reels or Shorts. Skip a studio shoot, test a new opening, and add captions after download.",
-  "h1": "AI UGC Video Ads Generator: Scroll-Stopping Product Ads from One Photo",
+  "description": "Make AI UGC video ads from a product photo or a link, with a script, an actor and a voice. Publish to TikTok or Meta, or download with no watermark.",
+  "h1": "AI UGC Video Ads Generator: Scroll-Stopping Ads From a Photo or Link",
   "eyebrow": "AI UGC video ads",
-  "lead": "AIVideosUGC turns one product photo into a creator-style video ad, with an AI presenter, a believable setting and your product in the shot. No creators to book, no studio day, no camera. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip ready for TikTok, Reels or YouTube Shorts.",
+  "lead": "AIVideosUGC turns one product photo or a product link into an AI UGC video ad, with a script, an actor, a voice and captions. No creator to book and no studio day. Pick a size, choose 6, 10, 15 or 30 seconds, then publish to TikTok or Meta or download the file.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -14,22 +14,22 @@
   "definition": {
     "title": "What Is an AI UGC Video Ad Generator?",
     "paras": [
-      "An AI UGC video ad generator is a tool that creates short, creator-style product ads from your own product photo. An AI presenter shows or uses the item in a setting you describe, with no filming, casting or production team.",
-      "AIVideosUGC is built for sellers who run paid social ads. Each clip uses one frame you choose: 9:16, 1:1, 16:9, 4:3 or 3:4. Match that frame to the placement, then add captions and licensed music after download."
+      "An AI UGC video ad generator makes a short ad from a product photo, a prompt or a product link. You get a script, an AI actor, a voice, captions and a cut, without filming or a separate editor.",
+      "AIVideosUGC sizes each ad for the placement you pick: 9:16, 1:1, 16:9, 4:3 or 3:4. Publish to TikTok or Meta, or download a file you can use commercially, with no watermark. Plans start at $24.50 a month."
     ]
   },
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the full item visible. The product in your ad comes from this image."
+      "t": "Add a Link or a Photo",
+      "d": "Drop in a product page or one photo, and say what the ad should show."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Say where the ad happens and what the presenter does, then pick a size and a length of 6, 10, 15 or 30 seconds."
+      "t": "AI Builds the Ad",
+      "d": "A script, an actor, a voice and captions are made together. Edit any of them."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip. Add captions, your price or licensed music in your editor, then post to TikTok, Reels, YouTube Shorts or Meta."
+      "t": "Export and Publish",
+      "d": "Download the frame you picked, or send the ad to TikTok or Meta from this screen."
     }
   ],
   "maker": {
@@ -48,15 +48,15 @@
   "faq": [
     {
       "q": "What is an AI UGC video ads generator?",
-      "a": "It turns a product photo into a short, creator-style video ad with an AI presenter and a setting you describe. You do not film it or book a crew. Add captions, a price or licensed music after download."
+      "a": "It makes a short, creator-style video ad from a product photo, a prompt or a product link, with a script, an AI actor, a voice and captions. You do not film it."
     },
     {
-      "q": "How do I make a video ad with AI?",
-      "a": "Upload a clear product photo, describe the scene and the presenter's action, pick a size and length, then download the finished clip."
+      "q": "How do I make a video ad here?",
+      "a": "Start from a product page or one clear photo. The script, actor and voice are created for you. Edit what you want, then download or publish to TikTok or Meta."
     },
     {
       "q": "What is the best AI video generator for ads?",
-      "a": "Use AIVideosUGC when you already have a product photo and you want a creator-style ad in 9:16, 1:1, 16:9, 4:3 or 3:4, plus another version from the same photo."
+      "a": "Use AIVideosUGC when you have a product photo or a product link and you want several creator-style ads in 9:16, 1:1, 16:9, 4:3 or 3:4, including a batch from a catalog."
     },
     {
       "q": "Is an AI UGC video ad free to make?",
@@ -68,11 +68,11 @@
     },
     {
       "q": "What sizes and platforms can I make ads for?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4 for TikTok, Instagram Reels, YouTube Shorts and Meta feeds."
+      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4 for TikTok, Instagram Reels, YouTube Shorts and Meta. You can publish to TikTok or Meta from the same screen."
     },
     {
       "q": "Can I make a video ad for every product at once?",
-      "a": "No. Each clip starts from one product photo. Upload the next photo when you want a clip for another item."
+      "a": "Yes. Paste the product links or connect the products you want, and make an ad for each one instead of starting every clip by hand."
     },
     {
       "q": "Which video lengths can I choose?",
@@ -83,8 +83,8 @@
       "a": "A 6-second video uses 24 credits, 10 seconds uses 40, 15 seconds uses 60 and 30 seconds uses 120. Failed jobs return credits automatically."
     },
     {
-      "q": "Can an AI video ad match one made by a real creator?",
-      "a": "It depends on the product and the audience. Use these clips to try more openings from one photo, and book a real creator when you need a filmed campaign."
+      "q": "Can an AI video ad stand in for one filmed by a creator?",
+      "a": "It depends on the product and the audience. Use these clips to try more openings, and book a real creator when you need a filmed campaign."
     },
     {
       "q": "Do Meta or TikTok flag ads made with AI?",
@@ -95,8 +95,12 @@
       "a": "No. The presenter is AI-generated, not a customer endorsement. Keep the scene factual, and disclose AI content when a platform requires it."
     },
     {
-      "q": "Can I add captions, prices or music after download?",
-      "a": "Yes. Add exact text and licensed music after download in TikTok, CapCut or your ad editor."
+      "q": "Can I change captions, the voice or the music?",
+      "a": "Yes. Captions are written with the script, and you can edit them. Swap the voice, and pick a track from the music library or add your own licensed music, before you publish."
+    },
+    {
+      "q": "Can I request ads through an API?",
+      "a": "Yes. An API can request ads from a product catalog in your own tool. Each clip still uses credits, and you see that cost before the job starts."
     }
   ],
   "visual": {
@@ -505,7 +509,7 @@
         "h2": "Questions About AI UGC Video Ads"
       }
     },
-    "overview": "Turn one product photo into a short ad with one clear action. Test another opening, scene or presenter without arranging a new shoot.",
+    "overview": "Turn a product photo or a product link into a short ad with a script, an actor and a voice. Test another opening without a new shoot.",
     "input": [],
     "outputs": [],
     "after": null
@@ -513,35 +517,35 @@
   "benefits_h2": "Benefits of Using AI UGC Video Ads",
   "benefits": [
     {
-      "t": "A Clip Without a Shoot Day",
-      "d": "Start from the photo you upload and download a finished clip without booking a creator, shipping a sample or waiting on an edit."
+      "t": "Speed Without a Shoot",
+      "d": "You get a script, an actor, a voice and a cut without booking a creator or opening another editing app."
     },
     {
-      "t": "Pay Per Clip, Not Per Shoot",
-      "d": "Credits replace creator fees, studio rental and editing hours. A 15-second ad uses 60 credits, and if the job fails, those credits return automatically."
+      "t": "A Plan Instead of a Shoot Fee",
+      "d": "Plans start at $24.50 a month. A 15-second ad uses 60 credits, and a failed job returns those credits."
     },
     {
-      "t": "A Presenter, Not a Customer Quote",
-      "d": "Any person on screen is an AI presenter, not a buyer review. Keep the scene factual, and disclose AI content when a platform requires it."
+      "t": "More Versions From One Product",
+      "d": "Change the hook, the script, the actor or the frame and make another ad from the same photo or link."
     },
     {
-      "t": "Fresh Creative Before Fatigue Hits",
-      "d": "Shoppers tune out an ad they have seen too often. Swap in a new presenter, setting or opening before that same ad gets old, without booking another shoot."
+      "t": "A Fresh Ad Before the Old One Stales",
+      "d": "Swap the actor, the hook or the frame when one version has been up long enough. No new shoot is required."
     },
     {
-      "t": "You Set the Direction",
-      "d": "You choose the scene, the action, the presenter and the length. Add your exact captions, price and licensed music after download so every ad stays on brand."
+      "t": "You Set the Brief",
+      "d": "You choose the script, the tone, the actor and the voice. Edit any of them before the ad goes out."
     },
     {
-      "t": "Yours to Run as Ads",
-      "d": "Finished clips can be used commercially in paid ads and organic posts, with no watermark."
+      "t": "Yours to Run",
+      "d": "Finished ads can be used commercially in paid ads and organic posts, with no watermark."
     }
   ],
   "steps_h2": "How to Make AI UGC Video Ads in 3 Simple Steps",
-  "steps_lead": "Go from one clear product photo to a short ad ready for your next test.",
+  "steps_lead": "Start from a product link or one photo. The script, actor and voice come with the ad.",
   "compare_table": {
     "title": "AIVideosUGC vs. Traditional Video Ad Production",
-    "lead": "One photo and one scene replace a shoot. A new version costs credits, and a failed job returns them.",
+    "lead": "A photo or a link replaces the shoot. New versions spend credits, and a failed job returns them.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -550,33 +554,33 @@
     "rows": [
       [
         "First ad",
-        "One photo and one scene, then one clip",
-        "Days to weeks of booking, shooting and editing"
+        "A photo or a link, then one finished ad",
+        "Days of booking, shooting and editing"
       ],
       [
-        "What you need",
-        "One product photo and one scene idea",
-        "A brief, product samples, a creator and a location"
+        "Cost",
+        "From $24.50 a month; 60 credits for 15 seconds",
+        "A creator fee plus editing time"
       ],
       [
-        "Cost of a new version",
-        "Credits for one clip (60 for 15 seconds)",
-        "Another creator fee and more editing time"
+        "New versions",
+        "Another hook, actor, voice or language",
+        "Limited by the shoot"
       ],
       [
-        "Sizes",
-        "9:16, 1:1, 16:9, 4:3 or 3:4 per clip",
-        "Re-edit the footage for each crop"
+        "Control",
+        "You set the script, tone, actor and voice",
+        "Depends on who you booked"
       ],
       [
         "Usage rights",
-        "Commercial use included, no watermark",
+        "Commercial use, no watermark",
         "Negotiated with each creator"
       ],
       [
-        "Failed takes",
-        "Credits return automatically",
-        "Paid for either way"
+        "A catalog",
+        "Many products from pages or photos",
+        "One product shoot at a time"
       ]
     ]
   },
@@ -603,27 +607,28 @@
   ],
   "reasons": {
     "h2": "Reasons to Use AIVideosUGC for Your Video Ads",
+    "lead": "The ad is written from your product, sized for the placement, and easy to vary.",
     "items": [
       {
-        "t": "Built From Your Real Product",
-        "d": "Every ad starts from the photo you upload, so the item on screen matches what you sell, not a generic stand-in. The opening stays tied to what shoppers will actually receive."
+        "t": "Scripted From Your Product",
+        "d": "Every script starts from your photo, your prompt or your product link, so the opening is about the item you actually sell."
       },
       {
-        "t": "Sized for Paid Social",
-        "d": "Each clip comes out in 9:16, 1:1, 16:9, 4:3 or 3:4, the sizes TikTok, Reels, Shorts and Meta feeds use, so you pick the frame instead of cropping one file into every placement."
+        "t": "Sized for the Placement",
+        "d": "Each ad comes out in 9:16, 1:1, 16:9, 4:3 or 3:4. Publish to TikTok or Meta, or pick the frame instead of cropping one file."
       },
       {
-        "t": "Many Angles From One Upload",
-        "d": "Keep the same photo and change the presenter, the scene or the first action to make a new version, then test which one your audience stops for."
+        "t": "More Than One Style",
+        "d": "Keep the same product and change the actor, the voice, the hook or the tone, then test the version that fits."
       }
     ]
   },
-  "benefits_lead": "For sellers who need another product ad from a photo they already have, without booking a shoot.",
+  "benefits_lead": "For shops that need another product ad from a photo or a link, without booking a shoot.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Other clips you can make from a product photo or a product page.",
+  "related_lead": "Other clips from a photo or a product page, plus an API when a catalog should request ads.",
   "reviews": {
-    "h2": "What Sellers Make With AIVideosUGC",
-    "lead": "How a shop uses one product photo for a feed, Reels, Shorts or TikTok test.",
+    "h2": "How Shops Use AI UGC Video Ads",
+    "lead": "How shops start from one product photo or a product page. These are examples, not quotes.",
     "items": [
       {
         "example": true,
@@ -641,7 +646,7 @@
         "example": true,
         "who": "Beauty shop",
         "t": "Pocket showcase",
-        "d": "A beauty shop uploads a lip balm photo and tests a close shot in YouTube Shorts."
+        "d": "A beauty shop uploads a lip balm photo, picks a voice, and tests a close shot in YouTube Shorts."
       },
       {
         "example": true,
@@ -653,16 +658,40 @@
         "example": true,
         "who": "Drink seller",
         "t": "First sip",
-        "d": "A drink seller uploads a bottle photo and tests a pour-and-sip opening on TikTok."
+        "d": "A drink seller pastes the bottle's product page and tests a pour-and-sip opening on TikTok."
       },
       {
         "example": true,
         "who": "Shoe seller",
         "t": "Creator showcase",
-        "d": "A shoe seller uploads a running-shoe photo and tests a showcase in a paid social post."
+        "d": "A shoe seller uploads a running-shoe photo, picks an actor, and tests a showcase in a paid social post."
+      },
+      {
+        "example": true,
+        "who": "Agency shop",
+        "t": "Client set",
+        "d": "An agency shop makes a set of actor-led ads for several client products from photos it already has."
+      },
+      {
+        "example": true,
+        "who": "Small brand",
+        "t": "Next product",
+        "d": "A small brand skips a new shoot and makes the next product ad from a fresh photo plus a script."
+      },
+      {
+        "example": true,
+        "who": "Catalog seller",
+        "t": "One ad per item",
+        "d": "A catalog seller pastes product links and makes one ad per item so each opening can be tested."
+      },
+      {
+        "example": true,
+        "who": "Home brand",
+        "t": "Script and voice",
+        "d": "A home brand asks for a script, an actor and a voice together, then edits one caption before publishing."
       }
     ]
   },
   "cta_title": "Ready to Make Your Next Video Ad?",
-  "cta_lead": "Upload a product photo and see the credit cost before you start."
+  "cta_lead": "Upload a product photo or paste a product link, and see the credit cost before you start."
 }

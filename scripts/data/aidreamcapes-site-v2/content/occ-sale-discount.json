@@ -4,7 +4,7 @@
   "description": "Build a sale ad creative from one product photo. Add the confirmed price, code and end date after download, then reuse the scene when the promotion changes.",
   "h1": "Create Sale Ad Creatives Fast",
   "eyebrow": "Sale ad creatives",
-  "lead": "Build the product scene now, and add the confirmed price, code, and end date after you download.",
+  "lead": "Paste a product link and get sale ad creatives with a script, an actor, and a voiceover, while the price and the code are still open.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -15,35 +15,51 @@
   "faq": [
     {
       "q": "Will the discount be printed on the image for me?",
-      "a": "No. Keep the percent, the price, the code, and the end date as text you add after download, so you can check every character."
+      "a": "The product link can bring the item details in. You still confirm the percent, the price, the code, and the end date in the built-in editor, so you can check every character."
     },
     {
       "q": "Can I reuse the scene for the next promotion?",
-      "a": "Yes. The product scene is separate from the offer. Replace the text when the promotion changes and keep the same visual."
+      "a": "Yes. The product scene is separate from the offer. Replace the text, the voiceover, or the timer when the promotion changes and keep the same visual."
     },
     {
       "q": "Can I show the old price next to the sale price?",
       "a": "Only if you actually charged that old price. Check the comparison-pricing rules where you sell before you publish the claim."
     },
     {
-      "q": "Can I add a countdown to the sale video?",
-      "a": "No. The clip does not include a timer. Add it in your editor or ad platform after download, where you control the end time."
+      "q": "Can I change the timer on the sale video?",
+      "a": "Yes. Set the end time in the built-in editor and move it if the window changes. You control when the countdown stops."
     },
     {
       "q": "How many credits does a sale photo or video use?",
       "a": "A photo uses 24 credits. Video uses 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. The cost shows before you start, and a failed job returns those credits."
     },
     {
-      "q": "Do I need a creator for the sale scene?",
-      "a": "No. Start from your product photo. If a person appears, that person is generated, not a real customer."
+      "q": "Can the sale ad use an actor from the library?",
+      "a": "Yes. Pick one, describe a look, or build one from a short clip of you. If a person appears, that person is generated, not a real customer or a celebrity."
     },
     {
-      "q": "Can I run the file as a paid sale ad?",
-      "a": "Yes. The download has no AIVideosUGC watermark. The platform's ad rules still apply."
+      "q": "Can I publish the file as a paid sale ad?",
+      "a": "Yes. Publish in one click to TikTok, Instagram, or Meta, or download it. The download has no AIVideosUGC watermark. The platform's ad rules still apply."
     },
     {
-      "q": "Can I make sale visuals for many products at once?",
-      "a": "No. Each product photo is its own job. Start the next product when you are ready."
+      "q": "Can I make sale ads for many products at once?",
+      "a": "Yes. Batch mode takes a set of product links and returns one ad each. Review every file before it is published."
+    },
+    {
+      "q": "Can the ad start from a product link?",
+      "a": "Yes. Paste the product page and the photos and details come in as a storyboard. You can also upload one product photo."
+    },
+    {
+      "q": "Can my store request sale ads through an API?",
+      "a": "Yes. The API lets your store ask for a sale ad from a product link. The file stays in your account until you share it."
+    },
+    {
+      "q": "Can I add a voiceover, music, and captions?",
+      "a": "Yes. Choose an AI voice, a track from the music library, and automatic captions. The same script can be spoken in another language."
+    },
+    {
+      "q": "What frame should the sale video use?",
+      "a": "A product photo is square. A clip from the same photo runs 6, 10, 15, or 30 seconds, in 9:16, 1:1, 16:9, 4:3, or 3:4. Each video is its own job."
     },
     {
       "q": "How much empty space should I leave for the offer?",
@@ -94,19 +110,19 @@
       }
     ]
   },
-  "cta_lead": "Download the visual first. Add the price, the code, and the end date when they are confirmed.",
+  "cta_lead": "Finish the actor, the script, and the timer. Add the price, the code, and the end date when they are confirmed.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Start with one clear photo of the product on offer. Keep the full item in frame so shoppers can tell what is on sale."
+      "t": "Add Your Product Link",
+      "d": "Start from the product page. Photos and the item details come in and form a storyboard for the sale."
     },
     {
-      "t": "Describe Your Scene",
-      "d": "Choose a product view with empty space for the offer. Keep the price, the code, and the end date out of the image."
+      "t": "Create Your Actor",
+      "d": "Choose a library actor or describe one for this offer. The mouth follows the voice you pick."
     },
     {
-      "t": "Download and Post",
-      "d": "Type the confirmed price, code, and end date in your editor, then post the file. The product scene can stay up while the words change."
+      "t": "Set Script, Timer, and Publish",
+      "d": "Edit the script, pick a voice and a music-library track, set the timer, then publish to TikTok, Instagram, or Meta."
     }
   ],
   "visual": {
@@ -245,7 +261,7 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "Create promo video ads in three steps"
+        "h2": "How to create promo video ads in 3 simple steps"
       },
       "m3": {
         "h2": "Choose a Sale Ad Creative Scene"
@@ -255,39 +271,39 @@
       }
     }
   },
-  "benefits_h2": "Discount ad images with room for the price",
+  "benefits_h2": "Reasons to use discount ad images",
   "benefits": [
     {
-      "t": "Start before the offer is final",
-      "d": "Build the product scene while the price and the code are still being decided. Leave the product clear, with empty space for the offer.",
+      "t": "An actor for the sale countdown",
+      "d": "Pick an actor to introduce the offer, or describe the look and the outfit. A short clip of you can become that presenter, with a face and a voice of its own.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-offer",
       "alt": "Denim jacket on a hanger against a pale wall with open space for an offer.",
       "frame": "none"
     },
     {
-      "t": "Keep the scene when the code changes",
-      "d": "Swap the price, the code, or the end date in your editor and leave the product scene as it is. A late change does not send you back to a shoot.",
+      "t": "A script from the product page",
+      "d": "Paste the link or describe the item. AIVideosUGC writes a hook and the reasons to act, and you still confirm the price, the code, and the end date before it goes out.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-reshoot",
       "alt": "Adult hands fold a checked picnic blanket beside a basket at a park table.",
       "frame": "none"
     },
     {
-      "t": "Get a square post or a short clip",
-      "d": "The photo is square. A clip from the same photo runs 6, 10, 15, or 30 seconds, in 9:16, 1:1, 16:9, 4:3, or 3:4.",
+      "t": "A voice that tightens the deadline",
+      "d": "Choose an AI voice and set the pace and the feeling so the sale sounds more pressing as the window gets shorter.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-versions",
       "alt": "Adult hand places a wireless charging pad on a dark desk.",
       "frame": "none"
     },
     {
-      "t": "Make the scene from the photo you have",
-      "d": "The sale scene starts from your product photo. Any person in the scene is generated, not a hired shopper.",
+      "t": "Several cuts of the same offer",
+      "d": "Export more than one version and compare the hook and the script. See how other shops show a deadline, then run the cut you want.",
       "img": "n:guide:fx01-occ-sale-discount-benefit-no-shoot",
       "alt": "Adult hands prepare a kraft tea pouch beside a plain travel mug in a bright kitchen.",
       "frame": "none"
     }
   ],
-  "steps_h2": "Create promo video ads in three steps",
-  "steps_lead": "Upload one product photo, leave room for the offer, and add the price after download.",
+  "steps_h2": "How to create promo video ads in 3 simple steps",
+  "steps_lead": "Paste the product link, choose an actor, then set the script, the timer, and where the sale publishes.",
   "relatedLinks": [
     {
       "id": "occ-black-friday",
@@ -322,19 +338,19 @@
         "example": true,
         "who": "A beauty shop",
         "t": "Leave open space beside the jar",
-        "d": "They upload the jar and ask for a clean counter with empty room on one side. The percent off is typed later, so a changed number does not need a new scene."
+        "d": "They paste the product link and ask for a clean counter with empty room on one side. The percent off is typed later, so a changed number does not need a new scene."
       },
       {
         "example": true,
         "who": "An apparel shop",
         "t": "Run the jacket scene again next week",
-        "d": "They reuse the same jacket scene for the next code. Only the offer line in the editor changes."
+        "d": "They keep the same jacket scene and swap the actor's line for the next code. Only the offer text in the editor changes."
       },
       {
         "example": true,
         "who": "A home shop",
-        "t": "Fold the blanket, then add the end date",
-        "d": "They show the blanket in use and leave the end date out of the picture. The date is added after download, once the sale window is real."
+        "t": "Fold the blanket, then set the timer",
+        "d": "They show the blanket in use and set the end time in the editor once the sale window is real."
       }
     ]
   },
@@ -363,12 +379,12 @@
         "d": "The product photo and the result stay in your account. They are not published until you share them."
       },
       {
-        "t": "Music and captions after download",
-        "d": "Add a track you have rights to, and any captions, in your editor. They are not generated into the file."
+        "t": "Voice, captions, and a track",
+        "d": "A voiceover, automatic captions, and a music-library track can go with the sale clip. You still proofread the price before you publish."
       }
     ]
   },
-  "cta_title": "Post the sale ad when the price is confirmed",
+  "cta_title": "Publish the sale ad when the price is confirmed",
   "blockOrder": [
     "hero",
     "benefits",

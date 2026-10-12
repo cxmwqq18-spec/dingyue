@@ -4,7 +4,7 @@
   "description": "Turn one shoe photo into on-foot demos, unboxings, fit checks, and listing stills. Download watermark-free clips and photos for social posts and product pages.",
   "h1": "AI Product Photos for Shoe Brands, On Foot and in Motion",
   "eyebrow": "Shoes",
-  "lead": "Shoppers want the pair on a foot, not only on a plain white background. One clear side photo can become a listing still and a short step.",
+  "lead": "Shoppers want the pair on a foot, not only on a plain white background. Paste a product link or one clear side photo and get a listing still and a short step.",
   "card": "On-foot steps, unboxings, fit checks, and listing stills from one shoe photo.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -45,24 +45,28 @@
     {
       "q": "How long is a shoe clip, and what does it cost?",
       "a": "Choose 6, 10, 15, or 30 seconds in 9:16, 1:1, 16:9, 4:3, or 3:4. Credits are 24, 40, 60, and 120 for those lengths. A failed job returns its credits. The person on screen is generated, not a reviewer."
+    },
+    {
+      "q": "Can I start from a product link and make more than one cut?",
+      "a": "Yes. Paste the product page, or send that link through the API. Ask for a short script, pick a presenter, and make a few cuts, including one in another language. Trim the clip, choose a voice and a backing track, and check captions in the editor on the page, then send it to TikTok or Meta. The clip can only show angles that were in the upload."
     }
   ],
   "templates_lead": "Choose a shoe format for an on-foot demo, an unboxing, or a fit check.",
-  "cta_lead": "Upload a side profile, describe one step or fit check, and review the credit cost before you start.",
-  "steps_h2": "How to Make On-Foot Shoe Photos in 3 Steps",
-  "steps_lead": "Three things you do on screen. The clip shows the sides you photographed.",
+  "cta_lead": "Paste a product link or upload a side profile, pick a presenter, and publish a step with a voice and captions. Review the credit cost before you start.",
+  "steps_h2": "How to Make On-Foot Shoe Photos in 3 Simple Steps",
+  "steps_lead": "Three things you do on screen. The clip can include a spoken line and captions. It shows the sides you photographed.",
   "steps": [
     {
-      "t": "Upload Your Shoe Photo",
-      "d": "Use a full side profile in even light, toe and heel in frame. Add a top view or sole photo if those details matter."
+      "t": "Upload Your Shoe",
+      "d": "Paste the product page, or upload a full side profile with the toe and heel in frame. A top or sole photo can join it."
     },
     {
-      "t": "Describe the On-Foot Scene",
-      "d": "Name one action, such as a single step, a fit check in the hands, or an unboxing. The person is generated, not a reviewer."
+      "t": "Choose a Presenter",
+      "d": "Pick a generated adult for one step or a fit check. The person is not a reviewer, and you do not book talent."
     },
     {
-      "t": "Download and Post",
-      "d": "Compare the silhouette and any stitching with the real pair, then download. Add size and width in your editor. Captions are not added for you."
+      "t": "Generate and Publish",
+      "d": "You get a spoken line and on-screen captions. Send the clip to TikTok or Meta, then check the silhouette."
     }
   ],
   "visual": {
@@ -100,12 +104,12 @@
     }
   },
   "steps_cta": {
-    "label": "Create shoe ad",
+    "label": "Create a shoe ad",
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "AI Shoe Photography Without a New Shoot",
-    "lead": "A side photo on a table does not show the collar or the step. Build the next ad from the pair you already photographed.",
+    "h2": "Why Shoe Brands Skip Another Booking",
+    "lead": "A side photo on a table does not show the collar or the step. Paste a product link, or start from the pair you already photographed.",
     "items": [
       {
         "t": "Fit check, no new booking",
@@ -115,7 +119,7 @@
       },
       {
         "t": "Angles you actually shot",
-        "d": "A step, an unboxing, or a material close-up can reuse the pair. Tread and heel only appear if those views are in the upload.",
+        "d": "A step, an unboxing, or a material close-up can reuse the pair, and you can make a second cut. Tread and heel only appear if those views are in the upload.",
         "img": "n:guide:fx30-shoes-benefit-material-r1",
         "alt": "Macro view of a plain taupe shoe showing leather grain, flat laces, stitching and sole edge."
       },
@@ -128,8 +132,8 @@
     ]
   },
   "platforms": {
-    "h2": "Shoe Photos for Amazon Listings and Feeds",
-    "lead": "A main image wants the shoe alone. A feed ad can show one step. Use a frame each place already accepts.",
+    "h2": "Create Shoe Ads for Every Platform",
+    "lead": "Publish the step to TikTok or Meta from this page. A main image still wants the shoe alone on white, with size notes in the listing.",
     "items": [
       {
         "t": "AI TikTok ads generator",
@@ -164,7 +168,7 @@
     ]
   },
   "reviews": {
-    "h2": "How Sellers Use Sneaker and Shoe Photos",
+    "h2": "How Shoe Brands Switch to AI Ads",
     "lead": "Example ways footwear sellers use one pair photo. These are not quotes.",
     "items": [
       {
@@ -202,6 +206,36 @@
         "who": "Fit page",
         "t": "Hands plus a step",
         "d": "One photo becomes a fit check in the hands and a 15-second step (60 credits)."
+      },
+      {
+        "example": true,
+        "who": "Script desk",
+        "t": "A link, then a step script",
+        "d": "They paste the product page, or send that link through the API, and ask for a short script about one step. Comfort claims stay in the listing."
+      },
+      {
+        "example": true,
+        "who": "Presenter desk",
+        "t": "One step, then a second look",
+        "d": "They pick a presenter from the actor library for a single step, then a second look of that person. The person is not a reviewer."
+      },
+      {
+        "example": true,
+        "who": "Edit desk",
+        "t": "Voice, captions, and a track",
+        "d": "They choose a voice or a short sample of their own, check the captions, pick a backing track, and trim the step in the editor on the page."
+      },
+      {
+        "example": true,
+        "who": "Second market",
+        "t": "The same pair, another language",
+        "d": "They make the step again in a second language from the same side photo. Hidden tread is still not invented."
+      },
+      {
+        "example": true,
+        "who": "Test desk",
+        "t": "A few cuts, then publish",
+        "d": "They describe the step in chat, keep a few cuts, and send the one they want to TikTok or Meta. A 15-second clip is 60 credits."
       }
     ]
   },
@@ -233,6 +267,23 @@
     }
   ],
   "related_h2": "Shoe colors, listings, and ad pages",
+  "maker": {
+    "options": [
+      [
+        "Size",
+        "9:16"
+      ],
+      [
+        "Length",
+        "15 seconds"
+      ],
+      [
+        "Scene",
+        "One step"
+      ]
+    ],
+    "cta": "Create a shoe ad"
+  },
   "blockOrder": [
     "hero",
     "strip",

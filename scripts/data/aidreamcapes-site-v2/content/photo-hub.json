@@ -4,7 +4,7 @@
   "description": "Turn one product photo into listing, lifestyle and ad images for your store. Skip the studio booking and see the credit cost before you start.",
   "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
   "eyebrow": "AI product photo generator",
-  "lead": "Start with one clear product photo. Build a listing image, a room scene, or a square ad, then download the version for your store.",
+  "lead": "Start with one clear product photo or a short description. Make a listing image, a room scene, or a square ad, then download the file or send it into a product video.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -15,49 +15,49 @@
   "benefits": [
     {
       "icon": "coins",
-      "t": "See the cost before a studio quote",
+      "t": "See the cost before you generate",
       "d": "Each product photo uses 24 credits, and that number appears before the job starts. A failed job returns the credits."
     },
     {
       "icon": "clock",
-      "t": "Skip booking a photographer",
-      "d": "Move from a plain product photo to a room scene or a square ad without a shoot date."
+      "t": "Skip the shoot date",
+      "d": "Move from a plain product photo to a room scene or a square ad without booking a photographer."
     },
     {
       "icon": "layers",
-      "t": "Cover the listing, the scene, and the ad",
-      "d": "Use one product photo for a clean listing, a detail, a room, or a social image. Each look is a separate photo."
+      "t": "Make a batch of product photos",
+      "d": "Generate a listing, a room scene, and a square ad from one upload. Each photo is its own file and uses 24 credits."
     },
     {
       "icon": "users",
-      "t": "Skip hiring a model",
-      "d": "Show clothing or a handheld item in context. If a person appears, that person is generated, not a booked model."
+      "t": "Skip models and extra props",
+      "d": "Describe the scene instead of styling a set. If a person appears, that person is generated, not a booked model."
     },
     {
       "icon": "refresh",
-      "t": "Make the next look when the listing changes",
-      "d": "Make another image when the product, the offer, or the season changes. You do not wait on a studio date."
+      "t": "Make another photo when the listing changes",
+      "d": "Run the next scene when the product, the offer, or the season changes. You do not wait on a studio calendar."
     },
     {
       "icon": "target",
-      "t": "Compare scenes before you post",
+      "t": "Compare two scenes before you post",
       "d": "Make a second background, then choose the file for the product page or the ad."
     }
   ],
-  "steps_h2": "Make a product photo in 3 steps",
-  "steps_lead": "Upload one product photo, choose the scene, and download a square image.",
+  "steps_h2": "Steps to generate an AI product image",
+  "steps_lead": "Describe or upload the product, choose a style, then download or continue into a video.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Use a photo where the whole item is visible on a simple background, so shape and color stay easy to check."
+      "t": "Describe or upload your product",
+      "d": "Type the scene you want, or upload a photo with the whole item visible on a simple background."
     },
     {
-      "t": "Pick a Scene",
-      "d": "Choose a listing, a lifestyle scene, or an on-model view. The result is square."
+      "t": "Choose a generation style",
+      "d": "Pick a listing, a lifestyle scene, or an on-model view, and choose the generation style before it runs."
     },
     {
-      "t": "Download and Post",
-      "d": "Review the image against the real product, then download it for the store or the ad editor."
+      "t": "Generate, refine, and use",
+      "d": "Review the file, ask for a variation, or send the still into a product video. Downloads have no watermark."
     }
   ],
   "maker": {
@@ -69,18 +69,22 @@
       [
         "Start with",
         "Photo or description"
+      ],
+      [
+        "Then",
+        "Still or a product video"
       ]
     ],
     "cta": "Make my product photo"
   },
   "faq": [
     {
-      "q": "What can an AI product photo generator make from one photo?",
-      "a": "A listing image, a room scene, a detail, or a square ad. Upload one clear photo and review the file before you publish."
+      "q": "What does an AI product photo generator make?",
+      "a": "A listing image, a room scene, a detail, or a square ad from one clear photo or a short description. You review the file before you publish."
     },
     {
       "q": "How do I make the photo from one product picture?",
-      "a": "Upload a product photo and describe the scene, then generate a square image. The credit cost appears before you start."
+      "a": "Upload a product photo or describe the scene, choose the style, then generate a square image. The credit cost appears before you start."
     },
     {
       "q": "Is there a free AI product photo generator plan?",
@@ -109,10 +113,18 @@
     {
       "q": "Where are the AI product photo templates?",
       "a": "Browse [product ad templates](page:templates) for packshots, lifestyle scenes, and ad layouts. Then upload your product photo here and describe the scene."
+    },
+    {
+      "q": "Can I run a batch or connect an API?",
+      "a": "Yes. A batch makes several scenes from the photos you upload, and the API can send those jobs from your catalog tool. Each photo still uses 24 credits, shown before it runs."
+    },
+    {
+      "q": "Can I turn the photo into a video with a voiceover?",
+      "a": "Yes. Send the still into a product video, then add a voiceover, captions, or a track from the music library. A 6-second clip uses 24 credits, a 10-second clip 40, a 15-second clip 60, and a 30-second clip 120. [Image to video](page:image-to-video) is that next step."
     }
   ],
   "examples": {
-    "h2": "Examples of ecommerce product photos",
+    "h2": "Examples of AI product photos",
     "lead": "More beach, desert, studio, and room scenes. Upload your product photo and describe the setting you want.",
     "groups": [
       {
@@ -215,28 +227,32 @@
         [
           "Start with",
           "Photo or description"
+        ],
+        [
+          "Then",
+          "Still or a product video"
         ]
       ]
     },
     "picker": {
-      "title": "Try a beach, desert, plain studio, or room scene",
-      "lead": "These four photos are examples. Upload your own product and describe the setting you want.",
+      "title": "Give your product a new setting",
+      "lead": "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting.",
       "chips": [],
       "cards": [],
       "button": "Open the photo creator"
     },
     "titles": {
       "m3": {
-        "h2": "Try a beach, desert, plain studio, or room scene",
-        "lead": "These four photos are examples. Upload your own product and describe the setting you want."
+        "h2": "Give your product a new setting",
+        "lead": "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting."
       },
       "faq": {
-        "h2": "Questions about the AI product photo generator"
+        "h2": "Frequently asked questions"
       }
     }
   },
-  "cta_title": "One product photo, then another scene",
-  "cta_lead": "Upload a clear photo, choose a listing, a room, or a square ad, and see the credit cost before you start.",
+  "cta_title": "One product photo, then more scenes",
+  "cta_lead": "Upload a clear photo, make a batch of scenes, and see the credit cost before you start. You can send a still into a product video next.",
   "blockOrder": [
     "hero",
     "picker",
@@ -249,51 +265,80 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How sellers use one product photo",
-    "lead": "Ways sellers build a listing image, a room scene, or an ad from one product photo.",
+    "h2": "Example ways shops use the photos",
+    "lead": "These are example uses, not quotes from a named customer. Each card is one way a shop can continue from a product photo.",
     "items": [
       {
         "example": true,
         "who": "Beauty seller",
-        "t": "A product-page image without a vanity setup",
-        "d": "Start with the bottle you already photographed. Place it in a clean scene and check the label before you publish.",
-        "img": "n:rx3-photo-hub-scenario-1-r1",
-        "alt": "Face mist bottle styled for a product page."
+        "t": "Turn the still into a short product video",
+        "d": "Start with the bottle photo. Send that still into a [product video](page:product-videos), then add a voiceover, captions, or a track from the music library."
       },
       {
         "example": true,
-        "who": "Home shop",
-        "t": "Show the room around a pillow",
-        "d": "Use a room scene so shoppers see where the pillow sits, without moving furniture for a shoot.",
-        "img": "n:im07-photo-hub-pillow-r1",
-        "alt": "Linen pillow shown in a living room."
+        "who": "Small marketing team",
+        "t": "Make the photo and the clip in one place",
+        "d": "Upload the product photo, generate the scene, then trim it in the built-in editor instead of opening another app."
       },
       {
         "example": true,
-        "who": "Fashion seller",
-        "t": "Preview a dress on a generated person",
-        "d": "The person is AI-generated. Compare the garment with your flat photo, and keep a size chart beside the image.",
-        "img": "n:im07-photo-hub-dress-r1",
-        "alt": "Knit dress worn by a generated adult model."
+        "who": "Gadget shop",
+        "t": "Show a generated person holding the product",
+        "d": "Use the photo as the product reference. A generated adult can hold it in a clip from [image to video](page:image-to-video). That person is not a real customer."
       },
       {
         "example": true,
-        "who": "Food seller",
-        "t": "A kitchen scene for a launch page",
-        "d": "Place the bottle in a bright kitchen scene. Add the price in your editor after download.",
-        "img": "n:rx3-photo-hub-scenario-4-r1",
-        "alt": "Olive oil bottle in a bright kitchen."
+        "who": "Supplement seller",
+        "t": "Pick a generated actor for the clip",
+        "d": "Choose a look from the [actor library](page:ai-actors), then keep the same person when you make the next version of the ad."
+      },
+      {
+        "example": true,
+        "who": "Shop selling in three countries",
+        "t": "Make the same ad in more than one language",
+        "d": "Write the script, then generate the spoken version in the languages your shoppers use. Check the words before you publish."
+      },
+      {
+        "example": true,
+        "who": "Solo seller",
+        "t": "See the credits before the photo runs",
+        "d": "A product photo is 24 credits. Starter is $24.50 for 200 credits a month. There is no free plan."
+      },
+      {
+        "example": true,
+        "who": "Agency editor",
+        "t": "Use a generated presenter instead of a creator day",
+        "d": "The actor is generated. Do not present the clip as a real customer or a celebrity."
+      },
+      {
+        "example": true,
+        "who": "Home brand",
+        "t": "Build a digital twin from photos you already have",
+        "d": "Upload a few clear photos and reuse that generated person on the next scene. A presenter starts on [spokesperson videos](page:spokesperson-videos)."
+      },
+      {
+        "example": true,
+        "who": "Marketplace seller",
+        "t": "Start from a product link, then publish the ad",
+        "d": "Paste a [product link](page:url-to-video) to draft a script, pick an actor, and make a video. Publish that file to [TikTok](page:plat-tiktok) or [Facebook](page:plat-facebook) from the editor."
+      },
+      {
+        "example": true,
+        "who": "Founder",
+        "t": "Ask for a script, a scene, and a clip",
+        "d": "Describe the ad in chat. The tool drafts a script, a scene, and a clip you can trim in the editor."
       }
     ]
   },
   "relatedLinks": [
-    "white-background",
-    "lifestyle-photos",
-    "model-photos",
-    "change-background",
-    "social-ad-photos",
-    "templates"
+    "video-ads",
+    "product-videos",
+    "spokesperson-videos",
+    "url-to-video",
+    "image-to-video",
+    "video-hub"
   ],
-  "benefits_lead": "A small catalog can make the next scene from a photo it already has.",
-  "related_h2": "Related photo tools"
+  "benefits_lead": "A small catalog can make the next scene, including a batch, from a photo it already has.",
+  "related_h2": "Related tools",
+  "related_lead": "Continue from the same product photo into a clip, an actor, or a page link."
 }

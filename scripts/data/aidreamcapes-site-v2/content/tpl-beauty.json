@@ -4,7 +4,7 @@
   "description": "Beauty product video ads from one skincare photo: show a routine, texture or review moment in 9:16 for TikTok and Reels, with 6, 10, 15 or 30 seconds.",
   "h1": "Beauty Product Video Ads for Skincare Routines",
   "eyebrow": "Beauty video template",
-  "lead": "Pick a routine scene and add one skincare photo, so the clip shows texture, application, or a review moment.",
+  "lead": "Pick a routine scene, add one skincare photo, and download a clip with a script, an AI voice, and captions you can edit.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -12,8 +12,8 @@
     "skincare routine video",
     "cosmetics product video"
   ],
-  "steps_h2": "Make a TikTok Beauty Ad in 3 Steps",
-  "steps_lead": "One skincare photo, a short line about the moment, then a file you can post.",
+  "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
+  "steps_lead": "One skincare photo, an AI voice, then a file you can caption and post.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
@@ -21,11 +21,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name a routine, a texture close-up, or a review moment. Then pick a size and a length from 6 to 30 seconds."
+      "d": "Name the routine moment, pick an AI voice, then choose a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add the shade or usage line in your editor. Check the action before you post."
+      "d": "Download the file, add captions or the shade line, and check the cap before you post."
     }
   ],
   "maker": {
@@ -44,43 +44,47 @@
   "faq": [
     {
       "q": "What is a beauty product video template?",
-      "a": "A ready beauty scene for a routine, a texture close-up, or a review moment. You add your own skincare photo, and the clip shows that moment."
+      "a": "A ready beauty scene with an AI actor, a voiceover, and a script. Add your bottle, jar, or tube and get a routine, texture, or review clip without filming a creator."
     },
     {
-      "q": "How do I make the routine clip?",
-      "a": "Upload the bottle, jar, or tube, name the moment, pick a size and a length, then download the file."
+      "q": "How does the routine clip come together?",
+      "a": "The scene brings a hook, a script, visuals, and a voiceover. Upload your photo, adjust the line, pick 6, 10, 15, or 30 seconds, and download."
     },
     {
-      "q": "Why start from a photo instead of booking a creator?",
-      "a": "The routine is built from the photo you already have. You skip the creator schedule, the studio booking, and the reshoot."
+      "q": "Why start here instead of booking a creator?",
+      "a": "You can post sooner, try another script, and change the line without a shoot. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30."
     },
     {
       "q": "Who is this scene for?",
-      "a": "Skincare sellers, beauty teams, and agencies that need fresh clips for a feed, a listing, or an ad."
+      "a": "Skincare sellers, beauty teams, agencies, and founders. Any person on screen is an AI performer, not a customer who reviewed the product."
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Start with one clear photo and a short line about the moment. Check the action, and run it again if the routine looks wrong."
-    },
-    {
-      "q": "What photo should I upload?",
-      "a": "A clear photo of the full bottle, jar, or tube, with the cap and the label area easy to see."
+      "a": "Yes. Upload one clear photo and follow the three steps. Captions, a track from the music library, and the AI voice can be adjusted in the built-in editor."
     },
     {
       "q": "Can the routine skip the face?",
       "a": "Yes. Choose hands, a close-up, or a product-only beat when the package should stay the focus."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Pick 9:16 for a TikTok or Reels cut, or 1:1, 16:9, 4:3 or 3:4 when the placement needs another shape. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "q": "Can I upload my own photos and clips?",
+      "a": "Yes. Use a JPG, PNG, or WebP of the full bottle, jar, or tube, or a short clip you have rights to. Keep the cap and label easy to see."
+    },
+    {
+      "q": "Where can I publish the clip?",
+      "a": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4. Publish the file to TikTok or Meta, or to YouTube, in one step from the same project."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see that number first. A failed job returns those credits. Starter is $24.50 a month with 200 credits."
     },
     {
       "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark and can run in your ads, pages, and posts. Add the shade and usage line after download, and match them to the approved listing. A person on screen is an AI performer, not a customer."
+      "a": "Yes. The download has no watermark and can run in ads, pages, and posts. Match the shade and usage line to the approved listing."
+    },
+    {
+      "q": "Can I start from a product link or a batch?",
+      "a": "Yes. Paste the product page link and AIVideosUGC drafts the script, or send several products through the API when a catalog needs the same routine in another language."
     }
   ],
   "visual": {
@@ -540,7 +544,7 @@
         "h2": "Choose a Skincare Routine Video"
       },
       "faq": {
-        "h2": "Questions About Skincare Video Ads"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
@@ -580,73 +584,73 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Beauty Shops Use a Serum Video Ad",
-    "lead": "Each card is one way a shop turns a single skincare photo into a routine clip.",
+    "h2": "Shops Are Moving to AI Video Ads",
+    "lead": "Each card is one way a beauty shop turns one product photo into a routine ad. People on screen are AI performers.",
     "items": [
       {
         "example": true,
         "who": "Cleanser shop",
-        "t": "Pump at the sink",
-        "d": "A cleanser shop shows one pump at the sink, with the bottle still readable beside the basin."
+        "t": "Frames that stay on the bottle",
+        "d": "A cleanser shop gets a finished pump clip from one bottle photo, with the bottle still easy to see beside the sink."
       },
       {
         "example": true,
         "who": "Moisturizer shop",
-        "t": "Texture close-up",
-        "d": "A moisturizer shop shows the cream spread beside the jar, so the finish is the point of the clip."
+        "t": "A video and a still together",
+        "d": "A moisturizer shop makes the texture clip and a matching still in one place, without a complicated setup."
       },
       {
         "example": true,
         "who": "Sunscreen shop",
-        "t": "Product in the light",
-        "d": "A sunscreen shop holds the tube up outdoors, with the package still easy to recognize."
+        "t": "The tube held up",
+        "d": "A sunscreen shop uploads the tube, then makes a clip of that tube held up so the package stays recognizable."
       },
       {
         "example": true,
-        "who": "Routine brand",
-        "t": "Hands only",
-        "d": "A routine brand shows the steps with hands and the product, and leaves the face out of frame."
+        "who": "Cosmetics brand",
+        "t": "AI actors and the editor",
+        "d": "A cosmetics brand picks an AI actor for the routine, then trims the clip in the built-in editor before download."
       },
       {
         "example": true,
-        "who": "Beauty editor",
-        "t": "Words after download",
-        "d": "A beauty editor types the shade name and the usage line after the file downloads."
+        "who": "Global beauty brand",
+        "t": "More than one language",
+        "d": "A serum brand tells the same routine with an AI voice in the languages its shoppers use."
+      },
+      {
+        "example": true,
+        "who": "Beauty team",
+        "t": "Quick, on a paid plan",
+        "d": "A small beauty team makes the clip in AIVideosUGC. Starter is $24.50 a month, and a 10-second video is 40 credits."
       },
       {
         "example": true,
         "who": "Agency",
-        "t": "Four moments, one photo",
-        "d": "An agency reuses one bottle photo for a routine, a texture close-up, a review moment, and an unboxing."
-      },
-      {
-        "example": true,
-        "who": "Listing manager",
-        "t": "Square and vertical",
-        "d": "A listing manager sends a 9:16 clip to a short feed and keeps a square cut for the product gallery."
-      },
-      {
-        "example": true,
-        "who": "Claims reviewer",
-        "t": "Match the listing",
-        "d": "A claims reviewer checks the action and the usage line against the approved listing before the ad runs."
+        "t": "An AI presenter",
+        "d": "An agency builds an AI presenter for a client's serum and keeps that person as the brand's ad, not a customer."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "Brand ad, not a review",
-        "d": "A founder keeps any person on screen as an AI performer. The clip is the brand's ad, not a customer review."
+        "t": "A digital double from photos",
+        "d": "A founder uploads a few product photos and skips lights, a camera, and a set for the routine."
+      },
+      {
+        "example": true,
+        "who": "Marketing lead",
+        "t": "Link, script, and voice",
+        "d": "A marketing lead pastes the product page link. AIVideosUGC drafts the script, picks an AI actor, and adds a cloned voice."
       },
       {
         "example": true,
         "who": "First-time seller",
-        "t": "One line about the moment",
-        "d": "A first-time seller names the routine moment in one line and checks the cap and label before posting."
+        "t": "Chat for the routine",
+        "d": "A first-time seller describes the routine in chat. The AI agent returns a script, visuals, and a video to review."
       }
     ]
   },
   "related_h2": "Pages for a Cosmetics Product Video",
   "related_lead": "Video ads, beauty stills, and a TikTok page that pair with a routine clip.",
-  "cta_title": "Ready to Show the Routine?",
-  "cta_lead": "Upload one skincare photo and see the credit cost before you start."
+  "cta_title": "Ready to Create Your First Video?",
+  "cta_lead": "Upload one skincare photo, pick an AI voice, and see the credit cost before you start."
 }

@@ -1,10 +1,10 @@
 {
   "id": "product-videos",
   "title": "AI Product Demo Video Generator | AIVideosUGC",
-  "description": "Turn one product photo into a clear demo that shows how the item works. Create videos for stores, product pages and paid social in 6, 10, 15 or 30 seconds.",
-  "h1": "AI Product Video Generator: Show One Action From a Photo",
+  "description": "Make a product video from a link or a photo. Add an avatar, a script and a voiceover, then publish to TikTok or Meta or download with no watermark.",
+  "h1": "AI Product Video Generator: Link, Avatar and Script",
   "eyebrow": "AI product video generator",
-  "lead": "AIVideosUGC turns one product photo into a short demo of a single operation, such as a latch closing, a pour or a switch. No studio booking. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip for a product page, a marketplace listing or a paid ad.",
+  "lead": "AIVideosUGC builds a product video from a product link or one photo. An avatar can hold the item or show it in use, a script and a human-sounding voiceover explain it, and you can publish to TikTok or Meta or download with no watermark. Choose 6, 10, 15 or 30 seconds.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -13,42 +13,42 @@
   ],
   "benefits": [
     {
-      "t": "No Filming Day to Book",
-      "d": "Upload a photo already on the listing. There is no crew and no sample to ship."
+      "t": "Simple on the First Try",
+      "d": "A few choices are enough to get a product video. You do not need an editing background."
     },
     {
-      "t": "On the Listing or in an Ad",
-      "d": "Place the demo next to your listing photos, or make a 9:16 version for a paid ad."
+      "t": "Change the Mix",
+      "d": "Adjust the script, the voice, the visuals and the brand marks until the clip fits the audience."
     },
     {
-      "t": "Credits, Not a Studio Day",
-      "d": "A 10-second demo uses 40 credits. If the job fails, those credits come back."
+      "t": "Voices That Sound Human",
+      "d": "Pick a natural AI voice from the library and let it read the script."
     },
     {
-      "t": "Check It Against the Real Item",
-      "d": "Watch the finished demo next to the product in your hand. If a color, button or moving part drifts, make another version."
+      "t": "A Price You Can Check",
+      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second video is 24 credits, shown before you start."
     },
     {
-      "t": "You Set the Size and the Length",
-      "d": "Pick 9:16, 1:1, 16:9, 4:3 or 3:4, and 6, 10, 15 or 30 seconds."
+      "t": "An Avatar You Can Shape",
+      "d": "Use the actor library or build a custom avatar so the face fits this product."
     },
     {
-      "t": "Yours to Publish",
-      "d": "Finished demos can be used commercially, with no watermark."
+      "t": "You Direct the Script",
+      "d": "Bring your own sales lines. The writer tightens them, and the avatar delivers the version you approve."
     }
   ],
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the full item and its moving part visible."
+      "t": "Paste a Product Link",
+      "d": "The page is read for the name, the photos and the selling points."
     },
     {
-      "t": "Describe the Action",
-      "d": "Name one action, where it happens and how it should end. Then pick a size and a length."
+      "t": "Choose an AI Avatar",
+      "d": "Pick one from the actor library, or make a custom avatar for this brand."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the demo and review it beside the real item. Add the name and price in your editor before you publish."
+      "t": "Generate a Script",
+      "d": "Read the script, edit a line, or ask for another version before the avatar says it."
     }
   ],
   "maker": {
@@ -62,73 +62,49 @@
         "6, 10, 15 or 30 seconds"
       ]
     ],
-    "cta": "Make my product demo"
+    "cta": "Make my product video"
   },
   "faq": [
     {
-      "q": "How do I make a product video from one photo?",
-      "a": "Upload one clear product photo, name one action a buyer would ask about, pick a size and a length, then download the demo."
+      "q": "How do I make a video that sells a product?",
+      "a": "Paste the product link. The page is read, a script is written, you pick visuals and an avatar, and you get a clip you can publish to TikTok or Meta or download with no watermark."
     },
     {
-      "q": "How long should a product demo video be?",
-      "a": "Choose 6, 10, 15 or 30 seconds. A shorter clip fits a feed. Use a longer one when the action needs more of the motion on screen."
+      "q": "How do I create product videos with AI?",
+      "a": "Give a product link, pick a style and an avatar, then approve or edit the script. Scenes, a human-sounding voiceover and captions are added, and you can run a batch of versions for a test."
     },
     {
-      "q": "Can I start from a product link instead of a photo?",
-      "a": "No. This page starts from one product photo. To start from a public product link, use URL to video."
+      "q": "How long should a product video be?",
+      "a": "Choose 6, 10, 15 or 30 seconds. A shorter clip fits a feed. Use 15 or 30 seconds when the action needs more of the motion on screen. Credits are 24, 40, 60 or 120."
     },
     {
-      "q": "What does a product demo video show?",
-      "a": "One useful operation from start to finish, such as a lid opening, a latch closing, a pour or a switch turning on."
+      "q": "Can AI make a solid product demo?",
+      "a": "Yes. Combine an avatar who explains the feature, shots of the product in use, and extra footage, without booking a live shoot."
     },
     {
-      "q": "How is this different from image to video?",
-      "a": "Image to video adds motion to a still. A product demo is built around one operation a buyer would ask about."
+      "q": "How does a product link become a video?",
+      "a": "The product page is read for images, the title, the description and the features. A script is written from those selling points and paired with the visuals and an avatar."
     },
     {
-      "q": "What photo should I upload?",
-      "a": "One sharp photo with the full item and the moving part visible, in even light."
+      "q": "Can I customize the product video?",
+      "a": "Yes. Edit the script, swap avatars, change scenes or backgrounds, pick a track from the music library, set brand colors and add your logo in the built-in editor. You can also voice the script in another language."
     },
     {
-      "q": "Which actions work well?",
-      "a": "Opening, closing, pouring, packing, connecting, switching on and fitting, when the real product can do that action."
+      "q": "How is an AI product video different from a filmed one?",
+      "a": "You skip the shoot, you pay in credits you see first, and you can make another version from the same link. Starter is $24.50 a month for 200 credits. A failed job returns its credits."
     },
     {
-      "q": "Which sizes and lengths can I choose?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4, and 6, 10, 15 or 30 seconds."
-    },
-    {
-      "q": "Will the demo match my product?",
-      "a": "Compare every result with the real item. If a color, button or moving part drifts, make another version instead of publishing it."
-    },
-    {
-      "q": "Can I add the price and the product name?",
-      "a": "Yes. Add them after download in your editor so the generated scene stays clean."
-    },
-    {
-      "q": "Can I use a product video for Shopify or an Etsy listing video?",
-      "a": "Yes. Place the download beside your listing photos or in an ad, and check that marketplace's rules first."
-    },
-    {
-      "q": "How many credits does a product demo use?",
-      "a": "24 for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. Failed jobs return the credits."
-    },
-    {
-      "q": "Does the demo include a spoken explanation?",
-      "a": "No. The clip shows the action and does not write a spoken script. Record any spoken line in your editor if you need one."
-    },
-    {
-      "q": "Is a person in the demo a real customer?",
-      "a": "No. Any person on screen is AI-generated. The demo shows the product action, not a buyer quote."
+      "q": "How do I keep the video on brand?",
+      "a": "Add your logo and colors, pick a voice that fits, and edit the script until the line sounds like your shop. An API can start the same job from your own tools."
     }
   ],
   "actor_scene_picker": {
     "title": "Choose an AI Presenter",
-    "lead": "Pick a generated presenter and a setting. The person on screen is AI-generated, not a customer. The clip shows one product action and does not add a spoken line.",
+    "lead": "Pick a generated presenter and a setting. The person on screen is an AI avatar, not a customer. The clip can include a script, a voiceover and captions.",
     "button": "Use this avatar and scene",
     "actor_picker": {
       "cta": {
-        "prompt": "Show the uploaded product doing one clear action in the chosen setting. Keep its shape, color and label as in the photo. No spoken line, captions or music."
+        "prompt": "Show the uploaded product in use with the chosen avatar. Write a short script, add a human-sounding voiceover and captions, and keep the product's shape, color and label as in the photo."
       }
     }
   },
@@ -147,7 +123,7 @@
       "result": "n:guide:k1-product-videos-step-mug-lift",
       "mode": "video",
       "length": 10,
-      "prompt": "Show one clear action in a bright room, then hold the product still so a shopper can see it. Keep the shape, color and label as in the photo. Leave music, captions and logos off.",
+      "prompt": "Show one clear action in a bright room, with an avatar and a short script about that action. Keep the shape, color and label as in the photo. Add a voiceover and captions.",
       "options": [
         [
           "Size",
@@ -160,8 +136,8 @@
       ]
     },
     "picker": {
-      "title": "See AI Product Demo Videos",
-      "lead": "Pick one operation and open an example that shows that action.",
+      "title": "Sample Product Videos",
+      "lead": "Open one if you want a similar action, avatar and script.",
       "chips": [
         {
           "id": "hands-on",
@@ -179,7 +155,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "Hands open the compact umbrella on a rainy sidewalk and stop when the canopy is fully open. Keep the umbrella's shape and color as in the photo.",
+          "prompt": "Hands open the compact umbrella on a rainy sidewalk and stop when the canopy is fully open. Keep the umbrella's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -188,7 +164,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Hands unfold the compact bicycle once and pause with the central hinge fully open. Keep the bike's shape and color as in the photo.",
+          "prompt": "Hands unfold the compact bicycle once and pause with the central hinge fully open. Keep the bike's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -197,7 +173,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "A hand presses the desk lamp switch once. Warm light spreads across the desk, then the lamp stays on. Keep the lamp's shape and color as in the photo.",
+          "prompt": "A hand presses the desk lamp switch once. Warm light spreads across the desk, then the lamp stays on. Keep the lamp's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -206,7 +182,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Hands slide the divided trays into an open drawer and stop when the compartments line up. Keep the drawer's shape and color as in the photo.",
+          "prompt": "Hands slide the divided trays into an open drawer and stop when the compartments line up. Keep the drawer's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -215,7 +191,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Hands coil the cable and pack the compact charger into a fabric travel pouch, then close the pouch. Keep the charger's shape and color as in the photo.",
+          "prompt": "Hands coil the cable and pack the compact charger into a fabric travel pouch, then close the pouch. Keep the charger's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -224,7 +200,7 @@
           "chips": [
             "hands-on"
           ],
-          "prompt": "Hands open the padded laptop sleeve and slide a laptop halfway in, so the fit is visible. Keep the sleeve's shape and color as in the photo.",
+          "prompt": "Hands open the padded laptop sleeve and slide a laptop halfway in, so the fit is visible. Keep the sleeve's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         },
         {
@@ -233,7 +209,7 @@
           "chips": [
             "everyday"
           ],
-          "prompt": "Hands close the divided lunchbox and press the side latch once, until the seal is shut. Keep the lunchbox's shape and color as in the photo.",
+          "prompt": "Hands close the divided lunchbox and press the side latch once, until the seal is shut. Keep the lunchbox's shape and color as in the photo. Add a short voiceover and captions.",
           "kind": "video"
         }
       ],
@@ -241,66 +217,60 @@
     },
     "titles": {
       "faq": {
-        "h2": "Questions About Product Demo Videos"
+        "h2": "Questions About AI Product Videos"
       }
     },
     "input": [],
     "outputs": [],
     "after": null
   },
-  "benefits_h2": "Benefits of a How-It-Works Product Video",
-  "steps_h2": "How to Make Product Demo Videos in 3 Simple Steps",
-  "steps_lead": "Go from one clear product photo to a short demo of one operation.",
+  "benefits_h2": "Features of the AI Product Video Generator",
+  "steps_h2": "How to Make a Product Video in 3 Simple Steps",
+  "steps_lead": "Paste a link, pick an avatar, then review the script.",
   "compare_table": {
-    "title": "AIVideosUGC vs. a Studio Product Demo",
-    "lead": "One photo and one operation, instead of shipping samples and booking a filming day.",
+    "title": "The Old Way vs. the AIVideosUGC Way",
+    "lead": "Start from a photo or a product link, with an avatar and a script, instead of booking a studio.",
     "columns": [
       "",
       "AIVideosUGC",
-      "Studio demo or creator shoot"
+      "A traditional shoot"
     ],
     "rows": [
       [
-        "Preparation",
-        "One clear product photo",
-        "Ship samples and book a filming day"
+        "Cost",
+        "Credits you see first. Starter is $24.50 a month for 200 credits.",
+        "A studio invoice before you have a clip"
       ],
       [
-        "First version",
-        "Describe one operation and generate it",
-        "Film that operation on set"
+        "Timing",
+        "No shoot to schedule. You start from a photo or a link.",
+        "A filming window you have to book"
       ],
       [
-        "Next version",
-        "A new description, no reshoot",
-        "Another booking for a new angle"
+        "More versions",
+        "Another version from the same photo or link",
+        "Another booking for each new test"
       ],
       [
-        "Frames",
-        "Vertical, square, wide, 4:3 and 3:4",
-        "A fresh crop of the filmed footage"
+        "Who does the work",
+        "One person can run the avatar, the script and the edit",
+        "Editors, actors and a studio"
       ],
       [
-        "On-screen text",
-        "Name and price added after download",
-        "Set during the edit"
-      ],
-      [
-        "A failed job",
-        "Credits return to your balance",
-        "The shoot is paid either way"
+        "Testing",
+        "A batch of versions, then publish the one you keep",
+        "Each test waits on a new shoot"
       ]
     ]
   },
   "blockOrder": [
     "hero",
-    "definition",
     "picker",
     "reasons",
-    "compare",
     "steps",
     "benefits",
     "related",
+    "compare",
     "reviews",
     "faq",
     "cta"
@@ -308,72 +278,72 @@
   "definition": {
     "title": "What Is an AI Product Video Generator?",
     "paras": [
-      "An AI product video generator makes a short demo from your product photo. The clip shows one operation a shopper can follow, such as a lid opening, a drawer sliding or a kettle pouring.",
-      "Use it when a still photo leaves the action unclear. Review the finished demo beside the real item before you publish. Add the product name and price in your editor. The tool does not write a spoken script."
+      "An AI product video generator makes a short product video from a link or a photo. An avatar can hold the item or show it in use, and a script plus a voiceover explain it.",
+      "Edit the line, swap the avatar, pick a music-library track and add your logo before you publish to TikTok or Meta, or download the file with no watermark."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Show One Product Action",
+    "h2": "Reasons to Use an AI Product Video Generator",
     "items": [
       {
-        "t": "One Action, Start to Finish",
-        "d": "A latch, a pour, a fold or a switch is easier to judge than a feature list. The clip follows that one action from the start to the end."
+        "t": "The Product in an Avatar's Hands",
+        "d": "Put the item in a lifelike avatar's hands, on a beach, in a studio or in a garden, so shoppers can judge size and shape without a photoshoot."
       },
       {
-        "t": "It Starts From Your Photo",
-        "d": "Shape and color begin with the photo you upload. Check the result against the real item before it goes live, in case a detail drifts."
+        "t": "The Product in Use",
+        "d": "Show an avatar applying skincare, opening a gadget or wearing an accessory, so the action is obvious."
       },
       {
-        "t": "A Second Action, No New Shoot",
-        "d": "Describe another operation when the listing or the ad needs a different view. You do not book a second filming day."
+        "t": "A Voice for the Product",
+        "d": "Turn the product description into a script and a human-sounding voiceover that covers the benefits and the doubts a shopper has."
       }
     ]
   },
-  "benefits_lead": "For sellers who need the moving part to be obvious on the product page.",
-  "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "Other video tools for a product page or a paid ad.",
+  "benefits_lead": "Script, voice, avatar and the edit, in one place.",
+  "related_h2": "Related Tools",
+  "related_lead": "Start from a link, an avatar, a still photo or a UGC ad.",
   "relatedLinks": [
-    "video-ads",
-    "image-to-video",
     "url-to-video",
-    "unboxing-videos",
     "spokesperson-videos",
-    "before-after-videos"
+    "image-to-video",
+    "video-ads",
+    "unboxing-videos",
+    "plat-tiktok"
   ],
   "reviews": {
-    "h2": "How Sellers Use a One-Action Demo",
-    "lead": "How a store uses a one-action demo on a product page or in an ad test.",
+    "h2": "How Shops Use an AI Product Video",
+    "lead": "How a store uses an avatar, a script and one product action on a page or in an ad.",
     "items": [
       {
         "example": true,
         "who": "Independent store",
         "t": "Lip balm routine",
-        "d": "An independent store puts a close lip-balm routine on the product page.",
+        "d": "An independent store shows an avatar applying the balm, with a short voiceover, on the product page.",
         "img": "n:guide:q3-product-videos-board-03-lip-balm-routine"
       },
       {
         "example": true,
         "who": "Marketplace seller",
         "t": "Shoe fit",
-        "d": "A marketplace seller uses a running-shoe fit clip on a listing.",
+        "d": "A marketplace seller uses a shoe-fit clip, with captions, on the listing.",
         "img": "n:guide:q3-product-videos-board-06-running-shoe-try-on"
       },
       {
         "example": true,
         "who": "Drink seller",
         "t": "First sip",
-        "d": "A drink seller uses a first-sip angle in an ad test, without booking another shoot.",
+        "d": "A drink seller pairs a first-sip shot with a script and a voice that sounds like a person, and skips another shoot.",
         "img": "n:guide:q3-product-videos-board-08-citrus-taste-review"
       },
       {
         "example": true,
         "who": "Home shop",
         "t": "Fabric shaver",
-        "d": "A home shop shows a fabric shaver clearing fabric, then checks the clip against the real tool before the listing goes up.",
+        "d": "A home shop shows the shaver clearing fabric, checks the clip against the real tool, then publishes it.",
         "img": "n:guide:f11-r10-product-videos-fabric-shaver-demo"
       }
     ]
   },
-  "cta_title": "Ready to Make the Demo?",
-  "cta_lead": "Upload a product photo and see the credit cost before you start."
+  "cta_title": "Ready to Make the Product Video?",
+  "cta_lead": "Paste a product link or upload a photo, and see the credit cost before you start."
 }

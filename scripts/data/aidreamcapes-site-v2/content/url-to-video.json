@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
   "title": "URL to Video AI Generator for Product Ads | AIVideosUGC",
-  "description": "Turn a public product URL into a short video ad using its product image and name. Create product demos, ecommerce videos, and social ads without a studio shoot.",
-  "h1": "URL to Video: A Short Ad From a Product Page",
+  "description": "Turn a public product URL into a short video with a script, an AI actor and a voice. Make demos, paid ads and social posts without a studio shoot.",
+  "h1": "URL to Video: A Finished Ad From a Product Page",
   "eyebrow": "URL to video",
-  "lead": "AIVideosUGC reads a public product link, keeps the main image and the product name, and makes a short video from them. No shoot, and no folder of photos to gather first. Pick a size, choose 6, 10, 15 or 30 seconds, and download a clip for a listing, a demo or a paid post.",
+  "lead": "Paste a public product link and get a short URL to video ad: a script, an AI actor, a voice and captions. No shoot, and no folder of photos to gather first. Pick a size, choose 6, 10, 15 or 30 seconds, then download or publish to TikTok or Meta.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,47 +12,43 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Benefits of a URL to Video Ad",
+  "benefits_h2": "Why Choose AIVideosUGC to Turn a Link Into a Video",
   "benefits": [
     {
-      "t": "No Download Step First",
-      "d": "Paste a public product page and start from the image and name already on it, so you do not download the photo into a folder first."
+      "t": "From the Product Page",
+      "d": "The link brings the image and the product details into a finished ad. You do not start from an empty folder of files."
     },
     {
-      "t": "One Selling Point",
-      "d": "The scene shows the feature you name, not every line on the page."
+      "t": "A Script You Can Edit",
+      "d": "The listing becomes a script you can change, including a version for another language when you sell in more than one market."
     },
     {
-      "t": "You Describe the Scene",
-      "d": "You name the action you want to show. The link does not write a script for you."
+      "t": "An Actor and a Voice",
+      "d": "Pick an AI actor and a voice from the library, or make an actor for your brand. The person on screen is not a customer."
     },
     {
-      "t": "The Price Stays in Your Editor",
-      "d": "The link does not bring over prices or reviews. You add those after download."
+      "t": "A Clip for Each Product",
+      "d": "Make a new clip per product link, then try another actor or opening without booking a shoot."
     },
     {
-      "t": "A Frame and a Length You Pick",
-      "d": "Choose a vertical, square or wide frame, plus 4:3 and 3:4, at 6, 10, 15 or 30 seconds."
-    },
-    {
-      "t": "Pay Per Clip",
-      "d": "A 15-second video uses 60 credits. If the job fails, those credits come back. Finished files can be used commercially, with no watermark."
+      "t": "Edit, Then Publish",
+      "d": "Change the script, the voice, the captions and the track, then send the ad to TikTok or Meta."
     }
   ],
   "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
-  "steps_lead": "Paste a public product page, confirm the captured image and download the clip.",
+  "steps_lead": "Paste a public product page, pick an actor and a voice, then check the script.",
   "steps": [
     {
       "t": "Paste Your Product URL",
-      "d": "Paste a public product page that opens without a login and shows the variant you sell."
+      "d": "Paste a public product page. Its image, name and reviews come in with the link."
     },
     {
-      "t": "Confirm Your Product",
-      "d": "Check the captured image and name, then describe the scene. Upload a photo if the page is blocked or has no usable image."
+      "t": "Select an AI Actor",
+      "d": "Choose an AI actor and a voice. Anyone on screen is generated, not a shopper."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip, then add your current price or offer in an editor before you post."
+      "t": "Generate the Script",
+      "d": "A script is written from the page. Edit it, then download or publish to TikTok or Meta."
     }
   ],
   "maker": {
@@ -75,11 +71,11 @@
   "faq": [
     {
       "q": "What does a product URL provide?",
-      "a": "A public page that loads without a login supplies its main product image and name."
+      "a": "A public page that loads without a login supplies its main image, product name and any reviews on that page."
     },
     {
       "q": "Does the product link write the script?",
-      "a": "No. You describe the scene. The page only supplies its main image and product name."
+      "a": "Yes. A script is written from the page, and you can edit the lines, the captions and the language before the clip is finished."
     },
     {
       "q": "Is URL to video free?",
@@ -87,7 +83,7 @@
     },
     {
       "q": "How do I make a video from a product link?",
-      "a": "Paste the URL, confirm the image and name, describe the scene, pick a size and length, then download."
+      "a": "Paste the URL, pick an actor and a voice, check the script, choose a size and a length, then download or publish to TikTok or Meta."
     },
     {
       "q": "Can I use a public Shopify or Amazon page?",
@@ -95,11 +91,11 @@
     },
     {
       "q": "What if the page requires a login?",
-      "a": "Upload the product photo directly. The tool cannot read a locked page."
+      "a": "Upload the product photo directly. A locked page cannot be read."
     },
     {
-      "q": "Does the URL include prices or reviews?",
-      "a": "No. Add the current price or a review line in your editor."
+      "q": "Can reviews on the page appear in the clip?",
+      "a": "Yes. When the page has reviews, they can be brought into the script so the clip mentions what buyers already said."
     },
     {
       "q": "Which lengths can I choose?",
@@ -114,35 +110,43 @@
       "a": "Choose 9:16, 1:1, 16:9, 4:3 or 3:4."
     },
     {
-      "q": "Can I reuse the same link?",
-      "a": "Yes. Paste it again and choose a new scene, opening or length."
+      "q": "Can I make clips for several product links at once?",
+      "a": "Yes. Paste the links you want and make a clip for each one, instead of rebuilding every ad by hand."
     },
     {
-      "q": "Can I run the download as an ad?",
-      "a": "Yes. Finished clips can be used commercially, with no watermark. Check each platform's rules before you scale spend."
+      "q": "Can I edit the script, the voice and the captions?",
+      "a": "Yes. Change the script, swap the voice, fix a caption and pick a track in the editor before you download or publish."
+    },
+    {
+      "q": "How long do I wait for a clip from a product page?",
+      "a": "You confirm the actor, the script and the credit cost, and the clip is prepared for download. If the job fails, those credits come back. The file itself is 6, 10, 15 or 30 seconds long."
+    },
+    {
+      "q": "Can I publish to TikTok or Meta?",
+      "a": "Yes. Send the finished clip to TikTok or Meta from the same screen, or download it. Finished files can be used commercially, with no watermark. Check each platform's rules before you scale spend."
     },
     {
       "q": "Is a person in the clip a real customer?",
       "a": "No. Any person on screen is AI-generated, not a customer endorsement."
     }
   ],
-  "cta_lead": "Paste a public product URL and see the credit cost before you start.",
+  "cta_lead": "Paste a public product URL, check the script and see the credit cost before you start.",
   "uses": [
     {
-      "t": "On the Product Page",
-      "d": "Put one short action on the listing so shoppers can judge the item. The clip uses that page's main image as the reference."
+      "t": "Listing Videos",
+      "d": "Turn the product page into a short ad that names one feature and the current price. The clip uses that page's image as the product."
     },
     {
-      "t": "A Hands-On Demo",
-      "d": "Show one action, such as opening a latch or unfolding a stand. Keep the clip to that one action."
+      "t": "Product Demos",
+      "d": "Show one action, such as opening a latch, with an actor and a voice. You do not need to film it."
     },
     {
-      "t": "A Paid Post",
-      "d": "Build the clip around one point from the listing. Add the current price in your editor after download."
+      "t": "Paid Ad Videos",
+      "d": "Build the ad from the link, with captions on the clip. Publish it to TikTok or Meta, or download it for another placement."
     },
     {
-      "t": "A 9:16 Social Post",
-      "d": "Make a vertical clip for TikTok, Instagram or YouTube Shorts. Choose 9:16 when that is the placement you are posting to."
+      "t": "Social Feed Videos",
+      "d": "Make a 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
     }
   ],
   "visual": {
@@ -176,26 +180,26 @@
       {
         "frame": "browser",
         "ref": "n:guide:q2-url-to-video-uses-01",
-        "h": "On the Product Page",
-        "d": "Put one short action on the listing so shoppers can judge the item. The clip uses that page's main image as the reference."
+        "h": "Listing Videos",
+        "d": "Turn the product page into a short ad that names one feature and the current price. The clip uses that page's image as the product."
       },
       {
         "frame": "post",
         "ref": "n:guide:q2-url-to-video-case-02",
-        "h": "A Hands-On Demo",
-        "d": "Show one action, such as opening a latch or unfolding a stand. Keep the clip to that one action."
+        "h": "Product Demos",
+        "d": "Show one action, such as opening a latch, with an actor and a voice. You do not need to film it."
       },
       {
         "frame": "reels",
         "ref": "n:guide:b2f11-url-to-video-uses-2-r1",
-        "h": "A Paid Post",
-        "d": "Build the clip around one point from the listing. Add the current price in your editor after download."
+        "h": "Paid Ad Videos",
+        "d": "Build the ad from the link, with captions on the clip. Publish it to TikTok or Meta, or download it for another placement."
       },
       {
         "frame": "post",
         "ref": "n:guide:b2f11-url-to-video-uses-3-r1",
-        "h": "A 9:16 Social Post",
-        "d": "Make a vertical clip for TikTok, Instagram or YouTube Shorts. Choose 9:16 when that is the placement you are posting to."
+        "h": "Social Feed Videos",
+        "d": "Make a 9:16 clip for TikTok, Instagram or YouTube Shorts. A voice and captions are already in the file."
       }
     ],
     "input": [],
@@ -206,51 +210,57 @@
         "h2": "Questions About URL to Video"
       },
       "m4": {
-        "h2": "URL to Video for Listings, Demos, Ads and Social"
+        "h2": "Endless Ways to Use URL to Video"
       }
     },
     "overview": ""
   },
   "blockOrder": [
     "hero",
-    "definition",
     "reasons",
     "steps",
     "benefits",
     "uses",
-    "related",
-    "compare",
+    "trust",
     "reviews",
     "faq",
+    "definition",
+    "related",
+    "compare",
     "cta"
   ],
   "definition": {
     "title": "What Is URL to Video?",
     "paras": [
-      "URL to video starts from a public product page instead of a file you download by hand. The tool uses that page's main image and product name as the reference for the clip.",
-      "You still choose the scene, the frame and the length. Prices and reviews on the page are not imported. Add the current offer in your editor after download. If a person appears, that person is AI-generated, not a customer."
+      "URL to video turns a public product page into a short ad. The page supplies the image, the name and any reviews, then a script, an actor and a voice are added and the clip is cut.",
+      "You can edit the script, the captions and the track before you download or publish. Choose 6, 10, 15 or 30 seconds, and a frame of 9:16, 1:1, 16:9, 4:3 or 3:4. Anyone on screen is AI, not a customer."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Turn a Product Link Into a Video",
+    "h2": "Key Advantages of Creating a Video From a Product Link",
+    "lead": "Paste the page you already sell from. The script, the actor and the voice come with it.",
     "items": [
       {
-        "t": "The Page Is the Starting Point",
-        "d": "Paste a public product page. Its main image and product name become the reference for the clip."
+        "t": "Less Setup Before the Ad",
+        "d": "Paste the link and the product is already there, so you skip gathering photos into a folder first."
       },
       {
-        "t": "You Confirm the Item",
-        "d": "Check that image and name before the job starts. If the page is locked or has no usable image, upload a photo instead."
+        "t": "Script, Voice and Cut Included",
+        "d": "The script, the voice and the cut are made for you. You edit only the parts you want to change."
       },
       {
-        "t": "Another Version From the Same Link",
-        "d": "Paste the same link again and change the scene or the length when you want a fresh version of that item."
+        "t": "A Clip for Every Link",
+        "d": "Paste several product links and get a clip for each one, for a launch, a demo or a social post."
+      },
+      {
+        "t": "Reviews From the Page",
+        "d": "When the page has reviews, they can be brought into the video so shoppers see what buyers already said."
       }
     ]
   },
-  "benefits_lead": "For sellers who already have a product page and need a clip without a studio.",
+  "benefits_lead": "For shops that already have a product page and want an ad without a shoot.",
   "related_h2": "More From the AIVideosUGC Toolkit",
-  "related_lead": "When you already have a photo, or you want a different kind of clip.",
+  "related_lead": "When you already have a photo, or you want a presenter-led clip.",
   "relatedLinks": [
     "video-ads",
     "product-videos",
@@ -260,37 +270,37 @@
     "before-after-videos"
   ],
   "compare_table": {
-    "title": "Product Page to Video vs. Collecting Files",
-    "lead": "The public page supplies the image and the name. You still decide the scene.",
+    "title": "A Product Link vs. Building the Ad Yourself",
+    "lead": "The page supplies the product. You still edit the script before it runs.",
     "columns": [
       "",
       "AIVideosUGC",
-      "Collecting files yourself"
+      "Building it yourself"
     ],
     "rows": [
       [
-        "First step",
-        "Paste a public product URL",
-        "Download photos and write a brief"
+        "Start",
+        "Paste one or many product links",
+        "Download files and write a brief"
       ],
       [
-        "What the page gives you",
-        "Main image and product name",
-        "Whatever you copy off the page by hand"
+        "Script",
+        "Written from the page, then you edit it",
+        "You write every line"
       ],
       [
-        "Prices and reviews",
-        "Not imported",
-        "You decide what to paste in"
+        "Reviews",
+        "Brought in when the page has them",
+        "You copy them by hand"
       ],
       [
-        "A new version",
-        "Same link, a different scene or length",
-        "A new edit or a new shoot"
+        "Actor and voice",
+        "Pick from the library",
+        "Book a person and a read"
       ],
       [
         "Frames",
-        "Vertical, square, wide, 4:3 and 3:4",
+        "9:16, 1:1, 16:9, 4:3 and 3:4",
         "A separate export for each crop"
       ],
       [
@@ -301,34 +311,88 @@
     ]
   },
   "reviews": {
-    "h2": "Turn a Link Into a Video: Examples",
-    "lead": "How four kinds of sellers start from one public listing.",
+    "h2": "How Shops Turn a Product Link Into an Ad",
+    "lead": "How ten kinds of sellers start from one public listing. These are examples, not quotes.",
     "items": [
       {
         "example": true,
         "who": "Store seller",
         "t": "Listing moment",
-        "d": "A store seller pastes a public listing, checks the captured photo, and makes one action to show on the product page."
+        "d": "A store seller pastes a public listing, checks the photo and the script, and puts one action on the product page."
       },
       {
         "example": true,
         "who": "Gadget seller",
         "t": "Phone stand",
-        "d": "A gadget seller uses the stand's public page and asks for one unfolding action so the mechanism is easy to see."
+        "d": "A gadget seller uses the stand's public page, picks an actor, and asks for one unfolding action so the mechanism is easy to see."
       },
       {
         "example": true,
         "who": "Store running ads",
         "t": "One selling point",
-        "d": "A store running ads takes the same listing, makes one paid post about a single point, and types the current price after download."
+        "d": "A store running ads takes the same listing, makes one paid post about a single point, and publishes it to Meta."
       },
       {
         "example": true,
         "who": "Social seller",
         "t": "Vertical post",
-        "d": "A social seller pastes the listing again and picks 9:16 for TikTok, Instagram or YouTube Shorts."
+        "d": "A social seller pastes the listing again, picks 9:16, and posts it to TikTok, Instagram or YouTube Shorts."
+      },
+      {
+        "example": true,
+        "who": "Beauty shop",
+        "t": "Reviews in the ad",
+        "d": "A beauty shop lets the page's reviews into the script so the clip mentions what buyers already noticed."
+      },
+      {
+        "example": true,
+        "who": "Catalog seller",
+        "t": "Several links",
+        "d": "A catalog seller pastes a handful of product links and makes one clip for each item in that sitting."
+      },
+      {
+        "example": true,
+        "who": "Wellness seller",
+        "t": "Second language",
+        "d": "A wellness seller keeps the same product page and makes a second clip in another language for a new market."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "Voice and actor",
+        "d": "A home shop picks an actor and a voice, then edits one line of the script before downloading."
+      },
+      {
+        "example": true,
+        "who": "Small team",
+        "t": "In the editor",
+        "d": "A small team trims the clip, fixes a caption and swaps the track in the editor, then downloads a file with no watermark."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "Publish",
+        "d": "A drink seller sends the finished clip to TikTok from the same screen after checking the credit cost."
       }
     ]
   },
-  "cta_title": "Ready to Paste a Product URL?"
+  "cta_title": "Ready to Turn a Product Link Into an Ad?",
+  "trust": {
+    "h2": "More Ads From a Link, With Less Hassle",
+    "lead": "Same product page. Another actor, another voice, or another language.",
+    "items": [
+      {
+        "t": "Actors to Compare",
+        "d": "Run the same product link with another actor when you want a second version to test."
+      },
+      {
+        "t": "Templates and Voices",
+        "d": "Start from an ad template and let a chosen voice read the script, instead of booking a separate read."
+      },
+      {
+        "t": "Another Language",
+        "d": "Keep the product and switch the language when the next market does not speak the first one."
+      }
+    ]
+  }
 }

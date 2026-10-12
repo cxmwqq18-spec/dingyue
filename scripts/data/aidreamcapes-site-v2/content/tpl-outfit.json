@@ -4,7 +4,7 @@
   "description": "Make AI fashion reels from one clothing photo for TikTok, Instagram and product pages. Choose 6, 10, 15 or 30 seconds for each social campaign you run.",
   "h1": "AI Fashion Reels That Show the Full Outfit",
   "eyebrow": "Fashion video template",
-  "lead": "Pick a try-on scene and add one garment photo, so shoppers see the whole look in motion.",
+  "lead": "Make AI fashion reels from one garment photo, with an AI actor, a voiceover, and captions, so the full outfit reads in motion.",
   "secondary_keywords": [
     "outfit reel ideas",
     "clothing video ad",
@@ -13,19 +13,19 @@
     "menswear video ad"
   ],
   "steps_h2": "Make a Clothing Video Ad in 3 Steps",
-  "steps_lead": "One garment photo, a short line about the action, then a file you can post.",
+  "steps_lead": "One garment photo, a spoken line, then a file you can post to TikTok or Meta.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Show the full garment flat, on a hanger, or on a mannequin. Keep the color even and the edges in frame."
+      "d": "Show the full garment flat, on a hanger, or on a mannequin. Or paste the product page link."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name one action, such as a turn or a short walk. Then pick a size and a length from 6 to 30 seconds."
+      "d": "Name one action and a short spoken line, then pick a size and a length from 6 to 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add the size or price in your editor. Check the color against the garment before you post."
+      "d": "Check the color against the garment, then publish the file to TikTok or Meta. Add the size in the editor if you need it."
     }
   ],
   "maker": {
@@ -44,15 +44,15 @@
   "faq": [
     {
       "q": "What is an AI fashion reel template?",
-      "a": "A ready try-on scene that puts one outfit in motion. You add a photo of the garment, and the clip shows the full look."
+      "a": "A ready try-on scene that puts one outfit in motion. You add a garment photo, a hook, a script, and a voiceover, and an AI actor wears the look."
     },
     {
       "q": "How do I make the outfit reel?",
-      "a": "Upload the garment, name one action such as a turn or a short walk, pick a size and a length, then download the file."
+      "a": "Upload the garment or paste a product page link, name one action such as a turn or a short walk, pick an AI actor, a size, and a length, then download."
     },
     {
       "q": "Why start from a photo instead of a fitting day?",
-      "a": "The try-on is built from the garment photo you already have. You can skip another shoot until you decide you need one."
+      "a": "The try-on is built from the garment photo or the product link you already have. You can skip another shoot until you decide you need one."
     },
     {
       "q": "Who is this scene for?",
@@ -60,27 +60,27 @@
     },
     {
       "q": "Can I do this on the first try?",
-      "a": "Use a sharp photo of the full garment and name one action, such as a turn or a short walk. Check the color against the garment before you post."
+      "a": "Yes. Use a sharp photo of the full garment and name one action. Set captions and the spoken line before you post, and check the color against the garment."
     },
     {
       "q": "What photo should I upload?",
-      "a": "A sharp, evenly lit photo of the full garment. A flat lay, a hanger, or a mannequin can work."
+      "a": "A sharp, evenly lit photo of the full garment. A flat lay, a hanger, or a mannequin can work. A product page link can stand in when you do not have the file handy."
     },
     {
       "q": "What should I check before posting?",
-      "a": "Compare the color, the fit, and the silhouette with the source photo. Add the real size and price in your editor."
+      "a": "Compare the color, the fit, and the silhouette with the source photo. Add the real size and price in the editor. The person on screen is an AI actor, not a customer fit check."
     },
     {
       "q": "Which size and length can I pick?",
-      "a": "Use 9:16 for TikTok and Reels. You can also pick 1:1, 16:9, 4:3 or 3:4. Lengths are 6, 10, 15 or 30 seconds, and the credit cost is shown before the job runs."
+      "a": "Use 9:16 for TikTok and Reels. You can also pick 1:1, 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds, and you can publish the file to TikTok or Meta."
     },
     {
       "q": "What does the clip cost?",
-      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15 and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month."
+      "a": "24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. A failed job returns those credits. Plans start at $24.50 a month. There is no free plan. The download has no watermark."
     },
     {
-      "q": "Can I run the file in ads?",
-      "a": "Yes. The download has no AIVideosUGC watermark and can run in your store, on a product page, or in paid ads. Add any platform disclosure yourself. The person on screen is an AI performer, not a customer."
+      "q": "Can I run the file in ads, in another language, or from an API?",
+      "a": "Yes. Publish it to TikTok or Meta, speak the line in another language, and make a batch of actions from the same photo. A catalog API can start the next color. Add any platform disclosure yourself."
     }
   ],
   "visual": {
@@ -527,80 +527,81 @@
       }
     }
   },
-  "cta_title": "Ready to Show the Outfit?",
-  "cta_lead": "Upload one garment photo and see the credit cost before you start.",
+  "cta_title": "Every Outfit Has a Turn. Let the Feed See It.",
+  "cta_lead": "Upload one garment photo, add the spoken line, and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
     "reviews",
+    "features",
     "steps",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "Sample AI Clothing Model Video Setups",
-    "lead": "Example scenes for one outfit, including a menswear video ad. They are not buyer reviews.",
+    "h2": "Shops Are Switching to AI Fashion Reels",
+    "lead": "Example ways a shop makes AI fashion reels, including an AI clothing model video and a menswear video ad.",
     "items": [
       {
         "example": true,
         "who": "Shirt shop",
-        "t": "Full length",
-        "d": "Example: an overshirt, tee, and jeans are shown head to toe so the silhouette is easy to judge."
+        "t": "A finished reel from one garment photo",
+        "d": "Example: a shirt shop uploads the overshirt and gets an AI fashion reel that shows the outfit head to toe."
       },
       {
         "example": true,
         "who": "Knit brand",
-        "t": "From the parcel",
-        "d": "Example: a knit is held above a plain shipping box, then the clip moves to the worn look."
-      },
-      {
-        "example": true,
-        "who": "Tailoring shop",
-        "t": "A side step",
-        "d": "Example: a blazer takes one side step so the drape reads without a booked studio."
+        "t": "The still and the reel in one project",
+        "d": "Example: a knit brand makes the product still and the worn clip together, on a first try, without a second app."
       },
       {
         "example": true,
         "who": "Denim shop",
-        "t": "One turn",
-        "d": "Example: dark trousers turn once, and the frame keeps the full garment in view."
+        "t": "Hold the garment, or start from the link",
+        "d": "Example: a denim shop pastes the product page link, or uploads the trousers, and the reel shows them in motion."
       },
       {
         "example": true,
-        "who": "Menswear shop",
-        "t": "A menswear cut",
-        "d": "Example: a menswear shop uses one jacket turn as its menswear video ad, then checks the color against the source photo."
+        "who": "Tailoring shop",
+        "t": "An AI clothing model video, then captions",
+        "d": "Example: the shop picks an AI actor from the actor library, trims the turn in the editor, and sets captions on the blazer."
       },
       {
         "example": true,
-        "who": "Dress shop",
-        "t": "Hem and sleeves",
-        "d": "Example: a dress shop uses one short walk so the hem and sleeves stay in frame, then adds the size notes after download."
-      },
-      {
-        "example": true,
-        "who": "Color shop",
-        "t": "Color against the cloth",
-        "d": "Example: the shop compares the reel with the garment photo and posts only when the color still matches."
+        "who": "Export label",
+        "t": "The same turn in another language",
+        "d": "Example: one jacket turn stays the picture, and the spoken line is recorded again for a second market."
       },
       {
         "example": true,
         "who": "Feed editor",
-        "t": "TikTok cut first",
-        "d": "Example: the shop posts a 9:16 fashion TikTok ad first, then can make another length from the same photo."
+        "t": "A voiceover and a track on the reel",
+        "d": "Example: the editor adds a voiceover and a track from the music library before the fashion TikTok ad is posted."
+      },
+      {
+        "example": true,
+        "who": "Dress shop",
+        "t": "An AI actor instead of a fitting day",
+        "d": "Example: a dress shop uses an AI actor for one short walk so the hem stays in frame. A new seller can start from the hanger photo."
+      },
+      {
+        "example": true,
+        "who": "Menswear shop",
+        "t": "A digital twin for the menswear video ad",
+        "d": "Example: a menswear shop uses a digital twin for the jacket turn, then checks the color against the source photo."
       },
       {
         "example": true,
         "who": "Agency",
-        "t": "Another angle, same photo",
-        "d": "Example: a second action is generated from the same garment photo instead of another shoot day."
+        "t": "A script, then a second action",
+        "d": "Example: the agency pastes the product link, takes the script and the voiceover, and makes a second action from the same photo."
       },
       {
         "example": true,
         "who": "Founder",
-        "t": "AI performer, not a buyer",
-        "d": "Example: the person wearing the outfit is an AI performer, so the shop does not present the reel as a customer fit check."
+        "t": "Publish to TikTok or Meta, or use the API",
+        "d": "Example: the founder publishes the reel to TikTok or Meta. A catalog API can start the next color. The person on screen is an AI actor, not a buyer."
       }
     ]
   },
@@ -630,6 +631,45 @@
     {
       "id": "ind-fashion-clothing",
       "label": "AI model photos and videos for fashion brands"
+    }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "On this reel",
+      "h2": "Features for an AI Fashion Reel",
+      "lead": "These sit on the outfit reel. Check the color and the silhouette against the garment before you post.",
+      "items": [
+        {
+          "icon": "play",
+          "t": "Voiceover, captions, and music",
+          "d": "Add a spoken line, on-screen captions, and a track from the music library before you download."
+        },
+        {
+          "icon": "users",
+          "t": "AI actors and a digital twin",
+          "d": "Pick an AI actor to wear the garment, or a digital twin when the same person should return. They are generated, not buyers."
+        },
+        {
+          "icon": "sparkle",
+          "t": "A script from a line or a link",
+          "d": "Ask for a short script, or paste a product page link and start the reel from that page."
+        },
+        {
+          "icon": "layers",
+          "t": "A batch of actions from one photo",
+          "d": "Make another action from the same garment photo when you want a second opening. Each job shows its credit cost first."
+        },
+        {
+          "icon": "check",
+          "t": "Edit here, then publish",
+          "d": "Trim in the built-in editor, then publish the file to TikTok or Meta. The download has no watermark."
+        },
+        {
+          "icon": "globe",
+          "t": "Another language, or the catalog API",
+          "d": "Speak the line in another language, or start the next reel from your catalog through the API."
+        }
+      ]
     }
   ]
 }

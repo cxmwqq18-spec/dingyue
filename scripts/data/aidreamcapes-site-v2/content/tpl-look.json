@@ -4,7 +4,7 @@
   "description": "Turn one outfit photo into AI lookbook photos of one complete look. Use them on the collection page or a launch ad, and check every layer against stock.",
   "h1": "AI Lookbook Photos for One Complete Outfit",
   "eyebrow": "Model photo template",
-  "lead": "A flat lay makes a full outfit hard to picture on a person. Upload one complete look and get AI lookbook photos for the collection page.",
+  "lead": "Upload one complete outfit for AI lookbook photos. An AI actor can wear the set, and the same photo can carry a voiceover when you make the clip.",
   "secondary_keywords": [
     "fashion editorial photos",
     "collection launch lookbook",
@@ -47,11 +47,11 @@
   "faq": [
     {
       "q": "What should the source photo include?",
-      "a": "Show every piece in the look, including top, bottom, outer layer and the shoes or featured accessory, laid out in one frame. If a layer is missing from the source photo, do not treat the frame as if that piece is there."
+      "a": "Show every piece in the look, including the top, bottom, outer layer, and the shoes or featured accessory, in one frame. If a layer is missing from the source, do not treat the frame as if that piece is there."
     },
     {
       "q": "How do I keep a collection looking connected?",
-      "a": "Reuse one location, one light and one crop across looks, and let each garment stay distinct. Open the set with the hero outfit."
+      "a": "Reuse one location, one light, and one crop across looks, and let each garment stay distinct. A digital twin can repeat so the set feels like one shoot. Open with the hero outfit."
     },
     {
       "q": "Can I show more than one outfit in a single image?",
@@ -59,23 +59,31 @@
     },
     {
       "q": "Do I need a photographer or models?",
-      "a": "No. Each lookbook photo is generated from an outfit photo you already have. The person is generated, not someone you booked and not a customer."
+      "a": "No. Each lookbook photo is generated from an outfit photo you already have. The person is an AI actor you pick from the actor library, not someone you booked and not a customer."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "A creator needs samples, a fee and time on the calendar. Here you upload one photo, pick a scene and pay the credits for that job."
+      "a": "A creator needs samples, a fee, and time on the calendar. Here you upload one photo or paste a product page link, pick a scene, and pay the credits for that job."
     },
     {
       "q": "What does a lookbook photo cost?",
-      "a": "Each photo costs 24 credits, the cost is shown before you start, and a failed job returns those credits. The download has no watermark, and you can use it in your own ads, pages and posts."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. There is no free plan. The download has no watermark, and you can use it in your own ads, pages, and posts."
     },
     {
       "q": "Can the same scene cover menswear and womenswear?",
-      "a": "Yes, as long as each outfit has its own source photo and you keep the crop and light steady. Check tailoring and lengths against the garments you sell."
+      "a": "Yes. Menswear lookbook photos and womenswear looks can share a crop and a light when each outfit has its own source photo. Check tailoring and lengths against the garments you sell."
     },
     {
       "q": "Can I use the frames in a launch?",
-      "a": "Yes. They fit a collection page, a carousel or a launch email after you add prices yourself. A launch that also needs motion is covered by [product launch video and photos](page:occ-product-launch)."
+      "a": "Yes. They fit a collection page, a carousel, or a launch email after you add prices yourself. A launch that also needs motion is covered by [product launch video and photos](page:occ-product-launch)."
+    },
+    {
+      "q": "Can the look include a voiceover and captions?",
+      "a": "The lookbook frame is a still. When you make a clip from the same outfit photo, add a voiceover, captions, and a track from the music library, then publish that clip to TikTok or Meta."
+    },
+    {
+      "q": "Can I start from a product link or another language?",
+      "a": "Yes. Paste a product page link, ask for a short script, and speak the line in another language. A catalog API can start the next look. You see the credit cost before each job."
     }
   ],
   "visual": {
@@ -551,68 +559,68 @@
     }
   },
   "reviews": {
-    "h2": "How Sellers Build a Collection Launch Lookbook",
-    "lead": "Example ways a label builds the set, including menswear lookbook photos.",
+    "h2": "Labels Are Switching to AI Lookbook Photos",
+    "lead": "Example ways a label builds the set, including menswear lookbook photos and a collection launch lookbook. Check every layer against stock.",
     "items": [
       {
         "example": true,
         "who": "Womenswear label",
-        "t": "Hero look, then the rest",
-        "d": "Example: a womenswear label opens the drop with one full outfit on a person, then repeats the same crop and light. Each outfit still gets its own source photo."
+        "t": "One finished frame from the outfit photo",
+        "d": "Example: a label uploads the full outfit and gets one AI lookbook photo for the collection page. A missing layer is left out of the frame."
+      },
+      {
+        "example": true,
+        "who": "Lookbook editor",
+        "t": "The still and a short clip together",
+        "d": "Example: the shop makes the editorial still and a short outfit clip from the same photo, in one project, on a first try."
       },
       {
         "example": true,
         "who": "Menswear shop",
-        "t": "Tailoring in one frame",
-        "d": "Example: a menswear shop keeps the jacket, shirt and trousers visible together so the silhouette reads as one outfit. The next outfit is a second image."
+        "t": "Menswear lookbook photos from a link",
+        "d": "Example: a menswear shop pastes the product page link, or uploads the suit, and keeps jacket, trousers, and shoes in one frame."
       },
       {
         "example": true,
-        "who": "Drop planner",
-        "t": "Same location across the set",
-        "d": "Example: one street or studio description is reused so the carousel feels connected. Colors are checked against stock before the set is scheduled."
+        "who": "Studio lead",
+        "t": "An AI actor, then a trim in the editor",
+        "d": "Example: the label picks an AI actor from the actor library for the hero look, then trims the companion clip and sets captions."
       },
       {
         "example": true,
-        "who": "Ecommerce team",
-        "t": "Collection page, not a shoot day",
-        "d": "Example: the gallery is built from outfit photos the shop already has. Nobody is booked for a location day, and the person in frame is generated."
+        "who": "Export shop",
+        "t": "The same look in another language",
+        "d": "Example: the carousel stays one crop and one light, and the spoken line on the clip is recorded again for a second market."
       },
       {
         "example": true,
         "who": "Social editor",
-        "t": "One outfit per slide",
-        "d": "Example: each carousel slide is one outfit. Price and product links are added outside the image after download."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "Credits instead of a creator day",
-        "d": "Example: the agency uploads the outfit, picks a scene and pays the credits for that photo. It does not send samples out for this frame."
-      },
-      {
-        "example": true,
-        "who": "Color shop",
-        "t": "One frame per color",
-        "d": "Example: each colorway gets its own source photo and the same crop, so the set stays easy to compare."
-      },
-      {
-        "example": true,
-        "who": "Launch editor",
-        "t": "Page and launch email",
-        "d": "Example: the photos go on the collection page and in a launch email. Prices are added outside the image."
-      },
-      {
-        "example": true,
-        "who": "Reseller",
-        "t": "Lengths against stock",
-        "d": "Example: a reseller checks jacket length and trouser length against the pieces it can ship before the set is scheduled."
+        "t": "Music and a voiceover on the clip",
+        "d": "Example: the lookbook frame stays a still. On the clip, the editor adds a voiceover and a track from the music library."
       },
       {
         "example": true,
         "who": "Boutique",
-        "t": "Shoes stay in the look",
-        "d": "Example: when shoes belong to the outfit, they are in the source photo and in the frame. A missing layer is left out."
+        "t": "An AI actor instead of a fitting day",
+        "d": "Example: a boutique uses an AI actor for the hero outfit. Someone new to photos can start from one flat lay."
+      },
+      {
+        "example": true,
+        "who": "Drop planner",
+        "t": "A digital twin across the collection launch lookbook",
+        "d": "Example: a digital twin wears each look so the set feels connected, and each outfit still has its own source photo."
+      },
+      {
+        "example": true,
+        "who": "Agency",
+        "t": "A script, then a second crop",
+        "d": "Example: the agency pastes the product link, takes a short script, and makes a second crop from the same outfit photo."
+      },
+      {
+        "example": true,
+        "who": "Reseller",
+        "t": "Publish the clip, or start from the API",
+        "d": "Example: after the lengths match stock, the shop publishes the clip to Instagram or TikTok. A catalog API can start the next look."
       }
     ]
   },
@@ -644,15 +652,55 @@
       "label": "AI Instagram ads"
     }
   ],
-  "cta_title": "Turn one outfit into a lookbook photo",
+  "cta_title": "Every Outfit Has a Look. Put the Set on the Page.",
   "cta_lead": "Upload one complete outfit. You see the credit cost before the job starts.",
   "blockOrder": [
     "hero",
     "picker",
     "reviews",
+    "features",
     "steps",
     "related",
     "faq",
     "cta"
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "On this look",
+      "h2": "Features for AI Lookbook Photos",
+      "lead": "The lookbook frame is a still you check against stock. The clip from the same outfit photo can carry the rest.",
+      "items": [
+        {
+          "icon": "play",
+          "t": "Voiceover, captions, and music",
+          "d": "On the clip, add a spoken line, on-screen captions, and a track from the music library. The lookbook frame stays a picture."
+        },
+        {
+          "icon": "users",
+          "t": "AI actors and a digital twin",
+          "d": "An AI actor wears the outfit. A digital twin can repeat across the set. The person is generated, not a customer you booked."
+        },
+        {
+          "icon": "sparkle",
+          "t": "A script from a line or a link",
+          "d": "Ask for a short script, or paste a product page link and start from that page's outfit photo."
+        },
+        {
+          "icon": "layers",
+          "t": "A batch of crops from one outfit",
+          "d": "Make another frame from the same photo when the next slide needs a new crop. Each photo is 24 credits, shown first."
+        },
+        {
+          "icon": "check",
+          "t": "Edit the clip, then publish",
+          "d": "Trim the companion clip in the built-in editor, then publish it to TikTok or Meta. The download has no watermark."
+        },
+        {
+          "icon": "globe",
+          "t": "Another language, or the catalog API",
+          "d": "Speak the line in another language, or start the next look from your catalog through the API."
+        }
+      ]
+    }
   ]
 }

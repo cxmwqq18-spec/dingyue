@@ -1,53 +1,53 @@
 {
   "id": "spokesperson-videos",
   "title": "AI Spokesperson Video Maker for Product Ads | AIVideosUGC",
-  "description": "Make an AI spokesperson video from one product photo. Choose a person and a scene, write your selling point, and download a talking 9:16 ad.",
+  "description": "Make an AI spokesperson video from a product photo or a product link. Choose a presenter and a voice, then download a talking ad for TikTok or Meta.",
   "h1": "AI Spokesperson Video: Explain One Product Point on Camera",
   "eyebrow": "AI spokesperson video",
-  "lead": "AIVideosUGC turns one product photo into an AI spokesperson video: a generated presenter holds your item and says the line you wrote. No casting, no studio day, no creator brief. Choose a frame, pick 6 to 30 seconds, and download a clip for TikTok, Reels, or Shorts.",
+  "lead": "AIVideosUGC turns one product photo or a product link into an AI spokesperson video. Pick a presenter from the actor library, use your line or a script written for you, and choose an AI voice. Captions, a music track, and the edit stay in one editor. Choose a frame, pick 6 to 30 seconds, then download with no watermark or publish to TikTok or Meta.",
   "secondary_keywords": [
     "AI person holding product video",
     "AI model product video",
     "AI actor product ads",
     "on-camera product showcase"
   ],
-  "benefits_h2": "Use Cases for an On-Camera Product Showcase",
+  "benefits_h2": "Different Use Cases for an AI Spokesperson Video",
   "benefits": [
     {
       "t": "Paid Ads",
-      "d": "Put one product benefit in a vertical ad and test the offer. You are not paying a creator for every new angle.",
+      "d": "Skip the creator day rate. Pick a face, a voice, and a setting that fit the buyer, then publish to TikTok or Meta. A second language is another clip, not another shoot.",
       "icon": "bolt"
     },
     {
       "t": "Product Pages",
-      "d": "Place the clip next to your listing photos so shoppers hear one feature before they buy. The presenter is generated, not a customer.",
+      "d": "The presenter explains one feature beside your photos. The same person can answer a short question on the page. They are generated, not a customer.",
       "icon": "target"
     },
     {
       "t": "Social Feeds",
-      "d": "Reuse the same upload with a new line or a new scene when TikTok, Reels, or Shorts needs another angle. Each version is its own clip.",
+      "d": "Keep a fresh clip in the feed. Swap the hook, the presenter, or the language when the last one has been up too long.",
       "icon": "refresh"
     },
     {
       "t": "Product Guides",
-      "d": "Walk through setup, sizing, or daily use in a spoken clip so buyers know what to do after delivery. You write the line.",
+      "d": "Walk through setup, sizing, or daily use. Update the line when the product changes, and offer the same guide in another language.",
       "icon": "check"
     }
   ],
   "steps_h2": "How to Make an AI Spokesperson Video in 3 Simple Steps",
-  "steps_lead": "Put one product point you can stand behind on camera, then download a file you can test.",
+  "steps_lead": "Put one product point on camera, then download a file you can test.",
   "steps": [
     {
-      "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo with the whole item visible. The product in the ad comes from this picture."
+      "t": "Add a Photo or a Link",
+      "d": "Upload one clear product photo, or paste the product page link the presenter should talk about."
     },
     {
-      "t": "Choose Your Spokesperson",
-      "d": "Pick a presenter and a setting, then write the one line they should say. Choose a frame and a length from 6 to 30 seconds."
+      "t": "Pick a Presenter and a Voice",
+      "d": "Choose someone from the actor library, a voice, and the line. Set the frame and the length."
     },
     {
-      "t": "Download and Post",
-      "d": "Download the clip when it is ready. Add captions, a price, or licensed music in your editor, then post it."
+      "t": "Download or Publish",
+      "d": "Review the take, edit captions or music, then download or send it to TikTok or Meta."
     }
   ],
   "maker": {
@@ -70,47 +70,39 @@
   "faq": [
     {
       "q": "What is an AI spokesperson video?",
-      "a": "It is a short ad where a generated presenter holds your product and explains one line you approved. You start with one product photo."
+      "a": "A short ad where a generated presenter holds your product and says a line. You choose the look, the voice, and the language. They are not a cartoon and not a customer. You start from your photo or a product link."
     },
     {
-      "q": "How do I give the spokesperson a script?",
-      "a": "Type one short sentence for them to say. The presenter says that line. Review the take before you post."
+      "q": "How does a spokesperson video get made?",
+      "a": "Paste your line, or let a script be written from the product page. Pick a presenter and a voice. Captions and a track from the music library can be added in the built-in editor. Your own tools can also request a clip through the API."
     },
     {
-      "q": "Can I choose the person and the setting?",
-      "a": "Yes. Choose from the adult presenter scenes on this page, then match the setting to where the product is used. Takes can vary, so review each one."
+      "q": "Where can I use an AI spokesperson?",
+      "a": "On paid ads, product pages, social feeds, and short guides. The same presenter can explain one feature, a setup step, or an offer."
     },
     {
-      "q": "Which products work?",
-      "a": "Handheld items with one clear feature work well, including skincare, snacks, drinks, pet supplies, and fitness gear. Keep the product fully visible in the source photo."
+      "q": "Can a spokesperson explain the product?",
+      "a": "Yes. The presenter can repeat the same point on every render, so the feature you care about stays the one that gets said."
     },
     {
-      "q": "How is this different from hiring a creator?",
-      "a": "A creator films with your real product and may improvise. An AI spokesperson starts from your photo and follows your line, so you can make another version without a new booking."
+      "q": "Can a spokesperson walk through setup?",
+      "a": "Yes. Use it for setup, sizing, or daily use. When the product changes, update the line and render again, including in another language."
     },
     {
-      "q": "Which frames and lengths can I choose?",
-      "a": "Choose 9:16, 1:1, 16:9, 4:3, or 3:4, and 6, 10, 15, or 30 seconds. A 9:16 frame is the usual one for TikTok, Reels, and Shorts."
+      "q": "How do shops use a spokesperson on social?",
+      "a": "They make several hooks from one photo, try a new opening, and keep one presenter as the face of the product. A group of clips can cover more than one item."
     },
     {
-      "q": "How many credits does a spokesperson video use?",
-      "a": "A 6-second clip uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The cost shows before you start, and a failed job gives the credits back."
+      "q": "Can I choose the look, the voice, or the language?",
+      "a": "Yes. The actor library has presenters for different settings. Pick an AI voice and a language that matches the buyer. Review the take before you post."
     },
     {
-      "q": "Do I own the clip, and can I run it as an ad?",
-      "a": "Yes. Finished clips can be used commercially and have no watermark. Add any AI label the platform requires before you spend."
+      "q": "Can I run the clip as an ad?",
+      "a": "Yes. Finished clips can be used commercially and have no watermark. Plans start at $24.50 a month. A 10-second clip uses 40 credits, and a failed job returns them. Add any AI label the platform asks for before you spend."
     },
     {
-      "q": "Is the spokesperson a real customer?",
-      "a": "No. It is a generated presenter, not a buyer or a reviewer. Use the clip to explain the product, and do not invent a customer experience."
-    },
-    {
-      "q": "Can I add captions, a price, or music after download?",
-      "a": "Yes. Add captions, your price, and licensed music in your editor. This tool does not add them for you."
-    },
-    {
-      "q": "Can I pick a voice library or another language?",
-      "a": "No. You write the line and choose a presenter and a scene. There is no voice list and no language switch. Review the spoken take before you post."
+      "q": "What should I not claim?",
+      "a": "Do not present the spokesperson as a real customer or a real review. Check TikTok and Meta rules before you spend more. The line should be one you can stand behind."
     }
   ],
   "visual": {
@@ -126,8 +118,8 @@
       "resultAlt": "Adult East Asian woman with a straight chin-length black bob holds the exact matte forest-green bottle with a black ribbed cap at chest height in a bright kitchen."
     },
     "picker": {
-      "title": "Start With an AI Person Holding Your Product",
-      "lead": "Pick who is on camera and where they stand, then add your product photo and the line they should say.",
+      "title": "Choose Your Presenter",
+      "lead": "Pick a face and a place from the actor library. Then add your product and the line they should say.",
       "chips": [
         {
           "id": "indoor",
@@ -749,19 +741,20 @@
         "h2": "How to Make an AI Spokesperson Video in 3 Simple Steps"
       },
       "faq": {
-        "h2": "Questions About an AI Spokesperson Video"
+        "h2": "AI Spokesperson Video - Frequently Asked Questions"
       }
     }
   },
-  "cta_title": "Ready to Put a Presenter on Camera?",
+  "cta_title": "Ready to Make Your Next Spokesperson Video?",
   "cta_lead": "Upload a product photo and see the credit cost before you start.",
   "blockOrder": [
     "hero",
-    "definition",
     "picker",
+    "definition",
     "reasons",
-    "steps",
     "benefits",
+    "features",
+    "steps",
     "related",
     "compare",
     "reviews",
@@ -771,29 +764,29 @@
   "definition": {
     "title": "What Is an AI Spokesperson Video?",
     "paras": [
-      "An AI spokesperson video is a short ad where a generated presenter holds your product and speaks a line you wrote. You start from your own photo. There is no filming, no casting, and no production team.",
-      "Use it for AI actor product ads. The presenter is generated, not a customer, and the line should be one you can stand behind. Clips come in 9:16, 1:1, 16:9, 4:3, and 3:4."
+      "An AI spokesperson video is a short ad where a generated presenter holds your product and speaks a line you wrote, or a script written from your product page. You pick the person from the actor library and an AI voice. There is no filming and no casting.",
+      "Use it for AI actor product ads on TikTok, Reels, Shorts, or a product page. The presenter is generated, not a customer. Clips come in 9:16, 1:1, 16:9, 4:3, and 3:4, and you can say the same point in another language."
     ]
   },
   "reasons": {
-    "h2": "Reasons to Run AI Actor Product Ads",
+    "h2": "Reasons to Use AIVideosUGC for AI Spokesperson Videos",
     "lead": "For sellers who need one product point spoken on camera, without booking a creator.",
     "items": [
       {
-        "t": "A Talking Ad From One Photo",
-        "d": "Upload the product, pick a presenter, and write one line. You get a clip you can review, without a casting call or a studio day.",
+        "t": "A Fast First Ad",
+        "d": "Upload a photo or paste a product link, pick a presenter and a voice, and review the clip. No casting call and no studio day.",
         "img": "n:guide:q4-spokesperson-strip-04",
         "alt": "Adult East Asian man holds a plain dark wireless earbud case while speaking to camera in a living room."
       },
       {
-        "t": "The Line You Wrote",
-        "d": "The presenter says the sentence you enter. Keep the claim specific and review the take before you post.",
+        "t": "Enough Versions to Test",
+        "d": "Change the actor, the hook, the voice, or the language and make another ad from the same product. Test them side by side.",
         "img": "n:guide:im02-spokesperson-videos-use-product-pages-r1",
         "alt": "Adult East Asian woman with a straight chin-length black bob holds plain charcoal over-ear headphones while speaking in a simple studio corner."
       },
       {
-        "t": "A New Presenter, Same Photo",
-        "d": "Keep the product photo and change the presenter, the setting, or the opening line. Each new version is another clip, not another shoot.",
+        "t": "The Line You Wrote",
+        "d": "The presenter says the sentence you enter, or a script written from your page. You do not trade notes with a creator first.",
         "img": "n:gen2:spokesperson-videos-c1",
         "alt": "Adult holds a plain toner bottle at eye level while speaking in a bright bathroom."
       }
@@ -827,7 +820,7 @@
   ],
   "compare_table": {
     "title": "AIVideosUGC vs. Hiring a Creator",
-    "lead": "A generated presenter follows your line. A creator films with the real item and may improvise. See the practical difference.",
+    "lead": "A generated presenter follows your line. A creator films the real item and may improvise.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -836,17 +829,17 @@
     "rows": [
       [
         "How the first ad happens",
-        "From your photo and the line you wrote",
+        "From your photo, your line, or a product link",
         "Brief someone, ship a sample, film, then edit"
       ],
       [
         "What you need",
-        "One product photo and one checked line",
+        "One photo, a presenter from the actor library, and a voice",
         "A brief, a sample, a creator, and a location"
       ],
       [
         "What gets said",
-        "The line you wrote",
+        "Your line, or a script written from the product page",
         "Your brief, plus whatever they improvise"
       ],
       [
@@ -855,47 +848,124 @@
         "Another fee and more editing time"
       ],
       [
-        "Frames",
-        "9:16, 1:1, 16:9, 4:3, or 3:4 on each clip",
-        "Recut the footage for every placement"
+        "Languages and frames",
+        "Another language on 9:16, 1:1, 16:9, 4:3, or 3:4",
+        "A new shoot, or a recut, for every market"
       ],
       [
-        "Who is on camera",
-        "A generated presenter, not a customer",
-        "A real person, under the deal you sign"
+        "Publish",
+        "Send it to TikTok or Meta from the editor, with no watermark",
+        "Export, then upload it yourself"
       ]
     ]
   },
   "reviews": {
-    "h2": "Example AI Model Product Video Setups",
+    "h2": "How Shops Put a Presenter on Their Ads",
     "lead": "Sample setups for a type of shop. The presenter is generated, and these are not quotes from buyers.",
     "items": [
       {
         "example": true,
         "who": "Beauty shop",
-        "t": "One texture point, said on camera",
-        "d": "A presenter holds the bottle and says the single line the team approved, for a Reels test."
+        "t": "One texture point on camera",
+        "d": "A presenter holds the bottle and says the line the team approved, for a Reels test."
       },
       {
         "example": true,
         "who": "Electronics shop",
-        "t": "A short point for a paid ad",
-        "d": "Use a 10-second talking clip to name one feature, then add the offer after download."
+        "t": "One feature in a paid ad",
+        "d": "A 10-second clip names a single feature. The offer is added in the editor before it runs."
       },
       {
         "example": true,
         "who": "Fitness brand",
-        "t": "The same shaker, a new line",
-        "d": "Keep the product photo and swap the opening line when the first hook stops working."
+        "t": "Same shaker, new line",
+        "d": "The product photo stays. The opening line changes when the first hook has been up too long."
       },
       {
         "example": true,
         "who": "Pet shop",
         "t": "The material, said once",
-        "d": "A pet shop uses a 10-second clip to name the material and the size, then stops."
+        "d": "A 10-second clip names the material and the size, then stops. The presenter is generated."
+      },
+      {
+        "example": true,
+        "who": "Drink seller",
+        "t": "A link, then a talking clip",
+        "d": "They paste the product page. A script, a presenter, and a voice come back as one ad."
+      },
+      {
+        "example": true,
+        "who": "Apparel shop",
+        "t": "Another language for a second market",
+        "d": "The same person says the sizing line in another language, with captions to match."
+      },
+      {
+        "example": true,
+        "who": "Home shop",
+        "t": "A guide after delivery",
+        "d": "The presenter walks through setup. When the steps change, they update the line and render again."
+      },
+      {
+        "example": true,
+        "who": "Jewelry shop",
+        "t": "A voice that fits the buyer",
+        "d": "They pick a presenter and a voice from the library, then publish the clip to Meta."
+      },
+      {
+        "example": true,
+        "who": "Snack brand",
+        "t": "A group of flavors",
+        "d": "Each flavor gets its own clip from the same setup. Every clip spends its own credits."
+      },
+      {
+        "example": true,
+        "who": "Small agency",
+        "t": "Several clients, one editor",
+        "d": "Captions, music, and a trim happen in the built-in editor, so the file is not bounced to another app."
+      },
+      {
+        "example": true,
+        "who": "Tool brand",
+        "t": "Clips from their own system",
+        "d": "Product photos go through the API, and the talking clips come back ready to review."
       }
     ]
   },
-  "related_h2": "More From the AIVideosUGC Toolkit",
-  "relatedH2": "More From the AIVideosUGC Toolkit"
+  "related_h2": "Explore Other Tools",
+  "relatedH2": "Explore Other Tools",
+  "benefits_lead": "Put one product point on camera for an ad, a product page, a feed, or a short guide.",
+  "related_lead": "More ways to turn a product into a clip.",
+  "more_sections": [
+    {
+      "eyebrow": "Features",
+      "h2": "Features of an AI Spokesperson Video",
+      "lead": "A presenter, a voice, and a line, plus the edit you need before the ad goes out.",
+      "items": [
+        {
+          "t": "A Script You Can Edit",
+          "d": "Paste the line yourself, or let one be written from the product page. Change any word before you render."
+        },
+        {
+          "t": "A Voice You Pick",
+          "d": "Choose an AI voice and the presenter speaks that line. Review the take before it runs."
+        },
+        {
+          "t": "Captions and a Music Library",
+          "d": "Captions are written onto the clip. Add a track from the music library and trim it in the built-in editor."
+        },
+        {
+          "t": "An Actor Library, Not a Casting Call",
+          "d": "Pick a presenter and a setting. Keep that person as the face of the product across later ads."
+        },
+        {
+          "t": "Links, a Group of Products, and an API",
+          "d": "Start from a product link or a photo. Make a clip per item. A store can also request clips through the API."
+        },
+        {
+          "t": "More Languages, Then Publish",
+          "d": "Say the same point in another language with a matching voice, then publish to TikTok or Meta from the editor."
+        }
+      ]
+    }
+  ]
 }

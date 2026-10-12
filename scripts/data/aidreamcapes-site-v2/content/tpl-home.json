@@ -4,7 +4,7 @@
   "description": "Turn one organizer photo into a before-and-after video of a messy drawer, shelf or closet turning neat. 9:16 clips made for TikTok and Reels.",
   "h1": "Home Product Videos That Show the Reset",
   "eyebrow": "Home video template",
-  "lead": "Pick an organizing scene and add one photo, so a messy drawer, shelf, or closet turns neat.",
+  "lead": "Pick an organizing scene and add one photo, so a messy drawer, shelf, or closet turns neat, with a voice and captions if you want them.",
   "secondary_keywords": [
     "organizer before and after video",
     "home organization video ad",
@@ -12,7 +12,7 @@
     "drawer organizer video",
     "TikTok home organizing ad"
   ],
-  "steps_h2": "Make a Storage Product Video in 3 Steps",
+  "steps_h2": "How to Make a Storage Video in 3 Simple Steps",
   "steps_lead": "One organizer photo, a short line about the reset, then a file you can post.",
   "steps": [
     {
@@ -21,11 +21,11 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the drawer, shelf, closet, or desk, and the one reset. Then pick a size and a length from 6 to 30 seconds."
+      "d": "Name the drawer, shelf, closet, or desk, and the one reset. Then pick a size and a length."
     },
     {
       "t": "Download and Post",
-      "d": "Download the file and add dimensions or capacity in your editor. Post the reset where shoppers browse."
+      "d": "Add a voice, captions, and the size, then post the reset. Keep capacity in text you can edit."
     }
   ],
   "maker": {
@@ -44,11 +44,11 @@
   "faq": [
     {
       "q": "What is a home product video template?",
-      "a": "A ready scene that shows one organizer solving one storage task. You add a photo of the product, and the clip shows the reset."
+      "a": "A ready scene that shows one organizer solving one storage task. You add a photo of the product, and the clip shows the reset, with a voice and captions if you want them."
     },
     {
       "q": "How do I make the organizing clip?",
-      "a": "Upload the organizer, name the spot and the one change, pick a size and a length, then download the file."
+      "a": "Upload the organizer or paste the product link, name the spot and the one change, pick a size and a length, then add a voice or captions and download or post."
     },
     {
       "q": "Why start from a photo instead of filming in a home?",
@@ -64,15 +64,15 @@
     },
     {
       "q": "What photo should I upload?",
-      "a": "One clear photo of the full organizer, including its edges, compartments, and surface."
+      "a": "One clear photo of the full organizer, including its edges, compartments, and surface. A public product link works when that page already shows the product."
     },
     {
       "q": "What does the clip actually show?",
-      "a": "One visible storage task in a drawer, on a shelf, in a closet, or on a desk. It is a single reset, not a whole-house tour."
+      "a": "One visible storage task in a drawer, on a shelf, in a closet, or on a desk. It is a single reset, not a whole-house tour. A person on screen is an AI presenter, not a customer."
     },
     {
-      "q": "Which size and length can I pick?",
-      "a": "Start at 9:16 for TikTok and Reels, or pick 1:1, 16:9, 4:3, or 3:4. A square cut can sit in a gallery. Lengths are 6, 10, 15, or 30 seconds, and the credit cost is shown before the job runs."
+      "q": "Which size can I pick, and where can I post it?",
+      "a": "Pick 9:16, 1:1, 16:9, 4:3, or 3:4. Lengths are 6, 10, 15, or 30 seconds. Send the file to TikTok or Meta from the workspace, or download it. The credit cost is shown before the job runs."
     },
     {
       "q": "What does the clip cost?",
@@ -80,7 +80,11 @@
     },
     {
       "q": "Can I add sizes, and can I run the file in ads?",
-      "a": "Yes. Add dimensions, capacity, names, and prices in your editor after download. The file has no AIVideosUGC watermark and can run in listings and paid ads. A person on screen is an AI performer, not a customer."
+      "a": "Yes. Add dimensions, capacity, names, and prices as captions or in text after download. The file has no AIVideosUGC watermark and can run in listings and paid ads."
+    },
+    {
+      "q": "Can I batch rooms, switch language, or use the API?",
+      "a": "Yes. Reuse the organizer photo for another room, switch the spoken line and captions to another language, or send photos through the API. Each job shows its credit cost first."
     }
   ],
   "visual": {
@@ -98,7 +102,7 @@
       "result": "f:tpl-home-r4-m2",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand slides this dark gray adjustable divider tray into the open kitchen drawer. Frame overhead, then track the tray with one slow downward move. Bright window light reveals the matte gray compartments. End with the full tray fitted inside the drawer. Sound: soft drawer glide and utensil clink. No music.",
+      "prompt": "Use the uploaded photo as the product and preserve its shape, color and visible label area exactly. A hand slides this dark gray adjustable divider tray into the open kitchen drawer. Frame overhead, then track the tray with one slow downward move. Bright window light reveals the matte gray compartments. End with the full tray fitted inside the drawer. Sound: soft drawer glide and utensil clink, and a music bed if you add one.",
       "options": [
         [
           "Size",
@@ -533,23 +537,26 @@
         "h2": "Choose a Scene for a Storage Product Video"
       },
       "faq": {
-        "h2": "Questions About an Organizer Before and After Video"
+        "h2": "Frequently Asked Questions"
       }
     }
   },
   "cta_title": "Ready to Show the Reset?",
-  "cta_lead": "Upload one organizer photo and see the credit cost before you start.",
+  "cta_lead": "Upload one organizer photo, add a voice if you want one, and see the credit cost before you start.",
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "reviews",
+    "reasons",
+    "features",
     "steps",
     "related",
     "faq",
     "cta"
   ],
   "reviews": {
-    "h2": "How Home Sellers Use a Storage Product Video",
+    "h2": "How Home Sellers Use a Storage Video",
     "lead": "Example setups. Each one shows how a home shop could stage one reset.",
     "items": [
       {
@@ -579,8 +586,8 @@
       {
         "example": true,
         "who": "Storage brand",
-        "t": "Sizes after download",
-        "d": "Example: the seller adds dimensions and capacity in an editor after the file downloads."
+        "t": "A spoken size line",
+        "d": "Example: a short voice names the width while a caption carries the capacity, and both stay easy to edit."
       },
       {
         "example": true,
@@ -603,14 +610,14 @@
       {
         "example": true,
         "who": "Founder",
-        "t": "Not a customer home tour",
-        "d": "Example: a person on screen is an AI performer. The clip is the brand's ad, not a client story."
+        "t": "A presenter, not a tour",
+        "d": "Example: a person on screen is an AI presenter from the actor library. The clip is the brand's ad, not a client story."
       },
       {
         "example": true,
         "who": "First-time seller",
-        "t": "One mess, one fix",
-        "d": "Example: the seller names a single cluttered spot and checks the organizer's edges before posting."
+        "t": "Posted to TikTok",
+        "d": "Example: the seller names one cluttered spot, checks the edges, and sends the file to TikTok."
       }
     ]
   },
@@ -640,6 +647,96 @@
     {
       "id": "ind-home-living",
       "label": "AI product videos for home brands"
+    }
+  ],
+  "definition": {
+    "title": "What Is a Home Organizing Video?",
+    "paras": [
+      "A home organizing video shows one product solving one storage task: a drawer, a shelf, a closet, or a desk.",
+      "You start from a photo of the organizer, then add a voice, captions, and a music bed if you want them. It is one reset, not a whole-house tour."
+    ]
+  },
+  "reasons": {
+    "h2": "Reasons to Use a Storage Product Video",
+    "lead": "Shoppers see one mess become one neater spot, from the organizer photo you already have.",
+    "items": [
+      {
+        "t": "No rented room",
+        "d": "The reset is generated from the organizer photo, so you do not borrow a kitchen or book a crew."
+      },
+      {
+        "t": "One mess, one fix",
+        "d": "Name a single drawer, shelf, closet, or desk. The clip ends on that neater spot."
+      },
+      {
+        "t": "Sizes stay editable",
+        "d": "Add dimensions and capacity as captions or as text after download, so a spec change is not a new shoot."
+      },
+      {
+        "t": "The same photo, another room",
+        "d": "Reuse the organizer photo for a drawer and then a closet, instead of a second shoot."
+      },
+      {
+        "t": "A voice that names the spot",
+        "d": "A short spoken line can say which drawer or shelf changed, with captions for people watching muted."
+      },
+      {
+        "t": "You see the cost first",
+        "d": "A 15-second clip is 60 credits. A failed job returns them. Plans start at $24.50 a month."
+      }
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "Features",
+      "h2": "Features for a Storage Product Video",
+      "lead": "The reset, the spoken line, and the post can all start from one organizer photo.",
+      "items": [
+        {
+          "t": "A voice on the reset",
+          "d": "Add an AI voice that names the drawer or the shelf as it turns neat. It is narration, not a client story."
+        },
+        {
+          "t": "Captions for the muted feed",
+          "d": "Put the result on screen as captions in the built-in editor, so the reset still reads with the sound off."
+        },
+        {
+          "t": "A batch of storage spots",
+          "d": "Reuse the organizer across a drawer, a shelf, and a closet. Each clip shows its credit cost before it runs."
+        },
+        {
+          "t": "Start from the product link",
+          "d": "Paste the listing link when the organizer photo is already on the page. The reset uses that product."
+        },
+        {
+          "t": "A script for the one change",
+          "d": "Ask for a line about the single reset, then edit the words before the voice reads them."
+        },
+        {
+          "t": "A presenter from the actor library",
+          "d": "Choose an AI actor to slide the organizer in. That person is not a customer and not a home tour."
+        },
+        {
+          "t": "A track from the music library",
+          "d": "Lay a music bed under the drawer sound, or leave the reset with only the room."
+        },
+        {
+          "t": "Trim it in the built-in editor",
+          "d": "Cut the length, move the caption, and set the voice without another app."
+        },
+        {
+          "t": "The same reset in another language",
+          "d": "Keep the organizing shot and switch the spoken line and captions to the language you sell in."
+        },
+        {
+          "t": "Post to TikTok or Meta",
+          "d": "Send the finished reset to TikTok or Meta from the workspace, or download it for the listing."
+        },
+        {
+          "t": "An API for a storage line",
+          "d": "Send organizer photos through the API when a catalog needs many resets. Each job still shows its credit cost."
+        }
+      ]
     }
   ]
 }

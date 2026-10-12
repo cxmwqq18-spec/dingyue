@@ -5,7 +5,7 @@
   "h1": "AIVideosUGC FAQ: Answers Before You Start",
   "eyebrow": "Help center",
   "lead": "Read how AI product videos work, then the answers on AI product photo questions, credits and refunds for AI content, and using AI images in ads.",
-  "card": "Lengths, credits, uploads, privacy, and finishing the ad yourself.",
+  "card": "Lengths, credits, actors, voice, captions, music, and publishing.",
   "secondary_keywords": [
     "how AI product videos work",
     "AI product photo questions",
@@ -15,7 +15,31 @@
   "faq": [
     {
       "q": "How do AI product videos work?",
-      "a": "Upload one photo of the real item, pick a template or describe one scene, then choose a length and a frame. Download the file when it is ready. Add the price, captions, and music afterward in your editor."
+      "a": "Upload one photo of the real item, or paste a public product page. Ask for a script, pick an AI actor, then choose a length and a frame. The file can include a voice, captions, and music. Download it, or publish it to TikTok or Meta."
+    },
+    {
+      "q": "What is an AI UGC ad?",
+      "a": "An AI UGC ad is a short product clip with a casual, creator-style look. An AI actor speaks a line you write. It is not a review from a real customer. Disclose a generated person when the platform asks you to."
+    },
+    {
+      "q": "Why does this style suit a product post?",
+      "a": "It looks like someone showing an item, which is how shoppers already watch short video. Open on the product, use a vertical frame for a full-screen feed, and let the line name one real benefit."
+    },
+    {
+      "q": "Is there a free plan?",
+      "a": "No. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Downloads have no watermark. See [Pricing](page:pricing)."
+    },
+    {
+      "q": "How long does a job take?",
+      "a": "You confirm the credit cost, then the job runs. When the file is ready, download it or publish it to TikTok or Meta. A failed job returns its credits."
+    },
+    {
+      "q": "How do I make an ad with an AI actor?",
+      "a": "Pick a presenter from the actor library, or describe the look you want for the brand. Type the line and the language. The actor speaks that line. The person is generated, not a customer. Start from [AI actors](page:ai-actors)."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste a public product page. The main image and the product name start the clip. Prices and reviews on that page are not copied in. The tool is [URL to video](page:url-to-video)."
     },
     {
       "q": "What video lengths and frame sizes can I choose?",
@@ -43,15 +67,47 @@
     },
     {
       "q": "How do I add a price when using AI images in ads?",
-      "a": "Add the price, code, and headline after download, in your editor or in Ads Manager. Type the number yourself so it matches the live offer. Captions and music go on the same way. The [AI ad image generator](page:social-ad-photos) makes the picture. The offer text stays yours."
+      "a": "Type the price yourself so it matches the live offer. The [AI ad image generator](page:social-ad-photos) makes the picture. On a clip, captions and music can already be included. Change them in the built-in editor if the offer moves."
     },
     {
       "q": "Can I use the images and videos commercially?",
-      "a": "Yes. You can use the images and videos you make in your own ads, product pages, and social posts."
+      "a": "Yes. You can use the images and videos you make in your own ads, product pages, and social posts. You do not need a creator release for an AI actor. Do not present that actor as a real customer."
     },
     {
       "q": "Do downloaded images and videos have a watermark?",
       "a": "No. Downloaded images and videos do not include an AIVideosUGC watermark."
+    },
+    {
+      "q": "Can I edit the file after it is generated?",
+      "a": "Yes. The built-in editor can change the line, the captions, the voice, and the presenter. Run another job when you want a different scene."
+    },
+    {
+      "q": "How is an AI UGC ad different from a clip a person filmed?",
+      "a": "UGC usually means a real person filmed the product. An AI UGC ad uses a generated presenter, a script, and a voice to get a similar casual look, without a filming day."
+    },
+    {
+      "q": "Can an AI actor replace a human creator?",
+      "a": "An AI actor can present the product when you need another version. It is not a customer, and it does not replace a size chart or a claim the real product cannot support."
+    },
+    {
+      "q": "Which languages can the actor speak?",
+      "a": "The actor speaks the language of the line you write. You do not buy a separate language pack."
+    },
+    {
+      "q": "Can I run a batch of versions?",
+      "a": "Yes. Start several versions from one photo when you want another scene, frame, or opening line. Each job shows its own credit cost before it starts."
+    },
+    {
+      "q": "Is there an API?",
+      "a": "Yes. Your own tools can start a photo or video job through the API. The credit cost is the same as in the project, and a failed job returns its credits."
+    },
+    {
+      "q": "Where does the music come from?",
+      "a": "A clip can use a track from the music library. Swap the track in the editor. You are responsible for the words in the spoken line."
+    },
+    {
+      "q": "Can I publish to TikTok or Meta?",
+      "a": "Yes. Publish the finished file to TikTok or Meta in one click, or download it. Audience, budget, and schedule still live in the ad account."
     }
   ],
   "cta_title": "Check the cost, then make one file",

@@ -4,7 +4,7 @@
   "description": "Product photo lighting for glass, metal, and gloss. Fix a harsh snapshot with soft, directional light and clean highlights, from one uploaded photo.",
   "h1": "Product Photo Lighting for Glass, Metal and Gloss",
   "eyebrow": "Product photo template",
-  "lead": "Upload one clear photo and describe the light so glass, metal, and gloss stay easy to see, without a studio kit.",
+  "lead": "Product photo lighting starts from one clear photo. Describe the light so glass, metal, and gloss stay easy to see, then start a clip with a voice, captions, or an AI actor.",
   "secondary_keywords": [
     "studio lighting for product photos",
     "perfume bottle photography",
@@ -45,43 +45,47 @@
   "faq": [
     {
       "q": "Which products show a useful lighting change?",
-      "a": "Glass, metal, ceramic, and glossy items can show a useful change in highlight and shadow. Compare the download with the real surface before you publish."
+      "a": "Glass, metal, and gloss. Perfume bottles, jars, watches, steel cups, and chains are typical. Compare every download with the real item."
+    },
+    {
+      "q": "What is product photo lighting here?",
+      "a": "You upload one clear photo and describe the direction, the shadow, and the surface. Studio lighting for product photos comes back as a square file."
     },
     {
       "q": "Do I need a studio setup?",
-      "a": "No. A clear phone photo can become a softly lit product image. The job uses credits instead of a lighting kit."
+      "a": "No. A plain snapshot is enough. Name the light you want instead of setting up stands and softboxes."
     },
     {
       "q": "Can I reduce glare on glass or metal?",
-      "a": "The generated image can soften highlights and keep the product face easier to read. Reflective results still need a review, because a highlight can shift."
+      "a": "Yes. Ask for softer light or a narrower highlight. Reject a frame that changes the shape or the color."
     },
     {
       "q": "Will the new lighting change the shape or color?",
-      "a": "It can. Compare the silhouette, color, and finish with the real item whenever those must stay exact."
+      "a": "It can. Compare the silhouette, the color, and the finish with the real item at full size, and keep only a frame that still matches."
     },
     {
       "q": "Which light suits an Amazon listing?",
-      "a": "Use even light from the front when shoppers need a clear product face. Save stronger contrast for ads and detail views."
+      "a": "Even light from the front keeps a label area easier to see. A stronger side light is better kept for an ad, not the main listing face."
     },
     {
-      "q": "Can I describe a light direction?",
-      "a": "Yes. Describe the direction, the shadow softness and the surface you want to read, then compare the result with the real item."
+      "q": "Can the lit photo start a video?",
+      "a": "Yes. The same photo can start a clip with an AI voice, captions, a script, and an AI actor. Publish that clip to TikTok, Instagram, or Facebook in one step."
     },
     {
       "q": "What does a lighting photo cost?",
-      "a": "Each product photo costs 24 credits. The cost is shown before the job starts, and a failed job returns those credits."
+      "a": "Each photo is 24 credits. You see that cost before the job starts, and a failed job returns those credits. Starter is $24.50 a month with 200 credits. The download has no watermark."
     },
     {
-      "q": "Does the lighting photo have a watermark?",
-      "a": "No. You can use it in a listing or your own ad. Compare glass, metal, and gloss with the real item first."
-    },
-    {
-      "q": "Can I use one relit photo in both a listing and an ad?",
-      "a": "Yes. Use the even, front-lit version as the listing face, and keep a higher-contrast version for the ad."
+      "q": "Can I light several photos at once?",
+      "a": "Yes. Run the same light note across a batch, or send the catalog through the API. A clip from a lit photo is priced as a video: 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
     },
     {
       "q": "Can I add offer text on the photo?",
-      "a": "Add the offer in your editor after export. The lighting photo does not add prices or other words."
+      "a": "Type the offer in your editor after download. Captions on a clip can name the product, and you can still add a price yourself."
+    },
+    {
+      "q": "Can I use the file in ads?",
+      "a": "Yes. The square photo and a clip made from it can run in your ads and on your pages. People in a clip are AI actors, so present that clip as your ad."
     }
   ],
   "visual": {
@@ -116,8 +120,8 @@
       "sourceHint": "Show the full mug, rim and handle in focus."
     },
     "picker": {
-      "title": "Video Ad Templates for Other Products",
-      "lead": "These cards are short video ads. For lighting on your own item, upload the photo above and describe the direction, the shadow, and the surface.",
+      "title": "Browse Templates by Category",
+      "lead": "Open a scene by category. For product photo lighting, use the upload above and describe the direction, the shadow, and the surface.",
       "chips": [
         {
           "id": "accessories",
@@ -541,85 +545,88 @@
         "h2": "Questions About Product Photo Lighting"
       },
       "m3": {
-        "h2": "Video Ad Templates for Other Products",
-        "lead": "These cards are short video ads. For lighting on your own item, upload the photo above and describe the direction, the shadow, and the surface."
+        "h2": "Browse Templates by Category",
+        "lead": "Open a scene by category. For product photo lighting, use the upload above and describe the direction, the shadow, and the surface."
       }
     }
   },
-  "steps_h2": "Set Glass Product Photo Lighting in 3 Steps",
-  "steps_lead": "One clear snapshot, a short light description, then a square file you compare with the real item.",
+  "steps_h2": "How to Set Product Photo Lighting in 3 Simple Steps",
+  "steps_lead": "Glass product photo lighting starts with one clear snapshot, a short light note, and a square file you compare with the real item.",
   "blockOrder": [
     "hero",
     "picker",
+    "definition",
     "steps",
+    "features",
+    "platforms",
     "reviews",
-    "related",
     "faq",
+    "related",
     "cta"
   ],
   "reviews": {
     "h2": "Light Setups for Glass, Metal and Gloss",
-    "lead": "Perfume bottle photography is one of these setups, next to metal, gloss, and glass. Check every download against the real item.",
+    "lead": "Perfume bottle photography is one of these setups, next to metal, gloss, and glass.",
     "items": [
       {
         "example": true,
         "who": "Fragrance shop",
         "t": "Soft bottle",
-        "d": "A fragrance shop uses soft side light on a perfume bottle so the glass edge stays easy to see."
+        "d": "A fragrance shop uses soft side light on a perfume bottle, then adds captions that name the scent on a clip."
       },
       {
         "example": true,
         "who": "Skincare shop",
         "t": "Even jar",
-        "d": "A skincare shop uses even front light on a cream jar for the listing, instead of a hard highlight."
+        "d": "A skincare shop uses even front light on a cream jar for the listing, and a first-time seller can do it from one snapshot."
       },
       {
         "example": true,
         "who": "Watch shop",
         "t": "Metal rim",
-        "d": "A watch shop puts a narrow highlight on the case rim and checks that the shape did not shift."
+        "d": "A watch shop puts a narrow highlight on the case rim, then an AI actor wears the watch in a clip."
       },
       {
         "example": true,
         "who": "Drinkware shop",
         "t": "Steel cup",
-        "d": "A drinkware shop keeps the reflection on a steel cup controlled, instead of a bright glare."
+        "d": "A drinkware shop keeps the reflection on a steel cup controlled, then trims the clip in the built-in editor."
       },
       {
         "example": true,
         "who": "Jewelry shop",
         "t": "Chain",
-        "d": "A jewelry shop runs light along a chain so the metal is easy to see, without a lighting kit."
+        "d": "A jewelry shop runs light along a chain so the metal is easy to see, then repeats the clip in another language."
       },
       {
         "example": true,
         "who": "Ceramic shop",
         "t": "Gloss cup",
-        "d": "A ceramic shop puts a glossy cup on a plain surface with a soft shadow."
+        "d": "A ceramic shop puts a glossy cup on a plain surface with a soft shadow, and edits the file on this page."
       },
       {
         "example": true,
         "who": "Audio shop",
         "t": "Gloss panel",
-        "d": "An audio shop pulls the glare off a speaker panel so the controls stay visible."
+        "d": "An audio shop pulls the glare off a speaker panel so the controls stay visible, then an AI actor points to them in the clip."
       },
       {
         "example": true,
         "who": "Candle shop",
         "t": "Glass jar",
-        "d": "A candle shop uses a gentle rim light on a glass jar for an ad, not for the main listing face."
+        "d": "A candle shop uses a gentle rim light on a glass jar and skips a studio kit."
       },
       {
         "example": true,
         "who": "Makeup shop",
         "t": "Compact",
-        "d": "A makeup shop puts a small highlight on a compact lid and compares it with the real finish before posting."
+        "d": "A makeup shop lights a compact lid, pastes the product link for a draft clip, and checks the script and the voice."
       },
       {
         "example": true,
         "who": "Bottle shop",
         "t": "Clear glass",
-        "d": "A bottle shop uses even front light on clear glass so the label area is easier to see."
+        "d": "A bottle shop describes the light in chat, gets a scene back, and compares the glass with the real bottle."
       }
     ]
   },
@@ -652,5 +659,81 @@
     }
   ],
   "cta_title": "Start from One Clear Snapshot",
-  "cta_lead": "Upload one photo of the whole product and see the credit cost before you start."
+  "cta_lead": "Upload one photo of the whole product. See the credit cost before you start.",
+  "definition": {
+    "title": "What Is Product Photo Lighting?",
+    "paras": [
+      "Studio lighting for product photos is a square file made from one snapshot. You describe the direction, the shadow, and how glass, metal, or gloss should look.",
+      "Compare the download with the real item before you post it. The same photo can also start a clip with an AI voice, captions, an actor, and a track from the music library."
+    ]
+  },
+  "more_sections": [
+    {
+      "eyebrow": "What you can add",
+      "h2": "Features Around This Lighting Photo",
+      "lead": "The square photo is the lighting result. The same upload can also start a clip.",
+      "items": [
+        {
+          "t": "AI voice",
+          "d": "The square photo stays the lighting file. A clip from that photo can use an AI voice."
+        },
+        {
+          "t": "Auto captions",
+          "d": "Captions on the clip can name the finish, the material, or the scent."
+        },
+        {
+          "t": "AI script",
+          "d": "Ask for a short script about the lit product, then edit it before you generate."
+        },
+        {
+          "t": "Actor library",
+          "d": "An AI actor can hold the lit product in the clip. Present that clip as your ad."
+        },
+        {
+          "t": "Link, batch, and API",
+          "d": "Paste a product link, light a batch of photos, or send the catalog through the API."
+        },
+        {
+          "t": "Editor, music, and languages",
+          "d": "Trim the clip in the editor, add a track from the music library, and make another language."
+        }
+      ]
+    }
+  ],
+  "platforms": {
+    "h2": "Publish a Clip of the Lit Product",
+    "lead": "The square photo is for the listing. A clip from the same photo can go to TikTok, Meta, or YouTube in one step.",
+    "items": [
+      {
+        "t": "AI TikTok ads generator",
+        "label": "AI TikTok ads generator",
+        "d": "Publish a clip of the lit product to TikTok in one step.",
+        "href": "page:plat-tiktok"
+      },
+      {
+        "t": "AI Instagram ads",
+        "label": "AI Instagram ads",
+        "d": "Send a square still or a tall clip to Instagram.",
+        "href": "page:plat-instagram"
+      },
+      {
+        "t": "AI Facebook ad generator",
+        "label": "AI Facebook ad generator",
+        "d": "Send the lit product to Facebook as a still or a clip.",
+        "href": "page:plat-facebook"
+      },
+      {
+        "t": "YouTube Shorts ads",
+        "label": "YouTube Shorts ads",
+        "d": "Download a tall clip for YouTube Shorts when the listing photo is not enough.",
+        "href": "page:plat-youtube-shorts"
+      },
+      {
+        "t": "Amazon product photos",
+        "label": "Amazon product photos",
+        "d": "Use the square lighting photo as a listing image, and compare it with the real item first.",
+        "href": "page:plat-amazon"
+      }
+    ]
+  }
 }
