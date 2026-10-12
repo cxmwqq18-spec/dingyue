@@ -247,7 +247,6 @@
     "trust",
     "benefits",
     "steps",
-    "reviews",
     "related",
     "faq",
     "closing",
@@ -271,19 +270,23 @@
     "items": [
       {
         "t": "A photo or a link",
-        "d": "Upload the product photo, or paste the public product page. The video starts from that item."
+        "d": "Upload the product photo, or paste the public product page. The video starts from that item.",
+        "icon": "Link"
       },
       {
         "t": "A style you describe",
-        "d": "Describe a look you are allowed to use, then put your product in it for this app."
+        "d": "Describe a look you are allowed to use, then put your product in it for this app.",
+        "icon": "Palette"
       },
       {
         "t": "You stay off camera",
-        "d": "Pick an AI actor when you do not want to film. Say the person is made by AI if the app asks."
+        "d": "Pick an AI actor when you do not want to film. Say the person is made by AI if the app asks.",
+        "icon": "UserRound"
       },
       {
         "t": "A page becomes a video",
-        "d": "A product page can become the social video. Prices on that page are not copied. You type the price."
+        "d": "A product page can become the social video. Prices on that page are not copied. You type the price.",
+        "icon": "Film"
       }
     ]
   },

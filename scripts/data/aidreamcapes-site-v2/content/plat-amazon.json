@@ -192,7 +192,6 @@
     "features",
     "steps",
     "reasons",
-    "reviews",
     "related",
     "faq"
   ],
@@ -203,23 +202,28 @@
     "items": [
       {
         "t": "A picture without a long setup",
-        "d": "On your own, the first image waits on a tech team. Here, you upload a photo and make the listing picture."
+        "d": "On your own, the first image waits on a tech team. Here, you upload a photo and make the listing picture.",
+        "icon": "Zap"
       },
       {
         "t": "No bill for a tech team",
-        "d": "On your own, you hire people and pay to keep the AI online. Here, a photo is 24 credits. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120."
+        "d": "On your own, you hire people and pay to keep the AI online. Here, a photo is 24 credits. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120.",
+        "icon": "Coins"
       },
       {
         "t": "AI updates included",
-        "d": "On your own, someone has to update the AI and put it back online. Here, those AI updates are included, and you keep making files."
+        "d": "On your own, someone has to update the AI and put it back online. Here, those AI updates are included, and you keep making files.",
+        "icon": "RefreshCw"
       },
       {
         "t": "Room for many products",
-        "d": "On your own, a busy season needs a waiting line you build. Here, many products at once, or your own shop software, use the same background and size."
+        "d": "On your own, a busy season needs a waiting line you build. Here, many products at once, or your own shop software, use the same background and size.",
+        "icon": "Layers"
       },
       {
         "t": "One brand look",
-        "d": "On your own, the spacing rules live in code you write. Here, the size and background you set apply to each new file."
+        "d": "On your own, the spacing rules live in code you write. Here, the size and background you set apply to each new file.",
+        "icon": "Palette"
       }
     ]
   },

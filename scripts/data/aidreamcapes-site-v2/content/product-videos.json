@@ -271,7 +271,6 @@
     "steps",
     "benefits",
     "related",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -287,15 +286,18 @@
     "items": [
       {
         "t": "The Product in an AI Person's Hands",
-        "d": "Put the item in an AI person's hands, on a beach, in a studio or in a garden. Shoppers can then judge size and shape without a photo shoot."
+        "d": "Put the item in an AI person's hands, on a beach, in a studio or in a garden. Shoppers can then judge size and shape without a photo shoot.",
+        "icon": "Hand"
       },
       {
         "t": "The Product in Use",
-        "d": "Show an AI person applying skincare, opening a gadget or wearing an accessory, so the action is obvious."
+        "d": "Show an AI person applying skincare, opening a gadget or wearing an accessory, so the action is obvious.",
+        "icon": "Play"
       },
       {
         "t": "A Voice for the Product",
-        "d": "Turn the product description into a script and a spoken voice that sounds human. It covers the benefits and the doubts a shopper has."
+        "d": "Turn the product description into a script and a spoken voice that sounds human. It covers the benefits and the doubts a shopper has.",
+        "icon": "Mic"
       }
     ]
   },

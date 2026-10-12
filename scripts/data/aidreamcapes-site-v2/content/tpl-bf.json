@@ -560,7 +560,6 @@
     "definition",
     "reasons",
     "steps",
-    "reviews",
     "related",
     "faq",
     "cta"
@@ -681,15 +680,18 @@
     "items": [
       {
         "t": "Start from a ready setup",
-        "d": "Open a ready setup, keep your product, and add your words, stickers, and captions. A song from the music library can play under the clip. The layout is already there, so you do not start from a blank file."
+        "d": "Open a ready setup, keep your product, and add your words, stickers, and captions. A song from the music library can play under the clip. The layout is already there, so you do not start from a blank file.",
+        "icon": "LayoutGrid"
       },
       {
         "t": "Show the product right away",
-        "d": "Turn the photo into a clip with an AI actor, a script, and a spoken voice. Publish it to TikTok, Facebook, or Instagram in one step. Type the real price only after download."
+        "d": "Turn the photo into a clip with an AI actor, a script, and a spoken voice. Publish it to TikTok, Facebook, or Instagram in one step. Type the real price only after download.",
+        "icon": "Play"
       },
       {
         "t": "Website, many products, or your software",
-        "d": "Make the same deal setup on the website. When you have many products, run them at once (a batch), or start jobs from your own software (the API). In the editor on this site you can edit, resize, change the background, and try another language. Plans start at $24.50 a month."
+        "d": "Make the same deal setup on the website. When you have many products, run them at once (a batch), or start jobs from your own software (the API). In the editor on this site you can edit, resize, change the background, and try another language. Plans start at $24.50 a month.",
+        "icon": "Layers"
       }
     ]
   }

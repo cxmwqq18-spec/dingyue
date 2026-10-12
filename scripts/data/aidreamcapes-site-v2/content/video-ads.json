@@ -601,7 +601,6 @@
     "benefits",
     "related",
     "compare",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -611,15 +610,18 @@
     "items": [
       {
         "t": "Scripted From Your Product",
-        "d": "Every script starts from your photo, the words you type, or your product link, so the opening is about the item you sell."
+        "d": "Every script starts from your photo, the words you type, or your product link, so the opening is about the item you sell.",
+        "icon": "PenLine"
       },
       {
         "t": "Sized for the Placement",
-        "d": "Each ad comes out as a tall phone (9:16), a square (1:1), a wide shape (16:9), 4:3 or 3:4. Post on TikTok, Facebook or Instagram, or pick the size instead of cutting one file to fit."
+        "d": "Each ad comes out as a tall phone (9:16), a square (1:1), a wide shape (16:9), 4:3 or 3:4. Post on TikTok, Facebook or Instagram, or pick the size instead of cutting one file to fit.",
+        "icon": "Ratio"
       },
       {
         "t": "More Than One Style",
-        "d": "Keep the same product and change the actor, the voice, the opening line or the tone. Then test the version that fits."
+        "d": "Keep the same product and change the actor, the voice, the opening line or the tone. Then test the version that fits.",
+        "icon": "Palette"
       }
     ]
   },

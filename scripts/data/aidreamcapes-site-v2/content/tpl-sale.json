@@ -687,7 +687,6 @@
     "reasons",
     "steps",
     "trust",
-    "reviews",
     "related",
     "faq",
     "cta"
@@ -705,15 +704,18 @@
     "items": [
       {
         "t": "A Layout With Room for the Offer",
-        "d": "The scene leaves an empty area beside the product. You place the discount, the code, and the dates there after download."
+        "d": "The scene leaves an empty area beside the product. You place the discount, the code, and the dates there after download.",
+        "icon": "Tag"
       },
       {
         "t": "A Scene You Can List Today",
-        "d": "One product photo becomes a square image you can put on a feed or a product page once the offer text is yours."
+        "d": "One product photo becomes a square image you can put on a feed or a product page once the offer text is yours.",
+        "icon": "Image"
       },
       {
         "t": "Phone, Store, and Feed",
-        "d": "The same square can go to Instagram, Facebook, or your store. A wider header means placing it on a wider background in your editor."
+        "d": "The same square can go to Instagram, Facebook, or your store. A wider header means placing it on a wider background in your editor.",
+        "icon": "Share2"
       }
     ]
   },

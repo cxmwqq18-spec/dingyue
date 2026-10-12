@@ -157,7 +157,6 @@
     "reasons",
     "features",
     "platforms",
-    "reviews",
     "related",
     "faq"
   ],
@@ -168,15 +167,18 @@
     "items": [
       {
         "t": "No wait for a creator",
-        "d": "Nothing to mail and no date to book. The next file starts from a link or a photo you already have."
+        "d": "Nothing to mail and no date to book. The next file starts from a link or a photo you already have.",
+        "icon": "Clock"
       },
       {
         "t": "Facebook ad templates",
-        "d": "Start from a template made for the home screen, then change the actor, the line, and how the photo is trimmed. One run can make more than one version."
+        "d": "Start from a template made for the home screen, then change the actor, the line, and how the photo is trimmed. One run can make more than one version.",
+        "icon": "LayoutGrid"
       },
       {
         "t": "The language your buyers use",
-        "d": "Write the script and the spoken voice in the language your buyers use. You do not book a new filming day for each language."
+        "d": "Write the script and the spoken voice in the language your buyers use. You do not book a new filming day for each language.",
+        "icon": "Languages"
       }
     ]
   },

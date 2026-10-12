@@ -167,7 +167,6 @@
     "reasons",
     "features",
     "platforms",
-    "reviews",
     "related",
     "faq"
   ],
@@ -178,15 +177,18 @@
     "items": [
       {
         "t": "Actors you can pick for the shop",
-        "d": "Pick a different AI actor when you want a new face, or build a custom one for the shop."
+        "d": "Pick a different AI actor when you want a new face, or build a custom one for the shop.",
+        "icon": "UserRound"
       },
       {
         "t": "Voices shoppers can follow",
-        "d": "Use an AI voice and on-screen words in the language you sell in, with a tone that fits the product."
+        "d": "Use an AI voice and on-screen words in the language you sell in, with a tone that fits the product.",
+        "icon": "Mic"
       },
       {
         "t": "Test the first seconds yourself",
-        "d": "Make another file to try a new script, actor, or voice. You choose which first seconds to publish."
+        "d": "Make another file to try a new script, actor, or voice. You choose which first seconds to publish.",
+        "icon": "Timer"
       }
     ]
   },

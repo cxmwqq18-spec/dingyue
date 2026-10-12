@@ -443,7 +443,6 @@
     "features",
     "steps",
     "reasons",
-    "reviews",
     "related",
     "faq"
   ],
@@ -498,15 +497,18 @@
     "items": [
       {
         "t": "Share and edit together",
-        "d": "Invite a teammate to the same design and edit it from a computer or a phone."
+        "d": "Invite a teammate to the same design and edit it from a computer or a phone.",
+        "icon": "Users"
       },
       {
         "t": "Shared logos and colors",
-        "d": "Keep logos, colors, and shared layouts in one library so the next post matches."
+        "d": "Keep logos, colors, and shared layouts in one library so the next post matches.",
+        "icon": "Palette"
       },
       {
         "t": "Notes in one place",
-        "d": "Leave a note on the design so the next change happens before you download."
+        "d": "Leave a note on the design so the next change happens before you download.",
+        "icon": "MessageCircle"
       }
     ]
   }

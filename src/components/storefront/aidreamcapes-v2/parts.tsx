@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
+import { Coins, Captions, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
 
 export function normalizeStepLabel(label: string): string {
   return ["Product photo", "Your photo", "Photo"].includes(label.trim()) ? "Your product" : label;
@@ -919,6 +920,13 @@ const cardBlockCss = `
 .adc2 .v1-card p a{text-decoration:underline;text-underline-offset:3px}
 .adc2 .v1-mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),#8b5cf6);color:#fff;font-size:14px;font-weight:700;margin-bottom:4px}
 .adc2 .v1-mark::before{content:counter(v1card,decimal-leading-zero)}
+.adc2 .v1-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;margin-bottom:6px;border:1px solid var(--tone-line);background:var(--tone-bg);color:var(--tone)}
+.adc2 .v1-tone-0{--tone:#c4b5fd;--tone-bg:rgba(139,92,246,.16);--tone-line:rgba(139,92,246,.38)}
+.adc2 .v1-tone-1{--tone:#6ee7b7;--tone-bg:rgba(16,185,129,.14);--tone-line:rgba(16,185,129,.36)}
+.adc2 .v1-tone-2{--tone:#f9a8d4;--tone-bg:rgba(236,72,153,.14);--tone-line:rgba(236,72,153,.36)}
+.adc2 .v1-tone-3{--tone:#fcd34d;--tone-bg:rgba(245,158,11,.14);--tone-line:rgba(245,158,11,.36)}
+.adc2 .v1-tone-4{--tone:#93c5fd;--tone-bg:rgba(59,130,246,.15);--tone-line:rgba(59,130,246,.38)}
+.adc2 .v1-tone-5{--tone:#5eead4;--tone-bg:rgba(20,184,166,.14);--tone-line:rgba(20,184,166,.36)}
 .adc2 .v1-trust .v1-mark{background:rgba(196,181,253,.14);border:1px solid rgba(196,181,253,.35)}
 .adc2 .v1-trust .v1-mark::before{content:"";width:13px;height:7px;border-left:2px solid #c4b5fd;border-bottom:2px solid #c4b5fd;transform:translateY(-2px) rotate(-45deg)}
 .adc2 .v1-reviews .v1-mark::before{content:"“";font-size:30px;line-height:1;transform:translateY(6px)}
@@ -937,13 +945,23 @@ function CardBlockCss() {
   return <style dangerouslySetInnerHTML={{ __html: cardBlockCss }} />;
 }
 
-function BlockCard({ item, r, children, before }: { item: V2CardBlockItem; r: V2Resolvers; children?: ReactNode; before?: ReactNode }) {
+// Reason cards show a small icon tile like the competitor's; the icon name comes from the
+// page content (reasons.items[].icon) and must be one of these.
+const REASON_ICONS = { Coins, Captions, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } as const;
+
+function ReasonIcon({ name, tone }: { name?: string; tone: number }) {
+  const Icon = name ? REASON_ICONS[name as keyof typeof REASON_ICONS] : undefined;
+  if (!Icon) return null;
+  return <span aria-hidden="true" className={`v1-icon v1-tone-${tone % 6}`}><Icon fill="currentColor" fillOpacity={0.22} size={24} strokeWidth={2.3} /></span>;
+}
+
+function BlockCard({ item, r, children, before, mark }: { item: V2CardBlockItem; r: V2Resolvers; children?: ReactNode; before?: ReactNode; mark?: ReactNode }) {
   return (
     <article className="v1-card">
       {before}
       {item.img?.src ? <figure><Img image={item.img} r={r} /></figure> : null}
       <div className="v1-card-copy">
-        {item.img?.src ? null : <span aria-hidden="true" className="v1-mark" />}
+        {item.img?.src ? null : mark ?? <span aria-hidden="true" className="v1-mark" />}
         <h3>{item.t}</h3>
         <p><RichText r={r} text={item.d} /></p>
         {children}
@@ -958,7 +976,7 @@ export function ReasonsSection({ block, r }: { block?: V2CardBlock; r: V2Resolve
   return (
     <Section eyebrow="Why sellers use it" lead={block.lead} title={block.h2}>
       <CardBlockCss />
-      <div className="v1-cards v1-reasons">{items.map((item) => <BlockCard item={item} key={item.t} r={r} />)}</div>
+      <div className="v1-cards v1-reasons">{items.map((item, i) => <BlockCard item={item} key={item.t} mark={<ReasonIcon name={item.icon} tone={i} />} r={r} />)}</div>
     </Section>
   );
 }

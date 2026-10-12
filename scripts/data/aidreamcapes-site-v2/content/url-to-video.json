@@ -222,7 +222,6 @@
     "benefits",
     "uses",
     "trust",
-    "reviews",
     "faq",
     "definition",
     "related",
@@ -242,19 +241,23 @@
     "items": [
       {
         "t": "Less Setup Before the Ad",
-        "d": "Paste the link and the product is already there, so you skip gathering photos into a folder first."
+        "d": "Paste the link and the product is already there, so you skip gathering photos into a folder first.",
+        "icon": "Link"
       },
       {
         "t": "Script, Voice and Edit Included",
-        "d": "The script, the voice and the edit are made for you. You change only what you want."
+        "d": "The script, the voice and the edit are made for you. You change only what you want.",
+        "icon": "WandSparkles"
       },
       {
         "t": "A Clip for Every Link",
-        "d": "Paste several product links and get a clip for each one, for a launch, a demo or a social post."
+        "d": "Paste several product links and get a clip for each one, for a launch, a demo or a social post.",
+        "icon": "Layers"
       },
       {
         "t": "Reviews From the Page",
-        "d": "When the page has reviews, they can be brought into the video so shoppers see what buyers already said."
+        "d": "When the page has reviews, they can be brought into the video so shoppers see what buyers already said.",
+        "icon": "Star"
       }
     ]
   },

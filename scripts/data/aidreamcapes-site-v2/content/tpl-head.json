@@ -655,7 +655,6 @@
     "hero",
     "picker",
     "definition",
-    "reviews",
     "reasons",
     "features",
     "steps",
@@ -676,27 +675,33 @@
     "items": [
       {
         "t": "One look across the row",
-        "d": "Share one background, one framing, and one light. Each person keeps the features in their own photo."
+        "d": "Share one background, one framing, and one light. Each person keeps the features in their own photo.",
+        "icon": "Users"
       },
       {
         "t": "A new hire joins without a reshoot",
-        "d": "Reuse the same background and framing on the new photo. The rest of the team stays as it is."
+        "d": "Reuse the same background and framing on the new photo. The rest of the team stays as it is.",
+        "icon": "UserCheck"
       },
       {
         "t": "The whole set in one batch",
-        "d": "Upload the approved photos together and get the same framing back, instead of booking a studio for each person."
+        "d": "Upload the approved photos together and get the same framing back, instead of booking a studio for each person.",
+        "icon": "Layers"
       },
       {
         "t": "Names stay easy to change",
-        "d": "Put the name and the role in text beside the portrait, so a title change is not a new image."
+        "d": "Put the name and the role in text beside the portrait, so a title change is not a new image.",
+        "icon": "Type"
       },
       {
         "t": "You still need a yes",
-        "d": "Upload only a photo that person agreed you can use, and let them check the result before it goes live."
+        "d": "Upload only a photo that person agreed you can use, and let them check the result before it goes live.",
+        "icon": "ShieldCheck"
       },
       {
         "t": "The cost shows before you start",
-        "d": "Each photo uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month."
+        "d": "Each photo uses 24 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
+        "icon": "Coins"
       }
     ]
   },

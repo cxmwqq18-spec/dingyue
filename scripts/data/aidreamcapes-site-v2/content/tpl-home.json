@@ -547,7 +547,6 @@
     "hero",
     "picker",
     "definition",
-    "reviews",
     "reasons",
     "features",
     "steps",
@@ -662,27 +661,33 @@
     "items": [
       {
         "t": "No rented room",
-        "d": "The tidy-up is made from the organizer photo, so you do not borrow a kitchen or book a crew."
+        "d": "The tidy-up is made from the organizer photo, so you do not borrow a kitchen or book a crew.",
+        "icon": "House"
       },
       {
         "t": "One mess, one fix",
-        "d": "Name a single drawer, shelf, closet, or desk. The clip ends on that neater spot."
+        "d": "Name a single drawer, shelf, closet, or desk. The clip ends on that neater spot.",
+        "icon": "Sparkles"
       },
       {
         "t": "Sizes stay editable",
-        "d": "Add sizes and how much it holds as captions, or as text after download, so a size change is not a new shoot."
+        "d": "Add sizes and how much it holds as captions, or as text after download, so a size change is not a new shoot.",
+        "icon": "Type"
       },
       {
         "t": "The same photo, another room",
-        "d": "Reuse the organizer photo for a drawer and then a closet, instead of a second shoot."
+        "d": "Reuse the organizer photo for a drawer and then a closet, instead of a second shoot.",
+        "icon": "Repeat"
       },
       {
         "t": "A voice that names the spot",
-        "d": "A short spoken line can say which drawer or shelf changed, with captions for people watching with the sound off."
+        "d": "A short spoken line can say which drawer or shelf changed, with captions for people watching with the sound off.",
+        "icon": "Mic"
       },
       {
         "t": "You see the cost first",
-        "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month."
+        "d": "A 15-second clip uses 60 credits from your monthly plan. If it fails, those credits come back. Plans start at $24.50 a month.",
+        "icon": "Coins"
       }
     ]
   },

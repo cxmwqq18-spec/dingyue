@@ -604,7 +604,6 @@
     "steps",
     "faq",
     "related",
-    "reviews",
     "cta"
   ],
   "reviews": {
@@ -734,15 +733,18 @@
     "items": [
       {
         "t": "Use what you already have",
-        "d": "A product link, a short script, or one photo is enough to start. A missing piece can be generated before the clip."
+        "d": "A product link, a short script, or one photo is enough to start. A missing piece can be generated before the clip.",
+        "icon": "Link"
       },
       {
         "t": "No shoot on the calendar",
-        "d": "You are not booking a creator or a studio for this file. The credit cost is on screen before the job starts."
+        "d": "You are not booking a creator or a studio for this file. The credit cost is on screen before the job starts.",
+        "icon": "Calendar"
       },
       {
         "t": "The price, and another language",
-        "d": "The clip on this page is 15 seconds, which is 60 credits. A 6-second clip is 24 credits. Plans start at $24.50 a month. The spoken line can use the language your shoppers use."
+        "d": "The clip on this page is 15 seconds, which is 60 credits. A 6-second clip is 24 credits. Plans start at $24.50 a month. The spoken line can use the language your shoppers use.",
+        "icon": "Coins"
       }
     ]
   }

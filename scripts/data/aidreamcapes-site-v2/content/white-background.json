@@ -379,7 +379,6 @@
     "benefits",
     "steps",
     "features",
-    "reviews",
     "faq",
     "related"
   ],
@@ -428,15 +427,18 @@
     "items": [
       {
         "t": "For sellers",
-        "d": "Put one product on white for the main image. You skip the studio, and you still check the photo rules for your product category before you publish."
+        "d": "Put one product on white for the main image. You skip the studio, and you still check the photo rules for your product category before you publish.",
+        "icon": "Store"
       },
       {
         "t": "For your own software",
-        "d": "Ask your catalog system for a white background. One photo costs 24 credits, the units your plan spends. You see that cost before it starts."
+        "d": "Ask your catalog system for a white background. One photo costs 24 credits, the units your plan spends. You see that cost before it starts.",
+        "icon": "Laptop"
       },
       {
         "t": "For large catalogs",
-        "d": "Keep the same white, the same empty space around the item, and the same shadow as new products come in. Past Premium's 600 credits, email support@aivideosugc.com with how many photos you make in a month."
+        "d": "Keep the same white, the same empty space around the item, and the same shadow as new products come in. Past Premium's 600 credits, email support@aivideosugc.com with how many photos you make in a month.",
+        "icon": "Layers"
       }
     ]
   }

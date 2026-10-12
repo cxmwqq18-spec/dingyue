@@ -540,7 +540,6 @@
   "blockOrder": [
     "hero",
     "picker",
-    "reviews",
     "features",
     "steps",
     "related",

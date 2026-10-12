@@ -179,7 +179,6 @@
     "steps",
     "uses",
     "related",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -195,15 +194,18 @@
     "items": [
       {
         "t": "Looks Like a Phone Video",
-        "d": "The clip shows your product and an AI person, with a line that sounds like a tip from a friend. That person is not a real customer."
+        "d": "The clip shows your product and an AI person, with a line that sounds like a tip from a friend. That person is not a real customer.",
+        "icon": "Smartphone"
       },
       {
         "t": "The Next Test Without Filming",
-        "d": "Change the motion, the AI person or the spoken line, and keep the same photo. The next test does not need a filming day."
+        "d": "Change the motion, the AI person or the spoken line, and keep the same photo. The next test does not need a filming day.",
+        "icon": "Zap"
       },
       {
         "t": "Credits, Not a Filming Bill",
-        "d": "Credits are the points each video spends. A 6-second clip is 24 credits, and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before you start."
+        "d": "Credits are the points each video spends. A 6-second clip is 24 credits, and a 15-second clip is 60. Starter is $24.50 a month with 200 credits. You see that cost before you start.",
+        "icon": "Coins"
       }
     ]
   },

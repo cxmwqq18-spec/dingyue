@@ -993,7 +993,6 @@
     "features",
     "steps",
     "related",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -1034,72 +1033,6 @@
         "d": "The actor says the words you approved. You can edit the words on screen and the music on this page.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
-      }
-    ]
-  },
-  "reviews": {
-    "h2": "How Shops Put an Actor in the Ad",
-    "lead": "Example uses, not quotes from customers. Each card is one kind of video you can make.",
-    "items": [
-      {
-        "example": true,
-        "who": "Skincare shop",
-        "t": "Jar, voice, and words on screen",
-        "d": "A skincare shop shows the jar and has the actor say one benefit. Words on screen show on a 10-second ad test."
-      },
-      {
-        "example": true,
-        "who": "Drink seller",
-        "t": "Bottle and an offer in the editor",
-        "d": "A drink seller has the actor say the flavor and show the bottle. Then they type the offer in the editor on this page."
-      },
-      {
-        "example": true,
-        "who": "Gadget shop",
-        "t": "One part, up close",
-        "d": "A gadget shop has the actor point to one part of the device in a short phone video."
-      },
-      {
-        "example": true,
-        "who": "Apparel shop",
-        "t": "Fit in one sentence",
-        "d": "An apparel shop has the actor say how it fits, with the clothes still visible. The post is a normal social post, not a paid ad."
-      },
-      {
-        "example": true,
-        "who": "Multi-country shop",
-        "t": "The same face, another language",
-        "d": "A shop keeps the same actor and product photo. They write the words in a second language and pick a voice."
-      },
-      {
-        "example": true,
-        "who": "Small team",
-        "t": "Edits on this page",
-        "d": "A small team changes the words on screen and the music in the editor, without opening a second app."
-      },
-      {
-        "example": true,
-        "who": "Agency",
-        "t": "A few actors for one product",
-        "d": "An agency uses the same client photo with a different actor and opening line, then sends the video files."
-      },
-      {
-        "example": true,
-        "who": "Home brand",
-        "t": "No lighting setup",
-        "d": "A home brand makes an actor video from one product photo, instead of setting lights for every post."
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "A link, then the words",
-        "d": "A catalog seller pastes a product page link, edits the words, and downloads an actor video."
-      },
-      {
-        "example": true,
-        "who": "Founder-led shop",
-        "t": "A short note, then an actor",
-        "d": "A founder writes a short note about the product, checks the words, and lets the actor read them."
       }
     ]
   },

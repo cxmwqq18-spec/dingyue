@@ -560,7 +560,6 @@
     "reasons",
     "steps",
     "trust",
-    "reviews",
     "related",
     "faq",
     "cta"
@@ -674,19 +673,23 @@
     "items": [
       {
         "t": "Size at a Glance",
-        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no size hint at all."
+        "d": "A familiar object next to the product is easier to read than a product floating on a plain ground with no size hint at all.",
+        "icon": "Ruler"
       },
       {
         "t": "No Props to Collect",
-        "d": "The reference object and the setting are generated from your product photo. You do not need a studio or a borrowed suitcase."
+        "d": "The reference object and the setting are generated from your product photo. You do not need a studio or a borrowed suitcase.",
+        "icon": "Sparkles"
       },
       {
         "t": "One Photo, Another Hint",
-        "d": "Reuse a clear product photo and name a different object. Compare each result with your measured dimensions before posting."
+        "d": "Reuse a clear product photo and name a different object. Compare each result with your measured dimensions before posting.",
+        "icon": "Repeat"
       },
       {
         "t": "The Numbers Stay in the Listing",
-        "d": "The picture does not replace length, width, height, or capacity. Those facts stay in the listing text."
+        "d": "The picture does not replace length, width, height, or capacity. Those facts stay in the listing text.",
+        "icon": "FileText"
       }
     ]
   },

@@ -162,7 +162,6 @@
     "steps",
     "features",
     "related",
-    "reviews",
     "faq"
   ],
   "benefits_lead": "Put the same product by the sea, in a desert, on a plain background, or in a room.",
@@ -172,27 +171,33 @@
     "items": [
       {
         "t": "See the cost first",
-        "d": "A photo costs 24 credits. Credits are what your monthly plan gives you to spend. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start. If a file fails, those credits come back."
+        "d": "A photo costs 24 credits. Credits are what your monthly plan gives you to spend. A video costs 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start. If a file fails, those credits come back.",
+        "icon": "Coins"
       },
       {
         "t": "Skip another film day",
-        "d": "Older products can use the picture they already have. You do not book another film day to refresh the collection."
+        "d": "Older products can use the picture they already have. You do not book another film day to refresh the collection.",
+        "icon": "Images"
       },
       {
         "t": "Many products at once",
-        "d": "Make photos for many products at one time. Each item still starts from its own photo."
+        "d": "Make photos for many products at one time. Each item still starts from its own photo.",
+        "icon": "Layers"
       },
       {
         "t": "No model and no props",
-        "d": "You do not hire a model, or rent extra items, just to try a new background. The scene starts from the photo you upload."
+        "d": "You do not hire a model, or rent extra items, just to try a new background. The scene starts from the photo you upload.",
+        "icon": "Sparkles"
       },
       {
         "t": "Start when the photo is ready",
-        "d": "There is no studio appointment. Make the file in the evening, on a weekend, or between orders."
+        "d": "There is no studio appointment. Make the file in the evening, on a weekend, or between orders.",
+        "icon": "Clock"
       },
       {
         "t": "Test another background",
-        "d": "Make a second photo with a wider or tighter view, a new look, or a new layout. Compare it with the first. You pick which file goes on the product page."
+        "d": "Make a second photo with a wider or tighter view, a new look, or a new layout. Compare it with the first. You pick which file goes on the product page.",
+        "icon": "RefreshCw"
       }
     ]
   },

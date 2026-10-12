@@ -610,7 +610,6 @@
     "benefits",
     "closing",
     "features",
-    "reviews",
     "steps",
     "related",
     "faq",
@@ -668,15 +667,18 @@
     "items": [
       {
         "t": "Clean edges on metal",
-        "d": "Lift a chain, a hoop, or a shiny band off the table. Check the edge against the original photo before you publish."
+        "d": "Lift a chain, a hoop, or a shiny band off the table. Check the edge against the original photo before you publish.",
+        "icon": "Gem"
       },
       {
         "t": "Color and shine kept",
-        "d": "Gold, stones, and texture should still match the piece you uploaded, on a table or on a generated person."
+        "d": "Gold, stones, and texture should still match the piece you uploaded, on a table or on a generated person.",
+        "icon": "Sparkles"
       },
       {
         "t": "One look across the set",
-        "d": "Use the same background, shadow, and framing on the pieces you upload. Many at once is a batch, and the API lets your own software run it."
+        "d": "Use the same background, shadow, and framing on the pieces you upload. Many at once is a batch, and the API lets your own software run it.",
+        "icon": "Layers"
       }
     ]
   },

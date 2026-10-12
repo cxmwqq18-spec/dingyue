@@ -181,7 +181,6 @@
     "closing",
     "related",
     "benefits",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -233,27 +232,33 @@
     "items": [
       {
         "t": "An AI actor",
-        "d": "Pick a person to show the product. That person is made by AI, not a real customer. The picture does not replace a size chart."
+        "d": "Pick a person to show the product. That person is made by AI, not a real customer. The picture does not replace a size chart.",
+        "icon": "UserRound"
       },
       {
         "t": "A video from the photo",
-        "d": "Turn the product photo into a short video. Shapes: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4. Lengths: 6, 10, 15, or 30 seconds."
+        "d": "Turn the product photo into a short video. Shapes: 9:16 (tall), 1:1 (square), 16:9 (wide), 4:3, or 3:4. Lengths: 6, 10, 15, or 30 seconds.",
+        "icon": "Film"
       },
       {
         "t": "The language you write",
-        "d": "The actor speaks the language of the line you type. You do not pay extra for another language."
+        "d": "The actor speaks the language of the line you type. You do not pay extra for another language.",
+        "icon": "Languages"
       },
       {
         "t": "Tone in the line",
-        "d": "Type the mood you want. The actor says your line in that mood. Edit the sentence before you publish."
+        "d": "Type the mood you want. The actor says your line in that mood. Edit the sentence before you publish.",
+        "icon": "Mic"
       },
       {
         "t": "A built-in editor",
-        "d": "Change the words, the captions, the voice, or the person on screen, without another app."
+        "d": "Change the words, the captions, the voice, or the person on screen, without another app.",
+        "icon": "Scissors"
       },
       {
         "t": "Captions on the file",
-        "d": "Captions come with the video. Change the words so any price matches the price in your store now."
+        "d": "Captions come with the video. Change the words so any price matches the price in your store now.",
+        "icon": "Captions"
       }
     ]
   },

@@ -572,7 +572,6 @@
     "features",
     "steps",
     "trust",
-    "reviews",
     "related",
     "faq",
     "cta"
@@ -658,23 +657,28 @@
     "items": [
       {
         "t": "A Closer Look at a Known Product",
-        "d": "Shoppers already saw the item. This clip shows one detail the first ad rushed past."
+        "d": "Shoppers already saw the item. This clip shows one detail the first ad rushed past.",
+        "icon": "Eye"
       },
       {
         "t": "The Audience Stays in Your Ad Tool",
-        "d": "The file has no viewer list and no cart data. You choose who sees it, and how often, in your ad platform."
+        "d": "The file has no viewer list and no cart data. You choose who sees it, and how often, in your ad platform.",
+        "icon": "Target"
       },
       {
         "t": "Voice and Captions on the Detail",
-        "d": "A script, a spoken line, and captions can explain the detail. You still type the price and the code yourself."
+        "d": "A script, a spoken line, and captions can explain the detail. You still type the price and the code yourself.",
+        "icon": "Captions"
       },
       {
         "t": "An AI Actor for the Second Look",
-        "d": "An AI performer can hold the product for the closer shot. That person is generated, not a past buyer."
+        "d": "An AI performer can hold the product for the closer shot. That person is generated, not a past buyer.",
+        "icon": "UserRound"
       },
       {
         "t": "Several Versions From One Photo",
-        "d": "Change the angle, the language, or the opening and make another version without a new shoot."
+        "d": "Change the angle, the language, or the opening and make another version without a new shoot.",
+        "icon": "Copy"
       }
     ]
   },

@@ -164,7 +164,6 @@
     "reasons",
     "features",
     "platforms",
-    "reviews",
     "related",
     "faq"
   ],
@@ -175,15 +174,18 @@
     "items": [
       {
         "t": "Skip hiring a video maker",
-        "d": "Post a test before you hire anyone. The product on screen is still the one from your photo or link."
+        "d": "Post a test before you hire anyone. The product on screen is still the one from your photo or link.",
+        "icon": "Rocket"
       },
       {
         "t": "Make several ads at once",
-        "d": "Make several TikTok videos from one product, so you are not waiting on someone else to film them."
+        "d": "Make several TikTok videos from one product, so you are not waiting on someone else to film them.",
+        "icon": "Copy"
       },
       {
         "t": "Another language, same length price",
-        "d": "Write the script and the voice in another language. The number of credits depends on the seconds, not the language."
+        "d": "Write the script and the voice in another language. The number of credits depends on the seconds, not the language.",
+        "icon": "Languages"
       }
     ]
   },

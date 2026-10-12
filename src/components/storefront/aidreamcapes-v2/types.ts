@@ -115,7 +115,7 @@ export const V2_BLOCK_IDS = [
   "plan", "sizes", "input", "outputs", "after", "limitations", "tools"
 ] as const;
 export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
-export type V2CardBlockItem = { t: string; d: string; img?: V2Image; alt?: string };
+export type V2CardBlockItem = { t: string; d: string; img?: V2Image; alt?: string; icon?: string };
 export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };
 export type V2ReviewItem = V2CardBlockItem & { example: boolean; who: string; source?: string };
 export type V2ReviewBlock = { h2: string; lead?: string; items: V2ReviewItem[] };

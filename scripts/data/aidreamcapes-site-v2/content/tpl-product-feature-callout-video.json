@@ -598,7 +598,6 @@
     "features",
     "steps",
     "trust",
-    "reviews",
     "related",
     "faq",
     "cta"
@@ -692,23 +691,28 @@
     "items": [
       {
         "t": "One Part Stays Readable",
-        "d": "A single pump, zipper, or clasp is easier to follow than a pile of benefits squeezed into one clip."
+        "d": "A single pump, zipper, or clasp is easier to follow than a pile of benefits squeezed into one clip.",
+        "icon": "Eye"
       },
       {
         "t": "Your Photo or a Product Link",
-        "d": "The item on screen starts from the photo you upload, or from the main image on a [product page link](page:url-to-video)."
+        "d": "The item on screen starts from the photo you upload, or from the main image on a [product page link](page:url-to-video).",
+        "icon": "Link"
       },
       {
         "t": "An Actor Can Point to It",
-        "d": "Choose an AI performer to hold the product and draw attention to the part that matters. The person is generated, not a customer."
+        "d": "Choose an AI performer to hold the product and draw attention to the part that matters. The person is generated, not a customer.",
+        "icon": "Hand"
       },
       {
         "t": "Voice, Script, and Captions",
-        "d": "A draft script, a spoken line, and on-screen captions can come with the clip. You can still edit the line."
+        "d": "A draft script, a spoken line, and on-screen captions can come with the clip. You can still edit the line.",
+        "icon": "Captions"
       },
       {
         "t": "Another Version, Same Photo",
-        "d": "Change the actor, the language, or the opening and make a second clip without booking a shoot."
+        "d": "Change the actor, the language, or the opening and make a second clip without booking a shoot.",
+        "icon": "Copy"
       }
     ]
   },

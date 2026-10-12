@@ -163,7 +163,6 @@
     "reasons",
     "features",
     "platforms",
-    "reviews",
     "related",
     "faq"
   ],
@@ -174,15 +173,18 @@
     "items": [
       {
         "t": "No wait for a creator",
-        "d": "The next Story or Reel starts when you paste a link. You do not wait on a booking."
+        "d": "The next Story or Reel starts when you paste a link. You do not wait on a booking.",
+        "icon": "Clock"
       },
       {
         "t": "Spoken voices",
-        "d": "Add a natural spoken voice in the language you sell in. You do not book a new recording for each language."
+        "d": "Add a natural spoken voice in the language you sell in. You do not book a new recording for each language.",
+        "icon": "Mic"
       },
       {
         "t": "Instagram templates",
-        "d": "Start from a Reel, Story, or post template, then make many versions when you need more than one."
+        "d": "Start from a Reel, Story, or post template, then make many versions when you need more than one.",
+        "icon": "LayoutGrid"
       }
     ]
   },

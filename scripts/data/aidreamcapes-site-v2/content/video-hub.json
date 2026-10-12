@@ -719,7 +719,6 @@
     "features",
     "examples",
     "related",
-    "reviews",
     "faq",
     "cta"
   ],
@@ -736,15 +735,18 @@
     "items": [
       {
         "t": "The Mouth Moves With the Words",
-        "d": "This is lip sync. The on-camera person's mouth follows the words, so the face and the line move together."
+        "d": "This is lip sync. The on-camera person's mouth follows the words, so the face and the line move together.",
+        "icon": "Mic"
       },
       {
         "t": "Start From a Link or a Photo",
-        "d": "Paste a product link or upload a photo. You get more than one version back. The credit cost shows before it starts."
+        "d": "Paste a product link or upload a photo. You get more than one version back. The credit cost shows before it starts.",
+        "icon": "Link"
       },
       {
         "t": "A List of On-Camera People",
-        "d": "Pick an AI person who fits the shop, then match a voice. This person is made by AI, not a real customer."
+        "d": "Pick an AI person who fits the shop, then match a voice. This person is made by AI, not a real customer.",
+        "icon": "Users"
       }
     ]
   },

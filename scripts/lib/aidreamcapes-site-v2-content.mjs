@@ -1990,6 +1990,7 @@ function resolveSectionHref(model, where, target) {
 }
 
 // Blocks a page can list in `blockOrder` (same list as V2_BLOCK_IDS in the v2 component types).
+const REASON_ICON_NAMES = new Set(["Coins", "Captions", "Calendar", "Camera", "CircleCheck", "Clapperboard", "Clock", "Copy", "Crop", "Droplet", "Eye", "FileText", "Film", "Gem", "Hand", "House", "Image", "Images", "Languages", "Laptop", "Layers", "LayoutGrid", "Link", "MessageCircle", "Mic", "Music", "Package", "Palette", "PenLine", "Play", "Ratio", "RefreshCw", "Repeat", "Rocket", "Ruler", "Scissors", "Share2", "ShieldCheck", "Shirt", "Smartphone", "Sparkles", "Star", "Store", "Sun", "Tag", "Target", "Timer", "Type", "UserCheck", "UserRound", "Users", "Utensils", "WandSparkles", "Zap"]);
 const BLOCK_IDS = new Set(["hero", "definition", "strip", "picker", "reasons", "steps", "benefits", "features", "audience", "uses", "examples",
   "seller_scenarios", "compare", "related", "trust", "reviews", "faq", "closing", "pricing", "templates", "platforms", "directory", "cta",
   "plan", "sizes", "input", "outputs", "after", "limitations", "tools"]);
@@ -3226,6 +3227,10 @@ export function validateSiteV2(build = buildSiteV2()) {
       const cards = data[key]?.items ?? [];
       const pictured = cards.filter((item) => item?.img?.src).length;
       if (pictured && pictured !== cards.length) errors.push(`${page.id}: ${key} cards must all have a picture or none (${pictured}/${cards.length})`);
+    }
+    // Reason cards without pictures show an icon tile (names match REASON_ICONS in parts.tsx).
+    for (const item of data.reasons?.items ?? []) {
+      if (!item?.img?.src && !REASON_ICON_NAMES.has(item?.icon)) errors.push(`${page.id}: reasons card "${item?.t}" needs an icon from the reason icon list (has ${item?.icon ?? "none"})`);
     }
     // Card counts follow the competitor block: reasons 3 to 6 cards, trust 3 to 6 rows.
     for (const [key, min, max] of [["reasons", 3, 6], ["trust", 3, 6]]) {

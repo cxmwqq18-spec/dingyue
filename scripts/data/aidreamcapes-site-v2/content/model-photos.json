@@ -307,19 +307,23 @@
     "items": [
       {
         "t": "Save the person's look and reuse it",
-        "d": "Save a generated adult and a scene in your brand library, the folder of saved looks. Use them on the next release."
+        "d": "Save a generated adult and a scene in your brand library, the folder of saved looks. Use them on the next release.",
+        "icon": "UserCheck"
       },
       {
         "t": "Cover clothing, jewelry, and eyewear",
-        "d": "Tops, dresses, bags, and [jewelry](page:tpl-jewel) start from a clear product photo. Eyewear works the same way."
+        "d": "Tops, dresses, bags, and [jewelry](page:tpl-jewel) start from a clear product photo. Eyewear works the same way.",
+        "icon": "Shirt"
       },
       {
         "t": "Use one look on the site and the marketplace",
-        "d": "The worn photo can go on your page, an [Amazon](page:plat-amazon) listing, or a [Shopify](page:plat-shopify) collection."
+        "d": "The worn photo can go on your page, an [Amazon](page:plat-amazon) listing, or a [Shopify](page:plat-shopify) collection.",
+        "icon": "Store"
       },
       {
         "t": "Hold the pose and the light steady",
-        "d": "Pick the pose and the scene once. The next garment uses them, so you do not hire a new model."
+        "d": "Pick the pose and the scene once. The next garment uses them, so you do not hire a new model.",
+        "icon": "Sun"
       }
     ]
   },
