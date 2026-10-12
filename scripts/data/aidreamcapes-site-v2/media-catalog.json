@@ -53329,6 +53329,94 @@
         ],
         "source": "Codex imagegen"
       },
+      "b2f1-social-ad-photos-picker-tote-r1": {
+        "file": "b2f1-social-ad-photos-picker-tote-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain cream canvas tote carried by an adult along a quiet sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-social-ad-photos-use-carry-r1": {
+        "file": "b2f1-social-ad-photos-use-carry-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult carrying a plain cream canvas tote along a quiet city sidewalk.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-occ-sale-discount-input-bad-r1": {
+        "file": "b2f1-occ-sale-discount-input-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel skincare product set cropped at the edge of the frame.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-occ-sale-discount-input-good-r1": {
+        "file": "b2f1-occ-sale-discount-input-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full pastel skincare product set on a plain light background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-occ-sale-discount-input-good2-r1": {
+        "file": "b2f1-occ-sale-discount-input-good2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Full pastel skincare product set on a pale neutral background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-occ-sale-discount-output-r1": {
+        "file": "b2f1-occ-sale-discount-output-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Pastel skincare product set on a light set with space for offer text.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-before-after-videos-pet-hair-r1": {
+        "file": "b2f1-before-after-videos-pet-hair-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "Adult hand removes pet hair from a sofa with a plain fabric brush.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f1-blog-cta-cup-r1": {
+        "file": "b2f1-blog-cta-cup-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short tight bun holds a plain terracotta travel cup beside a generic smartphone with no visible screen content.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
       "fx18-social-picker-speaker": {
         "file": "fx18-social-picker-speaker",
         "w": 1024,
