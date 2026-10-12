@@ -16,17 +16,23 @@
     {
       "t": "See dirty and clean together",
       "d": "Show a coffee stain lifting from a tote or dust clearing from a shelf, so buyers can judge the visible result in one frame.",
-      "icon": "target"
+      "icon": "target",
+      "img": "n:guide:fx48-benefit-shoe",
+      "alt": "Adult hands hold a wooden shoe brush beside one gray running shoe shown scuffed and cleaned."
     },
     {
       "t": "Skip the second shoot",
       "d": "Use one product photo to direct a stain cleanup or a cord reset, without booking another setup to match.",
-      "icon": "shield"
+      "icon": "shield",
+      "img": "n:guide:fx48-benefit-tote",
+      "alt": "Adult hands wipe a coffee stain from a plain canvas tote, with clean fabric beside it."
     },
     {
       "t": "Name the change in one line",
       "d": "Describe the starting state, the action and the result in one short line, then add your offer or labels after download.",
-      "icon": "check"
+      "icon": "check",
+      "img": "n:guide:fx48-benefit-watch",
+      "alt": "Adult hands wipe a plain round cream-dial watch with dusty and clean halves."
     }
   ],
   "steps_h2": "How to Make Before and After Videos in 3 Simple Steps",
@@ -34,7 +40,7 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Keep the same product through the whole clip. Upload one clear photo with the full item in frame."
+      "d": "Keep one product through the whole clip. Upload one clear photo with the full item in frame."
     },
     {
       "t": "Describe the Change",
@@ -53,9 +59,7 @@
       "items": [
         {
           "t": "Two setups to match",
-          "d": "Stage a stained tote, reset it for the clean state and try to match the same camera, light and crop.",
-          "img": "n:guide:q3-before-after-videos-board-05-snack-bin-reset",
-          "frame": "phone"
+          "d": "Stage a stained tote, reset it for the clean state and try to match the same camera, light and crop."
         },
         {
           "t": "One photo to direct",
@@ -72,8 +76,8 @@
       "items": [
         {
           "t": "Start without a crew",
-          "d": "Describe a stained surface and the cleaning action, then skip a studio setup or filming date.",
-          "img": "n:guide:q3-product-videos-case-handheld-vacuum",
+          "d": "Describe fur on a sofa and the roller pass, then skip a studio setup or filming date.",
+          "img": "n:guide:fx48-demo-pet-hair",
           "frame": "phone"
         },
         {
@@ -84,15 +88,15 @@
         },
         {
           "t": "Write the opening you need",
-          "d": "Give one short line that frames loose cords, a dusty shelf or a stuck zipper for your ad.",
-          "img": "n:guide:q3-product-videos-board-07-power-bank-demo",
+          "d": "Give one short line that frames dust on a shelf for your ad.",
+          "img": "n:guide:fx48-demo-shelf-dust",
           "frame": "phone"
         },
         {
           "t": "Test more hooks without reshooting",
           "d": "Try a dust cleanup opening, a pet-hair pass or a zipper fix without arranging another shoot.",
-          "img": "n:guide:f17-home-vacuum-demo",
-          "frame": "none"
+          "img": "n:guide:fx48-demo-zipper",
+          "frame": "phone"
         },
         {
           "t": "Finish more versions from one base",
@@ -101,23 +105,25 @@
           "frame": "none"
         },
         {
-          "t": "Show the fix at shelf level",
-          "d": "Capture a dusty shelf before the wipe and the clear shelf after it, with the same camera angle for an easy comparison."
+          "t": "Show the fix at tile level",
+          "d": "Capture a dark grout line before the scrub and a clean section after it, with the same camera angle for an easy comparison.",
+          "img": "n:guide:fx48-demo-tile-grout",
+          "frame": "phone"
         }
       ]
     }
   ],
   "maker": {
-    "options": [
-      [
-        "Size",
-        "9:16 vertical or 1:1 square"
+      "options": [
+        [
+          "Size",
+          "9:16 vertical or 1:1 square"
+        ],
+        [
+          "Length",
+          "6, 10 or 15 seconds"
+        ]
       ],
-      [
-        "Length",
-        "6, 10, 15 or 30 seconds"
-      ]
-    ],
     "cta": "Make my before & after video"
   },
   "faq": [
@@ -174,7 +180,7 @@
   "visual": {
     "steps": {
       "source": "n:guide:b1-before-after-videos-source",
-      "result": "n:guide:b1-before-after-videos-result",
+      "result": "n:guide:fx48-steps-cable-organizer",
       "mode": "video",
       "length": 15,
       "prompt": "Use the uploaded photo as the product and keep its shape, color and label area exactly. At a bright desk, an adult hand feeds three loose cords through the organizer slots, leaving the tabletop clear. End with the cords arranged in place. Soft daylight, practical home-demo style. Overhead medium framing with one slow push-in. Sound: cord slide, organizer tap and quiet room tone; no music, text or logos."
