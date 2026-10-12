@@ -49043,6 +49043,72 @@
         ],
         "source": "Codex imagegen"
       },
+      "b2f9-guide-first-tiktok-video-ad-sec02-r1": {
+        "file": "b2f9-guide-first-tiktok-video-ad-sec02-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Two adult hands spread white cream from a plain peach tube across the back of a hand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f9-guide-first-tiktok-video-ad-sec04-r1": {
+        "file": "b2f9-guide-first-tiktok-video-ad-sec04-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "One adult hand smooths white cream along a forearm beside a plain peach tube.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f9-about-credit-costs-r1": {
+        "file": "b2f9-about-credit-costs-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a short silver crop reviews plain wooden tokens beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f9-about-photos-stay-yours-r1": {
+        "file": "b2f9-about-photos-stay-yours-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f9-about-what-we-make-r1": {
+        "file": "b2f9-about-what-we-make-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult seller with a blonde chin-length bob sets a plain ceramic mug on paper beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f9-guide-ad-sizes-by-platform-mistakes-r1": {
+        "file": "b2f9-guide-ad-sizes-by-platform-mistakes-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult hand checks a plain white sunscreen tube inside a simple blank preview frame with generous margins.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
       "fx08-trust-what-it-is-for-r1": {
         "file": "gen2guide-fx08-trust-what-it-is-for-r1",
         "w": 1024,
@@ -49563,7 +49629,7 @@
         "file": "fx06-guide-first-tiktok-video-ad-sec01",
         "w": 1024,
         "h": 1024,
-        "alt": "Adult applies a plain peach sunscreen tube beside a bright window.",
+        "alt": "Adult woman applies cream from a plain light-peach tube to her cheek at the seaside.",
         "variants": [
           640,
           1280
