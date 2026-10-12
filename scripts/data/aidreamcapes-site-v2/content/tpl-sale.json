@@ -683,6 +683,7 @@
   "blockOrder": [
     "hero",
     "features",
+    "steps",
     "definition",
     "faq",
     "cta"
