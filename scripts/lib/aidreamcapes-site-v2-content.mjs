@@ -2562,7 +2562,7 @@ function buildNavigation(model) {
     links: [{ label: "Pricing", href: "/pricing" }],
     actions: { login: { label: "Log in", href: "/login" }, getStarted: { label: "Get started", href: "/app/create" } },
     footer: {
-      tagline: "AI video ads and product photos for online stores.",
+      tagline: "AI video ads and product photos for DTC brands, SaaS and agencies.",
       groups: [
         group("Video", ["ai-actors", ...VIDEO_TOOLS, link("video-hub", { label: "All Video Tools" })]),
         group("Photo", [...PHOTO_TOOLS.filter((id) => id !== "photo-hub"), link("photo-hub", { label: "All Photo Tools" })]),
@@ -3699,8 +3699,8 @@ export function loadUtilityPagePatches() {
 // An unset field matches `null` in a change, so a change can fill in a field that was never set.
 // The storefront was renamed from Aidreamcapes to AIVideosUGC and its support email moved to aivideosugc.com.
 // Stored text written before the rename is brought over by swapping these exact words; web addresses
-// (social profiles, asset paths) are left as they are.
-export const BRAND_SWAPS = [["support@aidreamcapes.com", "support@aivideosugc.com"], ["Aidreamcapes.com", "AIVideosUGC"], ["Aidreamcapes", "AIVideosUGC"]];
+// (social profiles, asset paths) are left as they are. The company itself is named BLYDEY INC (owner, 2026-10-12).
+export const BRAND_SWAPS = [["BLYDEYUS INC", "BLYDEY INC"], ["support@aidreamcapes.com", "support@aivideosugc.com"], ["Aidreamcapes.com", "AIVideosUGC"], ["Aidreamcapes", "AIVideosUGC"]];
 export function rebrandText(value) {
   if (typeof value !== "string" || /^\s*https?:\/\//i.test(value)) return value;
   return BRAND_SWAPS.reduce((text, [from, to]) => text.split(from).join(to), value);
