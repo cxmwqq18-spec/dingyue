@@ -24375,6 +24375,17 @@
           1280
         ]
       },
+      "b2f5-contact-results-r1": {
+        "file": "b2f5-contact-results-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller compares a ceramic cup beside a closed laptop",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
       "fx08-contact-privacy-r1": {
         "file": "fx08-contact-privacy-r1",
         "w": 1024,
@@ -49031,6 +49042,61 @@
           1280
         ],
         "source": "Codex imagegen"
+      },
+      "b2f5-trust-what-it-is-for-r1": {
+        "file": "b2f5-trust-what-it-is-for-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f5-trust-what-we-decline-r1": {
+        "file": "b2f5-trust-what-we-decline-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f5-trust-uploads-results-r1": {
+        "file": "b2f5-trust-uploads-results-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f5-trust-ai-content-r1": {
+        "file": "b2f5-trust-ai-content-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
+      },
+      "b2f5-trust-report-problem-r1": {
+        "file": "b2f5-trust-report-problem-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gpt-image-2"
       },
       "im10-ind-health-wellness-strip-first-stretch-r1": {
         "file": "im10-ind-health-wellness-strip-first-stretch-r1",
