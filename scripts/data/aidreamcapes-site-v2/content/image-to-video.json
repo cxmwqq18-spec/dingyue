@@ -4,7 +4,7 @@
   "description": "Turn a product photo into a phone-style video with a script, an AI person, a spoken voice and captions. Post to TikTok or Meta, or download with no watermark.",
   "h1": "AI Image to Video Generator: From a Still to an Ad",
   "eyebrow": "Image to video",
-  "lead": "Get ad-ready AI videos from a single product photo. Turn any still into a moving clip that sells, with no camera and no crew.",
+  "lead": "One product photo is all it takes. AIVideosUGC brings it to life as a UGC-style video ad that is ready to post, with no shoot to book.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
@@ -31,19 +31,19 @@
     }
   ],
   "steps_h2": "How to Make a Video From a Photo in 3 Simple Steps",
-  "steps_lead": "Share your idea, chat with the AI video agent, and get a finished UGC video.",
+  "steps_lead": "Describe the product, answer a few questions, and download a UGC ad.",
   "steps": [
     {
-      "t": "Share Your Video Idea",
-      "d": "Describe the video you have in mind. Add your product, your campaign goal and your audience, or just paste a product link."
+      "t": "Describe Your Product",
+      "d": "Upload a product photo or paste a product link, then say who it is for and what the ad should achieve."
     },
     {
-      "t": "Chat With Our AI Video Agent",
-      "d": "Talk it through the way you would with a teammate. The agent asks about your brand, your message, the look and the style you like."
+      "t": "Answer the Agent's Questions",
+      "d": "Our AI video agent checks your brand, tone and preferred look with a few quick questions, so the ad sounds like you."
     },
     {
-      "t": "Get a UGC Video Ready to Post",
-      "d": "AI builds a full UGC-style video with a script, an AI avatar, a voiceover, captions, scenes and B-roll, ready for ads or social posts."
+      "t": "Download Your UGC Ad",
+      "d": "Get a complete ad with a script, an AI avatar, a voiceover, captions and B-roll, sized for the platform you post on."
     }
   ],
   "maker": {
@@ -66,54 +66,54 @@
   "faq": [
     {
       "q": "What is an AI image to video tool?",
-      "a": "It is software that uses AI to turn a still picture into an engaging video. It adds motion, camera moves, transitions and even an AI voiceover, so your images come to life."
+      "a": "It animates a still picture into a short video. For sellers, that means a product photo becomes a UGC-style ad with motion, a voiceover and captions."
     },
     {
       "q": "How does a photo become a video?",
-      "a": "The AI reads the image you upload and uses generative models to add movement. You choose the motion style, add text on screen, and generate a script and voiceover, so a simple photo becomes a polished video in minutes."
+      "a": "Upload the image and describe the motion you want, and the AI generates the movement. Add a script, a voiceover and on-screen text, and the clip is ready in minutes."
     },
     {
       "q": "What do you gain by making video from a photo?",
-      "a": "You can make far more video with far less effort, skip most of the cost of a shoot, go from idea to finished clip in minutes, and get more value from every product photo you already have."
+      "a": "More ads from the photos you already own. You skip the shoot, get a finished clip in minutes, and make as many versions as your campaign needs."
     },
     {
       "q": "Can I post these clips on social?",
-      "a": "Yes, it is one of the most common uses. Make eye-catching videos sized for TikTok, Instagram Reels, YouTube Shorts and other apps, to grow your audience and your engagement."
+      "a": "Yes. Size each clip for TikTok, Instagram Reels or YouTube Shorts and post it as an ad or as an organic video."
     },
     {
       "q": "How can a store use this for product marketing?",
-      "a": "Make before-and-after reveals, product showcase videos, social video ads and listing videos for marketplaces like Amazon. It is a fast way to give shoppers more reasons to buy."
+      "a": "Show the product in action, reveal a before-and-after, run social video ads, or add a video to your Amazon listing. Each one starts from the same photo."
     },
     {
       "q": "Can I make explainers and tutorials?",
-      "a": "Yes. It works well for clear, consistent tutorials, feature explainers and internal training videos. The AI gives the same professional delivery every time, with no re-recording."
+      "a": "Yes. Keep one AI avatar and one script style for every lesson, so feature walkthroughs and training clips look consistent without re-recording."
     },
     {
       "q": "Can I add a voiceover or an AI avatar?",
-      "a": "Yes. An AI script writer and AI voiceover are built in. You can also add an AI avatar to present and narrate your video for a more personal feel."
+      "a": "Yes. Write your own script or let AI draft one, pick a voice, and add an AI avatar to present the product on camera."
     },
     {
       "q": "Which aspect ratios can I pick?",
-      "a": "Pick the aspect ratio you need: 9:16 for TikTok, Reels and Stories, 1:1 for the feed, or 16:9 for YouTube. Your video is formatted for each platform automatically."
+      "a": "Choose 9:16 for TikTok, Reels and Stories, 1:1 for the feed or 16:9 for YouTube. 4:3 and 3:4 are there too."
     }
   ],
-  "cta_lead": "Create high-converting video ads at scale, starting from one product photo.",
+  "cta_lead": "Upload a photo and get your first UGC video in minutes.",
   "uses": [
     {
-      "t": "A/B Test Your Paid Ads Faster",
-      "d": "Turn one product photo into many ad versions for A/B tests and find the winner sooner. Fresh clips on demand help you beat ad fatigue and keep viewers interested."
+      "t": "Fresh Creatives for Ad Testing",
+      "d": "Spin one product photo into several ad versions, run them side by side, and swap out tired creatives before results start to slip."
     },
     {
-      "t": "Stand Out on Marketplaces",
-      "d": "Make your listings hard to scroll past on Amazon, Etsy and other busy marketplaces. Where other sellers show flat photos, your products move."
+      "t": "Video on Your Marketplace Listings",
+      "d": "A product in motion stands out on Amazon, Etsy and other crowded marketplaces, where most listings still rely on still photos."
     },
     {
-      "t": "Show Up on Every Social Channel",
-      "d": "Social media runs on video. Make product teasers and short stories that take viewers from the feed to your store, and turn one photo into a week of posts."
+      "t": "A Steady Stream of Social Posts",
+      "d": "Turn a single photo into teasers and short stories for TikTok, Reels and Shorts, and keep your feed busy all week."
     },
     {
-      "t": "Clear Explainer and Tutorial Videos",
-      "d": "Need to explain a feature or show how a product works? Make tutorials that come out clear and consistent every time, with the same polished look."
+      "t": "Explainers That Stay Consistent",
+      "d": "Walk shoppers through a feature or a quick how-to with the same AI avatar and script style every time."
     }
   ],
   "visual": {
@@ -191,21 +191,21 @@
   },
   "reasons": {
     "h2": "Why Choose AIVideosUGC for Image to Video?",
-    "lead": "Picking an AI tool can be confusing. Here is how AIVideosUGC is built to get you the results you want.",
+    "lead": "Plenty of tools can animate a photo. Here is what makes AIVideosUGC the better fit for sellers who need ads that sell.",
     "items": [
       {
-        "t": "Built for UGC First",
-        "d": "Other tools started as video editors. We started with UGC. Our AI makes clips that look good, feel like a real recommendation and move shoppers to buy.",
+        "t": "Made for UGC, Not Just Motion",
+        "d": "Every clip is shaped like a real shopper's video: a face, a voice and a reason to buy. That is the kind of ad people trust, and the kind that turns views into orders.",
         "icon": "Users"
       },
       {
-        "t": "Fast Turnaround",
-        "d": "Start a new video campaign in minutes instead of weeks. While other brands wait on shoots, you can test many versions, find the one that works and scale it right away.",
+        "t": "Ads in Minutes",
+        "d": "Go from photo to finished ad before your coffee gets cold. Try several hooks today, keep the one that pulls clicks, and put more budget behind it right away.",
         "icon": "Gauge"
       },
       {
-        "t": "Spend Less per Video",
-        "d": "Stop paying a creator for every single video. For about the price of a team lunch, you can build a whole library of ad-ready clips and put the savings back into growth.",
+        "t": "Lower Cost per Ad",
+        "d": "Creator fees add up fast. On a monthly plan, each new ad costs a few credits, so you can keep testing and spend the difference on reaching more buyers.",
         "icon": "DollarSign"
       }
     ]
@@ -328,5 +328,5 @@
       }
     ]
   },
-  "cta_title": "Ready to Scale Your Video Ads?"
+  "cta_title": "Turn Your Next Product Photo Into an Ad"
 }
