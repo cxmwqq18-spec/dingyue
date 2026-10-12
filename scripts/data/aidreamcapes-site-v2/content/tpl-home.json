@@ -16,19 +16,27 @@
   "benefits": [
     {
       "t": "Show the drawer reset",
-      "d": "Show the organizer dividing a crowded drawer so shoppers can see the problem and the fix in one frame."
+      "d": "Show the organizer dividing a crowded drawer so shoppers can see the problem and the fix in one frame.",
+      "img": "n:guide:fx20-home-benefit-drawer-r1",
+      "alt": "Adult hands slide a plain dark gray divider tray into a crowded kitchen drawer."
     },
     {
       "t": "Make pantry storage easy to picture",
-      "d": "Show jars and bins arranged on pantry shelves so shoppers know where the storage product belongs."
+      "d": "Show jars and bins arranged on pantry shelves so shoppers know where the storage product belongs.",
+      "img": "n:guide:fx20-home-benefit-pantry-r1",
+      "alt": "Adult hands place plain clear pantry bins and unmarked jars onto a shelf."
     },
     {
       "t": "Show the closet shelf at a glance",
-      "d": "Show grouped clothes, folded pieces and bins together so the organizer’s job reads before shoppers scroll."
+      "d": "Show grouped clothes, folded pieces and bins together so the organizer’s job reads before shoppers scroll.",
+      "img": "n:guide:fx20-home-benefit-closet-r1",
+      "alt": "Adult hands place a plain woven shelf organizer into a closet cubby beside folded clothes."
     },
     {
       "t": "Make desk cable storage clear",
-      "d": "Show a tidy desk organizer holding everyday supplies so shoppers can picture the finished workspace."
+      "d": "Show a tidy desk organizer holding everyday supplies so shoppers can picture the finished workspace.",
+      "img": "n:guide:fx20-home-benefit-desk-r1",
+      "alt": "Adult hands guide loose desk cables into a plain black cable organizer beneath a wooden desk."
     }
   ],
   "steps_h2": "How to Make Home Organization Videos in 3 Simple Steps",
