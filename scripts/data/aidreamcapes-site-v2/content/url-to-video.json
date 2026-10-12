@@ -40,7 +40,7 @@
       "d": "Turn one product detail into a clear scene buyers can understand before purchase.",
       "icon": "target",
       "img": "n:guide:fx51-url-benefit-judge-r1",
-      "alt": "Adult hand dispenses cream from a plain cream pump bottle at a bright sink."
+      "alt": "Adult hand presses a plain cream-colored pump and dispenses clear gel into an open palm at a bright sink."
     }
   ],
   "steps_h2": "How to Make a Video from a Product URL in 3 Simple Steps",
@@ -165,7 +165,7 @@
   "visual": {
     "strip": [
       "n:guide:fx51-url-skincare-strip-r1",
-      "n:guide:q2-url-to-video-strip-02",
+      "n:guide:b2f11-url-to-video-strip-1-r1",
       "n:guide:q2-url-to-video-strip-05",
       "n:guide:fx51-url-strip-phone-stand-r1",
       "n:guide:q2-url-to-video-strip-03",
@@ -177,7 +177,7 @@
       "result": "n:guide:fx51-url-steps-result-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Use the captured product image as the product and keep its shape, color and label area exactly. A hand opens the sage-green lunch container while its silver metal front clasp and side latches remain visible, then sets the lid beside it on a bright kitchen counter. Front-left medium framing with one slow push-in. Sound: lid click, light container tap and quiet room tone; no music, text or logos.",
+      "prompt": "Use the captured product image as the product and keep its shape, color and clasp exactly. The same sage-green divided lunch container sits open on a bright kitchen counter, lid standing behind it, silver metal front clasp and side latches visible, compartments filled with food, and no hands in frame. Front-left medium framing with one slow push-in. Sound: quiet room tone; no music, text or logos.",
       "sourceTitle": "Paste your product page link",
       "sourceHint": "Like yourstore.com/products/lunch-container"
     },
@@ -204,13 +204,13 @@
       },
       {
         "frame": "reels",
-        "ref": "n:guide:q2-url-to-video-example-03",
+        "ref": "n:guide:b2f11-url-to-video-uses-2-r1",
         "h": "Advertising videos",
         "d": "Build a paid ad around one selling point from the product listing."
       },
       {
         "frame": "post",
-        "ref": "n:guide:q2-url-to-video-example-05",
+        "ref": "n:guide:b2f11-url-to-video-uses-3-r1",
         "h": "Social media videos",
         "d": "Post a fresh 9:16 version to TikTok, Instagram or YouTube Shorts."
       }

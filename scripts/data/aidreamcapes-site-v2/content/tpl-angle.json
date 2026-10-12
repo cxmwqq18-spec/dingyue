@@ -88,9 +88,9 @@
     ],
     "steps": {
       "source": "n:guide:tpl-angle-round4-speaker-controls",
-      "result": "n:guide:tpl-angle-m6-output-square-r2",
+      "result": "n:guide:b2f11-tpl-angle-steps-result-r1",
       "mode": "photo",
-      "prompt": "Use the uploaded speaker as the exact product. Show coordinated front and rear views with the top controls and USB-C port visible, preserving its shape, color and wrist strap. Neutral studio background, no text or logos.",
+      "prompt": "Use the uploaded speaker as the exact product. Show coordinated front and rear views with plain unmarked raised-dot controls and the USB-C port visible, preserving its shape, color and wrist strap. Neutral studio background, no text or logos.",
       "options": [
         [
           "Template",
