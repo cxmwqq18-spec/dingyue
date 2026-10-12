@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload and Clean Up",
-          "d": "Upload the product photo, remove the old background, and set pure white for the main image."
+          "d": "Upload your ceramic mug and clear the breakfast table behind it. You get a pure white main image of the mug."
         },
         {
           "t": "Style the Later Pictures",
-          "d": "For later pictures, show the item in use or on a person created by AI, and keep the square size."
+          "d": "Pick an AI actor to lift the mug at the breakfast table. You get a square in-use photo for a later slot."
         },
         {
           "t": "Many at Once, Then Download",
-          "d": "Apply those choices to many products, or through the API, then download and add them in Seller Central."
+          "d": "Use those mug choices on many products at once, or through the API. You download the files and add them in Seller Central."
         }
       ]
     },
