@@ -204,39 +204,5 @@
     "product-videos",
     "video-ads",
     "image-to-video"
-  ],
-  "reviews": {
-    "h2": "How Shops Film a Launch Unboxing",
-    "lead": "Four ways a shop turns one cream-mug mailer photo into the launch clips, and the studio day each one skips.",
-    "items": [
-      {
-        "example": true,
-        "who": "Home goods seller",
-        "t": "Show the Closed Mailer",
-        "d": "They show an AI actor with a hand on the closed kraft mailer before the cream mug page is live. That teaser goes up without a studio booking.",
-        "img": "n:guide:img2-blog-unboxing-videos-for-launches-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Gift shop owner",
-        "t": "Open the Tissue",
-        "d": "They show the lid lift and the cream mug coming out of the tissue. That reveal replaces a filmed unboxing.",
-        "img": "n:guide:img2-blog-unboxing-videos-for-launches-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Two-person shop",
-        "t": "Cut the Launch Set",
-        "d": "They make the teaser, the open, and the closer look from one package photo between orders. No extra person has to come in.",
-        "img": "n:guide:img2-blog-unboxing-videos-for-launches-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Kitchen seller",
-        "t": "Keep the Spoken Line",
-        "d": "They keep the voice on the one cream mug in the box. The line does not name a second item the buyer will not find.",
-        "img": "n:guide:img2-blog-unboxing-videos-for-launches-review4-r1"
-      }
-    ]
-  }
+  ]
 }

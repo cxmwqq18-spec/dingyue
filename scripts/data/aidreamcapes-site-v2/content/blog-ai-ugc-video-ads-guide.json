@@ -196,39 +196,5 @@
     "blog-ai-video-review-checklist",
     "blog-unboxing-videos-for-launches",
     "blog-ai-product-photography-guide"
-  ],
-  "reviews": {
-    "h2": "How Shops Use These Video Ads",
-    "lead": "Each seller starts from the gray jar photo and skips a creator booking for that job.",
-    "items": [
-      {
-        "example": true,
-        "who": "Skincare shop owner",
-        "t": "Lid-Off Clip for the Feed",
-        "d": "They upload the gray jar photo and make a tall clip of the lid coming off. They post it where that cream already sells, and skip booking a creator for this jar.",
-        "img": "n:guide:img2-blog-ai-ugc-video-ads-guide-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Listing manager",
-        "t": "Jar in Hand the Whole Clip",
-        "d": "They keep the gray jar in a hand from the first second to the last, then check the lid against the real jar. That check happens before the file goes into the ad account.",
-        "img": "n:guide:img2-blog-ai-ugc-video-ads-guide-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Order packer",
-        "t": "Spoken Ad From the Shelf",
-        "d": "They photograph the gray jar in daylight on the bathroom shelf and turn that photo into a spoken ad. They do not book a studio for this one jar.",
-        "img": "n:guide:img2-blog-ai-ugc-video-ads-guide-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Shop owner",
-        "t": "Still Approved, Then the Clip",
-        "d": "They approve a still of the real gray jar before anyone asks for a clip. The shape on screen stays the shape that ships, so this jar does not need a reshoot.",
-        "img": "n:guide:img2-blog-ai-ugc-video-ads-guide-review4-r1"
-      }
-    ]
-  }
+  ]
 }

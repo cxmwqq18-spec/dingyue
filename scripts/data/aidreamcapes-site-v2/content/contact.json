@@ -108,39 +108,5 @@
     "about",
     "glossary",
     "ai-info"
-  ],
-  "reviews": {
-    "h2": "How Sellers Use Support",
-    "lead": "Four sellers send one email and get a written next step. They skip a phone queue.",
-    "items": [
-      {
-        "example": true,
-        "who": "Solo shop owner",
-        "t": "Ask About a Charge",
-        "d": "A solo shop owner emails about a plan charge and gets a written next step. They sort the billing question without waiting on a phone line.",
-        "img": "n:guide:img2-contact-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Home video seller",
-        "t": "Check Credits After a Failure",
-        "d": "A home seller writes in when a failed video does not show the credits back. They get the balance checked and skip guessing which job it was.",
-        "img": "n:guide:img2-contact-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Catalog seller",
-        "t": "Send a Result That Missed",
-        "d": "A catalog seller sends the cup photo and the result that missed the brief. Support replies in writing, so they do not retype the same note in a chat.",
-        "img": "n:guide:img2-contact-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Agency owner",
-        "t": "Ask Who Can Sign In",
-        "d": "An agency owner asks who on the team can see the files. One email settles access, and they skip a back-and-forth about passwords.",
-        "img": "n:guide:img2-contact-review4-r1"
-      }
-    ]
-  }
+  ]
 }

@@ -151,39 +151,5 @@
     "plat-facebook",
     "plat-youtube-shorts",
     "ai-actors"
-  ],
-  "reviews": {
-    "h2": "How a Shop Uses the First TikTok Ad",
-    "lead": "Four ways a shop makes the first TikTok ad from a sunscreen photo. These cards describe the work, not a named seller.",
-    "items": [
-      {
-        "example": true,
-        "who": "Cream shop owner",
-        "t": "Tube at the Seaside",
-        "d": "They paste the product link and get a tall video of the peach tube at the seaside. The shoot for that opening stays off the calendar.",
-        "img": "n:guide:img2-guide-first-tiktok-video-ad-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Sunscreen seller",
-        "t": "Tube Over a Notebook",
-        "d": "They open on the peach tube over a blank notebook, large enough to see the cap. That file is the one they post on TikTok.",
-        "img": "n:guide:img2-guide-first-tiktok-video-ad-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Sunscreen shop owner",
-        "t": "Price and the First Line",
-        "d": "They set the price and the first line before anyone hears the clip, and they pick the track. The tube in the frame matches the one they ship.",
-        "img": "n:guide:img2-guide-first-tiktok-video-ad-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Cream seller",
-        "t": "Shade Checked, Then Posted",
-        "d": "They post from the listing photo they already have, after checking the shade against the real tube. No second morning is booked for that check.",
-        "img": "n:guide:img2-guide-first-tiktok-video-ad-review4-r1"
-      }
-    ]
-  }
+  ]
 }

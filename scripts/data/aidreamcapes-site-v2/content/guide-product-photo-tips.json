@@ -159,39 +159,5 @@
     "lifestyle-photos",
     "change-background",
     "white-background"
-  ],
-  "reviews": {
-    "h2": "How Shops Use These Shoe Photos",
-    "lead": "Four ways a shop places the same gray running shoe in a setting it can post, and the studio rental each one skips.",
-    "items": [
-      {
-        "example": true,
-        "who": "Running shop",
-        "t": "Put the Shoe on a Bench",
-        "d": "They place the gray running shoe on a bright bench and in a gym-bag scene, with the edges still clear. The listing uses those files instead of a rented studio.",
-        "img": "n:guide:img2-guide-product-photo-tips-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Home seller",
-        "t": "Skip the Studio Day",
-        "d": "They start from a phone photo and get a clean tabletop under the shoe. Nobody rents a studio for that color.",
-        "img": "n:guide:img2-guide-product-photo-tips-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Fitness seller",
-        "t": "Morning Bench, Evening Desk",
-        "d": "They make a morning bench scene and an evening desk scene from the same shoe photo. Both files stay the gray shoe they ship.",
-        "img": "n:guide:img2-guide-product-photo-tips-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Small catalog",
-        "t": "White Board and Curb",
-        "d": "They lay the shoe flat, then ask for it on a white board and on a street curb. The shape stays the one in the phone photo.",
-        "img": "n:guide:img2-guide-product-photo-tips-review4-r1"
-      }
-    ]
-  }
+  ]
 }

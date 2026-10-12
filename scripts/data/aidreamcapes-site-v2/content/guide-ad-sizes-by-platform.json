@@ -174,39 +174,5 @@
     "plat-youtube-shorts",
     "guide-first-tiktok-video-ad",
     "video-ads"
-  ],
-  "reviews": {
-    "h2": "How Four Shops Split the Shapes",
-    "lead": "Each shop starts from one sunscreen photo and exports the shape that fills the placement.",
-    "items": [
-      {
-        "example": true,
-        "who": "Home-goods seller",
-        "t": "Export Tall and Square",
-        "d": "They make a 9:16 file and a 1:1 file from the sunscreen page. They skip an evening of cutting one video apart, and they run the file that fills the placement.",
-        "img": "n:guide:img2-guide-ad-sizes-by-platform-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Skincare shop owner",
-        "t": "Change Only the First Line",
-        "d": "They keep the same tube photo and the same offer, and they change the first spoken line. Both files can run for the same people.",
-        "img": "n:guide:img2-guide-ad-sizes-by-platform-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Solo sunscreen seller",
-        "t": "Keep the Frame on the Tube",
-        "d": "They leave the frame on the tube and add a spoken line. They post the tall file where the phone screen is full, and they never step into the shot.",
-        "img": "n:guide:img2-guide-ad-sizes-by-platform-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Seller in two languages",
-        "t": "Replace the Spoken Line",
-        "d": "They keep the same tube and the same shape, and they replace the spoken line for the second language. The file still fills that placement.",
-        "img": "n:guide:img2-guide-ad-sizes-by-platform-review4-r1"
-      }
-    ]
-  }
+  ]
 }

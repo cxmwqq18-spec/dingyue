@@ -62,39 +62,5 @@
     "contact",
     "about",
     "trust"
-  ],
-  "reviews": {
-    "h2": "How Sellers Spend a Monthly Plan",
-    "lead": "Four sellers pick a plan and spend the credits on the products they already ship.",
-    "items": [
-      {
-        "example": true,
-        "who": "Home goods seller",
-        "t": "White Mug on Starter",
-        "d": "They use Starter for listing photos of the plain white mug they sell, and for a short clip of that same mug. They see the credit cost before each job and skip a studio day.",
-        "img": "n:guide:img2-pricing-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Skincare seller",
-        "t": "Cream Ads on Pro",
-        "d": "They use Pro to make another cream ad from the same jar photo when the week needs a new opening. They post the cut they keep and skip booking a creator for every test.",
-        "img": "n:guide:img2-pricing-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Electronics seller",
-        "t": "Charger Clip From One Photo",
-        "d": "They make a clip of the charger they sell and a matching listing photo from one product shot. They skip a bench shoot for that charger.",
-        "img": "n:guide:img2-pricing-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Small agency owner",
-        "t": "Many Products, One Month",
-        "d": "They use Premium so a mug, a cream jar, and a charger can each get a photo and a short ad in the same month. They skip hiring a separate crew for every product.",
-        "img": "n:guide:img2-pricing-review4-r1"
-      }
-    ]
-  }
+  ]
 }

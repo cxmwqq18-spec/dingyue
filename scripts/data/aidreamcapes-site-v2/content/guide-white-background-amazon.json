@@ -188,39 +188,5 @@
     "blog-ai-product-photography-guide",
     "blog-model-photos-without-a-photoshoot",
     "guide-testing-ad-versions"
-  ],
-  "reviews": {
-    "h2": "How Sellers Make the White Main Image",
-    "lead": "Four sellers put the olive backpack on pure white and use that square on the listing.",
-    "items": [
-      {
-        "example": true,
-        "who": "Bag shop owner",
-        "t": "Put the Pack on White",
-        "d": "A bag shop owner turns one olive canvas backpack photo into a pure-white main image. They upload it to the listing and skip a white-sweep rental.",
-        "img": "n:guide:img2-guide-white-background-amazon-review1-r1"
-      },
-      {
-        "example": true,
-        "who": "Colorway seller",
-        "t": "Repeat the Same White Square",
-        "d": "A colorway seller uses the same white setup on the next backpack color. The listing set stays consistent, and they skip rebuilding the shot for each color.",
-        "img": "n:guide:img2-guide-white-background-amazon-review2-r1"
-      },
-      {
-        "example": true,
-        "who": "Marketplace seller",
-        "t": "Check the Corners First",
-        "d": "A marketplace seller checks the white corners against the pack in hand before the listing goes up. They catch a gray haze at the desk, not after the listing is live.",
-        "img": "n:guide:img2-guide-white-background-amazon-review3-r1"
-      },
-      {
-        "example": true,
-        "who": "Two-person shop",
-        "t": "Skip a Custom Build",
-        "d": "A two-person shop makes the white main image inside the plan they already pay for. They skip hiring someone to build an image tool.",
-        "img": "n:guide:img2-guide-white-background-amazon-review4-r1"
-      }
-    ]
-  }
+  ]
 }
