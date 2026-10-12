@@ -95,5 +95,20 @@
       "label": "Social ad photos",
       "href": "/ai-image-generation/feed-ad-still"
     }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Try it with your own product",
+      "h2": "From one photo to a post",
+      "lead": "Upload one product photo and turn it into a listing image or short ad for your next post.",
+      "items": [
+        {
+          "t": "Start with your next product",
+          "d": "Hold one clear product photo beside your phone, then take the finished asset into your listing or ad editor.",
+          "img": "n:guide:fx03-blog-cta-photo-to-ad",
+          "alt": "Adult seller with a short tight bun holds a plain terracotta travel cup beside a generic smartphone, ready to post a listing image and short ad."
+        }
+      ]
+    }
   ]
 }

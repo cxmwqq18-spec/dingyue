@@ -17,19 +17,27 @@
   "benefits": [
     {
       "t": "Fewer wasted jobs",
-      "d": "A sharp, well-lit starting photo means the first image or video is far more likely to match your real product, so you spend fewer credits redoing jobs."
+      "d": "A sharp, well-lit starting photo means the first image or video is far more likely to match your real product, so you spend fewer credits redoing jobs.",
+      "img": "n:guide:fx03-guides-benefit-source",
+      "alt": "Adult seller with a short auburn bob checks a sharp source photo of a plain sage canvas tote before upload."
     },
     {
       "t": "No studio or agency needed",
-      "d": "Every walkthrough uses a phone, a window and things you already own. You plan, shoot and publish the listing photo or ad yourself."
+      "d": "Every walkthrough uses a phone, a window and things you already own. You plan, shoot and publish the listing photo or ad yourself.",
+      "img": "n:guide:fx03-guides-benefit-studio",
+      "alt": "Adult seller with a short dark-blonde crop photographs a plain bamboo lunch container on a kitchen table."
     },
     {
       "t": "Rules you can check in minutes",
-      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is easier to check before upload."
+      "d": "Amazon's white background rules and each platform's video shape are written as plain steps with checklists, so your file is easier to check before upload.",
+      "img": "n:guide:fx03-guides-benefit-rules",
+      "alt": "Adult seller with a short silver-gray pixie positions a plain ceramic plate fully inside a bright white backdrop."
     },
     {
       "t": "Ads that improve with every round",
-      "d": "The testing guide shows how to make a few low-cost versions, change one thing at a time, and keep whatever brings sales instead of guessing."
+      "d": "The testing guide shows how to make a few low-cost versions, change one thing at a time, and keep whatever brings sales instead of guessing.",
+      "img": "n:guide:fx03-guides-benefit-testing",
+      "alt": "Two adult sellers compare two plain fabric pouches side by side while choosing an ad version to test."
     }
   ],
   "steps_h2": "How to Make AI Product Photos and Videos in 3 Simple Steps",
@@ -124,6 +132,21 @@
       "id": "blog",
       "label": "Blog",
       "href": "/blog"
+    }
+  ],
+  "more_sections": [
+    {
+      "eyebrow": "Three moves",
+      "h2": "From source photo to posted asset",
+      "lead": "Keep one product in view as you shoot, choose the output and download the file.",
+      "items": [
+        {
+          "t": "Shoot, choose, download",
+          "d": "The same plain blue bottle stays in frame from the first phone photo through the tool choice and the downloaded product image.",
+          "img": "n:guide:fx03-guides-steps-triptych",
+          "alt": "Three-panel story of the same plain matte blue water bottle being photographed, selected in a tool and downloaded."
+        }
+      ]
     }
   ]
 }
