@@ -133,7 +133,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-To"
+          "label": "Explainer"
         },
         {
           "id": "financial-services",
@@ -173,11 +173,11 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-Style"
+          "label": "UGC"
         },
         {
           "id": "viral",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [

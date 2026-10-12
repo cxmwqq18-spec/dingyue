@@ -150,7 +150,6 @@
       "rule": "one-page",
       "pages": [
         "templates",
-        "video-ads",
         "tpl-angle",
         "tpl-beauty",
         "tpl-bf",
@@ -178,7 +177,9 @@
         "tpl-spark-ads-style-video",
         "tpl-story",
         "tpl-tryon",
-        "tpl-ugc"
+        "tpl-ugc",
+        "video-ads",
+        "video-hub"
       ]
     },
     {
@@ -186,7 +187,6 @@
       "rule": "one-page",
       "pages": [
         "templates",
-        "video-ads",
         "tpl-angle",
         "tpl-beauty",
         "tpl-bf",
@@ -214,7 +214,9 @@
         "tpl-spark-ads-style-video",
         "tpl-story",
         "tpl-tryon",
-        "tpl-ugc"
+        "tpl-ugc",
+        "video-ads",
+        "video-hub"
       ]
     },
     {

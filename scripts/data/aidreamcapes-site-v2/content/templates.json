@@ -104,7 +104,7 @@
         },
         {
           "id": "e-commerce",
-          "label": "Online Store"
+          "label": "E-Commerce"
         },
         {
           "id": "education",
@@ -112,7 +112,7 @@
         },
         {
           "id": "explainer",
-          "label": "How-To"
+          "label": "Explainer"
         },
         {
           "id": "financial-services",
@@ -152,17 +152,17 @@
         },
         {
           "id": "ugc",
-          "label": "Phone-Style"
+          "label": "UGC"
         },
         {
           "id": "viral",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [
         {
           "ref": "n:guide:tw1-wall-accessories-1",
-          "label": "Soft-sound unboxing: Makeup tools",
+          "label": "ASMR Unboxing: Makeup Tools",
           "chips": [
             "accessories"
           ],
@@ -171,7 +171,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-accessories-2",
-          "label": "Movie-style watch close-up",
+          "label": "Cinematic Watch Detail",
           "chips": [
             "accessories"
           ],
@@ -207,7 +207,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-apps-2",
-          "label": "Live-stream reaction: App",
+          "label": "Streamer Reaction: App",
           "chips": [
             "apps"
           ],
@@ -234,7 +234,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-clothing-1",
-          "label": "Get-ready unboxing: Knitwear",
+          "label": "GRWM Unboxing: Knitwear",
           "chips": [
             "clothing"
           ],
@@ -252,7 +252,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-e-commerce-1",
-          "label": "Spin view: Linen shirt",
+          "label": "360 Showcase: Linen Shirt",
           "chips": [
             "e-commerce"
           ],
@@ -279,7 +279,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-education-2",
-          "label": "Face-to-camera skin lesson",
+          "label": "Talking Head: Skin Lesson",
           "chips": [
             "education"
           ],
@@ -288,7 +288,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-1",
-          "label": "First-person look: Court gear",
+          "label": "POV Discovery: Court Gear",
           "chips": [
             "explainer"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-explainer-2",
-          "label": "Home app walk-through",
+          "label": "Hook: Home App Walkthrough",
           "chips": [
             "explainer"
           ],
@@ -306,7 +306,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-financial-services-1",
-          "label": "Finance app phone demo",
+          "label": "Finance Hook: Phone Demo",
           "chips": [
             "financial-services"
           ],
@@ -324,7 +324,7 @@
         },
         {
           "ref": "n:guide:tw1-wall-food-beverage-1",
-          "label": "First sip: Citrus drink",
+          "label": "Sensory Hook: Citrus Sip",
           "chips": [
             "food-beverage"
           ],
@@ -342,7 +342,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-footwear-1",
-          "label": "Runner holds the shoe",
+          "label": "Running Shoe Creator Showcase",
           "chips": [
             "footwear"
           ],
@@ -360,7 +360,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-health-fitness-1",
-          "label": "Berry bowl first bite",
+          "label": "Berry Bowl First Bite Reel",
           "chips": [
             "health-fitness"
           ],
@@ -378,7 +378,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-1",
-          "label": "Pendant try-on close-up",
+          "label": "Pendant Creator Try-On",
           "chips": [
             "jewelry-accessories"
           ],
@@ -387,7 +387,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-jewelry-accessories-2",
-          "label": "Silver signet close-up",
+          "label": "Silver Signet Macro Reveal",
           "chips": [
             "jewelry-accessories"
           ],
@@ -432,7 +432,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-sports-gym-2-r1",
-          "label": "Kettlebell powder reveal",
+          "label": "Kettlebell Powder Reveal Reel",
           "chips": [
             "sports-gym"
           ],
@@ -441,7 +441,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-1-r1",
-          "label": "Evening kitchen appliance demo",
+          "label": "Kitchen Appliance Evening Demo Reel",
           "chips": [
             "tech-electronics"
           ],
@@ -450,7 +450,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-tech-electronics-2",
-          "label": "Thin keyboard review",
+          "label": "Low Profile Keyboard Review",
           "chips": [
             "tech-electronics"
           ],
@@ -459,7 +459,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-ugc-1-r1",
-          "label": "Pump moisturizer routine",
+          "label": "Pump Moisturizer Routine Reel",
           "chips": [
             "ugc"
           ],
@@ -477,7 +477,7 @@
         },
         {
           "ref": "n:guide:tw2-wall-viral-1",
-          "label": "Mint face mist opening",
+          "label": "Mint Face Mist Hook",
           "chips": [
             "viral"
           ],

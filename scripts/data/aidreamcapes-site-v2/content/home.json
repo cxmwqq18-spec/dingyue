@@ -397,7 +397,7 @@
         },
         {
           "id": "education",
-          "label": "How-To Demos"
+          "label": "Education"
         },
         {
           "id": "explainer",
@@ -405,7 +405,7 @@
         },
         {
           "id": "financial-services",
-          "label": "Desk and Office"
+          "label": "Financial Services"
         },
         {
           "id": "food-beverage",
@@ -425,7 +425,7 @@
         },
         {
           "id": "kids-toy",
-          "label": "Kids and Toys"
+          "label": "Kids & Toy"
         },
         {
           "id": "pet",
@@ -445,7 +445,7 @@
         },
         {
           "id": "trending",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [

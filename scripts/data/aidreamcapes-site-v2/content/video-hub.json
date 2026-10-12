@@ -243,7 +243,7 @@
         },
         {
           "id": "apps",
-          "label": "Desk Gear"
+          "label": "Apps"
         },
         {
           "id": "beauty-personal-care",
@@ -255,11 +255,11 @@
         },
         {
           "id": "e-commerce",
-          "label": "Listings"
+          "label": "E-Commerce"
         },
         {
           "id": "education",
-          "label": "How-To"
+          "label": "Education"
         },
         {
           "id": "explainer",
@@ -267,7 +267,7 @@
         },
         {
           "id": "financial-services",
-          "label": "Work Desk"
+          "label": "Financial Services"
         },
         {
           "id": "food-beverage",
@@ -287,7 +287,7 @@
         },
         {
           "id": "kids-toy",
-          "label": "Kids & Toys"
+          "label": "Kids & Toy"
         },
         {
           "id": "pet",
@@ -303,11 +303,11 @@
         },
         {
           "id": "ugc",
-          "label": "Creator Style"
+          "label": "UGC"
         },
         {
           "id": "viral",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [
@@ -352,24 +352,22 @@
           "tool": "image-to-video"
         },
         {
-          "ref": "n:guide:b2f12-video-hub-picker4-r1",
-          "label": "Phone Tripod Setup",
+          "ref": "n:guide:tw1-wall-apps-1",
+          "label": "Lifestyle App Recommendation",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two adult hands clip a plain flat-top phone with an abstract color screen into a small tripod on a bedroom desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
-          "kind": "video",
-          "tool": "image-to-video"
+          "prompt": "A creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone.",
+          "kind": "video"
         },
         {
-          "ref": "n:guide:im01-video-hub-tablet-r1",
-          "label": "Tablet Stand Demo",
+          "ref": "n:guide:tw1-wall-apps-2",
+          "label": "Streamer Reaction: App",
           "chips": [
             "apps"
           ],
-          "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A plain adjustable tablet stand holds a generic tablet showing soft abstract blue and cream color blocks while an adult hand adjusts the stand on a clean desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting.",
-          "kind": "video",
-          "tool": "image-to-video"
+          "prompt": "Use a streamer-style reaction to show the moment your app surprises a viewer, with the device screen kept clear and easy to follow.",
+          "kind": "video"
         },
         {
           "ref": "n:guide:im01-video-hub-balm-r1",

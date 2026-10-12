@@ -193,11 +193,11 @@
         },
         {
           "id": "ugc",
-          "label": "Shopper-Style"
+          "label": "UGC"
         },
         {
           "id": "viral",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [

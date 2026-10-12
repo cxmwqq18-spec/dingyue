@@ -205,11 +205,11 @@
         },
         {
           "id": "ugc",
-          "label": "Creator-Style"
+          "label": "UGC"
         },
         {
           "id": "viral",
-          "label": "Trending"
+          "label": "Viral"
         }
       ],
       "cards": [
