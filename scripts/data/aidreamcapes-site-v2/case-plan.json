@@ -154,20 +154,20 @@
       {
         "ref": "n:guide:q5-life-case-unbox",
         "product": "moisturizer jar",
-        "title": "Moisturizer jar on a room shelf",
-        "prompt": "Use the uploaded moisturizer jar as the exact product reference. Place it on a bright bathroom shelf beside a folded towel; preserve its shape and color, with no readable text or logos."
+        "title": "Plain moisturizer jar lifted from a carton",
+        "prompt": "Use the uploaded moisturizer jar as the exact product reference. Show two hands lifting the plain jar out of an open white carton onto a counter; preserve its shape and color, with no readable text or logos."
       },
       {
         "ref": "n:guide:q5-life-case-sauce-pour",
         "product": "red sauce bottle",
-        "title": "Sauce bottle beside a cafe plate",
-        "prompt": "Use the uploaded red sauce bottle as the exact product reference. Place it beside a finished plate on a cafe table in soft daylight; preserve its shape and color, with no readable text or logos."
+        "title": "Unbranded red sauce poured over tacos",
+        "prompt": "Use the uploaded red sauce bottle as the exact product reference. Show a hand pouring unbranded red sauce from the plain glass bottle onto tacos on a kitchen counter; preserve the bottle shape and sauce color, with no readable text or logos."
       },
       {
         "ref": "n:guide:k5-lifestyle-case-3",
         "product": "canvas weekender bag",
-        "title": "Canvas weekender bag at a market",
-        "prompt": "Use the uploaded canvas weekender bag as the exact product reference. Set it on a wooden market bench with a folded scarf nearby; keep the full bag visible, with no readable text or logos."
+        "title": "Camel canvas weekender on a car seat",
+        "prompt": "Use the uploaded canvas weekender bag as the exact product reference. Set the camel canvas weekender on a car back seat in daylight; keep the full bag visible, with no readable text or logos."
       }
     ],
     "model-photos": [

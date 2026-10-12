@@ -54488,6 +54488,61 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "b2f10-lifestyle-photos-input0-bad-r1": {
+        "file": "b2f10-lifestyle-photos-input0-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream canvas tote with one handle cropped at the left frame edge.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f10-lifestyle-photos-input1-bad-r1": {
+        "file": "b2f10-lifestyle-photos-input1-bad-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Cream canvas tote in a market scene with one handle cropped at the upper edge.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f10-lifestyle-photos-input1-good-r1": {
+        "file": "b2f10-lifestyle-photos-input1-good-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shopper with a chin-length blonde bob carries a cream tote of produce at a market.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f10-lifestyle-photos-output0-r1": {
+        "file": "b2f10-lifestyle-photos-output0-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult shopper with a short silver pixie cut carries a cream tote of produce through a market.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f10-lifestyle-photos-gallery06-r1": {
+        "file": "b2f10-lifestyle-photos-gallery06-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Hand holding a linen tote bag on a neighborhood street.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }
