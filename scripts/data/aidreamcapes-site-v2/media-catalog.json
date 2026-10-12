@@ -53740,6 +53740,83 @@
           640,
           1280
         ]
+      },
+      "b2f7-video-hub-bf-r1": {
+        "file": "b2f7-video-hub-bf-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "An adult man with short gray hair holds a rolled blue yoga mat and a dark towel beside softly lit evergreen branches.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-ind-fashion-clothing-benefits-0-r1": {
+        "file": "b2f7-ind-fashion-clothing-benefits-0-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short black bob wears a plain light-gray hoodie, with her face and the full garment visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-ind-fashion-clothing-strip-1-r1": {
+        "file": "b2f7-ind-fashion-clothing-strip-1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with her hair pulled back wears a plain heather-gray hoodie, full face and shoulders visible.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-ind-fashion-clothing-lifestyle-photos-r1": {
+        "file": "b2f7-ind-fashion-clothing-lifestyle-photos-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a blonde braid wears a plain navy jacket and carries a canvas tote past a brick storefront.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-ind-fashion-clothing-video-ads-r1": {
+        "file": "b2f7-ind-fashion-clothing-video-ads-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Adult woman with a short copper pixie holds open a plain terracotta cardigan in a bright fitting room.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-platforms-youtube-shorts-ads-r1": {
+        "file": "b2f7-platforms-youtube-shorts-ads-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Charcoal portable speaker with a woven grille and fabric handle on a pale table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "b2f7-platforms-benefits-2-r1": {
+        "file": "b2f7-platforms-benefits-2-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Plain white ceramic jar with a lid on a light studio background.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

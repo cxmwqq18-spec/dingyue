@@ -58,8 +58,8 @@
     {
       "t": "No casting or studio",
       "d": "Start with one garment photo and show it on an adult model without casting, booking, or reshooting each style.",
-      "img": "n:guide:fx30-fashion-benefit-fit-r1",
-      "alt": "Adult model turns in a plain light-gray hoodie with the full garment and face visible."
+      "img": "n:guide:b2f7-ind-fashion-clothing-benefits-0-r1",
+      "alt": "Adult woman with a short black bob wears a plain light-gray hoodie, with her face and the full garment visible."
     },
     {
       "t": "Show fit in motion",
@@ -94,7 +94,7 @@
     "overview": "",
     "strip": [
       "n:guide:rb2-ind-fashion-clothing-strip-1-r1",
-      "n:guide:fx30-fashion-strip-face-r1",
+      "n:guide:b2f7-ind-fashion-clothing-strip-1-r1",
       "n:guide:rb2-ind-fashion-clothing-strip-2-r2",
       "n:guide:rb2-ind-fashion-clothing-strip-4-r3",
       "n:guide:rb2-ind-fashion-clothing-strip-5-r1",

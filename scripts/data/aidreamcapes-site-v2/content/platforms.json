@@ -128,7 +128,7 @@
         "/platforms/instagram-ads": "n:guide:k8-platforms-gen2-plat-shopify-c2",
         "/platforms/shopify-product-photos": "n:gen2:plat-shopify-g1",
         "/platforms/amazon-product-photos": "n:guide:q17-platforms-amazon-main",
-        "/platforms/youtube-shorts-ads": "f:k4-plat-youtube-shorts-15-visual-picker-cards-6-image",
+        "/platforms/youtube-shorts-ads": "n:guide:b2f7-platforms-youtube-shorts-ads-r1",
         "/platforms/facebook-ads": "f:q18-facebook-card-feed-jar"
       }
     }
@@ -150,8 +150,8 @@
     {
       "t": "See the size before you spend credits",
       "d": "Use 1080×1920 for vertical video and 1440×1800 for a Meta Feed image when those channel specs call for them.",
-      "img": "n:protein-pack",
-      "alt": "White protein powder tub with a scoop on a light studio background."
+      "img": "n:guide:b2f7-platforms-benefits-2-r1",
+      "alt": "Plain white ceramic jar with a lid on a light studio background."
     },
     {
       "t": "Download the file and post it yourself",
