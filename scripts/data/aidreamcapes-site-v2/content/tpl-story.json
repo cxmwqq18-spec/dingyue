@@ -24,7 +24,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Download the tall Story and post it. The product stays in frame, and the file has no watermark."
+      "d": "Preview the vertical Story, revise the script or voice, then download a watermark-free file ready to post."
     }
   ],
   "maker": {
@@ -636,7 +636,7 @@
   "related_h2": "Templates to Use With a Story Ad",
   "related_lead": "The ad-image tool, nearby templates, and Instagram ads sit beside this Story template.",
   "cta_title": "Create Your First Story Video",
-  "cta_lead": "Turn a product photo into a Story video with an avatar and a voice. The file has no watermark.",
+  "cta_lead": "Make shoppers stop tapping: turn one product photo into a Story with an AI avatar, a clear offer, and a voice you choose.",
   "blockOrder": [
     "hero",
     "picker",
@@ -656,7 +656,7 @@
         },
         {
           "t": "An Avatar Holds the Product",
-          "d": "Choose an AI avatar to hold the product in the Story, and bring that person back next time."
+          "d": "Choose an AI avatar or build a presenter from photos you may use, then keep the same face across your Stories."
         },
         {
           "t": "A Spoken Line Shoppers Hear",
@@ -672,7 +672,7 @@
         },
         {
           "t": "Versions, Languages, Publish",
-          "d": "Run the same photo for another opening or another language, then post it to Instagram, Facebook, or TikTok."
+          "d": "Test two Story openings from the same product photo and compare which version gets more engagement before you make the next ad."
         }
       ]
     }

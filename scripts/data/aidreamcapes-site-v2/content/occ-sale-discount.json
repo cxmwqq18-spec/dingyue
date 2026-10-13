@@ -259,21 +259,21 @@
   "benefits": [
     {
       "t": "One Avatar for the Countdown",
-      "d": "One AI avatar introduces the sale and names the last day, with the denim jacket still in frame.",
+      "d": "Choose an AI avatar to introduce your sale and say when it ends, while the product you sell stays in frame.",
       "img": "n:guide:img2-occ-sale-discount-benefits-0-r1",
       "alt": "An older man with short gray hair speaks to the camera beside a plain blue denim jacket on a wooden hanger.",
       "frame": "none"
     },
     {
       "t": "A Script That Builds Urgency",
-      "d": "Paste the product page and get a spoken pitch. The last day lands as the final line while the blanket stays in the shot.",
+      "d": "Turn your product page into a spoken sale pitch that builds anticipation and ends with the deadline shoppers need to know.",
       "img": "n:guide:img2-occ-sale-discount-benefits-1-r1",
       "alt": "A man with short blonde hair speaks to the camera while folding a checked picnic blanket at a park table.",
       "frame": "none"
     },
     {
       "t": "A Voice That Hits the Date",
-      "d": "Pick a voice and ease it on the end date so the buyer catches it. The charging pad stays in the shot.",
+      "d": "Choose an AI voice that fits your sale and slow the deadline line so buyers hear when the offer ends.",
       "img": "n:guide:img2-occ-sale-discount-benefits-2-r1",
       "alt": "A woman with auburn hair in a bun speaks to the camera, a plain round charging puck on the desk.",
       "frame": "none"
@@ -378,7 +378,7 @@
       }
     ]
   },
-  "cta_title": "Download Your Countdown Sale Video",
+  "cta_title": "Build Anticipation for Your Sale",
   "blockOrder": [
     "hero",
     "benefits",

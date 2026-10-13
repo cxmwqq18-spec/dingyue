@@ -52,7 +52,7 @@
     }
   ],
   "steps_h2": "How to Make a Fitness Ad in 3 Simple Steps",
-  "steps_lead": "Three steps take you from a product photo to a routine ad, with no creator to book.",
+  "steps_lead": "Make your fitness ad in three steps with your product photo, no camera gear, and no creator to book.",
   "steps": [
     {
       "t": "Upload Your Product",
@@ -107,7 +107,7 @@
     }
   },
   "templates_lead": "Pick a routine scene close to your product. Leave health results out of the frame.",
-  "cta_lead": "A routine ad can start from a product link or one photo, with a spoken line and captions.",
+  "cta_lead": "Show your health or fitness product in a real routine without booking a creator or a studio.",
   "relatedLinks": [
     {
       "id": "tpl-ugc",
@@ -161,7 +161,7 @@
   },
   "platforms": {
     "h2": "Where a Fitness Ad Can Run",
-    "lead": "One product photo can feed a phone feed and a listing. Match the shape to the place you post.",
+    "lead": "Create fitness ads from your product photo for feeds, product listings, stories, and short video channels.",
     "items": [
       {
         "t": "Post a TikTok Routine",

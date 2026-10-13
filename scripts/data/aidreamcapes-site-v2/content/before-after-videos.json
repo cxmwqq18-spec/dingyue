@@ -4,7 +4,7 @@
   "description": "Make a before and after video in minutes, with a script, an avatar, and a voice. Paste a product link or a photo, then download a clip you can post.",
   "h1": "Create Your Before and After Video With AI",
   "eyebrow": "Watch the Grease Come Off",
-  "lead": "Build a before and after clip with a script, an avatar, and a voice. Paste a link or upload a photo, then show one change shoppers can see.",
+  "lead": "Create a before-and-after video in minutes with your product photo, a realistic AI presenter, a script, and a voice you choose.",
   "secondary_keywords": [
     "AI before and after video",
     "before and after product video",
@@ -35,7 +35,7 @@
     },
     {
       "t": "You Write the Claim",
-      "d": "You write the one change the clip may say. It does not add a second claim on its own.",
+      "d": "Write your short script to name the starting state, show the change, and make the result easy for shoppers to understand.",
       "icon": "check"
     },
     {
@@ -49,15 +49,15 @@
   "steps": [
     {
       "t": "Add a Link or a Photo",
-      "d": "Paste the product page or upload the before photo. Name the after in one line."
+      "d": "Paste your product link or upload a photo, then let the script pick up the details that make the transformation clear."
     },
     {
       "t": "Let the Clip Come Together",
-      "d": "You get a clip of that change, and you can still edit the spoken line."
+      "d": "Pick an AI presenter who fits your product, then preview and edit the line that narrates the change."
     },
     {
       "t": "Download or Publish",
-      "d": "Download a tall, square, or wide file and post it. There is no watermark."
+      "d": "Watch your before-and-after clip, change the line or look, then download a watermark-free file in the size you need."
     }
   ],
   "maker": {
@@ -76,7 +76,7 @@
   "faq": [
     {
       "q": "What does a before and after product video show?",
-      "a": "A short ad where one thing changes and the product stays. Shoppers see the start and the result in the same place."
+      "a": "Keep your product in frame and show the starting state, the change, and the final result in one short ad."
     },
     {
       "q": "How do I make a before and after video from one photo?",
@@ -113,7 +113,7 @@
   ],
   "actor_scene_picker": {
     "title": "Pick a Presenter for the After",
-    "lead": "Choose who narrates the change. Then name the start, the action, and the result.",
+    "lead": "Choose an AI presenter who tells your product's transformation from the starting state to the result shoppers want to see.",
     "button": "Use this presenter and scene"
   },
   "relatedLinks": [
@@ -187,7 +187,7 @@
   "definition": {
     "title": "What a Before and After Video Shows",
     "paras": [
-      "The product stays in frame while one visible change plays out. Shoppers see the result in the same shot, and you approve that change before the file goes out.",
+      "Show your product's transformation as a clear before-and-after story, with the item visible from first frame to final result.",
       "A wide file fits a landscape placement. A tall file can go to TikTok, and a square can go to Meta. You approve the spoken line before any file leaves."
     ]
   },
@@ -314,7 +314,7 @@
         },
         {
           "t": "Add a Voiceover for the Change",
-          "d": "A voice can say what changed, so the picture is not the only way the shopper understands it."
+          "d": "Choose a natural voice to explain your product's visible change while shoppers watch the before-and-after clip."
         },
         {
           "t": "Edit Captions, Music, and Length",

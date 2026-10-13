@@ -22,11 +22,11 @@
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Pick an AI actor who looks like the buyer. You can swap that face before the clip is made."
+      "d": "Choose an AI actor whose look fits your buyers, with a range of skin tones and styles for your beauty ad."
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "The file includes a spoken line and captions. Download the vertical cut for the feed your buyers already watch."
+      "d": "Generate your complete beauty ad with a spoken line, captions, and the product in use, ready for the channels you sell on."
     }
   ],
   "faq": [
@@ -124,7 +124,7 @@
       },
       {
         "t": "Show the Product, Then Sell",
-        "d": "A creator-style beauty clip grabs attention and shows the product in use. You can sell without a big production bill.",
+        "d": "Show your beauty product in a creator-style ad that grabs attention, demonstrates use, and gives shoppers a reason to buy.",
         "img": "n:guide:fx29-beauty-benefit-swatch"
       }
     ]

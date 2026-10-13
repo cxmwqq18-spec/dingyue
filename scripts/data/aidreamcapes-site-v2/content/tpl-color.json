@@ -45,11 +45,11 @@
   "faq": [
     {
       "q": "What does a color template give me?",
-      "a": "A ready-made scene with an AI avatar, a voice, and a script. Add a photo of each color you sell and get a matching set in minutes, without filming every shade."
+      "a": "A ready-made color scene keeps the crop and lighting consistent while you add photos of the shades you sell."
     },
     {
       "q": "How do I turn a shade template into a file I can post?",
-      "a": "Drop your shade photos into the scene, name each color, and export a square for the gallery. A shade you never photographed is not added. You review the script before the export."
+      "a": "Use one ready-made layout to show each shade with the same crop, lighting, and product scale, then export images for your store."
     },
     {
       "q": "Why use a template instead of filming every color?",
@@ -620,7 +620,7 @@
     }
   ],
   "cta_title": "Put Every Shade in One Scene",
-  "cta_lead": "Get the colors you sell into one ad you can post. Add the shade photos you already have.",
+  "cta_lead": "Show every shade in a polished product image set shoppers can compare, then post the images to your store or ads.",
   "more_sections": [
     {
       "eyebrow": "Edit the Shade Before You Post",

@@ -25,7 +25,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "Preview the clip, then export 9:16, 1:1, or 16:9. Post it, or download it and post it yourself."
+      "d": "Preview your promo video, adjust the script or sound, and export the size that fits where you plan to post."
     }
   ],
   "maker": {
@@ -553,7 +553,7 @@
       }
     }
   },
-  "cta_lead": "Leave with a launch clip you can post, with a voice and an AI avatar, from one photo of the finished item.",
+  "cta_lead": "Make a promo video that helps sell your new item, with a script, AI avatar, and voice from one product photo.",
   "blockOrder": [
     "hero",
     "picker",
@@ -636,7 +636,7 @@
     {
       "eyebrow": "On the announcement",
       "h2": "Give This Promo a Voice, a Line, and a Face",
-      "lead": "Voice, script, avatar, and another opening can all hang on one photo of the finished item.",
+      "lead": "Make several promo video versions for your campaign, then choose the opening, face, and voice you want to post.",
       "items": [
         {
           "t": "Hear the Announcement",
@@ -648,11 +648,11 @@
         },
         {
           "t": "Edit the Line, Then Make It",
-          "d": "You get a short script you can fix before the clip is rendered."
+          "d": "Paste your product link to turn that page into a tailored promo script, then edit the line before rendering."
         },
         {
           "t": "Let an Avatar Present the Release",
-          "d": "An AI avatar you pick can present the release, and you can run the clip as your shop's ad."
+          "d": "Choose an AI avatar whose look fits your promotion, or make a custom presenter for the next release."
         },
         {
           "t": "Start From a Link or Your Catalog",

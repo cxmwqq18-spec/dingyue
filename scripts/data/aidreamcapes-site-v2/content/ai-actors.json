@@ -938,7 +938,7 @@
         },
         {
           "t": "Walk Through One Feature",
-          "d": "Use an AI actor as a guide. They show one feature, and the shopper can replay that clip from the product page.",
+          "d": "Guide shoppers through your product with an AI actor who can show steps, explain features, and answer common questions.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "You get a product guide of an adult man with close-cropped red hair pointing at the button on a plain blue portable lamp.",
           "frame": "none"
@@ -946,7 +946,7 @@
       ]
     }
   ],
-  "cta_title": "Cast an AI Actor for the Next Ad",
+  "cta_title": "Scale Your Next Ad Campaign With an AI Actor",
   "cta_lead": "Choose a face and a voice, then make a product video from one photo. You see the credit cost before you start.",
   "faq": [
     {
@@ -1025,7 +1025,7 @@
       },
       {
         "t": "Test Another Face and Line",
-        "d": "Keep one product photo and try another actor or another opening. Compare the cuts before you post.",
+        "d": "Test more actors, openings, and formats from one product photo, then keep the ads that work for you.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "You get an ad still of an adult East Asian man with short black hair holding a plain matte blue insulated bottle toward the camera."
       },

@@ -14,12 +14,12 @@
   ],
   "intro": [
     "Each guide is a short job: a product photo, a short ad, a launch clip, a last check, or clothing on a person. You use a photo of your own goods, write your own caption, and post without a shoot.",
-    "Open the guide, then open the tool it names. Paste a [product link](page:url-to-video), choose a face in the [actor library](page:ai-actors), or begin from a layout in the [template gallery](page:templates). Downloads do not carry a watermark. [Plans are on the pricing page](page:pricing)."
+    "Choose a guide for your product, get its quick answer, then open the linked tool to make the photo or ad."
   ],
   "faq": [
     {
       "q": "Which guide should I open first?",
-      "a": "Open the one that matches the job in front of you. That is a product photo, a short ad, a launch clip, a check before you publish, or clothing on a person."
+      "a": "Choose the guide for your next product photo, video ad, or final check, and follow it with the product you sell."
     },
     {
       "q": "How do I turn a guide into a file I can post?",
@@ -83,7 +83,7 @@
   "steps": [
     {
       "t": "Pick the Article",
-      "d": "Open the guide that matches the job: a product still, a short ad, or a launch clip."
+      "d": "Choose the guide for the file you need, then follow its steps with your own product photo."
     },
     {
       "t": "Make One File",
@@ -97,5 +97,5 @@
   "related_h2": "Open the Tool the Guide Names",
   "related_lead": "The guides land you in the tool that finishes the file, or in layouts and shop categories.",
   "cta_title": "Start From One Product Photo",
-  "cta_lead": "Open a guide, add one product photo, and check the credit cost before anything is rendered."
+  "cta_lead": "Use a guide to turn your product photo into a polished store image or ad you can post today."
 }

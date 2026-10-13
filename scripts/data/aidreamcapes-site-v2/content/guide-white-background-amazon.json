@@ -18,7 +18,7 @@
       "h2": "A Pure White Main Image for Every Product",
       "paras": [
         "Amazon requires a pure white main image. If the corners are not white, the listing can drop out of search until you replace that picture.",
-        "The photo on this page is one backpack. Remove the old background, then set the corners to pure white, 255 on red, green, and blue. You do not need a studio for that.",
+        "Take one backpack photo as an example. Remove the old background, then set the corners to pure white, 255 on red, green, and blue. You do not need a studio for that.",
         "Sale stickers, badges, and extra objects stay off this picture. The product should fill most of the square, and it should be the one you ship."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec01",
@@ -149,7 +149,7 @@
     },
     {
       "q": "How do I get a pure white background from a phone photo?",
-      "a": "Start from a phone photo that already shows the whole product. Ask for white, then sample a corner. A corner that is not 255 on red, green, and blue is not done yet."
+      "a": "Upload your product photo, remove its background, set the square to pure white, and check every corner before posting the main image."
     },
     {
       "q": "Can I do this for many products together?",
@@ -181,7 +181,7 @@
     }
   ],
   "cta_title": "Make a Clean Main Image",
-  "cta_lead": "You get a white main image from one complete product photo. Compare it with the item you ship before it goes on the listing.",
+  "cta_lead": "Make a listing-ready white main image in minutes from your complete product photo, then upload it after checking the corners.",
   "relatedLinks": [
     "guide-product-photo-tips",
     "white-background",

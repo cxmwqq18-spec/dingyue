@@ -48,7 +48,7 @@
   ],
   "examples": null,
   "templates_lead": "Choose a template that shows one useful product action in the opening seconds.",
-  "cta_lead": "Paste a product link or upload a photo, pick an avatar, and download a tall Shorts file.",
+  "cta_lead": "Make a YouTube Shorts ad in minutes: add your product link or photo, pick an actor, and download the tall file.",
   "steps": [
     {
       "t": "Add a Product Link",
@@ -108,7 +108,7 @@
         },
         {
           "t": "Select an Actor",
-          "d": "Pick an AI actor to hold the product and show one useful move. You do not book a creator."
+          "d": "Pick an AI actor or make a custom look, then show your product in a YouTube Short without booking a creator."
         },
         {
           "t": "Save and Download",
@@ -171,14 +171,14 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "A YouTube Shorts ad can start from a product photo or from the product link.",
+  "benefits_lead": "Make a YouTube Shorts ad that opens on your product, keeps viewers watching, and gives them a reason to act.",
   "reasons": {
     "h2": "Why This Fits YouTube Shorts",
     "lead": "A second face or a new opening does not require a second booking.",
     "items": [
       {
         "t": "Many Faces for One Brand",
-        "d": "Skip the hunt for creators. With 53 AI actors you can change the face often, so the channel does not stick to one person.",
+        "d": "Choose from 53 AI actors, change the face for your new version, and keep the product and brand consistent.",
         "icon": "UserRound"
       },
       {

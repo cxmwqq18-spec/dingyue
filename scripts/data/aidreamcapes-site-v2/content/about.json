@@ -14,7 +14,7 @@
     {
       "h2": "Ads Were Waiting on Creators",
       "paras": [
-        "Small shops were losing days to creator schedules, tight deadlines, and too many handoffs. AIVideosUGC was built so a product photo can become an ad without that wait.",
+        "We built AIVideosUGC so you can turn a product photo into a consistent ad in minutes, without waiting on creators or handoffs.",
         "Start with a photo, like the mug on the desk, or with the product page link. You get a square store image or a short video of 6, 10, 15, or 30 seconds. You read the file before anyone else sees it."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
@@ -23,7 +23,7 @@
     {
       "h2": "Fast Enough for a Tight Week",
       "paras": [
-        "A clear product photo and one sentence about the scene give you a listing image or an ad. You can do that while the next order is already on the packing table.",
+        "Turn one product photo and a short scene description into a listing image or video ad in minutes, without a traditional shoot.",
         "Paste a product page when a listing changes, or make several versions from one photo. Adjust the words, the presenter, the voice, and the captions before you download."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
@@ -41,7 +41,7 @@
     {
       "h2": "High Quality Without a Heavy Bill",
       "paras": [
-        "Every photo and video shows its credit charge before the job starts. Pick the monthly plan that fits how many files you make.",
+        "Make polished product photos and ads without a studio bill; you see the credit cost before each job starts.",
         "A product photo uses 24 credits. Video uses 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30. A failed job returns its credits, and downloads have no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
@@ -50,7 +50,7 @@
     {
       "h2": "Skip the Shoot for the Next Ad",
       "paras": [
-        "A photo or a link can become the ad without booking a shoot. Pick an AI actor, or make an AI twin from a photo you have the rights to use.",
+        "Stay off camera and still give your ad a presenter: choose an AI actor or make an AI twin from a photo you may use.",
         "A voice you may use can be cloned, and the same ad can be made again in another language. Email support@aivideosugc.com if you want a person to look at a file. You still see the credit cost before the job starts."
       ]
     }
@@ -92,7 +92,7 @@
   "ctaTitle": "Start From One Product Photo",
   "ctaLead": "Pick a photo or a video, see the charge before you start, and make the next listing image or short ad.",
   "cta_title": "Start From One Product Photo",
-  "cta_lead": "Pick a photo or a video, see the charge before you start, and make the next listing image or short ad.",
+  "cta_lead": "Make a scroll-stopping product ad from one photo, with no filming or editing; see the credit cost before you start.",
   "relatedLinks": [
     "pricing",
     "faq",

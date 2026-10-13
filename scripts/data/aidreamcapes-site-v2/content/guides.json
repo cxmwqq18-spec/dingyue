@@ -17,7 +17,7 @@
     "You land on the tool that makes the file: a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). For a video, an AI actor from the [actor library](page:ai-actors) is there when that guide calls for a person in the frame."
   ],
   "benefits_h2": "Pick the Guide That Matches Today",
-  "benefits_lead": "Open the guide for today's job, drop in the product photo, and make that one file. You do not start from a blank page.",
+  "benefits_lead": "No prompt to write: pick a guide, add your product photo, and follow the steps to a file you can post.",
   "benefits": [
     {
       "t": "Start From a Sharp Photo",
@@ -121,7 +121,7 @@
   "related_h2": "Tools These Guides Send You To",
   "related_lead": "The file from the guide is a step away from the tool that makes it, or from the places you post.",
   "cta_title": "Start the Guide That Matches Today",
-  "cta_lead": "You start today's job from one product photo.",
+  "cta_lead": "Make a polished ad from one product photo and put the item you sell in a file ready to post.",
   "reviews": {
     "h2": "How Sellers Use a Guide, Then Make the File",
     "lead": "Four sellers match today's job, drop in the product they ship, and post one file.",

@@ -4,7 +4,7 @@
   "description": "Open the industry you sell in and turn one photo into a UGC-style ad. Skip the crew and the long production, then download a clip you can post.",
   "h1": "Video Ads for the Industry You Sell",
   "eyebrow": "Find the Ad for Your Product",
-  "lead": "Make UGC-style video ads for the industry you sell in. You skip the time, the cost, and the crew of a traditional shoot.",
+  "lead": "Make authentic UGC-style ads for the category you sell in, with no crew, long wait, or traditional shoot budget.",
   "card": "Open your category and make a clip from one photo of the item.",
   "secondary_keywords": [
     "AI product photos by category",
@@ -270,7 +270,7 @@
   "cta_lead": "Make the next ad from the photo already on the listing. The credit cost shows before it runs.",
   "reasons": {
     "h2": "Included With Every Industry Ad",
-    "lead": "An avatar, a language, the frame size, and your logo can ride with every industry you open.",
+    "lead": "Make your industry ad without the time, crew cost, or complexity of a traditional shoot.",
     "items": [
       {
         "t": "A Face That Fits",
@@ -308,11 +308,11 @@
   "benefits": [
     {
       "t": "An Avatar Matched to the Item",
-      "d": "Pick an AI avatar who looks right with the product, and let that face say the line."
+      "d": "Choose an AI actor who fits your shoppers, then keep that face across the next products in your industry."
     },
     {
       "t": "A Listing Photo Becomes a Clip",
-      "d": "The photo on the listing can move into a clip, and you can start without a second design tool."
+      "d": "Turn your listing photo into a finished ad that shows the product clearly and is ready for you to review."
     },
     {
       "t": "The Offer in the Buyer's Language",
@@ -398,7 +398,7 @@
         },
         {
           "t": "Try a Second Opening",
-          "d": "Make a second opening from the same photo and keep the one you would actually run."
+          "d": "Upload your product photo, then make another video for the same item by changing the opening or the actor."
         },
         {
           "t": "Stay on the Brand",

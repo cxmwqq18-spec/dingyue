@@ -23,7 +23,7 @@
       "d": "The draft is written from the product link, using the facts already on the page. Ask for the language you sell in, then fix any line before it runs."
     },
     {
-      "t": "Realistic AI Actors for the Ad",
+      "t": "Choose From 53 Realistic AI Actors for Your Ad",
       "d": "Pick from 53 AI actors so the ad can face the buyer you already sell to. The delivery stays steady from the first clip to the next."
     },
     {
@@ -31,7 +31,7 @@
       "d": "Skip the crew and get more versions of the same product out faster. The time and the money stay in the ad, not in a studio day."
     },
     {
-      "t": "You Still Choose the Script and the Voice",
+      "t": "Choose Your Actor, Script, Voice, and Scene",
       "d": "Change the script, the voice, the actor, and the frame before you export. One product link can feed every placement you sell on."
     }
   ],
@@ -48,7 +48,7 @@
     },
     {
       "t": "Write the Script",
-      "d": "Read the draft script, fix any line that does not match the page, then make the video."
+      "d": "Generate a script from your product page, edit any claim that needs work, then make the video."
     }
   ],
   "maker": {
@@ -226,26 +226,26 @@
     ]
   },
   "reasons": {
-    "h2": "What a Product URL Does for the Ad",
+    "h2": "Why Your Product URL Makes Video Ads Faster",
     "lead": "Paste the link. The hours of writing, editing, and shooting do not have to happen first.",
     "items": [
       {
-        "t": "Saves the Hours",
+        "t": "Make Your Video Ad in Minutes",
         "d": "Paste the link and the video starts from that page. You do not write a script from scratch or book an edit before the first draft.",
         "icon": "Link"
       },
       {
-        "t": "The Manual Work Is Handled",
+        "t": "Skip the Manual Editing Work",
         "d": "The script and the video come back from the link. You drop the URL in and approve the result, instead of building each piece by hand.",
         "icon": "WandSparkles"
       },
       {
-        "t": "Many Links in Minutes",
+        "t": "Make Videos From Several Product Links at Once",
         "d": "Make a clip for several product links in minutes. A launch, a demo, and a social post do not each need their own shoot.",
         "icon": "Layers"
       },
       {
-        "t": "Trust Already Written on the Page",
+        "t": "Use Reviews Already on Your Product Page",
         "d": "If the page already has a shopper note, the clip can say it. You do not hunt for that line or type it into a new brief.",
         "icon": "Star"
       }

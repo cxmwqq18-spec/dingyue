@@ -35,7 +35,7 @@
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the look in one line, such as a gold cosmetic pack or a plain kraft box. The picture comes back in minutes."
+      "d": "Describe a packaging concept in one line and see a realistic version in minutes, ready to revise before production."
     },
     {
       "t": "Download and Compare",
@@ -638,7 +638,7 @@
     }
   ],
   "cta_title": "Download a Packaging Design",
-  "cta_lead": "Upload the product photo, name the pack style, and download a square design for the listing.",
+  "cta_lead": "Make a realistic packaging mockup for your product page from one clear photo, then check it against the pack you sell.",
   "more_sections": [
     {
       "eyebrow": "In the Editor",
@@ -648,7 +648,7 @@
         {
           "icon": "play",
           "t": "A Voice, Words, and Music",
-          "d": "The packaging design is a still. Add a voiceover or captions, plus a track from the music library, only when that still also becomes a clip."
+          "d": "Make a realistic packaging image from your product photo, with the shape and label area clear enough to review before listing."
         },
         {
           "icon": "users",
@@ -663,7 +663,7 @@
         {
           "icon": "layers",
           "t": "A Second Style to Compare",
-          "d": "Make a second style of the same box and keep the one that fits the listing. Each photo is 24 credits, shown before it runs."
+          "d": "Create two packaging styles from the same product photo, compare them on the listing, and keep the version you prefer."
         },
         {
           "icon": "check",

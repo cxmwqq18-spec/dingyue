@@ -24,13 +24,13 @@
       "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
       "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
       "t": "Show the Bag in Use",
-      "d": "A hand sets the bag beside a cup. When shoppers can picture it in use, they are closer to buying."
+      "d": "Show your product in a lifelike scene so shoppers can picture using it and feel more ready to buy."
     },
     {
       "img": "n:guide:img2-lifestyle-photos-benefits-2-r1",
       "alt": "Orange metal dining chair in a bright living room.",
       "t": "Skip the Styled Photo Shoot",
-      "d": "You get a staged chair photo without booking a room or a crew. The shot looks professionally set."
+      "d": "Get a professionally staged product photo without paying for a styled shoot, location, or crew."
     }
   ],
   "steps_h2": "How to Make a Staged Product Photo in 3 Simple Steps",
@@ -137,7 +137,7 @@
     },
     "picker": {
       "title": "Put Your Product in an Everyday Scene",
-      "lead": "A room shelf, a cafe table, or a market stall. The product in your photo stays the same.",
+      "lead": "Upload one product photo and place it in a realistic room, table, or market scene that helps shoppers picture it.",
       "chips": [
         {
           "id": "room-shelf",
@@ -205,7 +205,7 @@
       {
         "img": "n:guide:k5-lifestyle-photos-uses-0-image",
         "h": "Show Where the Item Sits at Home",
-        "d": "A shelf or a counter tells shoppers the room before they read the description.",
+        "d": "Show your product held, worn, or placed in a realistic setting so shoppers see how it fits their lives.",
         "alt": "Ceramic planter with a fern on a styled living-room shelf."
       },
       {
