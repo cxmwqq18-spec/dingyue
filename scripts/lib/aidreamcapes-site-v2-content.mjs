@@ -2081,10 +2081,8 @@ function payloadFor(model, page) {
     return { ...base,
       maker: homeMaker,
       ...(visual ? { visual } : {}),
-      // `output` and `versions` belong to the picture layout used when the hero has no video; with the video reel they are not shown, so they stay out of the data.
-      hero: { image: mediaImage(model, "g:feed-ad-still/source-input", "inset"),
-        ...(model.media.plan.pages.home?.hero?.kind === "loop" ? {} : { output: mediaImage(model, "g:feed-ad-still/hero-output", "inset"), versions: ["n:guide:img2-home-hero-shoe-r2-a", "n:guide:img2-home-hero-shoe-r2-b", "n:guide:img2-home-hero-shoe-r2-c"].map((ref) => mediaImage(model, ref, "inset")) }),
-        videoHref, photoHref },
+      // The centered hero only links to the workbench; it shows no product picture, so none goes into the page data or the home sitemap.
+      hero: { videoHref, photoHref },
       make: {
         title: c.make_title,
         lead: c.make_lead,
@@ -2459,7 +2457,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
     model.currentPageIsCollection = page.type === "industry" || page.type === "platform" || page.type === "occasion";
     model.currentPageCardCount = 0;
     model.pageUse = new Set(plannedRefs(model, page.id));
-    const heroMedia = heroMediaFor(model, page.id);
+    const heroMedia = page.type === "home" ? undefined : heroMediaFor(model, page.id); // the centered home hero shows no picture or reel
     const gallery = galleryFor(model, page.id);
     const pairs = pairsFor(model, page.id);
     const payload = { ...payloadFor(model, page), ...(heroMedia ? { heroMedia } : {}), ...(gallery ? { gallery } : {}), ...(pairs ? { pairs } : {}) };

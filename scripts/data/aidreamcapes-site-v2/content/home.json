@@ -354,14 +354,7 @@
     }
   ],
   "visual": {
-    "strip": [
-      "f:carousel-storytelling-v",
-      "n:guide:b2f4-home-strip-r1",
-      "n:gen2:photo-hub-c1",
-      "f:img3-home-strip-serum-r3",
-      "f:q1-home-strip-trailshoe",
-      "f:img3-home-strip-creator-review-r2"
-    ],
+    "strip": [],
     "steps": {
       "source": "n:guide:img1-home-steps-source-r1",
       "sourceAlt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
