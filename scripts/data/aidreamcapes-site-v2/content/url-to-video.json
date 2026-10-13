@@ -70,56 +70,56 @@
   },
   "faq": [
     {
-      "q": "How do I get a clip from a product page?",
-      "a": "Paste the public product page, pick an AI actor, approve the script, and download the clip. The photo on that page is the product in the file."
-    },
-    {
-      "q": "Do I pay credits to start a clip from my product page?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before it runs, and a failed render returns those credits."
-    },
-    {
-      "q": "What clips can I post from one product link?",
-      "a": "A listing video, a product demo, a paid ad, or a social clip. Each one can use the photo and the facts already on that public page."
-    },
-    {
-      "q": "Can I use the clip for ads, the product page, and social posts?",
-      "a": "Yes. Shops use it for ads, product pages, and social posts. You approve the script before the file is downloaded."
-    },
-    {
-      "q": "Can I change the drafted script before the clip is made?",
-      "a": "Yes. Read the script, change any line that does not match the listing, and then render. The wording stays yours."
-    },
-    {
-      "q": "Which frames and lengths can I download?",
-      "a": "Yes. You download a video file. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
-    },
-    {
-      "q": "What do I get after I paste the product page?",
-      "a": "The photo and the written facts come in from that page. You get a draft script, then you pick an actor and a voice before the clip is made."
-    },
-    {
-      "q": "Do I need editing experience for the first clip?",
-      "a": "No. You can still open the editor if you want to trim the clip, change the music, or fix a line. A first clip does not require that."
-    },
-    {
-      "q": "Which product pages can I paste to start a clip?",
-      "a": "Yes. Public product pages a shopper can open without logging in. A locked page or a page with no product photo will not supply the picture."
-    },
-    {
-      "q": "Why start from the listing instead of gathering the files myself?",
-      "a": "The page already has the product photo and the facts you would otherwise retype. You spend the time on the script and the actor."
-    },
-    {
       "q": "How do I go from the product link to a clip I can post?",
-      "a": "Paste the link, approve the script, and start the render. You see the credit cost first. There is no separate shoot to schedule before that."
-    },
-    {
-      "q": "How long do I wait for the clip?",
-      "a": "The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
+      "a": "Paste the product link, choose your message and actor, then make the video. Download the ad in a few minutes."
     },
     {
       "q": "How do I turn a product listing into an ad I can run?",
-      "a": "Yes. Paste the listing, pick a tall or square frame, approve the spoken line, and download. The file has no watermark and can run as an ad."
+      "a": "Paste your product URL, choose a vertical or square size, and make the ad. Download it without a watermark for paid campaigns."
+    },
+    {
+      "q": "Can I change the drafted script before the clip is made?",
+      "a": "Yes. Change the suggested script to match your product and offer before making the video. You can try another opening later."
+    },
+    {
+      "q": "What do I get after I paste the product page?",
+      "a": "You get a suggested script, product visuals, and choices for actor and voice. Check the details before making the video."
+    },
+    {
+      "q": "Why start from the listing instead of gathering the files myself?",
+      "a": "A product URL already holds your photos and details, so you can make an ad faster. There is no separate filming or file gathering."
+    },
+    {
+      "q": "Which frames and lengths can I download?",
+      "a": "Download videos in 9:16, 1:1, 16:9, 4:3, or 3:4. Choose 6, 10, 15, or 30 seconds for your ad."
+    },
+    {
+      "q": "Can I use the clip for ads, the product page, and social posts?",
+      "a": "Yes. Use the watermark-free video in paid ads, on product pages, or in social posts. Choose the size each placement needs."
+    },
+    {
+      "q": "How long do I wait for the clip?",
+      "a": "A product-link video usually takes a few minutes. Start with a clear page, then choose the message and actor."
+    },
+    {
+      "q": "How do I make a video from a product URL?",
+      "a": "Paste a public product link, choose an AI actor, and add your message. You can download the finished video in minutes."
+    },
+    {
+      "q": "What kinds of product URLs can I use?",
+      "a": "Use public product pages with a clear image and details shoppers can see. Private pages need a product photo upload instead."
+    },
+    {
+      "q": "How many credits does a product-link video use?",
+      "a": "A 6-second video uses 24 credits; 10, 15, and 30 seconds use 40, 60, and 120. Failed jobs return credits."
+    },
+    {
+      "q": "Do I need editing experience for the first clip?",
+      "a": "No. Paste your link, choose an actor and message, and make the video. You can create it without editing software."
+    },
+    {
+      "q": "What clips can I post from one product link?",
+      "a": "Make product demos, listing videos, social posts, and paid ads from one product link. Try different messages without another shoot."
     }
   ],
   "cta_lead": "Paste a public product page. You see the credit cost before the clip starts.",

@@ -135,64 +135,64 @@
   ],
   "faq": [
     {
-      "q": "What does the AI video ads generator do?",
-      "a": "A tool that makes a short video ad from a product, a prompt, or a link, with a script, a presenter, and a voice. You do not film, and you do not need an edit bay."
+      "q": "Where do I see which ad version worked?",
+      "a": "Check your ad account for views, clicks, and sales for each version. The video tool makes the ads; your campaign results show what worked."
     },
     {
-      "q": "How do I create a video ad to test?",
-      "a": "Upload a photo or paste the product link, and name the opening you want. Download the shape this test uses."
+      "q": "Can Meta or TikTok reject an AI video ad?",
+      "a": "Yes. An AI ad can be rejected if it breaks the platform’s ad rules. Check claims and any required AI disclosure before you spend more."
     },
     {
-      "q": "What should I look for when I pick a tool for ad tests?",
-      "a": "Pick a tool that can make a second opening of the same product from the photo you already have, with no new shoot."
+      "q": "Should I change the price in just one ad version?",
+      "a": "Keep the same price when you are testing a new opening or visual. Test a different price separately so you know what changed the result."
     },
     {
-      "q": "Do I pay to make each version?",
-      "a": "Yes. A clip is 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "How does AI make a video ad?",
+      "a": "It makes video ads from a product photo, link, or short description. You get a script, presenter, and voice without filming."
     },
     {
-      "q": "Can I run the file as a paid ad?",
-      "a": "Yes. The download has no watermark. It can run as a paid placement and sit on the product page."
+      "q": "Do I have to label an AI actor in my ad?",
+      "a": "Follow the platform’s current disclosure rules when you post. Be especially clear if the video could look like a real customer review."
     },
     {
-      "q": "Which frames can I download, and where can they run?",
-      "a": "Use 9:16 on a phone screen, 1:1 in a feed, and 16:9 when the screen is wide. 4:3 and 3:4 are for a placement that lists them. A second shape is a different test."
+      "q": "How many ad versions should I test first?",
+      "a": "Start with a few versions so each gets enough budget to compare. Change one thing at a time, such as the opening, to see what helps."
     },
     {
-      "q": "Can I test ads for more than one product?",
-      "a": "Yes, if each product has its own photo. Reuse one opening as the note. Many products still means one file each."
+      "q": "Can I make ads for several products?",
+      "a": "Yes. Use a photo or link for each product and make versions for your catalog. You can test different products and openings without a new shoot."
     },
     {
-      "q": "Should I stop filming with people I hire?",
-      "a": "No. Keep a filmed spot when you want a person you hired on camera. Use a generated file when you are still choosing the first second."
+      "q": "What if one ad version barely gets shown?",
+      "a": "Give each version enough exposure before comparing results. If one gets almost no views, you cannot tell whether its opening worked."
     },
     {
-      "q": "Can a generated ad be turned down by the ad account?",
-      "a": "It can, for the same reasons any ad can. If the line sounds like a customer wrote a review, say so the way that app currently asks. Read the rules before you raise the budget."
+      "q": "Which tool should I use to test video ads?",
+      "a": "Choose one that makes several versions from the same product and lets you change the opening quickly. AIVideosUGC can make those versions without new shoots."
     },
     {
-      "q": "How many versions should a small shop run?",
-      "a": "Start with a few, often three. More than that splits a small budget so far that no version gets a fair chance to play."
+      "q": "Which video sizes can I download for ads?",
+      "a": "Choose 9:16 for TikTok and Reels, 1:1 for feeds, or 16:9 for wide placements. You can also choose 4:3 or 3:4."
     },
     {
-      "q": "What should I test first?",
-      "a": "The opening. It decides whether anyone watches the rest. Keep the product, the length, and the shape the same until that result is clear."
+      "q": "How much do AI video ads cost?",
+      "a": "Videos cost 24 to 120 credits, depending on length. Starter costs $24.50 a month for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
     },
     {
-      "q": "Can I change the price on only one version?",
-      "a": "No. While you are testing the video or the photo, put the same words, the same price, and the same music on every file. Test the offer in a later round, on its own."
+      "q": "How do I make video ads to test?",
+      "a": "Start with a product photo or link and make several versions with different openings. Keep the product and offer the same so you can compare results."
     },
     {
-      "q": "Where do the numbers come from?",
-      "a": "From the ad account, after each version has played. The test does not invent a winner. You read who stayed, who clicked, and what a sale cost."
+      "q": "Can I use AI videos as paid ads?",
+      "a": "Yes. You can use the downloaded video in paid ads without a watermark or separate actor license. Check that your product claims are accurate before posting."
     },
     {
-      "q": "What if the ad account barely shows one version?",
-      "a": "That version was not tested. Wait until each file has had a real chance to play, or the comparison is noise."
+      "q": "What should I test first in a video ad?",
+      "a": "Test the opening first because it decides whether people keep watching. Make several short versions from the same product photo and compare them."
     },
     {
-      "q": "Do I have to say the presenter is generated?",
-      "a": "Yes, when the ad could be read as a real customer's review. Follow that platform's disclosure rule."
+      "q": "Do AI video ads work as well as filmed ads?",
+      "a": "Results depend on your product, audience, and offer. Try both in the same ad account to see which brings more clicks or sales."
     }
   ],
   "cta_title": "Make Your Next Test Ad Today",

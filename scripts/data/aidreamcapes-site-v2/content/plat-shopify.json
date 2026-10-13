@@ -15,39 +15,39 @@
   "faq": [
     {
       "q": "What is a Shopify AI product photo tool?",
-      "a": "It builds a product photo from a picture you already shot, in a new background, style, or setting. The product page can go up without renting a room."
-    },
-    {
-      "q": "How does a Shopify product photo get made?",
-      "a": "Upload the product and say where you want it, such as on a light table. You get a file back, and you can ask for more light before you download."
-    },
-    {
-      "q": "Which photo tool should a Shopify store use?",
-      "a": "Use AIVideosUGC. It puts your real product in a new scene and holds one look across the grid. The cost shows before the photo runs."
-    },
-    {
-      "q": "Can I make Shopify product photos for free?",
-      "a": "No. Every photo spends credits on a paid monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Are these photos a fit for a Shopify store?",
-      "a": "Yes. The same product photo can sit on the Shopify page and in a paid post. You spend credits, not a location fee."
-    },
-    {
-      "q": "What does a Shopify product photo tool give you?",
-      "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made. You can also make several versions and keep the best."
-    },
-    {
-      "q": "Can I use the photos on my store and in ads?",
-      "a": "Yes. The download can go on the product page and in your ads, with no watermark. You still need the right to use the photo you uploaded."
+      "a": "It turns your product image into a fresh photo for your Shopify store. Choose a new background and lighting without booking a studio."
     },
     {
       "q": "What should the upload look like?",
-      "a": "Start with a clear, well-lit photo of the whole item. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
+      "a": "Upload a clear, well-lit photo showing the whole product. That helps the finished image keep the shape and details shoppers expect."
+    },
+    {
+      "q": "How much does a Shopify product photo cost?",
+      "a": "One product photo costs 24 credits. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "How does a Shopify product photo get made?",
+      "a": "Upload a clear product photo and describe the scene you want. Make a finished image in minutes for your Shopify product page."
+    },
+    {
+      "q": "Are these photos a fit for a Shopify store?",
+      "a": "Yes. Use consistent product photos across your Shopify pages and ads. New scenes can help shoppers picture the item without a studio shoot."
     },
     {
       "q": "Can I refresh a whole collection together?",
-      "a": "Yes. Run many products in one batch so the grid shares a look. Each file spends credits, and the cost shows before you start. If a job fails, those credits come back."
+      "a": "Yes. Create new photos for many products with a consistent look. Each image costs 24 credits, and failed jobs return their credits."
+    },
+    {
+      "q": "How can I make better Shopify product photos?",
+      "a": "Start with a clear photo of the product you sell. Create realistic scenes and consistent backgrounds for your store without another shoot."
+    },
+    {
+      "q": "What does a Shopify product photo tool give you?",
+      "a": "You get more realistic scenes and backgrounds from a product photo you already have. Make several versions and choose the best fit for your store."
+    },
+    {
+      "q": "Can I use the photos on my store and in ads?",
+      "a": "Yes. Use watermark-free photos on Shopify and in paid ads. You need rights to the product image you upload."
     }
   ],
   "templates_lead": "Pick a matching look for the collection, the product page, and a short video.",

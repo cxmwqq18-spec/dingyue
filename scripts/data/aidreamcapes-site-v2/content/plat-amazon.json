@@ -14,40 +14,40 @@
   ],
   "faq": [
     {
+      "q": "Can I prepare Amazon images for many products?",
+      "a": "Yes. Make consistent white-background and lifestyle images across your catalog without new photo shoots. Each image costs 24 credits, and failed jobs return credits."
+    },
+    {
+      "q": "Will you upload my photos to Amazon?",
+      "a": "No. Download the finished files and add them in Seller Central yourself. You control when each listing changes."
+    },
+    {
+      "q": "What happens if my Amazon image breaks the rules?",
+      "a": "Amazon may hide the listing until you replace the image. Main images have stricter rules than other listing photos, so check them before publishing."
+    },
+    {
+      "q": "What other photos should I add to an Amazon listing?",
+      "a": "Add close-ups, a view that shows size, and photos of the product in use. Use these after the white-background main image."
+    },
+    {
+      "q": "Can I make an Amazon product video without filming?",
+      "a": "Yes. Make a video from your product photo or link without booking a shoot. Choose 6, 10, 15, or 30 seconds."
+    },
+    {
+      "q": "Can my catalog tool request Amazon images?",
+      "a": "Yes. Use the API to request product images from your catalog tool. You review the files and upload them to Amazon yourself."
+    },
+    {
       "q": "What should an Amazon main image show?",
-      "a": "The product on pure white, filling most of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Save measurements for a later image, and publish the file in Seller Central after you check the current rule."
+      "a": "An Amazon main image should show only the product on a pure white background, with no text or props. Check Amazon’s current image rules before uploading."
     },
     {
-      "q": "What happens if an Amazon photo breaks the image rules?",
-      "a": "A main photo that still shows the room can be held back, and the listing can leave search until you replace that file. A prop can sit on a later image, not on the main one."
+      "q": "Can I add words to Amazon listing images?",
+      "a": "Yes, add helpful text to secondary images when Amazon allows it. Keep the main image free of text, badges, and slogans."
     },
     {
-      "q": "How do I get a white Amazon main image from a photo I already have?",
-      "a": "Upload the photo you already have and put the product on white. The old background comes off, the edges stay with the product, and you download a finished file. A photo is 24 credits, shown before you start."
-    },
-    {
-      "q": "Can I prepare many Amazon photos in one run?",
-      "a": "Yes. Send the whole line through one batch, lifestyle frames included. Each file spends credits, the cost shows first, and a failed job returns those credits. You can also run that batch through the API."
-    },
-    {
-      "q": "Can my catalog tool request the Amazon images?",
-      "a": "Yes. When a new product is saved, your catalog tool can request the image through the API. You choose when it goes into Seller Central. We never sign in to the seller account."
-    },
-    {
-      "q": "What other Amazon images should I add?",
-      "a": "A close-up, a sense of size, and the item in use. A hand in the frame helps the shopper see the scale. Those frames come after the white main image."
-    },
-    {
-      "q": "Can I put my own words on the pictures after I download them?",
-      "a": "Yes. Add the words yourself after download, and only on images after the main one. The main image stays free of badges and slogans."
-    },
-    {
-      "q": "Can I make a video for the Amazon listing without booking a shoot?",
-      "a": "Yes. A video is its own job at 6, 10, 15, or 30 seconds, costing 24, 40, 60, or 120 credits."
-    },
-    {
-      "q": "Will you upload the finished photos into Amazon for me?",
-      "a": "No. Download the files and add them in Seller Central yourself. We do not connect to your seller login."
+      "q": "Can I make a white Amazon main image from my photo?",
+      "a": "Yes. Upload your product photo and replace its background with pure white. Download the new image and check its edges before adding it to your listing."
     }
   ],
   "templates_lead": "Pick the listing job: a white main image, a detail, or the product in use.",

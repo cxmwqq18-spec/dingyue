@@ -47,48 +47,48 @@
   },
   "faq": [
     {
-      "q": "How does a promo video fit different products?",
-      "a": "Give it the product photo and the sentence you want said. The clip comes back sized for a post, and you can shorten a long reveal."
+      "q": "Can I use my brand assets in a promo video?",
+      "a": "Yes. Upload your product photos and brand assets to give the promo a consistent look. Use only images and marks you have rights to use."
     },
     {
-      "q": "Can I use photos and marks I already have?",
-      "a": "Yes. You can add up to 7 reference images, such as the pack shot and the mark on your label. Use a photo of the item you will actually ship."
+      "q": "Can a beginner make a promo video?",
+      "a": "Yes. Upload a clear phone photo or paste a product link, then choose a style and message. You can make a promo without editing experience."
     },
     {
-      "q": "Can I start promo videos from a product link?",
-      "a": "Yes. Paste the product page. The pictures and the name come through, and you still check the words before the clip is made."
-    },
-    {
-      "q": "How do credits work for a promo video?",
-      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. Clips spend 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. A failed job returns its credits."
-    },
-    {
-      "q": "Can an AI avatar present the promo?",
-      "a": "Yes. An AI avatar can present the reveal with a voice, and you write the script that goes with it. You do not have to be on camera."
-    },
-    {
-      "q": "What does a launch template include?",
-      "a": "A ready reveal for one finished item. You can add a voice, captions, and a second opening, then export a tall, square, or wide file."
-    },
-    {
-      "q": "Why use a template instead of filming a creator?",
-      "a": "You can fix the sentence on launch week without calling a presenter back. A filmed shoot locks that sentence to one afternoon."
+      "q": "What is included in a product launch video template?",
+      "a": "It gives you a product reveal you can customize with a voice, captions, and different openings. Export a vertical, square, or wide version for your channel."
     },
     {
       "q": "Who should use a launch template?",
-      "a": "A shop shipping a new item, or a founder whose first product goes out next week. You need a finished item and a sentence, not a studio booking."
+      "a": "It is useful for shops launching a new product and needing ads quickly. Start with a product photo or link instead of booking a studio."
     },
     {
-      "q": "Can a first-timer run a launch template?",
-      "a": "Yes. A phone picture of the finished item is enough to start, even if you have never edited a video. You do not need a crew."
+      "q": "Why use a template instead of filming a creator?",
+      "a": "A template lets you update the message and make another launch video in minutes. You can test several openings without paying for another shoot."
     },
     {
-      "q": "Which channels can the launch clip fit?",
-      "a": "A 16:9 file fits a wide placement, and a 9:16 file fits a phone story. Square 1:1 is there for a feed tile, with 4:3 and 3:4 beside them."
+      "q": "Can an AI actor present my promo video?",
+      "a": "Yes. Choose an AI actor to present your product with a voice. You can make a launch video without hiring a presenter or filming yourself."
+    },
+    {
+      "q": "How do credits work for a promo video?",
+      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. Failed jobs return their credits."
+    },
+    {
+      "q": "How does a promo video maker work for different products?",
+      "a": "Paste a product link or upload a photo, and the promo video uses those details to feature your item. Review the message before posting."
+    },
+    {
+      "q": "Can I automate promo videos from product links?",
+      "a": "Yes. Paste a product page link to start a promo video with its images and details. You can make versions for many products through the API."
     },
     {
       "q": "Can the launch clip run in ads and for clients?",
-      "a": "Yes. Hand the file to a client, or run it as a paid post. No watermark is printed on the download."
+      "a": "Yes. Finished launch videos have no watermark and can be used in paid ads or client work. Make sure you have rights to the assets you upload."
+    },
+    {
+      "q": "Which channels can the launch clip fit?",
+      "a": "Choose 9:16 for Stories and Reels, 1:1 for feeds, or 16:9 for wide placements. Review each version on the screen where it will appear."
     }
   ],
   "visual": {

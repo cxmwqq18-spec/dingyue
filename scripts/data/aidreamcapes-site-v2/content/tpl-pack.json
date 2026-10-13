@@ -46,48 +46,48 @@
   "steps_lead": "A clear product photo starts it. You leave with a packaging design the listing can use.",
   "faq": [
     {
-      "q": "What does a packaging design tool make?",
-      "a": "It makes a packaging picture from one product photo. You name the style, then download a file you can check before anything is printed."
-    },
-    {
-      "q": "Do I need to know design first?",
-      "a": "No. You do not need a design job or a design degree. Upload the photo and name the look in plain words."
-    },
-    {
-      "q": "How does a packaging design get made?",
-      "a": "Upload a photo of the box, pouch, or bottle, then name the style in one sentence. Download the square file when the shape matches the product you ship."
+      "q": "How soon is the pack design ready?",
+      "a": "A packaging image takes a few minutes. Try more styles quickly without scheduling a design shoot."
     },
     {
       "q": "Can my shop put this on a listing?",
-      "a": "Yes. Use the design as the listing image or on the product page. Check the shape against the real pack before you publish it."
+      "a": "Yes. Use packaging visuals on product pages and in ads. Check every label and pack detail against what you actually sell."
     },
     {
-      "q": "How soon is the pack design ready?",
-      "a": "The preview comes back in the same sitting, so you are not booking a designer for that file. If a color is off, edit the line and run it again."
-    },
-    {
-      "q": "Can I make a design for each product I sell?",
-      "a": "Yes. Run each product from its own photo and a new style line. You download a square design for each listing."
-    },
-    {
-      "q": "Can I start from the listing photo I already have?",
-      "a": "Yes. The product photo already on the listing is the right start. You can add more reference photos when a close detail matters."
-    },
-    {
-      "q": "Where can I post the finished design?",
-      "a": "Use the square design on the listing and the product page. A tall, square, or wide crop can go to the feed that needs it."
-    },
-    {
-      "q": "What do I pay before I download?",
-      "a": "You pay with a plan, not a design invoice. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits, shown before it runs. A failed job puts those credits back."
+      "q": "Do I need to know design first?",
+      "a": "No. Upload a product image and describe the look you want in plain words. You can explore packaging ideas without design software."
     },
     {
       "q": "Can I use the design in an ad or send it to a client?",
-      "a": "Yes. Use it on your listing, in a paid ad, or hand the file to a client whose product is in the photo. The download has no watermark."
+      "a": "Yes. Use the watermark-free image in paid ads, listings, or client work. Commercial use is included."
+    },
+    {
+      "q": "Can I start from the listing photo I already have?",
+      "a": "Yes. Start with a clear photo of the package you already use. Add other views if a label or shape needs to stay accurate."
     },
     {
       "q": "Can I describe the style instead of drawing it?",
-      "a": "Yes. Say the style in one line instead of building the pack in design software. A new product can keep the same kind of file."
+      "a": "Yes. Describe your preferred colors, textures, and background in a sentence. Make several styles in minutes without drawing each design."
+    },
+    {
+      "q": "Can I make a design for each product I sell?",
+      "a": "Yes. Upload each product photo and make a packaging look for it. You can keep a consistent style across your shop."
+    },
+    {
+      "q": "How much does a packaging image cost?",
+      "a": "One packaging image costs 24 credits. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "What can an AI packaging design tool make?",
+      "a": "It makes realistic packaging visuals from your product photo and style description. See different looks in minutes before choosing one."
+    },
+    {
+      "q": "Where can I post the finished design?",
+      "a": "Post the finished image on product pages, social channels, or in ads. Check the pack details and wording before publishing."
+    },
+    {
+      "q": "How does a packaging design get made?",
+      "a": "Upload a photo of your box, pouch, or bottle and describe a style. The tool makes a packaging image with new colors, textures, or backgrounds."
     }
   ],
   "visual": {

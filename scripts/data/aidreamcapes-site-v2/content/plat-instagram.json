@@ -14,36 +14,36 @@
   ],
   "faq": [
     {
-      "q": "What counts as an Instagram ad I can run?",
-      "a": "A Reel, a Story, or a feed post that shows your product: someone holding it, an unboxing, or a short review. It sits beside everyday posts, and that is why people trust it."
-    },
-    {
-      "q": "How do I get an Instagram Reel from my product link?",
-      "a": "Paste the product link. You get a script, captions, and a Reel shaped for the feed, Reels, or Stories. Then pick the AI actor and the voice."
-    },
-    {
       "q": "Are there ready Reel templates I can use?",
-      "a": "Yes. Open a Reel, Story, or feed template and keep your product in the frame. The shape is already set."
-    },
-    {
-      "q": "What does an Instagram Reel cost in credits?",
-      "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Do I get music, captions, and a voice on the Reel?",
-      "a": "Yes. Choose a spoken voice, captions, and a track from the music library. The same line can be spoken in another language. You can still change a word before you export."
-    },
-    {
-      "q": "Can I run the Reel as a paid Instagram ad?",
-      "a": "Yes. Publish it or download it and run it in Instagram ads. The download has no watermark. Instagram still applies its own ad rules."
-    },
-    {
-      "q": "Do I have to book a person and a room?",
-      "a": "No. Use a photo you already have, or paste a product link. The person in the Reel is an AI actor from a library of 53. You can have the file in minutes."
+      "a": "Yes. Choose a ready-made Reel, Story, or feed template and add your product. You can make an Instagram ad without editing from scratch."
     },
     {
       "q": "What should I check before I download the Reel?",
-      "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
+      "a": "Check that your product and captions stay visible on a phone screen. Preview the Reel with Instagram’s buttons before posting."
+    },
+    {
+      "q": "Can I run the Reel as a paid Instagram ad?",
+      "a": "Yes. Download the watermark-free Reel for paid Instagram ads. Review Instagram’s current ad rules before posting."
+    },
+    {
+      "q": "Do I have to book a person and a room?",
+      "a": "No. Start with your product photo or link and choose one of 53 AI actors. You can get a Reel in minutes without a shoot."
+    },
+    {
+      "q": "What does an Instagram Reel cost in credits?",
+      "a": "A 6-second Reel uses 24 credits; 10, 15, and 30 seconds use 40, 60, and 120. A photo uses 24 credits."
+    },
+    {
+      "q": "How do I get an Instagram Reel from my product link?",
+      "a": "Paste your product link, then choose an AI actor, voice, and message. Make a Reel or Story with captions in a few minutes."
+    },
+    {
+      "q": "What counts as an Instagram ad I can run?",
+      "a": "An Instagram ad is a paid Reel, Story, or feed post that promotes your product. Creator-style videos can show unboxings, demos, or product benefits."
+    },
+    {
+      "q": "Do I get music, captions, and a voice on the Reel?",
+      "a": "Yes. Choose a voice, captions, and music for your Reel. You can change the message or language to make another version."
     }
   ],
   "examples": null,

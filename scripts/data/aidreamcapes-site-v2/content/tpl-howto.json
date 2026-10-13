@@ -47,48 +47,48 @@
   },
   "faq": [
     {
-      "q": "What does a how-to video template include?",
-      "a": "A ready-made explainer scene gives your product a clear action, script, and video frame. Add the detail your buyers need to learn."
-    },
-    {
-      "q": "How do I make a product how-to video?",
-      "a": "Upload a product photo or paste a link. Describe the action, review the spoken line, and download the finished demo."
-    },
-    {
-      "q": "Can I make a how-to without filming?",
-      "a": "Yes. Start from a product image and choose a scene that shows the action. No camera crew or presenter booking is needed."
-    },
-    {
-      "q": "Which products need a how-to video?",
-      "a": "Use one when a buyer needs to see a move, setup step, or result before using the product."
-    },
-    {
-      "q": "Can a beginner make the demo?",
-      "a": "Yes. Add the product and describe the action in plain words. Edit the generated line before you post."
-    },
-    {
-      "q": "Can an AI presenter explain the step?",
-      "a": "Yes. Choose a presenter and a voice that suit your product. Keep the action visible while the line plays."
-    },
-    {
-      "q": "Can I add my own brand assets?",
-      "a": "Yes. Add your logo, product photo, or a clip you already have. Check that the finished demo matches what you sell."
-    },
-    {
-      "q": "Where can I post the how-to?",
-      "a": "Use 9:16 for phone feeds, 1:1 for square posts, or 16:9 for a wide product page. Other sizes are available."
+      "q": "Why start from a template?",
+      "a": "The template already gives the explanation a clear structure. Add your product and action to make a useful video in minutes."
     },
     {
       "q": "How much does a how-to video cost?",
-      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
+      "a": "A 6-second video costs 24 credits, 10 seconds costs 40, 15 costs 60, and 30 costs 120. Starter costs $24.50 for 200 credits."
+    },
+    {
+      "q": "How do I make a product how-to video?",
+      "a": "Upload a product image or link and describe the step you want to show. Review the script, then make a video with visuals and a voice."
+    },
+    {
+      "q": "Where can I post the how-to?",
+      "a": "Post a tall video on phone feeds, a square version on social posts, or a wide version on your product page."
+    },
+    {
+      "q": "Can an AI presenter explain the step?",
+      "a": "Yes. Choose an AI presenter and voice to explain the step. Keep the product action visible while the message plays."
     },
     {
       "q": "Can I use the demo in ads or client work?",
-      "a": "Yes. Download the clip for paid ads, your product page, or a client handoff. Review the claims before publishing."
+      "a": "Yes. Download the watermark-free demo for paid ads, product pages, or client work. Commercial use is included."
     },
     {
-      "q": "Why start from a template?",
-      "a": "The explainer scene already sets the pace and frame. You can focus on the product and the action shoppers need to copy."
+      "q": "Can a beginner make the demo?",
+      "a": "Yes. Add your product and describe the action in simple words. You do not need scriptwriting or video editing experience."
+    },
+    {
+      "q": "Can I make a how-to without filming?",
+      "a": "Yes. Start with a product photo and choose a scene that shows the action. Make the video without a camera crew or presenter."
+    },
+    {
+      "q": "Can I add my own brand assets?",
+      "a": "Yes. Add your logo, product photo, or existing clip. Use your own assets to keep the demo consistent with your brand."
+    },
+    {
+      "q": "Which products need a how-to video?",
+      "a": "Use one when shoppers need to see a setup step, product feature, or result. A short explanation can help them understand before buying."
+    },
+    {
+      "q": "What is an AI how-to video template?",
+      "a": "It is a ready-made video layout for explaining how a product works. Add your product to make a clear demo in minutes without filming."
     }
   ],
   "visual": {

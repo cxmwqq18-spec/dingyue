@@ -68,44 +68,44 @@
   },
   "faq": [
     {
-      "q": "How does the AI image background changer work?",
-      "a": "It finds the product in your photo and separates it from the room behind it, so you can remove that room or replace it."
-    },
-    {
-      "q": "Where do I get backgrounds for a product photo?",
-      "a": "Yes. Pick a ready setting, upload a backdrop of your own, or choose a solid color. The cost shows before the photo is made."
-    },
-    {
-      "q": "What should I look for in a background changer?",
-      "a": "Look for simple controls, clean edges, and a result you can post. This tool is built for product photos."
-    },
-    {
-      "q": "How do I add a background to a photo online?",
-      "a": "Yes. Upload your image, describe the setting you want, and download a studio-style product photo."
-    },
-    {
-      "q": "How do I replace a product background online?",
-      "a": "Yes. Upload the product photo. The tool finds the product, then you can place white, a studio set, or another backdrop behind it."
-    },
-    {
-      "q": "Will the product itself change?",
-      "a": "The product should keep its angle, color, and shape. Compare the result with the photo you uploaded before you list it."
-    },
-    {
-      "q": "Can I use the new photo in a paid ad?",
-      "a": "Yes. The download has no watermark. You can use it for your business. Add any price or offer in your ad editor after you download."
-    },
-    {
       "q": "Can I run several backgrounds from one photo?",
-      "a": "Yes. Ask for a studio surface, a wood tone, and an outdoor table from the same photo. Each photo is 24 credits, shown before you start."
-    },
-    {
-      "q": "Can the new photo become a video?",
-      "a": "Yes. Open a moving clip from the same photo, or start from a product link. Add a script, a spoken voice, captions, and music, then publish."
+      "a": "Yes. Make several backgrounds from one product photo to test different looks. Each finished image costs 24 credits; failed jobs return their credits."
     },
     {
       "q": "What does each photo cost?",
-      "a": "One photo is 24 credits, shown before you start. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits."
+      "a": "One photo costs 24 credits. Starter costs $24.50 monthly for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. Failed jobs return their credits."
+    },
+    {
+      "q": "Will the product itself change?",
+      "a": "The product should keep its shape and color from your photo. Check the result against the item you sell and make another version if something looks wrong."
+    },
+    {
+      "q": "What is the best background changer for product photos?",
+      "a": "Look for clean product edges, easy background choices, and a result you can use in a listing. Compare each image with your real product before posting."
+    },
+    {
+      "q": "Can I use the new photo in a paid ad?",
+      "a": "Yes. Download the image without a watermark and use it in your shop or paid ads. Make sure the product and any offer shown are accurate."
+    },
+    {
+      "q": "Where can I get backgrounds for a product photo?",
+      "a": "Choose a ready background, a solid color, or an image you upload. You can try different scenes from one product photo without another shoot."
+    },
+    {
+      "q": "Can the new photo become a video?",
+      "a": "Yes. Use the product image to start a short video with an AI actor, voice, and captions. You can create both listing images and ads from one photo."
+    },
+    {
+      "q": "How do I add a background to a photo online?",
+      "a": "Upload your product photo, describe the scene, and generate a new background. You can make a studio-style image in minutes without design skills."
+    },
+    {
+      "q": "How do I replace a product background online?",
+      "a": "Upload the product photo and choose a new setting. AI finds the product and replaces the old background with white, a studio scene, or your own image."
+    },
+    {
+      "q": "How does the AI image background changer work?",
+      "a": "Upload your photo, and AI separates the product from its current background. Choose white, a studio scene, or another setting and download the new image."
     }
   ],
   "visual": {

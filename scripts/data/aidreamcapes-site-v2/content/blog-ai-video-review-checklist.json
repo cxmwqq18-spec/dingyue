@@ -158,60 +158,60 @@
   ],
   "faq": [
     {
-      "q": "What should I check before publishing an AI ad?",
-      "a": "Match the product, script, price, rights, and platform labels against the real item before you post."
-    },
-    {
-      "q": "How do I review an AI-generated product video?",
-      "a": "Watch every frame with sound and captions. Check the product details, hands, claims, and any price you added."
-    },
-    {
-      "q": "Should I review a still product image too?",
-      "a": "Yes. Compare its color, shape, parts, labels, and scale with the item customers will receive."
-    },
-    {
-      "q": "Do I need a paid plan before the first file?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
-    },
-    {
-      "q": "Can the file run as a paid ad?",
-      "a": "Yes. Commercial use is included on a paid plan, and the download has no watermark."
-    },
-    {
-      "q": "Which sizes can I export, and where do they run?",
-      "a": "YouTube and a wide ad can take 16:9. A phone story wants 9:16. A square post wants 1:1. 4:3 and 3:4 are there too. You still check the spot before you spend."
-    },
-    {
       "q": "Can I create ads for many products?",
-      "a": "Yes. Send each product through and get its own file. Each one shows its credit cost before it starts, and each one still needs this check."
-    },
-    {
-      "q": "Should I stop hiring creators?",
-      "a": "Keep hiring when the ad needs a person buyers already know. Use this for the other products in the catalog, and check each file."
-    },
-    {
-      "q": "Will TikTok or Meta block an AI ad?",
-      "a": "TikTok and Meta still accept a generated clip. They get stricter when the line sounds like a stranger already bought the product. Read their current rules before you spend. The [Content Policy](/content) is ours."
-    },
-    {
-      "q": "What should I check before posting an AI-made video?",
-      "a": "Watch it on your phone, from the first frame to the last. Check the product, the hands, the label, the voice, and the captions. Then check that any price you added matches the store."
-    },
-    {
-      "q": "What if an extra object looks like it comes with the order?",
-      "a": "Do not use that version, or say clearly in the listing what is included. Decoration is fine only when a shopper would not expect it in the box."
-    },
-    {
-      "q": "Can I ask the tool to draw my discount code?",
-      "a": "No. Add the code, the price, and the date yourself after you download, so the letters stay correct. Captions can follow what is spoken. They do not replace the price or the code."
+      "a": "Yes. Make a separate ad for each product and review each result. This saves filming time when you have a large catalog."
     },
     {
       "q": "Can I use a supplier photo as the source?",
       "a": "Only if your agreement with the supplier covers ads. Otherwise shoot your own photo of the item."
     },
     {
+      "q": "What should I check before posting an AI-made video?",
+      "a": "Check the product, voice, captions, and any price from start to finish. Watch the finished ad on your phone before posting."
+    },
+    {
+      "q": "Should I stop hiring creators?",
+      "a": "Use AI ads for quick tests and large catalogs, and hire creators when a real person’s endorsement matters. Review every AI ad before publishing."
+    },
+    {
+      "q": "How much does it cost to make a video for review?",
+      "a": "Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. Videos use 24 to 120 credits by length."
+    },
+    {
+      "q": "How do I review an AI-generated product video?",
+      "a": "Watch the full video with sound before publishing. Check product details, spoken claims, captions, and any price against what customers will receive."
+    },
+    {
+      "q": "Will TikTok or Meta block an AI ad?",
+      "a": "They may reject an AI ad if it breaks their current rules or makes a misleading claim. Check each platform’s policies before you pay to run it."
+    },
+    {
+      "q": "Which sizes can I export, and where do they run?",
+      "a": "You can export 9:16 for TikTok and Stories, 1:1 for feeds, and 16:9 for wide placements. Check the ad preview before spending."
+    },
+    {
+      "q": "What should I check before publishing an AI ad?",
+      "a": "Check that your product looks right, every claim is true, and the price matches your store. Review captions, usage rights, and platform labels before posting."
+    },
+    {
       "q": "What if one moment in the clip looks wrong?",
-      "a": "Trim that moment in the editor if it is brief. If the error runs through the clip, make a new version instead of posting it."
+      "a": "Make a new version if a mistake appears throughout the video. For one brief mistake, remove that moment and review the full video again."
+    },
+    {
+      "q": "How do I add a discount code to an AI ad?",
+      "a": "Add the code in the editor after making the image so every character is correct. Check the price and end date before posting."
+    },
+    {
+      "q": "Should I review a still product image too?",
+      "a": "Yes. Compare its color, shape, parts, labels, and scale with the item customers will receive."
+    },
+    {
+      "q": "Can the file run as a paid ad?",
+      "a": "Yes. Commercial use is included on a paid plan, and the download has no watermark."
+    },
+    {
+      "q": "What if an extra object looks like it comes with the order?",
+      "a": "Do not use that version, or say clearly in the listing what is included. Decoration is fine only when a shopper would not expect it in the box."
     }
   ],
   "cta_title": "Check Your Next Ad Before Publishing",

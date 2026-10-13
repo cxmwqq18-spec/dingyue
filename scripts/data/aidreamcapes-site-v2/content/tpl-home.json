@@ -43,48 +43,48 @@
   },
   "faq": [
     {
-      "q": "What is a home organization video template?",
-      "a": "It is a ready-made scene that shows a product solving a visible storage problem. Add your product photo and make the scene your own."
-    },
-    {
-      "q": "How do I turn my organizer photo into a video?",
-      "a": "Upload the product image, describe the change you want to show, and generate the clip. Check that the organizer stays true to your photo."
-    },
-    {
-      "q": "Can I show a before-and-after scene?",
-      "a": "Yes. Show the clutter first, then the space with your product in use. Keep the item easy to see."
-    },
-    {
-      "q": "Do I need to film inside a home?",
-      "a": "No. Start from a product photo and choose the room scene that fits it."
-    },
-    {
-      "q": "Which home products work with these templates?",
-      "a": "Storage bins, drawer dividers, shelves, and other organizers work when the video shows a clear change in use."
-    },
-    {
       "q": "Can I add my own voice, captions, or music?",
-      "a": "Yes. Choose a voice, edit the line, and add captions or music before you download."
+      "a": "Yes. Add a voice, captions, or music to explain the change. You can make another version without filming again."
     },
     {
       "q": "Can I start with a product link or my own clip?",
       "a": "Yes. Paste a product link or upload your image or clip. Review the result against the item you sell."
     },
     {
+      "q": "How do I turn my organizer photo into a video?",
+      "a": "Upload your organizer photo and describe the change to show. The template turns it into a video without filming inside a home."
+    },
+    {
+      "q": "Do I need to film inside a home?",
+      "a": "No. Use a product photo and choose a room scene. You can make the video without a camera crew or set."
+    },
+    {
+      "q": "How much does a home video cost?",
+      "a": "A 6-second video uses 24 credits; 10, 15, and 30 seconds use 40, 60, and 120. Failed jobs return credits."
+    },
+    {
+      "q": "Why use a template instead of making the scene myself?",
+      "a": "A template gives you the room scene and video pace, so you can make an ad faster. Focus on showing the product’s benefit."
+    },
+    {
+      "q": "Can I use the finished video in an ad?",
+      "a": "Yes. Use the watermark-free video in paid ads, on your store, or for client work. Check the product before posting."
+    },
+    {
+      "q": "Which home products work with these templates?",
+      "a": "Storage bins, dividers, shelves, and other organizers fit these templates. Show the visible change your product makes in a room."
+    },
+    {
+      "q": "Can I show a before-and-after scene?",
+      "a": "Yes. Show the clutter first and the organized space with your product afterward. Buyers can see the change quickly."
+    },
+    {
       "q": "What video sizes can I download?",
       "a": "Choose 9:16 for Stories and Reels, 1:1 for square posts, or 16:9 for a wide placement."
     },
     {
-      "q": "How much does a home video cost?",
-      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
-    },
-    {
-      "q": "Can I use the finished video in an ad?",
-      "a": "Yes. Download it for paid social, your store, or client work. Check your product and message before posting."
-    },
-    {
-      "q": "Why use a template instead of making the scene myself?",
-      "a": "The shot and pace are already set. You can spend your time choosing the product and the change shoppers should see."
+      "q": "What is a home organization video template?",
+      "a": "A home organization video template is a ready-made scene showing your product solving a storage problem. Add a photo to make an ad in minutes."
     }
   ],
   "visual": {

@@ -46,64 +46,64 @@
   },
   "faq": [
     {
-      "q": "What comes with a monthly plan?",
-      "a": "Your plan includes a credit balance for making product images and other supported ads. Starter is $24.50 for 200 credits, Pro is $35 for 300, and Premium is $63 for 600 each month."
+      "q": "Can I cancel before my next bill?",
+      "a": "Yes. Cancel in your account before the next billing date. Check your account for when your access ends."
+    },
+    {
+      "q": "Can I use the same product photo for another market?",
+      "a": "Yes. Use the photo again and add text in the language your shoppers speak. You can make different scenes for each market."
+    },
+    {
+      "q": "Can I change an image before downloading it?",
+      "a": "Yes. Change the scene or crop, then make another version if needed. Each newly generated image uses credits."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste a public product link to start a creator-style image. Check that the result matches the product you sell."
+    },
+    {
+      "q": "Which files can I upload to start?",
+      "a": "Upload clear product photos or clips you have permission to use. You can also paste a public product link."
     },
     {
       "q": "What can I change in a creator-style photo?",
-      "a": "Choose the setting, crop, product placement, and overall look. Review the result before you use it in an ad."
+      "a": "Change the setting, crop, and product placement to fit your ad. You can make another version without a new photo shoot."
     },
     {
-      "q": "How many credits does one UGC-style image use?",
-      "a": "One generated image uses 24 credits. You see the cost before you start, and a failed job returns its credits."
+      "q": "What happens if an image fails?",
+      "a": "The credits for a failed image return to your balance. Check your account if the balance does not update."
+    },
+    {
+      "q": "Will changing plans create another credit balance?",
+      "a": "No. Your account shows the balance for your current plan. Check it after changing plans so you know how many credits are available."
+    },
+    {
+      "q": "Does my plan include monthly credits?",
+      "a": "Yes. Starter includes 200 credits, Pro includes 300, and Premium includes 600 each month. Use them for images and videos."
+    },
+    {
+      "q": "Can I use creator-style images in paid ads?",
+      "a": "Yes. Use downloaded images in your store, social posts, and paid ads without a watermark. Check product details before publishing."
+    },
+    {
+      "q": "How many credits does a creator-style image use?",
+      "a": "Each image uses 24 credits. You see the cost before starting, and failed jobs return credits."
+    },
+    {
+      "q": "Can I edit the image after it is made?",
+      "a": "Yes. Change the scene or crop and make another version. You can also turn the product photo into a video later."
+    },
+    {
+      "q": "Can I switch my subscription?",
+      "a": "Yes. Change between Starter, Pro, and Premium in your account. Check the new price and credit amount before confirming."
+    },
+    {
+      "q": "What comes with a monthly plan?",
+      "a": "Starter includes 200 credits for $24.50, Pro includes 300 for $35, and Premium includes 600 for $63 each month. Use credits for product images and ads."
     },
     {
       "q": "Do unused credits carry into the next month?",
-      "a": "Check the rollover terms in your account before renewal. Credits from a failed image job return to your balance."
-    },
-    {
-      "q": "Can I use the same photo for another market?",
-      "a": "Yes. Reuse the product photo and add a caption in the language your shoppers use when you publish the image."
-    },
-    {
-      "q": "Can I change the image before I download it?",
-      "a": "Yes. Adjust the scene or crop before you save it. A newly generated version uses credits."
-    },
-    {
-      "q": "Does my plan include a monthly credit balance?",
-      "a": "Yes. Starter, Pro, and Premium each show the monthly amount in your account."
-    },
-    {
-      "q": "Can I change plans from my account?",
-      "a": "Yes. Switch between Starter, Pro, and Premium in your account when your image needs change."
-    },
-    {
-      "q": "Will changing plans create a second balance?",
-      "a": "No. Your account shows the balance for the plan you use, rather than a separate balance for each plan."
-    },
-    {
-      "q": "Can I stop my plan before the next bill?",
-      "a": "Yes. Cancel or change your plan in your account before the next billing date."
-    },
-    {
-      "q": "Can I use these images on my store and in paid ads?",
-      "a": "Yes. Use the downloaded still in your store, social posts, or paid image ads. Check product details and ad claims before publishing."
-    },
-    {
-      "q": "What happens if an image job fails?",
-      "a": "Its credits return to your balance. For other refund questions, read the [Refund Policy](/refunds)."
-    },
-    {
-      "q": "Can a product link start a creator-style image?",
-      "a": "Yes. Paste a product page you control, then review the product details and image before downloading."
-    },
-    {
-      "q": "Can I edit the result after it is made?",
-      "a": "Yes. Adjust the image before download. If you need motion later, try [creator-style video ads](page:video-ads)."
-    },
-    {
-      "q": "Which files can I add at the start?",
-      "a": "Start with a clear product photo or a product link. Add reference images you have permission to use when you need them."
+      "a": "Rollover depends on your current plan terms, which you can check in your account before renewal. Credits from failed jobs return to your balance."
     }
   ],
   "visual": {

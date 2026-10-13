@@ -950,40 +950,40 @@
   "cta_lead": "Choose a face and a voice, then make a product video from one photo. You see the credit cost before you start.",
   "faq": [
     {
-      "q": "What does an AI actor do in a product ad?",
-      "a": "This is a realistic human presenter made for ads, not a cartoon. You set the look, the voice, and the language. The clip is your presenter. It is not a review from a buyer."
+      "q": "Can I choose the actor, voice, and language?",
+      "a": "Yes. Choose from 53 AI actors, pick a voice, and write in the language your customers use. You may use your own voice sample if you have permission."
     },
     {
-      "q": "How does a script become a clip I can post?",
-      "a": "Type the line, choose the actor, then choose the voice. The clip comes back with the mouth moving to those words. A 10-second tall clip costs 40 credits. That cost shows before you start."
+      "q": "Where can I use an AI actor video?",
+      "a": "Use it on product pages, in paid ads, on social media, or in training. You can download it without a watermark and make versions for different channels."
     },
     {
-      "q": "Where can I use an AI actor?",
-      "a": "On the product page, in a paid ad, and on social. A training clip works too. The download has no watermark."
+      "q": "How can a digital actor present my product?",
+      "a": "AI actors are lifelike digital presenters who speak about your product on video. You choose the face, voice, and language without arranging a photo shoot."
     },
     {
-      "q": "Can an AI actor explain a product?",
-      "a": "Yes. The same delivery can repeat every time, with no extra studio day. Point at one feature and say what it does."
+      "q": "How can shops use digital presenters on social media?",
+      "a": "Make short product videos with the same actor so your posts look consistent. Try different openings or offers for each audience without hiring a creator."
     },
     {
-      "q": "Can an AI actor record a training clip I can update?",
-      "a": "Yes. Write the steps, then change a sentence when the rule changes. Another language is a new render of that same script."
+      "q": "Can an AI actor explain my product?",
+      "a": "Yes. An AI actor can explain a product feature clearly and give the same message in every video. You can change the words without another shoot."
     },
     {
-      "q": "How do shops use an AI actor on social?",
-      "a": "Use one face often enough that people recognize it. Change the first line when it gets old, and post a fresh tall cut."
+      "q": "How do AI actors make videos?",
+      "a": "Write what you want said, choose an actor and voice, and generate the video. The actor speaks your words with matching mouth movements in a few minutes."
     },
     {
-      "q": "Can I pick the face, the voice, and the language separately?",
-      "a": "Yes. Choose the face and the voice on their own, then write the line in the language you sell in. A cloned voice is allowed only when you have rights to the sample."
+      "q": "What should I check before posting an AI actor video?",
+      "a": "Check that your product claims are accurate and follow the ad platform’s rules for AI content. Use only photos and voice samples you have permission to upload."
     },
     {
-      "q": "Can I post this clip as a paid ad?",
-      "a": "Yes. The download has no watermark, and you can use the AI actor and the voice in a paid ad. You still need rights to the product photo and to any voice sample you upload. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "Can I update an AI actor training video?",
+      "a": "Yes. Change the words when your instructions change and make a new video. You can also make versions in other languages without filming again."
     },
     {
-      "q": "What should I check before I post?",
-      "a": "Follow the platform's label rules when a label is required. Do not imitate a real person who never agreed. Hire a human when the job needs a specific living performer. Add prices after you download the file and can check every digit."
+      "q": "Can I use AI actor videos in paid ads?",
+      "a": "Yes. AI actor videos can run in paid ads and have no watermark. You need rights to the product photos and voice samples you upload."
     }
   ],
   "blockOrder": [

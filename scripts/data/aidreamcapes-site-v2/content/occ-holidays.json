@@ -15,36 +15,36 @@
   "plan": [],
   "faq": [
     {
-      "q": "How do credits work for a holiday photo or video?",
-      "a": "A photo spends 24 credits. A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before the job runs, and a failed job returns those credits."
-    },
-    {
-      "q": "Can I add a holiday song and seasonal pictures?",
-      "a": "Yes. Choose a track from the music list, add seasonal pictures, and put captions on in the editor. Use a track you are allowed to play."
-    },
-    {
-      "q": "Can I make a holiday video for each product?",
-      "a": "Yes. Run several product links, and each one comes back as its own gift scene. You still check every file before it is published."
-    },
-    {
-      "q": "Can an AI avatar deliver the holiday message?",
-      "a": "Yes. An AI avatar can read a short gift note beside the product. Keep the product easy to recognize."
-    },
-    {
-      "q": "Can I use the holiday file again next season?",
-      "a": "You keep the file you downloaded. Change the date, the voice, or the offer in the editor, and use the scene again for the next holiday."
-    },
-    {
-      "q": "Can I start from a product link?",
-      "a": "Yes. Open the product page and use that photo as the gift in the scene. If the page photo is too tight, upload a clear shot you already sell with."
+      "q": "Can I make holiday videos for many products?",
+      "a": "Yes. Make a holiday video for each product from its photo or page link. Batch several items to save time, then review each result."
     },
     {
       "q": "Can I publish my holiday video to TikTok, Instagram, or Facebook?",
-      "a": "Yes. Download the file, or send it to TikTok, Instagram, or Facebook yourself. You still choose the budget in that ad account."
+      "a": "Yes. Download your holiday video for TikTok, Instagram, or Facebook. You can also send it from the tool and set the ad budget on the platform."
+    },
+    {
+      "q": "Can I add holiday music and visuals?",
+      "a": "Yes. Add seasonal visuals and a music track that fits the holiday. You can make a gift ad without filming a new scene."
+    },
+    {
+      "q": "Can I reuse my holiday video next season?",
+      "a": "Yes. Your finished videos stay in your account to download again. Change the offer, date, or message to make next season's version."
+    },
+    {
+      "q": "How do credits work for holiday videos and photos?",
+      "a": "A photo costs 24 credits; a 6, 10, 15, or 30 second video costs 24, 40, 60, or 120. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. Failed jobs return their credits."
     },
     {
       "q": "Can my own tools ask for a holiday ad?",
-      "a": "Yes. Your tools can ask for a holiday ad from a product link. You approve the file before anyone else sees it."
+      "a": "Yes. Your software can start holiday ad jobs through the API using product links. Review each finished video before publishing."
+    },
+    {
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste a product link to bring its image and details into the holiday ad. You can upload a clearer photo if you prefer."
+    },
+    {
+      "q": "Can an AI avatar deliver the holiday message?",
+      "a": "Yes. Choose an AI actor to deliver your holiday message with a voice. You can make a festive product ad without hiring a presenter."
     }
   ],
   "examples": {

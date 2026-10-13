@@ -45,48 +45,48 @@
   },
   "faq": [
     {
-      "q": "What does this Black Friday template make?",
-      "a": "A deal clip built from the product photo you already have. An AI avatar, a script, and a spoken voice can come with it. You add the offer after download."
+      "q": "Can I add my discount to the video?",
+      "a": "Yes. Add your real discount, code, and end date to the ad. Check them before posting so shoppers see the current offer."
     },
     {
-      "q": "How does the sale scene come together?",
-      "a": "Upload one product photo, describe the holiday room, pick a size and a length, then add captions or the offer in the editor."
-    },
-    {
-      "q": "Why skip a shoot during sale week?",
-      "a": "The product photo from your page is enough to build the sale scene. You can spend the week on the offer, not on a new camera day."
-    },
-    {
-      "q": "Who is this Black Friday template for?",
-      "a": "Shops that need a product clip for Black Friday, Cyber Monday, or a later holiday offer, on Facebook, Instagram, TikTok, or the product page."
-    },
-    {
-      "q": "Can I do this with no editing practice?",
-      "a": "Yes. The sale scene is built from your product photo. A song from the music library can sit under the voice in the editor."
+      "q": "How do I make a Black Friday product video?",
+      "a": "Upload a product photo, choose a sale scene, and add your offer. You can make a ready-to-post video in minutes."
     },
     {
       "q": "What photo should I upload?",
-      "a": "One sharp photo of the item that is actually in the offer, with the full shape visible. A short clip you have rights to can be uploaded too."
+      "a": "Use a sharp photo of the product you are selling, with the full item visible. A clear source makes the result easier to check."
     },
     {
-      "q": "Which size and length fit a deal post?",
-      "a": "Use a tall 9:16 for Stories and Reels, or a square 1:1 for the feed. Lengths are 6, 10, 15, or 30 seconds. You can also use 16:9, 4:3, or 3:4 when the post needs that shape."
+      "q": "Why use AI for Black Friday ads?",
+      "a": "A product photo is enough to make a sale video in minutes. Spend the week refining your offer instead of organizing a shoot."
     },
     {
-      "q": "Does the tool write the discount?",
-      "a": "No. Add the live price, the code, and the end date after download. If the offer changes, edit that text instead of trusting an old file."
+      "q": "Who is this Black Friday template for?",
+      "a": "It is for shops promoting Black Friday, Cyber Monday, or another sale. Make a product ad for social feeds, Stories, or your store."
     },
     {
       "q": "What does a clip cost?",
-      "a": "A clip spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. You see the cost first. If it fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "A 6, 10, 15, or 30 second clip costs 24, 40, 60, or 120 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. Failed jobs return their credits."
     },
     {
-      "q": "Can I use the download in paid ads?",
-      "a": "Yes. Nothing is stamped on the file, so the download can run in paid ads and on the product page."
+      "q": "What can I make with a Black Friday video template?",
+      "a": "This template makes a Black Friday product ad from your photo or link. Add an AI actor, voice, and sale message without filming a new commercial."
     },
     {
       "q": "Can I start from a product link or my own software?",
-      "a": "Yes. Paste a product page for a script and a voice you are allowed to use. When many products share the sale setup, run them together or start the jobs from your shop software."
+      "a": "Yes. Paste a product link or use the API to start sale videos for multiple items. Review each ad before posting."
+    },
+    {
+      "q": "Can I make a Black Friday ad without editing skills?",
+      "a": "Yes. Upload your product photo, choose a style, and add your sale message. You can make an ad without editing experience or a film crew."
+    },
+    {
+      "q": "What video size and length should I use for a sale ad?",
+      "a": "Choose 9:16 for Stories and Reels or 1:1 for feeds. Videos can be 6, 10, 15, or 30 seconds, with wide formats available too."
+    },
+    {
+      "q": "Can I use the download in paid ads?",
+      "a": "Yes. The finished Black Friday video has no watermark and can run in paid ads. Check the price and offer before publishing."
     }
   ],
   "visual": {

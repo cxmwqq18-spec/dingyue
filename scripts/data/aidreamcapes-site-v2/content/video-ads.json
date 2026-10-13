@@ -47,40 +47,40 @@
   },
   "faq": [
     {
-      "q": "What does a video ads generator produce?",
-      "a": "A spoken ad from a product photo or a product page, with a script, an AI actor, and a voice. You pick from 53 AI actors. You do not film a set."
-    },
-    {
-      "q": "How does a shop build the video ad?",
-      "a": "Start with a product photo or its page. Approve the drafted sentence, change a word if the product differs, then download. You can edit captions, swap the voice, or add a track from the music library."
-    },
-    {
-      "q": "Which kind of tool should a shop use for paid ads?",
-      "a": "Use one built for ads you can run: a script, an AI actor, a voice, and the sizes TikTok and Meta expect. This one does that from a photo or a product link, including a batch of products."
-    },
-    {
-      "q": "Do I pay before I can make the first ad?",
-      "a": "Yes. You pick a paid plan, then make the first ad. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Are commercial rights included on a paid plan?",
-      "a": "Yes. On a paid plan the clip can be the ad you fund. The file has no watermark, and you do not need a separate creator license."
-    },
-    {
-      "q": "Which frame sizes and placements can the file use?",
-      "a": "A phone ad wants 9:16, and a square feed wants 1:1. 16:9, 4:3, and 3:4 are there when the placement asks. You can download the file or send it toward TikTok, Meta, or Google Ads."
-    },
-    {
       "q": "Can every product in the catalog get its own ad?",
-      "a": "Yes. Each product can get an ad from its own photo or page. Shop software you already use can send that list. Every clip still spends credits, and a failed job returns them."
+      "a": "Yes. Make separate ads for many products in your catalog. Change the message or actor to test more versions without filming each item."
+    },
+    {
+      "q": "What should I look for in an AI video ad tool?",
+      "a": "Choose a tool that makes scripts, actors, voices, and ad sizes from your product. AIVideosUGC also lets you make many versions for testing."
     },
     {
       "q": "How do these compare with ads filmed by creators?",
-      "a": "Book a creator when you need a person filmed with the product itself. Use the generated ad when you are still choosing which opening to buy. Test more than one opening."
+      "a": "Results vary by product and audience. AI ads are useful for quick tests and many versions; a filmed creator suits campaigns needing a real person."
+    },
+    {
+      "q": "How does a shop build the video ad?",
+      "a": "Upload a product photo or paste a link, then review the script and choose an actor. Download the finished ad in minutes."
+    },
+    {
+      "q": "Which frame sizes and placements can the file use?",
+      "a": "Download square videos (1:1), portrait videos (9:16), or landscape videos (16:9) for TikTok, Meta, YouTube, and your store."
+    },
+    {
+      "q": "What does a video ads generator produce?",
+      "a": "It makes a finished video ad from a product photo, link, or short description. Add an AI actor, voice, and script without filming."
+    },
+    {
+      "q": "Are commercial rights included on a paid plan?",
+      "a": "Yes. Your watermark-free video is cleared for commercial use, including paid ads. You do not need a separate license for an AIVideosUGC AI actor."
+    },
+    {
+      "q": "How much does an AI video ad cost?",
+      "a": "Video credits depend on length: 6 seconds costs 24, 10 costs 40, 15 costs 60, and 30 costs 120. Starter costs $24.50 for 200 credits."
     },
     {
       "q": "Will Meta or TikTok reject a generated clip?",
-      "a": "Read that ad account's current rule before you fund the clip. If a viewer could think a buyer filmed their own order, add the label that account asks for. Keep the scene true to the product you uploaded."
+      "a": "AI video ads can run on Meta and TikTok, subject to their current rules. Check whether your ad needs an AI label before posting."
     }
   ],
   "visual": {

@@ -100,44 +100,44 @@
   "cta_lead": "Get a listing-ready worn photo in minutes, from the product image you already have.",
   "faq": [
     {
-      "q": "How does a virtual model photo get made for clothing?",
-      "a": "You upload one product photo. Clothing, plus jewelry or eyewear, goes onto a lifelike model with a natural pose and even light."
-    },
-    {
-      "q": "Can I put my own products on a virtual model?",
-      "a": "Yes. Upload a photo of the piece you sell, a top or a pair of jeans, and download the worn file. The guide to [model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) walks through that path."
-    },
-    {
       "q": "Can I use this for the store and the lookbook?",
-      "a": "Yes. Pair the worn photo with a clean backdrop, a new background, and a lighting pass so the store and the lookbook match."
+      "a": "Yes. Use matching model photos across product pages and lookbooks. Change the background and lighting to keep the collection consistent."
+    },
+    {
+      "q": "What image sizes can I download?",
+      "a": "Choose tall, square, or wide photos for your store and ads. Available sizes include 9:16, 1:1, 4:3, 16:9, and 3:4."
     },
     {
       "q": "How close is a virtual model to a studio photo?",
-      "a": "You pick the model, the pose, the background, and the frame. Compare the worn photo with your upload before you publish. Fine seams can still shift."
+      "a": "Virtual model photos can look like studio images with natural poses and light. Check fabric, fit, and small details against the real item before publishing."
     },
     {
-      "q": "How does this help a fashion shop make realistic product photos?",
-      "a": "Yes. The worn photo puts the garment on a model, keeps the texture readable, and gives you one look for every channel you sell on."
-    },
-    {
-      "q": "Can I run model photos from the shop software I already use?",
-      "a": "Yes. The shop software you already use can send garment photos in and pull the worn images back."
-    },
-    {
-      "q": "Can I create model photos for an entire collection?",
-      "a": "Yes. Run several garment photos together. Each image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Which frames can I download?",
-      "a": "Yes. Pick a tall portrait, a wide landscape, or a square. 9:16, 1:1, 4:3, 16:9, and 3:4 are all available."
-    },
-    {
-      "q": "Can I publish these photos on my store and in ads?",
-      "a": "Yes. The file has no watermark. Use it on the product page and in a square ad. Keep a plain product photo beside it when shoppers need measurements."
+      "q": "How does a virtual model photo get made for clothing?",
+      "a": "Upload a clear garment photo and choose a virtual model. The tool places your clothing on a lifelike person with natural lighting, without a studio shoot."
     },
     {
       "q": "What if a small print looks different?",
-      "a": "Compare the worn photo with the upload before you publish. Fine prints and seams can shift, so check them first."
+      "a": "Check each finished photo against the garment before posting. If a print or seam looks wrong, change the image and make another version."
+    },
+    {
+      "q": "Can I put my own products on a virtual model?",
+      "a": "Yes. Upload the clothing or accessory you sell and choose a virtual model to wear it. You can make catalog photos in minutes."
+    },
+    {
+      "q": "Can I publish these photos on my store and in ads?",
+      "a": "Yes. Use watermark-free model photos on product pages and in paid ads. Keep a clear product photo alongside them when shoppers need to inspect details."
+    },
+    {
+      "q": "Can I make virtual model photos through an API?",
+      "a": "Yes. You can send garment photos from your store software through the API. This helps create model photos for a large catalog."
+    },
+    {
+      "q": "How can virtual models help my fashion shop?",
+      "a": "They put your clothing on lifelike models without a shoot. Make consistent photos for product pages, lookbooks, and ads in minutes."
+    },
+    {
+      "q": "Can I create model photos for an entire collection?",
+      "a": "Yes. Create on-model photos for each item or color in your collection. One photo costs 24 credits, so you can plan the cost before starting."
     }
   ],
   "visual": {

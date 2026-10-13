@@ -140,60 +140,60 @@
   ],
   "faq": [
     {
-      "q": "How should a new product be sold on video?",
-      "a": "Paste the product page, or photograph the package people will receive. Pick an avatar, approve the script, and check the open before you post."
+      "q": "How is an AI unboxing video different from filming one?",
+      "a": "An AI unboxing video starts from your product photos, so you can make it in minutes without a camera crew. You can try another version without booking a new shoot."
     },
     {
-      "q": "How can I create an unboxing clip with AI?",
-      "a": "Start from the package photo, pick a style and an avatar, and approve one sentence about the product coming out. The clip should show that product and nothing else in the box."
+      "q": "Can a product link start an unboxing video?",
+      "a": "Yes. Paste your product link to bring in its photos and details. Check that the package and contents in the video match what you ship."
     },
     {
-      "q": "How long should an unboxing clip be?",
-      "a": "Choose 6, 10, 15, or 30 seconds. Six is a teaser. Ten opens and shows the product. Fifteen is a slower reveal. Thirty covers a box with more than one item."
+      "q": "What if the unboxing video shows the wrong item?",
+      "a": "Make a new version using clearer photos and a description of the exact box contents. Check the finished video against the package customers will receive."
     },
     {
-      "q": "Can the open lead into a demo?",
-      "a": "Yes. After the product is out of the package, the next beat can show it in use. You do not book a camera for that second beat."
+      "q": "What if my packaging changes before launch?",
+      "a": "Use a photo of the final package customers will receive. If the packaging changes, make a new video so shoppers see the right box."
     },
     {
-      "q": "Can I start an unboxing video from the product page?",
-      "a": "Yes. Paste the page if you do not want to retype the product name. The box in the finished clip still has to be the one you will mail."
+      "q": "Can an unboxing video show how my product works?",
+      "a": "Yes. Show the product coming out of the package, then show it in use. You can make the video without filming a separate demo."
     },
     {
-      "q": "Can I change the voice, the music, and the captions before I post?",
-      "a": "Yes. Change the voice, the music, and the captions in the editor before you post. Type the date, the price, and any code yourself."
+      "q": "How can video help sell a new product?",
+      "a": "A short video shows shoppers what arrives and how it works before they buy. Start from a product photo or link and make a launch video in minutes."
     },
     {
-      "q": "How is this different from filming the unboxing?",
-      "a": "You start from the package photo instead of a booked afternoon. You get speed, a lower bill, and another version without a new shoot."
+      "q": "How can I make an unboxing video with AI?",
+      "a": "Upload a clear photo of your package and product, then choose a style and AI actor. Describe the unboxing and check that the video shows what customers will receive."
     },
     {
-      "q": "How do I keep the unboxing in my shop's voice?",
-      "a": "Use the words you would say at the packing table. Edit the drafted script so it sounds like the person who writes your captions."
+      "q": "How long should an unboxing video be?",
+      "a": "Choose 6, 10, 15, or 30 seconds based on how much you need to show. A short video can reveal one item; use a longer one for several."
     },
     {
-      "q": "What if the video shows something that is not in my box?",
-      "a": "Make it again and name the exact contents. Shoppers will compare their package with the open they saw."
+      "q": "How many credits does an unboxing video cost?",
+      "a": "A 6-second video costs 24 credits; 10 seconds costs 40, 15 costs 60, and 30 costs 120. If generation fails, your credits return."
     },
     {
-      "q": "What photo should I use to start an unboxing video?",
-      "a": "Use a clear photo of the product in the package, and list every item in the box. Check the opening, the reveal, and the final contents against the real package."
+      "q": "How can the unboxing video sound like my shop?",
+      "a": "Use the same simple words you use in your product descriptions and social posts. Choose a voice that suits your brand and check the message before downloading."
     },
     {
-      "q": "How many credits does one unboxing clip use?",
-      "a": "A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. If the clip fails, the credits come back."
+      "q": "Can I change the voice, music, and captions?",
+      "a": "Yes. Choose a different voice, music, or captions before you download the video. Check any price, date, or discount code before posting."
     },
     {
-      "q": "What if the box is still changing before launch?",
-      "a": "Wait until you can photograph the final package. Describe the box people will receive, not a stand-in."
+      "q": "Which photo should I use for an AI unboxing video?",
+      "a": "Use a sharp photo that clearly shows the package and every item inside. This helps the video show the right product and a believable reveal."
     },
     {
-      "q": "Can one package photo make several launch clips?",
-      "a": "Yes. Reuse the photo, keep one saved avatar, and write a separate sentence for the teaser, the reveal, and the closer look."
+      "q": "Can one package photo make several launch videos?",
+      "a": "Yes. Reuse the photo and try different introductions, voices, or product details. You can compare several videos without another shoot."
     },
     {
-      "q": "Can I send the clip to TikTok or Facebook?",
-      "a": "Yes. After you check the unboxing, send it to TikTok, or to Facebook and Instagram. Or download it with no watermark and upload it yourself."
+      "q": "Can I post the unboxing video on TikTok or Facebook?",
+      "a": "Yes. Download the video without a watermark and post it on TikTok, Facebook, or Instagram. Choose a size that fits the platform."
     }
   ],
   "cta_title": "Make the Launch Unboxing",

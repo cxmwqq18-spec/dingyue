@@ -45,44 +45,44 @@
   },
   "faq": [
     {
-      "q": "What do I do when the product photo still shows the room?",
-      "a": "Upload it and download a file where the product sits on white. Every edge stays inside the frame and the room is gone."
+      "q": "Will a white background make my product look flat?",
+      "a": "No, if your source photo has clear lighting and contrast. A soft natural shadow adds depth while keeping attention on the item."
     },
     {
       "q": "How do I put a product photo onto pure white?",
-      "a": "Upload your photo, choose pure white (RGB 255, 255, 255) to meet a marketplace's white-background rule for main images, then download. The product shape stays the one in your photo."
-    },
-    {
-      "q": "Does a marketplace main image have to sit on white?",
-      "a": "Often it does, and a grey-looking field is a common reason a listing image gets sent back. Open the current rule for your category before you publish. You get a plain white field. The tool does not submit the listing for you."
-    },
-    {
-      "q": "Can the product look flat on white?",
-      "a": "It can, if the source photo is flatly lit and the base has no weight. A soft shadow under the product helps it read as sitting on the page."
-    },
-    {
-      "q": "Does a white product photo cost anything?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. One photo spends 24 credits. Those credits also pay for videos."
-    },
-    {
-      "q": "Can one white field cover a whole folder of photos?",
-      "a": "Yes. Send the folder through the API, or run the files together in the app. Each photo still shows its credit cost first."
+      "a": "Upload your photo and choose pure white, RGB 255, 255, 255. Review the product edges, then download the image for your listing."
     },
     {
       "q": "How many credits does one photo use?",
-      "a": "One product photo uses 24 credits. You see that number before the job starts. If the photo fails, those credits come back."
+      "a": "One white-background image costs 24 credits. You see the cost before starting, and a failed job returns those credits."
+    },
+    {
+      "q": "Does a marketplace main image have to sit on white?",
+      "a": "Many marketplaces require a pure white main image. Check your category’s current rules, because a background that only looks white may fail an automated check."
+    },
+    {
+      "q": "How do I add a white background to a product photo?",
+      "a": "Upload your product photo, and AI removes the room behind it. Download the item on a clean white background without manually cutting around the edges."
     },
     {
       "q": "What should the starting photo show?",
-      "a": "The whole product, with edges that are not cut off. A simple setting in the original photo makes the white result easier to check."
+      "a": "Use a clear photo that shows the whole product and its edges. Good lighting helps you check the result quickly."
     },
     {
       "q": "Can I post the file on Amazon, Shopify, or Etsy?",
-      "a": "Yes. The download has no watermark, so you can put it on Amazon, Shopify, or Etsy, and in your ads."
+      "a": "Yes. Download the image without a watermark for Amazon, Shopify, Etsy, or paid ads. Check each marketplace’s image rules before posting."
     },
     {
-      "q": "Which tool fits a pure white product photo?",
-      "a": "Use this one when you want the room gone and the item kept. You upload one clear photo of the whole product."
+      "q": "Which tool can make a pure white product photo?",
+      "a": "Choose a tool that removes the original background cleanly and gives you pure white. This one makes a listing-ready image from a product photo."
+    },
+    {
+      "q": "How much does a white-background photo cost?",
+      "a": "One image costs 24 credits. Starter costs $24.50 monthly for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "Can I apply white backgrounds to a whole catalog?",
+      "a": "Yes. Apply the same white background to many product photos in a batch or through the API. Review each item before publishing its listing."
     }
   ],
   "visual": {

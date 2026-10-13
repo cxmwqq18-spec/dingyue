@@ -57,36 +57,36 @@
   ],
   "faq": [
     {
-      "q": "What does AIVideosUGC make for a small shop?",
-      "a": "AIVideosUGC makes store images and short video ads from a product photo or a product page link. You can add an AI actor, a script, and a voice, and you review the file before you download it."
-    },
-    {
       "q": "Can I make a creator-style clip of my product?",
-      "a": "Yes. A generated presenter can talk about the product in a creator-style clip. For help with an account, a job, or a file, email support@aivideosugc.com."
-    },
-    {
-      "q": "What can a shop make from one product photo?",
-      "a": "A video ad, a product photo, or a social clip. Start with the photo or your product page, then add a short scene."
-    },
-    {
-      "q": "Can I make shop ads without booking a studio?",
-      "a": "Yes. It is for online sellers who need product images and short ads from their own catalog. You do not book a studio or a creator for every item."
-    },
-    {
-      "q": "Does AIVideosUGC cost money to use?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit charge before it starts."
+      "a": "Yes. Choose an AI actor, add your product, and make a creator-style video in minutes. You can change the message for your next ad."
     },
     {
       "q": "Can I use the same AI actor on my next ad?",
-      "a": "Yes. You can pick an AI actor for a video and change the presenter before download. The files you create stay in your account."
+      "a": "Yes. Choose the same AI actor for your next video to keep a familiar look. You can change the script, voice, or product each time."
     },
     {
-      "q": "Can my product video include a voice and captions?",
-      "a": "Yes. A video can include a spoken line, captions, and music. You can change those before you download."
+      "q": "Can I make shop ads without booking a studio?",
+      "a": "Yes. Upload a product photo and make ads in minutes without booking a studio or creator. Use the finished files in your marketing."
+    },
+    {
+      "q": "How much does AIVideosUGC cost?",
+      "a": "Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. A photo costs 24 credits; video credits depend on length."
     },
     {
       "q": "Can I post the ad on my store and on social channels?",
-      "a": "Yes. Download the file and publish it on TikTok, Instagram, Facebook, or your store, and follow the rules of that channel. Your own software can also start a job through the API."
+      "a": "Yes. Download your watermark-free ad for your store, social channels, or paid campaigns. Commercial use is included."
+    },
+    {
+      "q": "What can a shop make from one product photo?",
+      "a": "You can make listing photos, video ads, and social posts from one product image. Try new scenes and messages without another shoot."
+    },
+    {
+      "q": "Can my product video include a voice and captions?",
+      "a": "Yes. Add a voice and captions to your product video, then review the result. Make another version in minutes if you change the message."
+    },
+    {
+      "q": "What can AIVideosUGC make for my shop?",
+      "a": "Make product photos, product videos, and short ads from your images or product links. AI actors, voices, and scripts help you create videos without a shoot."
     }
   ],
   "ctaTitle": "Start From One Product Photo",

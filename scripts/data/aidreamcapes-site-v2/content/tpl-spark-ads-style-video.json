@@ -46,40 +46,40 @@
   },
   "faq": [
     {
-      "q": "Can I make a Spark-style video for free?",
-      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before the clip runs, and a failed run returns those credits."
+      "q": "Can I make several versions or use the API?",
+      "a": "Yes. Make several openings from one product and test different messages or languages. Your software can also start jobs through the API."
     },
     {
-      "q": "Who is responsible for rights in the clip and in what I upload?",
-      "a": "You can use the download in your own ads and posts. You are responsible for the claims you add and for logos in the photo you upload. The file has no watermark. Anyone on screen is an AI avatar."
+      "q": "What happens if my video job fails?",
+      "a": "A failed job returns its credits. For other refund questions, see our [Refund Policy](/refunds)."
     },
     {
-      "q": "Can I publish this clip on social apps other than TikTok?",
-      "a": "Yes. Save a tall 9:16, a square 1:1, or a wide 16:9, and 4:3 or 3:4 are there too. Then publish to Instagram, Facebook, YouTube, or TikTok."
+      "q": "What can I use to make a Spark-style video?",
+      "a": "Start with a product photo, a public product link, or a short description. Choose an AI actor and message without arranging a shoot."
     },
     {
-      "q": "What is your return policy if a job fails?",
-      "a": "A failed run puts its credits back. If the file does not match what you asked for, use the [Refund Policy](/refunds)."
+      "q": "Do I need to write a full script?",
+      "a": "No. A short product message is enough to start. You can adjust it before the AI actor speaks it."
+    },
+    {
+      "q": "How much does a Spark-style video cost?",
+      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
+    },
+    {
+      "q": "Can I use a Spark-style video commercially?",
+      "a": "You can use your finished video in your own ads and posts without a watermark. Use only photos, logos, and audio you have rights to use."
     },
     {
       "q": "What is a Spark-style video?",
-      "a": "A tall phone video of your product that you post from your own TikTok account. It is made from your product reference. A paid promotion is turned on in TikTok after that."
+      "a": "A Spark-style video is a creator-style TikTok post featuring your product. You can promote it through TikTok after posting it from your account."
     },
     {
-      "q": "What can I use as the starting input?",
-      "a": "The product listing, a photo on your desk, or a few lines you already wrote."
+      "q": "Can I post Spark-style videos on other platforms?",
+      "a": "Yes. Post the video to TikTok, Instagram, Facebook, or YouTube. Make vertical, square, or wide versions to fit each placement."
     },
     {
       "q": "Will captions and a spoken line be included?",
-      "a": "Yes. Add a voiceover and turn captions on in the editor before you publish. A TikTok sound can still be attached in TikTok."
-    },
-    {
-      "q": "Do I have to write a long script first?",
-      "a": "No. A line or two is enough to start. You can shorten the draft before it is spoken."
-    },
-    {
-      "q": "Can I make several versions or use the API?",
-      "a": "Yes. Render a batch of openings from one product, in more than one language, or start the job through the API from your shop software."
+      "a": "Yes. Add a spoken message and captions before posting. Check both on a phone so the product and offer are easy to understand."
     }
   ],
   "visual": {

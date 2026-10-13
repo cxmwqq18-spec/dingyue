@@ -14,36 +14,36 @@
   ],
   "faq": [
     {
-      "q": "What is an AI YouTube Shorts ad?",
-      "a": "It is a tall creator-style Short. An [AI actor](/ai-video-generation/ai-actors) can hold the product or give one reason to try it. You pick the language, and you do not wait on a creator."
-    },
-    {
-      "q": "Can a YouTube Shorts ad get people to watch longer?",
-      "a": "An opening on the product is easier to stay with than a logo. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
+      "q": "Does a Short start from a product link?",
+      "a": "Yes. Paste a product link or upload a photo to start a Short. You can make a separate wide video for other YouTube placements."
     },
     {
       "q": "What does a YouTube Shorts ad cost?",
-      "a": "You pay credits for each Short. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "How real do the face and the voice look?",
-      "a": "The mouth meets the words. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
-    },
-    {
-      "q": "Can I change the script, the avatar, and the picture?",
-      "a": "Yes. Rewrite the line after you see the avatar, swap who holds the product, and download the new Short."
-    },
-    {
-      "q": "Will YouTube accept an AI Short as an ad?",
-      "a": "It can, if the product in the video is the product you ship and you say so when YouTube asks. We do not publish the ad for you. Read the disclosure rules on the day you post."
-    },
-    {
-      "q": "Does a Short start from a product link?",
-      "a": "Yes. The product page can start the YouTube Shorts ad, and a product photo can start it too. A wide video that plays before another YouTube video is its own file."
+      "a": "You pay 24, 40, 60, or 120 credits for a 6, 10, 15, or 30 second Short. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
     },
     {
       "q": "Which frame should a Shorts ad use?",
-      "a": "Use 9:16 for Shorts. A 16:9 file is a separate wide job. Check [social media ad sizes](/guides/ad-sizes-by-platform) before you download."
+      "a": "Use vertical 9:16 for Shorts. Choose 16:9 for a separate wide placement and check the finished video before posting."
+    },
+    {
+      "q": "Are AI-generated videos allowed in YouTube ads?",
+      "a": "Yes. AI videos can run as YouTube ads when they meet YouTube’s current policies. Keep claims truthful, avoid impersonation, and disclose AI use when required."
+    },
+    {
+      "q": "Can AI YouTube Shorts ads improve watch time?",
+      "a": "It can hold attention when the product appears early and the message fits the viewer. Test different openings; results depend on your audience."
+    },
+    {
+      "q": "Can I change the script, the avatar, and the picture?",
+      "a": "Yes. Change the message, actor, voice, or visuals and make another Short. You can test more versions without filming again."
+    },
+    {
+      "q": "What is AI UGC for YouTube Shorts?",
+      "a": "An AI YouTube Shorts ad is a vertical product video made with an AI actor and voice. You can make one without filming or hiring a creator."
+    },
+    {
+      "q": "How realistic are AI actors and voices?",
+      "a": "AI actors can look and sound realistic, with lips matching the words. Review each video and disclose AI use when YouTube requires it."
     }
   ],
   "examples": null,

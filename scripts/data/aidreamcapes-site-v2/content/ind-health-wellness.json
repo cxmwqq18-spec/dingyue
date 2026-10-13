@@ -15,40 +15,40 @@
   ],
   "faq": [
     {
-      "q": "Can the ad promise what a supplement does?",
-      "a": "No. Show how and when someone uses it, not a health result. Keep claims and dosage in text your team approves."
-    },
-    {
-      "q": "Why is the label hard to read in the photo?",
-      "a": "Shoot the bottle upright, with the label facing the camera and soft light from the side. Glare usually starts in the photo you upload."
-    },
-    {
-      "q": "Can I use these clips in paid ads?",
-      "a": "Yes. Downloads have no watermark, so they can run in paid ads. Any health claim or offer you add has to be true."
-    },
-    {
-      "q": "Do I need a model or a creator?",
-      "a": "No. Pick an AI avatar for the clip, and add a spoken line and captions. Hire a real person only when you need a true customer story."
-    },
-    {
-      "q": "Can I make a Story from this?",
-      "a": "Yes. A square photo fits a feed or a product page. For a phone Story, make a tall clip at 6, 10, 15, or 30 seconds."
-    },
-    {
-      "q": "What do the lengths cost?",
-      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the number before you start. If the clip fails, those credits come back."
+      "q": "Can a wellness ad promise health results?",
+      "a": "No. Do not promise health results you cannot prove. Show the product in a routine and keep any claim accurate and approved."
     },
     {
       "q": "Which shapes can a clip use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Choose 4:3 or 3:4 when the placement asks for them."
+      "a": "Choose vertical 9:16 for Stories, square 1:1 for feeds, or wide 16:9 for a website. You can also export 4:3 or 3:4."
     },
     {
-      "q": "What should the scene avoid?",
-      "a": "Avoid before-and-after bodies, medical outcomes, and dosage text inside the image. Show the product in a routine, and write claims where you can check them."
+      "q": "Can I make a Story from this?",
+      "a": "Yes. Make a vertical 9:16 video for Stories and phone feeds. Choose a 6, 10, 15, or 30 second length that fits your message."
+    },
+    {
+      "q": "What should a wellness ad avoid?",
+      "a": "Avoid false health results, misleading body changes, and incorrect dosage claims. Show the product clearly and check every claim before advertising."
+    },
+    {
+      "q": "What do the lengths cost?",
+      "a": "A 6, 10, 15, or 30 second clip costs 24, 40, 60, or 120 credits. A photo costs 24 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your shop software. Ask for a short script, pick an AI avatar, and make a few versions. One of them can be in another language."
+      "a": "Yes. Paste a product link and make several versions with different messages, actors, or languages. You can test them without another shoot."
+    },
+    {
+      "q": "Do I need a model or a creator?",
+      "a": "No. Choose an AI actor and add your product message to make a clip without booking a creator. Use a real customer only for a genuine customer story."
+    },
+    {
+      "q": "How can I make the product label readable?",
+      "a": "Upload a sharp, front-facing photo taken in soft light. Glare or a blurry photo makes the label hard to read."
+    },
+    {
+      "q": "Can I use these clips in paid ads?",
+      "a": "Yes. Finished clips have no watermark and can run in paid ads. Check health claims and offers before you post."
     }
   ],
   "steps_h2": "How to Make a Fitness Ad in 3 Simple Steps",

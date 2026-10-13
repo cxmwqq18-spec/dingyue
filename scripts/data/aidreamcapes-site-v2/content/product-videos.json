@@ -66,36 +66,36 @@
   },
   "faq": [
     {
-      "q": "How does a shop get a clip of a product it already lists?",
-      "a": "Paste the product page you already sell. The photo on that page becomes the clip, and you download it with no watermark after you approve the line."
-    },
-    {
       "q": "What do I set before a product video is made?",
-      "a": "Add a link or a photo, pick a frame, then approve the spoken line. You can still change that line after the draft appears."
+      "a": "Add a product link or photo, choose a style and actor, and review the script. The tool adds scenes and a voice for a finished ad."
     },
     {
-      "q": "What length should a product video use?",
-      "a": "Match the length to the action. A short demo can be 6 seconds for 24 credits. A tighter cut is 10 seconds for 40. A standard cut is 15 seconds for 60, and a longer cut is 30 seconds for 120."
-    },
-    {
-      "q": "Can AI create a useful product demo without filming?",
-      "a": "Yes. The actor can show the product in use while saying the one benefit you kept. You are not renting a set for the shoot."
-    },
-    {
-      "q": "How does a product link become a video?",
-      "a": "The page supplies the product photo and the claim you already wrote. The spoken clip is built around those two, with an AI actor holding the item."
-    },
-    {
-      "q": "Can I customize the product video after the draft?",
-      "a": "Yes. Rewrite a sentence, choose a different AI actor, or change the setting. Add your logo when the words are right. The same line can be spoken in another language you sell in."
+      "q": "How can I make a product video for my store?",
+      "a": "Paste your product link or upload a photo. Choose a style and AI actor, then make a video in minutes without filming."
     },
     {
       "q": "What makes an AI product video different from filming?",
-      "a": "Filming means reserving a set and a person who can demo the item. Here you start from the product photo. If the render fails, the credits come back."
+      "a": "AI product videos take minutes and cost less than arranging a shoot. Make different versions for products and ad tests without a new filming day."
+    },
+    {
+      "q": "How does a product link become a video?",
+      "a": "Paste the product link so the tool can use its images and details. Review the script, then make a finished video in minutes."
+    },
+    {
+      "q": "What length should a product video use?",
+      "a": "Use 6 or 10 seconds for a quick ad, or 15 or 30 seconds when you need more detail. Make different lengths to test what works."
+    },
+    {
+      "q": "Can AI create a useful product demo without filming?",
+      "a": "Yes. An AI actor can explain a feature while the video shows your product in use. Make the demo without booking a studio shoot."
     },
     {
       "q": "How do I keep the video in my brand's voice?",
-      "a": "Read the line out loud and rewrite it if it does not sound like the shop. Your logo and colors can sit on the last frame, and shop software you already use can request the same job."
+      "a": "Edit the script to sound like your shop, then add your logo and colors. Choose a voice that suits the message before posting."
+    },
+    {
+      "q": "Can I customize the product video after the draft?",
+      "a": "Yes. Change the script, actor, voice, scene, music, or brand colors. Make another version quickly for a different audience or offer."
     }
   ],
   "actor_scene_picker": {

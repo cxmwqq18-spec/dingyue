@@ -118,36 +118,36 @@
   ],
   "faq": [
     {
-      "q": "What does a product photo generator do?",
-      "a": "It makes a realistic product image from a photo you provide. You can set the background, the light, and the style without a traditional shoot."
-    },
-    {
-      "q": "How does the product photo get made?",
-      "a": "You upload a product photo and say where it should sit. The picture comes back in that setting, and you can adjust the light and the style."
-    },
-    {
-      "q": "What should I look for before I publish?",
-      "a": "The edges must be clear, the color must match the real item in daylight, and no side should appear that your photo never showed."
-    },
-    {
-      "q": "Can I use a product photo tool for free?",
-      "a": "No. One image is 24 credits. Plans are on [pricing](page:pricing): Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost shows before the job starts."
-    },
-    {
       "q": "Are these photos useful on a product page?",
-      "a": "Yes. A product page can use the photo, and an ad can use a second file of the same product with a different crop."
-    },
-    {
-      "q": "What do I gain from an AI product photo?",
-      "a": "You get a new setting around the product before you rent anything. If the place looks wrong, you still have the original phone photo."
-    },
-    {
-      "q": "Can I sell with these photos?",
-      "a": "Yes, you can use the download in your store and ads if you own or have permission to use the photo you uploaded."
+      "a": "Yes. Use a clear product image on your listing, then make another scene for ads or social posts. The photos have no watermark."
     },
     {
       "q": "Do I need a camera, or is a phone enough?",
-      "a": "A phone is enough. Window light, filters off, and the whole product in the frame matter more than the camera body."
+      "a": "A phone photo is enough if it is clear and well lit. Show the whole product so the new image keeps its shape and details."
+    },
+    {
+      "q": "How much does an AI product photo cost?",
+      "a": "One product photo costs 24 credits. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "What should I look for before I publish?",
+      "a": "Check the color, shape, and small details against the product you sell. Clear, realistic photos help shoppers decide with confidence."
+    },
+    {
+      "q": "Can I sell with these photos?",
+      "a": "Yes. Use watermark-free product photos on your store and in paid ads. Make sure you have rights to the image you upload."
+    },
+    {
+      "q": "What do I gain from an AI product photo?",
+      "a": "You get realistic product images quickly without renting a studio. Try different backgrounds and lighting to see what suits your store."
+    },
+    {
+      "q": "How does the product photo get made?",
+      "a": "Upload a product photo and describe the scene you want. The tool makes a new image with your product, lighting, and background in minutes."
+    },
+    {
+      "q": "What does a product photo generator do?",
+      "a": "A product photo generator makes realistic images from a photo of your product. You can change the background and lighting without a studio shoot."
     }
   ],
   "cta_title": "See the Product in a New Place",

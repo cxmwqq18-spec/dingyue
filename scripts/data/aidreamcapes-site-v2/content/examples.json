@@ -135,48 +135,48 @@
   ],
   "faq": [
     {
-      "q": "What is a template in this gallery?",
-      "a": "A ready-made scene with the crop and the setting already chosen. You add your product and get a creator-style photo or video in minutes, without building the shot from nothing."
-    },
-    {
-      "q": "How do I turn a template into a file I can post?",
-      "a": "Upload your product photo, set the line, and get a finished file. A photo costs 24 credits. A 15-second video costs 60. The cost shows before anything runs."
-    },
-    {
-      "q": "Why use a template instead of hiring a creator?",
-      "a": "You can launch faster, test a second opening, and change the line without waiting on a creator's calendar."
-    },
-    {
       "q": "Who are these templates for?",
-      "a": "Shops, marketers, agencies, and anyone who needs a file this week. A one-person shop and a client account use them the same way."
-    },
-    {
-      "q": "Can I make a file if I have never edited video?",
-      "a": "Yes. A photo of the whole item and one open card are enough. A short ad can use one of 53 AI actors. There is no timeline to learn first."
-    },
-    {
-      "q": "Which products fit these scenes?",
-      "a": "The cards here show a mug, a tote, a vase, a wallet, a running shoe, and a sunscreen tube. The same idea fits other products. Pick the crop, then compare the file with what you ship."
+      "a": "They are for shops, marketers, agencies, and founders who need ads quickly. You can start with one product or make many versions."
     },
     {
       "q": "Can I use a photo I took of the product I ship?",
-      "a": "Yes. The item in the file comes from the photo you upload, or from a product page you paste. See [URL to video](page:url-to-video) when you start from a link."
+      "a": "Yes. Add your own product photos, videos, and logo. The finished ad can keep your brand look while using a creator-style format."
+    },
+    {
+      "q": "How do I turn a template into a file I can post?",
+      "a": "Choose a template, upload your product image, and change the message. The tool creates a finished photo or video you can post."
+    },
+    {
+      "q": "What is an AI ad template?",
+      "a": "It is a ready-made ad layout with a scene and message structure. Add your product to make a creator-style video in minutes without filming."
+    },
+    {
+      "q": "How much does it cost to make an ad from a template?",
+      "a": "A template ad uses credits on a paid plan. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "Which products fit these scenes?",
+      "a": "Templates work for clothing, beauty, food, home goods, and many other products. Pick a scene that fits what you sell."
     },
     {
       "q": "Where can I post the file?",
-      "a": "Use 9:16 for a phone, 1:1 for a square feed, and 16:9 when the slot is wide. Post it on TikTok, Instagram, Facebook, or YouTube, or download it for the store."
-    },
-    {
-      "q": "Do I pay to make a file from a template?",
-      "a": "Yes. The pictures here only show the look. A file you make spends credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits."
-    },
-    {
-      "q": "Can I run the file as a paid ad and in client work?",
-      "a": "Yes. The download has no watermark, so it can run as a paid ad and sit on your product page. A file you make for a client is the same kind of download."
+      "a": "Post the finished file on TikTok, Instagram, Facebook, YouTube, or your store. Choose a tall, square, or wide size for each placement."
     },
     {
       "q": "Why not build the ad from a blank page?",
-      "a": "A blank page makes you invent the room, the crop, and the first line at the same time. The template already chose the scene. You decide the product and the line."
+      "a": "A template already sets the scene and ad structure. Add your product and message to publish sooner, without building every part yourself."
+    },
+    {
+      "q": "Why use a template instead of hiring a creator?",
+      "a": "Templates let you make ads in minutes without booking a creator. You can test different openings and update the message for your next campaign."
+    },
+    {
+      "q": "Can I make a file if I have never edited video?",
+      "a": "Yes. Upload a product photo and follow a few simple steps. You do not need video editing or filming experience."
+    },
+    {
+      "q": "Can I run the file as a paid ad and in client work?",
+      "a": "Yes. Use the watermark-free download in paid ads, social posts, product pages, or client work. Commercial use is included."
     }
   ],
   "visual": {

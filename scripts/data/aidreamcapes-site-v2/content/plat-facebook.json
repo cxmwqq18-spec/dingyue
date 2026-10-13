@@ -14,36 +14,36 @@
   ],
   "faq": [
     {
-      "q": "What is an AI Facebook UGC ad?",
-      "a": "It is a Facebook clip that looks like someone showing your product. An AI actor and a voice do the demo. You did not book a creator or a studio."
+      "q": "Where should the price and the offer line go?",
+      "a": "Put the price and offer where Facebook’s controls will not cover them. Check the final video on a phone before running the ad."
     },
     {
-      "q": "Does this kind of ad work on Facebook?",
-      "a": "Yes. A clip of the product in use sits in the feed more naturally than a glossy brand film. You can make one opening for each buyer you sell to."
-    },
-    {
-      "q": "Can I stop paying a creator for every Facebook test?",
-      "a": "Yes. Each test comes out of your plan. You are not waiting on a new invoice before the next opening."
-    },
-    {
-      "q": "Do these videos follow Facebook's ad rules?",
-      "a": "Yes, when the offer is true and the product is the one you ship. Do not invent a buyer, and do not claim a result you have not seen. We do not submit the ad for you."
+      "q": "How fast can I make an AI Facebook ad?",
+      "a": "You can make a Facebook ad in a few minutes. Choose an actor, add your product message, and generate a file without waiting on a shoot."
     },
     {
       "q": "Will people know the ad is made by AI?",
-      "a": "The clip is built to feel like a creator video in the feed. Say it is AI when Facebook asks you to. Do not treat hiding that as the goal."
+      "a": "Viewers may or may not recognize an AI actor. Follow Facebook’s disclosure rules and do not present a generated person as a real customer."
     },
     {
-      "q": "How fast can I get a Facebook ad file?",
-      "a": "You can have a file in minutes. Pick an actor, set the first line, and you are not holding the launch for a camera crew."
+      "q": "How many credits does a Facebook video ad cost?",
+      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. Failed jobs return their credits."
     },
     {
-      "q": "What does a Facebook video cost in credits?",
-      "a": "Yes. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you start. A failed job returns those credits."
+      "q": "Are AI videos allowed in Facebook Ads?",
+      "a": "Yes, AI videos can run as Facebook ads when they follow Meta’s rules. Keep claims truthful, avoid impersonation, and disclose AI use when required."
     },
     {
-      "q": "Where should the price and the offer line go?",
-      "a": "Put the price and the offer where the player buttons will not cover them. You add that text in the editor after download."
+      "q": "Can AI UGC ads work on Facebook?",
+      "a": "It can work well when the ad feels natural in the feed and shows the product quickly. Test different openings and audiences to see what performs for your shop."
+    },
+    {
+      "q": "Can I stop paying a creator for every Facebook test?",
+      "a": "Yes. Make several Facebook ad versions from one product photo without paying a creator for each test. You can change the actor or message in minutes."
+    },
+    {
+      "q": "What is AI UGC for Facebook Ads?",
+      "a": "An AI Facebook UGC ad is a creator-style product video made with an AI actor and voice. You can make one without hiring a creator or filming."
     }
   ],
   "examples": null,

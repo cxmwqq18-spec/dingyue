@@ -21,36 +21,36 @@
   "teams": "Making more than Premium covers, for a shop or an agency? Email support@aivideosugc.com with how many photos and videos you make in a month. We will suggest a setup that fits that volume.",
   "faq": [
     {
-      "q": "How long do I wait before the video is ready to post?",
-      "a": "We do not promise a minute count. You see the credit cost before the job starts, and a failed job returns those credits. If a file stays stuck, email support@aivideosugc.com with the time of the job."
+      "q": "How do I move to a larger plan when I need more credits?",
+      "a": "Move to Pro or Premium in your account when you need more monthly credits. Email support@aivideosugc.com if you need help."
     },
     {
       "q": "Can an AI actor hold or wear the product I sell?",
-      "a": "Yes. An AI actor can hold the product, point to it, or wear it when your photo shows that item. The product in the file is the product you uploaded."
-    },
-    {
-      "q": "How do I move to a larger plan when I need more credits?",
-      "a": "Move from Starter to Pro or Premium when the month needs more credits. If you do not see the switch in your account, email support@aivideosugc.com and we will help."
+      "a": "Yes. An AI actor can hold, wear, or show the product in your photo. You can make a demonstration without booking a model."
     },
     {
       "q": "How do I cancel and keep the month I already paid?",
-      "a": "Email support@aivideosugc.com to cancel. Read the [Refund Policy](/refunds) if you need a charge review. The month you already paid stays active until it ends, and new credits stop after that."
-    },
-    {
-      "q": "Can I run the download in paid ads, on my store, and in client work?",
-      "a": "Yes. You can place the download in paid ads, on your store, and in client work. Files have no watermark. Follow each platform's rules on the day you publish. [AI content trust and safety](page:trust) covers what stays in your account."
-    },
-    {
-      "q": "How do I make my first video from a photo or a product link?",
-      "a": "Upload one product photo or paste a product link, pick an AI actor and a length, and download. The credit cost is on screen before you start."
+      "a": "Email support@aivideosugc.com to cancel your plan. Your paid period stays active until it ends."
     },
     {
       "q": "Can I make another version with a new actor or a new opening?",
-      "a": "Yes. Run another job with a new actor, a new voice, or a new opening line. Each job spends its own credits: 24 for a photo or a 6-second video, 40 for 10 seconds, 60 for 15, and 120 for 30."
+      "a": "Yes. Change the actor, opening, or voice to make another version. Each video uses its own credits based on length."
     },
     {
       "q": "Does the file I download carry a watermark?",
-      "a": "No. Downloaded photos and videos do not carry a watermark. Use them on your store, in social ads, and in files you send a client. Anyone on camera is an AI actor, and you can say so when a platform asks."
+      "a": "No. Downloaded photos and videos have no watermark. Use them in your store, social posts, and paid ads."
+    },
+    {
+      "q": "How do I make my first video from a photo or a product link?",
+      "a": "Upload a product photo or paste a link, choose an AI actor, and make your video. You can download it in minutes."
+    },
+    {
+      "q": "How long do I wait before the video is ready to post?",
+      "a": "A video is usually ready in a few minutes. If a job fails, its credits return to your account."
+    },
+    {
+      "q": "Can I run the download in paid ads, on my store, and in client work?",
+      "a": "Yes. Use the watermark-free download in paid ads, on your store, or for client work. Follow each platform’s current rules."
     }
   ],
   "cta_title": "Pick a Plan and Make the Next Ad",

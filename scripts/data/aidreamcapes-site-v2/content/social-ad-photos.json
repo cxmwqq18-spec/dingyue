@@ -80,36 +80,36 @@
   "cta_lead": "Upload one product photo and pick a scene. You see the credit cost before the square runs.",
   "faq": [
     {
-      "q": "How can I make social posts that stand out?",
-      "a": "Start with a ready layout, drop in your photo, and add a short line. Swap the color or the type if you want. When that square works, make the next one from the same photo."
-    },
-    {
-      "q": "What kinds of posts work on social?",
-      "a": "Lead with a sharp product photo and a hook in the first line. Then try a wider scene. A real item beats a vague graphic. Posts that show, teach, or entertain usually earn the second look."
-    },
-    {
-      "q": "How often should a small shop post?",
-      "a": "Pick a pace you can keep, such as a few finished photos a week. One product photo can supply those squares. Reply when people comment."
+      "q": "Do I need to label a social image as AI?",
+      "a": "Follow the platform’s current labeling rules when you post an AI image. Requirements vary by platform and location."
     },
     {
       "q": "How much does a social ad image cost?",
-      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. Each image is 24 credits, shown before it runs. A failed image returns those credits."
+      "a": "Each image costs 24 credits. Starter costs $24.50 a month for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
     },
     {
-      "q": "Where can I use the square file?",
-      "a": "The download is square, so it fits a lot of feed posts. In each ad tool, check that your words are not cut off. It does not turn itself into a tall story or a wide banner."
+      "q": "Can I put a headline on the image?",
+      "a": "Yes. Add a short headline that shoppers can read on a phone. You can also put the headline in the ad text instead."
     },
     {
-      "q": "Can I put my headline on the image?",
-      "a": "Yes. Add a short headline on the image, or type that line in your ad editor when you want the price set there."
+      "q": "How can I make social posts that stand out?",
+      "a": "Start with a clear product photo and a ready-made scene, then add a short message. Try different backgrounds or colors to see what catches attention."
     },
     {
-      "q": "Can I make several scenes from one photo?",
-      "a": "Yes. Build different settings from the same product photo and compare them before you spend on the ad."
+      "q": "How often should a small shop post?",
+      "a": "Choose a schedule you can keep, then reply to comments. One product photo can become several posts with different scenes."
     },
     {
-      "q": "Do I have to label the image as AI?",
-      "a": "Follow the label your ad account asks for, then post the square. Rules differ by app and by country."
+      "q": "Can one product photo make several social posts?",
+      "a": "Yes. Make several scenes from one product photo and compare them in your posts or ads. You do not need a new shoot."
+    },
+    {
+      "q": "What kinds of social posts work best?",
+      "a": "Posts with a strong product photo and a clear opening often get attention. Try posts that show, teach, or entertain, then compare the results."
+    },
+    {
+      "q": "Where can I use a square social ad image?",
+      "a": "Use it in square feed posts and ads on platforms that accept that size. Check your text in each placement before posting."
     }
   ],
   "visual": {

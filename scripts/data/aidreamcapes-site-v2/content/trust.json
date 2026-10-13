@@ -63,44 +63,44 @@
   ],
   "faq": [
     {
-      "q": "Can I download the photos and videos made in my account?",
-      "a": "Yes. Download them while you are signed in. You can use the files for your business, and there is no watermark on the file. You still need permission to use the photo you started from. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "Is an AI actor a real customer?",
+      "a": "No. An AI actor is not a buyer who used your product. Do not present a generated ad as a real customer review."
     },
     {
-      "q": "Are my uploads shown to other customers?",
-      "a": "No. Your uploads and the files made from them stay in your account. They are not public, and they are not shown to other customers."
+      "q": "What should I check before posting an AI ad?",
+      "a": "Check that the product, price, and claims match what you sell. Follow the posting platform’s rules, including any AI disclosure it requires."
     },
     {
-      "q": "What should I check before publishing?",
-      "a": "Compare the result with your product. Add the real price and what the product does, in your editor. Follow the rules where you post, including a label that the ad was made with AI."
-    },
-    {
-      "q": "Is the person in the ad a real buyer?",
-      "a": "No. The presenter is an AI actor made for the ad. Do not post the clip as a review written by someone who bought the product."
-    },
-    {
-      "q": "Can I make an ad with a celebrity or a brand I do not own?",
-      "a": "No. We can refuse a celebrity, another person's face, or a logo or brand you do not own. Use the tool for your own products and your own brand."
-    },
-    {
-      "q": "Where are the full content and data rules?",
-      "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds)."
-    },
-    {
-      "q": "How do I report a problem?",
-      "a": "Email support@aivideosugc.com with the link or a description of the content and what is wrong. You do not need an account to write."
-    },
-    {
-      "q": "Is the voice a real person?",
-      "a": "No. The voice is made by the tool, in the same way as the presenter. Do not use a real person's voice unless you have permission."
+      "q": "How can I report a problem?",
+      "a": "Email support@aivideosugc.com with the content link or a clear description of the issue. You do not need an account to report it."
     },
     {
       "q": "Can I start from a product link?",
-      "a": "Yes, when you are allowed to use that page and its photos. The script and the video still have to match the product you sell. Compare the result before you publish."
+      "a": "Yes. Paste a product link if you have rights to its photos and details. Check that the finished video matches the product you sell."
     },
     {
-      "q": "Does sending a file to TikTok or Meta check the ad for me?",
-      "a": "No. A post to TikTok or Meta does not check your words for you. Meta covers Facebook and Instagram. Read the captions, check the price, and follow that place's rules for ads made with AI."
+      "q": "Can I use my finished photos and videos commercially?",
+      "a": "Yes. Download your finished photos and videos without a watermark and use them for your business. Use only source images and audio you have rights to use."
+    },
+    {
+      "q": "Where can I find the content and privacy rules?",
+      "a": "Read our [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds) for the full rules."
+    },
+    {
+      "q": "Can I use someone else’s voice?",
+      "a": "The voice can be AI-generated or based on a sample you are allowed to use. Never upload someone else’s voice without permission."
+    },
+    {
+      "q": "Are my uploads shown to other customers?",
+      "a": "No. Your uploads and finished files stay in your account and are not shown to other customers."
+    },
+    {
+      "q": "Does publishing to TikTok or Meta approve my ad?",
+      "a": "No. Sending a file to TikTok or Meta does not approve its claims. Review your message and follow the platform’s current ad and AI rules."
+    },
+    {
+      "q": "Can I use a celebrity or another brand in an AI ad?",
+      "a": "No. Use your own products, brand assets, and approved likenesses. Do not impersonate a celebrity or use another brand’s logo without permission."
     }
   ],
   "ctaTitle": "Start With a Photo You May Use",

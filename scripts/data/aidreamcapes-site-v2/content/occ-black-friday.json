@@ -14,48 +14,48 @@
   "plan": [],
   "faq": [
     {
-      "q": "How do credits work on a Black Friday ad?",
-      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If it fails, those credits return."
+      "q": "Can I make Black Friday ads for several products?",
+      "a": "Yes. Use a photo or link for each product and make a separate ad. Try different openings to see which offer gets attention."
+    },
+    {
+      "q": "Can I make different sizes for each ad placement?",
+      "a": "Yes. Choose 9:16 for vertical feeds, 1:1 for square feeds, or 16:9 for wide placements. Other sizes include 4:3 and 3:4."
     },
     {
       "q": "Can I add music and product photos to a Black Friday ad?",
-      "a": "Yes. Pick a licensed track, use the product photo for the sale, and add the confirmed offer in the editor."
+      "a": "Yes. Use your product photo, choose music, and add your confirmed sale offer. You can make the ad without filming a new product video."
     },
     {
-      "q": "Can I make Black Friday ads for several products?",
-      "a": "Yes. Run several product links and each one comes back as its own ad. You still review every file before it is published."
+      "q": "Can a product link start a Black Friday ad?",
+      "a": "Yes. Paste your product link to bring in its photos and details. Add the sale offer, then check that the ad matches the product page."
     },
     {
-      "q": "Can an AI avatar deliver my Black Friday message?",
-      "a": "Yes. An AI avatar can stand beside the product and say the line, with the product kept large enough to recognize."
+      "q": "Can I start a Black Friday ad from my store listing?",
+      "a": "Yes. Paste the product listing and use its photos to make a sale ad. Review the product details and discount before posting."
     },
     {
-      "q": "What happens to the ad after Black Friday?",
-      "a": "You keep the file. Change the offer line, the voice, or the caption and use the same scene for the next sale day."
+      "q": "When should I make my Black Friday ads?",
+      "a": "Make the product scenes early, then add the final discount, code, and end date once they are confirmed. Check every offer before posting."
     },
     {
-      "q": "How early should I prepare Black Friday creatives?",
-      "a": "Prepare the product scene first. Add the discount, code, and end date only after your offer is final."
+      "q": "How much does a Black Friday ad cost?",
+      "a": "A photo costs 24 credits. Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, or 120 for 30; failed jobs return credits."
     },
     {
-      "q": "Can the ad start from a product link?",
-      "a": "Yes. Open the listing that will go on sale and use its photo as the scene. If that photo cuts the product off, upload the full shot."
+      "q": "Can I add an end date to my sale ad?",
+      "a": "Yes. Add the confirmed end date and time to your message or captions. Check them before posting so customers see the right offer."
     },
     {
-      "q": "Can I post a Black Friday ad to TikTok, Instagram, or Facebook?",
-      "a": "Yes. Download the file when it looks right, or send it to the feed you already use. It stays in your account until you share it."
+      "q": "Can I post Black Friday ads on TikTok, Instagram, or Facebook?",
+      "a": "Yes. Download the ad without a watermark and post it on TikTok, Instagram, or Facebook. Choose the size that fits each placement."
     },
     {
-      "q": "Do I need a separate file for each placement?",
-      "a": "Yes. Make a separate video for each placement: tall, square, wide, 4:3, or 3:4."
+      "q": "Can I reuse the ad after Black Friday?",
+      "a": "Yes. Change the sale message, dates, and captions for your next promotion. You can reuse the product scene without another shoot."
     },
     {
-      "q": "Can I put an end time on the sale ad?",
-      "a": "Yes. Set it in the editor and move it later if you need to. It stays off the product picture, so a new deadline can keep the same scene."
-    },
-    {
-      "q": "Can store tools start a Black Friday ad from a product link?",
-      "a": "Yes. A connected store tool can start from your product link. Review the file and confirmed offer before publishing."
+      "q": "Can an AI actor announce my Black Friday sale?",
+      "a": "Yes. Choose an AI actor to speak your sale message beside the product. You do not need to hire a creator for each offer."
     }
   ],
   "examples": {

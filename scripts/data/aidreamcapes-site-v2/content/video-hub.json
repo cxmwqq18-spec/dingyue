@@ -47,72 +47,72 @@
   ],
   "faq": [
     {
-      "q": "How do I start an AI product video?",
-      "a": "Share the product, paste a public page, or upload a photo. The video agent asks who the clip is for, then returns a script, an actor, and a voice for you to approve."
+      "q": "Can I make a video from one product photo?",
+      "a": "Yes. Upload your photo, choose an AI actor and voice, and make a product video without filming. You can change the message later."
     },
     {
-      "q": "How much detail should I give?",
-      "a": "Treat it like a short brief. Name the product, who it is for, and the one fact the clip must say. More detail makes the first draft closer."
+      "q": "How long does an AI video take to make?",
+      "a": "An AI video takes a few minutes to make. You can download it when generation finishes, and failed jobs return credits."
     },
     {
-      "q": "Can the clip look like a short news item?",
-      "a": "Yes. Pick a news-style setting, a voice, and the line you want spoken. Set the frame, the language, and the length, then approve the script."
+      "q": "How does the AI video generator work?",
+      "a": "Give it a product photo, link, or idea, then choose the style and voice. It makes a video with visuals and spoken words in a few minutes."
     },
     {
-      "q": "How does the tool use my video brief?",
-      "a": "Your brief sets the tone, the product, and the platform. The editor writes a script and builds pictures around that line. You can change either before download."
+      "q": "Can I make videos for my online store?",
+      "a": "Yes. Make product demos, creator-style ads, or social videos from your photos and links. Use them on product pages or in campaigns."
     },
     {
-      "q": "What should a store expect before it picks a video tool?",
-      "a": "A clear credit price, a file you can use in ads, and a way to change the actor and the script. The credit cost shows before the clip starts."
+      "q": "What voices can I use in an AI video?",
+      "a": "Choose a bright, calm, or deep voice that fits your product and customers. Preview several voices before posting."
     },
     {
-      "q": "What do the voices sound like?",
-      "a": "Try a bright voice, a low voice, or a calm one, and hear the line before you commit. Match the voice to the buyer you had in mind."
+      "q": "Which AI video generator is best for a small shop?",
+      "a": "Choose one that makes ads from your product photos, shows the credit cost, and lets you change the actor or words. AIVideosUGC does all three."
     },
     {
-      "q": "Do I have to install an app first?",
-      "a": "No. You work in the browser. Music and captions are in the same place as the render."
+      "q": "Do I need to install software to make videos?",
+      "a": "No. Make and download your video in the browser. You can add music and captions in the same place."
     },
     {
-      "q": "Can I generate a video from a product photo?",
-      "a": "Yes. Pick an AI actor, choose the language and the voice, and the mouth follows the line you approved. You can adjust the delivery before you download."
+      "q": "Can a product page link become a video?",
+      "a": "Yes. Paste a public product link to bring in its photos and details. Check the finished video against the product you sell."
     },
     {
-      "q": "What does my team get from making videos here?",
-      "a": "A clip without a shoot on the calendar, captions if you want them, and another version when you want a second opening. Paid plans include commercial use and no watermark."
+      "q": "How do I make an AI product video?",
+      "a": "Upload a product photo, paste a product link, or describe your idea. Choose an actor and voice, then make a video in a few minutes."
     },
     {
-      "q": "Are these clips useful in a paid campaign?",
-      "a": "Yes. Shops run them as the creative in a paid campaign on the networks they already buy. You still approve the claim before the file leaves the account."
+      "q": "Can I use AI videos in paid ads?",
+      "a": "Yes. Downloaded videos can run in paid campaigns without a watermark. Check that every product claim is accurate before posting."
     },
     {
-      "q": "Can I start a video from a product page link?",
-      "a": "Yes. Paste a public product page and the photo on it becomes the product in the clip. You still approve the script and the actor before the render."
+      "q": "Can I run an AI video on Facebook or Instagram?",
+      "a": "Yes. Download the video for Facebook or Instagram ads. Choose a square or vertical size that fits the placement."
     },
     {
-      "q": "Can I test two openings of the same product?",
-      "a": "Yes. Keep the same product photo and make a second opening, a second line, or a second frame. Post the one that fits the buyer."
+      "q": "How much does an AI product video cost?",
+      "a": "Videos cost 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter costs $24.50 a month for 200 credits, Pro $35 for 300, and Premium $63 for 600."
     },
     {
-      "q": "Can the file run as a Facebook or Instagram ad?",
-      "a": "Yes. Use a square or a tall frame, with an AI actor if the ad needs a face. A Reel or a TikTok cut can use 9:16. The download has no watermark."
+      "q": "Can I make several versions of one product video?",
+      "a": "Yes. Keep the same product and try different openings, actors, or voices. Compare the versions in your ad account to see what works."
     },
     {
-      "q": "Can I make ecommerce ads with this generator?",
-      "a": "Yes. One product, one claim, and a frame that fits the placement. The spoken line should match the listing, and the actor should look like the buyer you want to reach."
+      "q": "Why make product videos with AI?",
+      "a": "You can make videos in minutes without a shoot, crew, or creator fees. Try different openings and captions for your ads."
     },
     {
-      "q": "Can I choose how the video is rendered?",
-      "a": "Yes. You choose the AI actor, the voice, the frame, and the length. The credit cost is shown before the render."
+      "q": "Can AI make a news-style product video?",
+      "a": "Yes. Choose a news-style scene, voice, and message. Set the video length and size, then review it before posting."
     },
     {
-      "q": "When can I download the clip?",
-      "a": "After you approve the script and the voice, the file is ready to download from the editor. A failed render returns the credits for that job."
+      "q": "What should I tell the AI video generator?",
+      "a": "Tell it what you sell, who the video is for, and the main benefit to show. Clear product details help make a better first version."
     },
     {
-      "q": "What does a video cost?",
-      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. One photo spends 24 credits. You see the number first."
+      "q": "Can I choose the actor, voice, size, and length?",
+      "a": "Yes. Choose an AI actor, voice, video size, and length before you start. The credit cost appears before generation."
     }
   ],
   "examples": {

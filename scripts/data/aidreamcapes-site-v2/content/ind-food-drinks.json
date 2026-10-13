@@ -15,40 +15,40 @@
   ],
   "faq": [
     {
-      "q": "Will the ingredient list and nutrition panel look right?",
-      "a": "No. Keep allergens, ingredients, and nutrition facts on the real label, not in the image's small print."
+      "q": "Will the ingredients and nutrition label stay accurate?",
+      "a": "The main label follows your photo, but small text can blur. Keep ingredients, allergens, and nutrition facts in your listing and check the label before posting."
     },
     {
-      "q": "Can I turn a pack photo into a pour video?",
-      "a": "Yes. Upload the pack or paste a product link, then describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
+      "q": "Can I make a drink look cold without a photo shoot?",
+      "a": "Yes. Upload a clear bottle photo and ask for condensation or ice in the scene. Check that the finished drink still looks like yours."
     },
     {
-      "q": "How long should a food clip be, and what does it cost?",
-      "a": "Six or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits. You see the cost before it starts. If a job fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "Can a drink ad have a voice and captions in another language?",
+      "a": "Yes. Add a voice and captions, then make another version in the language your customers speak. You can reuse the same product photo."
     },
     {
-      "q": "Should I spray the bottle so it looks cold?",
-      "a": "No. Ask for condensation in the description, then photograph the dry bottle in side window light with fingerprints wiped off."
+      "q": "Do I need a creator or filming kitchen?",
+      "a": "No. You can make food and drink videos from product photos with an AI actor or hands in the scene. A real tasting still needs a person."
     },
     {
-      "q": "Can I run the clips as paid food and drink ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads."
+      "q": "Can I turn a food or drink photo into a video?",
+      "a": "Yes. Upload a clear product photo or paste its link, then describe the pour, bite, or serving you want. Make a short video without a kitchen shoot."
     },
     {
-      "q": "Do I need a creator or a filming kitchen?",
-      "a": "Not for these clips. Pick an AI avatar, or let the hands come from your pack photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
+      "q": "What should I check on the package in my video?",
+      "a": "Check that the package shape, color, and main label match your real product. Do not show a flavor or ingredient you do not sell."
     },
     {
-      "q": "Which shapes can the food ad use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide page, and 4:3 or 3:4 when the page asks for them."
+      "q": "Which video sizes can I use for food ads?",
+      "a": "Choose 9:16 for TikTok and Reels, 1:1 for feeds, or 16:9 for wide placements. You can also choose 4:3 or 3:4."
     },
     {
-      "q": "What should stay visible on the package?",
-      "a": "Keep the package shape and the main label area recognizable, and end on the full product when you can. Do not ask the clip to invent a flavor that is not in the photo."
+      "q": "How long can a food video be, and what does it cost?",
+      "a": "Choose 6, 10, 15, or 30 seconds for 24, 40, 60, or 120 credits. A product photo costs 24 credits, and failed jobs return credits."
     },
     {
-      "q": "Can a drink ad include a voice, captions, and another language?",
-      "a": "Yes. The clip can include a spoken line and captions, and the same pour can be made again in another language."
+      "q": "Can I use food and drink videos in paid ads?",
+      "a": "Yes. Download videos without a watermark and use them in paid ads. Check that the product and any food claims match what you sell."
     }
   ],
   "templates_lead": "Pick a format that keeps the pack, the pour, or the plate in frame.",

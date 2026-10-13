@@ -140,44 +140,44 @@
   ],
   "faq": [
     {
-      "q": "What does Amazon want on the main image?",
-      "a": "The product you ship, large in the square, on white that reads 255 on red, green, and blue. A sticker, a badge, or an extra object stays off this picture. The product should fill most of the frame."
-    },
-    {
-      "q": "What happens if the main image breaks the rules?",
-      "a": "The listing can drop out of search until you replace that main image with a compliant square. A photo of the product in use belongs in a later spot, not in the main square."
-    },
-    {
-      "q": "How do I get a pure white background from a phone photo?",
-      "a": "Upload your product photo, remove its background, set the square to pure white, and check every corner before posting the main image."
-    },
-    {
-      "q": "Can I do this for many products together?",
-      "a": "Yes. After the first product is right, the next colors can use that same square. Each color keeps that product's own shape, color, and label."
-    },
-    {
-      "q": "Can my shop system start the white image?",
-      "a": "Yes. If your shop system already lists every item, it can send the photo and ask for the white square. You still compare each file with the product in your hand. The API is not a separate install."
-    },
-    {
-      "q": "Why does my white background look gray on Amazon?",
-      "a": "The corners are not full white. Check them with a color picker and ask for 255 on red, green, and blue again. A gray haze at the edge is enough for the square to fail."
-    },
-    {
-      "q": "Can an image made here be my Amazon main image?",
-      "a": "Yes, if it shows the real product, on pure white, with nothing extra drawn on. Compare it with the item you ship before you upload it to Seller Central."
-    },
-    {
-      "q": "How many credits does one white image use?",
-      "a": "24 credits. The cost shows before the job starts. If it does not finish, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "What if the product is white, clear, or a set?",
+      "a": "Use side lighting to keep a white or clear product visible against pure white. Include every item in a set that you actually ship."
     },
     {
       "q": "Will the product's shape change?",
-      "a": "It keeps the shape in the photo you uploaded. If a strap, a buckle, or the label shifts, try again from a sharper photo before you publish the file."
+      "a": "The image should keep your product’s original shape and color. Review straps, labels, and edges against your source photo before posting."
     },
     {
-      "q": "What if the product is white, clear, or a set?",
-      "a": "Light it from the side so the edge still reads, and keep every piece that ships in the frame. A pale product on white needs that edge or it can disappear."
+      "q": "How many credits does one white image use?",
+      "a": "One white-background image costs 24 credits. Failed jobs return their credits. Starter costs $24.50 monthly for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "How can I make an Amazon image with a pure white background?",
+      "a": "Upload a phone photo, remove its background, and choose pure white. Check the product edges and every corner before using it as a main image."
+    },
+    {
+      "q": "Can my shop system start the white image?",
+      "a": "Yes. Your shop software can send product photos through the API and request white-background images. Review the results before adding them to listings."
+    },
+    {
+      "q": "Can an image made here be my Amazon main image?",
+      "a": "Yes, if the image shows the product you sell on pure white without extra props or text. Check Amazon’s current main-image rules before uploading."
+    },
+    {
+      "q": "Can I make white-background images for many products?",
+      "a": "Yes. Apply the same white background and framing to multiple product photos. Review each image so the color, label, and shape still match the item you sell."
+    },
+    {
+      "q": "What happens if my Amazon main image breaks the rules?",
+      "a": "Amazon may suppress a listing with a noncompliant main image. Replace it with a clear product image on pure white, then check that the listing is visible again."
+    },
+    {
+      "q": "What are Amazon’s main image requirements?",
+      "a": "Amazon main images need a pure white background, a clear view of the product, and no extra text or props. Check the current rules for your category before uploading."
+    },
+    {
+      "q": "Why does my white background look gray on Amazon?",
+      "a": "It may be off-white or have a gray shadow near an edge. Check that the background is RGB 255, 255, 255 across the full image."
     }
   ],
   "cta_title": "Make a Clean Main Image",

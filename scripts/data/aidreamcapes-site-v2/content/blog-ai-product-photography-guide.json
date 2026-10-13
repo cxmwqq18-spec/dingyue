@@ -124,36 +124,36 @@
   ],
   "faq": [
     {
-      "q": "What can a product photo tool make from one picture?",
-      "a": "It makes a store photo from a picture you already have: a new setting, a white field, or the product with a person. Product photos come out square. You still compare the photo with the item you ship."
+      "q": "Are AI product photos good for online stores?",
+      "a": "Yes. Use them for product pages, catalogs, and ads to show your item in different settings. Compare each image with the product you sell before posting."
     },
     {
-      "q": "How do I turn one photo into a store image?",
-      "a": "Upload a sharp photo. Say where you want the product, and name the light. If a job fails, those credits come back."
-    },
-    {
-      "q": "Which AI product photo tool should a shop use?",
-      "a": "Use AIVideosUGC. It keeps the product looking like yours, and it lets you name the setting."
-    },
-    {
-      "q": "Can I make AI product photos for free?",
-      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost of each image before it runs."
-    },
-    {
-      "q": "Is AI product photography a fit for an online store?",
-      "a": "Yes. A marketplace hero and a paid still can both come from it. When a buyer must see stitching or hardware, photograph that close-up yourself."
-    },
-    {
-      "q": "What do shops get from a product photo tool?",
-      "a": "You get new settings without a studio booking, and more than one scene from the same photo. Someone can hold the product without a hired model. You can make a second version when you want to test a background."
-    },
-    {
-      "q": "Can I use the photo on my store and in ads?",
-      "a": "Yes. A finished image can run in ads and on your store. It has no watermark. Compare it with the item you ship before you publish. The [Content Policy](/content) covers what you can upload."
+      "q": "How do I make a product photo with AI?",
+      "a": "Upload a clear product photo, describe the setting you want, and generate a new image. You can change the background or lighting in a few minutes."
     },
     {
       "q": "What if the product in the result looks different?",
       "a": "Run it again from a sharper photo or a clearer sentence. Compare the hardware and the shape with the item in your hand before you publish."
+    },
+    {
+      "q": "What can AI make from my product photo?",
+      "a": "It can turn one product photo into images with new backgrounds, lighting, or a person holding the item. You can make several store and ad photos without another shoot."
+    },
+    {
+      "q": "Which AI product photo generator should I use?",
+      "a": "Choose one that keeps your product clear, lets you change the scene, and allows commercial use. AIVideosUGC makes product photos from your image without a studio shoot."
+    },
+    {
+      "q": "Can I use AI product photos in my store and ads?",
+      "a": "Yes. You can use the photos in your store and paid ads without a watermark. Make sure you have rights to the photo you upload."
+    },
+    {
+      "q": "How much do AI product photos cost?",
+      "a": "Each image uses 24 credits. Starter costs $24.50 a month for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "What do shops get from a product photo tool?",
+      "a": "You get new settings without a studio booking, and more than one scene from the same photo. Someone can hold the product without a hired model. You can make a second version when you want to test a background."
     }
   ],
   "cta_title": "Turn One Photo Into the Next Scene",

@@ -18,56 +18,56 @@
   ],
   "faq": [
     {
-      "q": "Which guide should I open first?",
-      "a": "Choose the guide for your next product photo, video ad, or final check, and follow it with the product you sell."
-    },
-    {
-      "q": "How do I turn a guide into a file I can post?",
-      "a": "Pick the guide, then upload a photo of the item you ship. Keep the sentence to something you can show, such as the size on the label. The file you download is the one you post."
-    },
-    {
-      "q": "Why make a short ad instead of waiting on a creator?",
-      "a": "You can change the opening line and export another file without waiting on a creator's calendar. Book a person when the campaign needs that specific face."
-    },
-    {
-      "q": "Who gets the most from these guides?",
-      "a": "A person who packs orders and also runs the ads. The guides cover a product photo, a short ad, a launch clip, a last check, and clothing on a person."
-    },
-    {
-      "q": "Can a beginner follow a guide?",
-      "a": "Yes. If you can photograph the product on a table, you can follow the guide. The tool it names is the only app you open for that file."
-    },
-    {
-      "q": "Which products do the guides cover?",
-      "a": "Start with [beauty](page:ind-beauty-skincare) or [fashion](page:ind-fashion-clothing). [Food and drinks](page:ind-food-drinks), [home](page:ind-home-living), and [electronics](page:ind-electronics) are here too. The same tools work for other goods you ship."
-    },
-    {
-      "q": "Can I start from photos I already shot?",
-      "a": "Yes. Start with the photo of the item that actually ships. A logo file is useful only when you are allowed to put that mark on the ad."
-    },
-    {
-      "q": "Which platforms can I post the file to?",
-      "a": "Use the frame the placement asks for. [Shopify](page:plat-shopify) and [Amazon](page:plat-amazon) want a square photo. A tall 9:16 clip fits [TikTok](page:plat-tiktok) and [YouTube Shorts](page:plat-youtube-shorts). [Instagram](page:plat-instagram) and [Facebook](page:plat-facebook) can take a square still or a tall clip."
-    },
-    {
-      "q": "Do I pay before I can make a file from a guide?",
-      "a": "Yes. Making the file sits on a paid plan. Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. The cost shows before every job."
+      "q": "Why start from a guide instead of a blank file?",
+      "a": "A guide gives you a simple starting point for the photo or ad. Add your product and message, then make the file in minutes."
     },
     {
       "q": "Can I put the downloaded file in a paid ad?",
-      "a": "Yes. Put the file on a product page or hand it to a client whose brand you are allowed to show. The [Content Policy](/content) says what you can upload."
+      "a": "Yes. Your watermark-free download can be used in paid ads and client work. Use only product photos and brand assets you have permission to upload."
     },
     {
-      "q": "Why start from a guide instead of a blank file?",
-      "a": "These guides already decided where the product appears, so your time goes to the claim you can stand behind."
+      "q": "Who are these guides for?",
+      "a": "They are for shop owners and marketers making product photos or video ads. You can follow them without a studio or editing team."
+    },
+    {
+      "q": "How do I use a guide to make a post?",
+      "a": "Follow the steps with your own product photo, then download the finished photo or video. You can publish it on your store or social channels."
+    },
+    {
+      "q": "Why make a short ad instead of waiting on a creator?",
+      "a": "A short AI ad can be ready in minutes, without booking a creator. Change the opening message and make more versions for testing."
     },
     {
       "q": "How many credits does a photo or a clip cost?",
-      "a": "A product photo is 24 credits. A 6-second clip is 24, 10 seconds is 40, 15 is 60, and 30 is 120. If a job fails, those credits come back."
+      "a": "One photo costs 24 credits. Videos cost 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Failed jobs return their credits."
+    },
+    {
+      "q": "How much does it cost to make content from a guide?",
+      "a": "Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. A photo costs 24 credits; video credits depend on length."
+    },
+    {
+      "q": "Can a beginner follow a guide?",
+      "a": "Yes. Start with a clear product photo and follow the steps. You do not need filming or editing experience."
     },
     {
       "q": "Are the faces in the clip real customers?",
-      "a": "No. The face is generated for the ad. Do not give that avatar a buyer's name, or a line that says they purchased the product."
+      "a": "No. AI actors are generated presenters, not customers who bought your product. Use them for ads without claiming they gave a real review."
+    },
+    {
+      "q": "Which product marketing guide should I read first?",
+      "a": "Start with the guide for the photo or ad you need today. Each one shows a simple way to turn your product into content."
+    },
+    {
+      "q": "Which platforms can I post the file to?",
+      "a": "Post the finished file on your store, TikTok, Instagram, Facebook, or YouTube. Choose a tall, square, or wide format for the placement."
+    },
+    {
+      "q": "Can I start from photos I already shot?",
+      "a": "Yes. Upload a clear photo of the product you sell. You can build a new scene or video from it in minutes."
+    },
+    {
+      "q": "Which products do the guides cover?",
+      "a": "The guides cover clothing, beauty, food, home goods, and electronics. The same steps can help with other products you sell."
     }
   ],
   "relatedLinks": [

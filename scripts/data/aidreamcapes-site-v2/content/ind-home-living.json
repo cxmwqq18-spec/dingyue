@@ -15,40 +15,40 @@
   ],
   "faq": [
     {
+      "q": "Can I post the clip on TikTok or Meta?",
+      "a": "Yes. Download a watermark-free video for TikTok or Meta ads. Choose the right size and check each platform’s rules."
+    },
+    {
+      "q": "Can one photo cover more than one scene?",
+      "a": "Yes. Use one product photo to make scenes in different rooms. Compare the results and use the one that best shows your item."
+    },
+    {
       "q": "Can I make an ad for every item in the catalog?",
-      "a": "Yes. Each item can start from its own photo or link, and you still review every file before it posts."
+      "a": "Yes. Start each home product ad from its own photo or link. You can make many versions without booking separate shoots."
+    },
+    {
+      "q": "Can I change the message after making my first ad?",
+      "a": "Yes. Change the message, voice, or captions and make another version from the same photo. You can test fresh offers quickly."
+    },
+    {
+      "q": "Can I pick an avatar that fits the room?",
+      "a": "Yes. Choose an AI actor who suits your home product and room scene. Keep the same actor across ads for a familiar look."
     },
     {
       "q": "Do I need a creator or a studio?",
-      "a": "No. Pick an AI avatar instead of booking a model or a set. A failed clip returns the credits."
+      "a": "No. Choose an AI actor and a room scene instead of hiring a creator or renting a studio. Your ad can be ready in minutes."
+    },
+    {
+      "q": "How fast is the first home decor ad?",
+      "a": "A home decor ad can be ready in a few minutes. Start with a product photo or link instead of arranging a shoot."
     },
     {
       "q": "Can I start from a product link?",
       "a": "Yes. Paste the listing, or add the photo by hand if you do not have a link."
     },
     {
-      "q": "Can I pick an avatar that fits the room?",
-      "a": "Yes. Choose a creator-style avatar that fits the look of the room, and keep that face for the next piece."
-    },
-    {
-      "q": "How fast is the first home decor ad?",
-      "a": "You can have a clip in minutes, not after a week of scheduling a shoot."
-    },
-    {
-      "q": "Can I post the clip on TikTok or Meta?",
-      "a": "Yes. Download the file, or send it to the feed you already use. A paid plan has no watermark."
-    },
-    {
-      "q": "Can I change the line after the first cut?",
-      "a": "Yes. Edit the sentence, the voice, or the caption, and make the next version from the same photo."
-    },
-    {
       "q": "What does a home decor video cost?",
-      "a": "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Can one photo cover more than one scene?",
-      "a": "Yes. Use the same photo for another room scene, then keep the version you would actually post."
+      "a": "A 6-second home video uses 24 credits; 10, 15, and 30 seconds use 40, 60, and 120. Failed jobs return credits."
     }
   ],
   "templates_lead": "Choose a room scene, an organizing how-to, or a comparison that fits the product.",

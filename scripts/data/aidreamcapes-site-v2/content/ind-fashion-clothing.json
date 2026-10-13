@@ -16,39 +16,39 @@
   "faq": [
     {
       "q": "Can one garment photo make a clip and a listing image?",
-      "a": "Yes. Make a vertical try-on clip and an on-model still from the garment photo. Review the fit and color before posting."
-    },
-    {
-      "q": "Can a flat-lay photo show the clothing on a person?",
-      "a": "Yes. Upload a clear full-length garment photo or its product link, then choose an AI avatar and scene."
-    },
-    {
-      "q": "Will the print or fabric details stay accurate?",
-      "a": "The result follows your source photo. Check stripes, seams, buttons, and color against the garment before you use it."
-    },
-    {
-      "q": "Can I choose the build of the AI avatar?",
-      "a": "Yes. Describe the height, build, and age range you need, then review the silhouette before you download."
+      "a": "Yes. Turn one garment photo into an on-model listing image and a short video ad. Make both in minutes without a clothing shoot."
     },
     {
       "q": "What garment photo should I upload?",
-      "a": "Lay the piece flat or hang it in even light. Keep the full outline, print, and fastenings in frame."
-    },
-    {
-      "q": "How do I keep the clothing color accurate?",
-      "a": "Photograph the garment in soft daylight and compare the finished ad with the real sample."
+      "a": "Upload a clear, well-lit photo that shows the whole garment. A flat lay or hanger shot is enough to make an on-model image."
     },
     {
       "q": "Can I run these clips as paid clothing ads?",
-      "a": "Yes. You can use the watermark-free download in paid ads. Check every fabric and size claim against what you ship."
+      "a": "Yes. Use the watermark-free clips in paid clothing ads and on social channels. Check every product claim and garment detail before posting."
+    },
+    {
+      "q": "How do I keep the clothing color accurate?",
+      "a": "Use a photo taken in even daylight, then compare the finished image with the real garment. This helps shoppers see the color you actually sell."
+    },
+    {
+      "q": "Can a flat-lay photo show the clothing on a person?",
+      "a": "Yes. Upload a clear photo of the whole garment and choose an AI model. You can show the clothing on a person without booking a model."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "You pay the credits shown before generation instead of booking a creator. Review the garment details before posting the ad."
+      "a": "AI clothing ads take minutes and do not require booking a creator or studio. Make more versions to test different looks and messages."
     },
     {
       "q": "Can a clothing try-on include a voice and captions?",
-      "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. Add a voice and captions to a clothing video, then make versions for different channels or languages."
+    },
+    {
+      "q": "Can I choose the build of the AI avatar?",
+      "a": "Yes. Choose the model’s look and body type for your clothing image. Review the finished photo to make sure it represents the garment well."
+    },
+    {
+      "q": "Will the print or fabric details stay accurate?",
+      "a": "The image follows your garment photo, but check prints, seams, and colors before posting. A clear source photo helps keep the result realistic."
     }
   ],
   "templates_lead": "Pick a try-on, fit check, outfit review, or close look at the fabric.",

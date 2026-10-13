@@ -45,48 +45,48 @@
   },
   "faq": [
     {
-      "q": "How do I make a professional team headshot?",
-      "a": "Upload an approved, clear face photo for each person. Choose a backdrop and crop, then review and download each portrait."
+      "q": "Can clients use the portraits I create?",
+      "a": "Yes, if the person in the portrait agrees to that use. Review the final image before putting it on a client site or in a presentation."
     },
     {
-      "q": "Can I give the whole team a consistent look?",
-      "a": "Yes. Reuse the same background, lighting direction, and crop so the portraits sit together on your team page."
+      "q": "Do I need a photographer for professional headshots?",
+      "a": "No. Upload a face photo and choose a professional style. You can make team headshots without booking a photographer or learning editing software."
     },
     {
-      "q": "Will the headshot still look like the person?",
-      "a": "Start from that person’s approved photo and check the result against it. Choose another version if the face looks off."
-    },
-    {
-      "q": "Where can I use professional headshots?",
-      "a": "Use them on your About page, team directory, LinkedIn profile, speaker bio, resume, or proposal with each person’s permission."
-    },
-    {
-      "q": "Do I need a photographer or editing skills?",
-      "a": "No. Upload each photo and choose a professional style. You can make a consistent team row without coordinating a studio day."
-    },
-    {
-      "q": "What kind of source photo works best?",
-      "a": "Use a clear, front-facing face-and-shoulders image with even light and no heavy obstruction."
+      "q": "How do I make a professional headshot with AI?",
+      "a": "Upload a clear, approved photo of each person and choose a professional background. Review the finished headshot before downloading it."
     },
     {
       "q": "Can I use photos my team already approved?",
-      "a": "Yes. Upload each person’s approved photo and use it only for the places they agreed to."
+      "a": "Yes. Use only photos and likenesses your teammates have approved for this purpose. Review each result with them before publishing."
+    },
+    {
+      "q": "What kind of source photo works best?",
+      "a": "Choose a sharp, front-facing photo with even light and a clear view of the face. This helps the finished portrait look like the person."
     },
     {
       "q": "Can I try different backgrounds and crops?",
-      "a": "Yes. Compare a few professional looks, then use the same direction across the team."
-    },
-    {
-      "q": "How much does a headshot cost?",
-      "a": "One image costs 24 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
-    },
-    {
-      "q": "Can clients use the portraits I create?",
-      "a": "Yes, when each person agrees to that use. Review the finished files before adding them to a client site or deck."
+      "a": "Yes. Try different professional backgrounds and crops, then choose one style for the team. You can make new versions without another photo session."
     },
     {
       "q": "How do I add a new teammate later?",
-      "a": "Upload their approved photo and reuse the team’s backdrop, lighting, and crop. Check the new portrait beside the existing row."
+      "a": "Upload an approved photo of the new teammate and reuse your team’s background and crop. Check that the new portrait fits beside the others."
+    },
+    {
+      "q": "Can I make matching headshots for my team?",
+      "a": "Yes. Use the same background, lighting, and crop for each person. Your team portraits can look consistent without scheduling one studio day."
+    },
+    {
+      "q": "Will an AI headshot still look like me?",
+      "a": "It should. Start with a clear photo and compare the result with the person before publishing. Make another version if the face looks wrong."
+    },
+    {
+      "q": "Where can I use professional headshots?",
+      "a": "Use approved headshots on your team page, LinkedIn, speaker bios, and proposals. Get each person’s permission for where their portrait appears."
+    },
+    {
+      "q": "How much does an AI headshot cost?",
+      "a": "One headshot costs 24 credits. Starter costs $24.50 monthly for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
     }
   ],
   "cta_lead": "Start with a clear photo of each teammate. Review the portrait and credit cost before you download.",

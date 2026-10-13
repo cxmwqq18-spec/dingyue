@@ -75,20 +75,28 @@
   },
   "faq": [
     {
-      "q": "What does a before and after product video show?",
-      "a": "Keep your product in frame and show the starting state, the change, and the final result in one short ad."
+      "q": "How do I make a before and after video from one photo?",
+      "a": "Upload a clear starting photo and describe the result you want to show. Generate the video, then check that the change matches your product."
     },
     {
-      "q": "How do I make a before and after video from one photo?",
-      "a": "Upload the before photo and describe the after in a sentence. Read the line when the file comes back, then change the music before you export."
+      "q": "What does a before and after product video show?",
+      "a": "A before-and-after video shows the starting point and the visible result of using your product. Put both views together so shoppers see the change quickly."
+    },
+    {
+      "q": "How many credits does a before-and-after video use?",
+      "a": "A 6-second video uses 24 credits; 10, 15, and 30 seconds use 40, 60, and 120. Failed videos return their credits."
+    },
+    {
+      "q": "Can TikTok or Meta reject a before-and-after ad?",
+      "a": "Yes, if the ad breaks their rules or makes a misleading claim. Check each platform’s current policy before running it."
     },
     {
       "q": "Which products fit a before and after video?",
-      "a": "Shops with a change people can see, such as a surface getting clean or a texture getting smooth. TikTok can take a tall file, and a feed can take a square."
+      "a": "Products with a visible change work best, such as cleaning supplies, skincare, and home improvements. Show a real result that matches what buyers can expect."
     },
     {
-      "q": "What does a before and after clip cost?",
-      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the number before it starts. If the video fails, the credits come back."
+      "q": "Can I make before-and-after videos for many products?",
+      "a": "Yes. Use each product’s photo to make its own before-and-after video. You can create more ads without scheduling separate shoots."
     },
     {
       "q": "Can the file run as an ad I paid for?",
@@ -99,16 +107,8 @@
       "a": "You can download 9:16, 1:1, 16:9, 4:3, or 3:4. Use the tall file for TikTok, the square for a feed, or the wide file for a landscape placement."
     },
     {
-      "q": "Can every product in the catalog get a clip?",
-      "a": "Yes. Send a photo for each product, and you get a separate clip for each. Store software can request them through the API."
-    },
-    {
       "q": "Can an AI avatar narrate the change?",
-      "a": "Yes. Pick an AI avatar to narrate the change. Keep a filmed piece when a flagship spot needs your own camera."
-    },
-    {
-      "q": "Could TikTok or Meta turn the ad down?",
-      "a": "Maybe. Read TikTok and Meta rules before you spend. Add a label if a viewer might think a real buyer is reviewing the product. The person on screen is an AI actor."
+      "a": "Yes. Choose an AI actor to explain the change while the video shows your product. You do not need to hire a presenter."
     }
   ],
   "actor_scene_picker": {

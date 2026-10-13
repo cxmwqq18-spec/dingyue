@@ -15,40 +15,40 @@
   ],
   "faq": [
     {
-      "q": "Do I need a shoot to make an electronics ad?",
-      "a": "No. Upload a gadget photo or product link, choose one action, and download the clip. You see the credit cost first."
-    },
-    {
-      "q": "Do I need editing skills to make the ad?",
-      "a": "No. Add a spoken line and captions, then edit them before you export the gadget clip."
-    },
-    {
       "q": "Can I make several ads from one gadget photo?",
-      "a": "Yes. Try an unboxing, a setup, and a desk demo from the same product image."
-    },
-    {
-      "q": "Which electronics can I show?",
-      "a": "Speakers, chargers, headphones, cables, and small appliances work when your source photo clearly shows the item."
-    },
-    {
-      "q": "Can I make the ad without hiring a creator?",
-      "a": "Yes. Choose an AI avatar and use the product photo or listing link as your starting point."
-    },
-    {
-      "q": "Will the ad know my device specifications?",
-      "a": "Type battery life, wattage, and compatibility yourself. Check every figure against the product before publishing."
-    },
-    {
-      "q": "Can I use the clip as a paid electronics ad?",
-      "a": "Yes. The watermark-free download can run in paid ads. Keep performance claims true to the device you ship."
+      "a": "Yes. Make an unboxing, setup demo, and desk scene from one product photo. Test different openings without another shoot."
     },
     {
       "q": "What video shape should I pick?",
       "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Use 4:3 or 3:4 when the page asks for them."
     },
     {
+      "q": "Can I use the clip as a paid electronics ad?",
+      "a": "Yes. Your watermark-free electronics video can run as a paid ad. Check technical claims against the device before publishing."
+    },
+    {
+      "q": "Do I need editing skills to make the ad?",
+      "a": "No. Add your product photo and message, then choose a voice and captions. You can make a gadget ad without editing software."
+    },
+    {
+      "q": "Can I make the ad without hiring a creator?",
+      "a": "Yes. Choose an AI actor to present the gadget from your photo or listing. You can make creator-style ads without hiring anyone."
+    },
+    {
       "q": "Can the gadget ad include a voice and captions?",
-      "a": "Yes. Add a spoken line and captions, then review both before you download the clip."
+      "a": "Yes. Add a voice and captions to explain the gadget’s main benefit. Check that spoken specifications match the product you sell."
+    },
+    {
+      "q": "Do I need a shoot to make an electronics ad?",
+      "a": "No. Add a clear gadget photo or product link and choose what the ad should show. Make the video in minutes without filming."
+    },
+    {
+      "q": "Will the ad know my device specifications?",
+      "a": "It uses the details from your photo or product page. Add exact specifications yourself and check them against the device you sell."
+    },
+    {
+      "q": "Which electronics can I show?",
+      "a": "You can show speakers, chargers, headphones, and other gadgets with clear product photos. Show the real features buyers can expect."
     }
   ],
   "templates_lead": "Pick an unboxing or a desk demo that keeps the product easy to recognize.",

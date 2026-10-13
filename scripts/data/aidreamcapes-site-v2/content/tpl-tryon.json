@@ -46,36 +46,36 @@
   },
   "faq": [
     {
-      "q": "What does virtual try-on make for my clothing store?",
-      "a": "It places your garment on an AI model in a still image. A clear flat-lay or hanger photo is enough to start."
+      "q": "How can virtual try-on help shoppers?",
+      "a": "It lets shoppers preview how clothing looks on a person before buying. Upload a garment photo to make an on-model image in minutes."
     },
     {
-      "q": "How do I make an on-model clothing photo?",
-      "a": "Upload a garment image, choose a model and scene, then review the fit and details before downloading."
+      "q": "How long does a virtual try-on image take?",
+      "a": "A virtual try-on image takes a few minutes. Review the garment details, then download it for your product page or ad."
     },
     {
-      "q": "Which garments work for virtual try-on?",
-      "a": "Jackets, dresses, trousers, knitwear, and other wearable pieces work best when the whole garment is visible."
+      "q": "How do I create a virtual try-on image?",
+      "a": "Upload a garment photo, choose a model and setting, and make the image. Check its color, print, and fit before adding it to your store."
+    },
+    {
+      "q": "Can my store use virtual try-on photos?",
+      "a": "Yes. Use on-model images on product pages and in ads. They help shoppers picture the garment, while your size chart still guides fit."
     },
     {
       "q": "Can I make several try-on images for one garment?",
-      "a": "Yes. Use the same garment photo for another pose or scene, then check each image against the real piece."
+      "a": "Yes. Make more poses, models, or backgrounds from the same garment photo. Check each version against the real item before posting."
     },
     {
-      "q": "Which clothing shops can use try-on photos?",
-      "a": "Independent shops, clothing labels, and agencies can make on-model images for listings and social ads."
+      "q": "What photo do I need for virtual try-on?",
+      "a": "Upload a clear photo of the whole garment. Flat lays and hanger shots work when the fabric, color, and details are easy to see."
     },
     {
-      "q": "Can I use virtual try-on without editing experience?",
-      "a": "Yes. Upload the garment, choose a model, and download the image after checking the result."
-    },
-    {
-      "q": "When can I download my try-on image?",
-      "a": "Download it after generation finishes and you have checked the garment color, shape, and details."
+      "q": "Do I need technical skills to use virtual try-on?",
+      "a": "No. Upload the garment and choose a model in a few steps. You do not need design or editing skills."
     },
     {
       "q": "What does a virtual try-on photo cost?",
-      "a": "One generated image costs 24 credits. You see the cost before starting. The [AI Instagram ads](page:plat-instagram) page covers square placements."
+      "a": "One virtual try-on image costs 24 credits. You see the cost before starting, and a failed job returns the credits."
     }
   ],
   "visual": {

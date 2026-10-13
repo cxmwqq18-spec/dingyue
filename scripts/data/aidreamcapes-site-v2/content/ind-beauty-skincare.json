@@ -31,40 +31,40 @@
   ],
   "faq": [
     {
-      "q": "Can one product photo become a beauty ad?",
-      "a": "Yes. Upload a straight-on photo or paste a product link, then ask for a routine, a shade swipe, an unboxing, or a review-style clip."
-    },
-    {
-      "q": "Can I show a before-and-after of skin?",
-      "a": "No. A generated face is not proof of what a product does to skin. Show how it is applied, the texture, and the package. Leave skin results out of the ad."
-    },
-    {
-      "q": "Will the clip match my foundation or lipstick shade?",
-      "a": "Color follows your photo and the words you use. Shoot in daylight and name the shade in plain words, such as warm beige. If the color is off, make another version."
-    },
-    {
-      "q": "Can I put a price or a promo code on the image?",
-      "a": "Yes. You type the price, the code, and the shade name. The spoken line and captions come with the clip, and you can fix them in the editor before download."
-    },
-    {
       "q": "What photo should I upload for skincare?",
-      "a": "Use a straight-on shot, label toward the camera, on a plain surface, with no hands in the frame. Glossy tubes and glass pick up glare, so use window light instead of a flash."
-    },
-    {
-      "q": "How long should a beauty ad be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. If the job fails, those credits come back."
-    },
-    {
-      "q": "Can I run the clips as paid beauty ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Keep ingredient text accurate, and do not invent a skin result. Add offer text where you can check it."
-    },
-    {
-      "q": "How is this different from hiring a creator?",
-      "a": "You spend credits on your plan, not a creator fee or extra edit rounds. Upload one photo or paste a link, pick an AI avatar, and post the clip as an ad."
+      "a": "Upload a clear photo with the full package and readable label. Soft light helps prevent glare on glossy tubes and glass."
     },
     {
       "q": "Does the beauty clip include a voice and captions?",
-      "a": "Yes. The job can include a spoken line and captions, and you can fix both in the editor before you download."
+      "a": "Yes. Add a spoken message and captions to your beauty ad. You can change both before you download and post it."
+    },
+    {
+      "q": "Can one product photo become a beauty ad?",
+      "a": "Yes. Upload a beauty product photo or paste its link to make a short ad. Try a routine, unboxing, or product demo without arranging a shoot."
+    },
+    {
+      "q": "Will the ad show my foundation or lipstick shade accurately?",
+      "a": "It can follow the color in your photo, but check every finished ad against the real shade. A clear photo in natural light helps keep the color accurate."
+    },
+    {
+      "q": "Can I show a before-and-after with my beauty product?",
+      "a": "Yes. Show the product going on and the finished look in one short ad. Keep the result true to what customers can expect."
+    },
+    {
+      "q": "Can I put a price or a promo code on the image?",
+      "a": "Yes. Add your real price, code, and shade name to the ad. Review the words before posting so the offer matches your shop."
+    },
+    {
+      "q": "How is this different from hiring a creator?",
+      "a": "You can make a beauty ad from a photo or link without paying a creator or arranging a shoot. Try several openings quickly to see what fits your audience."
+    },
+    {
+      "q": "Can I run the clips as paid beauty ads?",
+      "a": "Yes. Finished beauty ads have no watermark and can be used commercially. Keep product claims and prices accurate before publishing."
+    },
+    {
+      "q": "How long can a beauty ad be, and what does it cost?",
+      "a": "Choose 6, 10, 15, or 30 seconds for 24, 40, 60, or 120 credits. One image costs 24 credits. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
     }
   ],
   "templates_lead": "Pick a routine, a texture close-up, a review-style clip, or an unboxing for the next shade.",

@@ -69,40 +69,40 @@
   },
   "faq": [
     {
-      "q": "What does an AI actor mean here?",
-      "a": "It is a realistic presenter you pick for a video. You set the look, the voice, and the language. It is not a cartoon."
-    },
-    {
-      "q": "How does a line become a clip?",
-      "a": "Type the line, choose who speaks and which voice, and the clip comes back for you to download. You can add captions before you post."
-    },
-    {
-      "q": "Where can I use an AI actor?",
-      "a": "Use the clip in a paid ad, on the product page, in a social feed, or in a short guide. The same actor can explain one feature in each place."
-    },
-    {
-      "q": "Is an AI actor a good fit for an explainer?",
-      "a": "Yes. The actor can say the same point the same way each time, so the product page and the ad stay in agreement."
-    },
-    {
-      "q": "Can I update a training clip when a step changes?",
-      "a": "Yes. Replace that sentence and make the lesson again. Everyone on the team can watch the new cut."
-    },
-    {
-      "q": "How do I keep a social feed going?",
-      "a": "Keep one actor as the face and change the line from post to post. The next clip does not mean a new shoot."
-    },
-    {
       "q": "Can I change the look, the voice, or the language?",
-      "a": "Yes. Pick another actor, outfit, or voice, including a language you already sell in. You can also use a voice you have the rights to use."
+      "a": "Yes. Pick from 53 actors and choose a voice or language that fits your audience. You can reuse the same presenter across ads."
     },
     {
-      "q": "Can I run the clip in a paid ad?",
-      "a": "Yes. Finished clips on a paid plan are yours to use in ads, with no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If a render fails, those credits come back."
+      "q": "Are AI actors good for product explainers?",
+      "a": "Yes. An AI actor can explain product features clearly and consistently. Update the message in minutes without booking another shoot."
     },
     {
-      "q": "What should I be careful about?",
-      "a": "Do not let the actor pretend to be a customer who bought the product. If you build a custom face, use only photos you have permission to use."
+      "q": "How can brands use AI actors for social media?",
+      "a": "Keep one AI actor across a series of social posts and change the opening each time. You can make more versions without filming again."
+    },
+    {
+      "q": "How do AI actors make videos?",
+      "a": "Type your message, choose an actor and voice, and generate a video. The actor speaks the words with matching lip movement, ready for you to review."
+    },
+    {
+      "q": "Can I update training videos with an AI actor?",
+      "a": "Yes. Change the message and make a new training video. You can keep lessons current without bringing a presenter back to a studio."
+    },
+    {
+      "q": "What is an AI actor?",
+      "a": "It is a realistic digital presenter for your video. Choose its look and voice to explain your product without filming a person."
+    },
+    {
+      "q": "Where can I use AI actors?",
+      "a": "Use an AI actor in product ads, website videos, social posts, and short explainers. You can keep the same presenter across channels."
+    },
+    {
+      "q": "Can I use AI actors commercially?",
+      "a": "Yes. AI actor videos have no watermark and can be used commercially. Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
+    },
+    {
+      "q": "What should I know before using an AI actor?",
+      "a": "Tell viewers when a presenter is AI if the platform requires it. Do not impersonate a real customer or use someone’s face or voice without permission."
     }
   ],
   "visual": {

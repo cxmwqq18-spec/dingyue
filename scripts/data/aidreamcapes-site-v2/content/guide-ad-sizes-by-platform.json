@@ -133,36 +133,36 @@
   ],
   "faq": [
     {
-      "q": "Can I resize a wide video into a tall one?",
-      "a": "Yes. You make the tall version as its own job and set it to 9:16, with the words placed for a phone. Watch that tall file before you retire the wide one."
+      "q": "Can I edit a video to match the music?",
+      "a": "Yes. Match product movement and scene changes to the music. Keep the product and message easy to see even in a fast edit."
     },
     {
-      "q": "Can I post without showing my face?",
-      "a": "Yes. You keep the frame on the product and use a spoken line. Or you put an AI actor in the shot when the ad needs a person."
+      "q": "Can I turn a wide video into a vertical ad?",
+      "a": "Yes. Make a vertical 9:16 version and check that the product and captions fit the phone screen. You can use the same idea in another size without filming again."
     },
     {
       "q": "Are the music and the spoken voice safe to use in an ad?",
-      "a": "Yes. Library tracks and the voice this product makes can run in a TikTok ad, an Instagram ad, or a YouTube ad. A track you brought from somewhere else is yours to clear. Before you pay to run the ad, confirm that the placement allows that library track."
-    },
-    {
-      "q": "Can the edit follow the music?",
-      "a": "Yes. A product move can sit on a beat you chose. If the cuts get so fast that the label blurs, you slow the clip down. Your product has to stay readable."
-    },
-    {
-      "q": "Can I start from a product page or a short article?",
-      "a": "Yes. A page that already lists the size and the texture can supply the spoken line. You can change that line before the job starts. A photo you took is enough when the page is thin."
+      "a": "Yes, use music and voices supplied for commercial use. Clear any audio you upload yourself, and check the ad platform’s current rules before posting."
     },
     {
       "q": "Can I change how the words on screen look?",
-      "a": "Yes. The words can use your shop color, and they can sit still instead of moving. You set that before you spend the credits."
+      "a": "Yes. Choose captions that fit your brand’s colors and are easy to read on a phone. You can adjust them before exporting."
+    },
+    {
+      "q": "Can I start from a product page or a short article?",
+      "a": "Yes. Paste a product page or short article to start the message, or upload your own photo. Review the words and visuals before generating."
     },
     {
       "q": "Can the same ad run in another language?",
-      "a": "Yes. Selling the same product in another language needs a second file. The scene can stay. You replace the spoken line."
+      "a": "Yes. Make another version with a translated message and matching voice. You can reach another audience without filming a new ad."
     },
     {
       "q": "Which shape should a small shop make first?",
-      "a": "You start with 9:16 when the first placement fills a phone. You add a square when the same offer also sits in a scrolling feed. You make the wide 16:9 file only when the screen itself is wide."
+      "a": "Start with 9:16 for Stories, Reels, and Shorts. Add 1:1 for square feeds or 16:9 for wide placements when you need them."
+    },
+    {
+      "q": "Can I post without showing my face?",
+      "a": "Yes. Show the product with a voiceover, or choose an AI actor to present it. You can make a short ad without appearing on camera."
     }
   ],
   "cta_title": "Make the Native Size, Then Post It",

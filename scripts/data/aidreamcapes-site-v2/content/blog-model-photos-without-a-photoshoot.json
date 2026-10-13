@@ -119,36 +119,36 @@
   ],
   "faq": [
     {
+      "q": "Can I show my clothing on an AI model?",
+      "a": "Yes. Use your garment photo to show the item on a generated adult model. Choose the pose and setting for your listing or lookbook."
+    },
+    {
       "q": "How does a flat clothing photo become an on-model picture?",
-      "a": "Photograph the whole garment, choose the virtual model, and name the setting. Then compare the collar, hem, and zipper with the real piece before you post."
+      "a": "Upload a clear photo of the whole garment and choose a virtual model. The tool creates an on-model image in minutes without a studio shoot."
     },
     {
-      "q": "Can I put the clothing I sell on a generated adult?",
-      "a": "Yes. The garment in the picture is yours. You choose who wears it, and you can save that person for the next color."
-    },
-    {
-      "q": "Can one saved face stay through the whole lookbook?",
-      "a": "Yes, when you pick that saved person again. A new description can grow a different face, so keep the saved one for the set."
-    },
-    {
-      "q": "How close is an on-model photo to a studio shoot?",
-      "a": "It shows the fit, the drape, and the fabric on a person, and it can look like a catalog photo. Check the neckline, length, and closures. It does not replace your size chart."
-    },
-    {
-      "q": "Can a large catalog send these photos through?",
-      "a": "Yes. A catalog can send each product and get the on-model photo back, so the next color does not wait on a studio day."
-    },
-    {
-      "q": "Do I need to say the person in the photo is generated?",
-      "a": "Check the current disclosure rule for the site where the image will appear. Rules differ, and they change. When a label is required, add it before you post."
+      "q": "Can I make on-model photos for a whole catalog?",
+      "a": "Yes. Send many garment photos through the API and make an image for each product. This saves studio time as your catalog grows."
     },
     {
       "q": "What photo should I start from for clothing or jewelry?",
-      "a": "Use a sharp, front-facing photo with the whole item visible. A flat lay or a hanger shot works for clothing. For jewelry, keep the clasp, stones, and chain easy to see."
+      "a": "Start with a clear photo showing the whole item and its details. A flat lay or hanger photo works for clothing, with no reshoot needed."
+    },
+    {
+      "q": "Do I need to say the person in the photo is generated?",
+      "a": "Follow the current disclosure rules for the store or ad platform where you post. Add a label when that channel requires one."
     },
     {
       "q": "How many credits does one on-model photo use?",
-      "a": "One photo uses 24 credits. The cost shows before you start. If the job fails, the credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "One on-model photo costs 24 credits. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
+    },
+    {
+      "q": "Can one saved face stay through the whole lookbook?",
+      "a": "Yes. Reuse the same saved model for each lookbook photo. That gives your collection a consistent face without booking a shoot."
+    },
+    {
+      "q": "How close is an on-model photo to a studio shoot?",
+      "a": "On-model images can look like studio photos with natural poses and lighting. Check the real garment’s fit and details before publishing."
     }
   ],
   "cta_title": "Put the Next Piece on a Virtual Model",

@@ -79,48 +79,48 @@
   },
   "faq": [
     {
-      "q": "What does a product photo generator do?",
-      "a": "It builds a product photo from the picture you already have, so you can put a new scene on the product page. The item stays the one you uploaded."
-    },
-    {
-      "q": "How do I turn a product photo into a scene I can post?",
-      "a": "Use the clearest picture you have, plus a sentence about where it should sit. A full product reads better than a dark crop. You can add up to 7 reference photos. Name the setting, and keep the whole item in the frame."
-    },
-    {
       "q": "What should I check before I post the photo?",
-      "a": "Check that the item still matches what you sell. The file should keep the shape and the color buyers recognize."
-    },
-    {
-      "q": "Can I make a product photo before I pick a plan?",
-      "a": "No. Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
-    },
-    {
-      "q": "Can I put the new photo on my product page?",
-      "a": "Yes. One file can sit on the product page and another can go in an email. Check the color against the item you pack before either file goes out."
+      "a": "Check the finished photo against the item you sell. Make sure the shape, color, and details are accurate before posting."
     },
     {
       "q": "What do I get if I already have a supplier photo?",
-      "a": "It adds a scene to the supplier shot while keeping the product recognizable. You are not booking a studio for that setting."
-    },
-    {
-      "q": "Can I post the photo on my store and in ads?",
-      "a": "Yes. The file downloads with no watermark. You still have to own the photo you started from, or have permission to use it. Our [AI product photography guide](page:blog-ai-product-photography-guide) covers that check."
-    },
-    {
-      "q": "Can I add my price or logo on the photo?",
-      "a": "Add prices, offers, and logo text in your own editor after download. Words drawn onto the photo can come out wrong, so proof them. See [Shopify product photos](page:plat-shopify) for where those files usually go."
-    },
-    {
-      "q": "Where do I find a template for the photo?",
-      "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your photo here and describe the scene."
+      "a": "You can turn a supplier photo into a fresh scene without booking a studio. Make several versions and keep the one that fits your store."
     },
     {
       "q": "Can I make a stack of photos, or connect the store I already run?",
-      "a": "Yes. Upload several photos, or send them from store software through the API, then make a scene for each one."
+      "a": "Yes. Make photos for multiple products or connect your store through the API. This helps keep a consistent look across a large catalog."
+    },
+    {
+      "q": "Can I add my price or logo on the photo?",
+      "a": "Yes. Add your logo or price after downloading, then check every word before posting. A clear product image can also work without text."
+    },
+    {
+      "q": "What does a product photo generator do?",
+      "a": "It makes a new product image from a photo you upload. Change the background, lighting, or style without arranging another shoot."
     },
     {
       "q": "Can the photo become a video with a spoken line?",
-      "a": "Yes. Turn that photo into a product video, then add a spoken voice, on-screen captions, or a song from the music library. A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. [Image to video](page:image-to-video) is that next step."
+      "a": "Yes. Turn your product photo into a video with a voice and captions. A 6-second video costs 24 credits."
+    },
+    {
+      "q": "Can I put the new photo on my product page?",
+      "a": "Yes. Download the photo for your product page, catalog, or ads. Make more scenes to show the same product in different ways."
+    },
+    {
+      "q": "Can I post the photo on my store and in ads?",
+      "a": "Yes. Your watermark-free photo can go on your store or in paid ads. Use only source images you own or have permission to use."
+    },
+    {
+      "q": "How do I turn a product photo into a scene I can post?",
+      "a": "Upload a clear photo and describe the scene you want. The tool places your product in that setting in minutes."
+    },
+    {
+      "q": "Where do I find a template for the photo?",
+      "a": "Browse templates for product shots, lifestyle scenes, and ads. Add your product image and choose the background that fits your shop."
+    },
+    {
+      "q": "How much does an AI product photo cost?",
+      "a": "One photo costs 24 credits. Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600."
     }
   ],
   "examples": {

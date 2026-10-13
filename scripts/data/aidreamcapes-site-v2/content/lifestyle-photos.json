@@ -68,48 +68,48 @@
   },
   "faq": [
     {
-      "q": "What is AI product staging?",
-      "a": "It places your product in a realistic everyday scene, made from the photo you already have. Shoppers see it held, worn, or set on a table."
-    },
-    {
-      "q": "How does product staging work?",
-      "a": "You upload a product photo. A scene is built around that item so it looks ready for a store, social, or an ad. You pick the one that fits."
-    },
-    {
-      "q": "Can I use a staged scene on my store?",
-      "a": "Yes. Download the photo and put it on a product page, a marketplace, social, or an ad."
-    },
-    {
-      "q": "Can I choose the setting for my product?",
-      "a": "Yes. Name the kind of place you want. If the first scene is not the one, ask for another."
-    },
-    {
-      "q": "Can I change the scene after it is made?",
-      "a": "Yes. Adjust the background, or make a second scene from the same photo. Add any price in your own editor."
-    },
-    {
-      "q": "What should the source photo show?",
-      "a": "The whole product, easy to see, with nothing important cut off at the edge of the frame."
-    },
-    {
-      "q": "What does one staged scene cost?",
-      "a": "One photo is 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits."
+      "q": "Can I use the scene in a paid ad?",
+      "a": "Yes. Use the staged photo in paid ads without a watermark. Add your offer in the ad editor and check the image against the product."
     },
     {
       "q": "Does the scene replace my plain catalog photo?",
-      "a": "No. Keep the original for small details. Use the scene when you want shoppers to picture the product in use. If the source photo is hard to read, start with [how to take product photos for AI](page:guide-product-photo-tips)."
+      "a": "No. Keep your plain catalog photo for close product details. Use the staged scene to show how your item looks in daily life."
+    },
+    {
+      "q": "Can I make another scene of the same product?",
+      "a": "Yes. Make another lifestyle scene from the same photo for 24 credits. Try different settings without another photoshoot."
+    },
+    {
+      "q": "Can I choose the setting for my product?",
+      "a": "Yes. Describe the setting you want for your product. Try another scene if the first one does not fit your brand."
+    },
+    {
+      "q": "How does product staging work?",
+      "a": "Upload a clear product photo and choose the type of setting you want. Download a realistic scene for your store, social posts, or ads."
     },
     {
       "q": "Can I post the scene on Instagram?",
       "a": "Yes. Use it as the product photo in the feed. Write the caption in Instagram, and add any price in your own editor."
     },
     {
-      "q": "Can I use the scene in a paid ad?",
-      "a": "Yes. Finish the headline and the offer in your ad editor. The photo does not include your price."
+      "q": "What is AI product staging?",
+      "a": "AI product staging puts your product into a realistic everyday setting using a photo you already have. You can show shoppers how it looks in use."
     },
     {
-      "q": "Can I make another scene of the same product?",
-      "a": "Yes. Start again with a different place. Each photo is 24 credits, and you see that cost before you start."
+      "q": "Can I use a staged scene on my store?",
+      "a": "Yes. Use the staged image on product pages, marketplaces, social posts, and ads. It helps shoppers picture your item in real life."
+    },
+    {
+      "q": "What should the source photo show?",
+      "a": "Use a clear photo that shows the whole product and its important details. This helps the new scene look true to the item you sell."
+    },
+    {
+      "q": "Can I change the scene after it is made?",
+      "a": "Yes. Change the background or make a second scene from the same product photo. You can test looks without another photoshoot."
+    },
+    {
+      "q": "What does one staged scene cost?",
+      "a": "One staged image costs 24 credits. Starter is $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600."
     }
   ],
   "visual": {

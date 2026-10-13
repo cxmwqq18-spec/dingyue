@@ -153,76 +153,76 @@
   ],
   "faq": [
     {
-      "q": "What is AIVideosUGC?",
-      "a": "An online tool for stores. Upload a product photo, or paste a product page link, then edit the result and publish a store image or a short video."
-    },
-    {
-      "q": "What does AIVideosUGC cost?",
-      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 a month for 300 credits. Premium is $63 a month for 600 credits. You see the credit cost before a job starts. A failed job returns those credits."
-    },
-    {
       "q": "Does a video include a spoken line?",
-      "a": "Yes. A short ad can include a spoken line, captions you can edit, and music from the library. A spokesperson clip uses an actor who says the line you write. See [AI spokesperson video](page:spokesperson-videos)."
+      "a": "Yes. Your video can include a spoken message, editable captions, and music. Choose an AI actor to present it without recording yourself."
+    },
+    {
+      "q": "Can I start from a product page link?",
+      "a": "Yes. Paste a public product page link to bring in its photos and details. Review the message and scene before making the ad."
+    },
+    {
+      "q": "How many AI actors are in the library?",
+      "a": "There are 53 AI actors in the library. Choose one that fits your audience and use them again across several ads."
     },
     {
       "q": "What length and shape can the ad use?",
-      "a": "Choose 6, 10, 15, or 30 seconds. The frames are 9:16, 1:1, 16:9, 4:3, and 3:4. One product photo can become a tall ad, a square clip, or a wide one."
+      "a": "Choose 6, 10, 15, or 30 seconds and a format such as vertical, square, or wide. You can make versions for different feeds from the same product photo."
     },
     {
-      "q": "How many credits does a video or photo use?",
-      "a": "A photo uses 24 credits. A 6-second video uses 24 credits, 10 seconds uses 40, 15 seconds uses 60, and 30 seconds uses 120. The number is on screen before it starts."
+      "q": "What can I make with AIVideosUGC?",
+      "a": "You can make store images and short product ads from a photo or link. Add an AI actor, voice, and captions when the message needs a presenter."
     },
     {
-      "q": "Can I use the results in ads and on my store?",
-      "a": "Yes. Ads and your store can both use the download. The file has no watermark. Follow each site's rules when you post."
+      "q": "Do I need a crew, or just a product photo?",
+      "a": "No crew is needed. Start with a product photo or public link, choose the message and actor, and make an ad in minutes."
     },
     {
-      "q": "Can I reuse the same actor on the next ad?",
-      "a": "Yes. Choose an actor from the library of 53, or build a presenter from photos you are allowed to use. You can use that person again on the next video."
+      "q": "What does AIVideosUGC cost?",
+      "a": "Starter costs $24.50 monthly for 200 credits; Pro costs $35 for 300; Premium costs $63 for 600. You see each job’s credit cost before starting, and failed jobs return their credits."
     },
     {
-      "q": "Can my own software start a photo or video?",
-      "a": "Yes. The API lets your own software start a photo or video. Email support@aivideosugc.com if you need access."
+      "q": "Do I pay before the first file?",
+      "a": "Yes. Choose Starter at $24.50 monthly for 200 credits, Pro at $35 for 300, or Premium at $63 for 600. You see the credit cost before each job."
     },
     {
       "q": "Can I make more than one version at a time?",
-      "a": "Yes. One batch can make several versions from one product photo. Each version lists its credit cost before you start it."
+      "a": "Yes. Make several versions from one product photo to test different messages or actors. You see the credit cost for each version before starting."
     },
     {
       "q": "Can I send the file to TikTok or Meta from the tool?",
       "a": "Yes. You can send a finished file to TikTok, Instagram, or Facebook from the tool, or download it and post it yourself."
     },
     {
-      "q": "Can I start from a product page link?",
-      "a": "Yes. Paste a public product page link. The tool reads that page, and you still describe the scene before the job starts."
+      "q": "How many credits does a video or photo use?",
+      "a": "A photo costs 24 credits. A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Failed jobs return their credits."
+    },
+    {
+      "q": "Can my own software start a photo or video?",
+      "a": "Yes. Your software can start photo or video jobs through the API. Email support@aivideosugc.com to get access."
+    },
+    {
+      "q": "Do I need to choose a video model?",
+      "a": "No. Choose the result you want, add your product photo or link, and make the video. You can review and adjust it before posting."
+    },
+    {
+      "q": "Can I reuse the same actor on the next ad?",
+      "a": "Yes. Choose from 53 AI actors and use the same presenter in another ad. This keeps your product videos consistent without arranging another shoot."
     },
     {
       "q": "Can I rebuild an ad I already run?",
-      "a": "Yes. You can follow the structure of an ad you already run, keep your product, and swap the actor or the first line. You still confirm the credit cost before it runs."
-    },
-    {
-      "q": "Do I need a crew, or just a product photo?",
-      "a": "You need a product photo or a product page link, a plan, and a short note about the buyer. The credit cost is on screen before you start. You do not need a crew."
-    },
-    {
-      "q": "How should a shop describe AIVideosUGC in one sentence?",
-      "a": "AIVideosUGC turns a product photo or a product page link into store images and short video ads. Add an actor, a script, and a voice when you want them."
-    },
-    {
-      "q": "Do I pay before the first file?",
-      "a": "Yes. You pay before the first file. There is no zero-cost plan, and the pricing row lists every monthly plan."
-    },
-    {
-      "q": "How many AI actors are in the library?",
-      "a": "The library holds 53 AI actors. A presenter built from photos you may use can come back on a later video."
+      "a": "Yes. Use an ad you already run as a reference, then change the opening or actor for your product. This helps you test another version quickly."
     },
     {
       "q": "Can the actor say the line in another language?",
-      "a": "Yes. Choose the language before the video starts, and the actor says the line in that language."
+      "a": "Yes. Write the message in the language your customers use and choose a matching voice. You can make a new version without hiring another presenter."
     },
     {
-      "q": "Which video model does a job use?",
-      "a": "The app shows the choices when the job starts. This page does not name a video model."
+      "q": "What is AIVideosUGC?",
+      "a": "AIVideosUGC turns your product photos or links into store images and short video ads. Add an AI actor and voice when you want someone to present the product."
+    },
+    {
+      "q": "Can I use the results in ads and on my store?",
+      "a": "Yes. Download the file without a watermark for your store or paid ads. Follow each platform’s rules when you post."
     }
   ],
   "relatedLinks": [

@@ -65,36 +65,36 @@
   },
   "faq": [
     {
-      "q": "What can image to video do with a product photo?",
-      "a": "It turns a still into a short video. For sellers, one product photo can become a clip with motion, a voiceover, and captions you can post."
+      "q": "Can I make explainer or training videos from images?",
+      "a": "Yes. Add a voice and AI actor to explain a product or teach a short lesson. You can update the words later without filming again."
     },
     {
-      "q": "How does a photo become a video?",
-      "a": "Upload the image and describe the motion you want. Add a script and a voiceover, plus on-screen text, and review the clip before you post it."
+      "q": "How does AI turn a photo into a video?",
+      "a": "Upload the photo and describe how you want it to move. Add a voice or captions, then generate a video in a few minutes."
     },
     {
-      "q": "What do you gain by making video from a photo?",
-      "a": "More ads from the photos you already own. You skip the shoot, and you can make another version whenever the current one goes stale. A 6-second clip is 24 credits."
+      "q": "Which video sizes does image-to-video support?",
+      "a": "Choose 9:16 for TikTok and Reels, square 1:1 in feeds, or widescreen 16:9 for YouTube. You can also use 4:3 or 3:4."
     },
     {
-      "q": "Can I post these clips on social?",
-      "a": "Yes. Size each clip for TikTok, Instagram Reels, or YouTube Shorts, and post it as an ad or as a regular unpaid post."
+      "q": "Can I add a voice or AI actor to an image video?",
+      "a": "Yes. Write what you want said, choose a voice, and add an AI actor if you want someone on screen."
     },
     {
-      "q": "How can a store use this for product marketing?",
-      "a": "Show the product in action, reveal a before-and-after, run social video ads, or add a video to a marketplace listing. Each one starts from the same photo."
+      "q": "Why make a video from a product photo?",
+      "a": "You can turn photos you already own into videos without booking a shoot. Make more versions for ads, product pages, or social posts in minutes."
     },
     {
-      "q": "Can I make explainers and tutorials?",
-      "a": "Yes. Keep one AI actor and one script style for every lesson, so feature walkthroughs look consistent without re-recording."
+      "q": "Can I post image-to-video clips on social media?",
+      "a": "Yes. Download clips for TikTok, Instagram Reels, YouTube Shorts, or other social channels. Choose the size that fits each placement."
     },
     {
-      "q": "Can I add a voiceover or an AI actor?",
-      "a": "Yes. Write your own script or let the tool draft one, pick a voice, and add an AI actor to present the product on camera."
+      "q": "How can online stores use image-to-video?",
+      "a": "Turn product photos into short demos, social ads, or listing videos. You can try different scenes from the same photo without another shoot."
     },
     {
-      "q": "Which aspect ratios can I pick?",
-      "a": "Choose 9:16 for TikTok, Reels, and Stories, 1:1 for the feed, or 16:9 for YouTube. 4:3 and 3:4 are there too."
+      "q": "How can AI turn my photo into a video?",
+      "a": "It turns a still photo into a short video with movement. Add a voice, captions, or an AI actor to make a product clip without filming."
     }
   ],
   "cta_lead": "Upload a product photo and download a clip you can post. The credit cost is on screen before you start.",

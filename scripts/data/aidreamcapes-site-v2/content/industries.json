@@ -18,100 +18,100 @@
   ],
   "faq": [
     {
-      "q": "Why do creator-style ads get watched?",
-      "a": "Shoppers stay when the clip feels like advice from someone who uses the item. Show the product in the first second, then say the point."
-    },
-    {
-      "q": "What does AI UGC mean for a shop?",
-      "a": "It means a product clip that looks like a creator made it. An AI avatar says a line you wrote, and you did not book a film crew."
-    },
-    {
-      "q": "Do I have to film before I choose a plan?",
-      "a": "No. You choose a plan first. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "How long does a UGC ad take?",
-      "a": "It does not take a shoot day. You review the file in your account after you submit the job."
-    },
-    {
-      "q": "How do I make a UGC ad with an AI avatar?",
-      "a": "Open the industry that matches the product, put an AI avatar on screen, and use a sentence you would say yourself. Then export the file."
-    },
-    {
-      "q": "Where do the AI avatars come from?",
-      "a": "They are part of the actor library. Pick a face, and that face can say the line you wrote."
-    },
-    {
-      "q": "Can a listing link become the video ad?",
-      "a": "Yes. A public product page can supply the photo and the name. Your shop software can still send that link."
-    },
-    {
-      "q": "Do I need a creator's permission to run the ad?",
-      "a": "No. You can run the download as a paid ad for your own shop. The face was generated here, so there is no creator release to collect."
+      "q": "Do I need to film before making an AI UGC ad?",
+      "a": "No. Make the ad from a product photo or link with an AI actor and voice. Plans start at $24.50 a month for 200 credits."
     },
     {
       "q": "Can I change the video after it is made?",
-      "a": "Yes. If the product looks right and the sentence is wrong, change the sentence and run the job again."
+      "a": "Yes. Change the message, actor, voice, or captions and make another version. You can test a new opening without filming again."
     },
     {
-      "q": "How is a filmed creator unlike an AI avatar?",
-      "a": "A filmed creator is a person you hired. An AI avatar can take that role when you need another opening for the same product."
-    },
-    {
-      "q": "Can an AI avatar stand in for a human creator?",
-      "a": "Yes, for the extra openings. If buyers already follow a specific founder, film that founder for the main spot."
-    },
-    {
-      "q": "How many languages can the avatar speak?",
-      "a": "As many as you can write accurately. Type the line in that language. A cloned voice needs a short sample you are allowed to use."
-    },
-    {
-      "q": "Which language should I write the line in?",
-      "a": "Use the language already on the listing. Type the line in that language, and the actor speaks it."
-    },
-    {
-      "q": "How quickly can I create a product ad?",
-      "a": "Paste the listing or the sentence, then review the file in your account. You do not wait on a shoot day."
-    },
-    {
-      "q": "Can the avatar speak in a cloned voice?",
-      "a": "Yes. Give it a short sample from a speaker you are allowed to use. The avatar can say a new line in that voice."
-    },
-    {
-      "q": "Can I make these ads without hiring a creator?",
-      "a": "Yes. If you already filmed the product, use that clip and add a generated voice. If you only have a photo, an AI avatar can hold the item and speak."
-    },
-    {
-      "q": "How is an AI UGC ad made?",
-      "a": "You supply the product photo and the sentence. The spoken line comes from that sentence, and an AI avatar delivers it."
-    },
-    {
-      "q": "What kinds of clips can I make?",
-      "a": "A recommendation, a how-to, an unboxing, or a review. You start from the photo you already have."
-    },
-    {
-      "q": "What should I look for in a tool for this job?",
-      "a": "Judge it by whether one photo of your item can become a clip you would actually post."
-    },
-    {
-      "q": "Which industry should I open first?",
-      "a": "Open the industry of the product you are listing. If you sell more than one kind of item, finish this one, then open the next."
-    },
-    {
-      "q": "How is an industry page different from the template library?",
-      "a": "These pages group ideas by what you sell. The template library groups them by layout. Open an industry first, then a template."
+      "q": "Which languages can an AI actor speak?",
+      "a": "Your actor can speak in the language you choose for the video. Write the message in that language and pick a matching voice."
     },
     {
       "q": "Can I begin with a phone photo?",
-      "a": "Yes. Use one clear photo with the whole item visible. Daylight and a plain surface make the color and the shape easier to check."
+      "a": "Yes. A clear phone photo showing the whole item can start an ad. Good light helps keep the product color and shape accurate."
+    },
+    {
+      "q": "Can the avatar speak in a cloned voice?",
+      "a": "Yes. Upload a voice sample you own or have permission to use. The AI actor can speak your new message in that voice."
+    },
+    {
+      "q": "How quickly can I create a product ad?",
+      "a": "You can make a product ad in a few minutes from a link or photo. Choose an actor and message, then review the video."
+    },
+    {
+      "q": "Which industry should I open first?",
+      "a": "Start with the industry that matches your product. You can make a video for one item, then use another category for the next."
+    },
+    {
+      "q": "How is an AI UGC ad made?",
+      "a": "Upload a photo or paste a product link, choose an actor, and add a short message. AI makes the creator-style video for you to review."
+    },
+    {
+      "q": "How do I make a UGC ad with an AI avatar?",
+      "a": "Upload a product photo or paste its link, choose an AI actor, and add your message. Review the result before posting it."
+    },
+    {
+      "q": "How is an industry page different from the template library?",
+      "a": "Industry pages give you ideas for the products you sell; templates give you ready video styles. Choose your product category, then pick a style."
+    },
+    {
+      "q": "Can a listing link become the video ad?",
+      "a": "Yes. Paste a public product link to start the video with its photos and details. Check the message before you generate it."
+    },
+    {
+      "q": "Which language should I write the line in?",
+      "a": "Use the language your customers use. Translate the product message, choose a matching voice, and review it before posting."
+    },
+    {
+      "q": "What is the difference between a filmed creator and an AI actor?",
+      "a": "A filmed creator is a real person on camera; an AI actor is generated for your ad. AI helps you make more versions quickly without coordinating shoots."
+    },
+    {
+      "q": "What types of AI UGC videos can I make?",
+      "a": "Make product demos, unboxings, tutorials, and recommendation-style ads. Try different messages from one photo without filming each version."
+    },
+    {
+      "q": "Can an AI avatar stand in for a human creator?",
+      "a": "Yes, an AI actor can cover quick tests and product ads. Use a real person when their own experience or identity matters to the campaign."
+    },
+    {
+      "q": "Can I make these ads without hiring a creator?",
+      "a": "Yes. Start with a product photo or link and choose an AI actor. You can make a creator-style ad without hiring a creator or film crew."
+    },
+    {
+      "q": "Do I need a creator's permission to run the ad?",
+      "a": "No creator release is needed for an AI actor from our library. The finished ad has no watermark and can be used commercially."
+    },
+    {
+      "q": "Where do the AI actors come from?",
+      "a": "Choose from 53 AI actors in the library. They can present your product with a voice, so you do not need to book someone for each ad."
+    },
+    {
+      "q": "How long does an AI UGC ad take?",
+      "a": "A UGC ad takes a few minutes. Upload a product photo or link, choose an actor, and make the video without waiting for a shoot."
     },
     {
       "q": "Will the file keep my product's color and shape?",
-      "a": "The file is built from the photo you upload. Start with a picture that already shows the color and the full shape."
+      "a": "It should match your source photo, but review the finished file against the real item. Make another version if the color or shape changes."
+    },
+    {
+      "q": "What should I look for in an AI UGC tool?",
+      "a": "Look for a tool that makes ads from your own product photo or link and lets you change the message. Check export formats, credit cost, and commercial use."
+    },
+    {
+      "q": "Why do AI UGC ads get watched?",
+      "a": "Creator-style ads feel like a product recommendation in the feed. Show the item early and test different openings to find what holds attention."
     },
     {
       "q": "Can I publish from the industry page?",
-      "a": "You make the file here, then send it to TikTok, Facebook, or Instagram, or download it. You still set the budget in the ad account."
+      "a": "Yes. Make an ad for your industry, then download it or send it to TikTok, Facebook, or Instagram. Set your ad budget on the platform."
+    },
+    {
+      "q": "What does AI UGC mean for a shop?",
+      "a": "AI UGC is a creator-style product ad made with an AI actor and voice. It lets your shop make videos without filming or hiring a creator."
     }
   ],
   "visual": {

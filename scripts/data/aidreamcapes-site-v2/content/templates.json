@@ -14,48 +14,48 @@
   ],
   "faq": [
     {
-      "q": "What is a product ad template?",
-      "a": "A finished layout for your product, with the scene and the speaking pace already set. Add your photo, and an AI actor can deliver the line. You are not building the ad from an empty timeline."
-    },
-    {
-      "q": "How does a template become an ad I can post?",
-      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your product, an AI actor speaks it. Save the clip, or post it to your shop."
-    },
-    {
       "q": "Why use a template instead of hiring a creator?",
-      "a": "The creator you wanted may be booked, and a second opening line can still be made while you wait. You get a new line and a fresh script without a new booking."
-    },
-    {
-      "q": "Who should use a product ad template?",
-      "a": "A founder with one product photo, a marketer refreshing this month's ads, and an agency making a client file all start here. The shared step is a picture of the item you already sell."
-    },
-    {
-      "q": "I have never edited a video. Can I still use a template?",
-      "a": "Yes. Start with a product photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
-    },
-    {
-      "q": "Which industries are these templates for?",
-      "a": "Accessories, apparel, apps, beauty and personal care, and clothing all have layouts. So do e-commerce, education, explainers, financial services, food and beverage, and footwear. Health and fitness, jewelry, kids and toys, pets, sports, and tech are included. Creator-style ads and viral layouts are included too."
+      "a": "A template lets you make ads in minutes without booking a creator or shoot. Try different messages when you need fresh ads."
     },
     {
       "q": "Can I use my own pictures and clips?",
-      "a": "Yes, if you have the right to use them. A front-on product photo and your shop logo are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
+      "a": "Yes. Add your own product photos, clips, and logo to the template. Your ad can show the item you actually sell."
     },
     {
-      "q": "Where can I publish the ad from these layouts?",
-      "a": "Post the download on TikTok, YouTube, Facebook, Instagram, or LinkedIn, or publish it from a connected account. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. Use 9:16 for TikTok, 1:1 for a square feed, 16:9 when the placement is wide, and 4:3 or 3:4 when the slot asks for those."
+      "q": "Can I use a template without video editing experience?",
+      "a": "Yes. Add a product photo, choose the message, and generate an ad. You do not need filming or editing experience."
     },
     {
-      "q": "Do these ad templates cost credits to use?",
-      "a": "Yes. A photo spends 24 credits, and a clip spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost before you start, and a failed job returns the credits. Prices are on the [pricing page](page:pricing). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
-    },
-    {
-      "q": "Can I use the download in a paid ad?",
-      "a": "Yes. The clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
+      "q": "What is a product ad template?",
+      "a": "A product ad template is a ready-made video layout with an opening, scenes, and voice. Add your product to make a creator-style ad in minutes."
     },
     {
       "q": "Why not build the ad from a blank page?",
-      "a": "The layout already sets the scene, the hook, and the pace, so you decide the offer and post. You do not start by building the room from nothing."
+      "a": "A template gives you the opening, scenes, and pace, so you can make an ad faster. Focus on your product and offer."
+    },
+    {
+      "q": "Which industries are these templates for?",
+      "a": "Templates work for beauty, clothing, food, home goods, electronics, and many other products. Change the scene and message to fit your buyers."
+    },
+    {
+      "q": "Can I use the download in a paid ad?",
+      "a": "Yes. Use your watermark-free video in paid ads, product pages, or client work. Use only product media you have rights to."
+    },
+    {
+      "q": "Do these ad templates cost credits to use?",
+      "a": "Yes. Videos use 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Failed jobs return credits."
+    },
+    {
+      "q": "Who should use a product ad template?",
+      "a": "Product sellers, marketers, and agencies can use these templates. Start with a photo and make ads for different products or buyers."
+    },
+    {
+      "q": "How does a template become an ad I can post?",
+      "a": "Add your product photo or link, choose a message, and generate the video. The template gives you a ready-made structure without editing from scratch."
+    },
+    {
+      "q": "Where can I publish the ad from these layouts?",
+      "a": "Publish template ads on TikTok, Instagram, Facebook, YouTube, or your store. Choose a video size that fits each placement."
     }
   ],
   "visual": {

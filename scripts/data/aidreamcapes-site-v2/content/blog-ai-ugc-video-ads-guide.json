@@ -147,44 +147,44 @@
   ],
   "faq": [
     {
-      "q": "What is the AI video ads generator?",
-      "a": "A tool that makes a short ad for a product you already sell. You bring a photo or a listing, and you get a file with someone speaking. This guide walks through each step."
-    },
-    {
       "q": "How do I create a video ad with AI?",
-      "a": "Start with the product photo. Name the first action. Download the tall file for a story, or the square file for a feed."
+      "a": "Upload a product photo or paste its link, then choose your message and presenter. Review the ad and export it in the size your placement needs."
     },
     {
-      "q": "Who is an AI video ad tool for?",
-      "a": "A shop that needs an ad for each product it sells this month. It is a poor fit when you only want one filmed founder story."
+      "q": "Can AI video ads replace real creators?",
+      "a": "They can cover quick tests and large catalogs, while a real creator may fit a campaign built around their own experience. Many shops use both."
     },
     {
       "q": "Do I pay before the first ad?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Each job shows its credit cost before it starts."
+      "a": "Yes. Starter costs $24.50 monthly for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. Each job shows its credit cost before starting."
+    },
+    {
+      "q": "What is the AI video ads generator?",
+      "a": "An AI video ad generator makes a short product ad from your photo, link, or prompt. It can add a script, presenter, voice, and captions without a film shoot."
     },
     {
       "q": "Can I run the file as a paid ad?",
-      "a": "Yes. A paid plan includes commercial use, so you can put the file in an ad account, and the download has no watermark."
+      "a": "Yes. Finished videos have no watermark and include commercial use. You can run them in paid ads without arranging a creator license."
     },
     {
       "q": "Which shapes and platforms can I use?",
-      "a": "Use 9:16 for YouTube Shorts and TikTok, and 1:1 for a Facebook or Instagram feed. Use 16:9, 4:3, or 3:4 when the placement names that shape."
-    },
-    {
-      "q": "Can I make ads for many products?",
-      "a": "Yes. Run a batch across the products you choose. Each clip shows its credit cost before it starts. If a job fails, those credits come back."
-    },
-    {
-      "q": "Do these stand in for a creator?",
-      "a": "No. Use a generated clip when you need several openings this week. Film the founder when buyers expect that person on one product."
-    },
-    {
-      "q": "Will TikTok, Facebook, or Instagram reject the ad?",
-      "a": "These apps do not ban a generated ad as a category. They do care if the clip pretends a stranger bought the product. Read that app's ad rules before you spend, and read our [Content Policy](/content) for what you can upload."
+      "a": "Choose 9:16 for vertical posts, 1:1 for square feeds, or 16:9 for wide ads. Pick 4:3 or 3:4 when a placement needs them."
     },
     {
       "q": "What if the clip shows a part my product does not have?",
-      "a": "Make the clip again and name the exact action and the exact product, so the shape matches the photo."
+      "a": "Make another version using a clearer product photo and a precise description. Compare the result with the item you sell before running the ad."
+    },
+    {
+      "q": "Who should use an AI video ad generator?",
+      "a": "It is useful for shops that need several ad versions across a product catalog. You can test different messages quickly without booking creators for every item."
+    },
+    {
+      "q": "Can I run AI video ads on TikTok, Facebook, or Instagram?",
+      "a": "AI video ads can run on TikTok, Facebook, and Instagram when they follow each platform’s rules. Keep claims truthful and disclose AI use when required."
+    },
+    {
+      "q": "Can I make ads for many products?",
+      "a": "Yes. Make ads for several products in a batch, with a separate result for each item. You can test more messages without planning a shoot for every listing."
     }
   ],
   "cta_title": "Make a Video Ad From Your Photo",

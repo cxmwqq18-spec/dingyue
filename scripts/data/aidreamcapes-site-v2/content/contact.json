@@ -69,36 +69,36 @@
   ],
   "faq": [
     {
-      "q": "How do I reach customer service?",
-      "a": "Email support@aivideosugc.com. That is the way to reach us, and you keep a written record of the question and the answer."
-    },
-    {
       "q": "Can you help before I choose a plan?",
-      "a": "Yes. Tell us what you sell and where you advertise. We can point you to a starting place such as [AI image to video](page:image-to-video). Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600."
+      "a": "Yes. Email support@aivideosugc.com with what you sell and the kind of ads you need. We can help you choose a plan."
     },
     {
       "q": "When will I hear back?",
-      "a": "We reply by email after a person has read your note. There is no promised hour. A clear note lets us find the job on the first read."
-    },
-    {
-      "q": "What details help support find my photo or video?",
-      "a": "The email on your account, what happened, roughly when it happened, and a screenshot of any error. That is enough to look it up."
-    },
-    {
-      "q": "What if a failed photo or video did not return credits?",
-      "a": "A failed photo or video returns its credits on its own. If you do not see them, email support with the time you made it and we will check."
-    },
-    {
-      "q": "Is email the only support channel?",
-      "a": "Yes. Email support@aivideosugc.com from the address on your account. We do not offer phone support or live chat."
+      "a": "We reply by email after reviewing your message. Include your account email and the issue so we can help without extra back-and-forth."
     },
     {
       "q": "Can support help me publish to TikTok or Facebook?",
-      "a": "Yes. If a send to TikTok, Instagram, or Facebook did not go through, email the account address, what you tried, and about when it happened."
+      "a": "Yes. Email us which platform you tried, when you tried, and what happened. We can help you find the publishing problem."
     },
     {
       "q": "Who do I email about an actor, captions, or my own software?",
-      "a": "Write to support@aivideosugc.com from the account email, and say what you were trying to do. That might be a saved presenter, captions, or a software connection."
+      "a": "Email support@aivideosugc.com with your account email and what you want to do. We can help with actors, captions, or software connections."
+    },
+    {
+      "q": "What if a failed photo or video did not return credits?",
+      "a": "Failed photo and video jobs return their credits. If you still see a charge, email support@aivideosugc.com with the job time."
+    },
+    {
+      "q": "What details help support find my photo or video?",
+      "a": "Send your account email, what happened, when it happened, and a screenshot of any error. Those details help us find the job."
+    },
+    {
+      "q": "Is email the only support channel?",
+      "a": "Yes. Email support@aivideosugc.com from your account address. This keeps your question and our reply in one place."
+    },
+    {
+      "q": "How do I reach customer service?",
+      "a": "Email support@aivideosugc.com to reach customer service. Include your account email and a short description so we can find your issue."
     }
   ],
   "relatedLinks": [
