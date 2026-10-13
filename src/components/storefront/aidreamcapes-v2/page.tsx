@@ -2,7 +2,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection,
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag, HomePrompt,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
@@ -122,76 +122,27 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 }
 
 function HomePage({ data, r }: Props) {
-  const hero = data.hero as { image: V2Image; output?: V2Image; versions?: V2Image[]; videoHref: string; photoHref: string };
-  const maker = data.maker as (V2Maker & { videoOptions?: [string, string][]; photoOptions?: [string, string][] }) | undefined;
+  const hero = data.hero as { videoHref: string; photoHref: string };
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
   const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
-  const heroMedia = data.heroMedia as V2HeroMedia | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   return <>{orderedBlocks(data, r, [
     ["hero",
-      <section className="hero">
+      <section className="hero hero-center">
         <div className="wrap">
-          <div className="hero-grid">
-            <div>
-              <div className="eyebrow">{data.eyebrow}</div>
-              <h1>{data.h1}</h1>
-              <p className="lead">{data.lead}</p>
-              <QuickStart href={hero.videoHref} label="Make my first video" r={r} />
-              <div aria-label="Start creating" className="maker" id="adc2-home-maker" role="group">
-                <div className="tabs" role="tablist">
-                  <button aria-selected="true" data-mode="video" role="tab" type="button">Video</button>
-                  <button aria-selected="false" data-mode="photo" role="tab" type="button">Photo</button>
-                </div>
-                <div className="drop">
-                  <Img image={hero.image} r={r} className="drop-thumb" eager />
-                  <div><b>{maker?.uploadTitle || "Drop your product photo here"}</b><span>JPG, PNG or WebP · any clear photo works</span></div>
-                </div>
-                <div data-pane="video">
-                  <div className="opts">
-                    {(maker?.videoOptions ?? [["Size", "9:16 · TikTok & Reels"], ["Length", "15 seconds"], ["Template", "Creator video ad"]]).map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}
-                  </div>
-                  <div className="maker-foot" style={{ marginTop: 14 }}>
-                    <a className="btn btn-grad" href={r.href(hero.videoHref)}>Make my video →</a>
-                    <small>See the cost before you start</small>
-                  </div>
-                </div>
-                <div data-pane="photo" hidden>
-                  <div className="opts">
-                    {(maker?.photoOptions ?? [["Template", "White background"], ["Size", "Square"]]).map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}
-                  </div>
-                  <div className="maker-foot" style={{ marginTop: 14 }}>
-                    <a className="btn btn-grad" href={r.href(hero.photoHref)}>Make my photos →</a>
-                    <small>See the cost before you start</small>
-                  </div>
-                </div>
-                <StartNote note={text(data.startNote)} r={r} />
-              </div>
+          <div className="hero-copy">
+            <div className="eyebrow hero-kicker">
+              <span>{data.eyebrow}</span>
+              <AudienceTag />
             </div>
-            {heroMedia?.kind === "loop" ? (
-              <div aria-label={heroMedia.inset ? "Product photo to video ad preview" : "Video ad previews for several products"} className="visual-loop"><HeroMedia media={heroMedia} r={r} /></div>
-            ) : (
-            <div aria-label="Product photo to video ad preview" className="visual">
-              <div className="vin"><span className="lbl">Your product</span><Img eager image={hero.image} r={r} /></div>
-              <div aria-hidden="true" className="arrow">
-                <svg fill="none" stroke="#fff" strokeWidth="2" viewBox="0 0 20 20"><path d="M4 10h11M11 5l5 5-5 5" /></svg>
-              </div>
-              <div className="vout">
-                {hero.output ? <Img eager image={hero.output} r={r} /> : null}
-              </div>
-              <div className="vars">
-                {list<V2Image>(hero.versions).map((image, index) => <Img image={image} key={index} r={r} />)}
-                <span>More versions</span>
-              </div>
-            </div>
-            )}
+            <h1>{data.h1}</h1>
+            <p className="lead">{data.lead}</p>
           </div>
-          <div className="trust">
-            <span>Private uploads</span><span>Cost shown before every job</span><span>9:16, 1:1, 16:9, 4:3 or 3:4</span><span>6, 10, 15 or 30 second videos</span>
-          </div>
+          <HomePrompt imageHref={hero.photoHref} r={r} videoHref={hero.videoHref} />
+          <StartNote note={text(data.startNote)} r={r} />
         </div>
       </section>],
     ["strip", visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null],

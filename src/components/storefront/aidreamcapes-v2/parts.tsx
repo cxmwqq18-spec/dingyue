@@ -520,7 +520,7 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
           </div>
           <div className="qa">
             {items.map((item, index) => (
-              <details key={item.q} open={index === 0}>
+              <details key={item.q} name="adc2-faq" open={index === 0}>
                 <summary>{item.q}</summary>
                 <p><RichText r={r} text={item.a} /></p>
               </details>
@@ -717,6 +717,62 @@ export function withStartLinks(r: V2Resolvers): V2Resolvers {
 
 export function StartNote({ note, r }: { note?: string; r: V2Resolvers }) {
   return note ? <p className="start-note"><RichText r={r} text={note} /></p> : null;
+}
+
+const AUDIENCE_WORDS = ["DTC", "Agency", "SaaS"];
+const PROMPT_CHIPS = ["+ Product", "Actor", "9:16", "Length", "Resolution"];
+const PROMPT_PLACEHOLDER = "Describe the ad you want for your product";
+
+export function AudienceTag() {
+  return (
+    <span className="hero-aud">
+      <span className="sr-only">DTC, Agency, and SaaS</span>
+      <svg aria-hidden="true" className="hero-aud-spark" fill="currentColor" height="14" viewBox="0 0 16 16" width="14">
+        <path d="M8 1.2 9.1 6 13.8 8 9.1 10 8 14.8 6.9 10 2.2 8 6.9 6Z" />
+      </svg>
+      <span aria-hidden="true" className="hero-aud-rot">
+        {AUDIENCE_WORDS.map((word) => <span key={word}>{word}</span>)}
+      </span>
+    </span>
+  );
+}
+
+const SendIcon = () => (
+  <svg aria-hidden="true" fill="none" height="18" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24" width="18">
+    <path d="M4.5 11.5 19 5l-6.2 14-2.3-6.2L4.5 11.5Z" />
+  </svg>
+);
+
+// Display-only home prompt. The field is not submitted; each send link reuses the
+// existing workspace href for that mode. Tab switching is the existing hero-tab script.
+export function HomePrompt({ videoHref, imageHref, r }: { videoHref: string; imageHref: string; r: V2Resolvers }) {
+  const modes = [
+    { id: "agent", label: "AI Video Agent", href: videoHref, send: "Make my video" },
+    { id: "video", label: "AI Video", href: videoHref, send: "Make my video" },
+    { id: "image", label: "AI Image", href: imageHref, send: "Make my photos" }
+  ];
+  return (
+    <div aria-label="Start creating" className="promptbox" id="adc2-home-maker" role="group">
+      <div className="prompt-tabs" role="tablist">
+        {modes.map((mode, index) => (
+          <button aria-selected={index === 0 ? "true" : "false"} data-mode={mode.id} key={mode.id} role="tab" type="button">{mode.label}</button>
+        ))}
+      </div>
+      <label className="prompt-field">
+        <span className="sr-only">{PROMPT_PLACEHOLDER}</span>
+        <textarea defaultValue="" placeholder={PROMPT_PLACEHOLDER} readOnly rows={2} tabIndex={-1} />
+      </label>
+      <div className="prompt-bar">
+        {PROMPT_CHIPS.map((chip) => <span className="prompt-chip" key={chip}>{chip}</span>)}
+        {modes.map((mode, index) => (
+          <a className="prompt-send" data-pane={mode.id} hidden={index === 0 ? undefined : true} href={r.href(mode.href)} key={mode.id}>
+            <span className="sr-only">{mode.send}</span>
+            <SendIcon />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note?: string }) {
