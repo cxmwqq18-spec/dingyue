@@ -1,8 +1,8 @@
 {
   "id": "ind-fashion-clothing",
-  "title": "AI UGC Ads for Beauty and Cosmetics | AIVideosUGC",
-  "description": "Show a skincare step, a makeup look, or hair care in a beauty and cosmetics UGC ad. Start from one product photo, then download a clip you can post.",
-  "h1": "Beauty UGC Ad Generator for Cosmetics",
+  "title": "AI Fashion UGC Ads for Clothing Brands | AIVideosUGC",
+  "description": "Turn one garment photo into fashion UGC ads with on-model looks, fit checks, and short clips. Show your clothing clearly without booking a shoot.",
+  "h1": "AI UGC Ads for Fashion and Clothing Brands",
   "eyebrow": "Clothing Ads Without a Shoot",
   "lead": "AI model photos and videos for fashion brands start from one flat photo. A buyer trusts a wool coat once the hem moves, and an AI avatar can walk it down a hallway with no casting day.",
   "card": "You get try-on clips, outfit photos, and review videos from one garment photo, so the fit is easy to see.",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can one product photo make both a vertical clip and a listing image?",
-      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a routine or a short demo. The same photo can also make a still. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
+      "q": "Can one garment photo make a clip and a listing image?",
+      "a": "Yes. Make a vertical try-on clip and an on-model still from the garment photo. Review the fit and color before posting."
     },
     {
-      "q": "Can a product photo become a clip of someone using it?",
-      "a": "Yes. Use a clear photo of the whole item, or paste a product link, and describe the AI actor and the room. You can pick from 53 AI actors."
+      "q": "Can a flat-lay photo show the clothing on a person?",
+      "a": "Yes. Upload a clear full-length garment photo or its product link, then choose an AI avatar and scene."
     },
     {
-      "q": "Will the shade or the package change?",
-      "a": "The result follows your photo. Fine print and small caps stay closer when the upload is sharp. If a detail moves, make another version. A failed job returns its credits."
+      "q": "Will the print or fabric details stay accurate?",
+      "a": "The result follows your source photo. Check stripes, seams, buttons, and color against the garment before you use it."
     },
     {
-      "q": "Can I choose the look of the AI actor?",
-      "a": "Yes. Describe age range and features in plain words. The AI actor is generated for that ad, and you can ask again if the look is off."
+      "q": "Can I choose the build of the AI avatar?",
+      "a": "Yes. Describe the height, build, and age range you need, then review the silhouette before you download."
     },
     {
-      "q": "What photo should I use for a beauty ad?",
-      "a": "Show the whole product, front side up, in even light. The shape, the shade, and the cap all need to be clear before you start."
+      "q": "What garment photo should I upload?",
+      "a": "Lay the piece flat or hang it in even light. Keep the full outline, print, and fastenings in frame."
     },
     {
-      "q": "How do I keep the shade true?",
-      "a": "Shoot in soft daylight, not under a warm lamp, and name the shade in plain words so the file can be checked against the sample."
+      "q": "How do I keep the clothing color accurate?",
+      "a": "Photograph the garment in soft daylight and compare the finished ad with the real sample."
     },
     {
-      "q": "Can I post these clips as paid ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. What you say about the product has to match what you ship."
+      "q": "Can I run these clips as paid clothing ads?",
+      "a": "Yes. You can use the watermark-free download in paid ads. Check every fabric and size claim against what you ship."
     },
     {
       "q": "How is this different from hiring a creator?",
-      "a": "You pick an AI actor and pay the credits shown before the job, not a creator fee. Post the clip once the product still matches the sample."
+      "a": "You pay the credits shown before generation instead of booking a creator. Review the garment details before posting the ad."
     },
     {
-      "q": "Can the ad include a spoken voice and captions?",
+      "q": "Can a clothing try-on include a voice and captions?",
       "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     }
   ],
-  "templates_lead": "Pick a skincare routine, a makeup look, a hair change, or a short product demo.",
-  "cta_lead": "The next beauty ad can start from one product photo, with the credit cost on screen first.",
-  "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
-  "steps_lead": "Add the product, choose an AI actor shoppers trust, and leave with a file you can post.",
+  "templates_lead": "Pick a try-on, fit check, outfit review, or close look at the fabric.",
+  "cta_lead": "Put your next clothing drop on an AI avatar from one garment photo. You see the credit cost before you start.",
+  "steps_h2": "How to Make Fashion UGC Ads in 3 Simple Steps",
+  "steps_lead": "Upload your garment, choose who wears it, and download a clothing ad ready for your store or feed.",
   "steps": [
     {
       "t": "Add the Garment Photo or Link",
-      "d": "Add a skincare, makeup, or hair photo, or paste the product link. That is enough to start."
+      "d": "Upload a clear photo of the full garment or paste its product link. Keep the color, print, and fastenings visible."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Pick an AI actor your buyer can see themselves in. You can change the face before the ad is made."
+      "d": "Choose an AI avatar who fits your clothing line. Check the garment shape before you make the ad."
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "Add a spoken voice and captions. Download a file that is ready for TikTok, Instagram, YouTube, and your site."
+      "d": "Add a spoken line and captions, then download the clothing clip for the channel where you sell."
     }
   ],
   "visual": {
@@ -100,7 +100,7 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "From a Garment Photo to a Try-On"
+        "h2": "Questions About Fashion UGC Ads"
       }
     }
   },
@@ -109,58 +109,58 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Why Beauty Shops Stop Waiting on Creators",
-    "lead": "No-shows, delays, and invoices should not hold up a routine, a look, or a launch.",
+    "h2": "Why Clothing Shops Make UGC Ads From Photos",
+    "lead": "Show a new garment on a person without waiting for a model booking or another shoot.",
     "items": [
       {
-        "t": "Skip the Shoot and the No-Show",
-        "d": "A skincare routine, a makeup look, or a hair change can leave as an ad from the product photo alone, in minutes.",
+        "t": "Skip the Casting Day",
+        "d": "Start with the garment photo you already have. Make an on-model look or short ad without arranging a fitting.",
         "img": "n:guide:fx30-fashion-benefit-fit-r1"
       },
       {
-        "t": "One Photo, Every Placement",
-        "d": "Make tutorials and short demos for the feed, for Stories, and for the product page, without a traditional shoot.",
+        "t": "One Garment, Several Placements",
+        "d": "Use the same source photo for an outfit still, a short clip, and a product page image.",
         "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Show the Product in Action",
-        "d": "A creator-style beauty video grabs attention, shows the product in use, and helps you sell without a large production bill.",
+        "t": "Show How the Garment Moves",
+        "d": "Let the jacket turn once so shoppers can see its length and drape before they open the product page.",
         "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Beauty Ad Can Run",
-    "lead": "One product photo can feed a phone feed and a product page. Match the shape to the place you already sell.",
+    "h2": "Where Your Fashion UGC Ads Can Run",
+    "lead": "One clothing photo can become a feed clip and a listing image. Choose the shape that fits each placement.",
     "items": [
       {
-        "t": "TikTok Beauty Ads",
-        "d": "A tall TikTok video of a routine or a short demo, made from the product photo you already have.",
+        "t": "TikTok Clothing Try-Ons",
+        "d": "A tall clip can show one full turn or a quick fit check from your garment photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Reels and Stories",
-        "d": "A Reel, a Story, or a feed photo that keeps the product clear in the frame.",
+        "t": "Instagram Outfit Looks",
+        "d": "Use an outfit still or a tall fit-check clip for Reels, Stories, and your grid.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed video or a still, with room to add the offer after you download the file.",
+        "d": "Use a clothing still or short clip, then add the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Demos",
-        "d": "A short vertical demo that opens on the product in use.",
+        "t": "YouTube Shorts Outfits",
+        "d": "Open a short vertical clothing ad with a full view of the garment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Gallery Photos",
-        "d": "Extra gallery views, with the full product and the shade easy to see.",
+        "d": "Add garment gallery views that keep the color, shape, and details easy to inspect.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Photos and clips that match across the whole beauty line.",
+        "t": "Shopify Outfit Photos",
+        "d": "Match on-model photos and flat lays across your clothing collection.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -199,7 +199,7 @@
       }
     ]
   },
-  "cta_title": "Start a Beauty Ad From One Photo",
+  "cta_title": "Make a Clothing Ad From One Photo",
   "relatedLinks": [
     {
       "id": "tpl-outfit",
@@ -226,7 +226,7 @@
       "label": "AI Lifestyle Product Photos"
     }
   ],
-  "related_h2": "Templates and Tools for Beauty Ads",
+  "related_h2": "Templates and Tools for Clothing Ads",
   "blockOrder": [
     "hero",
     "strip",
@@ -240,24 +240,24 @@
   "more_sections": [
     {
       "eyebrow": "With the Clip",
-      "h2": "What Your Beauty Ad Can Show",
-      "lead": "A spoken line can come with the demo, so the ad is ready to post where you already sell.",
+      "h2": "What Your Clothing Ad Can Include",
+      "lead": "Add a spoken line to a try-on and post the clothing ad where you already sell.",
       "items": [
         {
-          "t": "A Product Link Opens the Ad",
-          "d": "A product page is enough to start a routine, a makeup look, or a closer look at the item."
+          "t": "A Product Link Starts the Try-On",
+          "d": "A garment listing can start a turn, a short walk, or a closer look at the fabric."
         },
         {
-          "t": "An AI Actor From the Library",
-          "d": "Say the look in a few words, and an AI actor presents the product. The library holds 53 AI actors."
+          "t": "An Avatar Wears the Garment",
+          "d": "Describe the fit you want, then check the avatar against the clothing you sell."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "A voice can name the product, and captions can still say it with the sound turned down."
+          "d": "A spoken line can name the fabric while captions keep the key words readable in the feed."
         },
         {
-          "t": "A Script for the Demo",
-          "d": "You get a short script about one routine or one look, and you can change a word in the editor."
+          "t": "A Script for the Outfit",
+          "d": "Start with one fit or fabric detail, then edit the short script before you download."
         },
         {
           "t": "Edit Before You Export",
@@ -265,7 +265,7 @@
         },
         {
           "t": "Another Language, Then Publish",
-          "d": "The same demo can run again in another language on TikTok, Instagram, or Facebook."
+          "d": "Make another version of the same outfit with a different language for another feed."
         }
       ]
     }

@@ -58250,6 +58250,61 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "fix2-tpl-angle-review1-r1": {
+        "file": "fix2-tpl-angle-review1-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Two views of a short-haired ceramics seller photographing a cream mug on a white table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fix2-tpl-angle-review2-r1": {
+        "file": "fix2-tpl-angle-review2-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A short-haired seller photographs one olive backpack at a clean worktable.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen-nh.sh"
+      },
+      "fix2-tpl-angle-review3-r1": {
+        "file": "fix2-tpl-angle-review3-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "Two views of a blonde seller photographing a sage desk lamp at a worktable.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "fix2-tpl-angle-review4-r1": {
+        "file": "fix2-tpl-angle-review4-r1",
+        "w": 1024,
+        "h": 1280,
+        "alt": "A gray-haired seller photographs a steel travel tumbler and its front, side, and base views.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen-nh.sh"
+      },
+      "fix2-tpl-angle-hero1-r1": {
+        "file": "fix2-tpl-angle-hero1-r1",
+        "w": 1024,
+        "h": 1024,
+        "alt": "Four white-background packshots show the same cream mug from the front, side, back, and top.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

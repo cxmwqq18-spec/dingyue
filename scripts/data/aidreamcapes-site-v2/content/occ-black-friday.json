@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
-  "title": "Festive Holiday Video Maker | AIVideosUGC",
-  "description": "Make a festive holiday video from a product link, with an avatar and a voice. Export a file for your feed, and add the offer only when that number is final.",
-  "h1": "Make a Festive Holiday Video Fast",
+  "title": "Black Friday Ad Creatives for Your Sale | AIVideosUGC",
+  "description": "Create Black Friday product ads from a photo or listing link. Add your confirmed discount, code, and end date in the editor before you publish.",
+  "h1": "Create Black Friday Ad Creatives Fast",
   "eyebrow": "Black Friday Video Ads",
-  "lead": "Make a festive holiday video from a product link. An avatar and a voice carry the message, and you type the offer only when the number is final.",
+  "lead": "Make Black Friday ad creatives from product photos you already have. Add the final offer yourself, then post the version you approve.",
   "secondary_keywords": [
     "Black Friday Video Ads",
     "Black Friday banner ideas",
@@ -14,35 +14,35 @@
   "plan": [],
   "faq": [
     {
-      "q": "How do credits work on a holiday ad?",
+      "q": "How do credits work on a Black Friday ad?",
       "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If it fails, those credits return."
     },
     {
-      "q": "Can I add holiday music and pictures?",
-      "a": "Yes. Pick a track from the music library, choose visuals that fit the season, and add captions in the editor. Use music you are allowed to play."
+      "q": "Can I add music and product photos to a Black Friday ad?",
+      "a": "Yes. Pick a licensed track, use the product photo for the sale, and add the confirmed offer in the editor."
     },
     {
-      "q": "Can I make holiday ads for many products?",
+      "q": "Can I make Black Friday ads for several products?",
       "a": "Yes. Run several product links and each one comes back as its own ad. You still review every file before it is published."
     },
     {
-      "q": "Can an AI avatar deliver the holiday message?",
+      "q": "Can an AI avatar deliver my Black Friday message?",
       "a": "Yes. An AI avatar can stand beside the product and say the line, with the product kept large enough to recognize."
     },
     {
-      "q": "What happens to the ad after the holiday?",
+      "q": "What happens to the ad after Black Friday?",
       "a": "You keep the file. Change the offer line, the voice, or the caption and use the same scene for the next sale day."
     },
     {
-      "q": "How early should I prepare the holiday creative?",
-      "a": "Before the offer is final. Get the avatar and the line ready from the product link, then type the discount when it is set."
+      "q": "How early should I prepare Black Friday creatives?",
+      "a": "Prepare the product scene first. Add the discount, code, and end date only after your offer is final."
     },
     {
       "q": "Can the ad start from a product link?",
       "a": "Yes. Open the listing that will go on sale and use its photo as the scene. If that photo cuts the product off, upload the full shot."
     },
     {
-      "q": "Can I publish the holiday video to TikTok, Instagram, or Facebook?",
+      "q": "Can I post a Black Friday ad to TikTok, Instagram, or Facebook?",
       "a": "Yes. Download the file when it looks right, or send it to the feed you already use. It stays in your account until you share it."
     },
     {
@@ -54,27 +54,27 @@
       "a": "Yes. Set it in the editor and move it later if you need to. It stays off the product picture, so a new deadline can keep the same scene."
     },
     {
-      "q": "Can my store tools start a holiday ad from a product link?",
-      "a": "Yes. A connected store tool can request a holiday ad from a product link. You approve the file before anyone else sees it."
+      "q": "Can store tools start a Black Friday ad from a product link?",
+      "a": "Yes. A connected store tool can start from your product link. Review the file and confirmed offer before publishing."
     }
   ],
   "examples": {
-    "h2": "More Festive Holiday Video Ideas",
-    "lead": "Show the product in a holiday scene, then add the final offer after you download.",
+    "h2": "More Black Friday Ad Ideas",
+    "lead": "Show the product in a sale-ready scene, then add the confirmed offer before posting.",
     "groups": [
       {
-        "label": "Holiday product scenes",
+        "label": "Black Friday product demos",
         "items": [
           {
             "ref": "n:gen2:occ-black-friday-g1",
-            "title": "Gift packed and ready for the holiday",
+            "title": "Gift box ready for a Black Friday offer",
             "kind": "photo",
             "product": "leather duffel",
             "prompt": "Use the uploaded product photo as the same leather duffel. Show adult hands packing it on a warm wood table, with clean space beside the bag for the Black Friday offer added after download. No text or logos."
           },
           {
             "ref": "n:guide:f13-occ-black-friday-card-10",
-            "title": "Everyday product set for a sale day",
+            "title": "Lunch bag packed for a Black Friday deal",
             "kind": "photo",
             "product": "insulated lunch bag",
             "prompt": "Use the uploaded product photo as the same insulated lunch bag. Show adult hands placing it into a work tote beside a packed lunch, with clear space for the offer added after download. No text or logos."
@@ -86,7 +86,7 @@
         "items": [
           {
             "ref": "n:guide:q20-occ-bf-output-01-r2",
-            "title": "Product framed for a holiday post",
+            "title": "Gaming monitor framed for a Black Friday post",
             "kind": "photo",
             "product": "gaming monitor",
             "prompt": "Use the uploaded product photo as the same gaming monitor. Frame it on a tidy evening desk with clear negative space for the Black Friday offer added after download. No text or logos."
@@ -95,19 +95,19 @@
       }
     ]
   },
-  "cta_lead": "Export the festive holiday video, and leave space for the offer. Type the code, the price, and the end date when those numbers are real. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+  "cta_lead": "Finish your Black Friday scene with room for the offer. Type the confirmed code, price, and end date in the editor before publishing.",
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Paste the product link for the holiday offer. Its photo becomes the video, and you type the price yourself."
+      "d": "Paste the link for the product in your Black Friday sale. Use its photo and add the confirmed price yourself."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose an avatar, or describe a festive look. You can upload a short clip of yourself for that face."
+      "d": "Choose an AI avatar or scene that keeps the Black Friday product easy to see."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Set the voice and the line in the editor, then export a file for TikTok, Instagram, or YouTube."
+      "d": "Set the Black Friday line, code, and end date in the editor, then export the file for your feed."
     }
   ],
   "visual": {
@@ -141,7 +141,7 @@
       ]
     },
     "picker": {
-      "title": "Pick a Festive Video Scene",
+      "title": "Pick a Black Friday Ad Scene",
       "lead": "Show the product in a sale moment, then add the confirmed offer after download.",
       "chips": [
         {
@@ -215,45 +215,45 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Make a Festive Holiday Video in 3 Simple Steps"
+        "h2": "How to Make Black Friday Ads in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Choose a Black Friday Video Scene"
+        "h2": "Choose a Black Friday Ad Scene"
       },
       "faq": {
-        "h2": "Questions Before You Post the Holiday Video"
+        "h2": "Questions About Black Friday Ads"
       }
     }
   },
-  "benefits_h2": "What a Festive Holiday Video Includes",
+  "benefits_h2": "What a Black Friday Ad Includes",
   "benefits": [
     {
-      "t": "A Festive Avatar Beside the Product",
-      "d": "An AI avatar can stand beside the product and say the holiday line, while the product stays large in the frame. Describe a festive outfit, or upload a short clip of yourself for that face.",
+      "t": "An Avatar Beside the Black Friday Product",
+      "d": "Keep the product large enough to recognize while an AI avatar delivers your confirmed Black Friday line.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for the Black Friday ad."
     },
     {
       "t": "A Script in Your Own Words",
-      "d": "The first sentence is yours, in words you would actually say, and you can rewrite any line after you hear it. You can start from a link or a short note.",
+      "d": "Write the opening line for your Black Friday product, then edit it after you hear the voice.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe to the camera for the deal-day ad."
     },
     {
-      "t": "The Line in Another Language",
-      "d": "Play the line as a voiceover or captions in the listing language. Then play that same line in another language, while the product stays the same.",
+      "t": "The Black Friday Line in Another Language",
+      "d": "Make a second voice or caption file for another language while the sale product stays the same.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
-      "alt": "Adult hands place an insulated lunch bag into a kraft shipping box for the holiday ad."
+      "alt": "Adult hands place an insulated lunch bag into a kraft shipping box for a Black Friday ad."
     },
     {
       "t": "Two Openings, You Keep One",
-      "d": "A second opening gives you two lines, and you keep the one you would actually run. Change the opening before you export.",
+      "d": "Try another Black Friday opening, then keep the version you would actually run.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
-      "alt": "Adult hand rests on a calm dog lying on a dark sofa for the holiday opening."
+      "alt": "Adult hand rests on a calm dog lying on a dark sofa for a Black Friday ad."
     }
   ],
-  "steps_h2": "How to Make a Festive Holiday Video in 3 Simple Steps",
-  "steps_lead": "You get a festive holiday video from the product link. An avatar says the line, and you type the offer only when it is final.",
+  "steps_h2": "How to Make Black Friday Ads in 3 Simple Steps",
+  "steps_lead": "Start from your sale product photo, keep space for the offer, and type the final code when it is confirmed.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
@@ -281,42 +281,42 @@
     }
   ],
   "reviews": {
-    "h2": "How Sellers Make a Holiday Video",
-    "lead": "Four sellers start from a product link, put an avatar beside the item, and add the offer when it is final.",
+    "h2": "How Sellers Prepare Black Friday Ads",
+    "lead": "Four ways sellers prepare a product scene and add the Black Friday offer once it is final.",
     "items": [
       {
         "example": true,
         "who": "Gift seller",
-        "t": "Let an Avatar Pack the Box",
-        "d": "They paste the gift-box page and pick an avatar who stands beside the pump bottle. They export a tall holiday file and type the code only when the number is final.",
+        "t": "Show the Gift Box for Black Friday",
+        "d": "They show the boxed gift product, then add their confirmed Black Friday code to the finished ad.",
         "img": "n:guide:img2-occ-black-friday-review1-r1"
       },
       {
         "example": true,
         "who": "Shoe seller",
-        "t": "Try Two Holiday Openings",
-        "d": "They keep the knit slip-on on a tidy floor and test two opening lines with the same avatar. They keep the line they would actually run.",
+        "t": "Test Two Black Friday Openings",
+        "d": "They keep the same product shot and compare two Black Friday opening lines before publishing.",
         "img": "n:guide:img2-occ-black-friday-review2-r1"
       },
       {
         "example": true,
         "who": "Lunch seller",
-        "t": "Swap the Voice for Monday",
-        "d": "They keep the lunch-bag scene and change the language of the voice for the next sale day. The bag in the box stays the same.",
+        "t": "Reuse the Scene for Cyber Monday",
+        "d": "They keep the lunch bag scene and replace the Black Friday offer with a confirmed Cyber Monday line.",
         "img": "n:guide:img2-occ-black-friday-review3-r1"
       },
       {
         "example": true,
         "who": "Pet seller",
-        "t": "Keep the Dog, Change the Line",
-        "d": "They keep the calm dog on the sofa and try two openings of the holiday line. They export the one they would post.",
+        "t": "Keep the Pet Product in View",
+        "d": "They review the pet product shot, then add the Black Friday offer after the final price is set.",
         "img": "n:guide:img2-occ-black-friday-review4-r1"
       }
     ]
   },
   "trust": {
-    "h2": "Yours Until the Offer Goes Public",
-    "lead": "Six things already true of the file before anyone else sees the offer.",
+    "h2": "Yours Until the Black Friday Offer Goes Public",
+    "lead": "Review the product, price, and offer before you publish the Black Friday file.",
     "items": [
       {
         "t": "You Enter the Offer",
@@ -344,7 +344,7 @@
       }
     ]
   },
-  "cta_title": "Export the Holiday Video",
+  "cta_title": "Build Your Black Friday Ad",
   "blockOrder": [
     "hero",
     "benefits",

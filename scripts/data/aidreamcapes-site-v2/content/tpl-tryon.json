@@ -1,30 +1,30 @@
 {
   "id": "tpl-tryon",
-  "title": "Clothing Video Templates for Brands | AIVideosUGC",
-  "description": "Make styled clothing video ads for streetwear, dressier labels, and everyday wear in minutes. Upload a garment photo and skip the model booking.",
-  "h1": "Clothing Video Templates for Fashion Brands",
-  "eyebrow": "Clothing Videos You Can Post",
-  "lead": "Recreate styled clothing ads for streetwear, dressier labels, and everyday wear, in minutes. Upload one garment photo and skip the model booking.",
+  "title": "AI Virtual Try-On Photos for Clothing | AIVideosUGC",
+  "description": "Turn a flat-lay or hanger photo into an on-model clothing image. Show fit, color, and fabric in virtual try-on photos for product listings and ads.",
+  "h1": "AI Virtual Try-On Photos for Clothing",
+  "eyebrow": "Clothing on a Model From One Photo",
+  "lead": "Upload a photo of the garment you sell and show it on an AI model. Check the fit, color, and details before using the image in your store.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "How to Make a Clothing Video in 3 Simple Steps",
-  "steps_lead": "You leave with a clothing video the shop can post. A flat photo of the garment is enough to start.",
+  "steps_h2": "How to Make Virtual Try-On Photos in 3 Simple Steps",
+  "steps_lead": "Upload your garment, choose the model and scene, then download an on-model image for your listing.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "Upload a flat photo of the garment, or paste its product page. That piece is the one in the ad."
+      "d": "Upload a clear flat-lay or hanger photo that shows the full garment, including the collar and hem."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Pick an AI avatar and a tone. Let a draft write the opening line, then change any word."
+      "d": "Choose the model and scene. Describe the pose while keeping the garment color and details true to your photo."
     },
     {
       "t": "Download and Post",
-      "d": "Download the on-model clip with a spoken line and on-screen words. The shape fits the channel you sell on."
+      "d": "Download the on-model image and compare its fit, print, and fastenings with the garment you sell."
     }
   ],
   "maker": {
@@ -46,36 +46,36 @@
   },
   "faq": [
     {
-      "q": "What do these clothing ad templates include?",
-      "a": "You get the garment on an AI avatar, a spoken line, and a file you can approve. A flat-lay photo is enough to start, with no model booking."
+      "q": "What does virtual try-on make for my clothing store?",
+      "a": "It places your garment on an AI model in a still image. A clear flat-lay or hanger photo is enough to start."
     },
     {
-      "q": "How does a clothing template become an ad?",
-      "a": "Upload the garment photo and say who it is for, such as someone buying a lighter layer. The draft comes back as an on-model file you can post."
+      "q": "How do I make an on-model clothing photo?",
+      "a": "Upload a garment image, choose a model and scene, then review the fit and details before downloading."
     },
     {
-      "q": "Which kinds of clothing can I start with?",
-      "a": "Start with streetwear, everyday apparel, or a dressier piece. Activewear and occasion clothes fit when a person can wear them. A folded stack is a weak source photo."
+      "q": "Which garments work for virtual try-on?",
+      "a": "Jackets, dresses, trousers, knitwear, and other wearable pieces work best when the whole garment is visible."
     },
     {
-      "q": "Can I make several ads for one collection?",
-      "a": "Yes. The same garment can run once for a commute and again for a wet weekend, using the photo you already have. A second language can be its own file."
+      "q": "Can I make several try-on images for one garment?",
+      "a": "Yes. Use the same garment photo for another pose or scene, then check each image against the real piece."
     },
     {
-      "q": "Which shops are these clothing templates built for?",
-      "a": "A shop that sells its own clothes and restocks through the month. The owner can run it, or someone on the marketing desk can. An agency can repeat the path for each clothing client."
+      "q": "Which clothing shops can use try-on photos?",
+      "a": "Independent shops, clothing labels, and agencies can make on-model images for listings and social ads."
     },
     {
-      "q": "Can I use them if I have never edited a video?",
-      "a": "Yes. You supply the garment and say what the ad should show. The template handles the avatar, the opening, and the cut. Earlier video experience is not required."
+      "q": "Can I use virtual try-on without editing experience?",
+      "a": "Yes. Upload the garment, choose a model, and download the image after checking the result."
     },
     {
-      "q": "After I upload a garment, when is the ad ready to post?",
-      "a": "You can download the on-model clip as soon as it is ready, in the length your shop already uses."
+      "q": "When can I download my try-on image?",
+      "a": "Download it after generation finishes and you have checked the garment color, shape, and details."
     },
     {
-      "q": "What does a clothing ad cost, and can I post the square crop?",
-      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still of the same garment spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. Notes on the square crop are on [AI Instagram ads](page:plat-instagram)."
+      "q": "What does a virtual try-on photo cost?",
+      "a": "One generated image costs 24 credits. You see the cost before starting. The [AI Instagram ads](page:plat-instagram) page covers square placements."
     }
   ],
   "visual": {
@@ -109,8 +109,8 @@
       "sourceTitle": "Your Product"
     },
     "picker": {
-      "title": "Pick a Clothing Video to Post",
-      "lead": "Each card is a clothing video you can post. Upload the olive bomber, then check the collar, hem, and color against the piece.",
+      "title": "Browse Clothing Video Scenes",
+      "lead": "Upload above to make an on-model photo. Open these video scenes if you also want a clothing clip.",
       "chips": [
         {
           "id": "accessories",
@@ -532,53 +532,53 @@
     "after": null,
     "titles": {
       "m2": {
-        "h2": "How to Make a Clothing Video in 3 Simple Steps"
+        "h2": "How to Make Virtual Try-On Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Clothing Video Scenes You Can Open",
-        "lead": "Each card is a tall 9:16 clothing video. Upload the garment, then check the collar, hem, and color."
+        "h2": "Browse Clothing Video Scenes",
+        "lead": "Upload above for a try-on image. These cards show video scenes you can make separately."
       },
       "faq": {
-        "h2": "Questions About Clothing Video Templates"
+        "h2": "Questions About Virtual Try-On Photos"
       }
     }
   },
   "reviews": {
-    "h2": "How Clothing Shops Post a Video",
-    "lead": "Four ways a clothing shop turns one garment photo into a video it can post, and the model booking each one skips.",
+    "h2": "How Clothing Shops Use Try-On Photos",
+    "lead": "Four ways clothing sellers make on-model images from garment photos and review each result before posting.",
     "items": [
       {
         "example": true,
         "who": "Outerwear shop",
-        "t": "Post the Bomber Video",
-        "d": "They turn a flat photo of the olive bomber into a clothing video and put it on the product page. No model is booked for that jacket.",
+        "t": "Show the Bomber on a Model",
+        "d": "They turn a flat photo of the bomber into an on-model still for the product page and check its hem and pockets.",
         "img": "n:guide:img2-tpl-tryon-review1-r1"
       },
       {
         "example": true,
         "who": "Streetwear label",
-        "t": "Show a Commute Outfit",
-        "d": "They use the same path for a jacket a buyer would wear on a commute. The video posts without a fitting day.",
+        "t": "Show an Everyday Layer",
+        "d": "They place the jacket on a model in one standing scene and compare the color with the garment on the rail.",
         "img": "n:guide:img2-tpl-tryon-review2-r1"
       },
       {
         "example": true,
         "who": "Dress boutique",
-        "t": "Post a Dressier Look",
-        "d": "They pick one standing scene for a dressier piece and check the neckline against the garment on the rail. The file goes out as the ad.",
+        "t": "Check the Dress Neckline",
+        "d": "They choose a simple pose for the dress and check its neckline and print against the real garment.",
         "img": "n:guide:img2-tpl-tryon-review3-r1"
       },
       {
         "example": true,
         "who": "Tailoring shop",
-        "t": "Show the Trouser Video",
-        "d": "They start from a flat photo of a tailored trouser and post a clip that shows where the hem meets the shoe. The booking for that pair stays off the week.",
+        "t": "Show the Trouser Fit",
+        "d": "They make an on-model trouser photo, then check the waist and hem before adding it to the listing.",
         "img": "n:guide:img2-tpl-tryon-review4-r1"
       }
     ]
   },
   "related_h2": "More Fashion Templates and Listing Photos",
-  "related_lead": "More clothing templates, model photos, and listing shots are ready when you need the next file.",
+  "related_lead": "Find clothing templates, model photos, and listing shots for the next item in your collection.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -605,8 +605,8 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Post a Clothing Video Today",
-  "cta_lead": "Upload one flat garment photo and get a clothing video you can post. The credit cost is on screen first.",
+  "cta_title": "Make a Virtual Try-On Photo",
+  "cta_lead": "Upload one flat garment photo and make an on-model image. Check the credit cost and the garment details before posting.",
   "blockOrder": [
     "hero",
     "picker",
@@ -616,33 +616,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the ad",
-      "h2": "What a Clothing Ad Can Include",
-      "lead": "You get a try-on you can publish, with the script and the voice already in the file.",
+      "eyebrow": "With the Photo",
+      "h2": "What Your Try-On Photo Can Show",
+      "lead": "Show the garment on a model in a scene that fits your store, then check every detail before you post.",
       "items": [
         {
           "t": "Start From a Product Link",
-          "d": "Paste the product page so the ad uses that garment. A hanger photo or a flat lay can still be the source."
+          "d": "Paste the product page or upload a flat-lay image so the try-on uses the right garment."
         },
         {
           "t": "An AI Avatar Wears It",
-          "d": "The garment goes on an AI avatar you pick. Swap the face when the shop's usual customer looks different."
+          "d": "Choose an AI model for the garment, then review how the clothing fits in the finished image."
         },
         {
-          "t": "A Spoken Line Buyers Understand",
-          "d": "Buyers hear a spoken line in their own language, built from the garment photo you already have."
+          "t": "A Clear View of the Fabric",
+          "d": "Keep fabric color and texture visible in the on-model photo, then compare them with the real piece."
         },
         {
-          "t": "A Script for the Opening Line",
-          "d": "One sentence about the piece gets you a drafted opening, and you can rewrite any word."
+          "t": "A Pose That Shows the Fit",
+          "d": "Choose a standing pose that shows the collar, waist, and hem without hiding the clothing."
         },
         {
-          "t": "Edit Before You Post",
-          "d": "Finish the trim in the editor before you export, and the download has no watermark."
+          "t": "Review Before You Post",
+          "d": "Check the neckline, print, and fastenings before you download the watermark-free image."
         },
         {
-          "t": "Several Cuts, Then Publish",
-          "d": "One photo can become another pose or another language, then go out on TikTok, Instagram, or Facebook."
+          "t": "Another Image for the Collection",
+          "d": "Make another on-model view of the same garment for a different listing or social placement."
         }
       ]
     }

@@ -1,10 +1,10 @@
 {
   "id": "blog-ai-video-review-checklist",
-  "title": "AI Video Ads Generator for Shops | AIVideosUGC",
-  "description": "AI video ads generator for a backpack shop. Make the clip from one photo, check the pocket and the words, then download the file and post it.",
-  "h1": "AI Video Ads Generator for a Backpack You Can Post",
-  "eyebrow": "Check the Backpack Before You Post",
-  "lead": "Get a video ad with a script, a presenter, a voice, and an edit. Begin with the product page. A short note works too. No creator, no shoot, and no editing app.",
+  "title": "AI Video Ads Generator: Publish Checklist | AIVideosUGC",
+  "description": "Use this checklist before publishing AI product photos or video ads. Compare the item, verify claims and prices, review rights, and check each platform’s rules.",
+  "h1": "AI Video Ads Generator: A Pre-Publish Checklist",
+  "eyebrow": "Check Every File Before You Post",
+  "lead": "An AI Video Ads Generator can make a product clip quickly. Before you publish a photo or video ad, compare the product, claims, rights, and labels with the real item.",
   "secondary_keywords": [
     "AI video review checklist",
     "check AI product images",
@@ -16,17 +16,17 @@
   "summary": "Build the ad, match it to the product you ship, type the price yourself, and mark the file the way each site asks.",
   "sections": [
     {
-      "h2": "A Finished Ad You Still Have to Check",
+      "h2": "Your Pre-Publish Checklist",
       "paras": [
-        "Check the product, the clip, the price, the rights, and the labels before you post. Hold the real item next to the screen while you do it."
+        "Check the product, video, price, image rights, and platform labels before posting. Keep the real item or source photo beside your screen."
       ],
       "img": "n:guide:b2f12-blog-review-rules-r1",
       "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone."
     },
     {
-      "h2": "What This Video Ads Generator Does",
+      "h2": "What the Ad Tool Makes",
       "paras": [
-        "It builds a short ad for a product you already list. You can trim the clip before it goes on the store or into an ad account.",
+        "An AI Video Ads Generator makes a short ad from a product photo or listing. You still review every frame and claim before publishing.",
         "A generated photo or video is a new picture made from your upload, not a copy of the source. A letter can change, a part can move, or a color can shift. Use the same check on a listing photo, a social post, and a paid ad."
       ],
       "img": "n:guide:fx04-blog-review-why-r2",
@@ -83,9 +83,9 @@
       ]
     },
     {
-      "h2": "Reasons to Generate the Video Ad Here",
+      "h2": "Why Review Every Generated Ad",
       "paras": [
-        "The script starts from your product page, or from the lines you type. If the product has one pocket, the line does not say two.",
+        "A script can start from your product page, but only you can confirm that its claims match the item you ship.",
         "The file comes out in a shape you pick before the job. Those shapes are listed on [pricing](page:pricing). 9:16 is a tall phone video. 1:1 is a square. 16:9 is a wide video. 4:3 and 3:4 are there too.",
         "From one photo you can ask for a calm try-on and a louder unboxing. Keep the version that fits the shop after you run the check."
       ]
@@ -141,9 +141,9 @@
       ]
     },
     {
-      "h2": "Check the Product, Then Post the Ad",
+      "h2": "The Final Check Before Publishing",
       "paras": [
-        "Build the ad from a listing address, or from a short note you type. Then match the product, and type the price yourself.",
+        "Match the photo or clip to the product you ship. Verify the price and claims, confirm your rights, then follow each platform’s labeling rules.",
         "Send it to TikTok or Meta, or download it, only after those checks. If a shopper could feel misled, do not post that file."
       ]
     }
@@ -158,16 +158,16 @@
   ],
   "faq": [
     {
-      "q": "What does a video ads generator make?",
-      "a": "It builds the script, the presenter, the voice, and the cut. You start with a product or a short note. You do not film, and you do not open a separate editing app."
+      "q": "What should I check before publishing an AI ad?",
+      "a": "Match the product, script, price, rights, and platform labels against the real item before you post."
     },
     {
-      "q": "How do I create a video ad with AI?",
-      "a": "Add the product page, or write a short note. Read the draft out loud. Save the file only after the checks are complete."
+      "q": "How do I review an AI-generated product video?",
+      "a": "Watch every frame with sound and captions. Check the product details, hands, claims, and any price you added."
     },
     {
-      "q": "Which video tool is the right one for ads?",
-      "a": "Use this when each product needs its own ad, in the shapes paid placements expect. A single filmed founder video is a different job."
+      "q": "Should I review a still product image too?",
+      "a": "Yes. Compare its color, shape, parts, labels, and scale with the item customers will receive."
     },
     {
       "q": "Do I need a paid plan before the first file?",
@@ -214,8 +214,8 @@
       "a": "Trim that moment in the editor if it is brief. If the error runs through the clip, make a new version instead of posting it."
     }
   ],
-  "cta_title": "Make the Next Ad, Then Check It",
-  "cta_lead": "Add the product page, or add a short note. Then compare the result with the real product and add your own price before it goes live.",
+  "cta_title": "Check Your Next Ad Before Publishing",
+  "cta_lead": "Make the product photo or video, then compare it with the real item and verify every price and claim before it goes live.",
   "relatedLinks": [
     "product-videos",
     "video-ads",

@@ -1,10 +1,10 @@
 {
   "id": "ind-electronics",
-  "title": "App Install UGC Ads for Tech Shops | AIVideosUGC",
-  "description": "Make UGC ads for app installs and signups from a tech brand. Upload an app link or a screenshot, pick an avatar, and post a product walkthrough.",
-  "h1": "UGC Ads That Drive App Installs",
+  "title": "AI UGC Ads for Electronics Products | AIVideosUGC",
+  "description": "Turn a photo or product link into AI UGC ads for speakers, chargers, and other electronics. Show an unboxing or clear demo without booking a shoot.",
+  "h1": "AI UGC Ads for Electronics Products",
   "eyebrow": "Speaker Ads Without a Shoot",
-  "lead": "Make an AI UGC video ad for the app or gadget you sell. Skip the creator hunt, the outreach, and the wait for a shoot.",
+  "lead": "Make AI product videos for electronics from a gadget photo or product link. Show the device in use without waiting for a creator or camera day.",
   "card": "Unboxings, setups, and daily-use scenes from one gadget photo.",
   "secondary_keywords": [
     "AI unboxing video for gadgets",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Do I need a shoot before I can make an install ad?",
-      "a": "No. Upload one screenshot or photo, or paste a product link, and download the ad. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. A failed job returns its credits."
+      "q": "Do I need a shoot to make an electronics ad?",
+      "a": "No. Upload a gadget photo or product link, choose one action, and download the clip. You see the credit cost first."
     },
     {
       "q": "Do I need editing skills to make the ad?",
-      "a": "No. A spoken voice and captions come with the clip, and you can fix them in the editor before you export."
+      "a": "No. Add a spoken line and captions, then edit them before you export the gadget clip."
     },
     {
-      "q": "Can I make several ads from one screenshot?",
-      "a": "Yes. One screenshot can become an unboxing, a button press, and a desk scene."
+      "q": "Can I make several ads from one gadget photo?",
+      "a": "Yes. Try an unboxing, a setup, and a desk demo from the same product image."
     },
     {
-      "q": "Which apps and gadgets can I turn into an ad?",
-      "a": "Apps, speakers, cables, docks, and other products with a clear screen or shape. Use that product's own photo, and name one action."
+      "q": "Which electronics can I show?",
+      "a": "Speakers, chargers, headphones, cables, and small appliances work when your source photo clearly shows the item."
     },
     {
       "q": "Can I make the ad without hiring a creator?",
-      "a": "Yes. Upload one photo or paste a link, pick an AI avatar, and pay the credits shown before the job. Post the clip as an ad."
+      "a": "Yes. Choose an AI avatar and use the product photo or listing link as your starting point."
     },
     {
-      "q": "Will the clip invent my specs?",
-      "a": "No. Type the battery life, the wattage, or the feature list yourself in the editor or on the listing, then check them against the real product."
+      "q": "Will the ad know my device specifications?",
+      "a": "Type battery life, wattage, and compatibility yourself. Check every figure against the product before publishing."
     },
     {
-      "q": "Can I run the clip as a paid ad?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Do not overstate how the product performs."
+      "q": "Can I use the clip as a paid electronics ad?",
+      "a": "Yes. The watermark-free download can run in paid ads. Keep performance claims true to the device you ship."
     },
     {
       "q": "What video shape should I pick?",
       "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Use 4:3 or 3:4 when the page asks for them."
     },
     {
-      "q": "Can the ad include a voice and captions?",
-      "a": "Yes. Pick an AI avatar and the clip can include a spoken line and captions. Launch it on TikTok or Meta, or download it and post it yourself."
+      "q": "Can the gadget ad include a voice and captions?",
+      "a": "Yes. Add a spoken line and captions, then review both before you download the clip."
     }
   ],
   "templates_lead": "Pick an unboxing or a desk demo that keeps the product easy to recognize.",
-  "cta_lead": "No creator hunt and no shoot. Start from a product link or one clear photo.",
-  "steps_h2": "How to Make an App Install Ad in 3 Simple Steps",
-  "steps_lead": "You get an install ad you can post, with a voice and a face already chosen.",
+  "cta_lead": "Start an electronics product demo from one clear photo or listing link. Check the finished clip against the gadget you sell.",
+  "steps_h2": "How to Make Electronics UGC Ads in 3 Simple Steps",
+  "steps_lead": "Upload your gadget, choose an AI avatar, and download a demo with the product easy to recognize.",
   "steps": [
     {
       "t": "Add the Gadget Photo or Link",
-      "d": "Drop in a link, a screenshot, or a short description. That product is the one the demo is about."
+      "d": "Upload a clear photo of the gadget or paste its product link. Show the controls and ports you want in the demo."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Pick an AI avatar your buyers can see themselves in. You can change that face before the clip is made."
+      "d": "Choose an AI avatar and one product action, such as pressing a control or opening the box."
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "You get a voice and captions, then download the clip. Post it on TikTok, Instagram, or Facebook."
+      "d": "Add a spoken line and captions, then download the electronics clip for your store or social feed."
     }
   ],
   "visual": {
@@ -101,11 +101,11 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions Before You Post a Speaker Ad"
+        "h2": "Questions About Electronics UGC Ads"
       }
     }
   },
-  "cta_title": "Run an App Install Ad This Week",
+  "cta_title": "Make an Electronics Ad From One Photo",
   "relatedLinks": [
     {
       "id": "image-to-video",
@@ -133,58 +133,58 @@
     }
   ],
   "reasons": {
-    "h2": "Why Tech Sellers Choose These Ads",
-    "lead": "Use them when the creator calendar and the day rate get in the way of the next install ad.",
+    "h2": "Why Electronics Sellers Make UGC Ads",
+    "lead": "Show a real gadget feature without waiting for a creator booking or another shoot.",
     "items": [
       {
-        "t": "Ready in Minutes",
-        "d": "Skip the creator hunt. An app or gadget ad can be ready in minutes from a link or a screenshot. The credit cost is on screen before you start.",
+        "t": "Skip the Creator Hunt",
+        "d": "Start an unboxing or one-action demo from the product photo you already use. The credit cost appears before generation.",
         "img": "n:guide:fx31-ind-electronics-benefit-speaker"
       },
       {
-        "t": "Pay the Plan, Not a Day Rate",
-        "d": "The demo spends credits on your plan, so more of the budget can stay on reaching buyers instead of a creator invoice.",
+        "t": "Credits Instead of Day Rates",
+        "d": "Make a cable or speaker demo with the credits on your plan, without booking a presenter for each product.",
         "img": "n:guide:fx31-ind-electronics-benefit-cable"
       },
       {
-        "t": "You Set the Ad",
-        "d": "You pick the face, the setting, the tone, and the words. The ad matches the app or gadget you sell.",
+        "t": "You Choose the Feature",
+        "d": "Show the port, control, or setup step that matters. Write any technical claim yourself and check it against the product.",
         "img": "n:guide:fx31-ind-electronics-benefit-ports"
       }
     ]
   },
   "platforms": {
-    "h2": "Install Ads for the Channels You Use",
-    "lead": "One product can feed a phone ad and a product page. Match the shape to the place you post it.",
+    "h2": "Electronics Ads for the Channels You Use",
+    "lead": "Turn one gadget photo into a vertical demo and a listing image. Match each file to the place you sell.",
     "items": [
       {
-        "t": "TikTok Install Ads",
-        "d": "A tall phone video, unboxed or with one clear action, for an app or gadget ad in the TikTok feed.",
+        "t": "TikTok Gadget Demos",
+        "d": "Use a tall unboxing or button-press clip that keeps the device in full view.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "Instagram Setup Clips",
-        "d": "A square still, or a tall setup video, for the grid and for Stories.",
+        "d": "Use a square gadget still or a tall setup clip for your grid and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed image or a short clip, with room to add the feature line after you download.",
+        "d": "Add a verified product feature to a feed image or short clip after download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Demos",
-        "d": "A short vertical demo that opens on the one action you want people to notice.",
+        "d": "Open a short vertical clip with the electronics feature you want buyers to notice.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Listing Photos",
-        "d": "A clean photo for Amazon, with extra views of the ports or the screen in the gallery.",
+        "d": "Add clean gallery photos that show the device and its photographed ports.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Product Photos",
-        "d": "Matching images for the product page and the collection on your own store.",
+        "t": "Shopify Gadget Photos",
+        "d": "Keep product and collection images consistent across your electronics store.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -238,7 +238,7 @@
   "more_sections": [
     {
       "eyebrow": "On the finished clip",
-      "h2": "What You Can Add Before You Post",
+      "h2": "What Your Gadget Ad Can Include",
       "lead": "A spoken line can ride with the clip, so the demo is ready to post.",
       "items": [
         {
@@ -247,15 +247,15 @@
         },
         {
           "t": "An Avatar Holds the Product",
-          "d": "An AI avatar can sit at the desk and hold the product. Choose a face that fits who downloads this kind of app."
+          "d": "An AI avatar can hold your gadget in a simple setting. Choose someone who suits the product you sell."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "Captions can spell the product name on the screen."
+          "d": "Captions spell out the product name so shoppers catch it in the feed."
         },
         {
           "t": "A Script for One Action",
-          "d": "You get a short script about one action, and you can change a word in the editor."
+          "d": "Write one verified feature, such as a button press or unboxing, then edit the script before posting."
         },
         {
           "t": "Edit Before You Export",

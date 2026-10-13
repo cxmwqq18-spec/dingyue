@@ -1,10 +1,10 @@
 {
   "id": "tpl-angle",
-  "title": "Beauty Video Templates for Products | AIVideosUGC",
-  "description": "Browse beauty video templates, drop in the product you sell, and download a clip in minutes. The frame and the voice are already set, so you can post it.",
-  "h1": "Beauty Video Templates for Your Product",
-  "eyebrow": "Templates You Can Post",
-  "lead": "Browse beauty templates and rebuild any of them with the product you sell, in minutes, without writing a prompt.",
+  "title": "Multi-Angle Product Packshot Photos | AIVideosUGC",
+  "description": "Make clean packshot photos of the same product from the front, side, back, and top. Keep a consistent white backdrop for listings, galleries, and ads.",
+  "h1": "Multi-Angle Product Packshot Photos",
+  "eyebrow": "Product Photos From Every Side",
+  "lead": "Show the product you sell from the front, side, back, and top on a clean white backdrop. Upload the side you want to show so its details stay true.",
   "secondary_keywords": [
     "multi-angle product photos",
     "product photos from different angles",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Side Photos",
-      "d": "Upload a clear photo of the product you sell. If the listing needs another side, upload that side next."
+      "d": "Upload a clear photo of each product side you need. Keep the whole item in frame and the lighting even."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name the side, or describe the scene you want around the product."
+      "d": "Name the view and request the same plain backdrop. Use the photo of that side when buttons or ports must stay accurate."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip and post it where you already sell. Add a spoken line or captions first if the ad needs them."
+      "d": "Download each square packshot and add it to your listing or gallery. Check every view against the product you ship."
     }
   ],
   "maker": {
@@ -45,57 +45,57 @@
   },
   "faq": [
     {
-      "q": "What is a beauty video template?",
-      "a": "A beauty video template is a ready-made ad with the frame, the hook, and the voice already in place. You add the product you sell and download a clip in minutes. You skip filming and a blank file."
+      "q": "What is a multi-angle product packshot?",
+      "a": "It is a clean product photo from one side. Make matching front, side, back, and top views for your gallery."
     },
     {
-      "q": "How does a beauty video template work?",
-      "a": "The template already has the structure, the line, and the voice. You upload a product photo, check the words, and download a clip that is ready to post."
+      "q": "How do I make a matching set of product views?",
+      "a": "Upload each side you have photographed, name the view, and use the same white backdrop for every square photo."
     },
     {
-      "q": "Why use a template instead of filming a creator?",
-      "a": "A template is faster and costs less than booking a creator. You can post today, try another version, and change the line without waiting on a shoot."
+      "q": "Why use these photos instead of another shoot?",
+      "a": "You can build consistent listing views from photos you already have without resetting the studio for each side."
     },
     {
-      "q": "Who are these beauty templates for?",
-      "a": "They are for shops, marketers, and agencies that need beauty ads. A new product or a new ad can start from one photo."
+      "q": "Who needs multi-angle product photos?",
+      "a": "Shops and listing teams use them when buyers need to inspect the shape, controls, openings, or base before ordering."
     },
     {
-      "q": "Can I use a beauty template if I have never edited video?",
-      "a": "Yes. Upload a clear product photo and download a clip in a few steps. You do not need editing practice."
+      "q": "Can I make packshots without editing experience?",
+      "a": "Yes. Upload a clear product photo, choose the view, and download the square image after you check its details."
     },
     {
-      "q": "Which products fit a beauty video template?",
-      "a": "They fit beauty, skincare, hair, and most other products a shop sells. Open another card when you want a different kind of ad."
+      "q": "Which products work for multi-angle packshots?",
+      "a": "Mugs, bags, lamps, gadgets, and other physical goods benefit when shoppers need to see more than the front."
     },
     {
-      "q": "Can I bring my own photos and clips?",
-      "a": "Yes. Upload a product photo, a logo you own, or a short clip you have the rights to use. The ad should still look like your product."
+      "q": "Can I use photos I already took?",
+      "a": "Yes. Use your own clear photos of each side. Photograph any side that contains a detail you need to show accurately."
     },
     {
-      "q": "Where can I post the clip?",
-      "a": "The clip can be tall, square, or wide, so it fits TikTok, Instagram, Facebook, and YouTube. Download it and post it on the channel you already use."
+      "q": "Where can I use the finished photos?",
+      "a": "Use the square views in product galleries, marketplaces, social posts, and ads. Check each channel’s current image rules."
     },
     {
-      "q": "Are beauty video templates free to use?",
-      "a": "No. Each photo spends 24 credits, and a video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "How many credits does a packshot use?",
+      "a": "Each product photo costs 24 credits. You see the cost before generating a view, and a failed job returns its credits."
     },
     {
-      "q": "Can I use the clip in paid ads?",
-      "a": "Yes. The download has no watermark. You can run it in paid ads, on your store, and in work you deliver for a client."
+      "q": "Can I use the product photos in paid ads?",
+      "a": "Yes. The download has no watermark. Review each view against the item you sell before running an ad."
     },
     {
-      "q": "Why start from a template instead of a blank ad?",
-      "a": "The size, the frame, and the voice are already chosen. You add your product and your line, then post. You do not have to build the ad from nothing."
+      "q": "Why keep the same background for every side?",
+      "a": "A shared backdrop keeps the gallery consistent, so buyers can focus on the product shape and its details."
     },
     {
-      "q": "What if my photo is missing a side I need to show?",
-      "a": "Upload a photo of that side. The template cannot safely invent a button, a port, or a detail that was not in the picture."
+      "q": "What if I have no photo of the back or top?",
+      "a": "Photograph that side and upload it. Do not present an invented port, button, or feature as a real product detail."
     }
   ],
   "visual": {
     "strip": [
-      "n:guide:img2-tpl-angle-首屏-1-r1",
+      "n:guide:fix2-tpl-angle-hero1-r1",
       "n:gen2:tpl-angle-c3",
       "n:guide:q7-angle-strip-2",
       "n:gen2:tpl-angle-c2",
@@ -553,8 +553,8 @@
       }
     }
   },
-  "steps_h2": "How to Make a Beauty Video in 3 Simple Steps",
-  "steps_lead": "A beauty template already holds the frame and the voice. You add the product you sell, then download.",
+  "steps_h2": "How to Make Multi-Angle Product Photos in 3 Simple Steps",
+  "steps_lead": "Upload each side, keep one clean backdrop, and download a consistent set of product photos.",
   "blockOrder": [
     "hero",
     "picker",
@@ -563,41 +563,41 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Fill a Beauty Template",
-    "lead": "Four ways a shop drops a beauty product into a template that already has the frame and the voice, and the shoot each one skips.",
+    "h2": "How Shops Show Every Product Side",
+    "lead": "See how sellers photograph the sides shoppers need, then keep one clean backdrop across the gallery.",
     "items": [
       {
         "example": true,
-        "who": "Serum shop",
-        "t": "Drop In the Bottle",
-        "d": "They drop a serum photo into a beauty template and download a clip with the frame already set. Nobody writes a timeline from a blank file.",
-        "img": "n:guide:img2-tpl-angle-review1-r1"
+        "who": "Ceramics seller",
+        "t": "Show the Mug Handle",
+        "d": "Photograph the mug from the front and side, then compare the handle and glaze in both views.",
+        "img": "n:guide:fix2-tpl-angle-review1-r1"
       },
       {
         "example": true,
-        "who": "Makeup seller",
-        "t": "Fill a Lipstick Clip",
-        "d": "They swap their lipstick into a template that already shows one close look. The voice is already on the clip when they download it.",
-        "img": "n:guide:img2-tpl-angle-review2-r1"
+        "who": "Backpack seller",
+        "t": "Show the Front and Side",
+        "d": "Turn the same backpack at the photo table so shoppers can inspect its pocket and depth.",
+        "img": "n:guide:fix2-tpl-angle-review2-r1"
       },
       {
         "example": true,
-        "who": "Hair care shop",
-        "t": "Use the Ready Frame",
-        "d": "They put a hair oil bottle into a template that already has the move and the voice. A creator afternoon does not get booked for that clip.",
-        "img": "n:guide:img2-tpl-angle-review3-r1"
+        "who": "Home goods seller",
+        "t": "Photograph the Lamp Base",
+        "d": "Capture the desk lamp from two sides on one pale backdrop. Check the base and shade in each photo.",
+        "img": "n:guide:fix2-tpl-angle-review3-r1"
       },
       {
         "example": true,
-        "who": "Compact seller",
-        "t": "Skip the Blank Timeline",
-        "d": "They drop a compact photo into the template and check the words before posting. The shape of the ad was already there.",
-        "img": "n:guide:img2-tpl-angle-review4-r1"
+        "who": "Kitchenware seller",
+        "t": "Include the Tumbler Base",
+        "d": "Rotate the same travel tumbler for its front, side, and base photos. Keep its finish consistent across the gallery.",
+        "img": "n:guide:fix2-tpl-angle-review4-r1"
       }
     ]
   },
-  "related_h2": "More Ways to Show the Product",
-  "related_lead": "Product photos, short clips, and listing images sit on the pages next to these templates.",
+  "related_h2": "More Ways to Show Your Product",
+  "related_lead": "Pair your multi-angle packshots with listing photos, product videos, and other gallery views.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -624,6 +624,6 @@
       "label": "Amazon Product Photos"
     }
   ],
-  "cta_title": "Make Your First Beauty Video",
-  "cta_lead": "Drop the product you sell into a beauty template and download the clip. The credit cost is on screen before you start."
+  "cta_title": "Make Your Next Product View",
+  "cta_lead": "Upload the product side you need and make a clean packshot on the same backdrop. Check its details before you post."
 }
