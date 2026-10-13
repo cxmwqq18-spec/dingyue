@@ -1,10 +1,10 @@
 {
   "id": "tpl-head",
-  "title": "Team Headshot Templates to Match | AIVideosUGC",
-  "description": "Find a headshot you like and match the whole team from photos you already have. Pick one backdrop, add each photo, and download the row in minutes.",
-  "h1": "See a Headshot, Match the Team, Post It",
-  "eyebrow": "One Backdrop for the Whole Team",
-  "lead": "Find a headshot you like and match the team to it from photos you already have. Pick the template, add each photo, and download the row in minutes.",
+  "title": "AI Professional Headshots for Teams | AIVideosUGC",
+  "description": "Create matching professional headshots from approved team photos. Choose one backdrop and crop, then download portraits for your About page and profiles.",
+  "h1": "AI Professional Headshots for Your Team",
+  "eyebrow": "One Look for Every Teammate",
+  "lead": "Give your team portraits a consistent, professional look. Upload approved photos, choose the backdrop and crop, and download headshots for your site.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,26 +14,26 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Upload a face-and-shoulders photo each person already approved. The same crop fits the rest of the row."
+      "d": "Add a clear, approved face-and-shoulders photo for each teammate."
     },
     {
       "t": "Pick One Background",
-      "d": "Pick one backdrop and one light for the whole row. A short line can sit beside each face."
+      "d": "Choose one professional backdrop, crop, and lighting direction for the team."
     },
     {
       "t": "Download and Post",
-      "d": "Download the squares for the about page. A short intro can use 1:1, 9:16, 16:9, 4:3, or 3:4."
+      "d": "Review each face, then download portraits for your team page and profiles."
     }
   ],
   "maker": {
     "options": [
       [
-        "Template",
-        "Team Headshots"
+        "Look",
+        "Professional team portrait"
       ],
       [
         "Size",
-        "Square photo (1:1)"
+        "Square headshot (1:1)"
       ],
       [
         "Upload",
@@ -45,51 +45,51 @@
   },
   "faq": [
     {
-      "q": "What is a team headshot template?",
-      "a": "It is a ready-made look with one backdrop, one crop, and one light. Add each approved photo and get a matching row in minutes, without a portrait shoot."
+      "q": "How do I make a professional team headshot?",
+      "a": "Upload an approved, clear face photo for each person. Choose a backdrop and crop, then review and download each portrait."
     },
     {
-      "q": "How does a team template work?",
-      "a": "You add each photo, set one backdrop, and save squares for the about page. A short intro can be drafted, and an AI actor can speak it beside the row."
+      "q": "Can I give the whole team a consistent look?",
+      "a": "Yes. Reuse the same background, lighting direction, and crop so the portraits sit together on your team page."
     },
     {
-      "q": "Why use this instead of hiring a photographer?",
-      "a": "It is faster and costs less than finding one date the whole staff can attend. A new hire joins the row when they send an approved photo."
+      "q": "Will the headshot still look like the person?",
+      "a": "Start from that person’s approved photo and check the result against it. Choose another version if the face looks off."
     },
     {
-      "q": "Who is a team template for?",
-      "a": "Shop owners and small teams that should look like one staff on the site. Anyone who updates the about page can run it."
+      "q": "Where can I use professional headshots?",
+      "a": "Use them on your About page, team directory, LinkedIn profile, speaker bio, resume, or proposal with each person’s permission."
     },
     {
-      "q": "Can a beginner make the set?",
-      "a": "Yes. Upload each approved photo and pick the look. You do not need an editing background."
+      "q": "Do I need a photographer or editing skills?",
+      "a": "No. Upload each photo and choose a professional style. You can make a consistent team row without coordinating a studio day."
     },
     {
-      "q": "Which teams does this fit?",
-      "a": "A shop, a clinic desk, and a software team all fit when the page should read as one staff. The trade you sell does not change the crop."
+      "q": "What kind of source photo works best?",
+      "a": "Use a clear, front-facing face-and-shoulders image with even light and no heavy obstruction."
     },
     {
-      "q": "Can I upload photos the team already approved?",
-      "a": "Yes. Upload a face photo each person agreed to, plus a logo on the intro if you want one. Faces come only from those approved photos."
+      "q": "Can I use photos my team already approved?",
+      "a": "Yes. Upload each person’s approved photo and use it only for the places they agreed to."
     },
     {
-      "q": "Which sites and sizes fit the intro?",
-      "a": "Yes. Squares stay on the site. The intro can go to LinkedIn at 1:1, a Story at 9:16, or an embed at 16:9."
+      "q": "Can I try different backgrounds and crops?",
+      "a": "Yes. Compare a few professional looks, then use the same direction across the team."
     },
     {
-      "q": "Do I need a paid plan to use a template?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
+      "q": "How much does a headshot cost?",
+      "a": "One image costs 24 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
     },
     {
-      "q": "Can I use the portraits in ads and client work?",
-      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad. The download has no watermark."
+      "q": "Can clients use the portraits I create?",
+      "a": "Yes, when each person agrees to that use. Review the finished files before adding them to a client site or deck."
     },
     {
-      "q": "Why start from a template instead of matching by hand?",
-      "a": "The look locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand."
+      "q": "How do I add a new teammate later?",
+      "a": "Upload their approved photo and reuse the team’s backdrop, lighting, and crop. Check the new portrait beside the existing row."
     }
   ],
-  "cta_lead": "Add an approved photo for each person. The credit cost shows before you run it.",
+  "cta_lead": "Start with a clear photo of each teammate. Review the portrait and credit cost before you download.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -543,11 +543,11 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions About Team Headshot Templates"
+        "h2": "Questions About Professional Team Headshots"
       },
       "m3": {
-        "h2": "Choose a Video Scene",
-        "lead": "Open a scene when you want a short video. For the staff photo, use the headshot upload above."
+        "h2": "Explore More Creative Scenes",
+        "lead": "Browse other visual scenes when you need more than a team portrait."
       },
       "m2": {
         "h2": "How to Make Team Headshots in 3 Simple Steps"
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
-  "steps_lead": "One backdrop holds the row, so the about page reads as one team.",
+  "steps_lead": "Upload each approved photo, choose a professional look, and save portraits ready for your team page.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -583,8 +583,8 @@
     }
   ],
   "reviews": {
-    "h2": "How Small Teams Use Matching Headshots",
-    "lead": "Each team starts from photos people already approved and puts one matching row on the page.",
+    "h2": "How Teams Use Matching Headshots",
+    "lead": "Use approved photos to give every teammate a consistent portrait on the page.",
     "items": [
       {
         "example": true,
@@ -616,9 +616,9 @@
       }
     ]
   },
-  "related_h2": "Photo Tools Beside the Team Row",
-  "related_lead": "A product photo, a new backdrop, and a worn view sit next to this row when the about page is not the whole job.",
-  "cta_title": "Match the Next Teammate",
+  "related_h2": "More Photo Tools for Your Business",
+  "related_lead": "Create product photos and backgrounds alongside the portraits on your About page.",
+  "cta_title": "Create Matching Team Headshots",
   "blockOrder": [
     "hero",
     "picker",
@@ -628,97 +628,97 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is a Team Headshot Template?",
+    "title": "What Is a Professional Team Headshot?",
     "paras": [
-      "A team headshot template gives a staff page one backdrop, one crop, and one light. Each portrait starts from a photo that person approved.",
-      "The portraits are ready for the site or a deck. Names stay in text beside the image, so a new job title does not need a new photo."
+      "A professional team headshot is a clear portrait made for a profile or staff page. Matching backgrounds and crops help the team look consistent.",
+      "Start with each person’s approved photo, review their likeness, and download a portrait for the places they agreed to use it."
     ]
   },
   "reasons": {
-    "h2": "Why a Template Beats Starting Blank",
-    "lead": "A new hire can be on the about page this week, without booking a portrait day.",
+    "h2": "Why Teams Create Professional Headshots This Way",
+    "lead": "Keep a consistent team page as people join, without arranging another photo day.",
     "items": [
       {
-        "t": "Faster Than Booking a Creator",
-        "d": "The look runs on photos the team already approved, so the page does not wait on a studio hold.",
+        "t": "Make Portraits Without a Studio Day",
+        "d": "Start from photos your team already approved and create portraits without gathering everyone for a shoot.",
         "icon": "Clock"
       },
       {
-        "t": "Credits Instead of a Shoot Fee",
-        "d": "Each portrait spends credits on the paid plan you already have. Money you do not pay a studio can stay on ads.",
+        "t": "Keep Photo Costs Predictable",
+        "d": "Each image uses 24 credits, so you can see the cost before making the next portrait.",
         "icon": "Coins"
       },
       {
-        "t": "More Than One Version to Test",
-        "d": "Make the row once, then a second intro line for another audience. Keep the version you want to publish.",
+        "t": "Compare Professional Looks",
+        "d": "Try a few backgrounds and crops, then choose the look that fits your team page.",
         "icon": "Layers"
       },
       {
-        "t": "Change the Line and Run It Again",
-        "d": "Change a role in the text, or rewrite the intro, and run it again. A new title is not a new booking.",
+        "t": "Refresh a Portrait When Needed",
+        "d": "Upload a newer approved photo when someone wants an updated portrait.",
         "icon": "PenLine"
       },
       {
-        "t": "No Hold on a Creator Calendar",
-        "d": "The look is ready when a new hire sends an approved photo. You are not waiting on a photographer.",
+        "t": "Add New Hires Sooner",
+        "d": "Add a teammate when they send a clear photo, without waiting for the next portrait day.",
         "icon": "Calendar"
       },
       {
-        "t": "The Next Hire Matches",
-        "d": "The new hire gets the same backdrop and crop, so you are not rebuilding the row for one person.",
+        "t": "Make the Whole Row Match",
+        "d": "Reuse one backdrop, crop, and lighting direction so the new portrait fits beside the rest.",
         "icon": "LayoutGrid"
       }
     ]
   },
   "more_sections": [
     {
-      "eyebrow": "For the Intro Beside the Row",
-      "h2": "Tools Around a Team Portrait",
-      "lead": "The intro can carry a voice, captions, and music, while the portraits stay photos of your teammates.",
+      "eyebrow": "For Every Team Portrait",
+      "h2": "Keep the Headshot Set Consistent",
+      "lead": "Use the same choices for each person, then review the whole row before publishing.",
       "items": [
         {
-          "t": "A Voice for the Intro",
-          "d": "A stock voice can speak the short intro. The square portraits stay photos."
+          "t": "Choose a Professional Backdrop",
+          "d": "Pick a background that works with your site and use it for every teammate."
         },
         {
-          "t": "Captions Beside the Row",
-          "d": "A name line can sit on the clip, and you can move it in the editor. Job titles stay in text beside the portrait."
+          "t": "Use One Crop Across the Team",
+          "d": "Frame each person at a similar height so the row feels consistent."
         },
         {
-          "t": "The Whole Team in One Pass",
-          "d": "Every approved photo can use the same backdrop and crop, so the row matches in one pass."
+          "t": "Start From Approved Photos",
+          "d": "Ask each person for a clear photo they agree to use on the team page."
         },
         {
-          "t": "Start From a Public Page",
-          "d": "Paste a public about-page link and the intro can start from the words already there."
+          "t": "Check Each Person’s Likeness",
+          "d": "Compare the result with the source photo before you publish it."
         },
         {
-          "t": "A Script for the Intro",
-          "d": "The tool can draft one spoken line about the team, and you can edit it."
+          "t": "Compare a Few Styles",
+          "d": "Try corporate, casual, or creative looks and choose one direction for the set."
         },
         {
-          "t": "An AI Actor Introduces the Team",
-          "d": "An AI actor can introduce the team while each portrait stays the person in the photo."
+          "t": "Keep Lighting Consistent",
+          "d": "Use the same light direction so the portraits belong together."
         },
         {
-          "t": "Music Under the Intro",
-          "d": "A track from the music library can sit under the intro. The portraits on the page stay stills."
+          "t": "Refresh an Outdated Photo",
+          "d": "Replace a portrait when someone sends a newer approved photo."
         },
         {
-          "t": "Set the Crop Once",
-          "d": "Set the crop, the light, and the backdrop once, then reuse them for the next person."
+          "t": "Keep Names in Page Text",
+          "d": "Place names and roles beside the photos so you can edit them without remaking an image."
         },
         {
-          "t": "The Intro in Another Language",
-          "d": "The spoken intro and its captions can switch language while the portraits stay."
+          "t": "Try a New Background",
+          "d": "See how a lighter or darker backdrop works before you commit to the full set."
         },
         {
-          "t": "Post the Intro",
-          "d": "The intro can go to LinkedIn, YouTube, Facebook, or Instagram. The squares stay for the site."
+          "t": "Download Each Portrait",
+          "d": "Save the chosen portraits for your site, directory, or proposal."
         },
         {
-          "t": "Send Photos From Your Shop",
-          "d": "Shop software you already use can send approved photos in when a staff page needs the same crop."
+          "t": "Add the Next Teammate",
+          "d": "Reuse the same look when a new hire joins the team."
         }
       ]
     }

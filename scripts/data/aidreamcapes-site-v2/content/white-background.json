@@ -50,7 +50,7 @@
     },
     {
       "q": "How do I put a product photo onto pure white?",
-      "a": "Upload a photo, choose the white field, and download the file. The product shape stays the one in your photo."
+      "a": "Upload your photo, choose pure white (RGB 255, 255, 255) to meet a marketplace's white-background rule for main images, then download. The product shape stays the one in your photo."
     },
     {
       "q": "Does a marketplace main image have to sit on white?",

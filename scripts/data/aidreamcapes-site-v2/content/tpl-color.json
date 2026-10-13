@@ -1,10 +1,10 @@
 {
   "id": "tpl-color",
-  "title": "Product Color Variation Templates | AIVideosUGC",
-  "description": "Pick a product color template and drop in a photo of each shade you sell. You get a matching set in minutes, without filming every color on camera.",
-  "h1": "Product Color Templates You Can Recreate",
-  "eyebrow": "Every Shade in One Scene",
-  "lead": "Pick a color template and drop in a photo of each shade you sell. You get a matching set in minutes, without writing a long brief first.",
+  "title": "Product Color Variation Photos | AIVideosUGC",
+  "description": "Show every color you sell with product photos. Upload your shade images, place each one in the same scene, and make a matching set for listings and ads.",
+  "h1": "Create Product Color Variation Photos",
+  "eyebrow": "Every Color, One Consistent Look",
+  "lead": "Create product color variations for the shades you sell without shooting a new scene for every color. Upload your shade photos and make a consistent still set for your store or ads.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -14,22 +14,22 @@
   "steps": [
     {
       "t": "Upload Your Shade Photos",
-      "d": "Use your own photos of each shade. They share one scene, and a missing shade is not invented."
+      "d": "Upload a clear photo of each color you sell so every image starts with the right product and shade."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Name which color is which, in plain words, so shoppers are not guessing."
+      "d": "Choose one scene and describe the surface, light, and crop you want across the color set."
     },
     {
       "t": "Download and Post",
-      "d": "Put each square in the gallery, or make a tall clip that names the new shade. A photo costs 24 credits."
+      "d": "Download the matching still images for your product gallery, marketplace listing, or ad. Each image costs 24 credits."
     }
   ],
   "maker": {
     "options": [
       [
         "Template",
-        "Color variants (each color)"
+        "Product color photos"
       ],
       [
         "Size",
@@ -37,55 +37,55 @@
       ],
       [
         "Output",
-        "One photo per color"
+        "One image per shade"
       ]
     ],
-    "cta": "Make my color set"
+    "cta": "Make my color photos"
   },
   "faq": [
     {
-      "q": "What does a color template give me?",
-      "a": "A ready-made color scene keeps the crop and lighting consistent while you add photos of the shades you sell."
+      "q": "What do product color variation photos give me?",
+      "a": "A matching set of still images, one for each color you sell. Keep the same crop, lighting, and scene so shoppers can compare shades."
     },
     {
-      "q": "How do I turn a shade template into a file I can post?",
-      "a": "Use one ready-made layout to show each shade with the same crop, lighting, and product scale, then export images for your store."
+      "q": "How do I make matching images for each shade?",
+      "a": "Upload your shade photos, choose a shared scene, and download a separate image for each color."
     },
     {
-      "q": "Why use a template instead of filming every color?",
-      "a": "You skip the wait for a creator and the cost of filming every color. The photos already exist, so you drop them into the template and the ad can go out."
+      "q": "Can I show every color without another photoshoot?",
+      "a": "Yes. Use the product photos you already have and place each sold shade in a consistent scene."
     },
     {
-      "q": "Who should use a shade template?",
-      "a": "Shop owners and small teams who have to show which color is which. In a small shop that person is usually the owner, not a crew on payroll."
+      "q": "Who can use a product color template?",
+      "a": "Sellers who offer one item in several colors and want a clear, consistent gallery for shoppers."
     },
     {
-      "q": "Can I make the shade set if I have never edited video?",
-      "a": "Yes. You choose the scene, and the photos you already took decide what is in frame. You do not need a timeline."
+      "q": "Do I need photo editing experience?",
+      "a": "No. Upload the product photos, describe the scene, and review each result before posting."
     },
     {
-      "q": "Which products fit a color template?",
-      "a": "Products people hesitate over because of the finish, such as cases, hardware, or bottles in more than one color. A software screenshot is the wrong file, because nothing in it is a finish you can hold."
+      "q": "Which products work well for color variations?",
+      "a": "Clothing, shoes, home goods, cases, and other products sold in distinct colors. Compare the generated shade with the product you ship."
     },
     {
-      "q": "Can I use my own shade photos, a clip I have, and the logo?",
-      "a": "Yes. A listing photo that already shows the logo is the right file, and you can add up to 7 reference photos of shades you sell. A short clip you already have can supply the motion."
+      "q": "Can I use my own product and shade photos?",
+      "a": "Yes. Upload your photos of the real colors you sell. Include a clear product view and check the shade in every generated image."
     },
     {
-      "q": "Which placements and frames can I use for the shade ad?",
-      "a": "TikTok, Reels, Facebook, YouTube, and LinkedIn all work. A story often wants 9:16. A grid wants 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner."
+      "q": "Where can I use these color variation images?",
+      "a": "Use matching stills in your store gallery, marketplace listings, social posts, or paid image ads. Choose the size that fits each placement."
     },
     {
-      "q": "Do I need a paid plan before I make the shade set?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before it starts. If a job fails, those credits come back."
+      "q": "How much does a color variation image cost?",
+      "a": "Each image costs 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you generate."
     },
     {
-      "q": "Can I run the shade ad as a paid campaign and for a client?",
-      "a": "Yes. Run the shade row as a paid ad and place the file on the product page, including work for a client. The download has no watermark."
+      "q": "Can I use the images in paid ads or client work?",
+      "a": "Yes. Download the still images for your own ads, product pages, or a client whose products you are authorized to show."
     },
     {
-      "q": "What is already set so I do not have to plan the camera move?",
-      "a": "The scene already sets the surface, the crop, and the moment the color name appears. You bring the offer. You do not design the camera move."
+      "q": "What stays consistent across the color set?",
+      "a": "Keep the surface, crop, lighting, and product scale alike. Check each shade against the real item before you publish."
     }
   ],
   "visual": {
@@ -105,7 +105,7 @@
       "options": [
         [
           "Template",
-          "Color variants (each color)"
+          "Product color photos"
         ],
         [
           "Size",
@@ -113,7 +113,7 @@
         ],
         [
           "Output",
-          "One photo per color"
+          "One image per shade"
         ]
       ]
     },
@@ -540,7 +540,7 @@
     "after": null,
     "titles": {
       "faq": {
-        "h2": "Questions Before You Post the Shades"
+        "h2": "Questions About Product Color Photos"
       },
       "m3": {
         "h2": "Pick a Template Category",
@@ -548,8 +548,8 @@
       }
     }
   },
-  "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
-  "steps_lead": "One shared scene makes the shades easy to tell apart. Shoppers compare color, not a spec table.",
+  "steps_h2": "How to Make Product Color Photos in 3 Simple Steps",
+  "steps_lead": "Use your real shade photos to build a consistent image set that helps shoppers compare colors at a glance.",
   "blockOrder": [
     "hero",
     "picker",
@@ -558,41 +558,41 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Sellers Compare Dispenser Shades",
-    "lead": "Four sellers put the white, gray, and sand dispensers they already sell into one scene.",
+    "h2": "How Sellers Show Every Shade",
+    "lead": "See how sellers use matching still images to show each dispenser color in the same setting.",
     "items": [
       {
         "example": true,
         "who": "Bath goods seller",
         "t": "Three Shades, One Counter",
-        "d": "They put the white, gray, and sand dispensers they sell on the same square counter and use that set in the product gallery. Shoppers can compare the shades, and they skip a shoot for each color.",
+        "d": "They place the white, gray, and sand dispensers in a consistent counter scene for the product gallery. Shoppers can compare shades without a separate shoot for each one.",
         "img": "n:guide:img2-tpl-color-review1-r1"
       },
       {
         "example": true,
         "who": "Home shop owner",
-        "t": "Name the New Shade",
-        "d": "They make a tall clip that names the new sand dispenser while the white and gray ones stay on the counter. They skip writing a prompt from a blank page.",
+        "t": "Show the New Sand Shade",
+        "d": "They make a still image of the sand dispenser beside the white and gray options. The matching crop keeps the new color easy to spot.",
         "img": "n:guide:img2-tpl-color-review2-r1"
       },
       {
         "example": true,
         "who": "Dispenser seller",
-        "t": "Actor Holds One Shade",
-        "d": "They pick an AI actor to hold the gray dispenser in a follow-up clip, using the photo they already took. They skip booking a model for that shade.",
+        "t": "Show the Gray Shade in Use",
+        "d": "They show the gray dispenser in a seller-style product photo, with the other shades behind it. The set uses the same lighting throughout.",
         "img": "n:guide:img2-tpl-color-review3-r1"
       },
       {
         "example": true,
         "who": "Small home brand",
         "t": "Post the Shade Row",
-        "d": "They run the square row of the three dispensers as a paid ad and also place it on the product page. They skip a creator for each finish.",
+        "d": "They use the matching dispenser images in a paid ad and on the product page, so shoppers see the same colors in both places.",
         "img": "n:guide:img2-tpl-color-review4-r1"
       }
     ]
   },
-  "related_h2": "Tools and Templates Around a Shade Set",
-  "related_lead": "Use these with the shade set: a product photo tool, a drop alert, clothing try-on, and the listing pages for Amazon and Shopify.",
+  "related_h2": "More Ways to Show Your Product Colors",
+  "related_lead": "Use product photos, try-on images, and marketplace guides to show the same item clearly across your store and ads.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -619,37 +619,37 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Put Every Shade in One Scene",
-  "cta_lead": "Show every shade in a polished product image set shoppers can compare, then post the images to your store or ads.",
+  "cta_title": "Make a Matching Image for Every Color",
+  "cta_lead": "Upload the shades you sell and create consistent product photos shoppers can compare in your listings and ads.",
   "more_sections": [
     {
-      "eyebrow": "Edit the Shade Before You Post",
-      "h2": "Finish the Shade Ad in the Editor",
-      "lead": "A spoken color name and a line you can fix sit on the same page, so the ad is done without another tool.",
+      "eyebrow": "Keep Your Shades True",
+      "h2": "Fine-Tune Each Product Color Image",
+      "lead": "Set the color, crop, and scene once, then review every still before it goes into your gallery.",
       "items": [
         {
-          "t": "Add a Voice or Your Clone",
-          "d": "A stock voice, or a clone from a short sample, can read the color line out loud."
+          "t": "Keep the Real Product Color",
+          "d": "Use a clear photo of each shade you sell. Check the generated color against the item before publishing."
         },
         {
-          "t": "A Script You Can Rewrite",
-          "d": "You can change any sentence before the ad is made. Name the shade and the offer."
+          "t": "Use One Consistent Scene",
+          "d": "Place each color on the same surface, with matching light and product scale, so the difference is easy to see."
         },
         {
-          "t": "Put an AI Avatar on Camera",
-          "d": "An AI avatar can hold one color on camera, so you skip booking a model. Add a clip of the product alone when you want it to fill the frame."
+          "t": "Show Material Detail",
+          "d": "Keep texture, shape, and important product details visible when you compare one shade with another."
         },
         {
-          "t": "Paste a Listing or Shop Link",
-          "d": "Paste the product page to draft the first script. Or let your shop software send each shade photo through the API."
+          "t": "Start From Your Product Photo",
+          "d": "Upload a product image or use a product page you control to make the first color variation."
         },
         {
-          "t": "Edit Here in Another Language",
-          "d": "A storefront in another language can hear the color names in that language. The captions can follow that voice."
+          "t": "Edit the Image Before Posting",
+          "d": "Adjust the crop and background, then inspect the label and color before you download."
         },
         {
-          "t": "More Versions, Then Post",
-          "d": "Make a second version for another country from the same photos. Post it, or download it and post it yourself."
+          "t": "Make Images for Every Placement",
+          "d": "Download stills for a product gallery, social post, or image ad. Keep the product recognizable in each format."
         }
       ]
     }

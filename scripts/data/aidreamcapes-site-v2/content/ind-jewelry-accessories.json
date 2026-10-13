@@ -1,11 +1,11 @@
 {
   "id": "ind-jewelry-accessories",
-  "title": "AI UGC Ads for Jewelry Brands | AIVideosUGC",
-  "description": "Make AI UGC ads for jewelry from a photo of the piece. An actor wears it and says your line, with no model booking and no studio day. Then download the file.",
-  "h1": "AI UGC Ads for Jewelry Brands",
-  "eyebrow": "Post Jewelry Worn on Camera",
-  "lead": "Jewelry sells on trust. You can build that trust faster than a studio, with an AI actor wearing the piece and a line you approve.",
-  "card": "One jewelry photo gives you a close-up, a worn shot, and a gift scene you can post.",
+  "title": "AI UGC Ads for Jewelry and Accessories | AIVideosUGC",
+  "description": "Make AI UGC ads for jewelry, bags, watches, and accessories from your product photos. Show each item in a creator-style clip without booking a model or shoot.",
+  "h1": "AI UGC Ads for Jewelry and Accessories",
+  "eyebrow": "Give Every Accessory a Story",
+  "lead": "Show how your jewelry or accessory looks in use. Add your product photo, choose a creator-style scene, and post a polished ad in minutes.",
+  "card": "Put the details, the worn look, and the gift moment in one ad shoppers remember.",
   "secondary_keywords": [
     "AI jewelry model photos",
     "jewelry close-up photos",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can I make a jewelry UGC ad without booking a shoot?",
-      "a": "Yes. An AI actor can wear the piece and deliver a spoken ad from one photo. You approve the line before anyone posts it."
+      "q": "What are AI UGC ads for jewelry and accessories?",
+      "a": "They are creator-style videos made from your product photos. Show jewelry being worn or place another accessory in a scene shoppers can picture."
     },
     {
-      "q": "How do I make a jewelry UGC ad?",
-      "a": "Upload a sharp photo, pick an AI actor, and approve the spoken line before you download. A failed job returns its credits, and the cost is on screen first."
+      "q": "How do I make an accessory video ad?",
+      "a": "Add a product photo or link, choose a scene and presenter, then review the finished ad before you download it."
     },
     {
-      "q": "Can an AI actor wear the piece?",
-      "a": "Yes. An AI avatar wears the piece in frame. Keep the shot on what you uploaded, and approve the line before the ad runs."
+      "q": "Can a presenter show jewelry being worn?",
+      "a": "Yes. Choose a worn scene for a ring, chain, or bracelet. Check that the finished item matches the one you sell."
+    },
+    {
+      "q": "Can I make different ads for each accessory?",
+      "a": "Yes. Upload each item separately and change the scene or opening line. You can test more than one version without another shoot."
+    },
+    {
+      "q": "Do I need video editing experience?",
+      "a": "No. Start with a clear product image and a ready-made scene. You can edit the message before posting."
+    },
+    {
+      "q": "Can I use these ads in different sizes and languages?",
+      "a": "Yes. Choose 9:16, 1:1, 16:9, 4:3, or 3:4. Write a new line and choose a voice for another market."
+    },
+    {
+      "q": "Can I run accessory videos in paid campaigns?",
+      "a": "Yes. Download the ad for paid social or your product page. Review the product details and message first."
     },
     {
       "q": "How much does a jewelry video ad cost?",
-      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. A 6, 10, 15, or 30 second video is 24, 40, 60, or 120 credits."
+      "a": "A 6, 10, 15, or 30 second ad costs 24, 40, 60, or 120 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
     },
     {
-      "q": "Which placements can a jewelry ad use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square post, and 16:9, 4:3, or 3:4 when that placement asks for it. The same worn ad can also sit on the product page."
-    },
-    {
-      "q": "Can I run the same jewelry ad in another language?",
-      "a": "Yes. Keep the piece in the frame, write the line in the other language, and pick a voice for it. Check those words before you post."
-    },
-    {
-      "q": "Can I use the jewelry ad in paid campaigns?",
-      "a": "Yes. You can place the file in paid campaigns and on your listings. It has no watermark. Compare the piece in the file with the one you ship before you publish."
-    },
-    {
-      "q": "Can the ad show more than one kind of piece?",
-      "a": "Yes. Ask for each piece from its own photo. The actor wears what you uploaded, and you can make both in one project."
-    },
-    {
-      "q": "Can I start from a product link or my shop software?",
-      "a": "Yes. Paste the product page, or send it from the shop software you already use. Ask for a different worn angle in the next version."
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste the listing link or upload a photo, then choose a new angle or message for the next version."
     }
   ],
-  "templates_lead": "Pick a jewelry UGC template where an actor wears the piece.",
-  "cta_lead": "Download a worn jewelry ad with a spoken line you approve. The cost is on screen before you confirm.",
+  "templates_lead": "Choose a ready-made scene for jewelry, bags, watches, or the accessories you sell.",
+  "cta_lead": "Turn a product photo into a creator-style ad without waiting for a shoot. See the credit cost before you create.",
   "steps_h2": "How to Make a Jewelry Ad in 3 Simple Steps",
-  "steps_lead": "Your next jewelry ad is a few taps away. Add the piece, pick a presenter, and publish.",
+  "steps_lead": "Add the item, choose a presenter, and download a video ready for your next campaign.",
   "steps": [
     {
       "t": "Upload Your Piece",
-      "d": "Add a product link, a photo, or a few details. The tool reads them and starts, with no extra form to fill."
+      "d": "Add a jewelry or accessory photo, product link, or short description. Keep the item clear in frame."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick from 53 AI actors. Choose a plain neckline so the piece stays easy to see."
+      "d": "Choose a presenter and a scene that helps shoppers picture the item in use."
     },
     {
       "t": "Generate and Publish",
-      "d": "The ad comes back with a spoken line, captions, and a frame ready to post. Launch it where you sell."
+      "d": "Review the item and message, then download a video sized for your channel."
     }
   ],
   "visual": {
@@ -103,11 +103,11 @@
     "outputs": [],
     "titles": {
       "faq": {
-        "h2": "Questions About Jewelry UGC Ads"
+        "h2": "Questions About Jewelry and Accessory Ads"
       }
     }
   },
-  "cta_title": "Show the Piece Worn in an Ad",
+  "cta_title": "Make an Accessory Ad That Gets Noticed",
   "relatedLinks": [
     {
       "id": "tpl-jewel",
@@ -135,32 +135,32 @@
     }
   ],
   "reasons": {
-    "h2": "Why Jewelry Brands Stop Waiting on Creators",
-    "lead": "No-shows, delays, and extra invoices do not have to stall the next jewelry ad.",
+    "h2": "Why Accessory Brands Make Creator-Style Ads",
+    "lead": "Give each new item a video without waiting for a studio booking.",
     "items": [
       {
-        "t": "Faster and Less Expensive",
-        "d": "Skip costly shoots and creators who do not show. A worn jewelry ad can show the piece in minutes.",
+        "t": "Skip the Shoot",
+        "d": "Turn a product photo into a polished accessory ad in minutes, without hiring a model or arranging a shoot.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-1-r1",
         "alt": "Man with a short crop speaks to the camera and shows one plain silver ring on his finger."
       },
       {
-        "t": "Ready for Every Platform",
-        "d": "Make try-on clips and product demos for ads, feeds, and your site, without a traditional shoot.",
+        "t": "Show Each Accessory in Use",
+        "d": "Show a ring on a hand, a chain at the neckline, or another accessory in a useful scene.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-2-r1",
         "alt": "Woman with short silver hair speaks to the camera wearing only a plain silver chain at her collarbone."
       },
       {
-        "t": "Ads That Can Convert",
-        "d": "Worn jewelry clips grab attention and show the piece in use, so you can sell without a huge spend.",
+        "t": "Create More Ads for Your Catalog",
+        "d": "Make a new clip for each item, style, or offer. Post the versions across your store and social channels.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-3-r1",
         "alt": "Woman with her hair in a bun speaks to the camera and shows a plain silver cuff on her wrist."
       }
     ]
   },
   "platforms": {
-    "h2": "Run the Worn Piece on Every Channel",
-    "lead": "Use the same worn shot on feeds, listings, and the product page. Each one is framed for that spot.",
+    "h2": "Run Accessory Ads Across Your Channels",
+    "lead": "Choose the frame that suits the feed, then keep the item close enough to see.",
     "items": [
       {
         "t": "Post the Bracelet on TikTok",
@@ -195,8 +195,8 @@
     ]
   },
   "reviews": {
-    "h2": "How Jewelry Sellers Use a Worn Ad",
-    "lead": "Four shops start from a photo of the piece and leave with an actor wearing it on camera.",
+    "h2": "How Accessory Sellers Show Each Piece",
+    "lead": "Four sellers turn their product photos into worn scenes for ads and listings.",
     "items": [
       {
         "example": true,
@@ -228,7 +228,7 @@
       }
     ]
   },
-  "related_h2": "Jewelry Templates and Listing Tools",
+  "related_h2": "More Ways to Show Jewelry and Accessories",
   "maker": {
     "options": [
       [
@@ -237,7 +237,7 @@
       ],
       [
         "Look",
-        "Worn, or on a table"
+        "Worn close-up or product scene"
       ],
       [
         "Size",

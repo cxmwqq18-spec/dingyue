@@ -1,11 +1,11 @@
 {
   "id": "guides",
-  "title": "UGC Templates and Seller Guides | AIVideosUGC",
-  "description": "Pick a guide, add your product, and recreate that file in minutes. Start from a phone photo, a white main image, a first video, or a fair test.",
-  "h1": "See a Guide, Recreate It, and Post It",
-  "eyebrow": "Make Today's File From a Guide",
-  "lead": "Pick the guide for today's job and recreate that file with your product. Add a photo, follow the steps, and finish in minutes.",
-  "card": "Short how-to guides, from the first photo to the first paid ad.",
+  "title": "Product Photo and Video Guides | AIVideosUGC",
+  "description": "Explore product photo and video guides for your store. Learn to prepare a clear image, make your first ad, choose the right size, and test new versions.",
+  "h1": "Product Photo and Video Guides for Sellers",
+  "eyebrow": "Practical Guides for Your Next Product Ad",
+  "lead": "Find product photo and video guides for the next ad you need. Follow clear steps, use your own product, and make a file ready to post.",
+  "card": "Short guides for better product photos, first ads, formats, and creative tests.",
   "secondary_keywords": [
     "product photography tips for online sellers",
     "how to make product video ads",
@@ -13,101 +13,101 @@
     "Amazon main image tips"
   ],
   "intro": [
-    "Each guide ends in a file you can download and post. Open the one that matches the job in front of you.",
-    "You land on the tool that makes the file: a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). For a video, an AI actor from the [actor library](page:ai-actors) is there when that guide calls for a person in the frame."
+    "Browse quick guides for the next task on your list, from a clear product photo to an ad you can publish.",
+    "Choose a [template](page:templates), start from a [product link](page:url-to-video), or turn a [photo into a video](page:image-to-video). Explore the [actor library](page:ai-actors) for video guides that need a presenter."
   ],
-  "benefits_h2": "Pick the Guide That Matches Today",
-  "benefits_lead": "No prompt to write: pick a guide, add your product photo, and follow the steps to a file you can post.",
+  "benefits_h2": "Find the Guide for Your Next Ad",
+  "benefits_lead": "Get practical steps for product photos and ads without planning a studio shoot or starting from a blank brief.",
   "benefits": [
     {
-      "t": "Start From a Sharp Photo",
-      "d": "A clear photo of the tote makes the first file easier to keep, so you spend fewer credits on a redo.",
+      "t": "Start With a Clear Product Photo",
+      "d": "Use the photo guide to check framing and light before you make an ad with your tote.",
       "img": "n:guide:img2-guides-benefits-0-r1",
       "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera."
     },
     {
-      "t": "No Studio to Book",
-      "d": "You shoot the lunch container on the kitchen table, with a phone, by the window you already have.",
+      "t": "Make Product Photos Without a Studio",
+      "d": "Use a phone photo of your lunch container and learn how to make it ready for a product page.",
       "img": "n:guide:img2-guides-benefits-1-r1",
       "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera."
     },
     {
-      "t": "Fit the Plate in Frame",
-      "d": "The main-image rules are already written out, so the plate can sit fully inside the white backdrop before it goes live.",
+      "t": "Prepare a Clean Main Image",
+      "d": "Follow the white-background guide to show the whole plate clearly in its listing image.",
       "img": "n:guide:img2-guides-benefits-2-r1",
       "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera."
     },
     {
-      "t": "One Change at a Time",
-      "d": "The testing guide changes one thing on the two pouches, then keeps the version you want to run.",
+      "t": "Test One Ad Change at a Time",
+      "d": "Compare two pouch ads with one clear difference, so you can see which version works better.",
       "img": "n:guide:img2-guides-benefits-3-r1",
       "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera."
     }
   ],
-  "steps_h2": "How to Make a Product File in 3 Simple Steps",
-  "steps_lead": "You finish with a file you can post. Open the guide, make the file, then post it.",
+  "steps_h2": "How to Make a Product Ad in 3 Simple Steps",
+  "steps_lead": "Pick a guide, use your own product, and download the photo or video you need for your next post.",
   "steps": [
     {
       "t": "Take Your Product Photo",
-      "d": "Pick today's job: the phone photo, the white main image, the first video, the size, or the test."
+      "d": "Take a clear photo of the product you sell, then choose the guide for your next photo or ad."
     },
     {
       "t": "Make the File",
-      "d": "Upload the photo or paste a product link, follow that guide, and read the credit cost before you start."
+      "d": "Follow the guide to upload your photo or paste your product link. Review the result before you spend credits again."
     },
     {
       "t": "Download and Post",
-      "d": "The download has no watermark, so your store and a paid ad can both use it."
+      "d": "Download your finished image or video and post it where its size fits."
     }
   ],
   "faq": [
     {
-      "q": "What seller job does each guide finish for me?",
-      "a": "Short how-tos for one seller job each. They cover a phone photo, a plain main image, a first video ad, the frame each app wants, and a fair test of versions."
+      "q": "What can I learn from these product guides?",
+      "a": "Learn how to take a product photo, prepare a white main image, make a first video ad, choose ad sizes, and compare creative versions."
     },
     {
-      "q": "How do I turn a guide into a file I can post?",
-      "a": "Follow the steps, upload your product photo or paste the product page, and make the file on the tool that guide names. The guide is the plan. The tool makes the file."
+      "q": "How do I use a guide to make an ad?",
+      "a": "Open the guide for your task, follow its steps, then use the linked tool with your own product photo or product page."
     },
     {
-      "q": "Why use a guide instead of hiring someone to film?",
-      "a": "A photo on the kitchen table is enough to start after you close. Hiring someone to film means waiting on their calendar. The guide uses the picture you can take yourself."
+      "q": "Can I make an ad without booking a shoot?",
+      "a": "Yes. Start with a clear photo you already have. The guides show how to turn that photo into a product image or ad."
     },
     {
-      "q": "Who should use these guides?",
-      "a": "Someone packing orders who has never booked a studio. A marketer can use the same pages when a client needs a file this week."
+      "q": "Who are these guides for?",
+      "a": "Sellers making their own product photos and ads, and small teams that need clear steps for the next campaign."
     },
     {
-      "q": "Can I make a file if I have never edited video?",
-      "a": "Yes. You need a phone photo, not a timeline. The first-ad guide stops at a file you can post. Setting up the ad account stays in that app."
+      "q": "Do I need video editing experience?",
+      "a": "No. Each guide explains the steps and the file you will make. You can start with one clear product photo."
     },
     {
-      "q": "Which kinds of shops can follow these steps?",
-      "a": "The same photo steps and video steps work across shops. Rules differ by product type, so check the industry page for your shop before you upload."
+      "q": "Will these guides work for my kind of store?",
+      "a": "Yes. Use the photo, video, and ad guides that fit your product. Check the relevant industry guide for product-specific ideas."
     },
     {
-      "q": "Can one phone photo of my product feed every guide?",
-      "a": "Yes, if it shows the whole item clearly. A still and a clip made from it are separate files, each with its own credit cost."
+      "q": "Can I reuse one product photo in several guides?",
+      "a": "Yes. Use a clear photo across different guides, then check each result before you post it. Each new image or video uses credits."
     },
     {
-      "q": "Where can I post the file once I download it?",
-      "a": "Wherever the guide's shape fits. A tall file is the phone placement. A square sits in a feed. The [platform pages](page:video-hub) name the usual frames. Your own store can use the download too."
+      "q": "Where can I post the result?",
+      "a": "Post it where the format fits: a product page, social feed, Story, or paid ad. Check the [platform pages](page:video-hub) for sizes."
     },
     {
-      "q": "How many credits do a photo and a clip cost?",
-      "a": "A product photo is 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before it starts. If a job fails, those credits come back."
+      "q": "How many credits do photos and videos use?",
+      "a": "One image is 24 credits. Videos use 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 for 200 monthly credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can I run the file in ads and on my store?",
-      "a": "Yes. Use it in ads and on your store. The download has no watermark."
+      "q": "Can I use my download in paid ads?",
+      "a": "Yes. Use your watermark-free download in ads or on your store, and check each platform’s rules before posting."
     },
     {
-      "q": "Which guide gives me a video with a person and a voice?",
-      "a": "The first-ad guide does, when you want a person on screen. You can also keep the frame on the product and still have a spoken line. The photo guides stop at a still."
+      "q": "Which guide helps me make a video with a presenter?",
+      "a": "Start with the first video ad guide. You can choose a presenter for the video or keep the product in focus."
     },
     {
-      "q": "Why follow a guide instead of a blank start?",
-      "a": "The guide names the one task, the file you should end with, and the checks to make before you spend credits on a second try."
+      "q": "Why start with a guide?",
+      "a": "A guide gives you a clear starting point and a short set of checks before you make another version."
     }
   ],
   "relatedLinks": [
@@ -118,40 +118,40 @@
     "templates",
     "platforms"
   ],
-  "related_h2": "Tools These Guides Send You To",
-  "related_lead": "The file from the guide is a step away from the tool that makes it, or from the places you post.",
-  "cta_title": "Start the Guide That Matches Today",
-  "cta_lead": "Make a polished ad from one product photo and put the item you sell in a file ready to post.",
+  "related_h2": "Tools to Use With These Guides",
+  "related_lead": "Move from the guide to a product photo tool, an ad template, or the platform where you plan to post.",
+  "cta_title": "Choose a Guide and Make Your Next Ad",
+  "cta_lead": "Start with your own product photo, follow a practical guide, and make an image or video ready for your store or ads.",
   "reviews": {
-    "h2": "How Sellers Use a Guide, Then Make the File",
-    "lead": "Four sellers match today's job, drop in the product they ship, and post one file.",
+    "h2": "How Sellers Put These Guides to Work",
+    "lead": "See how sellers use one guide to prepare a product photo, make an ad, or compare versions.",
     "items": [
       {
         "example": true,
         "who": "Tote seller",
         "t": "Check the Tote Photo",
-        "d": "They check a sharp phone photo of the sage canvas tote, then make the file that guide names. They skip shooting that tote a second time before the first file is even posted.",
+        "d": "They check the tote photo for light and framing before using it in a product ad.",
         "img": "n:guide:img2-guides-review1-r1"
       },
       {
         "example": true,
         "who": "Lunch-container seller",
         "t": "Shoot on the Kitchen Table",
-        "d": "They photograph the bamboo lunch container on the kitchen table by the window they already have. They skip booking a studio for that container.",
+        "d": "They use the photo guide to turn a kitchen-table shot of the lunch container into a clearer listing image.",
         "img": "n:guide:img2-guides-review2-r1"
       },
       {
         "example": true,
         "who": "Tableware seller",
         "t": "Make the Plate the Main Image",
-        "d": "They set the ceramic plate fully inside a bright white backdrop and use that still as the main image. The guide tells them when the plate is ready to post.",
+        "d": "They follow the white-background guide so the whole plate shows clearly in its main image.",
         "img": "n:guide:img2-guides-review3-r1"
       },
       {
         "example": true,
         "who": "Small-goods seller",
         "t": "Test One Pouch Change",
-        "d": "They change one thing between two plain fabric pouches and keep the version they want to run. They skip filming a new pair for every idea.",
+        "d": "They compare two pouch ads with one change between them, then keep the version they prefer.",
         "img": "n:guide:img2-guides-review4-r1"
       }
     ]

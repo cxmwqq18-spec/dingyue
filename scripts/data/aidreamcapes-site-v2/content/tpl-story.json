@@ -1,96 +1,96 @@
 {
   "id": "tpl-story",
-  "title": "Instagram Story Video Maker | AIVideosUGC",
-  "description": "Make an Instagram Story video from a product link or one photo. Add a script, an AI avatar, and a voice, then export the tall file and post it.",
-  "h1": "Make an Instagram Story Video From a Link",
-  "eyebrow": "Story Videos You Can Post",
-  "lead": "Paste a product link or one photo. Get an Instagram Story video with a script, an AI avatar, and a voice you can edit.",
+  "title": "Instagram Story Image Maker | AIVideosUGC",
+  "description": "Turn a product photo into a vertical Instagram Story image for your next offer. Choose a scene, leave room for your message, and download a still ready to post.",
+  "h1": "Make a Vertical Instagram Story Image",
+  "eyebrow": "Product Photos for Instagram Stories",
+  "lead": "Put your product in a tall Story image that fits the phone screen. Choose a scene, leave space for your offer, and post a still you can make in minutes.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "How to Make an Instagram Story Video in 3 Simple Steps",
-  "steps_lead": "You leave with a tall 9:16 Story, an avatar, and a voice.",
+  "steps_h2": "How to Make an Instagram Story Image in 3 Simple Steps",
+  "steps_lead": "Start with one product photo and finish with a vertical still image for your next Story.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a product photo, or paste the product link. That product is the one shoppers see in the Story."
+      "d": "Upload a clear product photo or paste the product link. Check that the item is easy to recognize."
     },
     {
       "t": "Describe the Setting",
-      "d": "Describe the setting, pick an AI avatar, and set the voice. You can fix the spoken line before you export."
+      "d": "Choose a scene and leave clear space for the offer or short headline you want to add."
     },
     {
       "t": "Download and Post",
-      "d": "Preview the vertical Story, revise the script or voice, then download a watermark-free file ready to post."
+      "d": "Preview the vertical image, check the product, and download the still for your Instagram or Facebook Story."
     }
   ],
   "maker": {
     "options": [
       [
         "Template",
-        "Story Ad"
+        "Vertical Story image"
       ],
       [
         "Output",
-        "Square Product Photo"
+        "Portrait 9:16 still"
       ],
       [
         "Text",
         "Added by you afterward"
       ]
     ],
-    "cta": "Make my Story video"
+    "cta": "Make my Story image"
   },
   "faq": [
     {
-      "q": "What is an Instagram Story video for a product?",
-      "a": "It is a tall video for the product, with an AI avatar and a voice. You skip filming a new clip just to fill that frame. For another motion style, start from [creator-style video ads](page:video-ads)."
+      "q": "What is an Instagram Story image for a product?",
+      "a": "It is a vertical still that shows your product in a Story-sized scene, with room for a short message or offer. For a moving ad, explore [creator-style video ads](page:video-ads)."
     },
     {
-      "q": "How do credits work for a Story video?",
-      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost first. A failed run returns the credits."
+      "q": "How many credits does a Story image cost?",
+      "a": "One image costs 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you generate."
     },
     {
-      "q": "Can I start Story videos from my product pages?",
-      "a": "Yes. Paste the product page. The name and the photo come through, and you still approve the script before the Story is made."
+      "q": "Can I start from my product page?",
+      "a": "Yes. Paste the product link or upload your photo, then check the item before downloading the image."
     },
     {
-      "q": "Can I use an AI avatar in my Instagram Story video?",
-      "a": "Yes. Pick an AI avatar to hold the product, or build a presenter from photos you are allowed to use. You can bring that face back next time."
+      "q": "Can a person appear in my Story image?",
+      "a": "Yes. Choose a scene with a person holding or using the product, and keep the item clearly visible."
     },
     {
-      "q": "How does the Story stay vertical?",
-      "a": "The export is a tall 9:16 file made for Instagram Stories. A Facebook Story can use the same file. Use a square only when the placement is no longer a Story."
+      "q": "What size works for Instagram Stories?",
+      "a": "A vertical 9:16 image fits the Story screen. Use the same format for a Facebook Story, and check the safe area before adding text."
     },
     {
-      "q": "Can I add stickers or a price on the Story?",
-      "a": "Yes. Add a short line or a sticker on the video, or add Instagram stickers when you post. The price can sit in the script or go on after download."
+      "q": "Can I add a price or sticker?",
+      "a": "Yes. Leave space in the image for your offer, then add a short price line or platform sticker before you post."
     },
     {
-      "q": "Can a beginner make a Story video this way?",
-      "a": "Yes. If you can upload one clear photo, you can finish the Story. You add the price after you download, and you do not need an editing background."
+      "q": "Can I make a Story image without design experience?",
+      "a": "Yes. Upload a clear product photo, choose a scene, and check the result before downloading."
     },
     {
-      "q": "Who should make a Story video from this template?",
-      "a": "A shop that posts Stories every week, and the person who writes those posts. You need the product fully in frame, not a studio booking."
+      "q": "Who should use this Story image template?",
+      "a": "Sellers who post product offers or launches in Instagram and Facebook Stories and need a quick vertical still."
     },
     {
-      "q": "Can the Story use the photo I already shot?",
-      "a": "Yes. The product in the video should be the product you ship. Your logo can go on after download, and you do not need a new shoot for that."
+      "q": "Can I use the product photo I already have?",
+      "a": "Yes. Start from a clear photo of the item you sell. Check its label, shape, and color in the finished Story."
     },
     {
-      "q": "Can I run the Story as a paid ad or client work?",
-      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the video to a client who sells that product."
+      "q": "Can I use the image in a paid Story ad?",
+      "a": "Yes. Use the downloaded still in a paid Story placement or an organic post, and check the platform’s current ad rules."
     },
     {
-      "q": "Why start from a template instead of a blank edit?",
-      "a": "The tall frame, the avatar, and the voice are already in place. Your time goes to the offer and the words shoppers hear."
+      "q": "Why start from a Story template?",
+      "a": "The vertical layout gives your product room on a phone screen and leaves a clear place for your offer."
     }
   ],
-  "output": "Tall 9:16 Story with an avatar and a voice",
+  "output": "Vertical 9:16 Story still image",
   "visual": {
     "strip": [
       "n:q10-story-picker-1",
@@ -103,17 +103,17 @@
     "steps": {
       "source": "n:guide:c1-tpl-story-m2-source",
       "sourceAlt": "Single hot sauce bottle photographed upright on a plain pale background.",
-      "sourceTitle": "Square Product Photo",
+      "sourceTitle": "Product Photo",
       "sourceHint": "Center the full product with open space around it.",
       "result": "n:guide:c1-tpl-story-m2-result-square",
       "options": [
         [
           "Template",
-          "Story ad photo"
+          "Vertical Story image"
         ],
         [
           "Output",
-          "Square 1:1 product photo"
+          "Portrait 9:16 still"
         ],
         [
           "Text",
@@ -124,8 +124,8 @@
       "mode": "photo"
     },
     "picker": {
-      "title": "Pick a Story Video by Category",
-      "lead": "Each card is a tall 9:16 Story video. Upload the hot sauce photo, then add the price before you post.",
+      "title": "Explore Story Image Ideas",
+      "lead": "Browse scene ideas, then use your product photo to make a vertical Story still.",
       "chips": [
         {
           "id": "accessories",
@@ -543,33 +543,33 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Make a Story Video in 3 Simple Steps"
+        "h2": "How to Make a Story Image in 3 Simple Steps"
       },
       "m3": {
         "h2": "Pick a Template Category",
-        "lead": "Use a card as the tall Story, with your bottle photo and the price added before you post."
+        "lead": "Use a scene idea for your product photo and add the offer before you post the Story still."
       },
       "m4": {
-        "h2": "Use the Story Video in a Phone Ad"
+        "h2": "Use the Story Image in a Phone Ad"
       },
       "m5": {
         "h2": "Start the Story From a Clear Photo"
       },
       "m6": {
-        "h2": "Start the 9:16 Story From Your Photo"
+        "h2": "Make a Vertical Story Still From Your Photo"
       },
       "m7": {
         "h2": "Add the Date and Offer After Download"
       },
       "faq": {
-        "h2": "Questions About Instagram Story Videos"
+        "h2": "Questions About Instagram Story Images"
       },
       "examples": {
-        "h2": "Instagram Story Video Examples"
+        "h2": "Instagram Story Image Examples"
       },
       "templates": {
-        "h2": "More Instagram Story Video Templates",
-        "lead": "Choose another tall Story layout for the same hot sauce campaign."
+        "h2": "More Instagram Story Image Ideas",
+        "lead": "Choose another vertical layout for the same product offer."
       }
     }
   },
@@ -600,43 +600,43 @@
     }
   ],
   "reviews": {
-    "h2": "How Shops Use a Story Video",
-    "lead": "Four ways a shop makes a Story video from the hot sauce photo.",
+    "h2": "How Sellers Use Story Images",
+    "lead": "See how sellers show a product and a clear offer in vertical stills for Stories.",
     "items": [
       {
         "example": true,
         "who": "Hot sauce maker",
-        "t": "Avatar Holds the Bottle",
-        "d": "They pick an avatar to hold the hot sauce and say the heat. The Story video goes on Instagram, and they skip a filming morning.",
+        "t": "Show the Bottle in Hand",
+        "d": "They show the hot sauce bottle in a kitchen still, leaving room for a short offer before posting it to Instagram Stories.",
         "img": "n:guide:img2-tpl-story-review1-r1"
       },
       {
         "example": true,
         "who": "Sauce shop seller",
-        "t": "Same Bottle, Second Line",
-        "d": "They keep the bottle and change the spoken line for a second Story. Both files come from the one photo on the product page.",
+        "t": "Use the Bottle in a Second Layout",
+        "d": "They keep the same bottle photo and change the scene for another Story image. Both stills show the product clearly.",
         "img": "n:guide:img2-tpl-story-review2-r1"
       },
       {
         "example": true,
         "who": "Food seller",
-        "t": "Drizzle, Then the Cap",
-        "d": "They show the pour over a taco, then the full bottle with the cap on. Shoppers see the product, and nobody books a crew.",
+        "t": "Show the Sauce With Food",
+        "d": "They use a still of the sauce being poured over a taco, then check that the bottle stays visible in the Story crop.",
         "img": "n:guide:img2-tpl-story-review3-r1"
       },
       {
         "example": true,
         "who": "Small-batch sauce maker",
-        "t": "Voice in the Buyer's Language",
-        "d": "They keep the same Story and pair it with a spoken line in the language that market uses. The bottle does not change.",
+        "t": "Leave Room for a Local Offer",
+        "d": "They keep the bottle in view and add an offer in the language their shoppers use before posting the image.",
         "img": "n:guide:img2-tpl-story-review4-r1"
       }
     ]
   },
-  "related_h2": "Templates to Use With a Story Ad",
-  "related_lead": "The ad-image tool, nearby templates, and Instagram ads sit beside this Story template.",
-  "cta_title": "Create Your First Story Video",
-  "cta_lead": "Make shoppers stop tapping: turn one product photo into a Story with an AI avatar, a clear offer, and a voice you choose.",
+  "related_h2": "More Ways to Use Your Product Photo",
+  "related_lead": "Explore image ad tools, other product templates, and Instagram ad ideas for the same product.",
+  "cta_title": "Make Your First Story Image",
+  "cta_lead": "Upload a product photo, choose a vertical scene, and download a still ready for an Instagram or Facebook Story.",
   "blockOrder": [
     "hero",
     "picker",
@@ -646,33 +646,33 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "On the Story",
-      "h2": "What the Story Video Gives You",
-      "lead": "The Story carries a script, an avatar, and a spoken line you can publish with it.",
+      "eyebrow": "Built for the Story Screen",
+      "h2": "What Goes Into Your Story Image",
+      "lead": "Keep your product clear, use a vertical layout, and leave room for the offer shoppers need to see.",
       "items": [
         {
-          "t": "Start From the Product Link",
-          "d": "Paste the product page. The product comes through, and this video is the Story you post."
+          "t": "Start With Your Product Photo",
+          "d": "Upload the item you sell or paste its product page, then check the product in the finished still."
         },
         {
-          "t": "An Avatar Holds the Product",
-          "d": "Choose an AI avatar or build a presenter from photos you may use, then keep the same face across your Stories."
+          "t": "Show the Product in Use",
+          "d": "Choose a setting with a hand or person using the product, while keeping the item easy to recognize."
         },
         {
-          "t": "A Spoken Line Shoppers Hear",
-          "d": "Add a voice in the language your shoppers use, or a cloned voice the shop already records with. You can change any word before the Story goes up."
+          "t": "Leave Space for Your Message",
+          "d": "Keep a clear area for the price, offer, or short line you will add before posting."
         },
         {
-          "t": "A Script You Can Change",
-          "d": "Describe the offer in a sentence. A script draft comes back, and you can rewrite any word in the editor."
+          "t": "Adjust the Scene",
+          "d": "Choose a background and crop that fit the product, then review the image before download."
         },
         {
-          "t": "Trim, Then Download Clean",
-          "d": "Shape the Story in the built-in editor, then download a file with no watermark."
+          "t": "Download a Clean Still",
+          "d": "Save the Story image without a watermark and add any final sticker in the social app."
         },
         {
-          "t": "Versions, Languages, Publish",
-          "d": "Test two Story openings from the same product photo and compare which version gets more engagement before you make the next ad."
+          "t": "Try Another Story Layout",
+          "d": "Make a second vertical still from the same product photo when you want to test a different image or offer."
         }
       ]
     }

@@ -1,10 +1,10 @@
 {
   "id": "tpl-howto",
-  "title": "How-To Video Templates for Demos | AIVideosUGC",
-  "description": "Drop your product into a how-to video template that already shows one step. An AI avatar runs the demo, and you download a clip you can post.",
-  "h1": "How-To Video Templates You Can Recreate",
-  "eyebrow": "How-To Videos You Can Post",
-  "lead": "Drop your product into a how-to template that already shows one step. An AI avatar runs the demo, and you download a clip in minutes.",
+  "title": "How-To Video Templates for Product Demos | AIVideosUGC",
+  "description": "Create a clear how-to video from your product photo or link. Choose a ready-made explainer scene, add your steps, and download a demo in minutes.",
+  "h1": "How-To Video Templates for Product Demos",
+  "eyebrow": "Teach One Step Clearly",
+  "lead": "Make the move shoppers need to learn easy to see. Add your product to an explainer scene and create a short how-to without filming.",
   "secondary_keywords": [
     "product how-to video",
     "product demo video from photo",
@@ -13,26 +13,26 @@
     "instructional product video"
   ],
   "steps_h2": "How to Make a How-To Video in 3 Simple Steps",
-  "steps_lead": "You leave with a how-to of one step, ready to post. The frame already shows that step.",
+  "steps_lead": "Add the product, describe one action, and download a how-to shoppers can follow.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload a photo of the product. The demo frame is already there, so you are not drawing the lesson."
+      "d": "Add a clear product image or link so the demo shows the item you sell."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Say how the step should look. The spoken line follows the hands and names the move shoppers miss."
+      "d": "Describe the action in one line. Make the movement and result easy for shoppers to follow."
     },
     {
       "t": "Download and Post",
-      "d": "Captions can name the step. Trim a long pause in the editor, then download and post."
+      "d": "Check the action and spoken line, then download a clip sized for your channel."
     }
   ],
   "maker": {
     "options": [
       [
         "Size",
-        "Tall 9:16 · YouTube Shorts"
+        "Tall video (9:16)"
       ],
       [
         "Length",
@@ -40,7 +40,7 @@
       ],
       [
         "Also try",
-        "Wide 16:9 · Product page"
+        "Wide video (16:9)"
       ]
     ],
     "cta": "Make my how-to video"
@@ -48,47 +48,47 @@
   "faq": [
     {
       "q": "What does a how-to video template include?",
-      "a": "A demo frame for one task, plus an AI avatar, a voice, and a script. Put your product in the frame. You do not book a person for this lesson."
+      "a": "A ready-made explainer scene gives your product a clear action, script, and video frame. Add the detail your buyers need to learn."
     },
     {
-      "q": "How does the template become a video?",
-      "a": "Paste the listing link or drop in the product photo, then write the line you want heard. What comes back is a clip you can post. If a pause feels long, shorten it before the file goes up."
+      "q": "How do I make a product how-to video?",
+      "a": "Upload a product photo or paste a link. Describe the action, review the spoken line, and download the finished demo."
     },
     {
-      "q": "Why use this instead of hiring someone to film the task?",
-      "a": "Make and revise a how-to clip in minutes from your product photo, without booking a creator or filming the step again."
+      "q": "Can I make a how-to without filming?",
+      "a": "Yes. Start from a product image and choose a scene that shows the action. No camera crew or presenter booking is needed."
     },
     {
-      "q": "Who gets the most from a how-to like this?",
-      "a": "A founder filming between orders, and a small team that owes a client a demo before the week ends. If the product has a move a buyer must copy, this frame fits."
+      "q": "Which products need a how-to video?",
+      "a": "Use one when a buyer needs to see a move, setup step, or result before using the product."
     },
     {
-      "q": "Can I do this if I have never edited a video?",
-      "a": "Yes. A photo of the product is enough to start, even if you have never edited a video."
+      "q": "Can a beginner make the demo?",
+      "a": "Yes. Add the product and describe the action in plain words. Edit the generated line before you post."
     },
     {
-      "q": "Which products fit a how-to template?",
-      "a": "A product with one move a shopper must copy. The spoken line can name that move. Swap the photo when the next product needs the same shape."
+      "q": "Can an AI presenter explain the step?",
+      "a": "Yes. Choose a presenter and a voice that suit your product. Keep the action visible while the line plays."
     },
     {
-      "q": "Can the how-to use files from my shop?",
-      "a": "Yes. A logo in the corner and a clip you already shot can both go in. The product in the photo should be the one you ship."
+      "q": "Can I add my own brand assets?",
+      "a": "Yes. Add your logo, product photo, or a clip you already have. Check that the finished demo matches what you sell."
     },
     {
-      "q": "Where can I post the finished how-to?",
-      "a": "Match the frame to the placement. Use 9:16 for a phone story, 1:1 for a square tile, and 16:9 for a wide screen. 4:3 and 3:4 sit in the same picker."
+      "q": "Where can I post the how-to?",
+      "a": "Use 9:16 for phone feeds, 1:1 for square posts, or 16:9 for a wide product page. Other sizes are available."
     },
     {
-      "q": "Do I pay to use a template?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A photo spends 24 credits. If a job fails, those credits come back."
+      "q": "How much does a how-to video cost?",
+      "a": "A 6, 10, 15, or 30 second video costs 24, 40, 60, or 120 credits. Starter is $24.50 for 200 credits; Pro is $35 for 300; Premium is $63 for 600."
     },
     {
-      "q": "Can I run the how-to in ads and in client work?",
-      "a": "Yes. A client handoff and a paid placement can use the same clip, and the download has no watermark."
+      "q": "Can I use the demo in ads or client work?",
+      "a": "Yes. Download the clip for paid ads, your product page, or a client handoff. Review the claims before publishing."
     },
     {
-      "q": "Why not build the ad from a blank file?",
-      "a": "This frame is already a lesson, so the hour can go to the product and the step. A blank timeline asks you to invent that shape."
+      "q": "Why start from a template?",
+      "a": "The explainer scene already sets the pace and frame. You can focus on the product and the action shoppers need to copy."
     }
   ],
   "visual": {
@@ -546,10 +546,10 @@
     "after": null,
     "titles": {
       "m3": {
-        "h2": "How-To Scenes You Can Open"
+        "h2": "Choose a Product Demo Scene"
       },
       "faq": {
-        "h2": "Questions About How to Use a Product Video"
+        "h2": "Questions About How-To Video Templates"
       }
     }
   },
@@ -587,8 +587,8 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How to Make a Product How-To",
-    "lead": "Four ways a shop teaches one press of the steamer on a blue shirt, and the filming day each one skips.",
+    "h2": "How Sellers Explain a Product Step",
+    "lead": "Four demos show one steamer pass on a shirt, with the product and result in view.",
     "items": [
       {
         "example": true,
@@ -622,8 +622,8 @@
   },
   "related_h2": "More Pages Beside a How-To",
   "related_lead": "Product videos, room scenes, and a Shorts page sit well next to a one-step demo.",
-  "cta_title": "Fill This How-To With Your Product",
-  "cta_lead": "You leave with a how-to clip you can post. Add the product photo and let an AI avatar show the step.",
+  "cta_title": "Make a Clear Product How-To",
+  "cta_lead": "Put your product in a ready-made demo scene. Show one useful move and post the finished clip.",
   "definition": {
     "title": "A Demo Frame That Is Already a Lesson",
     "paras": [

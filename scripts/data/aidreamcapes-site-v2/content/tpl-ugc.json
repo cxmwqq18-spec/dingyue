@@ -1,109 +1,109 @@
 {
   "id": "tpl-ugc",
-  "title": "AI UGC Generator for Video Ads | AIVideosUGC",
-  "description": "Make UGC video ads from one product photo. Pick the avatar, the language, and the line, then download a cut you can test. No creator booking and no filming day.",
-  "h1": "Make UGC Ads on Demand With AI",
-  "eyebrow": "UGC Video Ad Template",
-  "lead": "A creator's calendar can slip. You can make punchy UGC video ads in minutes, test more ideas, and still hit your launch.",
+  "title": "UGC Style Product Photos | AIVideosUGC",
+  "description": "Make creator-style product photos for your image ads. Add one clear product photo, choose an everyday scene, and download a still without booking a creator.",
+  "h1": "Make UGC Style Product Photos for Ads",
+  "eyebrow": "Creator-Style Product Images",
+  "lead": "Make UGC-style product photos in minutes, without booking a creator or arranging a shoot. Try more everyday scenes from the same product photo.",
   "secondary_keywords": [
     "creator style product photos",
     "user-generated content style images",
     "lifestyle photos for Instagram ads",
     "fitness product lifestyle photos"
   ],
-  "steps_h2": "How to Make a UGC Ad in 3 Simple Steps",
-  "steps_lead": "You get a feed-ready UGC ad. Add your product, pick the face and the language, then choose who presents it.",
+  "steps_h2": "How to Make a UGC Style Photo in 3 Simple Steps",
+  "steps_lead": "Start with your product, choose an everyday setting, and download a still image ready for your next image ad.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one product photo, or paste the product page. That photo is the source for the ad."
+      "d": "Upload a clear image of the product you sell, or paste its product page as the starting point."
     },
     {
       "t": "Pick a Creator Style",
-      "d": "Say what the ad should claim, then pick the AI avatar who holds the product, and change any line."
+      "d": "Choose a natural setting and describe how the product should appear in the still image."
     },
     {
       "t": "Download and Post",
-      "d": "You get a cut with a spoken voice and captions, sized for your feed. The credit cost is on screen before you start."
+      "d": "Check the product and scene, then download the image for your feed or ad. One image costs 24 credits."
     }
   ],
   "maker": {
     "options": [
       [
         "Template",
-        "Creator-Style Photo"
+        "Creator-style product photo"
       ],
       [
         "Size",
-        "Square by default"
+        "Square 1:1 image"
       ],
       [
         "Scene",
         "An everyday moment you pick"
       ]
     ],
-    "cta": "Make my UGC ad"
+    "cta": "Make my UGC-style photo"
   },
   "faq": [
     {
-      "q": "What is included when I start a plan?",
-      "a": "You get a paid credit balance and every tool those credits open. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "What comes with a monthly plan?",
+      "a": "Your plan includes a credit balance for making product images and other supported ads. Starter is $24.50 for 200 credits, Pro is $35 for 300, and Premium is $63 for 600 each month."
     },
     {
-      "q": "What does a monthly plan add?",
-      "a": "The same credits pay for AI avatars, a spoken voice, captions, music, and the editor. You do not buy those tools one by one."
+      "q": "What can I change in a creator-style photo?",
+      "a": "Choose the setting, crop, product placement, and overall look. Review the result before you use it in an ad."
     },
     {
-      "q": "Where do the credits go on each ad?",
-      "a": "A still spends 24 credits. A 6-second ad spends 24, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120."
+      "q": "How many credits does one UGC-style image use?",
+      "a": "One generated image uses 24 credits. You see the cost before you start, and a failed job returns its credits."
     },
     {
       "q": "Do unused credits carry into the next month?",
-      "a": "The plan shows one monthly credit amount, and that amount is the balance for the plan period. A failed job returns its credits."
+      "a": "Check the rollover terms in your account before renewal. Credits from a failed image job return to your balance."
     },
     {
-      "q": "Which languages can the spoken line use?",
-      "a": "You can generate the spoken line in the language you sell in, and reuse the same product photo for each country."
+      "q": "Can I use the same photo for another market?",
+      "a": "Yes. Reuse the product photo and add a caption in the language your shoppers use when you publish the image."
     },
     {
-      "q": "When is a change a revision, and when is it a new ad?",
-      "a": "A revision is a change you make before download: a trim, a caption fix, or a rewritten line in the editor. A brand-new version spends credits."
+      "q": "Can I change the image before I download it?",
+      "a": "Yes. Adjust the scene or crop before you save it. A newly generated version uses credits."
     },
     {
-      "q": "Does the credit balance refresh with the plan?",
-      "a": "Yes. Starter, Pro, and Premium each list a monthly credit amount, and that amount is the balance for the plan period."
+      "q": "Does my plan include a monthly credit balance?",
+      "a": "Yes. Starter, Pro, and Premium each show the monthly amount in your account."
     },
     {
-      "q": "Where do I switch between Starter, Pro, and Premium?",
-      "a": "Move between Starter, Pro, and Premium from your account when you need a different monthly balance."
+      "q": "Can I change plans from my account?",
+      "a": "Yes. Switch between Starter, Pro, and Premium in your account when your image needs change."
     },
     {
-      "q": "Does switching plans add a second credit balance?",
-      "a": "No. Switching plans changes that monthly amount. It does not add a second balance beside it."
+      "q": "Will changing plans create a second balance?",
+      "a": "No. Your account shows the balance for the plan you use, rather than a separate balance for each plan."
     },
     {
-      "q": "How do I stop a plan before the next bill?",
-      "a": "Cancel from your account, or switch to Starter, Pro, or Premium there, before the next bill."
+      "q": "Can I stop my plan before the next bill?",
+      "a": "Yes. Cancel or change your plan in your account before the next billing date."
     },
     {
-      "q": "Can I run these ads on my shop and in paid posts?",
-      "a": "Yes. You can use downloaded ads in your own campaigns, on product pages, and in social posts. You are responsible for the claims in the ad."
+      "q": "Can I use these images on my store and in paid ads?",
+      "a": "Yes. Use the downloaded still in your store, social posts, or paid image ads. Check product details and ad claims before publishing."
     },
     {
-      "q": "How do refunds work?",
-      "a": "If a job fails, its credits come back on their own. For anything else, the [Refund Policy](/refunds) explains what we review."
+      "q": "What happens if an image job fails?",
+      "a": "Its credits return to your balance. For other refund questions, read the [Refund Policy](/refunds)."
     },
     {
-      "q": "Which product page links can start an ad?",
-      "a": "Paste a link to a product you sell. The tool drafts the script, the voice, and the ad from that page. You need the right to use that page and its photos."
+      "q": "Can a product link start a creator-style image?",
+      "a": "Yes. Paste a product page you control, then review the product details and image before downloading."
     },
     {
-      "q": "After the clip is ready, can I still change it?",
-      "a": "Yes. Trim the clip and fix captions in the editor. When the ad needs a longer motion cut, open [creator-style video ads](page:video-ads)."
+      "q": "Can I edit the result after it is made?",
+      "a": "Yes. Adjust the image before download. If you need motion later, try [creator-style video ads](page:video-ads)."
     },
     {
       "q": "Which files can I add at the start?",
-      "a": "A product photo is the usual start, and a product link works too. The person on screen is an AI avatar, and you can add up to 7 reference images."
+      "a": "Start with a clear product photo or a product link. Add reference images you have permission to use when you need them."
     }
   ],
   "visual": {
@@ -123,17 +123,17 @@
       "options": [
         [
           "Template",
-          "Creator-style photo"
+          "Creator-style product photo"
         ],
         [
           "Size",
-          "Square"
+          "Square 1:1 image"
         ]
       ]
     },
     "picker": {
-      "title": "Browse UGC Templates to Post",
-      "lead": "Each card is a tall 9:16 UGC video ad. Upload your product photo above, then write the caption after you download.",
+      "title": "Explore UGC Template Ideas",
+      "lead": "Explore visual ideas by category, then make your own creator-style still from a product photo.",
       "chips": [
         {
           "id": "accessories",
@@ -551,14 +551,14 @@
     },
     "titles": {
       "m2": {
-        "h2": "How to Make AI UGC Video Ads in 3 Simple Steps"
+        "h2": "How to Make a UGC Style Photo in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Browse UGC Video Templates by Category",
-        "lead": "Each card is a tall 9:16 UGC video ad. Upload your product photo above, then write the caption after you download."
+        "h2": "Explore UGC Templates by Category",
+        "lead": "Browse visual ideas, then upload your product photo to make a still image for your ad."
       },
       "faq": {
-        "h2": "Questions About AI UGC Video Ads"
+        "h2": "Questions About UGC Style Product Photos"
       }
     }
   },
@@ -589,43 +589,43 @@
     }
   ],
   "reviews": {
-    "h2": "How Sellers Make an AI UGC Ad",
-    "lead": "Four sellers pick a face, a language, and a line, then download a cut they can test.",
+    "h2": "How Sellers Use Creator-Style Photos",
+    "lead": "See how sellers place their products in everyday scenes for still image ads.",
     "items": [
       {
         "example": true,
         "who": "Skincare seller",
-        "t": "Speak a Routine Line",
-        "d": "They place the bottle in a morning routine and pick the face and the line. They write any claim after download, and they skip hiring a creator for that scene.",
+        "t": "Show the Bottle in a Routine",
+        "d": "They place the skincare bottle in a bright morning routine scene and check the label before using the still in an ad.",
         "img": "n:guide:img2-tpl-ugc-review1-r1"
       },
       {
         "example": true,
         "who": "Snack seller",
-        "t": "Unbox Without a Creator",
-        "d": "They make an unboxing from the pouch photo, and the hands in it come from the tool. They check the label against the source before the ad runs.",
+        "t": "Show a First-Look Unboxing",
+        "d": "They show the snack pouch being opened in one still image, then check that the package matches what they sell.",
         "img": "n:guide:img2-tpl-ugc-review2-r1"
       },
       {
         "example": true,
         "who": "Fitness seller",
-        "t": "Demo the Bottle",
-        "d": "They show the workout bottle in use at a gym bench and can switch the face. They do not ship a sample to a creator for this test.",
+        "t": "Place the Bottle at the Gym",
+        "d": "They show the workout bottle beside a gym bench in a natural-looking product photo, without sending a sample to a creator.",
         "img": "n:guide:img2-tpl-ugc-review3-r1"
       },
       {
         "example": true,
         "who": "Home seller",
-        "t": "Post the Mug in Two Sizes",
-        "d": "They download a tall cut for TikTok and a square for the grid from the same mug photo. The line stays the one they approved.",
+        "t": "Use the Mug in Two Image Sizes",
+        "d": "They use the same mug photo to prepare one image for a social feed and another for a square ad placement.",
         "img": "n:guide:img2-tpl-ugc-review4-r1"
       }
     ]
   },
-  "related_h2": "Explore More Ad Tools",
-  "related_lead": "Move from a product link to an AI actor, a creator-style video, a product video, or an ad image.",
-  "cta_title": "Start Your First UGC Ad",
-  "cta_lead": "Start from a product photo or a product link, pick the line, and download a cut you can test.",
+  "related_h2": "More Ways to Advertise Your Product",
+  "related_lead": "Explore more photo and ad tools for the same item.",
+  "cta_title": "Make Your First Creator-Style Image",
+  "cta_lead": "Upload your product photo, choose an everyday scene, and download a still image you can use in an ad.",
   "blockOrder": [
     "hero",
     "picker",
@@ -639,42 +639,42 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "Full Creative Control",
-      "h2": "Every Tool on One UGC Ad",
-      "lead": "Set the face, the sound, the words, and the file, then download the ad.",
+      "eyebrow": "Your Product, Your Scene",
+      "h2": "Control the Look of Each UGC Style Image",
+      "lead": "Choose the setting and product placement, refine the image, and download a still for your next ad.",
       "items": [
         {
-          "t": "Avatars That Fit the Brand",
-          "d": "Pick a face that fits the buyer you sell to. You can switch that face before you write a single line."
+          "t": "Choose a Natural Setting",
+          "d": "Put your product in a kitchen, bathroom, desk, or other everyday scene that fits how shoppers use it."
         },
         {
-          "t": "The Buyer's Language",
-          "d": "Speak the line in the language your shoppers use. It starts from the photo you already have, with no new shoot."
+          "t": "Keep the Product Clear",
+          "d": "Show the item you sell at a useful size, with its shape and important details easy to recognize."
         },
         {
-          "t": "Music Under the Ad",
-          "d": "Add a short track made for this ad, or drop in a song from the library you already like."
+          "t": "Make More Scene Options",
+          "d": "Try another setting or crop from the same product photo when you want a new image to test."
         },
         {
-          "t": "Fix It in the Editor",
-          "d": "Trim a long pause and fix a caption in the same editor. The download has no watermark."
+          "t": "Refine in the Editor",
+          "d": "Adjust the crop, background, and image details before you download the still."
         },
         {
-          "t": "Words on the Picture",
-          "d": "Shoppers can read the line while the voice keeps playing. The words sit on the picture, not in a separate file."
+          "t": "Add Your Offer Line",
+          "d": "Leave room for a short headline or offer, then add the words you approve before posting."
         },
         {
-          "t": "Ready for the Feed",
-          "d": "Send the ad to YouTube, TikTok, or Instagram. Use a tall 9:16 file, or a square 1:1 file."
+          "t": "Use the Right Image Size",
+          "d": "Prepare a still image for an Instagram feed, product page, or paid social placement."
         }
       ]
     }
   ],
   "definition": {
-    "title": "Full Creative Control",
+    "title": "A Creator-Style Product Still",
     "paras": [
-      "You get the tools to make a professional UGC ad, even if you have never filmed one.",
-      "The face is an AI avatar, so a shop can publish a test without hiring a creator. You still decide every line. Details sit on [AI content trust and safety](page:trust)."
+      "Make a product image that looks at home in a social feed, with your item in an everyday scene.",
+      "You choose the setting and check the product details before posting. For responsible use, see [AI content trust and safety](page:trust)."
     ]
   }
 }
