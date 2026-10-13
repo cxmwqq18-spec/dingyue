@@ -587,7 +587,7 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Teach One Press",
+    "h2": "How to Make a Product How-To",
     "lead": "Four ways a shop teaches one press of the steamer on a blue shirt, and the filming day each one skips.",
     "items": [
       {
@@ -613,7 +613,7 @@
       },
       {
         "example": true,
-        "who": "Desk seller",
+        "who": "Home seller",
         "t": "Trim the Demo",
         "d": "They pick an AI avatar for the steamer demo and trim the press in the editor before the how-to goes up. The lesson stays one move.",
         "img": "n:guide:img2-tpl-howto-review4-r1"
@@ -654,7 +654,7 @@
           "d": "An AI avatar you pick can present the press, and you can post the clip as your shop's ad."
         },
         {
-          "t": "Start from a Link, Batch, or API",
+          "t": "Start from a Link or a Batch",
           "d": "A product link, a batch of photos, or the shop software you already use can start the how-to."
         },
         {
@@ -693,7 +693,7 @@
         "href": "page:plat-youtube-shorts"
       },
       {
-        "t": "Post on the Next Channel",
+        "t": "Post on Another Channel You Use",
         "label": "All Platform Sizes for This How-To",
         "d": "Open the channel list when the next post is not one of these four.",
         "href": "page:video-hub"

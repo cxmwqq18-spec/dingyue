@@ -121,7 +121,7 @@
       "t": "A Fresh Collection Grid",
       "d": "Give the ceramics in the collection a setting that belongs together, so the Shopify grid looks planned. One product photo is enough to start the next tile.",
       "img": "n:guide:fx42-shopify-benefit-collection",
-      "alt": "You get a matching collection grid. Three plain ceramic home goods sit together for the Shopify page."
+      "alt": "You get a matching collection grid. Three plain ceramic bowls sit together for the Shopify page."
     },
     {
       "t": "Page Shot and Life Shot",
@@ -241,21 +241,21 @@
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Post on the Next Channel",
+        "t": "Post on the Channels You Already Use",
         "label": "Open every platform",
-        "d": "Open the channel list and post the bowls where you already sell.",
+        "d": "Open TikTok, Instagram, Facebook, Shorts, or Amazon and post the bowls where you already sell.",
         "href": "/ai-video-generation"
       }
     ]
   },
   "reviews": {
     "h2": "How Shops Use the Product Photos",
-    "lead": "Four ways a shop turns one upload into files for the product page, and the location day each one skips.",
+    "lead": "Four ways a shop turns one upload into files for the product page, and skips renting a room to shoot.",
     "items": [
       {
         "example": true,
         "who": "Tableware shop",
-        "t": "Square the Four Bowls",
+        "t": "Match the Bowl Squares",
         "d": "They use a bowl photo to make a square product photo that matches the other colors in the collection. The grid goes up without a location day.",
         "img": "n:guide:img2-plat-shopify-review1-r1"
       },
@@ -270,7 +270,7 @@
         "example": true,
         "who": "Storage shop",
         "t": "Basket on the Shelf",
-        "d": "They place the linen basket on a bright shelf for the lifestyle frame, and keep the plain shot as a second file. No prop house gets booked.",
+        "d": "They place the linen basket on a bright shelf for the lifestyle frame, and keep the plain shot as a second file. Nobody has to rent props for that photo.",
         "img": "n:guide:img2-plat-shopify-review3-r1"
       },
       {

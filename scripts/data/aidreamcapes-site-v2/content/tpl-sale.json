@@ -600,7 +600,7 @@
         "h2": "How to Make a Sale Banner in 3 Simple Steps"
       },
       "faq": {
-        "h2": "Sale Banner Maker Answers"
+        "h2": "Instagram Sale Post Answers"
       },
       "m3": {
         "h2": "Pick a Sale Scene",
@@ -787,14 +787,14 @@
     {
       "eyebrow": "Edit the Sale Square",
       "h2": "Edit the Square, Then Post It",
-      "lead": "You change the background, the model, or the size, and the offer beside the blue suitcase still leads the square.",
+      "lead": "You change the background, the person, or the size, and the offer beside the blue suitcase still leads the square.",
       "items": [
         {
           "t": "Backgrounds and Setting",
           "d": "Place the product on white, on a clear ground, in a new setting, or against a softer background. The product shape stays the one you uploaded."
         },
         {
-          "t": "Show It Worn, Flat, or Clean",
+          "t": "Show It Held, Flat, or Clean",
           "d": "An AI avatar can wear the item. You can also ask for a top-down photo, a garment with no visible mannequin, a softer shadow, or a cleaned product shot."
         },
         {
@@ -817,7 +817,7 @@
     }
   ],
   "trust": {
-    "h2": "Facts Before You Post",
+    "h2": "Check Your Sale Square Before You Post",
     "lead": "The square goes out ready for the feed, with your offer added by you.",
     "items": [
       {

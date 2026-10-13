@@ -590,21 +590,21 @@
     "cta"
   ],
   "reviews": {
-    "h2": "How Shops Make a Cinematic Open",
+    "h2": "How Shops Make a Cinematic Clip",
     "lead": "Each seller starts from one product photo and gets a slow dark move without booking a set.",
     "items": [
       {
         "example": true,
         "who": "Audio shop",
-        "t": "Slow Push on the Speaker",
+        "t": "Slow Move on the Speaker",
         "d": "They start from the black speaker photo and get a slow dark move with studio-style light. They post it without booking a set.",
         "img": "n:guide:img2-tpl-film-review1-r1"
       },
       {
         "example": true,
         "who": "Perfume brand",
-        "t": "Night-Table Open",
-        "d": "They set the perfume bottle in a low-light open from the photo they already sell. The clip goes on the product page, and no crew is on the calendar.",
+        "t": "Perfume on the Night Table",
+        "d": "They set the perfume bottle in a low-light shot from the photo they already sell. The clip goes on the product page, and no crew is on the calendar.",
         "img": "n:guide:img2-tpl-film-review2-r1"
       },
       {
@@ -617,7 +617,7 @@
       {
         "example": true,
         "who": "Drinkware shop",
-        "t": "Wide Cut and a Tall Cut",
+        "t": "One Wide File and One Tall File",
         "d": "They export the travel mug once wide and once tall from the same photo. Both cuts keep the slow light, and they skip a second shoot.",
         "img": "n:guide:img2-tpl-film-review4-r1"
       }
@@ -672,7 +672,7 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Finish the Dark Open",
+      "eyebrow": "Finish the Dark Shot",
       "h2": "What You Can Add to a Cinematic Open",
       "lead": "A calm line and a music bed can ride under the dark open, so the reveal is finished from one photo.",
       "items": [

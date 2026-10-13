@@ -784,30 +784,30 @@
     "items": [
       {
         "example": true,
-        "who": "Bottle brand",
-        "t": "Spoken Ad for the Bottle",
-        "d": "They have an adult hold the insulated bottle and say the line they approved. They post that clip and skip a shoot for this week's color.",
+        "who": "Cleanser shop",
+        "t": "Spoken Ad for the Cleanser",
+        "d": "They have an adult hold the cleanser and say the line they approved. They post that clip and skip a shoot for this cleanser.",
         "img": "n:guide:img2-video-hub-review1-r1"
       },
       {
         "example": true,
-        "who": "Lunch brand",
-        "t": "Same Bento Walkthrough",
-        "d": "They show the bento box the same way for a new color: open the lid, name the compartments, stop. They do not rebrief a creator for the repeat.",
+        "who": "Bottle brand",
+        "t": "Same Bottle Walkthrough",
+        "d": "They show the insulated bottle the same way for a new color: turn it, name the size, stop. They do not hire the creator again for the repeat.",
         "img": "n:guide:img2-video-hub-review2-r1"
       },
       {
         "example": true,
-        "who": "Fragrance shop",
-        "t": "Perfume in a Real Room",
-        "d": "They place the perfume bottle on a bedroom dresser so the size reads next to ordinary objects. The clip replaces a white-sweep shoot for this bottle.",
+        "who": "Apparel shop",
+        "t": "Jacket in a Real Room",
+        "d": "They place the jacket on a bedroom chair so the length is easy to see. The clip replaces a plain white-background shoot for this jacket.",
         "img": "n:guide:img2-video-hub-review3-r1"
       },
       {
         "example": true,
-        "who": "Fitness seller",
-        "t": "Actor Matched to the Rope",
-        "d": "They pick an actor who fits an early gym buyer and have them hold the jump rope. The same face can carry the next cut without a new casting call.",
+        "who": "Skincare shop",
+        "t": "Actor Matched to the Serum",
+        "d": "They pick an actor who fits a skincare buyer and have them hold the serum. The same face can carry the next clip without a new casting call.",
         "img": "n:guide:img2-video-hub-review4-r1"
       }
     ]

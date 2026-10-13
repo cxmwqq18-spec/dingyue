@@ -568,7 +568,7 @@
         "example": true,
         "who": "Necklace seller",
         "t": "Keep the Stones and the Crop",
-        "d": "They clear the cloth under a tennis bracelet and run that same crop on the next chain. They check every stone against the photo they took.",
+        "d": "They clear the cloth under a stone necklace and run that same crop on the next chain. They check every stone against the photo they took.",
         "img": "n:guide:img2-tpl-jewel-review1-r1"
       },
       {
@@ -581,7 +581,7 @@
       {
         "example": true,
         "who": "Ring seller",
-        "t": "Line Up the Size Run",
+        "t": "Center the Next Ring Size",
         "d": "They center a size run on the same point of the square. The next size uses that crop instead of a new table setup.",
         "img": "n:guide:img2-tpl-jewel-review3-r1"
       },

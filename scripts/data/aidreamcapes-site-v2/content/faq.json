@@ -30,7 +30,7 @@
       "a": "Starter is $24.50 per month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A product photo uses 24 credits. A video uses 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. See [Pricing](page:pricing)."
     },
     {
-      "q": "What file do I get after I approve a job?",
+      "q": "What file do I get after I approve the photo or video?",
       "a": "After you approve, the tool spends the credits shown on screen and puts the file in your account when it is ready. If the file fails, those credits come back."
     },
     {
@@ -38,7 +38,7 @@
       "a": "Yes. Paste a public product page you are allowed to use, and the tool can start the video from that page. Review the result against the product before you post it."
     },
     {
-      "q": "Which length and frame can I pick for the ad?",
+      "q": "Which length and shape can I pick for the ad?",
       "a": "Choose 6, 10, 15, or 30 seconds. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Product photos are square. The credit charge appears before you start."
     },
     {
@@ -81,7 +81,7 @@
     "guide-product-photo-tips"
   ],
   "reasons": {
-    "h2": "Turn an Answer Into a File",
+    "h2": "Make the Next Photo or Video",
     "lead": "You can use these tools today, starting from one product photo.",
     "items": [
       {

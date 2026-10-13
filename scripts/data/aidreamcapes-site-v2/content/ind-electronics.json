@@ -36,7 +36,7 @@
     },
     {
       "q": "Will the speaker clip state my battery life or wattage?",
-      "a": "Add battery life, watts, and which devices the cable fits in the listing or the editor. Do not trust the picture for those numbers, so you can check them first."
+      "a": "No. Type the battery life and the wattage yourself in the editor or on the listing, then check them against the real speaker."
     },
     {
       "q": "Can I run the speaker clip as a paid ad?",
@@ -191,7 +191,7 @@
   },
   "reviews": {
     "h2": "How Sellers Use a Gadget Video",
-    "lead": "Four ways an electronics shop shows one gadget. These cards describe the work, not a named seller.",
+    "lead": "Four ways an electronics shop shows one gadget in a clip.",
     "items": [
       {
         "example": true,
@@ -246,7 +246,7 @@
           "d": "A product page is enough to start an unboxing, a setup, or a desk scene."
         },
         {
-          "t": "An Avatar Holds the Webcam",
+          "t": "An Avatar Holds the Speaker",
           "d": "An AI avatar can sit at the desk and hold the speaker. Choose a face that fits who buys this kind of gadget."
         },
         {

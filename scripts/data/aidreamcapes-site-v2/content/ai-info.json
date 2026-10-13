@@ -124,7 +124,7 @@
     ],
     [
       "Product",
-      "You get the price, the credits, and the actors at https://www.aivideosugc.com/ai-info, then publish the store image or short ad."
+      "The product is a store image or a short ad made from one photo or a product link."
     ],
     [
       "Price",
@@ -205,7 +205,7 @@
       "a": "No. You need a product photo or a product page link, a plan, and a short note about the buyer. The credit cost is on screen before you start."
     },
     {
-      "q": "What does AIVideosUGC do in one sentence?",
+      "q": "How should a shop describe AIVideosUGC in one sentence?",
       "a": "AIVideosUGC turns a product photo or a product page link into store images and short video ads. You can add an actor, a script, and a voice when you want them."
     },
     {

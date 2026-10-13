@@ -42,7 +42,7 @@
       "a": "No. Use a photo you already have. The person in the Reel is an AI avatar from a library of 53 AI actors. The setting can be the one already in the photo."
     },
     {
-      "q": "Which frame should I check before I download the Reel?",
+      "q": "What should I check on the Reel before I download it?",
       "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
     }
   ],
@@ -234,7 +234,7 @@
   },
   "reviews": {
     "h2": "How Shops Put an Instagram Ad Together",
-    "lead": "Four ways a shop uses one product photo. These cards describe the work, not a named seller.",
+    "lead": "Four ways a shop uses one product photo.",
     "items": [
       {
         "example": true,
@@ -254,7 +254,7 @@
         "example": true,
         "who": "Lip balm maker",
         "t": "Three Tubes, One Test",
-        "d": "They open on the three balm tubes, then on a hand using one of them. Both cuts come from the photos they already had.",
+        "d": "They start with the three balm tubes, then show a hand using one of them. Both clips come from the photos they already had.",
         "img": "n:guide:img2-plat-instagram-review3-r1"
       },
       {

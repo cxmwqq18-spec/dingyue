@@ -213,7 +213,7 @@
       "use": "Explains a product from a relaxed living room",
       "category": "Actor-led testimonial",
       "talent": "an adult East Asian woman in her thirties",
-      "line": "I keep this next to me on the living-room couch, so a quiet night still shows it.",
+      "line": "I keep this next to me on the living-room couch, so I can reach it without getting up.",
       "action": "seated on a bright living-room sofa with a plant behind, one hand gesturing gently",
       "ambient": "their voice and natural living room room tone",
       "ref": "n:guide:ac1-actor-card-living-room-1-r1"
@@ -258,7 +258,7 @@
       "use": "Says one clear thing about the product",
       "category": "Actor-led testimonial",
       "talent": "an adult Black man in his twenties",
-      "line": "I leave this on the studio desk between recordings, ready for the next one.",
+      "line": "I leave this on the studio desk between takes, so the next line can start on it.",
       "action": "chest-up portrait in a dim studio with a soft colored rim light, hands below frame",
       "ambient": "their voice and natural studio room tone",
       "ref": "n:guide:ac1-actor-card-studio-2-r1"
@@ -378,7 +378,7 @@
       "use": "Recommends a product during a cafe break",
       "category": "Actor-led testimonial",
       "talent": "an adult Middle Eastern woman in her thirties",
-      "line": "During a slow cafe pause I reach for this and set it in the center of the table.",
+      "line": "I set this in the center of the cafe table so the size is easy to see.",
       "action": "standing near a cafe window with one hand making a small conversational gesture",
       "ambient": "their voice and natural cafe room tone",
       "ref": "n:guide:ac1-actor-card-cafe-2-r2"
@@ -438,7 +438,7 @@
       "use": "Says one thing about the product in a podcast",
       "category": "Actor-led testimonial",
       "talent": "an adult Black woman in her twenties",
-      "line": "I keep this next to the microphone and lift it before I start talking.",
+      "line": "I lift this beside the microphone and name the one thing it does.",
       "action": "seated in a moody podcast corner with red studio light, hands below frame",
       "ambient": "their voice and natural podcast room tone",
       "ref": "n:guide:ac1-actor-card-podcast-2-r1"
@@ -950,7 +950,7 @@
   "cta_lead": "Choose a face and a voice, then make a product video from one photo. You see the credit cost before you start.",
   "faq": [
     {
-      "q": "What is an AI actor I can put in a product ad?",
+      "q": "What does an AI actor do in a product ad?",
       "a": "An adult AI actor, built for ads, not a cartoon. You choose the face and write the line. Use the clip as your presenter. Do not treat it as a review from a buyer."
     },
     {
@@ -962,7 +962,7 @@
       "a": "Wherever the product already appears. A shoe brand might run it as the paid ad, then keep a shorter cut on the product page. The file has no watermark."
     },
     {
-      "q": "Can one AI actor explain one feature, like a lamp button?",
+      "q": "Can one AI actor explain a single product feature?",
       "a": "Yes. Point at the lamp's power button and say what it does, and keep that button in frame. You can explain it again when you add a color."
     },
     {
@@ -1070,7 +1070,7 @@
     }
   ],
   "reviews": {
-    "h2": "How Shops Cast an AI Actor",
+    "h2": "How Shops Use an AI Actor",
     "lead": "Four ways a shop uses one AI actor on a product it already sells, and the booking each one skips.",
     "items": [
       {
@@ -1091,14 +1091,14 @@
         "example": true,
         "who": "Phone case seller",
         "t": "Keep the Approved Script",
-        "d": "They reuse the accepted script about the coral phone case on every render. Nobody has to chase a creator to fix one word.",
+        "d": "They reuse the accepted script about the coral phone case on every new clip. Nobody has to chase a creator to fix one word.",
         "img": "n:guide:img2-ai-actors-review3-r1"
       },
       {
         "example": true,
         "who": "Running shoe shop",
         "t": "Post the Shoe Clip",
-        "d": "They have one AI actor hold the coral running shoe for a paid ad and a shorter cut on the product page. The crew call for that pair does not go out.",
+        "d": "They have one AI actor hold the coral running shoe for a paid ad and a shorter version on the product page. Nobody has to call a crew for that pair.",
         "img": "n:guide:img2-ai-actors-review4-r1"
       }
     ]

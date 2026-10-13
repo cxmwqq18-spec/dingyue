@@ -603,7 +603,7 @@
         "example": true,
         "who": "Snack seller",
         "t": "Unbox Without a Creator",
-        "d": "An unboxing is generated from the pouch photo, with hands that are generated. They check the label against the source before the ad runs.",
+        "d": "They make an unboxing from the pouch photo, and the hands in it come from the tool. They check the label against the source before the ad runs.",
         "img": "n:guide:img2-tpl-ugc-review2-r1"
       },
       {

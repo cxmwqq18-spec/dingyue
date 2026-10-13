@@ -178,17 +178,17 @@
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "Post the Watch as a Short",
+        "t": "Post the Bracelet as a Short",
         "d": "A tight Short that stays on the watch from the first moment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "List the Piece on Amazon",
+        "t": "List the Necklace Where the Shop Already Sells",
         "d": "A sharp gallery image of the piece you can put on the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Match the Bag on Your Store",
+        "t": "Show the Earrings on Your Store Page",
         "d": "Consistent imagery for the bag and the pieces around it.",
         "href": "/platforms/shopify-product-photos"
       }
@@ -209,7 +209,7 @@
         "example": true,
         "who": "Necklace seller",
         "t": "A Collarbone Frame",
-        "d": "They turn a necklace photo into a spoken ad with the chain at the collarbone, and run that file on the product page. They do not book a fit model for the drop.",
+        "d": "They turn a necklace photo into a spoken ad with the chain at the collarbone, and run that file on the product page. They do not book a fit model for that launch.",
         "img": "n:guide:img2-ind-jewelry-accessories-review2-r1"
       },
       {
@@ -223,7 +223,7 @@
         "example": true,
         "who": "Bracelet shop",
         "t": "A Wrist Ad From One Photo",
-        "d": "They upload the bracelet and get a wrist ad with a spoken line, then post the vertical cut. They do not hold a model day for that piece.",
+        "d": "They upload the bracelet and get a wrist ad with a spoken line, then post the tall phone file. They do not hold a model day for that piece.",
         "img": "n:guide:img2-ind-jewelry-accessories-review4-r1"
       }
     ]

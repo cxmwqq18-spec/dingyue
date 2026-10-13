@@ -83,7 +83,7 @@
     },
     {
       "q": "Which kinds of shops can follow the photo steps and the video steps?",
-      "a": "You use the same photo steps and video steps for the tote, the lunch container, and every other shop. Rules differ by product type, so check the [page for your kind of shop](page:industries) before you upload."
+      "a": "You use the same photo steps and video steps for the tote, the lunch container, and every other shop. Rules differ by product type, so check the industry page for your shop before you upload."
     },
     {
       "q": "Can one phone photo of my product feed every guide?",
@@ -143,7 +143,7 @@
       {
         "example": true,
         "who": "Tableware seller",
-        "t": "Fit the Plate in Frame",
+        "t": "Make the Plate the Main Image",
         "d": "They set the ceramic plate fully inside a bright white backdrop and use that still as the main image. The guide tells them when the plate is ready to post.",
         "img": "n:guide:img2-guides-review3-r1"
       },

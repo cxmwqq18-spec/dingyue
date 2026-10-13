@@ -71,7 +71,7 @@
     },
     {
       "q": "After I upload a garment, when is the ad ready to post?",
-      "a": "You can download the on-model clip of the olive bomber and post the length your shop already uses. A clip is 6, 10, 15, or 30 seconds, and you skip the booking."
+      "a": "You can download the on-model clip of the olive bomber as soon as it is ready, in the length your shop already uses."
     },
     {
       "q": "What does a clothing ad cost, and can I post the square crop?",
@@ -110,7 +110,7 @@
     },
     "picker": {
       "title": "Pick a Clothing Video to Post",
-      "lead": "Each card is a tall 9:16 clothing video you can post. Upload the olive bomber, then check the collar, hem, and color against the piece.",
+      "lead": "Each card is a clothing video you can post. Upload the olive bomber, then check the collar, hem, and color against the piece.",
       "chips": [
         {
           "id": "accessories",
@@ -557,8 +557,8 @@
       {
         "example": true,
         "who": "Streetwear label",
-        "t": "Show a Daily Layer",
-        "d": "They use the same path for a street layer a buyer would wear on a commute. The video posts without a fitting day.",
+        "t": "Show a Commute Outfit",
+        "d": "They use the same path for a jacket a buyer would wear on a commute. The video posts without a fitting day.",
         "img": "n:guide:img2-tpl-tryon-review2-r1"
       },
       {
@@ -572,7 +572,7 @@
         "example": true,
         "who": "Tailoring shop",
         "t": "Show the Trouser Video",
-        "d": "They start from a flat photo of a tailored trouser and post a clip that shows the break at the shoe. The booking for that pair stays off the week.",
+        "d": "They start from a flat photo of a tailored trouser and post a clip that shows where the hem meets the shoe. The booking for that pair stays off the week.",
         "img": "n:guide:img2-tpl-tryon-review4-r1"
       }
     ]

@@ -129,14 +129,14 @@
         "t": "Keep Packing the Tote on Camera",
         "d": "Someone who posts product rounds can pack the canvas tote on the hallway bench from one photo. The channel does not go quiet during a travel week.",
         "img": "n:gen2:video-ads-g2",
-        "alt": "Pack the canvas tote on the hallway bench so the ad shows what fits.",
+        "alt": "A canvas tote sits on a hallway bench beside a wallet, a book, and a bottle, so the ad shows what fits.",
         "frame": "phone"
       },
       {
         "t": "Explain the Tablet Stand",
         "d": "An app team can show the tablet stand on a tidy desk while a person explains one feature. The clip is there to win a signup, and no studio was booked for it.",
         "img": "n:gen2:ind-electronics-g2",
-        "alt": "Show the tablet on its stand at a tidy desk, with the screen dark, ready to post.",
+        "alt": "A tablet sits on its stand at a tidy desk, with a landscape on the screen and no words.",
         "frame": "browser"
       }
     ]
@@ -291,7 +291,7 @@
     }
   ],
   "limitations": {
-    "h2": "Check the Product, Then Post",
+    "h2": "What to Check Before You Post an AI UGC Ad",
     "items": [
       {
         "t": "Add the Real Size",
@@ -952,7 +952,7 @@
         "example": true,
         "who": "Candle maker",
         "t": "A Gift-Guide Clip",
-        "d": "They turn one candle photo into a short unboxing ad and post the vertical file. They do not set up lights for that gift-guide cut.",
+        "d": "They turn one candle photo into a short unboxing ad and post the vertical file. They do not set up lights for that gift guide.",
         "img": "n:guide:img2-home-review2-r1"
       },
       {

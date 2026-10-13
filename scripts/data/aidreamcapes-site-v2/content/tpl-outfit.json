@@ -612,12 +612,12 @@
         },
         {
           "icon": "users",
-          "t": "Use an AI Avatar or a Twin",
+          "t": "Use an Avatar or a Twin",
           "d": "An AI avatar can wear the clothing, or an AI twin can keep the same presenter on the next reel."
         },
         {
           "icon": "sparkle",
-          "t": "Start From a Script or the Listing",
+          "t": "Start From the Script or Listing",
           "d": "A short script, or a product link, can start the reel from the garment page."
         },
         {

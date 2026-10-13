@@ -3,7 +3,7 @@
   "title": "AI Packaging Design Generator | AIVideosUGC",
   "description": "An AI packaging design generator turns one product photo into a realistic pack. Change the background and style in one line, then download the listing mockup.",
   "h1": "AI Packaging Design Generator for Listing Mockups",
-  "eyebrow": "Pack Shots You Can Post",
+  "eyebrow": "Packaging Designs You Can Post",
   "lead": "Upload the pouch or box photo, name the pack style in one line, and download a square packaging design for the listing. Check it against the product you ship before anything is printed.",
   "secondary_keywords": [
     "box mockup from design photo",
@@ -50,11 +50,11 @@
       "a": "It makes a square packaging picture from one product photo. You name the style, such as a matte box or a stand-up pouch, and download the file. It is a picture you can check, not a print-ready pattern and not a filmed shelf ad."
     },
     {
-      "q": "Do I need a designer before the pack hits the listing?",
+      "q": "Do I need a designer before the pack goes on the listing?",
       "a": "No. You do not need a design job or a design degree to start. Upload the product photo and name the look in plain words. Publish the square file on the product page when it matches the pack you sell. Check the preview before you publish it."
     },
     {
-      "q": "How do I get a pack shot from one product photo?",
+      "q": "How do I get a packaging design from one product photo?",
       "a": "Upload a photo of the box, pouch, or bottle, then name the style in one sentence, such as a cream label on a kraft box. The tool returns a square packaging design you can preview. Download it when the shape matches the product you ship."
     },
     {
@@ -86,7 +86,7 @@
       "a": "Yes. Use the design on your listing, in a paid ad, or hand the file to a client whose product is in the photo. The download has no watermark, so you can place it where that product already sells."
     },
     {
-      "q": "Why name the pack style instead of drawing it?",
+      "q": "Can I describe the pack style instead of drawing it?",
       "a": "You say the style in one line instead of building the pack in design software. A new product can keep the same kind of file, and only the style line changes, so you are not starting the layout over."
     }
   ],
@@ -533,7 +533,7 @@
         "lead": "Each card is a video ad for another product. Your preview is the square image from one photo of the pouch, box, or bottle you will ship."
       },
       "faq": {
-        "h2": "Questions Before You Post the Pack"
+        "h2": "Questions About AI Packaging Design"
       }
     }
   },
@@ -642,7 +642,7 @@
   "more_sections": [
     {
       "eyebrow": "In the Editor",
-      "h2": "Publish the Pack You Preview",
+      "h2": "Preview the Pack Design, Then Download It",
       "lead": "Upload a product photo and name the pack style in one line. An avatar and a spoken line stay available when that design also becomes a video you can publish.",
       "items": [
         {

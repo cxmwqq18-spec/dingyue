@@ -31,7 +31,7 @@
       "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for that ad, and you can ask again if the outline is off."
     },
     {
-      "q": "What photo works when someone should wear the hoodie?",
+      "q": "What photo should I use for a hoodie try-on?",
       "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear before you start."
     },
     {
@@ -187,12 +187,12 @@
         "example": true,
         "who": "Coat seller",
         "t": "Walk the Wool Coat",
-        "d": "They have an AI avatar walk the wool coat down a hallway from the flat photo. The buyer sees the hem move and where to buy it.",
+        "d": "They have an AI actor walk the wool coat down a hallway from the flat photo. The buyer sees the hem move, and the clip can point to the product page.",
         "img": "n:guide:img2-ind-fashion-clothing-review3-r1"
       },
       {
         "example": true,
-        "who": "Small line",
+        "who": "Small clothing label",
         "t": "Skip the Casting Day",
         "d": "They put the next color on an AI avatar from the garment photo alone. The model invoice for that test does not get sent.",
         "img": "n:guide:img2-ind-fashion-clothing-review4-r1"

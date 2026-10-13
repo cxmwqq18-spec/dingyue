@@ -109,7 +109,7 @@
     },
     {
       "q": "Do I have to label the image as AI?",
-      "a": "Follow the label your ad account asks for, then post the square. Rules differ by app and by country. For a looser phone-shot look, see [casual phone-style product photos](page:tpl-ugc)."
+      "a": "Follow the label your ad account asks for, then post the square. Rules differ by app and by country. For a looser phone-shot look, see phone-style UGC video ads."
     }
   ],
   "visual": {
@@ -311,7 +311,7 @@
         "h2": "Download a Square Social Ad Image"
       },
       "faq": {
-        "h2": "AI Ad Image Generator Answers"
+        "h2": "Social Media Post Answers"
       }
     },
     "uses": [
@@ -455,23 +455,23 @@
       },
       {
         "example": true,
-        "who": "Bottle brand",
-        "t": "Sage Bottle in a Square",
-        "d": "They place the sage green thermos in a square with room for a line they type later. The product stays the thermos they uploaded.",
+        "who": "Tote seller",
+        "t": "Cream Tote in a Square",
+        "d": "They place the cream canvas tote in a square with room for a line they type later. The product stays the tote they uploaded.",
         "img": "n:guide:img2-social-ad-photos-review2-r1"
       },
       {
         "example": true,
         "who": "One-product shop",
-        "t": "Two Scenes Before the Spend",
-        "d": "They try the charcoal hiking shoe on a curb and on an oak floor, then keep the square that shows the shoe clearly. They do not hire a photographer the night before.",
+        "t": "Two Mug Squares Before You Pay",
+        "d": "They try the cream mug in two quiet scenes, then keep the square that shows the mug clearly. They do not hire a photographer the night before.",
         "img": "n:guide:img2-social-ad-photos-review3-r1"
       },
       {
         "example": true,
         "who": "Outdoor seller",
         "t": "Offer Added After Download",
-        "d": "They download the sage thermos square and add the offer themselves. The photo does not lock in an old discount.",
+        "d": "They download the matte teal bottle square and add the offer themselves. The photo does not lock in an old discount.",
         "img": "n:guide:img2-social-ad-photos-review4-r1"
       }
     ]

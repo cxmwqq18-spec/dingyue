@@ -205,7 +205,7 @@
         "h2": "Choose a Photo That Shows the Whole Product"
       },
       "m6": {
-        "h2": "See the Product on Clean White"
+        "h2": "See Your Product on a White Background"
       },
       "m7": {
         "h2": "Keep White Background Product Photos Consistent"
@@ -215,7 +215,7 @@
       },
       "examples": {
         "h2": "See White Background Photos for Real Products",
-        "lead": "You see the tote, the mug, and the kettle on clean white, ready to list."
+        "lead": "You see the wallet and the canvas tote on clean white, ready to list."
       },
       "examplesLead": "Browse white background product photos for bags, skincare, shoes and everyday product details.",
       "templates": {
@@ -302,8 +302,8 @@
           "d": "Ten new jar photos can take the same white field in one run inside the app. You are not standing up a queue of your own."
         },
         {
-          "t": "Tell Support You Need a Larger Month",
-          "d": "When Premium is not enough, you tell support how many photos you make. That run keeps the same white field."
+          "t": "Ask Support for More Photos",
+          "d": "When Premium is not enough, tell support how many photos you need this month. The extra photos keep the same white field."
         }
       ]
     },
