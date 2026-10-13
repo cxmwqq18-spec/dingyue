@@ -1,10 +1,10 @@
 {
   "id": "white-background",
   "title": "White Background Product Photos | AIVideosUGC",
-  "description": "Put a product photo on white for Amazon, Shopify, or Etsy. Keep every edge of the item, then download the file and set it as the main image.",
+  "description": "Put a product photo on a white background for Amazon, Shopify, or Etsy. Keep every edge of the item, then download the file and set it as the main image.",
   "h1": "Put a Product Photo on a White Background",
   "eyebrow": "White Photos Ready to List",
-  "lead": "The mug you shot on the counter can sit on a white background, with the clutter gone and the edges kept. When the folder is bigger than one photo, your shop software can send the rest.",
+  "lead": "Put any product photo on white in a few minutes. You get the plain white look a marketplace wants on the main image. One photo at a time in the app, or the whole folder through the API.",
   "secondary_keywords": [
     "white background product photo maker",
     "white background main image for marketplaces",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use the photo where the brown wallet and every edge sit inside the frame. Start from that photo instead of another shoot."
+      "d": "Upload a product image where the whole item sits inside the frame. Start from that photo instead of another shoot."
     },
     {
       "t": "Choose a White Background",
-      "d": "Keep the wallet shape while the desk turns white. The clutter near the base is removed and the leather stays brown."
+      "d": "Choose white. The product shape stays, the clutter near the base goes, and a soft shadow can sit under it."
     },
     {
       "t": "Download and Post",
-      "d": "Download the wallet file. Each extra photo in the line shows 24 credits before the app or API runs it."
+      "d": "Download the file. Each extra photo shows 24 credits before the app or the API runs it."
     }
   ],
   "maker": {
@@ -46,7 +46,7 @@
   "faq": [
     {
       "q": "What do I do when the product photo still shows the room?",
-      "a": "Upload it and download a file where the product sits on white. On a wallet, every edge stays inside the frame and the desk is gone."
+      "a": "Upload it and download a file where the product sits on white. Every edge stays inside the frame and the room is gone."
     },
     {
       "q": "How do I put a product photo onto pure white?",
@@ -54,11 +54,11 @@
     },
     {
       "q": "Does a marketplace main image have to sit on white?",
-      "a": "Often it does, and a grey-looking field is a common reason a listing image gets sent back. Open the current rule for your category before you publish, and read the photo notes for that category. AIVideosUGC gives you a plain white field. It does not submit the listing for you."
+      "a": "Often it does, and a grey-looking field is a common reason a listing image gets sent back. Open the current rule for your category before you publish. You get a plain white field. The tool does not submit the listing for you."
     },
     {
-      "q": "Can the product look like a paper cutout on white?",
-      "a": "It can, if the source photo is flatly lit and the base has no weight. On a wallet, a soft shadow under the leather helps it read as sitting on the page."
+      "q": "Can the product look flat on white?",
+      "a": "It can, if the source photo is flatly lit and the base has no weight. A soft shadow under the product helps it read as sitting on the page."
     },
     {
       "q": "Does a white product photo cost anything?",
@@ -82,7 +82,7 @@
     },
     {
       "q": "Which tool fits a pure white product photo?",
-      "a": "Use AIVideosUGC when you want the room gone and the item kept. You upload one clear photo of the whole product."
+      "a": "Use this one when you want the room gone and the item kept. You upload one clear photo of the whole product."
     }
   ],
   "visual": {
@@ -258,103 +258,103 @@
     {
       "img": "n:guide:img2-white-background-benefits-1-r1",
       "alt": "The same woven straw tote sits on a linen table and, beside that, on pure white.",
-      "t": "The Label Stays Easy to Read",
-      "d": "Shoppers can read the size line on the cream mug in the search result. The busy counter is gone, so that line is what the card shows."
+      "t": "Color and Texture Stay Easy to See",
+      "d": "Shoppers can read the shape and the weave in the search result. The busy table is gone, so the product is what the card shows."
     },
     {
       "img": "n:guide:img2-white-background-benefits-2-r1",
       "alt": "An olive bomber and a yellow polo lie on a wooden chair and, beside that, on pure white.",
-      "t": "A Catalog Look From a Phone",
-      "d": "A brass desk lamp shot on a cluttered desk can belong in the catalog. The shade stays centered, the whole lamp stays in frame, and a short shadow under the base keeps it from looking pasted on."
+      "t": "A Catalog Look From a Phone Photo",
+      "d": "A shot taken in a real room can still look like a catalog photo. The whole item stays in frame, and a short shadow keeps it from looking pasted on."
     },
     {
       "img": "n:guide:img2-white-background-benefits-3-r1",
       "alt": "One beige block-heel pump sits on a wood floor beside six plain block-heel pumps on white.",
-      "t": "The Same White on Every SKU",
-      "d": "Buyers paging the shop see one white, even when the second bowl was shot under a warmer bulb. That file matches the first bowl instead of sitting cream beside it."
+      "t": "The Same White on Every Item",
+      "d": "Buyers paging the shop see one white, even when the next photo was shot under a warmer bulb. The grid matches."
     },
     {
       "img": "n:guide:img2-white-background-benefits-4-r1",
       "alt": "The same coral three-seat sofa appears in a living room, on pure white, and in a second room.",
-      "t": "Two Crops From One Saved File",
-      "d": "One saved white dish covers both placements. The store grid gets a square crop, and the email gets the rim closer to the left."
+      "t": "A Clean Base for the Next Crop",
+      "d": "One saved white file covers more than one placement. The store grid gets a square crop, and the email gets a tighter crop of the same item."
     }
   ],
   "benefits_h2": "What a Plain White Field Does for the Listing",
-  "steps_h2": "How to Add a White Background in 3 Steps",
-  "steps_lead": "You get a listing file from the wallet photo you already took. The same moves apply to the next wallet, and every edge stays in the frame.",
+  "steps_h2": "How to Make a White Background in 3 Steps",
+  "steps_lead": "Upload the photo you already took, choose white, and download a file with every edge still in the frame.",
   "more_sections": [
     {
-      "eyebrow": "Use the White File Next",
+      "eyebrow": "Use the white file next",
       "h2": "Where the White File Goes Next",
       "lead": "The finished file can go on the product page, and the folder behind it can follow when you are ready.",
       "items": [
         {
           "t": "The File on the Product Page",
-          "d": "The saved kettle file can go live on the Shopify product page you are editing. If a marketplace feed reads images from that page, it picks up the same file."
+          "d": "The saved file can go live on the product page you are editing. If a marketplace feed reads images from that page, it picks up the same file."
         },
         {
           "t": "Send It From the Tool You Already Use",
           "d": "Your catalog software can request the white field through the API, so a new photo does not wait for someone to open it by hand."
         },
         {
-          "t": "Ten Photos in One Run",
-          "d": "Ten new jar photos can take the same white field in one run inside the app. You are not standing up a queue of your own."
+          "t": "A Whole Folder in One Run",
+          "d": "A stack of new photos can take the same white field in one run inside the app. You are not standing up a queue of your own."
         },
         {
-          "t": "Ask Support for More Photos",
+          "t": "Ask Support When the Folder Is Larger",
           "d": "When Premium is not enough, tell support how many photos you need this month. The extra photos keep the same white field."
         }
       ]
     },
     {
-      "eyebrow": "The Rest of the Listing",
+      "eyebrow": "The rest of the listing",
       "h2": "More Tools for the Listing Photo",
       "lead": "The same account also builds, fixes, and exports the other images a listing needs.",
       "items": [
         {
           "t": "Remove the Old Background",
-          "d": "The plant comes off the patterned rug and sits by itself. That pot is ready for the field the listing asks for next."
+          "d": "Lift the product off a busy surface so it sits alone, ready for whatever field the listing asks for next."
         },
         {
           "t": "Generate a New Background",
-          "d": "The toaster can sit on a walnut desk while the metal color stays the one in your photo. You get a new setting without a new shoot."
+          "d": "Place the product in a new setting while the color stays the one in your photo. You get that scene without a new shoot."
         },
         {
           "t": "Place It in a Room Scene",
-          "d": "A buyer choosing a throw can see it on a sofa, not only as a folded square. That second image is there when the listing needs context."
+          "d": "Help shoppers picture the product in use, not only as a cutout. That second image is there when the listing needs context."
         },
         {
-          "t": "Brighten a Dim Photo",
-          "d": "A lantern photo that came out dim can be brightened before the store grid gets its square. The shade no longer hides the bulb."
+          "t": "Brighten and Resize",
+          "d": "Lift a dim photo, clear a stray object, and resize the file for the channel that will carry it."
         },
         {
-          "t": "Show the Shirt on an Avatar",
-          "d": "The linen shirt can appear worn, with the stripe spacing from your photo kept. That avatar stands in, so the Thursday fitting does not have to happen."
+          "t": "Show It on an AI Actor",
+          "d": "Clothing and accessories can appear worn, with the color from your photo kept. That actor stands in, so a fitting does not have to happen."
         },
         {
           "t": "A Download With No Watermark",
           "d": "The file you save has no mark across it, so you can attach it straight to the product page you are editing."
         },
         {
-          "t": "Soften the Bright Spot on Metal",
-          "d": "The gold hoop keeps its shape while the too-bright spot on the metal comes down. The earring looks like metal again, ready for the listing."
+          "t": "Soften a Harsh Highlight",
+          "d": "Metal keeps its shape while a too-bright spot comes down. The item looks like the material you ship."
         },
         {
           "t": "Extend the Frame Wider",
-          "d": "A tall photo of a phone case can fill a wide ad frame. The camera cutout stays in the picture while the white field grows out to the sides."
+          "d": "A tall photo can fill a wide ad frame. The product stays in the picture while the white field grows out to the sides."
         },
         {
           "t": "Send New Photos From Your Shop Tool",
-          "d": "The shop's product tool can call the API when a new SKU is saved. The white field is requested from the tool you already use."
+          "d": "The shop's product tool can call the API when a new item is saved. The white field is requested from the tool you already use."
         },
         {
-          "t": "Add Text to the Photo",
-          "d": "The scent name can sit under the candle in the font the site already uses. The story image goes up with the name already on it."
+          "t": "Add a Caption After Download",
+          "d": "Add the product name in your own editor, in the type the site already uses. Proof the words before the story image goes up."
         },
         {
           "t": "One Square for a Whole Folder",
-          "d": "Twelve spoon photos can all become the same square in one run. The set matches in the grid without resizing each file by hand."
+          "d": "A folder of photos can all become the same square in one run. The set matches in the grid without resizing each file by hand."
         }
       ]
     }
@@ -372,10 +372,10 @@
     "cta"
   ],
   "definition": {
-    "title": "Why Listings Use a Plain Main Image",
+    "title": "Why a White Field Helps the Listing",
     "paras": [
-      "Shoppers scanning a grid can read the shape of a wallet at a glance. The white file is that view, with the desk behind it gone.",
-      "A second photo can show the wallet in a hand. This file is the plain one they compare before they click."
+      "A white field makes the product easier to see, and easier to sell. It clears distractions and brings out color and texture.",
+      "In a long row of products, that plain field is a simple way to earn the click. A second photo can show the item in use. This file is the plain one shoppers compare first."
     ]
   },
   "reviews": {
@@ -421,17 +421,17 @@
     "tpl-angle"
   ],
   "reasons": {
-    "h2": "Who a White Background Is For",
+    "h2": "From One Listing to a Whole Catalog",
     "lead": "A single listing, an API folder, and a large catalog can each end with one product alone on white.",
     "items": [
       {
-        "t": "Finish One Listing Fast",
-        "d": "The wallet beside the keys becomes a main image with the table gone. The edges stay in the frame, so you can list from the photo you already took.",
+        "t": "For Sellers",
+        "d": "Add a clean white field from the photo you already took. The product stays, the room goes, and the main image is ready to list.",
         "icon": "Store"
       },
       {
-        "t": "Send New Photos Without Opening Each One",
-        "d": "Your shop software can send this week's new product photos and get the same white field back, without anyone opening each file.",
+        "t": "For API Folders",
+        "d": "Your shop software can send this week's new photos and get the same white field back, without anyone opening each file.",
         "icon": "Laptop"
       },
       {

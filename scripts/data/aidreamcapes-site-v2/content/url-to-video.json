@@ -1,10 +1,10 @@
 {
   "id": "url-to-video",
-  "title": "Convert a Link to Video Ads | AIVideosUGC",
-  "description": "Convert a link to video from a public product page. Paste your product link, approve the script and the actor, and download an ad you can post.",
-  "h1": "Convert a Link to Video From the Product Page",
+  "title": "Convert a Product URL to Video | AIVideosUGC",
+  "description": "Paste a product link and get an AI video for ads, demos, and social posts. Approve the actor and the script, then download a file you can post.",
+  "h1": "Make Video Ads From a Product URL",
   "eyebrow": "Paste a Link and Post the Clip",
-  "lead": "A URL to video run turns a public product page into a spoken ad. Paste that page, and the lunch box photo there stays the product in the clip.",
+  "lead": "Turn a product link into an AI video for ads, social posts, and product demos. You get that clip without a shoot and without the wait.",
   "secondary_keywords": [
     "product link to video",
     "URL to video ad",
@@ -12,43 +12,43 @@
     "turn a link into a video",
     "Shopify product video"
   ],
-  "benefits_h2": "Why a URL to Video Starts From the Listing",
+  "benefits_h2": "Why Start the Video From the Product Link",
   "benefits": [
     {
-      "t": "The Page Does the Gathering",
-      "d": "Paste the lunch box page once and the clip starts from that page. The picture on the public page is the one that enters the project, so you do not re-upload the lunch box photo."
+      "t": "Create the Video From the Product Page",
+      "d": "The link pulls in the images and the product facts for you. There is no separate edit and no shoot before you have an ad you can post."
     },
     {
-      "t": "Scripts in the Languages You Sell",
-      "d": "The script comes back with the lunch box page, and it can use a fact the listing already states. If you also sell that lunch box in French, the draft can be written in French."
+      "t": "Scripts Come Back in Seconds",
+      "d": "The draft is written from the product link, using the facts already on the page. Ask for the language you sell in, then fix any line before it runs."
     },
     {
-      "t": "Actors That Can Carry an Ad",
-      "d": "Use one actor for the lunch box and the next color so the two ads look like one shop. The library has 53 AI actors."
+      "t": "Realistic AI Actors for the Ad",
+      "d": "Pick from 53 AI actors so the ad can face the buyer you already sell to. The delivery stays steady from the first clip to the next."
     },
     {
-      "t": "Ready for the Paid Ad",
-      "d": "The lunch box clip can go out as a paid ad or a listing video once you approve it. A 15-second clip is 60 credits, and a 6-second cut is 24. You see that cost before it runs."
+      "t": "Ads You Can Test Without a Shoot",
+      "d": "Skip the crew and get more versions of the same product out faster. The time and the money stay in the ad, not in a studio day."
     },
     {
-      "t": "You Still Hold the Edit",
-      "d": "You can change the voice after the draft comes back. The edit still says what the lunch box page says, and you do not start a new project."
+      "t": "You Still Choose the Script and the Voice",
+      "d": "Change the script, the voice, the actor, and the frame before you export. One product link can feed every placement you sell on."
     }
   ],
-  "steps_h2": "How to Make a Video From a Product Page in 3 Simple Steps",
-  "steps_lead": "A public product page for the lunch box is the only link you need.",
+  "steps_h2": "How to Make a URL to Video in 3 Simple Steps",
+  "steps_lead": "A public product page is the only link you need.",
   "steps": [
     {
       "t": "Paste Your Product Page",
-      "d": "Paste the public page for this sage-green lunch box. The photo on that page is the product the clip should hold."
+      "d": "Paste the public product page. The photo and the facts on it come into the project."
     },
     {
       "t": "Select an AI Actor",
-      "d": "Pick an AI actor in a bright kitchen for the lunch box, and a quieter voice so the read stays calm."
+      "d": "Pick an AI actor who fits the buyer, or stay with one you already saved for the shop."
     },
     {
       "t": "Write the Script",
-      "d": "If the draft says the lunch box is heavy and the page says light, keep the page word and download."
+      "d": "Read the draft script, fix any line that does not match the page, then make the video."
     }
   ],
   "maker": {
@@ -70,7 +70,7 @@
   },
   "faq": [
     {
-      "q": "How do I get a clip from my lunch box listing?",
+      "q": "How do I get a clip from a product page?",
       "a": "Paste the public product page, pick an AI actor, approve the script, and download the clip. The photo on that page is the product in the file."
     },
     {
@@ -86,59 +86,59 @@
       "a": "Yes. Shops use it for ads, product pages, and social posts. You approve the script before the file is downloaded."
     },
     {
-      "q": "Can I change the drafted script before the lunch box clip is made?",
+      "q": "Can I change the drafted script before the clip is made?",
       "a": "Yes. Read the script, change any line that does not match the listing, and then render. The wording stays yours."
     },
     {
       "q": "Which frames and lengths can I download?",
-      "a": "You download a video file. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
+      "a": "Yes. You download a video file. Frames are 9:16, 1:1, 16:9, 4:3, and 3:4. Lengths are 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "What do I get after I paste the lunch box page?",
+      "q": "What do I get after I paste the product page?",
       "a": "The photo and the written facts come in from that page. You get a draft script, then you pick an actor and a voice before the clip is made."
     },
     {
       "q": "Do I need editing experience for the first clip?",
-      "a": "No. You can still open the editor if you want to trim the clip, change the music, or fix a line. A first clip does not require a timeline."
+      "a": "No. You can still open the editor if you want to trim the clip, change the music, or fix a line. A first clip does not require that."
     },
     {
       "q": "Which product pages can I paste to start a clip?",
-      "a": "Public product pages a shopper can open without logging in. A locked page, a private file, or a page with no product photo will not supply the picture."
+      "a": "Yes. Public product pages a shopper can open without logging in. A locked page or a page with no product photo will not supply the picture."
     },
     {
       "q": "Why start from the listing instead of gathering the files myself?",
-      "a": "The page already has the product photo and the facts you would otherwise retype. You spend the time on the script and the actor, not on gathering files."
+      "a": "The page already has the product photo and the facts you would otherwise retype. You spend the time on the script and the actor."
     },
     {
-      "q": "How do I go from the lunch box link to a clip I can post?",
+      "q": "How do I go from the product link to a clip I can post?",
       "a": "Paste the link, approve the script, and start the render. You see the credit cost first. There is no separate shoot to schedule before that."
     },
     {
-      "q": "How long do I wait for the lunch box clip?",
-      "a": "There is no fixed time for the lunch box clip. The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
+      "q": "How long do I wait for the clip?",
+      "a": "The render starts after you approve the script and the actor. If it fails, the credits for that job come back."
     },
     {
-      "q": "How do I turn the lunch box listing into an ad I can run?",
-      "a": "Paste the listing, pick a tall or square frame, approve the spoken line, and download. The file has no watermark and can run as an ad."
+      "q": "How do I turn a product listing into an ad I can run?",
+      "a": "Yes. Paste the listing, pick a tall or square frame, approve the spoken line, and download. The file has no watermark and can run as an ad."
     }
   ],
   "cta_lead": "Paste a public product page. You see the credit cost before the clip starts.",
   "uses": [
     {
-      "t": "Listing Videos",
-      "d": "The clip can name the size and the price already on the lunch box page, using that page's photo of the box."
+      "t": "Ecommerce Videos",
+      "d": "Turn the product page into a video that shows one feature and the price already listed there. The clip uses that page's photo."
     },
     {
       "t": "Product Demos",
-      "d": "Have the actor open a lunch-box latch once, so a buyer sees the seal. That clip can sit on the product page. You are not filming a kitchen."
+      "d": "Show one use of the product with an AI actor. You do not film it, and the clip can sit on the product page."
     },
     {
-      "t": "Paid Ad Videos",
-      "d": "A lunch box ad can use the page you already send people to. Captions sit in the file, so the claim can be read with the sound off."
+      "t": "Advertising Videos",
+      "d": "The ad is built from the link you already send shoppers to. Captions are in the file, so the line stays on screen while it plays."
     },
     {
-      "t": "Social Feed Videos",
-      "d": "Use 9:16 so the lunch box is easy to see on a phone. The same file can go to a Shorts placement later if that is where it sells."
+      "t": "Social Media Videos",
+      "d": "Make a tall clip for Instagram, YouTube, or TikTok from the same link. The product stays large on the phone."
     }
   ],
   "visual": {
@@ -221,37 +221,37 @@
   "definition": {
     "title": "What Is a URL to Video",
     "paras": [
-      "You paste a public product page. AIVideosUGC reads the photo and the facts on it, then drafts a script, an actor, and a voice for you to approve.",
-      "Edit the script, the captions, and the music before you download or publish. The person on screen is an AI actor. Lengths are 6, 10, 15, or 30 seconds, and frames are 9:16, 1:1, 16:9, 4:3, and 3:4."
+      "You paste a public product page. The photo and the facts on it come in, and a script, an actor, and a voice are drafted for you to approve.",
+      "You can edit the script, the captions, and the music before you download. The person on screen is an AI actor. Lengths are 6, 10, 15, or 30 seconds."
     ]
   },
   "reasons": {
-    "h2": "Why URL to Video Saves the Prep",
-    "lead": "Paste a public product page and the heavy prep is already done for you.",
+    "h2": "What a Product URL Does for the Ad",
+    "lead": "Paste the link. The hours of writing, editing, and shooting do not have to happen first.",
     "items": [
       {
-        "t": "Less Prep Before the Ad",
-        "d": "You skip collecting photos into a folder. The lunch box page already holds the picture, the name, and the facts the clip should use.",
+        "t": "Saves the Hours",
+        "d": "Paste the link and the video starts from that page. You do not write a script from scratch or book an edit before the first draft.",
         "icon": "Link"
       },
       {
-        "t": "The Heavy Lifting Is Done",
-        "d": "The draft script, the first pictures, and a voice option come back from that page. You approve them instead of building each piece by hand.",
+        "t": "The Manual Work Is Handled",
+        "d": "The script and the video come back from the link. You drop the URL in and approve the result, instead of building each piece by hand.",
         "icon": "WandSparkles"
       },
       {
-        "t": "Many Links, One Sitting",
-        "d": "Paste several public product pages in one sitting and get a clip for each. A catalog push does not need a shoot day for every item.",
+        "t": "Many Links in Minutes",
+        "d": "Make a clip for several product links in minutes. A launch, a demo, and a social post do not each need their own shoot.",
         "icon": "Layers"
       },
       {
-        "t": "Proof Already on the Page",
-        "d": "A review already written on the product page can be spoken in the clip. You do not retype that note into a separate brief.",
+        "t": "Trust Already Written on the Page",
+        "d": "If the page already has a shopper note, the clip can say it. You do not hunt for that line or type it into a new brief.",
         "icon": "Star"
       }
     ]
   },
-  "benefits_lead": "Paste the lunch box page once. The draft script, the pictures, and a voice come back together, and you approve them before the clip runs.",
+  "benefits_lead": "Paste the page once. The draft script, the pictures, and a voice come back, and you approve them before the clip runs.",
   "related_h2": "When You Are Not Starting From a Link",
   "related_lead": "If you already have a photo, or you want a presenter-led clip, start in one of these tools.",
   "relatedLinks": [
@@ -263,7 +263,7 @@
   ],
   "compare_table": {
     "title": "Paste the Link, Skip the Blank Build",
-    "lead": "Paste the lunch box page and the product is already in the project. You approve the script, then download a clip you can post.",
+    "lead": "Paste the product page and the product is already in the project. You approve the script, then download a clip you can post.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -282,8 +282,8 @@
       ],
       [
         "Reviews",
-        "A note already on the product page can be spoken.",
-        "You retype that note into the script yourself."
+        "A note already on the page can be spoken",
+        "You retype that note into the script"
       ],
       [
         "Actor and voice",
@@ -336,22 +336,22 @@
       }
     ]
   },
-  "cta_title": "Start the Next Ad From a Product Page",
+  "cta_title": "No Shoot, Paste the Link",
   "trust": {
     "h2": "More Versions From One Product Link",
     "lead": "One public page can feed more than the single clip you export today.",
     "items": [
       {
         "t": "Actors You Can Test",
-        "d": "Keep the lunch box page and swap the AI actor when you want a second opening in the test."
+        "d": "Keep the same product page and swap the AI actor when you want a second opening for the test."
       },
       {
         "t": "Templates and Voices",
-        "d": "Start from a template that already has a place for the lunch box. Pick the voice that will read the line. You are not booking a recording booth."
+        "d": "Start from a template that already has a place for the product. Pick the voice that reads the line. You are not booking a booth."
       },
       {
         "t": "Another Language",
-        "d": "The lunch box does not change. The spoken line can be the Spanish one your other market already uses on that page."
+        "d": "The product does not change. The spoken line can use the other language already written on that page."
       }
     ]
   }

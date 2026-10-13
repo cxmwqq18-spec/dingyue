@@ -1,10 +1,10 @@
 {
   "id": "plat-shopify",
-  "title": "Shopify AI Product Photo Generator | AIVideosUGC",
-  "description": "Make Shopify images for the product page with your shop's AI product photo generator. Upload one photo, pick the scene, and download the product image.",
-  "h1": "Shopify Product Image Generator for Store Pages",
+  "title": "AI Product Photo Generator for Shopify | AIVideosUGC",
+  "description": "Use an AI product photo generator to put your Shopify product in a new background, style, or setting. Upload one photo and download a store image.",
+  "h1": "AI Product Image Generator for Shopify Pages",
   "eyebrow": "Shopify Photos Without a Shoot",
-  "lead": "This AI product photo generator makes a Shopify image in a room you never rented. Place that file on the product page.",
+  "lead": "This AI product photo generator makes a Shopify image in a new background, style, or setting. A scene that felt too hard to shoot can go on the product page today.",
   "card": "Shopify product photos, new backgrounds, and short videos, made one by one or many at a time.",
   "secondary_keywords": [
     "Shopify product images",
@@ -14,20 +14,20 @@
   ],
   "faq": [
     {
-      "q": "What is a Shopify product photo tool?",
-      "a": "It builds a Shopify product photo from a picture you already shot. The product page can go up without renting a room for a shoot."
+      "q": "What is a Shopify AI product photo tool?",
+      "a": "It builds a product photo from a picture you already shot, in a new background, style, or setting. The product page can go up without renting a room."
     },
     {
       "q": "How does a Shopify product photo get made?",
-      "a": "Upload the product and say where you want it, such as the bowls on a light table. You get a file back, and you can ask for more light before you download."
+      "a": "Upload the product and say where you want it, such as on a light table. You get a file back, and you can ask for more light before you download."
     },
     {
       "q": "Which photo tool should a Shopify store use?",
-      "a": "Use AIVideosUGC. It puts your real product in a new scene, holds one look across the grid, and hands you a file you upload yourself. The cost shows before the photo runs."
+      "a": "Use AIVideosUGC. It puts your real product in a new scene and holds one look across the grid. The cost shows before the photo runs."
     },
     {
-      "q": "Can I make Shopify product photos without paying?",
-      "a": "No. Every photo spends credits on a paid monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. There is no zero-cost way to run a photo."
+      "q": "Can I make Shopify product photos for free?",
+      "a": "No. Every photo spends credits on a paid monthly plan. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are these photos a fit for a Shopify store?",
@@ -35,15 +35,15 @@
     },
     {
       "q": "What does a Shopify product photo tool give you?",
-      "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made."
+      "a": "You get another scene when the collection needs one, and you can take the old background off a phone photo before that scene is made. You can also make several versions and keep the best."
     },
     {
       "q": "Can I use the photos on my store and in ads?",
-      "a": "Yes. The download can go on the product page and in your ads, with no watermark. You still need the right to use the photo you uploaded. The terms you accepted with the plan cover the file."
+      "a": "Yes. The download can go on the product page and in your ads, with no watermark. You still need the right to use the photo you uploaded."
     },
     {
       "q": "What should the upload look like?",
-      "a": "Start with a clear, well-lit photo of the whole item, like the ceramic bowls with every bowl in frame. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
+      "a": "Start with a clear, well-lit photo of the whole item. [how to take product photos for AI](/guides/product-photo-tips) shows what kind of photo works."
     },
     {
       "q": "Can I refresh a whole collection together?",
@@ -55,15 +55,15 @@
   "steps": [
     {
       "t": "Upload Your Product or Describe It",
-      "d": "Upload one clear photo of the ceramic bowls. If you only have a sentence, describe them on a light table."
+      "d": "Upload one clear photo of the product. If you only have a sentence, describe the scene you want on the product page."
     },
     {
       "t": "Choose Your Image Style",
-      "d": "Ask for the four bowls on a dining table with a little fruit."
+      "d": "Name the setting, the light, and whether the shot is clean or in use. The style should match the rest of the collection."
     },
     {
       "t": "Download and Add It",
-      "d": "If a bowl color shifts, describe that color back, then download and add the file in Shopify."
+      "d": "Download the file once the product still looks like yours. You add the photo or the clip in Shopify yourself."
     }
   ],
   "visual": {
@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload Your Product or Describe It",
-          "d": "Upload the cream, blue, sage, and charcoal ceramic bowls, or describe them. You get that set for the table scene."
+          "d": "Upload one clear photo of the product. If you only have a sentence, describe the scene you want on the product page."
         },
         {
           "t": "Choose Your Image Style",
-          "d": "Pick a square photo, a collection photo, or a video of 6, 10, 15, or 30 seconds. You get the bowls with a little fruit."
+          "d": "Name the setting, the light, and whether the shot is clean or in use. The style should match the rest of the collection."
         },
         {
           "t": "Download and Add It",
-          "d": "Edit the photo, then download the file with no watermark. You add the bowls photo or video in Shopify yourself."
+          "d": "Download the file once the product still looks like yours. You add the photo or the clip in Shopify yourself."
         }
       ]
     },
@@ -115,46 +115,46 @@
       }
     }
   },
-  "benefits_h2": "Give Your Shopify Products a Fresh Look",
+  "benefits_h2": "AI Product Shot Benefits on Shopify",
   "benefits": [
     {
       "t": "A Fresh Collection Grid",
-      "d": "Give the ceramics in the collection a setting that belongs together, so the Shopify grid looks planned. One product photo is enough to start the next tile.",
+      "d": "The bowls share one setting, so the Shopify collection grid looks planned. One product photo is enough to start the next tile.",
       "img": "n:guide:fx42-shopify-benefit-collection",
       "alt": "You get a matching collection grid. Three plain ceramic bowls sit together for the Shopify page."
     },
     {
       "t": "Page Shot and Life Shot",
-      "d": "Keep a clean frame for the product page, then a second frame of the water bottle in a hand for the ad. Both come from one upload.",
+      "d": "Keep a clean frame for the product page, then a second frame of the bottle in a hand for the ad. Both come from one upload.",
       "img": "n:guide:fx42-shopify-benefit-versions",
       "alt": "You get both shots of the water bottle. One is a clean product view, and one is a handheld lifestyle angle."
     },
     {
       "t": "Photo in a Real Room",
-      "d": "You get a lifestyle frame of the linen basket on a bright shelf. The plain product shot stays a separate download.",
+      "d": "You get a lifestyle frame of the basket on a bright shelf. The plain product shot stays a separate download.",
       "img": "n:guide:fx42-shopify-benefit-scene",
       "alt": "You get a lifestyle photo for the page. Adult hands place a plain linen basket on a bright shelf."
     }
   ],
-  "steps_h2": "Steps to Make a Shopify Photo or Video",
-  "steps_lead": "The Shopify product photo of the bowls is ready to drop into the product admin.",
+  "steps_h2": "How to Make a Shopify Photo in 3 Simple Steps",
+  "steps_lead": "Upload a photo or describe the scene, pick the look, and download a file you add in Shopify.",
   "more_sections": [
     {
       "eyebrow": "Files Ready for the Product Page",
       "h2": "Examples of Shopify Product Photos",
-      "lead": "Use the square of the four bowls on the collection grid, the table scene with fruit, and a short clip on the product page. Each file is its own download.",
+      "lead": "Use a square on the collection grid, a table scene, and a short clip on the product page. Each file is its own download.",
       "items": [
         {
           "t": "Post the Collection Square",
-          "d": "You get the whole set of ceramic bowls, square, with nothing fighting them. Use this as the image in the collection."
+          "d": "You get the whole set of bowls, square, with nothing fighting them. Use this as the image in the collection."
         },
         {
           "t": "Show the Table With Fruit",
-          "d": "The gallery frame shows the bowls on a dining table with a little fruit, not on the plain white background used in the grid. Shoppers see the size against something familiar."
+          "d": "The gallery frame shows the bowls on a dining table with a little fruit. Shoppers see the size against something familiar."
         },
         {
           "t": "Add the Clip on the Page",
-          "d": "Turn the still into a 6, 10, 15, or 30 second clip and add that Shopify product video on the page. A video spends 24, 40, 60, or 120 credits."
+          "d": "Turn the still into a 6, 10, 15, or 30 second clip and add that video on the page. A video spends 24, 40, 60, or 120 credits."
         }
       ]
     }
@@ -169,81 +169,81 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "One photo is enough for the next tile on the Shopify collection grid.",
+  "benefits_lead": "One photo is enough for a new tile, a life shot, and a scene in a real room.",
   "reasons": {
     "h2": "Why Stores Skip the Photo Shoot",
-    "lead": "The next Shopify product photo does not need a location, a model, or a prop rental.",
+    "lead": "The next Shopify photo does not need a location, a model, or a rented prop.",
     "items": [
       {
         "t": "Photos at Plan Prices",
-        "d": "A product photo is 24 credits. Starter is $24.50 a month for 200 credits. The charge shows before you start, so you can budget the reshoot.",
+        "d": "A product photo is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The charge shows before you start.",
         "icon": "Coins"
       },
       {
-        "t": "Photos Before the Shoot Date",
-        "d": "Upload tonight and put a file on the product page, even when the photographer's next open morning is weeks away.",
+        "t": "Photos in Minutes, Not Days",
+        "d": "You do not wait days for a shoot. A clean product photo can be ready in minutes, in time to put it on the page.",
         "icon": "Images"
       },
       {
         "t": "A Whole Grid in One Run",
-        "d": "Generate Shopify product photos for many products together when the grid needs a refresh. It is closer to restocking the page than booking another location.",
+        "d": "Make photos for many products together when the grid needs a refresh. It is closer to restocking the page than booking another location.",
         "icon": "Layers"
       },
       {
         "t": "No Model and No Props",
-        "d": "The new Shopify photo can show the product on a wooden chair you never bought, and nobody has to be booked to sit in it.",
+        "d": "The new photo can show the product on a chair you never bought. Nobody has to be booked to sit in the scene.",
         "icon": "Sparkles"
       },
       {
         "t": "Photos After the Shop Closes",
-        "d": "Export a new Shopify product photo late at night, after the orders are packed, when the studio you used to rent is closed.",
+        "d": "Make another product photo late at night, after the orders are packed. You do not need a studio that is still open.",
         "icon": "Clock"
       },
       {
-        "t": "Two Scenes, Then Choose",
-        "d": "Make one frame in a dim room and one in a bright hallway, then keep the Shopify photo that matches the collection.",
+        "t": "Two Scenes, Then You Choose",
+        "d": "Make one frame in a dim room and one in a bright hallway. Keep the photo that matches the collection.",
         "icon": "RefreshCw"
       }
     ]
   },
   "platforms": {
     "h2": "Files for the Other Channels You Also Use",
-    "lead": "You put the bowls on the Shopify page, then start a TikTok, Instagram, Facebook, Shorts, or Amazon file from the same photo.",
+    "lead": "Put the product on the Shopify page, then start a TikTok, Instagram, Facebook, Shorts, or Amazon file from the same photo.",
     "items": [
       {
-        "t": "TikTok Ads from One Photo",
+        "t": "TikTok Ads From One Photo",
         "label": "Open TikTok ads",
-        "d": "You post a tall TikTok ad of the bowls from that same photo.",
+        "d": "You post a tall TikTok ad from that same photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Ads from One Photo",
+        "t": "Instagram Ads From One Photo",
         "label": "Open Instagram ads",
-        "d": "You post a square still or a tall video of the bowls on Instagram.",
+        "d": "You post a square still or a tall video on Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "Facebook Ads from One Photo",
+        "t": "Facebook Ads From One Photo",
         "label": "Open Facebook ads",
-        "d": "You post a square photo of the bowls, or a tall video that fills the Facebook screen.",
+        "d": "You post a square photo, or a tall video that fills the Facebook screen.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts from One Photo",
+        "t": "YouTube Shorts From One Photo",
         "label": "Open YouTube Shorts",
-        "d": "You post a tall Short of the bowls. A wide YouTube ad is a separate download.",
+        "d": "You post a tall Short. A wide YouTube ad is a separate download.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Photos Ready to List",
         "label": "Open Amazon photos",
-        "d": "You list a white main image, a close-up, and an in-use view of the bowls on Amazon.",
+        "d": "You list a white main image, a close-up, and an in-use view on Amazon.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Post on the Channels You Already Use",
         "label": "Open every platform",
-        "d": "Open TikTok, Instagram, Facebook, Shorts, or Amazon and post the bowls where you already sell.",
+        "d": "Open the channel you already use and post the file there.",
         "href": "/ai-video-generation"
       }
     ]
@@ -283,7 +283,7 @@
     ]
   },
   "related_h2": "Tools for Shopify Product Photos",
-  "related_lead": "Open the next tool for another photo, a clip, or a template.",
+  "related_lead": "Open the next tool when you need another photo, a clip, or a template.",
   "relatedLinks": [
     "product-videos",
     "url-to-video",

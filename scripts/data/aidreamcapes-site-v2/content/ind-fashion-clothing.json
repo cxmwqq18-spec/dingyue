@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can one hoodie photo make both a vertical clip and a listing image?",
-      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a turn or a short walk. The same photo can also make a still of someone wearing the piece. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
+      "q": "Can one product photo make both a vertical clip and a listing image?",
+      "a": "Yes. Use a tall 9:16 video at 6, 10, 15, or 30 seconds for a routine or a short demo. The same photo can also make a still. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits."
     },
     {
-      "q": "Can a flat photo of the hoodie become a photo of someone wearing it?",
-      "a": "Yes. Smooth the garment, shoot the whole piece in even light, or paste a product link, and describe the avatar and the room. You can pick from 53 AI actors when you want a face that already exists."
+      "q": "Can a product photo become a clip of someone using it?",
+      "a": "Yes. Use a clear photo of the whole item, or paste a product link, and describe the AI actor and the room. You can pick from 53 AI actors."
     },
     {
-      "q": "Will the hoodie's print or fabric change in the try-on?",
-      "a": "The result follows your photo. Fine stripes, embroidery, and buttons stay closer when the upload is sharp. If a trim moves, make another version. A failed job returns its credits."
+      "q": "Will the shade or the package change?",
+      "a": "The result follows your photo. Fine print and small caps stay closer when the upload is sharp. If a detail moves, make another version. A failed job returns its credits."
     },
     {
-      "q": "Can I show the hoodie on a plus-size or petite build?",
-      "a": "Yes. Describe height, build, and age range in plain words. The AI avatar is generated for that ad, and you can ask again if the outline is off."
+      "q": "Can I choose the look of the AI actor?",
+      "a": "Yes. Describe age range and features in plain words. The AI actor is generated for that ad, and you can ask again if the look is off."
     },
     {
-      "q": "What photo should I use for a hoodie try-on?",
-      "a": "Lay it flat or hang it, with the whole garment visible, front side up, in even light. The outline, color, print, and fastenings all need to be clear before you start."
+      "q": "What photo should I use for a beauty ad?",
+      "a": "Show the whole product, front side up, in even light. The shape, the shade, and the cap all need to be clear before you start."
     },
     {
-      "q": "How do I keep the hoodie fabric color true?",
-      "a": "Shoot in soft daylight, not under a warm lamp, and name the color in plain words so the file can be checked against the sample."
+      "q": "How do I keep the shade true?",
+      "a": "Shoot in soft daylight, not under a warm lamp, and name the shade in plain words so the file can be checked against the sample."
     },
     {
-      "q": "Can I post these hoodie clips as paid clothing ads?",
-      "a": "Yes. The download has no watermark, and you can use it in paid ads. Size and fabric details have to match the real garment you ship."
+      "q": "Can I post these clips as paid ads?",
+      "a": "Yes. The download has no watermark, and you can use it in paid ads. What you say about the product has to match what you ship."
     },
     {
-      "q": "How is a hoodie try-on different from hiring a creator?",
-      "a": "You pick an AI avatar and pay the credits shown before the job, not a creator fee. Post the clip as an ad once the hem and the color match the sample."
+      "q": "How is this different from hiring a creator?",
+      "a": "You pick an AI actor and pay the credits shown before the job, not a creator fee. Post the clip once the product still matches the sample."
     },
     {
-      "q": "Can the hoodie try-on include a voice and captions?",
+      "q": "Can the ad include a spoken voice and captions?",
       "a": "Yes. The clip can include a spoken line and captions, and you can publish it to TikTok, Instagram, or Facebook. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     }
   ],
-  "templates_lead": "Pick a try-on, a fit check, a review-style clip, or a close look at the cloth.",
-  "cta_lead": "The next drop can go on an AI avatar from one garment photo, with the credit cost on screen first.",
-  "steps_h2": "Short Fashion Outfit Videos in Three Steps",
-  "steps_lead": "You download an ad you can post. Lay the hoodie and sweatpants out, then choose who wears the set.",
+  "templates_lead": "Pick a skincare routine, a makeup look, a hair change, or a short product demo.",
+  "cta_lead": "The next beauty ad can start from one product photo, with the credit cost on screen first.",
+  "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
+  "steps_lead": "Add the product, choose an AI actor shoppers trust, and leave with a file you can post.",
   "steps": [
     {
       "t": "Add the Garment Photo or Link",
-      "d": "Lay the pale blue hoodie and sweatpants flat, front up, both pieces in frame. That photo is what the try-on wears."
+      "d": "Add a skincare, makeup, or hair photo, or paste the product link. That is enough to start."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Pick an AI avatar. If the garment is long, ask for a taller person. You can change the face before the clip is made."
+      "d": "Pick an AI actor your buyer can see themselves in. You can change the face before the ad is made."
     },
     {
       "t": "Add a Spoken Voice and Captions",
-      "d": "Add a spoken voice and captions that name the fabric. Then download the file and post it where the shop already sells."
+      "d": "Add a spoken voice and captions. Download a file that is ready for TikTok, Instagram, YouTube, and your site."
     }
   ],
   "visual": {
@@ -109,58 +109,58 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Show the Next Color Without a Fitting Day",
-    "lead": "The next color can still be shown on a body when the fitting never happened. You skip the casting day and the invoice.",
+    "h2": "Why Beauty Shops Stop Waiting on Creators",
+    "lead": "No-shows, delays, and invoices should not hold up a routine, a look, or a launch.",
     "items": [
       {
-        "t": "Skip the Casting Day",
-        "d": "A striped knit can leave as a try-on from the flat photo alone. The credit cost is on screen before the job runs, so the test does not start with a model invoice.",
+        "t": "Skip the Shoot and the No-Show",
+        "d": "A skincare routine, a makeup look, or a hair change can leave as an ad from the product photo alone, in minutes.",
         "img": "n:guide:fx30-fashion-benefit-fit-r1"
       },
       {
-        "t": "One Photo, Every Channel",
-        "d": "A flat photo can also make the still for the product page. The second file does not wait on a separate crew or a second booking.",
+        "t": "One Photo, Every Placement",
+        "d": "Make tutorials and short demos for the feed, for Stories, and for the product page, without a traditional shoot.",
         "img": "n:guide:fx30-fashion-benefit-detail-r1"
       },
       {
-        "t": "Show the Lining on the Product Page",
-        "d": "Let the jacket turn once on the product page so the shopper sees the lining and where to buy. That turn makes the piece easier to want.",
+        "t": "Show the Product in Action",
+        "d": "A creator-style beauty video grabs attention, shows the product in use, and helps you sell without a large production bill.",
         "img": "n:guide:fx30-fashion-benefit-review-r1"
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Try-On Can Run",
-    "lead": "One flat lay can feed a phone feed and a product page. Match the shape to the place you already sell.",
+    "h2": "Where a Beauty Ad Can Run",
+    "lead": "One product photo can feed a phone feed and a product page. Match the shape to the place you already sell.",
     "items": [
       {
-        "t": "TikTok Try-Ons",
-        "d": "A tall TikTok video of one turn or a short walk, made from the garment photo you already have.",
+        "t": "TikTok Beauty Ads",
+        "d": "A tall TikTok video of a routine or a short demo, made from the product photo you already have.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Outfit Photos",
-        "d": "An outfit photo, or a tall video of the clothes, for the grid and for Stories.",
+        "t": "Instagram Reels and Stories",
+        "d": "A Reel, a Story, or a feed photo that keeps the product clear in the frame.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed image with room to add the offer after you download the file.",
+        "d": "A feed video or a still, with room to add the offer after you download the file.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "YouTube Shorts Looks",
-        "d": "A short vertical look that opens on one full turn of the piece.",
+        "t": "YouTube Shorts Demos",
+        "d": "A short vertical demo that opens on the product in use.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Gallery Photos",
-        "d": "Extra gallery views of the garment, with the full piece and the color easy to see.",
+        "d": "Extra gallery views, with the full product and the shade easy to see.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Shopify Outfit Photos",
-        "d": "Worn photos and flat lays that match across the whole collection.",
+        "t": "Shopify Product Photos",
+        "d": "Photos and clips that match across the whole beauty line.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -199,7 +199,7 @@
       }
     ]
   },
-  "cta_title": "Put the Next Drop on an Avatar",
+  "cta_title": "Start a Beauty Ad From One Photo",
   "relatedLinks": [
     {
       "id": "tpl-outfit",
@@ -226,7 +226,7 @@
       "label": "AI Lifestyle Product Photos"
     }
   ],
-  "related_h2": "Templates and Tools for Clothing Ads",
+  "related_h2": "Templates and Tools for Beauty Ads",
   "blockOrder": [
     "hero",
     "strip",
@@ -239,25 +239,25 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "With the clip",
-      "h2": "What Your Clothing Ad Can Show",
-      "lead": "A spoken line can come with the try-on, so the ad is ready to post on the channel you already use.",
+      "eyebrow": "With the Clip",
+      "h2": "What Your Beauty Ad Can Show",
+      "lead": "A spoken line can come with the demo, so the ad is ready to post where you already sell.",
       "items": [
         {
-          "t": "A Product Link Opens the Try-On",
-          "d": "A product page is enough to start a turn, a short walk, or a closer look at the cloth."
+          "t": "A Product Link Opens the Ad",
+          "d": "A product page is enough to start a routine, a makeup look, or a closer look at the item."
         },
         {
-          "t": "An Avatar From the Library",
-          "d": "Say the height and body shape in a few words, and an AI avatar wears the hoodie. The library holds 53 AI actors."
+          "t": "An AI Actor From the Library",
+          "d": "Say the look in a few words, and an AI actor presents the product. The library holds 53 AI actors."
         },
         {
           "t": "Voice and Captions Included",
-          "d": "A voice can name the fabric, and captions can still say it when the sound is off."
+          "d": "A voice can name the product, and captions can still say it with the sound turned down."
         },
         {
-          "t": "A Script for the Look",
-          "d": "You get a short script about one turn or one walk, and you can change a word in the editor."
+          "t": "A Script for the Demo",
+          "d": "You get a short script about one routine or one look, and you can change a word in the editor."
         },
         {
           "t": "Edit Before You Export",
@@ -265,7 +265,7 @@
         },
         {
           "t": "Another Language, Then Publish",
-          "d": "The same turn can run again in another language on TikTok, Instagram, or Facebook."
+          "d": "The same demo can run again in another language on TikTok, Instagram, or Facebook."
         }
       ]
     }

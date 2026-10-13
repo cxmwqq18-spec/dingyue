@@ -1,10 +1,10 @@
 {
   "id": "guides",
   "title": "UGC Templates and Seller Guides | AIVideosUGC",
-  "description": "Open UGC video templates and seller guides, drop in your product, and make one file. Pick a phone photo, a white main image, a first video, or a fair test.",
-  "h1": "UGC Video Templates and Guides You Can Recreate",
+  "description": "Pick a guide, add your product, and recreate that file in minutes. Start from a phone photo, a white main image, a first video, or a fair test.",
+  "h1": "See a Guide, Recreate It, and Post It",
   "eyebrow": "Make Today's File From a Guide",
-  "lead": "Pick the UGC video template guide for today's job, then make that one file. Start from a phone photo, a white main image, a first video, the right frame, or a test of two versions.",
+  "lead": "Pick the guide for today's job and recreate that file with your product. Add a photo, follow the steps, and finish in minutes.",
   "card": "Short how-to guides, from the first photo to the first paid ad.",
   "secondary_keywords": [
     "product photography tips for online sellers",
@@ -16,40 +16,40 @@
     "Each guide ends in a file you can download and post. Open the one that matches the job in front of you.",
     "You land on the tool that makes the file: a [template](page:templates), a [product link](page:url-to-video), or a [photo turned into a clip](page:image-to-video). For a video, an AI actor from the [actor library](page:ai-actors) is there when that guide calls for a person in the frame."
   ],
-  "benefits_h2": "Product Video Templates for Today's Job",
-  "benefits_lead": "Open the guide that matches today's job, drop in the product photo, and make that one file. A long prompt is not the first step.",
+  "benefits_h2": "Pick the Guide That Matches Today",
+  "benefits_lead": "Open the guide for today's job, drop in the product photo, and make that one file. You do not start from a blank page.",
   "benefits": [
     {
-      "t": "Fewer Retries on the Tote",
-      "d": "A sharp photo of the sage canvas tote makes the first file easier to accept, so you spend fewer credits making that tote again.",
+      "t": "Start From a Sharp Photo",
+      "d": "A clear photo of the tote makes the first file easier to keep, so you spend fewer credits on a redo.",
       "img": "n:guide:img2-guides-benefits-0-r1",
       "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera."
     },
     {
       "t": "No Studio to Book",
-      "d": "You shoot the bamboo lunch container on the kitchen table, with a phone, by the window you already have.",
+      "d": "You shoot the lunch container on the kitchen table, with a phone, by the window you already have.",
       "img": "n:guide:img2-guides-benefits-1-r1",
       "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera."
     },
     {
       "t": "Fit the Plate in Frame",
-      "d": "The main-image rules are already written out, so the ceramic plate can sit fully inside the bright white backdrop before it goes live.",
+      "d": "The main-image rules are already written out, so the plate can sit fully inside the white backdrop before it goes live.",
       "img": "n:guide:img2-guides-benefits-2-r1",
       "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera."
     },
     {
       "t": "One Change at a Time",
-      "d": "The testing guide changes one thing on the two fabric pouches, then keeps the version you want to run.",
+      "d": "The testing guide changes one thing on the two pouches, then keeps the version you want to run.",
       "img": "n:guide:img2-guides-benefits-3-r1",
       "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera."
     }
   ],
-  "steps_h2": "How to Make Product Video Ads or Photos",
-  "steps_lead": "You finish with a file you can post. Open the guide for today's job, make the file, then post it.",
+  "steps_h2": "How to Make a Product File in 3 Simple Steps",
+  "steps_lead": "You finish with a file you can post. Open the guide, make the file, then post it.",
   "steps": [
     {
       "t": "Take Your Product Photo",
-      "d": "Pick today's job: the phone photo, the white main image, the first TikTok ad, the size, or the test."
+      "d": "Pick today's job: the phone photo, the white main image, the first video, the size, or the test."
     },
     {
       "t": "Make the File",
@@ -57,7 +57,7 @@
     },
     {
       "t": "Download and Post",
-      "d": "The download has no watermark, so your store and a paid ad can both use it. Post it where that shape belongs."
+      "d": "The download has no watermark, so your store and a paid ad can both use it."
     }
   ],
   "faq": [
@@ -67,23 +67,23 @@
     },
     {
       "q": "How do I turn a guide into a file I can post?",
-      "a": "You follow the steps, upload your product photo or paste the product page, and make the file on the tool that guide names. The guide is the plan. The tool makes the file."
+      "a": "Follow the steps, upload your product photo or paste the product page, and make the file on the tool that guide names. The guide is the plan. The tool makes the file."
     },
     {
-      "q": "Why use a guide instead of hiring someone to film the lunch container?",
-      "a": "A lunch-container photo on the kitchen table is enough to start the phone-photo guide after you close. Hiring someone to film that container means waiting on their calendar. The guide uses the picture you can take yourself."
+      "q": "Why use a guide instead of hiring someone to film?",
+      "a": "A photo on the kitchen table is enough to start after you close. Hiring someone to film means waiting on their calendar. The guide uses the picture you can take yourself."
     },
     {
-      "q": "Who should use these guides if I have never booked a studio?",
-      "a": "Someone packing orders who has never booked a studio. A marketer can use the same pages when a client needs a file this week. A shop with a full photo team can skip them."
+      "q": "Who should use these guides?",
+      "a": "Someone packing orders who has never booked a studio. A marketer can use the same pages when a client needs a file this week."
     },
     {
       "q": "Can I make a file if I have never edited video?",
-      "a": "Yes. You need a phone photo, not a timeline. The first-ad guide stops at a file you can post. Setting up the ad account stays in that app's own help."
+      "a": "Yes. You need a phone photo, not a timeline. The first-ad guide stops at a file you can post. Setting up the ad account stays in that app."
     },
     {
-      "q": "Which kinds of shops can follow the photo steps and the video steps?",
-      "a": "You use the same photo steps and video steps for the tote, the lunch container, and every other shop. Rules differ by product type, so check the industry page for your shop before you upload."
+      "q": "Which kinds of shops can follow these steps?",
+      "a": "The same photo steps and video steps work across shops. Rules differ by product type, so check the industry page for your shop before you upload."
     },
     {
       "q": "Can one phone photo of my product feed every guide?",
@@ -95,7 +95,7 @@
     },
     {
       "q": "How many credits do a photo and a clip cost?",
-      "a": "A product photo is 24 credits. A clip is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost shows before you start. If a file does not finish, its credits come back."
+      "a": "A product photo is 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before it starts. If a job fails, those credits come back."
     },
     {
       "q": "Can I run the file in ads and on my store?",
@@ -106,7 +106,7 @@
       "a": "The first-ad guide does, when you want a person on screen. You can also keep the frame on the product and still have a spoken line. The photo guides stop at a still."
     },
     {
-      "q": "Why follow a guide instead of spending credits on a blank start?",
+      "q": "Why follow a guide instead of a blank start?",
       "a": "The guide names the one task, the file you should end with, and the checks to make before you spend credits on a second try."
     }
   ],
@@ -119,7 +119,7 @@
     "platforms"
   ],
   "related_h2": "Tools These Guides Send You To",
-  "related_lead": "The file from the guide is a step away from the tool that makes it, or from layouts and the places you post.",
+  "related_lead": "The file from the guide is a step away from the tool that makes it, or from the places you post.",
   "cta_title": "Start the Guide That Matches Today",
   "cta_lead": "You start today's job from one product photo.",
   "reviews": {

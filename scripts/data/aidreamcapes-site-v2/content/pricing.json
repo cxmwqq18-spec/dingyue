@@ -1,10 +1,10 @@
 {
   "id": "pricing",
-  "title": "Pricing: Starter, Pro and Premium Plans | AIVideosUGC",
-  "description": "AIVideosUGC pricing: Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Credits are what you spend on a photo or video.",
-  "h1": "AIVideosUGC Pricing for Product Photos and Videos",
+  "title": "AI UGC Video Ad Pricing | AIVideosUGC",
+  "description": "AI UGC video ad pricing: Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. See the cost before each job.",
+  "h1": "Plans for Scroll-Stopping AI UGC Video Ads",
   "eyebrow": "Plans for This Month's Ads",
-  "lead": "Compare pricing for product photos and short video ads. AIVideosUGC shows the credit cost of each job before you approve it.",
+  "lead": "Turn a product idea into a scroll-stopping UGC video ad. No creator to book, no editing skill to learn, and no hassle before the first file.",
   "card": "Starter, Pro, and Premium each give you a monthly credit balance for photos and videos.",
   "secondary_keywords": [
     "AI product photo pricing",
@@ -18,14 +18,14 @@
     "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance on their own. You do not send a ticket for that return.",
     "Pro is $35 a month for 300 credits. That covers about 12 product photos or 5 fifteen-second videos, with all 53 AI actors and no watermark. Starter is $24.50 for 200 credits, about 8 photos or 3 of those videos. Premium is $63 for 600 credits, about 25 photos or 10 of those videos."
   ],
-  "teams": "Need more than Premium for a shop or an agency? Email support@aivideosugc.com with how many photos and videos you make in a month, and we will suggest a setup.",
+  "teams": "Making more than Premium covers, for a shop or an agency? Email support@aivideosugc.com with how many photos and videos you make in a month. We will suggest a setup that fits that volume.",
   "faq": [
     {
       "q": "How long do I wait before the video is ready to post?",
-      "a": "We do not promise how many minutes it takes. You see the credit cost before the job starts, and a failed job returns those credits. If a file stays stuck, email support@aivideosugc.com with the time of the job."
+      "a": "We do not promise a minute count. You see the credit cost before the job starts, and a failed job returns those credits. If a file stays stuck, email support@aivideosugc.com with the time of the job."
     },
     {
-      "q": "Can an AI actor hold the product I sell in the ad?",
+      "q": "Can an AI actor hold or wear the product I sell?",
       "a": "Yes. An AI actor can hold the product, point to it, or wear it when your photo shows that item. The product in the file is the product you uploaded."
     },
     {
@@ -38,22 +38,22 @@
     },
     {
       "q": "Can I run the download in paid ads, on my store, and in client work?",
-      "a": "You can place the download in paid ads, on your store, and in client work. Files have no AIVideosUGC watermark. Follow each platform's rules on the day you publish. [AI content trust and safety](page:trust) covers what stays in your account."
+      "a": "Yes. You can place the download in paid ads, on your store, and in client work. Files have no watermark. Follow each platform's rules on the day you publish. [AI content trust and safety](page:trust) covers what stays in your account."
     },
     {
       "q": "How do I make my first video from a photo or a product link?",
       "a": "Upload one product photo or paste a product link, pick an AI actor and a length, and download. The credit cost is on screen before you start."
     },
     {
-      "q": "Can I make another version with a new actor or opening line?",
-      "a": "Yes. Run another job with a new actor, a new voice, or a new opening line. Each job spends its own credits: 24 for a photo or a 6-second video, 40 for 10 seconds, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "q": "Can I make another version with a new actor or a new opening?",
+      "a": "Yes. Run another job with a new actor, a new voice, or a new opening line. Each job spends its own credits: 24 for a photo or a 6-second video, 40 for 10 seconds, 60 for 15, and 120 for 30."
     },
     {
       "q": "Does the file I download carry a watermark?",
-      "a": "No. Downloaded photos and videos do not carry an AIVideosUGC watermark. Use them on your store, in social ads, and in files you send a client. Anyone on camera is an AI actor, and you can say so when a platform asks."
+      "a": "No. Downloaded photos and videos do not carry a watermark. Use them on your store, in social ads, and in files you send a client. Anyone on camera is an AI actor, and you can say so when a platform asks."
     }
   ],
-  "cta_title": "Pick a Plan for This Month",
+  "cta_title": "Pick a Plan and Make the Next Ad",
   "cta_lead": "Check the credit cost of the next photo or video, then start on the monthly plan that fits the work.",
   "relatedLinks": [
     "faq",

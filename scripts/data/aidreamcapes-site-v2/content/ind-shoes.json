@@ -1,10 +1,10 @@
 {
   "id": "ind-shoes",
-  "title": "AI Shoe UGC Ads From a Product Photo | AIVideosUGC",
-  "description": "Use this AI shoe UGC ad generator to turn one shoe photo into on-foot ads and listing photos. Download the clips with no watermark and post them.",
-  "h1": "AI UGC Ads for Shoe Brands, On Foot and in Motion",
+  "title": "Shoes: AI UGC Ad Generator | AIVideosUGC",
+  "description": "This AI UGC ad generator turns one shoe photo into an on-foot ad. Skip the creator wait and the shoot, then post a clip with voice and captions.",
+  "h1": "AI UGC Ad Generator Made for Shoe Brands",
   "eyebrow": "Shoe Ads Without a Model Day",
-  "lead": "An AI shoe UGC ad starts from the side photo of a brown boot. One measured step shows the stride, so shoppers see more than the color on white.",
+  "lead": "Shoppers trust a shoe when they see it worn. An AI shoe UGC ad from a product photo is ready faster than booking a studio.",
   "card": "On-foot steps, unboxings, fit checks, and listing photos from one shoe photo.",
   "secondary_keywords": [
     "sneaker product photos",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can one side photo cover both a listing image and a walking clip?",
-      "a": "Yes. A clear side view can guide a white-background photo and a short on-foot scene. Keep the toe, heel, ankle opening, and sole edge visible so the pair stays recognizable."
+      "q": "Can one side photo make both a listing still and a walking clip?",
+      "a": "Yes. A clear side view can become a white-background still and a short on-foot clip. Keep the toe, heel, opening, and sole edge in frame so the pair stays easy to recognize."
     },
     {
-      "q": "Can a side shot produce a sole or heel view?",
-      "a": "No. Start from a separate photo of the sole or the heel. A side photo cannot show a sole pattern that was never in the file."
+      "q": "How do I get a sole or heel view?",
+      "a": "Use a separate photo of the sole or the heel. A side photo cannot reveal a sole pattern that was never in the file."
     },
     {
       "q": "Can I make an Amazon main image this way?",
-      "a": "Yes. For a main image, show the shoe alone on pure white. It should fill most of the frame. Leave out extra objects and any text on the picture. Put size and width notes in the gallery or the listing text."
+      "a": "Yes. For a main image, show the shoe alone on pure white and let it fill most of the frame. Leave out extra objects and any text on the picture. Put size and width notes in the gallery or the listing text."
     },
     {
-      "q": "Can I show a sneaker logo I do not own?",
-      "a": "No. If you ask for a logo or a brand mark you do not own, the request can be refused. Resellers of branded pairs should use their own straight product photos for those listings."
+      "q": "What happens if I ask for a logo I do not own?",
+      "a": "A logo or brand mark you do not own can be refused. If you resell branded pairs, use your own straight product photos for those listings."
     },
     {
       "q": "Which angles should I photograph?",
-      "a": "Start with one full side view, then a top view and a sole or heel shot. Those three cover the shape and the sole pattern a shopper checks."
+      "a": "Start with one full side view, then a top view and a sole or heel shot. Those three show the shape and the sole pattern a shopper checks."
     },
     {
-      "q": "How do I keep an unbranded pair from looking branded?",
-      "a": "Start from a plain pair and check the result for stripes, sole shapes, or stitching that resemble a known logo. Keep marks you do not own out of the source photo and the finished scene."
+      "q": "How do I keep a plain pair from looking like a known brand?",
+      "a": "Start from a plain pair and check the result for stripes, sole shapes, or stitching that copy a known logo. Keep marks you do not own out of the source photo and the finished scene."
     },
     {
       "q": "Can the clips run as paid shoe ads?",
-      "a": "Yes. Downloads come back without a watermark, so a paid ad is fine. You can publish the clip to TikTok or Meta, or download it and post it yourself."
+      "a": "Yes. The download has no watermark, so a paid ad is fine. You can post the clip on TikTok or Meta, or download it and publish it yourself."
     },
     {
       "q": "How long can a shoe clip be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. Frames include 9:16, 1:1, 16:9, 4:3, and 3:4. Those lengths spend 24, 40, 60, and 120 credits. If the clip fails, the credits return. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits, and Premium is $63 for 600."
+      "a": "You can pick 6, 10, 15, or 30 seconds. Frame choices are 9:16, 1:1, 16:9, 4:3, and 3:4. Those lengths cost 24, 40, 60, and 120 credits. A failed clip sends its credits back. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits. Premium is $63 for 600 credits. A product still costs 24 credits."
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send the link from your shop software through the API. Ask for one step in one version and a white-background side view in the other."
+      "a": "Yes. Paste the product page, or send the link from your shop software. Ask for a step in one version and a white-background side view in the other."
     }
   ],
-  "templates_lead": "Choose an on-foot demo, an unboxing, or a fit check that matches the pair you sell.",
-  "cta_lead": "Download one step you can run as an ad. You start from the side photo of the boot, and the credit cost is on screen before you confirm.",
-  "steps_h2": "How to Make On-Foot Shoe Photos in 3 Simple Steps",
-  "steps_lead": "You download one step of the brown boots, sized for the channel you picked, from the side view.",
+  "templates_lead": "Pick an on-foot demo, an unboxing, or a fit check that fits the pair you sell.",
+  "cta_lead": "Make more shoe ads that sell, with no creator and no shoot. The credit cost sits on screen before you confirm.",
+  "steps_h2": "How to Make a Shoe Ad in 3 Simple Steps",
+  "steps_lead": "Three steps to a creator-style shoe video, from a photo, a link, or a short note.",
   "steps": [
     {
       "t": "Upload Your Shoe",
-      "d": "Upload a full side view of the brown lace-up boots. Keep the toe and the heel inside the frame."
+      "d": "Drop in a link, a shoe photo, or a short note. It reads the file and starts, with nothing else needed from you."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Choose an AI avatar already mid-stride in these brown boots. Keep that face when you make another color."
+      "d": "Browse many AI avatars across ages and looks. Pick the face your shoe buyers trust before they tap the ad."
     },
     {
       "t": "Generate and Publish",
-      "d": "Download a spoken line and captions for this trail step. Post the size that fits the channel you picked."
+      "d": "Your finished shoe ad includes a voice and captions. Launch it on TikTok or Meta and let the pair sell."
     }
   ],
   "visual": {
@@ -108,61 +108,61 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Why Shoe Brands Skip Another Model Day",
-    "lead": "Start from the shoe photo you already shot, and add an AI actor when someone should wear the pair. Skip the model day, use that pair in more than one placement, and keep the shoot money for the ads.",
+    "h2": "Why Shoe Brands Stop Waiting on Creators",
+    "lead": "No-shows, delays, and surprise bills do not belong in a shoe launch. Here is how you fix that.",
     "items": [
       {
-        "t": "Skip Another Shoe Shoot",
-        "d": "An adult holds both gray walking shoes from the side photo you already took, so the toe and the sole show together. You are not waiting on a creator, or booking a model, for this pair.",
+        "t": "Faster and More Affordable Production",
+        "d": "Skip pricey shoots and creators who do not show up. On-foot shoe ads can show a step, a fit check, and the pair held up close. You get a strong clip in minutes, then post more of them.",
         "img": "n:guide:fx30-shoes-benefit-fit-r1",
-        "alt": "You skip the model day: an adult holds a pair of plain gray walking shoes for a fit check."
+        "alt": "An adult holds a pair of plain gray walking shoes up for a fit check."
       },
       {
-        "t": "One Pair Across Placements",
-        "d": "The taupe shoe keeps its grain in the gallery still, and the same pair becomes the tall clip for the ad. One photo set covers the product page and the placements you pay for.",
+        "t": "Scalable Shoe Ads Across Channels",
+        "d": "Make walking clips, fit checks, and product demos in batches. Use them on paid ads, phone videos, Stories, and your store page, with no full production day.",
         "img": "n:guide:fx30-shoes-benefit-material-r1",
-        "alt": "You show what shoppers check up close: a plain taupe shoe with leather grain, flat laces, stitching, and the sole edge."
+        "alt": "Close view of a plain taupe shoe with leather grain, flat laces, stitching, and the sole edge."
       },
       {
-        "t": "Keep the Shoot Budget for Ads",
-        "d": "One step on a clean sidewalk comes from the shoe photo, not from a model day on a set. The money that day would have cost can stay on the ads you run.",
+        "t": "Higher Conversions, Stronger Sales",
+        "d": "Creator-style shoe clips catch the eye, show the pair in motion, and help you move more pairs without draining the budget. Sharp ads bring stronger sales and quicker growth.",
         "img": "n:guide:fx30-shoes-benefit-step-r1",
-        "alt": "You can post this step with no model day. An adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
+        "alt": "An adult wearing a plain walking shoe takes one measured step on a clean sidewalk."
       }
     ]
   },
   "platforms": {
-    "h2": "A Walking Clip for Every Placement",
-    "lead": "Shape the walking clip and the clean product image for the feed, the listing, or the product page. Publish the file you want, or download it and post it yourself.",
+    "h2": "Make Shoe UGC Ads for Every Channel",
+    "lead": "One pair can feed a phone ad and your product page. Match the frame to the place you post it.",
     "items": [
       {
         "t": "Make a TikTok Walking Clip",
-        "d": "A tall walking clip for TikTok, with the pair in motion from the first second and room for your offer.",
+        "d": "A tall TikTok clip that opens on the pair in motion, with room left for your offer.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "Post the Pair on Instagram",
-        "d": "A side-view still or a short step for the grid and for Stories. Make the square and the tall file as two jobs.",
+        "d": "A square still or a short step for the grid and for Stories. Make the square file and the tall file as two separate jobs.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Make a Facebook Feed Image",
-        "d": "A feed image of the pair, with open space so you can add your offer after you download it.",
+        "d": "A feed image of the pair, with open space so you can place your offer after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Make a YouTube Short",
-        "d": "A Short built around one pace, so the shoe is clear in the opening second of the clip.",
+        "d": "A Short built around one step, so the shoe is easy to see in the opening second.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Put the Shoe on Amazon",
-        "d": "The shoe alone on white, ready for you to check against the main-image rules before upload.",
+        "d": "The shoe alone on white, ready for you to check the main-image rules before you upload.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Match the Pair on Shopify",
-        "d": "Matching pair photos for the product page and for the collection grid on your store.",
+        "d": "Matching photos of the pair for the product page and the collection grid on your store.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -201,7 +201,7 @@
       }
     ]
   },
-  "cta_title": "Turn a Side Photo Into a Walking Ad",
+  "cta_title": "Ready to Scale Your Shoe Ads?",
   "relatedLinks": [
     {
       "id": "tpl-color",
@@ -228,7 +228,7 @@
       "label": "Casual Creator-Style Video Ads"
     }
   ],
-  "related_h2": "Shoe Templates, Listings, and Ad Tools",
+  "related_h2": "More Tools for Shoe Ads and Listings",
   "maker": {
     "options": [
       [

@@ -1,10 +1,10 @@
 {
   "id": "guide-white-background-amazon",
-  "title": "Compliant Amazon Main Images at Scale | AIVideosUGC",
-  "description": "Follow Amazon's product image requirements with one compliant white main image. Use that setup at scale, then send every backpack to Seller Central.",
-  "h1": "Amazon Product Image Requirements for Every Listing",
+  "title": "Amazon Main Image Rules at Scale | AIVideosUGC",
+  "description": "Meet Amazon's main-image rules with one pure-white setup for the whole catalog. Keep the product large, check the corners, then send the files.",
+  "h1": "Amazon Main Image Rules for Every Listing",
   "eyebrow": "Pure White for the Main Image",
-  "lead": "Give every olive canvas backpack the same pure-white main image, then send the set to Seller Central. Keep the sale badge off this picture, and put the pack you ship large in the square.",
+  "lead": "Meet Amazon's main-image rules at catalog scale. One pure-white setup, then send the set to Seller Central.",
   "secondary_keywords": [
     "Amazon main image requirements",
     "pure white background product photo",
@@ -12,13 +12,14 @@
     "white background for product listings"
   ],
   "read_minutes": 5,
-  "summary": "One white setup covers the whole backpack catalog, not just the first color. The square stays white, the product stays large, and the frame stays limited to what the box contains.",
+  "summary": "One white setup covers the whole catalog, not just the first color. The square stays white, the product stays large, and the frame stays limited to what the box contains.",
   "sections": [
     {
-      "h2": "One White Main Image for Every Backpack",
+      "h2": "A Pure White Main Image for Every Product",
       "paras": [
-        "Give every olive canvas backpack the same pure-white main image, then send that set to Seller Central. Sale stickers, badges, and extra objects stay off this picture.",
-        "Start with the corners of that backpack square. Amazon wants those corners at 255 on red, green, and blue. The backpack should fill most of the square. The product in the frame should be the one you ship, straps included when the straps ship, with no text drawn on. Small lettering on a label should still be readable when you zoom. When the square matches the backpack in your hand, you can publish that file as the main image. Later pictures can show the pack in use. This first picture stays the clean white one."
+        "Amazon requires a pure white main image. If the corners are not white, the listing can drop out of search until you replace that picture.",
+        "The photo on this page is one backpack. Remove the old background, then set the corners to pure white, 255 on red, green, and blue. You do not need a studio for that.",
+        "Sale stickers, badges, and extra objects stay off this picture. The product should fill most of the square, and it should be the one you ship."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec01",
       "alt": "Olive canvas backpack centered on a pure white background."
@@ -26,17 +27,17 @@
     {
       "h2": "Built for a Whole Catalog",
       "paras": [
-        "A shop with thirty backpacks can reuse the white square once the first pack looks right. Save that setup and apply it to pack thirty.",
-        "Use that same white backpack square as the first photo on your own store too.",
-        "You set pure white once, choose how much of the square the backpack fills, and name what ships in the box. The next product uses that setup.",
-        "You confirm shape, color, straps, and label against the backpack in your hand, and then you publish the file that matches."
+        "A shop with many products can reuse the white square once the first one looks right. Save that setup and apply it to the rest.",
+        "Use that same white square as the first photo on your own store too.",
+        "You set pure white once, choose how much of the square the product fills, and name what ships in the box. The next product uses that setup.",
+        "You confirm shape, color, and label against the item in your hand, and then you publish the file that matches."
       ]
     },
     {
       "h2": "Start From a Phone Photo, Not a Studio",
       "paras": [
-        "You do not need a white studio. The phone photo needs the whole backpack, sharp, with even light and a little space around every edge.",
-        "Take the photo near a window, on a plain surface, and hold the phone at the backpack's height. Show what the buyer finds in the box, including both straps. Leave a little empty space around the pack so the edges are not cut off. Flash on a canvas weave can blow out the color, so window light is safer."
+        "You do not need a white studio. The phone photo needs the whole product, sharp, with even light and a little space around every edge.",
+        "Take the photo near a window, on a plain surface, and hold the phone at the product's height. Show what the buyer finds in the box. Flash can blow out the color, so window light is safer."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec02",
       "alt": "Adult hand holds an olive canvas backpack upright beside a bright window."
@@ -44,60 +45,60 @@
     {
       "h2": "Make the Pure White Main Image",
       "paras": [
-        "The olive canvas backpack, straps included, is already in the phone photo, and that is the group you ask for on white.",
-        "Open the [AI product background changer](page:change-background) or the [AI product photo generator](page:photo-hub). Type one plain line, such as the olive canvas backpack and both straps on pure white, filling most of the square. Then sample a corner. It should read 255 on red, green, and blue."
+        "Open the [AI product background changer](page:change-background) or the [AI product photo generator](page:photo-hub). Ask for the product on pure white, filling most of the square.",
+        "Then sample a corner. It should read 255 on red, green, and blue. If it does not, ask again before you upload."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec03",
       "alt": "Olive canvas backpack on a pure white background."
     },
     {
-      "h2": "Use the Same White Setup on Every SKU",
+      "h2": "Use the Same White Setup on Every Product",
       "paras": [
-        "A white main image keeps a backpack listing easy to find in search. Replace a gray main image and the listing can show in search again. The later photos are not the ones this rule is about.",
-        "Once the first backpack's square is right, use that same square on the next color. The API is not a separate install. It can start the job from the catalog you already keep, so a new color uses the setup you already checked."
+        "A white main image keeps a listing easy to find in search. Replace a gray main image and the listing can show in search again. The later photos are not the ones this rule is about.",
+        "Once the first square is right, use that same square on the next color. The API is not a separate install. It can start the next file from the catalog you already keep."
       ]
     },
     {
-      "h2": "Keep One Look on the Later Images",
+      "h2": "Keep Your Brand on the Later Images",
       "paras": [
-        "Save the shop's navy and the wordmark for the photos after the main image. Those later photos are where colors and the wordmark belong. The main image stays a clean product on white, with no lettering.",
-        "The white square is only the first picture. The backpack on a chair, or a hand on the strap for scale, belongs in the later spots. [Photos of daily use](page:lifestyle-photos) and [photos with a person](page:model-photos) cover those spots. Do not move the wordmark onto the main image."
+        "Save your colors and your wordmark for the photos after the main image. Those later photos are where colors and the wordmark belong. The main image stays a clean product on white, with no lettering.",
+        "The white square is only the first picture. The product in use, or a hand for scale, belongs in the later spots. [Photos of daily use](page:lifestyle-photos) and [photos with a person](page:model-photos) cover those spots."
       ]
     },
     {
       "h2": "How to Make Amazon Listing Photos in 3 Simple Steps",
       "paras": [
-        "Upload your product photo. Get the main image right on one backpack before you touch the rest. The square is white, and the straps are in it when the straps ship.",
-        "Describe your scene for the later pictures. The second picture can be the backpack on a chair. Add your navy caption in the editor only on that later image. Match the long side to the size your category currently asks for.",
-        "Download and post. When that pair looks right, repeat it for the other backpacks and send the files to Seller Central. Upload the white file you already checked."
+        "Upload your product photo. Get the main image right on one product before you touch the rest. The square is white, and every piece that ships is in the frame.",
+        "Describe your scene for the later pictures. The second picture can show the product in use. Add your colors in the editor only on that later image.",
+        "Download and post. When that pair looks right, repeat it for the other products and send the files to Seller Central."
       ]
     },
     {
-      "h2": "Use AIVideosUGC or Build the Tool Yourself",
+      "h2": "Use AIVideosUGC or Build It Yourself",
       "paras": [
-        "A two-person shop can give the olive canvas backpack a white main image with the plan it already pays for. The white square is a job in that product, not a separate build.",
+        "A two-person shop can give the product a white main image with the plan it already pays for. You can start today. You do not staff an engineering project first.",
         "The bill you already know is the plan and the credits. That is the cost of the white square, including a quiet month.",
-        "When the photo tools improve, that shows up in the product you already open, on the day you open it. You do not keep a second image tool running.",
-        "November is when thirty new colors show up at once. The white setup from October still applies. The API is not a separate build. It can start those files from the catalog.",
-        "The navy on a later Amazon photo should be the navy on your own store. Set it once. The white main image stays free of lettering."
+        "When the photo tools improve, that shows up in the product you already open. You do not keep a second image tool running.",
+        "A busy season can bring many new colors at once. The white setup from last month still applies. The API is not a separate build.",
+        "The colors on a later Amazon photo should match your own store. Set them once. The white main image stays free of lettering."
       ]
     },
     {
       "h2": "How a Catalog Seller Uses the Main Image",
       "paras": [
-        "Every new backpack gets the same pure-white main image. Photos of the pack on a chair, or in a hallway, stay in the later image spots."
+        "Every new product gets the same pure-white main image. Photos of the product in use stay in the later image spots."
       ]
     },
     {
       "h2": "More Photo Tools for the Listing",
       "paras": [
-        "[Background changer](page:change-background) takes off the old background. [White background](page:white-background) is the tool for the main image. [Product photos](page:photo-hub) cover the rest of the square, including a tighter crop of the strap. [Photos of daily use](page:lifestyle-photos) belong in the later image spots, not on the main image."
+        "[Background changer](page:change-background) takes off the old background. [White background](page:white-background) is the tool for the main image. [Product photos](page:photo-hub) cover the rest of the square. [Photos of daily use](page:lifestyle-photos) belong in the later image spots, not on the main image."
       ]
     },
     {
-      "h2": "Check the Backpack Before You Upload",
+      "h2": "Check the Product Before You Upload",
       "paras": [
-        "You upload a file whose corners are full white and whose backpack matches the one in your hand. Check the corners with a color picker, then set the real pack next to the screen and compare the straps, the color, and the label.",
+        "You upload a file whose corners are full white and whose product matches the one in your hand. Check the corners with a color picker, then set the real item next to the screen.",
         "Each corner should be pure white, with no gray haze. Zoom in on labels, because small lettering is where a new image often goes wrong. If the words are wrong, try again from a sharper phone photo before the file goes to Seller Central."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec04-r2",
@@ -106,8 +107,8 @@
     {
       "h2": "When the Product Is White, Clear, or a Set",
       "paras": [
-        "Set the backpack's shape first, light the edges, and show exactly how many pieces the listing sells.",
-        "Side light keeps a pale product's outline visible on white. Take the starting photo with light from one side, so the outline has soft shading, and mention that side light in the line you type. If two straps ship, both straps stay in the frame. A clear bottle in the same catalog needs the same edge light, or it can disappear into the white."
+        "Set the product's shape first, light the edges, and show exactly how many pieces the listing sells.",
+        "Side light keeps a pale product's outline visible on white. Take the starting photo with light from one side, and mention that side light in the line you type. If two pieces ship, both stay in the frame. A clear bottle needs the same edge light, or it can disappear into the white."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec05",
       "alt": "Adult hand shapes an olive canvas backpack upright on a white backdrop."
@@ -115,8 +116,8 @@
     {
       "h2": "Keep White for the Main Image Only",
       "paras": [
-        "Only the first picture has to be the white square. Picture two can show the backpack on a chair. Picture three can show the strap up close.",
-        "A useful set might show the backpack in a hallway, a hand for size, and a close view of the buckle. Make the pictures first, then add any words in the editor. [Photos of daily use](page:lifestyle-photos) are for those later spots. A soft shadow, when you want one, stays off the main image."
+        "Only the first picture has to be the white square. Picture two can show the product in use. Picture three can show a detail up close.",
+        "Make the pictures first, then add any words in the editor. [Photos of daily use](page:lifestyle-photos) are for those later spots. A soft shadow, when you want one, stays off the main image."
       ],
       "img": "n:guide:fx06-guide-white-background-amazon-sec06",
       "alt": "Adult holds an olive canvas backpack in a simple product gallery setup."
@@ -124,8 +125,8 @@
     {
       "h2": "Upload the White Square You Checked",
       "paras": [
-        "A large backpack, white corners, the right straps, and a readable label are the file you upload. Check the pack in your hand against that file.",
-        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. A failed job returns those credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The same white setup can repeat across the catalog. The API is not an extra fee, and it can start the next color."
+        "A large product, white corners, the right pieces, and a readable label are the file you upload. Check the item in your hand against that file.",
+        "The phone photo can start on any plain surface. One finished image is 24 credits, shown before it starts. A failed job returns those credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The same white setup can repeat across the catalog. The API is not an extra fee."
       ]
     }
   ],
@@ -140,47 +141,47 @@
   "faq": [
     {
       "q": "What does Amazon want on the main image?",
-      "a": "The backpack you ship, large in the square, on white that reads 255 on red, green, and blue. A sticker, a badge, or an extra object stays off this picture. The product should fill most of the frame."
+      "a": "The product you ship, large in the square, on white that reads 255 on red, green, and blue. A sticker, a badge, or an extra object stays off this picture. The product should fill most of the frame."
     },
     {
       "q": "What happens if the main image breaks the rules?",
-      "a": "The listing can drop out of search until you replace that main image with a compliant square. A photo of the backpack on a chair belongs in a later spot, not in the main square."
+      "a": "The listing can drop out of search until you replace that main image with a compliant square. A photo of the product in use belongs in a later spot, not in the main square."
     },
     {
       "q": "How do I get a pure white background from a phone photo?",
-      "a": "Start from a phone photo that already shows the whole backpack. Ask for white, then sample a corner. A corner that is not 255 on red, green, and blue is not done yet."
+      "a": "Start from a phone photo that already shows the whole product. Ask for white, then sample a corner. A corner that is not 255 on red, green, and blue is not done yet."
     },
     {
-      "q": "Can I do this for many backpacks together?",
-      "a": "Yes. After the first backpack is right, the next colors can use that same square. Each color keeps that product's own straps, color, and label."
+      "q": "Can I do this for many products together?",
+      "a": "Yes. After the first product is right, the next colors can use that same square. Each color keeps that product's own shape, color, and label."
     },
     {
       "q": "Can my shop system start the white image?",
-      "a": "Yes. If your shop system already lists every item, it can send the photo and ask for the white square in a batch. You still compare each file with the product in your hand."
+      "a": "Yes. If your shop system already lists every item, it can send the photo and ask for the white square. You still compare each file with the product in your hand. The API is not a separate install."
     },
     {
       "q": "Why does my white background look gray on Amazon?",
-      "a": "The corners are not full white. Check them with a color picker and ask for RGB 255, 255, 255 again. A gray haze at the edge is enough for the square to fail."
+      "a": "The corners are not full white. Check them with a color picker and ask for 255 on red, green, and blue again. A gray haze at the edge is enough for the square to fail."
     },
     {
       "q": "Can an image made here be my Amazon main image?",
-      "a": "Yes, if it shows the real backpack, on pure white, with nothing extra drawn on. Compare it with the pack you ship before you upload it to Seller Central."
+      "a": "Yes, if it shows the real product, on pure white, with nothing extra drawn on. Compare it with the item you ship before you upload it to Seller Central."
     },
     {
       "q": "How many credits does one white image use?",
       "a": "24 credits. The cost shows before the job starts. If it does not finish, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Will the backpack's shape change?",
+      "q": "Will the product's shape change?",
       "a": "It keeps the shape in the photo you uploaded. If a strap, a buckle, or the label shifts, try again from a sharper photo before you publish the file."
     },
     {
       "q": "What if the product is white, clear, or a set?",
-      "a": "Light it from the side so the edge still reads, and keep every piece that ships in the frame. A pale pack on white needs that edge or it can disappear."
+      "a": "Light it from the side so the edge still reads, and keep every piece that ships in the frame. A pale product on white needs that edge or it can disappear."
     }
   ],
   "cta_title": "Make a Clean Main Image",
-  "cta_lead": "You get a white main image of the backpack from one complete product photo. Compare it with the pack you ship before it goes on the listing.",
+  "cta_lead": "You get a white main image from one complete product photo. Compare it with the item you ship before it goes on the listing.",
   "relatedLinks": [
     "guide-product-photo-tips",
     "white-background",

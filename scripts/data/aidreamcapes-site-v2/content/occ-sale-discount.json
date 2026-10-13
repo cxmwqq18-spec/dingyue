@@ -1,10 +1,10 @@
 {
   "id": "occ-sale-discount",
   "title": "Countdown Sale Video Maker | AIVideosUGC",
-  "description": "Make a countdown sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and download the file.",
-  "h1": "Create a Countdown Sale Video",
+  "description": "Turn a product link into a countdown sale video with a script, an avatar, and a voice. Set the end date, then download a file you can post today.",
+  "h1": "Create Your Countdown Sale Video With AI",
   "eyebrow": "Sale Ads You Can Post",
-  "lead": "Get a sale video that says the last day out loud. Paste the product page, pick an avatar, set the end date, and change the offer line before you download.",
+  "lead": "Turn a product link into a countdown video with a script, an avatar, and a voice. Set the end date, then download the file.",
   "secondary_keywords": [
     "discount ad images",
     "sale banner for online store",
@@ -15,23 +15,23 @@
   "faq": [
     {
       "q": "How many credits do I spend on a sale photo or a sale video?",
-      "a": "A sale video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24 credits. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before you start. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
+      "a": "A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A photo spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before it starts. If a job fails, those credits come back. A finished file is not refunded just because you dislike it."
     },
     {
       "q": "Can my shop software request a sale video from a product link?",
       "a": "Yes. Your tools can request a sale video from a product link through the API. The file stays in your account until you decide to share it."
     },
     {
-      "q": "Can one AI avatar present the denim jacket through the sale?",
+      "q": "Can one AI avatar present the product through the sale?",
       "a": "Yes. Use the same AI avatar from your other clips, so the sale video looks like the same shop."
     },
     {
       "q": "How do I say the last day in the sale video before I download?",
-      "a": "Set the end date in the editor before you download, and move it if the sale window shifts. The cream jar stays in frame while you decide when the offer stops."
+      "a": "Set the end date in the editor before you download, and move it if the sale window shifts. The product stays in frame while you decide when the offer stops."
     },
     {
-      "q": "Can I add the clip I already filmed on my table?",
-      "a": "Paste a product page so the photos come in, upload a picture, or add a clip you already shot. You still check the offer before it goes out."
+      "q": "Can I add the clip I already filmed?",
+      "a": "Yes. Paste a product page so the photos come in, upload a picture, or add a clip you already shot. You still check the offer before it goes out."
     },
     {
       "q": "Can I keep the same scene and only swap the next offer?",
@@ -43,7 +43,7 @@
     },
     {
       "q": "Can I run the download as a paid sale ad?",
-      "a": "Yes. The download has no AIVideosUGC watermark, so you can place it as a paid ad. The app you pick still has its own rules."
+      "a": "Yes. The download has no watermark, so you can place it as a paid ad. The app you pick still has its own rules."
     },
     {
       "q": "Can I make sale videos for many products in one sitting?",
@@ -98,15 +98,15 @@
   "steps": [
     {
       "t": "Add Your Product Link",
-      "d": "Paste the skincare listing. The clip opens on the pastel bottles, then the cream jar."
+      "d": "Paste the product page. Photos and the offer details come in, and the story starts from that page."
     },
     {
       "t": "Create Your Actor",
-      "d": "Pick one of 53 AI actors as the avatar you use. The voice says Friday while the cream jar stays in frame."
+      "d": "Pick an AI avatar to present the countdown. The avatar speaks in the voice you choose."
     },
     {
       "t": "Set Script, Timer, and Publish",
-      "d": "Set the end date and the offer line, then download. The cream jar stays in the frame when you change the words."
+      "d": "Edit the script, set the end date, and pick a track. Then export or download the file."
     }
   ],
   "visual": {
@@ -255,38 +255,38 @@
       }
     }
   },
-  "benefits_h2": "A Countdown Turns a Sale Into an Event",
+  "benefits_h2": "A Countdown Video Maker That Builds Anticipation",
   "benefits": [
     {
-      "t": "One AI Avatar for the Sale",
-      "d": "One AI avatar carries the denim jacket through this sale, so the hanger clip looks like the same shop as your other videos. Leave open wall space beside the jacket, and that face opens by naming the last day.",
+      "t": "One Avatar for the Countdown",
+      "d": "One AI avatar introduces the sale and names the last day, with the denim jacket still in frame.",
       "img": "n:guide:img2-occ-sale-discount-benefits-0-r1",
       "alt": "An older man with short gray hair speaks to the camera beside a plain blue denim jacket on a wooden hanger.",
       "frame": "none"
     },
     {
-      "t": "A Spoken Pitch With the Deadline",
-      "d": "You get a spoken pitch from the picnic blanket page, and the last day lands as the final line. A buyer hears the offer while the hands keep folding the blanket.",
+      "t": "A Script That Builds Urgency",
+      "d": "Paste the product page and get a spoken pitch. The last day lands as the final line while the blanket stays in the shot.",
       "img": "n:guide:img2-occ-sale-discount-benefits-1-r1",
       "alt": "A man with short blonde hair speaks to the camera while folding a checked picnic blanket at a park table.",
       "frame": "none"
     },
     {
-      "t": "Slow the Voice on the End Date",
-      "d": "A buyer can catch the end date when the voice eases on Thursday night. Pick a warm voice, keep the rest of the line quick, and leave the charging pad in the shot.",
+      "t": "A Voice That Hits the Date",
+      "d": "Pick a voice and ease it on the end date so the buyer catches it. The charging pad stays in the shot.",
       "img": "n:guide:img2-occ-sale-discount-benefits-2-r1",
       "alt": "A woman with auburn hair in a bun speaks to the camera, a plain round charging puck on the desk.",
       "frame": "none"
     },
     {
-      "t": "Run Two Openings, Keep One",
-      "d": "Make two cuts of the tea pouch. One opens on the pack beside the mug, and the other opens by naming the last day. Keep the file you want to run.",
+      "t": "Test Two Openings",
+      "d": "Make two cuts of the tea pouch. Keep the one you want to run before the timer ends.",
       "img": "n:guide:img2-occ-sale-discount-benefits-3-r1",
       "alt": "A young man with a short buzz cut speaks to the camera beside a blank kraft pouch and a steel travel mug.",
       "frame": "none"
     }
   ],
-  "steps_h2": "How to Create Promo Video Ads in 3 Simple Steps",
+  "steps_h2": "How to Make a Countdown Sale Video in 3 Simple Steps",
   "steps_lead": "You get a sale clip the ad account can run once the end date is in the spoken line.",
   "relatedLinks": [
     {
@@ -350,31 +350,31 @@
   },
   "trust": {
     "h2": "How Sellers Ship a Countdown Clip",
-    "lead": "Sellers use this countdown page to say the end date, without a separate production desk.",
+    "lead": "Sellers use this countdown to say the end date, without a separate production desk.",
     "items": [
       {
         "t": "Say the Last Day Out Loud",
-        "d": "A denim seller pastes the jacket page, and the opening says the last day while the jacket stays in frame. They redo that opening without booking another film day."
+        "d": "Paste the product page, and the opening says the last day while the product stays in frame. Redo that opening without booking another film day."
       },
       {
         "t": "Use the Credits Already There",
-        "d": "A home seller keeps the picnic blanket scene and draws the new offer from the credit balance they already have. A new code does not start with a new creator invoice."
+        "d": "Keep the product scene and draw the new offer from the credit balance you already have. A new code does not start with a new creator invoice."
       },
       {
         "t": "A Clip for Each Product",
-        "d": "A small team makes a sale clip for the charging pad and the tea pouch, instead of waiting on one editor for the whole catalog."
+        "d": "A small team makes a sale clip for each product, instead of waiting on one editor for the whole catalog."
       },
       {
         "t": "Set the Date, Skip the Shoot",
-        "d": "A skincare seller pastes the cream page and sets the end date in the editor. That stands in for a location day, a talent call, and an edit queue."
+        "d": "Paste the product page and set the end date in the editor. That stands in for a location day, a talent call, and an edit queue."
       },
       {
         "t": "Try Another Voice",
-        "d": "A tea seller tries another opening and another voice when the end date moves. They are not stuck with one sale video for the whole month."
+        "d": "Try another opening and another voice when the end date moves. You are not stuck with one sale video for the whole month."
       },
       {
         "t": "One Person Finishes the Set",
-        "d": "One person can brief, generate, and export the weekend set of sale clips after the orders are packed. Nobody else has to stay late for the denim jacket or the tea pouch."
+        "d": "One person can brief, generate, and export the weekend set after the orders are packed."
       }
     ]
   },

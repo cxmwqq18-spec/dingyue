@@ -1,10 +1,10 @@
 {
   "id": "occ-black-friday",
-  "title": "Festive Holiday Video With Avatar Voice | AIVideosUGC",
-  "description": "Make a festive holiday video from your product link, with an avatar and a voice. Export a tall file, and add the offer only when that number is final.",
-  "h1": "Festive Holiday Video With an Avatar and Voice",
+  "title": "Festive Holiday Video Maker | AIVideosUGC",
+  "description": "Make a festive holiday video from a product link, with an avatar and a voice. Export a file for your feed, and add the offer only when that number is final.",
+  "h1": "Make a Festive Holiday Video Fast",
   "eyebrow": "Black Friday Video Ads",
-  "lead": "Make a festive holiday video from the product link. An AI avatar stands beside the item and says the offer. You export a tall file, and you type the code only when the number is final.",
+  "lead": "Make a festive holiday video from a product link. An avatar and a voice carry the message, and you type the offer only when the number is final.",
   "secondary_keywords": [
     "Black Friday Video Ads",
     "Black Friday banner ideas",
@@ -14,40 +14,40 @@
   "plan": [],
   "faq": [
     {
-      "q": "How do credits work on a Black Friday ad?",
-      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. The cost is on screen before the job runs. If it fails, those credits return."
+      "q": "How do credits work on a holiday ad?",
+      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. If it fails, those credits return."
     },
     {
-      "q": "Can I add sale-day music and pictures?",
-      "a": "Yes. Pick a track from the music library, choose visuals that fit the deal, and add captions in the editor. Use music you are allowed to play."
+      "q": "Can I add holiday music and pictures?",
+      "a": "Yes. Pick a track from the music library, choose visuals that fit the season, and add captions in the editor. Use music you are allowed to play."
     },
     {
-      "q": "Can I make sale ads for many products together?",
+      "q": "Can I make holiday ads for many products?",
       "a": "Yes. Run several product links and each one comes back as its own ad. You still review every file before it is published."
     },
     {
-      "q": "Can an AI avatar deliver the sale message?",
-      "a": "Yes. An AI avatar can stand beside the product and say the offer, with the product kept large enough to recognize."
+      "q": "Can an AI avatar deliver the holiday message?",
+      "a": "Yes. An AI avatar can stand beside the product and say the line, with the product kept large enough to recognize."
     },
     {
-      "q": "What happens to the ad after Black Friday?",
-      "a": "You keep the file. Change the offer line, the voice, or the caption and use the same scene for Cyber Monday."
+      "q": "What happens to the ad after the holiday?",
+      "a": "You keep the file. Change the offer line, the voice, or the caption and use the same scene for the next sale day."
     },
     {
-      "q": "How early should I prepare the sale creative?",
-      "a": "Before the offer is final. Get the avatar and the script ready from the product link, then type the discount, the code, and the end date when they are set."
+      "q": "How early should I prepare the holiday creative?",
+      "a": "Before the offer is final. Get the avatar and the line ready from the product link, then type the discount when it is set."
     },
     {
       "q": "Can the ad start from a product link?",
-      "a": "Yes. Open the listing that will go on sale and use its photo as the scene. If that photo cuts the product off, upload the full shot you already use on the page."
+      "a": "Yes. Open the listing that will go on sale and use its photo as the scene. If that photo cuts the product off, upload the full shot."
     },
     {
-      "q": "Can I publish my Black Friday video to TikTok, Instagram, or Facebook?",
+      "q": "Can I publish the holiday video to TikTok, Instagram, or Facebook?",
       "a": "Yes. Download the file when it looks right, or send it to the feed you already use. It stays in your account until you share it."
     },
     {
       "q": "Do I need a separate file for each placement?",
-      "a": "Yes. Make a separate video for each placement: tall 9:16, square 1:1, wide 16:9, 4:3, or 3:4."
+      "a": "Yes. Make a separate video for each placement: tall, square, wide, 4:3, or 3:4."
     },
     {
       "q": "Can I put an end time on the sale ad?",
@@ -55,26 +55,26 @@
     },
     {
       "q": "Can my store tools start a holiday ad from a product link?",
-      "a": "Yes. A connected store tool can request a sale ad from a product link. You approve the file before anyone else sees it."
+      "a": "Yes. A connected store tool can request a holiday ad from a product link. You approve the file before anyone else sees it."
     }
   ],
   "examples": {
-    "h2": "More Black Friday Ad Creative Examples",
-    "lead": "Show deal-ready product scenes, then add the final offer layer after download.",
+    "h2": "More Festive Holiday Video Ideas",
+    "lead": "Show the product in a holiday scene, then add the final offer after you download.",
     "groups": [
       {
-        "label": "Deal-day product demos",
+        "label": "Holiday product scenes",
         "items": [
           {
             "ref": "n:gen2:occ-black-friday-g1",
-            "title": "Leather duffel opened for a deal-day pack",
+            "title": "Gift packed and ready for the holiday",
             "kind": "photo",
             "product": "leather duffel",
             "prompt": "Use the uploaded product photo as the same leather duffel. Show adult hands packing it on a warm wood table, with clean space beside the bag for the Black Friday offer added after download. No text or logos."
           },
           {
             "ref": "n:guide:f13-occ-black-friday-card-10",
-            "title": "Lunch bag packed for a sale-day commute",
+            "title": "Everyday product set for a sale day",
             "kind": "photo",
             "product": "insulated lunch bag",
             "prompt": "Use the uploaded product photo as the same insulated lunch bag. Show adult hands placing it into a work tote beside a packed lunch, with clear space for the offer added after download. No text or logos."
@@ -86,7 +86,7 @@
         "items": [
           {
             "ref": "n:guide:q20-occ-bf-output-01-r2",
-            "title": "Gaming monitor framed for a deal post",
+            "title": "Product framed for a holiday post",
             "kind": "photo",
             "product": "gaming monitor",
             "prompt": "Use the uploaded product photo as the same gaming monitor. Frame it on a tidy evening desk with clear negative space for the Black Friday offer added after download. No text or logos."
@@ -99,15 +99,15 @@
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Open the product link for the holiday offer. Its photo becomes the video, and the price stays yours to type."
+      "d": "Paste the product link for the holiday offer. Its photo becomes the video, and you type the price yourself."
     },
     {
       "t": "Create Your Actor",
-      "d": "Choose an AI avatar who stands beside the item in a festive look you describe. You can upload a short clip for that face."
+      "d": "Choose an avatar, or describe a festive look. You can upload a short clip of yourself for that face."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Set the voice and the script in the editor, then export a tall file to the feed you use."
+      "d": "Set the voice and the line in the editor, then export a file for TikTok, Instagram, or YouTube."
     }
   ],
   "visual": {
@@ -228,32 +228,32 @@
   "benefits_h2": "What a Festive Holiday Video Includes",
   "benefits": [
     {
-      "t": "Describe a Festive Avatar",
-      "d": "An AI avatar can stand beside the pump bottle and say the holiday offer, while the bottle stays large in the frame. Describe a festive outfit, or upload a short clip of yourself for that face, and leave the kraft box clear until the code is final.",
+      "t": "A Festive Avatar Beside the Product",
+      "d": "An AI avatar can stand beside the product and say the holiday line, while the product stays large in the frame. Describe a festive outfit, or upload a short clip of yourself for that face.",
       "img": "n:guide:fx02-occ-bf-benefit-gift",
       "alt": "Adult hands lift a pump bottle from a kraft gift box for the Black Friday ad."
     },
     {
       "t": "A Script in Your Own Words",
-      "d": "The first sentence about the knit slip-on is yours, in words you would actually say, and you can rewrite any line after you hear it. Two openings of that holiday line let you keep the one you would run.",
+      "d": "The first sentence is yours, in words you would actually say, and you can rewrite any line after you hear it. You can start from a link or a short note.",
       "img": "n:guide:fx02-occ-bf-benefit-shoe",
       "alt": "Adult creator holds a plain knit slip-on shoe to the camera for the deal-day ad."
     },
     {
-      "t": "The Sale Line in Two Languages",
-      "d": "The lunch-bag line can play as a voiceover or captions in the listing language. Then play that festive line in another language, while the bag in the box stays the same.",
+      "t": "The Line in Another Language",
+      "d": "Play the line as a voiceover or captions in the listing language. Then play that same line in another language, while the product stays the same.",
       "img": "n:guide:fx02-occ-bf-benefit-lunch",
       "alt": "Adult hands place an insulated lunch bag into a kraft shipping box for the holiday ad."
     },
     {
       "t": "Two Openings, You Keep One",
-      "d": "A second opening about the calm dog on the sofa gives you two lines, and you keep the one you would actually run. Look at other holiday ads in your category, then change this opening before you export.",
+      "d": "A second opening gives you two lines, and you keep the one you would actually run. Change the opening before you export.",
       "img": "n:guide:b2f8-occ-black-friday-benefit-pet-r1",
       "alt": "Adult hand rests on a calm dog lying on a dark sofa for the holiday opening."
     }
   ],
-  "steps_h2": "How to Create Black Friday Banners in 3 Simple Steps",
-  "steps_lead": "You get a festive holiday video from the product link. An AI avatar says the offer, and you type the code only when the number is final.",
+  "steps_h2": "How to Make a Festive Holiday Video in 3 Simple Steps",
+  "steps_lead": "You get a festive holiday video from the product link. An avatar says the line, and you type the offer only when it is final.",
   "relatedLinks": [
     {
       "id": "occ-sale-discount",
@@ -315,16 +315,16 @@
     ]
   },
   "trust": {
-    "h2": "Yours Until the Deal Goes Public",
-    "lead": "Six things already true of the file before anyone else sees the deal.",
+    "h2": "Yours Until the Offer Goes Public",
+    "lead": "Six things already true of the file before anyone else sees the offer.",
     "items": [
       {
         "t": "You Enter the Offer",
-        "d": "You type the price, the code, and the end date yourself. The picture stays the product, and the offer lives in the editor."
+        "d": "You type the price, the code, and the end date yourself. The picture stays the product."
       },
       {
         "t": "No Watermark on the Download",
-        "d": "Nothing from AIVideosUGC is stamped on the file, so paid ads are allowed. Each app still applies its own rules."
+        "d": "Nothing from this site is stamped on the file, so paid ads are allowed. Each app still applies its own rules."
       },
       {
         "t": "Know the Spend Before You Run",
@@ -336,11 +336,11 @@
       },
       {
         "t": "Private Until You Share It",
-        "d": "The product photo and the result remain in your account. They are not public until you publish them."
+        "d": "The product photo and the result stay in your account. They are not public until you publish them."
       },
       {
         "t": "Voice, Captions, and Music",
-        "d": "A voice, captions, and a track from the music library can go out with the clip. Change any of them in the editor before the ad goes live."
+        "d": "A voice, captions, and a track from the music library can go out with the clip. Change any of them before the ad goes live."
       }
     ]
   },

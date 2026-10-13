@@ -1,10 +1,10 @@
 {
   "id": "trust",
-  "title": "Trust and Safety for AI Product Content | AIVideosUGC",
-  "description": "How AIVideosUGC handles AI product ads. See what you can make, what we refuse, how your uploads stay in your account, and how to report a problem.",
-  "h1": "AI Content Trust and Safety for Product Ads",
+  "title": "Trust and Safety for Product Ads | AIVideosUGC",
+  "description": "Trust and safety for AI product ads. See what you can make, what we refuse, how uploads stay in your account, and how to report a problem by email.",
+  "h1": "Trust and Safety for AI Product Ads",
   "eyebrow": "Checks Before You Publish",
-  "lead": "AI content trust and safety means three checks. Make ads only for products you sell. Upload photos you may use. Check every result before you publish.",
+  "lead": "Trust and safety covers three checks. Make ads only for products you sell. Upload photos you may use. Check every result before you publish.",
   "card": "What you can make, how private uploads stay private, and how to report a problem.",
   "secondary_keywords": [
     "AI content rules",
@@ -17,7 +17,7 @@
     {
       "h2": "Consent First, Then Say the Clip Is AI",
       "paras": [
-        "Use a face or a voice only with permission, and say the clip is AI before you publish. Online stores use AIVideosUGC to turn a photo they own into a short ad for a store page. A clip can carry a script, a spoken voice, captions, and a music track. We can refuse a request that breaks the rules, and a person looks at each report. Make ads only for products you sell or are allowed to promote. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+        "Use a face or a voice only with permission, and say the clip is AI before you publish. A person reviews each report. Make ads only for products you sell or may promote. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
       ],
       "img": "n:guide:b2f5-trust-what-it-is-for-r1",
       "alt": "Seller with a chin-length straight black bob holds a plain ceramic mug in a shop beside a closed laptop."
@@ -25,15 +25,15 @@
     {
       "h2": "What We Refuse to Make",
       "paras": [
-        "We can refuse a celebrity, a private person's face, or a logo you do not own. A trademark is a brand name or a logo. You cannot pretend to be someone else or trick buyers. We refuse sexual images of any person, anything sexual or harmful involving anyone under 18, scams, threats, and hate. We also refuse a fake brand and a clip that pretends to be a news report or a public official. We can remove the file and close the account when a request breaks these rules."
+        "We refuse a celebrity, a private person's face, or a logo you do not own. We refuse sexual images, anything sexual or harmful involving anyone under 18, scams, threats, and hate. We also refuse a fake brand and a clip that pretends to be a news report. We can remove the file and close the account."
       ],
       "img": "n:guide:b2f5-trust-what-we-decline-r1",
       "alt": "Seller with short silver-gray hair reviews a plain white mug beside a closed laptop."
     },
     {
-      "h2": "Uploads Stay in Your Account",
+      "h2": "Your Uploads Stay Yours",
       "paras": [
-        "Only upload photos you own or are allowed to use. Private uploads and the files made from them stay in your account. They are not shown to other customers, and we do not sell those uploads. Compare every result with your real product before you publish it. You can ask us to delete the account files by emailing support@aivideosugc.com."
+        "Only upload photos you own or may use. Uploads and the files made from them stay in your account. They are not shown to other customers, and we do not sell them. You can ask us to delete the account files by emailing support@aivideosugc.com."
       ],
       "img": "n:guide:b2f5-trust-uploads-results-r1",
       "alt": "Seller with a close-cropped haircut checks a ceramic mug beside a closed laptop and a padlock."
@@ -41,15 +41,15 @@
     {
       "h2": "Rules for Ads You Publish",
       "paras": [
-        "Show what the product really does. Add the price, the date, and the claim yourself so those words stay exact. Follow the rules where you publish, including a label that says the ad was made with AI. Do not fake a health result or a money promise. Paid plans cover ads you run for your own brand. They do not cover pretending to be another brand. Use the [AI content checklist](page:blog-ai-video-review-checklist) before you post."
+        "Show what the product really does. Add the price and the claim yourself. Say the ad was made with AI when the platform asks. Do not fake a health result or a money promise. Paid plans cover ads for your own brand. Use the [AI content checklist](page:blog-ai-video-review-checklist) before you post."
       ],
       "img": "n:guide:b2f5-trust-ai-content-r1",
       "alt": "Seller with a short copper-red pixie compares a speckled ceramic mug with the same mug beside a closed laptop."
     },
     {
-      "h2": "Report a Problem",
+      "h2": "Something Wrong? Tell Us",
       "paras": [
-        "If you see a clip made with AIVideosUGC that breaks these rules, email support@aivideosugc.com and describe what you saw. You do not need an account to write. If a face, a voice, or a product is yours and you did not agree, use the same address. Include a link when you have one."
+        "If you see a clip made here that breaks these rules, email support@aivideosugc.com and describe what you saw. You do not need an account to write. If a face, a voice, or a product is yours and you did not agree, use the same address."
       ],
       "img": "n:guide:b2f5-trust-report-problem-r1",
       "alt": "Seller with platinum blonde hair in a tight bun looks at a damaged parcel and a blank envelope beside a closed laptop."
@@ -57,14 +57,14 @@
     {
       "h2": "Voices, Scripts, and Where You Post",
       "paras": [
-        "Your shop software can start several versions from a product link you may use. That connection uses this account, and it is not a second login. The voice is made by the tool. Do not upload another person's voice unless they agreed. There are 53 AI actors, and you can add up to 7 reference photos. Clone a voice only when you have the right to it. Read the captions and compare the item with the real product. Sending a file to TikTok, Facebook, or Instagram does not check your claims. You still follow each place's rules for ads made with AI."
+        "The voice is made by the tool. Do not upload another person's voice unless they agreed. There are 53 AI actors, and you can add up to 7 reference photos. Clone a voice only when you have the right. Sending a file to TikTok, Facebook, or Instagram does not check your claims."
       ]
     }
   ],
   "faq": [
     {
       "q": "Can I download the photos and videos made in my account?",
-      "a": "Yes. Download them while you are signed in. You can use the files for your business, and there is no watermark on the file. You still need permission to use the photo you started from. Follow the rules of the place you post them. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. Download them while you are signed in. You can use the files for your business, and there is no watermark on the file. You still need permission to use the photo you started from. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are my uploads shown to other customers?",
@@ -75,7 +75,7 @@
       "a": "Compare the result with your product. Add the real price and what the product does, in your editor. Follow the rules where you post, including a label that the ad was made with AI."
     },
     {
-      "q": "Is the person in the ad a real customer?",
+      "q": "Is the person in the ad a real buyer?",
       "a": "No. The presenter is an AI actor made for the ad. Do not post the clip as a review written by someone who bought the product."
     },
     {
@@ -83,16 +83,16 @@
       "a": "No. We can refuse a celebrity, another person's face, or a logo or brand you do not own. Use the tool for your own products and your own brand."
     },
     {
-      "q": "Where are the full content and data-use rules?",
+      "q": "Where are the full content and data rules?",
       "a": "Read the [Privacy Policy](/privacy), [Terms of Service](/terms), [Content Policy](/content), and [Refund Policy](/refunds)."
     },
     {
-      "q": "How do I report AI misuse?",
+      "q": "How do I report a problem?",
       "a": "Email support@aivideosugc.com with the link or a description of the content and what is wrong. You do not need an account to write."
     },
     {
       "q": "Is the voice a real person?",
-      "a": "No. The voice is made by the tool, in the same way as the presenter. Do not post it as a buyer. Do not use a real person's voice unless you have permission."
+      "a": "No. The voice is made by the tool, in the same way as the presenter. Do not use a real person's voice unless you have permission."
     },
     {
       "q": "Can I start from a product link?",
@@ -103,9 +103,9 @@
       "a": "No. A post to TikTok or Meta does not check your words for you. Meta covers Facebook and Instagram. Read the captions, check the price, and follow that place's rules for ads made with AI."
     }
   ],
-  "ctaTitle": "Start With Your Own Product Photo",
+  "ctaTitle": "Start With a Photo You May Use",
   "ctaLead": "Upload a photo you are allowed to use, compare the result with the real item, and publish only after that check.",
-  "cta_title": "Start With Your Own Product Photo",
+  "cta_title": "Start With a Photo You May Use",
   "cta_lead": "Upload a photo you are allowed to use, compare the result with the real item, and publish only after that check.",
   "relatedLinks": [
     "contact",

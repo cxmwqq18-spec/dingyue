@@ -1,10 +1,10 @@
 {
   "id": "plat-facebook",
-  "title": "AI Facebook Ad Generator for Online Stores | AIVideosUGC",
-  "description": "Make a Facebook UGC video from one product photo. Pick a square or a tall clip, see the credit cost first, and download a file with no watermark.",
-  "h1": "Make UGC Videos for Your Facebook Ads",
+  "title": "Make Facebook Ads in Minutes | AIVideosUGC",
+  "description": "Build Facebook ads without a creator, a studio, or a wait. Pick a square or a tall clip, see the credit cost, and download a file you can run.",
+  "h1": "Winning UGC Videos for Your Facebook Ads",
   "eyebrow": "Facebook Ads Ready to Run",
-  "lead": "Turn one photo of the pale-blue bottle into a Facebook UGC video ad. An AI avatar can hold it and pour, so you are not booking a creator or a studio.",
+  "lead": "Build Facebook ads that feel like a person showing the product on camera. No creator, no studio, and no wait before you post.",
   "card": "A Facebook video of the pale-blue bottle, as a square or a tall clip.",
   "secondary_keywords": [
     "Facebook video ads for ecommerce",
@@ -15,52 +15,52 @@
   "faq": [
     {
       "q": "What is an AI Facebook UGC ad?",
-      "a": "It is a Facebook clip that looks like someone showing your product. An AI avatar holds the pale-blue bottle and a voice explains the pour. You did not book a creator or a studio to film that shot."
+      "a": "It is a Facebook clip that looks like someone showing your product. An AI actor and a voice do the demo. You did not book a creator or a studio."
     },
     {
       "q": "Does this kind of ad work on Facebook?",
-      "a": "Yes. A clip of a hand pouring the pale-blue bottle sits among posts from friends more naturally than a glossy brand film. Make one opening for gift buyers and another for people replacing a worn bottle."
+      "a": "Yes. A clip of the product in use sits in the feed more naturally than a glossy brand film. You can make one opening for each buyer you sell to."
     },
     {
       "q": "Can I stop paying a creator for every Facebook test?",
-      "a": "Yes. Each test comes out of your plan. You are not waiting on a new invoice before the next bottle opening."
+      "a": "Yes. Each test comes out of your plan. You are not waiting on a new invoice before the next opening."
     },
     {
       "q": "Do these videos follow Facebook's ad rules?",
-      "a": "Yes, when the offer is true and the bottle is the one you ship. Publish only after you read Facebook's rules that day. Do not invent a buyer, and do not claim a result you have not seen. We do not submit the ad for you."
+      "a": "Yes, when the offer is true and the product is the one you ship. Do not invent a buyer, and do not claim a result you have not seen. We do not submit the ad for you."
     },
     {
       "q": "Will people know the ad is made by AI?",
-      "a": "Some will, and some will not. The clip is built to feel like a creator video of the bottle. Say it is AI when Facebook asks you to. Do not treat hiding that as the goal."
+      "a": "The clip is built to feel like a creator video in the feed. Say it is AI when Facebook asks you to. Do not treat hiding that as the goal."
     },
     {
       "q": "How fast can I get a Facebook ad file?",
-      "a": "You download the file when the render ends. Pick an avatar, rewrite the first line about the bottle, and you are not holding the launch for a camera crew."
+      "a": "You can have a file in minutes. Pick an actor, set the first line, and you are not holding the launch for a camera crew."
     },
     {
       "q": "What does a Facebook video cost in credits?",
-      "a": "A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you start. A failed job returns those credits."
+      "a": "Yes. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo spends 24. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you start. A failed job returns those credits."
     },
     {
       "q": "Where should the price and the offer line go?",
-      "a": "Put the price and the offer line off the bottle, where the player buttons will not cover them. You add that text in the editor after download."
+      "a": "Put the price and the offer where the player buttons will not cover them. You add that text in the editor after download."
     }
   ],
   "examples": null,
-  "templates_lead": "Pick a scene that keeps the pale-blue bottle clear in the Facebook shape you chose.",
-  "cta_lead": "Choose the Facebook shape for the bottle, then download a file you can drop into Ads Manager.",
+  "templates_lead": "Pick a scene that keeps the product clear in the Facebook shape you chose.",
+  "cta_lead": "Pick the Facebook shape, then download a file you can drop into Ads Manager.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "Upload the pale-blue bottle, or paste its listing. Those photos become the shots in the Facebook video ad."
+      "d": "Paste the product link, or upload one photo. Those pictures become the shots in the Facebook video."
     },
     {
       "t": "Choose an Actor",
-      "d": "Choose an AI avatar to hold the pale-blue bottle. The captions can match the way your shop already writes."
+      "d": "Pick an AI actor who fits the brand, the buyer, and the tone. Captions can match the way your shop already writes."
     },
     {
       "t": "Finish and Publish",
-      "d": "Download the bottle clip and attach it to the campaign. That file is the one you place in the ad."
+      "d": "Render the clip and download it. That file is the one you place in the Facebook ad."
     }
   ],
   "visual": {
@@ -90,15 +90,15 @@
       "items": [
         {
           "t": "Add a Product Link",
-          "d": "Paste the pale-blue bottle page, or upload one photo of it. You get the bottle ready for a pour on the desk."
+          "d": "Paste the product link, or upload one photo. Those pictures become the shots in the Facebook video."
         },
         {
           "t": "Choose an Actor",
-          "d": "Pick an AI actor to pour the pale-blue bottle into a glass. You get that desk pour without hiring a creator."
+          "d": "Pick an AI actor who fits the brand, the buyer, and the tone. Captions can match the way your shop already writes."
         },
         {
           "t": "Finish and Publish",
-          "d": "Add a script, voice, and music, then download the pale-blue bottle pour, with captions and no watermark."
+          "d": "Render the clip and download it. That file is the one you place in the Facebook ad."
         }
       ]
     },
@@ -108,40 +108,40 @@
       }
     }
   },
-  "benefits_h2": "Why Sellers Switch to Facebook Video Ads",
+  "benefits_h2": "Reasons to Switch to Facebook UGC Ads",
   "benefits": [
     {
       "t": "Stretch the Ad Budget",
-      "d": "More of the Facebook budget can buy reach, because a new bottle clip costs less to make than hiring a creator for every test."
+      "d": "More of the Facebook budget can buy reach, because a new clip costs less to make than hiring a creator for every test."
     },
     {
-      "t": "Refresh the Offer",
-      "d": "When the offer changes, you make a new Facebook video that shows the pale-blue bottle and names the new date. You are not stuck waiting on a creator who is booked out."
+      "t": "Always-On Content",
+      "d": "When the offer changes, you make a new Facebook video while that offer is still the one you want to run. You are not waiting on a creator who is booked out."
     },
     {
-      "t": "Swap a Tired Opening",
-      "d": "When people flick past the opening, you can swap in a hand pouring the bottle. The Facebook video gets another look without a new shoot."
+      "t": "No Creative Fatigue",
+      "d": "When people flick past the opening, you swap in a new one. The Facebook video gets another look without a new shoot."
     }
   ],
-  "steps_h2": "Steps to Make Facebook Ads That Look Customer-Made",
-  "steps_lead": "You leave with a Facebook video of the bottle that Ads Manager can take.",
+  "steps_h2": "How to Make Facebook UGC Ads in 3 Simple Steps",
+  "steps_lead": "You leave with a Facebook video that Ads Manager can take.",
   "more_sections": [
     {
       "eyebrow": "Why the Clip Stops the Scroll",
-      "h2": "Why a Moving Facebook Ad Wins",
-      "lead": "A moving ad of the pale-blue bottle is harder to scroll past than a still of the same bottle.",
+      "h2": "The Case for a Facebook Video Ad",
+      "lead": "A moving ad is harder to scroll past than a still of the same product.",
       "items": [
         {
-          "t": "Show the Bottle in a Hand",
-          "d": "A clip of a hand holding the pale-blue bottle is harder to pass than a still of that same bottle. The buyer sees it the way a friend would hold it up."
+          "t": "Harder to Scroll Past",
+          "d": "A still ad is easy to pass. A video of someone showing the product feels like it belongs in the feed."
         },
         {
-          "t": "Scale a Spoken Facebook Ad",
-          "d": "Money that used to pay a creator and a half-day studio for one Facebook video can stay in the ad account. Each bottle clip shows its credit charge before it starts, so you can make another opening when the offer changes."
+          "t": "Scale the Ads Without the Shoot",
+          "d": "Skip the expensive shoot and the influencer fee. A Facebook video can be ready in minutes, and the credit cost shows before it runs."
         },
         {
-          "t": "Match the Line to the Buyer",
-          "d": "You can show the same pale-blue bottle to different buyers, with a different spoken line for each. Put more of the budget on the line you want to spend on, and keep the others for people who already visited the page."
+          "t": "A Different Line for Each Buyer",
+          "d": "Make a version for each group you sell to. Test them, bring back people who already visited, and spend more on the line that holds."
         }
       ]
     }
@@ -158,66 +158,66 @@
     "faq",
     "cta"
   ],
-  "benefits_lead": "Your next Facebook video of the pale-blue bottle does not start with a talent email.",
+  "benefits_lead": "Your next Facebook video does not start with a talent email.",
   "reasons": {
-    "h2": "Why Use This for Facebook Ads",
-    "lead": "One marketer can cover the bottle offer in more than one language.",
+    "h2": "Why Use This for Facebook UGC Ads",
+    "lead": "One marketer can cover the offer in more than one language.",
     "items": [
       {
-        "t": "No Creator Backlog",
-        "d": "The bottle clip is ready when the offer is ready, so you do not pause the campaign for a creator's other clients.",
+        "t": "No Creator Hold-Ups",
+        "d": "Skip the wait on a creator. A fresh clip is ready in minutes, on brand, and ready to place in the Facebook ad.",
         "icon": "Clock"
       },
       {
-        "t": "Templates You Can Reuse",
-        "d": "Several bottle colors can go out as separate files. The files share one feed-shaped template, and the last color is framed as carefully as the first.",
+        "t": "Facebook Ad Templates You Can Reuse",
+        "d": "Start from a Facebook ad template, change it, and make a batch of ads. You save the time and keep the quality.",
         "icon": "LayoutGrid"
       },
       {
-        "t": "Ads in the Buyer's Language",
-        "d": "You can deliver the Facebook ad in the buyer's language, with the phrasing a local shop would use for the bottle. That version does not need a second crew.",
+        "t": "Language and Location, Handled",
+        "d": "Make the Facebook ad in the language the buyer speaks, so the shop feels local. That version does not need a second crew.",
         "icon": "Languages"
       }
     ]
   },
   "platforms": {
     "h2": "Facebook Ads and the Other Channels",
-    "lead": "The same pale-blue bottle photo can also start a TikTok file, an Instagram file, a Short, an Amazon image, or a Shopify image.",
+    "lead": "The same product photo can also start a TikTok file, an Instagram file, a Short, an Amazon image, or a Shopify image.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "Make the TikTok version",
-        "d": "A tall TikTok ad from the same bottle photo.",
+        "d": "A tall TikTok ad from the same product photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
         "label": "Make the Instagram version",
-        "d": "A square still or a tall Reel of the same bottle.",
+        "d": "A square still or a tall Reel of the same product.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "YouTube Shorts Ads",
         "label": "Make the Shorts version",
-        "d": "A tall Short of the bottle. A wide YouTube ad is a different file.",
+        "d": "A tall Short of the product. A wide YouTube ad is a different file.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Make the Amazon photos",
-        "d": "A white main image of the bottle, a close-up, and an in-use frame for the listing.",
+        "d": "A white main image, a close-up, and an in-use frame for the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
         "label": "Make the Shopify photos",
-        "d": "Square photos of the bottle for the product page and the collection, plus a video you upload in Shopify yourself.",
+        "d": "Square photos for the product page and the collection, plus a video you upload in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "AI Ads and Product Photos by Platform",
         "label": "See every platform",
-        "d": "Open every channel and choose where the next bottle file should run.",
+        "d": "Open every channel and choose where the next file should run.",
         "href": "/ai-video-generation"
       }
     ]
@@ -257,7 +257,7 @@
     ]
   },
   "related_h2": "Tools Next to a Facebook Video Ad",
-  "related_lead": "Open the tool or template that matches the Facebook placement you are cutting for the bottle.",
+  "related_lead": "Open the tool that matches the Facebook placement you are cutting.",
   "relatedLinks": [
     "video-ads",
     "social-ad-photos",
@@ -266,5 +266,5 @@
     "tpl-story",
     "photo-hub"
   ],
-  "cta_title": "Download the Facebook Ad"
+  "cta_title": "Download a Facebook Ad You Can Run"
 }

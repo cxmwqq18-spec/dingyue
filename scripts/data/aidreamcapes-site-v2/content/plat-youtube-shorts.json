@@ -1,10 +1,10 @@
 {
   "id": "plat-youtube-shorts",
-  "title": "YouTube Ads and Shorts With AI UGC | AIVideosUGC",
-  "description": "Build AI UGC video ads for YouTube from one steamer photo. Open on the blue shirt, skip the studio, then download a tall file you can post now.",
-  "h1": "AI UGC Video Ads Built for YouTube",
+  "title": "YouTube Shorts Ads With AI UGC | AIVideosUGC",
+  "description": "Make AI UGC ads for YouTube Shorts from a product photo or a link. Pick an actor, open on the product, and download a tall file you can post without a studio.",
+  "h1": "AI UGC Ads Made for YouTube Shorts",
   "eyebrow": "Shorts From the Steamer Photo",
-  "lead": "Open a YouTube Shorts ad on the white steamer and the blue shirt, not on a logo, so people keep watching past the first second.",
+  "lead": "Plenty of YouTube ads lose the viewer before the product appears. A YouTube Shorts ad can sound like a creator, open fast, and keep people watching long enough to buy.",
   "card": "YouTube Shorts ads from a photo or a product link, in the tall shape Shorts uses.",
   "secondary_keywords": [
     "YouTube Shorts video ads",
@@ -15,11 +15,11 @@
   "faq": [
     {
       "q": "What is an AI YouTube Shorts ad?",
-      "a": "It is a tall creator-style Short. A hand can set the steamer on the shirt or give one reason to try it, with an [AI actor](/ai-video-generation/ai-actors) you can revoice. You pick the language, and you do not wait on a creator."
+      "a": "It is a tall creator-style Short. An [AI actor](/ai-video-generation/ai-actors) can hold the product or give one reason to try it. You pick the language, and you do not wait on a creator."
     },
     {
       "q": "Can a YouTube Shorts ad get people to watch longer?",
-      "a": "A steamer on a blue shirt is easier to stay with than a logo opening. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
+      "a": "An opening on the product is easier to stay with than a logo. If fewer people skip, you will see that in YouTube. We do not promise a longer watch."
     },
     {
       "q": "What does a YouTube Shorts ad cost?",
@@ -27,40 +27,40 @@
     },
     {
       "q": "How real do the face and the voice look?",
-      "a": "The mouth meets the words, and the eyes stay on the steamer. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
+      "a": "The mouth meets the words. The voice can sit in an accent you pick. If YouTube asks you to say the person is AI, say it."
     },
     {
       "q": "Can I change the script, the avatar, and the picture?",
-      "a": "Yes. Rewrite the line after you see the avatar, swap the hand on the steamer, and download the new Short."
+      "a": "Yes. Rewrite the line after you see the avatar, swap who holds the product, and download the new Short."
     },
     {
       "q": "Will YouTube accept an AI Short as an ad?",
-      "a": "It can, if the steamer in the video is the steamer you ship and you say so when YouTube asks. We do not publish the ad for you. Read the disclosure rules on the day you post."
+      "a": "It can, if the product in the video is the product you ship and you say so when YouTube asks. We do not publish the ad for you. Read the disclosure rules on the day you post."
     },
     {
       "q": "Does a Short start from a product link?",
-      "a": "Yes. The product page can start the YouTube Shorts ad, and the steamer photo can start it too. If you also need the wide video that plays before another YouTube video, make that shape as its own file. Do not crop the Short and call it that wide video."
+      "a": "Yes. The product page can start the YouTube Shorts ad, and a product photo can start it too. A wide video that plays before another YouTube video is its own file."
     },
     {
       "q": "Which frame should a Shorts ad use?",
-      "a": "Use 9:16 for Shorts. A 16:9 file is a separate wide job. Check [social media ad sizes](/guides/ad-sizes-by-platform) before you download, and keep the steamer clear of the player buttons."
+      "a": "Use 9:16 for Shorts. A 16:9 file is a separate wide job. Check [social media ad sizes](/guides/ad-sizes-by-platform) before you download."
     }
   ],
   "examples": null,
   "templates_lead": "Choose a template that shows one useful product action in the opening seconds.",
-  "cta_lead": "Paste a product link or upload the steamer photo, pick an avatar, and download a tall Shorts file.",
+  "cta_lead": "Paste a product link or upload a photo, pick an avatar, and download a tall Shorts file.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "The listing already says the steamer is handheld and white. Those two facts are the spoken line for the blue shirt."
+      "d": "Skip the old form. Paste your product link and the tool pulls the photos and the description in minutes."
     },
     {
       "t": "Select an Actor",
-      "d": "Use the AI avatar in a plain tee to hold the steamer for this Short."
+      "d": "Choose from 53 AI actors, or make your own AI twin, so the face fits who you sell to."
     },
     {
       "t": "Save and Download",
-      "d": "The file comes down as a tall Short with captions under the steamer and the shirt."
+      "d": "Download the finished Short, captions included, ready to post. You do not need another editor, and you do not wait on a shoot."
     }
   ],
   "maker": {
@@ -104,15 +104,15 @@
       "items": [
         {
           "t": "Add a Product Link",
-          "d": "Paste the steamer page, or upload one photo of the white steamer. You get that steamer ready for the blue shirt."
+          "d": "Paste the product page, or upload one photo. That photo is the product in the Short."
         },
         {
           "t": "Select an Actor",
-          "d": "Pick an AI actor to smooth the blue shirt with the white steamer. You get that demo without booking a creator."
+          "d": "Pick an AI actor to hold the product and show one useful move. You do not book a creator."
         },
         {
           "t": "Save and Download",
-          "d": "Save the tall Short with a voice, captions, and no watermark. You get the steamer on the blue shirt, and the wide ad is separate."
+          "d": "Save the tall Short with a voice, captions, and no watermark. The wide ad is a separate file."
         }
       ]
     },
@@ -122,39 +122,39 @@
       }
     }
   },
-  "benefits_h2": "Why YouTube Advertisers Start a Short From One Product Photo",
+  "benefits_h2": "Why YouTube Advertisers Move to AI Video",
   "benefits": [
     {
-      "t": "Three Versions, Then Pick",
-      "d": "You can show a hand on the steamer, a close pass on the shirt, and a voice naming one fact. Then spend the afternoon in the ad account."
+      "t": "Faster Turnaround",
+      "d": "Make several strong variants for testing, so your hours go into the campaign instead of a shoot."
     },
     {
-      "t": "New Version When One Fades",
-      "d": "When fewer people watch that opening, you can make a new Short that starts with the steamer on the shirt, without booking another shoot."
+      "t": "More Conversions",
+      "d": "Short on ideas? Make a steady run of platform-ready videos so the ads stay fresh and can convert better."
     },
     {
-      "t": "Use the Photo You Have",
-      "d": "The next Short uses the steamer photo that is already on the product page. You do not wait for a rented studio to open."
+      "t": "No Production Delays",
+      "d": "Old production is slow and scattered. Skip the long timeline and get a strong video ad when you need it."
     }
   ],
   "steps_h2": "Generate YouTube Shorts Ads in 3 Steps",
-  "steps_lead": "You download a tall Short of the steamer on the shirt. A wide player ad is its own file.",
+  "steps_lead": "You download a tall Short. A wide player ad is its own file.",
   "more_sections": [
     {
-      "eyebrow": "Settle the Short First",
-      "h2": "Set the Product, the Hands, and the Line",
-      "lead": "You settle the steamer, the hand, and the line before the file leaves.",
+      "eyebrow": "Set the Short",
+      "h2": "What You Can Set Before You Export",
+      "lead": "Settle the product, the hands, and the line before the file leaves.",
       "items": [
         {
-          "t": "A URL Becomes the Ad",
-          "d": "Paste the product page and get a Short of the steamer on the shirt. A 15-second file spends 60 credits, and the charge appears before you start."
+          "t": "A Link Becomes the Ad",
+          "d": "Paste the product page and get a Short of the product in use. A 15-second file spends 60 credits, and the charge appears before you start."
         },
         {
-          "t": "Avatar in the Ad",
-          "d": "Upload a photo of the steamer. An AI avatar sets it on the shirt and says one real fact about it."
+          "t": "An Avatar Holds the Product",
+          "d": "Upload a photo. An AI avatar holds the product and says one real fact about it."
         },
         {
-          "t": "Edit the Ad Line Here",
+          "t": "Edit the Line in Place",
           "d": "Fix a wrong fact in the line and leave the avatar in place, without moving the job to another app."
         }
       ]
@@ -171,66 +171,66 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "A YouTube Shorts ad can start from the steamer photo on the product page, or from the product link.",
+  "benefits_lead": "A YouTube Shorts ad can start from a product photo or from the product link.",
   "reasons": {
-    "h2": "Why the Next Short Is Easy to Swap",
-    "lead": "A second face on your Short does not require a second booking.",
+    "h2": "Why This Fits YouTube Shorts",
+    "lead": "A second face or a new opening does not require a second booking.",
     "items": [
       {
-        "t": "A Different Face Next",
-        "d": "You can put a different face on the next Short, chosen from 53 AI actors, so the channel is not one face on repeat. You do not send a casting call.",
+        "t": "Many Faces for One Brand",
+        "d": "Skip the hunt for creators. With 53 AI actors you can change the face often, so the channel does not stick to one person.",
         "icon": "UserRound"
       },
       {
-        "t": "A Local Voice",
-        "d": "Buyers can hear the steamer line in a Texas accent, not a voice with no local sound. You pick that voice for this ad.",
+        "t": "Voices That Feel Local",
+        "d": "Keep viewers with voices that feel local. Use a different tone so the ad speaks the way your buyers speak.",
         "icon": "Mic"
       },
       {
         "t": "Test the Next Opening",
-        "d": "You can make another Short with a new first line, script, face, or voice, then keep the one people watch. Nothing here picks a winner for you.",
+        "d": "Make several creator-style Shorts and test hooks, scripts, faces, and voices. You see what performs. Nothing here picks a winner for you.",
         "icon": "Timer"
       }
     ]
   },
   "platforms": {
     "h2": "Run the Same Photo on Other Channels",
-    "lead": "The same steamer photo can also start a file for TikTok, Instagram, Facebook, Amazon, or Shopify.",
+    "lead": "The same product photo can also start a file for TikTok, Instagram, Facebook, Amazon, or Shopify.",
     "items": [
       {
         "t": "AI TikTok Ads Generator",
         "label": "Make the TikTok version",
-        "d": "A tall TikTok ad from the same steamer photo.",
+        "d": "A tall TikTok ad from the same product photo.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "AI Instagram Ads",
         "label": "Make the Instagram version",
-        "d": "A square still or a tall steamer video for Instagram.",
+        "d": "A square still or a tall video for Instagram.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "AI Facebook Ad Generator",
         "label": "Make the Facebook version",
-        "d": "A square Facebook photo, or a tall steamer video that fills the screen.",
+        "d": "A square photo, or a tall video, for Facebook.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Amazon Product Photos",
         "label": "Make the Amazon photos",
-        "d": "A white main image, a steamer close-up, and an in-use view for the gallery.",
+        "d": "A white main image, a close-up, and an in-use view for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Product Photos",
         "label": "Make the Shopify photos",
-        "d": "Square steamer photos for the page and the collection, and a video you add in Shopify yourself.",
+        "d": "Square photos for the page and the collection, and a video you add in Shopify yourself.",
         "href": "/platforms/shopify-product-photos"
       },
       {
         "t": "All Channel Pages",
         "label": "See every channel",
-        "d": "Open the full channel list and choose where the next steamer file runs.",
+        "d": "Open the full channel list and choose where the next file runs.",
         "href": "/ai-video-generation"
       }
     ]
@@ -270,7 +270,7 @@
     ]
   },
   "related_h2": "Tools to Open Next to This Short",
-  "related_lead": "Open the link tool, the actor library, or a how-to template once you know the steamer move.",
+  "related_lead": "Open the link tool, the actor library, or a how-to template when you know the move.",
   "relatedLinks": [
     "video-ads",
     "url-to-video",

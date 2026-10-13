@@ -1,10 +1,10 @@
 {
   "id": "occ-holidays",
   "title": "Holiday Video Maker for Gift Season | AIVideosUGC",
-  "description": "Use this holiday video maker on one gift photo, then post before the ship date is final. An avatar can hold the product while you add the date later.",
-  "h1": "Holiday Video Maker for a Festive Gift Ad",
+  "description": "Turn one product link into a holiday video that feels festive, with a script, an AI avatar, and a voice. Post the gift ad before the ship-by date is final.",
+  "h1": "Make a Festive Holiday Video From a Link",
   "eyebrow": "Post a Festive Gift Video",
-  "lead": "This holiday video maker lets the gift ad go up before the ship-by date is set. An avatar can hold the gift, and you type the date when the carrier confirms it.",
+  "lead": "Turn a product link into a holiday video that feels festive, with a script, a lifelike AI avatar, and a voice you choose.",
   "secondary_keywords": [
     "Christmas product photos",
     "holiday video ads",
@@ -16,22 +16,22 @@
   "faq": [
     {
       "q": "How do credits work for a holiday photo or video?",
-      "a": "A photo spends 24 credits. A video spends 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. You see the cost before the job runs, and a failed job returns those credits."
+      "a": "A photo spends 24 credits. A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before the job runs, and a failed job returns those credits."
     },
     {
       "q": "Can I add a holiday song and seasonal pictures?",
-      "a": "Yes. Choose a track from the music library, add seasonal pictures, and put captions on in the editor. Use a track you are allowed to play."
+      "a": "Yes. Choose a track from the music list, add seasonal pictures, and put captions on in the editor. Use a track you are allowed to play."
     },
     {
-      "q": "Can I make holiday scenes for many products at once?",
-      "a": "Yes. Run several product links in a batch, and each one comes back as its own gift scene. You still check every file before it is published."
+      "q": "Can I make a holiday video for each product?",
+      "a": "Yes. Run several product links, and each one comes back as its own gift scene. You still check every file before it is published."
     },
     {
-      "q": "Can an AI avatar deliver the gift message?",
-      "a": "Yes. An AI avatar from the library of 53 can read a short gift note beside the product. Keep the product easy to recognize."
+      "q": "Can an AI avatar deliver the holiday message?",
+      "a": "Yes. An AI avatar can read a short gift note beside the product. Keep the product easy to recognize."
     },
     {
-      "q": "Can I use the file again after the holiday?",
+      "q": "Can I use the holiday file again next season?",
       "a": "You keep the file you downloaded. Change the date, the voice, or the offer in the editor, and use the scene again for the next holiday."
     },
     {
@@ -43,12 +43,12 @@
       "a": "Yes. Download the file, or send it to TikTok, Instagram, or Facebook yourself. You still choose the budget in that ad account."
     },
     {
-      "q": "Can I create holiday ads through an API?",
-      "a": "Yes. Your tools can ask for a holiday ad from a product link through the API. You approve the file before anyone else sees it."
+      "q": "Can my own tools ask for a holiday ad?",
+      "a": "Yes. Your tools can ask for a holiday ad from a product link. You approve the file before anyone else sees it."
     }
   ],
   "examples": {
-    "h2": "More Holiday Gift Ad Examples",
+    "h2": "Festive Gift Scenes You Can Open",
     "lead": "Show gift moments and seasonal product scenes, then add current dates or offers after download.",
     "groups": [
       {
@@ -83,15 +83,15 @@
   "steps": [
     {
       "t": "Paste Your Product Link",
-      "d": "Open the candle jar page so that photo is the gift. You add the ship-by date when you know it."
+      "d": "Paste the product page so that photo is the gift. You add the ship-by date when you know it."
     },
     {
       "t": "Create Your Actor",
-      "d": "Pick an AI avatar whose hands leave the label clear. You get a presenter for the gift scene."
+      "d": "Pick an AI avatar, or build one from a short clip of yourself. Keep the product easy to recognize."
     },
     {
       "t": "Set the Script and Publish",
-      "d": "Type the ship-by date and publish to the feed you sell on. You can download the file as well."
+      "d": "Accept the script or edit it. Add a voice and a track, then publish to the feed you sell on."
     }
   ],
   "visual": {
@@ -215,34 +215,34 @@
       }
     }
   },
-  "benefits_h2": "Make Holiday Ad Photos Feel Festive",
+  "benefits_h2": "A Holiday Video With a Face, a Script, and a Voice",
   "benefits": [
     {
-      "t": "Hold the Gift With an Avatar",
-      "d": "You get a face for the gift without hiring a model. An AI avatar sits beside the lipstick so the tube stays easy to see in the cream box.",
+      "t": "Give the Holiday Video a Face",
+      "d": "Pick an AI avatar for the seasonal message, or describe the look you want. The product stays easy to see.",
       "img": "n:guide:fx02-occ-holidays-benefit-lipstick",
       "alt": "Adult hands lift a lipstick tube from a cream gift box."
     },
     {
-      "t": "Speak a Gift Line",
-      "d": "Shoppers hear a gift line for this wool jacket, in words you would write on a card. You can change any word before the ad goes up.",
+      "t": "A Script for the Gift Message",
+      "d": "Paste a product link or a short note. You get an opening line plus the rest of the script, and you can edit every line.",
       "img": "n:guide:fx02-occ-holidays-benefit-jacket",
       "alt": "Adult creator holds a wool winter jacket beside a gift box."
     },
     {
-      "t": "Add a Voice in Their Language",
-      "d": "The note can be spoken in the language they read, and the jar by the ribbon stays the same. You pick the voice before you export.",
+      "t": "Add a Festive Voice",
+      "d": "Pick a lifelike voice for the holiday message. The same note can be spoken in the language your shoppers read.",
       "img": "n:guide:fx02-occ-holidays-benefit-shipping",
       "alt": "Adult hands tie ribbon around a plain parcel beside a jar."
     },
     {
-      "t": "Try a Second Opening Line",
-      "d": "The jar, the tube, and the scarf share one gift scene. A second opening line gives you a choice, and you publish the one you like.",
+      "t": "Try a Second Opening",
+      "d": "Make another version of the hook, the avatar, or the script. Publish the one that fits this season.",
       "img": "n:guide:fx02-occ-holidays-benefit-guide",
       "alt": "Adult hands arrange a jar, tube and scarf gift guide set."
     }
   ],
-  "steps_h2": "How to Create Christmas Product Photos in 3 Simple Steps",
+  "steps_h2": "How to Make a Holiday Video in 3 Simple Steps",
   "steps_lead": "The gift scene can go up before the ship-by date is known. The product photo is the source.",
   "relatedLinks": [
     {
@@ -310,7 +310,7 @@
     "items": [
       {
         "t": "Cleared for Paid Ads",
-        "d": "The download has no AIVideosUGC watermark, so a holiday ad can run as a paid placement. Each app still has its own rules."
+        "d": "The download has no watermark, so a holiday ad can run as a paid placement. Each app still has its own rules."
       },
       {
         "t": "Know the Spend First",
@@ -326,15 +326,15 @@
       },
       {
         "t": "Use an Avatar or a Clip of You",
-        "d": "Use an AI avatar from the library of 53. Or build one from a short clip of yourself."
+        "d": "Use an AI avatar from the library. Or build one from a short clip of yourself."
       },
       {
         "t": "Add a Voice, Captions, and Music",
-        "d": "A voice, captions, and a track from the music library can sit on the clip. Edit them in place before the ad goes live."
+        "d": "A voice, captions, and a track from the music list can sit on the clip. Edit them in place before the ad goes live."
       }
     ]
   },
-  "cta_title": "Make the Holiday Ad Today",
+  "cta_title": "Make the Holiday Video Today",
   "blockOrder": [
     "hero",
     "benefits",

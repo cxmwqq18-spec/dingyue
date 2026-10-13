@@ -1,10 +1,10 @@
 {
   "id": "ind-jewelry-accessories",
   "title": "AI UGC Ads for Jewelry Brands | AIVideosUGC",
-  "description": "Make AI UGC ads for jewelry from a photo of the ring or necklace. An actor wears it and says your line. See the credit cost, then download the file.",
-  "h1": "AI UGC Ads for Jewelry, Worn on Camera",
+  "description": "Make AI UGC ads for jewelry from a photo of the piece. An actor wears it and says your line, with no model booking and no studio day. Then download the file.",
+  "h1": "AI UGC Ads for Jewelry Brands",
   "eyebrow": "Post Jewelry Worn on Camera",
-  "lead": "Show the ring on a hand and the necklace at the collarbone, with an AI actor and a spoken line you approve. Earrings and bracelets can get the same worn ad.",
+  "lead": "Jewelry sells on trust. You can build that trust faster than a studio, with an AI actor wearing the piece and a line you approve.",
   "card": "One jewelry photo gives you a close-up, a worn shot, and a gift scene you can post.",
   "secondary_keywords": [
     "AI jewelry model photos",
@@ -16,57 +16,57 @@
   "faq": [
     {
       "q": "Can I make a jewelry UGC ad without booking a shoot?",
-      "a": "Yes. An AI actor can wear the ring, necklace, earring, or bracelet and deliver a spoken ad from one photo of the piece you ship. You approve the line before anyone posts it."
+      "a": "Yes. An AI actor can wear the piece and deliver a spoken ad from one photo. You approve the line before anyone posts it."
     },
     {
       "q": "How do I make a jewelry UGC ad?",
-      "a": "Upload a sharp photo of the piece, pick an AI actor, and approve the spoken line before you download. A failed job returns its credits, and the cost is on screen first."
+      "a": "Upload a sharp photo, pick an AI actor, and approve the spoken line before you download. A failed job returns its credits, and the cost is on screen first."
     },
     {
-      "q": "Can an AI actor wear the ring or the necklace?",
-      "a": "Yes. An AI avatar wears the necklace at the collarbone or the ring on a hand. Keep the frame on the piece you uploaded, and approve the line before the ad runs."
+      "q": "Can an AI actor wear the piece?",
+      "a": "Yes. An AI avatar wears the piece in frame. Keep the shot on what you uploaded, and approve the line before the ad runs."
     },
     {
       "q": "How much does a jewelry video ad cost?",
-      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. A 6, 10, 15, or 30 second video is 24, 40, 60, or 120 credits. You see the charge before it runs."
+      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. A 6, 10, 15, or 30 second video is 24, 40, 60, or 120 credits."
     },
     {
       "q": "Which placements can a jewelry ad use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a gallery or a square post, and 16:9, 4:3, or 3:4 when that placement asks for it. The same worn ad can also sit on the product page."
+      "a": "Use 9:16 for a phone feed, 1:1 for a square post, and 16:9, 4:3, or 3:4 when that placement asks for it. The same worn ad can also sit on the product page."
     },
     {
       "q": "Can I run the same jewelry ad in another language?",
-      "a": "Yes. Keep the piece in the frame, write the line in the other language, and pick a voice for it. Check those words before you post the ad anywhere new."
+      "a": "Yes. Keep the piece in the frame, write the line in the other language, and pick a voice for it. Check those words before you post."
     },
     {
       "q": "Can I use the jewelry ad in paid campaigns?",
       "a": "Yes. You can place the file in paid campaigns and on your listings. It has no watermark. Compare the piece in the file with the one you ship before you publish."
     },
     {
-      "q": "Can the ad show earrings and a bracelet as well?",
-      "a": "Yes. Ask for the earrings on an ear and the bracelet on a wrist, each from the photo of that piece. The actor wears what you uploaded, and you can make both in one project."
+      "q": "Can the ad show more than one kind of piece?",
+      "a": "Yes. Ask for each piece from its own photo. The actor wears what you uploaded, and you can make both in one project."
     },
     {
       "q": "Can I start from a product link or my shop software?",
-      "a": "Yes. Paste the product page, or send it from the shop software you already use. Ask for the bracelet on a wrist in one version and the necklace at the collarbone in another."
+      "a": "Yes. Paste the product page, or send it from the shop software you already use. Ask for a different worn angle in the next version."
     }
   ],
-  "templates_lead": "Pick a jewelry UGC template where an actor wears the ring, necklace, earring, or bracelet.",
-  "cta_lead": "Download a worn jewelry ad with a spoken line you approve. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The cost is on screen before you confirm.",
-  "steps_h2": "How to Make Jewelry Close-Up Photos in 3 Simple Steps",
-  "steps_lead": "You see the ring on a hand and the necklace at the collarbone, then you choose what the voice says.",
+  "templates_lead": "Pick a jewelry UGC template where an actor wears the piece.",
+  "cta_lead": "Download a worn jewelry ad with a spoken line you approve. The cost is on screen before you confirm.",
+  "steps_h2": "How to Make a Jewelry Ad in 3 Simple Steps",
+  "steps_lead": "Your next jewelry ad is a few taps away. Add the piece, pick a presenter, and publish.",
   "steps": [
     {
       "t": "Upload Your Piece",
-      "d": "Use a sharp photo of the ring or the necklace. That photo becomes the worn ad, once you name the metal."
+      "d": "Add a product link, a photo, or a few details. The tool reads them and starts, with no extra form to fill."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick an AI avatar with a plain neckline so the ring stays easy to see. Reuse that face on the next piece."
+      "d": "Pick from 53 AI actors. Choose a plain neckline so the piece stays easy to see."
     },
     {
       "t": "Generate and Publish",
-      "d": "The worn ad downloads with a spoken line and captions. Send that file to the feed where the ring already sells."
+      "d": "The ad comes back with a spoken line, captions, and a frame ready to post. Launch it where you sell."
     }
   ],
   "visual": {
@@ -135,61 +135,61 @@
     }
   ],
   "reasons": {
-    "h2": "Why Jewelry Ads Can Skip the Model",
-    "lead": "A worn frame comes from the photo already on the listing, so the next piece does not wait on a studio day.",
+    "h2": "Why Jewelry Brands Stop Waiting on Creators",
+    "lead": "No-shows, delays, and extra invoices do not have to stall the next jewelry ad.",
     "items": [
       {
-        "t": "A Tight View of the Clasp",
-        "d": "A tight view of the clasp comes from the linen photo of the pendant you already have. That saves a fresh studio day on the next piece.",
+        "t": "Faster and Less Expensive",
+        "d": "Skip costly shoots and creators who do not show. A worn jewelry ad can show the piece in minutes.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-1-r1",
         "alt": "Man with a short crop speaks to the camera and shows one plain silver ring on his finger."
       },
       {
-        "t": "One Watch, Two Frames",
-        "d": "One watch photo becomes a wrist clip for the phone feed and a square of the dial for the gallery.",
+        "t": "Ready for Every Platform",
+        "d": "Make try-on clips and product demos for ads, feeds, and your site, without a traditional shoot.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-2-r1",
         "alt": "Woman with short silver hair speaks to the camera wearing only a plain silver chain at her collarbone."
       },
       {
-        "t": "Show the Bag on a Shoulder",
-        "d": "A tote on an adult shoulder makes the size obvious in one frame, and the ad can run without a fit-model booking.",
+        "t": "Ads That Can Convert",
+        "d": "Worn jewelry clips grab attention and show the piece in use, so you can sell without a huge spend.",
         "img": "n:guide:img2-ind-jewelry-accessories-reasons-3-r1",
         "alt": "Woman with her hair in a bun speaks to the camera and shows a plain silver cuff on her wrist."
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Worn Piece Can Run",
-    "lead": "Use the same worn shot across feeds, listings, and the product page, each one framed for that spot.",
+    "h2": "Run the Worn Piece on Every Channel",
+    "lead": "Use the same worn shot on feeds, listings, and the product page. Each one is framed for that spot.",
     "items": [
       {
         "t": "Post the Bracelet on TikTok",
-        "d": "A vertical try-on of the bracelet for TikTok, opening on the wrist itself.",
+        "d": "A vertical try-on that opens on the wrist, sized for TikTok.",
         "href": "/platforms/tiktok-ads"
       },
       {
         "t": "Post the Ring on Instagram",
-        "d": "A square detail of the ring, or a tall worn frame, for the grid and Stories.",
+        "d": "A square detail, or a tall worn frame, for the grid and Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Run the Pendant on Facebook",
-        "d": "A feed image of the pendant, with room to place your offer after download.",
+        "d": "A feed image with room to place your offer after download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Post the Bracelet as a Short",
-        "d": "A tight Short that stays on the watch from the first moment.",
+        "d": "A tight Short that stays on the piece from the first moment.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "List the Necklace Where the Shop Already Sells",
-        "d": "A sharp gallery image of the piece you can put on the listing.",
+        "d": "A sharp gallery image you can put on the listing.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Show the Earrings on Your Store Page",
-        "d": "Consistent imagery for the bag and the pieces around it.",
+        "d": "Consistent imagery for the earrings and the pieces around them.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -259,13 +259,13 @@
   "definition": {
     "title": "What Is a Jewelry UGC Ad?",
     "paras": [
-      "AI UGC for a jewelry brand is a spoken ad. An AI actor wears the ring, necklace, earring, or bracelet and delivers a line you approve before it posts.",
-      "You start from a photo of the piece you ship. The file can go to a phone feed or the product page, in 9:16, 1:1, 16:9, 4:3, or 3:4."
+      "A jewelry UGC ad is a spoken clip. An AI actor wears the piece and delivers a line you approve before it posts.",
+      "You start from a photo or a product link. The file can go to a phone feed or the product page, in 9:16, 1:1, 16:9, 4:3, or 3:4."
     ]
   },
   "compare_table": {
-    "title": "A Jewelry Shoot vs. an AI UGC Ad",
-    "lead": "Same worn ad, two ways to pay for it: book a studio, or start from a photo of the piece.",
+    "title": "A Jewelry Shoot vs an AI UGC Ad",
+    "lead": "Same worn ad, two ways to pay for it. Book a studio, or start from a photo of the piece.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -275,16 +275,16 @@
       [
         "What you pay",
         "Starter is $24.50 a month for 200 credits. A 6-second ad is 24 credits.",
-        "A studio invoice before the ring is on camera"
+        "A studio invoice before anyone is on camera"
       ],
       [
         "When you can start",
-        "You start when the necklace photo is ready, and you approve the line first.",
+        "You start when the photo is ready, and you approve the line first.",
         "A date on the calendar before anyone films"
       ],
       [
         "Who has to be there",
-        "An AI actor wears the piece. The person who owns the listing can finish the ad.",
+        "An AI actor wears the piece. You can finish the ad.",
         "A model, a photographer, and a stylist have to be hired"
       ],
       [
@@ -294,17 +294,17 @@
       ],
       [
         "How many looks",
-        "Ask for the ring on a hand, then the necklace at the collarbone, from photos you already have.",
+        "Ask for another worn angle from photos you already have.",
         "Each extra look usually means more time on set"
       ],
       [
-        "A gifting week",
-        "Make another version when gifting season starts, without a rush day on a set.",
+        "A busy week",
+        "Make another version when the season starts, without a rush day on a set.",
         "Those dates get booked early, and a rush shows up on the invoice"
       ],
       [
         "Worn on the body",
-        "The actor wears the earring or the bracelet in the frame you approve.",
+        "The actor wears the piece in the frame you approve.",
         "A fit model has to be present for the piece to be worn"
       ],
       [
@@ -324,7 +324,7 @@
       ],
       [
         "Another opening",
-        "Change the first line and keep the same ring in frame when you want another test.",
+        "Change the first line and keep the same piece in frame when you want another test.",
         "Another opening waits on another booking"
       ]
     ]

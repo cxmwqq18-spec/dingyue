@@ -1,10 +1,10 @@
 {
   "id": "video-ads",
   "title": "AI Video Ads Generator for TikTok and Reels | AIVideosUGC",
-  "description": "Use this AI video ads generator to turn a product photo or a link into an ad with an actor and a voice. Download it for TikTok or Reels, with no watermark.",
+  "description": "AI video ads generator for scroll-stopping ads. Turn a product photo or a link into an ad with an actor and a voice, then download it for TikTok or Reels.",
   "h1": "AI Video Ads Generator for Scroll-Stopping Ads",
   "eyebrow": "Phone Ads You Can Post",
-  "lead": "This AI video ads generator starts from a product photo or a product page, with a script, an actor, a voice, and captions.",
+  "lead": "This AI video ads generator builds the script, the presenter, the voice, and the cut. Begin with your product link. A short prompt works too. No creators, no shoots, and no editing software. You get a finished ad you can run.",
   "secondary_keywords": [
     "UGC style video ads",
     "creator-style product ads",
@@ -12,24 +12,24 @@
     "UGC video ad maker"
   ],
   "definition": {
-    "title": "AI Video Ads Generator: What You Get",
+    "title": "What This AI Video Ads Generator Does",
     "paras": [
-      "It is a short spoken ad built from a bottle photo, a short note, or a product page. You get a script, an AI actor, a voice, and the edit in one file, and you skip a separate editor and a crew.",
-      "Export 9:16 when the ad runs on a phone, or 1:1 for a square feed. 16:9, 4:3, and 3:4 are available too."
+      "It produces a short video ad, with a script, an AI presenter, a voice, and the edit, from a product, a prompt, or a link. You do not film, and you do not open a separate editor.",
+      "Each ad is made to run in the frames paid placements expect, ready for TikTok, Meta, and a search ad. Export 9:16, 1:1, 16:9, 4:3, or 3:4."
     ]
   },
   "steps": [
     {
       "t": "Add a Link or a Photo",
-      "d": "Upload the insulated bottle photo, or paste its public product page. Add a note if the first sip should come first."
+      "d": "Drop in a product link, or upload a photo. Add a short note about what you are advertising."
     },
     {
       "t": "AI Builds the Ad",
-      "d": "The actor says the bottle stays cold on a sunny desk. Change that sentence when your bottle is different, then keep the take."
+      "d": "The tool writes the hook and the script, pairs a presenter with a voice, then renders the video."
     },
     {
       "t": "Download and Publish",
-      "d": "Download the 9:16 bottle ad, or send it to the ad account that will run it. The file has no watermark."
+      "d": "Download the frame you need, or send the file to TikTok, Meta, or a search campaign. No watermark."
     }
   ],
   "maker": {
@@ -47,20 +47,20 @@
   },
   "faq": [
     {
-      "q": "What does a video ad generator produce?",
+      "q": "What does a video ads generator produce?",
       "a": "A spoken ad from a product photo or a product page, with a script, an AI actor, and a voice. You pick from 53 AI actors. You do not film a set."
     },
     {
       "q": "How does a shop build the video ad?",
-      "a": "Start with the insulated bottle photo or its page. Approve the drafted sentence, change a word when the bottle differs, then download. You can edit captions, swap the voice, or add a track from the music library before you post."
+      "a": "Start with a product photo or its page. Approve the drafted sentence, change a word if the product differs, then download. You can edit captions, swap the voice, or add a track from the music library."
     },
     {
-      "q": "Which tool should a shop use for paid ads?",
-      "a": "Use one built for ads you can run: a script, an AI actor, a voice, and the sizes TikTok and Meta expect. AIVideosUGC does that from a photo or a product link, including a batch of products."
+      "q": "Which kind of tool should a shop use for paid ads?",
+      "a": "Use one built for ads you can run: a script, an AI actor, a voice, and the sizes TikTok and Meta expect. This one does that from a photo or a product link, including a batch of products."
     },
     {
       "q": "Do I pay before I can make the first ad?",
-      "a": "Yes. You pick a paid plan, then make the first ad from the bottle photo. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. You pick a paid plan, then make the first ad. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Are commercial rights included on a paid plan?",
@@ -76,11 +76,11 @@
     },
     {
       "q": "How do these compare with ads filmed by creators?",
-      "a": "Book a creator when you need a person filmed with the product itself. Use the generated ad when you are still choosing which opening to buy. Results depend on the product and the audience, so test more than one opening."
+      "a": "Book a creator when you need a person filmed with the product itself. Use the generated ad when you are still choosing which opening to buy. Test more than one opening."
     },
     {
       "q": "Will Meta or TikTok reject a generated clip?",
-      "a": "Read that ad account's current rule before you fund the clip. If a viewer could think a buyer filmed their own order, add the label that account asks for. Keep the scene true to the insulated bottle you uploaded."
+      "a": "Read that ad account's current rule before you fund the clip. If a viewer could think a buyer filmed their own order, add the label that account asks for. Keep the scene true to the product you uploaded."
     }
   ],
   "visual": {
@@ -538,44 +538,44 @@
     "outputs": [],
     "after": null
   },
-  "benefits_h2": "What This AI Video Ads Generator Gives You",
+  "benefits_h2": "Benefits of AI Video Ads",
   "benefits": [
     {
       "t": "A Finished Ad, Quickly",
-      "d": "You get the script, the actor, the voice, and the edit in one file. Test a new hook on the backpack you plan to advertise.",
+      "d": "You get the script, the actor, the voice, and the edit in one file. Test a new hook without waiting on a shoot.",
       "icon": "bolt"
     },
     {
-      "t": "Skip the Creator Invoice",
+      "t": "A Cost That Stays Predictable",
       "d": "The monthly plan replaces a per-video creator invoice. A 15-second ad is 60 credits, and a failed render returns those credits.",
       "icon": "coins"
     },
     {
-      "t": "Variants From the Same Product",
-      "d": "Both ads can use the same photo of a gold necklace. One starts on the clasp, and one starts on the length.",
+      "t": "More Versions From One Product",
+      "d": "Both ads can use the same photo. Change the opening, keep the product, and test which one earns the spend.",
       "icon": "layers"
     },
     {
       "t": "Refresh a Tired Ad",
-      "d": "When a candle ad starts to feel familiar, change the first line and keep the same candle in frame. Swap that opening before the cut goes stale, and leave the product where shoppers already know it.",
+      "d": "When an ad starts to feel familiar, change the first line and keep the same product in frame.",
       "icon": "refresh"
     },
     {
-      "t": "Your Brief, Followed",
-      "d": "The shop calls a cast-iron skillet seasoned. The ad uses that word, because you set it, and the actor does not pick a prettier one.",
+      "t": "On Brand, Every Time",
+      "d": "The word you typed is the one that is spoken. The actor does not swap in a prettier claim.",
       "icon": "target"
     },
     {
-      "t": "Commercial Use on a Paid Plan",
-      "d": "A paid plan includes commercial use, so the clip can run as the ad you fund. You do not need a creator to sign off before that buy starts.",
+      "t": "Usage Rights on a Paid Plan",
+      "d": "A paid plan includes commercial use, so the clip can run as the ad you fund. You do not need a separate creator sign-off.",
       "icon": "shield"
     }
   ],
   "steps_h2": "How to Make AI UGC Video Ads in 3 Simple Steps",
-  "steps_lead": "An insulated bottle photo is enough to start. The file you send is the ad.",
+  "steps_lead": "Add a link or a photo, let the ad build, then download and publish.",
   "compare_table": {
     "title": "A Generated Ad vs. a Booked Shoot",
-    "lead": "You start the insulated bottle ad from a photo today, while a booked shoot still waits on a calendar.",
+    "lead": "Faster, cheaper, and easier to scale. See how a generated ad compares with a booked shoot.",
     "columns": [
       "Point",
       "AIVideosUGC",
@@ -594,12 +594,12 @@
       ],
       [
         "Another version",
-        "A new opening line on the same photo, at the credit cost shown",
-        "You wait for another shoot day"
+        "A new opening on the same photo, at the credit cost shown",
+        "Another shoot day"
       ],
       [
         "Brand control",
-        "The word you typed is the one that is spoken",
+        "You control the script, the tone, and the presenter",
         "The creator may describe the product in their own words"
       ],
       [
@@ -636,29 +636,29 @@
     "cta"
   ],
   "reasons": {
-    "h2": "Why Sellers Pick This AI Video Ads Generator",
-    "lead": "The script comes from the product you sell, the file matches the placement, and one photo can yield more than one style.",
+    "h2": "Reasons to Use This AI Video Ads Generator",
+    "lead": "The script comes from what you sell, the file matches the placement, and one photo can yield more than one style.",
     "items": [
       {
-        "t": "Written From What You Sell",
-        "d": "The spoken line comes from the serum you sell, not a blank page. A generic glow line is not the product.",
+        "t": "Scripted From What You Sell",
+        "d": "Every ad is written from your product or your prompt, so the hook and the message stay tied to what you actually sell.",
         "icon": "PenLine"
       },
       {
-        "t": "Sized for Every Placement",
-        "d": "Ask for 9:16 if a sneaker ad runs on a phone. A square 1:1 is there when the feed wants it, with 16:9, 4:3, and 3:4 too.",
+        "t": "Ready for Paid Placements",
+        "d": "Ads render in the frames TikTok, Meta, and search ads expect. You are not left cropping a raw file by hand.",
         "icon": "Ratio"
       },
       {
-        "t": "Several Hooks From One Photo",
-        "d": "One cold-brew cut can wait on the pour. Another can start at the first sip, from the same bottle photo.",
+        "t": "Several Styles From One Run",
+        "d": "Get more than one presenter, hook, and tone, then keep the cut that fits the brand and the buyer.",
         "icon": "Palette"
       }
     ]
   },
-  "benefits_lead": "You can try more openings than a booked shoot can keep up with.",
+  "benefits_lead": "Made for shops that have to test and ship ads faster than a shoot allows.",
   "related_h2": "More Ways to Make the Ad",
-  "related_lead": "Clips from a photo or a product page, plus an API your shop software can use to request ads.",
+  "related_lead": "Clips from a photo or a product page, plus a way for shop software to request ads.",
   "reviews": {
     "h2": "How Sellers Run AI Video Ads",
     "lead": "Four shops start from a product photo and swap the opening when the ad feels familiar.",
@@ -694,5 +694,5 @@
     ]
   },
   "cta_title": "Launch the Next Video Ad",
-  "cta_lead": "Upload an insulated bottle photo or paste its product page. The credit cost is on screen first."
+  "cta_lead": "Upload a product photo or paste its page. The credit cost is on screen first. No creator and no shoot."
 }

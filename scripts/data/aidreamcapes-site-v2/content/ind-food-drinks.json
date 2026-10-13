@@ -1,10 +1,10 @@
 {
   "id": "ind-food-drinks",
-  "title": "AI UGC Videos for Food and Beverage | AIVideosUGC",
-  "description": "Make AI UGC videos for food and beverage products from one package photo. Show a pour or a plate, then download a clip you can post without a kitchen day.",
-  "h1": "AI UGC Videos for Food and Beverage Products",
+  "title": "AI UGC for Food and Beverage | AIVideosUGC",
+  "description": "Turn any food or drink into a creator-style video ad from a pack photo or a product link. Download a clip you can post, without booking a kitchen.",
+  "h1": "AI UGC for Food and Beverage Products",
   "eyebrow": "Food and Drink Ads",
-  "lead": "Upload the citrus bottle and let an AI avatar pour it over ice for an AI UGC video. You get a clip you can post, without booking a kitchen for the pour.",
+  "lead": "Hungry shoppers do not wait. Turn any food or drink into a clip you can post, without booking a kitchen for the pour or the plate.",
   "card": "Pours, plates, and package scenes from one food photo.",
   "secondary_keywords": [
     "drink pour video",
@@ -16,15 +16,15 @@
   "faq": [
     {
       "q": "Will the ingredient list and nutrition panel look right?",
-      "a": "No. Keep allergens, ingredients, and nutrition facts on the real citrus label, not in the image's small print."
+      "a": "No. Keep allergens, ingredients, and nutrition facts on the real label, not in the image's small print."
     },
     {
-      "q": "Can I turn a bottle photo into a pour video?",
-      "a": "Yes. Upload the citrus bottle or paste a product link, then describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
+      "q": "Can I turn a pack photo into a pour video?",
+      "a": "Yes. Upload the pack or paste a product link, then describe the glass, the ice, and the color of the liquid. Name the texture in plain words so the pour stays close to the real drink."
     },
     {
       "q": "How long should a food clip be, and what does it cost?",
-      "a": "A 6-second pour is 24 credits, and 6 or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. 10 seconds is 40 credits, 15 is 60, and 30 is 120. A still image is 24 credits. A failed job returns its credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Six or 10 seconds covers one pour or one bite. Use 15 seconds for two moments, or 30 seconds for a longer serve. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. A still image is 24 credits. You see the cost before it starts. If a job fails, those credits come back. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Should I spray the bottle so it looks cold?",
@@ -36,11 +36,11 @@
     },
     {
       "q": "Do I need a creator or a filming kitchen?",
-      "a": "Not for these clips. Pick an AI avatar, or let the hands come from your bottle photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
+      "a": "Not for these clips. Pick an AI avatar, or let the hands come from your pack photo. A real tasting, or a recipe you must show exactly, still needs a real shoot."
     },
     {
       "q": "Which shapes can the food ad use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide page, and 4:3 or 3:4 when the page asks for them. A square photo fits many listings."
+      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide page, and 4:3 or 3:4 when the page asks for them."
     },
     {
       "q": "What should stay visible on the package?",
@@ -51,22 +51,22 @@
       "a": "Yes. The clip can include a spoken line and captions, and the same pour can be made again in another language."
     }
   ],
-  "templates_lead": "Pick a format that keeps the citrus bottle, the pouches, or the cookie plate in frame.",
-  "cta_lead": "A food ad can start from a product link or one photo of the citrus bottle, the pouches, or the cookies.",
-  "steps_h2": "Food and Drink Video Ads From Pack to Pour",
-  "steps_lead": "You download an ad you can post. Add the citrus bottle, then choose who pours it.",
+  "templates_lead": "Pick a format that keeps the pack, the pour, or the plate in frame.",
+  "cta_lead": "A food ad can start from a product link or one photo of the pack you already sell.",
+  "steps_h2": "How to Make a Food and Drink Ad in 3 Simple Steps",
+  "steps_lead": "Drop in the pack, pick who presents it, and download an ad you can post.",
   "steps": [
     {
       "t": "Add the Package Photo or Link",
-      "d": "Stand the citrus bottle so the label faces the camera. That photo is the product the pour is about."
+      "d": "Add a product link, a photo, or a short note. That is enough to start the ad."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Choose an AI avatar at the kitchen counter who pours this citrus. You can change that face before the clip is made."
+      "d": "Pick an AI avatar who fits a kitchen or a counter. You can change that face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice, Then Post",
-      "d": "Download the citrus pour with the voice and captions already in it, and post it where that drink sells."
+      "d": "The file comes back with a voice and captions. Download it and post it where that product sells."
     }
   ],
   "visual": {
@@ -138,57 +138,57 @@
   },
   "reasons": {
     "h2": "What Your Food Ads Have Been Missing",
-    "lead": "You already have the pouch photo and the citrus bottle. The missing line is a pour or a plate you can post, without booking a kitchen.",
+    "lead": "You already have the pack photo. The missing piece is a pour or a plate you can post, without a bigger budget.",
     "items": [
       {
-        "t": "Ready When Lunch Is Due",
-        "d": "The snack pouches are already on the counter beside the lunch box. Use that pack photo for the listing, and make the clip while people are still asking about the flavor.",
+        "t": "Ready When You Are",
+        "d": "Need a clip before a rush or a trend fades? Make it from the pack photo you already have. There is no shoot to schedule.",
         "img": "n:guide:fx32-food-benefit-packaging"
       },
       {
-        "t": "You Direct the Pour",
-        "d": "You choose the glass, the ice, and the one sentence about the citrus. Language and tone stay yours, and the bottle beside the glass stays the one you uploaded.",
+        "t": "You Direct the Ad",
+        "d": "You pick the face, the line, the language, and the look. The product beside the glass stays the one you uploaded.",
         "img": "n:guide:fx32-food-benefit-pour"
       },
       {
         "t": "More Clips From One Plan",
-        "d": "The same cookie photo can make a plate with berries and, later, a still for the shelf. Both come from the credits on your plan, so the test is not priced like a shoot day.",
+        "d": "One pack photo can become several posts, plus a still for the shelf. The credits on your plan cover the test.",
         "img": "n:guide:fx32-food-benefit-serve-r2"
       }
     ]
   },
   "platforms": {
-    "h2": "Post the Pour on the Channels You Sell",
-    "lead": "One bottle or pouch can feed a phone feed and a listing. Match the shape to the place.",
+    "h2": "Post the Ad on the Channels You Sell",
+    "lead": "One pack can feed a phone feed and a listing. Match the shape to the place.",
     "items": [
       {
-        "t": "TikTok Pour Clips",
-        "d": "A tall phone video of the citrus pour, or a first bite of the cookies, for a snack ad in the TikTok feed.",
+        "t": "TikTok Clips",
+        "d": "A tall phone video of a pour or a first bite, for a food ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
-        "t": "Instagram Serving Clips",
-        "d": "A square photo of the pouches, or a tall serving video of the cookies, for the grid and for Stories.",
+        "t": "Instagram Clips",
+        "d": "A square photo of the pack, or a tall serving video, for the grid and for Stories.",
         "href": "/platforms/instagram-ads"
       },
       {
         "t": "Facebook Feed Ads",
-        "d": "A feed image of the citrus bottle, with room to add the offer after you download.",
+        "d": "A feed image of the pack, with room to add the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Shorts Bites",
-        "d": "A short vertical moment that opens on one citrus pour or one bite of the cookies.",
+        "d": "A short vertical moment that opens on one pour or one bite.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Amazon Bottle Photos",
-        "d": "A clean bottle image for the listing, plus the pouch and cookie views in the gallery.",
+        "t": "Amazon Pack Photos",
+        "d": "A clean pack image for the listing, plus the other views in the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Shopify Pack Photos",
-        "d": "Matching bottle and pouch images for the product page and the collection.",
+        "d": "Matching pack images for the product page and the collection.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -227,7 +227,7 @@
       }
     ]
   },
-  "cta_title": "Start a Food Ad From the Bottle",
+  "cta_title": "Start a Food and Drink Ad",
   "related_h2": "Pours, Packs, and Listing Photos",
   "blockOrder": [
     "hero",
@@ -242,20 +242,20 @@
   "more_sections": [
     {
       "eyebrow": "In the Finished Clip",
-      "h2": "A Pour Ad You Can Post",
-      "lead": "A spoken line can ride with the citrus pour, so the ad is ready to post.",
+      "h2": "A Food Ad You Can Post",
+      "lead": "A spoken line can ride with the pour or the bite, so the ad is ready to post.",
       "items": [
         {
-          "t": "Start the Pour From a Product Link",
-          "d": "A product page is enough to start a citrus pour, a cookie bite, or a pouch on the shelf."
+          "t": "Start From a Product Link",
+          "d": "A product page is enough to start a pour, a bite, or a pack on the shelf."
         },
         {
-          "t": "Pick a Face for the Pour",
+          "t": "Pick a Face for the Ad",
           "d": "An AI avatar can sit with the glass. Choose a face that fits a kitchen, not a studio host."
         },
         {
           "t": "Voice and Captions Ready to Post",
-          "d": "A voice can name the citrus flavor, and captions can repeat that line on screen."
+          "d": "A voice can name the flavor, and captions can repeat that line on screen."
         },
         {
           "t": "A Script for One Bite",

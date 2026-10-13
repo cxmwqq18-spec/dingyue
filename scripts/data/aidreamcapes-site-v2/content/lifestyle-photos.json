@@ -1,10 +1,10 @@
 {
   "id": "lifestyle-photos",
-  "title": "AI Product Staging for Real Scenes | AIVideosUGC",
-  "description": "Use AI product staging to place your item in a real-life scene, held, worn, or set on a table. Upload one photo and download the scene you can post.",
-  "h1": "AI Product Staging That Puts Your Item in a Real Scene",
+  "title": "AI Product Staging for Real-Life Scenes | AIVideosUGC",
+  "description": "Place your product in a realistic scene that earns attention, builds trust, and helps the sale. Upload one photo and download a lifestyle image you can post.",
+  "h1": "AI Product Staging That Brings Products to Life",
   "eyebrow": "Lifestyle Photos Without a Shoot",
-  "lead": "Product staging lets you publish the white-background tote on a cafe table. Shoppers see the bag where it would go. One scene is 24 credits, shown before you start.",
+  "lead": "AI product staging sets your item in a lifelike scene that earns attention, builds trust, and helps the sale.",
   "secondary_keywords": [
     "lifestyle product photography with AI",
     "product in a home setting photo",
@@ -12,41 +12,41 @@
     "Instagram product scene photos",
     "AI product scene generator"
   ],
-  "benefits_h2": "Stage the Product Where People Use It",
+  "benefits_h2": "Put Your Product Where People Use It",
   "benefits": [
     {
       "img": "n:guide:img2-lifestyle-photos-benefits-0-r1",
       "alt": "Rust-red lounge chair with a wood frame in a bright living room.",
-      "t": "Show the Planter in a Room",
-      "d": "The planter sits on a wood shelf in a living room. The room is clear before anyone reads the description."
+      "t": "Show the Chair in a Real Room",
+      "d": "Shoppers see the chair where it would sit at home. A real room makes the use clear before they read."
     },
     {
       "img": "n:guide:fx15-lifestyle-benefit-pop-r1",
       "alt": "Adult hand sets a plain canvas tote on a marble cafe table beside a ceramic cup.",
-      "t": "Set the Tote Down in Use",
-      "d": "A hand sets the bag beside a cup. The straps and the color stay easy to check against your catalog photo."
+      "t": "Show the Bag in Use",
+      "d": "A hand sets the bag beside a cup. When shoppers can picture it in use, they are closer to buying."
     },
     {
       "img": "n:guide:img2-lifestyle-photos-benefits-2-r1",
       "alt": "Orange metal dining chair in a bright living room.",
-      "t": "Give the Bottle a Home Spot",
-      "d": "The bottle stands on an entryway table with a folded cloth, so shoppers see where it would sit at home."
+      "t": "Skip the Styled Photo Shoot",
+      "d": "You get a staged chair photo without booking a room or a crew. The shot looks professionally set."
     }
   ],
-  "steps_h2": "How to Put Your Product in a Scene",
-  "steps_lead": "The cream tote you already shot is enough to build the scene.",
+  "steps_h2": "How to Make a Staged Product Photo in 3 Simple Steps",
+  "steps_lead": "Add one product photo, try a few scenes, and download the one you want to post.",
   "steps": [
     {
       "t": "Upload Your Photo",
-      "d": "Upload a photo where both straps and the base of the cream tote are visible."
+      "d": "Add a clear photo of your product. You get a lifelike scene for the store, for social, or for an ad."
     },
     {
       "t": "Try Different Scenes",
-      "d": "Ask for a cafe table or a market stall. One nearby object, such as a cup, is enough to show use."
+      "d": "Try more than one setting. Keep the scene that shows the item held, worn, or set on a surface."
     },
     {
       "t": "Download Your Image",
-      "d": "Check the straps against the white photo, then keep the square. Put the price on it yourself."
+      "d": "Pick the scene that fits. Download it for your site, a marketplace, social, or an ad."
     }
   ],
   "maker": {
@@ -68,48 +68,48 @@
   },
   "faq": [
     {
-      "q": "What is a lifestyle photo of the product I sell?",
-      "a": "A lifestyle product photo shows the item in a place a buyer recognizes, made from the catalog photo you already have. A tote on a cafe table is one example. The bag stays the bag."
+      "q": "What is AI product staging?",
+      "a": "It places your product in a realistic everyday scene, made from the photo you already have. Shoppers see it held, worn, or set on a table."
     },
     {
-      "q": "How do I build a cafe scene from my tote photo?",
-      "a": "Use the catalog photo as the reference and name a place, such as a cafe table. Download the square when the straps still match the tote you uploaded."
+      "q": "How does product staging work?",
+      "a": "You upload a product photo. A scene is built around that item so it looks ready for a store, social, or an ad. You pick the one that fits."
     },
     {
-      "q": "Can I publish the cafe scene on my product page?",
-      "a": "Yes. A tote shop can put the cafe-table square on the product page. Add the price yourself after you download the file."
+      "q": "Can I use a staged scene on my store?",
+      "a": "Yes. Download the photo and put it on a product page, a marketplace, social, or an ad."
     },
     {
-      "q": "Can I pick a cafe, a shelf, or a market for my product?",
-      "a": "Yes. Name the kind of place, such as a cafe table, a room shelf, or a market stall. The product photo stays the reference. You can ask for a different place next."
+      "q": "Can I choose the setting for my product?",
+      "a": "Yes. Name the kind of place you want. If the first scene is not the one, ask for another."
     },
     {
-      "q": "What can I still change after the tote scene is made?",
-      "a": "You can change the surface, or run a second scene from the same tote. Your store software can request one through the API."
+      "q": "Can I change the scene after it is made?",
+      "a": "Yes. Adjust the background, or make a second scene from the same photo. Add any price in your own editor."
     },
     {
-      "q": "Can I try another place for the same tote?",
-      "a": "Yes. Start again with a different surface or one extra object. Each photo is 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits, and Premium is $63 for 600."
+      "q": "What should the source photo show?",
+      "a": "The whole product, easy to see, with nothing important cut off at the edge of the frame."
     },
     {
-      "q": "Does the cafe scene replace my plain tote photo?",
-      "a": "No. Keep the original for small details such as a stitch or a strap. Use the scene when you want shoppers to picture where the tote belongs."
+      "q": "What does one staged scene cost?",
+      "a": "One photo is 24 credits. Starter is $24.50 a month for 200 credits. Pro is $35 for 300, and Premium is $63 for 600. A failed job returns those credits."
     },
     {
-      "q": "How is a staged tote photo different from a photoshoot?",
-      "a": "A shoot needs a place, a few extra objects, and a day on the calendar. Here you start from a photo you already have. If that photo is hard to read, start with [how to take product photos for AI](page:guide-product-photo-tips)."
+      "q": "Does the scene replace my plain catalog photo?",
+      "a": "No. Keep the original for small details. Use the scene when you want shoppers to picture the product in use. If the source photo is hard to read, start with [how to take product photos for AI](page:guide-product-photo-tips)."
     },
     {
-      "q": "Can I put the tote scene on my Shopify store?",
-      "a": "Yes. Download the square and upload it on the product page yourself."
+      "q": "Can I post the scene on Instagram?",
+      "a": "Yes. Use it as the product photo in the feed. Write the caption in Instagram, and add any price in your own editor."
     },
     {
-      "q": "Can I post the tote scene on Instagram?",
-      "a": "Yes. The square works as the product photo in the feed. Write the caption in Instagram, and add any price in your own editor."
-    },
-    {
-      "q": "Can I use the tote scene in a paid ad?",
+      "q": "Can I use the scene in a paid ad?",
       "a": "Yes. Finish the headline and the offer in your ad editor. The photo does not include your price."
+    },
+    {
+      "q": "Can I make another scene of the same product?",
+      "a": "Yes. Start again with a different place. Each photo is 24 credits, and you see that cost before you start."
     }
   ],
   "visual": {
@@ -273,50 +273,50 @@
     {
       "eyebrow": "Skip the Shoot",
       "h2": "Stage One Catalog Photo in Real Use",
-      "lead": "The cafe photo starts from the cream tote you already shot on white.",
+      "lead": "The cafe scene starts from the bag photo you already have.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-01",
           "alt": "Linen tote bag beside a coffee cup at a sunny cafe.",
-          "t": "Place the Tote in a Cafe",
+          "t": "Place the Bag in a Cafe",
           "d": "The bag stays next to one drink. The square is ready for the product page or the feed."
         }
       ]
     },
     {
-      "eyebrow": "Ready for the Store or Ad",
-      "h2": "A Staged Scene for Every Channel",
-      "lead": "The street photo is a square you can drop into the feed.",
+      "eyebrow": "Ready to Post",
+      "h2": "One Scene for the Store, Social, or an Ad",
+      "lead": "The same bag photo can go on the store, on social, or into an ad.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-06",
           "alt": "Hand holding a linen tote bag on a neighborhood street.",
-          "t": "Show the Tote on a Street",
+          "t": "Show the Bag on a Street",
           "d": "A neighborhood carry is enough for the post. Add the caption and any price in your own editor."
         }
       ]
     },
     {
-      "eyebrow": "Same Tote, More Scenes",
-      "h2": "Several Staged Scenes From One Tote",
-      "lead": "The bag stays the bag. Only the place changes: a park path, a picnic, or an entryway.",
+      "eyebrow": "Same Bag, More Scenes",
+      "h2": "Several Scenes From One Product Photo",
+      "lead": "The bag stays the bag. Only the place changes.",
       "items": [
         {
           "img": "n:guide:k5-lifestyle-gallery-03",
           "alt": "Linen tote bag carried beside a city bike.",
-          "t": "Carry the Tote Beside a Bike",
+          "t": "Carry the Bag Beside a Bike",
           "d": "The bag is carried beside a bike, so a weekend use is easy to see at a glance."
         },
         {
           "img": "n:guide:k5-lifestyle-gallery-04",
           "alt": "Linen tote bag on a beach picnic blanket.",
-          "t": "Create a Picnic Product Scene",
-          "d": "The same bag sits on a picnic blanket, away from the house, with the straps still visible."
+          "t": "Set the Bag on a Picnic",
+          "d": "The same bag sits on a picnic blanket, with the straps still easy to see."
         },
         {
           "img": "n:guide:k5-lifestyle-gallery-05",
           "alt": "Linen tote bag hanging in a bright home entryway.",
-          "t": "Create a Home Entryway Scene",
+          "t": "Hang the Bag in an Entryway",
           "d": "A bright entryway gives you a home version to set beside the outdoor scenes."
         }
       ]
@@ -342,90 +342,90 @@
     "plat-shopify"
   ],
   "platforms": {
-    "h2": "Stage and Finish the Tote Photo",
-    "lead": "Product staging starts here. Clean the catalog photo, stage the tote, size the file, and hand it to the person who posts it.",
+    "h2": "Every Step of a Product Photo",
+    "lead": "Make, clean, and resize the photos you sell with, on every channel, from one file to a full catalog.",
     "items": [
       {
-        "t": "Change the Product Background",
-        "d": "The tote can leave a cluttered counter and sit on a plain gray sweep.",
+        "t": "Remove the Photo Background",
+        "d": "Lift the product off its old backdrop and drop in a clean studio setting that shows it clearly.",
         "href": "page:change-background",
         "icon": "Image"
       },
       {
-        "t": "Create a White or Brand-Color Background",
-        "d": "Choose sand or a green that matches the label, and keep the tote color aligned to the uploaded photo.",
+        "t": "Generate a New Background",
+        "d": "Make a custom backdrop, or change the color, and keep the look of your brand.",
         "href": "page:white-background",
         "icon": "Palette"
       },
       {
-        "t": "Create a Lifestyle Product Scene",
-        "d": "Put the tote on a cafe table, next to one cup and a folded napkin.",
+        "t": "Create a Lifestyle Scene",
+        "d": "Help shoppers picture the product in use by setting it in an everyday scene.",
         "icon": "Camera"
       },
       {
-        "t": "Fix Lighting, Clutter, and Image Size",
-        "d": "A stray spoon beside the tote can go. Then fit the file to the slot the store asks for.",
+        "t": "Fix Light, Clutter, and Size",
+        "d": "Adjust the brightness, clear a stray object, and resize the file for the channel that needs it.",
         "href": "page:social-ad-photos",
         "icon": "Crop"
       },
       {
-        "t": "Put the Tote on an Actor",
-        "d": "A tote can sit on a shoulder so the buyer sees the drop. That person is an AI actor.",
+        "t": "Show the Product on an AI Actor",
+        "d": "Show how it looks worn or held by an AI actor, so shoppers can judge the scale.",
         "href": "page:model-photos",
         "icon": "UserRound"
       },
       {
-        "t": "Download a Store-Ready Square",
-        "d": "Download the file and put it where you sell. The price is still something you add.",
+        "t": "Download a File You Can Post",
+        "d": "Export a photo that is ready for your site, a marketplace listing, or an ad.",
         "icon": "Share2"
       },
       {
         "t": "Improve Lighting and Color",
-        "d": "If the white-background tote looks gray, even out the color before you build a scene on top of it.",
+        "d": "Even out the light, the detail, and the color before you build a scene on top.",
         "icon": "Sun"
       },
       {
-        "t": "Resize Photos for Each Placement",
-        "d": "A story slot and a banner need different shapes. The tote photo can match each placement.",
+        "t": "Resize for a New Shape",
+        "d": "Go from a tall frame to a wide one, or the other way, and keep the product intact.",
         "icon": "Ratio"
       },
       {
-        "t": "Request Product Scenes Through an API",
-        "d": "Connect through the API and request a scene for a tote already on the list.",
+        "t": "Send Scenes From Your Catalog",
+        "d": "Connect the catalog and request a scene for each product, without opening every file by hand.",
         "icon": "Laptop"
       },
       {
-        "t": "Add Text to Product Photos",
-        "d": "The shop name can sit in a corner of the tote photo. Pricing stays in your ad editor.",
+        "t": "Add a Short Line on the Photo",
+        "d": "Place a short message on the photo, in a style that fits the shop. The price still goes in your ad editor.",
         "icon": "Type"
       },
       {
-        "t": "Batch Edit Product Photos",
-        "d": "Every tote in the catalog can get the same linen surface. You do not open a dozen files by hand.",
+        "t": "Apply One Look to Many Photos",
+        "d": "Give a stack of photos the same backdrop or the same size in a few clicks.",
         "icon": "Layers"
       },
       {
-        "t": "Share Product Scenes With Your Team",
-        "d": "Send the cafe scene to the person who owns the product page, before it goes live.",
+        "t": "Share Scenes With Your Team",
+        "d": "Pass a scene and a note to the person who owns the product page, before it goes live.",
         "icon": "Users"
       },
       {
-        "t": "Save Logos, Fonts, and Brand Colors",
-        "d": "Save the shop mark and the green you always use, so the next tote scene carries the same color.",
+        "t": "Save Logos, Fonts, and Colors",
+        "d": "Keep your mark, your type, and your colors together so the next scene matches.",
         "icon": "ShieldCheck"
       },
       {
-        "t": "Create a Simple Product Brand Mark",
-        "d": "A new shop can make a simple mark here, then put that mark on the next scene.",
+        "t": "Make a Simple Brand Mark",
+        "d": "A new shop can make a simple mark here, then place that mark on the next scene.",
         "icon": "PenLine"
       },
       {
-        "t": "Edit Product Photos Across Devices",
-        "d": "Start the tote scene on a laptop and finish the crop on a phone.",
+        "t": "Edit on a Computer or a Phone",
+        "d": "Start the scene on a laptop and finish the crop on a phone.",
         "icon": "Smartphone"
       }
     ]
   },
-  "related_h2": "More Product Staging Tools",
-  "related_lead": "Open a backdrop tool, a model photo, an ad size, or the store where the scene will sit."
+  "related_h2": "More Ways to Finish the Photo",
+  "related_lead": "Open the backdrop tool, the model photo, the ad size, or the store where this scene will go."
 }

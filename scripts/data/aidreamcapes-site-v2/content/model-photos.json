@@ -1,10 +1,10 @@
 {
   "id": "model-photos",
-  "title": "AI Virtual Fashion Model Photography | AIVideosUGC",
-  "description": "Dress clothes and accessories on a lifelike virtual fashion model. Upload one flat photo and download product photography for the page or the ad.",
-  "h1": "Product Photography on Virtual Fashion Models",
+  "title": "AI Fashion Model Product Photography | AIVideosUGC",
+  "description": "Skip the styling, the studio, and shipping samples around. Put products on realistic virtual models in minutes and download a photo for the page or the ad.",
+  "h1": "Show Products on Lifelike AI Fashion Models",
   "eyebrow": "Worn Photos Without a Fitting",
-  "lead": "A virtual fashion model can put a canvas backpack on a person for product photography before the listing goes up. Upload the flat photo and AIVideosUGC places that pack on a lifelike model.",
+  "lead": "Skip the styling, the studio, and shipping samples around. Place your catalog on realistic virtual models in minutes.",
   "secondary_keywords": [
     "on-model photos for clothing",
     "AI fashion model images",
@@ -12,71 +12,71 @@
     "AI photos of bags being worn",
     "jewelry on model photos"
   ],
-  "benefits_h2": "Launch the Drop Without a Fitting Day",
+  "benefits_h2": "Picture Every Product on an AI Fashion Model",
   "benefits": [
     {
       "img": "n:guide:fx16-model-photos-benefit-studio-r1",
-      "alt": "You get a worn studio photo to list. An adult woman with short silver hair wears a plain heather-gray hoodie.",
-      "t": "Launch Without a Casting Day",
-      "d": "The product page can show the heather hoodie worn while you are still packing that color. The flat photo is enough to put it on a virtual model."
+      "alt": "An adult woman with short silver hair wears a plain heather-gray hoodie in a studio.",
+      "t": "Launch New Collections Without the Studio",
+      "d": "Getting the model, the photographer, and the stylist into one day slows every drop, and one late hour can hold the whole launch. Upload several product photos and see the outfit on a realistic virtual model right away. You skip the casting and the studio booking. Preview the set and refresh the listing in minutes so you can sell sooner."
     },
     {
       "img": "n:guide:fx16-model-photos-benefit-street-r1",
-      "alt": "You get a sidewalk photo to post. An adult man with short auburn hair wears a plain denim jacket.",
-      "t": "One Look on Every Channel",
-      "d": "A shopper who liked the denim jacket on your homepage can recognize that jacket in the square ad later the same week. Reuse the saved model instead of booking a second shoot for the ad crop."
+      "alt": "An adult man with short auburn hair wears a plain denim jacket on a sidewalk.",
+      "t": "Keep Product Photos Consistent on Every Channel",
+      "d": "Light and pose shift every time you book a new shoot, so the catalog stops looking like one brand. Tops, jewelry, eyewear, and the rest of the line can share one model and one setting. Shoppers then recognize the line on your site, in the marketplace, and in the lookbook. Save that model and reuse it on the next collection."
     },
     {
       "img": "n:guide:fx16-model-photos-benefit-face-r1",
-      "alt": "You get a terrace photo to post. An adult woman with a tight bun wears a plain cream knit top on a bright terrace.",
-      "t": "Show How the Piece Sits",
-      "d": "Show where the hem and the shoulder of the cream knit sit, on a person you describe. Leave the flat file in the gallery when shoppers want the stitch."
+      "alt": "An adult woman with a tight bun wears a plain cream knit top on a bright terrace.",
+      "t": "Boost Conversions With Realistic Virtual Models",
+      "d": "Shoppers look closer when they can picture the piece on a body. Show how it sits, how the fabric falls, and how the cut reads. Pair the worn photo with a flat lay, or with a hanger shot that has nobody in it. Pick models of different ages and body types, then download a sharp file for the page."
     }
   ],
   "more_sections": [
     {
-      "eyebrow": "More Styles Without a Fitting",
-      "h2": "Worn Photos Across a Longer Catalog",
-      "lead": "Flat photos already in the folder can supply the worn views after the list outgrows a fitting day.",
+      "eyebrow": "For the Longer Catalog",
+      "h2": "Worn Photos for a Longer Catalog",
+      "lead": "Flat photos already in the folder can become worn views once the list outgrows a fitting day.",
       "items": [
         {
           "img": "n:guide:fx16-model-photos-scale-tote-pair-r1",
-          "alt": "You get a flat lay and a worn view. The same unbranded rust-orange tote is laid flat and carried by an adult.",
+          "alt": "A rust-orange tote is laid flat, and an adult carries the same tote on one shoulder.",
           "frame": "none",
-          "t": "Flat Lay Beside the Worn View",
-          "d": "Shoppers can compare the rust tote laid flat, on a hanger with nobody in it, or on a shoulder. The next color can reuse that pairing."
+          "t": "Flat Lay Next to the Worn View",
+          "d": "Shoppers can compare the piece laid flat, on an empty hanger, or on a shoulder. The next color can reuse that same pairing."
         },
         {
           "img": "n:guide:fx16-model-photos-scale-denim-pair-r1",
-          "alt": "You get a flat lay and a worn view of the denim jacket. The same jacket is laid flat and worn by an adult.",
+          "alt": "The same denim jacket is laid flat and worn by an adult.",
           "frame": "none",
-          "t": "One Model for the Whole Drop",
-          "d": "The denim jacket wears the same model as the styles beside it. The collar and the wash stay recognizable from one product page to the next."
+          "t": "One Model Across the Whole Drop",
+          "d": "Styles in the same drop share one model. The collar and the color stay recognizable from one product page to the next."
         },
         {
           "img": "n:guide:im13-model-photos-after-r1",
-          "alt": "You get a worn photo for the next color. An adult South Asian woman with a tight low bun wears the same heather-gray hoodie in a bright courtyard.",
+          "alt": "An adult woman with a tight low bun wears a heather-gray hoodie in a bright courtyard.",
           "frame": "none",
-          "t": "New Model for the Drop",
-          "d": "The next collection can wear a new model or a new setting without a new garment photo. A plain backdrop can come from that same hoodie file."
+          "t": "A New Model for the Next Drop",
+          "d": "The next collection can wear a new model or a new setting, and you do not need a new garment photo. A plain backdrop can come from that same file."
         }
       ]
     }
   ],
-  "steps_h2": "How to Use AI Fashion Model Photos in 3 Steps",
-  "steps_lead": "A flat photo of the gray hoodie is enough. You leave with a worn image for the page.",
+  "steps_h2": "How to Make AI Fashion Model Photos in 3 Simple Steps",
+  "steps_lead": "A flat photo, or a photo of someone already wearing the piece, is enough.",
   "steps": [
     {
       "t": "Upload a Clothing Product Photo",
-      "d": "Lay the gray hoodie flat, with the hood and the pocket in frame. The virtual model then has the whole garment to wear."
+      "d": "Pick the product photo you want on a virtual model. A flat lay works, and so does a photo of someone wearing it."
     },
     {
       "t": "Choose a Generated Model",
-      "d": "For the gray hoodie, pick the model and the street background you want on the listing. Save that pair for the next color."
+      "d": "Pick a model that fits the brand, then pick the pose and the background you want on the listing."
     },
     {
       "t": "Download the Worn Photo",
-      "d": "Choose 4:3 for the gray hoodie page, or 9:16 for a phone story. Download a file with no watermark."
+      "d": "Choose a tall, wide, or square frame. In a few seconds the download shows your product on the model you picked."
     }
   ],
   "maker": {
@@ -96,48 +96,48 @@
     ],
     "cta": "Show my item on a person"
   },
-  "cta_title": "See the Next Piece on a Virtual Model",
-  "cta_lead": "Get a worn image of the canvas backpack for the listing, from one flat photo of the pack.",
+  "cta_title": "Start Selling From the First Worn Photo",
+  "cta_lead": "Get a listing-ready worn photo in minutes, from the product image you already have.",
   "faq": [
     {
-      "q": "How does an AI model photo get made?",
-      "a": "It shows your garment on a virtual model. You start with a product photo of the canvas backpack and get a worn image for the store."
+      "q": "How does a virtual model photo get made for clothing?",
+      "a": "You upload one product photo. Clothing, plus jewelry or eyewear, goes onto a lifelike model with a natural pose and even light."
     },
     {
-      "q": "Can I put my garment on a virtual model?",
-      "a": "Yes. Upload the garment photo, choose who wears it, and download the worn file. The guide to [model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) walks through that path."
+      "q": "Can I put my own products on a virtual model?",
+      "a": "Yes. Upload a photo of the piece you sell, a top or a pair of jeans, and download the worn file. The guide to [model photos without a photoshoot](page:blog-model-photos-without-a-photoshoot) walks through that path."
     },
     {
-      "q": "What kind of photo should I upload?",
-      "a": "Show the whole garment, with the color easy to read. A photo that cuts off the hem of the hoodie gives the model less shape to wear."
+      "q": "Can I use this for the store and the lookbook?",
+      "a": "Yes. Pair the worn photo with a clean backdrop, a new background, and a lighting pass so the store and the lookbook match."
     },
     {
-      "q": "How close is this to a studio photo?",
-      "a": "You pick the model, the pose, and the setting. Compare the worn photo with the upload before you publish. Fine seams can still shift."
+      "q": "How close is a virtual model to a studio photo?",
+      "a": "You pick the model, the pose, the background, and the frame. Compare the worn photo with your upload before you publish. Fine seams can still shift."
     },
     {
-      "q": "Which products can go on a virtual model?",
-      "a": "Clothing, bags, jewelry, and eyewear all work from a clear photo that shows the whole item."
+      "q": "How does this help a fashion shop make realistic product photos?",
+      "a": "Yes. The worn photo puts the garment on a model, keeps the texture readable, and gives you one look for every channel you sell on."
     },
     {
-      "q": "Can I reuse a model on the next collection?",
-      "a": "Yes. Save the model with your brand looks and start the next collection from that face."
+      "q": "Can I run model photos from the shop software I already use?",
+      "a": "Yes. The shop software you already use can send garment photos in and pull the worn images back."
     },
     {
       "q": "Can I create model photos for an entire collection?",
-      "a": "Yes. Run several garment photos in one batch, or send them from the shop software you already use. Each image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. Run several garment photos together. Each image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Which frames can I download?",
-      "a": "Use 9:16 for a story, 1:1 for a square gallery, or 4:3 and 16:9 when the page is wide. 3:4 is there for a taller product tile."
+      "a": "Yes. Pick a tall portrait, a wide landscape, or a square. 9:16, 1:1, 4:3, 16:9, and 3:4 are all available."
     },
     {
       "q": "Can I publish these photos on my store and in ads?",
-      "a": "Yes. The download has no watermark. Put the worn photo on the product page, and use a square crop in an ad. Keep a plain product photo beside it when shoppers need measurements."
+      "a": "Yes. The file has no watermark. Use it on the product page and in a square ad. Keep a plain product photo beside it when shoppers need measurements."
     },
     {
       "q": "What if a small print looks different?",
-      "a": "Look at the worn photo next to the upload before you publish. Fine prints and seams can shift."
+      "a": "Compare the worn photo with the upload before you publish. Fine prints and seams can shift, so check them first."
     }
   ],
   "visual": {
@@ -299,137 +299,137 @@
     "faq",
     "related"
   ],
-  "benefits_lead": "You get a worn photo while the release date is still the one you planned, without waiting on a fitting.",
-  "related_h2": "More Photo Tools",
+  "benefits_lead": "See the outfit worn before a casting or a studio day slows the drop.",
+  "related_h2": "More Tools for Product Visuals",
   "reasons": {
-    "h2": "One Virtual Model Across the Catalog",
-    "lead": "Save one face and one setting, and the next color still looks like your shop.",
+    "h2": "Scale the Catalog With Virtual Models",
+    "lead": "One saved model can cover the next color, the next channel, and the next drop.",
     "items": [
       {
-        "t": "Save the Model for Next Time",
-        "d": "The pose that already fits the line can stay with your brand looks. The next canvas backpack starts from that face, so you are not casting again.",
+        "t": "Save the Model and Reuse It",
+        "d": "The face and the pose that fit the line stay saved. The next piece starts from that model, so you are not casting again.",
         "icon": "UserCheck"
       },
       {
-        "t": "Jewelry on a Virtual Model",
-        "d": "Shoppers can see how a thin chain or a pair of glasses sits. Place that photo on a model for the [jewelry](page:tpl-jewel) page, and keep a tight frame for the clasp.",
+        "t": "Jewelry and Eyewear on a Model",
+        "d": "A thin chain or a pair of glasses reads more clearly on a person. Use the [jewelry](page:tpl-jewel) page for that tight frame, and keep the clasp in view.",
         "icon": "Shirt"
       },
       {
-        "t": "One Look on Site and Marketplace",
-        "d": "Publish the worn denim jacket on your own page first. When that file also goes to an [Amazon](page:plat-amazon) listing, point the [Shopify](page:plat-shopify) collection at the same jacket so the shop still looks like one brand.",
+        "t": "One Look on the Site and the Marketplace",
+        "d": "Publish the worn photo on your own page first. When that file also goes to an [Amazon](page:plat-amazon) listing, point the [Shopify](page:plat-shopify) collection at the same photo so the shop still looks like one brand.",
         "icon": "Store"
       },
       {
-        "t": "Pose and Light, Held Steady",
-        "d": "Pick the pose and the setting once. The cream knit's next color inherits them, so the catalog does not shift every time you add a shade.",
+        "t": "Hold the Pose and the Light",
+        "d": "Pick the pose and the setting once. The next color inherits both, so the catalog does not shift every time you add a shade.",
         "icon": "Sun"
       }
     ]
   },
   "trust": {
-    "h2": "What Changes for the Shop",
-    "lead": "The shop gets a worn photo on styles that never had a fitting.",
+    "h2": "What Sellers Notice After the Worn Photo",
+    "lead": "The change shows up in the listing, the photo bill, and how much of the catalog looks ready.",
     "items": [
       {
-        "t": "A Backpack Listing Before the Drop",
-        "d": "A canvas backpack that never got a fitting can still open its listing with an on-model image while you write the product text."
+        "t": "Shoppers Can Picture the Piece",
+        "d": "A worn photo helps a shopper see the product on a body, which is what turns a glance into a closer look."
       },
       {
         "t": "A Smaller Photography Bill",
         "d": "You skip model day rates, studio rental, and a round of retouching. Each worn photo is 24 credits, and that charge is shown before it runs."
       },
       {
-        "t": "Worn Photos for More Styles",
-        "d": "Hero pieces used to get the shoot. The hoodie and the jacket can get a worn photo too, so more of the catalog looks ready to buy."
+        "t": "More of the Catalog Can Sell",
+        "d": "Hero pieces used to get the only shoot. The rest of the line can get a worn photo too, so more styles look ready to buy."
       },
       {
-        "t": "One Look From Style to Style",
-        "d": "A buyer moving from the denim jacket to the cream knit still feels they are in your shop. The saved setting and the same model do that."
+        "t": "One Look the Buyer Recognizes",
+        "d": "A buyer moving from one style to the next still feels they are in your shop. The saved setting and the same model do that."
       }
     ]
   },
   "platforms": {
-    "h2": "Photo Tools Around the Model Shot",
-    "lead": "The same garment can also get a clean backdrop, a square ad, and a file your store software requests.",
+    "h2": "Your Complete Set of Photo Tools",
+    "lead": "Make and edit product photos for every channel, from a single file to the full catalog.",
     "items": [
       {
-        "t": "Swap in a Studio Backdrop",
-        "d": "A canvas backpack shot in a hallway can sit on a plain studio sweep instead. The room goes away, and the pack is what the listing shows.",
+        "t": "Remove the Photo Background",
+        "d": "Take off the old backdrop and put a studio-quality one behind the product, so the listing looks finished.",
         "href": "page:white-background",
         "label": "White background photos"
       },
       {
-        "t": "Describe a New Background",
-        "d": "The heather hoodie can sit on a pale oak bench when the first setting feels wrong. The garment stays. Only the space around it changes.",
+        "t": "Make a New Background",
+        "d": "Build a custom backdrop, or swap the color, and keep the brand look you already use.",
         "href": "page:change-background",
         "label": "Change the background"
       },
       {
-        "t": "Show the Product in Use",
-        "d": "Shoppers see the canvas backpack by a front door, the way someone would set it down after a walk, not only the pack on white.",
+        "t": "Place the Product in a Lived-In Scene",
+        "d": "Help shoppers picture the product in use, set in a scene from daily life.",
         "href": "page:lifestyle-photos",
         "label": "Lifestyle photos"
       },
       {
-        "t": "Brighten and Clear the Shot",
-        "d": "A dim denim jacket becomes easier to read once the light comes up and a stray cup leaves the corner. The jacket is what shoppers see.",
+        "t": "Fix the Light and the Frame",
+        "d": "Raise the brightness, clear a stray object, and resize the photo for each place you sell.",
         "href": "page:photo-hub",
         "label": "Product photo generator"
       },
       {
-        "t": "Match the Model to the Buyer",
-        "d": "The cream knit on a model who looks like the buyer makes the fit easier to picture. Pick a model who fits the people you already sell to.",
+        "t": "Show the Fit on a Model",
+        "d": "Show shoppers how the product sits on different models, from the same photo you uploaded.",
         "href": "page:tpl-tryon",
         "label": "Try-on template"
       },
       {
-        "t": "Download a Clean File",
-        "d": "The worn backpack photo goes straight onto the product page you control."
+        "t": "Download and Publish",
+        "d": "Download a photo that is ready for your site, a marketplace, or another place you sell."
       },
       {
-        "t": "Even the Light First",
-        "d": "A heather hoodie keeps a readable pocket once the light is even, and that file is ready for the model step."
+        "t": "Clean Up the Product Shot",
+        "d": "Upload a product photo and improve the light, the detail, and the color in seconds."
       },
       {
-        "t": "Fit the Photo to the Slot",
-        "d": "The denim jacket can go out as 1:1 for a gallery, or as 9:16 when that photo becomes a short video. 16:9, 4:3, and 3:4 are there when the placement asks.",
+        "t": "Switch Portrait and Landscape",
+        "d": "Resize the frame from tall to wide, or the other way, and keep the product sharp.",
         "href": "page:image-to-video",
         "label": "Image to video"
       },
       {
         "t": "Send Photos From Your Shop",
-        "d": "Shop software you already use can send garment photos in and pull the worn images back."
+        "d": "Connect the shop you already run, send the photos in, and pull the finished images back."
       },
       {
-        "t": "Make the Ad Version",
-        "d": "The square leaves without a price printed on it. You type the current price in your own editor, and the worn photo is ready for the ad.",
+        "t": "Add a Line for the Ad",
+        "d": "Add a short line on the image when the ad needs one. Keep the product easy to see.",
         "href": "page:social-ad-photos",
         "label": "Social ad photos"
       },
       {
         "t": "Edit a Whole Drop Together",
-        "d": "Apply one model and one scene across the backpack drop so the collection looks like one shop when it goes live."
+        "d": "Apply one model, one backdrop, or one frame across the drop in a few clicks."
       },
       {
-        "t": "Work as a Team",
-        "d": "Share the saved model so the next teammate continues the same face and setting."
+        "t": "Share the Work With Your Team",
+        "d": "Share the saved model so the next teammate keeps the same face and the same setting."
       },
       {
-        "t": "Save the Look for Next Time",
-        "d": "The pose and backdrop that worked on the cream knit can stay with your brand looks, so the next color starts there."
+        "t": "Save the Brand Look",
+        "d": "Keep the pose, the backdrop, and the colors that worked, so the next color starts there."
       },
       {
-        "t": "Make a Simple Logo",
-        "d": "Create a mark for the shop, then place it on the ad in your editor after you download."
+        "t": "Make a Logo for the Shop",
+        "d": "Create a mark for the shop in seconds, then place it on the ad in your editor after you download."
       },
       {
-        "t": "Open It in the Browser",
-        "d": "A listing can get a worn photo from the browser on the plan you already pay for. The charge for that photo is 24 credits.",
+        "t": "Use It on Desktop or Phone",
+        "d": "A listing can get a worn photo from a desktop or a phone. That photo costs 24 credits.",
         "href": "page:pricing",
         "label": "Pricing"
       }
     ]
   },
-  "related_lead": "Cutouts, new scenes, and worn views for the listing and the ad."
+  "related_lead": "Clean backdrops, new scenes, and worn views for the listing and the ad."
 }

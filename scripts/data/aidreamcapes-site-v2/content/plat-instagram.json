@@ -1,10 +1,10 @@
 {
   "id": "plat-instagram",
-  "title": "Instagram UGC Ad Videos for Reels | AIVideosUGC",
-  "description": "Build Instagram UGC ad videos from one product photo. Add a voice and captions, then post the Reel to Stories, Reels, or the main feed today.",
-  "h1": "Instagram UGC Ad Videos From One Photo",
+  "title": "AI Instagram Ads for Reels and Stories | AIVideosUGC",
+  "description": "Create a clear Instagram ad from a product link, in minutes. Make another version, skip the creator wait, and download a Reel you can run today.",
+  "h1": "AI Instagram Ads You Can Make in Minutes",
   "eyebrow": "Instagram Ads From One Photo",
-  "lead": "Instagram UGC ad videos can keep running on weeks when no creator is free. The Reel comes from the product page, and you can make a second version in another setting before the offer ends.",
+  "lead": "Why wait on a creator or a shoot? Make a clear Instagram ad in minutes, then spin up another version before the offer ends.",
   "card": "Instagram ads from one product photo, as a tall clip or a square photo.",
   "secondary_keywords": [
     "Instagram Reels ads",
@@ -15,52 +15,52 @@
   "faq": [
     {
       "q": "What counts as an Instagram ad I can run?",
-      "a": "It is a paid Reel, Story, or feed post: someone holding your product, an unboxing, or a short review. It sits more comfortably beside friends' posts than a glossy brand film does."
+      "a": "A Reel, a Story, or a feed post that shows your product: someone holding it, an unboxing, or a short review. It sits beside everyday posts, and that is why people trust it."
     },
     {
       "q": "How do I get an Instagram Reel from my product link?",
-      "a": "Paste the product page and say who the buyer is. You get a Reel with captions, and you pick the avatar before you export."
+      "a": "Paste the product link. You get a script, captions, and a Reel shaped for the feed, Reels, or Stories. Then pick the AI actor and the voice."
     },
     {
-      "q": "Are there ready Reel templates I can post?",
-      "a": "Yes. Open a Reel template and keep your product in the frame. The tall shape is already set, so you do not measure the edges yourself."
+      "q": "Are there ready Reel templates I can use?",
+      "a": "Yes. Open a Reel, Story, or feed template and keep your product in the frame. The shape is already set."
     },
     {
       "q": "What does an Instagram Reel cost in credits?",
-      "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost first. A failed job returns those credits."
+      "a": "A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
       "q": "Do I get music, captions, and a voice on the Reel?",
-      "a": "Yes. Choose an AI voice, captions, and a track from the music library. The same script can be spoken in another language. You can still change a word before you export."
+      "a": "Yes. Choose a spoken voice, captions, and a track from the music library. The same line can be spoken in another language. You can still change a word before you export."
     },
     {
       "q": "Can I run the Reel as a paid Instagram ad?",
-      "a": "Yes. Publish it or download it and run it in Instagram ads. The download has no AIVideosUGC watermark. Instagram still applies its own ad rules to every file."
+      "a": "Yes. Publish it or download it and run it in Instagram ads. The download has no watermark. Instagram still applies its own ad rules."
     },
     {
-      "q": "Do I have to book a person and a room for the Reel?",
-      "a": "No. Use a photo you already have. The person in the Reel is an AI avatar from a library of 53 AI actors. The setting can be the one already in the photo."
+      "q": "Do I have to book a person and a room?",
+      "a": "No. Use a photo you already have, or paste a product link. The person in the Reel is an AI actor from a library of 53. You can have the file in minutes."
     },
     {
-      "q": "What should I check on the Reel before I download it?",
+      "q": "What should I check before I download the Reel?",
       "a": "Compare your placement with [social media ad sizes](/guides/ad-sizes-by-platform), then preview the file so on-screen buttons do not cover the product."
     }
   ],
   "examples": null,
-  "templates_lead": "Choose a look for a Reel or a square post that keeps your product clear in the frame.",
-  "cta_lead": "Pick Reels, Stories, or the feed first, then make a photo or a clip that fits that placement.",
+  "templates_lead": "Open a Reel, a Story, or a square post that keeps your product clear in the frame.",
+  "cta_lead": "Paste a product link or upload one photo. Leave with a Reel, a Story, or a feed post you can run.",
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "Paste the hand-cream page. The jar, the pump, and the size in those pictures set the order of the Reel."
+      "d": "Paste the product link. The pictures and the description come in with it, so you skip retyping them."
     },
     {
       "t": "Choose an Actor",
-      "d": "Pick an AI avatar for this Reel, or make one from a short clip of you if it should sound like the shop."
+      "d": "Pick an AI actor from the library, or one that matches your shop. Choose a face the buyer trusts."
     },
     {
       "t": "Download and Publish",
-      "d": "Download the Reel and publish it on the campaign you already run."
+      "d": "Download the Reel and publish it. The file is built to run as an Instagram ad."
     }
   ],
   "visual": {
@@ -94,15 +94,15 @@
       "items": [
         {
           "t": "Add a Product Link",
-          "d": "Paste your hand-cream link, or upload a photo of the white tube. You get that tube ready beside the bathroom mirror."
+          "d": "Paste your hand-cream link, or upload a photo of the white tube. The Reel uses that product."
         },
         {
           "t": "Choose an Actor",
-          "d": "Pick an AI actor to apply the white tube, with a voice in your language. You get the hand applying it beside the mirror."
+          "d": "Pick an AI actor to apply the white tube, with a spoken voice in your language."
         },
         {
           "t": "Download and Publish",
-          "d": "Publish the hand-cream Reel to Instagram, or download it with captions, voice, and music. You get a file with no watermark."
+          "d": "Publish the hand-cream Reel, or download it with captions, a voice, and music. The file has no watermark."
         }
       ]
     },
@@ -112,46 +112,46 @@
       }
     }
   },
-  "benefits_h2": "Instagram UGC Ads Without the Wait",
+  "benefits_h2": "Why Make Instagram Ads This Way",
   "benefits": [
     {
-      "t": "Publish When Ready",
-      "d": "A quiet week with no creator does not have to pause the feed. The hand-cream Reel and the organic post can both come from the same jar photo.",
+      "t": "Post on the Weeks You Choose",
+      "d": "Instagram wants a steady feed. The hand-cream Reel can go up in minutes, even when no creator is free.",
       "img": "n:guide:fx40-plat-instagram-benefit-time",
       "alt": "Hand reaching for a white pump hand-cream jar on a sunlit bathroom shelf"
     },
     {
-      "t": "Spend the Budget on Reach",
-      "d": "The money that used to start with a creator invoice can buy reach instead. A 15-second ad of this travel mug spends 60 credits, and the charge shows before you start.",
+      "t": "Spend Less to Make the Ad",
+      "d": "A strong Instagram ad does not have to start with a creator invoice. This travel-mug test spends credits you see first.",
       "img": "n:guide:fx40-plat-instagram-benefit-cost",
       "alt": "Unbranded ceramic travel mug on linen with one green leaf"
     },
     {
-      "t": "Keep the Face People Know",
-      "d": "When one opening gets the replies, the next ad can use that AI avatar again. Try one lip balm clip that opens on the three tubes, and another that opens on a hand using them.",
+      "t": "Test More Than One Face",
+      "d": "Try the lip balm with a different AI actor. Keep the opening that gets the replies, and make the next ad from that.",
       "img": "n:guide:fx40-plat-instagram-benefit-variations",
       "alt": "Three pastel lip balm tubes arranged in color groups on a peach surface"
     }
   ],
-  "steps_h2": "Make Instagram Ads With AI in 3 Steps",
-  "steps_lead": "You finish with an Instagram Reel or a square post the account can run.",
+  "steps_h2": "How to Make an Instagram Ad in 3 Simple Steps",
+  "steps_lead": "Paste the link, pick an AI actor, and download a Reel you can publish.",
   "more_sections": [
     {
-      "eyebrow": "Finish the Reel in One Place",
-      "h2": "One Hand-Cream Jar, Three Reels",
-      "lead": "One hand-cream jar becomes the Reel, the voice, and the next test. You settle the script before you export.",
+      "eyebrow": "Finish in One Place",
+      "h2": "From a Product Link to a Finished Reel",
+      "lead": "The link, the AI actor, and the edit live together, so you do not jump to another app.",
       "items": [
         {
-          "t": "Start From the Hand-Cream Link",
-          "d": "Paste the hand-cream page and get a Reel of that jar. You are not paying a production invoice for every test of the first line."
+          "t": "Turn the Link Into a Reel",
+          "d": "Paste the hand-cream page and get a Reel of that jar. You are not paying a new production bill for every test."
         },
         {
-          "t": "An Avatar Holds the Hand Cream",
-          "d": "An AI avatar can hold the hand-cream jar and say who it is for. You can start from a photo you already have on your phone."
+          "t": "An AI Actor Holds the Product",
+          "d": "An AI actor can hold the jar and say who it is for. You can start from a photo already on your phone."
         },
         {
-          "t": "Fix the Line Here",
-          "d": "Change the line, the voice, or the actor in the editor, then export the next hand-cream Reel without a second app."
+          "t": "Edit the Line Here",
+          "d": "Change the line, the voice, or the actor, then export the next Reel without opening a second tool."
         }
       ]
     }
@@ -168,31 +168,31 @@
     "faq",
     "cta"
   ],
-  "benefits_lead": "Three photos, three tests. The hand-cream jar, the travel mug, and the lip balms each stay in their own Reel.",
+  "benefits_lead": "Shorter production, a lower content bill, and more than one version to test.",
   "reasons": {
-    "h2": "Why UGC-Style Instagram Ads Help",
-    "lead": "A second country can hear the Instagram ad without a second shoot or a second booking.",
+    "h2": "Why Creator-Style Instagram Ads Help",
+    "lead": "Your next Instagram ad does not have to wait on a creator, a studio, or a second shoot.",
     "items": [
       {
-        "t": "Keep Tests on Your Calendar",
-        "d": "The clip is ready when the offer is. You do not wait on a creator who is filming another brand that week.",
+        "t": "No Creator to Wait On",
+        "d": "Get an on-brand ad when you need it. The next Reel is ready in minutes, not when a creator is free.",
         "icon": "Clock"
       },
       {
-        "t": "Ads in the Buyer's Language",
-        "d": "You can run the Instagram ad in the buyer's language, in a voice that sounds local. You do not book a second actor for that cut.",
+        "t": "A Spoken Voice in the Buyer's Language",
+        "d": "Add a natural spoken voice in the language you sell in, without a separate voice session.",
         "icon": "Mic"
       },
       {
-        "t": "One Reel Frame, Many Products",
-        "d": "Several products can share one Reels frame from a ready template. Only the product and the first spoken line change.",
+        "t": "Ready Frames for Reels",
+        "d": "Start from a Reel template, swap in your product, and make more versions without rebuilding the frame.",
         "icon": "LayoutGrid"
       }
     ]
   },
   "platforms": {
-    "h2": "Post the Same Photo on Other Channels",
-    "lead": "The same product photo can start a file for TikTok, Facebook, Shorts, Amazon, or Shopify. Instagram is one of those placements.",
+    "h2": "Use the Same Photo on Other Channels",
+    "lead": "The same product photo can start a file for TikTok, Facebook, Shorts, Amazon, or Shopify.",
     "items": [
       {
         "t": "Tall TikTok Ad From This Photo",
@@ -203,13 +203,13 @@
       {
         "t": "Facebook Ad From This Photo",
         "label": "Open the Facebook ads page.",
-        "d": "A square Facebook still, or a tall video that fills the phone screen.",
+        "d": "A square Facebook still, or a tall video that fills the phone.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "YouTube Short From This Photo",
         "label": "Open the YouTube Shorts page.",
-        "d": "A tall Short for the phone. A wide YouTube ad is a different file you make on purpose.",
+        "d": "A tall Short for the phone. A wide YouTube ad is a separate file you make on purpose.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
@@ -227,7 +227,7 @@
       {
         "t": "Every Channel for the Next File",
         "label": "Open the full platform list.",
-        "d": "Open every channel and choose where the next file should run.",
+        "d": "Open the channel list and choose where the next file should run.",
         "href": "/ai-video-generation"
       }
     ]
@@ -267,7 +267,7 @@
     ]
   },
   "related_h2": "Tools That Pair With an Instagram Ad",
-  "related_lead": "Open the tool or the template that matches the placement where this ad will show.",
+  "related_lead": "Open the tool or the template that matches the placement where this ad will run.",
   "relatedLinks": [
     "video-ads",
     "social-ad-photos",

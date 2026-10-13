@@ -1,30 +1,30 @@
 {
   "id": "tpl-spark-ads-style-video",
-  "title": "TikTok Spark Ads: Create a Clip | AIVideosUGC",
-  "description": "Create a TikTok Spark Ads clip from a product photo or a product link. Download the tall file and post it from your own TikTok account today.",
-  "h1": "TikTok Spark Ads You Create and Post",
+  "title": "TikTok Spark Ads Video Maker | AIVideosUGC",
+  "description": "Make a TikTok Spark Ads clip in minutes from a product link, a script, or a photo. Download the tall file and post it from your own account.",
+  "h1": "TikTok Spark Ads You Can Make in Minutes",
   "eyebrow": "Publish From Your TikTok Account",
-  "lead": "Make a TikTok Spark Ads clip for the sage bottle from the listing you already have. The finished file is what you publish from your TikTok account.",
+  "lead": "Make a high-converting TikTok Spark Ads clip in minutes. Start from a product link, a script, or a photo, then post it from your own account.",
   "secondary_keywords": [
     "TikTok Spark Ads creative",
     "native TikTok ad",
     "Spark Ads video template",
     "TikTok product footage"
   ],
-  "steps_h2": "How to Make a Spark-Style Video in 3 Simple Steps",
-  "steps_lead": "Three moves, and the sage bottle clip can leave from the shop's TikTok account.",
+  "steps_h2": "How to Make TikTok Spark Ads in 3 Simple Steps",
+  "steps_lead": "Three moves, and the clip can go out from your TikTok account.",
   "steps": [
     {
       "t": "Add a Link, Script, or Photo",
-      "d": "Upload the sage insulated bottle with the hinged loop lid in frame. You get a tall clip that keeps that bottle."
+      "d": "Add a link, a script, or a photo. Add any extra note that should shape the clip."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Share a short hiking script for an AI actor. You get that actor raising the same sage bottle."
+      "d": "Pick an AI avatar to present it, from the library or one you describe."
     },
     {
       "t": "Make the Clip and Post It",
-      "d": "Download the tall file and post it from your TikTok account. The same sage bottle clip can also run on Facebook."
+      "d": "Make the clip, download the tall file, and post it from your TikTok account."
     }
   ],
   "maker": {
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "Can I make a Spark-style video for free?",
-      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. You see the cost before the clip runs, and a failed run returns those credits."
+      "a": "No. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before the clip runs, and a failed run returns those credits."
     },
     {
       "q": "Who is responsible for rights in the clip and in what I upload?",
@@ -63,11 +63,11 @@
     },
     {
       "q": "What is a Spark-style video?",
-      "a": "A tall phone video of your product that you post from your own TikTok account. The video is made from your product reference. A paid promotion is turned on in TikTok after that."
+      "a": "A tall phone video of your product that you post from your own TikTok account. It is made from your product reference. A paid promotion is turned on in TikTok after that."
     },
     {
       "q": "What can I use as the starting input?",
-      "a": "The sage bottle listing, the bottle photo on your desk, or a few lines you already wrote about the hike."
+      "a": "The product listing, a photo on your desk, or a few lines you already wrote."
     },
     {
       "q": "Will captions and a spoken line be included?",
@@ -75,7 +75,7 @@
     },
     {
       "q": "Do I have to write a long script first?",
-      "a": "No. A line about the hike is enough to start. You can shorten the draft before it is spoken."
+      "a": "No. A line or two is enough to start. You can shorten the draft before it is spoken."
     },
     {
       "q": "Can I make several versions or use the API?",
@@ -548,7 +548,7 @@
     }
   },
   "cta_title": "Make the Spark-Style Clip",
-  "cta_lead": "Upload a photo or a product link, then download the tall file and post it from your TikTok account.",
+  "cta_lead": "Add a link, a script, or a photo. Download the tall file and post it from your TikTok account.",
   "relatedLinks": [
     {
       "id": "url-to-video",
@@ -653,36 +653,36 @@
     ]
   },
   "related_h2": "Explore Related Tools",
-  "related_lead": "A product link, image to video, an AI actor, creator-style video ads, TikTok ads, and product videos sit beside this template.",
+  "related_lead": "A product link, image to video, an AI actor, creator-style ads, TikTok ads, and product videos sit beside this one.",
   "more_sections": [
     {
-      "eyebrow": "Start From the Listing You Have",
+      "eyebrow": "Start From What You Already Have",
       "h2": "Six Starting Points, One Tall Clip",
       "lead": "Use the input you already have. Post the finished file from your TikTok account.",
       "items": [
         {
           "t": "Paste the Product Link",
-          "d": "The sage bottle page already lists the size and the lid. You paste that link and it becomes the tall clip you post from TikTok."
+          "d": "If you sell online, paste the product page. That page becomes the tall clip you post from TikTok."
         },
         {
           "t": "Render a Batch of Openings",
-          "d": "One sage bottle can become several openings in the same job. You post the one that fits TikTok and keep the rest."
+          "d": "One product can become several openings in the same job. Post the one that fits TikTok and keep the rest."
         },
         {
           "t": "Edit a Clip You Filmed",
-          "d": "A bottle clip you filmed last month can be cropped into the tall phone shape. You finish that trim in this editor."
+          "d": "A clip you already filmed can be trimmed into the tall phone shape. You finish that cut in this editor."
         },
         {
-          "t": "Type the Lid Line",
-          "d": "You write that the hinged lid opens and the bottle stays in frame. That beat is what the tall clip uses."
+          "t": "Turn a Line Into the Picture",
+          "d": "Type what should happen on screen. That beat becomes the tall clip, with your product still in frame."
         },
         {
           "t": "Edit the Spoken Script",
-          "d": "You type that the sage bottle is for a hike. The words come back as a draft you can cut before anyone speaks them."
+          "d": "Describe the message. You get a draft you can cut before anyone speaks it."
         },
         {
-          "t": "Pick the City Voice",
-          "d": "The bottle line can be spoken in the accent your city actually hears. You choose the voice before the clip is rendered."
+          "t": "Pick the Voice They Hear",
+          "d": "The line can be spoken in an accent your buyers actually hear. You choose the voice before the clip is rendered."
         }
       ]
     }
@@ -692,38 +692,38 @@
   "benefits": [
     {
       "t": "Several Openings to Test",
-      "d": "You render another first line for the sage bottle, watch both, and keep the one you want to spend on. The credit cost of each clip shows first."
+      "d": "Render another first line, watch both, and keep the one you want to spend on. The credit cost of each clip shows first."
     },
     {
       "t": "Pick a Different Look",
-      "d": "The sage bottle does not have to sit on a desk. You can ask for a hand-drawn look, or a small 3D scene, if that matches your other posts."
+      "d": "The product does not have to sit on a desk. Ask for a drawn look, or a small 3D scene, if that matches your other posts."
     },
     {
-      "t": "Show the Bottle You Sell",
-      "d": "Shoppers see this sage bottle, not a generic drink bottle. The lid, the color, and the size from your listing are what the picture stays on."
+      "t": "Show the Product You Sell",
+      "d": "Shoppers see your product, not a stand-in. The color, the size, and the details from your listing stay in frame."
     },
     {
       "t": "Frames for More Than TikTok",
-      "d": "A Facebook placement can take the square, and a wide YouTube ad can take 16:9. TikTok still wants 9:16, and 4:3 or 3:4 is there when the placement asks. You can publish each size from the connected account."
+      "d": "A square can go to Facebook, and a wide file can go to YouTube. TikTok still wants 9:16. You can also use 4:3 or 3:4."
     }
   ],
   "reasons": {
-    "h2": "Why Shops Make Spark-Style Clips Here",
-    "lead": "The listing you already published is enough to begin the tall clip.",
+    "h2": "Why Make Spark Ads Here",
+    "lead": "A link, a script, or a photo is enough to begin the tall clip.",
     "items": [
       {
         "t": "Start From What You Have",
-        "d": "The listing is enough to begin. If the sage bottle photo is the only file on your desk, the missing spoken line can be drafted before you render.",
+        "d": "A link, a script, or a photo is enough. If one piece is missing, a draft can fill it before you render.",
         "icon": "Link"
       },
       {
         "t": "Off the Production Calendar",
-        "d": "A creator day does not have to sit on the calendar. You review the file when the job finishes, then post it from the shop account.",
+        "d": "You do not wait on a creator day. Review the file when the job finishes, then post it from the shop account.",
         "icon": "Calendar"
       },
       {
-        "t": "Say the Line in Spanish",
-        "d": "The bottle line can be spoken for shoppers who read Spanish. A 15-second cut of that line is 60 credits on a paid plan, and the charge shows first.",
+        "t": "Say It in Another Language",
+        "d": "The same line can be spoken for shoppers who use another language. A 15-second cut is 60 credits, and the charge shows first.",
         "icon": "Coins"
       }
     ]

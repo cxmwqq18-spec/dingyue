@@ -1,30 +1,30 @@
 {
   "id": "tpl-tryon",
-  "title": "AI Clothing Video Templates for Brands | AIVideosUGC",
-  "description": "Clothing brands use these AI video templates to turn a flat garment photo into a clip you can post. Upload the piece, skip the model booking, and download.",
-  "h1": "Clothing Video Templates Your Brand Can Post",
+  "title": "Clothing Video Templates for Brands | AIVideosUGC",
+  "description": "Make styled clothing video ads for streetwear, dressier labels, and everyday wear in minutes. Upload a garment photo and skip the model booking.",
+  "h1": "Clothing Video Templates for Fashion Brands",
   "eyebrow": "Clothing Videos You Can Post",
-  "lead": "Turn a flat photo of the olive bomber into a clothing video your shop can post, with no model booking. Choose an AI avatar, and the clip can still carry a spoken line.",
+  "lead": "Recreate styled clothing ads for streetwear, dressier labels, and everyday wear, in minutes. Upload one garment photo and skip the model booking.",
   "secondary_keywords": [
     "clothing on model from flat lay",
     "AI fashion model photos",
     "garment on model photo for Shopify",
     "jacket product photos on a model"
   ],
-  "steps_h2": "How to Make a Garment on Model Photo in 3 Simple Steps",
-  "steps_lead": "You leave with a clothing video the shop can post. The olive bomber goes in as a flat lay.",
+  "steps_h2": "How to Make a Clothing Video in 3 Simple Steps",
+  "steps_lead": "You leave with a clothing video the shop can post. A flat photo of the garment is enough to start.",
   "steps": [
     {
       "t": "Upload Your Garment Photo",
-      "d": "The olive bomber can arrive as a flat photo or as its product page. That jacket is the one in the ad."
+      "d": "Upload a flat photo of the garment, or paste its product page. That piece is the one in the ad."
     },
     {
       "t": "Pick a Fashion Style",
-      "d": "Pick an AI avatar, choose the tone, and let the script draft the opening line. Change any word before the bomber goes out."
+      "d": "Pick an AI avatar and a tone. Let a draft write the opening line, then change any word."
     },
     {
       "t": "Download and Post",
-      "d": "Download the on-model bomber video with a voiceover and on-screen captions. You get a shape that fits the channel you sell on."
+      "d": "Download the on-model clip with a spoken line and on-screen words. The shape fits the channel you sell on."
     }
   ],
   "maker": {
@@ -47,35 +47,35 @@
   "faq": [
     {
       "q": "What do these clothing ad templates include?",
-      "a": "You get the olive bomber on an AI avatar, a spoken line, and a file you can approve. A flat-lay photo is enough to start, with no model booking."
+      "a": "You get the garment on an AI avatar, a spoken line, and a file you can approve. A flat-lay photo is enough to start, with no model booking."
     },
     {
       "q": "How does a clothing template become an ad?",
-      "a": "Upload the bomber photo and name the shopper, such as someone buying a lighter layer. The draft comes back as an on-model file you can post. Your shop software can send that photo for you."
+      "a": "Upload the garment photo and say who it is for, such as someone buying a lighter layer. The draft comes back as an on-model file you can post."
     },
     {
       "q": "Which kinds of clothing can I start with?",
-      "a": "Start with the olive bomber, a dress, or a tailored trouser. Streetwear, activewear, and occasion pieces fit when a person can wear them. A folded stack is a weak source photo."
+      "a": "Start with streetwear, everyday apparel, or a dressier piece. Activewear and occasion clothes fit when a person can wear them. A folded stack is a weak source photo."
     },
     {
       "q": "Can I make several ads for one collection?",
-      "a": "Yes. The same bomber can run once for a commute and again for a wet weekend, using the photo you already have. A second language can be its own file."
+      "a": "Yes. The same garment can run once for a commute and again for a wet weekend, using the photo you already have. A second language can be its own file."
     },
     {
-      "q": "Which shops are these clothing templates built around?",
-      "a": "A shop that sells its own jackets and restocks through the month. The owner can run it, or someone on the marketing desk can. An agency can repeat the path for each clothing client."
+      "q": "Which shops are these clothing templates built for?",
+      "a": "A shop that sells its own clothes and restocks through the month. The owner can run it, or someone on the marketing desk can. An agency can repeat the path for each clothing client."
     },
     {
       "q": "Can I use them if I have never edited a video?",
-      "a": "Yes. You supply the bomber and say what the ad should show. The template handles the avatar, the opening, and the cut. Earlier video experience is not required."
+      "a": "Yes. You supply the garment and say what the ad should show. The template handles the avatar, the opening, and the cut. Earlier video experience is not required."
     },
     {
       "q": "After I upload a garment, when is the ad ready to post?",
-      "a": "You can download the on-model clip of the olive bomber as soon as it is ready, in the length your shop already uses."
+      "a": "You can download the on-model clip as soon as it is ready, in the length your shop already uses."
     },
     {
       "q": "What does a clothing ad cost, and can I post the square crop?",
-      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still of the same bomber spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. Notes on the square crop are on [AI Instagram ads](page:plat-instagram)."
+      "a": "A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still of the same garment spends 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. Notes on the square crop are on [AI Instagram ads](page:plat-instagram)."
     }
   ],
   "visual": {
@@ -578,7 +578,7 @@
     ]
   },
   "related_h2": "More Fashion Templates and Listing Photos",
-  "related_lead": "More clothing templates, model photos, and Shopify listing shots are ready when you need the next file.",
+  "related_lead": "More clothing templates, model photos, and listing shots are ready when you need the next file.",
   "relatedLinks": [
     {
       "id": "model-photos",
@@ -605,8 +605,8 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Post the Bomber as a Video",
-  "cta_lead": "Upload the flat olive bomber and get a clothing video you can post. The credit cost is on screen first.",
+  "cta_title": "Post a Clothing Video Today",
+  "cta_lead": "Upload one flat garment photo and get a clothing video you can post. The credit cost is on screen first.",
   "blockOrder": [
     "hero",
     "picker",
@@ -622,19 +622,19 @@
       "items": [
         {
           "t": "Start From a Product Link",
-          "d": "Paste the bomber's product page so the ad uses that jacket. A hanger photo or a flat lay can still be the source."
+          "d": "Paste the product page so the ad uses that garment. A hanger photo or a flat lay can still be the source."
         },
         {
           "t": "An AI Avatar Wears It",
-          "d": "The olive bomber can go on an AI avatar you pick from the library of 53. Swap the face when the shop's usual customer looks different."
+          "d": "The garment goes on an AI avatar you pick. Swap the face when the shop's usual customer looks different."
         },
         {
-          "t": "A Voiceover Buyers Understand",
-          "d": "Buyers hear a spoken line in their own language, built from the bomber photo you already have."
+          "t": "A Spoken Line Buyers Understand",
+          "d": "Buyers hear a spoken line in their own language, built from the garment photo you already have."
         },
         {
           "t": "A Script for the Opening Line",
-          "d": "One sentence about the bomber gets you a drafted opening line, and you can rewrite any word."
+          "d": "One sentence about the piece gets you a drafted opening, and you can rewrite any word."
         },
         {
           "t": "Edit Before You Post",

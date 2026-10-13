@@ -1,10 +1,10 @@
 {
   "id": "plat-amazon",
   "title": "Amazon Product Image Requirements | AIVideosUGC",
-  "description": "Amazon product image requirements: a compliant white background, with the product large in the frame. Download the file and add it in Seller Central.",
-  "h1": "Amazon Listing Photos That Follow Image Requirements",
+  "description": "Get photos that follow Amazon product image requirements. Start from a picture you already have, make the main image pure white, and add it in Seller Central.",
+  "h1": "Amazon Product Image Requirements for Every Listing",
   "eyebrow": "Amazon Photos Without a Studio",
-  "lead": "From one photo you already have, meet Amazon product image requirements: a white main image, a detail, and an in-use view. Repeat that set across the catalog. A batch can do the rest. The cost shows before each file.",
+  "lead": "Clear photos help people buy on Amazon. Hit Amazon product image requirements from pictures you already have, with no studio.",
   "card": "Amazon listing photos from one product photo: main, detail and in-use.",
   "secondary_keywords": [
     "Amazon main image white background",
@@ -14,11 +14,11 @@
   ],
   "faq": [
     {
-      "q": "What should your Amazon main image show so the listing can go up?",
-      "a": "The main image is the product on pure white, filling about eighty-five percent of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Save measurements for a later image, and publish the file in Seller Central after you check the current rule."
+      "q": "What should an Amazon main image show?",
+      "a": "The product on pure white, filling most of the square. Make the long edge 1000 pixels or more, so zoom still looks sharp. No words, logos, or props. Save measurements for a later image, and publish the file in Seller Central after you check the current rule."
     },
     {
-      "q": "What happens to the listing if an Amazon photo breaks the image rules?",
+      "q": "What happens if an Amazon photo breaks the image rules?",
       "a": "A main photo that still shows the room can be held back, and the listing can leave search until you replace that file. A prop can sit on a later image, not on the main one."
     },
     {
@@ -26,20 +26,20 @@
       "a": "Upload the photo you already have and put the product on white. The old background comes off, the edges stay with the product, and you download a finished file. A photo is 24 credits, shown before you start."
     },
     {
-      "q": "Can I prepare many Amazon photos in one run and skip a studio day?",
+      "q": "Can I prepare many Amazon photos in one run?",
       "a": "Yes. Send the whole line through one batch, lifestyle frames included. Each file spends credits, the cost shows first, and a failed job returns those credits. You can also run that batch through the API."
     },
     {
-      "q": "Can my catalog tool make the Amazon images so I skip a studio day?",
+      "q": "Can my catalog tool request the Amazon images?",
       "a": "Yes. When a new product is saved, your catalog tool can request the image through the API. You choose when it goes into Seller Central. We never sign in to the seller account."
     },
     {
-      "q": "What other Amazon images should I add so shoppers understand the product?",
-      "a": "A close-up, a sense of size, and the item in use. The mug can sit in a hand so the shopper sees the scale."
+      "q": "What other Amazon images should I add?",
+      "a": "A close-up, a sense of size, and the item in use. A hand in the frame helps the shopper see the scale. Those frames come after the white main image."
     },
     {
       "q": "Can I put my own words on the pictures after I download them?",
-      "a": "Add the words yourself after download, and only on images after the main one. The main image stays free of badges and slogans."
+      "a": "Yes. Add the words yourself after download, and only on images after the main one. The main image stays free of badges and slogans."
     },
     {
       "q": "Can I make a video for the Amazon listing without booking a shoot?",
@@ -50,20 +50,20 @@
       "a": "No. Download the files and add them in Seller Central yourself. We do not connect to your seller login."
     }
   ],
-  "templates_lead": "Pick the listing job: a white main image of the mug, a detail, or the product in use.",
-  "cta_lead": "Build the white main image, the detail, and the in-use mug frame from one product photo.",
+  "templates_lead": "Pick the listing job: a white main image, a detail, or the product in use.",
+  "cta_lead": "Build the white main image, the detail, and the in-use frame from one product photo.",
   "steps": [
     {
       "t": "Upload and Clean Up",
-      "d": "You shot the ceramic mug on a breakfast table. The main file shows the mug alone, on white, with the table gone."
+      "d": "Upload the photos you already shot. The old background comes off, and the main file puts the product on pure white."
     },
     {
       "t": "Style the Later Pictures",
-      "d": "The next frame shows a hand lifting that mug at the breakfast table. It is sized for the slot under the main image."
+      "d": "For the later images, stage the product in use or on a person, add your marks, and size them for the listing."
     },
     {
       "t": "Many at Once, Then Download",
-      "d": "Run the mug files together, or through the API, then download them. You place those files on the listing in Seller Central."
+      "d": "Run the files together, or through the API, then download them. You place those files on the listing in Seller Central."
     }
   ],
   "visual": {
@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload and Clean Up",
-          "d": "Add the mug photo you already shot. You get the mug alone on white, with the table gone."
+          "d": "Add the photo you already shot. You get the product alone on white, with the old background gone."
         },
         {
           "t": "Style the Later Pictures",
-          "d": "Show the mug in a hand at the breakfast table. That frame is for the slot under the main image."
+          "d": "Show the product in use, or in a hand, for the slot under the main image."
         },
         {
           "t": "Many at Once, Then Download",
-          "d": "Run the mug files together, then download them. You add the files in Seller Central yourself."
+          "d": "Run the files together, then download them. You add the files in Seller Central yourself."
         }
       ]
     },
@@ -115,47 +115,47 @@
       }
     }
   },
-  "benefits_h2": "How Listing Images Stay in Bounds",
+  "benefits_h2": "How Amazon Listing Photos Stay in Bounds",
   "benefits": [
     {
       "t": "White Main From Your Photo",
-      "d": "A counter photo of the coffee bag becomes the Amazon main image on white. Shoppers see the bag, not the counter, and the file has no watermark.",
+      "d": "A photo you already have becomes the main image on pure white. Shoppers see the product, not the room, and the file has no watermark.",
       "img": "n:coffee-pack",
       "alt": "You list the coffee bag without a new shoot: a kraft coffee bag, blank label, and beans on a light studio background."
     },
     {
       "t": "One Pass for the Whole Catalog",
-      "d": "One white background and one square size keep the lunch container in line with the rest of the catalog. A batch uses the same choices on every item.",
+      "d": "One white background and one square size keep every item in line. A batch uses the same choices on the rest of the range.",
       "img": "f:k2-url-use-open-bento",
       "alt": "You show the sage lunch container in use: it sits open on an office desk, compartments visible, ready to list."
     },
     {
-      "t": "Shoppers Recognize Your Basket",
-      "d": "Keep the same mark on the picnic-basket frame as on your other Amazon images. A shopper coming from your storefront still recognizes the basket as yours.",
+      "t": "Shoppers Recognize Your Product",
+      "d": "Keep the same mark and the same margin on every Amazon image. A shopper coming from your storefront still recognizes the item.",
       "img": "f:k2-url-picker-picnic-basket",
       "alt": "You show the picnic basket in use: a woven basket open on a blanket, with simple foods beside it, ready to list."
     }
   ],
   "steps_h2": "How to Make Amazon Product Photos in 3 Steps",
-  "steps_lead": "You get the white main image and the in-use mug frame before you open Seller Central.",
+  "steps_lead": "You get the white main image and the in-use frame before you open Seller Central.",
   "more_sections": [
     {
-      "eyebrow": "Main Image You Can List",
+      "eyebrow": "Main image you can list",
       "h2": "Amazon Main Image on White",
-      "lead": "You get a coffee-bag photo on white, with the bag easy to see and nothing extra in the frame.",
+      "lead": "You get a product photo on pure white, with the item easy to see and nothing extra in the frame.",
       "items": [
         {
           "t": "Lift the Product Onto White",
-          "d": "Start from the coffee-bag photo you already have. The main file keeps the bag and drops the counter around it."
+          "d": "Start from the photo you already have. The main file keeps the product and drops the room around it."
         },
         {
           "t": "Badges Start on Image Two",
-          "d": "The product name stays off the main file, so that frame stays a clean coffee bag on white. You can place the name on the second image after the download, where a badge is allowed."
+          "d": "The product name stays off the main file, so that frame stays a clean product on white. You can place the name on the second image after the download."
         }
       ]
     },
     {
-      "eyebrow": "The Whole Catalog in One Pass",
+      "eyebrow": "The whole catalog",
       "h2": "Amazon Listing Images in One Pass",
       "lead": "You set one white background and one square size, then those choices land on the rest of the range.",
       "items": [
@@ -170,17 +170,17 @@
       ]
     },
     {
-      "eyebrow": "One Look Shoppers Recognize",
+      "eyebrow": "One look shoppers recognize",
       "h2": "Amazon Product Images That Match",
-      "lead": "A shopper who saw the picnic basket in search should recognize it in the next frame.",
+      "lead": "A shopper who saw the product in search should recognize it in the next frame.",
       "items": [
         {
           "t": "Same Margin on Listing Images",
-          "d": "Search results look like one catalog when the basket size and the empty margin stay the same on every file."
+          "d": "Search results look like one catalog when the product size and the empty margin stay the same on every file."
         },
         {
           "t": "In-Use Images After the Main",
-          "d": "An AI avatar can show the picnic basket in use later in the gallery, after the white main image."
+          "d": "An AI actor can show the product in use later in the gallery, after the white main image."
         }
       ]
     }
@@ -198,32 +198,32 @@
   ],
   "benefits_lead": "The listing can go up without a studio day, starting from a photo you already shot.",
   "reasons": {
-    "h2": "Skip Building Your Own Setup",
-    "lead": "You can start Amazon listing photos from the upload, instead of standing up your own image setup.",
+    "h2": "Skip Building Your Own Image Setup",
+    "lead": "You can start Amazon listing photos from the upload, instead of standing up your own image pipeline.",
     "items": [
       {
         "t": "Start Without a Long Build",
-        "d": "You upload the coffee bag and get a white main image before the listing goes up. You do not need a developer or a checking line first.",
+        "d": "You upload a photo and get a white main image before the listing goes up. You do not need a developer or a checking line first.",
         "icon": "Zap"
       },
       {
         "t": "Pay the Plan, Not a Hire",
-        "d": "You pay the plan instead of hiring a specialist. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits.",
+        "d": "You pay the plan instead of hiring a specialist. Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. A photo spends 24 credits.",
         "icon": "Coins"
       },
       {
         "t": "Cleaner Edges, Nothing to Install",
-        "d": "When the cut-out edges get cleaner, the next mug image uses that better version. There is nothing to install or update on your side.",
+        "d": "When the cut-out edges get cleaner, the next image uses that better version. There is nothing to install or update on your side.",
         "icon": "RefreshCw"
       },
       {
         "t": "Handle a Heavy Listing Week",
-        "d": "In a peak week you can batch a whole run of products in one sitting, and the run finishes. You are not stuck waiting while the rest of the catalog sits there.",
+        "d": "In a peak week you can batch a whole run of products in one sitting, and the run finishes. You are not stuck waiting on a custom queue.",
         "icon": "Layers"
       },
       {
         "t": "Keep One Frame Rule Everywhere",
-        "d": "The picnic basket sits the same distance from the edge on Amazon and on your own site. When the picture rule changes, you adjust that one setup instead of redrawing every file.",
+        "d": "The product sits the same distance from the edge on Amazon and on your own site. When the picture rule changes, you adjust that one setup.",
         "icon": "Palette"
       }
     ]
@@ -320,11 +320,11 @@
     "items": [
       {
         "t": "List Before the Studio Is Booked",
-        "d": "A white main image and a later lifestyle frame come from the coffee-bag photo you already own. A new listing does not wait on a photographer."
+        "d": "A white main image and a later lifestyle frame come from a photo you already own. A new listing does not wait on a photographer."
       },
       {
         "t": "Use One Crop in Every Country",
-        "d": "Use one crop and one white-background rule, then export the mug set you need for each country you sell in."
+        "d": "Use one crop and one white-background rule, then export the set you need for each country you sell in."
       },
       {
         "t": "Keep the Budget for Ads",
@@ -332,7 +332,7 @@
       },
       {
         "t": "Download and Add It Yourself",
-        "d": "You download a finished main image of the picnic basket and add it in Seller Central on your own time."
+        "d": "You download a finished main image and add it in Seller Central on your own time."
       }
     ]
   }

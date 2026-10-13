@@ -1,10 +1,10 @@
 {
   "id": "ind-home-living",
-  "title": "AI UGC for Home Decor | AIVideosUGC",
-  "description": "Make AI UGC for home decor from a photo you own. Put the vacuum, the lamp, or the pillows in the room, then download a clip you can post today.",
-  "h1": "AI UGC for Home Decor, Shown in the Room",
+  "title": "Home Decor AI UGC Ads | AIVideosUGC",
+  "description": "Make AI UGC ads for every home decor item in minutes. Paste a product link or a photo, pick an avatar, and download a clip without booking a creator.",
+  "h1": "Home Decor Ads in Minutes, Not Weeks",
   "eyebrow": "Room Ads for Home Decor",
-  "lead": "Turn one home decor photo into an AI UGC clip in the room it belongs in. A pillow can leave the plain white backdrop and sit on the bed.",
+  "lead": "Making a new ad for every home decor item is slow, and last month's clip rarely fits the next one. Make a fresh ad for each item in minutes.",
   "card": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
   "secondary_keywords": [
     "home decor product videos",
@@ -15,58 +15,58 @@
   ],
   "faq": [
     {
-      "q": "Can I show the closet before and after without a new shoot?",
-      "a": "Yes, when the after state is something the product really does. Describe both states in plain language, and do not invent a result the rack cannot produce."
+      "q": "Can I make an ad for every item in the catalog?",
+      "a": "Yes. Each item can start from its own photo or link, and you still review every file before it posts."
     },
     {
-      "q": "Will the sofa or the table show up at the right size in the room?",
-      "a": "The scale in the picture can drift. Put the true dimensions in the listing. You can still mention a size in the scene, such as a 24-inch side table next to an armchair."
+      "q": "Do I need a creator or a studio?",
+      "a": "No. Pick an AI avatar instead of booking a model or a set. A failed clip returns the credits."
     },
     {
-      "q": "Can I put a sofa or a bed in the room from one photo?",
-      "a": "Yes, if the photo shows the whole piece, legs included, and you name a room large enough to hold it. A missing leg or handle cannot be invented later."
+      "q": "Can I start from a product link?",
+      "a": "Yes. Paste the listing, or add the photo by hand if you do not have a link."
     },
     {
-      "q": "Can I start from a white-background photo and still get a room?",
-      "a": "Yes. Keep the entire product in frame, including legs, handles, and cords. The scene can only use what that photo already shows."
+      "q": "Can I pick an avatar that fits the room?",
+      "a": "Yes. Choose a creator-style avatar that fits the look of the room, and keep that face for the next piece."
     },
     {
-      "q": "Can I make a short cleaning demo of the vacuum without filming?",
-      "a": "Yes. Show one mess the viewer can see, hold the camera steady, and let the product make a single pass."
+      "q": "How fast is the first home decor ad?",
+      "a": "You can have a clip in minutes, not after a week of scheduling a shoot."
     },
     {
-      "q": "What should I describe so the room scene is ready to post?",
-      "a": "Name the room, the furniture nearby, the light, and the one action shoppers need to see. Keep exact dimensions and materials in the listing text."
+      "q": "Can I post the clip on TikTok or Meta?",
+      "a": "Yes. Download the file, or send it to the feed you already use. A paid plan has no watermark."
     },
     {
-      "q": "Can I run the room clip as a paid ad after I download it?",
-      "a": "Yes. Downloads carry no watermark, so a room clip can go straight into a paid ad."
+      "q": "Can I change the line after the first cut?",
+      "a": "Yes. Edit the sentence, the voice, or the caption, and make the next version from the same photo."
     },
     {
-      "q": "Do I need a studio or a hired model for the room clip?",
-      "a": "No. Choose an AI avatar instead of booking a model or a set. A clip can include a voice, a voiceover, captions, a music track, and a script. If that clip fails, the credits return."
+      "q": "What does a home decor video cost?",
+      "a": "A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "Can one lamp listing give me the lamp off and the lamp on?",
-      "a": "Yes. Paste the listing, or let your shop software send it through the API. Ask for the lamp off in one version and on in the next, then trim both in the editor before you export."
+      "q": "Can one photo cover more than one scene?",
+      "a": "Yes. Use the same photo for another room scene, then keep the version you would actually post."
     }
   ],
   "templates_lead": "Choose a room scene, an organizing how-to, or a comparison that fits the product.",
-  "cta_lead": "Download a room clip you can run as an ad. Add the photo already on the listing, and the file is ready to post.",
-  "steps_h2": "How to Make a Home Product Video in 3 Simple Steps",
-  "steps_lead": "You leave with a clip sized for the feed you picked, made from the pillow photo.",
+  "cta_lead": "No shoot and no creator to book. Download a home decor ad you can post in minutes.",
+  "steps_h2": "How to Make a Home Decor Ad in 3 Simple Steps",
+  "steps_lead": "Drop a product link, a photo, or a short note. You leave with a clip sized for the feed you picked.",
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Upload the pillow photo with both pillows fully in frame. Say whether they sit on the cream chair or the bed."
+      "d": "Add a link, a photo, or a short description of the product. You do not reformat the listing first."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Choose an AI avatar from the 53 AI actors, and keep that face for a second pillow color."
+      "d": "Choose an AI avatar that fits the room, and keep that face for the next piece in the line."
     },
     {
       "t": "Generate and Publish",
-      "d": "You leave with a voiceover and captions on the pillow clip, framed for the feed you picked."
+      "d": "Download a polished clip, or send it to Meta or TikTok. The product stays recognizable in the frame."
     }
   ],
   "visual": {
@@ -97,15 +97,15 @@
       "items": [
         {
           "t": "Upload Your Product",
-          "d": "Upload a photo of the ivory and sage pillow pair. You get both pillows ready to place on the cream chair."
+          "d": "Add a link, a photo, or a short description. You get the product ready to place in the room."
         },
         {
           "t": "Choose a Presenter",
-          "d": "Choose an AI actor whose hands place the pillows on the chair. You get the pillows set down without hiring a model."
+          "d": "Choose an AI actor whose look fits the room. You get the scene without hiring a model."
         },
         {
           "t": "Generate and Publish",
-          "d": "Add a spoken line and captions, then publish to TikTok. You get the clip with both pillows still fully in view."
+          "d": "Add a spoken line and captions, then publish. You get a clip with the product still fully in view."
         }
       ]
     },
@@ -145,36 +145,36 @@
     }
   ],
   "reasons": {
-    "h2": "Why Home Decor Brands Start With AI UGC",
-    "lead": "One photo you own can cover the rooms on the listing, with no studio booked and the same presenter kept.",
+    "h2": "Why Home Decor Brands Switch to AI UGC",
+    "lead": "Cover the catalog without burning out, skip the studio bill, and keep the ad on brand.",
     "items": [
       {
-        "t": "Cover the Whole Listing",
-        "d": "One photo of the vacuum can feed a clip for every room on the listing, so you are not booking a creator for each cushion. A 10-second clip of the vacuum crossing the sofa is 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
+        "t": "Cover the Whole Catalog",
+        "d": "Creators can take too long for every item. Generate ads with different avatars and keep moving through the catalog.",
         "img": "n:guide:img2-ind-home-living-reasons-items-0-r1",
         "alt": "Adult man with short strawberry-blond hair speaks beside a white vacuum on a sofa cushion."
       },
       {
-        "t": "Skip the Studio Booking",
-        "d": "You do not book a studio for the closet organizer. One organizer photo covers a square still for the product page and a tall clip of hands dropping shirts into the bins.",
+        "t": "Studio Look, Without the Studio Bill",
+        "d": "Skip the creator day rate and the set. You still get a realistic home video from the photo you have.",
         "img": "n:guide:img2-ind-home-living-reasons-items-1-r1",
         "alt": "Adult woman with hair in a high bun holds folded shirts in front of a fabric closet organizer."
       },
       {
-        "t": "Keep One Presenter",
-        "d": "The same AI actor can present the lamp switched on beside the reading chair, then the next piece in that room. Shoppers see the lamp on, which is the moment that sells the piece.",
+        "t": "On Brand, and Yours to Edit",
+        "d": "Match the avatar to your voice and your look. Change the line before the clip goes out.",
         "img": "n:guide:img2-ind-home-living-reasons-items-2-r1",
         "alt": "Adult man with short black hair speaks beside a lit cream ceramic lamp."
       }
     ]
   },
   "platforms": {
-    "h2": "Where a Home Decor UGC Ad Can Run",
-    "lead": "One room scene can cover the feeds, the listings, and the product pages already on your calendar.",
+    "h2": "Home Decor Ads for the Feeds You Already Use",
+    "lead": "One room scene can cover the phone feeds, the listings, and the product pages.",
     "items": [
       {
         "t": "Post the Tall Clip on TikTok",
-        "d": "A tall clip of the cordless vacuum for TikTok, with the vacuum moving across the cushion in the first second.",
+        "d": "A tall clip for TikTok, with the product in action in the first second.",
         "href": "/platforms/tiktok-ads"
       },
       {
@@ -183,23 +183,23 @@
         "href": "/platforms/instagram-ads"
       },
       {
-        "t": "Put the Lamp on Facebook",
-        "d": "Put the lamp in a room on Facebook, then add your offer and post it.",
+        "t": "Put the Product on Facebook",
+        "d": "Put the product in a room on Facebook, then add your offer and post it.",
         "href": "/platforms/facebook-ads"
       },
       {
-        "t": "Show the Vacuum in a Short",
-        "d": "Show the cordless vacuum crossing the cushion in a YouTube Short. You show the job without a studio.",
+        "t": "Show the Product in a Short",
+        "d": "Show the product doing its job in a YouTube Short. You do not book a studio for that cut.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
-        "t": "Pair a Clean Photo With Amazon Specs",
-        "d": "A clean product image for the Amazon listing, ready to sit beside the dimensions you write yourself.",
+        "t": "Pair a Clean Photo With the Listing",
+        "d": "A clean product image for the listing, ready to sit beside the details you write yourself.",
         "href": "/platforms/amazon-product-photos"
       },
       {
-        "t": "Use the Same Room on Shopify",
-        "d": "Use the same room photo on the Shopify product page and the collection, so you do not shoot twice.",
+        "t": "Use the Same Room on the Product Page",
+        "d": "Use the same room photo on the product page and the collection, so you do not shoot twice.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -238,7 +238,7 @@
       }
     ]
   },
-  "cta_title": "Put Your Next Product in a Room",
+  "cta_title": "Start a Home Decor Ad",
   "related_h2": "Templates and Tools for Home Sellers",
   "maker": {
     "options": [

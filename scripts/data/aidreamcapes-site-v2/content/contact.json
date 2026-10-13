@@ -1,10 +1,10 @@
 {
   "id": "contact",
-  "title": "Contact Us for Credits, Billing, and Help | AIVideosUGC",
-  "description": "Contact us about a photo, a video, or a charge. Email support@aivideosugc.com and get a written next step on credits, billing, or your account.",
-  "h1": "Contact Us About a Photo, a Video, or a Charge",
+  "title": "Contact Us for Video Ad Help | AIVideosUGC",
+  "description": "Contact us about a photo, a video, a plan, or a charge. Email support@aivideosugc.com and get a written next step on credits, billing, or your account.",
+  "h1": "Need Help With a Photo, a Video, or a Plan?",
   "eyebrow": "Help With a File or a Charge",
-  "lead": "Contact us when a photo, a video, or a charge needs a person. Email support@aivideosugc.com and get a written next step. An actor or captions come to the same inbox.",
+  "lead": "Questions, feature ideas, and billing notes all come to one inbox. Email support@aivideosugc.com and we will write back.",
   "secondary_keywords": [
     "AIVideosUGC customer service",
     "AIVideosUGC billing help",
@@ -12,13 +12,13 @@
     "contact AIVideosUGC by email"
   ],
   "intro": [
-    "Email support@aivideosugc.com when a file, a plan, a credit balance, an account, or a publishing step needs a person. Tell us what you were making and where it stopped. One clear note gives support enough to look it up.",
+    "Email support@aivideosugc.com when a file, a plan, a credit balance, or an account needs a person. Say what you were making and where it stopped.",
     "Use the account email, name the photo or video, and say roughly when you made it. Add the error text or a screenshot when you have one."
   ],
   "topics": [
     {
-      "t": "Review a Plan or a Charge",
-      "d": "Get help reading a monthly plan or a charge, so the next set of photos and videos runs on the right account.",
+      "t": "Get Started",
+      "d": "Ask which plan fits what you sell, and where to make the first photo or video.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-billing-r1.webp",
         "alt": "Black man with a close-cropped haircut reviewing a plan panel beside a product parcel.",
@@ -27,8 +27,8 @@
       }
     },
     {
-      "t": "Fix Credits After a Failure",
-      "d": "Get a failed job's credits checked, and your balance put right, before you run the photo again.",
+      "t": "Review a Plan or a Charge",
+      "d": "Get help reading a monthly plan or a charge, so the next photos and videos run on the right account.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-credits-r1.webp",
         "alt": "Seller with a short dark buzz cut checking a product parcel beside a laptop.",
@@ -37,8 +37,8 @@
       }
     },
     {
-      "t": "Review a Result That Missed the Brief",
-      "d": "Email the cup photo and the result if the image, video, actor, line, or captions miss the brief. We will look at that pair.",
+      "t": "Fix Credits After a Failure",
+      "d": "Ask us to check a failed job's credits, and put the balance right, before you run the photo again.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/b2f5-contact-results-r1.webp",
         "alt": "Seller compares a ceramic cup beside a closed laptop",
@@ -58,7 +58,7 @@
     },
     {
       "t": "Talk About a Store or Agency",
-      "d": "Start a conversation about using AIVideosUGC for a store, an agency, a creator channel, or a software connection. Email a short description of the work you have in mind.",
+      "d": "Scaling ads, or a custom setup for a store or an agency? Email a short note about the work.",
       "img": {
         "src": "/assets/sites/site_aidreamcapes/site-v2/guide/fx08-contact-partnerships-r1.webp",
         "alt": "Two shop partners exchanging a plain parcel across an ecommerce desk.",
@@ -69,28 +69,28 @@
   ],
   "faq": [
     {
-      "q": "How do I reach AIVideosUGC customer service?",
-      "a": "Email support@aivideosugc.com. That is the way to reach us, and it gives you a written record of the question and the answer."
+      "q": "How do I reach customer service?",
+      "a": "Email support@aivideosugc.com. That is the way to reach us, and you keep a written record of the question and the answer."
     },
     {
       "q": "Can you help before I choose a plan?",
-      "a": "Yes. Tell us what you sell and where you advertise, and we can point you to a starting place such as [AI image to video](page:image-to-video). Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. Tell us what you sell and where you advertise. We can point you to a starting place such as [AI image to video](page:image-to-video). Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600."
     },
     {
       "q": "When will I hear back?",
-      "a": "We reply by email after a person has read your note. There is no promised hour. The details in the next answer let us find the job on the first read."
+      "a": "We reply by email after a person has read your note. There is no promised hour. A clear note lets us find the job on the first read."
     },
     {
       "q": "What details help support find my photo or video?",
-      "a": "The email on your account, what happened, roughly when it happened, and a screenshot of any error give us a way to locate it."
+      "a": "The email on your account, what happened, roughly when it happened, and a screenshot of any error. That is enough to look it up."
     },
     {
       "q": "What if a failed photo or video did not return credits?",
-      "a": "Yes, a failed photo or video returns its credits on its own. If you do not see them, email support with the time you made it and we will check."
+      "a": "A failed photo or video returns its credits on its own. If you do not see them, email support with the time you made it and we will check."
     },
     {
       "q": "Is email the only support channel?",
-      "a": "Yes. Email support@aivideosugc.com from the address on your account; we do not offer phone support."
+      "a": "Yes. Email support@aivideosugc.com from the address on your account. We do not offer phone support or live chat."
     },
     {
       "q": "Can support help me publish to TikTok or Facebook?",
@@ -98,7 +98,7 @@
     },
     {
       "q": "Who do I email about an actor, captions, or my own software?",
-      "a": "Write to support@aivideosugc.com from the account email, and say what you were trying to do. That might be changing a saved presenter, fixing captions, or connecting your own software."
+      "a": "Write to support@aivideosugc.com from the account email, and say what you were trying to do. That might be a saved presenter, captions, or a software connection."
     }
   ],
   "relatedLinks": [

@@ -1,10 +1,10 @@
 {
   "id": "tpl-bf",
-  "title": "Black Friday Templates and Video Ads | AIVideosUGC",
-  "description": "Build a Black Friday template from one product photo. The promo stays easy to read, and you add the price in the editor before you post the video ad.",
-  "h1": "Black Friday Templates You Can Read at a Glance",
+  "title": "Black Friday Video Ad Templates | AIVideosUGC",
+  "description": "Make a Black Friday video ad from one product photo, with a promotion shoppers can read at a glance. Skip the camera day and post the clip today.",
+  "h1": "Black Friday Templates for a Clear Promotion",
   "eyebrow": "A Sale Clip Without a Shoot",
-  "lead": "Turn the pump-bottle photo into a Black Friday promo you can read at a glance. Add the price and a sticker in the editor, then post it.",
+  "lead": "Make your Black Friday promotion hard to miss, without booking a camera day.",
   "secondary_keywords": [
     "Black Friday video ad ideas",
     "Black Friday sale video",
@@ -15,15 +15,15 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one sharp photo of the pump bottle in the offer, with the full bottle and the cap visible. Shoppers should recognize it."
+      "d": "Upload one sharp photo of the product in the offer, with the full item visible."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Describe a warm holiday room, pick a spoken voice, and choose 6, 10, 15, or 30 seconds. The scene comes back ready to post."
+      "d": "Describe a warm holiday room, pick a spoken voice, and choose 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Download the clip, add captions, and place a sticker with the price. You set the code and the end date in the editor."
+      "d": "Download the clip and add the price in your editor. You set the code and the end date."
     }
   ],
   "maker": {
@@ -46,15 +46,15 @@
   "faq": [
     {
       "q": "What does this Black Friday template make?",
-      "a": "A deal clip built from the pump-bottle photo you already have. An AI avatar from the 53 AI actors, a script, and a spoken voice can come with it. You add the offer after download."
+      "a": "A deal clip built from the product photo you already have. An AI avatar, a script, and a spoken voice can come with it. You add the offer after download."
     },
     {
       "q": "How does the sale scene come together?",
-      "a": "Upload one pump-bottle photo, describe the holiday room, pick a size and a length, then add captions or the offer in the editor."
+      "a": "Upload one product photo, describe the holiday room, pick a size and a length, then add captions or the offer in the editor."
     },
     {
       "q": "Why skip a shoot during sale week?",
-      "a": "The pump-bottle photo from the product page is enough to build the sale scene. You can spend the week on the offer, not on a new camera day."
+      "a": "The product photo from your page is enough to build the sale scene. You can spend the week on the offer, not on a new camera day."
     },
     {
       "q": "Who is this Black Friday template for?",
@@ -62,19 +62,19 @@
     },
     {
       "q": "Can I do this with no editing practice?",
-      "a": "Yes. The sale scene is built from your pump-bottle photo. A song from the music library can sit under the voice in the editor here."
+      "a": "Yes. The sale scene is built from your product photo. A song from the music library can sit under the voice in the editor."
     },
     {
       "q": "What photo should I upload?",
-      "a": "One sharp photo of the item that is actually in the offer, with the full shape and finish visible. A short clip you have rights to can be uploaded too, up to the length you pick."
+      "a": "One sharp photo of the item that is actually in the offer, with the full shape visible. A short clip you have rights to can be uploaded too."
     },
     {
       "q": "Which size and length fit a deal post?",
-      "a": "Use a tall 9:16 for Stories and Reels, or a square 1:1 for the feed. A wide 16:9, a slightly wide 4:3, and a slightly tall 3:4 are there when the post needs that shape. Lengths are 6, 10, 15, or 30 seconds. Publish to TikTok, Facebook, or Instagram from the same project."
+      "a": "Use a tall 9:16 for Stories and Reels, or a square 1:1 for the feed. Lengths are 6, 10, 15, or 30 seconds. You can also use 16:9, 4:3, or 3:4 when the post needs that shape."
     },
     {
       "q": "Does the tool write the discount?",
-      "a": "No. Add the live price, code, and end date after download. If the offer changes, edit that text instead of trusting an old file."
+      "a": "No. Add the live price, the code, and the end date after download. If the offer changes, edit that text instead of trusting an old file."
     },
     {
       "q": "What does a clip cost?",
@@ -86,7 +86,7 @@
     },
     {
       "q": "Can I start from a product link or my own software?",
-      "a": "Yes. Paste a product page for a script and a cloned voice you are allowed to use. When many products share the sale setup, run them together, or start jobs from your shop software. Another language can reuse the same photo."
+      "a": "Yes. Paste a product page for a script and a voice you are allowed to use. When many products share the sale setup, run them together or start the jobs from your shop software."
     }
   ],
   "visual": {
@@ -551,8 +551,8 @@
     }
   },
   "steps_h2": "How to Make a Black Friday Ad in 3 Simple Steps",
-  "steps_lead": "You leave with a holiday clip, and the pump bottle stays in the scene you described.",
-  "cta_lead": "Upload the pump bottle in your offer and get a sale clip back. The credit cost is on screen before it starts.",
+  "steps_lead": "You leave with a holiday clip shoppers can read, and your product stays in the scene.",
+  "cta_lead": "Upload the product in your offer and get a sale clip back. The credit cost is on screen before it starts.",
   "cta_title": "Make Your Black Friday Sale Clip",
   "blockOrder": [
     "hero",
@@ -566,8 +566,9 @@
   "definition": {
     "title": "A Sale Scene Without a Camera Day",
     "paras": [
-      "A pump bottle from your product page can sit in a scene made for the Black Friday post, without a rented camera.",
-      "The pump bottles in the offer can share one setup, so the shop grid looks like one sale. Add your words and a sticker before you post."
+      "A Black Friday post has to stand out while the sale is on. A strong scene grabs attention and still looks like your shop.",
+      "A template is the short path, with a layout that already looks finished. You add your own line, which saves time and keeps the sale consistent.",
+      "The products in the offer can share one setup, so the shop grid looks like one sale. Add your words before you post."
     ]
   },
   "reviews": {
@@ -647,7 +648,7 @@
     ]
   },
   "related_h2": "Pages for a Black Friday Sale",
-  "related_lead": "The sale clip can continue into video ads, holiday creatives, and Facebook ads on these pages.",
+  "related_lead": "The sale clip sits next to video ads, holiday posts, and Facebook ads on these pages.",
   "relatedLinks": [
     {
       "id": "video-ads",
@@ -675,23 +676,23 @@
     }
   ],
   "reasons": {
-    "h2": "What You Can Add to the Photo",
-    "lead": "The sale scene, your own wording, and one look across the shop are the three things you add to the photo you already have.",
+    "h2": "A Finished Look Without a Big Shoot",
+    "lead": "You get a professional scene from a photo you already have, then add the words that make it yours.",
     "items": [
       {
-        "t": "A Sale Scene From Your Photo",
+        "t": "A Professional Scene Fast",
         "icon": "Camera",
-        "d": "A pump-bottle photo can become a sale scene for the feed, without renting a camera for that one clip."
+        "d": "A product photo can become a sale scene for the feed. You skip renting a camera and a big shoot budget."
       },
       {
-        "t": "Words That Sound Like Your Shop",
+        "t": "Words That Sound Like You",
         "icon": "Type",
-        "d": "The pump-bottle clip can carry your shop's own wording and a sticker, not a generic sale banner. Put that wording on it, and the post reads as yours."
+        "d": "Add your price and your code after download. The clip should sound like your shop, not a generic banner."
       },
       {
-        "t": "One Sale Look Across the Shop",
+        "t": "One Sale Look for the Shop",
         "icon": "Palette",
-        "d": "Sale posts can match across the shop when they reuse one setup. You can edit the wording, try another language, or start the next product from this account."
+        "d": "Sale posts can match across the shop when they share one setup. You can change the wording or try another language on the next product."
       }
     ]
   }

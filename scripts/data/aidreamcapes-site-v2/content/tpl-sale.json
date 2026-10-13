@@ -1,30 +1,30 @@
 {
   "id": "tpl-sale",
   "title": "Instagram Sales Post Maker | AIVideosUGC",
-  "description": "Make an Instagram sales post from one product photo, with clean space for the offer. Download the square and add your discount before you post it.",
-  "h1": "Instagram Sales Post With Room for the Offer",
+  "description": "Make an Instagram sales post that puts your discount and your event in the spotlight. Start from a ready square, add your offer, and post it.",
+  "h1": "Instagram Sales Post for Your Next Offer",
   "eyebrow": "Sale Squares You Can Post",
-  "lead": "This sale banner maker leaves a clean spot for the offer. Set the blue suitcase in the square, then add the end date after you download.",
+  "lead": "Put your discount and your next event in the spotlight on Instagram. A ready square gives the offer a clean place to sit.",
   "secondary_keywords": [
     "Black Friday banner image",
     "seasonal sale ad image",
     "holiday sale photo for Facebook",
     "winter clearance banner"
   ],
-  "steps_h2": "How to Make a Sale Banner in 3 Simple Steps",
-  "steps_lead": "Open a layout, place the suitcase, leave room for the offer, then post the square.",
+  "steps_h2": "How to Make an Instagram Sale Post in 3 Simple Steps",
+  "steps_lead": "Open a ready layout, place your product, leave room for the offer, and post the square.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the blue suitcase. The template gives you a square made for the feed."
+      "d": "Upload one clear photo of the product on sale. The template gives you a square made for the feed."
     },
     {
       "t": "Pick a Sale Scene",
-      "d": "Leave an open area beside the suitcase for the code and the dates. The offer should be what shoppers read first."
+      "d": "Leave an open area for the code and the dates. The offer should be what shoppers read first."
     },
     {
       "t": "Download and Post",
-      "d": "Download the suitcase square and publish it on Instagram once the offer is easy to read."
+      "d": "Download the square and publish it on Instagram once the offer is easy to read."
     }
   ],
   "maker": {
@@ -47,7 +47,7 @@
   "faq": [
     {
       "q": "What does an Instagram sale post template give my shop?",
-      "a": "A square that keeps the suitcase recognizable while the promotion is easy to read. The case can fill the frame, with the weekend price large enough to read on a phone."
+      "a": "A square that keeps your product recognizable and the promotion easy to read. The offer can be large enough to read on a phone."
     },
     {
       "q": "How do I make a sale post from one product photo?",
@@ -55,7 +55,7 @@
     },
     {
       "q": "Can the post show my discount and the event date large enough to read?",
-      "a": "Yes. The layout is there so the promotion leads. You type the offer, the code, and the dates that match the sale you approved, then read them back before the post goes up."
+      "a": "Yes. The layout is there so the promotion leads. You type the offer, the code, and the dates, then read them back before the post goes up."
     },
     {
       "q": "What size is the sale image so it fits an Instagram feed?",
@@ -75,24 +75,24 @@
     },
     {
       "q": "How many credits does a sale photo use before I download it?",
-      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. The download has no watermark. You can use it in your ads, pages, and posts."
+      "a": "Each photo costs 24 credits. The cost is shown before you start, and a failed job returns those credits. The download has no watermark, so you can use it in ads, on pages, and in posts."
     },
     {
       "q": "What should I do with the square when the sale ends?",
-      "a": "Pause or replace the post so an old date or code is not still up. The product scene can stay for a later promotion or as a plain listing image."
+      "a": "Pause or replace the post so an old date or code is not still up. The product scene can stay for a later promotion."
     },
     {
       "q": "Can I start from a holiday scene and swap the offer later?",
-      "a": "Yes. Keep the suitcase scene and swap the headline when the holiday passes. The product photo underneath can be used again."
+      "a": "Yes. Keep the product scene and swap the headline when the holiday passes. The photo underneath can be used again."
     },
     {
       "q": "Do I need a paid plan before I can post a sale square?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Photos, batches, and API jobs all draw from that balance."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. Photos and batches draw from that balance."
     }
   ],
   "examples": {
     "h2": "Sale Scenes With Room for the Offer",
-    "lead": "Each scene keeps a clear area for your offer, placed where it suits the product.",
+    "lead": "Each scene keeps a clear area for your offer. Pick the one closest to the product you sell.",
     "groups": [
       {
         "label": "Space for the offer",
@@ -608,7 +608,7 @@
       }
     }
   },
-  "cta_lead": "Open a sale template, set the suitcase and leave room for the promotion, then download a square for Instagram.",
+  "cta_lead": "Open a sale template, set your product, leave room for the promotion, and download a square for Instagram.",
   "relatedLinks": [
     {
       "id": "social-ad-photos",
@@ -678,8 +678,8 @@
     ]
   },
   "related_h2": "Picture Tools Beside This Sale Post",
-  "related_lead": "Staging, backgrounds, and fashion looks sit beside this template, along with the fashion pages and the sale occasion page.",
-  "cta_title": "Post the Offer Where Shoppers See It",
+  "related_lead": "Staging, backgrounds, and fashion looks sit beside this template, along with the sale pages.",
+  "cta_title": "Put the Offer Where Shoppers Can See It",
   "blockOrder": [
     "hero",
     "features",
@@ -689,10 +689,11 @@
     "cta"
   ],
   "definition": {
-    "title": "What a Sale Post Does in the Feed",
+    "title": "What an Instagram Sale Post Does",
     "paras": [
-      "It is the square you post when the suitcase price changes for a long weekend. The case stays fully visible, and the end date sits in the empty area beside the case.",
-      "You are filling a feed square, not drawing one from scratch. Next month the same suitcase can carry a new headline for a different event."
+      "An Instagram sale post puts a discount and an upcoming event where shoppers will see them. It should catch the eye and still look like your shop.",
+      "A template is the short path. The layout is already designed, so the square looks finished, and you only add your line. That saves time and keeps every post consistent.",
+      "Use it while the event is still on, so the offer reaches people in time to act."
     ]
   },
   "reasons": {
@@ -701,17 +702,17 @@
     "items": [
       {
         "t": "The Offer Lands First",
-        "d": "Someone scrolling should see the suitcase offer before they study the handle. The case stays in the frame so the shopper still knows what is on sale.",
+        "d": "Someone scrolling should see the offer before they study the product. The product stays in the frame so they still know what is on sale.",
         "icon": "Tag"
       },
       {
         "t": "Start From a Ready Square",
-        "d": "The feed frame is already composed. You set the suitcase in it, and the open area is already where the offer should sit.",
+        "d": "The feed frame is already composed. You set your product in it, and the open area is already where the offer should sit.",
         "icon": "Image"
       },
       {
         "t": "One Look, Several Places",
-        "d": "Use the suitcase square on the feed and again on the product page. When the next event starts, only the headline changes, so the shop still looks like the same shop.",
+        "d": "Use the square on the feed and again on the product page. When the next event starts, only the headline changes.",
         "icon": "Share2"
       }
     ]
@@ -720,23 +721,23 @@
     {
       "eyebrow": "Pick a Scene and Post",
       "h2": "Sale Scenes for the Instagram Feed",
-      "lead": "Start from a scene that puts your offer in front of the product, such as the blue suitcase, ready for the feed.",
+      "lead": "Start from a scene that puts your offer in front of the product, ready for the feed.",
       "items": [
         {
           "t": "Sneaker Square for the Offer",
-          "d": "The white sneaker stays whole, and the lower price sits in the empty area beside it."
+          "d": "The sneaker stays whole, and the lower price sits in the empty area beside it."
         },
         {
           "t": "Clearance Table",
-          "d": "Your blue suitcase sits on a simple table, so a short price-cut line has room beside it, where shoppers can read the offer."
+          "d": "The product sits on a simple table, so a short price line has room beside it."
         },
         {
           "t": "Weekend Market",
-          "d": "Your blue suitcase sits at an outdoor stall, and the event dates are large enough to read in the headline."
+          "d": "The product sits at an outdoor stall, and the event dates are large enough to read."
         },
         {
           "t": "Gift Table",
-          "d": "Your blue suitcase sits on a gift table, and the price is large enough to read as someone scrolls."
+          "d": "The product sits on a gift table, and the price is large enough to read as someone scrolls."
         },
         {
           "t": "End of Season",
@@ -752,15 +753,15 @@
         },
         {
           "t": "Member Offer",
-          "d": "Your blue suitcase stays in a clean scene, and the member code is large enough to copy at a glance."
+          "d": "The product stays in a clean scene, and the member code is large enough to copy at a glance."
         },
         {
           "t": "Last Day Look",
-          "d": "Your blue suitcase stays in a simple scene, and the end date is large enough to see in the feed."
+          "d": "The product stays in a simple scene, and the end date is large enough to see in the feed."
         },
         {
           "t": "Square Feed Post",
-          "d": "You get a square of the blue suitcase for an Instagram or Facebook feed once the offer is in place."
+          "d": "You get a square for an Instagram or Facebook feed once the offer is in place."
         },
         {
           "t": "Product Page Banner",
@@ -776,7 +777,7 @@
         },
         {
           "t": "Studio Clearance",
-          "d": "A plain studio scene so the shopper notices the product first and the offer sits in the open area."
+          "d": "A plain studio scene, so the shopper notices the product first and the offer sits in the open area."
         },
         {
           "t": "Launch Window",
@@ -787,7 +788,7 @@
     {
       "eyebrow": "Edit the Sale Square",
       "h2": "Edit the Square, Then Post It",
-      "lead": "You change the background, the person, or the size, and the offer beside the blue suitcase still leads the square.",
+      "lead": "Change the background, the person, or the size, and keep the offer as the line people read first.",
       "items": [
         {
           "t": "Backgrounds and Setting",
@@ -795,7 +796,7 @@
         },
         {
           "t": "Show It Held, Flat, or Clean",
-          "d": "An AI avatar can wear the item. You can also ask for a top-down photo, a garment with no visible mannequin, a softer shadow, or a cleaned product shot."
+          "d": "An AI avatar can wear the item. You can also ask for a top-down photo, a garment with no visible mannequin, or a cleaned product shot."
         },
         {
           "t": "Resize, Recolor, and Post It",
@@ -817,8 +818,8 @@
     }
   ],
   "trust": {
-    "h2": "Check Your Sale Square Before You Post",
-    "lead": "The square goes out ready for the feed, with your offer added by you.",
+    "h2": "Check the Sale Square Before You Post",
+    "lead": "The square goes out ready for the feed, and you add the offer yourself.",
     "items": [
       {
         "t": "24 Credits a Photo",
@@ -826,11 +827,11 @@
       },
       {
         "t": "No Watermark",
-        "d": "The download has no AIVideosUGC watermark, and you can use it in your own ads, pages, and posts."
+        "d": "The download has nothing stamped on it. You can use it in your ads, on pages, and in posts."
       },
       {
         "t": "The Price Shoppers Read",
-        "d": "The discount, the code, and the end date you type are the words on the square, big enough to read while someone scrolls."
+        "d": "The discount, the code, and the end date you type are the words on the square. They should be big enough to read while someone scrolls."
       },
       {
         "t": "Failed Jobs Return Credits",

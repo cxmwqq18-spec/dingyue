@@ -1,10 +1,10 @@
 {
   "id": "plat-tiktok",
-  "title": "AI UGC TikTok Ads From a Product Link | AIVideosUGC",
-  "description": "Make AI UGC videos for TikTok ads from a product link or a photo. Pick a tall size and a voice, see the credit cost, then download a file for the ad account.",
-  "h1": "AI UGC Videos for TikTok Ads",
+  "title": "Make TikTok Ads With AI UGC | AIVideosUGC",
+  "description": "Make creator-style TikTok ads from a product link or a photo, in minutes. Pick a tall size and a voice, see the credit cost, then download it.",
+  "h1": "Make TikTok Ads in a Creator Style",
   "eyebrow": "TikTok Ads Ready to Post",
-  "lead": "Your AI TikTok ads generator turns the product page into a tall ad with a quick first line. The download has no watermark, so you can place it in the ad account.",
+  "lead": "Put a creator-style TikTok ad live in minutes, shaped for the trends, sizes, and shoppers you already sell to.",
   "card": "Tall TikTok ads from a photo or a product link. You see the cost before you start.",
   "secondary_keywords": [
     "TikTok video ads for products",
@@ -18,7 +18,7 @@
       "a": "Use AIVideosUGC. It builds TikTok-style video from your product, with a script and a voice, so you can test often. You get a file to review before posting. No tool can promise a video will take off."
     },
     {
-      "q": "Where can I get branded TikTok frames that follow our colors?",
+      "q": "Can the frames follow our colors?",
       "a": "Yes. The frames can follow your product and your brand colors before the ad goes into the account."
     },
     {
@@ -55,15 +55,15 @@
   "steps": [
     {
       "t": "Add a Product Link",
-      "d": "The headphone facts are already on the product page. That page becomes the spoken line, so you do not retype the listing."
+      "d": "Paste the product page. The photos and the facts there become the spoken line, so you do not retype the listing."
     },
     {
       "t": "Select an Actor",
-      "d": "Use an AI avatar to lift the headphones from the box. The face fits an unboxing, and the cups stay visible."
+      "d": "Pick an AI actor who fits the shopper. The product stays easy to see in the opening."
     },
     {
       "t": "Download or Post",
-      "d": "Download the clip and drop it into the TikTok ad account. You still set the budget there."
+      "d": "Download the clip and place it in the TikTok ad account. You still set the budget there."
     }
   ],
   "visual": {
@@ -94,15 +94,15 @@
       "items": [
         {
           "t": "Add a Product Link",
-          "d": "Paste the headphone page, or upload one photo, so the unboxing uses that pair."
+          "d": "Paste the product page. The photos and the facts there become the spoken line, so you do not retype the listing."
         },
         {
           "t": "Select an Actor",
-          "d": "Pick an AI actor to lift the black headphones out of the box, and keep the cups in the opening."
+          "d": "Pick an AI actor who fits the shopper. The product stays easy to see in the opening."
         },
         {
           "t": "Download or Post",
-          "d": "Add a voice and captions, then download the unboxing for the TikTok ad account."
+          "d": "Download the clip and place it in the TikTok ad account. You still set the budget there."
         }
       ]
     },
@@ -112,38 +112,38 @@
       }
     }
   },
-  "benefits_h2": "AI TikTok Ads for the Feed",
+  "benefits_h2": "TikTok Ads That Are Ready to Convert",
   "benefits": [
     {
-      "t": "Ride the Sound This Week",
-      "d": "Drop the windbreaker into an AI TikTok ad while that sound is still hot. The color stays the one in your photo.",
+      "t": "Catch the Trend This Week",
+      "d": "Jump on a TikTok trend while it is still hot. You get an on-brand ad you can post, without missing the moment.",
       "img": "n:guide:fx40-plat-tiktok-benefit-trend",
       "alt": "A hand lifts a coral windbreaker from folded streetwear on a mint tabletop for TikTok."
     },
     {
-      "t": "A Voice Like Your Captions",
-      "d": "The line about the water bottle is spoken in a voice that matches your captions. That voice is in the plan, not a studio invoice.",
+      "t": "A Voice That Fits the Line",
+      "d": "Add a natural voice in the language your shoppers use. That voice is part of the clip, not a separate studio bill.",
       "img": "n:guide:fx40-plat-tiktok-benefit-clips",
       "alt": "A hand moves a cobalt reusable bottle beside a tabletop light for the TikTok ad."
     },
     {
       "t": "Already Tall and Ready",
-      "d": "The tumbler clip is already tall, and the first second is the product in a hand. You can post the next item the same way without calling a crew.",
+      "d": "The TikTok ad comes back fast and ready to run. The first second can be the product in a hand.",
       "img": "n:guide:fx40-plat-tiktok-benefit-ready",
       "alt": "A hand places a green leaf beside a mint insulated tumbler on a kitchen counter, ready for TikTok."
     }
   ],
-  "steps_h2": "From a Product Link to a TikTok Ad in 3 Steps",
-  "steps_lead": "You get a tall AI TikTok ad the account can run today.",
+  "steps_h2": "How to Make a TikTok Ad in 3 Simple Steps",
+  "steps_lead": "You get a tall TikTok ad the account can run.",
   "more_sections": [
     {
-      "eyebrow": "How an AI TikTok ad is made",
-      "h2": "How to Change an AI TikTok Ad After Export",
-      "lead": "You can change the AI TikTok ad after the first export, then run another test.",
+      "eyebrow": "After the first export",
+      "h2": "Change a TikTok Ad Without a Reshoot",
+      "lead": "You can change the TikTok ad after the first export, then run another test.",
       "items": [
         {
           "t": "More Ads From One Sitting",
-          "d": "One influencer film used to be the whole month. On this plan you can make a set of AI TikTok ads and put that money into the auction instead."
+          "d": "One influencer film used to be the whole month. Here you can make a set of TikTok ads and put that money into the auction instead."
         },
         {
           "t": "Post While the Sound Is Hot",
@@ -168,31 +168,31 @@
     "reviews",
     "faq"
   ],
-  "benefits_lead": "You film nothing. The product still gets an AI TikTok ad when a new test is due.",
+  "benefits_lead": "You film nothing. The product still gets a TikTok ad when a new test is due.",
   "reasons": {
     "h2": "Why Sellers Make AI TikTok Ads",
     "lead": "Your TikTok tests do not each start with a new influencer or a new shoot.",
     "items": [
       {
-        "t": "Credits Over a Day Rate",
-        "d": "A 10-second AI TikTok ad spends 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you start, and a failed job returns those credits. That replaces one influencer invoice for a single video.",
+        "t": "Spend Credits, Not a Day Rate",
+        "d": "Skip pricey influencers and a production team. A 10-second TikTok ad spends 40 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. You see the cost before you start, and a failed job returns those credits.",
         "icon": "Rocket"
       },
       {
         "t": "Several Openings at Once",
-        "d": "Export a few openings in one sitting, as a batch if you have several products. None of those wait on another creator.",
+        "d": "You no longer queue one creator after another. Export a few openings in one sitting, then put that money into the auction.",
         "icon": "Copy"
       },
       {
         "t": "Ads in Another Language",
-        "d": "The same line can be spoken in Spanish for a second TikTok account. You do not film that version in another country.",
+        "d": "Speak the same line for another TikTok market. You do not film that version in another country.",
         "icon": "Languages"
       }
     ]
   },
   "platforms": {
     "h2": "Run the Same Photo on Other Channels",
-    "lead": "The TikTok file is already tall and ready to run. The same photo also covers Instagram, Facebook, Shorts, Amazon, or Shopify.",
+    "lead": "The TikTok file is already tall and ready to run. The same photo also covers the other channels you sell on.",
     "items": [
       {
         "t": "Post the Photo on Instagram",

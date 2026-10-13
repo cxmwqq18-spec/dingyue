@@ -1,10 +1,10 @@
 {
   "id": "tpl-head",
-  "title": "UGC Templates for Team Headshots | AIVideosUGC",
-  "description": "Pick a headshot template and match every teammate from a photo they already approved. Download one shared backdrop for the about page and team row.",
-  "h1": "Pick a Headshot Template and Match the Team",
+  "title": "Team Headshot Templates to Match | AIVideosUGC",
+  "description": "Find a headshot you like and match the whole team from photos you already have. Pick one backdrop, add each photo, and download the row in minutes.",
+  "h1": "See a Headshot, Match the Team, Post It",
   "eyebrow": "One Backdrop for the Whole Team",
-  "lead": "Pick one headshot template, then match every teammate to it from a photo they already approved. The row shares one backdrop, one crop, and one light, starting with the teammate in the dark green shirt.",
+  "lead": "Find a headshot you like and match the team to it from photos you already have. Pick the template, add each photo, and download the row in minutes.",
   "secondary_keywords": [
     "matching team headshots",
     "professional headshots for small business",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Each Team Photo",
-      "d": "Upload an approved face-and-shoulders photo, like the teammate in the dark green shirt. The same crop will fit the rest of the row."
+      "d": "Upload a face-and-shoulders photo each person already approved. The same crop fits the rest of the row."
     },
     {
       "t": "Pick One Background",
-      "d": "Say the role in one sentence on a pale gray backdrop. A voice can read that line over the portrait."
+      "d": "Pick one backdrop and one light for the whole row. A short line can sit beside each face."
     },
     {
       "t": "Download and Post",
-      "d": "Save the square portraits for the about page. Post a spoken intro at 1:1, 9:16, 16:9, 4:3, or 3:4."
+      "d": "Download the squares for the about page. A short intro can use 1:1, 9:16, 16:9, 4:3, or 3:4."
     }
   ],
   "maker": {
@@ -45,51 +45,51 @@
   },
   "faq": [
     {
-      "q": "What is a team portrait template?",
-      "a": "A team portrait template is one portrait treatment for a whole staff page, plus a short intro if you want a voice. Every face starts from a photo that person approved. The sample is the teammate in the dark green shirt, set on a pale gray backdrop in a charcoal blazer."
+      "q": "What is a team headshot template?",
+      "a": "It is a ready-made look with one backdrop, one crop, and one light. Add each approved photo and get a matching row in minutes, without a portrait shoot."
     },
     {
-      "q": "How does a team template become portraits and a video?",
-      "a": "Add each approved photo, set one backdrop, and save squares for the about page. A script can draft the intro, and an AI actor can speak it beside the row. The portraits stay photos of your teammates. A track can sit under that intro."
+      "q": "How does a team template work?",
+      "a": "You add each photo, set one backdrop, and save squares for the about page. A short intro can be drafted, and an AI actor can speak it beside the row."
     },
     {
-      "q": "Why use this instead of hiring a photographer or a creator?",
-      "a": "You skip the search for one date the whole staff can attend. A new hire can join the row when they send an approved photo. The same crop and light apply without a new booking."
+      "q": "Why use this instead of hiring a photographer?",
+      "a": "It is faster and costs less than finding one date the whole staff can attend. A new hire joins the row when they send an approved photo."
     },
     {
       "q": "Who is a team template for?",
-      "a": "Small teams that should look like one staff on the site. A shop owner, a founder, and a hiring lead can all run the row from photos people already approved."
+      "a": "Shop owners and small teams that should look like one staff on the site. Anyone who updates the about page can run it."
     },
     {
       "q": "Can a beginner make the set?",
-      "a": "Yes. The person who updates the about page can do this on a first try. They choose the treatment. Each approved photo supplies that face, and captions on the intro can be shortened in the editor."
+      "a": "Yes. Upload each approved photo and pick the look. You do not need an editing background."
     },
     {
-      "q": "Which teams and industries fit?",
-      "a": "A shop, a clinic front desk, and a software team all fit when the page should read as one staff. The treatment is the match. The trade they sell does not change the crop."
+      "q": "Which teams does this fit?",
+      "a": "A shop, a clinic desk, and a software team all fit when the page should read as one staff. The trade you sell does not change the crop."
     },
     {
-      "q": "Do I need permission to use a person's face in a team portrait?",
-      "a": "Yes. Each person agrees first. The result is not a passport or any other identity document. You may put the shop mark on the intro. Faces still come only from approved photos, and a clip filmed at work can sit under that intro."
+      "q": "Can I upload photos the team already approved?",
+      "a": "Yes. Upload a face photo each person agreed to, plus a logo on the intro if you want one. Faces come only from those approved photos."
     },
     {
       "q": "Which sites and sizes fit the intro?",
-      "a": "Square portraits stay on the site, and the intro can go to LinkedIn, a Story, YouTube, or an embed. LinkedIn is comfortable at 1:1, a Story wants 9:16, and an embed can be 16:9. Use 4:3 or 3:4 for a banner. Lengths are 6, 10, 15, or 30 seconds. You can publish from a connected account."
+      "a": "Yes. Squares stay on the site. The intro can go to LinkedIn at 1:1, a Story at 9:16, or an embed at 16:9."
     },
     {
       "q": "Do I need a paid plan to use a template?",
-      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run returns the credits."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A video spends 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds."
     },
     {
-      "q": "Can I use the portraits and intro in ads and client work?",
-      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad for the shop. The download has no watermark. Another language can reuse the same portraits."
+      "q": "Can I use the portraits in ads and client work?",
+      "a": "Yes, if each person agreed to that use. The squares can go on the site and in a deck, and the intro can run as an ad. The download has no watermark."
     },
     {
-      "q": "Why start from a template instead of matching photos by hand?",
-      "a": "The treatment locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand. Your own software can send approved photos through the API when the staff page needs that same crop. You can run every approved photo in one batch."
+      "q": "Why start from a template instead of matching by hand?",
+      "a": "The look locks one backdrop and one crop, so a new hire can sit beside the owner without a layout you build by hand."
     }
   ],
-  "cta_lead": "Add an approved photo for each person, starting with the teammate in the dark green shirt. The credit cost shows before you run it.",
+  "cta_lead": "Add an approved photo for each person. The credit cost shows before you run it.",
   "visual": {
     "strip": [
       "n:guide:tpl-head-round4-02",
@@ -555,7 +555,7 @@
     }
   },
   "steps_h2": "How to Make Team Headshots in 3 Simple Steps",
-  "steps_lead": "One pale gray backdrop holds the row, so the about page reads as one team. The sample portrait puts that teammate in a charcoal blazer.",
+  "steps_lead": "One backdrop holds the row, so the about page reads as one team.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -617,7 +617,7 @@
     ]
   },
   "related_h2": "Photo Tools Beside the Team Row",
-  "related_lead": "A product photo tool, a background change, and model photos sit next to this row. Ad images and lifestyle photos are there when the about page is not the whole job.",
+  "related_lead": "A product photo, a new backdrop, and a worn view sit next to this row when the about page is not the whole job.",
   "cta_title": "Match the Next Teammate",
   "blockOrder": [
     "hero",
@@ -628,44 +628,44 @@
     "cta"
   ],
   "definition": {
-    "title": "What Is a Team Portrait Template?",
+    "title": "What Is a Team Headshot Template?",
     "paras": [
-      "A team portrait template gives a whole staff page one backdrop, one crop, and one light. Everyone looks like they stood in the same room. Each portrait starts from a photo that person approved.",
-      "The portraits are ready for a site or a deck. Names stay in text beside the image, so a new job title does not force a new photo."
+      "A team headshot template gives a staff page one backdrop, one crop, and one light. Each portrait starts from a photo that person approved.",
+      "The portraits are ready for the site or a deck. Names stay in text beside the image, so a new job title does not need a new photo."
     ]
   },
   "reasons": {
-    "h2": "Why Sellers Start From a Template",
-    "lead": "A new hire can be on the about page before the next busy weekend, without a portrait day next month. One treatment is how a small shop does that.",
+    "h2": "Why a Template Beats Starting Blank",
+    "lead": "A new hire can be on the about page this week, without booking a portrait day.",
     "items": [
       {
         "t": "Faster Than Booking a Creator",
-        "d": "The treatment runs on photos the team already approved, so the page does not wait on a studio hold.",
+        "d": "The look runs on photos the team already approved, so the page does not wait on a studio hold.",
         "icon": "Clock"
       },
       {
         "t": "Credits Instead of a Shoot Fee",
-        "d": "Each portrait spends credits on whichever paid plan fits your team. Money you do not pay a portrait studio can stay on hiring and on ads.",
+        "d": "Each portrait spends credits on the paid plan you already have. Money you do not pay a studio can stay on ads.",
         "icon": "Coins"
       },
       {
         "t": "More Than One Version to Test",
-        "d": "Make the row once, then a second intro line for a different audience. Keep the version you want to publish.",
+        "d": "Make the row once, then a second intro line for another audience. Keep the version you want to publish.",
         "icon": "Layers"
       },
       {
-        "t": "Rewrite the Line, Render Again",
-        "d": "Change a role in the text beside the photo, or rewrite the intro script and render again. A title change is not a new booking.",
+        "t": "Change the Line and Run It Again",
+        "d": "Change a role in the text, or rewrite the intro, and run it again. A new title is not a new booking.",
         "icon": "PenLine"
       },
       {
         "t": "No Hold on a Creator Calendar",
-        "d": "The treatment is ready when a new hire sends an approved photo. You are not waiting on a photographer's calendar.",
+        "d": "The look is ready when a new hire sends an approved photo. You are not waiting on a photographer.",
         "icon": "Calendar"
       },
       {
         "t": "The Next Hire Matches",
-        "d": "The new hire inherits the same backdrop and crop, so you are not rebuilding a layout for one person. The spoken intro can say what they do.",
+        "d": "The new hire gets the same backdrop and crop, so you are not rebuilding the row for one person.",
         "icon": "LayoutGrid"
       }
     ]
@@ -674,51 +674,51 @@
     {
       "eyebrow": "For the Intro Beside the Row",
       "h2": "Tools Around a Team Portrait",
-      "lead": "The intro beside the portraits can carry a voice, captions, and music, while the portraits stay photos of your teammates.",
+      "lead": "The intro can carry a voice, captions, and music, while the portraits stay photos of your teammates.",
       "items": [
         {
           "t": "A Voice for the Intro",
-          "d": "A stock voice, or a clone from a short sample, can speak the short intro. The square portraits stay photos."
+          "d": "A stock voice can speak the short intro. The square portraits stay photos."
         },
         {
           "t": "Captions Beside the Row",
-          "d": "A name line or a one-sentence intro can sit on the clip, and you can move it in the editor. Job titles stay in text beside the portrait."
+          "d": "A name line can sit on the clip, and you can move it in the editor. Job titles stay in text beside the portrait."
         },
         {
           "t": "The Whole Team in One Pass",
-          "d": "Every approved photo can run with the same background and crop, so the row matches in one pass."
+          "d": "Every approved photo can use the same backdrop and crop, so the row matches in one pass."
         },
         {
           "t": "Start From a Public Page",
-          "d": "Paste a public about-page link and the intro can start from the words already on that page."
+          "d": "Paste a public about-page link and the intro can start from the words already there."
         },
         {
           "t": "A Script for the Intro",
           "d": "The tool can draft one spoken line about the team, and you can edit it."
         },
         {
-          "t": "An AI Avatar Introduces Them",
-          "d": "A separate AI avatar can introduce the team while each portrait stays the person in the photo. Add extra shop or product clips if the intro needs them."
+          "t": "An AI Actor Introduces the Team",
+          "d": "An AI actor can introduce the team while each portrait stays the person in the photo."
         },
         {
           "t": "Music Under the Intro",
-          "d": "A track from the music library can sit under the intro. The square portraits on the page stay stills."
+          "d": "A track from the music library can sit under the intro. The portraits on the page stay stills."
         },
         {
-          "t": "Crop and Background Here",
-          "d": "You can set the crop, the light, and the background once, then reuse those choices for the next person."
+          "t": "Set the Crop Once",
+          "d": "Set the crop, the light, and the backdrop once, then reuse them for the next person."
         },
         {
           "t": "The Intro in Another Language",
-          "d": "The spoken intro and its captions can switch to another language while the portraits stay. Names on the page stay text you edit."
+          "d": "The spoken intro and its captions can switch language while the portraits stay."
         },
         {
           "t": "Post the Intro",
-          "d": "The intro can go to LinkedIn, YouTube, or to Facebook and Instagram, from the account you connect. The square portraits stay for the site and the deck."
+          "d": "The intro can go to LinkedIn, YouTube, Facebook, or Instagram. The squares stay for the site."
         },
         {
-          "t": "An API for Approved Photos",
-          "d": "Your own software can send photos through the API when a staff page needs the same crop."
+          "t": "Send Photos From Your Shop",
+          "d": "Shop software you already use can send approved photos in when a staff page needs the same crop."
         }
       ]
     }

@@ -1,30 +1,30 @@
 {
   "id": "tpl-story",
   "title": "Instagram Story Video Maker | AIVideosUGC",
-  "description": "Turn a product link into an Instagram Story video with an avatar, a script, and a voice. Export the tall file and post it on Instagram Stories.",
-  "h1": "Turn a Product Link Into an Instagram Story Video",
+  "description": "Make an Instagram Story video from a product link or one photo. Add a script, an AI avatar, and a voice, then export the tall file and post it.",
+  "h1": "Make an Instagram Story Video From a Link",
   "eyebrow": "Story Videos You Can Post",
-  "lead": "Start with a hot sauce link or one bottle photo. You get an avatar and a voice in a tall Instagram Story video. The bottle in the file is the one you ship.",
+  "lead": "Paste a product link or one photo. Get an Instagram Story video with a script, an AI avatar, and a voice you can edit.",
   "secondary_keywords": [
     "square Story ad image",
     "square Story product image",
     "Facebook Stories ad image",
     "summer product story ads"
   ],
-  "steps_h2": "How to Make a Square Story Image in 3 Simple Steps",
-  "steps_lead": "You get a tall Story video of the hot sauce, with an avatar and a voice, ready to post.",
+  "steps_h2": "How to Make an Instagram Story Video in 3 Simple Steps",
+  "steps_lead": "You leave with a tall 9:16 Story, an avatar, and a voice.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Use the photo where the whole hot sauce bottle is visible. That photo is the product in the Story video."
+      "d": "Add a product photo, or paste the product link. That product is the one shoppers see in the Story."
     },
     {
       "t": "Describe the Setting",
-      "d": "Pick an avatar to hold the hot sauce and say one line about the heat. Set the voice before you export."
+      "d": "Describe the setting, pick an AI avatar, and set the voice. You can fix the spoken line before you export."
     },
     {
       "t": "Download and Post",
-      "d": "Download the tall Story video and post it. The bottle stays full in frame, with no watermark."
+      "d": "Download the tall Story and post it. The product stays in frame, and the file has no watermark."
     }
   ],
   "maker": {
@@ -46,51 +46,51 @@
   },
   "faq": [
     {
-      "q": "What is a Story video template for a product?",
-      "a": "A Story ad template is a tall video for the hot sauce, with an avatar and a voice. The bottle stays fully visible, and you skip filming a new clip just to fill that frame. When you need another motion style, start from [creator-style video ads](page:video-ads)."
+      "q": "What is an Instagram Story video for a product?",
+      "a": "It is a tall video for the product, with an AI avatar and a voice. You skip filming a new clip just to fill that frame. For another motion style, start from [creator-style video ads](page:video-ads)."
     },
     {
-      "q": "How does a Story template become a video I can post?",
-      "a": "You leave with a tall Story video you can post. Add the hot sauce photo, say the price in the script, and download."
+      "q": "How do credits work for a Story video?",
+      "a": "Starter is $24.50 a month for 200 credits. Pro is $35 for 300. Premium is $63 for 600. A photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost first. A failed run returns the credits."
     },
     {
-      "q": "Why use a template instead of filming a creator for Stories?",
-      "a": "Stories go stale when the offer changes and the creator is booked. Change the spoken line and post the new Story video while that booking is still ahead."
+      "q": "Can I start Story videos from my product pages?",
+      "a": "Yes. Paste the product page. The name and the photo come through, and you still approve the script before the Story is made."
     },
     {
-      "q": "Who should make a Story video from this template?",
-      "a": "A shop that posts Stories every week, and the person who writes those posts. A hot sauce brand and the helper who handles its Instagram both need the bottle fully in the video."
+      "q": "Can I use an AI avatar in my Instagram Story video?",
+      "a": "Yes. Pick an AI avatar to hold the product, or build a presenter from photos you are allowed to use. You can bring that face back next time."
+    },
+    {
+      "q": "How does the Story stay vertical?",
+      "a": "The export is a tall 9:16 file made for Instagram Stories. A Facebook Story can use the same file. Use a square only when the placement is no longer a Story."
+    },
+    {
+      "q": "Can I add stickers or a price on the Story?",
+      "a": "Yes. Add a short line or a sticker on the video, or add Instagram stickers when you post. The price can sit in the script or go on after download."
     },
     {
       "q": "Can a beginner make a Story video this way?",
-      "a": "Yes. Someone who has never edited a video can still do it. The three steps turn one sharp photo into a Story video, and you add the price after you download."
+      "a": "Yes. If you can upload one clear photo, you can finish the Story. You add the price after you download, and you do not need an editing background."
     },
     {
-      "q": "Which shops post this kind of Story video?",
-      "a": "Shops that sell something a viewer should see in full. Hot sauce, a small pouch, and a folded scarf can each become a Story video, with the price added after download."
+      "q": "Who should make a Story video from this template?",
+      "a": "A shop that posts Stories every week, and the person who writes those posts. You need the product fully in frame, not a studio booking."
     },
     {
-      "q": "Can the Story use the photo I already shot for the shop?",
-      "a": "Yes. The hot sauce in the video should be the hot sauce you ship, label and all. Your logo can be added after download, and you do not need a new shoot for that."
+      "q": "Can the Story use the photo I already shot?",
+      "a": "Yes. The product in the video should be the product you ship. Your logo can go on after download, and you do not need a new shoot for that."
     },
     {
-      "q": "Which apps can I post this Story video to?",
-      "a": "Instagram Stories is the home for this tall video. A Facebook Story can use the same file, and a feed post can use a square cut. Use 16:9, 4:3, or 3:4 only when the placement is no longer a Story."
+      "q": "Can I run the Story as a paid ad or client work?",
+      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the video to a client who sells that product."
     },
     {
-      "q": "Do I need a paid plan for a Story video template?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. Each photo is 24 credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. You see the cost first. A failed run returns the credits. The download has no watermark."
-    },
-    {
-      "q": "Can I run the Story video as a paid ad or client work?",
-      "a": "Yes. Run it as a paid Story, leave it as an organic post, or send the video to a client who sells the same hot sauce."
-    },
-    {
-      "q": "Why use a Story template instead of building the video from scratch?",
-      "a": "Your time goes into the price and the heat, which are the words shoppers hear. The hot sauce already has a place in the video, so you can spend the edit on those words."
+      "q": "Why start from a template instead of a blank edit?",
+      "a": "The tall frame, the avatar, and the voice are already in place. Your time goes to the offer and the words shoppers hear."
     }
   ],
-  "output": "Tall Story video with an avatar and a voice",
+  "output": "Tall 9:16 Story with an avatar and a voice",
   "visual": {
     "strip": [
       "n:q10-story-picker-1",
@@ -634,9 +634,9 @@
     ]
   },
   "related_h2": "Templates to Use With a Story Ad",
-  "related_lead": "The ad-image tool, bundle and lighting templates, beauty video, the beauty page, and Instagram ads sit beside this Story template.",
+  "related_lead": "The ad-image tool, nearby templates, and Instagram ads sit beside this Story template.",
   "cta_title": "Create Your First Story Video",
-  "cta_lead": "Turn the hot sauce photo into a Story video with an avatar and a voice. The file has no watermark.",
+  "cta_lead": "Turn a product photo into a Story video with an avatar and a voice. The file has no watermark.",
   "blockOrder": [
     "hero",
     "picker",
@@ -646,25 +646,25 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "On the Story Video",
+      "eyebrow": "On the Story",
       "h2": "What the Story Video Gives You",
-      "lead": "The Story video carries a script, an avatar, and a spoken line you can publish with it.",
+      "lead": "The Story carries a script, an avatar, and a spoken line you can publish with it.",
       "items": [
         {
-          "t": "Start From the Hot Sauce Link",
-          "d": "Paste the product page. The hot sauce comes through, and this video is the Story you post."
+          "t": "Start From the Product Link",
+          "d": "Paste the product page. The product comes through, and this video is the Story you post."
         },
         {
-          "t": "An Avatar Holds the Hot Sauce",
+          "t": "An Avatar Holds the Product",
           "d": "Choose an AI avatar to hold the product in the Story, and bring that person back next time."
         },
         {
           "t": "A Spoken Line Shoppers Hear",
-          "d": "Add a voiceover in the language your shoppers use, or a cloned voice the shop already records with. You can change any word before the Story goes up."
+          "d": "Add a voice in the language your shoppers use, or a cloned voice the shop already records with. You can change any word before the Story goes up."
         },
         {
           "t": "A Script You Can Change",
-          "d": "Describe the offer in a sentence. A script draft comes back, and you can rewrite it in the editor."
+          "d": "Describe the offer in a sentence. A script draft comes back, and you can rewrite any word in the editor."
         },
         {
           "t": "Trim, Then Download Clean",
@@ -672,7 +672,7 @@
         },
         {
           "t": "Versions, Languages, Publish",
-          "d": "Run the same photo for another setting or another language, then post it to Instagram, Facebook, or TikTok. Your catalog can start the next one."
+          "d": "Run the same photo for another opening or another language, then post it to Instagram, Facebook, or TikTok."
         }
       ]
     }

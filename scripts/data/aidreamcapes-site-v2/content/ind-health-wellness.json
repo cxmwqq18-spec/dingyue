@@ -1,10 +1,10 @@
 {
   "id": "ind-health-wellness",
   "title": "AI UGC Video Ads for Health and Fitness | AIVideosUGC",
-  "description": "Make AI UGC video ads for health and fitness products from one photo. Skip the creator booking, then post that morning routine on your shop.",
+  "description": "Make AI UGC video ads for health and fitness products from one photo or a product link. Skip the creator booking and post a routine that feels real.",
   "h1": "AI UGC Video Ads for Health and Fitness Brands",
   "eyebrow": "Skip the Creator for This Ad",
-  "lead": "Put the teal mat, the breakfast bottle, or the bands in a morning routine for a health and fitness UGC video. An avatar stands in, so you skip booking a creator.",
+  "lead": "In fitness, trust comes first. Buyers want a clip that feels like a real routine, not a produced shoot. You can make that ad without booking a creator.",
   "card": "Short routine clips for the teal mat, the breakfast bottle, and the bands.",
   "secondary_keywords": [
     "supplement lifestyle photos",
@@ -15,20 +15,20 @@
   ],
   "faq": [
     {
-      "q": "Can the photo or clip show what a supplement does?",
-      "a": "No. Show how and when it is used, not a health result. Keep claims and dosage in text your team approves."
+      "q": "Can the ad promise what a supplement does?",
+      "a": "No. Show how and when someone uses it, not a health result. Keep claims and dosage in text your team approves."
     },
     {
-      "q": "Why does the label look washed out?",
-      "a": "Shoot the bottle upright, front label centered, with soft side light instead of a direct flash. Glare usually starts in that source photo."
+      "q": "Why is the label hard to read in the photo?",
+      "a": "Shoot the bottle upright, with the label facing the camera and soft light from the side. Glare usually starts in the photo you upload."
     },
     {
-      "q": "Can I use these in paid wellness ads?",
-      "a": "Yes. Downloads have no watermark, so you can use them in paid ads. Any health claim or offer you add has to be accurate."
+      "q": "Can I use these clips in paid ads?",
+      "a": "Yes. Downloads have no watermark, so they can run in paid ads. Any health claim or offer you add has to be true."
     },
     {
       "q": "Do I need a model or a creator?",
-      "a": "No. Pick an AI avatar from 53 actors. The clip can include a spoken line and captions. Hire a real person only when you need a true customer story."
+      "a": "No. Pick an AI avatar for the clip, and add a spoken line and captions. Hire a real person only when you need a true customer story."
     },
     {
       "q": "Can I make a Story from this?",
@@ -40,31 +40,31 @@
     },
     {
       "q": "Which shapes can a clip use?",
-      "a": "Use 9:16 for a phone feed, 1:1 for a square, 16:9 for a wide page, and 4:3 or 3:4 when the page asks for them."
+      "a": "Use 9:16 for a phone feed, 1:1 for a square, and 16:9 for a wide page. Choose 4:3 or 3:4 when the placement asks for them."
     },
     {
       "q": "What should the scene avoid?",
-      "a": "Avoid before-and-after bodies, medical outcomes, and dosage text inside the image. Show the product in a routine, and write the claims where you can check them."
+      "a": "Avoid before-and-after bodies, medical outcomes, and dosage text inside the image. Show the product in a routine, and write claims where you can check them."
     },
     {
       "q": "Can I start from a product link and make more than one version?",
-      "a": "Yes. Paste the product page, or send that link from your own shop through the API. Ask for a short script and pick an AI avatar. Make a few versions, including one in another language, then trim the clip in the editor. Add a voice, captions, and a music track before you post it."
+      "a": "Yes. Paste the product page, or send that link from your shop software. Ask for a short script, pick an AI avatar, and make a few versions. One of them can be in another language."
     }
   ],
-  "steps_h2": "How to Make Wellness Product Photos in 3 Simple Steps",
-  "steps_lead": "You download a routine photo of the teal yoga mat that you can post, without booking a creator.",
+  "steps_h2": "How to Make a Fitness Ad in 3 Simple Steps",
+  "steps_lead": "Three steps take you from a product photo to a routine ad, with no creator to book.",
   "steps": [
     {
       "t": "Upload Your Product",
-      "d": "Unroll the teal yoga mat so the full mat is visible. That photo is the product in the morning routine."
+      "d": "Upload a clear photo of the product, or paste the product link. That file is the start of the ad."
     },
     {
       "t": "Choose a Presenter",
-      "d": "Pick an AI avatar who looks like someone about to stretch beside that mat."
+      "d": "Pick an AI avatar who fits the people you sell to. You are not putting anyone on camera."
     },
     {
       "t": "Generate and Publish",
-      "d": "Download the routine clip for the feed you already use. It can include a spoken voice and captions."
+      "d": "Download a clip with a spoken line and captions, sized for a phone feed."
     }
   ],
   "visual": {
@@ -106,7 +106,7 @@
       }
     }
   },
-  "templates_lead": "Pick a routine scene for the mat, the tea, or the bands. Leave health results out of the frame.",
+  "templates_lead": "Pick a routine scene close to your product. Leave health results out of the frame.",
   "cta_lead": "A routine ad can start from a product link or one photo, with a spoken line and captions.",
   "relatedLinks": [
     {
@@ -140,21 +140,21 @@
   },
   "reasons": {
     "h2": "Create Health and Fitness Ads Without the Wait",
-    "lead": "A yoga mat, a breakfast table, and a set of bands can each start from one photo. You are not chasing a creator.",
+    "lead": "Save the creator hunt, keep the spend in credits, and decide how the ad looks.",
     "items": [
       {
-        "t": "Skip the Creator Chase",
-        "d": "A rolled teal yoga mat on a wood floor can be the ad this afternoon. You are not waiting on someone else to film that routine.",
+        "t": "Save the Creator Hunt",
+        "d": "A rolled mat on the floor can be the ad this afternoon. You skip the wait for someone to film that routine, and the next ad can match it.",
         "img": "n:guide:fx32-health-benefit-yoga"
       },
       {
         "t": "Spend Credits, Not a Crew",
-        "d": "The breakfast-table scene has a price you can plan. A still is 24 credits, the price shows before you start, and there is no creator invoice.",
+        "d": "The breakfast scene has a price you can plan. A still is 24 credits, shown before you start, with no creator invoice.",
         "img": "n:guide:b2f3-ind-health-breakfast-r1"
       },
       {
-        "t": "You Set the Morning Scene",
-        "d": "Put the bands in the corner you want and point the ad at the product page. The scene stays a routine, not a claim about a body.",
+        "t": "You Set the Scene",
+        "d": "Put the bands where you want them and point the ad at the product page. You choose the avatar, the setting, and the words.",
         "img": "n:guide:fx32-health-benefit-bands"
       }
     ]
@@ -165,7 +165,7 @@
     "items": [
       {
         "t": "Post a TikTok Routine",
-        "d": "A tall TikTok routine of the yoga mat, ready for the phone feed.",
+        "d": "A tall phone ad of your product, ready for the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
@@ -175,22 +175,22 @@
       },
       {
         "t": "Run a Facebook Feed Ad",
-        "d": "A square Facebook photo of the teal mat, with room to add your offer after you download it.",
+        "d": "A square Facebook photo, with room to add your offer after you download it.",
         "href": "/platforms/facebook-ads"
       },
       {
         "t": "Cut a Shorts Routine",
-        "d": "A short phone-screen routine that opens on one action, such as the unroll.",
+        "d": "A short phone clip that opens on one action, such as picking the product up.",
         "href": "/platforms/youtube-shorts-ads"
       },
       {
         "t": "Fill the Amazon Gallery",
-        "d": "Download a clean yoga-mat image for the listing, plus extra shots of the morning routine for the gallery.",
+        "d": "A clean listing image, plus extra shots of the routine for the gallery.",
         "href": "/platforms/amazon-product-photos"
       },
       {
         "t": "Match the Shopify Grid",
-        "d": "Post matching teal-mat routine images on the product page and the collection grid.",
+        "d": "Matching routine images for the product page and the collection grid.",
         "href": "/platforms/shopify-product-photos"
       }
     ]

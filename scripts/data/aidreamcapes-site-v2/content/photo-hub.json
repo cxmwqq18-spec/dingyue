@@ -1,10 +1,10 @@
 {
   "id": "photo-hub",
-  "title": "AI Product Photo Generator for Sellers | AIVideosUGC",
-  "description": "This AI product photo generator can remove the background, add a soft shadow, and turn one photo into a listing or lifestyle scene. See the credit cost first.",
-  "h1": "Make listing, lifestyle, and ad images with an AI product photo generator",
+  "title": "AI Product Photo Generator | AIVideosUGC",
+  "description": "AI product photo generator for instant photoshoots. Remove a background, add a scene, and make listing photos from one shot. See the 24-credit cost first.",
+  "h1": "AI Product Photo Generator for Instant Photoshoots",
   "eyebrow": "Post the Lip Balm Photo",
-  "lead": "Put the lip balm on the vanity you wanted. This AI product photo generator starts from the photo you already shot, so you can skip the studio day.",
+  "lead": "Had a scene in mind that felt too hard to shoot? This AI product photo generator lets you place the item in new backgrounds, styles, and settings right away.",
   "secondary_keywords": [
     "AI product image generator",
     "AI photos for Shopify products",
@@ -15,49 +15,49 @@
   "benefits": [
     {
       "icon": "coins",
-      "t": "Skip the Studio Invoice",
-      "d": "A studio day is the expensive part. Here each photo is 24 credits, so the balm scene does not wait on a photographer's calendar."
+      "t": "Spend Less Than a Studio Day",
+      "d": "A studio day is the expensive part. Here each photo is 24 credits, so you save time and money and skip the photographer's calendar."
     },
     {
       "icon": "clock",
-      "t": "Ship Without a Studio Booking",
-      "d": "The lip balm can go on the page from the photo you took on the packing table. A rental day does not have to be booked first."
+      "t": "A Usable Photo Without the Wait",
+      "d": "You do not wait days for a shoot. You get a clean product photo you can post, fast and without a fuss."
     },
     {
       "icon": "layers",
-      "t": "Make Several Scenes From One Photo",
-      "d": "The same balm can be a white-background listing, a vanity scene, and a square for an ad. A store can also send files through the API."
+      "t": "Several Shots From One Photo",
+      "d": "Need a stack of shots? Make a white listing, a lifestyle scene, and a square ad from the same photo. A store can also send files through the API."
     },
     {
       "icon": "users",
-      "t": "Skip the Model and the Props",
-      "d": "The lip balm does not need a hired model or a rented set. Describe the vanity shelf. If a hand should hold it, pick an AI actor."
+      "t": "No Model and No Props",
+      "d": "Skip the hired model and the rented set. Describe the scene you want. If a hand should hold the product, pick an AI actor."
     },
     {
       "icon": "refresh",
-      "t": "Make the Photo on Any Day",
-      "d": "A holiday offer can be pictured on a Sunday night from the laptop. You do not have to wait for a studio to open."
+      "t": "Ready Any Day You Are",
+      "d": "It is open whenever you are. Make the photo at night, on a weekend, or on a holiday, from the laptop."
     },
     {
       "icon": "target",
-      "t": "Test a Second Scene",
-      "d": "Run the balm on marble, then again on a vanity shelf, and keep the file that matches the page."
+      "t": "Test a Second Scene Fast",
+      "d": "Try another background, another style, and another crop. Keep the file that matches the page."
     }
   ],
-  "steps_h2": "Steps to Make an AI Product Image",
-  "steps_lead": "You get a square of the lip balm in the scene you named.",
+  "steps_h2": "How to Make an AI Product Image in 3 Simple Steps",
+  "steps_lead": "Describe the scene or upload a photo, pick the look, then use the file.",
   "steps": [
     {
       "t": "Describe or Upload Your Product",
-      "d": "Upload a full photo of the lip balm, cap beside it. No photo yet? Describe the tube and the cap."
+      "d": "Type a short description of the photo you want, or upload a reference image to start from."
     },
     {
       "t": "Choose a Photo Style",
-      "d": "Ask for the balm on a bright vanity, cap beside it, in warm light. Describe the look you want for that scene."
+      "d": "Pick the look: a clean product shot, a lifestyle scene, or a bolder style. Describe the light and the setting."
     },
     {
       "t": "Check the Photo, Then Use It",
-      "d": "Put the file on the product page after you check the cap. The same still can later open a video ad."
+      "d": "Check the product, then put the file on the page. The same still can later open a video ad."
     }
   ],
   "maker": {
@@ -79,39 +79,39 @@
   },
   "faq": [
     {
-      "q": "What photo can I post from the lip balm picture I have?",
-      "a": "It builds a product photo from the picture you already have, so you can put a scene on the product page. The lip balm stays the item you uploaded."
+      "q": "What does a product photo generator do?",
+      "a": "It builds a product photo from the picture you already have, so you can put a new scene on the product page. The item stays the one you uploaded."
     },
     {
-      "q": "How do I turn a lip balm photo into a scene I can post?",
-      "a": "Use the clearest picture you have of the lip balm, plus a sentence about where it should sit. A full tube reads better than a dark crop. You can add up to 7 reference photos. Ask for warmer light if the first file looks cold. Name the vanity, and keep the cap in the frame."
+      "q": "How do I turn a product photo into a scene I can post?",
+      "a": "Use the clearest picture you have, plus a sentence about where it should sit. A full product reads better than a dark crop. You can add up to 7 reference photos. Name the setting, and keep the whole item in the frame."
     },
     {
-      "q": "What should I check before I post the lip balm photo?",
-      "a": "Check that the lip balm still matches what you sell. The file should keep the shape and the color buyers recognize."
+      "q": "What should I check before I post the photo?",
+      "a": "Check that the item still matches what you sell. The file should keep the shape and the color buyers recognize."
     },
     {
-      "q": "Can I make a lip balm photo before I pick a plan?",
+      "q": "Can I make a product photo before I pick a plan?",
       "a": "No. Starter is $24.50 a month for 200 credits. Each photo is 24 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the number before the photo is made."
     },
     {
-      "q": "Can I put the lip balm photo on the product page?",
-      "a": "Yes. A lip balm can use one file on the product page and another in an email. Check the tube color against the one you pack before either file goes out."
+      "q": "Can I put the new photo on my product page?",
+      "a": "Yes. One file can sit on the product page and another can go in an email. Check the color against the item you pack before either file goes out."
     },
     {
-      "q": "What do I get if I already have a supplier photo of the balm?",
-      "a": "It adds a scene to the supplier shot, such as the balm on a vanity, while keeping the product recognizable."
+      "q": "What do I get if I already have a supplier photo?",
+      "a": "It adds a scene to the supplier shot while keeping the product recognizable. You are not booking a studio for that setting."
     },
     {
-      "q": "Can I post the lip balm photo on my store and in ads?",
+      "q": "Can I post the photo on my store and in ads?",
       "a": "Yes. The file downloads with no watermark. You still have to own the photo you started from, or have permission to use it. Our [AI product photography guide](page:blog-ai-product-photography-guide) covers that check."
     },
     {
-      "q": "Can I add my price or logo before I post the photo?",
+      "q": "Can I add my price or logo on the photo?",
       "a": "Add prices, offers, and logo text in your own editor after download. Words drawn onto the photo can come out wrong, so proof them. See [Shopify product photos](page:plat-shopify) for where those files usually go."
     },
     {
-      "q": "Where do I find a template for the lip balm photo?",
+      "q": "Where do I find a template for the photo?",
       "a": "Browse [product ad templates](page:templates) for plain product photos, lifestyle scenes, and ad layouts. Then upload your photo here and describe the scene."
     },
     {
@@ -119,13 +119,13 @@
       "a": "Yes. Upload several photos, or send them from store software through the API, then make a scene for each one."
     },
     {
-      "q": "Can the lip balm photo become a video with a spoken line?",
+      "q": "Can the photo become a video with a spoken line?",
       "a": "Yes. Turn that photo into a product video, then add a spoken voice, on-screen captions, or a song from the music library. A 6-second clip uses 24 credits. A 10-second clip uses 40, a 15-second clip uses 60, and a 30-second clip uses 120. [Image to video](page:image-to-video) is that next step."
     }
   ],
   "examples": {
-    "h2": "Examples of Product Photos You Can Post",
-    "lead": "Upload your product and name the setting you want. The groups below are looks a catalog can publish.",
+    "h2": "Examples of AI Product Photos",
+    "lead": "Give the product a new look. Coastal, desert, plain studio, or indoor. Upload your product and name the setting.",
     "groups": [
       {
         "label": "Coastal",
@@ -200,14 +200,14 @@
   "hero_cards": [
     {
       "ref": "n:guide:img2-photo-hub-hero-source-r1",
-      "name": "Start with the Balm Photo",
-      "line": "One clear shot of your lip balm is enough to start the next scene.",
+      "name": "Start From the Photo You Have",
+      "line": "One clear product photo is enough to start the next scene.",
       "href": "/ai-image-generation/ecommerce-main-image"
     },
     {
       "ref": "n:guide:img2-photo-hub-hero-result-r1",
-      "name": "A Vanity Scene You Can Post",
-      "line": "Check the balm on the vanity, then put that scene on the page.",
+      "name": "A Scene You Can Post",
+      "line": "Check the product in the new setting, then put that file on the page.",
       "href": "/ai-image-generation/lifestyle-scene"
     }
   ],
@@ -251,8 +251,8 @@
       }
     }
   },
-  "cta_title": "Turn One Photo Into More Scenes",
-  "cta_lead": "Take the lip balm photo you already have and ask for the vanity the listing has been missing.",
+  "cta_title": "Make Stunning Product Photos Now",
+  "cta_lead": "Take the product photo you already have and ask for the scene the listing has been missing.",
   "blockOrder": [
     "hero",
     "picker",
@@ -306,7 +306,7 @@
     "image-to-video",
     "video-hub"
   ],
-  "benefits_lead": "Here is what changes when the next scene starts from a lip balm photo you already own.",
+  "benefits_lead": "Here is what changes when the next scene starts from a photo you already own.",
   "related_h2": "Turn the Photo Into a Video",
   "related_lead": "Once the photo is approved, the same still can open a video on the next page."
 }

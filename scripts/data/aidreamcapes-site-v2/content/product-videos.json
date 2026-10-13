@@ -1,10 +1,10 @@
 {
   "id": "product-videos",
-  "title": "AI Product Video Generator From a Link | AIVideosUGC",
-  "description": "Use an AI product video generator to make a clip from a link or a photo. Add an AI actor, a script, and a spoken voice, then download it with no watermark.",
-  "h1": "AI Product Video Generator: Link, Avatar and Script",
+  "title": "AI Product Video Generator | AIVideosUGC",
+  "description": "AI product video generator that turns a link or a photo into a clip with an AI actor, a script, and a voice. Download it with no watermark and post it.",
+  "h1": "AI Product Video Generator From a Link or Photo",
   "eyebrow": "Post a Product Video",
-  "lead": "Your AI product video generator can start from one catalog photo, with an actor holding the mug and a spoken line.",
+  "lead": "This AI product video generator starts from a link or a photo and skips the studio and the crew. You get a product video in a few minutes, for far less than a shoot day.",
   "secondary_keywords": [
     "AI product demo video",
     "product video for Shopify",
@@ -18,37 +18,37 @@
     },
     {
       "t": "Change Any Part",
-      "d": "Change the sentence, the AI actor, or the counter shot on the ceramic mug without rebuilding the whole clip. Drop a word the shop never uses."
+      "d": "Change the sentence, the AI actor, or the setting without rebuilding the whole clip. Drop a word the shop never uses."
     },
     {
-      "t": "A Voice Like a Person",
-      "d": "A steadier voice lets a mug demo sound like advice from someone who uses it. A shouty promo voice fights a simple product."
+      "t": "A Voice That Sounds Human",
+      "d": "A natural voice lets a demo sound like advice from someone who uses the product. A shouty promo voice fights a simple product."
     },
     {
       "t": "A Plan You Can Budget",
-      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see that cost before it runs. Creator day rates stay off the invoice, and that money can go into the ad budget."
+      "d": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A 6-second video is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see that cost before it runs."
     },
     {
       "t": "An Actor You Can Shape",
-      "d": "If none of the 53 faces match the mug brand, build a custom actor and keep that face on the mug videos."
+      "d": "If none of the 53 faces match the brand, build a custom actor and keep that face on later videos."
     },
     {
       "t": "You Still Direct the Line",
-      "d": "Paste the sentence you already use when a customer asks about the ceramic mug. The draft can shorten it, and you leave in the version the actor will speak."
+      "d": "Paste the sentence you already use when a customer asks. The draft can tighten it. You leave in the version the actor will speak."
     }
   ],
   "steps": [
     {
       "t": "Add a Link or a Photo",
-      "d": "Paste the ceramic mug page. The photo and the title claim become the clip. A private page can use one photo instead."
+      "d": "Paste the product page. The photo and the title become the clip. A private page can use one photo instead."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Choose an AI actor by a bright counter for the mug. The hand and the mug then read at phone size."
+      "d": "Choose an AI actor who fits the buyer. The hand and the product then read at phone size."
     },
     {
       "t": "Check the Script",
-      "d": "If the mug draft says gym essential and you would not, replace it. The actor speaks the line you leave in."
+      "d": "Read the draft. If a line is not something you would say, replace it. The actor speaks the line you leave in."
     }
   ],
   "maker": {
@@ -82,7 +82,7 @@
       "a": "Yes. The actor can show the product in use while saying the one benefit you kept. You are not renting a set for the shoot."
     },
     {
-      "q": "How does a product URL become a video?",
+      "q": "How does a product link become a video?",
       "a": "The page supplies the product photo and the claim you already wrote. The spoken clip is built around those two, with an AI actor holding the item."
     },
     {
@@ -99,7 +99,7 @@
     }
   ],
   "actor_scene_picker": {
-    "title": "Pick Who Holds the Mug",
+    "title": "Pick Who Holds the Product",
     "lead": "Pick an actor and a scene. The clip can include a script, a spoken voice, and captions.",
     "button": "Use this actor and scene",
     "actor_picker": {
@@ -226,9 +226,9 @@
   },
   "benefits_h2": "What an AI Product Video Gives You",
   "steps_h2": "How to Make a Product Video in 3 Simple Steps",
-  "steps_lead": "A public product page is enough to start a mug clip you can put on the listing.",
+  "steps_lead": "A public product page is enough to start a clip you can put on the listing.",
   "compare_table": {
-    "title": "A Shoot Day vs. a Product Link",
+    "title": "The Old Way vs. a Product Link",
     "lead": "Same job, two ways of paying for it: a booked production, or a link and a plan.",
     "columns": [
       "",
@@ -277,27 +277,27 @@
   "definition": {
     "title": "What Is an AI Product Video?",
     "paras": [
-      "An AI product video turns a product page or one photo into a short clip shoppers can judge. An AI actor can hold the item or use it on camera while a script explains why to buy it.",
-      "You approve the line before the clip goes to TikTok, Reels, or the product page. Frames include square 1:1, wide 16:9, and tall 9:16, plus 4:3 and 3:4."
+      "An AI product video turns a product page or one photo into a short clip shoppers can judge. An AI actor can hold the item or use it while a script says why to buy.",
+      "You approve the line before the clip goes to TikTok, Reels, or the product page. Frames include square 1:1, wide 16:9, tall 9:16, plus 4:3 and 3:4."
     ]
   },
   "reasons": {
-    "h2": "Show the Product in a Video That Sells",
-    "lead": "A still photo leaves size, use, and the reason to buy up to the imagination. A product video can carry all three.",
+    "h2": "Use Video for a Product That Sells",
+    "lead": "A still leaves size, use, and the reason to buy up to the imagination. A product video can carry all three.",
     "items": [
       {
-        "t": "Show the Size in a Hand",
-        "d": "A buyer can judge the ceramic mug against a palm when an AI actor holds it on the counter. They are not guessing from a plain white photo.",
+        "t": "Clean Product Shots in a Hand",
+        "d": "A buyer can judge the size against a palm when an AI actor holds the product. They are not guessing from a plain white photo.",
         "icon": "Hand"
       },
       {
         "t": "Show the Product in Use",
-        "d": "A buyer sees the move when an AI actor applies serum, unboxes a gadget, or wears an accessory. A still never shows that action.",
+        "d": "A buyer sees the move when an AI actor uses the product on camera. A still never shows that action.",
         "icon": "Play"
       },
       {
-        "t": "A Line That Makes the Case",
-        "d": "The ceramic mug gets the line you already say at the counter, once you approve the wording. A still photo cannot say it for you.",
+        "t": "Give the Product a Voice",
+        "d": "The product gets the line you already say at the counter, once you approve the wording. A still photo cannot say it.",
         "icon": "Mic"
       }
     ]
@@ -348,5 +348,5 @@
     ]
   },
   "cta_title": "Make the Next Product Video",
-  "cta_lead": "Open the mug page you already sell, or drop in one photo of that mug."
+  "cta_lead": "Open the product page you already sell, or drop in one photo. Studio-style ads, without the studio invoice."
 }

@@ -1,10 +1,10 @@
 {
   "id": "ind-beauty-skincare",
   "title": "Beauty UGC Ad Generator From One Photo | AIVideosUGC",
-  "description": "Make a beauty UGC ad from one cosmetic photo. Show the shade on a wrist, then download a clip for the feed or a paid beauty ad. Cost shows first.",
-  "h1": "Make a Beauty UGC Ad From One Product Photo",
+  "description": "Make a beauty UGC ad from one product photo. Show a routine or a shade, skip the creator wait, and download a clip for the feed or a paid beauty ad.",
+  "h1": "Beauty UGC Ad Generator From One Photo",
   "eyebrow": "Beauty & Personal Care",
-  "lead": "A tinted moisturizer sells when the wrist swatch matches the bottle. An AI avatar applies it, says the shade, and you get a beauty UGC ad from that photo.",
+  "lead": "Beauty sells on trust. A realistic UGC ad can be ready faster than a studio day, from one product photo.",
   "card": "Routines, color samples, unboxings, and review-style clips from one beauty photo.",
   "secondary_keywords": [
     "skincare product video ideas",
@@ -13,16 +13,16 @@
     "skincare texture video",
     "makeup product photos"
   ],
-  "steps_h2": "Your Next Beauty Video Ad for TikTok",
-  "steps_lead": "A clip of the bottle in use comes back from one photo. The credit cost shows before it runs.",
+  "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
+  "steps_lead": "Three steps turn a cosmetic photo into an influencer-style video. The credit cost shows before it runs.",
   "steps": [
     {
       "t": "Upload a Beauty Product",
-      "d": "Photograph the cleanser upright with the label forward. Paste the product page link if that is what you have."
+      "d": "Drop in a link, a photo, or the product details. The ad can start from that alone."
     },
     {
       "t": "Choose an AI Actor",
-      "d": "For a cream blush, pick an AI avatar who looks like the buyer. You can swap that face before the clip is made."
+      "d": "Pick an AI actor who looks like the buyer. You can swap that face before the clip is made."
     },
     {
       "t": "Add a Spoken Voice and Captions",
@@ -40,7 +40,7 @@
     },
     {
       "q": "Will the clip match my foundation or lipstick shade?",
-      "a": "Color follows your photo and the words you use. Shoot in daylight and name the shade in plain words, such as warm beige liquid. If the color is off, make another version."
+      "a": "Color follows your photo and the words you use. Shoot in daylight and name the shade in plain words, such as warm beige. If the color is off, make another version."
     },
     {
       "q": "Can I put a price or a promo code on the image?",
@@ -52,7 +52,7 @@
     },
     {
       "q": "How long should a beauty ad be, and what does it cost?",
-      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip is 24 credits, 10 seconds is 40, 15 seconds is 60, and 30 seconds is 120. A still image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. If the job fails, those credits come back."
+      "a": "Choose 6, 10, 15, or 30 seconds. A 6-second clip spends 24 credits, 10 seconds spends 40, 15 seconds spends 60, and 30 seconds spends 120. A still image is 24 credits. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. The screen shows that cost before you start. If the job fails, those credits come back."
     },
     {
       "q": "Can I run the clips as paid beauty ads?",
@@ -68,7 +68,7 @@
     }
   ],
   "templates_lead": "Pick a routine, a texture close-up, a review-style clip, or an unboxing for the next shade.",
-  "cta_lead": "The next shade can go out from one photo and an AI avatar. You see the credit cost before you start.",
+  "cta_lead": "The next product can go out from one photo and an AI avatar. You see the credit cost before you start.",
   "visual": {
     "overview": "",
     "strip": [
@@ -109,33 +109,33 @@
     "href": "/app/create"
   },
   "reasons": {
-    "h2": "Skip the Wait for a Beauty Creator",
-    "lead": "The next concealer can go out even when last week's creator never sent the file.",
+    "h2": "Why Beauty Brands Stop Waiting on Creators",
+    "lead": "No more ghosting, delays, or surprise invoices in the beauty routine.",
     "items": [
       {
-        "t": "Spend Credits, Not a Shoot Day",
-        "d": "A glass dropper bottle can be the whole source. Name one motion, a pump onto the back of a hand, and the credit cost sits on screen before the job runs.",
+        "t": "Skip the Shoot and the Wait",
+        "d": "Skip expensive shoots and creators who go quiet. Show a routine, a makeup application, or a hair change, and publish in minutes.",
         "img": "n:guide:fx29-beauty-benefit-routine"
       },
       {
         "t": "Fill Every Channel From One Photo",
-        "d": "The same serum photo can become the clip for a phone feed and a separate still for the product page. You are not waiting on a crew to finish the second one.",
+        "d": "Make tutorials, demos, and ads for feeds, shorts, stories, and your site. You are not waiting on a crew for the second cut.",
         "img": "n:guide:fx29-beauty-benefit-versions"
       },
       {
-        "t": "Show the Use, Then Sell",
-        "d": "Show the balm going onto a knuckle, then point the viewer to the product page. The buyer sees it in use and has a next step to purchase.",
+        "t": "Show the Product, Then Sell",
+        "d": "A creator-style beauty clip grabs attention and shows the product in use. You can sell without a big production bill.",
         "img": "n:guide:fx29-beauty-benefit-swatch"
       }
     ]
   },
   "platforms": {
     "h2": "Post the Beauty Ad on Every Channel",
-    "lead": "One serum bottle can feed the phone feeds and the listing. Pick the shape that place already uses.",
+    "lead": "One product photo can feed the phone feeds and the listing. Pick the shape that place already uses.",
     "items": [
       {
         "t": "Post Routines on TikTok",
-        "d": "A tall phone video of a serum routine, or a shade swipe, ready for a beauty ad in the TikTok feed.",
+        "d": "A tall phone video of a routine, or a shade swipe, ready for a beauty ad in the TikTok feed.",
         "href": "/platforms/tiktok-ads"
       },
       {
@@ -145,7 +145,7 @@
       },
       {
         "t": "Run a Facebook Feed Ad",
-        "d": "A feed image of the compact, with room to type the offer after you download.",
+        "d": "A feed image of the package, with room to type the offer after you download.",
         "href": "/platforms/facebook-ads"
       },
       {
@@ -160,7 +160,7 @@
       },
       {
         "t": "Match the Shopify Collection",
-        "d": "Product and collection images that match, made from the same source photo of the bottle.",
+        "d": "Product and collection images that match, made from the same source photo.",
         "href": "/platforms/shopify-product-photos"
       }
     ]
@@ -199,7 +199,7 @@
       }
     ]
   },
-  "cta_title": "Post the Next Shade Yourself",
+  "cta_title": "Post the Next Beauty Ad Yourself",
   "relatedLinks": [
     {
       "id": "tpl-beauty",
@@ -239,7 +239,7 @@
   ],
   "more_sections": [
     {
-      "eyebrow": "In the Finished Beauty Clip",
+      "eyebrow": "In the finished beauty clip",
       "h2": "Add a Voice, Captions, and an Avatar",
       "lead": "The clip can carry a spoken line, so the ad is ready for the feed.",
       "items": [
@@ -249,7 +249,7 @@
         },
         {
           "t": "Pick an Avatar Who Would Buy It",
-          "d": "An AI avatar can hold the compact. Pick someone who would actually buy that shade."
+          "d": "An AI avatar can hold the package. Pick someone who would actually buy that shade."
         },
         {
           "t": "Voice and Captions Included",

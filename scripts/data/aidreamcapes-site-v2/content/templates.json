@@ -1,10 +1,10 @@
 {
   "id": "templates",
-  "title": "UGC Inspiration Gallery of Ad Templates | AIVideosUGC",
-  "description": "Browse an inspiration gallery of UGC and product ad templates. Pick a layout, add your own product photo, and post the ad without writing a prompt.",
-  "h1": "See a Template, Drop In Your Product, Post It",
+  "title": "UGC Ad Template Gallery | AIVideosUGC",
+  "description": "Browse a gallery of UGC and product ad templates. Find a style, add your own product photo, and generate the ad in a few minutes without writing a prompt.",
+  "h1": "See a Style, Recreate It, Launch It",
   "eyebrow": "Product Ad Templates to Post",
-  "lead": "See a product ad template, drop in the photo you already have, and post a speaking clip. You skip the blank prompt.",
+  "lead": "Find a style you like and rebuild that style around your product. No prompt to write. Pick a template, drop in your product, and generate the ad in a few minutes.",
   "card": "Ready-made layouts for product pictures and short clips. Add your photo and download the next file.",
   "secondary_keywords": [
     "product photo templates",
@@ -14,32 +14,32 @@
   ],
   "faq": [
     {
-      "q": "What is a product ad template for the item I sell?",
-      "a": "A product ad template is a finished layout for your product, with the scene and the speaking pace already set. Add the leather duffel photo, and an AI actor can deliver the line. You are not building the ad from an empty timeline."
+      "q": "What is a product ad template?",
+      "a": "A finished layout for your product, with the scene and the speaking pace already set. Add your photo, and an AI actor can deliver the line. You are not building the ad from an empty timeline."
     },
     {
       "q": "How does a template become an ad I can post?",
-      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your serum, an AI actor speaks it. Save the clip, or post it to your shop."
+      "a": "You add the product photo or the product link, then set the one line a buyer would actually say. When the frame shows your product, an AI actor speaks it. Save the clip, or post it to your shop."
     },
     {
       "q": "Why use a template instead of hiring a creator?",
-      "a": "The creator you wanted is booked, and a second opening line can still be made while you wait. A serum ad can get that new line, plus a fresh script, without a new booking."
+      "a": "The creator you wanted may be booked, and a second opening line can still be made while you wait. You get a new line and a fresh script without a new booking."
     },
     {
       "q": "Who should use a product ad template?",
-      "a": "A founder with one necklace photo, a marketer refreshing this month's ads, and an agency making a client file all start here. The shared step is a picture of the item you already sell."
+      "a": "A founder with one product photo, a marketer refreshing this month's ads, and an agency making a client file all start here. The shared step is a picture of the item you already sell."
     },
     {
-      "q": "I have never edited a video. Can I still make an ad from a template?",
-      "a": "Yes. Start with a watch photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
+      "q": "I have never edited a video. Can I still use a template?",
+      "a": "Yes. Start with a product photo and the three steps above. If a caption runs long, shorten it in the editor, or drop a song under the voice."
     },
     {
-      "q": "Which industries are these product ad templates for?",
-      "a": "Accessories, apparel, apps, beauty and personal care, and clothing all have layouts. So do e-commerce, education, explainers, financial services, food and beverage, and footwear. Health and fitness, jewelry, kids and toys, pets, sports, and tech are included. Creator-style ads and viral layouts are included too. Open one with the category buttons."
+      "q": "Which industries are these templates for?",
+      "a": "Accessories, apparel, apps, beauty and personal care, and clothing all have layouts. So do e-commerce, education, explainers, financial services, food and beverage, and footwear. Health and fitness, jewelry, kids and toys, pets, sports, and tech are included. Creator-style ads and viral layouts are included too."
     },
     {
-      "q": "Can I use my own pictures and clips in a template?",
-      "a": "Yes, if you have the right to use them. A front-on photo of the frying pan and your shop logo are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
+      "q": "Can I use my own pictures and clips?",
+      "a": "Yes, if you have the right to use them. A front-on product photo and your shop logo are a usual pair. A clip you filmed yourself can come in too, with up to 7 reference images on one job."
     },
     {
       "q": "Where can I publish the ad from these layouts?",
@@ -51,11 +51,11 @@
     },
     {
       "q": "Can I use the download in a paid ad?",
-      "a": "Yes. A necklace clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
+      "a": "Yes. The clip can run as a paid ad, and the same file can go to a client. The download has no watermark, and you still need rights to the product photo. An AI twin can keep one face across versions. The API can start the next file from your catalog."
     },
     {
       "q": "Why not build the ad from a blank page?",
-      "a": "The layout already sets the scene, the hook, and the pace, so you decide the offer and post. A tea tin ad does not start by building the kitchen from nothing."
+      "a": "The layout already sets the scene, the hook, and the pace, so you decide the offer and post. You do not start by building the room from nothing."
     }
   ],
   "visual": {
@@ -554,25 +554,25 @@
   "steps": [
     {
       "t": "Add Your Product",
-      "d": "Upload a clear photo of the leather duffel, or paste its product page link. The duffel in the frame is the one you ship."
+      "d": "Upload a clear product photo, or paste its page link. The product in the frame is the one you ship."
     },
     {
       "t": "Choose a Template",
-      "d": "Open a layout whose scene and pace already fit a product ad. Your duffel drops into that frame."
+      "d": "Open a layout whose scene and pace already fit a product ad. Your product drops into that frame."
     },
     {
       "t": "Download or Post",
-      "d": "Download the duffel clip with no watermark, or post the 9:16 cut. The credit cost is on screen before you start."
+      "d": "Download the clip with no watermark, or post the 9:16 cut. The credit cost is on screen before you start."
     }
   ],
   "steps_h2": "How to Make a Product Ad From a Template in 3 Steps",
-  "steps_lead": "You get a speaking ad from a layout you already like. The leather duffel below is the product, and the credit line shows first.",
-  "benefits_h2": "Pieces Already Inside the Layout",
+  "steps_lead": "You get a speaking ad from a layout you already like. The credit cost shows before you start.",
+  "benefits_h2": "What Is Already Inside the Layout",
   "benefits_lead": "Open one card and the ad is already a speaking clip. You bring the product photo.",
   "benefits": [
     {
-      "t": "Open on the Backpack Strap",
-      "d": "For a backpack, the draft can open on the padded strap, not on a generic hello. Change the color name in that line and the ad matches your listing."
+      "t": "A Hook That Fits the Product",
+      "d": "The draft can open on the detail that matters, not on a generic hello. Change the color name and the line matches your listing."
     },
     {
       "t": "A Voice Shoppers Hear",
@@ -580,19 +580,19 @@
     },
     {
       "t": "Captions Shoppers Can Read",
-      "d": "The words sit on the video, so shoppers can read the line while the voice plays. A candle ad can show the scent name on screen."
+      "d": "The words sit on the video, so shoppers can read the line while the voice plays."
     },
     {
-      "t": "An Avatar Holds the Necklace",
-      "d": "An AI avatar from the library can hold the necklace in a daylight close-up. If the face should be yours, an AI twin can be built from photos you already took."
+      "t": "An Actor in the Frame",
+      "d": "An AI actor from the library can hold the product in a close-up. If the face should be yours, an AI twin can be built from photos you already took."
     },
     {
-      "t": "Trim the Blender Clip and Add Music",
-      "d": "You can trim the blender clip to the sentence about the glass jar, and lay a track under it in the editor."
+      "t": "Trim the Clip and Add Music",
+      "d": "Trim the clip to the sentence that matters, and lay a track under the voice in the editor."
     },
     {
       "t": "From a Product Link to a Post",
-      "d": "A headphone product page can drive the first draft, so you paste that link instead of describing the item from scratch. A second language can reuse the same photo, and your own software can start the job through the API."
+      "d": "A product page can drive the first draft, so you paste that link instead of describing the item from scratch. Your own software can start the next job through the API."
     }
   ],
   "blockOrder": [
@@ -667,7 +667,7 @@
     }
   ],
   "cta_title": "Start From a Layout You Like",
-  "cta_lead": "Add the leather duffel photo and get the speaking clip from the layout you like.",
+  "cta_lead": "Add your product photo and get the speaking clip from the layout you like. No prompt to write.",
   "gallery_h2": "Every Product Ad Template on the Wall",
   "gallery_lead": "Open a card, watch the example, and fill it with the product you sell. The category buttons are the same wall every shop uses."
 }

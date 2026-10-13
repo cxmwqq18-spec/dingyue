@@ -1,10 +1,10 @@
 {
   "id": "glossary",
-  "title": "AI UGC and Digital Marketing Glossary | AIVideosUGC",
-  "description": "Plain definitions of AI UGC and digital marketing terms, from video ads to product photos. Open a term, follow the link, and make the photo or video.",
-  "h1": "AIVideosUGC Glossary: Terms for Product Photos and Videos",
+  "title": "Product Photo and Video Glossary | AIVideosUGC",
+  "description": "Plain product photo and video terms for your shop, from credits and frame sizes to ad words. Open a term, follow the link, and make the photo or the clip.",
+  "h1": "Photo and Video Terms, Explained",
   "eyebrow": "Find a Term and Make the File",
-  "lead": "Plain AI UGC definitions for the photo, video, and ad words you will meet here. Open a term, follow the link, and make the file.",
+  "lead": "Explore plain product photo and video terms in one glossary, so you can learn a word, follow the link, and make the file you need.",
   "secondary_keywords": [
     "ecommerce glossary",
     "product video terms",
@@ -13,7 +13,7 @@
   "entries": [
     {
       "term": "Credits",
-      "definition": "Credits are the points each photo or video spends. A product photo is 24 credits. A video is 24 credits for 6 seconds, 40 for 10, 60 for 15, and 120 for 30. Starter is $24.50 a month for 200 credits. Pro is $35 for 300 credits, and Premium is $63 for 600. You see the cost before you confirm. If the job fails, the credits come back.",
+      "definition": "Credits are spent per job: a photo is 24, and a video is 24, 40, 60, or 120 for 6, 10, 15, or 30 seconds. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, Premium is $63 for 600, and a failed job returns them.",
       "related_page_ids": [
         "pricing",
         "faq"
@@ -21,7 +21,7 @@
     },
     {
       "term": "Aspect ratio",
-      "definition": "Aspect ratio is how wide the frame is next to its height. Pick 9:16 for a tall phone, or 1:1 for a square. Use 16:9 for a wide screen, 4:3 when the frame is a bit wide, and 3:4 when it is a bit tall. Choose the shape of the post, then check the edges after you download.",
+      "definition": "Aspect ratio is how wide the frame is beside how tall it is. Choose 9:16, 1:1, 16:9, 4:3, or 3:4 to match the post, then look at the edges after download.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "video-hub"
@@ -29,7 +29,7 @@
     },
     {
       "term": "Duration",
-      "definition": "Duration is how long the video runs. You can choose 6, 10, 15, or 30 seconds. A lid closing can stay at 6 seconds. An unboxing or a before-and-after needs the longer cut so both parts fit on screen.",
+      "definition": "Duration is how long the clip runs, and you can pick 6, 10, 15, or 30 seconds. A lid closing can stay short, while an unboxing needs the longer cut so both halves fit.",
       "related_page_ids": [
         "video-hub",
         "before-after-videos"
@@ -37,7 +37,7 @@
     },
     {
       "term": "White background",
-      "definition": "A white-background photo puts the product on plain white, with nothing else in the frame. Sellers use it as the main image on a marketplace. Start from a full, sharp photo of the product. Check that site's current image rules before you publish.",
+      "definition": "A white background sets the product on plain white and leaves the rest of the frame empty. Start from a sharp photo of the whole item, then read that site's current image rules.",
       "related_page_ids": [
         "white-background",
         "guide-white-background-amazon"
@@ -45,7 +45,7 @@
     },
     {
       "term": "Packshot",
-      "definition": "A packshot is a clean product photo. The item stands alone, so a shopper can judge its shape and its surface. It is not a daily-life scene with extra items or a person. The angle template makes matching square photos of the front, back, top, or base. You need a photo of each real side you want to show.",
+      "definition": "A packshot is a clean product photo with the item standing alone, so a shopper can judge the shape and the surface. It is not a daily scene with extra things or a person.",
       "related_page_ids": [
         "tpl-angle",
         "examples"
@@ -53,7 +53,7 @@
     },
     {
       "term": "UGC",
-      "definition": "UGC means user-generated content: a video that looks like a shopper filmed it on a phone. An AI actor can speak a line you write, with captions and music under the clip. The actor is fictional. If the platform asks you to disclose that, describe the clip accurately.",
+      "definition": "UGC is a clip that looks like a shopper filmed the product on a phone, and an AI actor can say a line you write. The person on screen is fictional, so say so if the platform asks you to.",
       "related_page_ids": [
         "video-ads",
         "ai-info"
@@ -61,7 +61,7 @@
     },
     {
       "term": "B-roll",
-      "definition": "B-roll is extra video of the product, a hand, a close detail, or an everyday action. It is not only a person talking to the camera. That footage can play under an AI voice, with captions and music, while the product stays easy to see.",
+      "definition": "B-roll is extra footage of the product, a hand, a close detail, or a daily action. It is not just a person talking to the camera, so the item stays easy to see.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "video-ads"
@@ -69,7 +69,7 @@
     },
     {
       "term": "Spark Ads",
-      "definition": "Spark Ads are TikTok ads that boost a post you already put up. You can send a video to TikTok from AIVideosUGC, with an AI voice, captions, and music. In TikTok Ads Manager you still choose who sees it, the budget, and the Spark permission TikTok asks for. Keep the actor role clear in the ad.",
+      "definition": "Spark Ads are TikTok ads that boost a post you already put up. You can send a video from here, then set who sees it, the budget, and the permission TikTok asks for.",
       "related_page_ids": [
         "tpl-spark-ads-style-video",
         "plat-tiktok"
@@ -77,7 +77,7 @@
     },
     {
       "term": "Retargeting",
-      "definition": "Retargeting means showing ads to people who already visited your shop, viewed a product, or left items in the cart. AIVideosUGC can make the picture or the video for that follow-up. It cannot see who visited, and it cannot pick the audience. In your ad account, set who to include, who to skip, the offer, the budget, and how often the ad shows.",
+      "definition": "Retargeting means ads for people who already visited your shop, viewed a product, or left a cart. You make the photo or video here, and the ad account chooses who sees it.",
       "related_page_ids": [
         "video-ads",
         "social-ad-photos"
@@ -85,7 +85,7 @@
     },
     {
       "term": "Safe zone",
-      "definition": "A safe zone is the middle of a social video that people still see. The app covers the edges with buttons, captions, or the profile button. You add the final words yourself. Keep the product and those words off the bottom edge and the right edge. Then preview the file in each ad account.",
+      "definition": "A safe zone is the middle of a social video that people still see. The app covers the edges with buttons and captions, so keep the product and your words away from those edges.",
       "related_page_ids": [
         "guide-ad-sizes-by-platform",
         "plat-tiktok"
@@ -93,7 +93,7 @@
     },
     {
       "term": "Feed ad",
-      "definition": "A feed ad is a paid picture or video in the scrolling list of posts. You get a clear product scene, often square, with room for your message. A video can already include captions, a voice, and music. Type the exact price yourself so it matches the store today.",
+      "definition": "A feed ad is a paid photo or video inside the scrolling list of posts. Make a clear product scene, often square, and type the price so it matches the store today.",
       "related_page_ids": [
         "social-ad-photos",
         "plat-facebook"
@@ -101,7 +101,7 @@
     },
     {
       "term": "Ads Manager",
-      "definition": "Ads Manager is the page in an ad account where you choose who sees the ad, the budget, where it shows, and when it runs. You can send the file to TikTok or Meta (Facebook and Instagram) from AIVideosUGC, or download it. Type the price so it matches your store now.",
+      "definition": "Ads Manager is the screen where you choose who sees the ad, the budget, and when it runs. Send the file to TikTok or Meta, or download it and post it yourself.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook"
@@ -109,7 +109,7 @@
     },
     {
       "term": "Product demo",
-      "definition": "A product demo is a short video of one useful action, such as a kettle pouring or a lid closing. Describe that one action. Upload a photo that shows the moving part. Then compare the result with the real product before you post the file.",
+      "definition": "A product demo is a short video of one useful action, such as a pour or a lid closing. Upload a photo that shows the moving part, then compare the file with the real item.",
       "related_page_ids": [
         "product-videos",
         "tpl-howto"
@@ -117,7 +117,7 @@
     },
     {
       "term": "Unboxing",
-      "definition": "An unboxing video shows a package opening and the product coming out. You describe the box, the paper, the insert, and the order things appear. Your product photo keeps the item looking like yours. Music can come from the library. Add the current price after you download.",
+      "definition": "An unboxing video shows a package opening and the product coming out, in the order you describe. Your photo keeps the item looking like the one you sell, including the box and the paper.",
       "related_page_ids": [
         "product-videos",
         "blog-unboxing-videos-for-launches"
@@ -125,7 +125,7 @@
     },
     {
       "term": "Before-and-after",
-      "definition": "Before-and-after shows the start, then the change the product makes. It fits a change you can see, such as a drawer put in order. Describe both halves in the note you write. Do not promise a medical result, a body change, or better performance unless the real product can do that.",
+      "definition": "Before-and-after shows the start, then the change a product makes, such as a drawer put in order. Do not promise a medical result or a body change the real item cannot do.",
       "related_page_ids": [
         "before-after-videos",
         "tpl-home"
@@ -133,7 +133,7 @@
     },
     {
       "term": "Lifestyle photo",
-      "definition": "A lifestyle photo puts the product in an everyday setting, so a shopper can picture owning it. A mug can sit beside a book on a table. The scene comes from your product photo and the place you describe. Compare the result with the real item before you use the file.",
+      "definition": "A lifestyle photo puts the product in an everyday place, so a shopper can picture owning it, like a mug beside a book. Compare the file with the real item before you use it.",
       "related_page_ids": [
         "lifestyle-photos",
         "photo-hub"
@@ -141,7 +141,7 @@
     },
     {
       "term": "On-model photo",
-      "definition": "An on-model photo shows clothing, jewelry, a bag, or something else you wear, on a person the tool makes. Shoppers can see how it hangs and how big it looks next to a shoulder or a wrist. The tool does not give measurements or confirm the fit. Keep your size chart next to the picture.",
+      "definition": "An on-model photo shows clothes, jewelry, or a bag on a person the tool makes, so you can see the hang and the scale. Keep your size chart beside the picture, since the photo does not measure fit.",
       "related_page_ids": [
         "model-photos",
         "tpl-tryon"
@@ -149,7 +149,7 @@
     },
     {
       "term": "Flat lay",
-      "definition": "A flat lay is a photo from above. The product and a few extra items sit on a surface. Upload a photo of the whole product, then describe the surface and the layout you want. Check that every item in the picture is something you actually sell.",
+      "definition": "A flat lay is a photo from above, with the product and a few other items on a surface. Upload the whole product, and only include things you actually sell.",
       "related_page_ids": [
         "model-photos",
         "tpl-outfit"
@@ -157,7 +157,7 @@
     },
     {
       "term": "Swatch",
-      "definition": "A swatch is a small sample of a color or a surface next to the product, so a shopper can judge the shade. Make it from your own product photos. Then add the color name and the price yourself after you download the file.",
+      "definition": "A swatch is a small sample of a color or a surface beside the product, so a shopper can judge the shade. Make it from your own photos, then add the color name and the price.",
       "related_page_ids": [
         "tpl-color",
         "ind-beauty-skincare"
@@ -165,7 +165,7 @@
     },
     {
       "term": "Variant",
-      "definition": "A variant is one option a shopper can buy, such as a color, a size, a surface, or how much it holds. Upload a photo for each option you sell. Then put each downloaded file on the matching option in Shopify or on Amazon.",
+      "definition": "A variant is one option a shopper can buy, such as a color, a size, or a surface. Upload a photo for each option you sell, then place that file on the matching option.",
       "related_page_ids": [
         "tpl-color",
         "plat-shopify"
@@ -173,7 +173,7 @@
     },
     {
       "term": "Carousel",
-      "definition": "A carousel is several slides in one social ad. People swipe through products, angles, or options such as colors. AIVideosUGC makes each picture or each video. You set the order, the words, and the link inside your ad account.",
+      "definition": "A carousel is several slides in one social ad, so people can swipe through products or colors. You make each photo or video here, then set the order and the link in the ad account.",
       "related_page_ids": [
         "video-ads",
         "plat-instagram"
@@ -181,7 +181,7 @@
     },
     {
       "term": "CTA (call to action)",
-      "definition": "A CTA, or call to action, is the short line that says what to do next, such as shop or view the product. Put that line in the spoken words or in the captions. Type the date and the price so they match your store now.",
+      "definition": "A call to action is the short line that tells someone what to do next, such as shop or view the product. Put it in the spoken line or the captions, and match the price to your store.",
       "related_page_ids": [
         "occ-sale-discount",
         "video-ads"
@@ -189,7 +189,7 @@
     },
     {
       "term": "AI-generated content",
-      "definition": "AI-generated content is a picture or video the tool creates or changes. It is not a photo or video you only filmed with a camera. Check every result against the real item before it goes up. A generated person is not a customer testimonial. If the app asks you to say it is made by AI, do that.",
+      "definition": "AI-generated content is a picture or video the tool creates or changes, rather than a frame you only filmed. Check it against the real item, and do not present a generated person as a buyer.",
       "related_page_ids": [
         "trust",
         "video-ads"
@@ -197,7 +197,7 @@
     },
     {
       "term": "Caption",
-      "definition": "A caption is words on a video that show at the right time, or the written line under a social post. Videos can include captions from the start. Edit them in the editor so the price, the date, and any code match your store now.",
+      "definition": "A caption is words on a video that appear at the right moment, or the written line under a post. Edit them so the price, the date, and any code match the store now.",
       "related_page_ids": [
         "ai-info",
         "guide-first-tiktok-video-ad"
@@ -205,7 +205,7 @@
     },
     {
       "term": "Spoken narration",
-      "definition": "Spoken narration is the voice you hear on a video. An AI actor speaks the line you write, in the language you choose. That speech is not a customer review. You can change the voice in the editor before you download the file again.",
+      "definition": "Spoken narration is the voice you hear on a video, spoken by an AI actor from the line you write. You choose the language by writing that line, and the speech is not a buyer review.",
       "related_page_ids": [
         "ai-info",
         "spokesperson-videos"
@@ -213,7 +213,7 @@
     },
     {
       "term": "Template",
-      "definition": "A template is a ready-made setup for one product photo or video, such as a white background, an unboxing, or a short demo. Upload the product photo and follow the notes on that template. Start again when you want a different setup.",
+      "definition": "A template is a ready setup for one photo or video, such as a white background, an unboxing, or a short demo. Upload the product photo, follow the notes, and run again for a different setup.",
       "related_page_ids": [
         "templates",
         "video-hub"
@@ -221,7 +221,7 @@
     },
     {
       "term": "Marketplace listing",
-      "definition": "A marketplace listing is the product page you keep on a selling site such as Amazon or Etsy. That site sets the image slots and the video rules. Download the files here, then check the current seller rules before you upload them.",
+      "definition": "A marketplace listing is the product page you keep on a selling site such as Amazon or Etsy, and that site sets the image slots. Download the files here, then read the current rules before you upload.",
       "related_page_ids": [
         "plat-amazon",
         "white-background"
@@ -229,7 +229,7 @@
     },
     {
       "term": "DTC",
-      "definition": "DTC means direct to consumer. The brand sells in its own online store, not only on a marketplace. Sellers use the photos and the short videos on that store, in social posts, in email, and in ads.",
+      "definition": "DTC means direct to consumer: the brand sells in its own online store, not only on a marketplace. You use the photos and short videos on that store, in posts, in email, and in ads.",
       "related_page_ids": [
         "ai-info",
         "plat-shopify"
@@ -237,7 +237,7 @@
     },
     {
       "term": "AI actor",
-      "definition": "An AI actor is a made-up person on screen who can hold, wear, or talk about a product. You pick one from 53 AI actors, or you describe the look. The on-screen person is fictional. The picture does not replace a size chart.",
+      "definition": "An AI actor is a made-up person on screen who can hold, wear, or talk about a product. Pick from 53 AI actors or describe the look, and remember the picture does not replace a size chart.",
       "related_page_ids": [
         "ai-actors",
         "spokesperson-videos"
@@ -245,7 +245,7 @@
     },
     {
       "term": "AI script",
-      "definition": "An AI script is the spoken line the tool writes from the product and the shopper you describe. You can edit every sentence before the actor says it. The line should only say what the real item does.",
+      "definition": "An AI script is the spoken line the tool writes from the product and the buyer you name, and you can edit every sentence first. The line should only say what the real item does.",
       "related_page_ids": [
         "video-ads",
         "spokesperson-videos"
@@ -253,7 +253,7 @@
     },
     {
       "term": "AI voice",
-      "definition": "An AI voice is the voice an actor uses for the line you write. You pick the language by writing the line in it. The voice is made by the tool. It is generated audio, not a recording from a customer.",
+      "definition": "An AI voice is the voice an actor uses for the line you write, and you choose the language by writing that line. The voice comes from the tool, not from a buyer recording.",
       "related_page_ids": [
         "spokesperson-videos",
         "ai-actors"
@@ -261,7 +261,7 @@
     },
     {
       "term": "API",
-      "definition": "An API lets your other software ask for a product photo or a video. The credit charge matches what you see in the app, and a failed job returns the credits. A video is 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. A photo is 24 credits.",
+      "definition": "An API lets other software ask for a product photo or a video, and the credit charge matches what you see in the app. A failed job returns the credits.",
       "related_page_ids": [
         "pricing",
         "faq"
@@ -269,7 +269,7 @@
     },
     {
       "term": "Batch",
-      "definition": "A batch is several photos or videos from one product photo. Each one can have its own scene, shape, or first line. Every one shows its credit cost before it starts. Download the ones you want, or send a finished file to TikTok or Meta (Facebook and Instagram).",
+      "definition": "A batch is several photos or videos from one product photo, each with its own scene or length, and each shows its credit cost first. Download the ones you want, or send a finished file to TikTok or Meta.",
       "related_page_ids": [
         "video-ads",
         "image-to-video"
@@ -277,7 +277,7 @@
     },
     {
       "term": "Built-in editor",
-      "definition": "The built-in editor changes a finished file without another app. You can change the spoken line, the captions, the voice, the music, and the person on screen. Then download the file again.",
+      "definition": "The built-in editor changes a finished file without a second app. You can change the spoken line, the captions, the voice, the music, and the person on screen, then download again.",
       "related_page_ids": [
         "video-ads",
         "faq"
@@ -285,7 +285,7 @@
     },
     {
       "term": "Link to video",
-      "definition": "Link to video starts a video from a public product page. It uses that page's main image and the product name. It does not copy prices or reviews from the page. You still pick the shape and the length, then check the file before you post it.",
+      "definition": "Link to video starts a clip from a public product page, using that page's main image and the product name. It does not copy prices or reviews, so check the file before you post.",
       "related_page_ids": [
         "url-to-video",
         "product-videos"
@@ -293,7 +293,7 @@
     },
     {
       "term": "Music library",
-      "definition": "The music library is a set of songs you can put under a product video. Swap the song in the editor when the mood should change. You still write the spoken line, and you are responsible for what it says.",
+      "definition": "The music library is a set of songs you can place under a product video, and swap the song when the mood should change. You still write the spoken line, and you own every word of it.",
       "related_page_ids": [
         "video-ads",
         "product-videos"
@@ -301,7 +301,7 @@
     },
     {
       "term": "One-click publish",
-      "definition": "One-click publish sends a finished photo or video to TikTok or Meta (Facebook and Instagram) from AIVideosUGC. You can download the file instead. You still set who sees it, the budget, where it shows, and the schedule in the ad account.",
+      "definition": "One-click publish sends a finished photo or video to TikTok or Meta from here, and you can download the file instead. You still set the audience, the budget, and the schedule in the ad account.",
       "related_page_ids": [
         "plat-tiktok",
         "plat-facebook"
@@ -309,7 +309,7 @@
     },
     {
       "term": "Ad cloning",
-      "definition": "Ad cloning means making a new ad that follows a look you already like, with your own product in the frame. Start from a template, then swap in the photo you ship.",
+      "definition": "Ad cloning means a new ad that follows a look you already like, with your own product in the frame. Start from a template, then swap in the photo of the item you ship.",
       "related_page_ids": [
         "templates",
         "video-ads"
@@ -317,7 +317,7 @@
     },
     {
       "term": "AI video agent",
-      "definition": "The AI video agent asks who the product is for, then drafts a script you can edit. You still approve the line before anyone hears it.",
+      "definition": "The AI video agent asks who the product is for, then drafts a script you can edit. You still approve the line before anyone hears it, and it should only say what the real item does.",
       "related_page_ids": [
         "video-hub",
         "url-to-video"
@@ -325,7 +325,7 @@
     },
     {
       "term": "A/B testing",
-      "definition": "A/B testing means showing two versions of an ad and keeping the one you prefer. Change a single piece, such as the first line, so the test stays fair.",
+      "definition": "A/B testing means you show two versions of an ad and keep the one you prefer. Change one piece, such as the opening line, so the comparison stays fair.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "video-ads"
@@ -333,7 +333,7 @@
     },
     {
       "term": "Ad text",
-      "definition": "Ad text is the words in the ad: the spoken line, the caption, and the offer. Write the offer you are actually running, then read it back before you post.",
+      "definition": "Ad text is the words in the ad, meaning the spoken line, the caption, and the offer. Write the offer you are really running, then read it aloud before you post.",
       "related_page_ids": [
         "video-ads",
         "guide-testing-ad-versions"
@@ -341,7 +341,7 @@
     },
     {
       "term": "Ad spend",
-      "definition": "Ad spend is the budget you set in the ad account for who sees the ad. You make the photo or clip here, and that file spends credits, not that budget.",
+      "definition": "Ad spend is the budget you set in the ad account for who sees the ad. The photo or clip you make here spends credits, not that budget.",
       "related_page_ids": [
         "pricing",
         "plat-facebook"
@@ -349,7 +349,7 @@
     },
     {
       "term": "CTR",
-      "definition": "CTR means click-through rate: how many people clicked after they saw the ad. You read it in the ad account, then make a new opening here if you want a test. It is not a promise about the next ad.",
+      "definition": "CTR means click-through rate: how many people clicked after they saw the ad, which you read in the ad account. That count is not a promise about the next ad you make.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "plat-facebook"
@@ -357,7 +357,7 @@
     },
     {
       "term": "CPC",
-      "definition": "CPC means cost per click, the charge in the ad account when someone clicks. You make the photo or clip here, and that file spends credits, not the click charge.",
+      "definition": "CPC means cost per click, the charge in the ad account when someone clicks. The photo or clip you make here spends credits, not that click charge.",
       "related_page_ids": [
         "pricing",
         "plat-facebook"
@@ -365,7 +365,7 @@
     },
     {
       "term": "Conversion rate",
-      "definition": "Conversion rate is how many clicks become an order, as the ad account counts them. You make two ads here, then use that number to keep the one you want.",
+      "definition": "Conversion rate counts how many clicks become an order, the way the ad account counts them. Make two ads here, then keep the one you want.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "plat-shopify"
@@ -373,7 +373,7 @@
     },
     {
       "term": "Creative testing",
-      "definition": "Creative testing means running more than one opening, scene, or line, then keeping the ad you want. Change one piece at a time so you know what you changed.",
+      "definition": "Creative testing means you run more than one opening, scene, or line, then keep the ad you want. Change one piece at a time so you know what changed.",
       "related_page_ids": [
         "guide-testing-ad-versions",
         "video-ads"
@@ -381,7 +381,7 @@
     },
     {
       "term": "Content marketing",
-      "definition": "Content marketing is the posts and videos you publish so shoppers learn the product before they buy. You make a short clip from the product photo and post it, with no shoot to book.",
+      "definition": "Content marketing is the posts and videos you publish so shoppers learn the product before they buy. Make a short clip from the product photo and post it, with no shoot to book.",
       "related_page_ids": [
         "blog",
         "video-hub"
@@ -389,7 +389,7 @@
     },
     {
       "term": "Display ad",
-      "definition": "A display ad is a paid picture on a website or in an app, outside a social feed. You make that picture here so the product stays easy to see, then post it.",
+      "definition": "A display ad is a paid picture on a website or in an app, outside a social feed. Make that picture here so the product stays easy to see, then post it.",
       "related_page_ids": [
         "plat-facebook",
         "social-ad-photos"
@@ -397,7 +397,7 @@
     },
     {
       "term": "Facebook ad",
-      "definition": "Facebook ads are paid posts shown on Facebook. A square or a tall file can run there after you download it, or you can send it from here.",
+      "definition": "Facebook ads are paid posts that show up on Facebook. A square file or a tall file can run there after you download it, or you can send the file from here.",
       "related_page_ids": [
         "plat-facebook",
         "video-ads"
@@ -405,7 +405,7 @@
     },
     {
       "term": "Deep learning",
-      "definition": "Deep learning is the training that lets the tool build a picture or clip from what it learned. You upload your own photo, skip the shoot, and approve the file before you post.",
+      "definition": "Deep learning is the training that lets the tool build a picture or a clip from what it has learned. Upload your own photo, skip the shoot, and approve the file before you post.",
       "related_page_ids": [
         "video-hub",
         "image-to-video"

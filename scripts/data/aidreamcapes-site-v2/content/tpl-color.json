@@ -1,10 +1,10 @@
 {
   "id": "tpl-color",
-  "title": "Product Color Variations in a Coordinated Set | AIVideosUGC",
-  "description": "Make one matching square photo for every color you sell, from your own photo of that color. Shoppers can then compare the options in the same scene.",
-  "h1": "Product Color Variations in One Shared Square Scene",
+  "title": "Product Color Variation Templates | AIVideosUGC",
+  "description": "Pick a product color template and drop in a photo of each shade you sell. You get a matching set in minutes, without filming every color on camera.",
+  "h1": "Product Color Templates You Can Recreate",
   "eyebrow": "Every Shade in One Scene",
-  "lead": "Line up your product color variations on one square counter. Drop in a photo of each dispenser shade you sell, so shoppers can compare them.",
+  "lead": "Pick a color template and drop in a photo of each shade you sell. You get a matching set in minutes, without writing a long brief first.",
   "secondary_keywords": [
     "colorway product photos",
     "product variant images for Shopify",
@@ -14,15 +14,15 @@
   "steps": [
     {
       "t": "Upload Your Shade Photos",
-      "d": "Use your own photos of each dispenser shade. They share one counter, and a missing shade is not invented."
+      "d": "Use your own photos of each shade. They share one scene, and a missing shade is not invented."
     },
     {
       "t": "Describe Your Scene",
-      "d": "The white dispenser is the bath shade. Write that plainly so shoppers know which color is which."
+      "d": "Name which color is which, in plain words, so shoppers are not guessing."
     },
     {
       "t": "Download and Post",
-      "d": "Put each dispenser square in the gallery, or make a tall clip that names the new shade. A photo costs 24 credits."
+      "d": "Put each square in the gallery, or make a tall clip that names the new shade. A photo costs 24 credits."
     }
   ],
   "maker": {
@@ -44,28 +44,28 @@
   },
   "faq": [
     {
-      "q": "What does a color template give me for the dispenser shades?",
-      "a": "A UGC video template is a ready-made scene. You drop your own dispenser photos in, and you do not write a long prompt first. A home shop can put white, gray, and sand dispensers on the same counter. A spoken line can name the shade that is new this month."
+      "q": "What does a color template give me?",
+      "a": "A ready-made scene with an AI avatar, a voice, and a script. Add a photo of each color you sell and get a matching set in minutes, without filming every shade."
     },
     {
-      "q": "How do I turn a shade template into a square I can post?",
-      "a": "Drop the dispenser photos into the scene you picked, name each color in the script, and export a square for the gallery. A shade you never photographed is not added. You review the script before the export."
+      "q": "How do I turn a shade template into a file I can post?",
+      "a": "Drop your shade photos into the scene, name each color, and export a square for the gallery. A shade you never photographed is not added. You review the script before the export."
     },
     {
-      "q": "Why use a template instead of filming every dispenser color?",
-      "a": "You skip the wait for a creator and the cost of filming every color. The dispenser photos already exist, so you drop them into the template. The ad can go out while that filming day belongs to someone else."
+      "q": "Why use a template instead of filming every color?",
+      "a": "You skip the wait for a creator and the cost of filming every color. The photos already exist, so you drop them into the template and the ad can go out."
     },
     {
-      "q": "Who should use a shade template if I run the shop myself?",
-      "a": "Shop owners and small teams who have to show which color is which. In a home shop that person is the owner, not a producer with a crew on payroll."
+      "q": "Who should use a shade template?",
+      "a": "Shop owners and small teams who have to show which color is which. In a small shop that person is usually the owner, not a crew on payroll."
     },
     {
       "q": "Can I make the shade set if I have never edited video?",
-      "a": "Yes. A shop that has never edited a video can still make the row. They choose the scene, and the photos they already took decide what is in frame."
+      "a": "Yes. You choose the scene, and the photos you already took decide what is in frame. You do not need a timeline."
     },
     {
-      "q": "Which products fit a color template when shoppers compare the finish?",
-      "a": "Dispensers, cases, and hardware all fit when people hesitate over the finish. White, gray, and sand are a normal set. A software screenshot is the wrong file, because nothing in it is a finish you can hold."
+      "q": "Which products fit a color template?",
+      "a": "Products people hesitate over because of the finish, such as cases, hardware, or bottles in more than one color. A software screenshot is the wrong file, because nothing in it is a finish you can hold."
     },
     {
       "q": "Can I use my own shade photos, a clip I have, and the logo?",
@@ -73,11 +73,11 @@
     },
     {
       "q": "Which placements and frames can I use for the shade ad?",
-      "a": "TikTok, Reels, Facebook, YouTube, and LinkedIn all work. A Facebook Story wants 9:16, often at 6 or 10 seconds. The Instagram grid wants 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner. 15 and 30 seconds are there when a shade needs a longer look."
+      "a": "TikTok, Reels, Facebook, YouTube, and LinkedIn all work. A story often wants 9:16. A grid wants 1:1. YouTube can take 16:9, and 4:3 or 3:4 covers a banner."
     },
     {
       "q": "Do I need a paid plan before I make the shade set?",
-      "a": "Yes. Starter is $24.50 a month with 200 credits, Pro is $35 with 300, and Premium is $63 with 600. A photo spends 24 credits. A 6, 10, 15, or 30 second clip spends 24, 40, 60, or 120 credits. The total shows before the run, and a failed run gives those credits back."
+      "a": "Yes. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo spends 24 credits. A 6-second clip is 24 credits, 10 seconds is 40, 15 is 60, and 30 is 120. You see the cost before it starts. If a job fails, those credits come back."
     },
     {
       "q": "Can I run the shade ad as a paid campaign and for a client?",
@@ -85,7 +85,7 @@
     },
     {
       "q": "What is already set so I do not have to plan the camera move?",
-      "a": "The scene already sets the surface, the crop, and the moment the shade name appears. You bring the offer, such as which dispenser color is the seasonal one. You do not design the camera move."
+      "a": "The scene already sets the surface, the crop, and the moment the color name appears. You bring the offer. You do not design the camera move."
     }
   ],
   "visual": {
@@ -549,7 +549,7 @@
     }
   },
   "steps_h2": "How to Make Product Color Variations in 3 Simple Steps",
-  "steps_lead": "One shared counter makes the dispenser shades easy to tell apart. Shoppers compare color instead of a spec table.",
+  "steps_lead": "One shared scene makes the shades easy to tell apart. Shoppers compare color, not a spec table.",
   "blockOrder": [
     "hero",
     "picker",
@@ -592,7 +592,7 @@
     ]
   },
   "related_h2": "Tools and Templates Around a Shade Set",
-  "related_lead": "Use these with the shade set: a product photo tool, a drop alert, clothing try-on, shoe-brand photos, and the Amazon and Shopify listing pages.",
+  "related_lead": "Use these with the shade set: a product photo tool, a drop alert, clothing try-on, and the listing pages for Amazon and Shopify.",
   "relatedLinks": [
     {
       "id": "photo-hub",
@@ -619,21 +619,21 @@
       "label": "Shopify Product Photos"
     }
   ],
-  "cta_title": "Put Those Shades on One Counter",
-  "cta_lead": "Get every dispenser shade into one ad you can post. Add the shade photos you already sell.",
+  "cta_title": "Put Every Shade in One Scene",
+  "cta_lead": "Get the colors you sell into one ad you can post. Add the shade photos you already have.",
   "more_sections": [
     {
       "eyebrow": "Edit the Shade Before You Post",
       "h2": "Finish the Shade Ad in the Editor",
-      "lead": "A spoken shade name and a line you can fix sit on the same page, so the ad is done without another tool.",
+      "lead": "A spoken color name and a line you can fix sit on the same page, so the ad is done without another tool.",
       "items": [
         {
           "t": "Add a Voice or Your Clone",
-          "d": "A stock voice, or a clone from a short sample, can read the shade line out loud."
+          "d": "A stock voice, or a clone from a short sample, can read the color line out loud."
         },
         {
           "t": "A Script You Can Rewrite",
-          "d": "You can change any sentence before the ad is made. Start from a note or the product link, and name the shade and the offer."
+          "d": "You can change any sentence before the ad is made. Name the shade and the offer."
         },
         {
           "t": "Put an AI Avatar on Camera",
@@ -645,11 +645,11 @@
         },
         {
           "t": "Edit Here in Another Language",
-          "d": "A Spanish storefront can hear the color names in Spanish while the English cut keeps the same three dispensers. The captions can follow that voice, and you can move them in the editor."
+          "d": "A storefront in another language can hear the color names in that language. The captions can follow that voice."
         },
         {
           "t": "More Versions, Then Post",
-          "d": "Make a second version for another country from the same photos. Post it to Instagram, YouTube, TikTok, or Facebook, or download it and post it yourself."
+          "d": "Make a second version for another country from the same photos. Post it, or download it and post it yourself."
         }
       ]
     }

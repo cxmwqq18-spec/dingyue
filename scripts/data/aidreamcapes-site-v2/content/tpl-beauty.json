@@ -1,10 +1,10 @@
 {
   "id": "tpl-beauty",
-  "title": "Beauty Video Templates for Product Ads | AIVideosUGC",
-  "description": "Browse beauty video templates and swap in the bottle you photographed. Get a sink-side routine ad in a tall size, then download it for TikTok or Reels.",
-  "h1": "Beauty Video Templates for Skincare Ads",
+  "title": "Beauty Video Templates for Your Ads | AIVideosUGC",
+  "description": "Browse beauty video templates and swap in the product you already shot. Get a routine ad in minutes, in a tall size you can download for TikTok or Reels.",
+  "h1": "Beauty Video Templates You Can Recreate",
   "eyebrow": "Skincare Video Template",
-  "lead": "Beauty video templates can start from the cleanser already on your sink. Upload that pump photo and an AI actor can walk through the routine.",
+  "lead": "Browse beauty templates and rebuild any of them around the product you already shot. You get a ready ad in minutes.",
   "secondary_keywords": [
     "skincare video ads",
     "serum video ad",
@@ -13,19 +13,19 @@
     "cosmetics product video"
   ],
   "steps_h2": "How to Make a Beauty Ad in 3 Simple Steps",
-  "steps_lead": "One cleanser photo becomes a sink-side clip you can post. The pump and the label stay in frame.",
+  "steps_lead": "One product photo becomes a routine clip you can post. The package and the label stay in frame.",
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Add a clear photo of the ivory cleanser pump, with the cap and label included. You get a file that still shows that same bottle."
+      "d": "Add a clear photo of the product, with the cap and the label included. The file still shows that same package."
     },
     {
       "t": "Describe Your Scene",
-      "d": "Ask for one pump at a bright sink, with foam on the fingertips. You get a 9:16 clip in 6, 10, 15, or 30 seconds."
+      "d": "Ask for the routine, such as one pump at a bright sink. You get a tall clip in 6, 10, 15, or 30 seconds."
     },
     {
       "t": "Download and Post",
-      "d": "Set the voice, then add the shade name in captions and download. You get a cleanser clip with nothing stamped on it."
+      "d": "Set the voice, add the shade name in captions, and download. The clip has nothing stamped on it."
     }
   ],
   "maker": {
@@ -44,23 +44,23 @@
   "faq": [
     {
       "q": "What does a beauty video template include?",
-      "a": "It is a sink-side ad shape for a cleanser you already photographed. An AI actor, a voice, and a script come with that shape. You are not building the morning routine from a blank page."
+      "a": "It is a ready ad shape for a beauty product you already photographed. An AI actor, a voice, and a script come with that shape. You are not building the routine from a blank page."
     },
     {
       "q": "How does a beauty video template work?",
-      "a": "Add the cream photo, name the jar in the line you would say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft. Your own software can start that job through the API."
+      "a": "Add the product photo, name it in the line you would say, and pick 6, 10, 15, or 30 seconds. A product link can supply the first draft."
     },
     {
       "q": "Why use this beauty template instead of booking a creator?",
-      "a": "You can still publish the launch ad when your usual creator is booked. You can change the shade name and cut a second mascara version while that booking stays out."
+      "a": "You can still publish the launch ad when your usual creator is booked. You can change the shade name and cut a second version while that booking stays out."
     },
     {
       "q": "Who should use a beauty template?",
-      "a": "Someone selling a shampoo who already has the bottle photo. A small beauty team and an agency making a client file fit the same way. Anyone on screen is an AI avatar. You can pick from 53 AI actors."
+      "a": "Someone selling beauty or personal care who already has the product photo. A small beauty team and an agency making a client file fit the same way. Anyone on screen is an AI avatar."
     },
     {
       "q": "Can I make the clip with no editing practice?",
-      "a": "Yes. One clear lip-balm photo is the start. Shorten a long caption in the editor, and a song from the music library can sit under the voice."
+      "a": "Yes. One clear product photo is the start. Shorten a long caption in the editor, and a song from the music list can sit under the voice."
     },
     {
       "q": "Is this template only for skincare?",
@@ -68,11 +68,11 @@
     },
     {
       "q": "Can I bring photos and clips I already own?",
-      "a": "Yes. Bring the toner photo you shot on the shelf, plus a short clip if you filmed the texture yourself and you have the rights. The toner can be the only subject in the frame."
+      "a": "Yes. Bring the photo you shot on the shelf, plus a short clip if you filmed the texture yourself and you have the rights. The product can be the only subject in the frame."
     },
     {
       "q": "Where do these beauty clips get posted?",
-      "a": "Choose the shape for the place you already post. A tall 9:16 suits TikTok, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram, YouTube, and LinkedIn can take the file you download, or you can send it from AIVideosUGC."
+      "a": "Choose the shape for the place you already post. A tall 9:16 suits TikTok, a square 1:1 suits a Facebook feed, and 16:9, 4:3, or 3:4 cover the other slots. Instagram and YouTube can take the file you download."
     },
     {
       "q": "What does a beauty clip cost?",
@@ -80,11 +80,11 @@
     },
     {
       "q": "Can the file run in paid ads and client work?",
-      "a": "Yes. A blush clip can run as a paid ad or go to a client as a delivery. The download has no watermark."
+      "a": "Yes. The clip can run as a paid ad or go to a client as a delivery. The download has no watermark."
     },
     {
       "q": "Why use a beauty template instead of building a scene?",
-      "a": "The sink, the pace, and the place the cleanser sits are already decided. You spend the time on the shade name, then post."
+      "a": "The setting, the pace, and the place the product sits are already decided. You spend the time on the shade name, then post."
     }
   ],
   "visual": {
@@ -618,5 +618,5 @@
   "related_h2": "More Beauty Ads and Photos",
   "related_lead": "Open video ads, beauty photos, and TikTok sizes when the routine clip is not the only file you need.",
   "cta_title": "Make a Beauty Clip From One Photo",
-  "cta_lead": "Upload the cleanser pump and get a routine clip. The credit cost is on screen before it runs."
+  "cta_lead": "Upload the product photo and get a routine clip. The credit cost is on screen before it runs."
 }

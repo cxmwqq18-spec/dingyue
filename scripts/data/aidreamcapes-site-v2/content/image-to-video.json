@@ -1,10 +1,10 @@
 {
   "id": "image-to-video",
-  "title": "Image to Video for Product Ads | AIVideosUGC",
-  "description": "Make an image to video ad from one product photo, with a script, a voice, and captions. Post it to TikTok or Meta, or download it with no watermark.",
-  "h1": "Image to Video Generator: From a Still to an Ad",
+  "title": "Image to Video AI for Ads | AIVideosUGC",
+  "description": "Image to video AI that turns one product photo into a moving ad, with a script, a voice, and captions. Post it, or download it with no watermark.",
+  "h1": "Image to Video AI That Turns a Still Into an Ad",
   "eyebrow": "A posted ad from one photo",
-  "lead": "One product photo is enough for an AI image to video ad. The matte teal bottle can turn toward the camera as a clip you post, with no shoot to book.",
+  "lead": "Get a high-quality video from a single image. Turn any product photo into a moving ad that converts, with no camera and no crew.",
   "secondary_keywords": [
     "product photo to video",
     "animate product photo",
@@ -15,7 +15,7 @@
   "benefits": [
     {
       "t": "Several Versions From One Photo",
-      "d": "Make more than one opening from the teal bottle photo already on the listing, and keep the one you want to run."
+      "d": "Make more than one opening from the photo already on the listing, and keep the one you want to run."
     },
     {
       "t": "See the Credit Cost First",
@@ -23,27 +23,27 @@
     },
     {
       "t": "No Camera Day to Book",
-      "d": "You start from the bottle photo you have, so the next test does not wait on a shoot."
+      "d": "You start from the photo you have, so the next test does not wait on a shoot."
     },
     {
       "t": "One Photo, More Than One Frame",
-      "d": "Reuse that bottle photo in 9:16, 1:1, 16:9, 4:3, or 3:4 for a feed, a listing, or a product page."
+      "d": "Reuse that photo in 9:16, 1:1, 16:9, 4:3, or 3:4 for a feed, a listing, or a product page."
     }
   ],
   "steps_h2": "How to Make a Video From a Photo in 3 Simple Steps",
-  "steps_lead": "Name the mug, answer a few questions, and download a UGC ad.",
+  "steps_lead": "Name the product, answer a few questions, and download a creator-style ad.",
   "steps": [
     {
       "t": "Describe Your Product",
-      "d": "Upload the cream mug photo, or paste its link. Then say who the ad is for, and you get a clip aimed at them."
+      "d": "Upload the photo, or paste its link. Then say who the ad is for, and you get a clip aimed at them."
     },
     {
       "t": "Answer the Agent's Questions",
-      "d": "The video agent asks about the mug, the tone, and the look. Your answers make the ad sound like your shop."
+      "d": "The video agent asks about the product, the tone, and the look. Your answers make the ad sound like your shop."
     },
     {
       "t": "Download Your UGC Ad",
-      "d": "You get a mug ad with a script, an AI actor, and a voiceover. The captions fit the post you chose."
+      "d": "You get an ad with a script, an AI actor, and a voiceover. The captions fit the post you chose."
     }
   ],
   "maker": {
@@ -66,7 +66,7 @@
   "faq": [
     {
       "q": "What can image to video do with a product photo?",
-      "a": "It turns a still into a short video. For sellers, the teal bottle photo can become a clip with motion, a voiceover, and captions you can post."
+      "a": "It turns a still into a short video. For sellers, one product photo can become a clip with motion, a voiceover, and captions you can post."
     },
     {
       "q": "How does a photo become a video?",
@@ -82,38 +82,38 @@
     },
     {
       "q": "How can a store use this for product marketing?",
-      "a": "Show the product in action, reveal a before-and-after, run social video ads, or add a video to your Amazon listing. Each one starts from the same photo."
+      "a": "Show the product in action, reveal a before-and-after, run social video ads, or add a video to a marketplace listing. Each one starts from the same photo."
     },
     {
       "q": "Can I make explainers and tutorials?",
-      "a": "Yes. Keep one AI avatar and one script style for every lesson, so feature walkthroughs and training clips look consistent without re-recording."
+      "a": "Yes. Keep one AI actor and one script style for every lesson, so feature walkthroughs look consistent without re-recording."
     },
     {
-      "q": "Can I add a voiceover or an AI avatar?",
-      "a": "Yes. Write your own script or let the tool draft one, pick a voice, and add an AI avatar to present the product on camera."
+      "q": "Can I add a voiceover or an AI actor?",
+      "a": "Yes. Write your own script or let the tool draft one, pick a voice, and add an AI actor to present the product on camera."
     },
     {
       "q": "Which aspect ratios can I pick?",
       "a": "Choose 9:16 for TikTok, Reels, and Stories, 1:1 for the feed, or 16:9 for YouTube. 4:3 and 3:4 are there too."
     }
   ],
-  "cta_lead": "Upload the teal bottle photo and download a clip you can post. The credit cost is on screen before you start.",
+  "cta_lead": "Upload a product photo and download a clip you can post. The credit cost is on screen before you start.",
   "uses": [
     {
-      "t": "Test the Balm Ad",
-      "d": "Make two openings from the balm swatch on a hand, run them side by side, and retire the one people skip."
+      "t": "Test Two Paid Openings",
+      "d": "Make two openings from the same photo, run them side by side, and retire the one people skip."
     },
     {
-      "t": "A Listing Clip for the Drink Mix",
-      "d": "Show the hydration mix poured into a glass, so the listing answers what a still photo leaves out."
+      "t": "A Listing Clip That Shows the Use",
+      "d": "Show the product in action on the listing, so the page answers what a still photo leaves out."
     },
     {
-      "t": "Social Clips of the Shirt",
-      "d": "Turn the linen shirt photo into short clips for TikTok, Reels, and Shorts, and show the drape each time."
+      "t": "Short Clips for Social",
+      "d": "Turn one photo into short clips for TikTok, Reels, and Shorts, and keep the product recognizable each time."
     },
     {
-      "t": "Show the Pump in Use",
-      "d": "Walk shoppers through the cleanser pump with the same AI avatar and script style every time."
+      "t": "Explainers That Stay Consistent",
+      "d": "Walk shoppers through the product with the same AI actor and the same script style every time."
     }
   ],
   "visual": {
@@ -186,26 +186,26 @@
   "definition": {
     "title": "What a Product Photo Becomes",
     "paras": [
-      "This tool turns a still product photo into a moving clip a shopper can watch. They see one action, and they can also hear a short script from an avatar.",
-      "AIVideosUGC can add a voiceover, captions, and a track from the music library. You can edit in the built-in editor and voice the script in another language. You can publish to TikTok or Meta, or download the file with no watermark."
+      "This tool turns a still product photo into a moving clip a shopper can watch. They see one action, and they can hear a short script from an actor.",
+      "You can add a voiceover, captions, and a track from the music library. Edit in the built-in editor, and voice the script in another language. Publish to TikTok or Meta, or download the file with no watermark."
     ]
   },
   "reasons": {
-    "h2": "Why Sellers Use AIVideosUGC for Image to Video",
-    "lead": "Plenty of tools can animate a photo. AIVideosUGC finishes an ad a seller can post, with a face and a voice.",
+    "h2": "Why Sellers Use This for Image to Video",
+    "lead": "Plenty of tools can animate a photo. This one finishes an ad a seller can post, with a face and a voice.",
     "items": [
       {
         "t": "Built Like a Shopper Video",
-        "d": "A face, a voice, and one reason to want the teal bottle. That is the shopper-style clip people already stop to watch.",
+        "d": "A face, a voice, and one reason to want the product. That is the shopper-style clip people already stop to watch.",
         "icon": "Users"
       },
       {
-        "t": "Test an Opening Today",
-        "d": "Go from the teal bottle photo to a finished ad while the idea is still fresh. Try several openings, and keep the one you want to run.",
+        "t": "A First Ad in Minutes, Not Weeks",
+        "d": "Launch a new video ad while the idea is fresh. Test several openings, keep a winner, and scale that one.",
         "icon": "Gauge"
       },
       {
-        "t": "A Credit Price You Can See",
+        "t": "Spend Credits, Not Creator Days",
         "d": "Creator days add up. On a monthly plan, each new ad spends credits you see first. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600.",
         "icon": "DollarSign"
       }
@@ -224,7 +224,7 @@
   ],
   "compare_table": {
     "title": "A Photo-Led Ad vs. a Camera Day",
-    "lead": "A product photo, a script, and an avatar, instead of a camera day.",
+    "lead": "A product photo, a script, and an actor, instead of a camera day.",
     "columns": [
       "",
       "AIVideosUGC",
@@ -233,7 +233,7 @@
     "rows": [
       [
         "First clip",
-        "One photo, one motion, a script, and an avatar",
+        "One photo, one motion, a script, and an actor",
         "A shoot day or a long manual edit"
       ],
       [
@@ -248,7 +248,7 @@
       ],
       [
         "Frames",
-        "Vertical, square, wide, 4:3 and 3:4",
+        "Vertical, square, wide, 4:3, and 3:4",
         "A new crop for each placement"
       ],
       [
@@ -297,5 +297,5 @@
       }
     ]
   },
-  "cta_title": "Turn Your Next Product Photo Into an Ad"
+  "cta_title": "Turn Your Next Photo Into an Ad"
 }

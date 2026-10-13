@@ -4,7 +4,7 @@
   "description": "Use an AI actor generator to put a realistic face on your product ad. Upload one photo, pick a voice, and download a clip you can post today.",
   "h1": "AI Actor Generator for Realistic Product Ads",
   "eyebrow": "AI Actors You Can Post",
-  "lead": "Your shop's AI actor generator puts a realistic adult on camera for the next product ad. Pick a face that fits the buyer, and reuse that face on the ads you already run.",
+  "lead": "Generate realistic AI actors that carry your ads. Switch the style and the format, and give each campaign a better chance to convert.",
   "actor_visual": {
     "titles": {
       "m2": {
@@ -913,32 +913,32 @@
     {
       "eyebrow": "Where it runs",
       "h2": "Where an AI Actor Can Carry the Ad",
-      "lead": "The same face can sell in the places the shop already publishes, from the ad to the product page.",
+      "lead": "The same face can sell in the places you already publish.",
       "items": [
         {
-          "t": "Run Paid AI Actor Ads",
-          "d": "Skip the crew and run a paid running-shoe ad with an AI actor. Write the line in each language you sell in, and keep the coral shoe in frame.",
+          "t": "Run Paid Ads Without a Crew",
+          "d": "Skip creators, sets, and crews. Pick a realistic face, a voice, and a setting that fit your buyer. Run the ad in each language you sell in.",
           "img": "n:guide:cwa-uses-paid-01-r1",
           "alt": "You get a paid social ad of an adult Black woman with short natural curls holding a plain coral running shoe in a bright entryway.",
           "frame": "phone"
         },
         {
-          "t": "Add an AI Actor to Pages",
-          "d": "A travel mug page can play a short clip where someone names the lid, then stops. The shopper still sees the mug they can order.",
+          "t": "Put an Actor on the Product Page",
+          "d": "Let an AI actor speak for the product on the page. They can walk through a feature and answer a common question.",
           "img": "n:guide:cwa-uses-product-page-02-r1",
           "alt": "You get a product-page video of an adult East Asian man with a tight bun holding a plain stainless travel mug beside a wooden desk.",
           "frame": "browser"
         },
         {
-          "t": "Reuse One AI Actor on Social",
-          "d": "A tote brand can post on Thursday with that AI actor from last month, and a different line for commuters. The face stays recognizable.",
+          "t": "Keep Social Posts Coming",
+          "d": "Stay ahead of the calendar with the same actor and a new line. The face stays familiar on the channels you already use.",
           "img": "n:guide:cwa-uses-social-03-r1",
           "alt": "You get a vertical clip of an adult Latina woman with a short auburn bob holding a plain sage canvas tote.",
           "frame": "phone"
         },
         {
-          "t": "Explain One Feature on Camera",
-          "d": "A portable lamp can be explained by pointing at the button, then the charge light. The shopper can replay that file from the product page.",
+          "t": "Walk Through One Feature",
+          "d": "Use an AI actor as a guide. They show one feature, and the shopper can replay that clip from the product page.",
           "img": "n:guide:cwa-uses-guide-04-r1",
           "alt": "You get a product guide of an adult man with close-cropped red hair pointing at the button on a plain blue portable lamp.",
           "frame": "none"
@@ -951,39 +951,39 @@
   "faq": [
     {
       "q": "What does an AI actor do in a product ad?",
-      "a": "An adult AI actor, built for ads, not a cartoon. You choose the face and write the line. Use the clip as your presenter. Do not treat it as a review from a buyer."
+      "a": "This is a realistic human presenter made for ads, not a cartoon. You set the look, the voice, and the language. The clip is your presenter. It is not a review from a buyer."
     },
     {
-      "q": "How does my script become a clip I can post?",
-      "a": "Bring the product and the sentence you want said, then choose the face and voice. A 10-second vertical clip is 9:16 and costs 40 credits. That cost shows before you start."
+      "q": "How does a script become a clip I can post?",
+      "a": "Type the line, choose the actor, then choose the voice. The clip comes back with the mouth moving to those words. A 10-second tall clip costs 40 credits. That cost shows before you start."
     },
     {
-      "q": "Where can I post an AI actor video?",
-      "a": "Wherever the product already appears. A shoe brand might run it as the paid ad, then keep a shorter cut on the product page. The file has no watermark."
+      "q": "Where can I use an AI actor?",
+      "a": "On the product page, in a paid ad, and on social. A training clip works too. The download has no watermark."
     },
     {
-      "q": "Can one AI actor explain a single product feature?",
-      "a": "Yes. Point at the lamp's power button and say what it does, and keep that button in frame. You can explain it again when you add a color."
+      "q": "Can an AI actor explain a product?",
+      "a": "Yes. The same delivery can repeat every time, with no extra studio day. Point at one feature and say what it does."
     },
     {
-      "q": "Can an AI actor present a training clip I can update?",
-      "a": "Yes. Write the packing steps as a script, then change a sentence when the rule changes. A second language is another render of that same script."
+      "q": "Can an AI actor record a training clip I can update?",
+      "a": "Yes. Write the steps, then change a sentence when the rule changes. Another language is a new render of that same script."
     },
     {
-      "q": "How do I keep one AI actor across my social posts?",
-      "a": "Use one face often enough that people recognize the tote posts. When a line gets old, change the first sentence and post a fresh 9:16 cut."
+      "q": "How do shops use an AI actor on social?",
+      "a": "Use one face often enough that people recognize it. Change the first line when it gets old, and post a fresh tall cut."
     },
     {
-      "q": "Can I pick the face, the voice, and the language separately for my ad?",
-      "a": "Yes. Choose the face and voice separately from the library, then write the line in the language you sell in. A cloned voice is allowed only when you have rights to the sample."
+      "q": "Can I pick the face, the voice, and the language separately?",
+      "a": "Yes. Choose the face and the voice on their own, then write the line in the language you sell in. A cloned voice is allowed only when you have rights to the sample."
     },
     {
       "q": "Can I post this clip as a paid ad?",
-      "a": "Yes. The download has no watermark, and you can use the AI actor and voice in a paid ad. You still need rights to the product photo and to any voice sample you upload. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+      "a": "Yes. The download has no watermark, and you can use the AI actor and the voice in a paid ad. You still need rights to the product photo and to any voice sample you upload. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
     },
     {
-      "q": "What should I check before I post the clip?",
-      "a": "Follow the platform's disclosure rules when a label is required. Do not imitate a real person who never agreed. Hire a human when the job needs a specific living performer. Add prices to the file after you download it and can check every digit."
+      "q": "What should I check before I post?",
+      "a": "Follow the platform's label rules when a label is required. Do not imitate a real person who never agreed. Hire a human when the job needs a specific living performer. Add prices after you download the file and can check every digit."
     }
   ],
   "blockOrder": [
@@ -1002,36 +1002,36 @@
   "steps": [
     {
       "t": "Upload Your Product Photo",
-      "d": "Upload one clear photo of the product, or paste its page link. Keep the whole item in the frame."
+      "d": "Upload one clear product photo, or paste the product page. Keep the whole product in the frame."
     },
     {
       "t": "Pick Actor and Voice",
-      "d": "Pick a face and a voice. Type the line, or let AI draft it, then approve the words."
+      "d": "Pick a face and a voice. Type the line, or let a draft write it, then approve the words."
     },
     {
       "t": "Edit and Publish",
-      "d": "Add words on screen and a track from the music library, then post to TikTok, Facebook, or Instagram."
+      "d": "Add on-screen words and a track from the music list, then post to TikTok, Facebook, or Instagram."
     }
   ],
   "reasons": {
     "h2": "Why Shops Cast an AI Actor",
-    "lead": "Make the next cut faster, test more than one face, and keep the line you already approved.",
+    "lead": "Move faster, test more than one face, and keep the line you already approved.",
     "items": [
       {
-        "t": "Ship the Serum Ad Sooner",
-        "d": "Put an adult beside the skincare jar and post the next ad without booking a shoot day.",
+        "t": "Make the Next Ad Faster",
+        "d": "Put a realistic actor with the product and publish the next ad without a shoot day. Fresh ads stay easy to make.",
         "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
         "alt": "You get an ad still of an adult Black woman with a short silver-gray pixie cut holding a plain opaque skincare jar toward the camera."
       },
       {
         "t": "Test Another Face and Line",
-        "d": "Keep the blue bottle photo and try another adult actor or opening line. The credit cost shows before each render, so you can compare cuts before you post.",
+        "d": "Keep one product photo and try another actor or another opening. Compare the cuts before you post.",
         "img": "n:guide:fx50-ai-actors-benefit-2",
         "alt": "You get an ad still of an adult East Asian man with short black hair holding a plain matte blue insulated bottle toward the camera."
       },
       {
-        "t": "Reuse One Approved Script",
-        "d": "Keep the accepted phone-case line on every render, so you do not chase a creator to fix a word.",
+        "t": "Keep One Approved Line",
+        "d": "The actor says the line you wrote. You do not trade notes with a creator. Start from the product page.",
         "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
         "alt": "You get an ad still of an adult Latina woman with a short auburn bob holding a plain coral phone case beside her face."
       }
@@ -1047,24 +1047,24 @@
     "image-to-video",
     "product-videos"
   ],
-  "benefits_h2": "Cast an AI Actor Faster",
-  "benefits_lead": "Make the next cut the same week, test more than one face and voice, and keep the line you already approved.",
+  "benefits_h2": "Why Shops Cast an AI Actor",
+  "benefits_lead": "Move faster, test more than one face, and keep the line you already approved.",
   "benefits": [
     {
-      "t": "Ship the Serum Ad Faster",
-      "d": "Put an adult beside the skincare jar and post the next ad without a shoot day. One photo is enough to ship that serum ad the same week.",
+      "t": "Make the Next Ad Faster",
+      "d": "Put a realistic actor with the product and publish the next ad without a shoot day. Fresh ads stay easy to make.",
       "img": "n:guide:b2f2-ai-actors-benefit-1-r1",
       "alt": "Adult Black woman with a short silver-gray pixie cut holds a plain opaque skincare jar toward the camera."
     },
     {
-      "t": "Test More Than One Cut",
-      "d": "Keep the blue bottle photo and try another adult actor or opening line. The credit cost shows before each render, so you can compare several cuts.",
+      "t": "Test Another Face and Line",
+      "d": "Keep one product photo and try another actor or another opening. Compare the cuts before you post.",
       "img": "n:guide:fx50-ai-actors-benefit-2",
       "alt": "Adult East Asian man with short black hair holds a plain matte blue insulated bottle toward the camera."
     },
     {
-      "t": "Keep One Approved Script",
-      "d": "Keep the accepted phone-case line on every render, so the wording does not drift. You do not chase a creator to fix a word.",
+      "t": "Keep One Approved Line",
+      "d": "The actor says the line you wrote. You do not trade notes with a creator. Start from the product page.",
       "img": "n:guide:b2f2-ai-actors-benefit-3-r1",
       "alt": "Adult Latina woman with a short auburn bob holds a plain coral phone case beside her face."
     }
