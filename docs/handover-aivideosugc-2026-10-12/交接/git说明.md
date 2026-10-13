@@ -5,14 +5,14 @@
 | 分支 | 放什么 | 最新提交 |
 |---|---|---|
 | `main` | 网站全部代码（线上就是从 main 部署的） | ccb309676（首页去掉生成框，尚未部署到线上；线上当前是 057b5db43） |
-| `handover/aivideosugc-2026-10-12` | 交接文档：`交接/`、`决定/`、`CLAUDE.md`（就是本压缩包里的这些） | 见该分支最新 |
+| `handover/aivideosugc-2026-10-12` | main 的代码＋交接文档，文档在 `docs/handover-aivideosugc-2026-10-12/` 目录（就是本压缩包里的这些） | 见该分支最新 |
 
 ## 取代码
 ```
 git clone git@github.com:cxmwqq18-spec/dingyue.git
 cd dingyue && git checkout main
 # 看交接文档：
-git fetch origin handover/aivideosugc-2026-10-12 && git checkout handover/aivideosugc-2026-10-12 -- 交接 决定 CLAUDE.md
+git fetch origin handover/aivideosugc-2026-10-12 && git checkout origin/handover/aivideosugc-2026-10-12 -- docs/handover-aivideosugc-2026-10-12
 ```
 
 ## 注意
