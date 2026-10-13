@@ -218,76 +218,76 @@
   },
   "faq": [
     {
-      "q": "Why do creator-style AI ads get attention?",
-      "a": "They open like a recommendation, so the problem and the product show up before a polished brand spot would."
-    },
-    {
-      "q": "What does AI UGC mean for a product ad?",
-      "a": "It is a creator-style product ad read by an AI actor, not a review from a buyer. Start from your photo or your product page, then read the words before you download."
-    },
-    {
-      "q": "What does a paid plan include before the first ad?",
-      "a": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. Videos of 6, 10, 15, and 30 seconds cost 24, 40, 60, and 120 credits. You see the charge before you start."
-    },
-    {
-      "q": "How long does an AI UGC ad take?",
-      "a": "You stay on the page and can edit the line while the file renders, then download it when it finishes. A failed job returns the credits."
-    },
-    {
       "q": "How do I make a UGC ad with an AI actor?",
-      "a": "Upload a product photo or paste a page link, pick an AI actor, and read the script. Change the line if it does not fit, then generate."
+      "a": "Upload a product photo or paste its link, choose an AI actor, and add your message. Then generate the ad and download it in minutes."
     },
     {
-      "q": "Where do the AI actors for these ads come from?",
-      "a": "They come from a library of 53 adult AI actors. Pick a face that fits the buyer, then pair it with a voice from the same library."
+      "q": "How much does it cost to make an AI UGC ad?",
+      "a": "Starter costs $24.50 monthly for 200 credits, Pro $35 for 300, and Premium $63 for 600. One photo uses 24 credits; 6-, 10-, 15-, and 30-second videos use 24, 40, 60, and 120 credits."
     },
     {
-      "q": "Can I turn a product link into a UGC ad?",
-      "a": "Yes. Paste a public product page so the tool can start from the product image and the name. Add who the ad is for before you review it."
+      "q": "Can I use the finished ads for a client?",
+      "a": "Yes. You can use the finished ads in client campaigns. Use product photos, voices, and other material you have permission to use."
     },
     {
-      "q": "Do these AI UGC ads need a signed release?",
-      "a": "No signed release is needed for an AIVideosUGC AI actor, and the file is cleared for commercial use with no watermark. You still need rights to the product photo and to any voice sample you upload."
-    },
-    {
-      "q": "Can I change the ad after it is generated?",
-      "a": "Yes. Edit the script, swap the face, change the captions, and render another version. The credit charge shows before you confirm that next job."
-    },
-    {
-      "q": "How is a customer video different from AI UGC?",
-      "a": "A customer video is filmed by a person who bought the product. An AI actor ad uses a generated face and a line you approved. Do not present it as a review from a buyer."
-    },
-    {
-      "q": "Should I use an AI actor or hire a person?",
-      "a": "Use an AI actor when you need the ad without a shoot, or several versions to test. Hire a person when a real founder has to be the one on camera."
-    },
-    {
-      "q": "Can I make the same ad in another language?",
-      "a": "Yes. Write the product sentence in the language you sell in, then pick a voice that matches it. Render the same offer again for the next market."
-    },
-    {
-      "q": "Which languages can the spoken line use?",
-      "a": "Any language you can write the product sentence in. Pick a voice that matches it. The same offer can be cut for TikTok and for Meta."
-    },
-    {
-      "q": "Where do I get help before a promotion date?",
-      "a": "Email support@aivideosugc.com with the product page and the line you want spoken. We help you get the script right before that date."
-    },
-    {
-      "q": "Can an AI actor use a voice we already recorded?",
-      "a": "Yes. An AI actor can use a cloned voice when you have rights to the sample. Upload only audio you own or are allowed to use."
-    },
-    {
-      "q": "Can I post creator-style ads without hiring anyone?",
-      "a": "Yes. Start from your product photo and an AI actor, then publish the download in your ad account like any other video."
+      "q": "Why are AI UGC ads effective?",
+      "a": "AI UGC ads get attention because they look like the creator posts people already watch. Open with a clear problem, then show your product solving it."
     },
     {
       "q": "Can I make a testimonial-style ad for TikTok?",
-      "a": "Yes. Make a vertical testimonial-style ad with an AI actor, approve the line, and download it for TikTok. Check that platform's label rules before you post."
+      "a": "Yes. Choose a vertical format and an AI actor to make a TikTok-style product ad. Check TikTok’s labeling rules before posting."
     },
     {
-      "q": "What should a small shop look for in a UGC tool?",
-      "a": "A tool that shows the credit cost first and lets you approve the script. It should export 9:16, 1:1, 16:9, 4:3, and 3:4 with no watermark. Failed jobs return credits. You can send up to 7 reference images with a job."
+      "q": "Can I turn a product link into a UGC ad?",
+      "a": "Yes. Paste your public product link to start an ad from its photos and details. Choose an actor and make a video in minutes."
+    },
+    {
+      "q": "Can I make the same ad in another language?",
+      "a": "Yes. Change the script and choose a matching voice to make an ad for another language. You can reuse the same product photo."
+    },
+    {
+      "q": "Can I make another version of an ad later?",
+      "a": "Yes. Start from the same product photo, change the script or scene, and render a new version. You see the credit cost before each run."
+    },
+    {
+      "q": "What does AI UGC mean for a product ad?",
+      "a": "AI UGC is a creator-style product video made with an AI actor and voice. You can make one from a product photo without filming or hiring a creator."
+    },
+    {
+      "q": "Can I change the ad after it is generated?",
+      "a": "Yes. Change the script, actor, voice, or captions and make another version. You can test fresh openings without another shoot."
+    },
+    {
+      "q": "How long does an AI UGC ad take?",
+      "a": "An AI UGC ad usually takes a few minutes. Add a product link, choose an actor, and download the finished video without arranging a shoot."
+    },
+    {
+      "q": "Should I use an AI actor or hire a person?",
+      "a": "Use AI actors when you need several ads quickly or want to reach buyers in different languages. Hire people when a real personal endorsement matters."
+    },
+    {
+      "q": "Will Meta accept an AI-generated product ad?",
+      "a": "AI-generated product ads can run on Meta when they meet its ad policies. Check your claims and any required AI labels before posting."
+    },
+    {
+      "q": "Can an AI actor use a voice we already recorded?",
+      "a": "Yes. Upload a voice sample you own or have permission to use. Your AI actor can speak your ad in that voice."
+    },
+    {
+      "q": "Do these AI UGC ads need a signed release?",
+      "a": "No signed release is needed for our AI actors, and the download is cleared for commercial use without a watermark. Use only product photos and audio you have rights to."
+    },
+    {
+      "q": "Can I post creator-style ads without hiring anyone?",
+      "a": "Yes. Use your product photo or link with an AI actor to make a creator-style ad. You can download it in minutes without booking anyone."
+    },
+    {
+      "q": "How is a customer video different from AI UGC?",
+      "a": "Customer videos are filmed by real people; AI UGC uses generated actors and voices. It gives your ads a creator-style look without organizing a shoot."
+    },
+    {
+      "q": "What should a small shop look for in an AI UGC tool?",
+      "a": "Look for simple photo-to-video steps, realistic actors, and commercial downloads without a watermark. Check the credit cost before making each ad."
     }
   ],
   "limitations": {
