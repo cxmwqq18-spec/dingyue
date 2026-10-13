@@ -2,7 +2,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import {
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag, HomePrompt,
+  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
@@ -141,7 +141,10 @@ function HomePage({ data, r }: Props) {
             <h1>{data.h1}</h1>
             <p className="lead">{data.lead}</p>
           </div>
-          <HomePrompt imageHref={hero.photoHref} r={r} videoHref={hero.videoHref} />
+          <div className="hero-ctas">
+            <a className="btn btn-grad" href={r.href(hero.videoHref)}>Make my video →</a>
+            <a className="btn btn-ghost" href={r.href(hero.photoHref)}>Make my photos →</a>
+          </div>
           <StartNote note={text(data.startNote)} r={r} />
         </div>
       </section>],

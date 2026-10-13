@@ -189,7 +189,7 @@ export const AIDREAMCAPES_V2_CARD_CSS = `
 .adc2 .prompt-send{margin-left:auto;width:40px;height:40px;border-radius:12px;display:inline-grid;place-items:center;background:var(--grad);color:#fff;flex:none}
 .adc2 .prompt-send[hidden]{display:none!important}
 .adc2 .prompt-send:hover{filter:brightness(1.08)}
-.adc2 .hero.hero-center p.start-note{position:relative;z-index:1;max-width:760px;margin:16px auto 0;text-align:center}
+.adc2 .hero.hero-center .hero-ctas{position:relative;z-index:1;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}.hero-center p.start-note{position:relative;z-index:1;max-width:760px;margin:16px auto 0;text-align:center}
 .adc2 .qa details:not([open])>:not(summary){display:none}
 @media (max-width:420px){
 .adc2 .hero.hero-center{padding-block:32px 28px}

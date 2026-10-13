@@ -720,8 +720,6 @@ export function StartNote({ note, r }: { note?: string; r: V2Resolvers }) {
 }
 
 const AUDIENCE_WORDS = ["DTC", "Agency", "SaaS"];
-const PROMPT_CHIPS = ["+ Product", "Actor", "9:16", "Length", "Resolution"];
-const PROMPT_PLACEHOLDER = "Describe the ad you want for your product";
 
 export function AudienceTag() {
   return (
@@ -734,44 +732,6 @@ export function AudienceTag() {
         {AUDIENCE_WORDS.map((word) => <span key={word}>{word}</span>)}
       </span>
     </span>
-  );
-}
-
-const SendIcon = () => (
-  <svg aria-hidden="true" fill="none" height="18" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.8" viewBox="0 0 24 24" width="18">
-    <path d="M4.5 11.5 19 5l-6.2 14-2.3-6.2L4.5 11.5Z" />
-  </svg>
-);
-
-// Display-only home prompt. The field is not submitted; each send link reuses the
-// existing workspace href for that mode. Tab switching is the existing hero-tab script.
-export function HomePrompt({ videoHref, imageHref, r }: { videoHref: string; imageHref: string; r: V2Resolvers }) {
-  const modes = [
-    { id: "agent", label: "AI Video Agent", href: videoHref, send: "Make my video" },
-    { id: "video", label: "AI Video", href: videoHref, send: "Make my video" },
-    { id: "image", label: "AI Image", href: imageHref, send: "Make my photos" }
-  ];
-  return (
-    <div aria-label="Start creating" className="promptbox" id="adc2-home-maker" role="group">
-      <div className="prompt-tabs" role="tablist">
-        {modes.map((mode, index) => (
-          <button aria-selected={index === 0 ? "true" : "false"} data-mode={mode.id} key={mode.id} role="tab" type="button">{mode.label}</button>
-        ))}
-      </div>
-      <label className="prompt-field">
-        <span className="sr-only">{PROMPT_PLACEHOLDER}</span>
-        <textarea defaultValue="" placeholder={PROMPT_PLACEHOLDER} readOnly rows={2} tabIndex={-1} />
-      </label>
-      <div className="prompt-bar">
-        {PROMPT_CHIPS.map((chip) => <span className="prompt-chip" key={chip}>{chip}</span>)}
-        {modes.map((mode, index) => (
-          <a className="prompt-send" data-pane={mode.id} hidden={index === 0 ? undefined : true} href={r.href(mode.href)} key={mode.id}>
-            <span className="sr-only">{mode.send}</span>
-            <SendIcon />
-          </a>
-        ))}
-      </div>
-    </div>
   );
 }
 
