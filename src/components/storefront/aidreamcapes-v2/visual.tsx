@@ -12,7 +12,6 @@ import type {
   V2Image,
   V2ImageItem
 } from "./types";
-import { TemplateGrid } from "./parts";
 
 const DIRECTORY_FILTER_SELECTORS = Array.from({ length: 40 }, (_, index) => {
   const value = index + 1;
@@ -73,6 +72,11 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
   const step = visual.steps;
   if (!step) return null;
   const actorCards = step.actorCards ?? [];
+  const isVideo = step.mode === "video";
+  const hasActorResult = isVideo && Boolean(step.actorResult);
+  const pickerChips = visual.picker?.chips?.map((chip) => chip.label).filter((label) => !/^(all|more)\b/i.test(label)) ?? [];
+  const choiceChips = step.chips?.length ? step.chips : pickerChips.length ? pickerChips.slice(0, 4) : (step.options ?? []).slice(0, 4).map(([label, value]) => value || label);
+  const formatLength = step.length ? `00:${String(step.length).padStart(2, "0")}` : "";
   const actorStepStyles = actorCards.length ? (
     <style dangerouslySetInnerHTML={{ __html: `
       .adc2 .v-step-actor-maker{gap:8px}
@@ -94,11 +98,14 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
       {actorStepStyles}
       <div className="v-steps">
         <article className="v-step-card">
-          <div className={`v-step-art v-step-source${step.hideSourceCopy ? " v-step-source-only" : ""}`}>
-            <div className="drop v-step-drop">
+          <div className={`v-step-art v-step-source${step.hideSourceCopy ? " v-step-source-only" : ""}${isVideo ? " v-step-idea-art" : ""}`}>
+            {isVideo ? <div className="v-step-idea-box">
+              <div className="v-step-idea-main"><VisualImage image={step.source} r={r} className="v-step-idea-thumb" />{step.idea ? <p>{step.idea}</p> : null}</div>
+              <div className="v-step-idea-foot"><div className="v-step-idea-tags"><span>Product</span><span>9:16</span>{step.length ? <span>{step.length}s</span> : null}</div><span aria-hidden="true" className="v-step-send">➤</span></div>
+            </div> : <div className="drop v-step-drop">
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
               {step.hideSourceCopy ? null : <div><b>{step.sourceTitle ? normalizeStepLabel(step.sourceTitle) : "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>}
-            </div>
+            </div>}
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{normalizeStepLabel(step.items[0]?.t ?? "")}</h3><p>{step.items[0]?.d}</p></div>
         </article>
@@ -118,19 +125,20 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
               </div>
             ) : (
               <div className="maker v-step-maker">
-                {step.prompt ? <div aria-label="Example description" className="v-step-prompt"><span className="v-step-prompt-text">{step.prompt}</span></div> : null}
-                <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
-                <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
-                <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
+                {isVideo && step.chat?.length ? <div className="v-step-chat">
+                  {step.chat.map(({ q, a }, index) => <div className="v-step-chat-exchange" key={`${q}-${index}`}><span className="v-step-chat-ai">{q}</span><span className="v-step-chat-user">{a}</span></div>)}
+                  <span className="v-step-chat-confirm">Ready: 9:16{step.length ? ` · ${step.length} s` : ""} · {step.credits}</span>
+                </div> : <div className="v-step-choice-chips" aria-label={isVideo ? "Video choices" : "Photo scene choices"}>{choiceChips.map((chip, index) => <span className={index === 0 ? "is-selected" : undefined} key={`${chip}-${index}`}>{chip}</span>)}</div>}
+                {isVideo && step.chat?.length ? null : <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>}
+                {step.buttonHref ? <a className="btn btn-grad v-step-submit" href={r.href(step.buttonHref)}>{buttonLabel} →</a> : <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>}
               </div>
             )}
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{normalizeStepLabel(step.items[1]?.t ?? "")}</h3><p>{step.items[1]?.d}</p></div>
         </article>
         <article className="v-step-card">
-          <div className="v-step-art v-step-result">
-            <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} />
-            <span aria-hidden="true" className="btn btn-ghost v-download">Download</span>
+          <div className={`v-step-art v-step-result${hasActorResult ? " v-step-video-result" : ""}`}>
+            {hasActorResult && step.actorResult ? <div className="v-step-video-frame"><VisualImage image={step.actorResult} r={r} /><span className="v-step-duration">{formatLength}</span><span aria-label="Download video" className="v-step-download-icon" role="img">↓</span></div> : <><VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} /><span aria-hidden="true" className="btn btn-ghost v-download">Download</span></>}
           </div>
           <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{normalizeStepLabel(step.items[2]?.t ?? "")}</h3><p>{step.items[2]?.d}</p></div>
         </article>

@@ -1187,6 +1187,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
   const picker = Array.isArray(pickerSource) ? {} : pickerSource;
   const pickerCards = Array.isArray(picker.cards) ? picker.cards : [];
   const chips = Array.isArray(pickerSource) ? pickerSource : Array.isArray(picker.chips) ? picker.chips : [];
+  const stepChips = (Array.isArray(steps.chips) ? steps.chips : chips.length ? chips.map((chip) => chip.label) : options.map((option) => option[1]))
+    .map(String).filter((label) => !/^(all|more)\b/i.test(label)).slice(0, 4);
   const pickerChipIds = chips.map((chip) => String(chip.id ?? ""));
   const buildPickerCard = (card) => {
         const cardKind = card.kind;
@@ -1241,9 +1243,15 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
         ...visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
         ...(steps.resultPosition ? { objectPosition: String(steps.resultPosition) } : {})
       },
+      ...(steps.actorResult ? { actorResult: visualImage(model, steps.actorResult, "video") } : {}),
       options,
       credits: `${stepCredits} credits`,
       ...(steps.prompt ? { prompt: String(steps.prompt) } : {}),
+      ...(stepLength ? { length: stepLength } : {}),
+      ...(steps.idea ? { idea: String(steps.idea) } : {}),
+      ...(Array.isArray(steps.chat) ? { chat: steps.chat.map(({ q, a }) => ({ q: String(q), a: String(a) })) } : {}),
+      chips: stepChips.length ? stepChips : options.map(([label, value]) => String(value || label)).slice(0, 4),
+      buttonHref,
       mode: stepMode,
       items: stepItems.map((item) => ({ t: normalizeStepLabel(item.t ?? ""), d: item.d ?? "" })),
       ...(actorCards.length ? { actorCards } : {})
