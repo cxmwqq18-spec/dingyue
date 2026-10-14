@@ -64,23 +64,21 @@
       "source": "n:guide:k6-templates-step-source",
       "sourceAlt": "Brown leather duffel bag on a dark studio background.",
       "result": "n:guide:q13-templates-steps-result-r2",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-templates-actor-r1",
+      "mode": "video",
       "prompt": "Your photo stays the product. It shows fully in a clean ad layout, with no extra words or logos.",
       "sourceHint": "Any clear photo works.",
-      "options": [
-        [
-          "Template",
-          "Lifestyle Scene"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ],
-      "chips": [
-        "Travel day",
-        "Lifestyle scene",
-        "Studio product"
+      "length": 15,
+      "idea": "Make a template ad for my duffel bag",
+      "chat": [
+        {
+          "q": "Which template fits?",
+          "a": "Travel day"
+        },
+        {
+          "q": "Who should present it?",
+          "a": "Frequent traveler"
+        }
       ]
     },
     "picker": {

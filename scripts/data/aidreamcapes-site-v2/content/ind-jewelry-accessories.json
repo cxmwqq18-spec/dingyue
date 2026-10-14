@@ -81,26 +81,20 @@
     "steps": {
       "source": "n:guide:q16-jewelry-ring-dish",
       "result": "n:guide:q16-jewelry-ring-hand-cafe",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-ind-jewelry-accessories-actor-r1",
+      "mode": "video",
       "prompt": "Show a silver solitaire ring worn beside a ceramic cup on a pale cafe table.",
-      "options": [
-        [
-          "Photo",
-          "Your jewelry photo"
-        ],
-        [
-          "Look",
-          "Worn close-up"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ],
-      "chips": [
-        "Cafe close-up",
-        "Everyday wear",
-        "Gift moment"
+      "length": 15,
+      "idea": "Make a UGC ad for my silver ring",
+      "chat": [
+        {
+          "q": "Who should wear it?",
+          "a": "Everyday stylist"
+        },
+        {
+          "q": "Which scene fits?",
+          "a": "Cafe table"
+        }
       ]
     },
     "uses": [],

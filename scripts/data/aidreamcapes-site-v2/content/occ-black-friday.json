@@ -123,26 +123,20 @@
     "steps": {
       "source": "n:guide:black-friday-m2-source",
       "result": "n:guide:q20-occ-bf-steps-result",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-occ-black-friday-actor-r1",
+      "mode": "video",
       "prompt": "A leather duffel on a dark backdrop, with clear space beside it for the offer.",
-      "options": [
-        [
-          "Template",
-          "Black Friday sale photo"
-        ],
-        [
-          "Size",
-          "Square 1:1"
-        ],
-        [
-          "Use",
-          "Social post or product page"
-        ]
-      ],
-      "chips": [
-        "Weekend packing",
-        "Gift reveal",
-        "Holiday sale"
+      "length": 15,
+      "idea": "Make a Black Friday ad for my duffel bag",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Weekend traveler"
+        },
+        {
+          "q": "What should it say?",
+          "a": "Gift-ready deal"
+        }
       ]
     },
     "picker": {

@@ -80,26 +80,20 @@
       "source": "n:guide:q16-wellness-mat-source",
       "sourceAlt": "Teal yoga mat partly unrolled on a clean studio floor.",
       "result": "n:guide:q16-wellness-mat-stretch",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-ind-health-wellness-actor-r1",
+      "mode": "video",
       "prompt": "An adult starts a gentle stretch beside a teal yoga mat on a bright studio floor. The full mat stays visible, and the scene shows no body change.",
-      "options": [
-        [
-          "Photo",
-          "Your product shot"
-        ],
-        [
-          "Scene",
-          "Morning routine"
-        ],
-        [
-          "Size",
-          "Square"
-        ]
-      ],
-      "chips": [
-        "Yoga lover",
-        "Busy parent",
-        "Fitness coach"
+      "length": 15,
+      "idea": "Make a UGC ad for my yoga mat",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Yoga lover"
+        },
+        {
+          "q": "Which scene fits?",
+          "a": "Morning stretch"
+        }
       ]
     },
     "uses": [],

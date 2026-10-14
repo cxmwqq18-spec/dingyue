@@ -75,18 +75,9 @@
     "steps": {
       "source": "f:q18-facebook-after-bottle-offer",
       "result": "f:q18-facebook-steps-bottle-pour",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-plat-facebook-actor-r1",
+      "mode": "video",
       "prompt": "Show a pale-blue insulated bottle pouring water into a clear glass on a bright desk for a Facebook ad.",
-      "options": [
-        [
-          "Template",
-          "Product photo"
-        ],
-        [
-          "Size",
-          "Square photo or tall phone clip (9:16)"
-        ]
-      ],
       "items": [
         {
           "t": "Add a Product Link",
@@ -101,10 +92,17 @@
           "d": "Render the clip and download it. That file is the one you place in the Facebook ad."
         }
       ],
-      "chips": [
-        "Busy professional",
-        "Fitness fan",
-        "Student"
+      "length": 15,
+      "idea": "Make a Facebook ad for my water bottle",
+      "chat": [
+        {
+          "q": "Who fits your buyer?",
+          "a": "Busy professional"
+        },
+        {
+          "q": "What tone do you want?",
+          "a": "Upbeat"
+        }
       ]
     },
     "titles": {

@@ -58701,6 +58701,94 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "steps2-home-actor-r1": {
+        "file": "steps2-home-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man in a parked car holds the navy travel mug toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-health-wellness-actor-r1": {
+        "file": "steps2-ind-health-wellness-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman kneels on the teal yoga mat after a stretch.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-jewelry-accessories-actor-r1": {
+        "file": "steps2-ind-jewelry-accessories-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman at a cafe table shows the silver ring on her finger.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-occ-black-friday-actor-r1": {
+        "file": "steps2-occ-black-friday-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man lifts the brown leather duffel bag toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-occ-holidays-actor-r1": {
+        "file": "steps2-occ-holidays-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the lit white candle jar at a holiday table.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-occ-sale-discount-actor-r1": {
+        "file": "steps2-occ-sale-discount-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the pink pump bottle beside the white cream jar.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-plat-facebook-actor-r1": {
+        "file": "steps2-plat-facebook-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man at his desk holds the pale-blue insulated bottle.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-templates-actor-r1": {
+        "file": "steps2-templates-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman at a train platform holds the brown leather duffel bag.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

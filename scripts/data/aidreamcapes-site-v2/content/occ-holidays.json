@@ -107,26 +107,20 @@
     "steps": {
       "source": "n:guide:occ-holidays-c3-m2-source",
       "result": "n:guide:occ-holidays-c3-m2-result",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-occ-holidays-actor-r1",
+      "mode": "video",
       "prompt": "A white candle jar in a gift scene, with clear space for the shipping cutoff.",
-      "options": [
-        [
-          "Template",
-          "Holiday product photo"
-        ],
-        [
-          "Size",
-          "Square 1:1"
-        ],
-        [
-          "Use",
-          "Gift guide or product page"
-        ]
-      ],
-      "chips": [
-        "Holiday table",
-        "Gift reveal",
-        "Cozy evening"
+      "length": 15,
+      "idea": "Make a holiday video for my candle",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Cozy host"
+        },
+        {
+          "q": "What's the moment?",
+          "a": "Holiday dinner"
+        }
       ]
     },
     "picker": {

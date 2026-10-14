@@ -1240,7 +1240,8 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
       ...(steps.sourceTitle ? { sourceTitle: normalizeStepLabel(String(steps.sourceTitle)) } : {}),
       ...(steps.sourceHint ? { sourceHint: String(steps.sourceHint) } : {}),
       result: {
-        ...visualImage(model, steps.result, stepMode === "video" ? "video" : "photo"),
+        // The actor frame replaces the old result picture on screen, so the payload carries it as the result too.
+        ...visualImage(model, stepMode === "video" && steps.actorResult ? steps.actorResult : steps.result, stepMode === "video" ? "video" : "photo"),
         ...(steps.resultPosition ? { objectPosition: String(steps.resultPosition) } : {})
       },
       ...(steps.actorResult ? { actorResult: visualImage(model, steps.actorResult, "video") } : {}),

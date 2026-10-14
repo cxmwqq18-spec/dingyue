@@ -122,26 +122,20 @@
     "steps": {
       "source": "n:guide:img2-occ-sale-discount-visual-steps-source-r1",
       "result": "n:guide:img2-occ-sale-discount-visual-steps-result-r1",
-      "mode": "photo",
+      "actorResult": "n:guide:steps2-occ-sale-discount-actor-r1",
+      "mode": "video",
       "prompt": "Pastel skincare bottles on a pale counter, with open space beside them for the offer.",
-      "options": [
-        [
-          "Template",
-          "Sale ad photo"
-        ],
-        [
-          "Size",
-          "Square 1:1"
-        ],
-        [
-          "Use",
-          "Social post or product page"
-        ]
-      ],
-      "chips": [
-        "Product review",
-        "Unbox reveal",
-        "Product in use"
+      "length": 15,
+      "idea": "Make a countdown sale video for my skincare",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Friendly reviewer"
+        },
+        {
+          "q": "When does it end?",
+          "a": "Sunday midnight"
+        }
       ]
     },
     "picker": {
