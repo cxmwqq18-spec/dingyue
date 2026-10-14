@@ -58316,6 +58316,160 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "teams1-home-aud1-r1": {
+        "file": "teams1-home-aud1-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "A plain photo of a floral water bottle beside a phone showing a person holding the same bottle in an ad.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-aud2-r1": {
+        "file": "teams1-home-aud2-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "Three phones show three ad versions for the same handheld fan.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-aud3-r1": {
+        "file": "teams1-home-aud3-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "A bakery owner in an apron holds up a fresh loaf to the camera in the shop.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-aud4-r1": {
+        "file": "teams1-home-aud4-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "A marketer reviews a grid of ad thumbnails for many different products on a monitor.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-aud5-r1": {
+        "file": "teams1-home-aud5-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-aud6-r1": {
+        "file": "teams1-home-aud6-r1",
+        "w": 1536,
+        "h": 1024,
+        "alt": "A person holds up a phone showing a simple app screen and explains it to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r1-src": {
+        "file": "teams1-home-r1-src",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain phone photo of an amber serum dropper bottle on a counter.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r1-ad": {
+        "file": "teams1-home-r1-ad",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A person in a bathrobe holds the same serum bottle and talks to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r2-src": {
+        "file": "teams1-home-r2-src",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain phone photo of a ribbed glass candle with a wooden lid.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r2-ad": {
+        "file": "teams1-home-r2-ad",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A person in a cozy living room holds the same lit candle toward the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r3-src": {
+        "file": "teams1-home-r3-src",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain phone photo of a white supplement bottle with a green label.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r3-ad": {
+        "file": "teams1-home-r3-ad",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A person in a kitchen holds the same supplement bottle beside a glass of water.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r4-src": {
+        "file": "teams1-home-r4-src",
+        "w": 1024,
+        "h": 1024,
+        "alt": "A plain phone photo of a pair of white leather sneakers.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "teams1-home-r4-ad": {
+        "file": "teams1-home-r4-ad",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A person on front steps holds up one of the same white sneakers to the camera.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
-import {
+import { TeamCards,
   BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
 import type { V2Company } from "./company";
@@ -159,7 +159,7 @@ function HomePage({ data, r }: Props) {
     ["steps", visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
     ["features", <MoreSections r={r} sections={data.more_sections as never} />],
-    ["audience", audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}><Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} /></Section> : null],
+    ["audience", audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],
     ["tools",
       <section className="sec">
         <div className="wrap">

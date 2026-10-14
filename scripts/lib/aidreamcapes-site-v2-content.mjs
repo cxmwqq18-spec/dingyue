@@ -2010,6 +2010,8 @@ function cardBlockFor(model, page, block, key) {
   const items = imageItemsFor(model, page, block.items.map((item) => {
     assert.ok(item && typeof item.t === "string" && item.t.trim() && typeof item.d === "string" && item.d.trim(), `${page.id}: ${key} item needs t and d`);
     const out = { ...item, d: inlineLinks(model, item.d, page.id) };
+    // Showcase cards pair the seller's plain photo with the ad made from it.
+    if (typeof item.srcImg === "string" && item.srcImg.trim()) out.srcImg = mediaImage(model, item.srcImg, "gallery");
     if (typeof item.href === "string" && item.href.trim()) {
       out.href = resolveSectionHref(model, `${page.id} ${key}`, item.href.startsWith("/") || item.href.startsWith("page:") ? item.href : `page:${item.href}`);
     }
@@ -2508,7 +2510,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
       const listed = new Set(["hero", ...payload.blockOrder]);
       const v = payload.visual ?? {};
       const groupItems = (examples) => (examples?.groups ?? []).flatMap((group) => (group.items ?? []).map((item) => item?.image));
-      const cardImages = (block) => (block?.items ?? []).map((item) => item?.img);
+      const cardImages = (block) => (block?.items ?? []).flatMap((item) => [item?.img, item?.srcImg]);
       const parts = {
         // Template heroes show the generator box, not the hero picture, so that picture only counts where another listed block shows it.
         hero: [...(layoutFor(page) === "template" ? [] : [heroMedia ? heroImageOf(heroMedia) : undefined, heroMedia?.before]), ...(payload.heroCards ?? []).map((card) => card?.image)],
@@ -2521,7 +2523,7 @@ export function buildSiteV2(source = loadSiteV2Source()) {
         outputs: (v.outputs ?? []).map((item) => item?.image),
         after: [v.after?.image],
         sizes: (v.sizes ?? []).map((item) => item?.image),
-        steps: [v.steps?.source, v.steps?.result, ...(v.steps?.actorCards ?? []).map((card) => card?.image)],
+        steps: [v.steps?.source, v.steps?.actorResult ?? v.steps?.result, ...(v.steps?.actorCards ?? []).map((card) => card?.image)],
         templates: [...(payload.cards ?? []), ...(payload.templates?.cards ?? [])].map((card) => card?.image),
         examples: [...(gallery?.images ?? []), ...(pairs ?? []).flatMap((pair) => [pair?.after, pair?.before]), ...groupItems(payload.examples), ...groupItems(payload.exampleGallery)],
         features: (payload.more_sections ?? []).flatMap((section) => (section.items ?? []).map((item) => item?.img)),
@@ -2625,7 +2627,7 @@ const PUBLIC_ENRICHMENT_BANNED = [
 // src/components/storefront/aidreamcapes-v2/page.tsx). Used to make sure no picture appears twice on a page.
 function visualPayloadImages(visual) {
   if (!visual) return [];
-  const images = [...(visual.strip ?? []), visual.steps?.source, visual.steps?.result];
+  const images = [...(visual.strip ?? []), visual.steps?.source, visual.steps?.actorResult ?? visual.steps?.result];
   for (const card of visual.steps?.actorCards ?? []) images.push(card.image);
   for (const card of visual.picker?.cards ?? []) images.push(card.image);
   for (const item of visual.uses ?? []) images.push(item.image, item.imageB);
@@ -2837,7 +2839,7 @@ export function analyzeSiteV2ImageReuse(build, source = loadSiteV2Source()) {
       stripCounts.set(key, (stripCounts.get(key) ?? 0) + 1);
     }
     const allowedVisualRepeats = new Set();
-    for (const image of [data.visual?.steps?.source, data.visual?.steps?.result]) {
+    for (const image of [data.visual?.steps?.source, data.visual?.steps?.actorResult ?? data.visual?.steps?.result]) {
       if (!image?.src) continue;
       const key = imageBase(image.src);
       if (stripCounts.get(key) === 1) allowedVisualRepeats.add(key);
@@ -3644,7 +3646,7 @@ export function validateSiteV2(build = buildSiteV2()) {
       stripCounts.set(key, (stripCounts.get(key) ?? 0) + 1);
     }
     const allowedVisualRepeats = new Set();
-    for (const image of [data.visual?.steps?.source, data.visual?.steps?.result]) {
+    for (const image of [data.visual?.steps?.source, data.visual?.steps?.actorResult ?? data.visual?.steps?.result]) {
       if (!image?.src) continue;
       const key = imageBase(image.src);
       if (stripCounts.get(key) === 1) allowedVisualRepeats.add(key);

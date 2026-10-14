@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
-import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ClosingBlock, V2LinkCardBlock } from "./types";
+import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ReviewItem, V2TeamIcon, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
-import { Coins, Captions, DollarSign, Gauge, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
+import { Coins, Captions, DollarSign, Gauge, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, Megaphone, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, ShoppingCart, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
 
 function SoonLabel({ soon }: { soon?: boolean }) {
   return soon ? <span className="v-soon">Coming soon</span> : null;
@@ -1017,6 +1017,7 @@ export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }
 export function ReviewWall({ block, r }: { block?: V2ReviewBlock; r: V2Resolvers }) {
   const items = (block?.items ?? []).filter((item) => item.example || Boolean(item.source?.trim()));
   if (!block || !items.length) return null;
+  if (items.every((item) => item.srcImg && item.img)) return <ShowcaseWall block={block} items={items} r={r} />;
   return (
     <Section eyebrow={items.every((item) => item.example) ? "Seller examples" : "Reviews"} lead={block.lead} title={block.h2}>
       <CardBlockCss />
@@ -1059,6 +1060,88 @@ export function LinkCardsSection({ block, eyebrow, r }: { block?: V2LinkCardBloc
             {item.href ? <a className="v1-card-link" href={r.href(item.href)}>{item.label || item.t} →</a> : null}
           </BlockCard>
         ))}
+      </div>
+    </Section>
+  );
+}
+
+// Team cards: a picture of what that team gets, then a colored icon, the team name and the line.
+const TEAM_ICONS: Record<V2TeamIcon, { icon: ReactNode; color: string }> = {
+  cart: { icon: <ShoppingCart size={20} />, color: "#a78bfa" },
+  box: { icon: <Package size={20} />, color: "#4ade80" },
+  store: { icon: <Store size={20} />, color: "#f472b6" },
+  megaphone: { icon: <Megaphone size={20} />, color: "#facc15" },
+  calendar: { icon: <Calendar size={20} />, color: "#fb923c" },
+  apps: { icon: <LayoutGrid size={20} />, color: "#22d3ee" }
+};
+
+export function TeamCards({ items, r }: { items: V2Item[]; r: V2Resolvers }) {
+  return <>
+    <style dangerouslySetInnerHTML={{ __html: `
+      .adc2 .v-teams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+      .adc2 .v-team{display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line-2);border-radius:18px;background:#0d0d10}
+      .adc2 .v-team figure{margin:0;aspect-ratio:3/2;overflow:hidden;background:#0b0b0d}
+      .adc2 .v-team figure img{display:block;width:100%;height:100%;object-fit:cover}
+      .adc2 .v-team-body{padding:20px 22px 24px}
+      .adc2 .v-team-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+      .adc2 .v-team-icon{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:12px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
+      .adc2 .v-team h3{font-size:19px;line-height:1.25;margin:0}
+      .adc2 .v-team p{color:var(--ink-2);font-size:15px;line-height:1.6;margin:0}
+      @media(max-width:980px){.adc2 .v-teams{grid-template-columns:repeat(2,minmax(0,1fr))}}
+      @media(max-width:640px){.adc2 .v-teams{grid-template-columns:minmax(0,1fr)}}
+    ` }} />
+    <div className="v-teams">
+      {items.map((item) => {
+        const icon = item.teamIcon ? TEAM_ICONS[item.teamIcon] : undefined;
+        const image = item.img ? (item.alt ? { ...item.img, alt: item.alt } : item.img) : undefined;
+        return <article className="v-team" key={item.t}>
+          {image ? <figure><Img image={image} r={r} /></figure> : null}
+          <div className="v-team-body">
+            <div className="v-team-head">{icon ? <span aria-hidden="true" className="v-team-icon" style={{ "--c": icon.color } as CSSProperties}>{icon.icon}</span> : null}<h3>{item.t}</h3></div>
+            <p><RichText r={r} text={item.d} /></p>
+          </div>
+        </article>;
+      })}
+    </div>
+  </>;
+}
+
+// Seller showcase: the plain photo a seller uploads, an arrow, and the vertical ad made from it.
+function ShowcaseWall({ block, items, r }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers }) {
+  return (
+    <Section eyebrow="Seller examples" lead={block.lead} title={block.h2}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .adc2 .v-shows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+        .adc2 .v-show{border:1px solid var(--line-2);border-radius:20px;background:#0d0d10;overflow:hidden}
+        .adc2 .v-show-stage{display:grid;grid-template-columns:minmax(0,.8fr) auto minmax(0,1fr);align-items:center;gap:14px;padding:22px 22px 8px;background:radial-gradient(ellipse at 70% 40%,rgba(139,92,246,.16),transparent 65%)}
+        .adc2 .v-show-src{position:relative;margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line-2)}
+        .adc2 .v-show-src img{display:block;width:100%;aspect-ratio:1;object-fit:cover;filter:saturate(.85)}
+        .adc2 .v-show-src figcaption,.adc2 .v-show-ad .v-show-tag{position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,.62);color:#e5e7eb;font-size:11px;font-weight:600;letter-spacing:.02em}
+        .adc2 .v-show-arrow{color:#a78bfa;font-size:26px;font-weight:700}
+        .adc2 .v-show-ad{position:relative;margin:0 auto;width:min(100%,220px);padding:7px;border-radius:24px;background:#050506;box-shadow:0 16px 40px rgba(0,0,0,.45)}
+        .adc2 .v-show-ad img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:17px}
+        .adc2 .v-show-ad .v-show-tag{left:15px;top:15px;background:linear-gradient(90deg,#8b5cf6,#ec4899);color:#fff}
+        .adc2 .v-show-time{position:absolute;right:15px;top:15px;padding:2px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700}
+        .adc2 .v-show-cap{position:absolute;left:16px;right:16px;bottom:22px;padding:6px 9px;border-radius:8px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;line-height:1.3;text-align:center}
+        .adc2 .v-show-body{padding:16px 24px 24px}
+        .adc2 .v-show-body h3{font-size:20px;margin:6px 0 8px}
+        .adc2 .v-show-body p{color:var(--ink-2);font-size:15px;line-height:1.6;margin:0}
+        .adc2 .v-show-who{color:#c4b5fd;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+        @media(max-width:860px){.adc2 .v-shows{grid-template-columns:minmax(0,1fr)}}
+      ` }} />
+      <div className="v-shows">
+        {items.map((item) => {
+          const ad = item.alt && item.img ? { ...item.img, alt: item.alt } : item.img;
+          const seconds = item.length ?? 15;
+          return <article className="v-show" key={`${item.who}-${item.t}`}>
+            <div className="v-show-stage">
+              {item.srcImg ? <figure className="v-show-src"><Img image={item.srcImg} r={r} /><figcaption>Their photo</figcaption></figure> : null}
+              <span aria-hidden="true" className="v-show-arrow">→</span>
+              {ad ? <figure className="v-show-ad"><Img image={ad} r={r} /><span className="v-show-tag">Ready-to-run ad</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
+            </div>
+            <div className="v-show-body"><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></div>
+          </article>;
+        })}
       </div>
     </Section>
   );

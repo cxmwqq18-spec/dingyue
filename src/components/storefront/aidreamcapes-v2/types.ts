@@ -73,7 +73,9 @@ export type V2Item = {
   alt?: string;
   frame?: "phone" | "browser" | "none";
   icon?: V2BenefitIcon;
+  teamIcon?: V2TeamIcon;
 };
+export type V2TeamIcon = "cart" | "box" | "store" | "megaphone" | "calendar" | "apps";
 export type V2ImageItem = V2Item & { href?: string; prompt?: string };
 export type V2Faq = { q: string; a: string };
 export type V2Crumb = { label: string; href: string };
@@ -118,7 +120,7 @@ export const V2_BLOCK_IDS = [
 export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
 export type V2CardBlockItem = { t: string; d: string; soon?: boolean; img?: V2Image; alt?: string; icon?: string };
 export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };
-export type V2ReviewItem = V2CardBlockItem & { example: boolean; who: string; source?: string };
+export type V2ReviewItem = V2CardBlockItem & { example: boolean; who: string; source?: string; srcImg?: V2Image; caption?: string; length?: number };
 export type V2ReviewBlock = { h2: string; lead?: string; items: V2ReviewItem[] };
 export type V2ClosingBlock = { h2: string; paras: string[] };
 export type V2LinkCardBlock = { h2: string; lead?: string; items: (V2CardBlockItem & { href?: string; label?: string })[] };

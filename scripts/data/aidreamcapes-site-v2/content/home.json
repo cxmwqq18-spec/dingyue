@@ -100,44 +100,44 @@
       {
         "t": "Ecommerce and D2C Brands",
         "d": "Make high-converting ads that show the product, with no shoot, no creator, and no delay. Launch faster, test more ads, and keep the store running.",
-        "img": "n:img3-gen2-unboxing-videos-g2-r3",
-        "alt": "Open the gift box in the ad so buyers see the white cream tube, jar, and soap bar.",
-        "frame": "browser"
+        "img": "n:guide:teams1-home-aud1-r1",
+        "alt": "A plain photo of a floral water bottle beside a phone showing a person holding the same bottle in an ad.",
+        "teamIcon": "cart"
       },
       {
         "t": "Dropshippers",
         "d": "Launch ads for a new product in a few minutes, with no creator and no studio. Test faster, drop the weak cuts, and scale the ones that sell.",
-        "img": "n:gen2:video-ads-g3",
-        "alt": "Set the snack pouch beside the lunch container, and post that desk scene.",
-        "frame": "phone"
+        "img": "n:guide:teams1-home-aud2-r1",
+        "alt": "Three phones show three ad versions for the same handheld fan.",
+        "teamIcon": "box"
       },
       {
         "t": "Small Businesses",
         "d": "Explain what you sell with an AI actor video, without an expensive shoot or an agency. Stay visible, even when the budget is small.",
-        "img": "n:gen2:ind-food-drinks-g3",
-        "alt": "Set the sauce jar beside the finished pasta so the ad shows the meal.",
-        "frame": "browser"
+        "img": "n:guide:teams1-home-aud3-r1",
+        "alt": "A bakery owner in an apron holds up a fresh loaf to the camera in the shop.",
+        "teamIcon": "store"
       },
       {
         "t": "Marketers and Agencies",
         "d": "Make fresh ads every day, test faster, and spend less on production. Stay on the media plan while the files get made.",
-        "img": "n:img3-gen2-spokesperson-videos-g3-r2",
-        "alt": "A presenter with short curls holds your blank snack pouch in a bright kitchen, ready to post.",
-        "frame": "phone"
+        "img": "n:guide:teams1-home-aud4-r1",
+        "alt": "A marketer reviews a grid of ad thumbnails for many different products on a monitor.",
+        "teamIcon": "megaphone"
       },
       {
         "t": "Content Creators",
         "d": "Build an AI twin with your face and voice, then publish more often without burning out.",
-        "img": "n:gen2:video-ads-g2",
-        "alt": "A canvas tote sits on a hallway bench beside a wallet, a book, and a bottle, so the ad shows what fits.",
-        "frame": "phone"
+        "img": "n:guide:teams1-home-aud5-r1",
+        "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+        "teamIcon": "calendar"
       },
       {
         "t": "App and SaaS Teams",
         "d": "Explain the product, show one real use, and ask for the signup with a creator-style video. No heavy shoot required.",
-        "img": "n:gen2:ind-electronics-g2",
-        "alt": "A tablet sits on its stand at a tidy desk, with a landscape on the screen and no words.",
-        "frame": "browser"
+        "img": "n:guide:teams1-home-aud6-r1",
+        "alt": "A person holds up a phone showing a simple app screen and explains it to the camera.",
+        "teamIcon": "apps"
       }
     ]
   },
@@ -931,36 +931,52 @@
   },
   "compare_h2": "AI UGC Ads Compared With a Usual Shoot",
   "reviews": {
-    "h2": "How Sellers Use One Product Photo",
-    "lead": "Four shops turn one product photo into an AI UGC ad they can post.",
+    "h2": "From One Product Photo to a Scroll-Stopping Ad",
+    "lead": "Start with a plain phone photo. Minutes later, you have a creator-style ad ready to run.",
     "items": [
       {
         "example": true,
         "who": "Skincare founder",
-        "t": "A Serum Ad From One Jar",
-        "d": "They upload one serum jar and get an AI actor holding it with a spoken line for a phone ad. They skip booking a creator for that week’s post.",
-        "img": "n:guide:img2-home-review1-r1"
+        "t": "A Serum Ad That Sells the Glow",
+        "d": "One plain bottle photo became a creator-style ad that feels like a real review. No creator to book, no shoot, ready in minutes.",
+        "img": "n:guide:teams1-home-r1-ad",
+        "alt": "A person in a bathrobe holds the same serum bottle and talks to the camera.",
+        "srcImg": "n:guide:teams1-home-r1-src",
+        "caption": "My new nightly glow step",
+        "length": 15
       },
       {
         "example": true,
         "who": "Candle maker",
-        "t": "A Gift-Guide Clip",
-        "d": "They turn one candle photo into a short unboxing ad and post the vertical file. They do not set up lights for that gift guide.",
-        "img": "n:guide:img2-home-review2-r1"
+        "t": "A Cozy Gift Ad in Minutes",
+        "d": "A countertop candle shot turned into a warm, scroll-stopping gift ad. No lights to set up, no studio day, just post and sell.",
+        "img": "n:guide:teams1-home-r2-ad",
+        "alt": "A person in a cozy living room holds the same lit candle toward the camera.",
+        "srcImg": "n:guide:teams1-home-r2-src",
+        "caption": "The candle everyone asks about",
+        "length": 10
       },
       {
         "example": true,
         "who": "Supplement shop",
-        "t": "A Bottle Pitch on Camera",
-        "d": "They have an AI actor hold the vitamin bottle and explain what it is for, then put that clip on the product page. They skip a talking-head shoot.",
-        "img": "n:guide:img2-home-review3-r1"
+        "t": "A Bottle Pitch That Builds Trust",
+        "d": "A simple bottle photo became a friendly on-camera pitch shoppers trust. Skip the talking-head shoot and test new hooks today.",
+        "img": "n:guide:teams1-home-r3-ad",
+        "alt": "A person in a kitchen holds the same supplement bottle beside a glass of water.",
+        "srcImg": "n:guide:teams1-home-r3-src",
+        "caption": "My morning routine, simplified",
+        "length": 15
       },
       {
         "example": true,
         "who": "Footwear brand",
         "t": "A Sneaker Ad Without a Crew",
-        "d": "They start from a white sneaker photo and get a creator-style ad with an actor and a line they approve. They do not hire a crew for that first test.",
-        "img": "n:guide:img2-home-review4-r1"
+        "d": "Two sneakers on a counter became a lifestyle ad that looks filmed on location. No crew, no model fees, high-converting from day one.",
+        "img": "n:guide:teams1-home-r4-ad",
+        "alt": "A person on front steps holds up one of the same white sneakers to the camera.",
+        "srcImg": "n:guide:teams1-home-r4-src",
+        "caption": "Clean white sneakers, every day",
+        "length": 10
       }
     ]
   },
