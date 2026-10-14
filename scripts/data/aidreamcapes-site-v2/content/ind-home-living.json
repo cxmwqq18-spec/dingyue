@@ -81,6 +81,7 @@
     "steps": {
       "source": "n:guide:q17-ind-home-living-r2-source-pillow",
       "result": "f:q17-ind-home-living-r2-steps-pillow",
+      "actorResult": "n:guide:steps2-ind-home-living-actor-r1",
       "mode": "video",
       "length": 10,
       "prompt": "In a bright living room, a hand places the ivory and sage pillow pair on a cream chair. Both pillows stay fully visible.",
@@ -106,6 +107,17 @@
         {
           "t": "Generate and Publish",
           "d": "Add a spoken line and captions, then publish. You get a clip with the product still fully in view."
+        }
+      ],
+      "idea": "Make a UGC ad for my throw pillows",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Cozy homebody"
+        },
+        {
+          "q": "Which room fits?",
+          "a": "Living room"
         }
       ]
     },

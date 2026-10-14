@@ -133,6 +133,12 @@
           "Size",
           "Square"
         ]
+      ],
+      "chips": [
+        "Farmers market",
+        "Cafe table",
+        "Room shelf",
+        "Beach day"
       ]
     },
     "picker": {

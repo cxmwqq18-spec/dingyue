@@ -100,6 +100,11 @@
           "t": "Finish and Publish",
           "d": "Render the clip and download it. That file is the one you place in the Facebook ad."
         }
+      ],
+      "chips": [
+        "Busy professional",
+        "Fitness fan",
+        "Student"
       ]
     },
     "titles": {

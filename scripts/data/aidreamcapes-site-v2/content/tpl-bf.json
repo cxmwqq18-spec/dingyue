@@ -102,6 +102,7 @@
     "steps": {
       "source": "n:guide:rc4-tpl-bf-source-pump-r1",
       "result": "n:guide:img2-tpl-bf-steps-2-r1",
+      "actorResult": "n:guide:steps2-tpl-bf-actor-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Hold the bottle in a warm holiday room and turn it once. Leave the price off.",
@@ -118,6 +119,17 @@
           "Also try",
           "1:1 square · feed post"
         ]
+      ],
+      "idea": "Make a Black Friday clip for my best seller",
+      "chat": [
+        {
+          "q": "What scene do you want?",
+          "a": "Warm holiday room"
+        },
+        {
+          "q": "Which voice fits?",
+          "a": "Cheerful"
+        }
       ]
     },
     "picker": {

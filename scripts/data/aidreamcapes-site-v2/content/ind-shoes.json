@@ -81,6 +81,7 @@
     "steps": {
       "source": "n:guide:q15-shoes-steps-source",
       "result": "n:guide:q15-shoes-steps-result-laceup-r2",
+      "actorResult": "n:guide:steps2-ind-shoes-actor-r1",
       "mode": "video",
       "prompt": "Show brown lace-up boots taking one measured step on a quiet trail in soft overcast light.",
       "options": [
@@ -92,6 +93,17 @@
           "Length",
           "15 seconds"
         ]
+      ],
+      "idea": "Make a UGC ad for my leather boots",
+      "chat": [
+        {
+          "q": "Who should wear them?",
+          "a": "Weekend hiker"
+        },
+        {
+          "q": "What look fits?",
+          "a": "Rugged casual"
+        }
       ]
     },
     "uses": [],

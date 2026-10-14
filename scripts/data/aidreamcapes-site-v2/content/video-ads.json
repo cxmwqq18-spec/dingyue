@@ -96,6 +96,7 @@
       "source": "n:gen2:plat-facebook-g3",
       "sourceAlt": "Your product: an insulated bottle shown alone on a pure white background.",
       "result": "n:gen2:plat-facebook-g4",
+      "actorResult": "n:guide:steps2-video-ads-actor-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Use your product photo and keep its shape, color and label the same. Show one person using the product in a familiar place, then hold it up clearly. Light it like a phone video and keep the camera steady. Keep the sound of the action and the room. No words, logos or music.",
@@ -108,6 +109,17 @@
           "Length",
           "15 seconds in this example"
         ]
+      ],
+      "idea": "Make a video ad for my water bottle",
+      "chat": [
+        {
+          "q": "What are you advertising?",
+          "a": "Insulated bottle"
+        },
+        {
+          "q": "Who is it for?",
+          "a": "Gym goers"
+        }
       ]
     },
     "picker": {

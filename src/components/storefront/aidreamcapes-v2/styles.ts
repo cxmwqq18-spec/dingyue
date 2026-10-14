@@ -49,8 +49,10 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 .adc2 .v-step-chat-ai{align-self:flex-start;background:#282833;color:var(--ink)}
 .adc2 .v-step-chat-user{align-self:flex-end;background:#5b4ad8;color:#fff}
 .adc2 .v-step-chat-confirm{max-width:100%;background:rgba(107,88,231,.18);color:var(--ink);font-weight:600}
-.adc2 .v-step-choice-chips{display:flex;flex-wrap:wrap;align-content:flex-start;gap:7px;min-height:80px}
-.adc2 .v-step-choice-chips span{font-size:12px;padding:8px 11px}
+.adc2 .v-step-choice-chips{display:flex;flex:1;flex-wrap:wrap;align-content:center;justify-content:center;gap:9px;min-height:80px}
+.adc2 .v-step-choice-chips span{font-size:13px;padding:10px 14px}
+.adc2 .v-step-options .v-step-maker:has(.v-step-choice-chips){height:100%}
+.adc2 .v-step-options .v-step-maker .v-step-choice-chips{flex:1 1 auto}
 .adc2 .v-step-choice-chips span.is-selected{border-color:#9985ff;background:rgba(107,88,231,.24);color:#fff}
 .adc2 .v-step-video-result{display:grid;place-items:center;background:#0a0a0d}
 .adc2 .v-step-video-frame{position:relative;height:calc(100% - 20px);aspect-ratio:9/16;overflow:hidden;border-radius:12px;background:#19191e;box-shadow:0 12px 32px rgba(0,0,0,.4)}

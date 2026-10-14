@@ -112,6 +112,11 @@
           "Size",
           "Square"
         ]
+      ],
+      "chips": [
+        "Soft shadow",
+        "Pure white",
+        "Square crop"
       ]
     },
     "picker": {

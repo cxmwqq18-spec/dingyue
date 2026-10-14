@@ -82,6 +82,7 @@
     "steps": {
       "source": "n:guide:q15-fashion-steps-source-blue-set-r2",
       "result": "n:guide:q15-fashion-steps-result-blue-set-r2",
+      "actorResult": "n:guide:steps2-ind-fashion-clothing-actor-r1",
       "mode": "video",
       "prompt": "Show a pale blue hoodie and matching sweatpants as an adult model turns once in a bright fitting room.",
       "options": [
@@ -93,6 +94,17 @@
           "Length",
           "15 seconds"
         ]
+      ],
+      "idea": "Make a UGC ad for my blue hoodie set",
+      "chat": [
+        {
+          "q": "Who should wear it?",
+          "a": "Relaxed twenties"
+        },
+        {
+          "q": "What should we show?",
+          "a": "The full fit"
+        }
       ]
     },
     "uses": [],

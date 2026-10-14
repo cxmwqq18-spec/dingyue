@@ -78,6 +78,7 @@
     "steps": {
       "source": "n:guide:k4-plat-tiktok-12-visual-steps-source",
       "result": "f:q18-tiktok-steps-black-headphones-unboxing",
+      "actorResult": "n:guide:steps2-plat-tiktok-actor-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Show black over-ear headphones being lifted from a plain box for a TikTok unboxing opening.",
@@ -103,6 +104,17 @@
         {
           "t": "Download or Post",
           "d": "Download the clip and place it in the TikTok ad account. You still set the budget there."
+        }
+      ],
+      "idea": "Make a TikTok ad for my headphones",
+      "chat": [
+        {
+          "q": "Who fits your shopper?",
+          "a": "Music lover"
+        },
+        {
+          "q": "How should it open?",
+          "a": "Unboxing"
         }
       ]
     },

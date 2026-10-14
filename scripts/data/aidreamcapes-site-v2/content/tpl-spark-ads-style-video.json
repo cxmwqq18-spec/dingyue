@@ -98,6 +98,7 @@
       "sourceTitle": "Your Starting Product",
       "sourceHint": "Keep the whole bottle and hinged lid sharp in natural light.",
       "result": "n:guide:q14-spark-step-hiker-r2",
+      "actorResult": "n:guide:steps2-tpl-spark-ads-style-video-actor-r1",
       "resultPosition": "center 20%",
       "options": [
         [
@@ -115,7 +116,18 @@
       ],
       "length": 15,
       "prompt": "At a shaded trail overlook, an adult hiker drinks from the bottle and lowers it, with the bottle facing the camera.",
-      "mode": "video"
+      "mode": "video",
+      "idea": "Make a Spark Ad for my water bottle",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Outdoor hiker"
+        },
+        {
+          "q": "Where is it filmed?",
+          "a": "Trail overlook"
+        }
+      ]
     },
     "picker": {
       "title": "Choose a Product Scene for Your TikTok Post",

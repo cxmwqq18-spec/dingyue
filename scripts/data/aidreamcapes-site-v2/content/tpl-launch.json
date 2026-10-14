@@ -106,6 +106,7 @@
       "sourceTitle": "Product photo",
       "sourceHint": "Show the sage-green canvas bag clearly, with the whole bag inside the photo.",
       "result": "n:guide:rc4-tpl-launch-result-bag-r1",
+      "actorResult": "n:guide:steps2-tpl-launch-actor-r1",
       "mode": "video",
       "prompt": "An adult lifts the sage-green canvas bag from a table and holds it toward the camera once. Bright entryway, with the bag kept in focus.",
       "options": [
@@ -121,6 +122,17 @@
           "Also try",
           "Square 1:1 · Feed post"
         ]
+      ],
+      "idea": "Announce my new crossbody bag",
+      "chat": [
+        {
+          "q": "What scene do you want?",
+          "a": "Bright entryway"
+        },
+        {
+          "q": "What's the news?",
+          "a": "New color drop"
+        }
       ]
     },
     "picker": {

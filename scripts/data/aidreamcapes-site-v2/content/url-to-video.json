@@ -154,11 +154,23 @@
       "source": "n:guide:img2-url-to-video-visual-steps-source-r1",
       "sourceAlt": "Your product: closed sage-green lunch container with its silver clasp visible on a pale counter.",
       "result": "n:guide:img2-url-to-video-visual-steps-result-r1",
+      "actorResult": "n:guide:steps2-url-to-video-actor-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Keep this sage-green divided lunch box the same shape, color and silver clasp. It sits open on a bright kitchen counter, lid behind it, side latches showing, food in the sections, and no hands. Move closer slowly. Quiet room sound only. No music, words or logos.",
       "sourceTitle": "Paste Your Product Page Link",
-      "sourceHint": "Like yourstore.com/products/lunch-container"
+      "sourceHint": "Like yourstore.com/products/lunch-container",
+      "idea": "Turn my lunch box page into a video",
+      "chat": [
+        {
+          "q": "Who fits the buyer?",
+          "a": "Busy parent"
+        },
+        {
+          "q": "Which point leads?",
+          "a": "Keeps lunch fresh"
+        }
+      ]
     },
     "picker": {
       "title": "Clips Made From a Product Page",

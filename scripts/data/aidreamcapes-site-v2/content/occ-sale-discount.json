@@ -137,6 +137,11 @@
           "Use",
           "Social post or product page"
         ]
+      ],
+      "chips": [
+        "Product review",
+        "Unbox reveal",
+        "Product in use"
       ]
     },
     "picker": {

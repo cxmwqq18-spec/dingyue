@@ -82,6 +82,7 @@
     "steps": {
       "source": "n:guide:q16-electronics-speaker-source",
       "result": "n:guide:q16-electronics-speaker-step-result",
+      "actorResult": "n:guide:steps2-ind-electronics-actor-r1",
       "mode": "video",
       "length": 10,
       "prompt": "A hand presses the speaker's one control on a cafe table, then the full speaker sits beside a cup.",
@@ -94,6 +95,17 @@
           "Length",
           "10 seconds"
         ]
+      ],
+      "idea": "Make a demo ad for my mini speaker",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Young commuter"
+        },
+        {
+          "q": "Which action to show?",
+          "a": "Pressing play"
+        }
       ]
     },
     "uses": [],

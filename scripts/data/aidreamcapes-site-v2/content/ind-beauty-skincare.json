@@ -82,6 +82,7 @@
     "steps": {
       "source": "n:guide:q15-beauty-steps-source",
       "result": "n:guide:q15-beauty-steps-result-center-r1",
+      "actorResult": "n:guide:steps2-ind-beauty-skincare-actor-r1",
       "mode": "video",
       "prompt": "Show a coral lipstick swept once across the back of a hand at a bright vanity, then hold the lipstick and the color sample together.",
       "options": [
@@ -93,6 +94,17 @@
           "Length",
           "15 seconds"
         ]
+      ],
+      "idea": "Make a UGC ad for my coral lipstick",
+      "chat": [
+        {
+          "q": "Who should wear it?",
+          "a": "Warm skin tone"
+        },
+        {
+          "q": "What should she show?",
+          "a": "One-swipe color"
+        }
       ]
     },
     "uses": [],

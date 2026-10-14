@@ -76,6 +76,11 @@
           "Size",
           "Square"
         ]
+      ],
+      "chips": [
+        "Travel day",
+        "Lifestyle scene",
+        "Studio product"
       ]
     },
     "picker": {

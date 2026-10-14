@@ -75,6 +75,7 @@
     "steps": {
       "source": "n:guide:k4-plat-instagram-24-visual-strip-0",
       "result": "f:q18-instagram-steps-hand-cream",
+      "actorResult": "n:guide:steps2-plat-instagram-actor-r1",
       "mode": "video",
       "prompt": "Show a hand applying a plain white hand-cream tube beside a bright bathroom mirror for an Instagram Reel.",
       "options": [
@@ -103,6 +104,17 @@
         {
           "t": "Download and Publish",
           "d": "Publish the hand-cream Reel, or download it with captions, a voice, and music. The file has no watermark."
+        }
+      ],
+      "idea": "Make an Instagram Reel for my hand cream",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Skincare fan"
+        },
+        {
+          "q": "What should she show?",
+          "a": "Quick application"
         }
       ]
     },

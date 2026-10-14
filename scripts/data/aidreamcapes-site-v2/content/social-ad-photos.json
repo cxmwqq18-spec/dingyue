@@ -117,7 +117,12 @@
       "source": "n:guide:im13-social-steps-source-r1",
       "result": "n:guide:im13-social-steps-result-r1",
       "mode": "photo",
-      "prompt": "Put this matte sage-green insulated bottle on a warm wood bench by the door. Keep its shape, color, and cap."
+      "prompt": "Put this matte sage-green insulated bottle on a warm wood bench by the door. Keep its shape, color, and cap.",
+      "chips": [
+        "Sunny shelf",
+        "Bright kitchen",
+        "Gym bag"
+      ]
     },
     "picker": {
       "title": "Browse Square Scenes for a Social Post",

@@ -115,7 +115,12 @@
         ]
       ],
       "sourceTitle": "Product photo",
-      "sourceHint": "Show the full necklace, clasp, and edges."
+      "sourceHint": "Show the full necklace, clasp, and edges.",
+      "chips": [
+        "Clean table",
+        "Worn close-up",
+        "Gift box"
+      ]
     },
     "picker": {
       "title": "Scenes for Your Jewelry Photo",

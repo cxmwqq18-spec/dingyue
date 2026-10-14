@@ -96,9 +96,21 @@
     "steps": {
       "source": "n:guide:tpl-outfit-c3-m2-source",
       "result": "n:guide:tpl-outfit-c3-m2-result-9x16",
+      "actorResult": "n:guide:steps2-tpl-outfit-actor-r1",
       "resultPosition": "center 20%",
       "mode": "video",
-      "prompt": "An adult turns once in the beige zip jacket so the side fit shows. The collar, cuffs, hem, and shoes stay visible, in soft studio daylight."
+      "prompt": "An adult turns once in the beige zip jacket so the side fit shows. The collar, cuffs, hem, and shoes stay visible, in soft studio daylight.",
+      "idea": "Make a reel for my zip jacket",
+      "chat": [
+        {
+          "q": "Which move to show?",
+          "a": "One full turn"
+        },
+        {
+          "q": "What light fits?",
+          "a": "Soft daylight"
+        }
+      ]
     },
     "picker": {
       "title": "Clothing reels you can start from",

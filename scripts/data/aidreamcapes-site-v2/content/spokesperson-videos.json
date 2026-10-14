@@ -112,10 +112,22 @@
       "sourceTitle": "Your Product",
       "sourceHint": "Start with a clear view of the full item.",
       "result": "n:guide:im02-spokesperson-videos-step-result-r1",
+      "actorResult": "n:guide:steps2-spokesperson-videos-actor-r1",
       "mode": "video",
       "length": 10,
       "prompt": "A presenter holds the bottle at chest height in a bright kitchen and says one short line about how you use it.",
-      "resultAlt": "Adult East Asian woman with a straight chin-length black bob holds the exact matte forest-green bottle with a black ribbed cap at chest height in a bright kitchen."
+      "resultAlt": "Adult East Asian woman with a straight chin-length black bob holds the exact matte forest-green bottle with a black ribbed cap at chest height in a bright kitchen.",
+      "idea": "Make a spokesperson ad for my water bottle",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Friendly host"
+        },
+        {
+          "q": "Which voice fits?",
+          "a": "Warm and upbeat"
+        }
+      ]
     },
     "picker": {
       "title": "Choose Your Presenter",

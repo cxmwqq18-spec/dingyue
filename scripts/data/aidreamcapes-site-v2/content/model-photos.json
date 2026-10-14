@@ -161,6 +161,11 @@
           "Size",
           "Square (1:1)"
         ]
+      ],
+      "chips": [
+        "City street",
+        "Studio",
+        "Terrace"
       ]
     },
     "picker": {

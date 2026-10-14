@@ -146,9 +146,21 @@
     "steps": {
       "source": "n:guide:ba1-before-after-videos-steps-source-r1",
       "result": "n:guide:ba1-before-after-videos-steps-result-r1",
+      "actorResult": "n:guide:steps2-before-after-videos-actor-r1",
       "mode": "video",
       "length": 15,
-      "prompt": "Grease across the stovetop, then the same stove wiped clean. The camera stays put."
+      "prompt": "Grease across the stovetop, then the same stove wiped clean. The camera stays put.",
+      "idea": "Show my cleaner turning a greasy stove spotless",
+      "chat": [
+        {
+          "q": "Who presents the change?",
+          "a": "A busy parent"
+        },
+        {
+          "q": "What line opens it?",
+          "a": "Grease gone, fast"
+        }
+      ]
     },
     "picker": {
       "title": "See a finished before and after, then make one from your photo.",

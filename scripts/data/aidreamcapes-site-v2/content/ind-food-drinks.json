@@ -82,6 +82,7 @@
     "steps": {
       "source": "n:guide:ind-food-drinks-m2-source",
       "result": "f:k7-ind-food-drinks-steps-result-f-food-video-t06",
+      "actorResult": "n:guide:steps2-ind-food-drinks-actor-r1",
       "mode": "video",
       "length": 10,
       "prompt": "A hand tilts the citrus bottle and pours once into an ice-filled glass. The pour stops, and the full bottle stays beside the glass.",
@@ -94,6 +95,17 @@
           "Length",
           "10 seconds"
         ]
+      ],
+      "idea": "Make a UGC ad for my citrus soda",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Home cook"
+        },
+        {
+          "q": "Where does it happen?",
+          "a": "Sunny kitchen"
+        }
       ]
     },
     "uses": [],

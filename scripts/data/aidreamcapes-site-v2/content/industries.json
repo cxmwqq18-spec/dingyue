@@ -129,6 +129,7 @@
       "sourceTitle": "Your Starting Product",
       "sourceHint": "Keep the full bag, handle, and zipper visible.",
       "result": "n:gen2:rb1-industries-steps-result-r1",
+      "actorResult": "n:guide:steps2-industries-actor-r1",
       "mode": "video",
       "prompt": "Pack a lunch container into the insulated bag and lift it by the handle.",
       "options": [
@@ -144,6 +145,17 @@
           "Shape",
           "9:16 tall"
         ]
+      ],
+      "idea": "Make a video ad for my lunch container",
+      "chat": [
+        {
+          "q": "Which industry is it?",
+          "a": "Home and kitchen"
+        },
+        {
+          "q": "Who should care?",
+          "a": "Busy commuters"
+        }
       ]
     },
     "picker": [],

@@ -100,6 +100,7 @@
     "steps": {
       "source": "n:guide:q11-drink-step-source-r2",
       "result": "f:q11-drink-step-result-r2",
+      "actorResult": "n:guide:steps2-tpl-drink-actor-r1",
       "mode": "video",
       "length": 6,
       "prompt": "A hand pours citrus soda from the silver can into one glass filled with ice. The shot starts at counter height and moves closer as the glass fills. Bright window light stays beside the can. The can and the full glass are both in the last shot. You hear a crisp fizz and a soft pour. Add background music if you want it. Keep the can's shape, color, and label as in your photo.",
@@ -112,6 +113,17 @@
           "Length",
           "6 seconds"
         ]
+      ],
+      "idea": "Make a UGC video for my citrus soda",
+      "chat": [
+        {
+          "q": "Which moment to show?",
+          "a": "The first sip"
+        },
+        {
+          "q": "Where is it?",
+          "a": "Bright kitchen"
+        }
       ]
     },
     "picker": {

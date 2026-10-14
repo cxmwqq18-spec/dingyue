@@ -232,6 +232,11 @@
           "Then",
           "A photo, or a product video"
         ]
+      ],
+      "chips": [
+        "Lifestyle scene",
+        "Clean product shot",
+        "Bold color"
       ]
     },
     "picker": {

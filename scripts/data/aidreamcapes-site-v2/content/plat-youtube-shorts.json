@@ -88,6 +88,7 @@
     "steps": {
       "source": "n:guide:q19-yt-step-steamer-source",
       "result": "f:k4-plat-youtube-shorts-17-visual-steps-result",
+      "actorResult": "n:guide:steps2-plat-youtube-shorts-actor-r1",
       "mode": "video",
       "length": 15,
       "prompt": "Show white handheld garment steamer smoothing a blue shirt for a YouTube Shorts product demo.",
@@ -113,6 +114,17 @@
         {
           "t": "Save and Download",
           "d": "Save the tall Short with a voice, captions, and no watermark. The wide ad is a separate file."
+        }
+      ],
+      "idea": "Make a YouTube Short for my steamer",
+      "chat": [
+        {
+          "q": "Who should present it?",
+          "a": "Busy professional"
+        },
+        {
+          "q": "What should it show?",
+          "a": "Wrinkles gone"
         }
       ]
     },

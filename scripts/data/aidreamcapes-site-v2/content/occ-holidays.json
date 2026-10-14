@@ -122,6 +122,11 @@
           "Use",
           "Gift guide or product page"
         ]
+      ],
+      "chips": [
+        "Holiday table",
+        "Gift reveal",
+        "Cozy evening"
       ]
     },
     "picker": {

@@ -107,6 +107,11 @@
           "t": "Many at Once, Then Download",
           "d": "Run the files together, then download them. You add the files in Seller Central yourself."
         }
+      ],
+      "chips": [
+        "In-use shot",
+        "White main image",
+        "Detail close-up"
       ]
     },
     "titles": {

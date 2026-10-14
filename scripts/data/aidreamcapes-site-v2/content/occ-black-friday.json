@@ -138,6 +138,11 @@
           "Use",
           "Social post or product page"
         ]
+      ],
+      "chips": [
+        "Weekend packing",
+        "Gift reveal",
+        "Holiday sale"
       ]
     },
     "picker": {

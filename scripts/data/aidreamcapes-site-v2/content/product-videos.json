@@ -121,6 +121,7 @@
       "source": "n:gen2:plat-amazon-g1",
       "sourceAlt": "Your product: a ceramic mug filling the frame on a pure white background.",
       "result": "n:guide:k1-product-videos-step-mug-lift",
+      "actorResult": "n:guide:steps2-product-videos-actor-r1",
       "mode": "video",
       "length": 10,
       "prompt": "Show one clear action in a bright room, with an AI actor and a short script about that action. Keep the shape, color and label as in the photo. Add a spoken voice and captions.",
@@ -133,6 +134,17 @@
           "Length",
           "10 seconds"
         ]
+      ],
+      "idea": "Make a product video for my ceramic mug",
+      "chat": [
+        {
+          "q": "Who fits the buyer?",
+          "a": "Coffee lover"
+        },
+        {
+          "q": "What should they say?",
+          "a": "Morning favorite"
+        }
       ]
     },
     "picker": {

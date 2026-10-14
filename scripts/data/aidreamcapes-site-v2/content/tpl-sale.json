@@ -171,7 +171,12 @@
           "Feed or product page"
         ]
       ],
-      "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal."
+      "resultAlt": "Adult pulls a blue hard-shell suitcase through a bright airport terminal.",
+      "chips": [
+        "Airport walk",
+        "Weekend getaway",
+        "Holiday trip"
+      ]
     },
     "picker": {
       "title": "Browse Sale Scenes by Category",

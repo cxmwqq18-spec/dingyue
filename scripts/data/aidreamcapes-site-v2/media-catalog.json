@@ -58470,6 +58470,237 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "steps2-before-after-videos-actor-r1": {
+        "file": "steps2-before-after-videos-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds a spray cleaner beside the same stove, now clean.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-beauty-skincare-actor-r1": {
+        "file": "steps2-ind-beauty-skincare-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A creator holds the coral lipstick, wearing the same shade.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-electronics-actor-r1": {
+        "file": "steps2-ind-electronics-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man presses the top button on the black mini speaker.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-fashion-clothing-actor-r1": {
+        "file": "steps2-ind-fashion-clothing-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A creator wears the blue hoodie and matching sweatpants.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-food-drinks-actor-r1": {
+        "file": "steps2-ind-food-drinks-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man holds the citrus soda bottle beside a glass of ice.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-home-living-actor-r1": {
+        "file": "steps2-ind-home-living-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman on the cream armchair holds the sage throw pillow.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-ind-shoes-actor-r1": {
+        "file": "steps2-ind-shoes-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man holds up one brown leather boot while wearing the other.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-industries-actor-r1": {
+        "file": "steps2-industries-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the sage insulated lunch container in her kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-plat-instagram-actor-r1": {
+        "file": "steps2-plat-instagram-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A creator holds the white hand cream tube with cream on her hand.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-plat-tiktok-actor-r1": {
+        "file": "steps2-plat-tiktok-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man unboxes the black over-ear headphones.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-plat-youtube-shorts-actor-r1": {
+        "file": "steps2-plat-youtube-shorts-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman steams a blue shirt with the white handheld steamer.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-product-videos-actor-r1": {
+        "file": "steps2-product-videos-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "An older man holds the cream ceramic mug with both hands.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-spokesperson-videos-actor-r1": {
+        "file": "steps2-spokesperson-videos-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A presenter holds the forest-green bottle at chest height.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-tpl-bf-actor-r1": {
+        "file": "steps2-tpl-bf-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man holds the sage pump bottle in a room with holiday lights.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-tpl-drink-actor-r1": {
+        "file": "steps2-tpl-drink-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the silver soda can beside a glass of ice.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-tpl-launch-actor-r1": {
+        "file": "steps2-tpl-launch-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A man wears the sage canvas crossbody bag and holds it forward.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-tpl-outfit-actor-r1": {
+        "file": "steps2-tpl-outfit-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A creator wears the beige zip jacket and shows the fit.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-tpl-spark-ads-style-video-actor-r1": {
+        "file": "steps2-tpl-spark-ads-style-video-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A hiker holds the sage insulated bottle at a trail overlook.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-url-to-video-actor-r1": {
+        "file": "steps2-url-to-video-actor-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "A woman holds the open sage lunch box with lunch inside.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-video-ads-actor-r1": {
+        "file": "steps2-video-ads-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the aqua insulated bottle in a sunny park.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
+      },
+      "steps2-video-hub-actor-r1": {
+        "file": "steps2-video-hub-actor-r1",
+        "w": 1024,
+        "h": 1536,
+        "alt": "A woman holds the teal insulated bottle in a bright kitchen.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

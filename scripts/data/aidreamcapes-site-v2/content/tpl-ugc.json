@@ -129,6 +129,11 @@
           "Size",
           "Square 1:1 image"
         ]
+      ],
+      "chips": [
+        "Post-workout",
+        "Home workout",
+        "Desk refill"
       ]
     },
     "picker": {
