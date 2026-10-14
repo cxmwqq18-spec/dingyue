@@ -58305,6 +58305,17 @@
           1280
         ],
         "source": "gen.sh"
+      },
+      "steps1-i2v-actor-r1": {
+        "file": "steps1-i2v-actor-r1",
+        "w": 864,
+        "h": 1536,
+        "alt": "Short-haired woman in a bright kitchen holds the same cream mug with blue flecks and dark coffee.",
+        "variants": [
+          640,
+          1280
+        ],
+        "source": "gen.sh"
       }
     }
   }

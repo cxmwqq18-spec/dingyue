@@ -31,19 +31,19 @@
     }
   ],
   "steps_h2": "How to Make a Video From a Photo in 3 Simple Steps",
-  "steps_lead": "Name the product, answer a few questions, and download a creator-style ad.",
+  "steps_lead": "Share your product photo and one idea. Answer two quick questions, then download a creator-style video.",
   "steps": [
     {
-      "t": "Describe Your Product",
-      "d": "Upload the photo, or paste its link. Then say who the ad is for, and you get a clip aimed at them."
+      "t": "Share Your Video Idea",
+      "d": "Add your product photo and tell the agent what kind of video you want."
     },
     {
-      "t": "Answer the Agent's Questions",
-      "d": "The video agent asks about the product, the tone, and the look. Your answers make the ad sound like your shop."
+      "t": "Chat with the Video Agent",
+      "d": "Answer a couple of short questions to shape the video for your shoppers."
     },
     {
-      "t": "Download Your UGC Ad",
-      "d": "You get an ad with a script, an AI actor, and a voiceover. The captions fit the post you chose."
+      "t": "Download Your UGC Video",
+      "d": "Get a creator-style video with your product in view, ready to download and post."
     }
   ],
   "maker": {
@@ -61,7 +61,7 @@
         "Your product"
       ]
     ],
-    "cta": "Animate my product"
+    "cta": "Make my video"
   },
   "faq": [
     {
@@ -122,8 +122,20 @@
       "source": "n:guide:fx10-image-to-video-source-r2",
       "sourceAlt": "Cream ceramic mug with blue flecks filled with coffee on a wooden counter.",
       "result": "n:guide:b1-image-to-video-result",
+      "actorResult": "n:guide:steps1-i2v-actor-r1",
       "mode": "video",
       "length": 6,
+      "idea": "Make a UGC video for my coffee mug",
+      "chat": [
+        {
+          "q": "Who is the video for?",
+          "a": "Coffee lovers"
+        },
+        {
+          "q": "What feel do you want?",
+          "a": "Cozy mornings"
+        }
+      ],
       "prompt": "Steam rises slowly from the cream ceramic mug with blue flecks. Morning light moves across the glaze on a wooden counter. The camera moves in a little. An AI actor adds a one-line spoken voice, and captions name the mug. Keep the mug's shape, color and label as in the photo."
     },
     "picker": {

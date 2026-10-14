@@ -34,6 +34,29 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 .adc2 .v-step-copy{flex:1;padding:18px 20px 20px}
 .adc2 .v-step-number{display:block;margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--ink-3)}
 .adc2 .v-step-copy p{margin-top:8px;color:var(--ink-3);font-size:14.5px;line-height:1.6}
+.adc2 .v-step-idea-art{display:grid;place-items:center;background:radial-gradient(circle at 50% 0,rgba(94,70,185,.16),transparent 70%),#09090c}
+.adc2 .v-step-idea-box{display:flex;flex-direction:column;justify-content:space-between;width:100%;min-height:156px;padding:12px;border:1px solid rgba(147,125,250,.55);border-radius:13px;background:#15151a;box-shadow:0 0 0 2px rgba(98,74,216,.12)}
+.adc2 .v-step-idea-main{display:flex;align-items:flex-start;gap:10px;min-height:76px}
+.adc2 .v-step-idea-main img.v-step-idea-thumb{display:block;flex:none;width:46px;height:46px;object-fit:cover;border-radius:7px}
+.adc2 .v-step-idea-main p{margin:3px 0 0;color:var(--ink);font-size:14px;line-height:1.4}
+.adc2 .v-step-idea-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.adc2 .v-step-idea-tags{display:flex;flex-wrap:wrap;gap:5px}
+.adc2 .v-step-idea-tags span,.adc2 .v-step-choice-chips span{padding:5px 8px;border:1px solid var(--line-2);border-radius:999px;background:#222228;color:var(--ink-2);font-size:11px;line-height:1.1}
+.adc2 .v-step-send{display:grid;flex:none;place-items:center;width:24px;height:24px;border-radius:6px;background:#6953ed;color:#fff;font-size:13px}
+.adc2 .v-step-chat{display:flex;flex-direction:column;gap:9px;width:100%}
+.adc2 .v-step-chat-exchange{display:flex;flex-direction:column;gap:5px}
+.adc2 .v-step-chat-ai,.adc2 .v-step-chat-user,.adc2 .v-step-chat-confirm{max-width:91%;padding:7px 10px;border-radius:9px;font-size:12px;line-height:1.3}
+.adc2 .v-step-chat-ai{align-self:flex-start;background:#282833;color:var(--ink)}
+.adc2 .v-step-chat-user{align-self:flex-end;background:#5b4ad8;color:#fff}
+.adc2 .v-step-chat-confirm{max-width:100%;background:rgba(107,88,231,.18);color:var(--ink);font-weight:600}
+.adc2 .v-step-choice-chips{display:flex;flex-wrap:wrap;align-content:flex-start;gap:7px;min-height:80px}
+.adc2 .v-step-choice-chips span{font-size:12px;padding:8px 11px}
+.adc2 .v-step-choice-chips span.is-selected{border-color:#9985ff;background:rgba(107,88,231,.24);color:#fff}
+.adc2 .v-step-video-result{display:grid;place-items:center;background:#0a0a0d}
+.adc2 .v-step-video-frame{position:relative;height:calc(100% - 20px);aspect-ratio:9/16;overflow:hidden;border-radius:12px;background:#19191e;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.adc2 .v-step-video-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.adc2 .v-step-duration{position:absolute;top:9px;right:9px;padding:4px 6px;border-radius:5px;background:rgba(0,0,0,.67);color:#fff;font-size:11px;font-weight:700}
+.adc2 .v-step-download-icon{position:absolute;top:50%;left:50%;display:grid;place-items:center;width:42px;height:42px;transform:translate(-50%,-50%);border-radius:10px;background:rgba(255,255,255,.9);color:#222;font-size:27px;line-height:1}
 .adc2 .v-uses{gap:22px}
 .adc2 .v-use-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;overflow:hidden;border:1px solid var(--line);border-radius:20px;background:var(--card)}
 .adc2 .v-use-row:nth-child(even) .v-use-art{order:2}
