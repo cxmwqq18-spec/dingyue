@@ -959,9 +959,9 @@ function toolRef(model, id, withImage = true, imageOverride) {
   const image = imageOverride?.ref ? mediaImage(model, imageOverride.ref, "inset") : toolPicture(model, id);
   return { id, group: page.group, label: page.label, description: TOOL_DESC[id] ?? "", href: page.url, image: { ...image, alt: imageOverride?.alt ?? "" } };
 }
-// Public links into the workspace carry only the tool (and a short template key), like the competitor's clean /app links;
-// prompts, templates, sizes and lengths stay out of the address bar.
-const APP_LINK_KEYS = new Set(["tool_id", "tool", "template"]);
+// Public links carry the selected tool, opaque template key, safe format
+// controls and an optional product page URL. Model prompts stay out of the URL.
+const APP_LINK_KEYS = new Set(["tool_id", "tool", "template", "size", "length", "url"]);
 function appHref(params, video) {
   const query = new URLSearchParams(Object.entries(params).filter(([key, value]) => value && APP_LINK_KEYS.has(key)));
   return `/app/create?${query.toString()}${video ? "#step-video" : ""}`;
@@ -2905,10 +2905,23 @@ export function validateSiteV2(build = buildSiteV2()) {
       if (params.get("tool_id") === "image_generator") errors.push(`${pageId}: video card link uses image_generator (${label})`);
       const size = params.get("size");
       if (size && !VIDEO_SIZES.includes(size)) errors.push(`${pageId}: video card link has unsupported size ${size} (${label})`);
+      const length = params.get("length");
+      if (length && !["6", "10", "15", "30"].includes(length)) errors.push(`${pageId}: video card link has unsupported length ${length} (${label})`);
     } else if (params.get("tool_id") !== "image_generator") {
       errors.push(`${pageId}: photo card link must include image_generator (${label})`);
     }
-    if (["prompt", "size", "length"].some((key) => params.has(key))) errors.push(`${pageId}: workspace link must carry only the tool (${label})`);
+    if (params.has("prompt")) errors.push(`${pageId}: workspace link must keep model prompts out of the URL (${label})`);
+    if (params.has("url")) {
+      const productUrl = params.get("url");
+      try {
+        const parsed = new URL(productUrl);
+        if (params.get("tool") !== "url-to-video" || parsed.protocol !== "https:" || !parsed.hostname.includes(".") || parsed.username || parsed.password || (parsed.port && parsed.port !== "443")) {
+          errors.push(`${pageId}: workspace link has an unsupported product URL (${label})`);
+        }
+      } catch {
+        errors.push(`${pageId}: workspace link has an invalid product URL (${label})`);
+      }
+    }
   };
   const checkPhotoCardLines = (value, pageId) => {
     if (Array.isArray(value)) return value.forEach((item) => checkPhotoCardLines(item, pageId));

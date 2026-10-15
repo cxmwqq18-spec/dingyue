@@ -67,29 +67,29 @@
     }
   ],
   "ugc": {
-    "eyebrow": "What the term means",
+    "eyebrow": "AI UGC explained",
     "title": "What Is AI UGC?",
     "paras": [
-      "Our AI actors have lifelike eyes, natural hands, and a realistic voice, so the ad you download feels filmed with a creator.",
-      "You can start from a product link, a photo, or a prompt. A ready-made template keeps that shape familiar in the feed.",
-      "Hold the product the way a friend would. The ad then sits beside ordinary posts. A glossy studio spot is a different job."
+      "UGC stands for user-generated content. AI UGC adapts familiar creator formats, such as product introductions, demonstrations and unboxing videos, using AI presenters, generated visuals and scripted dialogue. For a business, it is a way to explain what a product does, who it is for and how it can be used through a short video.",
+      "Start with a product link, a photo or a written idea. In AIVideosUGC, choose a scene, prepare a product script and select an AI presenter where the format calls for one. Use your own product information to shape a video for a product launch, a social ad or a product-page introduction.",
+      "Explore the four formats below to choose how you want to introduce your product. Each format provides a different starting point for the story, from a direct product explanation to a demonstration or packaging reveal."
     ],
     "formats": [
       {
-        "t": "Give a First-Person Product Review",
-        "d": "An AI actor gives a first-person review that sounds honest. The buyer hears a recommendation, not a slogan."
+        "t": "AI Presenter Product Introductions",
+        "d": "Introduce your product through a script spoken by an AI presenter. Focus on the main features, intended audience and everyday uses, so viewers can understand the offer before exploring the details."
       },
       {
-        "t": "Show the Problem, Then the Fix",
-        "d": "The ad names a problem, then shows your product as the fix, said straight to the camera."
+        "t": "Problem and Solution Videos",
+        "d": "Build a short story around a customer need. Explain the relevant product feature and illustrate how it could help in that situation, using product information you can support."
       },
       {
-        "t": "Walk Through How It Works",
-        "d": "A short demo shows the product in use, one move at a time, so the buyer sees the action."
+        "t": "Product Demonstration Videos",
+        "d": "Plan a short sequence around a particular use, setup step or visible feature. A focused demonstration gives shoppers context and helps them understand how the product could fit into everyday use."
       },
       {
-        "t": "Open the Box on Camera",
-        "d": "A first look as the product comes out of the box, before anyone reads a slogan."
+        "t": "Unboxing and Product Reveal Videos",
+        "d": "Plan an opening sequence that reveals the product and highlights its packaging or visible details. Use your actual product information to shape an unboxing introduction for a new launch or social post."
       }
     ]
   },
@@ -322,33 +322,33 @@
   },
   "more_sections": [
     {
-      "eyebrow": "Inside the file",
-      "h2": "One Place for the Whole UGC Ad",
-      "lead": "You get the shots, the language, the delivery, the edit, and the captions in the same file.",
+      "eyebrow": "A clear video creation process",
+      "h2": "Create Your Product Video from Start to Finish",
+      "lead": "Bring your product photos, key selling points and script into one workspace. Choose a scene and an AI presenter where needed, then set the supported language and video format. Adapt the message for a product launch, a feature explanation or an offer, and preview the generated result before downloading.",
       "items": [
         {
-          "t": "Product Shots From Your Photo",
-          "d": "A plain product photo can move in a clip. Match the color to the photo you uploaded before anyone posts it."
+          "t": "Use Product Photos to Guide the Video",
+          "d": "Upload clear product photos as visual references for generation. Decide whether to focus on the full product, its packaging or a particular detail. Compare the result with your original photos, since generated details can vary."
         },
         {
-          "t": "Write the Ad in Their Language",
-          "d": "Write the sentence in the language you sell in, then pick a voice that matches it. No translation vendor has to sit in the middle."
+          "t": "Choose a Presenter and Supported Language",
+          "d": "Choose an AI presenter and review the voice profile included with that presenter. Select a supported language and write the message for the audience you want to reach, so the product introduction fits the market you are addressing."
         },
         {
-          "t": "Direct the Actor's Delivery",
-          "d": "If the script says the speaker is relieved, the delivery should sound relieved, not like a showroom tour."
+          "t": "Guide the Tone of the Presentation",
+          "d": "Describe the speaking style and product details you want to emphasize in your brief. Use a direct script for a feature explanation or a conversational script for a lifestyle introduction. Your instructions guide the generated performance."
         },
         {
-          "t": "Edit the Script Before Export",
-          "d": "A price that changed this morning can be corrected in the editor before you export the file."
+          "t": "Adapt the Script to Each Campaign",
+          "d": "Write an opening that makes the subject clear, explain the main product benefit, and end with the next step you want viewers to take. Update the script when product details or offers change, then generate a version for that campaign."
         },
         {
-          "t": "Captions Sized for a Phone",
-          "d": "Restyle the on-screen line so the claim is easy to read on a phone, even in a noisy room."
+          "t": "Add Captions to Support the Message",
+          "d": "When captions are available for the selected video, choose a caption style and review the text and timing. Captions keep product names and key points visible on screen, giving viewers another way to follow the message when browsing with sound off."
         },
         {
-          "t": "Put Your Brand on the End Card",
-          "d": "Add your logo, your colors, and your type so the last frame looks like the rest of the shop."
+          "t": "Preview and Download Your Video",
+          "d": "Watch the generated clips and any captions together to see how the product, dialogue and story work as a whole. Once you are satisfied with the result, download the video and prepare it for the product page or social channel you plan to use."
         }
       ]
     }
@@ -376,8 +376,8 @@
       ]
     },
     "picker": {
-      "title": "Pick a Scene and Use Your Own Product",
-      "lead": "Pick a scene you like, upload your product photo, and get that look with your own product in it.",
+      "title": "Choose a Scene for Your Product Video",
+      "lead": "Explore product video examples by category, from product close-ups and demonstrations to AI presenter introductions and unboxing ideas. Select a scene that matches what you want to show, then add your product photo and adapt the script or visual description in the workspace. Compare the examples to find a creative direction before generating a video for your own product.",
       "chips": [
         {
           "id": "accessories",
@@ -883,8 +883,9 @@
         "h2": "How to Make AI Product Videos and Photos in 3 Simple Steps"
       },
       "m3": {
-        "h2": "Pick a Look, Then Swap in Your Product",
-        "lead": "Open a scene, put your product photo in it, and keep the product you actually sell."
+        "eyebrow": "Explore product ad scenes",
+        "h2": "Choose a Scene for Your Product Video",
+        "lead": "Explore product video examples by category, from product close-ups and demonstrations to AI presenter introductions and unboxing ideas. Select a scene that matches what you want to show, then add your product photo and adapt the script or visual description in the workspace. Compare the examples to find a creative direction before generating a video for your own product."
       },
       "faq": {
         "h2": "Questions About AI UGC Ads"

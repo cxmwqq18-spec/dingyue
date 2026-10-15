@@ -42,6 +42,25 @@ type Step = "input" | "storyboard" | "render" | "delivery";
 type Action = "storyboard" | "reroll" | "rewrite" | "generate_shot" | "restore_version" | "render" | "resume" | "compose_shot";
 type ActionQuote = { available: boolean; credits: number | null; currency: "credits"; quoteToken?: string; expiresAt?: string; revision?: number; reason?: string };
 type ImageResult = { jobs: { id: string; status: string; creditsReserved: number; createdAt?: string }[]; assets: { id: string; jobId?: string; label: string; previewUrl: string; downloadUrl?: string }[] };
+
+type GuestDraftHandoff = {
+  version: 1;
+  savedAt: number;
+  view: "agent" | "batch";
+  tab?: HomeComposerTab;
+  prompt: string;
+  title: string;
+  sceneId: string;
+  batchSceneId: string;
+  quickStartSceneId: string;
+  aspect: string;
+  duration: number;
+  modelId: string;
+};
+
+function guestDraftHandoffKey(siteId: string): string {
+  return `aidreamcapes:guest-video-draft:${encodeURIComponent(siteId)}`;
+}
 export interface AidreamcapesWorkspaceProps {
   siteId: string;
   basePath: string;
@@ -52,6 +71,7 @@ export interface AidreamcapesWorkspaceProps {
   initialView?: WorkspaceView;
   initialTaskId?: string;
   initialSceneId?: string;
+  initialProductUrl?: string;
   loginPath?: string;
   accountPath?: string;
   logoutPath?: string;
@@ -94,7 +114,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -123,7 +143,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const closeModal = useCallback(() => setModal(null), []);
   const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : "");
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
-  const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">("");
+  const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">(initialSceneId ?? "");
   const [draftReferenceUrls, setDraftReferenceUrls] = useState<string[]>([]);
   const [composerTab, setComposerTab] = useState(initialPreset?.kind === "video" ? "AI Video" : "AI Video Agent");
   const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? 15);
@@ -201,6 +221,39 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     return result as T;
   }, [api, csrfToken, siteId]);
 
+  function continueToLoginWithDraft() {
+    let saved = false;
+    try {
+      const handoff: GuestDraftHandoff = {
+        version: 1,
+        savedAt: Date.now(),
+        view: view === "batch" ? "batch" : "agent",
+        tab: view === "images" ? "AI Image" : view === "video" ? "AI Video" : view === "agent" ? "AI Video Agent" : composerTab,
+        prompt: prompt.slice(0, 4000),
+        title: composerTitle.slice(0, 160),
+        sceneId: selectedSceneId,
+        batchSceneId,
+        quickStartSceneId,
+        aspect: composerAspect,
+        duration: composerDuration,
+        modelId: composerModel.slice(0, 2048),
+      };
+      window.sessionStorage.setItem(guestDraftHandoffKey(siteId), JSON.stringify(handoff));
+      saved = true;
+    } catch {
+      // Keep login usable when browser storage is unavailable.
+    }
+    window.location.assign(currentLoginHref(saved));
+  }
+
+  function currentLoginHref(resumeDraft = false): string {
+    const target = new URL(loginHref, window.location.origin);
+    const returnTo = new URL(`${window.location.pathname}${window.location.search}`, window.location.origin);
+    if (resumeDraft) returnTo.searchParams.set("resumeDraft", "1");
+    target.searchParams.set("next", `${returnTo.pathname}${returnTo.search}${returnTo.hash}`);
+    return `${target.pathname}${target.search}${target.hash}`;
+  }
+
   const acceptTask = useCallback((next: WorkspaceTask, display = true) => {
     currentRef.current = next; savedRef.current = next; dirty.current = false;
     if (display) setTask(next);
@@ -257,14 +310,54 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const active = () => !controller.signal.aborted && navigation === navigationSerial.current;
     const params = new URLSearchParams(window.location.search);
     const createIntent = aidreamcapesCreateIntentFromSearchParams(params);
-    if (!initialPreset && createIntent?.prompt) setPrompt(createIntent.prompt);
-    if (!initialPreset && createIntent?.kind === "photo" && createIntent.prompt) {
+    const resumingGuestDraft = params.get("resumeDraft") === "1";
+    if (!initialPreset && !resumingGuestDraft && createIntent?.prompt) setPrompt(createIntent.prompt);
+    if (!initialPreset && !resumingGuestDraft && createIntent?.kind === "video") {
+      if (createIntent.size && WORKSPACE_ASPECTS.includes(createIntent.size as TaskInput["options"]["aspect"])) setComposerAspect(createIntent.size as TaskInput["options"]["aspect"]);
+      if (createIntent.length) setComposerDuration(createIntent.length);
+    }
+    if (!initialPreset && !resumingGuestDraft && createIntent?.kind === "photo" && createIntent.prompt) {
       setImageInput((current) => ({ ...current, prompt: createIntent.prompt ?? "" }));
     }
     const queryView = params.get("view");
     const entryView = initialPreset ? initialPreset.kind === "photo" ? "images" : "home" : isWorkspaceView(queryView) ? queryView : initialView;
     const taskId = initialTaskId ?? params.get("task");
     setView(entryView);
+    if (customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
+      params.delete("resumeDraft");
+      const restoredUrl = `${window.location.pathname}${params.size ? `?${params.toString()}` : ""}${window.location.hash}`;
+      window.history.replaceState(window.history.state, "", restoredUrl);
+      try {
+        const raw = window.sessionStorage.getItem(guestDraftHandoffKey(siteId));
+        if (raw) {
+          const handoff = JSON.parse(raw) as Partial<GuestDraftHandoff>;
+          window.sessionStorage.removeItem(guestDraftHandoffKey(siteId));
+          const age = Date.now() - Number(handoff.savedAt);
+          const fresh = handoff.version === 1 && Number.isFinite(handoff.savedAt) && age >= 0 && age < 30 * 60 * 1000;
+          if (fresh) {
+            if (handoff.tab === "AI Video Agent" || handoff.tab === "AI Video" || handoff.tab === "AI Image") setComposerTab(handoff.tab);
+            if (typeof handoff.prompt === "string" && handoff.prompt.length <= 4000) setPrompt(handoff.prompt);
+            if (typeof handoff.title === "string" && handoff.title.length <= 160) setComposerTitle(handoff.title);
+            if (typeof handoff.aspect === "string" && WORKSPACE_ASPECTS.includes(handoff.aspect as TaskInput["options"]["aspect"])) setComposerAspect(handoff.aspect as TaskInput["options"]["aspect"]);
+            if ([6, 10, 15, 30].includes(Number(handoff.duration))) setComposerDuration(Number(handoff.duration) as TaskInput["options"]["duration"]);
+            if (typeof handoff.modelId === "string" && handoff.modelId.length <= 2048 && initialCatalog?.models.some((item) => item.id === handoff.modelId)) setComposerModel(handoff.modelId);
+            if (handoff.view === "batch" && typeof handoff.batchSceneId === "string" && initialCatalog?.scenes.some((item) => item.id === handoff.batchSceneId)) {
+              setBatchSceneId(handoff.batchSceneId);
+              setView("batch");
+              setMessage("Your batch draft details were restored. Please add your product photos again.");
+            } else if (typeof handoff.sceneId === "string" && initialCatalog?.scenes.some((item) => item.id === handoff.sceneId)) {
+              setSelectedSceneId(handoff.sceneId);
+              setView("agent");
+              setStep("input");
+              setMessage("Your video details were restored. Please upload your product photos again.");
+            }
+            if (typeof handoff.quickStartSceneId === "string" && initialCatalog?.scenes.some((item) => item.id === handoff.quickStartSceneId)) setQuickStartSceneId(handoff.quickStartSceneId);
+          }
+        }
+      } catch {
+        // Ignore expired or malformed browser-only handoff data.
+      }
+    }
     // Both SSR and /catalog include the customer's actors. Task details do not need
     // the complete Library payload before they can be displayed.
     const loads: Promise<unknown>[] = [];
@@ -287,7 +380,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setLoading(false);
     });
     return () => controller.abort();
-  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, request]);
+  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, request, siteId]);
 
   const taskRunning = Boolean(operationActive || task?.status === "rendering" || clipsProcessing);
   const taskId = task?.taskId;
@@ -465,7 +558,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   async function saveNewDraft() {
     const selected = catalog?.scenes.find((item) => item.id === selectedSceneId);
     if (!selected) return;
-    if (!customer) { window.location.assign(loginHref); return; }
     const input = composerInput(selected, { aspect: composerAspect, duration: composerDuration, modelId: composerModel, referenceUrls: draftReferenceUrls });
     const fields = selected.sections.flatMap((section) => section.fields);
     const requiredImage = fields.find((field) => field.type === "images" && field.required);
@@ -473,6 +565,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!requiredImage || !(input.images[requiredImage.id]?.length)) { setMessage("Add at least one product photo before saving this draft."); return; }
     const draftDescription = activePreset?.kind === "video" ? input.creativeDirection : requiredText ? input.fields[requiredText.id] : "";
     if (!String(draftDescription ?? "").trim()) { setMessage("Describe your video in one sentence before saving this draft."); return; }
+    if (!customer) { continueToLoginWithDraft(); return; }
     setBusy(true); setMessage("");
     try {
       const selectedProductBrief = [...composerProducts].reverse().find((asset) => asset.confirmedBrief && Object.values(input.images).some((urls) => urls.includes(asset.previewUrl)))?.confirmedBrief;
@@ -496,7 +589,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   async function uploadDraftReferences(files: FileList | null) {
     if (!files?.length) return;
-    if (!customer) { window.location.assign(loginHref); return; }
+    if (!customer) { continueToLoginWithDraft(); return; }
     const imageField = selectedScene?.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required);
     const limit = imageField?.max ?? 4;
     const available = Math.max(0, limit - draftReferenceUrls.length);
@@ -512,7 +605,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   async function createBatch(items: BatchDraftItem[]) {
-    if (!customer) { window.location.assign(loginHref); return; }
+    if (!customer) { continueToLoginWithDraft(); return; }
     setBusy(true); setMessage(""); setBatchNotice("");
     try {
       const result = await request<{ tasks: WorkspaceTask[]; failed: { index: number; error: string }[] }>("/tasks/batch", {
@@ -602,7 +695,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   async function uploadAvatarProduct(file: File | undefined) {
     if (!file) return;
-    if (!customer) { window.location.assign(loginHref); return; }
+    if (!customer) { window.location.assign(currentLoginHref()); return; }
     setBusy(true); setMessage("");
     try {
       const asset = await uploadAsset(file);
@@ -611,7 +704,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   async function createAvatarDraft() {
-    if (!customer) { window.location.assign(loginHref); return; }
+    if (!customer) { window.location.assign(currentLoginHref()); return; }
     const selectedActor = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
     const presenterScene = catalog?.scenes.find((item) => item.id === "presenter_showcase");
     if (!selectedActor || !presenterScene) { setMessage("Choose a presenter before continuing."); return; }
@@ -680,7 +773,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (tab === "AI Image") { void navigate("images"); return; }
     setComposerModel(selection.modelId ?? ""); setComposerAspect(selection.aspect); setComposerDuration(selection.duration);
     if (tab === "AI Video") {
-      const selected = catalog?.scenes.find((item) => item.id === (activePreset?.kind === "video" ? presetSceneId : "process_demo")) ?? catalog?.scenes.find((item) => !item.needsActor);
+      const selected = catalog?.scenes.find((item) => item.id === (activePreset?.kind === "video" ? presetSceneId : quickStartSceneId || "process_demo")) ?? catalog?.scenes.find((item) => !item.needsActor);
       if (selected) selectScene(selected, { ...selection, referenceUrls: videoReferenceUrls });
       return;
     }
@@ -700,7 +793,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   async function generateImage() {
-    if (!customer) { window.location.assign(loginHref); return; }
+    if (!customer) { window.location.assign(currentLoginHref()); return; }
     setBusy(true); setMessage("");
     try {
       const quoted = await request<{ quote: ActionQuote }>("/images/quote", { method: "POST", body: JSON.stringify(imageInput) });
@@ -784,7 +877,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault(); if (!busy) void navigate(item.id);
-    }}><Icon size={21} strokeWidth={1.8} /><span>{item.title}</span>{item.planned && <small className={styles.planned}>Planned</small>}</a>;
+    }}><Icon size={21} strokeWidth={1.8} /><span>{item.title}</span>{item.status && <small className={`${styles.planned} ${item.status === "simulation" ? styles.simulation : ""}`}>{item.status === "simulation" ? "Simulation" : "Planned"}</small>}</a>;
   });
   const activeModel = catalog?.models.find((model) => model.available) ?? catalog?.models[0];
   const selectedModel = catalog?.models.find((model) => model.id === (task?.input.modelId || composerModel)) ?? activeModel;
@@ -819,7 +912,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     <div className={styles.body}>
       <header className={styles.toolbar}>
         <div className={styles.toolbarLeft}><button className={`${styles.iconButton} ${styles.mobileMenu}`} onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu size={23} /></button><button className={`${styles.iconButton} ${styles.desktopMenu}`} onClick={() => { if (window.innerWidth <= 760) setMobileOpen(true); else setCollapsed(!collapsed); }} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}><PanelLeftClose size={23} /></button><button className={styles.pillButton} onClick={() => setModal("guide")}><Play size={15} fill="currentColor" /><span>Watch Tutorial</span></button>{canBrowseTemplates && <button type="button" className={`${styles.button} ${styles.primary} ${styles.templateToolbarButton}`} onClick={() => setModal("templates")} aria-label="Choose a template"><Clapperboard size={15} /><span>Choose template</span></button>}</div>
-        <div className={styles.toolbarRight}>{balance != null && <span className={styles.balance}><span>{balance.toLocaleString()}</span><span> credits</span></span>}<button className={`${styles.button} ${styles.primary}`} onClick={() => setModal("support")} aria-label="Book a Call"><PhoneCall size={16} /><span className={styles.toolbarCallLabel}>Book a Call</span></button><button className={styles.iconButton} onClick={() => setDark(!dark)} aria-label={dark ? "Use light theme" : "Use dark theme"}>{dark ? <Moon size={21} /> : <Sun size={21} />}</button>{customer ? <button className={styles.button} disabled={editingDisabled} onClick={() => void logout()}>Log Out</button> : <a className={styles.button} href={loginHref}>Log In</a>}</div>
+        <div className={styles.toolbarRight}>{balance != null && <span className={styles.balance}><span>{balance.toLocaleString()}</span><span> credits</span></span>}<button className={`${styles.button} ${styles.primary}`} onClick={() => setModal("support")} aria-label="Book a Call"><PhoneCall size={16} /><span className={styles.toolbarCallLabel}>Book a Call</span></button><button className={styles.iconButton} onClick={() => setDark(!dark)} aria-label={dark ? "Use light theme" : "Use dark theme"}>{dark ? <Moon size={21} /> : <Sun size={21} />}</button>{customer ? <button className={styles.button} disabled={editingDisabled} onClick={() => void logout()}>Log Out</button> : <a className={styles.button} href={loginHref} onClick={(event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          if (["home", "video", "images", "agent", "batch"].includes(view)) continueToLoginWithDraft();
+          else window.location.assign(currentLoginHref());
+        }}>Log In</a>}</div>
       </header>
       <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""}`}>
         {message && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{message}</span>{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => setMessage("")} aria-label="Dismiss message"><X size={15} /></button></div>}
@@ -836,7 +934,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
-            onContinue={continueHomeComposer} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
+            onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {importedBriefNotice()}
           <div className={styles.quickPrompts}>{(catalog?.quickStarts ?? catalog?.scenes.map((item) => ({ label: item.name, sceneId: item.id, aspect: undefined, duration: undefined })) ?? []).map((item, index) => <button type="button" key={`${item.sceneId}-${index}`} className={styles.quick} disabled={working} onClick={() => fillQuickStart(item)}><Sparkles size={12} /><span>{item.label}</span></button>)}</div>
@@ -848,8 +946,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </>}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
-        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
-        {view === "batch" && <BatchDraftPage scenes={catalog?.scenes ?? []} sceneId={batchScene?.id ?? ""} onSceneChange={setBatchSceneId} prompt={prompt} onPromptChange={setPrompt} referenceCount={batchReferenceCount} disabled={working} onCreate={() => { if (!customer) { window.location.assign(loginHref); return; } setBatchOpen(true); }} onOpenLibrary={() => void navigate("library")} onAddProduct={() => setModal("product")} />}
+        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={initialProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
+        {view === "batch" && <BatchDraftPage scenes={catalog?.scenes ?? []} sceneId={batchScene?.id ?? ""} onSceneChange={setBatchSceneId} prompt={prompt} onPromptChange={setPrompt} referenceCount={batchReferenceCount} disabled={working} onCreate={() => { if (!customer) { continueToLoginWithDraft(); return; } setBatchOpen(true); }} onOpenLibrary={() => void navigate("library")} onAddProduct={() => setModal("product")} />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
           <HomeComposer
             tab="AI Video" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
@@ -860,7 +958,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
-            onContinue={continueHomeComposer} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
+            onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {canBrowseTemplates && templatePickerCallout()}
         </>}
@@ -878,7 +976,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
-            onContinue={continueHomeComposer} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
+            onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {importedBriefNotice()}
           {canBrowseTemplates && templatePickerCallout()}
@@ -1030,7 +1128,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
             onImageGenerate={() => void generateImage()} imageGenerateDisabled={!customer || !imageQuote?.available}
-            onContinue={continueHomeComposer} disabled={busy} canUpload={Boolean(customer)} loginHref={loginHref}
+            onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={busy} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {canBrowseTemplates && templatePickerCallout()}
           {customer && <p className={styles.help} style={{ margin: "12px 0 0" }}>

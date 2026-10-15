@@ -13,6 +13,7 @@ import { isWorkspaceView } from "./navigation";
 import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
 import { presetRequestFromQuery, type WorkspacePresetRequest } from "./preset-contract";
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
+import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -28,6 +29,7 @@ export async function renderAidreamcapesWorkspace({
   taskId,
   sceneId,
   imageTool,
+  initialProductUrl,
   presetRequest,
   invalidPreset = false,
 }: {
@@ -36,6 +38,7 @@ export async function renderAidreamcapesWorkspace({
   taskId?: string;
   sceneId?: SceneId;
   imageTool?: WorkspaceImageTool;
+  initialProductUrl?: string;
   presetRequest?: WorkspacePresetRequest;
   invalidPreset?: boolean;
 }) {
@@ -57,6 +60,10 @@ export async function renderAidreamcapesWorkspace({
   if (initialPreset) { returnQuery.set("source", initialPreset.sourcePage); returnQuery.set("preset", initialPreset.presetId); }
   if (taskId) returnQuery.set("task", taskId);
   if (!initialPreset && !taskId && initialView !== "home") returnQuery.set("view", initialView);
+  if (!initialPreset && !taskId && initialProductUrl) {
+    returnQuery.set("tool", "url-to-video");
+    returnQuery.set("url", initialProductUrl);
+  }
   const returnPath = returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
   return <AidreamcapesWorkspace
     key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? "workspace"}
@@ -65,6 +72,7 @@ export async function renderAidreamcapesWorkspace({
     initialView={initialPreset ? initialPreset.kind === "photo" ? "images" : "home" : initialView}
     initialTaskId={taskId}
     initialSceneId={sceneId}
+    initialProductUrl={initialProductUrl}
     initialImageTool={imageTool}
     initialPreset={initialPreset}
     initialTemplateGallery={templateGallery}
@@ -84,12 +92,26 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
   const value = (key: string) => typeof query[key] === "string" ? query[key] as string : undefined;
   const tool = value("tool");
   const scene = value("scene");
-  const sceneId: SceneId | undefined = scene === "presenter_showcase" || scene === "process_demo" || scene === "texture_closeup" ? scene : undefined;
   const imageTools: WorkspaceImageTool[] = ["custom", "change-background", "white-background", "model-photos", "lifestyle-photos"];
   const queryView = value("view");
-  const initialView: WorkspaceView | undefined = isWorkspaceView(queryView) ? queryView : value("tool_id") === "image_generator" || (tool && imageTools.includes(tool as WorkspaceImageTool)) ? "images" : undefined;
+  const createIntent = aidreamcapesCreateIntentFromSearchParams({ get: (key) => value(key) ?? null });
+  const requestedScene: SceneId | undefined = scene === "presenter_showcase" || scene === "process_demo" || scene === "texture_closeup" ? scene : undefined;
+  const sceneByTool: Record<string, SceneId> = {
+    "video-ads": "presenter_showcase",
+    "spokesperson-videos": "presenter_showcase",
+    "product-videos": "process_demo",
+    "before-after-videos": "process_demo",
+    "unboxing-videos": "process_demo",
+  };
+  const sceneId = requestedScene ?? (createIntent?.kind === "video" ? sceneByTool[createIntent.tool] : undefined);
+  const intentView: WorkspaceView | undefined = createIntent?.kind === "video" ? createIntent.tool === "url-to-video" ? "product" : "video" : undefined;
+  const initialView: WorkspaceView | undefined = isWorkspaceView(queryView) ? queryView : value("tool_id") === "image_generator" || (tool && imageTools.includes(tool as WorkspaceImageTool)) ? "images" : intentView;
   const imageTool = initialView === "images" && tool && imageTools.includes(tool as WorkspaceImageTool) ? tool as WorkspaceImageTool : undefined;
   const presetRequest = presetRequestFromQuery(query);
   const invalidPreset = Boolean(query.source !== undefined || query.preset !== undefined) && !presetRequest;
-  return { taskId: value("task"), sceneId, initialView, imageTool, presetRequest, invalidPreset };
+  return {
+    taskId: value("task"), sceneId, initialView, imageTool,
+    initialProductUrl: createIntent?.kind === "video" ? createIntent.productUrl : undefined,
+    presetRequest, invalidPreset,
+  };
 }

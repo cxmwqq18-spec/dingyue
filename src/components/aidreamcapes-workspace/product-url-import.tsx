@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import styles from "./product-url-import.module.css";
 
@@ -62,6 +62,7 @@ export type ProductUrlImportProps = {
   customerId?: string;
   csrfToken?: string;
   loginHref: string;
+  initialUrl?: string;
   onImported: (asset: ImportedProductAsset, title?: string, brief?: ConfirmedProductBrief) => void;
 };
 
@@ -118,19 +119,45 @@ function priceText(price: { amount: string; currency?: string }): string {
   return `${price.currency ? `${price.currency} ` : ""}${price.amount}`;
 }
 
-export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, onImported }: ProductUrlImportProps) {
-  const [url, setUrl] = useState("");
+function loginHrefForProduct(loginHref: string, sourceUrl: string): string {
+  const login = new URL(loginHref, "https://workspace.invalid");
+  const next = new URL(login.searchParams.get("next") || "/app/create?view=product", "https://workspace.invalid");
+  if (next.pathname.endsWith("/app")) next.pathname = `${next.pathname}/create`;
+  for (const key of ["source", "preset", "task", "scene", "template", "tool_id", "prompt"]) next.searchParams.delete(key);
+  next.searchParams.set("view", "product");
+  next.searchParams.set("tool", "url-to-video");
+  try {
+    const raw = sourceUrl.trim();
+    const parsed = new URL(/^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : `https://${raw}`);
+    if ((parsed.protocol === "https:" || parsed.protocol === "http:") && parsed.hostname.includes(".") && !parsed.username && !parsed.password && (!parsed.port || parsed.port === "443") && raw.length <= 2048) {
+      parsed.protocol = "https:";
+      next.searchParams.set("url", parsed.toString());
+    } else {
+      next.searchParams.delete("url");
+    }
+  } catch {
+    next.searchParams.delete("url");
+  }
+  login.searchParams.set("next", `${next.pathname}${next.search}`);
+  return `${login.pathname}${login.search}${login.hash}`;
+}
+
+export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, initialUrl, onImported }: ProductUrlImportProps) {
+  const [url, setUrl] = useState(initialUrl ?? "");
   const [busy, setBusy] = useState<"preview" | "import" | "">("");
   const [preview, setPreview] = useState<ProductBriefPreview | null>(null);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (initialUrl) setUrl(initialUrl);
+  }, [initialUrl]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setStatus("");
     setPreview(null);
-    if (!customerId) return;
 
     let parsed: URL;
     try {
@@ -282,15 +309,27 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, onI
               {url && <button className={styles.clear} type="button" onClick={() => { setUrl(""); setError(""); setStatus(""); }} disabled={busy !== ""}>Clear</button>}
               <button className={styles.submit} type="submit" disabled={busy !== "" || !url.trim()}>{busy === "preview" ? "Reading page…" : "Preview product"}</button>
             </div>
-            <p className={styles.note}>We’ll read the page and show its product facts for review. Nothing is added until you confirm a photo; importing requires you to be logged in and the page to be publicly readable with a usable product image.</p>
+            <p className={styles.note}>We’ll read the page and show its product facts for review. Nothing is added until you confirm a photo; the page must be publicly readable with a usable product image.</p>
             {status && <p className={styles.status} role="status" aria-live="polite">{status}</p>}
             {error && <p className={styles.error} role="alert">{error}</p>}
           </form>
         )
       ) : (
         <div className={styles.loginPrompt}>
-          <p>Sign in is required to preview and import a product photo. Use a public HTTPS product page with a readable page and usable image.</p>
-          <a className={styles.submit} href={loginHref}>Log in to import</a>
+          <label className={styles.label} htmlFor="product-page-url">Product page URL</label>
+          <input
+            className={styles.input}
+            id="product-page-url"
+            name="url"
+            type="url"
+            inputMode="url"
+            autoComplete="url"
+            placeholder="https://store.example/products/item"
+            value={url}
+            onChange={(event) => setUrl(event.currentTarget.value)}
+          />
+          <p>Log in to preview a product page and add its photo to your workspace. The link will be ready when you return.</p>
+          <a className={styles.submit} href={loginHrefForProduct(loginHref, url)}>Log in to preview</a>
         </div>
       )}
       {preview && status && <p className={styles.status} role="status" aria-live="polite">{status}</p>}

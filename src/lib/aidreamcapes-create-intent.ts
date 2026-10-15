@@ -7,7 +7,7 @@
 export const AIDREAMCAPES_CREATE_INTENT_SITE_ID = "site_aidreamcapes";
 
 const VIDEO_SIZES = ["9:16", "1:1", "16:9", "4:3", "3:4"] as const;
-const VIDEO_LENGTHS = [6, 10, 15] as const;
+const VIDEO_LENGTHS = [6, 10, 15, 30] as const;
 const MAX_PROMPT_LENGTH = 600;
 const MAX_PRODUCT_URL_LENGTH = 2048;
 const TOOL_SLUG_RE = /^[a-z0-9][a-z0-9-]{1,60}$/;
@@ -38,14 +38,16 @@ function cleanTool(value: string | null): string | undefined {
   return TOOL_SLUG_RE.test(tool) ? tool : undefined;
 }
 
-/** A product page link as typed by a customer: adds https:// when missing, accepts http(s) only. */
+/** A customer product-page link: add or upgrade to HTTPS and reject credentials or nonstandard ports. */
 export function cleanProductUrl(value: string | null | undefined): string | undefined {
   const raw = (value ?? "").trim();
   if (!raw || raw.length > MAX_PRODUCT_URL_LENGTH) return undefined;
   try {
     const url = new URL(/^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : `https://${raw}`);
     if (url.protocol !== "https:" && url.protocol !== "http:") return undefined;
-    if (!url.hostname.includes(".")) return undefined;
+    const hostname = url.hostname.toLowerCase().replace(/\.$/, "");
+    if (!hostname.includes(".") || url.username || url.password || (url.port && url.port !== "443") || hostname === "localhost" || [".localhost", ".local", ".internal", ".lan", ".home.arpa", ".intranet", ".corp"].some((suffix) => hostname.endsWith(suffix))) return undefined;
+    url.protocol = "https:";
     url.hash = "";
     return url.toString();
   } catch {

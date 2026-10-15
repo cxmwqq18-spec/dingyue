@@ -40,6 +40,7 @@ export interface HomeComposerProps {
   imageGenerateDisabled?: boolean;
   imageGenerateLabel?: string;
   onContinue: (tab: HomeComposerTab, video: HomeComposerVideoSelection) => void;
+  onLogin?: () => void;
   disabled?: boolean;
   canUpload?: boolean;
   loginHref?: string;
@@ -89,7 +90,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind }
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
@@ -142,7 +143,11 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
         <div className={styles.footerActions}>
           {tooManyReferences && <span className={styles.footerNote} role="status">{`Remove photos to fit this model's ${referenceLimit}-photo limit.`}</span>}
           {videoMode && !validVideo && <span className={styles.footerNote} role="status">Choose an available model.</span>}
-          {!canUpload && (videoMode || imageMode) && loginHref && <a className={styles.loginLink} href={loginHref}>Log in to add photos</a>}
+          {!canUpload && (videoMode || imageMode) && loginHref && <a className={styles.loginLink} href={loginHref} onClick={(event) => {
+            if (!onLogin || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            onLogin();
+          }}>Log in to add photos</a>}
           <button type="button" className={`${styles.continue} ${imageMode && onImageGenerate ? styles.continueWithLabel : ""}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration })}>{imageMode && onImageGenerate && <span>{imageGenerateLabel}</span>}<ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>
