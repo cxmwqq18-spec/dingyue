@@ -143,9 +143,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const closeModal = useCallback(() => setModal(null), []);
   const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : "");
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
-  const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">(initialSceneId ?? "");
+  const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">(initialCatalog?.scenes.find((scene) => scene.id === initialSceneId)?.id ?? "");
   const [draftReferenceUrls, setDraftReferenceUrls] = useState<string[]>([]);
-  const [composerTab, setComposerTab] = useState(initialPreset?.kind === "video" ? "AI Video" : "AI Video Agent");
+  const [composerTab, setComposerTab] = useState<HomeComposerTab>(initialPreset?.kind === "video" ? "AI Video" : "AI Video Agent");
   const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? 15);
   const [composerAspect, setComposerAspect] = useState<TaskInput["options"]["aspect"]>(initialPreset?.aspect ?? "9:16");
   const [composerModel, setComposerModel] = useState("");
@@ -351,7 +351,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               setStep("input");
               setMessage("Your video details were restored. Please upload your product photos again.");
             }
-            if (typeof handoff.quickStartSceneId === "string" && initialCatalog?.scenes.some((item) => item.id === handoff.quickStartSceneId)) setQuickStartSceneId(handoff.quickStartSceneId);
+            const quickStartScene = typeof handoff.quickStartSceneId === "string" ? initialCatalog?.scenes.find((item) => item.id === handoff.quickStartSceneId) : undefined;
+            if (quickStartScene) setQuickStartSceneId(quickStartScene.id);
           }
         }
       } catch {
