@@ -50,7 +50,7 @@ const remoteArchive = `/tmp/aidreamcapes-${commit}.tar`;
 const remoteBuildArchive = `/tmp/aidreamcapes-build-${commit}.tar`;
 try {
   execFileSync("git", ["archive", "--format=tar", `--output=${archive}`, commit, "--", ...sourcePaths]);
-  if (prebuiltBuild) execFileSync("tar", ["-cf", buildArchive, "-C", path.resolve(prebuiltBuild), "."]);
+  if (prebuiltBuild) execFileSync("tar", ["-cf", buildArchive, "--exclude=./cache", "-C", path.resolve(prebuiltBuild), "."]);
   run("scp", ["-P", port, ...connection, archive, `${host}:${remoteArchive}`]);
   if (prebuiltBuild) run("scp", ["-P", port, ...connection, buildArchive, `${host}:${remoteBuildArchive}`]);
   const command = `set -eu
