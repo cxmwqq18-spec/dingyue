@@ -783,7 +783,7 @@ assert(
 
 const sitemapDomains = [
   { site: mydreamshootsSite, ownHost: "www.mydreamshoots.com", forbiddenHost: "www.aidreamcapes.com" },
-  { site: aidreamcapesSite, ownHost: "www.aidreamcapes.com", forbiddenHost: "www.mydreamshoots.com" }
+  { site: aidreamcapesSite, ownHost: "www.aivideosugc.com", forbiddenHost: "www.mydreamshoots.com" }
 ];
 for (const { site, ownHost, forbiddenHost } of sitemapDomains) {
   assert(
@@ -819,7 +819,7 @@ console.log(JSON.stringify({
   sitemapStrategy: "live draft projection only; renderable, indexable, canonical URLs per request host",
   hostAwareSitemaps: {
     mydreamshoots: "www.mydreamshoots.com only",
-    aidreamcapes: "www.aidreamcapes.com only"
+    aidreamcapes: "www.aivideosugc.com only"
   }
 }, null, 2));
 await prisma.$disconnect();
