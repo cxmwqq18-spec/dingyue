@@ -7,6 +7,7 @@ import type { Customer, PublicCustomer } from "@/lib/types";
 import {
   mapCustomer,
   hashRelationalPassword,
+  isLegacyRelationalPasswordHash,
   relationalSessionTtlMs,
   relationalUid,
   requireDelegate,
@@ -17,10 +18,6 @@ import {
 } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
-
-function isUniqueConstraintError(error: unknown): boolean {
-  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002";
-}
 
 function isMissingCustomerProfileTableError(error: unknown): boolean {
   if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2021") return false;
@@ -46,102 +43,9 @@ export async function createCustomerSessionRelational(
   params: { siteId: string; email: string; password: string; name?: string },
   client: DbClient = prisma
 ) {
-  const createSession = async () => createCustomerSessionRelationalOnce(params, client);
-  return client === prisma
-    ? runPrismaWriteWithReconnect(createSession, { label: "customer login session create" })
-    : createSession();
-}
-
-async function createCustomerSessionRelationalOnce(
-  params: { siteId: string; email: string; password: string; name?: string },
-  client: DbClient
-) {
-  const email = params.email.trim().toLowerCase();
-  if (!email.includes("@")) throw new StoreError("invalid_email", 400);
-  if (params.password.trim().length < 6) throw new StoreError("password_min_6_chars", 400);
-  await requireDelegate(client, "customerSession");
-  await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status", "passwordHash"]);
-  await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
-
-  const site = await client.site.findUnique({ where: { id: params.siteId }, select: { id: true, slug: true, signupCreditGrant: true } });
-  if (!site) throw new StoreError("site_not_found", 404);
-  const existing = await client.customer.findUnique({
-    where: { siteId_email: { siteId: params.siteId, email } },
-    include: { balance: true }
-  });
-  let customer = existing;
-  let createdCustomer = false;
-
-  if (customer) {
-    if (!verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
-      throw new StoreError("invalid_customer_credentials", 401);
-    }
-  } else {
-    createdCustomer = true;
-    const signupCreditGrant = Math.max(0, Math.trunc(Number(site.signupCreditGrant ?? 0)));
-    const customerId = relationalUid(`cust_${site.slug}`);
-    const passwordHash = hashRelationalPassword(params.password);
-    try {
-      customer = await client.customer.create({
-        data: {
-          id: customerId,
-          siteId: params.siteId,
-          email,
-          passwordHash,
-          name: params.name?.trim() || email.split("@")[0],
-          status: "active",
-          balance: {
-            create: {
-              id: relationalUid("bal"),
-              siteId: params.siteId,
-              balance: signupCreditGrant,
-              reserved: 0
-            }
-          },
-          ...(signupCreditGrant > 0
-            ? {
-                ledger: {
-                  create: {
-                    id: relationalUid("led"),
-                    siteId: params.siteId,
-                    amount: signupCreditGrant,
-                    type: "grant",
-                    sourceType: "signup_credit",
-                    sourceId: `signup_${customerId}`
-                  }
-                }
-              }
-            : {})
-        },
-        include: { balance: true }
-      });
-    } catch (error) {
-      if (!isUniqueConstraintError(error)) throw error;
-      customer = await client.customer.findUnique({
-        where: { siteId_email: { siteId: params.siteId, email } },
-        include: { balance: true }
-      });
-      if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
-        throw new StoreError("invalid_customer_credentials", 401);
-      }
-      createdCustomer = false;
-    }
-  }
-
-  const session = await (client as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
-      data: {
-        id: relationalUid("sess"),
-        siteId: params.siteId,
-        customerId: customer.id,
-        expiresAt: new Date(Date.now() + relationalSessionTtlMs)
-      }
-    });
-
-  return {
-    customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
-    session: toCustomerSessionRelational(session),
-    createdCustomer
-  };
+  // Keep the legacy form helper login-only. Registration must complete the
+  // site-scoped email verification flow before a customer row is created.
+  return createExistingCustomerSessionRelational({ siteId: params.siteId, email: params.email, password: params.password }, client);
 }
 
 export async function createExistingCustomerSessionRelational(
@@ -165,12 +69,20 @@ async function createExistingCustomerSessionRelationalOnce(
   await requireModelFields(client, "Customer", ["id", "siteId", "email", "name", "status", "passwordHash"]);
   await requireModelFields(client, "CustomerSession", ["id", "siteId", "customerId", "createdAt", "expiresAt"]);
 
-  const customer = await client.customer.findUnique({
+  let customer = await client.customer.findUnique({
     where: { siteId_email: { siteId: params.siteId, email } },
     include: { balance: true }
   });
   if (!customer || !verifyRelationalPassword(params.password, String((customer as Record<string, unknown>).passwordHash ?? ""))) {
     throw new StoreError("invalid_customer_credentials", 401);
+  }
+  if (customer.status === "blocked") throw new StoreError("customer_account_blocked", 403);
+  if (isLegacyRelationalPasswordHash(String((customer as Record<string, unknown>).passwordHash ?? ""))) {
+    customer = await client.customer.update({
+      where: { id: customer.id },
+      data: { passwordHash: hashRelationalPassword(params.password) },
+      include: { balance: true }
+    });
   }
 
   const session = await (client as unknown as { customerSession: { create(args: unknown): Promise<Record<string, unknown>> } }).customerSession.create({
@@ -233,7 +145,7 @@ export async function getCustomerBySessionRelational(
     warnRelationalFallback("customer session lookup", error);
     return undefined;
   }
-  if (!session?.customer) return undefined;
+  if (!session?.customer || session.customer.status === "blocked") return undefined;
   return {
     customer: toPublicCustomerRelational(session.customer),
     session: toCustomerSessionRelational(session)
@@ -252,10 +164,17 @@ export async function updateCustomerStatusRelational(
     select: { id: true }
   });
   if (!existing) throw new StoreError("customer_not_found_for_site", 404);
-  const customer = await client.customer.update({
-    where: { id: params.customerId },
-    data: { status: params.status },
-    include: { balance: true }
+  if (params.status === "blocked") await requireDelegate(client, "customerSession");
+  const customer = await client.$transaction(async (tx) => {
+    const updated = await tx.customer.update({
+      where: { id: params.customerId },
+      data: { status: params.status },
+      include: { balance: true }
+    });
+    if (params.status === "blocked") {
+      await tx.customerSession.deleteMany({ where: { siteId: params.siteId, customerId: params.customerId } });
+    }
+    return updated;
   });
   return { customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>) };
 }

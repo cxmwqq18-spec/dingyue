@@ -116,6 +116,11 @@ model PlatformAiProvider {
   imageResolution    String   @default("1K")
   imageQuality       String   @default("low")
   imageOutputFormat  String   @default("png")
+  apiProtocol        String   @default("auto")
+  videoModelFamily   String   @default("auto")
+  videoDurations     Int[]    @default([6, 10, 15])
+  videoAspectRatios  String[] @default(["9:16", "1:1", "16:9"])
+  videoNativeSpeech  Boolean?
   updatedBy           String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -163,6 +168,23 @@ model Site {
   admins                  SiteAdmin[]
   adminSessions           SiteAdminSession[]
   customers               Customer[]
+  aidreamcapesVideoTasks      AidreamcapesVideoTask[]
+  aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
+  aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
+  aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
+  aidreamcapesWebhookDeliveries AidreamcapesWebhookDelivery[]
+  aidreamcapesPublishingJobs AidreamcapesPublishingJob[]
+  aidreamcapesCloneConsents AidreamcapesCloneConsent[]
+  aidreamcapesCloneJobs AidreamcapesCloneJob[]
+  aidreamcapesTeams AidreamcapesTeam[]
+  aidreamcapesTeamMembers AidreamcapesTeamMember[]
+  aidreamcapesTeamInvites AidreamcapesTeamInvite[]
+  aidreamcapesBrandProfiles AidreamcapesBrandProfile[]
+  aidreamcapesBrandFacts AidreamcapesBrandFact[]
+  aidreamcapesBrandFactVersions AidreamcapesBrandFactVersion[]
+  aidreamcapesCreativeMetrics AidreamcapesCreativeMetric[]
+  aidreamcapesMusicCatalogTracks AidreamcapesMusicCatalogTrack[]
+  aidreamcapesMusicLicenses AidreamcapesMusicLicense[]
   customerProfiles        CustomerProfile[]
   customerSessions        CustomerSession[]
   emailVerifications      CustomerEmailVerification[]
@@ -297,12 +319,419 @@ model Customer {
   uploads       AssetUpload[]
   downloads     CustomerAssetDownload[]
   models        CustomerModel[]
-  albums        Album[]
+  albums                    Album[]
+  aidreamcapesVideoTasks    AidreamcapesVideoTask[]
+  aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
+  aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
+  aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
+  aidreamcapesWebhookDeliveries AidreamcapesWebhookDelivery[]
+  aidreamcapesPublishingJobs AidreamcapesPublishingJob[]
+  aidreamcapesCloneConsents AidreamcapesCloneConsent[]
+  aidreamcapesCloneJobs AidreamcapesCloneJob[]
+  aidreamcapesOwnedTeams AidreamcapesTeam[] @relation("AidreamcapesTeamOwner")
+  aidreamcapesOwnedTeamMembers AidreamcapesTeamMember[] @relation("AidreamcapesTeamMemberOwner")
+  aidreamcapesTeamMemberships AidreamcapesTeamMember[] @relation("AidreamcapesTeamMemberCustomer")
+  aidreamcapesOwnedTeamInvites AidreamcapesTeamInvite[] @relation("AidreamcapesTeamInviteOwner")
+  aidreamcapesReceivedTeamInvites AidreamcapesTeamInvite[] @relation("AidreamcapesTeamInviteTarget")
+  aidreamcapesSentTeamInvites AidreamcapesTeamInvite[] @relation("AidreamcapesTeamInviteActor")
+  aidreamcapesOwnedBrandProfiles AidreamcapesBrandProfile[] @relation("AidreamcapesBrandProfileOwner")
+  aidreamcapesOwnedBrandFacts AidreamcapesBrandFact[] @relation("AidreamcapesBrandFactOwner")
+  aidreamcapesConfirmedBrandFacts AidreamcapesBrandFact[] @relation("AidreamcapesBrandFactConfirmer")
+  aidreamcapesChangedBrandFactVersions AidreamcapesBrandFactVersion[] @relation("AidreamcapesBrandFactVersionActor")
+  aidreamcapesConfirmedBrandFactVersions AidreamcapesBrandFactVersion[] @relation("AidreamcapesBrandFactVersionConfirmer")
+  aidreamcapesOwnedCreativeMetrics AidreamcapesCreativeMetric[] @relation("AidreamcapesCreativeMetricOwner")
+  aidreamcapesImportedCreativeMetrics AidreamcapesCreativeMetric[] @relation("AidreamcapesCreativeMetricImporter")
+  aidreamcapesMusicLicenses AidreamcapesMusicLicense[]
 
   @@unique([siteId, email])
   @@index([siteId, status])
   @@index([siteId, createdAt])
   @@index([siteId, status, createdAt])
+}
+
+model AidreamcapesVideoTask {
+  id         String   @id
+  siteId     String
+  customerId String
+  revision   Int      @default(1)
+  /// WorkspaceTask JSON, including task status and image, audio, and output asset references.
+  data       Json
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @db.Timestamptz(6)
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId, updatedAt(sort: Desc)], map: "AidreamcapesVideoTask_owner_updated")
+}
+
+model AidreamcapesPublishingJob {
+  id             String    @id
+  siteId         String
+  customerId     String
+  taskId         String
+  renderId       String
+  target         String
+  status         String
+  scheduledAt    DateTime? @db.Timestamptz(6)
+  idempotencyKey String
+  requestHash    String
+  capabilityState String   @default("not_configured")
+  attemptCount   Int       @default(0)
+  lastError      String?
+  createdAt      DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime  @default(now()) @db.Timestamptz(6)
+  queuedAt       DateTime  @default(now()) @db.Timestamptz(6)
+  publishedAt    DateTime? @db.Timestamptz(6)
+  cancelledAt    DateTime? @db.Timestamptz(6)
+  retriedAt      DateTime? @db.Timestamptz(6)
+  site           Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, customerId, idempotencyKey], map: "AidreamcapesPublishingJob_owner_idempotency_unique")
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesPublishingJob_owner_created")
+  @@index([siteId, status, scheduledAt], map: "AidreamcapesPublishingJob_due")
+  @@index([siteId, customerId, taskId, renderId], map: "AidreamcapesPublishingJob_task_render")
+}
+
+model AidreamcapesCloneConsent {
+  id                 String   @id
+  siteId             String
+  customerId         String
+  workflow           String
+  sourceType         String
+  sourceAssetId      String
+  actorId            String?
+  taskId             String?
+  scope              String
+  rightsConfirmed    Boolean  @default(false)
+  revision           Int      @default(1)
+  status             String   @default("granted")
+  grantedAt          DateTime @default(now()) @db.Timestamptz(6)
+  expiresAt          DateTime? @db.Timestamptz(6)
+  revokedAt          DateTime? @db.Timestamptz(6)
+  createdAt          DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt          DateTime @default(now()) @db.Timestamptz(6)
+  site               Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer           Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  jobs               AidreamcapesCloneJob[]
+
+  @@index([siteId, customerId, status, createdAt(sort: Desc)], map: "AidreamcapesCloneConsent_owner_status")
+  @@index([siteId, customerId, sourceAssetId, scope], map: "AidreamcapesCloneConsent_owner_source")
+}
+
+model AidreamcapesCloneJob {
+  id                String   @id
+  siteId            String
+  customerId        String
+  workflow          String
+  sourceType        String
+  sourceAssetId     String
+  actorId           String?
+  taskId            String?
+  consentId         String
+  consentRevision   Int
+  idempotencyKey    String
+  requestHash       String
+  status            String   @default("queued")
+  revision          Int      @default(1)
+  capabilityState   String   @default("mock_only")
+  result            Json?
+  createdAt         DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt         DateTime @default(now()) @db.Timestamptz(6)
+  queuedAt          DateTime @default(now()) @db.Timestamptz(6)
+  completedAt       DateTime? @db.Timestamptz(6)
+  cancelledAt       DateTime? @db.Timestamptz(6)
+  deletedAt         DateTime? @db.Timestamptz(6)
+  site              Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer          Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  consent           AidreamcapesCloneConsent @relation(fields: [consentId], references: [id], onDelete: Restrict)
+
+  @@unique([siteId, customerId, idempotencyKey], map: "AidreamcapesCloneJob_owner_idempotency")
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesCloneJob_owner_created")
+  @@index([siteId, customerId, status, updatedAt(sort: Desc)], map: "AidreamcapesCloneJob_owner_status")
+  @@index([siteId, customerId, sourceAssetId], map: "AidreamcapesCloneJob_owner_source")
+  @@index([siteId, customerId, taskId], map: "AidreamcapesCloneJob_owner_task")
+}
+
+model AidreamcapesWorkspaceActor {
+  id         String   @id
+  siteId     String
+  customerId String
+  /// ActorAsset JSON, including its actor identity and image/audio asset references.
+  data       Json
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesWorkspaceActor_owner")
+}
+
+model AidreamcapesDeveloperApiKey {
+  id          String    @id
+  siteId      String
+  customerId  String
+  name        String
+  secretHash  String    @unique
+  scopes      Json
+  createdAt   DateTime  @default(now()) @db.Timestamptz(6)
+  expiresAt   DateTime? @db.Timestamptz(6)
+  revokedAt   DateTime? @db.Timestamptz(6)
+  lastUsedAt  DateTime? @db.Timestamptz(6)
+  rateLimitWindowAt DateTime? @db.Timestamptz(6)
+  rateLimitCount Int @default(0)
+  site        Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer    Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesDeveloperApiKey_owner")
+}
+
+model AidreamcapesWebhookSubscription {
+  id               String                       @id
+  siteId           String
+  customerId       String
+  endpointUrl      String
+  events           Json
+  secretCiphertext String
+  createdAt        DateTime                     @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime                     @updatedAt @db.Timestamptz(6)
+  disabledAt       DateTime?                    @db.Timestamptz(6)
+  site             Site                         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer         Customer                     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  deliveries       AidreamcapesWebhookDelivery[]
+
+  @@unique([id, siteId, customerId], map: "AidreamcapesWebhookSubscription_owner_unique")
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesWebhookSubscription_owner")
+}
+
+model AidreamcapesWebhookDelivery {
+  id             String                        @id
+  siteId         String
+  customerId     String
+  subscriptionId String
+  eventKey       String
+  eventType      String
+  payload        Json
+  status         String                        @default("pending")
+  attemptCount   Int                           @default(0)
+  nextAttemptAt  DateTime                      @default(now()) @db.Timestamptz(6)
+  lastStatusCode Int?
+  lastError      String?
+  createdAt      DateTime                      @default(now()) @db.Timestamptz(6)
+  deliveredAt    DateTime?                     @db.Timestamptz(6)
+  site           Site                          @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer                      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  subscription   AidreamcapesWebhookSubscription @relation(fields: [subscriptionId, siteId, customerId], references: [id, siteId, customerId], onDelete: Cascade)
+
+  @@unique([subscriptionId, eventKey], map: "AidreamcapesWebhookDelivery_event_unique")
+  @@index([siteId, status, nextAttemptAt], map: "AidreamcapesWebhookDelivery_due")
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesWebhookDelivery_owner")
+}
+
+model AidreamcapesTeam {
+  id              String                       @id
+  siteId          String
+  ownerCustomerId String
+  name            String
+  revision        Int                          @default(1)
+  createdAt       DateTime                     @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime                     @default(now()) @db.Timestamptz(6)
+  site            Site                         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner           Customer                     @relation("AidreamcapesTeamOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  members         AidreamcapesTeamMember[]
+  invites         AidreamcapesTeamInvite[]
+  brandProfile    AidreamcapesBrandProfile?
+  creativeMetrics AidreamcapesCreativeMetric[]
+
+  @@unique([id, siteId, ownerCustomerId], map: "AidreamcapesTeam_owner_unique")
+  @@index([siteId, ownerCustomerId, updatedAt(sort: Desc)], map: "AidreamcapesTeam_owner_updated")
+}
+
+model AidreamcapesCreativeMetric {
+  id                  String   @id
+  siteId              String
+  ownerCustomerId     String
+  createdByCustomerId String
+  teamId              String?
+  provider            String
+  providerAccountId   String
+  providerRecordId    String
+  creativeId          String
+  creativeName        String?
+  metricDate          DateTime @db.Date
+  currency            String   @db.Char(3)
+  spendMinorUnits     BigInt
+  impressions         BigInt
+  clicks              BigInt
+  conversions         BigInt
+  importedAt          DateTime @default(now()) @db.Timestamptz(6)
+  site                Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner               Customer @relation("AidreamcapesCreativeMetricOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  importer            Customer @relation("AidreamcapesCreativeMetricImporter", fields: [createdByCustomerId], references: [id], onDelete: Cascade)
+  team                AidreamcapesTeam? @relation(fields: [teamId], references: [id], onDelete: Cascade, map: "AidreamcapesCreativeMetric_team_fkey")
+
+  @@index([siteId, ownerCustomerId, teamId, metricDate, currency], map: "AidreamcapesCreativeMetric_scope_date")
+  @@index([siteId, ownerCustomerId, provider, providerAccountId, metricDate], map: "AidreamcapesCreativeMetric_provider_date")
+  @@index([siteId, ownerCustomerId, importedAt(sort: Desc)], map: "AidreamcapesCreativeMetric_freshness")
+}
+
+model AidreamcapesMusicCatalogTrack {
+  id               String                      @id
+  siteId           String
+  title            String
+  artist           String
+  genre            String
+  moods            String[]                    @default([])
+  durationSeconds  Int
+  bpm              Int?
+  previewAssetKey  String?
+  demoOnly         Boolean                     @default(true)
+  active           Boolean                     @default(true)
+  createdAt        DateTime                    @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime                    @default(now()) @updatedAt @db.Timestamptz(6)
+  site             Site                        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  licenses         AidreamcapesMusicLicense[]
+
+  @@unique([id, siteId], map: "AidreamcapesMusicCatalogTrack_id_site_unique")
+  @@index([siteId, active, genre, title], map: "AidreamcapesMusicCatalogTrack_site_active")
+}
+
+model AidreamcapesMusicLicense {
+  id                  String                      @id
+  siteId              String
+  customerId          String
+  trackId             String
+  status              String                      @default("suspended")
+  territories         String[]
+  usageTypes          String[]
+  attributionRequired Boolean                     @default(false)
+  attributionText     String?
+  startsAt            DateTime?                   @db.Timestamptz(6)
+  expiresAt           DateTime?                   @db.Timestamptz(6)
+  revision            Int                         @default(1)
+  createdAt           DateTime                    @default(now()) @db.Timestamptz(6)
+  updatedAt           DateTime                    @default(now()) @updatedAt @db.Timestamptz(6)
+  site                Site                        @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer            Customer                    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  track               AidreamcapesMusicCatalogTrack @relation(fields: [trackId, siteId], references: [id, siteId], onDelete: Cascade)
+
+  @@unique([siteId, customerId, trackId], map: "AidreamcapesMusicLicense_owner_track_unique")
+  @@index([siteId, customerId, status, expiresAt], map: "AidreamcapesMusicLicense_owner_status")
+}
+
+model AidreamcapesTeamMember {
+  id              String       @id
+  teamId          String
+  siteId          String
+  ownerCustomerId String
+  customerId      String
+  role            String
+  createdAt       DateTime     @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime     @default(now()) @db.Timestamptz(6)
+  team            AidreamcapesTeam @relation(fields: [teamId, siteId, ownerCustomerId], references: [id, siteId, ownerCustomerId], onDelete: Cascade)
+  site            Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner           Customer     @relation("AidreamcapesTeamMemberOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  customer        Customer     @relation("AidreamcapesTeamMemberCustomer", fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, customerId], map: "AidreamcapesTeamMember_team_customer_unique")
+  @@index([siteId, ownerCustomerId, teamId], map: "AidreamcapesTeamMember_team_owner")
+  @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesTeamMember_customer")
+}
+
+model AidreamcapesTeamInvite {
+  id                   String       @id
+  teamId               String
+  siteId               String
+  ownerCustomerId      String
+  invitedCustomerId    String
+  invitedByCustomerId  String
+  role                 String
+  status               String       @default("pending")
+  createdAt            DateTime     @default(now()) @db.Timestamptz(6)
+  respondedAt          DateTime?    @db.Timestamptz(6)
+  team                 AidreamcapesTeam @relation(fields: [teamId, siteId, ownerCustomerId], references: [id, siteId, ownerCustomerId], onDelete: Cascade)
+  site                 Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner                Customer     @relation("AidreamcapesTeamInviteOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  invitedCustomer      Customer     @relation("AidreamcapesTeamInviteTarget", fields: [invitedCustomerId], references: [id], onDelete: Cascade)
+  invitedBy            Customer     @relation("AidreamcapesTeamInviteActor", fields: [invitedByCustomerId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, invitedCustomerId, status], map: "AidreamcapesTeamInvite_recipient_status_unique")
+  @@index([siteId, ownerCustomerId, teamId, status], map: "AidreamcapesTeamInvite_team_status")
+  @@index([siteId, invitedCustomerId, status, createdAt(sort: Desc)], map: "AidreamcapesTeamInvite_recipient")
+}
+
+model AidreamcapesBrandProfile {
+  id              String                    @id
+  teamId          String                    @unique(map: "AidreamcapesBrandProfile_team_key")
+  siteId          String
+  ownerCustomerId String
+  name            String
+  revision        Int                       @default(1)
+  profile         Json
+  createdAt       DateTime                  @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime                  @default(now()) @db.Timestamptz(6)
+  team            AidreamcapesTeam          @relation(fields: [teamId, siteId, ownerCustomerId], references: [id, siteId, ownerCustomerId], onDelete: Cascade)
+  site            Site                      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner           Customer                  @relation("AidreamcapesBrandProfileOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  facts           AidreamcapesBrandFact[]
+
+  @@unique([id, siteId, ownerCustomerId], map: "AidreamcapesBrandProfile_owner_unique")
+  @@unique([teamId, siteId, ownerCustomerId], map: "AidreamcapesBrandProfile_team_owner_unique")
+  @@index([siteId, ownerCustomerId, updatedAt(sort: Desc)], map: "AidreamcapesBrandProfile_owner_updated")
+}
+
+model AidreamcapesBrandFact {
+  id                    String                         @id
+  brandProfileId        String
+  siteId                String
+  ownerCustomerId       String
+  factKey               String
+  factValue             String
+  sourceType            String                         @default("manual")
+  sourceUrl             String?
+  sourceLabel           String?
+  confirmed             Boolean                        @default(false)
+  confirmedByCustomerId String?
+  confirmedAt           DateTime?                      @db.Timestamptz(6)
+  revision              Int                            @default(1)
+  createdAt             DateTime                       @default(now()) @db.Timestamptz(6)
+  updatedAt             DateTime                       @default(now()) @db.Timestamptz(6)
+  brandProfile          AidreamcapesBrandProfile       @relation(fields: [brandProfileId, siteId, ownerCustomerId], references: [id, siteId, ownerCustomerId], onDelete: Cascade)
+  site                  Site                           @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  owner                 Customer                       @relation("AidreamcapesBrandFactOwner", fields: [ownerCustomerId], references: [id], onDelete: Cascade)
+  confirmedBy           Customer?                      @relation("AidreamcapesBrandFactConfirmer", fields: [confirmedByCustomerId], references: [id], onDelete: Restrict)
+  versions              AidreamcapesBrandFactVersion[]
+
+  @@unique([id, brandProfileId, siteId, ownerCustomerId], map: "AidreamcapesBrandFact_owner_unique")
+  @@unique([brandProfileId, factKey], map: "AidreamcapesBrandFact_brand_key_unique")
+  @@index([siteId, ownerCustomerId, brandProfileId, factKey], map: "AidreamcapesBrandFact_brand_key")
+  @@index([siteId, ownerCustomerId, brandProfileId, updatedAt(sort: Desc)], map: "AidreamcapesBrandFact_brand_updated")
+}
+
+model AidreamcapesBrandFactVersion {
+  id                    String                  @id
+  factId                String
+  brandProfileId        String
+  siteId                String
+  ownerCustomerId       String
+  revision              Int
+  action                String
+  factKey               String
+  factValue             String
+  sourceType            String
+  sourceUrl             String?
+  sourceLabel           String?
+  confirmed             Boolean
+  confirmedByCustomerId String?
+  confirmedAt           DateTime?               @db.Timestamptz(6)
+  changedByCustomerId   String
+  createdAt             DateTime                @default(now()) @db.Timestamptz(6)
+  fact                  AidreamcapesBrandFact   @relation(fields: [factId, brandProfileId, siteId, ownerCustomerId], references: [id, brandProfileId, siteId, ownerCustomerId], onDelete: Cascade)
+  site                  Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  changedBy             Customer                @relation("AidreamcapesBrandFactVersionActor", fields: [changedByCustomerId], references: [id], onDelete: Cascade)
+  confirmedBy           Customer?               @relation("AidreamcapesBrandFactVersionConfirmer", fields: [confirmedByCustomerId], references: [id], onDelete: Restrict)
+
+  @@unique([factId, revision], map: "AidreamcapesBrandFactVersion_fact_revision_unique")
+  @@index([siteId, ownerCustomerId, factId, revision(sort: Desc)], map: "AidreamcapesBrandFactVersion_history")
 }
 
 model CustomerProfile {

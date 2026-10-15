@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, publicUrlForRequest, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { createCustomerSessionRelational } from "@/lib/stores/customer-store";
+import { createExistingCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { Site } from "@/lib/types";
 
 function isDatabaseUnavailableError(error: unknown): boolean {
@@ -13,15 +13,14 @@ function isDatabaseUnavailableError(error: unknown): boolean {
 
 export async function handleCustomerLoginForm(request: Request, site: Site, successPath: string, failurePath: string) {
   const form = await request.formData();
-  if (!form.get("password")) {
-    return NextResponse.redirect(publicUrlForRequest(request, `${failurePath}?error=${encodeURIComponent("missing_email_or_code")}`), 303);
+  if (!form.get("email") || !form.get("password")) {
+    return NextResponse.redirect(publicUrlForRequest(request, `${failurePath}?error=${encodeURIComponent("missing_email_or_password")}`), 303);
   }
   try {
-    const result = await createCustomerSessionRelational({
+    const result = await createExistingCustomerSessionRelational({
       siteId: site.id,
       email: String(form.get("email") ?? ""),
-      password: String(form.get("password") ?? ""),
-      name: String(form.get("name") ?? "")
+      password: String(form.get("password") ?? "")
     });
     const response = NextResponse.redirect(publicUrlForRequest(request, successPath), 303);
     response.cookies.set(customerSessionCookie(site.id), result.session.id, {

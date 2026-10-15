@@ -1,0 +1,60 @@
+.fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #101623;
+  font: 14px/1.45 Arial, Helvetica, sans-serif;
+}
+
+.legend { margin-bottom: 4px; padding: 0; font-size: 17px; font-weight: 650; }
+.note { margin: 0 0 13px; color: #73777d; font-size: 12px; }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 9px; }
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e1e4ea;
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.option:hover { border-color: #b9a9f5; }
+.option:has(.radio:checked) { border-color: #7857ed; background: #f8f6ff; box-shadow: 0 0 0 1px #7857ed; }
+.option:has(.radio:focus-visible) { outline: 3px solid #946dff; outline-offset: 2px; }
+.fieldset:disabled .option { cursor: not-allowed; opacity: .58; }
+
+.radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+}
+
+.radioMark {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+  margin-top: 1px;
+  border: 1.5px solid #aeb2bd;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.radio:checked + .radioMark { border-color: #6542e5; }
+.radio:checked + .radioMark::after { width: 8px; height: 8px; border-radius: 50%; background: #6542e5; content: ""; }
+.content { display: grid; gap: 3px; }
+.label { color: #171923; font-weight: 600; }
+.hint { color: #73777d; font-size: 12px; }
+
+@media (max-width: 520px) {
+  .options { grid-template-columns: 1fr; }
+}

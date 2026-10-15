@@ -1,0 +1,200 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { chromium } from 'playwright';
+
+const baseUrl = process.env.AIDREAMCAPES_NAV_BASE_URL || 'http://127.0.0.1:3002';
+assert(['127.0.0.1', 'localhost'].includes(new URL(baseUrl).hostname), 'Navigation checks require a loopback app.');
+const siteId = 'site_aidreamcapes';
+const customerId = 'navigation-fixture-customer';
+const api = `/api/sites/${siteId}/aivideosugc`;
+const reference = '/media/site_aidreamcapes/workspace/references/product_1.png';
+const tasks = new Map();
+const actors = JSON.parse(fs.readFileSync('src/lib/aidreamcapes-workspace/actors.json','utf8')).actors;
+const unexpected = [], errors = [], fixtureHydrationRecoveries = [], calls = [], checks = [];
+const artifacts = fs.mkdtempSync(path.join(os.tmpdir(), 'aidreamcapes-navigation-'));
+const browser = await chromium.launch({ headless: true });
+const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, serviceWorkers: 'block' });
+const json = (route, value) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(value) });
+const sourced = (value) => ({ value, sourceUrl: 'https://example.invalid/product', sourceLabel: 'Product page', confidence: 'high', confirmed: false });
+try {
+  await context.route('**/*', async (route) => {
+    const req = route.request(), url = new URL(req.url());
+    if (!['127.0.0.1', 'localhost'].includes(url.hostname)) {
+      if (url.hostname === 'example.invalid' && url.pathname === '/mug.png') return route.fulfill({ status: 200, contentType: 'image/png', body: fs.readFileSync(path.resolve('public/media/site_aidreamcapes/workspace/references/product_1.png')) });
+      if (!['fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname)) unexpected.push(`External ${url.hostname}`);
+      return route.fulfill({ status: 200, contentType: 'text/css', body: '' });
+    }
+    if (url.pathname.startsWith('/api/')) {
+      const key = `${req.method()} ${url.pathname}`; calls.push(key);
+      let body = {}; try { body = req.postDataJSON() ?? {}; } catch {}
+      if (url.pathname === `${api}/actors`) return json(route, { actors });
+      if (url.pathname === `${api}/clones`) return json(route, { productionReady: false, mockAvailable: true, analysisBeforeTask: true, voiceTwin: { available: false, state: 'mock_only' }, adReference: { available: false, state: 'mock_only' }, components: { database: { available: true } } });
+      if (url.pathname === `${api}/clones/jobs`) return json(route, { jobs: [] });
+      if (url.pathname === `${api}/clones/consents`) return json(route, { consents: [] });
+      if (url.pathname === `${api}/clones/assets`) return json(route, { assets: [] });
+      if (url.pathname === `${api}/tasks` && req.method() === 'GET') return json(route, { tasks: [...tasks.values()] });
+      if (url.pathname === `${api}/tasks` && req.method() === 'POST') {
+        const taskId = `navigation-task-${tasks.size + 1}`, now = new Date().toISOString();
+        const task = { taskId, siteId, customerId, sceneId: body.sceneId, title: body.title, status: 'draft', input: body.input, revision: 1, createdAt: now, updatedAt: now, storyboardStale: false, storyboardHistory: [], revisions: [], videoHistory: [] };
+        tasks.set(taskId, task); return json(route, { task });
+      }
+      const taskMatch = url.pathname.match(new RegExp(`^${api}/tasks/([^/]+)$`));
+      if (taskMatch && tasks.has(taskMatch[1])) {
+        const task = tasks.get(taskMatch[1]);
+        if (req.method() === 'PATCH') Object.assign(task, body, { revision: task.revision + 1 });
+        return json(route, { task });
+      }
+      if (url.pathname === `${api}/balance`) return json(route, { customerBalance: { balance: 1000, reserved: 0 } });
+      if (url.pathname === `${api}/music`) return json(route, { tracks: [], assets: [] });
+      if (url.pathname === `${api}/images/quote`) {
+        assert.equal(body.assetUrls.length > 0, true); assert.equal(['1:1', '9:16', '16:9'].includes(body.aspect), true);
+        return json(route, { quote: { available: true, credits: 20, currency: 'credits', quoteToken: 'navigation-only' } });
+      }
+      if (url.pathname === `${api}/images` && req.method() === 'GET') return json(route, { jobs: [], assets: [{ id: 'saved-fixture', label: 'Saved image fixture', previewUrl: reference, downloadUrl: reference }] });
+      if (url.pathname === `/api/sites/${siteId}/customers/${customerId}/assets` && req.method() === 'POST') return json(route, { asset: { id: 'uploaded-fixture', label: 'Product photo', previewUrl: reference } });
+      if (url.pathname === `/api/sites/${siteId}/customers/${customerId}/assets/import-url`) return json(route, { asset: { id: 'import-fixture', label: 'Imported mug', previewUrl: reference }, product: { title: 'Imported mug' } });
+      if (url.pathname === `${api}/tasks/product-brief`) return json(route, { ok: true, preview: { sourceUrl: 'https://example.invalid/product', fetchedPageUrl: 'https://example.invalid/product', draft: { title: sourced('Imported mug'), description: sourced('A ceramic mug'), detectedImages: [{ ...sourced('https://example.invalid/mug.png'), sourcePageUrl: 'https://example.invalid/product' }], possiblePrice: null, confirmed: false, reviewRequired: true } } });
+      unexpected.push(key); return json(route, { error: 'unexpected_navigation_api' });
+    }
+    if (req.isNavigationRequest() && url.pathname.startsWith('/site/aidreamcapes/app')) {
+      const response = await route.fetch();
+      assert.equal(response.status(), 200, `App document ${url.pathname} loads.`);
+      let html = await response.text();
+      const seam = String.raw`\"customer\":\"$undefined\"`;
+      assert(html.includes(seam), 'Browser-only customer seam is present; no real session is used.');
+      html = html.replaceAll(seam, String.raw`\"customer\":{\"id\":\"navigation-fixture-customer\",\"name\":\"Navigation Fixture\",\"email\":\"navigation@example.invalid\"}`);
+      html = html.replace(/<a class="([^"]*workspace_button[^"]*)" href="[^"]*\/login[^"]*">(?:<span>)?Log In(?:<\/span>)?<\/a>/, '<button class="$1">Log Out</button>');
+      html = html.replace(/<h1>Good Evening<\/h1>/, '<h1>Hello, Navigation</h1>');
+      const headers = { ...response.headers() }; for (const key of ['content-length', 'content-encoding', 'transfer-encoding']) delete headers[key];
+      return route.fulfill({ status: 200, headers, body: html });
+    }
+    return route.continue();
+  });
+  const page = await context.newPage();
+  page.on('pageerror', (error) => {
+    if (error.message.startsWith('Hydration failed') && new URL(page.url()).searchParams.get('view') === 'images' && error.message.includes('disabled={false}')) fixtureHydrationRecoveries.push('Expected synthetic customer / anonymous SSR difference on image reload.');
+    else errors.push(error.stack || error.message);
+  });
+  const sidebar = () => page.getByRole('complementary', { name: 'Workspace navigation' });
+  const menu = (name) => sidebar().getByRole('link', { name, exact: true });
+  const plannedMenu = (name, view) => sidebar().getByRole('link', { name: new RegExp(`^${name}`) }).click().then(() => page.waitForURL((url) => url.searchParams.get('view') === view));
+  const go = async (name, view) => { await menu(name).click(); await page.waitForURL((url) => view === 'inspirations' ? url.pathname.endsWith('/app/inspirations') : url.searchParams.get('view') === view); assert.equal(await menu(name).getAttribute('aria-current'), 'page'); };
+  await page.goto(`${baseUrl}/site/aidreamcapes/app/create?view=home`, { waitUntil: 'networkidle' });
+  await menu('AI Video Agent').waitFor({timeout:15000}).catch(async (error) => { console.log('Fixture DOM:', await page.locator('body').innerText()); console.log('Fixture errors:', errors); console.log('Calls:',calls); console.log('Unexpected:',unexpected); throw error; });
+  for (const name of ['AI Video Agent', 'AI Video', 'AI Image', 'URL to Video', 'AI Avatar', 'Batch Drafts', 'All Tools', 'Library']) assert.equal(await menu(name).count(), 1, `${name} is directly accessible.`);
+  checks.push('All creation modules have one sidebar entry.');
+  await plannedMenu('AI Twin', 'twin');
+  await page.getByRole('heading', { name: 'AI Twin', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Create a request', exact: true }).waitFor();
+  await go('AI Avatar', 'actors');
+  await page.getByRole('heading', { name: 'Create a video with an AI presenter', exact: true }).waitFor();
+  await plannedMenu('Ad Clone', 'clone');
+  await page.getByRole('heading', { name: /Start with a structure\.\s*Make it your own\./ }).waitFor();
+  await page.getByRole('tab', { name: 'Own MP4', exact: true }).waitFor();
+  await go('Inspirations', 'inspirations');
+  await page.getByRole('heading', { name: 'Explore video and photo ideas' }).waitFor();
+  checks.push('AI Twin and Ad Clone open integrated forms; adjacent avatar and inspiration navigation remains available.');
+  await go('Home', 'home');
+  await page.getByRole('button', { name: 'See All', exact: true }).click();
+  await page.getByRole('heading', { name: 'All Tools', exact: true }).waitFor();
+  for (const [name, view] of [['AI Image', 'images'], ['URL to Video', 'product'], ['AI Avatar', 'actors'], ['AI Video', 'video'], ['Batch Drafts', 'batch'], ['AI Video Agent', 'agent']]) {
+    await page.locator('main button').filter({ has: page.getByRole('heading', { name, exact: true }) }).click();
+    assert.equal(await menu(name).getAttribute('aria-current'), 'page'); assert.equal(new URL(page.url()).searchParams.get('view'), view);
+    await go('All Tools', 'tools');
+  }
+  checks.push('All Tools cards and sidebar agree on every destination.');
+  await go('Home', 'home');
+  const quicks = await page.locator('main button').filter({ has: page.locator('svg.lucide-play') }).allTextContents();
+  assert.equal(quicks.length >= 6, true);
+  for (const label of quicks) {
+    const before = tasks.size;
+    await page.getByRole('button', { name: label, exact: true }).click();
+    await page.getByRole('button', { name: 'Save draft', exact: true }).waitFor();
+    assert.equal(new URL(page.url()).searchParams.get('view'), 'agent');
+    assert(['presenter_showcase', 'process_demo', 'texture_closeup'].includes(new URL(page.url()).searchParams.get('scene')));
+    assert.equal(tasks.size, before, 'Quick starts open a scene setup without creating or charging a job.');
+    await go('Home', 'home');
+  }
+  checks.push('Every quick start opens its scene setup rather than only replacing Home text.');
+  await go('AI Avatar', 'actors');
+  await page.getByRole('heading', { name: 'Create a video with an AI presenter', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Choose presenter', exact: true }).click();
+  await page.getByRole('dialog', { name: 'Choose a presenter' }).waitFor();
+  await page.getByRole('button', { name: 'Use this presenter', exact: true }).first().click();
+  await page.getByRole('heading', { name: actors[0].name, exact: true }).waitFor();
+  checks.push('The AI Avatar module opens the presenter workflow and accepts a selected presenter.');
+  await go('Home', 'home');
+
+  await page.getByRole('button', { name: 'Create draft copies', exact: true }).click();
+  await page.getByRole('heading', { name: 'Batch Drafts', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Choose draft titles' }).click();
+  await page.getByRole('dialog', { name: 'Create draft copies' }).waitFor();
+  await page.getByRole('button', { name: 'Close dialog', exact: true }).click();
+  checks.push('Batch shortcut opens the matching module and its real draft dialog.');
+  await go('Home', 'home');
+  await page.getByRole('tab', { name: 'AI Image', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Describe your image idea' }).fill('A ceramic mug beside a window');
+  await page.getByRole('combobox', { name: 'Image style' }).selectOption('lifestyle-photos');
+  await page.getByRole('combobox', { name: 'Image aspect ratio' }).selectOption('16:9');
+  await page.getByLabel('Upload image reference photo', { exact: true }).setInputFiles(path.resolve('public/media/site_aidreamcapes/workspace/references/product_1.png'));
+  await page.getByRole('img', { name: 'Image reference 1', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Continue to image', exact: true }).click();
+  await page.getByRole('heading', { name: 'AI Image', exact: true }).waitFor();
+  assert.equal(await menu('AI Image').getAttribute('aria-current'), 'page');
+  assert.equal(await page.locator('main textarea').inputValue(), 'A ceramic mug beside a window');
+  assert.equal(await page.getByRole('radio', { name: /^Lifestyle photo/ }).isChecked(), true);
+  assert.equal(await page.locator('main select').inputValue(), '16:9');
+  await page.getByRole('img', { name: 'Image reference 1', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Saved image fixture' }).waitFor();
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(await page.locator('main textarea').inputValue(), 'A ceramic mug beside a window');
+  assert.equal(await page.getByRole('radio', { name: /^Lifestyle photo/ }).isChecked(), true);
+  await page.getByRole('img', { name: 'Image reference 1', exact: true }).waitFor();
+  checks.push('Home image prompt, style, ratio and reference survive module navigation and reload; saved images load.');
+  await go('URL to Video', 'product');
+  await page.getByRole('textbox', { name: 'Product page URL' }).fill('https://example.invalid/product');
+  const importButton = page.getByRole('button', { name: /^(Import photo|Preview product page|Preview product)$/ });
+  await importButton.click();
+  await page.getByRole('img', { name: 'Imported mug', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Confirm and add photo', exact: true }).click();
+  await page.getByRole('button', { name: 'Continue to video draft', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Continue to video draft' }).click();
+  await page.getByRole('heading', { name: 'Product demo', exact: true }).waitFor();
+  await page.getByRole('img', { name: 'Product photo 1', exact: true }).waitFor();
+  checks.push('URL import is a real module and its imported product reaches the correct video setup.');
+  await go('Inspirations', 'inspirations').catch(async () => { await page.waitForURL('**/site/aidreamcapes/app/inspirations'); });
+  await page.getByRole('heading', { name: 'Explore video and photo ideas' }).waitFor();
+  assert.equal(await menu('Inspirations').getAttribute('aria-current'), 'page');
+  assert.equal(await menu('AI Image').count(), 1);
+  const inspirationCount = await page.locator('.insp-card').count();
+  checks.push(`Inspiration library stays inside the full workspace navigation (${inspirationCount} visible video cards from current LivePage rows).`);
+  await page.screenshot({ path: path.join(artifacts, 'desktop-inspirations.png'), fullPage: true });
+  await go('AI Image', 'images');
+  await page.getByRole('img', { name: 'Image reference 1', exact: true }).evaluate((image) => image.decode());
+  await page.getByRole('img', { name: 'Saved image fixture', exact: true }).scrollIntoViewIfNeeded();
+  await page.getByRole('img', { name: 'Saved image fixture', exact: true }).evaluate((image) => image.decode());
+  await page.waitForFunction(() => [...document.querySelectorAll('button')].some((button) => button.textContent.includes('Generate image') && !button.disabled));
+  await page.evaluate(() => window.scrollTo({top:0}));
+  await page.screenshot({ path: path.join(artifacts, 'desktop-images.png'), fullPage: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole('button', { name: 'Open navigation', exact: true }).click();
+  await menu('URL to Video').click();
+  await page.getByRole('heading', { name: 'URL to Video', exact: true, level: 1 }).waitFor();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Mobile module does not overflow.');
+  await page.screenshot({ path: path.join(artifacts, 'mobile-product.png'), fullPage: true });
+  checks.push('Mobile menu reaches all modules and the module form fits the viewport.');
+  const guestContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  const guestPage = await guestContext.newPage();
+  guestPage.on('pageerror', (error) => errors.push(error.message));
+  await guestPage.goto(`${baseUrl}/site/aidreamcapes/app/create?view=images`, { waitUntil: 'networkidle' });
+  await guestPage.getByRole('heading', { name: 'AI Image', exact: true }).waitFor();
+  await guestContext.close();
+  checks.push('Unmodified anonymous SSR image page hydrates without application errors.');
+  assert.deepEqual(unexpected, []); assert.deepEqual(errors, []);
+  assert.equal(calls.some((call) => /actions|dispatch|billing|ledger|POST .*aivideosugc\/images$/.test(call)), false, 'No generation, worker or billing API is called.');
+  const report = { passed: true, baseUrl, checks, apiCalls: calls.length, actualGenerationCalls: 0, pageErrors: errors, fixtureHydrationRecoveries, unexpectedRequests: unexpected, artifacts };
+  fs.writeFileSync(path.join(artifacts, 'result.json'), JSON.stringify(report, null, 2));
+  console.log(JSON.stringify(report, null, 2));
+} finally { await browser.close(); }

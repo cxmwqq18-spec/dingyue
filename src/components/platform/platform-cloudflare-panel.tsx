@@ -104,6 +104,18 @@ export function PlatformCloudflarePanel({
   }
 
   async function save() {
+    if (!form.label.trim()) {
+      setMessage(errorLabel("missing_cloudflare_label"));
+      return;
+    }
+    if (!form.email.trim() || !form.email.includes("@")) {
+      setMessage(errorLabel("invalid_cloudflare_email"));
+      return;
+    }
+    if (!form.accountId.trim()) {
+      setMessage(errorLabel("missing_cloudflare_account_id"));
+      return;
+    }
     setSaving(true);
     const response = await fetch("/api/platform/cloudflare", {
       method: "PUT",
@@ -214,20 +226,20 @@ export function PlatformCloudflarePanel({
             <ErpInfoList
               items={[
                 { label: "当前账号", value: current?.label ?? "missing", tone: current ? "good" : "warn" },
-                { label: "邮箱名称", value: current?.email ?? "missing", tone: current?.email ? "good" : "warn" },
+                { label: "账号邮箱", value: current?.email ?? "missing", tone: current?.email ? "good" : "warn" },
                 { label: "Account ID", value: current?.accountId ?? "missing", tone: current?.accountId ? "good" : "warn" },
                 { label: "API Token", value: current?.status.apiTokenConfigured ? current.status.apiTokenPreview : "missing", tone: current?.status.apiTokenConfigured ? "good" : "warn" }
               ]}
             />
             <ErpFormGrid>
               <ErpField label="账号名称">
-                <ErpInput onChange={(event) => setForm((current) => ({ ...current, label: event.target.value }))} placeholder="Main Cloudflare" value={form.label} />
+                <ErpInput onChange={(event) => setForm((current) => ({ ...current, label: event.target.value }))} placeholder="Main Cloudflare" required value={form.label} />
               </ErpField>
-              <ErpField label="邮箱名称">
-                <ErpInput onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} placeholder="admin@example.com" type="email" value={form.email} />
+              <ErpField label="账号邮箱">
+                <ErpInput onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} placeholder="admin@example.com" required type="email" value={form.email} />
               </ErpField>
               <ErpField label="Account ID">
-                <ErpInput className="font-mono" onChange={(event) => setForm((current) => ({ ...current, accountId: event.target.value }))} placeholder="Cloudflare account id" value={form.accountId} />
+                <ErpInput className="font-mono" onChange={(event) => setForm((current) => ({ ...current, accountId: event.target.value }))} placeholder="Cloudflare account id" required value={form.accountId} />
               </ErpField>
               <ErpField label="API Token">
                 <ErpInput autoComplete="off" className="font-mono" onChange={(event) => setForm((current) => ({ ...current, apiToken: event.target.value }))} placeholder={form.id ? "留空则保留当前 token" : "Cloudflare API token"} type="password" value={form.apiToken} />

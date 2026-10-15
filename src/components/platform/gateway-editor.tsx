@@ -57,6 +57,14 @@ export function GatewayEditor({
   }
 
   async function save() {
+    if (!Number.isInteger(item.monthlyQuota) || item.monthlyQuota < 0) {
+      setMessage("月额度必须是大于或等于 0 的整数。");
+      return;
+    }
+    if (!Number.isInteger(item.rateLimitPerMinute) || item.rateLimitPerMinute < 1) {
+      setMessage("每分钟限制必须是大于或等于 1 的整数。");
+      return;
+    }
     const response = await fetch(`/api/platform/sites/${siteId}/gateway-groups/${group.id}`, {
       method: "PUT",
       headers: platformJsonHeaders(),
@@ -112,11 +120,11 @@ export function GatewayEditor({
             <tr>
               <th className="bgtt aright">月额度</th>
               <td className="aleft">
-                <input className="inputall input150" onChange={(event) => update("monthlyQuota", Number(event.target.value))} type="number" value={item.monthlyQuota} />
+                <input className="inputall input150" min={0} onChange={(event) => update("monthlyQuota", Number(event.target.value))} step={1} type="number" value={item.monthlyQuota} />
               </td>
               <th className="bgtt aright">每分钟限制</th>
               <td className="aleft">
-                <input className="inputall input150" onChange={(event) => update("rateLimitPerMinute", Number(event.target.value))} type="number" value={item.rateLimitPerMinute} />
+                <input className="inputall input150" min={1} onChange={(event) => update("rateLimitPerMinute", Number(event.target.value))} step={1} type="number" value={item.rateLimitPerMinute} />
               </td>
             </tr>
             <tr>

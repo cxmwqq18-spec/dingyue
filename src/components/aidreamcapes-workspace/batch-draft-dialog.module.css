@@ -1,0 +1,178 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #1d193866;
+  backdrop-filter: blur(3px);
+}
+
+.dialog {
+  width: min(560px, 100%);
+  max-height: min(780px, 92dvh);
+  overflow-y: auto;
+  padding: 25px;
+  color: #101623;
+  background: #fff;
+  border: 1px solid #e3e6ec;
+  border-radius: 16px;
+  box-shadow: 0 22px 70px #17112b33;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dialog * { box-sizing: border-box; }
+.dialog button, .dialog input { font: inherit; }
+.dialog button:focus-visible, .dialog input:focus-visible { outline: 3px solid #946dff; outline-offset: 3px; }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: #73777d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+  color: #101623;
+  font-size: 23px;
+  font-weight: 650;
+  letter-spacing: -.7px;
+  line-height: 1.2;
+}
+
+.iconButton {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #626b7a;
+  background: transparent;
+  cursor: pointer;
+}
+
+.iconButton:hover { border-color: #e3e6ec; background: #f7f7fa; }
+.iconButton:disabled, .removeButton:disabled, .addButton:disabled, .secondaryButton:disabled, .primaryButton:disabled { cursor: not-allowed; opacity: .52; }
+
+.description {
+  margin: 15px 0 21px;
+  color: #686f7a;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.list { display: grid; gap: 12px; }
+
+.draftRow {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #e3e6ec;
+  border-radius: 11px;
+  background: #fcfcfe;
+}
+
+.field { display: grid; min-width: 0; flex: 1; gap: 6px; }
+.fieldLabel { color: #343b49; font-size: 12px; font-weight: 650; }
+
+.input {
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid #d9dde5;
+  border-radius: 7px;
+  color: #101623;
+  background: #fff;
+}
+
+.input:hover { border-color: #bcb1f8; }
+.input:disabled { color: #73777d; background: #f4f4f6; }
+
+.removeButton {
+  min-height: 40px;
+  padding: 0 9px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #77727f;
+  background: transparent;
+  font-size: 12px !important;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.removeButton:hover:not(:disabled) { border-color: #f0d5d8; color: #a03f4a; background: #fff7f7; }
+
+.addButton {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 13px;
+  padding: 0 12px;
+  border: 1px dashed #c8c2da;
+  border-radius: 8px;
+  color: #5639c4;
+  background: #faf9ff;
+  font-size: 13px !important;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.addButton:hover:not(:disabled) { border-color: #8c72e5; background: #f5f2ff; }
+.addButton > span:first-child { font-size: 19px; line-height: 1; }
+.count { margin-left: 4px; color: #77727f; font-size: 11px; font-weight: 500; }
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: 24px;
+  padding-top: 17px;
+  border-top: 1px solid #eceef2;
+}
+
+.secondaryButton, .primaryButton {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 7px;
+  font-size: 13px !important;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.secondaryButton { border: 1px solid #dfe2e8; color: #242a36; background: #fff; }
+.secondaryButton:hover:not(:disabled) { border-color: #bcb1f8; background: #fbfaff; }
+.primaryButton { border: 1px solid #6035ff; color: #fff; background: #6035ff; }
+.primaryButton:hover:not(:disabled) { border-color: #4f28df; background: #4f28df; }
+.primaryButton:disabled { cursor: not-allowed; opacity: .48; }
+
+@media (max-width: 520px) {
+  .overlay { align-items: flex-end; padding: 10px; }
+  .dialog { max-height: 92dvh; padding: 20px 16px; border-radius: 15px; }
+  .header h2 { font-size: 21px; }
+  .description { margin: 12px 0 17px; font-size: 13px; }
+  .draftRow { padding: 10px; }
+  .removeButton { padding: 0 5px; }
+  .footer { margin-top: 18px; }
+  .secondaryButton, .primaryButton { padding: 0 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .overlay *, .overlay *::before, .overlay *::after { scroll-behavior: auto !important; }
+}

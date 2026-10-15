@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyCustomerEmailCode } from "@/lib/customer-email-auth";
+import { clearCustomerSessionAuthCache, primeCustomerSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
@@ -16,6 +17,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   try {
     const result = await verifyCustomerEmailCode({ siteId, email: body.email, code: body.code, password: body.password, confirmPassword: body.confirmPassword, purpose: body.purpose, name: body.name });
+    if (body.purpose === "password_reset") clearCustomerSessionAuthCache(siteId, result.customer.id);
+    primeCustomerSessionAuthCache({ customer: result.customer, session: result.session, sessionId: result.session.id });
     const response = NextResponse.json({
       ok: true,
       customer: result.customer,

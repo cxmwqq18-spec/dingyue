@@ -16,6 +16,9 @@ const platformSessionCacheTtlMs = 30_000;
 const platformSessionCache = new Map<string, SessionCacheEntry<CurrentPlatformAdmin>>();
 const scopedSessionCacheTtlMs = 30_000;
 const siteAdminSessionCache = new Map<string, SessionCacheEntry<CurrentSiteAdmin>>();
+// Customer sessions must be checked against relational state on every request:
+// password resets and account blocking revoke sessions across all app instances.
+const customerSessionCacheTtlMs = 0;
 const customerSessionCache = new Map<string, SessionCacheEntry<CurrentCustomer>>();
 const maxSessionCacheEntries = 500;
 const platformSessionInflight = new Map<string, Promise<CurrentPlatformAdmin | undefined>>();
@@ -115,8 +118,8 @@ export function clearCustomerSessionAuthCache(siteId?: string, customerId?: stri
 }
 
 export function primeCustomerSessionAuthCache(current: CurrentCustomer): void {
-  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, "current"), current, scopedSessionCacheTtlMs);
-  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, current.customer.id), current, scopedSessionCacheTtlMs);
+  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, "current"), current, customerSessionCacheTtlMs);
+  setSessionCache(customerSessionCache, scopedSessionKey(current.session.siteId, current.sessionId, current.customer.id), current, customerSessionCacheTtlMs);
 }
 
 function scopedSessionKey(siteId: string, sessionId: string, extra?: string): string {
@@ -246,16 +249,16 @@ export async function getCurrentCustomer(siteId: string, customerId: string): Pr
   if (!sessionId) return undefined;
   const cacheKey = scopedSessionKey(siteId, sessionId, customerId);
   const cached = customerSessionCache.get(cacheKey);
-  if (isFresh(cached, scopedSessionCacheTtlMs)) return cached.current;
+  if (isFresh(cached, customerSessionCacheTtlMs)) return cached.current;
   return reuseInflight(customerSessionInflight, cacheKey, async () => {
     const version = readSessionVersion(customerSessionVersions, cacheKey);
     const freshCached = customerSessionCache.get(cacheKey);
-    if (isFresh(freshCached, scopedSessionCacheTtlMs)) return freshCached.current;
+    if (isFresh(freshCached, customerSessionCacheTtlMs)) return freshCached.current;
     const relational = await getCustomerBySessionRelational({ siteId, sessionId });
     if (relational?.customer.id === customerId) {
       const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
       if (isSessionVersionCurrent(customerSessionVersions, cacheKey, version)) {
-        setSessionCache(customerSessionCache, cacheKey, current, scopedSessionCacheTtlMs);
+        setSessionCache(customerSessionCache, cacheKey, current, customerSessionCacheTtlMs);
       }
       return current;
     }
@@ -268,22 +271,22 @@ export async function getCurrentCustomerForSite(siteId: string): Promise<Current
   if (!sessionId) return undefined;
   const cacheKey = scopedSessionKey(siteId, sessionId, "current");
   const cached = customerSessionCache.get(cacheKey);
-  if (isFresh(cached, scopedSessionCacheTtlMs)) return cached.current;
+  if (isFresh(cached, customerSessionCacheTtlMs)) return cached.current;
   return reuseInflight(customerSessionInflight, cacheKey, async () => {
     const version = readSessionVersion(customerSessionVersions, cacheKey);
     const customerSpecificVersion = (customerId: string) => readSessionVersion(customerSessionVersions, scopedSessionKey(siteId, sessionId, customerId));
     const freshCached = customerSessionCache.get(cacheKey);
-    if (isFresh(freshCached, scopedSessionCacheTtlMs)) return freshCached.current;
+    if (isFresh(freshCached, customerSessionCacheTtlMs)) return freshCached.current;
     const relational = await getCustomerBySessionRelational({ siteId, sessionId });
     if (relational) {
       const current = { customer: relational.customer, session: relational.session, sessionId: relational.session.id };
       const customerCacheKey = scopedSessionKey(siteId, sessionId, relational.customer.id);
       const specificVersion = customerSpecificVersion(relational.customer.id);
       if (isSessionVersionCurrent(customerSessionVersions, cacheKey, version)) {
-        setSessionCache(customerSessionCache, cacheKey, current, scopedSessionCacheTtlMs);
+        setSessionCache(customerSessionCache, cacheKey, current, customerSessionCacheTtlMs);
       }
       if (isSessionVersionCurrent(customerSessionVersions, customerCacheKey, specificVersion)) {
-        setSessionCache(customerSessionCache, customerCacheKey, current, scopedSessionCacheTtlMs);
+        setSessionCache(customerSessionCache, customerCacheKey, current, customerSessionCacheTtlMs);
       }
       return current;
     }

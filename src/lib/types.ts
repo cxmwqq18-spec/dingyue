@@ -7,7 +7,7 @@ export type JobStatus = "queued" | "running" | "succeeded" | "failed" | "refunde
 export type LedgerType = "grant" | "reserve" | "consume" | "release" | "adjustment";
 export type GenerationEntryPoint = "customer_workspace" | "site_admin" | "platform_admin" | "external_api" | "rerun";
 
-export type PlatformAiProviderType = "image" | "video" | "text";
+export type PlatformAiProviderType = "image" | "video" | "text" | "audio";
 
 export type SectionType =
   | "aidreamcapes_home_hero"
@@ -809,6 +809,11 @@ export interface PlatformAiProvider {
   imageResolution: ImageProviderResolution;
   imageQuality: ImageProviderQuality;
   imageOutputFormat: ImageProviderOutputFormat;
+  apiProtocol?: "auto" | "lk888-media" | "openai-videos" | "huitu-openapi" | "tokengo-media" | "tokengo-image" | "openai-compatible";
+  videoModelFamily?: "auto" | "grok" | "gemini";
+  videoDurations?: number[];
+  videoAspectRatios?: string[];
+  videoNativeSpeech?: boolean | null;
   createdAt: string;
   updatedAt: string;
   updatedBy?: string;

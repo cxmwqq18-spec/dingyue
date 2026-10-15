@@ -16,12 +16,13 @@ export type InspirationCard = {
   category: string;
 };
 
-export function inspirationCreateHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind">): string {
+export function inspirationCreateHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind">, basePath = ""): string {
   const params = new URLSearchParams();
   if (card.kind === "photo") {
     params.set("tool_id", "image_generator");
   }
+  if (basePath) params.set("view", card.kind === "photo" ? "images" : "video");
   params.set("tool", card.toolSlug);
   if (card.prompt) params.set("prompt", card.prompt);
-  return `/app/create?${params.toString()}`;
+  return `${basePath}/app/create?${params.toString()}`;
 }

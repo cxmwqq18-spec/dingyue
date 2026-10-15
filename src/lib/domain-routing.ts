@@ -12,6 +12,7 @@ const SITE_ADMIN_DOMAINS: Record<string, string> = {
   "aidreamcapes.xyz": "aidreamcapes"
 };
 const PUBLIC_SITE_SLUG_ALIASES: Record<string, string> = {
+  aivideosugc: "aidreamcapes",
   dreamshoot: "mydreamshoots",
   mydreamshoot: "mydreamshoots",
   ...SPANISH_STOREFRONT_SLUG_ALIASES

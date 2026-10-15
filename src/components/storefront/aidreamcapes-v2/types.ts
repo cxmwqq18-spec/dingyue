@@ -19,7 +19,7 @@ export type V2ActorScenePicker = {
   cta?: { label: string; prompt: string };
 };
 export type V2VisualStep = { source: V2VisualImage; sourceTitle?: string; sourceHint?: string; hideSourceCopy?: boolean; result: V2VisualImage; actorResult?: V2VisualImage; options: [string, string][]; credits: string; prompt?: string; mode?: "photo" | "video"; length?: number; idea?: string; chat?: { q: string; a: string }[]; chips?: string[]; buttonHref?: string; items: V2Item[]; actorCards?: V2VisualActorCard[] };
-export type V2VisualTitle = { h2: string; lead?: string };
+export type V2VisualTitle = { h2: string; lead?: string; eyebrow?: string };
 export type V2VisualTitles = Partial<Record<"m2" | "m3" | "m4" | "m5" | "m6" | "m7" | "m8" | "examples" | "templates" | "faq" | "beforeAfter" | "gallery" | "plan", V2VisualTitle>>;
 export type V2VisualPickerCard = { image: V2VisualImage; label: string; chips: string[]; href: string; prompt: string; kind: "photo" | "video"; tool?: string };
 export type V2VisualPicker = { title: string; lead?: string; chips: { id: string; label: string }[]; cards: V2VisualPickerCard[]; button: string; href: string };

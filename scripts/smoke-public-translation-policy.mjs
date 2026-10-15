@@ -10,6 +10,7 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "").replace(/\/$/, "");
 const prisma = baseUrl ? new PrismaClient() : undefined;
 const publicSurfaceRoots = [
   "src/app/site",
+  "src/components/aidreamcapes-workspace",
   "src/components/theme-renderer.tsx",
   "src/components/storefront",
   "src/components/app",

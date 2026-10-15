@@ -1,0 +1,94 @@
+.composer {
+  --composer-accent: var(--purple, #6035ff);
+  border: 2px solid color-mix(in srgb, var(--composer-accent) 86%, #1b53d6);
+  border-radius: 18px;
+  color: var(--ink, #101623);
+  background: var(--surface, #fff);
+  overflow: hidden;
+  box-shadow: 0 7px 26px #15234a0a;
+}
+
+.tabs { display: flex; align-items: stretch; gap: 0; min-height: 56px; padding: 0 12px; border-bottom: 1px solid var(--line, #e3e6ec); }
+.tab { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-width: 145px; padding: 0 18px; border: 0; background: transparent; color: var(--muted, #73777d); font-size: 14px; font-weight: 600; }
+.tab::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: transparent; content: ""; }
+.activeTab { color: var(--ink, #101623); }
+.activeTab::after { background: var(--composer-accent); }
+.activeTab svg { color: var(--composer-accent); }
+
+.promptField { display: block; position: relative; padding: 18px 21px 10px; }
+.promptField textarea { display: block; width: 100%; min-height: 150px; border: 0; resize: vertical; padding: 0; font-size: 15px; line-height: 1.7; color: inherit; background: transparent; }
+.promptField textarea::placeholder { color: #a4a8b2; }
+.composer .promptField textarea:focus-visible { outline: none; box-shadow: none; }
+.imagePromptField { padding-top: 22px; }
+.imagePromptField textarea { min-height: 224px; font-size: 16px; line-height: 1.75; }
+.characterCount { display: block; text-align: right; font-size: 11px; color: var(--muted, #73777d); margin-top: 2px; }
+
+.references { padding: 0 20px 14px; }
+.referenceHeader { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; font-size: 11px; color: var(--muted, #73777d); }
+.referenceHeader > span:first-child { font-weight: 600; color: var(--ink, #101623); }
+.imageReferences { padding-top: 0; padding-bottom: 15px; }
+.imageReferences .referenceHeader { margin-bottom: 7px; }
+.referenceStrip { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 9px; }
+.thumbnail, .upload { width: 76px; height: 76px; border-radius: 9px; position: relative; }
+.thumbnail { border: 1px solid var(--line, #e3e6ec); overflow: hidden; background: var(--surface, #fff); }
+.thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.imageReferences .thumbnail, .imageReferences .upload { width: 66px; height: 66px; }
+.imageReferences .upload { gap: 4px; border-color: #d5c9f2; background: color-mix(in srgb, var(--composer-accent) 4%, var(--surface, #fff)); color: var(--composer-accent); font-size: 10px; font-weight: 600; }
+.remove { position: absolute; top: 5px; right: 5px; width: 23px; height: 23px; border: 1px solid #ffffff90; border-radius: 50%; color: #2d3340; background: #ffffffed; display: grid; place-items: center; padding: 0; box-shadow: 0 1px 5px #0002; cursor: pointer; }
+.remove:disabled { cursor: wait; opacity: .55; }
+.upload { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 10px; background: var(--surface, #fff); border: 1px dashed #bbc0cf; cursor: pointer; color: var(--muted, #73777d); }
+.upload input { position: absolute; width: 100%; height: 100%; inset: 0; opacity: 0; cursor: pointer; }
+.upload:focus-within { outline: 3px solid var(--composer-accent); outline-offset: 3px; }
+.uploadDisabled { opacity: .55; cursor: not-allowed; }
+.uploadDisabled input { cursor: not-allowed; }
+
+.footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line, #e3e6ec); padding: 10px 11px 10px 13px; background: color-mix(in srgb, var(--canvas, #f3f4f6) 34%, transparent); }
+.controls { display: flex; min-width: 0; flex: 1; align-items: center; flex-wrap: wrap; gap: 7px; }
+.controlButton, .setting { display: inline-flex; min-height: 38px; min-width: 0; max-width: 100%; align-items: center; justify-content: center; gap: 7px; padding: 7px 10px; border: 1px solid var(--line, #e3e6ec); border-radius: 7px; color: var(--muted, #73777d); background: var(--surface, #fff); font-size: 12px; white-space: nowrap; }
+.controlButton { cursor: pointer; }
+.controlButton:hover, .setting:focus-within { border-color: var(--composer-accent); }
+.controlButton > span { max-width: 180px; overflow: hidden; color: var(--ink, #101623); text-overflow: ellipsis; }
+.controlThumbnail { width: 25px; height: 25px; border-radius: 5px; object-fit: cover; }
+.setting > span { white-space: nowrap; }
+.setting select { min-width: 0; max-width: 230px; border: 0; outline: 0; color: var(--ink, #101623); background: transparent; padding: 0 2px; cursor: pointer; font-weight: 500; font-size: 12px; }
+.modelSetting select { max-width: 260px; }
+.modelDot { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: #18a46d; }
+.unavailable { background: #a3a8b2; }
+.footerActions { display: flex; flex: 0 0 auto; align-items: center; justify-content: flex-end; gap: 10px; }
+.footerNote, .loginLink { max-width: 210px; color: var(--muted, #73777d); font-size: 11px; line-height: 1.4; }
+.loginLink { text-decoration: underline; text-underline-offset: 3px; }
+.continue { display: inline-grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border: 1px solid var(--composer-accent); border-radius: 8px; color: #fff; background: var(--composer-accent); cursor: pointer; transition: filter .15s; }
+.continueWithLabel { display: inline-flex; width: auto; min-width: 124px; flex-basis: auto; gap: 8px; padding: 0 12px; font-size: 12px; font-weight: 600; }
+.continue:hover:not(:disabled) { filter: brightness(1.09); }
+.continue:disabled { opacity: .45; cursor: not-allowed; }
+.composer button:focus-visible, .composer select:focus-visible { outline: 2px solid var(--composer-accent); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .tabs { min-height: 51px; padding: 0 5px; }
+  .tab { min-width: 0; flex: 1; gap: 6px; padding: 0 7px; font-size: 12px; }
+  .tab svg { width: 15px; }
+  .promptField { padding: 15px 13px 8px; }
+  .promptField textarea { min-height: 120px; font-size: 14px; }
+  .imagePromptField { padding-top: 17px; }
+  .imagePromptField textarea { min-height: 190px; font-size: 15px; }
+  .references { padding: 0 13px 12px; }
+  .thumbnail, .upload { width: 66px; height: 66px; }
+  .imageReferences .thumbnail, .imageReferences .upload { width: 58px; height: 58px; }
+  .footer { align-items: flex-end; padding: 9px; }
+  .controls { gap: 6px; }
+  .controlButton, .setting { min-height: 36px; gap: 5px; padding: 6px 7px; font-size: 11px; }
+  .controlButton > span { max-width: 105px; }
+  .setting select, .modelSetting select { max-width: 120px; font-size: 11px; }
+  .footerActions { gap: 6px; }
+  .footerNote, .loginLink { max-width: 125px; font-size: 10px; }
+  .continue { width: 38px; height: 38px; flex-basis: 38px; }
+  .continueWithLabel { width: auto; min-width: 120px; flex-basis: auto; }
+}
+
+@media (max-width: 420px) {
+  .tab { gap: 4px; font-size: 11px; }
+  .tab svg { width: 14px; }
+  .footer { align-items: stretch; flex-direction: column; }
+  .footerActions { justify-content: space-between; }
+  .footerNote, .loginLink { max-width: none; }
+}

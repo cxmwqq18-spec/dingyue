@@ -1,0 +1,1023 @@
+{
+  "version": "aidreamcapes-ugc-voice-assets-v1",
+  "provider": "Buming TokenGo",
+  "model": "speech-2.8",
+  "settings": {
+    "version": "2.8",
+    "tier": "turbo",
+    "speed": 1,
+    "pitch": 0,
+    "emotion": "auto",
+    "sound_effects": "none",
+    "responseFormat": "mp3"
+  },
+  "actors": {
+    "indoor-1": {
+      "name": "Ari",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "温暖少女",
+      "voiceName": "温暖少女",
+      "voiceId": "Chinese (Mandarin)_Warm_Girl",
+      "voiceLanguage": "zh",
+      "voicePosition": {
+        "genderPage": 2,
+        "item": 6
+      },
+      "sampleLine": "I keep this by the door and grab it on the way out, so I never hunt for it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/indoor-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 70260,
+      "generatedAt": "2026-10-14T05:57:38.399Z",
+      "voiceAgeBand": "youth"
+    },
+    "indoor-2": {
+      "name": "Mila",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Calm Woman",
+      "voiceName": "Calm Woman",
+      "voiceId": "Indonesian_CalmWoman",
+      "voiceLanguage": "id",
+      "voicePosition": {
+        "genderPage": 7,
+        "item": 1
+      },
+      "sampleLine": "I use this at home when the day is done.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/indoor-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 53556,
+      "generatedAt": "2026-10-14T05:57:40.295Z",
+      "voiceAgeBand": "adult"
+    },
+    "home-1": {
+      "name": "Dev",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Trustworthy Man",
+      "voiceName": "Trustworthy Man",
+      "voiceId": "English_Trustworthy_Man",
+      "voiceLanguage": "en",
+      "voicePosition": {
+        "genderPage": 2,
+        "item": 9
+      },
+      "sampleLine": "After a long day I sit down and pull this close, so the evening starts with it in hand.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/home-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 78900,
+      "generatedAt": "2026-10-14T06:25:23.270Z",
+      "voiceAgeBand": "adult"
+    },
+    "home-2": {
+      "name": "Elena",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Confident Woman",
+      "voiceName": "Confident Woman",
+      "voiceId": "Spanish_ConfidentWoman",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 10
+      },
+      "sampleLine": "I set this beside me for the evening at home, so I can reach it without getting up.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/home-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 83508,
+      "generatedAt": "2026-10-14T05:57:42.208Z",
+      "voiceAgeBand": "adult"
+    },
+    "outdoor-1": {
+      "name": "Priyanka",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Gentle Lady",
+      "voiceName": "Gentle Lady",
+      "voiceId": "Greek_female_1_sample1",
+      "voiceLanguage": "el",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 4
+      },
+      "sampleLine": "I carry this up to the rooftop when I need a break, and I show it there.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/outdoor-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 79476,
+      "generatedAt": "2026-10-14T06:25:24.058Z",
+      "voiceAgeBand": "adult"
+    },
+    "living-room-1": {
+      "name": "Celine",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Serene Woman",
+      "voiceName": "Serene Woman",
+      "voiceId": "Serene_Woman",
+      "voiceLanguage": "en",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 1
+      },
+      "sampleLine": "I keep this next to me on the living-room couch, so I can reach it without getting up.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/living-room-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 76020,
+      "generatedAt": "2026-10-14T05:57:46.533Z",
+      "voiceAgeBand": "adult"
+    },
+    "living-room-2": {
+      "name": "Gordon",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Level-Headed Man",
+      "voiceName": "Level-Headed Man",
+      "voiceId": "French_Male_Speech_New",
+      "voiceLanguage": "fr",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 12
+      },
+      "sampleLine": "On a calm evening at home I keep this nearby and talk through why I use it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/living-room-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 85812,
+      "generatedAt": "2026-10-14T05:57:49.114Z",
+      "voiceAgeBand": "adult"
+    },
+    "outdoor-2": {
+      "name": "Jon",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Friendly Man",
+      "voiceName": "Friendly Man",
+      "voiceId": "German_FriendlyMan",
+      "voiceLanguage": "de",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 3
+      },
+      "sampleLine": "I take this on the city walk and hold it at my side, so the size is easy to see.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/outdoor-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 73716,
+      "generatedAt": "2026-10-14T05:57:49.131Z",
+      "voiceAgeBand": "adult"
+    },
+    "studio-1": {
+      "name": "Ravi",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Deep-voiced Gentleman",
+      "voiceName": "Deep-voiced Gentleman",
+      "voiceId": "Portuguese_Deep-VoicedGentleman",
+      "voiceLanguage": "pt",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 2
+      },
+      "sampleLine": "I pick this up at the studio desk before I record, so the first line is about it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/studio-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 81780,
+      "generatedAt": "2026-10-14T05:57:51.617Z",
+      "voiceAgeBand": "adult"
+    },
+    "office-1": {
+      "name": "Omar",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Assured Presenter",
+      "voiceName": "Assured Presenter",
+      "voiceId": "czech_male_1_v1",
+      "voiceLanguage": "cs",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 2
+      },
+      "sampleLine": "On a busy workday I keep this in reach and hold it up at the desk.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/office-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 64500,
+      "generatedAt": "2026-10-14T05:57:52.680Z",
+      "voiceAgeBand": "adult"
+    },
+    "studio-2": {
+      "name": "Evan",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Friendly Boy",
+      "voiceName": "Friendly Boy",
+      "voiceId": "finnish_male_1_v2",
+      "voiceLanguage": "fi",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 4
+      },
+      "sampleLine": "I leave this on the studio desk between takes, so the next line can start on it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/studio-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 60468,
+      "generatedAt": "2026-10-14T05:57:53.169Z",
+      "voiceAgeBand": "youth"
+    },
+    "office-2": {
+      "name": "Nisha",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Ambitious Woman",
+      "voiceName": "Ambitious Woman",
+      "voiceId": "Russian_AmbitiousWoman",
+      "voiceLanguage": "ru",
+      "voicePosition": {
+        "genderPage": 7,
+        "item": 5
+      },
+      "sampleLine": "I keep this on my desk through the workday and point to it while I explain.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/office-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 66804,
+      "generatedAt": "2026-10-14T05:57:55.359Z",
+      "voiceAgeBand": "adult"
+    },
+    "garden-1": {
+      "name": "Claire",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Graceful Lady",
+      "voiceName": "Graceful Lady",
+      "voiceId": "English_Graceful_Lady",
+      "voiceLanguage": "en",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 2
+      },
+      "sampleLine": "I bring this outside for a quiet garden break and set it where the plants are.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/garden-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 97332,
+      "generatedAt": "2026-10-14T06:25:23.261Z",
+      "voiceAgeBand": "adult"
+    },
+    "garden-2": {
+      "name": "Amara",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Calm Lady",
+      "voiceName": "Calm Lady",
+      "voiceId": "Japanese_CalmLady",
+      "voiceLanguage": "ja",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 6
+      },
+      "sampleLine": "Among the plants I reach for this when I pause, and I turn it toward the light.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/garden-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 71988,
+      "generatedAt": "2026-10-14T05:57:56.911Z",
+      "voiceAgeBand": "adult"
+    },
+    "gym-1": {
+      "name": "Sofia",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Energetic Woman",
+      "voiceName": "Energetic Woman",
+      "voiceId": "Thai_female_2_sample2",
+      "voiceLanguage": "th",
+      "voicePosition": {
+        "genderPage": 7,
+        "item": 14
+      },
+      "sampleLine": "Between sets at the gym I keep this close and show it before the next one.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/gym-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 83508,
+      "generatedAt": "2026-10-14T05:57:59.694Z",
+      "voiceAgeBand": "adult"
+    },
+    "gym-2": {
+      "name": "Lana",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "善良女声",
+      "voiceName": "善良女声",
+      "voiceId": "Cantonese_KindWoman",
+      "voiceLanguage": "yue",
+      "voicePosition": {
+        "genderPage": 2,
+        "item": 12
+      },
+      "sampleLine": "For indoor training I keep this ready and pick it up between moves.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/gym-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 76596,
+      "generatedAt": "2026-10-14T05:58:00.070Z",
+      "voiceAgeBand": "adult"
+    },
+    "cafe-1": {
+      "name": "Tess",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Calm Lady",
+      "voiceName": "Calm Lady",
+      "voiceId": "Korean_CalmLady",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 11
+      },
+      "sampleLine": "A cafe break is more useful when I set this on the table and talk about it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/cafe-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 82932,
+      "generatedAt": "2026-10-14T06:25:26.984Z",
+      "voiceAgeBand": "adult"
+    },
+    "cafe-2": {
+      "name": "Yara",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Confident Woman",
+      "voiceName": "Confident Woman",
+      "voiceId": "Portuguese_ConfidentWoman",
+      "voiceLanguage": "pt",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 7
+      },
+      "sampleLine": "I set this in the center of the cafe table so the size is easy to see.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/cafe-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 70836,
+      "generatedAt": "2026-10-14T06:25:27.765Z",
+      "voiceAgeBand": "adult"
+    },
+    "kitchen-1": {
+      "name": "Asha",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Caring Woman",
+      "voiceName": "Caring Woman",
+      "voiceId": "Korean_CaringWoman",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 4
+      },
+      "sampleLine": "My kitchen counter has a spot for this, so I can grab it while I talk.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/kitchen-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 70836,
+      "generatedAt": "2026-10-14T05:58:03.774Z",
+      "voiceAgeBand": "adult"
+    },
+    "kitchen-2": {
+      "name": "Mara",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Tranquil Woman",
+      "voiceName": "Tranquil Woman",
+      "voiceId": "hindi_female_2_v1",
+      "voiceLanguage": "hi",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 9
+      },
+      "sampleLine": "I reach for this while I cook at the counter, without stopping the meal.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/kitchen-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 72564,
+      "generatedAt": "2026-10-14T05:58:04.682Z",
+      "voiceAgeBand": "adult"
+    },
+    "podcast-1": {
+      "name": "Leonie",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Inspiring Lady",
+      "voiceName": "Inspiring Lady",
+      "voiceId": "Portuguese_InspiringLady",
+      "voiceLanguage": "pt",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 5
+      },
+      "sampleLine": "At the microphone I bring this up when I have one clear point to share.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/podcast-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 82356,
+      "generatedAt": "2026-10-14T05:58:07.553Z",
+      "voiceAgeBand": "adult"
+    },
+    "fitness-1": {
+      "name": "Caleb",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Dominant Man",
+      "voiceName": "Dominant Man",
+      "voiceId": "Korean_DominantMan",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 3
+      },
+      "sampleLine": "When training starts I keep this in reach and show it first.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/fitness-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 56436,
+      "generatedAt": "2026-10-14T05:58:08.100Z",
+      "voiceAgeBand": "adult"
+    },
+    "podcast-2": {
+      "name": "Bria",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Charming Girl",
+      "voiceName": "Charming Girl",
+      "voiceId": "Indonesian_CharmingGirl",
+      "voiceLanguage": "id",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 15
+      },
+      "sampleLine": "I lift this beside the microphone and name the one thing it does.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/podcast-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 82932,
+      "generatedAt": "2026-10-14T05:58:08.471Z",
+      "voiceAgeBand": "youth"
+    },
+    "fitness-2": {
+      "name": "Rina",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Thoughtful Lady",
+      "voiceName": "Thoughtful Lady",
+      "voiceId": "Spanish_ThoughtfulLady",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 3
+      },
+      "sampleLine": "I keep this in my indoor training routine and name one reason it stays there.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/fitness-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 73716,
+      "generatedAt": "2026-10-14T06:25:28.890Z",
+      "voiceAgeBand": "adult"
+    },
+    "beach-1": {
+      "name": "Nia",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Playful Girl",
+      "voiceName": "Playful Girl",
+      "voiceId": "Portuguese_PlayfulGirl",
+      "voiceLanguage": "pt",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 13
+      },
+      "sampleLine": "I bring this when I walk by the water and hold it against the shoreline.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/beach-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 70260,
+      "generatedAt": "2026-10-14T05:58:12.057Z",
+      "voiceAgeBand": "youth"
+    },
+    "beach-2": {
+      "name": "Lola",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Kind Lady",
+      "voiceName": "Kind Lady",
+      "voiceId": "Japanese_KindLady",
+      "voiceLanguage": "ja",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 5
+      },
+      "sampleLine": "On a beach walk I bring this along and stop so you can see it in my hand.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/beach-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 71988,
+      "generatedAt": "2026-10-14T05:58:13.079Z",
+      "voiceAgeBand": "adult"
+    },
+    "car-1": {
+      "name": "Mateo",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Jovial Man",
+      "voiceName": "Jovial Man",
+      "voiceId": "Spanish_Jovialman",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 12
+      },
+      "sampleLine": "Before I pull away I check that this is in reach and give it one look.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/car-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 64500,
+      "generatedAt": "2026-10-14T05:58:14.495Z",
+      "voiceAgeBand": "adult"
+    },
+    "hospital-1": {
+      "name": "Adrian",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Diligent Man",
+      "voiceName": "Diligent Man",
+      "voiceId": "English_Diligent_Man",
+      "voiceLanguage": "en",
+      "voicePosition": {
+        "genderPage": 2,
+        "item": 11
+      },
+      "sampleLine": "I pause in the hallway, reach for this, and turn it toward the camera.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/hospital-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 68532,
+      "generatedAt": "2026-10-14T05:58:17.051Z",
+      "voiceAgeBand": "adult"
+    },
+    "car-2": {
+      "name": "Jade",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Dependable Woman",
+      "voiceName": "Dependable Woman",
+      "voiceId": "Japanese_DependableWoman",
+      "voiceLanguage": "ja",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 4
+      },
+      "sampleLine": "At a quick stop before I drive, I keep this within reach and show it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/car-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 70260,
+      "generatedAt": "2026-10-14T05:58:18.007Z",
+      "voiceAgeBand": "adult"
+    },
+    "hospital-2": {
+      "name": "Sana",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Optimistic Youth",
+      "voiceName": "Optimistic Youth",
+      "voiceId": "Romanian_female_1_sample4",
+      "voiceLanguage": "ro",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 2
+      },
+      "sampleLine": "I keep this close when I get ready for the day.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/hospital-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 68532,
+      "generatedAt": "2026-10-14T05:58:18.626Z",
+      "voiceAgeBand": "youth"
+    },
+    "balcony-1": {
+      "name": "Tessa",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Casual Woman",
+      "voiceName": "Casual Woman",
+      "voiceId": "Polish_female_2_sample3",
+      "voiceLanguage": "pl",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 1
+      },
+      "sampleLine": "On a sunny balcony break I keep this nearby and lift it into the light.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/balcony-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 67380,
+      "generatedAt": "2026-10-14T06:25:31.009Z",
+      "voiceAgeBand": "adult"
+    },
+    "pet-1": {
+      "name": "Rhea",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Athletic Girl",
+      "voiceName": "Athletic Girl",
+      "voiceId": "Korean_AthleticGirl",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 5
+      },
+      "sampleLine": "With my dog beside me I keep this close and show it between pats.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/pet-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 82356,
+      "generatedAt": "2026-10-14T05:58:22.587Z",
+      "voiceAgeBand": "youth"
+    },
+    "pet-2": {
+      "name": "Anika",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Girl Next Door",
+      "voiceName": "Girl Next Door",
+      "voiceId": "Greek_female_2_sample3",
+      "voiceLanguage": "el",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 5
+      },
+      "sampleLine": "While I cuddle my cat I keep this ready and tilt it toward the camera.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/pet-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 77748,
+      "generatedAt": "2026-10-14T05:58:24.652Z",
+      "voiceAgeBand": "youth"
+    },
+    "balcony-2": {
+      "name": "Iris",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Mature Lady",
+      "voiceName": "Mature Lady",
+      "voiceId": "Korean_MatureLady",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 13
+      },
+      "sampleLine": "I start my balcony morning with this in hand and say one reason I like it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/balcony-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 92724,
+      "generatedAt": "2026-10-14T05:58:25.409Z",
+      "voiceAgeBand": "mature"
+    },
+    "shopping-1": {
+      "name": "Lena",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Steadfast Narrator",
+      "voiceName": "Steadfast Narrator",
+      "voiceId": "czech_female_5_v7",
+      "voiceLanguage": "cs",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 6
+      },
+      "sampleLine": "While I browse I spot this, pick it up, and share why it caught my eye.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/shopping-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 76596,
+      "generatedAt": "2026-10-14T05:58:26.335Z",
+      "voiceAgeBand": "adult"
+    },
+    "shopping-2": {
+      "name": "Casey",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Confident Woman",
+      "voiceName": "Confident Woman",
+      "voiceId": "Indonesian_ConfidentWoman",
+      "voiceLanguage": "id",
+      "voicePosition": {
+        "genderPage": 7,
+        "item": 2
+      },
+      "sampleLine": "In the beauty aisle I stop when I find this and hold it next to my face.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/shopping-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 74292,
+      "generatedAt": "2026-10-14T06:25:32.106Z",
+      "voiceAgeBand": "adult"
+    },
+    "sports-1": {
+      "name": "Damon",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Male Narrator",
+      "voiceName": "Male Narrator",
+      "voiceId": "French_MaleNarrator",
+      "voiceLanguage": "fr",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 14
+      },
+      "sampleLine": "Courtside I keep this ready and show it before the next game starts.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/sports-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 78324,
+      "generatedAt": "2026-10-14T05:58:29.581Z",
+      "voiceAgeBand": "adult"
+    },
+    "sports-2": {
+      "name": "Mireya",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Sweet Girl",
+      "voiceName": "Sweet Girl",
+      "voiceId": "Korean_SweetGirl",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 7
+      },
+      "sampleLine": "While I warm up to play I bring this along and keep it where I can reach it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/sports-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 90420,
+      "generatedAt": "2026-10-14T05:58:30.246Z",
+      "voiceAgeBand": "youth"
+    },
+    "study-room-1": {
+      "name": "Maxwell",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Caring Man",
+      "voiceName": "Caring Man",
+      "voiceId": "Indonesian_CaringMan",
+      "voiceLanguage": "id",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 1
+      },
+      "sampleLine": "At my study desk I hold this up and walk through the reason I chose it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/study-room-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 72564,
+      "generatedAt": "2026-10-14T05:58:32.553Z",
+      "voiceAgeBand": "adult"
+    },
+    "study-room-2": {
+      "name": "Sora",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Wise Lady",
+      "voiceName": "Wise Lady",
+      "voiceId": "Spanish_Wiselady",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 13
+      },
+      "sampleLine": "At my desk I keep this nearby, so the work stays on one clear point about it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/study-room-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 97332,
+      "generatedAt": "2026-10-14T05:58:33.958Z",
+      "voiceAgeBand": "adult"
+    },
+    "classroom-1": {
+      "name": "Noah",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Rational Man",
+      "voiceName": "Rational Man",
+      "voiceId": "Spanish_RationalMan",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 10
+      },
+      "sampleLine": "Between lessons I hold this up and share the reason I started using it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/classroom-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 89268,
+      "generatedAt": "2026-10-14T05:58:34.256Z",
+      "voiceAgeBand": "adult"
+    },
+    "terrace-1": {
+      "name": "Elise",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Compelling Girl",
+      "voiceName": "Compelling Girl",
+      "voiceId": "Spanish_CompellingGirl",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 2
+      },
+      "sampleLine": "I use a rooftop break to hold this up and recommend it in one sentence.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/terrace-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 69684,
+      "generatedAt": "2026-10-14T05:58:36.331Z",
+      "voiceAgeBand": "youth"
+    },
+    "terrace-2": {
+      "name": "Ken",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "成熟女性音色",
+      "voiceName": "成熟女性音色",
+      "voiceId": "female-chengshu",
+      "voiceLanguage": "zh",
+      "voicePosition": {
+        "genderPage": 1,
+        "item": 3
+      },
+      "sampleLine": "On this sunny terrace I keep this ready and recommend it while I stand here.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/terrace-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 75444,
+      "generatedAt": "2026-10-14T06:25:32.919Z",
+      "voiceAgeBand": "adult"
+    },
+    "bathroom-1": {
+      "name": "Lila",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Soothing Lady",
+      "voiceName": "Soothing Lady",
+      "voiceId": "Korean_SoothingLady",
+      "voiceLanguage": "ko",
+      "voicePosition": {
+        "genderPage": 3,
+        "item": 12
+      },
+      "sampleLine": "After a mirror check I reach for this and show it before I head out.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/bathroom-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 95028,
+      "generatedAt": "2026-10-14T05:58:38.665Z",
+      "voiceAgeBand": "adult"
+    },
+    "exercise-1": {
+      "name": "Vera",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Assertive Woman",
+      "voiceName": "Assetive Woman",
+      "voiceId": "finnish_female_4_v1",
+      "voiceLanguage": "fi",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 8
+      },
+      "sampleLine": "After a waterside workout I'm glad I brought this, and I hold it up.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/exercise-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 64500,
+      "generatedAt": "2026-10-14T05:58:41.654Z",
+      "voiceAgeBand": "adult"
+    },
+    "exercise-2": {
+      "name": "Akio",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Gentle Girl",
+      "voiceName": "Gentle Girl",
+      "voiceId": "Indonesian_GentleGirl",
+      "voiceLanguage": "id",
+      "voicePosition": {
+        "genderPage": 7,
+        "item": 3
+      },
+      "sampleLine": "During park stretches I hold this up and tell you the reason I chose it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/exercise-2.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 67380,
+      "generatedAt": "2026-10-14T05:58:42.114Z",
+      "voiceAgeBand": "youth"
+    },
+    "bedroom-1": {
+      "name": "Nora",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Patient Female Presenter",
+      "voiceName": "Patient Female Presenter",
+      "voiceId": "French_Female_News Anchor",
+      "voiceLanguage": "fr",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 11
+      },
+      "sampleLine": "My morning is simpler when I keep this close and use it before I leave.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/bedroom-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 73716,
+      "generatedAt": "2026-10-14T05:58:42.393Z",
+      "voiceAgeBand": "adult"
+    },
+    "garage-1": {
+      "name": "Luis",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Thoughtful Mentor",
+      "voiceName": "Thoughtful Mentor",
+      "voiceId": "greek_male_1a_v1",
+      "voiceLanguage": "el",
+      "voicePosition": {
+        "genderPage": 6,
+        "item": 1
+      },
+      "sampleLine": "Before work starts I take a moment, hold this up, and recommend it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/garage-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 71988,
+      "generatedAt": "2026-10-14T05:58:45.630Z",
+      "voiceAgeBand": "adult"
+    },
+    "pool-1": {
+      "name": "Tara",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Lovely Lady",
+      "voiceName": "Lovely Lady",
+      "voiceId": "Portuguese_LovelyLady",
+      "voiceLanguage": "pt",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 15
+      },
+      "sampleLine": "Poolside I keep this ready and give one sunny reason to try it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/pool-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 74868,
+      "generatedAt": "2026-10-14T05:58:46.084Z",
+      "voiceAgeBand": "adult"
+    },
+    "interview-1": {
+      "name": "Gianna",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Chatty Girl",
+      "voiceName": "Chatty Girl",
+      "voiceId": "Spanish_ChattyGirl",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 5,
+        "item": 1
+      },
+      "sampleLine": "In a street chat I hold this up and tell you why I picked it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/interview-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 67956,
+      "generatedAt": "2026-10-14T05:58:46.137Z",
+      "voiceAgeBand": "youth"
+    },
+    "reporting-1": {
+      "name": "Dalia",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "News Anchor",
+      "voiceName": "News Anchor",
+      "voiceId": "hindi_female_1_v2",
+      "voiceLanguage": "hi",
+      "voicePosition": {
+        "genderPage": 8,
+        "item": 10
+      },
+      "sampleLine": "I look at the camera, hold this up, and share one short update about it.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/reporting-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 78900,
+      "generatedAt": "2026-10-14T06:25:35.045Z",
+      "voiceAgeBand": "adult"
+    },
+    "yoga-1": {
+      "name": "Anjali",
+      "gender": "female",
+      "voiceGender": "female",
+      "candidateName": "Whimsical Girl",
+      "voiceName": "Whimsical Girl",
+      "voiceId": "Spanish_WhimsicalGirl",
+      "voiceLanguage": "es",
+      "voicePosition": {
+        "genderPage": 4,
+        "item": 15
+      },
+      "sampleLine": "On my mat I hold this up and share the reason it stays in my routine.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/yoga-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 75444,
+      "generatedAt": "2026-10-14T05:58:49.867Z",
+      "voiceAgeBand": "youth"
+    },
+    "travel-1": {
+      "name": "Avery",
+      "gender": "male",
+      "voiceGender": "male",
+      "candidateName": "Gentle-voiced man",
+      "voiceName": "Gentle-voiced man",
+      "voiceId": "English_Gentle-voiced_man",
+      "voiceLanguage": "en",
+      "voicePosition": {
+        "genderPage": 2,
+        "item": 12
+      },
+      "sampleLine": "From my plane seat I hold this up and tell you why I chose it for the trip.",
+      "assetUrl": "/media/site_aidreamcapes/workspace/actors/voices/travel-1.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 96180,
+      "generatedAt": "2026-10-14T05:58:50.344Z",
+      "voiceAgeBand": "adult"
+    }
+  }
+}

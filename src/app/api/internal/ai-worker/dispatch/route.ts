@@ -61,8 +61,8 @@ import {
   throwIfLocalWorkerAborted
 } from "@/lib/local-worker-abort-registry";
 import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, VIDEO_RESOLUTIONS, normalizeVideoDurationSeconds, normalizeVideoFrameLimit, normalizeVideoModelPreference, normalizeVideoResolution, type VideoModelFamily, type VideoModelPreference } from "@/lib/video-frame-config";
-import { orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
-import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { orderAiProviderFallbackCandidates, orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
+import { isTokengoMediaBaseUrl, isYinglingApiBaseUrl, videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider, videoProviderProtocolForBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
 import { videoProviderAvailabilityReason } from "@/lib/video-provider-availability";
 import {
@@ -229,15 +229,6 @@ function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
 }
 
-function isLk888MediaBaseUrl(baseUrl: string) {
-  try {
-    const hostname = new URL(baseUrl).hostname.toLowerCase();
-    return hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai";
-  } catch {
-    return false;
-  }
-}
-
 function imageBase64(body: ImageGenerationResponse) {
   return body.data?.[0]?.b64_json ??
     body.data?.[0]?.image_base64 ??
@@ -348,10 +339,12 @@ function proxyOpenAiVideoBaseUrl(baseUrl: string) {
 
 function openAiVideoCreateEndpoint(baseUrl: string) {
   const endpointBaseUrl = proxyOpenAiVideoBaseUrl(baseUrl);
+  if (isYinglingApiBaseUrl(endpointBaseUrl)) return `${endpointBaseUrl}/v1/video/generations`;
   return `${endpointBaseUrl}${usesProxyOpenAiVideoEndpoint(endpointBaseUrl) ? "/v1/videos" : "/v1/videos/generations"}`;
 }
 
 function openAiVideoStatusEndpoint(baseUrl: string, taskId: string) {
+  if (isYinglingApiBaseUrl(baseUrl)) return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/video/generations/${encodeURIComponent(taskId)}`;
   return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/videos/${encodeURIComponent(taskId)}`;
 }
 
@@ -372,6 +365,7 @@ function videoProviderModelCandidates(model: string, params?: { protocol?: Video
   const normalizedModel = normalizeVideoGenerationModel(model);
   const protocol = params?.protocol;
   const referenceAssetCount = Math.max(0, Math.trunc(Number(params?.referenceAssetCount ?? 0) || 0));
+  if (protocol === "openai-videos" && isYinglingApiBaseUrl(params?.baseUrl ?? "")) return [normalizedModel];
   if (protocol === "tokengo-media") return [normalizedModel];
   if (protocol === "huitu-openapi") return [normalizedModel];
   if (protocol === "openai-videos" && isSmartPickLidBaseUrl(params?.baseUrl ?? "")) {
@@ -525,14 +519,10 @@ function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
   const selectedProvider = selectedProviderId
     ? candidateProviders.find((provider) => provider.id === selectedProviderId)
     : undefined;
-
-  const preferredProviders = Array.from(new Map([
-    ...(selectedProvider ? [[selectedProvider.id, selectedProvider] as const] : []),
-    ...candidateProviders.filter((provider) => provider.preferred).map((provider) => [provider.id, provider] as const)
-  ]).values());
-  const preferredIds = new Set(preferredProviders.map((provider) => provider.id));
-  const fallbackProviders = candidateProviders.filter((provider) => !preferredIds.has(provider.id));
-  return [...preferredProviders, ...fallbackProviders];
+  const orderedProviders = orderAiProviderFallbackCandidates(candidateProviders);
+  return selectedProvider
+    ? [selectedProvider, ...orderedProviders.filter((provider) => provider.id !== selectedProvider.id)]
+    : orderedProviders;
 }
 
 function isTokengoGrokImagine15VideoProvider(provider: WorkerImageProvider) {
@@ -2617,17 +2607,8 @@ async function optimizeGeneratedVideoForPlayback(video: { bytes: Buffer; mimeTyp
   }
 }
 
-function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
-  try {
-    const hostname = new URL(baseUrl).hostname.toLowerCase();
-    if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
-    if (isTokengoMediaBaseUrl(baseUrl)) return "tokengo-media";
-    if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
-    if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
-  } catch {
-    return "lk888-media";
-  }
-  return "lk888-media";
+function videoProviderProtocol(baseUrl: string, configured?: unknown): VideoProviderProtocol {
+  return videoProviderProtocolForBaseUrl(baseUrl, configured);
 }
 
 function lk888MediaStatusUrls(baseUrl: string, taskId: string) {
@@ -2789,7 +2770,8 @@ async function createVideoTask(params: {
   const openAiJsonReferencePayload = useJsonReference
     ? openAiJsonVideoReferencePayload(openAiJsonImageUrls, firstImageUrl, { proxyStringReferences: useProxyStringReferences })
     : {};
-  const openAiVideosForm = params.protocol === "openai-videos" && !useJsonReference && params.referenceAssets.length
+  const yinglingApi = isYinglingApiBaseUrl(params.baseUrl);
+  const openAiVideosForm = params.protocol === "openai-videos" && !yinglingApi && !useJsonReference && params.referenceAssets.length
     ? await buildVideoReferenceForm({
         referenceAssets: params.referenceAssets,
         model: params.model,
@@ -2800,7 +2782,17 @@ async function createVideoTask(params: {
         smartPickLid: isSmartPickLidBaseUrl(params.baseUrl)
       })
     : undefined;
-  const payload = params.protocol === "openai-videos"
+  const yinglingDimensions = parseVideoPixelSize(params.videoParams.size) ??
+    parseVideoPixelSize(videoSizeForParams(params.videoParams.aspect_ratio, params.videoParams.resolution));
+  const payload = yinglingApi
+    ? {
+        model: params.model,
+        prompt: params.prompt,
+        duration: Number(params.videoParams.duration),
+        ...(yinglingDimensions ? { width: yinglingDimensions.width, height: yinglingDimensions.height } : {}),
+        ...(firstImageUrl ? { image: firstImageUrl } : {})
+      }
+    : params.protocol === "openai-videos"
     ? {
         model: params.model,
         prompt: params.prompt,
@@ -3121,7 +3113,7 @@ async function downloadVideoResult(params: {
     }, params.signal);
   }
   const rawResultUrl = params.protocol === "openai-videos"
-    ? params.resultUrl || openAiVideoContentEndpoint(params.baseUrl ?? "", params.taskId ?? "")
+    ? params.resultUrl || (isYinglingApiBaseUrl(params.baseUrl ?? "") ? "" : openAiVideoContentEndpoint(params.baseUrl ?? "", params.taskId ?? ""))
     : params.resultUrl;
   const resultUrl = params.protocol === "tokengo-media"
     ? resolveTokengoMediaResultUrl(params.baseUrl ?? "", rawResultUrl)
@@ -3137,7 +3129,7 @@ async function downloadVideoResult(params: {
       })()
     : false;
   const headers = params.apiKey && (
-    params.protocol === "openai-videos" ||
+    (params.protocol === "openai-videos" && (!isYinglingApiBaseUrl(params.baseUrl ?? "") || sameProviderOrigin)) ||
     (params.protocol === "tokengo-media" && sameProviderOrigin)
   )
     ? { Authorization: `Bearer ${params.apiKey}` }
@@ -3186,7 +3178,7 @@ async function generateVideoWithProvider(params: {
   }
   const requestedReferenceAssets = videoFrameAssets(params.payload);
   const baseUrl = normalizeBaseUrl(provider.aiUrl);
-  const protocol = videoProviderProtocol(baseUrl);
+  const protocol = videoProviderProtocol(baseUrl, provider.apiProtocol);
   if (isSmartPickLidBaseUrl(baseUrl) && !shouldAllowSmartPickLidVideoProvider()) {
     throw new Error("ai_provider_video_content_unverified_smartpicklid");
   }
@@ -3632,7 +3624,7 @@ function imageProviderCostTrace(outputs: GeneratedOutput[]) {
 function videoProviderFailureContext(provider: WorkerImageProvider): { providerFamily: VideoModelFamily; providerProtocol: VideoProviderProtocol } {
   return {
     providerFamily: videoProviderModelFamilyForProvider(provider),
-    providerProtocol: videoProviderProtocol(normalizeBaseUrl(provider.aiUrl ?? ""))
+    providerProtocol: videoProviderProtocol(normalizeBaseUrl(provider.aiUrl ?? ""), provider.apiProtocol)
   };
 }
 

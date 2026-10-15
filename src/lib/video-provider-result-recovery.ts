@@ -15,7 +15,7 @@ import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { settleGenerationJobRelational } from "@/lib/stores/job-store";
 import { getPlatformAiProviderRelational, listPlatformAiProvidersRelational } from "@/lib/stores/platform-store";
-import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { isYinglingApiBaseUrl, videoProviderProtocolForBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 import type { PlatformAiProvider } from "@/lib/types";
 
 type VideoStatusResponse = {
@@ -40,7 +40,7 @@ type VideoStatusResponse = {
   creditCost?: number;
 };
 
-type RecoveryProvider = Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "apiKey" | "modelType">;
+type RecoveryProvider = Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "apiKey" | "modelType" | "apiProtocol">;
 
 function textValue(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -54,33 +54,8 @@ function normalizeBaseUrl(value: string) {
   return value.trim().replace(/\/+$/, "").replace(/\/v1$/, "");
 }
 
-function isLk888MediaBaseUrl(baseUrl: string) {
-  try {
-    const hostname = new URL(baseUrl).hostname.toLowerCase();
-    return hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai";
-  } catch {
-    return false;
-  }
-}
-
-function isProxyOpenAiVideoBaseUrl(baseUrl: string) {
-  try {
-    const hostname = new URL(baseUrl).hostname.toLowerCase();
-    return hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com";
-  } catch {
-    return false;
-  }
-}
-
-function videoProviderProtocol(baseUrl: string): VideoProviderProtocol {
-  if (isHuituOpenApiBaseUrl(baseUrl)) return "huitu-openapi";
-  if (isTokengoMediaBaseUrl(baseUrl)) return "tokengo-media";
-  if (isProxyOpenAiVideoBaseUrl(baseUrl)) return "openai-videos";
-  if (isLk888MediaBaseUrl(baseUrl)) return "lk888-media";
-  return "lk888-media";
-}
-
 function openAiVideoStatusEndpoint(baseUrl: string, taskId: string) {
+  if (isYinglingApiBaseUrl(baseUrl)) return `${normalizeBaseUrl(baseUrl)}/v1/video/generations/${encodeURIComponent(taskId)}`;
   return `${normalizeBaseUrl(baseUrl)}/v1/videos/${encodeURIComponent(taskId)}`;
 }
 
@@ -344,9 +319,12 @@ async function downloadRecoveredVideo(params: {
   protocol?: VideoProviderProtocol;
   taskId?: string;
 }) {
+  const externalYinglingResult = params.protocol === "openai-videos" &&
+    isYinglingApiBaseUrl(params.provider?.aiUrl ?? "") &&
+    shouldRetryDownloadWithoutAuth(params.url, params.provider);
   const rawAttempts: Array<Record<string, string> | undefined | null> = [
-    params.provider?.apiKey ? { Authorization: `Bearer ${params.provider.apiKey}` } : undefined,
-    shouldRetryDownloadWithoutAuth(params.url, params.provider) ? undefined : null
+    !externalYinglingResult && params.provider?.apiKey ? { Authorization: `Bearer ${params.provider.apiKey}` } : undefined,
+    externalYinglingResult ? null : shouldRetryDownloadWithoutAuth(params.url, params.provider) ? undefined : null
   ];
   const attempts = rawAttempts.filter((headers): headers is Record<string, string> | undefined => headers !== null);
   let lastError: unknown;
@@ -456,7 +434,7 @@ export async function recoverVideoProviderOutput(params: {
     resultJson: job.resultJson,
     required: Boolean(providerTaskId) || !explicitVideoUrl.startsWith("http")
   });
-  const protocol = provider ? videoProviderProtocol(normalizeBaseUrl(provider.aiUrl)) : undefined;
+  const protocol = provider ? videoProviderProtocolForBaseUrl(normalizeBaseUrl(provider.aiUrl), provider.apiProtocol) : undefined;
   let status: VideoStatusResponse | undefined;
   let statusError: unknown;
   if (provider && protocol && providerTaskId) {
@@ -485,7 +463,7 @@ export async function recoverVideoProviderOutput(params: {
 
   const baseUrl = provider ? normalizeBaseUrl(provider.aiUrl) : undefined;
   const statusResultUrl = status ? videoStatusResultUrl(status) : "";
-  const providerContentUrl = provider && providerTaskId && protocol === "openai-videos"
+  const providerContentUrl = provider && providerTaskId && protocol === "openai-videos" && !isYinglingApiBaseUrl(provider.aiUrl)
     ? openAiVideoContentEndpoint(provider.aiUrl, providerTaskId)
     : "";
   const downloadUrl = resolveProviderUrl(baseUrl, explicitVideoUrl || providerContentUrl || statusResultUrl);

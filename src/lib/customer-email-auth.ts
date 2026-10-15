@@ -53,8 +53,8 @@ function randomCode(): string {
   return String(crypto.randomInt(100000, 1000000));
 }
 
-function shouldExposeDevCode(deliveryStatus: CustomerEmailVerificationDeliveryStatus | undefined): boolean {
-  return process.env.NODE_ENV !== "production" || process.env.EMAIL_AUTH_EXPOSE_DEV_CODE === "1" || deliveryStatus !== "sent";
+function shouldExposeDevCode(): boolean {
+  return process.env.NODE_ENV !== "production";
 }
 
 function normalizePurpose(purpose: string | undefined): VerificationPurpose {
@@ -175,8 +175,8 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
     purpose,
     expiresAt: verification.expiresAt,
     deliveryStatus: verification.deliveryStatus,
-    deliveryError: verification.deliveryError,
-    devCode: shouldExposeDevCode(verification.deliveryStatus) ? code : undefined
+    deliveryError: process.env.NODE_ENV === "production" ? undefined : verification.deliveryError,
+    devCode: shouldExposeDevCode() ? code : undefined
   };
 }
 
@@ -228,11 +228,13 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
       });
     } else {
       if (!customer) throw new StoreError("customer_not_found_for_site", 404);
+      if (customer.status === "blocked") throw new StoreError("customer_account_blocked", 403);
       customer = await tx.customer.update({
         where: { id: customer.id },
-        data: { passwordHash: hashRelationalPassword(params.password), status: "active" },
+        data: { passwordHash: hashRelationalPassword(params.password) },
         include: { balance: true }
       });
+      await tx.customerSession.deleteMany({ where: { siteId: params.site.id, customerId: customer.id } });
     }
 
     const session = await tx.customerSession.create({
@@ -264,7 +266,7 @@ export async function verifyCustomerEmailCode(params: { siteId: string; email: s
   if (!/^\d{6}$/.test(code)) throw new StoreError("invalid_verification_code", 400);
 
   const site = await requireEmailAuthSite(params.siteId);
-  await prisma.$transaction(async (tx) => {
+  const verificationResult = await prisma.$transaction(async (tx) => {
     const now = new Date();
     const verification = await tx.customerEmailVerification.findFirst({
       where: {
@@ -276,31 +278,48 @@ export async function verifyCustomerEmailCode(params: { siteId: string; email: s
       },
       orderBy: { createdAt: "desc" }
     });
-    if (!verification) throw new StoreError("verification_code_expired", 400);
+    if (!verification) return { ok: false as const, error: "verification_code_expired" };
     if (verification.attempts >= maxVerificationAttempts) {
-      await tx.customerEmailVerification.update({
-        where: { id: verification.id },
+      await tx.customerEmailVerification.updateMany({
+        where: { id: verification.id, consumedAt: null },
         data: { consumedAt: now }
       });
-      throw new StoreError("verification_code_expired", 400);
+      return { ok: false as const, error: "verification_code_expired" };
     }
 
-    const attempts = verification.attempts + 1;
     if (verification.codeHash !== codeHash(site.id, email, code)) {
-      await tx.customerEmailVerification.update({
-        where: { id: verification.id },
+      const updated = await tx.customerEmailVerification.updateMany({
+        where: {
+          id: verification.id,
+          siteId: site.id,
+          email,
+          purpose,
+          consumedAt: null,
+          expiresAt: { gt: now },
+          attempts: { lt: maxVerificationAttempts }
+        },
         data: {
-          attempts,
-          consumedAt: attempts >= maxVerificationAttempts ? now : undefined
+          attempts: { increment: 1 },
+          ...(verification.attempts + 1 >= maxVerificationAttempts ? { consumedAt: now } : {})
         }
       });
-      throw new StoreError("invalid_verification_code", 400);
+      return { ok: false as const, error: updated.count ? "invalid_verification_code" : "verification_code_expired" };
     }
 
-    await tx.customerEmailVerification.update({
-      where: { id: verification.id },
-      data: { attempts, consumedAt: now }
+    const consumed = await tx.customerEmailVerification.updateMany({
+      where: {
+        id: verification.id,
+        siteId: site.id,
+        email,
+        purpose,
+        consumedAt: null,
+        expiresAt: { gt: now },
+        attempts: { lt: maxVerificationAttempts }
+      },
+      data: { attempts: { increment: 1 }, consumedAt: now }
     });
+    return consumed.count ? { ok: true as const } : { ok: false as const, error: "verification_code_expired" };
   });
+  if (!verificationResult.ok) throw new StoreError(verificationResult.error, 400);
   return completeVerifiedCustomerAuth({ site, email, password, purpose, name: params.name });
 }

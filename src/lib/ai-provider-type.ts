@@ -1,11 +1,11 @@
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
 
-export const platformAiProviderTypes = ["image", "video", "text"] as const;
+export const platformAiProviderTypes = ["image", "video", "text", "audio"] as const;
 
 export type PlatformAiProviderType = typeof platformAiProviderTypes[number];
 
 export function normalizePlatformAiProviderType(value: unknown, fallback: PlatformAiProviderType = "image"): PlatformAiProviderType {
-  return value === "video" || value === "image" || value === "text" ? value : fallback;
+  return value === "video" || value === "image" || value === "text" || value === "audio" ? value : fallback;
 }
 
 export function inferPlatformAiProviderType(provider: {
@@ -32,5 +32,6 @@ export function platformProviderTypeForAppType(appType: unknown): PlatformAiProv
 export function platformAiProviderTypeLabel(providerType: PlatformAiProviderType): string {
   if (providerType === "video") return "AI 生成视频";
   if (providerType === "text") return "AI 文本生成";
+  if (providerType === "audio") return "AI 音频";
   return "AI 生图";
 }

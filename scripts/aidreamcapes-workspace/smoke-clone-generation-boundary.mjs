@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createRequire} from 'node:module';
+import ts from 'typescript';
+const require=createRequire(import.meta.url);
+class WorkspaceError extends Error {constructor(code,status=400){super(code);this.code=code;this.status=status;}}
+let stored, mock=false, providerCalls=0, quoteCalls=0;
+const bad=()=>{providerCalls++;throw new Error('Unexpected real dependency');};
+const resolver=(name)=>{
+  if(name==='server-only')return {};
+  if(name.startsWith('node:'))return require(name);
+  if(name==='./types')return {WorkspaceError};
+  if(name==='./store')return {saveTask:async task=>{stored=structuredClone({...task,revision:task.revision+1});return stored;},getTask:async()=>structuredClone(stored)};
+  if(name==='./stability')return {isWorkspaceStabilityMockMode:()=>mock};
+  if(name==='./api')return {catalogForCustomer:bad};
+  if(name==='./quote')return {verifyQuote:()=>{quoteCalls++;throw Error('Unexpected quote');}};
+  if(name==='./provider')return {generateStoryboard:bad,submitShotGeneration:bad,getWorkspaceActors:()=>[]};
+  return new Proxy({},{get:()=>bad});
+};
+const module={exports:{}};
+const code=ts.transpileModule(fs.readFileSync('src/lib/aidreamcapes-workspace/runner.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+new Function('require','module','exports',code)(resolver,module,module.exports);
+const task={taskId:'synthetic',siteId:'site_aidreamcapes',customerId:'synthetic-owner',revision:1,status:'draft',sourceAnalysis:{synthetic:true},input:{images:{},fields:{},options:{}},revisions:[],storyboardHistory:[],videoHistory:[]};
+for(const action of ['storyboard','generate_shot','compose_shot','render','rewrite'])await assert.rejects(()=>module.exports.queueAction(structuredClone(task),{action},1),e=>e.code==='workspace_clone_analysis_mock_only');
+stored=structuredClone({...task,operation:{id:'synthetic-operation',action:'storyboard',state:'pending',attempts:0}});
+const result=await module.exports.executeAction(stored,{});
+assert.equal(result.operation.state,'fail');assert.equal(result.operation.error,'workspace_clone_analysis_mock_only');
+assert.equal(providerCalls,0);assert.equal(quoteCalls,0);
+const provider=fs.readFileSync('src/lib/aidreamcapes-workspace/provider.ts','utf8');
+assert.match(provider,/referenceStructure: args\.sourceAnalysis/);
+assert.match(provider,/referenceStructure supplies editable pacing/);
+console.log('PASS simulated Ad Clone drafts cannot trigger real provider/quote actions; queued worker fails before catalog/provider access. Reference structure stays separate from product facts.');

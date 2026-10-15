@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { invalidateAdminCustomersPageCache } from "@/lib/admin-customers-page-cache";
-import { requireSiteMutation } from "@/lib/api-auth";
+import { clearCustomerSessionAuthCache, requireSiteMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { updateCustomerStatusRelational } from "@/lib/stores/customer-store";
 import type { Customer } from "@/lib/types";
@@ -21,6 +21,7 @@ export async function PATCH(
 
   try {
     const result = await updateCustomerStatusRelational({ siteId, customerId, status: body.status });
+    clearCustomerSessionAuthCache(siteId, customerId);
     invalidateAdminCustomersPageCache(siteId);
     return NextResponse.json({ ok: true, customer: result.customer });
   } catch (error) {

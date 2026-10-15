@@ -14,6 +14,7 @@ import {
 } from "@/lib/stores/platform-store";
 import type { PlatformAiProvider } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
 
 const defaultModelTypes = [
   "gpt-image-2",
@@ -84,6 +85,11 @@ async function payload(extra: Record<string, unknown> = {}) {
       imageResolution: provider.imageResolution,
       imageQuality: provider.imageQuality,
       imageOutputFormat: provider.imageOutputFormat,
+      apiProtocol: provider.apiProtocol,
+      videoModelFamily: provider.videoModelFamily,
+      videoDurations: provider.videoDurations,
+      videoAspectRatios: provider.videoAspectRatios,
+      videoNativeSpeech: provider.videoNativeSpeech,
       createdAt: provider.createdAt,
       updatedAt: provider.updatedAt,
       updatedBy: provider.updatedBy,
@@ -102,14 +108,15 @@ async function payload(extra: Record<string, unknown> = {}) {
   };
 }
 
-async function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string; modelType?: string; providerType?: string }): Promise<Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType">> {
+async function providerFromBody(body: { id?: string; aiUrl?: string; apiKey?: string; modelType?: string; providerType?: string; apiProtocol?: string }): Promise<Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType" | "apiProtocol">> {
   const existing = await getPlatformAiProviderRelational(body.id);
   if (!body.aiUrl?.trim()) throw new Error("missing_ai_provider_url");
   return {
     aiUrl: body.aiUrl,
     apiKey: body.apiKey?.trim() || existing?.apiKey || undefined,
     modelType: body.modelType?.trim() || existing?.modelType || "",
-    providerType: normalizePlatformAiProviderType(body.providerType, existing?.providerType ?? "image")
+    providerType: normalizePlatformAiProviderType(body.providerType, existing?.providerType ?? "image"),
+    apiProtocol: normalizeAiProviderProtocol(body.apiProtocol ?? existing?.apiProtocol)
   };
 }
 
@@ -139,11 +146,29 @@ export async function PUT(request: NextRequest) {
     imageResolution?: string;
     imageQuality?: string;
     imageOutputFormat?: string;
+    apiProtocol?: string;
+    videoModelFamily?: string;
+    videoDurations?: number[];
+    videoAspectRatios?: string[];
+    videoNativeSpeech?: boolean | null;
     priority?: unknown;
   };
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_ai_provider_label" }, { status: 400 });
   if (!body.id && !body.aiUrl?.trim()) return NextResponse.json({ error: "missing_ai_provider_url" }, { status: 400 });
   if (!body.modelType?.trim()) return NextResponse.json({ error: "missing_ai_provider_model_type" }, { status: 400 });
+  if (body.apiProtocol !== undefined && normalizeAiProviderProtocol(body.apiProtocol) !== body.apiProtocol) return NextResponse.json({ error: "invalid_ai_provider_protocol" }, { status: 400 });
+  const existing = body.id && body.providerType === undefined ? await getPlatformAiProviderRelational(body.id) : undefined;
+  const providerType = normalizePlatformAiProviderType(body.providerType, existing?.providerType ?? inferPlatformAiProviderType({ label: body.label, aiUrl: body.aiUrl, modelType: body.modelType }));
+  const allowedProtocols = providerType === "video"
+    ? ["auto", "lk888-media", "openai-videos", "huitu-openapi", "tokengo-media"]
+    : providerType === "image"
+      ? ["auto", "tokengo-image", "openai-compatible"]
+      : ["auto", "openai-compatible"];
+  if (body.apiProtocol !== undefined && !allowedProtocols.includes(body.apiProtocol)) return NextResponse.json({ error: "invalid_ai_provider_protocol_for_type" }, { status: 400 });
+  if (body.videoModelFamily !== undefined && !["auto", "grok", "gemini"].includes(body.videoModelFamily)) return NextResponse.json({ error: "invalid_ai_provider_model_family" }, { status: 400 });
+  if (body.videoDurations !== undefined && (!Array.isArray(body.videoDurations) || !body.videoDurations.length || body.videoDurations.some((value) => ![6, 10, 15].includes(Number(value))))) return NextResponse.json({ error: "invalid_ai_provider_video_durations" }, { status: 400 });
+  if (body.videoAspectRatios !== undefined && (!Array.isArray(body.videoAspectRatios) || !body.videoAspectRatios.length || body.videoAspectRatios.some((value) => !["9:16", "1:1", "16:9"].includes(value)))) return NextResponse.json({ error: "invalid_ai_provider_video_aspects" }, { status: 400 });
+  if (body.videoNativeSpeech !== undefined && body.videoNativeSpeech !== null && typeof body.videoNativeSpeech !== "boolean") return NextResponse.json({ error: "invalid_ai_provider_native_speech" }, { status: 400 });
   if (body.priority !== undefined) {
     const priority = Number(body.priority);
     if (!Number.isFinite(priority) || !Number.isInteger(priority) || priority < 0) {
@@ -164,7 +189,7 @@ export async function PUT(request: NextRequest) {
     aiUrl: body.aiUrl ?? "",
     apiKey: body.apiKey,
     modelType: body.modelType,
-    providerType: normalizePlatformAiProviderType(body.providerType, inferPlatformAiProviderType({ label: body.label, aiUrl: body.aiUrl, modelType: body.modelType })),
+    providerType,
     makeCurrent: body.makeCurrent,
     enabled: typeof body.enabled === "boolean" ? body.enabled : undefined,
     supportsGenerationN: Boolean(body.supportsGenerationN),
@@ -174,6 +199,11 @@ export async function PUT(request: NextRequest) {
     imageResolution: body.imageResolution,
     imageQuality: body.imageQuality,
     imageOutputFormat: body.imageOutputFormat,
+    apiProtocol: body.apiProtocol,
+    videoModelFamily: body.videoModelFamily,
+    videoDurations: body.videoDurations,
+    videoAspectRatios: body.videoAspectRatios,
+    videoNativeSpeech: body.videoNativeSpeech,
     priority: body.priority,
     actor: permission.current.platformAdmin.id
   });
@@ -193,6 +223,7 @@ export async function POST(request: NextRequest) {
     apiKey?: string;
     modelType?: string;
     providerType?: string;
+    apiProtocol?: string;
   };
   try {
     if (body.action === "reveal") {

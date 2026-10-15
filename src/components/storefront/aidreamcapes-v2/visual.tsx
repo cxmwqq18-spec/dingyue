@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
@@ -202,14 +203,16 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
   );
 }
 
-export function VisualPicker({ visual, r, pageId, eyebrow = "Choose a scene", relatedGroups = [] }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [] }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
+  sourcePage?: string;
   eyebrow?: string;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
+  const sectionEyebrow = eyebrow ?? visual.titles?.m3?.eyebrow ?? "Choose a scene";
   const pickerId = `visual-picker-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
   if (!picker.cards.length) return null;
   const isHub = pageId === "video-hub" || pageId === "photo-hub";
@@ -217,7 +220,7 @@ export function VisualPicker({ visual, r, pageId, eyebrow = "Choose a scene", re
   const pickerFocusCss = isHub ? `#${pickerId} .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${Array.from({ length: 3 }, (_, index) => `#${pickerId} .v-filter[data-filter-index="${index + 1}"]:focus-visible~.v-picker-chips label[data-filter-index="${index + 1}"]`).join(",")}{outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}` : "";
   const relatedCss = relatedGroups.length ? `#${pickerId} .v-related-groups{margin-top:30px;padding-top:22px;border-top:1px solid rgba(22,34,54,.12)}#${pickerId} .v-related-group+.v-related-group{margin-top:22px}#${pickerId} .v-related-group ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 22px;list-style:none;margin:10px 0 0;padding:0}#${pickerId} .v-related-group a{color:inherit;text-decoration:underline;text-underline-offset:3px}@media(max-width:720px){#${pickerId} .v-related-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}` : "";
   return (
-    <Section eyebrow={eyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
+    <Section eyebrow={sectionEyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
       {photoGridStyle || pickerFocusCss || relatedCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}\n${relatedCss}` }} /> : null}
       <div className="v-picker" id={pickerId}>
         <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
@@ -228,7 +231,7 @@ export function VisualPicker({ visual, r, pageId, eyebrow = "Choose a scene", re
         </div>
         <div className="v-picker-grid">
           {picker.cards.map((card, index) => (
-            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(card.href)} key={`${card.image.src}-${index}`}>
+            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(pickerPresetHref(card, sourcePage))} key={`${card.image.src}-${index}`}>
               <VisualImage image={card.image} r={r} />
               <span>{card.label}</span>
             </a>

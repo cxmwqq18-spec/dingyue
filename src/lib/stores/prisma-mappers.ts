@@ -29,6 +29,7 @@ import type {
 } from "@/lib/types";
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
+import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
@@ -261,17 +262,50 @@ export function mapSiteApiKey(row: Prisma.SiteApiKeyGetPayload<object>): SiteApi
 }
 
 export const relationalSessionTtlMs = 1000 * 60 * 60 * 24 * 30;
+const relationalPasswordScryptCost = 32_768;
+const relationalPasswordScryptBlockSize = 8;
+const relationalPasswordScryptParallelism = 1;
+const relationalPasswordKeyLength = 64;
+const relationalPasswordSaltLength = 16;
 
 export function relationalUid(prefix: string): string {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 export function hashRelationalPassword(password: string): string {
-  return `sha256:${crypto.createHash("sha256").update(password).digest("hex")}`;
+  const salt = crypto.randomBytes(relationalPasswordSaltLength);
+  const derived = crypto.scryptSync(password, salt, relationalPasswordKeyLength, {
+    N: relationalPasswordScryptCost,
+    r: relationalPasswordScryptBlockSize,
+    p: relationalPasswordScryptParallelism,
+    maxmem: 64 * 1024 * 1024
+  });
+  return `scrypt:v1:${relationalPasswordScryptCost}:${relationalPasswordScryptBlockSize}:${relationalPasswordScryptParallelism}:${salt.toString("base64url")}:${derived.toString("base64url")}`;
+}
+
+export function isLegacyRelationalPasswordHash(passwordHash?: string | null): boolean {
+  return typeof passwordHash === "string" && /^sha256:[\da-f]{64}$/i.test(passwordHash);
 }
 
 export function verifyRelationalPassword(password: string, passwordHash?: string | null): boolean {
-  return Boolean(passwordHash) && hashRelationalPassword(password) === passwordHash;
+  if (!passwordHash) return false;
+  if (isLegacyRelationalPasswordHash(passwordHash)) {
+    const expected = Buffer.from(passwordHash.slice("sha256:".length), "hex");
+    const actual = crypto.createHash("sha256").update(password).digest();
+    return expected.length === actual.length && crypto.timingSafeEqual(expected, actual);
+  }
+  const match = /^scrypt:v1:32768:8:1:([A-Za-z0-9_-]{22}):([A-Za-z0-9_-]{86})$/.exec(passwordHash);
+  if (!match) return false;
+  const salt = Buffer.from(match[1], "base64url");
+  const expected = Buffer.from(match[2], "base64url");
+  if (salt.length !== relationalPasswordSaltLength || expected.length !== relationalPasswordKeyLength) return false;
+  const actual = crypto.scryptSync(password, salt, relationalPasswordKeyLength, {
+    N: relationalPasswordScryptCost,
+    r: relationalPasswordScryptBlockSize,
+    p: relationalPasswordScryptParallelism,
+    maxmem: 64 * 1024 * 1024
+  });
+  return crypto.timingSafeEqual(expected, actual);
 }
 
 export function toIsoString(value: Date | string | null | undefined): string | undefined {
@@ -1406,11 +1440,22 @@ export function toPlatformAiProvider(record: {
   imageResolution?: string | null;
   imageQuality?: string | null;
   imageOutputFormat?: string | null;
+  apiProtocol?: string | null;
+  videoModelFamily?: string | null;
+  videoDurations?: number[] | null;
+  videoAspectRatios?: string[] | null;
+  videoNativeSpeech?: boolean | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   updatedBy?: string | null;
 }): import("@/lib/types").PlatformAiProvider {
   const maxImagesPerRequest = Number(record.maxImagesPerRequest);
+  const videoDurations = Array.isArray(record.videoDurations)
+    ? [...new Set(record.videoDurations.map(Number).filter((value) => [6, 10, 15].includes(value)))].sort((a, b) => a - b)
+    : [6, 10, 15];
+  const videoAspectRatios = Array.isArray(record.videoAspectRatios)
+    ? [...new Set(record.videoAspectRatios.filter((value) => value === "9:16" || value === "1:1" || value === "16:9"))]
+    : ["9:16", "1:1", "16:9"];
   return {
     id: record.id,
     label: record.label,
@@ -1428,6 +1473,11 @@ export function toPlatformAiProvider(record: {
     imageResolution: normalizeImageProviderResolution(record.imageResolution),
     imageQuality: normalizeImageProviderQuality(record.imageQuality),
     imageOutputFormat: normalizeImageProviderOutputFormat(record.imageOutputFormat),
+    apiProtocol: normalizeAiProviderProtocol(record.apiProtocol),
+    videoModelFamily: record.videoModelFamily === "grok" || record.videoModelFamily === "gemini" ? record.videoModelFamily : "auto",
+    videoDurations: videoDurations.length ? videoDurations : [6, 10, 15],
+    videoAspectRatios: videoAspectRatios.length ? videoAspectRatios : ["9:16", "1:1", "16:9"],
+    videoNativeSpeech: record.videoNativeSpeech ?? null,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString(),
     updatedBy: record.updatedBy ?? undefined

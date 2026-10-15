@@ -35,6 +35,7 @@ const availabilityModule = jiti.evalModule(source, {
   filename: path.join(root, "src/lib/video-provider-availability.ts"),
   ext: ".ts"
 });
+const providerFamilyModule = jiti(path.join(root, "src/lib/video-provider-family.ts"));
 
 function withEnv(patch, callback) {
   const original = {};
@@ -80,6 +81,25 @@ const tokengoProvider = {
   providerType: "video",
   enabled: true
 };
+
+assert(
+  providerFamilyModule.videoProviderProtocolForBaseUrl("https://api.smartpicklid.com") === "openai-videos" &&
+    providerFamilyModule.videoProviderProtocolForBaseUrl("https://buming.token6688.com") === "tokengo-media" &&
+    providerFamilyModule.videoProviderProtocolForBaseUrl("https://sd2.huitu.xyz") === "huitu-openapi",
+  "automatic protocol selection retains existing SmartPickLid, Buming and Huitu adapters"
+);
+assert(
+  providerFamilyModule.videoProviderProtocolForBaseUrl("https://new-video.example", "openai-videos") === "openai-videos",
+  "an explicitly selected protocol works with a new provider domain"
+);
+assert(
+  providerFamilyModule.videoProviderModelFamilyForProvider({
+    aiUrl: "https://new-video.example",
+    modelType: "grok-imagine-video",
+    videoModelFamily: "gemini"
+  }) === "gemini",
+  "an explicitly configured model family takes precedence over model-name guessing"
+);
 
 withEnv({
   AI_WORKER_ALLOW_SMARTPICKLID_UNVERIFIED_VIDEO: undefined,

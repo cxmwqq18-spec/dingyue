@@ -2,7 +2,7 @@ import "server-only";
 import { FetchTimeoutError, fetchWithTimeout } from "@/lib/fetch-timeout";
 import type { PlatformAiProvider } from "@/lib/types";
 import { isTokengoImageBaseUrl } from "@/lib/tokengo-image";
-import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
+import { isHuituOpenApiBaseUrl, isTokengoMediaBaseUrl, isYinglingApiBaseUrl, normalizeAiProviderProtocol, type AiProviderProtocol } from "@/lib/video-provider-family";
 
 export function maskAiProviderKey(apiKey?: string): string {
   const value = apiKey?.trim() ?? "";
@@ -11,13 +11,18 @@ export function maskAiProviderKey(apiKey?: string): string {
   return `${value.slice(0, 6)}...${value.slice(-4)}`;
 }
 
-export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType" | "providerType">): VideoProviderProtocol | "tokengo-image" | "openai-compatible" {
+export function aiProviderProtocol(provider?: Pick<PlatformAiProvider, "aiUrl" | "modelType" | "providerType" | "apiProtocol">): AiProviderProtocol {
+  const configuredProtocol = normalizeAiProviderProtocol(provider?.apiProtocol);
+  if (configuredProtocol !== "auto") return configuredProtocol;
+  // Standalone audio configuration must not inherit image/video domain heuristics.
+  if (provider?.providerType === "audio") return "openai-compatible";
   const aiUrl = provider?.aiUrl?.trim() ?? "";
   try {
     const hostname = new URL(aiUrl).hostname.toLowerCase();
     if (isHuituOpenApiBaseUrl(aiUrl)) return "huitu-openapi";
     if (provider?.providerType === "image" && isTokengoImageBaseUrl(aiUrl)) return "tokengo-image";
     if (isTokengoMediaBaseUrl(aiUrl)) return "tokengo-media";
+    if (isYinglingApiBaseUrl(aiUrl)) return "openai-videos";
     if (hostname.includes("smartpicklid") || hostname.includes("magic666") || hostname === "apis.2ken.com") return "openai-videos";
     if (hostname === "api.lk888.ai" || hostname === "api.lk666.ai" || hostname === "api.lingkeai.ai") return "lk888-media";
   } catch {
@@ -93,7 +98,7 @@ function tokengoModelsCatalogUrl(aiUrl: string) {
   return parsed.toString();
 }
 
-export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType">): Promise<{
+export async function testAiProviderConnection(provider: Pick<PlatformAiProvider, "aiUrl" | "apiKey" | "modelType" | "providerType" | "apiProtocol">): Promise<{
   ok: boolean;
   status?: number;
   method?: "HEAD" | "GET";

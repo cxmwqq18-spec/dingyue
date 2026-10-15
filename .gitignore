@@ -18,6 +18,8 @@ tsconfig.tsbuildinfo
 .codex/
 .playwright-cli/
 output/
+!src/app/api/sites/**/aivideosugc/tasks/**/output/
+!src/app/api/sites/**/aivideosugc/tasks/**/output/**
 work_pdf_translation/
 tmp/
 .tmp/
@@ -47,6 +49,7 @@ public/site-media
 *.m4a
 *.wav
 *.ogg
+!public/media/site_aidreamcapes/workspace/actors/library/*.webp
 
 data/customer-assets/
 docs/audits/**/local-playwright/

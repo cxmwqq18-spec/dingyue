@@ -277,7 +277,15 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
   if (!catalog) return [];
   const overrides = readInspirationCategoryOverrides();
   const pages = await prisma.livePage.findMany({
-    where: { siteId: AIDREAMCAPES_INSPIRATIONS_SITE_ID },
+    where: {
+      siteId: AIDREAMCAPES_INSPIRATIONS_SITE_ID,
+      OR: [
+        { slug: { startsWith: "/ai-video-generation/" } },
+        { slug: { startsWith: "ai-video-generation/" } },
+        { slug: { startsWith: "/ai-image-generation/" } },
+        { slug: { startsWith: "ai-image-generation/" } }
+      ]
+    },
     select: { slug: true, title: true, contentJson: true }
   });
   const cards: InspirationCard[] = [];

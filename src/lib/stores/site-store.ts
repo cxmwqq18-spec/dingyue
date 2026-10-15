@@ -71,6 +71,7 @@ import {
   addAuditLogRelational,
   cloneJson,
   hashRelationalPassword,
+  isLegacyRelationalPasswordHash,
   relationalSessionTtlMs,
   relationalUid,
   RelationalStoreError,
@@ -2457,6 +2458,12 @@ export async function createSiteAdminSessionRelational(params: { siteId: string;
   }
   if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
     throw new RelationalStoreError("invalid_site_admin_credentials", 401);
+  }
+  if (isLegacyRelationalPasswordHash(admin.passwordHash)) {
+    admin = await prisma.siteAdmin.update({
+      where: { id: admin.id },
+      data: { passwordHash: hashRelationalPassword(params.password) }
+    });
   }
   const session = await prisma.siteAdminSession.create({
     data: {

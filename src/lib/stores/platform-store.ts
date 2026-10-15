@@ -14,6 +14,7 @@ import {
 } from "@/lib/server-store";
 import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -45,6 +46,8 @@ import {
   toSite,
   toSiteDomain,
   uid,
+  hashRelationalPassword,
+  isLegacyRelationalPasswordHash,
   verifyRelationalPassword
 } from "./prisma-mappers";
 
@@ -455,9 +458,15 @@ async function listSiteEmailConfigAssignmentsRelational() {
 export async function createPlatformAdminSessionRelational(params: { email: string; password: string }) {
   try {
     const email = params.email.trim().toLowerCase();
-    const admin = await prisma.platformAdmin.findUnique({ where: { email } });
+    let admin = await prisma.platformAdmin.findUnique({ where: { email } });
     if (!admin || !verifyRelationalPassword(params.password, admin.passwordHash)) {
       throw new RelationalStoreError("invalid_platform_credentials", 401);
+    }
+    if (isLegacyRelationalPasswordHash(admin.passwordHash)) {
+      admin = await prisma.platformAdmin.update({
+        where: { id: admin.id },
+        data: { passwordHash: hashRelationalPassword(params.password) }
+      });
     }
     const session = await prisma.platformSession.create({
       data: {
@@ -1593,11 +1602,23 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat" | "apiProtocol" | "videoModelFamily" | "videoDurations" | "videoAspectRatios" | "videoNativeSpeech">>;
 
 function normalizeProviderMaxImagesPerRequest(value: unknown) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? Math.max(1, Math.min(Math.trunc(numeric), 20)) : 1;
+}
+
+function normalizeProviderVideoDurations(value: unknown) {
+  if (!Array.isArray(value)) return [6, 10, 15];
+  const normalized = [...new Set(value.map(Number).filter((duration) => [6, 10, 15].includes(duration)))].sort((a, b) => a - b);
+  return normalized.length ? normalized : [6, 10, 15];
+}
+
+function normalizeProviderVideoAspectRatios(value: unknown) {
+  if (!Array.isArray(value)) return ["9:16", "1:1", "16:9"];
+  const normalized = [...new Set(value.filter((aspect) => aspect === "9:16" || aspect === "1:1" || aspect === "16:9"))];
+  return normalized.length ? normalized : ["9:16", "1:1", "16:9"];
 }
 
 const platformAiProviderOrderBy: Prisma.PlatformAiProviderOrderByWithRelationInput[] = [
@@ -1675,7 +1696,7 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(providerType?: PlatformAiProviderType): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational({ providerType });
-  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat }) => ({
+  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat, apiProtocol, videoModelFamily, videoDurations, videoAspectRatios, videoNativeSpeech }) => ({
     id,
     label,
     aiUrl,
@@ -1690,7 +1711,12 @@ export async function getPlatformAiProviderFallbackQueueRelational(providerType?
     imageAspectRatio,
     imageResolution,
     imageQuality,
-    imageOutputFormat
+    imageOutputFormat,
+    apiProtocol,
+    videoModelFamily,
+    videoDurations,
+    videoAspectRatios,
+    videoNativeSpeech
   }));
 }
 
@@ -1725,6 +1751,11 @@ export async function upsertPlatformAiProviderRelational(params: {
   imageResolution?: string;
   imageQuality?: string;
   imageOutputFormat?: string;
+  apiProtocol?: string;
+  videoModelFamily?: string;
+  videoDurations?: number[];
+  videoAspectRatios?: string[];
+  videoNativeSpeech?: boolean | null;
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
@@ -1765,6 +1796,11 @@ export async function upsertPlatformAiProviderRelational(params: {
             imageResolution: normalizeImageProviderResolution(params.imageResolution ?? existing.imageResolution),
             imageQuality: normalizeImageProviderQuality(params.imageQuality ?? existing.imageQuality),
             imageOutputFormat: normalizeImageProviderOutputFormat(params.imageOutputFormat ?? existing.imageOutputFormat),
+            apiProtocol: normalizeAiProviderProtocol(params.apiProtocol ?? existing.apiProtocol),
+            videoModelFamily: params.videoModelFamily === "grok" || params.videoModelFamily === "gemini" ? params.videoModelFamily : params.videoModelFamily === "auto" ? "auto" : existing.videoModelFamily,
+            videoDurations: normalizeProviderVideoDurations(params.videoDurations ?? existing.videoDurations),
+            videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios ?? existing.videoAspectRatios),
+            videoNativeSpeech: params.videoNativeSpeech !== undefined ? params.videoNativeSpeech : existing.videoNativeSpeech,
             updatedBy: params.actor
           }
         })
@@ -1786,6 +1822,11 @@ export async function upsertPlatformAiProviderRelational(params: {
             imageResolution: normalizeImageProviderResolution(params.imageResolution),
             imageQuality: normalizeImageProviderQuality(params.imageQuality),
             imageOutputFormat: normalizeImageProviderOutputFormat(params.imageOutputFormat),
+            apiProtocol: normalizeAiProviderProtocol(params.apiProtocol),
+            videoModelFamily: params.videoModelFamily === "grok" || params.videoModelFamily === "gemini" ? params.videoModelFamily : "auto",
+            videoDurations: normalizeProviderVideoDurations(params.videoDurations),
+            videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios),
+            videoNativeSpeech: params.videoNativeSpeech ?? null,
             updatedBy: params.actor
           }
         });

@@ -10,13 +10,13 @@ import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath,
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
 
-const TARGET_SITE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?(?:\/|$)/i;
+const TARGET_SITE_PATH_RE = /^\/site\/(?:aivideosugc|(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|aivideosugc|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
 const INTERNAL_PATH_RE = /^\/(?:api|assets|_next\/static|_next\/image|robots\.txt|sitemap\.xml)(?:\/|$)/i;
 const BROWSER_ICON_PATH_RE = /^\/(?:favicon\.ico|favicon\.svg|icon\.svg|apple-touch-icon(?:\.png)?)$/i;
 const GROWNSTRIDE_TEST_HOST = "test.grownstride.com";
 const GROWNSTRIDE_LEGACY_HOSTS = new Set(["grownstride.com", "www.grownstride.com"]);
-const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
+const PRIVATE_STORE_PATH_RE = /^\/site\/(?:aivideosugc|(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const HOST_PRIVATE_STORE_PATH_RE = /^\/(?:admin|app|account|cart|dashboard|login|register|reset-password|checkout|logout)(?:\/|$)/i;
 const REORDER_SKIP_HEADER = "x-storefront-head-seo-reorder-skip";
 const IMAGE_THEME_CONTEXT_HEADER = "x-storefront-image-theme";
@@ -477,7 +477,7 @@ function isAidreamcapesComPublicHtmlRequest(request: NextRequest): boolean {
   if (isPrivateStorefrontHtmlRequest(request)) return false;
   const pathname = request.nextUrl.pathname;
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
-  return hostSlug === "aidreamcapes" || /^\/site\/aidreamcapes(?:\/|$)/i.test(pathname);
+  return hostSlug === "aidreamcapes" || /^\/site\/(?:aidreamcapes|aivideosugc)(?:\/|$)/i.test(pathname);
 }
 
 function hasCustomerSessionCookie(request: NextRequest): boolean {

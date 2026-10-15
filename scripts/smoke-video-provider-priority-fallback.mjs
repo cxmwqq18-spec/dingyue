@@ -89,8 +89,9 @@ check(
 check(
   "platform provider UI lets admins edit priority",
   source.providerPanel.includes("priority: number") &&
-    source.providerPanel.includes('label="调用优先级 P"') &&
-    source.providerPanel.includes("nextProviderPriorityForType")
+    source.providerPanel.includes('label="调用优先级"') &&
+    source.providerPanel.includes("normalizeProviderPriority(event.target.value)") &&
+    source.providerPanel.includes("status.providers.filter((provider) => provider.providerType === providerType)")
 );
 
 if (source.fallback) {

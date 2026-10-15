@@ -7,10 +7,8 @@ import {
   getAidreamcapesInspirationCards
 } from "@/lib/aidreamcapes-inspirations";
 
-// Server-side render entry points for the AIVideosUGC guest-only routes
-// (/app/create and /app/inspirations without a session). The route layer in
-// src/app/[...path]/page.tsx only reaches these functions for the aidreamcapes
-// host slug and the two guest-allowed slugs.
+// Server-side render entry points for Aidreamcapes guest create and inspiration
+// routes. The inspiration library is available with or without a session.
 
 type GuestRouteQuery = Record<string, string | string[] | undefined>;
 
@@ -48,10 +46,11 @@ export async function renderAidreamcapesGuestCreatePage({ query = {}, siteSlug }
   return <AidreamcapesGuestCreateWorkspace initialIntent={intent} initialReturnTo={`/app/create${querySuffix(query)}`} siteId={AIDREAMCAPES_INSPIRATIONS_SITE_ID} siteSlug={siteSlug === AIDREAMCAPES_INSPIRATIONS_SITE_SLUG ? AIDREAMCAPES_INSPIRATIONS_SITE_SLUG : siteSlug} />;
 }
 
-export async function renderAidreamcapesInspirationsPage({ siteSlug }: {
+export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "" }: {
   query?: GuestRouteQuery;
   siteSlug: string;
+  basePath?: string;
 }) {
   const cards = siteSlug === AIDREAMCAPES_INSPIRATIONS_SITE_SLUG ? await getAidreamcapesInspirationCards() : [];
-  return <AidreamcapesInspirationsPage cards={cards} />;
+  return <AidreamcapesInspirationsPage cards={cards} basePath={basePath} />;
 }

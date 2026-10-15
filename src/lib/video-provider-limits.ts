@@ -24,6 +24,7 @@ export function isVideoProviderModel(modelType: unknown): boolean {
     normalized.startsWith("kling-") ||
     normalized.startsWith("vidu") ||
     normalized.startsWith("pixverse-") ||
+    normalized.startsWith("dola") ||
     /^wan.*-video$/.test(normalized) ||
     normalized.startsWith("minimax-hailuo-") ||
     normalized.startsWith("happyhorse-") ||
