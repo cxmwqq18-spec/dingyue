@@ -83,6 +83,9 @@ AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/smoke-ai
 cat .candidate-contract.json
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
+# Apply the exact release's forward-only schema migrations after the built
+# candidate passes its SSR contract and before it receives production traffic.
+DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js migrate deploy
 DROPIN=/etc/systemd/system/aidreamcapes.service.d/release.conf
 cp "$DROPIN" .previous-release.conf
 OLD_CURRENT=$(readlink -f "$ROOT/current")
