@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import type { SceneId, TaskInput } from "./types";
 import type { WorkspaceImageTool } from "@/components/aidreamcapes-workspace/image-tool-picker";
 
@@ -40,7 +39,17 @@ export function presetSourcePage(value: unknown): string | undefined {
 
 /** Identity comes from the current relational card, not its array position. */
 export function pickerPresetId(card: Pick<PickerPresetCard, "image" | "kind" | "label">): string {
-  return `p_${createHash("sha256").update(JSON.stringify([card.kind, card.image.src, card.label])).digest("hex").slice(0, 24)}`;
+  const value = JSON.stringify([card.kind, card.image.src, card.label]);
+  const hash = (seed: number) => {
+    let result = seed;
+    for (let index = 0; index < value.length; index += 1) {
+      result = Math.imul(result ^ value.charCodeAt(index), 0x01000193);
+    }
+    return (result >>> 0).toString(16).padStart(8, "0");
+  };
+  // This is an opaque, stable locator shared by SSR and the browser. The
+  // server still resolves every request against the current relational card.
+  return `p_${hash(0x811c9dc5)}${hash(0x9e3779b9)}${hash(0x85ebca6b)}`;
 }
 
 /** Called during public SSR. Only the small identity crosses into the app URL. */
