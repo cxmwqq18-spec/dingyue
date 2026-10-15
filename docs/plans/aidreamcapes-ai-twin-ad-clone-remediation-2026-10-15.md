@@ -199,3 +199,34 @@
 3. **Ad Clone 真实解析**：实际 ASR/视觉分析、带证据时间轴、分析 worker 和真实输出复用；当前合成结构不包含真实媒体理解。
 4. **P2**：受支持广告平台链接导入、变体批次、站点管理诊断页、阶段耗时/错误率观测与基于实际 SQL 计划的调优。当前只限制本地媒体并发，未声称这些扩展已交付。
 5. **上线**：生产增量迁移与当前数据读回尚未执行；不得以本地通过代替生产可用。
+
+### 8.4 追加本地综合回归记录
+
+- 修复 Teams/Brands 本地创建返回 503 的数据库触发器缺陷：PostgreSQL 在非成员表行上访问了 `NEW.customerId`。新增 Aidreamcapes-only 增量迁移 `20261015090000_fix_aidreamcapes_team_brand_row_guard`，将表特有字段校验放入对应触发器分支；部署前确认本地数据库仅有这 1 条待应用迁移，并通过 `assertDatabaseTarget(local)` 固定为 `127.0.0.1:15433/dingyue_local`。生产未部署。
+- `smoke-team-brand-http-local.mjs`：**21 项断言通过**，真实本地 HTTP 创建/重载/改名团队、创建品牌、添加未确认事实、按 revision 确认并重载；精确 owner/site 清理完成，CreditLedger 与 GenerationJob 均为 0。
+- `smoke-clone-integrated-browser-local.mjs`：**91 项断言通过**，真实登录合成客户访问桌面及 390px 首页、AI Image、URL to Video、AI Avatar、AI Twin、Ad Clone、Performance、Teams & Brands；演员、克隆任务、分析和品牌事实刷新后可回读。358 个本地 API 请求中页面错误 0、HTTP 5xx 0、未允许请求 0；测试创建的客户、会话、媒体、角色、作业、团队、品牌及事实已精确清理；CreditLedger 与 GenerationJob 均为 0。16 张截图和 JSON 汇总保存在本机临时目录。
+- 组件回归：快捷标签/导航 **11 项通过**，首页视频/图片表单通过，Ad Clone 实际组件交互通过，Teams & Brands **108 个浏览器请求/交互检查通过**，Performance、Developer access、视频后期编辑组件与 Teams/Brands 后端烟测通过；音乐目录组件的独立 mock 浏览器 smoke 通过并已挂入任务详情，只有真实有效广告授权的曲目才可添加。类型检查通过；本次目标文件 ESLint **0 errors**，保留 11 条既有 `<img>` 性能提示。
+- 本节只验收无供应商网络、无真实生成/交易的内部工作流。真实 voice clone、ASR/视觉广告解析、上游结果复用、生产发布仍按 8.3 列为未完成；该浏览器测试拦截并替代了外部字体。
+- 工作树中另有 Aidreamcapes 首页文案 manifest 差异；只读确认本地 `LivePage` 行属于 `site_aidreamcapes`、路径 `/`，`updatedAt=2026-10-15T04:36:22.344Z`，本地 origin HTTP 返回 200，关闭 JavaScript 时服务端 HTML 仍有更新后的文案且 0 次页面数据 API 请求。当前 local DB 没有 `SitePublishedState` 表，无法核验派生状态 revision；因此此项只记录为本地 SSR 观察，不列为已发布/完整验收，也未执行公开内容写入。
+
+### 8.5 与 2026-10-13 技术交接待补清单对照
+
+| 交接项 | 当前实现与验收结论 |
+|---|---|
+| 3 声音克隆、4 AI Twin | 模拟授权/作业/角色绑定和本地回读通过；未训练真实声音、未完成人脸与声音身份核验或真实视频复用，部分完成。 |
+| 9 批量生成 | 批量草稿、幂等与任务生命周期已验收；真实批量执行器未接通并会 fail closed，未完成。 |
+| 10 社交平台一键发布 | 仅有私有发布草稿/队列和能力声明；平台授权及真实发布仍关闭，未完成。 |
+| 13 30 秒视频 | 内部工作流可将 30 秒时间轴规划为两个 15 秒镜头；真实模型组合输出尚无供应商验收，部分完成。 |
+| 15 Ad Clone | 自有 MP4 上传、显式模拟分析、结构编辑、确认商品信息、建草稿和回读通过；真实媒体解析与输出未完成，部分完成。 |
+| 24 多模型选择、25 商用授权 | UI/能力按配置呈现且音乐使用授权会校验；供应商真实能力和完整成片商用权仍未验证，部分完成。 |
+
+交接包中“已上线”的 2026-10-13 页面内容/发布记录是交接时状态，不能替代当前代码和数据库验收。本次没有据此恢复历史页面快照，也未发布任何生产迁移或内容。
+
+### 8.6 本轮回归复验（2026-10-15）
+
+- 克隆真实本地 HTTP：`smoke-clone-http-local.mjs` **68 项断言、35 次请求、10 次预期拒绝**通过；2 个合成客户、3 个合成上传均已清理，`CreditLedger=0`、`GenerationJob=0`。
+- 登录态集成浏览器：`smoke-clone-integrated-browser-local.mjs` **91 项检查、396 个本地 API 请求**通过；桌面和 390px 页面覆盖首页、AI Image、商品 URL、AI Avatar、AI Twin、Ad Clone、Analytics、Teams/Brands；演员和 2 个自有克隆作业可刷新回读；页面错误、5xx 和未允许请求均为 0。16 张截图及 JSON 汇总保存在 `/var/folders/_w/l7qb3zvn2m70p3qtmkphxp580000gn/T/aidreamcapes-clone-browser-evidence-H9Sg6v`；合成行/素材精确清理，`CreditLedger=0`、`GenerationJob=0`。
+- 离线/组件复验通过：clone schema、media、generation boundary、runtime，Twin/Ad Clone workbench，navigation（11 项检查、0 生成请求）、home composer、DOM translation、team/brand workbench（108 项）、analytics workbench（11 GET/3 imports）、developer workbench（15 请求）、video post editor、licensed music picker、batch contract、publishing contract、music generation；`npm run typecheck -- --pretty false` 通过。
+- 后期编辑端到端复验：`node scripts/aidreamcapes-workspace/smoke-post-edit-http-local.mjs --browser` **73 项断言通过**，包含桌面和 390px 登录态编辑器、字幕与新版本保存/重载；浏览器 20 项检查通过，页面错误、5xx、非允许请求均为 0。2 个合成客户和 1 个合成上传已精确清理，CreditLedger/GenerationJob 均为 0；截图在 `/var/folders/_w/l7qb3zvn2m70p3qtmkphxp580000gn/T/aidreamcapes-post-edit-browser-evidence-rGcpyW`。
+- DOM translation smoke 的旧断言已更新以匹配当前交互：图片提示保留在独立图片 composer 且 fixture 下生成按钮保持禁用；“Create draft copies”快捷入口直接打开弹窗。测试打包包含懒加载音乐目录模块并使用空目录 fixture。集成浏览器 smoke 使用 `127.0.0.1:3002`，匹配现有仅监听 IPv4 的本地服务；未重启服务器。
+- 音乐目录测试中的一次 409 是用于覆盖 revision 冲突拒绝的预期响应。所有回归继续使用本地或 mock fixture；未访问 Yingling/其他供应商、未读密钥、未调用模型或计费、未应用迁移、未写生产数据库。真实供应商 P1、平台发布/链接解析与生产发布门槛仍按 8.3/8.5 未完成处理。

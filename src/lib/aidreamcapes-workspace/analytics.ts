@@ -443,7 +443,7 @@ export async function getAnalyticsSummary(
   const { prisma } = await import("@/lib/prisma");
   const providerFilter = "AND ($7::text IS NULL OR metric.\"provider\" = $7)";
   const teamFilter = scope.teamId === null
-    ? 'metric."teamId" IS NULL AND metric."ownerCustomerId" = $8'
+    ? 'metric."teamId" IS NULL AND metric."ownerCustomerId" = $8 AND $3::text IS NULL'
     : 'metric."teamId" = $3 AND EXISTS (' +
       'SELECT 1 FROM "AidreamcapesTeamMember" actor ' +
       'JOIN "Customer" actorCustomer ON actorCustomer."id" = actor."customerId" AND actorCustomer."siteId" = $1 ' +

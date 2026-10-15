@@ -48,6 +48,11 @@ try {
       }
       if (url.pathname === `${api}/balance`) return json(route, { customerBalance: { balance: 1000, reserved: 0 } });
       if (url.pathname === `${api}/music`) return json(route, { tracks: [], assets: [] });
+      if (url.pathname === `${api}/teams`) return json(route, { teams: [] });
+      if (url.pathname === `${api}/brands`) return json(route, { brands: [] });
+      if (url.pathname === `${api}/teams/invites`) return json(route, { invites: [] });
+      if (url.pathname === `${api}/developer-keys`) return json(route, { keys: [] });
+      if (url.pathname === `${api}/webhooks`) return json(route, { subscriptions: [] });
       if (url.pathname === `${api}/images/quote`) {
         assert.equal(body.assetUrls.length > 0, true); assert.equal(['1:1', '9:16', '16:9'].includes(body.aspect), true);
         return json(route, { quote: { available: true, credits: 20, currency: 'credits', quoteToken: 'navigation-only' } });
@@ -83,7 +88,7 @@ try {
   const go = async (name, view) => { await menu(name).click(); await page.waitForURL((url) => view === 'inspirations' ? url.pathname.endsWith('/app/inspirations') : url.searchParams.get('view') === view); assert.equal(await menu(name).getAttribute('aria-current'), 'page'); };
   await page.goto(`${baseUrl}/site/aidreamcapes/app/create?view=home`, { waitUntil: 'networkidle' });
   await menu('AI Video Agent').waitFor({timeout:15000}).catch(async (error) => { console.log('Fixture DOM:', await page.locator('body').innerText()); console.log('Fixture errors:', errors); console.log('Calls:',calls); console.log('Unexpected:',unexpected); throw error; });
-  for (const name of ['AI Video Agent', 'AI Video', 'AI Image', 'URL to Video', 'AI Avatar', 'Batch Drafts', 'All Tools', 'Library']) assert.equal(await menu(name).count(), 1, `${name} is directly accessible.`);
+  for (const name of ['AI Video Agent', 'AI Video', 'AI Image', 'URL to Video', 'AI Avatar', 'Batch Drafts', 'All Tools', 'Library', 'Performance', 'Teams & Brands', 'Developer access']) assert.equal(await menu(name).count(), 1, `${name} is directly accessible.`);
   checks.push('All creation modules have one sidebar entry.');
   await plannedMenu('AI Twin', 'twin');
   await page.getByRole('heading', { name: 'AI Twin', exact: true }).waitFor();
@@ -92,7 +97,13 @@ try {
   await page.getByRole('heading', { name: 'Create a video with an AI presenter', exact: true }).waitFor();
   await plannedMenu('Ad Clone', 'clone');
   await page.getByRole('heading', { name: /Start with a structure\.\s*Make it your own\./ }).waitFor();
-  await page.getByRole('tab', { name: 'Own MP4', exact: true }).waitFor();
+  await page.getByRole('tab', { name: 'Upload an MP4', exact: true }).waitFor();
+  await go('Teams & Brands', 'teams');
+  await page.getByRole('heading', { name: 'Teams & brands', exact: true }).waitFor();
+  await page.getByText('No teams yet', { exact: true }).waitFor();
+  await go('Developer access', 'developer');
+  await page.getByRole('heading', { name: 'Developer access', exact: true }).waitFor();
+  await page.getByText('No API keys yet.', { exact: true }).waitFor();
   await go('Inspirations', 'inspirations');
   await page.getByRole('heading', { name: 'Explore video and photo ideas' }).waitFor();
   checks.push('AI Twin and Ad Clone open integrated forms; adjacent avatar and inspiration navigation remains available.');
@@ -102,22 +113,25 @@ try {
   for (const [name, view] of [['AI Image', 'images'], ['URL to Video', 'product'], ['AI Avatar', 'actors'], ['AI Video', 'video'], ['Batch Drafts', 'batch'], ['AI Video Agent', 'agent']]) {
     await page.locator('main button').filter({ has: page.getByRole('heading', { name, exact: true }) }).click();
     assert.equal(await menu(name).getAttribute('aria-current'), 'page'); assert.equal(new URL(page.url()).searchParams.get('view'), view);
+    if (view === 'agent') {
+      await page.getByRole('heading', { name: 'AI Video Agent', exact: true }).waitFor();
+      assert.match((await page.locator('main').innerText()).replace(/\s+/g, ' '), /editable video draft.*storyboard.*generate shots.*render your video/i);
+    }
     await go('All Tools', 'tools');
   }
   checks.push('All Tools cards and sidebar agree on every destination.');
   await go('Home', 'home');
-  const quicks = await page.locator('main button').filter({ has: page.locator('svg.lucide-play') }).allTextContents();
-  assert.equal(quicks.length >= 6, true);
+  const quicks = ['Product video ad for your store', 'TikTok ad for your brand', 'UGC testimonial for your product', 'Instagram Reel for your campaign', 'Cinematic product reveal', 'How-to product video'];
+  for (const label of quicks) await page.getByRole('button', { name: label, exact: true }).waitFor();
+  const homeUrl = page.url();
   for (const label of quicks) {
     const before = tasks.size;
     await page.getByRole('button', { name: label, exact: true }).click();
-    await page.getByRole('button', { name: 'Save draft', exact: true }).waitFor();
-    assert.equal(new URL(page.url()).searchParams.get('view'), 'agent');
-    assert(['presenter_showcase', 'process_demo', 'texture_closeup'].includes(new URL(page.url()).searchParams.get('scene')));
-    assert.equal(tasks.size, before, 'Quick starts open a scene setup without creating or charging a job.');
-    await go('Home', 'home');
+    assert.equal(page.url(), homeUrl, 'A quick label fills the form without changing pages.');
+    assert((await page.getByRole('textbox', { name: 'Describe your video idea', exact: true }).inputValue()).includes(label), 'The selected quick label is written into the video brief.');
+    assert.equal(tasks.size, before, 'Quick labels do not create or charge a job.');
   }
-  checks.push('Every quick start opens its scene setup rather than only replacing Home text.');
+  checks.push('Every quick label fills the video brief in place without navigating or creating a task.');
   await go('AI Avatar', 'actors');
   await page.getByRole('heading', { name: 'Create a video with an AI presenter', exact: true }).waitFor();
   await page.getByRole('button', { name: 'Choose presenter', exact: true }).click();
@@ -127,12 +141,12 @@ try {
   checks.push('The AI Avatar module opens the presenter workflow and accepts a selected presenter.');
   await go('Home', 'home');
 
+  const batchUrl = page.url();
   await page.getByRole('button', { name: 'Create draft copies', exact: true }).click();
-  await page.getByRole('heading', { name: 'Batch Drafts', exact: true }).waitFor();
-  await page.getByRole('button', { name: 'Choose draft titles' }).click();
   await page.getByRole('dialog', { name: 'Create draft copies' }).waitFor();
+  assert.equal(page.url(), batchUrl, 'The draft copies shortcut opens its dialog without navigating.');
   await page.getByRole('button', { name: 'Close dialog', exact: true }).click();
-  checks.push('Batch shortcut opens the matching module and its real draft dialog.');
+  checks.push('Batch shortcut opens its draft dialog in place.');
   await go('Home', 'home');
   await page.getByRole('tab', { name: 'AI Image', exact: true }).click();
   await page.getByRole('textbox', { name: 'Describe your image idea' }).fill('A ceramic mug beside a window');
@@ -144,13 +158,13 @@ try {
   await page.getByRole('heading', { name: 'AI Image', exact: true }).waitFor();
   assert.equal(await menu('AI Image').getAttribute('aria-current'), 'page');
   assert.equal(await page.locator('main textarea').inputValue(), 'A ceramic mug beside a window');
-  assert.equal(await page.getByRole('radio', { name: /^Lifestyle photo/ }).isChecked(), true);
-  assert.equal(await page.locator('main select').inputValue(), '16:9');
+  assert.equal(await page.getByRole('combobox', { name: 'Image style' }).inputValue(), 'lifestyle-photos');
+  assert.equal(await page.getByRole('combobox', { name: 'Image aspect ratio' }).inputValue(), '16:9');
   await page.getByRole('img', { name: 'Image reference 1', exact: true }).waitFor();
   await page.getByRole('heading', { name: 'Saved image fixture' }).waitFor();
   await page.reload({ waitUntil: 'networkidle' });
   assert.equal(await page.locator('main textarea').inputValue(), 'A ceramic mug beside a window');
-  assert.equal(await page.getByRole('radio', { name: /^Lifestyle photo/ }).isChecked(), true);
+  assert.equal(await page.getByRole('combobox', { name: 'Image style' }).inputValue(), 'lifestyle-photos');
   await page.getByRole('img', { name: 'Image reference 1', exact: true }).waitFor();
   checks.push('Home image prompt, style, ratio and reference survive module navigation and reload; saved images load.');
   await go('URL to Video', 'product');
@@ -158,7 +172,7 @@ try {
   const importButton = page.getByRole('button', { name: /^(Import photo|Preview product page|Preview product)$/ });
   await importButton.click();
   await page.getByRole('img', { name: 'Imported mug', exact: true }).waitFor();
-  await page.getByRole('button', { name: 'Confirm and add photo', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm product photo', exact: true }).click();
   await page.getByRole('button', { name: 'Continue to video draft', exact: true }).waitFor();
   await page.getByRole('button', { name: 'Continue to video draft' }).click();
   await page.getByRole('heading', { name: 'Product demo', exact: true }).waitFor();
@@ -184,6 +198,16 @@ try {
   await page.getByRole('heading', { name: 'URL to Video', exact: true, level: 1 }).waitFor();
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Mobile module does not overflow.');
   await page.screenshot({ path: path.join(artifacts, 'mobile-product.png'), fullPage: true });
+  await page.getByRole('button', { name: 'Open navigation', exact: true }).click();
+  await menu('Teams & Brands').click();
+  await page.getByRole('heading', { name: 'Teams & brands', exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Mobile team workspace does not overflow.');
+  await page.screenshot({ path: path.join(artifacts, 'mobile-teams.png'), fullPage: true });
+  await page.getByRole('button', { name: 'Open navigation', exact: true }).click();
+  await menu('Developer access').click();
+  await page.getByRole('heading', { name: 'Developer access', exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'Mobile developer workspace does not overflow.');
+  await page.screenshot({ path: path.join(artifacts, 'mobile-developer.png'), fullPage: true });
   checks.push('Mobile menu reaches all modules and the module form fits the viewport.');
   const guestContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const guestPage = await guestContext.newPage();
@@ -197,4 +221,7 @@ try {
   const report = { passed: true, baseUrl, checks, apiCalls: calls.length, actualGenerationCalls: 0, pageErrors: errors, fixtureHydrationRecoveries, unexpectedRequests: unexpected, artifacts };
   fs.writeFileSync(path.join(artifacts, 'result.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
+} catch (error) {
+  console.error('Navigation acceptance diagnostic:', JSON.stringify({ error: error instanceof Error ? error.message : 'failed', calls, errors, unexpected }));
+  throw error;
 } finally { await browser.close(); }

@@ -43,17 +43,18 @@ export function validateCaptionLines(value: unknown, duration: number): Subtitle
 
 function currentAsrLines(task: WorkspaceTask) {
   const video = captionRender(task);
-  const lines = validateCaptionLines(video.captionLines, task.input.options.duration);
-  return { video, lines };
+  const duration = (video as typeof video & { editDuration?: number }).editDuration ?? task.input.options.duration;
+  const lines = validateCaptionLines(video.captionLines, duration);
+  return { video, lines, duration };
 }
 
 export function readCaptionLines(task: WorkspaceTask) {
-  const { video, lines: asrLines } = currentAsrLines(task);
+  const { video, lines: asrLines, duration } = currentAsrLines(task);
   const draft = task.captionEdits;
   if (draft && draft.renderId !== video.renderId) throw new WorkspaceError("workspace_caption_render_stale", 409);
   return {
     renderId: video.renderId,
-    lines: draft ? validateCaptionLines(draft.lines, task.input.options.duration) : asrLines,
+    lines: draft ? validateCaptionLines(draft.lines, duration) : asrLines,
     edited: Boolean(draft),
   };
 }
@@ -61,9 +62,9 @@ export function readCaptionLines(task: WorkspaceTask) {
 export function updateCaptionLines(task: WorkspaceTask, value: unknown, expectedRevision: number): CaptionEditDraft {
   if (task.revision !== expectedRevision) throw new WorkspaceError("revision_conflict", 409);
   if (task.operation?.state === "pending" || task.operation?.state === "run") throw new WorkspaceError("task_busy", 409);
-  const { video, lines: asrLines } = currentAsrLines(task);
+  const { video, lines: asrLines, duration } = currentAsrLines(task);
   const before = task.captionEdits?.renderId === video.renderId ? structuredClone(task.captionEdits.lines) : asrLines;
-  const lines = validateCaptionLines(value, task.input.options.duration);
+  const lines = validateCaptionLines(value, duration);
   const draft: CaptionEditDraft = { renderId: video.renderId, lines, updatedAt: new Date().toISOString() };
   task.captionEdits = draft;
   task.revisions.push({ at: draft.updatedAt, field: "captions", before, after: lines });
@@ -80,5 +81,6 @@ export function confirmedCaptionEdits(task: WorkspaceTask, currentStoryboardHash
       draft.renderId !== video.renderId || video.storyboardHash !== currentStoryboardHash) {
     throw new WorkspaceError("workspace_caption_render_stale", 409);
   }
-  return validateCaptionLines(draft.lines, task.input.options.duration);
+  const duration = (video as typeof video & { editDuration?: number }).editDuration ?? task.input.options.duration;
+  return validateCaptionLines(draft.lines, duration);
 }

@@ -15,10 +15,15 @@ import { MusicTrackPicker } from "./music-track-picker";
 import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
-import type { WorkspacePreset } from "@/lib/aidreamcapes-workspace/preset-contract";
+import type { WorkspacePreset, WorkspaceTemplateGallery, WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
+const AnalyticsWorkbench = dynamic(() => import("./analytics-workbench").then((module) => module.AnalyticsWorkbench), { loading: () => <p role="status">Loading performance reports…</p> });
+const TeamBrandWorkbench = dynamic(() => import("./team-brand-workbench").then((module) => module.TeamBrandWorkbench), { loading: () => <p role="status">Loading teams and brands…</p> });
+const DeveloperWorkbench = dynamic(() => import("./developer-workbench").then((module) => module.DeveloperWorkbench), { loading: () => <p role="status">Loading developer settings…</p> });
+const VideoPostEditor = dynamic(() => import("./video-post-editor").then((module) => module.VideoPostEditor), { loading: () => <p role="status">Loading video editor…</p> });
+const MusicCatalogPicker = dynamic(() => import("./music-catalog-picker").then((module) => module.MusicCatalogPicker), { loading: () => <p role="status">Loading licensed music…</p> });
 
 import { WORKSPACE_MODULES, isWorkspaceView, workspaceViewHref, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
@@ -54,6 +59,7 @@ export interface AidreamcapesWorkspaceProps {
   presenterStudioEnabled?: boolean;
   initialImageTool?: WorkspaceImageTool;
   initialPreset?: WorkspacePreset;
+  initialTemplateGallery?: WorkspaceTemplateGallery;
 }
 
 const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
@@ -88,7 +94,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -110,13 +116,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
-  const [modal, setModal] = useState<"guide" | "support" | "actors" | "product" | null>(null);
+  const [modal, setModal] = useState<"guide" | "support" | "actors" | "product" | "templates" | null>(null);
+  const [templateKindFilter, setTemplateKindFilter] = useState<"all" | "video" | "photo">("all");
+  const [templateCategoryFilter, setTemplateCategoryFilter] = useState("all");
+  const [templateSearch, setTemplateSearch] = useState("");
   const closeModal = useCallback(() => setModal(null), []);
   const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : "");
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
   const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">("");
   const [draftReferenceUrls, setDraftReferenceUrls] = useState<string[]>([]);
-  const [composerTab, setComposerTab] = useState(initialPreset?.kind === "video" ? "AI Video" : "Video Agent");
+  const [composerTab, setComposerTab] = useState(initialPreset?.kind === "video" ? "AI Video" : "AI Video Agent");
   const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? 15);
   const [composerAspect, setComposerAspect] = useState<TaskInput["options"]["aspect"]>(initialPreset?.aspect ?? "9:16");
   const [composerModel, setComposerModel] = useState("");
@@ -162,6 +171,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   visibleView.current = view;
   const scene = catalog?.scenes.find((item) => item.id === task?.sceneId);
   const selectedScene = catalog?.scenes.find((item) => item.id === selectedSceneId);
+  const selectedSceneImageLimit = selectedScene?.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required)?.max ?? 4;
   const actor = catalog?.actors.find((item) => item.actorId === task?.input.actorId);
   const avatarSelection = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
   const avatarModels = catalog?.models.filter((item) => item.available && item.nativeSpeech) ?? [];
@@ -342,7 +352,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }, []);
 
   useEffect(() => {
-    if (modal !== "actors" && modal !== "product") return;
+    if (modal !== "actors" && modal !== "product" && modal !== "templates") return;
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -682,7 +692,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   function fillQuickStart(item: NonNullable<WorkspaceCatalog["quickStarts"]>[number]) {
     const suggestion = item.label.trim();
     setQuickStartSceneId(item.sceneId);
-    setComposerTab("Video Agent");
+    setComposerTab("AI Video Agent");
     setPrompt(`Use “${suggestion}” as the direction for a video featuring my product. Keep product details accurate and based on confirmed facts, then end with a clear call to action.`);
     if (item.aspect) setComposerAspect(item.aspect);
     if (item.duration) setComposerDuration(item.duration);
@@ -768,7 +778,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); setBusy(false); }
   }
 
-  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, twin: WandSparkles, clone: FileVideo };
+  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo };
   const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group).map((item) => {
     const Icon = moduleIcons[item.id as keyof typeof moduleIcons];
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
@@ -783,6 +793,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const batchReferenceCount = batchScene ? Object.values(composerInput(batchScene).images).flat().length : 0;
   const actorSpeechSupported = !scene?.needsActor || Boolean(selectedModel?.nativeSpeech);
   const canGenerate = !task?.sourceAnalysis?.synthetic && Boolean(durationCapability?.generationAvailable && selectedModel?.available && actorSpeechSupported);
+  const canBrowseTemplates = presenterStudioEnabled && Boolean(initialTemplateGallery?.options.length) && !task && ["home", "video", "images", "agent"].includes(view);
+  const availableTemplateKinds = (["video", "photo"] as const).filter((kind) => initialTemplateGallery?.options.some((option) => option.kind === kind));
+  const templateFilterKinds = ["all" as const, ...availableTemplateKinds];
+  const visibleTemplates = (initialTemplateGallery?.options ?? []).filter((item) => {
+    if (templateKindFilter !== "all" && item.kind !== templateKindFilter) return false;
+    if (templateCategoryFilter !== "all" && !item.categoryIds.includes(templateCategoryFilter)) return false;
+    const query = templateSearch.trim().toLocaleLowerCase();
+    return !query || item.title.toLocaleLowerCase().includes(query) || item.prompt.toLocaleLowerCase().includes(query);
+  });
 
   // Keep text beside icons/conditional children in host elements: browser
   // translation replaces bare Text nodes that React would otherwise remove.
@@ -799,7 +818,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     </aside>
     <div className={styles.body}>
       <header className={styles.toolbar}>
-        <div className={styles.toolbarLeft}><button className={`${styles.iconButton} ${styles.mobileMenu}`} onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu size={23} /></button><button className={`${styles.iconButton} ${styles.desktopMenu}`} onClick={() => { if (window.innerWidth <= 760) setMobileOpen(true); else setCollapsed(!collapsed); }} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}><PanelLeftClose size={23} /></button><button className={styles.pillButton} onClick={() => setModal("guide")}><Play size={15} fill="currentColor" /><span>Watch Tutorial</span></button></div>
+        <div className={styles.toolbarLeft}><button className={`${styles.iconButton} ${styles.mobileMenu}`} onClick={() => setMobileOpen(true)} aria-label="Open navigation"><Menu size={23} /></button><button className={`${styles.iconButton} ${styles.desktopMenu}`} onClick={() => { if (window.innerWidth <= 760) setMobileOpen(true); else setCollapsed(!collapsed); }} aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}><PanelLeftClose size={23} /></button><button className={styles.pillButton} onClick={() => setModal("guide")}><Play size={15} fill="currentColor" /><span>Watch Tutorial</span></button>{canBrowseTemplates && <button type="button" className={`${styles.button} ${styles.primary} ${styles.templateToolbarButton}`} onClick={() => setModal("templates")} aria-label="Choose a template"><Clapperboard size={15} /><span>Choose template</span></button>}</div>
         <div className={styles.toolbarRight}>{balance != null && <span className={styles.balance}><span>{balance.toLocaleString()}</span><span> credits</span></span>}<button className={`${styles.button} ${styles.primary}`} onClick={() => setModal("support")} aria-label="Book a Call"><PhoneCall size={16} /><span className={styles.toolbarCallLabel}>Book a Call</span></button><button className={styles.iconButton} onClick={() => setDark(!dark)} aria-label={dark ? "Use light theme" : "Use dark theme"}>{dark ? <Moon size={21} /> : <Sun size={21} />}</button>{customer ? <button className={styles.button} disabled={editingDisabled} onClick={() => void logout()}>Log Out</button> : <a className={styles.button} href={loginHref}>Log In</a>}</div>
       </header>
       <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""}`}>
@@ -822,6 +841,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {importedBriefNotice()}
           <div className={styles.quickPrompts}>{(catalog?.quickStarts ?? catalog?.scenes.map((item) => ({ label: item.name, sceneId: item.id, aspect: undefined, duration: undefined })) ?? []).map((item, index) => <button type="button" key={`${item.sceneId}-${index}`} className={styles.quick} disabled={working} onClick={() => fillQuickStart(item)}><Sparkles size={12} /><span>{item.label}</span></button>)}</div>
           {composerTab !== "AI Image" && batchScene && <div className={styles.quickPrompts} style={{ marginTop: -18 }}><button type="button" className={styles.quick} disabled={working} onClick={() => { setBatchSceneId(quickStartSceneId || selectedSceneId || catalog?.scenes[0]?.id || ""); setBatchOpen(true); }}><Layers3 size={14} /><span>Create draft copies</span></button></div>}
+          {canBrowseTemplates && templatePickerCallout()}
           <section className={styles.section}><div className={styles.sectionHead}><h2>Tools</h2><button className={styles.linkButton} onClick={() => void navigate("tools")}><span>See All</span><ArrowRight size={15} /></button></div><WorkspaceTools disabled={working} onNavigate={(next) => void navigate(next)} /></section>
           <section className={styles.section} id="aivideosugc-models"><div className={styles.sectionHead}><h2>AI Models</h2><button className={styles.linkButton} onClick={() => void navigate("agent")}><span>Create a video </span><ArrowRight size={15} /></button></div>{catalog?.models.length ? <div className={styles.models}>{catalog.models.map((model, index) => <div key={model.id} className={styles.model}><div className={styles.modelTop}><img loading="lazy" decoding="async" src={`/media/site_aidreamcapes/workspace/references/${["sunglasses_1", "food_1", "texture_1", "product_1"][index % 4]}.png`} alt="Product reference example" /><span className={styles.modelExample}>REFERENCE EXAMPLE</span><div className={styles.modelOverlay}><h3>{displayModel(model.model)}</h3><span className={styles.badge}>{model.available ? "Available" : "Not available"}</span></div></div><p>{model.available ? `${model.durations.join(" / ")}s · ${model.aspects.join(" / ")}${model.nativeSpeech ? " · Native audio" : ""}` : humanError(model.reason) || "This model is not connected yet."}</p></div>)}</div> : <div className={styles.empty}><Clapperboard size={28} /><h3>{loading ? "Loading models…" : "No video model is connected"}</h3><p>You can save a draft once you log in. Generation needs an available model.</p></div>}</section>
           {customer && tasks.length > 0 && <section className={styles.section}><div className={styles.sectionHead}><h2>Recent videos</h2><button className={styles.linkButton} onClick={() => void navigate("library")}><span>View Library </span><ArrowRight size={15} /></button></div>{renderTaskCards(tasks.slice(0, 3))}</section>}
@@ -842,14 +862,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
             onContinue={continueHomeComposer} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
+          {canBrowseTemplates && templatePickerCallout()}
         </>}
         {view === "inspirations" && <AidreamcapesInspirationsPage cards={initialInspirations} basePath={basePath} embedded />}
 
         {view === "agent" && !task && !selectedScene && <>
-          <div className={styles.pageTitle}><h1>AI Video Agent</h1><p>Describe your video, add a product photo if you have one, then save a draft before editing.</p></div>
+          <div className={styles.pageTitle}><h1>AI Video Agent</h1><p>Turn a product photo and short brief into an editable video draft. Save it to review the storyboard, generate shots, and render your video.</p></div>
           {loading && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Loading your workspace…</span></div>}
           <HomeComposer
-            tab="Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
+            tab="AI Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
@@ -860,19 +881,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onContinue={continueHomeComposer} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {importedBriefNotice()}
+          {canBrowseTemplates && templatePickerCallout()}
         </>}
 
         {view === "agent" && !task && selectedScene && <>
-          <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to AI Video Agent</span></button><h1>{selectedScene.name}</h1><p>Add a product photo and one sentence, then save your draft. Video generation is a separate step.</p></div>
-          <section className={styles.formSection}>
-            <h2>Start with your product</h2>
-            <p>One clear photo and a short description are enough to save a draft.</p>
+          <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to AI Video Agent</span></button><h1>{selectedScene.name}</h1><p>Add the product photos and a short brief for this scene. Saving opens the editable storyboard, where you can generate shots and render the video.</p></div>
+          <section className={`${styles.formSection} ${styles.videoDraftForm}`}>
+            <h2>1. Add your product and idea</h2>
+            <p>Start with at least one clear product photo and a short description. You can refine the storyboard after saving.</p>
             <div className={styles.fields}>
               <div className={styles.field}>
                 <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
-                <div className={styles.imageStrip}>
-                  {draftReferenceUrls.length < (selectedScene.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required)?.max ?? 4) && <label className={styles.upload}><Upload size={21} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label>}
-                  {draftReferenceUrls.map((url, index) => <div className={styles.imageSlot} key={`${url}-${index}`}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
+                <div className={`${styles.imageStrip} ${styles.draftImageStrip}`}>
+                  <div className={styles.draftReferenceColumn}>
+                    {draftReferenceUrls.length < selectedSceneImageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
+                    <span className={styles.draftReferenceCount} aria-label={`Product photos: ${draftReferenceUrls.length} of ${selectedSceneImageLimit}`}>{`${draftReferenceUrls.length} / ${selectedSceneImageLimit} photos`}</span>
+                  </div>
+                  {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
                 </div>
                 {!customer && <span className={styles.help}>Log in to upload photos and save this draft.</span>}
               </div>
@@ -880,9 +905,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             </div>
             {selectedScene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
             {importedBriefNotice()}
-            <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveNewDraft()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Save draft</span></button></div>
-            <p className={styles.help}>Saving adds this video to your Library. It does not start generation.</p>
+            <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveNewDraft()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Save draft and open storyboard</span></button></div>
+            <p className={styles.help}>Saving adds the draft to your Library and opens the storyboard. No video is generated until you start that step.</p>
           </section>
+          {canBrowseTemplates && templatePickerCallout()}
         </>}
 
         {view === "agent" && task && <>
@@ -909,6 +935,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {scene?.needsActor && <section className={styles.formSection}><div className={styles.sectionHead}><div><h2>Your presenter</h2><p className={styles.help}>One avatar and its voice throughout your video.</p></div><button className={styles.button} disabled={editingDisabled} onClick={() => setModal("actors")}><UserRound size={16} /><span>{actor ? "Change avatar" : "Choose avatar"}</span></button></div>{actor ? <div className={styles.row}><img loading="lazy" decoding="async" src={actor.imageUrl} alt={actor.name} width={64} height={70} style={{ objectFit: "contain", borderRadius: 8 }} /><div><strong>{actor.name}</strong><p className={styles.help}><span>{actor.voice.label || "Voice profile"}</span><span> · </span><span>{languageLabel(actor.voice.language)}</span></p>{actor.voice.refAudio && <audio src={actor.voice.refAudio} controls preload="none" aria-label={`${actor.name} voice sample`} style={{ height: 30, maxWidth: 220 }} />}</div></div> : <p className={styles.help}>Choose a presenter to continue. The presenter card includes its voice profile.</p>}</section>}
             <section className={styles.formSection}><h2>Video settings</h2><p>Choose the format, language and style for this video.</p>{catalog?.billing && <div className={styles.notice}><span>{catalog.billing.creditsPerShot}</span><span> credits per generated clip. Your total depends on how many clips and new versions you generate.</span></div>}<div className={styles.parameterGrid}><label className={styles.field}><span className={styles.fieldLabel}>Video model</span><select className={styles.input} disabled={editingDisabled} value={task.input.modelId || activeModel?.id || ""} onChange={(event) => updateInput((input) => ({ ...input, modelId: event.target.value }))}>{!catalog?.models.length && <option value="">No model connected</option>}{catalog?.models.map((model) => <option key={model.id} value={model.id} disabled={!model.available || Boolean(scene?.needsActor && !model.nativeSpeech)}>{displayModel(model.model)}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Duration</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.duration} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, duration: Number(event.target.value) as TaskInput["options"]["duration"] } }))}>{catalog?.durations.map((item) => <option key={item.value} value={item.value}>{item.label}{item.credits != null ? ` · ${item.credits} credits` : ""}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Aspect ratio</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.aspect} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, aspect: event.target.value as TaskInput["options"]["aspect"] } }))}>{catalog?.aspects.map((item) => <option key={item}>{item}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Style</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.style} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, style: event.target.value } }))}>{scene?.styleOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Language</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.language} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, language: event.target.value as TaskInput["options"]["language"] } }))}>{catalog?.languages.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Captions</span><select className={styles.input} disabled={editingDisabled || !scene?.needsActor} value={String(task.input.options.subtitle)} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitle: event.target.value === "true" } }))}><option value="false">Without captions</option><option value="true" disabled={catalog?.subtitles?.available === false}>With captions</option></select>{!scene?.needsActor ? <span className={styles.help}>This scene has no spoken dialogue.</span> : catalog?.subtitles?.available === false ? <span className={styles.help}>Captions are not available for this connection yet.</span> : null}</label>{task.input.options.subtitle && scene?.needsActor && <label className={styles.field}><span className={styles.fieldLabel}>Caption style</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.subtitleStyle ?? "classic"} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitleStyle: event.target.value as TaskInput["options"]["subtitleStyle"] } }))}><option value="classic">Classic</option><option value="bold">Bold</option><option value="minimal">Minimal</option></select></label>}</div>{catalog?.durations.find((item) => item.value === task.input.options.duration)?.reason && <div className={styles.notice}>{catalog.durations.find((item) => item.value === task.input.options.duration)?.reason ? humanError(catalog.durations.find((item) => item.value === task.input.options.duration)?.reason) : ""}</div>}{scene?.needsActor && !actorSpeechSupported && <div className={styles.notice}>{humanError("native_audio_required")}</div>}</section>
             <MusicTrackPicker siteId={siteId} selectedUrl={task.input.musicUrl} onSelect={(musicUrl) => updateInput((input) => ({ ...input, musicUrl }))} csrfToken={csrfToken} disabled={editingDisabled} />
+            {customer && <MusicCatalogPicker siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
             </details>
             {task.storyboardStale && <div className={styles.notice}>Your details have changed. Review the existing storyboard or generate a new draft. Locked shots will be kept.</div>}
             <div className={styles.footerActions}>{task.storyboard && <button className={styles.button} disabled={editingDisabled} onClick={() => { setStep("storyboard"); updateUrl(task, "storyboard"); }}>View storyboard</button>}<button className={`${styles.button} ${styles.primary}`} disabled={editingDisabled || Boolean(task.sourceAnalysis?.synthetic)} onClick={() => void runAction(task.storyboard ? "reroll" : "storyboard")}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Sparkles size={16} />}<span>{task.storyboard ? "Refresh storyboard" : "Generate storyboard"}</span></button></div>
@@ -928,7 +955,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {step === "delivery" && <section className={styles.panel}><h2>Your finished video</h2>{task.video?.finalUrl ? <><video className={styles.video} src={task.video.finalUrl} controls playsInline preload="metadata" aria-label="Finished video" />{task.video.stale && <div className={styles.notice}>Your storyboard changed after this video was rendered. Render again to include your edits.</div>}<div className={styles.row}><a className={`${styles.button} ${styles.primary}`} href={task.video.finalUrl} download><Download size={16} /><span>Download video</span></a><button className={styles.button} onClick={() => setStep("storyboard")}>Edit storyboard</button></div><h3 style={{ marginTop: 25 }}>Shot sources</h3><div className={styles.sourceList}>{task.video.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((item) => item.shotId === clip.shotId && item.versions.some((version) => version.vid === clip.vid)); return <div key={clip.shotId} className={styles.sourceRow}><span><span>Shot </span><span>{index + 1}</span></span><span><span>Version </span><span>{(source?.versions.findIndex((item) => item.vid === clip.vid) ?? -1) + 1}</span></span><a className={styles.linkButton} href={clip.clipUrl} download><Download size={14} /><span>Clip</span></a></div>; })}</div><details><summary className={styles.help} style={{ cursor: "pointer" }}>Export script and captions</summary><div className={styles.row} style={{ marginTop: 15, flexWrap: "wrap" }}><button className={styles.button} onClick={() => downloadText(`${task.title}-script.txt`, task.video?.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return `Shot ${index + 1}\n${version?.visual ?? ""}\n${version?.voiceover ?? ""}`; }).join("\n\n") ?? "")}><Download size={15} /><span>Script</span></button><button className={styles.button} onClick={() => downloadText(`${task.title}-prompts.json`, JSON.stringify(task.video?.clips.map((clip) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return { shot: clip.shotId, prompt: version?.prompt, references: version?.refImgs }; }), null, 2), "application/json")}><Download size={15} /><span>Prompts</span></button>{task.video.subtitleUrl && <a className={styles.button} href={task.video.subtitleUrl} download><Download size={15} /><span>Captions</span></a>}</div></details></> : <div className={styles.empty}><Video size={32} /><h3>Your video isn't ready yet</h3><p>Generate your shots and render your video to see it here.</p><button className={styles.button} onClick={() => setStep("render")}>Go to render</button></div>}</section>}
         </>}
 
-        {view === "library" && <><div className={styles.sectionHead}><div className={styles.pageTitle}><h1>Your Library</h1><p>Pick up where you left off or download a finished video.</p></div><button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("agent")}><Plus size={16} /><span>New video</span></button></div><div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "draft", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "draft" ? "In progress" : "Completed"}</button>)}</div>{!customer ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div> : loading ? <div className={styles.empty}><Loader2 className={styles.spin} size={25} /><span>Loading your videos…</span></div> : tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed")).length ? renderTaskCards(tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed"))) : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open the Video Agent, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}</>}
+        {view === "agent" && step === "delivery" && customer && task?.video?.status === "done" && <VideoPostEditor siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
+
+        {view === "analytics" && (customer ? <AnalyticsWorkbench siteId={siteId} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Performance</h1><p>Log in to import and compare your advertising results.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "analytics"))}`}>Log in</a></section>)}
+
+        {view === "teams" && <TeamBrandWorkbench siteId={siteId} customerId={customer?.id ?? ""} csrfToken={csrfToken} disabled={working} />}
+
+        {view === "developer" && (customer ? <DeveloperWorkbench siteId={siteId} customerId={customer.id} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Developer access</h1><p>Log in to manage API keys and webhook endpoints for your workspace.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "developer"))}`}>Log in</a></section>)}
+
+        {view === "library" && <><div className={styles.sectionHead}><div className={styles.pageTitle}><h1>Your Library</h1><p>Pick up where you left off or download a finished video.</p></div><button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("agent")}><Plus size={16} /><span>New video</span></button></div><div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "draft", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "draft" ? "In progress" : "Completed"}</button>)}</div>{!customer ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div> : loading ? <div className={styles.empty}><Loader2 className={styles.spin} size={25} /><span>Loading your videos…</span></div> : tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed")).length ? renderTaskCards(tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed"))) : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open AI Video Agent, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}</>}
 
         {view === "actors" && presenterStudioEnabled && <>
           <div className={styles.creatorHeading}>
@@ -997,6 +1032,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onImageGenerate={() => void generateImage()} imageGenerateDisabled={!customer || !imageQuote?.available}
             onContinue={continueHomeComposer} disabled={busy} canUpload={Boolean(customer)} loginHref={loginHref}
           />
+          {canBrowseTemplates && templatePickerCallout()}
           {customer && <p className={styles.help} style={{ margin: "12px 0 0" }}>
             {!imageInput.assetUrls.length ? "Add a product reference photo to see the price." : imageInput.toolId === "custom" && !imageInput.prompt.trim() ? "Describe your image to see the current price." : imageQuote?.available ? `This generation costs ${imageQuote.credits} credits.` : imageQuote ? humanError(imageQuote.reason) : "Checking the current price…"}
           </p>}
@@ -1037,11 +1073,66 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       </main>
     </div>
     {(modal === "guide" || modal === "support") && <WorkspaceHelpDialog kind={modal} onClose={closeModal} supportHref={supportPath ?? `${basePath}/contact-us`} accountHref={customer ? accountHref : undefined} />}
+    {modal === "templates" && renderTemplatePickerDialog()}
     {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
     {batchScene && <BatchDraftDialog open={batchOpen} initialSceneId={batchScene.id} initialInput={composerInput(batchScene)} scenes={catalog?.scenes.map((item) => ({ id: item.id, label: item.name })) ?? []} disabled={busy} onClose={() => setBatchOpen(false)} onSubmit={(items) => void createBatch(items)} />}
 
   </div>;
+
+  function selectTemplate(option: WorkspaceTemplateOption) {
+    if (option.kind === "video") {
+      setView("home");
+      setComposerTab("AI Video");
+      setPrompt(option.prompt);
+      setComposerAspect(option.aspect);
+      setComposerDuration(option.duration);
+    } else {
+      setView("images");
+      setComposerTab("AI Image");
+      setImageInput((current) => ({ ...current, prompt: option.prompt, aspect: option.aspect, toolId: option.imageTool }));
+    }
+    setActivePreset(option);
+    setPresetSceneId(option.sceneId);
+    setSelectedSceneId(option.sceneId);
+    setComposerTitle(option.title);
+    setMessage("");
+    const url = new URL(window.location.href);
+    url.searchParams.delete("task");
+    url.searchParams.delete("step");
+    url.searchParams.delete("scene");
+    url.searchParams.set("source", option.sourcePage);
+    url.searchParams.set("preset", option.presetId);
+    url.searchParams.set("view", option.kind === "video" ? "home" : "images");
+    if (option.kind === "photo") url.searchParams.set("tool", option.imageTool);
+    else { url.searchParams.delete("tool"); url.searchParams.delete("tool_id"); }
+    window.history.replaceState(window.history.state, "", url);
+    setModal(null);
+    const main = document.querySelector<HTMLElement>(`main.${styles.main}`);
+    window.requestAnimationFrame(() => main?.scrollTo({ top: 0, behavior: "smooth" }));
+  }
+
+  function renderTemplatePickerDialog() {
+    const categories = initialTemplateGallery?.categories ?? [];
+    return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${styles.templateGalleryModal}`} role="dialog" aria-modal="true" aria-label="Choose a product template">
+      <div className={styles.modalHeader}><div><h2>Choose a product template</h2><p className={styles.help}>Pick a scene from the storefront gallery to fill your workspace prompt.</p></div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>
+      <label className={styles.templateSearch}><Search size={18} /><input type="search" value={templateSearch} onChange={(event) => setTemplateSearch(event.target.value)} aria-label="Search templates" placeholder="Search templates" /></label>
+      <div className={styles.templateFilters} role="group" aria-label="Template type">
+        {templateFilterKinds.map((kind) => <button type="button" key={kind} aria-pressed={templateKindFilter === kind} className={templateKindFilter === kind ? styles.templateFilterActive : ""} onClick={() => setTemplateKindFilter(kind)}>{kind === "all" ? "All" : kind === "video" ? "Video" : "Photo"}</button>)}
+      </div>
+      {categories.length > 0 && <div className={styles.templateCategories} role="group" aria-label="Template category">
+        <button type="button" aria-pressed={templateCategoryFilter === "all"} className={templateCategoryFilter === "all" ? styles.templateFilterActive : ""} onClick={() => setTemplateCategoryFilter("all")}>All categories</button>
+        {categories.map((category) => <button type="button" key={category.id} aria-pressed={templateCategoryFilter === category.id} className={templateCategoryFilter === category.id ? styles.templateFilterActive : ""} onClick={() => setTemplateCategoryFilter(category.id)}>{category.label}</button>)}
+      </div>}
+      <p className={styles.templateResultCount} aria-live="polite">{visibleTemplates.length} {visibleTemplates.length === 1 ? "template" : "templates"}</p>
+      {visibleTemplates.length ? <div className={styles.templateGalleryGrid}>{visibleTemplates.map((option) => <button type="button" key={option.presetId} className={`${styles.templateGalleryCard} ${activePreset?.presetId === option.presetId ? styles.templateGalleryCardSelected : ""}`} onClick={() => selectTemplate(option)} aria-label={`Use ${option.title}`}>
+        {/* This is the public preview already used by the homepage picker. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img loading="lazy" decoding="async" src={option.previewUrl} alt={option.imageAlt} />
+        <span className={styles.templateGalleryCardCopy}><span className={styles.templateGalleryCardMeta}><small>{option.kind === "video" ? "Video" : "Photo"}</small>{option.categoryIds.slice(0, 2).map((categoryId) => { const category = categories.find((item) => item.id === categoryId); return category ? <small key={category.id}>{category.label}</small> : null; })}</span><strong>{option.title}</strong><span className={styles.templateGalleryCardAction}>{activePreset?.presetId === option.presetId ? <><Check size={15} /> Selected</> : <>Use this template <ArrowRight size={15} /></>}</span></span>
+      </button>)}</div> : <div className={styles.templateGalleryEmpty}><Clapperboard size={26} /><p>No templates match your search.</p></div>}
+    </section></div>;
+  }
 
   function renderTemplate(preset: WorkspacePreset) {
     const video = preset.kind === "video";
@@ -1051,10 +1142,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className={styles.templatePreview} src={preset.previewUrl} alt={preset.title} decoding="async" />
       <div className={styles.templateCopy}><span className={styles.badge}>{video ? "Video template" : "Image template"}</span><h2>{preset.title}</h2><p>Use this style with your own product photos and details.</p>
-        {video && !task ? <label className={styles.templateScene}><span>Video scene</span><select className={styles.input} aria-label="Video scene" value={selectedScene} disabled={working} onChange={(event) => {
+        {video && !task && presenterStudioEnabled && <div className={styles.templateScene}><span>Video scene</span><strong>{catalog?.scenes.find((item) => item.id === selectedScene)?.name ?? selectedScene}</strong></div>}
+        {video && !task && !presenterStudioEnabled && <label className={styles.templateScene}><span>Video scene</span><select className={styles.input} aria-label="Video scene" value={selectedScene} disabled={working} onChange={(event) => {
           const nextScene = event.target.value as WorkspacePreset["sceneId"]; setPresetSceneId(nextScene);
           if (view === "agent" && selectedSceneId) { setSelectedSceneId(nextScene); const url = new URL(window.location.href); url.searchParams.set("scene", nextScene); window.history.replaceState(window.history.state, "", url); }
-        }}>{catalog?.scenes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label> : video && <p>{catalog?.scenes.find((item) => item.id === selectedScene)?.name}</p>}
+        }}>{catalog?.scenes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
+        {video && task && <p>{catalog?.scenes.find((item) => item.id === selectedScene)?.name}</p>}
       </div>
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
         setActivePreset(undefined); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
@@ -1062,6 +1155,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         const url = new URL(window.location.href); url.searchParams.delete("source"); url.searchParams.delete("preset");
         window.history.replaceState(window.history.state, "", url);
       }}><X size={18} /></button>}
+    </section>;
+  }
+
+  function templatePickerCallout() {
+    return <section className={styles.templatePickerCallout} aria-label="Product templates">
+      <div className={styles.templatePickerMessage}>
+        <span className={styles.templatePickerIcon}><Clapperboard size={20} /></span>
+        <span className={styles.templatePickerText}><strong>Start with a ready-made scene</strong><span>Choose a template from the storefront scene gallery.</span></span>
+      </div>
+      <button type="button" className={`${styles.button} ${styles.primary} ${styles.templatePickerButton}`} onClick={() => setModal("templates")}><Clapperboard size={16} /><span>Choose a template</span><ArrowRight size={15} /></button>
     </section>;
   }
 

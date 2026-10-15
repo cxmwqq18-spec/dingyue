@@ -6,7 +6,7 @@ import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import styles from "./home-composer.module.css";
 
-export type HomeComposerTab = "Video Agent" | "AI Video" | "AI Image";
+export type HomeComposerTab = "AI Video Agent" | "AI Video" | "AI Image";
 type Aspect = TaskInput["options"]["aspect"];
 type Duration = TaskInput["options"]["duration"];
 export type HomeComposerImageInput = { prompt: string; assetUrls: string[]; aspect: Aspect; toolId: WorkspaceImageTool };
@@ -46,7 +46,7 @@ export interface HomeComposerProps {
 }
 
 const tabs: { id: HomeComposerTab; icon: typeof Video }[] = [
-  { id: "Video Agent", icon: WandSparkles }, { id: "AI Video", icon: Video }, { id: "AI Image", icon: ImageIcon },
+  { id: "AI Video Agent", icon: WandSparkles }, { id: "AI Video", icon: Video }, { id: "AI Image", icon: ImageIcon },
 ];
 const imageStyles: { id: WorkspaceImageTool; label: string }[] = [
   { id: "custom", label: "Custom image" }, { id: "white-background", label: "White background" },
@@ -69,14 +69,16 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind }
   onUpload: (file: File) => void; onRemove: (index: number) => void; kind: "video" | "image";
 }) {
   return <div className={`${styles.references} ${kind === "image" ? styles.imageReferences : ""}`}>
-    <div className={styles.referenceHeader}><span>{kind === "video" ? "Photos" : "Reference photos"}</span><span>{`${urls.length} / ${max}`}</span></div>
     <div className={styles.referenceStrip}>
-      {urls.length < max && <label className={`${styles.upload} ${!canUpload || disabled ? styles.uploadDisabled : ""}`}>
-        <Upload size={19} aria-hidden="true" /><span>Add photo</span>
-        <input type="file" accept="image/*" aria-label={`Upload ${kind} reference photo`} disabled={disabled || !canUpload} onChange={(event) => {
-          const file = event.target.files?.[0]; event.target.value = ""; if (file) onUpload(file);
-        }} />
-      </label>}
+      <div className={styles.referenceUploadColumn}>
+        {urls.length < max ? <label className={`${styles.upload} ${!canUpload || disabled ? styles.uploadDisabled : ""}`}>
+          <Upload size={19} aria-hidden="true" /><span>Add photo</span>
+          <input type="file" accept="image/*" aria-label={`Upload ${kind} reference photo`} disabled={disabled || !canUpload} onChange={(event) => {
+            const file = event.target.files?.[0]; event.target.value = ""; if (file) onUpload(file);
+          }} />
+        </label> : <div className={`${styles.upload} ${styles.uploadFull}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
+        <span className={styles.referenceCount} aria-label={`${kind === "video" ? "Video" : "Image"} reference photos: ${urls.length} of ${max}`}>{`${urls.length} / ${max} photos`}</span>
+      </div>
       {urls.map((url, index) => <div key={`${url}-${index}`} className={styles.thumbnail}>
         {/* Customer assets may use private authenticated URLs. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,14 +90,15 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind }
 }
 
 export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
-  const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "Video Agent";
+  const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
+  const draftMode = activeTab === "AI Video Agent";
   const { model, aspects, durations, selectedAspect, selectedDuration } = homeComposerVideoOptions(catalog, modelId, aspect, duration);
   const referenceLimit = model?.multiReference ? 4 : 1;
   const validVideo = Boolean(model?.available && selectedAspect && selectedDuration);
   const tooManyReferences = videoMode && videoReferenceUrls.length > referenceLimit;
-  const canContinue = !disabled && !(imageMode && onImageGenerate && imageGenerateDisabled) && (imageMode || activeTab === "Video Agent" || validVideo) && !tooManyReferences;
+  const canContinue = !disabled && !(imageMode && onImageGenerate && imageGenerateDisabled) && (imageMode || draftMode || validVideo) && !tooManyReferences;
   const promptValue = imageMode ? imageInput.prompt : prompt;
   const imageAspects = WORKSPACE_ASPECTS;
 
@@ -111,15 +114,15 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
       }}><Icon size={17} aria-hidden="true" /><span>{id}</span></button>)}
     </div>}
     <div id={showTabs ? "home-composer-panel" : undefined} role={showTabs ? "tabpanel" : undefined} aria-labelledby={showTabs ? `home-tab-${tabs.findIndex((item) => item.id === activeTab)}` : undefined}>
-      {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} />}
-      <label className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""}`}>
+      <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""}`}>
+        {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} />}
+        {imageMode && <References kind="image" urls={imageInput.assetUrls} max={4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} />}
         <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={imageMode ? 4000 : 2000} />
         <span className={styles.characterCount}>{`${promptValue.length} / ${imageMode ? "4000" : "2000"}`}</span>
-      </label>
-      {imageMode && <References kind="image" urls={imageInput.assetUrls} max={4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} />}
+      </div>
       <div className={styles.footer}>
         <div className={styles.controls}>
-          {activeTab === "Video Agent" && <>
+          {draftMode && <>
             <button type="button" className={styles.controlButton} title={products[0]?.label ? `Selected product: ${products[0].label}` : "Add or import a product"} disabled={disabled} onClick={onOpenProduct}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               {products[0]?.previewUrl ? <img className={styles.controlThumbnail} src={products[0].previewUrl} alt={products[0].label ? `Product: ${products[0].label}` : "Selected product"} /> : <Plus size={16} aria-hidden="true" />}
@@ -140,7 +143,7 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
           {tooManyReferences && <span className={styles.footerNote} role="status">{`Remove photos to fit this model's ${referenceLimit}-photo limit.`}</span>}
           {videoMode && !validVideo && <span className={styles.footerNote} role="status">Choose an available model.</span>}
           {!canUpload && (videoMode || imageMode) && loginHref && <a className={styles.loginLink} href={loginHref}>Log in to add photos</a>}
-          <button type="button" className={`${styles.continue} ${imageMode && onImageGenerate ? styles.continueWithLabel : ""}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : activeTab === "Video Agent" ? "Build with Video Agent" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration })}>{imageMode && onImageGenerate && <span>{imageGenerateLabel}</span>}<ArrowRight size={18} aria-hidden="true" /></button>
+          <button type="button" className={`${styles.continue} ${imageMode && onImageGenerate ? styles.continueWithLabel : ""}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration })}>{imageMode && onImageGenerate && <span>{imageGenerateLabel}</span>}<ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>
     </div>

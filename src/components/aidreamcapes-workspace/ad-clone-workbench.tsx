@@ -16,6 +16,59 @@ function validSegments(segments: AdSegment[]) {
   return segments.length > 0 && segments.every((s, i) => s.visual.trim() && Number.isFinite(s.start) && Number.isFinite(s.end) && s.start >= 0 && s.end > s.start && s.end <= 300 && (i === 0 || s.start >= segments[i - 1].end));
 }
 
+type PublicVideoPlatform = "YouTube" | "TikTok" | "Instagram" | "Facebook";
+type PublicVideoPreview = { platform: PublicVideoPlatform; sourceUrl: string; embedUrl: string };
+type ParsedPublicVideoUrl = PublicVideoPreview | { platform: "TikTok"; sourceUrl: string; needsResolution: true };
+
+function parsePublicVideoUrl(value: string): ParsedPublicVideoUrl | null {
+  if (!value.trim() || value.length > 2048) return null;
+  let url: URL;
+  try { url = new URL(value.trim()); } catch { return null; }
+  if (url.protocol !== "https:" || url.username || url.password || url.port) return null;
+  const host = url.hostname.toLowerCase();
+  const sourceUrl = url.toString();
+
+  if (["youtu.be", "youtube.com", "www.youtube.com", "m.youtube.com", "youtube-nocookie.com", "www.youtube-nocookie.com"].includes(host)) {
+    const id = host === "youtu.be"
+      ? url.pathname.split("/").filter(Boolean)[0]
+      : url.pathname === "/watch"
+        ? url.searchParams.get("v")
+        : url.pathname.match(/^\/(?:shorts|live|embed|v)\/([A-Za-z0-9_-]{11})(?:\/|$)/)?.[1];
+    if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) return null;
+    return { platform: "YouTube", sourceUrl, embedUrl: `https://www.youtube-nocookie.com/embed/${id}` };
+  }
+
+  if (["tiktok.com", "www.tiktok.com", "m.tiktok.com", "vm.tiktok.com", "vt.tiktok.com"].includes(host)) {
+    const id = url.pathname.match(/\/(?:@[^/]+\/)?video\/(\d{8,25})(?:\/|$)/)?.[1]
+      ?? url.pathname.match(/^\/player\/v1\/(\d{8,25})(?:\/|$)/)?.[1];
+    if (id) return { platform: "TikTok", sourceUrl, embedUrl: `https://www.tiktok.com/player/v1/${id}?controls=1` };
+    const shortLink = host === "vm.tiktok.com" || host === "vt.tiktok.com"
+      ? /^\/[A-Za-z0-9_-]{4,}\/?$/.test(url.pathname)
+      : /^\/(?:t|v)\/[A-Za-z0-9_-]{4,}\/?$/.test(url.pathname);
+    return shortLink ? { platform: "TikTok", sourceUrl, needsResolution: true } : null;
+  }
+
+  if (["instagram.com", "www.instagram.com", "m.instagram.com", "instagr.am", "www.instagr.am"].includes(host)) {
+    const match = url.pathname.match(/^\/(?:reel|reels|p|tv)\/([A-Za-z0-9_-]{5,})(?:\/|$)/);
+    if (!match) return null;
+    const kind = url.pathname.split("/").filter(Boolean)[0] === "reels" ? "reel" : url.pathname.split("/").filter(Boolean)[0];
+    return { platform: "Instagram", sourceUrl, embedUrl: `https://www.instagram.com/${kind}/${match[1]}/embed/` };
+  }
+
+  if (["facebook.com", "www.facebook.com", "m.facebook.com", "web.facebook.com", "fb.watch"].includes(host)) {
+    const path = url.pathname;
+    const videoLikePath = host === "fb.watch" || url.searchParams.has("v") || /\/(?:videos?|reels?|watch|share\/v|share\/r)(?:\/|$)/.test(path);
+    if (!videoLikePath || path === "/") return null;
+    const embed = new URL("https://www.facebook.com/plugins/video.php");
+    embed.searchParams.set("href", sourceUrl);
+    embed.searchParams.set("show_text", "false");
+    embed.searchParams.set("width", "720");
+    return { platform: "Facebook", sourceUrl, embedUrl: embed.toString() };
+  }
+
+  return null;
+}
+
 export function AdCloneWorkbench({ siteId, customerId, csrfToken, loginHref, onOpenTask }: AdCloneWorkbenchProps) {
   const id = useId();
   const request = useMemo(() => adCloneClient(siteId, csrfToken), [siteId, csrfToken]);
@@ -31,10 +84,15 @@ export function AdCloneWorkbench({ siteId, customerId, csrfToken, loginHref, onO
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [mode, setMode] = useState<"mp4" | "url">("mp4");
+  const [publicVideoUrl, setPublicVideoUrl] = useState("");
+  const [publicVideoPreview, setPublicVideoPreview] = useState<PublicVideoPreview | null>(null);
+  const [publicVideoError, setPublicVideoError] = useState("");
+  const [resolvingPublicVideo, setResolvingPublicVideo] = useState(false);
   const [product, setProduct] = useState({ url: "", title: "", description: "" });
   const [confirmed, setConfirmed] = useState(false);
   const [draft, setDraft] = useState<{ taskId: string; revision: number } | null>(null);
   const uploadAbort = useRef<AbortController | null>(null);
+  const previewAbort = useRef<AbortController | null>(null);
   const mounted = useRef(true);
   const operation = useRef(false);
   const draftKey = useRef("");
@@ -66,7 +124,7 @@ export function AdCloneWorkbench({ siteId, customerId, csrfToken, loginHref, onO
     if (!customerId || siteId !== "site_aidreamcapes") return;
     const controller = new AbortController();
     void load(controller.signal);
-    return () => { mounted.current = false; controller.abort(); uploadAbort.current?.abort(); };
+    return () => { mounted.current = false; controller.abort(); uploadAbort.current?.abort(); previewAbort.current?.abort(); };
   }, [customerId, siteId, load]);
   const pollJobId = job?.id;
   const pollJobStatus = job?.status;
@@ -119,6 +177,39 @@ export function AdCloneWorkbench({ siteId, customerId, csrfToken, loginHref, onO
       } finally { uploadAbort.current = null; }
     });
   }
+  async function previewPublicVideo() {
+    previewAbort.current?.abort();
+    previewAbort.current = null;
+    setResolvingPublicVideo(false);
+    setPublicVideoError("");
+    setPublicVideoPreview(null);
+    const parsed = parsePublicVideoUrl(publicVideoUrl);
+    if (!parsed) {
+      setPublicVideoError("Enter a public video URL from TikTok, Facebook, Instagram, or YouTube.");
+      return;
+    }
+    if (!("needsResolution" in parsed)) {
+      setPublicVideoPreview(parsed);
+      setNotice("Video preview loaded from the original platform. It is not downloaded or analyzed.");
+      return;
+    }
+    const controller = new AbortController();
+    previewAbort.current = controller;
+    setResolvingPublicVideo(true);
+    try {
+      const { videoId } = await request<{ videoId: string }>("/ad-references/preview-url", {
+        method: "POST", body: { url: parsed.sourceUrl }, signal: controller.signal,
+      });
+      if (!/^\d{8,25}$/.test(videoId)) throw new Error("video_id_invalid");
+      if (controller.signal.aborted) return;
+      setPublicVideoPreview({ platform: "TikTok", sourceUrl: parsed.sourceUrl, embedUrl: `https://www.tiktok.com/player/v1/${videoId}?controls=1` });
+      setNotice("Video preview loaded from TikTok. It is not downloaded or analyzed.");
+    } catch {
+      if (!controller.signal.aborted) setPublicVideoError("This TikTok share link could not be opened. Check that the video is public, then try its full video URL.");
+    } finally {
+      if (!controller.signal.aborted) setResolvingPublicVideo(false);
+    }
+  }
   async function queue() {
     await perform("Saving authorization and queuing…", async () => {
       if (!source || !rights) return;
@@ -161,14 +252,26 @@ export function AdCloneWorkbench({ siteId, customerId, csrfToken, loginHref, onO
   const storageUnavailable = capabilities?.components?.database?.available === false || capabilities?.mockAvailable === false || capabilities?.analysisBeforeTask === false;
   if (siteId !== "site_aidreamcapes") return null;
   return <section className={styles.workbench} aria-labelledby={`${id}-heading`}>
-    <header className={styles.heading}><div><span className={styles.eyebrow}>CREATIVE WORKSPACE / AD CLONE</span><h1 id={`${id}-heading`}>Start with a structure.<br />Make it your own.</h1><p>Review a reference timeline, then build a draft around your own product.</p></div><span className={styles.badge}>{mockOnly ? "Simulation only" : "Analysis available"}</span></header>
+    <header className={styles.heading}><div><span className={styles.eyebrow}>CREATIVE WORKSPACE / AD CLONE</span><h1 id={`${id}-heading`}>Start with a structure.<br />Make it your own.</h1><p>{mode === "url" ? "Play a public video here. The video is not downloaded or analyzed." : "Review a reference timeline, then build a draft around your own product."}</p></div><span className={styles.badge}>{mockOnly ? "Simulation only" : "Analysis available"}</span></header>
     {!customerId ? <div className={styles.guest}><h2>Your references stay in your workspace</h2><p>Sign in to upload your own MP4, manage permission, and save a draft.</p><a href={loginHref}><span>Sign in to continue</span></a></div> : <>
-      <div className={styles.status} role="status" aria-live="polite"><span>{busy || notice || (storageUnavailable ? "Saved analyses need storage setup. Try again later." : mockOnly ? "Video analysis is not connected. You can test the workflow with an explicitly simulated timeline; no video is read and no credits are charged." : "Choose a reference video to begin.")}</span></div>
+      <div className={styles.status} role="status" aria-live="polite"><span>{busy || notice || (mode === "url" ? "Paste a public platform video link to play it here. The video stays on its platform and is not downloaded or analyzed." : storageUnavailable ? "Saved analyses need storage setup. Try again later." : mockOnly ? "Video analysis is not connected. You can test the workflow with an explicitly simulated timeline; no video is read and no credits are charged." : "Choose a reference video to begin.")}</span></div>
       {error ? <div className={styles.error} role="alert"><span>{error}</span><button type="button" disabled={disabled} onClick={() => void perform("Reloading saved analyses…", () => load())}><span>Try reload</span></button><a href={loginHref}><span>Sign in again</span></a></div> : null}
       <div className={styles.layout}><div className={styles.main}>
         <section className={styles.card}><div className={styles.sectionTitle}><span className={styles.number}>01</span><h2>Your reference</h2></div>
-          <div className={styles.tabs} role="tablist" aria-label="Reference video source"><button role="tab" aria-selected={mode === "mp4"} onClick={() => setMode("mp4")}><span>Upload an MP4</span></button><button role="tab" aria-selected={mode === "url"} onClick={() => setMode("url")}><span>Video link (unavailable)</span></button></div>
-          {mode === "url" ? <div className={styles.unavailable}><p className={styles.note}>Importing an ad video from a link is not supported here. This workspace does not fetch or parse video URLs. Upload an MP4 that you own or have permission to use as a reference.</p><p className={styles.note}>The product page URL in step 03 is a separate field for your product information. It does not import an ad video.</p><button type="button" className={styles.primary} onClick={() => setMode("mp4")}><span>Upload an MP4 instead</span></button></div> : <>
+          <div className={styles.tabs} role="tablist" aria-label="Reference video source"><button type="button" role="tab" aria-selected={mode === "mp4"} onClick={() => { previewAbort.current?.abort(); setResolvingPublicVideo(false); setMode("mp4"); setNotice(""); setPublicVideoError(""); }}><span>Upload an MP4</span></button><button type="button" role="tab" aria-selected={mode === "url"} onClick={() => { previewAbort.current?.abort(); setResolvingPublicVideo(false); setMode("url"); setNotice(""); setError(""); }}><span>Play a video link</span></button></div>
+          {mode === "url" ? <div className={styles.publicVideoForm}>
+            <p className={styles.note}>Paste a public TikTok, Facebook, Instagram, or YouTube video link. Playback stays on the original platform; this workspace does not download or analyze the video.</p>
+            <label className={styles.field}><span>Public video URL</span><input type="url" inputMode="url" autoComplete="url" maxLength={2048} placeholder="https://…" value={publicVideoUrl} onChange={event => { previewAbort.current?.abort(); setResolvingPublicVideo(false); setPublicVideoUrl(event.target.value); setPublicVideoError(""); setPublicVideoPreview(null); setNotice(""); }} onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); void previewPublicVideo(); } }} /></label>
+            <div className={styles.actions}><button type="button" className={styles.primary} disabled={resolvingPublicVideo || !publicVideoUrl.trim()} onClick={() => void previewPublicVideo()}><span>{resolvingPublicVideo ? "Opening video…" : "Play video"}</span></button>{publicVideoPreview ? <button type="button" onClick={() => { setPublicVideoPreview(null); setPublicVideoError(""); setNotice(""); }}><span>Clear preview</span></button> : null}</div>
+            {publicVideoError ? <p className={styles.urlError} role="alert">{publicVideoError}</p> : null}
+            {publicVideoPreview ? <section className={styles.publicPreview} aria-label={`${publicVideoPreview.platform} video preview`}>
+              <div className={styles.previewHeading}><h3>{publicVideoPreview.platform} video</h3><a href={publicVideoPreview.sourceUrl} target="_blank" rel="noreferrer">Open original link</a></div>
+              <div className={`${styles.embedFrame} ${publicVideoPreview.platform === "TikTok" ? styles.portraitFrame : publicVideoPreview.platform === "Instagram" ? styles.instagramFrame : styles.landscapeFrame}`}>
+                <iframe title={`${publicVideoPreview.platform} video player`} src={publicVideoPreview.embedUrl} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
+              </div>
+              <p className={styles.note}>The video is played by {publicVideoPreview.platform}. Private, removed, or non-embeddable videos may not play here.</p>
+            </section> : null}
+          </div> : <>
             <label className={styles.upload}><span>＋ Upload your MP4</span><small>Video files are checked before use · up to {Math.round((capabilities?.adUpload?.maxBytes ?? maxUploadBytes) / 1024 / 1024)} MB</small><input type="file" accept="video/mp4,.mp4" aria-label="Upload reference MP4" disabled={disabled || storageUnavailable || capabilities?.adUpload?.available === false} onChange={e => { void upload(e.target.files?.[0]); e.target.value = ""; }} /></label>
             {uploadAbort.current ? <button disabled={!busy} onClick={() => uploadAbort.current?.abort()}><span>Cancel upload</span></button> : null}
             <label className={styles.field}><span>Or select a saved video</span><select value={source} disabled={disabled} onChange={e => { setSource(e.target.value); setRights(false); }}><option value="">Choose your video</option>{assets.map(asset => <option key={asset.id} value={asset.id}>{asset.label || "Untitled video"}</option>)}</select></label>

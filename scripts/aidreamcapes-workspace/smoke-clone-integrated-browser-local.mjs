@@ -12,7 +12,7 @@ import { loadCloneAcceptanceEnv } from './clone-http-fixture.mjs';
 await loadCloneAcceptanceEnv();
 assertDatabaseTarget({ expectedTarget: 'local' });
 assert(!process.env.CUSTOMER_ASSET_WRITE_BASE_URL && !process.env.CUSTOMER_ASSET_SHARED_BASE_URL, 'Remote storage forbidden');
-const origin = 'http://localhost:3002', siteId = 'site_aidreamcapes';
+const origin = 'http://127.0.0.1:3002', siteId = 'site_aidreamcapes';
 const prefix = `/api/sites/${siteId}/aivideosugc`, clone = `${prefix}/clones`;
 const customerId = `synthetic-clone-browser-${randomUUID()}`, sessionId = randomBytes(32).toString('hex');
 const nonce = randomBytes(24).toString('base64url');
@@ -45,7 +45,7 @@ const python = String.raw`
 import json,sys,re,os
 from playwright.sync_api import sync_playwright
 fixture=json.load(sys.stdin)
-errors=[]; responses=[]; blocked=[]; fonts=[]; failed=[]; consoles=[]; calls=[]; observed_jobs=set(); observed_actors=set(); screenshots=[]; checks=0
+errors=[]; responses=[]; blocked=[]; fonts=[]; failed=[]; consoles=[]; calls=[]; api_status=[]; observed_jobs=set(); observed_actors=set(); created_teams=[]; created_brands=[]; created_facts=[]; screenshots=[]; checks=0
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,executable_path=fixture['chromium'])
  context=browser.new_context(viewport={'width':1440,'height':1100},device_scale_factor=1)
@@ -56,6 +56,13 @@ with sync_playwright() as p:
    fonts.append(req.url.split('?')[0]);route.fulfill(status=200,content_type='text/css',body='/* External fonts disabled during offline acceptance. */');return
   if req.url.startswith(fixture['origin']+'/__nextjs_original-stack-frames') and req.method=='POST':
    calls.append('/__nextjs_original-stack-frames (local dev diagnostic)');route.continue_();return
+  if req.url==fixture['origin']+'/api/sites/site_aidreamcapes/aivideosugc/analytics/events' and req.method=='POST':
+   calls.append('/analytics/events (synthetic report import)');route.continue_();return
+  teams_base=fixture['origin']+'/api/sites/site_aidreamcapes/aivideosugc'
+  if req.url.startswith(teams_base) and req.method in ('POST','PATCH'):
+   path=req.url.split('?')[0].replace(teams_base,'')
+   if path=='/teams' and req.method=='POST' or re.fullmatch(r'/teams/[A-Za-z0-9_-]+',path) and req.method=='PATCH' or path=='/brands' and req.method=='POST' or re.fullmatch(r'/brands/[A-Za-z0-9_-]+/facts',path) and req.method=='POST' or re.fullmatch(r'/brands/[A-Za-z0-9_-]+/facts/[A-Za-z0-9_-]+',path) and req.method=='PATCH':
+    calls.append(path+' (synthetic team/brand fixture)');route.continue_();return
   if not req.url.startswith(fixture['origin']+'/') or req.method!='GET' or re.search(r'/(quote|reserve|generate|billing|actions)(/|\?|$)',req.url):
    blocked.append({'method':req.method,'path':req.url.split('?')[0].replace(fixture['origin'],'')})
    route.abort(); return
@@ -67,6 +74,13 @@ with sync_playwright() as p:
  page.on('console',lambda m:consoles.append(m.text) if m.type=='error' else None)
  def response(response):
   if response.status>=500:responses.append({'path':response.url.split('?')[0].replace(fixture['origin'],''),'status':response.status})
+  if '/aivideosugc/teams' in response.url or '/aivideosugc/brands' in response.url:
+   event={'method':response.request.method,'path':response.url.split('?')[0].replace(fixture['origin'],''),'status':response.status}
+   try:
+    payload=response.json()
+    if isinstance(payload,dict) and isinstance(payload.get('error'),str):event['errorCode']=payload['error']
+   except Exception:pass
+   api_status.append(event)
   if '/aivideosugc/clones/jobs' in response.url and response.status==200:
    try:
     value=response.json()
@@ -78,13 +92,22 @@ with sync_playwright() as p:
    try:
     for actor in response.json().get('actors',[]):observed_actors.add(actor['actorId'])
    except Exception as e:errors.append('Actor response validation: '+str(e))
+  if '/aivideosugc/teams' in response.url and response.status==201:
+   try:
+    value=response.json();created_teams.append(value['team']['id'])
+   except Exception as e:errors.append('Created team response validation: '+str(e))
+  if '/aivideosugc/brands' in response.url and response.status==201:
+   try:
+    value=response.json()
+    if '/facts' in response.url:created_facts.append(value['fact']['id'])
+    else:created_brands.append(value['brand']['id'])
+   except Exception as e:errors.append('Created brand/fact response validation: '+str(e))
  page.on('response',response)
  try:
   for width,label in [(1440,'desktop'),(390,'mobile')]:
    page.set_viewport_size({'width':width,'height':1100 if width==1440 else 844})
-   for view in ['home','images','product','actors','twin','clone']:
-    workspace_view=view in ['home','images','product','actors']
-    app_path='/site/aidreamcapes/app/create?view=' if workspace_view else '/site/aidreamcapes/app?view='
+   for view in (fixture.get('views') or ['home','images','product','actors','twin','clone','analytics','teams']):
+    app_path='/site/aidreamcapes/app/create?view='
     url=fixture['origin']+app_path+view
     page.goto(url,wait_until='networkidle',timeout=120000)
     if view=='home':
@@ -119,6 +142,60 @@ with sync_playwright() as p:
      dialog.wait_for(timeout=10000)
      page.get_by_role('button',name='Close dialog').click()
      checks+=2
+    elif view=='analytics':
+     page.get_by_role('heading',name='Ad performance',exact=True).wait_for(timeout=60000)
+     if width==1440:
+      page.get_by_role('heading',name='Your imported results will appear here',exact=True).wait_for()
+      page.get_by_role('tab',name='One row',exact=True).click()
+      for field,value in [('Account reference','synthetic-report'),('Report row ID','synthetic-report-row'),('Creative ID','synthetic-report-creative'),('Creative name','SYNTHETIC browser ad'),('Report date',fixture['today']),('Report currency','USD'),('Spend','12.00'),('Impressions','1000'),('Clicks','50'),('Conversions','3')]:
+       page.get_by_label(field,exact=True).fill(value)
+      page.get_by_role('button',name='Import this row',exact=True).click()
+      checks+=3
+     page.get_by_role('heading',name='SYNTHETIC browser ad',exact=True).wait_for(timeout=30000)
+     page.reload(wait_until='networkidle',timeout=120000)
+     page.get_by_role('heading',name='SYNTHETIC browser ad',exact=True).wait_for(timeout=30000)
+     assert page.get_by_text('USD 12.00',exact=True).count()>0,'Imported spend must reload'
+     assert page.get_by_text('USD 4.00',exact=True).count()>0,'CPA must equal spend divided by conversions'
+     checks+=5
+    elif view=='teams':
+     page.get_by_role('heading',name='Teams & brands',exact=True).wait_for(timeout=60000)
+     page.get_by_role('heading',name='Your teams',exact=True).wait_for()
+     if width==1440:
+      page.get_by_label('New team name',exact=True).fill('SYNTHETIC browser team')
+      page.get_by_role('button',name='Create team',exact=True).click()
+      page.get_by_label('Team name',exact=True).wait_for(timeout=30000)
+      page.get_by_label('Team name',exact=True).fill('SYNTHETIC browser team renamed')
+      page.get_by_role('button',name='Save team',exact=True).click()
+      page.get_by_text('Team details saved.',exact=True).wait_for(timeout=30000)
+      page.get_by_role('button',name='Brands & facts',exact=True).click()
+      page.get_by_role('heading',name='Brand profile',exact=True).wait_for()
+      page.get_by_label('New brand name',exact=True).fill('SYNTHETIC browser brand')
+      page.get_by_label('New brand website',exact=True).fill('https://synthetic.example')
+      page.get_by_label('New brand description',exact=True).fill('Synthetic browser acceptance profile.')
+      page.get_by_role('button',name='Create brand',exact=True).click()
+      page.get_by_label('New fact key',exact=True).wait_for(timeout=30000)
+      page.get_by_label('New fact key',exact=True).fill('materials')
+      page.get_by_label('New fact value',exact=True).fill('Synthetic cotton canvas')
+      page.get_by_label('New fact source',exact=True).fill('https://synthetic.example/materials')
+      page.get_by_label('New fact source label',exact=True).fill('Synthetic materials page')
+      page.get_by_role('button',name='Add unconfirmed fact',exact=True).click()
+      page.get_by_text('Synthetic cotton canvas',exact=True).wait_for(timeout=30000)
+      page.once('dialog',lambda dialog:dialog.accept())
+      page.get_by_role('button',name='Confirm this fact',exact=True).click()
+      page.get_by_text('Confirmed',exact=True).wait_for(timeout=30000)
+      page.reload(wait_until='networkidle',timeout=120000)
+      page.get_by_role('button',name='Brands & facts',exact=True).click()
+      page.get_by_text('Synthetic cotton canvas',exact=True).wait_for(timeout=30000)
+      page.get_by_text('Confirmed',exact=True).wait_for()
+      assert page.get_by_role('link',name='Synthetic materials page',exact=True).get_attribute('href')=='https://synthetic.example/materials','Fact source stays linked to the product fact'
+      assert len(created_teams)==1 and len(created_brands)==1 and len(created_facts)==1,'Created team, brand, and fact IDs must be returned for exact cleanup'
+      checks+=10
+     else:
+      page.get_by_role('button',name='Brands & facts',exact=True).click()
+      page.get_by_role('heading',name='Brand profile',exact=True).wait_for()
+      page.get_by_text('Synthetic cotton canvas',exact=True).wait_for(timeout=30000)
+      page.get_by_text('Confirmed',exact=True).wait_for()
+      checks+=3
     elif view=='twin':
      page.get_by_role('heading',name='AI Twin',exact=True).wait_for(timeout=60000)
      page.get_by_role('heading',name=fixture['actorName'],exact=True).wait_for(timeout=20000)
@@ -137,18 +214,20 @@ with sync_playwright() as p:
     assert overflow['scroll']<=overflow['client']+1, f'{view}/{label} horizontal overflow: {overflow}'
     checks+=1
     image=os.path.join(fixture['artifacts'],f'{view}-{label}.png');page.screenshot(path=image,full_page=True);screenshots.append(image)
-  assert fixture['actorId'] in observed_actors,'Owned actor not reloaded through integrated API'
-  assert set(fixture['jobIds']).issubset(observed_jobs),'Owned voice/ad jobs not reloaded through integrated API'
+  actor_reloaded=fixture['actorId'] in observed_actors
+  jobs_reloaded=set(fixture['jobIds']).issubset(observed_jobs)
+  if fixture.get('views') is None or 'twin' in fixture['views']:assert actor_reloaded,'Owned actor not reloaded through integrated API'
+  if fixture.get('views') is None or 'clone' in fixture['views']:assert jobs_reloaded,'Owned voice/ad jobs not reloaded through integrated API'
   assert not errors,'Page errors: '+json.dumps(errors)
   assert not responses,'HTTP 5xx: '+json.dumps(responses)
   unsafe=[r for r in blocked if not r['path'].startswith('https://fonts.googleapis.com/')]
   assert not unsafe,'Unexpected non-read/external requests blocked: '+json.dumps(unsafe)
   checks+=5
-  print(json.dumps({'result':'PASS','checks':checks,'pageErrors':len(errors),'http5xx':len(responses),'blockedRequests':len(blocked),'externalFontsStubbed':len(fonts),'localGetRequests':len(calls),'ownedJobsReloaded':len(set(fixture['jobIds'])&observed_jobs),'ownedActorReloaded':True,'screenshots':screenshots}))
+  print(json.dumps({'result':'PASS','checks':checks,'pageErrors':len(errors),'http5xx':len(responses),'blockedRequests':len(blocked),'externalFontsStubbed':len(fonts),'localApiRequests':len(calls),'ownedJobsReloaded':len(set(fixture['jobIds'])&observed_jobs),'ownedActorReloaded':actor_reloaded,'createdTeamIds':created_teams,'createdBrandIds':created_brands,'createdFactIds':created_facts,'screenshots':screenshots}))
  except Exception as e:
   try:page.screenshot(path=os.path.join(fixture['artifacts'],'failure.png'),full_page=True)
   except:pass
-  print(json.dumps({'result':'FAIL','error':str(e),'pageErrors':errors,'http5xx':responses,'failedRequests':failed,'consoleErrors':consoles,'blockedRequests':blocked,'screenshots':screenshots}))
+  print(json.dumps({'result':'FAIL','error':str(e),'pageErrors':errors,'http5xx':responses,'apiStatus':api_status,'visibleAlerts':page.get_by_role('alert').all_inner_texts() if page else [],'pageText':page.locator('main').inner_text()[:3000] if page else '', 'failedRequests':failed,'consoleErrors':consoles,'blockedRequests':blocked,'createdTeamIds':created_teams,'createdBrandIds':created_brands,'createdFactIds':created_facts,'screenshots':screenshots}))
   sys.exitcode=1
  finally:
   browser.close()
@@ -172,7 +251,8 @@ try {
     const ready=(await request(`${clone}/jobs/${job.id}/run-mock`,{revision:job.revision})).job;jobs.push(ready.id);
     if(workflow==='voice_twin')await request(`${clone}/jobs/${job.id}/bind-actor`,{revision:ready.revision,body:{mockMode:true,actorId:actor.actorId}});
   }
-  const payload={origin,sessionId,token,customerId,actorName,actorId:actor.actorId,videoLabel:video.label,jobIds:jobs,artifacts,chromium:'/Users/a1/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'};
+  const views=process.env.AIDREAMCAPES_SMOKE_VIEWS?.split(',').map((view)=>view.trim()).filter(Boolean);
+  const payload={origin,sessionId,token,customerId,today:new Date().toISOString().slice(0,10),actorName,actorId:actor.actorId,videoLabel:video.label,jobIds:jobs,artifacts,views,chromium:'/Users/a1/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing'};
   const browserResult=await new Promise((resolve,reject)=>{
     const child=spawn('/tmp/aidreamcapes-dom-browser-venv/bin/python',['-c',python],{stdio:['pipe','pipe','pipe']});let stdout='',stderr='';
     child.stdout.on('data',data=>stdout+=data);child.stderr.on('data',data=>stderr+=data);
@@ -186,8 +266,18 @@ finally {
   try {
     const creditLedger=await db.creditLedger.count({where:scope}),generationJobs=await db.generationJob.count({where:scope});
     assert.equal(creditLedger,0);assert.equal(generationJobs,0);
+    const syntheticTeams=await db.$queryRaw`SELECT "id" FROM "AidreamcapesTeam" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId}`;
+    for(const {id:teamId} of syntheticTeams){
+      await db.$executeRaw`DELETE FROM "AidreamcapesBrandFactVersion" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "brandProfileId" IN (SELECT "id" FROM "AidreamcapesBrandProfile" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "teamId"=${teamId})`;
+      await db.$executeRaw`DELETE FROM "AidreamcapesBrandFact" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "brandProfileId" IN (SELECT "id" FROM "AidreamcapesBrandProfile" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "teamId"=${teamId})`;
+      await db.$executeRaw`DELETE FROM "AidreamcapesBrandProfile" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "teamId"=${teamId}`;
+      await db.$executeRaw`DELETE FROM "AidreamcapesTeamInvite" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "teamId"=${teamId}`;
+      await db.$executeRaw`DELETE FROM "AidreamcapesTeamMember" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "teamId"=${teamId}`;
+      await db.$executeRaw`DELETE FROM "AidreamcapesTeam" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "id"=${teamId}`;
+    }
     await db.$executeRaw`DELETE FROM "AidreamcapesCloneJob" WHERE "siteId"=${siteId} AND "customerId"=${customerId}`;
     await db.$executeRaw`DELETE FROM "AidreamcapesCloneConsent" WHERE "siteId"=${siteId} AND "customerId"=${customerId}`;
+    await db.$executeRaw`DELETE FROM "AidreamcapesCreativeMetric" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId} AND "createdByCustomerId"=${customerId}`;
     await db.$executeRaw`DELETE FROM "AidreamcapesVideoTask" WHERE "siteId"=${siteId} AND "customerId"=${customerId}`;
     await db.$executeRaw`DELETE FROM "AidreamcapesWorkspaceActor" WHERE "siteId"=${siteId} AND "customerId"=${customerId}`;
     await db.assetUpload.deleteMany({where:scope});
@@ -198,8 +288,12 @@ finally {
     assert.equal(await db.assetUpload.count({where:scope}),0);assert.equal(await db.customerSession.count({where:scope}),0);
     const remaining=await db.$queryRaw`SELECT (SELECT count(*) FROM "AidreamcapesCloneJob" WHERE "siteId"=${siteId} AND "customerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesCloneConsent" WHERE "siteId"=${siteId} AND "customerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesVideoTask" WHERE "siteId"=${siteId} AND "customerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesWorkspaceActor" WHERE "siteId"=${siteId} AND "customerId"=${customerId}) AS count`;
     assert.equal(Number(remaining[0].count),0);
+    const metricRows=await db.$queryRaw`SELECT count(*) AS count FROM "AidreamcapesCreativeMetric" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId}`;
+    assert.equal(Number(metricRows[0].count),0);
+    const workspaceRows=await db.$queryRaw`SELECT (SELECT count(*) FROM "AidreamcapesTeam" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesTeamMember" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesTeamInvite" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesBrandProfile" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesBrandFact" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId})+(SELECT count(*) FROM "AidreamcapesBrandFactVersion" WHERE "siteId"=${siteId} AND "ownerCustomerId"=${customerId}) AS count`;
+    assert.equal(Number(workspaceRows[0].count),0);
     result={...result,cleanup:true,creditLedger,generationJobs};
-  }catch(error){failure||='Scoped fixture cleanup failed';console.error('FAIL scoped fixture cleanup');}
+  }catch{failure||='Scoped fixture cleanup failed';console.error('FAIL scoped fixture cleanup');}
   await fs.rm(temp,{recursive:true,force:true});await db.$disconnect();
 }
 result.result=failure?'FAIL':'PASS';

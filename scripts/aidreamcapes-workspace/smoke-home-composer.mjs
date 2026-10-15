@@ -17,7 +17,7 @@ const calls = [];
 const model = { id: "fixture", label: "Fixture model", model: "fixture", available: true, aspects: ["16:9"], durations: [6], multiReference: false };
 const catalog = { models: [model], aspects: ["9:16", "16:9", "1:1"], durations: [{ value: 6, label: "6s" }, { value: 15, label: "15s" }], actors: [], scenes: [] };
 const props = {
-  tab: "Video Agent", onTabChange: (value) => calls.push(["tab", value]), prompt: "A product demonstration", onPromptChange: (value) => calls.push(["prompt", value]),
+  tab: "AI Video Agent", onTabChange: (value) => calls.push(["tab", value]), prompt: "A product demonstration", onPromptChange: (value) => calls.push(["prompt", value]),
   catalog, modelId: "fixture", onModelChange() {}, aspect: "9:16", onAspectChange() {}, duration: 15, onDurationChange() {},
   products: [], onOpenProduct: () => calls.push(["product"]), onOpenAvatar: () => calls.push(["avatar"]),
   videoReferenceUrls: [], onVideoReferenceUpload() {}, onVideoReferenceRemove() {},
@@ -36,6 +36,9 @@ assert.equal(options.aspects.length, 1); assert.equal(options.durations.length, 
 const videoTree = HomeComposer({ ...props, tab: "AI Video" });
 find(videoTree, isContinueButton).props.onClick();
 assert.equal(calls.at(-1)[1], "AI Video"); assert.equal(calls.at(-1)[2].aspect, "16:9"); assert.equal(calls.at(-1)[2].duration, 6);
+const draftTree = HomeComposer({ ...props, tab: "AI Video Agent" });
+find(draftTree, isContinueButton).props.onClick();
+assert.equal(calls.at(-1)[1], "AI Video Agent");
 const invalidTree = HomeComposer({ ...props, tab: "AI Video", videoReferenceUrls: ["one", "two"] });
 assert.equal(find(invalidTree, isContinueButton).props.disabled, true);
 const imageTree = HomeComposer({ ...props, tab: "AI Image" });
@@ -58,13 +61,25 @@ try {
   await page.route("**/*", (route) => route.abort());
   for (const width of [1120, 390]) {
     await page.setViewportSize({ width, height: 920 });
-    for (const tab of ["Video Agent", "AI Video", "AI Image"]) {
+    for (const tab of ["AI Video Agent", "AI Video", "AI Image"]) {
       await page.setContent(`<html><head><style>*{box-sizing:border-box}body{margin:0;padding:24px;background:#f3f4f6;font-family:Arial;color:#101623}button,input,select,textarea{font:inherit}h2,p{margin:0}${css}</style></head><body>${renderToStaticMarkup(HomeComposer({ ...props, tab }))}</body></html>`);
       await page.waitForLoadState("networkidle");
       assert.equal(await page.getByRole("tab", { name: tab, exact: true }).getAttribute("aria-selected"), "true");
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${tab} fits ${width}px`);
       assert.equal(await page.getByRole("combobox", { name: "Video model", exact: true }).count(), tab === "AI Image" ? 0 : 1);
       assert.equal(await page.getByRole("combobox", { name: "Image style", exact: true }).count(), tab === "AI Image" ? 1 : 0);
+      if (tab === "AI Video" || tab === "AI Image") {
+        const prompt = page.locator(".hc-promptField");
+        const references = prompt.locator(".hc-references");
+        assert.equal(await references.count(), 1, `${tab} reference picker is inside its prompt card.`);
+        const upload = references.locator(".hc-upload");
+        const count = references.locator(".hc-referenceCount");
+        const [uploadBox, countBox, promptBox, textareaBox] = await Promise.all([upload.boundingBox(), count.boundingBox(), prompt.boundingBox(), prompt.locator("textarea").boundingBox()]);
+        assert(uploadBox && countBox && promptBox && textareaBox);
+        assert(uploadBox.x >= promptBox.x && uploadBox.y >= promptBox.y, `${tab} upload starts at the upper-left of its card.`);
+        assert(countBox.y >= uploadBox.y + uploadBox.height - 1, `${tab} photo count sits below the upload tile.`);
+        assert(textareaBox.y >= countBox.y + countBox.height, `${tab} description follows its upload and count.`);
+      }
       if (tab === "AI Video") assert.equal(await page.getByRole("option", { name: "15s", exact: true }).count(), 0);
       await page.screenshot({ path: path.join(directory, `${width}-${tab.replaceAll(" ", "-")}.png`), fullPage: true });
     }

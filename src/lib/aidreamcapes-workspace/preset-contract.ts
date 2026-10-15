@@ -23,6 +23,14 @@ export interface WorkspacePreset extends WorkspacePresetRequest {
   imageTool: WorkspaceImageTool;
   sourceUpdatedAt: string;
 }
+export interface WorkspaceTemplateOption extends WorkspacePreset {
+  imageAlt: string;
+  categoryIds: string[];
+}
+export interface WorkspaceTemplateGallery {
+  categories: { id: string; label: string }[];
+  options: WorkspaceTemplateOption[];
+}
 
 export function presetSourcePage(value: unknown): string | undefined {
   if (typeof value !== "string" || value.length > 300 || !value.startsWith("/") || value.startsWith("//") || /[\\?#\u0000-\u0020]/.test(value)) return;

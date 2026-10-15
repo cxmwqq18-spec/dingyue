@@ -9,7 +9,7 @@ import { readClip, readTaskMusic } from "./media-render";
 import { assertTaskMusicSelectionRights } from "./music-catalog";
 import { isWorkspaceStabilityMockMode } from "./stability";
 import { readMockShotClip } from "./mock-runtime";
-import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SubtitleCue, type VideoAspect, type VideoRender, type WorkspaceTask } from "./types";
+import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SubtitleCue, type SubtitleStyle, type VideoAspect, type VideoRender, type WorkspaceTask } from "./types";
 
 const run = promisify(execFile);
 const SAFE_ID = /^[a-zA-Z0-9_-]{1,180}$/;
@@ -34,6 +34,7 @@ export interface ClipEditSetting {
 export interface VideoEditSettings {
   clips: ClipEditSetting[];
   order: string[];
+  subtitleStyle: SubtitleStyle;
   overlay: { text: string; cta: string };
   audio: { nativeGain: number; musicGain: number; mixMusic: boolean };
 }
@@ -146,7 +147,7 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   }
 
   const patch = value === undefined ? {} : plainObject(value, "workspace_edit_patch_invalid");
-  assertExactKeys(patch, ["clips", "order", "overlay", "audio"], "workspace_edit_patch_invalid");
+  assertExactKeys(patch, ["clips", "order", "subtitleStyle", "overlay", "audio"], "workspace_edit_patch_invalid");
   if (patch.clips !== undefined) {
     if (!Array.isArray(patch.clips) || patch.clips.length > clipByShot.size) throw new WorkspaceError("workspace_edit_clips_invalid", 422);
     const seen = new Set<string>();
@@ -186,6 +187,10 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   }
 
   const previousOverlay = prior?.overlay || { text: "", cta: "" };
+  const subtitleStyle = patch.subtitleStyle === undefined ? prior?.subtitleStyle ?? task.input.options.subtitleStyle ?? "classic" : patch.subtitleStyle;
+  if (subtitleStyle !== "classic" && subtitleStyle !== "bold" && subtitleStyle !== "minimal") {
+    throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
+  }
   const overlayPatch = patch.overlay === undefined ? {} : plainObject(patch.overlay, "workspace_edit_overlay_invalid");
   assertExactKeys(overlayPatch, ["text", "cta"], "workspace_edit_overlay_invalid");
   const overlay = {
@@ -211,7 +216,7 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   const [width, height] = aspect === "9:16" ? [720, 1280] : aspect === "1:1" ? [720, 720] : [1280, 720];
   return {
     sourceRenderId,
-    settings: { clips: clipsInSourceOrder.map(({ shotId, inPoint, outPoint, speed }) => ({ shotId, inPoint, outPoint, speed })), order, overlay, audio },
+    settings: { clips: clipsInSourceOrder.map(({ shotId, inPoint, outPoint, speed }) => ({ shotId, inPoint, outPoint, speed })), order, subtitleStyle, overlay, audio },
     clips: orderedClips.map(({ shotId, inPoint, outPoint, speed, vid, clipUrl, sourceDuration }) => ({ shotId, inPoint, outPoint, speed, vid, clipUrl, sourceDuration })),
     duration,
     aspect,
@@ -342,6 +347,7 @@ function remapCaptions(task: EditedWorkspaceTask, compiled: CompiledVideoEdit, c
   const currentSettings = current.editSettings || {
     clips: compiled.clips.map((clip) => ({ shotId: clip.shotId, inPoint: 0, outPoint: clip.sourceDuration, speed: 1 })),
     order: current.clips.map((clip) => clip.shotId),
+    subtitleStyle: task.input.options.subtitleStyle ?? "classic",
     overlay: { text: "", cta: "" },
     audio: { nativeGain: 1, musicGain: 0, mixMusic: false },
   };
@@ -465,9 +471,9 @@ export async function renderEditedVideo(task: WorkspaceTask, compiled: CompiledV
     if (compiled.settings.overlay.text) await fs.writeFile(path.join(dir, "overlay-text.txt"), compiled.settings.overlay.text, { mode: 0o600, flag: "wx" });
     if (compiled.settings.overlay.cta) await fs.writeFile(path.join(dir, "overlay-cta.txt"), compiled.settings.overlay.cta, { mode: 0o600, flag: "wx" });
 
-    const style = task.input.options.subtitleStyle === "bold"
+    const style = compiled.settings.subtitleStyle === "bold"
       ? "FontName=Arial,FontSize=26,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H80000000,BorderStyle=3,Outline=0,Shadow=0,Alignment=2,MarginV=48"
-      : task.input.options.subtitleStyle === "minimal"
+      : compiled.settings.subtitleStyle === "minimal"
         ? "FontName=Arial,FontSize=20,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BorderStyle=1,Outline=1,Shadow=1,Alignment=2,MarginV=36"
         : "FontName=Arial,FontSize=22,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BorderStyle=1,Outline=2,Shadow=0,Alignment=2,MarginV=44";
     const videoFilter = outputVideoFilter(dir, compiled, cues, style);

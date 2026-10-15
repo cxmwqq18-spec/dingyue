@@ -12,7 +12,7 @@ import { AIVIDEOSUGC_SITE_ID, type SceneId } from "./types";
 import { isWorkspaceView } from "./navigation";
 import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
 import { presetRequestFromQuery, type WorkspacePresetRequest } from "./preset-contract";
-import { resolveWorkspacePreset } from "./presets.server";
+import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -42,10 +42,11 @@ export async function renderAidreamcapesWorkspace({
   if (!taskId && invalidPreset) notFound();
   const initialPreset = !taskId && presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined;
   if (!taskId && presetRequest && !initialPreset) notFound();
-  const [current, cookieStore, headerStore] = await Promise.all([
+  const [current, cookieStore, headerStore, templateGallery] = await Promise.all([
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
     cookies(),
     headers(),
+    routeSlug === "aidreamcapes" ? getWorkspaceTemplateGallery(AIVIDEOSUGC_SITE_ID) : Promise.resolve(undefined),
   ]);
   const catalog = current ? await catalogForCustomer(AIVIDEOSUGC_SITE_ID, current.customer.id) : await getWorkspaceCatalog(AIVIDEOSUGC_SITE_ID);
   const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
@@ -66,6 +67,7 @@ export async function renderAidreamcapesWorkspace({
     initialSceneId={sceneId}
     initialImageTool={imageTool}
     initialPreset={initialPreset}
+    initialTemplateGallery={templateGallery}
     initialCatalog={catalog}
     initialInspirations={initialView === "inspirations" ? await getAidreamcapesInspirationCards() : []}
     csrfToken={cookieStore.get(csrfCookieName(`customer:${AIVIDEOSUGC_SITE_ID}`))?.value}

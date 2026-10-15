@@ -15,6 +15,7 @@ const presetId = `p_${"a".repeat(24)}`;
 const currentTime = "2026-10-15T01:02:03.000Z";
 const videoPreset = { sourcePage: "/templates", presetId, title: "Creator scene", kind: "video", prompt: "A creator demonstrates a product.", previewUrl: "/media/site_aidreamcapes/picker/creator.webp", sceneId: "presenter_showcase", aspect: "9:16", duration: 15, imageTool: "custom", sourceUpdatedAt: currentTime };
 const photoPreset = { ...videoPreset, title: "Clean white product", kind: "photo", prompt: "A product on a white background.", imageTool: "white-background" };
+const templateGallery = { categories: [{ id: "accessories", label: "Accessories" }], options: [{ ...videoPreset, imageAlt: "A creator presents a product.", categoryIds: ["accessories"] }] };
 const NotFound = class extends Error { constructor() { super("NEXT_NOT_FOUND"); this.code = "NEXT_NOT_FOUND"; } };
 
 try {
@@ -30,6 +31,7 @@ try {
   let host = "www.aivideosugc.com";
   let customer;
   let currentCustomerCalls = 0;
+  let templateGalleryCalls = 0;
   const workspaceMarker = function AidreamcapesWorkspace() {};
   const scopedRequire = (id) => {
     if (id === "server-only") return {};
@@ -47,7 +49,10 @@ try {
     if (id === "./navigation") return { isWorkspaceView: (value) => ["home", "agent", "images", "inspirations", "library", "settings"].includes(value) };
     if (id === "@/lib/aidreamcapes-inspirations") return { getAidreamcapesInspirationCards: async () => [] };
     if (id === "./preset-contract") return presetContract;
-    if (id === "./presets.server") return { resolveWorkspacePreset: async (siteId, request) => { resolveCalls.push({ siteId, request }); return fixtures[selectedPreset]; } };
+    if (id === "./presets.server") return {
+      resolveWorkspacePreset: async (siteId, request) => { resolveCalls.push({ siteId, request }); return fixtures[selectedPreset]; },
+      getWorkspaceTemplateGallery: async (siteId) => { templateGalleryCalls++; assert.equal(siteId, "site_aidreamcapes"); return templateGallery; },
+    };
     return require(id);
   };
   const pageModule = { exports: {} };
@@ -72,6 +77,8 @@ try {
   assert.equal(videoElement.props.initialView, "home", "video preset opens video composer home");
   assert.deepEqual(videoElement.props.initialPreset, videoPreset);
   assert.equal(videoElement.props.basePath, "", "canonical host uses host routes");
+  assert.equal(videoElement.props.initialTemplateGallery, undefined, "AIVideosUGC alias does not load Aidreamcapes-only picker data");
+  assert.equal(templateGalleryCalls, 0);
   assert.equal(resolveCalls.length, 1);
   assert.deepEqual(resolveCalls[0], { siteId: "site_aidreamcapes", request: { sourcePage: "/templates", presetId } });
   const videoNext = new URL(videoElement.props.loginPath, "https://www.aivideosugc.com").searchParams.get("next");
@@ -82,6 +89,8 @@ try {
   const photoElement = await renderAidreamcapesWorkspace({ routeSlug: "aidreamcapes", ...photoEntry, initialView: "agent" });
   assert.equal(photoElement.props.initialView, "images", "photo preset opens image view");
   assert.deepEqual(photoElement.props.initialPreset, photoPreset);
+  assert.deepEqual(photoElement.props.initialTemplateGallery, templateGallery, "Aidreamcapes workspace receives its homepage template gallery");
+  assert.equal(templateGalleryCalls, 1);
   assert.equal(new URL(photoElement.props.loginPath, "https://www.aivideosugc.com").searchParams.get("next"), `/app/create?source=%2Ftemplates&preset=${presetId}`);
 
   // Invalid query identity and valid-but-missing current preset fail explicitly before loading auth/catalog.

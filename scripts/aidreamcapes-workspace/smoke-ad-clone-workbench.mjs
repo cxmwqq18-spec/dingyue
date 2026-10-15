@@ -26,7 +26,7 @@ const bundle = fs.readFileSync(path.join(folder,'bundle.js'),'utf8');
 const prefix='/api/sites/site_aidreamcapes/aivideosugc';
 const asset={id:'source-fixture', label:'My launch ad', mimeType:'video/mp4'};
 const segments=[{role:'hook',start:0,end:3,visual:'Example opening'},{role:'body',start:3,end:8,visual:'Example middle'},{role:'cta',start:8,end:10,visual:'Example close'}];
-let storageMissing=false; let savedSegments=segments; let jobs=[]; let failJobs=false; let failAttach=false; const calls=[]; const unexpected=[]; const errors=[];
+let storageMissing=false; let savedSegments=segments; let jobs=[]; let failJobs=false; let failAttach=false; let failPreviewResolution=false; const calls=[]; const unexpected=[]; const embedFixtureRequests=[]; const errors=[];
 const browser=await chromium.launch({headless:true});
 try {
   const page=await browser.newPage({viewport:{width:1180,height:950}});
@@ -34,6 +34,7 @@ try {
   await page.route('**/*', async route=>{
     const req=route.request(); const url=new URL(req.url());
     if(url.pathname==='/fixture') return route.fulfill({contentType:'text/html',body:`<!doctype html><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;padding:28px;background:#f4f5f8;font-family:Arial,sans-serif}button,input,textarea,select{font:inherit}${css}</style><div id="app"></div><script>window.guest=${url.searchParams.has('guest')};</script><script>${bundle.replaceAll('</script','<\\/script')}</script>`});
+    if(['www.youtube-nocookie.com','www.tiktok.com','www.instagram.com','www.facebook.com'].includes(url.hostname)) {embedFixtureRequests.push(`${url.hostname}${url.pathname}${url.search}`);return route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Synthetic embed fixture</title>'});}
     if(!url.pathname.startsWith(prefix)){unexpected.push(req.url());return route.abort();}
     const suffix=url.pathname.slice(prefix.length); const method=req.method();
     let body; if(req.headers()['content-type']?.includes('application/json')) body=req.postDataJSON();
@@ -43,6 +44,7 @@ try {
     if(suffix==='/clones') return reply({adReference:{available:false,state:'mock_only'},components:{database:{available:!storageMissing}},mockAvailable:!storageMissing,analysisBeforeTask:!storageMissing});
     if(suffix==='/clones/assets'&&method==='GET') return reply({assets:[asset],limits:{videoBytes:100*1024*1024}});
     if(suffix==='/clones/assets'&&method==='POST') {assert.match(req.postData(),/name="workflow"/);return reply({asset:{...asset,id:'uploaded-fixture',label:'Uploaded ad'}});}
+    if(suffix==='/clones/ad-references/preview-url'&&method==='POST') {assert.match(body.url,/^https:\/\/(?:vm|vt)\.tiktok\.com\//);return failPreviewResolution?reply({error:'video_link_resolution_failed'},422):reply({videoId:'6718335390845095173'});}
     if(suffix==='/clones/jobs') return failJobs?reply({error:'workspace_database_unavailable'},503):reply({jobs});
     if(suffix==='/clones/consents') {assert.equal(body.taskId,undefined);assert.equal(body.rightsConfirmed,true);return reply({consent:{id:'consent-fixture',revision:1}});}
     if(suffix==='/clones/ad-references/queue') { const job={id:`job-${jobs.length}`,workflow:'ad_reference',sourceAssetId:asset.id,status:'queued',revision:1,consentId:'consent-fixture',consentRevision:1};jobs.unshift(job);return reply({job},202); }
@@ -69,9 +71,48 @@ try {
   await page.getByText('Saved analyses need storage setup. Try again later.').waitFor();
   assert.equal(await page.getByLabel('Upload reference MP4').isDisabled(),true);
   storageMissing=false;await page.getByRole('button',{name:'Reload',exact:true}).click();
-  await page.getByRole('tab',{name:'Video link (unavailable)',exact:true}).click();
-  await page.getByText(/does not fetch or parse video URLs/).waitFor();
-  await page.getByText(/product page URL in step 03 is a separate field/).waitFor();
+  await page.getByRole('tab',{name:'Play a video link',exact:true}).click();
+  await page.getByText(/playback stays on the original platform; this workspace does not download or analyze the video/i).waitFor();
+  await page.getByLabel('Public video URL',{exact:true}).fill('https://youtu.be/dQw4w9WgXcQ');
+  await page.getByRole('button',{name:'Play video',exact:true}).click();
+  await page.getByRole('region',{name:'YouTube video preview',exact:true}).waitFor();
+  assert.equal(calls.some(call=>call.suffix==='/clones/ad-references/preview-url'),false,'A full video URL opens its platform embed directly');
+  assert.equal(jobs.length,0,'Playing a video link does not queue a reference analysis');
+  assert.equal(await page.getByRole('link',{name:'Open original link',exact:true}).getAttribute('href'),'https://youtu.be/dQw4w9WgXcQ');
+  await page.getByRole('button',{name:'Clear preview',exact:true}).click();
+  const previewCases=[
+    {url:'https://www.tiktok.com/@scout2015/video/6718335390845095173',platform:'TikTok',embed:'https://www.tiktok.com/player/v1/6718335390845095173?controls=1'},
+    {url:'https://vm.tiktok.com/ZM123456/',platform:'TikTok',embed:'https://www.tiktok.com/player/v1/6718335390845095173?controls=1',resolved:true},
+    {url:'https://www.instagram.com/reel/C1abcDeFGhI/',platform:'Instagram',embed:'https://www.instagram.com/reel/C1abcDeFGhI/embed/'},
+    {url:'https://www.facebook.com/watch/?v=1234567890',platform:'Facebook',embedPrefix:'https://www.facebook.com/plugins/video.php?'}
+  ];
+  for(const item of previewCases){
+    const resolverCountBefore=calls.filter(call=>call.suffix==='/clones/ad-references/preview-url').length;
+    await page.getByLabel('Public video URL',{exact:true}).fill(item.url);
+    await page.getByRole('button',{name:'Play video',exact:true}).click();
+    const region=page.getByRole('region',{name:`${item.platform} video preview`,exact:true});await region.waitFor();
+    const frame=region.locator('iframe');const frameUrl=await frame.getAttribute('src');
+    if(item.embed) assert.equal(frameUrl,item.embed); else assert.ok(frameUrl.startsWith(item.embedPrefix));
+    assert.equal(calls.filter(call=>call.suffix==='/clones/ad-references/preview-url').length-resolverCountBefore,item.resolved?1:0,'Only TikTok short links use the authenticated resolver');
+    assert.equal(jobs.length,0,'URL preview never queues analysis');
+    await page.getByRole('button',{name:'Clear preview',exact:true}).click();
+  }
+  const previewPosts=calls.filter(call=>call.suffix==='/clones/ad-references/preview-url');
+  assert.equal(previewPosts.length,1,'Only a TikTok short link requests oEmbed ID resolution');
+  await page.getByLabel('Public video URL',{exact:true}).fill('https://evil.example/video/123');
+  await page.getByRole('button',{name:'Play video',exact:true}).click();
+  await page.getByRole('alert').filter({hasText:'Enter a public video URL'}).waitFor();
+  assert.equal(await page.locator('iframe').count(),0,'Unsupported domains never create an iframe');
+  assert.equal(calls.filter(call=>call.suffix==='/clones/ad-references/preview-url').length,1,'Invalid URL never reaches the resolver');
+  assert.equal(calls.some(call=>call.method==='POST'&&/analysis|queue|consent/i.test(call.suffix)),false,'Public video preview never starts analysis or consent');
+  assert.deepEqual(calls.filter(call=>call.method==='POST').map(call=>call.suffix),['/clones/ad-references/preview-url'],'Only TikTok short-link ID resolution is posted during URL preview');
+  failPreviewResolution=true;
+  await page.getByLabel('Public video URL',{exact:true}).fill('https://vm.tiktok.com/ZM987654/');
+  await page.getByRole('button',{name:'Play video',exact:true}).click();
+  await page.getByRole('alert').filter({hasText:'This TikTok share link could not be opened'}).waitFor();
+  assert.equal(await page.locator('iframe').count(),0,'Resolver errors fail closed without creating a player');
+  assert.equal(jobs.length,0,'Resolver errors do not queue analysis');
+  failPreviewResolution=false;
   await page.getByRole('tab',{name:'Upload an MP4',exact:true}).click();
   await page.getByLabel('Upload reference MP4').setInputFiles({name:'reference.mp4',mimeType:'video/mp4',buffer:Buffer.from('fixture MP4 bytes; endpoint fully mocked')});
   await page.getByText('Video uploaded. Confirm your permission before queuing.').waitFor();
@@ -111,6 +152,6 @@ try {
   await page.getByRole('button',{name:/My launch ad/}).filter({hasText:'Cancelled'}).click();
   await page.getByRole('button',{name:'Delete saved analysis',exact:true}).click();
   await page.getByText('No saved analyses yet',{exact:true}).waitFor();
-  assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);
-  console.log(`PASS AdCloneWorkbench actual interactive component: guest, empty, MP4 upload/select, consent, queue, cancel/retry, explicit simulation, edited timing/structure, confirmed facts, attach failure/retry without duplicate draft, owner-job reload/delete, database error, mobile. No real network/model/billing/DB calls. Screenshots: ${folder}`);
+  assert.deepEqual(errors,[]);assert.deepEqual(unexpected,[]);assert.equal(embedFixtureRequests.length,5,'All four platform embeds plus the TikTok short-link embed were locally stubbed');
+  console.log(`PASS AdCloneWorkbench actual interactive component: guest, empty, MP4 upload/select, YouTube/TikTok canonical/TikTok short/Instagram/Facebook preview, invalid domain rejection, TikTok short-link resolver failure, URL preview without download/analysis, consent, queue, cancel/retry, explicit simulation, edited timing/structure, confirmed facts, attach failure/retry without duplicate draft, owner-job reload/delete, database error, mobile. External embeds and TikTok resolution locally stubbed; no real network/model/billing/DB calls. Screenshots: ${folder}`);
 } finally {await browser.close();}

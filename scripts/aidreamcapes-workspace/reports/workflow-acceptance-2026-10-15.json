@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-15",
+  "siteId": "site_aidreamcapes",
+  "status": "offline_and_synthetic_local_http_accepted",
+  "scope": "Aidreamcapes private workspace backend, synthetic local HTTP, and current customer auth hardening",
+  "offline": {
+    "passed": 26,
+    "failed": 0,
+    "commands": [
+      "node scripts/aidreamcapes-workspace/smoke-stability.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-capabilities.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-feature-contracts.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-asset-contracts.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-task-cancel.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-mock-workflow.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-editor.mjs",
+      "node scripts/aidreamcapes-workspace/smoke-captions.mjs",
+      "node scripts/smoke-aidreamcapes-workspace-pipeline.mjs",
+      "node scripts/smoke-aidreamcapes-workspace-voice.mjs",
+      "node scripts/smoke-aidreamcapes-workspace-render.mjs",
+      "node scripts/smoke-aidreamcapes-workspace-batch.mjs",
+      "node scripts/smoke-aidreamcapes-product-brief-patch.mjs",
+      "node scripts/smoke-aidreamcapes-product-brief-persistence.mjs",
+      "node scripts/smoke-aidreamcapes-product-brief-ui.mjs",
+      "node scripts/smoke-aidreamcapes-teams-brands.mjs",
+      "node scripts/smoke-aidreamcapes-developer-webhooks.mjs",
+      "node scripts/smoke-aidreamcapes-publishing.mjs",
+      "node scripts/smoke-aidreamcapes-clones.mjs",
+      "node scripts/smoke-aidreamcapes-analytics.mjs",
+      "node scripts/smoke-aidreamcapes-music-catalog.mjs",
+      "node scripts/smoke-aidreamcapes-music-generation.mjs",
+      "node scripts/smoke-customer-auth-hardening.mjs",
+      "node scripts/smoke-video-provider-availability-runtime.mjs",
+      "node scripts/smoke-video-provider-priority-fallback.mjs",
+      "node scripts/smoke-platform-ai-audio-provider.mjs"
+    ],
+    "outcomeForEachCommand": "pass",
+    "mockWorkflowCounters": {
+      "externalRequestCount": 0,
+      "providerStoreCalls": 0,
+      "apiKeyReads": 0,
+      "prismaCalls": 0,
+      "realBillingStoreCalls": 0,
+      "generationSubmitCalls": 0,
+      "workerDispatchCalls": 0
+    },
+    "authLimit": "Salted scrypt, verification, blocked status, OTP throttling, and session revocation passed with synthetic stores; no real customer login or password was tested."
+  },
+  "localHttp": {
+    "command": "node scripts/aidreamcapes-workspace/smoke-post-edit-http-local.mjs",
+    "outcome": "pass",
+    "assertions": 70,
+    "requests": 31,
+    "expectedRejections": 13,
+    "syntheticCustomers": 2,
+    "syntheticUploads": 1,
+    "newEditedRenderVersions": 2,
+    "creditLedgerRows": 0,
+    "generationJobRows": 0,
+    "cleanupVerified": true,
+    "browser": {
+      "command": "node scripts/aidreamcapes-workspace/smoke-post-edit-http-local.mjs --browser",
+      "outcome": "pass",
+      "assertions": 73,
+      "browserChecks": 20,
+      "desktopAndMobile": true,
+      "pageErrors": 0,
+      "http5xx": 0,
+      "blockedRequests": 0,
+      "cleanupVerified": true,
+      "creditLedgerRows": 0,
+      "generationJobRows": 0,
+      "screenshots": "/var/folders/_w/l7qb3zvn2m70p3qtmkphxp580000gn/T/aidreamcapes-post-edit-browser-evidence-rGcpyW"
+    },
+    "databaseGuard": "DATABASE_TARGET and DINGYUE_ENV local; URL checked against 127.0.0.1:15433/dingyue_local before any connection; remote asset storage refused.",
+    "sourceClip": "Local FFmpeg solid MP4 with sine audio uploaded through clones/assets. Only its newly created exact site/customer/asset row was changed from input to output to represent an already-generated clip, then deleted. Only the exact owner task JSON was seeded to completed with verified synthetic caption cues and matching local render files.",
+    "coverage": [
+      "Actual personal analytics GET returns 200 and scoped empty state",
+      "Actual batch POST creates draft; ordinary resume returns 503 and GET remains draft",
+      "Edit and caption GET/PATCH with real local FFmpeg trim, speed, subtitle style, overlay, audio, MP4 and SRT readback",
+      "Anonymous, foreign owner, CSRF, stale revision, invalid cue, and invalid edit rejection",
+      "Two render versions retain source and previous edit history"
+    ],
+    "developmentFixtureFailuresResolved": [
+      "Initial seed omitted matching JSON revision and hit AidreamcapesVideoTask_revision_payload_check; exact scoped cleanup passed.",
+      "Initial clip used clone input preview URL; output clip contract requires a customer asset download URL; corrected and exact scoped cleanup passed."
+    ]
+  },
+  "otherChecks": {
+    "typecheck": { "command": "npm run typecheck -- --pretty false", "outcome": "pass" },
+    "diffCheck": { "command": "git diff --check", "outcome": "pass" },
+    "browserHook": "Optional --browser hook and root-owned Python helper passed 20 integrated browser checks against synthetic local data; no page errors, 5xx, blocked requests, credit ledger rows, generation jobs, or fixture rows remained."
+  },
+  "implementationFindings": {
+    "batch": "Draft creation, ownership, idempotency, leases, concurrency, cancellation, and retry state machine are genuine. No real executor is wired; ordinary resume now fails closed with workspace_batch_execution_unavailable 503 before mutation. Explicit injected fake runner remains fixture-only.",
+    "features": "Advanced feature jobs only queue and cancel metadata. Production provider-derived flags for 4K, extension, actor replacement, and advanced shot tools remain false, so requests are unavailable without explicit capability proof.",
+    "analytics": "Personal summary SQL had an unused null $3 parameter, causing Prisma P2010/HTTP 503. Typed personal guard fixed it; offline analytics and actual local HTTP empty-state regression pass. Coordinator also reported an integrated browser summary pass after the fix.",
+    "providerReadiness": "Video protocol availability and priority fallback pass fixture tests only. Real video, image, TTS, ASR, music, cloning, social publishing, worker topology, and actual billing/provider quality were not exercised or established. Audio provider configuration does not provide a task adapter."
+  },
+  "sideEffects": {
+    "externalProviderRequests": 0,
+    "actualLedgerOrGenerationCalls": 0,
+    "productionWrites": 0,
+    "migrations": 0,
+    "serverRestarts": 0,
+    "commitOrDeployment": 0,
+    "syntheticLocalDatabaseRowsRemaining": 0
+  },
+  "releaseBoundary": {
+    "storefrontDataChangedByThisWorker": false,
+    "myDreamShootsReadback": "Not performed. A shared MyDreamShoots storefront component was already modified in the shared worktree before this worker began; coordinator must review it under Aidreamcapes isolation rules.",
+    "publicRelationalRevisionAndOriginReadback": "Not applicable to these private backend and fixture changes; no public storefront change is claimed.",
+    "unresolved": [
+      "Real batch executor and billing contract are not implemented.",
+      "Provider adapters and credentials were not validated live.",
+      "Production database, worker topology, public storefront, and optional integrated post-edit browser acceptance remain coordinator-owned."
+    ]
+  }
+}

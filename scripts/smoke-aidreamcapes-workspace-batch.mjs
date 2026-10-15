@@ -130,7 +130,9 @@ try {
   await assert.rejects(() => getBatchGroup({ siteId: "site_aidreamcapes", customerId: "customer-b", batchId: created.batch.batchId, repository }), error => error.code === "workspace_batch_not_found" && error.status === 404);
   await assert.rejects(() => cancelBatch({ siteId: "site_aidreamcapes", customerId: "customer-b", batchId: created.batch.batchId, expectedRevision: 1, repository }), error => error.code === "workspace_batch_not_found" && error.status === 404);
   await assert.rejects(() => resumeBatch({ siteId: "site_dreamshoot", customerId, batchId: created.batch.batchId, expectedRevision: 1, repository }), error => error.code === "workspace_site_not_found" && error.status === 404);
+  await assert.rejects(() => resumeBatch({ siteId: "site_aidreamcapes", customerId: "customer-b", batchId: created.batch.batchId, expectedRevision: 1, repository }), error => error.code === "workspace_batch_not_found" && error.status === 404);
   await assert.rejects(() => resumeBatch({ siteId: "site_aidreamcapes", customerId, batchId: created.batch.batchId, expectedRevision: 2, repository }), error => error.code === "revision_conflict" && error.status === 409);
+  await assert.rejects(() => resumeBatch({ siteId: "site_aidreamcapes", customerId, batchId: created.batch.batchId, expectedRevision: 2, repository, runner: mockBatchRunner }), error => error.code === "revision_conflict" && error.status === 409);
 
   let active = 0;
   let maximumActive = 0;
@@ -190,11 +192,17 @@ try {
   let externalCalls = 0;
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => { externalCalls++; throw new Error("external network call forbidden"); };
-  const mockOnlyResult = await resumeBatch({ siteId: "site_aidreamcapes", customerId, batchId: mockOnlyDraft.batch.batchId, expectedRevision: 1, repository: mockOnlyRepo });
-  await mockBatchRunner(mockOnlyResult.tasks[0]);
+  await assert.rejects(
+    resumeBatch({ siteId: "site_aidreamcapes", customerId, batchId: mockOnlyDraft.batch.batchId, expectedRevision: 1, repository: mockOnlyRepo }),
+    error => error.code === "workspace_batch_execution_unavailable" && error.status === 503,
+    "An ordinary resume cannot complete tasks without a real batch executor"
+  );
+  const stillDraft = await getBatchGroup({ siteId: "site_aidreamcapes", customerId, batchId: mockOnlyDraft.batch.batchId, repository: mockOnlyRepo });
+  assert.equal(stillDraft.batch.status, "draft", "Unavailable execution leaves the batch unchanged");
+  const mockOnlyResult = await resumeBatch({ siteId: "site_aidreamcapes", customerId, batchId: mockOnlyDraft.batch.batchId, expectedRevision: 1, repository: mockOnlyRepo, runner: mockBatchRunner });
   globalThis.fetch = originalFetch;
   assert.equal(externalCalls, 0, "mock runner performs no network or provider call");
-  assert.equal(mockOnlyResult.batch.status, "completed", "production resume defaults to the mock runner");
+  assert.equal(mockOnlyResult.batch.status, "completed", "Explicitly injected fixture runner can exercise completion semantics");
 
   const batchSource = fs.readFileSync(path.join(source, "batch.ts"), "utf8");
   assert.doesNotMatch(batchSource, /from ["'][^"']*(?:provider|dispatch|billing|ledger)[^"']*["']/i, "batch implementation has no provider, dispatch, or billing imports");
@@ -205,7 +213,7 @@ try {
   assert.match(batchSource, /jsonb_to_recordset/);
   const resumeRoute = fs.readFileSync(path.join(root, "src/app/api/sites/[siteId]/aivideosugc/tasks/batch/[batchId]/resume/route.ts"), "utf8");
   assert.match(resumeRoute, /resumeBatch\(/);
-  assert.doesNotMatch(resumeRoute, /runner\s*:/, "resume route cannot select a real execution runner");
+  assert.doesNotMatch(resumeRoute, /runner\s*:/, "Ordinary resume route does not inject the fixture runner");
 
   console.log("Aidreamcapes batch contract passed (atomic/idempotent creation, owner and revision guards, concurrency 3, failure resume, cancellation, mock-only execution).");
 } finally {

@@ -151,6 +151,13 @@ export async function resumeBatch(args: {
   const repository = args.repository ?? prismaBatchRepository;
   const baseRevision = args.expectedRevision;
   if (!Number.isSafeInteger(baseRevision) || baseRevision < 1) throw new WorkspaceError("revision_required", 428);
+  // No production batch executor is wired. Preserve owner/revision errors,
+  // then refuse before any state mutation instead of completing a no-op.
+  if (!args.runner) {
+    const existing = assertBatch(await repository.listOwned(args.siteId, args.customerId, args.batchId), args.batchId);
+    if (existing[0].batch.batchRevision !== baseRevision) throw new WorkspaceError("revision_conflict", 409);
+    throw new WorkspaceError("workspace_batch_execution_unavailable", 503);
+  }
   const queued = await repository.updateOwned({ siteId: args.siteId, customerId: args.customerId, batchId: args.batchId, expectedRevision: baseRevision }, tasks => {
     const ordered = assertBatch(tasks, args.batchId);
     if (ordered[0].batch.cancelRequested) throw new WorkspaceError("batch_cancelled", 409);
@@ -169,7 +176,7 @@ export async function resumeBatch(args: {
   });
   assertBatch(queued, args.batchId);
 
-  const runner = args.runner ?? mockBatchRunner;
+  const runner = args.runner;
   const worker = async () => {
     while (true) {
       const task = await repository.claimNext(args.siteId, args.customerId, args.batchId);

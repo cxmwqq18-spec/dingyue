@@ -1,6 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import { pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest } from "./preset-contract";
+import { pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
 import { AIVIDEOSUGC_SITE_ID, type SceneId, type TaskInput } from "./types";
 
 type RecordValue = Record<string, unknown>;
@@ -54,17 +54,8 @@ function cardDuration(href: URL): TaskInput["options"]["duration"] {
   return DURATIONS.has(duration as TaskInput["options"]["duration"]) ? duration as TaskInput["options"]["duration"] : 15;
 }
 
-/** Resolve a picker card exclusively from the current Aidreamcapes LivePage row. */
-export async function resolveWorkspacePreset(siteId: string, request: WorkspacePresetRequest): Promise<WorkspacePreset | undefined> {
-  if (siteId !== AIVIDEOSUGC_SITE_ID) return undefined;
-  const sourcePage = presetSourcePage(request.sourcePage);
-  if (!sourcePage || !/^p_[a-f0-9]{24}$/.test(request.presetId)) return undefined;
-  const page = await prisma.livePage.findUnique({
-    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: sourcePage } },
-    select: { contentJson: true, updatedAt: true },
-  });
-  if (!page) return undefined;
-  const content = record(page.contentJson);
+function pickerFromContent(contentJson: unknown): RecordValue | undefined {
+  const content = record(contentJson);
   const sections = record(content?.sections);
   const order = Array.isArray(content?.sectionsOrder) ? content.sectionsOrder : [];
   for (const sectionId of order) {
@@ -75,38 +66,93 @@ export async function resolveWorkspacePreset(siteId: string, request: WorkspaceP
     const data = record(settings?.data);
     const visual = record(data?.visual);
     const picker = record(visual?.picker);
-    if (!Array.isArray(picker?.cards)) continue;
-    for (const rawCard of picker.cards) {
-      const card = record(rawCard);
-      const image = record(card?.image);
-      if (!card || !image || typeof image.src !== "string" || typeof card.kind !== "string" || typeof card.label !== "string") continue;
-      if (card.kind !== "video" && card.kind !== "photo") continue;
-      const typedCard = card as unknown as PickerPresetCard;
-      if (pickerPresetId(typedCard) !== request.presetId) continue;
-      const src = image.src.trim();
-      const label = card.label.trim();
-      const prompt = typeof card.prompt === "string" ? card.prompt.trim() : "";
-      if (!label || !prompt || prompt.length > 4000 || !safePreviewPath(src)) return undefined;
-      let href: URL;
-      try { href = new URL(typeof card.href === "string" ? card.href : "/app/create", "https://www.aivideosugc.com"); }
-      catch { return undefined; }
-      if (!["https:", "http:"].includes(href.protocol) || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || href.pathname !== "/app/create") return undefined;
-      const rawTool = typeof card.tool === "string" ? card.tool : href.searchParams.get("tool") ?? "";
-      const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
-      return {
-        sourcePage,
-        presetId: request.presetId,
-        title: label.slice(0, 160),
-        kind: card.kind,
-        prompt,
-        previewUrl: src,
-        sceneId: sceneFromCard(card, href, prompt, label),
-        aspect: cardAspect(card, href),
-        duration: cardDuration(href),
-        imageTool,
-        sourceUpdatedAt: page.updatedAt.toISOString(),
-      };
-    }
+    if (picker && Array.isArray(picker.cards)) return picker;
+  }
+  return undefined;
+}
+
+function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: unknown): WorkspacePreset | undefined {
+  const card = record(value);
+  const image = record(card?.image);
+  if (!card || !image || typeof image.src !== "string" || typeof card.kind !== "string" || typeof card.label !== "string") return undefined;
+  if (card.kind !== "video" && card.kind !== "photo") return undefined;
+  const typedCard = card as unknown as PickerPresetCard;
+  const src = image.src.trim();
+  const title = card.label.trim();
+  const prompt = typeof card.prompt === "string" ? card.prompt.trim() : "";
+  if (!title || !prompt || prompt.length > 4000 || !safePreviewPath(src)) return undefined;
+  let href: URL;
+  try { href = new URL(typeof card.href === "string" ? card.href : "/app/create", "https://www.aivideosugc.com"); }
+  catch { return undefined; }
+  if (!["https:", "http:"].includes(href.protocol) || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || href.pathname !== "/app/create") return undefined;
+  const rawTool = typeof card.tool === "string" ? card.tool : href.searchParams.get("tool") ?? "";
+  const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
+  return {
+    sourcePage,
+    presetId: pickerPresetId(typedCard),
+    title: title.slice(0, 160),
+    kind: card.kind,
+    prompt,
+    previewUrl: src,
+    sceneId: sceneFromCard(card, href, prompt, title),
+    aspect: cardAspect(card, href),
+    duration: cardDuration(href),
+    imageTool,
+    sourceUpdatedAt: page.updatedAt.toISOString(),
+  };
+}
+
+/** Read the current homepage picker cards from Aidreamcapes' relational LivePage row. */
+export async function getWorkspaceTemplateGallery(siteId: string): Promise<WorkspaceTemplateGallery | undefined> {
+  if (siteId !== AIVIDEOSUGC_SITE_ID) return undefined;
+  const page = await prisma.livePage.findUnique({
+    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: "/" } },
+    select: { contentJson: true, updatedAt: true },
+  });
+  if (!page) return undefined;
+  const picker = pickerFromContent(page.contentJson);
+  if (!picker || !Array.isArray(picker.cards)) return undefined;
+  const categories = (Array.isArray(picker.chips) ? picker.chips : []).flatMap((value) => {
+    const category = record(value);
+    const id = typeof category?.id === "string" ? category.id.trim() : "";
+    const label = typeof category?.label === "string" ? category.label.trim() : "";
+    return /^[a-z0-9-]{1,80}$/.test(id) && label ? [{ id, label: label.slice(0, 100) }] : [];
+  });
+  const categoryIds = new Set(categories.map((category) => category.id));
+  const options = picker.cards.flatMap((value) => {
+    const preset = presetFromCard(page, "/", value);
+    if (!preset) return [];
+    const card = record(value);
+    const image = record(card?.image);
+    const tags = Array.isArray(card?.chips) ? card.chips.filter((item): item is string => typeof item === "string" && categoryIds.has(item)) : [];
+    return [{
+      ...preset,
+      imageAlt: typeof image?.alt === "string" && image.alt.trim() ? image.alt.trim().slice(0, 300) : preset.title,
+      categoryIds: [...new Set(tags)],
+    }];
+  });
+  return { categories, options };
+}
+
+/** Resolve a picker card exclusively from the current Aidreamcapes LivePage row. */
+export async function resolveWorkspacePreset(siteId: string, request: WorkspacePresetRequest): Promise<WorkspacePreset | undefined> {
+  if (siteId !== AIVIDEOSUGC_SITE_ID) return undefined;
+  const sourcePage = presetSourcePage(request.sourcePage);
+  if (!sourcePage || !/^p_[a-f0-9]{24}$/.test(request.presetId)) return undefined;
+  const page = await prisma.livePage.findUnique({
+    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: sourcePage } },
+    select: { contentJson: true, updatedAt: true },
+  });
+  if (!page) return undefined;
+  const cards = pickerFromContent(page.contentJson)?.cards;
+  if (!Array.isArray(cards)) return undefined;
+  for (const card of cards) {
+    const typedCard = record(card);
+    const image = record(typedCard?.image);
+    if (!typedCard || !image || typeof image.src !== "string" || typeof typedCard.kind !== "string" || typeof typedCard.label !== "string") continue;
+    if (typedCard.kind !== "video" && typedCard.kind !== "photo") continue;
+    if (pickerPresetId(typedCard as unknown as PickerPresetCard) !== request.presetId) continue;
+    return presetFromCard(page, sourcePage, card);
   }
   return undefined;
 }

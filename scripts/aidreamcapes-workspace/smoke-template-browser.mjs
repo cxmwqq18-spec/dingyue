@@ -149,7 +149,7 @@ try {
     assert.equal(await page.getByRole("heading", { name: "Presenter showcase", exact: true }).count(), 1);
     await page.getByLabel("Upload product photos").setInputFiles({ name: "product.png", mimeType: "image/png", buffer: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl6M9sAAAAASUVORK5CYII=", "base64") });
     await page.getByAltText("Product photo 1").waitFor();
-    await page.getByRole("button", { name: "Save draft", exact: true }).click();
+    await page.getByRole("button", { name: "Save draft and open storyboard", exact: true }).click();
     await page.getByText("More details and settings", { exact: true }).click();
     const directionEditor = page.locator('textarea[aria-label="Creative direction"], textarea[aria-label="Additional visual direction"]');
     await directionEditor.waitFor({ timeout: 5000 }).catch(async (error) => {

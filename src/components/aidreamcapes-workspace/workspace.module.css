@@ -111,6 +111,8 @@
 .step.selected { background: var(--surface); color: #6139e6; box-shadow: 0 1px 4px #17212b0c; }
 .stepNumber { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; font-size: 11px; border-radius: 100%; background: #e9e3fc; color: #7051cf; }
 .formSection, .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 23px; margin-bottom: 18px; }
+.videoDraftForm { border: 2px solid color-mix(in srgb, var(--purple, #6035ff) 86%, #1b53d6); border-radius: 18px; }
+.videoDraftForm h2 { font-size: 18px; }
 .formSection h2 { font-size: 20px; margin-bottom: 5px; }
 .formSection > p { color: var(--muted); font-size: 13px; margin-bottom: 21px; }
 .advanced { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin: 0 0 18px; overflow: hidden; }
@@ -131,6 +133,13 @@ textarea.input { resize: vertical; min-height: 100px; }
 .parameterGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .imageStrip { display: flex; gap: 9px; flex-wrap: wrap; }
 .imageStrip > .upload { order: -1; }
+.draftImageStrip { align-items: flex-start; gap: 9px; }
+.draftReferenceColumn { display: flex; width: 76px; flex: 0 0 76px; flex-direction: column; align-items: center; gap: 5px; }
+.draftReferenceCount { width: 100%; color: var(--muted); font-size: 10px; line-height: 1.25; text-align: center; white-space: nowrap; }
+.draftPhotoUpload { width: 76px; min-width: 76px; min-height: 76px; padding: 8px; font-size: 10px; }
+.draftPhotoLimit { border-style: solid; background: color-mix(in srgb, var(--purple, #6035ff) 4%, var(--surface)); cursor: default; }
+.draftPhotoSlot { width: 76px; }
+.draftPhotoSlot img { width: 76px; height: 76px; object-fit: cover; }
 .imageSlot { width: 106px; position: relative; }
 .imageSlot img { height: 106px; width: 106px; object-fit: contain; border-radius: 9px; background: #f4f5f8; border: 1px solid var(--line); }
 .imageSlot .badge { position: absolute; top: 5px; left: 5px; background: white; color: #423752; }
@@ -241,7 +250,7 @@ textarea.input { resize: vertical; min-height: 100px; }
   .desktopMenu { display: none; }
   .toolbar { padding: 11px 15px; min-height: 64px; }
   .toolbarLeft .pillButton { padding: 7px 11px; font-size: 12px; }
-  .toolbarRight { gap: 7px; }
+  .toolbarRight { gap: 6px; }
   .toolbarRight .button { padding: 7px 10px; font-size: 12px; }
   .balance { display: none; }
   .main { padding: 23px 16px 35px; }
@@ -266,6 +275,10 @@ textarea.input { resize: vertical; min-height: 100px; }
   .modelTop { min-height: 210px; }
   .parameterGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .formSection, .panel { padding: 18px; }
+  .draftReferenceColumn { width: 66px; flex-basis: 66px; }
+  .draftPhotoUpload { width: 66px; min-width: 66px; min-height: 66px; }
+  .draftPhotoSlot { width: 66px; }
+  .draftPhotoSlot img { width: 66px; height: 66px; }
   .steps { gap: 2px; }
   .step { font-size: 11px; padding: 9px 4px; flex-direction: column; gap: 4px; }
   .editorHeader { gap: 9px; }
@@ -290,7 +303,19 @@ textarea.input { resize: vertical; min-height: 100px; }
 .templateCopy p { margin: 6px 0; font-size: 13px; color: var(--muted); }
 .templateScene { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; }
 .templateScene select { width: auto; max-width: 100%; }
+.templateScene strong { color: var(--ink); font-weight: 600; }
+.templateToolbarButton { min-height: 36px; padding: 7px 12px; font-size: 13px; }
+.templatePickerCallout { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 18px 0 34px; padding: 16px 18px; border: 1px solid var(--line); border-left: 4px solid var(--purple); border-radius: 14px; background: var(--surface); }
+.templatePickerMessage { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.templatePickerIcon { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border-radius: 11px; color: var(--purple); background: color-mix(in srgb, var(--purple) 9%, var(--surface)); }
+.templatePickerText { display: block; min-width: 0; }
+.templatePickerText strong { display: block; font-size: 15px; }
+.templatePickerText span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+.templatePickerButton { flex: 0 0 auto; min-height: 42px; }
+.workspace .templateToolbarButton, .workspace .templatePickerButton { color: #fff; }
 @media (max-width: 600px) { .templateSummary { gap: 12px; padding: 14px; } .templatePreview { width: 72px; height: 90px; } .templateScene { align-items: stretch; flex-direction: column; gap: 5px; } .templateCopy h2 { font-size: 17px; } }
+@media (max-width: 760px) { .templateToolbarButton { padding: 7px 10px; } .templateToolbarButton span { display: none; } }
+@media (max-width: 600px) { .templatePickerCallout { align-items: stretch; flex-direction: column; gap: 13px; padding: 14px; } .templatePickerText strong { font-size: 14px; } .templatePickerButton { width: 100%; } }
 @media (max-width: 430px) { .toolbarCallLabel { display: none; } }
 @media (max-width: 360px) {
   .toolbar { padding-inline: 10px; gap: 6px; }
@@ -374,6 +399,33 @@ textarea.input { resize: vertical; min-height: 100px; }
 .actorPickerModal .modalHeader h2 { font-size: 22px; }
 .actorPickerModal .modalHeader p { margin-top: 3px; }
 .actorPickerModal .actorGrid { grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); }
+.templateGalleryModal { width: min(1120px, 100%); }
+.templateGalleryModal .modalHeader { align-items: flex-start; margin-bottom: 14px; }
+.templateGalleryModal .modalHeader h2 { margin: 0; font-size: 23px; }
+.templateGalleryModal .modalHeader p { margin: 5px 0 0; }
+.templateSearch { display: flex; align-items: center; gap: 9px; min-height: 44px; margin-bottom: 13px; padding: 0 12px; border: 1px solid var(--line); border-radius: 11px; color: var(--muted); background: var(--surface); }
+.templateSearch:focus-within { border-color: var(--purple); box-shadow: 0 0 0 3px color-mix(in srgb, var(--purple) 15%, transparent); }
+.templateSearch input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font: inherit; }
+.templateFilters, .templateCategories { display: flex; align-items: center; gap: 7px; }
+.templateFilters { margin-bottom: 10px; }
+.templateCategories { flex-wrap: wrap; padding: 1px 2px 5px; }
+.templateFilters button, .templateCategories button { min-height: 33px; flex: 0 0 auto; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface); font-size: 12px; font-weight: 600; cursor: pointer; }
+.templateFilters button:hover, .templateCategories button:hover { border-color: var(--purple); color: var(--ink); }
+.templateFilters button.templateFilterActive, .templateCategories button.templateFilterActive { border-color: var(--purple); color: #fff; background: var(--purple); }
+.templateResultCount { margin: 13px 0 10px; color: var(--muted); font-size: 12px; }
+.templateGalleryGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.templateGalleryCard { display: flex; min-width: 0; overflow: hidden; flex-direction: column; padding: 0; border: 1px solid var(--line); border-radius: 13px; color: var(--ink); background: var(--surface); text-align: left; cursor: pointer; transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease; }
+.templateGalleryCard:hover { transform: translateY(-2px); border-color: #b79df7; box-shadow: 0 8px 22px #34246717; }
+.templateGalleryCard:focus-visible { outline: 3px solid color-mix(in srgb, var(--purple) 38%, transparent); outline-offset: 2px; }
+.templateGalleryCardSelected { border-color: var(--purple); box-shadow: 0 0 0 2px color-mix(in srgb, var(--purple) 16%, transparent); }
+.templateGalleryCard > img { display: block; width: 100%; aspect-ratio: 1.42; object-fit: cover; background: var(--canvas); }
+.templateGalleryCardCopy { display: grid; width: 100%; min-width: 0; gap: 8px; padding: 11px 12px 12px; }
+.templateGalleryCardMeta { display: flex; flex-wrap: wrap; gap: 5px; }
+.templateGalleryCardMeta small { padding: 3px 7px; border-radius: 999px; color: var(--purple); background: color-mix(in srgb, var(--purple) 9%, var(--surface)); font-size: 10px; line-height: 1.2; }
+.templateGalleryCardCopy strong { overflow: hidden; font-size: 14px; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.templateGalleryCardAction { display: flex; align-items: center; gap: 5px; color: var(--purple); font-size: 12px; font-weight: 700; }
+.templateGalleryEmpty { display: grid; min-height: 180px; place-content: center; justify-items: center; gap: 7px; border: 1px dashed var(--line); border-radius: 13px; color: var(--muted); }
+.templateGalleryEmpty p { margin: 0; font-size: 13px; }
 .dark .creatorPortrait { background: radial-gradient(ellipse at 50% 35%, #322d43 0, #2c2b35 66%, #25252d 100%); }
 .dark .creatorPortraitTag { color: #2b3530; }
 .dark .creatorUpload { background: #2a2439; }
@@ -399,9 +451,18 @@ textarea.input { resize: vertical; min-height: 100px; }
   .creatorActions .button { width: 100%; }
   .creatorSaveNote { text-align: left; }
   .actorPickerModal .actorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .templateGalleryGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .templateGalleryModal { padding: 16px; }
+  .templateGalleryModal .modalHeader h2 { font-size: 19px; }
+  .templateGalleryCardCopy { gap: 6px; padding: 9px; }
+  .templateGalleryCardCopy strong { font-size: 12px; }
 }
 @media (max-width: 420px) {
   .creatorVoice { align-items: flex-start; flex-direction: column; }
   .creatorVoice audio { width: 100%; }
   .creatorProductGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .templateGalleryGrid { grid-template-columns: 1fr; }
+  .templateGalleryCard { display: grid; grid-template-columns: minmax(90px, 34%) minmax(0, 1fr); flex-direction: row; }
+  .templateGalleryCard > img { height: 100%; min-height: 112px; aspect-ratio: auto; }
+  .templateGalleryCardCopy { align-content: center; }
 }

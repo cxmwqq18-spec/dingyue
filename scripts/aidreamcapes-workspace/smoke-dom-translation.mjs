@@ -57,7 +57,7 @@ try {
       { test: /\.tsx?$/, use: path.join(temp, "typescript-loader.cjs") },
       { test: /\.css$/, use: path.join(temp, "css-loader.cjs") },
     ] },
-    plugins: [new webpack.DefinePlugin({ "process.env": JSON.stringify({ NODE_ENV: "development" }) })],
+    plugins: [new webpack.DefinePlugin({ "process.env": JSON.stringify({ NODE_ENV: "development" }) }), new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })],
     optimization: { minimize: false },
   });
   await new Promise((resolve, reject) => compiler.run((error, stats) => {
@@ -82,7 +82,7 @@ try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     const errors = [], lists = [], unexpected = [], createdTasks = [], uploads = [];
     let currentTask;
-    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("pageerror", (error) => errors.push(error.stack || error.message));
     await page.route("**/api/**", async (route) => {
       const url = new URL(route.request().url());
       if (url.pathname.endsWith("/tasks") && route.request().method() === "GET") { lists.push(route); return; }
@@ -102,6 +102,7 @@ try {
       if (url.pathname.endsWith("/images")) return route.fulfill({ json: { jobs: [], assets: [] } });
       if (url.pathname.endsWith("/music")) return route.fulfill({ json: { tracks: [] } });
       if (url.pathname.endsWith("/images/quote")) return route.fulfill({ json: { quote: { available: false, credits: null, reason: "workspace_composition_provider_unavailable" } } });
+      if (url.pathname.endsWith("/music/catalog")) return route.fulfill({ json: { tracks: [] } });
       if (url.pathname.endsWith("/balance")) return route.fulfill({ json: { customerBalance: { balance: 50, reserved: 0 } } });
       unexpected.push(url.pathname);
       return route.fulfill({ status: 501, json: { error: "unhandled_fixture" } });
@@ -125,7 +126,7 @@ try {
       await settleList();
     }
     await page.getByRole("link", { name: "Home", exact: true }).click();
-    await page.getByRole("tab", { name: "Video Agent", exact: true }).waitFor();
+    await page.getByRole("tab", { name: "AI Video Agent", exact: true }).waitFor();
     await page.evaluate(simulateTranslation);
     await page.getByRole("tab", { name: "AI Video", exact: true }).click();
     await page.getByLabel("Upload video reference photo").waitFor();
@@ -146,7 +147,8 @@ try {
     await page.evaluate(simulateTranslation);
     await page.getByRole("button", { name: "Continue to image", exact: true }).click();
     await page.getByRole("heading", { name: "AI Image", exact: true }).waitFor();
-    assert.equal(await page.getByRole("textbox", { name: "Additional details (optional)", exact: true }).inputValue(), "A product on a clean white background.");
+    assert.equal(await page.getByLabel("Describe your image idea").inputValue(), "A product on a clean white background.");
+    assert.equal(await page.getByRole("button", { name: "Generate image", exact: true }).isDisabled(), true, "image generation stays unavailable in the fixture");
     await page.getByRole("link", { name: "Home", exact: true }).click();
     await page.getByRole("tab", { name: "AI Video", exact: true }).click();
     assert.equal(await page.getByLabel("Describe your video idea").inputValue(), "A hand turns the product slowly beside a window.");
@@ -154,7 +156,7 @@ try {
     await page.getByRole("button", { name: "Remove video reference 1", exact: true }).waitFor();
     await page.evaluate(simulateTranslation);
     await page.getByRole("button", { name: "Continue to video", exact: true }).click();
-    await page.getByRole("button", { name: "Save draft", exact: true }).click();
+    await page.getByRole("button", { name: "Save draft and open storyboard", exact: true }).click();
     await page.getByRole("textbox", { name: "Video title", exact: true }).waitFor();
     assert.equal(createdTasks.length, 1);
     assert.equal(createdTasks[0].sceneId, "process_demo");
@@ -172,22 +174,21 @@ try {
       await page.getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: new RegExp(`^${gender}`) }).click();
     }
     await page.getByRole("link", { name: "Home", exact: true }).click();
-    await page.getByRole("tab", { name: "Video Agent", exact: true }).click();
+    await page.getByRole("tab", { name: "AI Video Agent", exact: true }).click();
     await page.getByRole("button", { name: /^Product/ }).click();
     await page.getByRole("dialog", { name: "Add your product" }).waitFor();
     await page.evaluate(simulateTranslation, '[role="dialog"]');
     await page.getByRole("button", { name: "Close dialog", exact: true }).click();
     await page.getByRole("button", { name: "Create draft copies", exact: true }).click();
-    await page.getByRole("button", { name: "Choose draft titles", exact: true }).click();
-    await page.getByRole("dialog").waitFor();
+    await page.getByRole("dialog", { name: "Create draft copies", exact: true }).waitFor();
     await page.evaluate(simulateTranslation, '[role="dialog"]');
     await page.getByRole("button", { name: /Add another draft/ }).click();
     await page.getByRole("textbox", { name: "Draft 2 name", exact: true }).waitFor();
     await page.evaluate(simulateTranslation, '[role="dialog"]');
     await page.getByRole("button", { name: "Remove draft 1", exact: true }).click();
     await page.getByRole("button", { name: "Close dialog", exact: true }).click();
-    assert.deepEqual(errors, []);
-    assert.deepEqual(unexpected, []);
+    assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}; unexpected API paths: ${JSON.stringify(unexpected)}`);
+    assert.deepEqual(unexpected, [], `unexpected API paths: ${JSON.stringify(unexpected)}`);
     console.log("PASS: real React DOM survives translated Library and tab transitions; separate image/video prompts and uploaded references reach their corresponding editors/draft API. No DB/provider traffic.");
   }
 } finally {
