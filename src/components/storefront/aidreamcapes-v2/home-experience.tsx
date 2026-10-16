@@ -75,8 +75,10 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
           <p className="hx-local-empty" data-hx-empty hidden>{c.uiEmpty}</p>
           <ol className="hx-campaign-steps" data-relocated-workflow>
             {campaign.workflow.items.map((item, index) => <li key={item.t}>
-              <h3><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{item.t}</h3>
-              <p><RichText text={item.d} r={r} /></p>
+              <details name="home-campaign-workflow" open={index === 0}>
+                <summary><span className="hx-campaign-step-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3>{item.t}</h3></summary>
+                <p><RichText text={item.d} r={r} /></p>
+              </details>
             </li>)}
           </ol>
         </div>
