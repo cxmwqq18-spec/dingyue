@@ -7,7 +7,7 @@ export type HomeExperienceData = {
   language: "en" | "zh-CN";
   labels: Record<string, string>;
   media: Record<string, V2Image>;
-  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { sceneCategories?: Record<string, string[]> } }[];
+  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
 };
 
 /** Page-owned translations; destinations and identifiers retain their original values. */

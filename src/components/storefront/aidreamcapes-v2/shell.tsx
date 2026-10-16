@@ -8,6 +8,7 @@ import type { V2Resolvers } from "./types";
 import { copyLabel } from "./types";
 import { homePresentationValue, type HomeExperienceData } from "./home-experience-types";
 import { AidreamcapesSocialLinks, type AidreamcapesSocialLink } from "./social-links";
+import socialStyles from "./social-links.module.css";
 
 const Chevron = () => (
   <svg aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 12 12">
@@ -128,9 +129,9 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
             </div>
           ))}
         </div>
-        <AidreamcapesSocialLinks links={footer.socialLinks} />
-        <div className="fbottom">
+        <div className={`fbottom ${socialStyles.bottom}`}>
           <span>{navigation.footer.copyright}</span>
+          <AidreamcapesSocialLinks compact links={footer.socialLinks} />
           <span>
             {navigation.footer.legal.map((item, index) => (
               <span key={item.href}>

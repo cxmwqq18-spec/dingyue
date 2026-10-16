@@ -301,11 +301,12 @@ function CardNumber({ index }: { index: number }) {
 export function Boxes({ items, className = "ben", r, numbered = false }: { items: V2Item[]; className?: string; r?: V2Resolvers; numbered?: boolean }) {
   if (!items.length) return null;
   if (hasImageItems(items) && r) return <ImageItemRows items={items} numbered={numbered} r={r} />;
+  const Title = numbered ? "h3" : "b";
   return <div className={`${className}${numbered ? " v-numbered-cards" : ""}`}>
     {items.map((item, index) => (
       <div key={item.t}>
         {item.icon ? <BenefitIcon name={item.icon} /> : null}
-        <b>{numbered ? <CardNumber index={index} /> : null}{item.t}<SoonLabel soon={item.soon} /></b>
+        <Title className={numbered ? "v-numbered-title" : undefined}>{numbered ? <CardNumber index={index} /> : null}{item.t}<SoonLabel soon={item.soon} /></Title>
         <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
       </div>
     ))}

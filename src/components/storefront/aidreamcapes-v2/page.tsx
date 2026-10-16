@@ -17,6 +17,8 @@ import { HomeExperienceBehavior } from "./home-experience-behavior";
 import { HOME_EXPERIENCE_KINDS, type HomeExperienceData } from "./home-experience-types";
 import { copyLabel } from "./types";
 import "./home-experience.css";
+import { HomeComposer, type HomeComposerData } from "./home-composer";
+import { HomeComposerBehavior } from "./home-composer-behavior";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -142,7 +144,7 @@ function HomePage({ data, r }: Props) {
   const hero = data.hero as { videoHref: string; photoHref: string };
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
-  const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[] } | undefined;
+  const ugc = data.ugc as { eyebrow?: string; title?: string; paras?: string[]; formats?: V2Item[]; composer?: HomeComposerData } | undefined;
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
@@ -171,6 +173,7 @@ function HomePage({ data, r }: Props) {
     ["definition", visual && ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
+          <HomeComposer data={ugc.composer} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} numbered /></div> : null}
         </Section>
       ) : null],
@@ -204,7 +207,7 @@ function HomePage({ data, r }: Props) {
     ...pageOwnBlocks(data, r),
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
-    ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}</>]
+    ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}{ugc?.composer ? <HomeComposerBehavior /> : null}</>]
   ], additions)}
   </div>;
 }

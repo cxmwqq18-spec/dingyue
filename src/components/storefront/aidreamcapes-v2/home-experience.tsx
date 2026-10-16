@@ -67,7 +67,7 @@ export function HomeExperienceSection({ experience, after, r }: {
       <section className="hx-feature hx-light hx-scenes" data-hx-root data-home-experience="picker" id="home-experience-picker" aria-labelledby="home-experience-picker-title">
         <div className="hx-wrap hx-scene-layout">
           <div><div className="hx-tag">{c.t001}</div><h2 id="home-experience-picker-title">{c.t002}<br /><em>{c.t003}</em></h2><p className="hx-intro">{c.t004}</p>
-            <div className="hx-steps-list">{[["t005", "t006", "t007"], ["t008", "t009", "t010"], ["t011", "t012", "t013"]].map(([number, title, description]) => <div key={number}><i aria-hidden="true">{c[number]}</i><div><b>{c[title]}</b><p>{c[description]}</p></div></div>)}</div>
+            <div className={`hx-steps-list${block.presentation?.steps?.length === 6 ? " hx-six-steps" : ""}`}>{(block.presentation?.steps ?? [["t005", "t006", "t007"], ["t008", "t009", "t010"], ["t011", "t012", "t013"]].map(([number, title, description]) => ({ number: c[number], title: c[title], description: c[description] }))).map(step => <div key={step.number}><i aria-hidden="true">{step.number}</i><div><b>{step.title}</b><p>{step.description}</p></div></div>)}</div>
           </div>
           <div className="hx-selector">
             <div className="hx-window-head"><span>{c.t014}</span><small>{c.t015}</small></div>

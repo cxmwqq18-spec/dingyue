@@ -30,14 +30,14 @@ function isPublicSocialLink(link: AidreamcapesSocialLink) {
   }
 }
 
-export function AidreamcapesSocialLinks({ links, label }: { links?: readonly AidreamcapesSocialLink[]; label?: string }) {
+export function AidreamcapesSocialLinks({ links, label, compact = false }: { links?: readonly AidreamcapesSocialLink[]; label?: string; compact?: boolean }) {
   const visibleLinks = links?.filter(isPublicSocialLink) ?? [];
   if (!visibleLinks.length) return null;
   return (
-    <ul aria-label={label} className={styles.links} data-social-links="true">
+    <ul aria-label={label} className={`${styles.links}${compact ? ` ${styles.compact}` : ""}`} data-social-links="true">
       {visibleLinks.map((link) => (
         <li key={link.key}>
-          <a className={styles.link} href={link.href} rel="noopener noreferrer" target="_blank">
+          <a aria-label={link.label} title={link.label} className={styles.link} href={link.href} rel="noopener noreferrer" target="_blank">
             <svg aria-hidden="true" className={styles.mark} fill="currentColor" focusable="false" height="18" viewBox="0 0 24 24" width="18">
               {brandMarks[link.key]}
             </svg>
