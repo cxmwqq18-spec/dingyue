@@ -54,7 +54,9 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
               <div><h3>{item.t}</h3><p><RichText text={item.d} r={r} /></p></div>
             </article>)}
           </div>
-          <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t008}</a>
+          {briefs.map(([key], index) => <div data-hx-panel-group="brief" data-hx-panel-value={key} hidden={index !== 0} key={key}>
+            <a className="hx-button hx-action" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t008}</a>
+          </div>)}
           <p className="hx-note">{c.t009}</p>
         </div>
         <div className="hx-library hx-campaign-workflow" aria-labelledby="home-campaign-workflow-title">
@@ -63,6 +65,14 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <h2 id="home-campaign-workflow-title">{campaign.workflow.h2}</h2>
             {campaign.workflow.lead ? <p>{campaign.workflow.lead}</p> : null}
           </header>
+          <div className="hx-library-filter">{[["all", "t012"], ["product", "t013"], ["presenter", "t014"]].map(([key, text], index) => <button type="button" className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${key}`} data-hx-filter={key} aria-pressed={index === 0} key={key}>{c[text]}</button>)}</div>
+          <div className="hx-drafts hx-campaign-examples">
+            {briefs.map(([key, image, state, title, , , edit, category], index) => <button type="button" className={`hx-draft${index === 0 ? " is-selected" : ""}`} data-home-local={key} data-hx-filter-tags={category} data-hx-select-group="brief" data-hx-select-value={key} data-hx-dialog={previewId(key)} aria-pressed={index === 0} key={key}>
+              <span className="hx-draft-photo"><Img image={m[image]} r={r} /><span className="state">{c[state]}</span></span>
+              <span className="copy"><strong>{c[title]}</strong><span className="hx-draft-edit">{c[edit]}</span></span>
+            </button>)}
+          </div>
+          <p className="hx-local-empty" data-hx-empty hidden>{c.uiEmpty}</p>
           <ol className="hx-campaign-steps" data-relocated-workflow>
             {campaign.workflow.items.map((item, index) => <li key={item.t}>
               <h3><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{item.t}</h3>
@@ -71,6 +81,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
           </ol>
         </div>
       </div>
+      {briefs.map(([key, image, , title, line1, line2]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c[line1]} {c[line2]}</p><p>{c.t009}</p><a className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</a></Preview>)}
     </section>
   );
 

@@ -16,16 +16,18 @@
   font-size: 13px;
   line-height: 1.75;
 }
-.home-v4 .hx-campaign-benefits { margin-top: 22px; }
+.home-v4 .hx-campaign-benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
 .home-v4 .hx-campaign-benefits article {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr);
   align-items: start;
   gap: 12px;
-  padding: 14px 0;
-  border-bottom: 1px solid #d9cfdd;
+  padding: 14px;
+  border: 1px solid #d9cfdd;
+  border-radius: 12px;
+  background: #f8f5f8;
 }
-.home-v4 .hx-campaign-benefits article:last-child { border-bottom: 0; }
+.home-v4 .hx-campaign-benefits article:last-child { border-bottom: 1px solid #d9cfdd; }
 .home-v4 .hx-campaign-benefits .v-benefit-icon { display: block; margin: 1px 0 0; color: #8054a1; }
 .home-v4 .hx-campaign-benefits h3 { font-size: 14px; font-weight: 650; line-height: 1.45; }
 .home-v4 .hx-feature.hx-campaign .hx-campaign-benefits p {
@@ -56,6 +58,12 @@
 .home-v4 .hx-campaign-steps h3 { display: flex; align-items: baseline; gap: 9px; font-size: 14px; font-weight: 650; line-height: 1.5; }
 .home-v4 .hx-campaign-steps h3 span { flex: none; color: #8054a1; font-size: 13px; font-variant-numeric: tabular-nums; }
 .home-v4 .hx-campaign-steps p { margin-top: 10px; color: #706574; font-size: 12.5px; line-height: 1.75; }
+.home-v4 .hx-campaign .hx-campaign-examples { gap: 10px; padding: 0 18px 18px; }
+.home-v4 .hx-campaign .hx-campaign-examples .hx-draft-photo { height: 150px; }
+.home-v4 .hx-campaign .hx-campaign-examples .copy { padding: 10px; }
+.home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 11px; line-height: 1.5; }
+.home-v4 .hx-campaign .hx-campaign-examples .hx-draft-edit { margin-top: 7px; padding-top: 7px; }
+.home-v4 .hx-campaign .hx-campaign-steps { padding-top: 0; }
 @media (max-width: 960px) {
   .home-v4 .hx-feature.hx-campaign .hx-campaign-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
   .home-v4 .hx-campaign-benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -69,6 +77,10 @@
   .home-v4 .hx-campaign .hx-campaign-workflow-head { padding: 18px; }
   .home-v4 .hx-feature.hx-campaign .hx-campaign-workflow-head h2 { font-size: 23px !important; }
   .home-v4 .hx-campaign-steps { padding: 14px; }
+  .home-v4 .hx-campaign .hx-campaign-examples { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; padding-inline: 14px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .hx-draft-photo { height: 95px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy { padding: 8px 6px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 10px; }
   .home-v4 .hx-campaign-benefits h3,
   .home-v4 .hx-campaign-steps h3 { font-size: 15px; }
   .home-v4 .hx-feature.hx-campaign .hx-campaign-benefits p,
