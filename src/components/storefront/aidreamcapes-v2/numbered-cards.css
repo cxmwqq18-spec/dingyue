@@ -1,0 +1,24 @@
+.adc2 .v-card-number {
+  display: inline-block;
+  margin: 0 0.55em 0 0;
+  color: #c4b5fd;
+  font-family: "Iowan Old Style", "Baskerville", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.adc2 .v-numbered-rows .v-card-number {
+  font-size: 18px;
+}
+
+@media (max-width: 760px) {
+  .adc2 .v-numbered-rows .v-card-number {
+    font-size: 16px;
+  }
+}

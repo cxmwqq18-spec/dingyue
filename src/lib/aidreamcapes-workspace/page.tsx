@@ -14,6 +14,7 @@ import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations
 import { presetRequestFromQuery, type WorkspacePresetRequest } from "./preset-contract";
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
+import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -32,6 +33,8 @@ export async function renderAidreamcapesWorkspace({
   initialProductUrl,
   presetRequest,
   invalidPreset = false,
+  handoff,
+  resumeDraft = false,
 }: {
   routeSlug: "aivideosugc" | "aidreamcapes";
   initialView?: WorkspaceView;
@@ -41,6 +44,8 @@ export async function renderAidreamcapesWorkspace({
   initialProductUrl?: string;
   presetRequest?: WorkspacePresetRequest;
   invalidPreset?: boolean;
+  handoff?: WorkspaceHandoff;
+  resumeDraft?: boolean;
 }) {
   if (!taskId && invalidPreset) notFound();
   const initialPreset = !taskId && presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined;
@@ -56,10 +61,12 @@ export async function renderAidreamcapesWorkspace({
   const hostMode = workspaceHosts.has(host);
   const basePath = hostMode ? "" : `/site/${routeSlug}`;
   const accountBase = hostMode ? "" : "/site/aidreamcapes";
-  const returnQuery = new URLSearchParams();
+  const safeHandoff = !initialPreset && !taskId && !resumeDraft ? handoff : undefined;
+  const returnQuery = new URLSearchParams(safeHandoff ? workspaceHandoffHref("", safeHandoff).split("?")[1] : undefined);
   if (initialPreset) { returnQuery.set("source", initialPreset.sourcePage); returnQuery.set("preset", initialPreset.presetId); }
   if (taskId) returnQuery.set("task", taskId);
   if (!initialPreset && !taskId && initialView !== "home") returnQuery.set("view", initialView);
+  if (!initialPreset && !taskId && resumeDraft) returnQuery.set("resumeDraft", "1");
   if (!initialPreset && !taskId && initialProductUrl) {
     returnQuery.set("tool", "url-to-video");
     returnQuery.set("url", initialProductUrl);
@@ -75,6 +82,7 @@ export async function renderAidreamcapesWorkspace({
     initialProductUrl={initialProductUrl}
     initialImageTool={imageTool}
     initialPreset={initialPreset}
+    initialHandoff={safeHandoff}
     initialTemplateGallery={templateGallery}
     initialCatalog={catalog}
     initialInspirations={initialView === "inspirations" ? await getAidreamcapesInspirationCards() : []}
@@ -90,6 +98,7 @@ export async function renderAidreamcapesWorkspace({
 
 export function aidreamcapesWorkspaceEntry(query: Record<string, string | string[] | undefined>) {
   const value = (key: string) => typeof query[key] === "string" ? query[key] as string : undefined;
+  const handoff = workspaceHandoffFromSearchParams({ get: (key) => value(key) ?? null });
   const tool = value("tool");
   const scene = value("scene");
   const imageTools: WorkspaceImageTool[] = ["custom", "change-background", "white-background", "model-photos", "lifestyle-photos"];
@@ -112,6 +121,6 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
   return {
     taskId: value("task"), sceneId, initialView, imageTool,
     initialProductUrl: createIntent?.kind === "video" ? createIntent.productUrl : undefined,
-    presetRequest, invalidPreset,
+    presetRequest, invalidPreset, handoff, resumeDraft: value("resumeDraft") === "1",
   };
 }

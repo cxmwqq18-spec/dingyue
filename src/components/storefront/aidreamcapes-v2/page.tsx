@@ -12,6 +12,11 @@ import type { V2Visual } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
 import { AidreamcapesV2PricingSection } from "./pricing";
+import { HomeExperienceSection } from "./home-experience";
+import { HomeExperienceBehavior } from "./home-experience-behavior";
+import { HOME_EXPERIENCE_KINDS, type HomeExperienceData } from "./home-experience-types";
+import { copyLabel } from "./types";
+import "./home-experience.css";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -39,7 +44,7 @@ function ctaLead(data: V2Data, fallback: string): string {
 export function BenefitsSection({ data, r, fallbackTitle, eyebrow }: { data: V2Data; r: V2Resolvers; fallbackTitle: string; eyebrow?: string }) {
   const items = list<V2Item>(data.benefits);
   if (!items.length) return null;
-  return <Section eyebrow={eyebrow ?? "Why use it"} lead={text(data.benefitsLead) || undefined} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
+  return <Section eyebrow={copyLabel(r, eyebrow ?? "Why use it")} lead={text(data.benefitsLead) || undefined} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
 }
 
 // The three-step heading falls back through the visual title to the same default as before.
@@ -63,7 +68,7 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
 
 function RelatedLinksSection({ links, r, title = "Related Pages", lead }: { links: { label: string; href: string }[]; r: V2Resolvers; title?: string; lead?: string }) {
   if (!links.length) return null;
-  return <Section eyebrow="Related Pages" lead={lead} title={title}>
+  return <Section eyebrow={copyLabel(r, "Related Pages")} lead={lead} title={copyLabel(r, title)}>
     <div className="related">
       {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
     </div>
@@ -88,14 +93,14 @@ function pageOwnBlocks(data: V2Data, r: V2Resolvers): PageBlock[] {
 // Without `blockOrder` a layout shows its blocks in its own order. With it, only the listed
 // blocks show, in the listed order. When the page lists its own related links, the
 // "related" block shows those links instead of the layout's related tools.
-function orderedBlocks(data: V2Data, r: V2Resolvers, blocks: PageBlock[]): ReactNode {
+function orderedBlocks(data: V2Data, r: V2Resolvers, blocks: PageBlock[], afterBlocks: Partial<Record<V2BlockId, ReactNode>> = {}): ReactNode {
   const order = list<V2BlockId>(data.blockOrder);
-  if (!order.length) return blocks.map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
+  if (!order.length) return blocks.map(([id, node], index) => <Fragment key={index}>{node}{id === "always" ? null : afterBlocks[id]}</Fragment>);
   const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
   const render = (id: V2BlockId | "always") => id === "related" && relatedLinks.length
     ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />
     : blocks.filter(([blockId]) => blockId === id).map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
-  return [...order, "always" as const].map((id) => <Fragment key={id}>{render(id)}</Fragment>);
+  return [...order, "always" as const].map((id) => <Fragment key={id}>{render(id)}{id === "always" ? null : afterBlocks[id]}</Fragment>);
 }
 
 function splitPhotoHubExamples(examples: V2Examples | undefined) {
@@ -131,6 +136,9 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 }
 
 function HomePage({ data, r }: Props) {
+  const experience = data.homeExperience as HomeExperienceData | undefined;
+  if (experience) r = { ...r, copy: experience.labels };
+  const additions = experience ? Object.fromEntries(HOME_EXPERIENCE_KINDS.map((after) => [after, <HomeExperienceSection after={after} experience={experience} key={after} r={r} />])) : {};
   const hero = data.hero as { videoHref: string; photoHref: string };
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
@@ -138,7 +146,7 @@ function HomePage({ data, r }: Props) {
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
-  return <div className="home-v2">
+  return <div className={`home-v2${experience ? " home-v4" : ""}`}>
     <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_HOME_CSS }} />
     {orderedBlocks(data, r, [
     ["hero",
@@ -147,14 +155,14 @@ function HomePage({ data, r }: Props) {
           <div className="hero-copy">
             <div className="eyebrow hero-kicker">
               <span>{data.eyebrow}</span>
-              <AudienceTag />
+              <AudienceTag labels={r.copy} />
             </div>
             <h1>{data.h1}</h1>
             <p className="lead">{data.lead}</p>
           </div>
           <div className="hero-ctas">
-            <a className="btn btn-grad" href={r.href(hero.videoHref)}>Make my video →</a>
-            <a className="btn btn-ghost" href={r.href(hero.photoHref)}>Make my photos →</a>
+            <a className="btn btn-grad" href={r.href(hero.videoHref)}>{copyLabel(r, "Make my video →")}</a>
+            <a className="btn btn-ghost" href={r.href(hero.photoHref)}>{copyLabel(r, "Make my photos →")}</a>
           </div>
           <StartNote note={text(data.startNote)} r={r} />
         </div>
@@ -163,14 +171,14 @@ function HomePage({ data, r }: Props) {
     ["definition", visual && ugc?.title ? (
         <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
-          {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} /></div> : null}
+          {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} numbered /></div> : null}
         </Section>
       ) : null],
     ["picker", visual ? <VisualPicker pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
-    ["steps", visual ? <VisualSteps buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
+    ["steps", visual ? <VisualSteps actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
-    ["features", <MoreSections r={r} sections={data.more_sections as never} />],
-    ["audience", audience?.title ? <Section eyebrow="For growing teams" lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],
+    ["features", <MoreSections numbered r={r} sections={data.more_sections as never} />],
+    ["audience", audience?.title ? <Section eyebrow={copyLabel(r, "For growing teams")} lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],
     ["tools",
       <section className="sec">
         <div className="wrap">
@@ -183,10 +191,10 @@ function HomePage({ data, r }: Props) {
       </section>],
     ["related", <RelatedGroupsSection groups={relatedGroups} r={r} />],
     ["compare",
-      <Section eyebrow="Why stores switch" title={text(data.compareH2) || "A faster way to keep testing new ads"}>
+      <Section eyebrow={copyLabel(r, "Why stores switch")} title={text(data.compareH2) || "A faster way to keep testing new ads"}>
         <div className="cmp-wrap">
           <table className="cmp">
-            <thead><tr><th scope="col"><span className="sr-only">Topic</span></th><th scope="col">Photoshoot or creator</th><th scope="col">{BRAND_NAME}</th></tr></thead>
+            <thead><tr><th scope="col"><span className="sr-only">{copyLabel(r, "Topic")}</span></th><th scope="col">{copyLabel(r, "Photoshoot or creator")}</th><th scope="col">{BRAND_NAME}</th></tr></thead>
             <tbody>{list<string[]>(data.compare).map((row) => <tr key={row[0]}><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>)}</tbody>
           </table>
         </div>
@@ -196,8 +204,8 @@ function HomePage({ data, r }: Props) {
     ...pageOwnBlocks(data, r),
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
-    ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference /></>]
-  ])}
+    ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}</>]
+  ], additions)}
   </div>;
 }
 

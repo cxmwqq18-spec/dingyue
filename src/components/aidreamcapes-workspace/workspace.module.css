@@ -28,8 +28,7 @@
 .workspace h2 { font-size: 23px; letter-spacing: -.8px; font-weight: 650; }
 .sidebar { position: sticky; top: 0; height: 100dvh; background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: 0 9px 12px; z-index: 20; }
 .brand { height: 64px; padding: 0 10px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid var(--line); margin: 0 -9px 10px; padding-left: 19px; font-size: 22px; letter-spacing: -1.3px; font-weight: 700; }
-.brandmark { position: relative; display: inline-flex; align-items: center; justify-content: center; height: 34px; width: 36px; color: white; background: linear-gradient(135deg, #ae91ff 5%, #6128fa 58%, #2d7cfb); border-radius: 7px 7px 15px 7px; transform: rotate(-8deg); }
-.brandmark svg { transform: rotate(8deg); }
+.brandLogo { display: block; flex: none; width: 36px; height: 36px; object-fit: contain; }
 .navitem { border: none; background: transparent; color: var(--ink); width: 100%; min-height: 45px; padding: 11px 14px; display: flex; align-items: center; gap: 11px; font-size: 15px; font-weight: 600; text-align: left; border-radius: 8px; margin-bottom: 7px; }
 .navitem:hover { background: var(--canvas); }
 .navitem.active { background: var(--canvas); }
@@ -200,7 +199,6 @@ textarea.input { resize: vertical; min-height: 100px; }
 .mobileMenu { display: none; }
 .collapsed { grid-template-columns: 76px minmax(0, 1fr); }
 .collapsed .brand { font-size: 0; padding-left: 20px; }
-.collapsed .brandmark { font-size: 16px; }
 .collapsed .navitem { justify-content: center; padding-left: 10px; padding-right: 10px; }
 .collapsed .navitem > span, .collapsed .navitem > small, .collapsed .navlabel { display: none; }
 .collapsed .navdivider { margin: 24px 0; }

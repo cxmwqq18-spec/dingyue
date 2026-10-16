@@ -161,12 +161,17 @@ export type V2PricingCard = {
 };
 
 export type V2Resolvers = {
+  copy?: Record<string, string>;
   href: (value: string) => string;
   asset: (value: string) => string;
   pricingPlans?: V2PricingCard[];
   // The plain link for a workspace address, used where a form must submit there directly.
   direct?: (value: string) => string;
 };
+
+export function copyLabel(r: Pick<V2Resolvers, "copy">, value: string): string {
+  return r.copy?.[value] ?? value;
+}
 
 export function list<T>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : [];

@@ -1,6 +1,7 @@
 import { Section } from "./parts";
-import type { V2Resolvers } from "./types";
+import { copyLabel, type V2Resolvers } from "./types";
 import { AidreamcapesPricingToggle } from "./pricing-toggle";
+
 
 const pricingCss = `
 .adc2 .v2-pricing-content{display:grid;gap:28px}
@@ -42,16 +43,17 @@ const pricingCss = `
 `;
 
 export function AidreamcapesV2PricingSection({ r }: { r: V2Resolvers }) {
+  const plans = r.pricingPlans ?? [];
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: pricingCss }} />
       <Section
-        eyebrow="Plans"
+        eyebrow={copyLabel(r, "Plans")}
         id="pricing"
-        lead="Compare monthly and yearly credit plans. Each option shows its price and included credits for the selected billing period."
-        title="Plans for Your Next Campaign"
+        lead={copyLabel(r, "Compare monthly and yearly credit plans. Each option shows its price and included credits for the selected billing period.")}
+        title={copyLabel(r, "Plans for Your Next Campaign")}
       >
-        <AidreamcapesPricingToggle plans={r.pricingPlans ?? []} />
+        <AidreamcapesPricingToggle labels={r.copy} plans={plans} />
       </Section>
     </>
   );

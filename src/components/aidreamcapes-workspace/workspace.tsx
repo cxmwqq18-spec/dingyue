@@ -15,6 +15,7 @@ import { MusicTrackPicker } from "./music-track-picker";
 import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
+import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
 import type { WorkspacePreset, WorkspaceTemplateGallery, WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
@@ -70,7 +71,7 @@ export interface AidreamcapesWorkspaceProps {
   initialInspirations?: InspirationCard[];
   initialView?: WorkspaceView;
   initialTaskId?: string;
-  initialSceneId?: string;
+  initialSceneId?: SceneSchema["id"];
   initialProductUrl?: string;
   loginPath?: string;
   accountPath?: string;
@@ -79,6 +80,7 @@ export interface AidreamcapesWorkspaceProps {
   presenterStudioEnabled?: boolean;
   initialImageTool?: WorkspaceImageTool;
   initialPreset?: WorkspacePreset;
+  initialHandoff?: WorkspaceHandoff;
   initialTemplateGallery?: WorkspaceTemplateGallery;
 }
 
@@ -114,7 +116,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -137,17 +139,17 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
   const [modal, setModal] = useState<"guide" | "support" | "actors" | "product" | "templates" | null>(null);
-  const [templateKindFilter, setTemplateKindFilter] = useState<"all" | "video" | "photo">("all");
-  const [templateCategoryFilter, setTemplateCategoryFilter] = useState("all");
+  const [templateKindFilter, setTemplateKindFilter] = useState<"all" | "video" | "photo">(initialHandoff?.kind && initialTemplateGallery?.options.some((item) => item.kind === initialHandoff.kind) ? initialHandoff.kind : "all");
+  const [templateCategoryFilter, setTemplateCategoryFilter] = useState(initialHandoff?.category && initialTemplateGallery?.categories.some((item) => item.id === initialHandoff.category) ? initialHandoff.category : "all");
   const [templateSearch, setTemplateSearch] = useState("");
   const closeModal = useCallback(() => setModal(null), []);
-  const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : "");
+  const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : initialHandoff?.prompt ?? "");
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
   const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">(initialCatalog?.scenes.find((scene) => scene.id === initialSceneId)?.id ?? "");
   const [draftReferenceUrls, setDraftReferenceUrls] = useState<string[]>([]);
   const [composerTab, setComposerTab] = useState<HomeComposerTab>(initialPreset?.kind === "video" ? "AI Video" : "AI Video Agent");
-  const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? 15);
-  const [composerAspect, setComposerAspect] = useState<TaskInput["options"]["aspect"]>(initialPreset?.aspect ?? "9:16");
+  const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? initialHandoff?.duration ?? 15);
+  const [composerAspect, setComposerAspect] = useState<TaskInput["options"]["aspect"]>(initialPreset?.aspect ?? initialHandoff?.aspect ?? "9:16");
   const [composerModel, setComposerModel] = useState("");
   const [composerActorId, setComposerActorId] = useState("");
   const [composerProducts, setComposerProducts] = useState<ComposerProduct[]>([]);
@@ -155,7 +157,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [batchOpen, setBatchOpen] = useState(false);
   const [batchSceneId, setBatchSceneId] = useState(initialSceneId ?? "");
   const [composerTitle, setComposerTitle] = useState(initialPreset?.title ?? "");
-  const [libraryFilter, setLibraryFilter] = useState("all");
+  const [libraryFilter, setLibraryFilter] = useState<string>(initialHandoff?.filter ?? "all");
   const [actorSearch, setActorSearch] = useState("");
   const [actorGenderFilter, setActorGenderFilter] = useState<"all" | "female" | "male">("all");
   const [avatarSelectionId, setAvatarSelectionId] = useState("");
@@ -168,7 +170,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [creatingActor, setCreatingActor] = useState(false);
   const [actorDraft, setActorDraft] = useState({ name: "", gender: "female" as "female" | "male", ageRange: "25-30", imageUrl: "", languages: ["en"] as TaskInput["options"]["language"][] });
   const [quotes, setQuotes] = useState<Record<string, ActionQuote>>({});
-  const [imageInput, setImageInput] = useState<{ prompt: string; assetUrls: string[]; aspect: TaskInput["options"]["aspect"]; toolId: WorkspaceImageTool }>({ prompt: initialPreset?.kind === "photo" ? initialPreset.prompt : "", assetUrls: [], aspect: initialPreset?.kind === "photo" ? initialPreset.aspect : "1:1", toolId: initialPreset?.kind === "photo" ? initialPreset.imageTool : initialImageTool });
+  const [imageInput, setImageInput] = useState<{ prompt: string; assetUrls: string[]; aspect: TaskInput["options"]["aspect"]; toolId: WorkspaceImageTool }>({ prompt: initialPreset?.kind === "photo" ? initialPreset.prompt : initialView === "images" ? initialHandoff?.prompt ?? "" : "", assetUrls: [], aspect: initialPreset?.kind === "photo" ? initialPreset.aspect : initialView === "images" ? initialHandoff?.aspect ?? "1:1" : "1:1", toolId: initialPreset?.kind === "photo" ? initialPreset.imageTool : initialImageTool });
   useImageDraft(siteId, customer?.id, imageInput, setImageInput);
   const [imageQuote, setImageQuote] = useState<ActionQuote | null>(null);
   const [imageResults, setImageResults] = useState<ImageResult>({ jobs: [], assets: [] });
@@ -310,18 +312,27 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const active = () => !controller.signal.aborted && navigation === navigationSerial.current;
     const params = new URLSearchParams(window.location.search);
     const createIntent = aidreamcapesCreateIntentFromSearchParams(params);
+    const handoff = workspaceHandoffFromSearchParams(params);
     const resumingGuestDraft = params.get("resumeDraft") === "1";
-    if (!initialPreset && !resumingGuestDraft && createIntent?.prompt) setPrompt(createIntent.prompt);
-    if (!initialPreset && !resumingGuestDraft && createIntent?.kind === "video") {
-      if (createIntent.size && WORKSPACE_ASPECTS.includes(createIntent.size as TaskInput["options"]["aspect"])) setComposerAspect(createIntent.size as TaskInput["options"]["aspect"]);
-      if (createIntent.length) setComposerDuration(createIntent.length);
-    }
-    if (!initialPreset && !resumingGuestDraft && createIntent?.kind === "photo" && createIntent.prompt) {
-      setImageInput((current) => ({ ...current, prompt: createIntent.prompt ?? "" }));
-    }
     const queryView = params.get("view");
     const entryView = initialPreset ? initialPreset.kind === "photo" ? "images" : "home" : isWorkspaceView(queryView) ? queryView : initialView;
     const taskId = initialTaskId ?? params.get("task");
+    if (!initialPreset && !resumingGuestDraft && !taskId) {
+      const entryPrompt = handoff.prompt ?? createIntent?.prompt;
+      if (entryPrompt) setPrompt(entryPrompt);
+      if (handoff.aspect) setComposerAspect(handoff.aspect);
+      if (handoff.duration) setComposerDuration(handoff.duration);
+      const entryScene = initialCatalog?.scenes.find((item) => item.id === handoff.scene);
+      if (entryScene) {
+        setQuickStartSceneId(entryScene.id);
+        setBatchSceneId(entryScene.id);
+        if (entryView === "agent") setSelectedSceneId(entryScene.id);
+      }
+      if (entryView === "images" || createIntent?.kind === "photo") {
+        setImageInput((current) => ({ ...current, ...(entryPrompt ? { prompt: entryPrompt } : {}), ...(handoff.aspect ? { aspect: handoff.aspect } : {}) }));
+      }
+    }
+    if (entryView === "library" && handoff.filter) setLibraryFilter(handoff.filter);
     setView(entryView);
     if (customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
       params.delete("resumeDraft");
@@ -829,12 +840,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   function importedBriefNotice() {
     const brief = confirmedProductBriefs[confirmedProductBriefs.length - 1];
-    if (!brief) return null;
+    const savedBrief = task?.productBrief;
+    if (!brief && !savedBrief) return null;
+    const title = brief?.title?.value ?? savedBrief?.title?.value;
+    const description = brief?.description?.value ?? savedBrief?.description?.value;
+    const priceAmount = brief?.possiblePrice?.value.amount ?? savedBrief?.possiblePrice?.amount;
+    const priceCurrency = brief?.possiblePrice?.value.currency ?? savedBrief?.possiblePrice?.currency;
+    const priceSourceLabel = brief?.possiblePrice?.sourceLabel ?? savedBrief?.possiblePrice?.sourceLabel;
+    const sourceUrl = brief?.fetchedPageUrl ?? savedBrief?.fetchedPageUrl;
     return <div className={styles.notice} role="status">
       <strong>Product page details saved for review.</strong>
-      {brief.description && <p>{brief.description.value}</p>}
-      {brief.possiblePrice && <p><span>Possible price: </span><span>{brief.possiblePrice.value.currency ? `${brief.possiblePrice.value.currency} ` : ""}</span><span>{brief.possiblePrice.value.amount}</span><span> · unconfirmed from </span><span>{brief.possiblePrice.sourceLabel}</span><span>.</span></p>}
-      <p><span>Source: </span><a href={brief.fetchedPageUrl} target="_blank" rel="noreferrer">{brief.fetchedPageUrl}</a></p>
+      {title && <p><span>Product name: </span>{title}</p>}
+      {description && <p>{description}</p>}
+      {priceAmount && <p><span>Possible price · unconfirmed: </span><span>{priceCurrency ? `${priceCurrency} ` : ""}</span><span>{priceAmount}</span>{priceSourceLabel && <><span> · from </span><span>{priceSourceLabel}</span></>}<span>.</span></p>}
+      {sourceUrl && <p><span>Source: </span><a href={sourceUrl} target="_blank" rel="noreferrer">{sourceUrl}</a></p>}
     </div>;
   }
 
@@ -888,6 +907,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const actorSpeechSupported = !scene?.needsActor || Boolean(selectedModel?.nativeSpeech);
   const canGenerate = !task?.sourceAnalysis?.synthetic && Boolean(durationCapability?.generationAvailable && selectedModel?.available && actorSpeechSupported);
   const canBrowseTemplates = presenterStudioEnabled && Boolean(initialTemplateGallery?.options.length) && !task && ["home", "video", "images", "agent"].includes(view);
+  const templateHandoffConsumed = useRef(false);
+  useEffect(() => {
+    if (!canBrowseTemplates || templateHandoffConsumed.current) return;
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("templates") !== "1") return;
+    templateHandoffConsumed.current = true;
+    const handoff = workspaceHandoffFromSearchParams(url.searchParams);
+    if (handoff.category && initialTemplateGallery?.categories.some((item) => item.id === handoff.category)) setTemplateCategoryFilter(handoff.category);
+    if (handoff.kind && initialTemplateGallery?.options.some((item) => item.kind === handoff.kind)) setTemplateKindFilter(handoff.kind);
+    setModal("templates");
+    url.searchParams.delete("templates");
+    window.history.replaceState(window.history.state, "", url);
+  }, [canBrowseTemplates, initialTemplateGallery]);
   const availableTemplateKinds = (["video", "photo"] as const).filter((kind) => initialTemplateGallery?.options.some((option) => option.kind === kind));
   const templateFilterKinds = ["all" as const, ...availableTemplateKinds];
   const visibleTemplates = (initialTemplateGallery?.options ?? []).filter((item) => {
@@ -902,7 +934,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   return <div className={`${styles.workspace} ${collapsed ? styles.collapsed : ""} ${mobileOpen ? styles.mobileOpen : ""} ${dark ? styles.dark : ""}`} translate="yes">
     {mobileOpen && <button className={styles.closeOverlay} onClick={() => setMobileOpen(false)} aria-label="Close navigation" />}
     <aside className={styles.sidebar} aria-label="Workspace navigation">
-      <a className={styles.brand} href={basePath} aria-label="AIVideosUGC storefront"><span className={styles.brandmark}><Play size={22} fill="currentColor" /></span><span>AIVideosUGC</span></a>
+      <a className={styles.brand} href={basePath || "/"} aria-label="AIVideosUGC storefront"><img className={styles.brandLogo} src="/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc" alt="" width={36} height={36} /><span>AIVideosUGC</span></a>
       <div className={styles.navScroll}>
         {navGroup("main")}
         <div className={styles.navdivider} /><div className={styles.navlabel}>CREATE</div>{navGroup("create")}

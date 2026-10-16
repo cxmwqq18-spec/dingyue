@@ -19,7 +19,8 @@ const reactStub = {
     return [mount.state[index], value => {
       mount.state[index] = typeof value === "function" ? value(mount.state[index]) : value;
     }];
-  }
+  },
+  useEffect(effect) { effect(); }
 };
 const jsxStub = {
   jsx: (type, props, key) => ({ type, props: props ?? {}, key }),

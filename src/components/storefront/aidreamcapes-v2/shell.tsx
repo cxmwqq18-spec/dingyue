@@ -1,10 +1,13 @@
-import type { ReactNode } from "react";
-import type { AidreamcapesV2Navigation, ThemeNavLink } from "@/lib/types";
+import { isValidElement, type ReactNode } from "react";
+import type { AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
 import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
 import { AIDREAMCAPES_V2_CARD_CSS, AIDREAMCAPES_V2_CSS, AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type { V2Resolvers } from "./types";
+import { copyLabel } from "./types";
+import { homePresentationValue, type HomeExperienceData } from "./home-experience-types";
+import { AidreamcapesSocialLinks, type AidreamcapesSocialLink } from "./social-links";
 
 const Chevron = () => (
   <svg aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 12 12">
@@ -31,11 +34,11 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
   return (
     <header className="site">
       <div className="wrap hbar">
-        <a aria-label="AIVideosUGC home" className="logo" href={r.href("/")}>
+        <a aria-label={copyLabel(r, "AIVideosUGC home")} className="logo" href={r.href("/")}>
           <img alt="" className="logo-mark" height={28} src={r.asset(BRAND_ICON)} width={28} />
           {BRAND_NAME}
         </a>
-        <nav aria-label="Main" className="main" id="adc2-main-nav">
+        <nav aria-label={copyLabel(r, "Main")} className="main" id="adc2-main-nav">
           {navigation.menus.map((menu) => {
             const rich = menu.groups.length === 1 && menu.groups[0].items.some((item) => item.description);
             return (
@@ -62,7 +65,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                   )}
                   {rich && menu.popular?.length ? (
                     <div className="pop">
-                      <div className="ph">Popular templates</div>
+                      <div className="ph">{copyLabel(r, "Popular templates")}</div>
                       <div className="popc">
                         {menu.popular.map((item) => (
                           <a href={r.href(item.href)} key={item.href}>
@@ -89,7 +92,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
         <div className="hright">
           <a className="login" href={r.href(navigation.actions.login.href)}>{navigation.actions.login.label}</a>
           <a className="btn btn-primary" href={withStartLinks(r).href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</a>
-          <button aria-controls="adc2-main-nav" aria-expanded="false" aria-label="Open menu" className="menu-toggle" id="adc2-menu-toggle" type="button">
+          <button aria-controls="adc2-main-nav" aria-expanded="false" aria-label={copyLabel(r, "Open menu")} className="menu-toggle" id="adc2-menu-toggle" type="button">
             <svg fill="none" height="20" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 20 20" width="20">
               <path d="M3 6h14M3 10h14M3 14h14" />
             </svg>
@@ -101,6 +104,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
 }
 
 export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company }) {
+  const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[] };
   return (
     <footer className="site">
       <div className="wrap">
@@ -111,7 +115,7 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
               {BRAND_NAME}
             </a>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
-            {company ? <CompanyDetails className="company-foot" company={company} /> : null}
+            {company ? <CompanyDetails className="company-foot" company={homePresentationValue(company, r.copy ?? {})} labels={r.copy} /> : null}
           </div>
           {navigation.footer.groups.map((group) => (
             <div key={group.label}>
@@ -124,6 +128,7 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
             </div>
           ))}
         </div>
+        <AidreamcapesSocialLinks links={footer.socialLinks} />
         <div className="fbottom">
           <span>{navigation.footer.copyright}</span>
           <span>
@@ -145,8 +150,18 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
 // main[data-aidreamcapes-public-page]) for pages that still render their own sections,
 // such as login, search, cart and the album page.
 export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company }) {
+  // The shell's page element already carries the current LivePage section. Use
+  // its presentation labels only for this homepage, leaving other routes alone.
+  const pageSection = isValidElement<{ section?: SectionInstance }>(children) ? children.props.section : undefined;
+  const settings = pageSection?.settings as { layout?: string; data?: { homeExperience?: HomeExperienceData } } | undefined;
+  const homeExperience = settings?.layout === "home" ? settings.data?.homeExperience : undefined;
+  const homeCopy = homeExperience?.labels;
+  if (homeCopy) {
+    r = { ...r, copy: homeCopy };
+    navigation = homePresentationValue(navigation, homeCopy);
+  }
   return (
-    <div className="adc2">
+    <div className={`adc2${homeExperience?.language === "zh-CN" ? " adc-home-locale" : ""}`} lang={homeExperience?.language}>
       <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS + AIDREAMCAPES_V2_VISUAL_CSS + AIDREAMCAPES_V2_VISUAL_CSS_POLISH }} />
       <AidreamcapesV2Header navigation={navigation} r={r} />
       <main

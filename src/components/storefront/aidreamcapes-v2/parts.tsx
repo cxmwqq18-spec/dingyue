@@ -1,6 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
+import "./numbered-cards.css";
 import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ReviewItem, V2TeamIcon, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
+import { copyLabel } from "./types";
 import { Coins, Captions, DollarSign, Gauge, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, Megaphone, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, ShoppingCart, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
 
 function SoonLabel({ soon }: { soon?: boolean }) {
@@ -195,13 +197,13 @@ export function EnrichmentBlockSection({ block, eyebrow, className = "ideas", r 
 }
 
 // Optional page-owned explanation blocks (per platform, per audience, vs traditional shoots).
-// They reuse the standard Section + Boxes markup so no new styles are introduced.
-export function MoreSections({ sections, r }: { sections?: V2MoreSection[]; r: V2Resolvers }) {
+// Numbering is optional so homepage cards can opt in without changing other pages.
+export function MoreSections({ sections, r, numbered = false }: { sections?: V2MoreSection[]; r: V2Resolvers; numbered?: boolean }) {
   const list = (sections ?? []).filter((section) => section?.h2 && section.items?.length);
   if (!list.length) return null;
   return <>{list.map((section) => (
     <Section eyebrow={section.eyebrow} key={`${section.h2}-${section.lead ?? ""}`} lead={section.lead} title={section.h2}>
-      <Boxes items={section.items} r={r} />
+      <Boxes items={section.items} numbered={numbered} r={r} />
     </Section>
   ))}</>;
 }
@@ -250,7 +252,7 @@ function BenefitIcon({ name }: { name: V2BenefitIcon }) {
   return <span aria-hidden="true" className="v-benefit-icon"><svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" viewBox="0 0 24 24" width="24">{BENEFIT_ICON_PATHS[name]}</svg></span>;
 }
 
-export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolvers }) {
+export function ImageItemRows({ items, r, numbered = false }: { items: V2ImageItem[]; r: V2Resolvers; numbered?: boolean }) {
   return <>
     <style dangerouslySetInnerHTML={{ __html: `
       .adc2 .v-image-item-rows{display:flex;flex-direction:column;gap:22px}
@@ -274,13 +276,13 @@ export function ImageItemRows({ items, r }: { items: V2ImageItem[]; r: V2Resolve
       .adc2 .v-benefit-icon{display:grid;place-items:center;width:38px;height:38px;margin-bottom:4px;border:1px solid rgba(139,92,246,.45);border-radius:12px;background:rgba(139,92,246,.14);color:#c4b5fd}
       @media(max-width:760px){.adc2 .v-image-item-row,.adc2 .v-image-item-row:nth-child(even){grid-template-columns:minmax(0,1fr);gap:20px;padding-block:22px}.adc2 .v-image-item-row:nth-child(even) .v-image-item-copy,.adc2 .v-image-item-row:nth-child(even) .v-image-item-media{order:initial}.adc2 .v-image-item-copy{max-width:none}.adc2 .v-image-item-media{justify-content:flex-start}}
     ` }} />
-    <div className="v-image-item-rows">
+    <div className={`v-image-item-rows${numbered ? " v-numbered-rows" : ""}`}>
       {items.map((item, index) => {
         if (!item.img) return null;
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
-          <div className="v-image-item-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-copy"><h3>{numbered ? <CardNumber index={index} /> : null}{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
           <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
         </article>;
       })}
@@ -292,14 +294,18 @@ function hasImageItems(items: V2Item[]): items is V2ImageItem[] {
   return items.length > 0 && items.every((item) => item && typeof item.img === "object" && Boolean(item.img.src));
 }
 
-export function Boxes({ items, className = "ben", r }: { items: V2Item[]; className?: string; r?: V2Resolvers }) {
+function CardNumber({ index }: { index: number }) {
+  return <span aria-hidden="true" className="v-card-number">{String(index + 1).padStart(2, "0")}</span>;
+}
+
+export function Boxes({ items, className = "ben", r, numbered = false }: { items: V2Item[]; className?: string; r?: V2Resolvers; numbered?: boolean }) {
   if (!items.length) return null;
-  if (hasImageItems(items) && r) return <ImageItemRows items={items} r={r} />;
-  return <div className={className}>
-    {items.map((item) => (
+  if (hasImageItems(items) && r) return <ImageItemRows items={items} numbered={numbered} r={r} />;
+  return <div className={`${className}${numbered ? " v-numbered-cards" : ""}`}>
+    {items.map((item, index) => (
       <div key={item.t}>
         {item.icon ? <BenefitIcon name={item.icon} /> : null}
-        <b>{item.t}<SoonLabel soon={item.soon} /></b>
+        <b>{numbered ? <CardNumber index={index} /> : null}{item.t}<SoonLabel soon={item.soon} /></b>
         <p>{r ? <RichText r={r} text={item.d} /> : item.d}</p>
       </div>
     ))}
@@ -441,13 +447,13 @@ export function Specs({ rows, r }: { rows: V2SpecRow[]; r: V2Resolvers }) {
 }
 
 // The company named in the site profile: name, postal address, phone and email.
-export function CompanyDetails({ company, className }: { company: V2Company; className?: string }) {
+export function CompanyDetails({ company, className, labels }: { company: V2Company; className?: string; labels?: Record<string, string> }) {
   return (
     <address className={className ? `company ${className}` : "company"}>
       <b>{company.name}</b>
       {company.address ? <span>{company.address}</span> : null}
-      {company.phone ? <span>Phone: <a href={`tel:${company.phoneHref}`}>{company.phone}</a></span> : null}
-      {company.email ? <span>Email: <a href={`mailto:${company.email}`}>{company.email}</a></span> : null}
+      {company.phone ? <span>{copyLabel({ copy: labels }, "Phone:")} <a href={`tel:${company.phoneHref}`}>{company.phone}</a></span> : null}
+      {company.email ? <span>{copyLabel({ copy: labels }, "Email:")} <a href={`mailto:${company.email}`}>{company.email}</a></span> : null}
       {company.taxId ? <span>{company.taxIdLabel}: {company.taxId}</span> : null}
     </address>
   );
@@ -721,15 +727,15 @@ export function StartNote({ note, r }: { note?: string; r: V2Resolvers }) {
 
 const AUDIENCE_WORDS = ["DTC", "Agency", "SaaS"];
 
-export function AudienceTag() {
+export function AudienceTag({ labels }: { labels?: Record<string, string> } = {}) {
   return (
     <span className="hero-aud">
-      <span className="sr-only">DTC, Agency, and SaaS</span>
+      <span className="sr-only">{copyLabel({ copy: labels }, "DTC, Agency, and SaaS")}</span>
       <svg aria-hidden="true" className="hero-aud-spark" fill="currentColor" height="14" viewBox="0 0 16 16" width="14">
         <path d="M8 1.2 9.1 6 13.8 8 9.1 10 8 14.8 6.9 10 2.2 8 6.9 6Z" />
       </svg>
       <span aria-hidden="true" className="hero-aud-rot">
-        {AUDIENCE_WORDS.map((word) => <span key={word}>{word}</span>)}
+        {AUDIENCE_WORDS.map((word) => <span key={word}>{copyLabel({ copy: labels }, word)}</span>)}
       </span>
     </span>
   );
@@ -900,8 +906,8 @@ export function CtaBand({ title, lead, href, r, note }: { title: string; lead: s
         <h2>{title}</h2>
         <p>{lead}</p>
         <div className="row">
-          <a className="btn btn-primary" href={r.href(href)}>Get started</a>
-          <a className="btn btn-ghost" href={r.href("/templates")}>Browse templates</a>
+          <a className="btn btn-primary" href={r.href(href)}>{copyLabel(r, "Get started")}</a>
+          <a className="btn btn-ghost" href={r.href("/templates")}>{copyLabel(r, "Browse templates")}</a>
         </div>
         <StartNote note={note} r={r} />
       </section>
@@ -1005,7 +1011,7 @@ export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }
   const items = block?.items ?? [];
   if (!block || !items.length) return null;
   return (
-    <Section eyebrow="What you can count on" lead={block.lead} title={block.h2}>
+    <Section eyebrow={copyLabel(r, "What you can count on")} lead={block.lead} title={block.h2}>
       <CardBlockCss />
       <div className="v1-cards v1-trust">{items.map((item) => <BlockCard item={item} key={item.t} r={r} />)}</div>
     </Section>
@@ -1109,7 +1115,7 @@ export function TeamCards({ items, r }: { items: V2Item[]; r: V2Resolvers }) {
 // Seller showcase: the plain photo a seller uploads, an arrow, and the vertical ad made from it.
 function ShowcaseWall({ block, items, r }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers }) {
   return (
-    <Section eyebrow="Seller examples" lead={block.lead} title={block.h2}>
+    <Section eyebrow={copyLabel(r, "Seller examples")} lead={block.lead} title={block.h2}>
       <style dangerouslySetInnerHTML={{ __html: `
         .adc2 .v-shows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
         .adc2 .v-show{border:1px solid var(--line-2);border-radius:20px;background:#0d0d10;overflow:hidden}
@@ -1135,9 +1141,9 @@ function ShowcaseWall({ block, items, r }: { block: V2ReviewBlock; items: V2Revi
           const seconds = item.length ?? 15;
           return <article className="v-show" key={`${item.who}-${item.t}`}>
             <div className="v-show-stage">
-              {item.srcImg ? <figure className="v-show-src"><Img image={item.srcImg} r={r} /><figcaption>Their photo</figcaption></figure> : null}
+              {item.srcImg ? <figure className="v-show-src"><Img image={item.srcImg} r={r} /><figcaption>{copyLabel(r, "Their photo")}</figcaption></figure> : null}
               <span aria-hidden="true" className="v-show-arrow">→</span>
-              {ad ? <figure className="v-show-ad"><Img image={ad} r={r} /><span className="v-show-tag">Ready-to-run ad</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
+              {ad ? <figure className="v-show-ad"><Img image={ad} r={r} /><span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
             </div>
             <div className="v-show-body"><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></div>
           </article>;

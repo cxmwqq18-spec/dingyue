@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { copyLabel } from "./types";
 import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
@@ -67,14 +68,25 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
   return visual.overview ? <div className="v-overview"><p><RichText r={r} text={visual.overview} /></p></div> : null;
 }
 
-export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "" }: {
-  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string
+export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "", actions }: {
+  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string; actions?: Record<string, string>
 }) {
   const step = visual.steps;
   if (!step) return null;
+  const actionHref = (key: string) => r.href(actions?.[key] ?? step.buttonHref ?? visual.picker.href);
+  const ActionTag = actions ? "button" : "span";
+  const PrimaryTag = actions ? "a" : "span";
+  const SourceTag = actions ? "button" : "div";
+  const CostTag = actions ? "a" : "div";
+  const sourcePreviewId = "home-visual-source-preview";
+  const resultPreviewId = "home-visual-result-preview";
   const actorCards = step.actorCards ?? [];
   const isVideo = step.mode === "video";
   const hasActorResult = isVideo && Boolean(step.actorResult);
+  const previews: { id: string; image: V2VisualImage; label: string }[] = [
+    { id: sourcePreviewId, image: step.source, label: "Preview source image" },
+    { id: resultPreviewId, image: hasActorResult && step.actorResult ? step.actorResult : step.result, label: "Preview result" }
+  ];
   const pickerChips = visual.picker?.chips?.map((chip) => chip.label).filter((label) => !/^(all|more)\b/i.test(label)) ?? [];
   const choiceChips = step.chips?.length ? step.chips : pickerChips.length ? pickerChips.slice(0, 4) : (step.options ?? []).slice(0, 4).map(([label, value]) => value || label);
   const formatLength = step.length ? `00:${String(step.length).padStart(2, "0")}` : "";
@@ -94,55 +106,77 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
     ` }} />
   ) : null;
   return (
-    <Section eyebrow="How it works" lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
+    <Section eyebrow={copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
       <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       {actorStepStyles}
-      <div className="v-steps">
+      {actions ? <style dangerouslySetInnerHTML={{ __html: `
+        .adc2 .v-steps [data-home-local],.adc2 .v-steps a[data-home-cta]{cursor:pointer;text-decoration:none;pointer-events:auto}
+        .adc2 .v-steps button[data-home-local]{border:0;font:inherit;color:inherit;text-align:inherit}
+        .adc2 .v-steps [data-home-local]:focus-visible,.adc2 .v-steps a[data-home-cta]:focus-visible{outline:3px solid #c4b5fd;outline-offset:3px}
+        .adc2 .v-steps [data-home-local]:hover,.adc2 .v-steps a[data-home-cta]:hover{filter:brightness(1.12)}
+        .adc2 .v-steps button.v-step-idea-main,.adc2 .v-steps button.v-step-drop{background:transparent;width:100%}
+        .adc2 .v-steps .v-step-choice-chips button{padding:10px 14px;border:1px solid var(--line-2);border-radius:999px;background:#222228;color:var(--ink-2);font-size:13px;line-height:1.1}
+        .adc2 .v-steps button.v-step-actor-card{padding:0;border:1px solid var(--line);background:#0c0c0f}
+        .adc2 .v-steps .v-step-choice-chips [aria-pressed=true],.adc2 .v-steps .v-step-actor-card[aria-pressed=true]{border-color:#9985ff;background:rgba(107,88,231,.24);color:#fff}
+        .adc2 .v-steps .v-step-result-link{position:absolute;inset:0;display:block}
+        .adc2 .v-steps button.v-step-result-link{background:transparent;padding:0;width:100%;height:100%}
+        .adc2 .v-steps .v-step-result-link img{width:100%;height:100%;max-height:none;object-fit:cover}
+        .adc2 .v-steps .v-step-result-link img.v-step-result-portrait{object-position:center bottom}
+        .adc2 .v-steps .v-step-video-frame .v-step-result-link{position:static;display:block;height:100%}
+        .adc2 .v-steps .v-download,.adc2 .v-steps .v-step-download-icon{pointer-events:auto;z-index:2}
+        .adc2 .v-steps .v-step-source img.v-step-thumb{flex:none;width:64px;height:64px;object-fit:cover}
+        .adc2 .v-steps .v-step-source-only img.v-step-thumb{width:100%;height:100%}
+        .adc2 .v-step-preview-dialog .v-step-preview-media{display:block;width:100%;max-height:70vh;object-fit:contain;border-radius:12px}
+        .adc2 .v-step-preview-dialog h3{margin:0 48px 18px 0}
+        .adc2 .v-step-preview-dialog [data-hx-close]{position:absolute;right:16px;top:16px;width:36px;height:36px;border:1px solid var(--line-2);border-radius:50%;background:#19191f;color:#fff;font-size:22px}
+      ` }} /> : null}
+      <div className="v-steps" data-hx-root={actions ? "visualSteps" : undefined} data-interactive={actions ? "true" : undefined}>
         <article className="v-step-card">
           <div className={`v-step-art v-step-source${step.hideSourceCopy ? " v-step-source-only" : ""}${isVideo ? " v-step-idea-art" : ""}`}>
             {isVideo ? <div className="v-step-idea-box">
-              <div className="v-step-idea-main"><VisualImage image={step.source} r={r} className="v-step-idea-thumb" />{step.idea ? <p>{step.idea}</p> : null}</div>
-              <div className="v-step-idea-foot"><div className="v-step-idea-tags"><span>Product</span><span>9:16</span>{step.length ? <span>{step.length}s</span> : null}</div><span aria-hidden="true" className="v-step-send">➤</span></div>
-            </div> : <div className="drop v-step-drop">
+              <SourceTag aria-label={actions ? copyLabel(r, "Preview source image") : undefined} className="v-step-idea-main" data-home-local={actions ? "visualSource" : undefined} data-hx-dialog={actions ? sourcePreviewId : undefined} type={actions ? "button" : undefined}><VisualImage image={step.source} r={r} className="v-step-idea-thumb" />{step.idea ? <p>{step.idea}</p> : null}</SourceTag>
+              <div className="v-step-idea-foot"><div className="v-step-idea-tags"><span>Product</span><span>9:16</span>{step.length ? <span>{step.length}s</span> : null}</div><ActionTag aria-hidden={actions ? undefined : true} aria-label={actions ? copyLabel(r, "Preview source image") : undefined} className="v-step-send" data-home-local={actions ? "visualIdeaPreview" : undefined} data-hx-dialog={actions ? sourcePreviewId : undefined} type={actions ? "button" : undefined}>➤</ActionTag></div>
+            </div> : <SourceTag aria-label={actions ? copyLabel(r, "Preview source image") : undefined} className="drop v-step-drop" data-home-local={actions ? "visualSource" : undefined} data-hx-dialog={actions ? sourcePreviewId : undefined} type={actions ? "button" : undefined}>
               <VisualImage image={step.source} r={r} className="v-step-thumb" />
               {step.hideSourceCopy ? null : <div><b>{step.sourceTitle ? normalizeStepLabel(step.sourceTitle) : "Drop your product photo here"}</b><span>{step.sourceHint ?? "JPG, PNG or WebP · any clear photo works"}</span></div>}
-            </div>}
+            </SourceTag>}
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 01</span><h3>{normalizeStepLabel(step.items[0]?.t ?? "")}</h3><p>{step.items[0]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">{copyLabel(r, "Step 01")}</span><h3>{normalizeStepLabel(step.items[0]?.t ?? "")}</h3><p>{step.items[0]?.d}</p></div>
         </article>
         <article className="v-step-card">
           <div className="v-step-art v-step-options">
             {actorCards.length ? (
-              <div aria-label="Choose an actor" className="maker v-step-maker v-step-actor-maker">
-                <div className="v-step-actor-grid" role="list">
-                  {actorCards.map((card, index) => <div aria-label={`${card.label}${card.selected ? ", selected" : ""}`} className={`v-step-actor-card${card.selected ? " is-selected" : ""}`} key={`${card.image.src}-${index}`} role="listitem">
+              <div aria-label={copyLabel(r, "Choose an actor")} className="maker v-step-maker v-step-actor-maker">
+                <div aria-label={actions ? copyLabel(r, "Example selection") : undefined} className="v-step-actor-grid" role={actions ? "group" : "list"}>
+                  {actorCards.map((card, index) => <SourceTag aria-pressed={actions ? Boolean(card.selected) : undefined} type={actions ? "button" : undefined} data-home-local={actions ? `visualActor${index + 1}` : undefined} data-hx-select-group={actions ? "visual-actor" : undefined} data-hx-select-value={actions ? String(index) : undefined} aria-label={card.label} className={`v-step-actor-card${!actions && card.selected ? " is-selected" : ""}`} key={`${card.image.src}-${index}`} role={actions ? undefined : "listitem"}>
                     <VisualImage image={card.image} r={r} className="v-step-actor-image" />
                     <span>{card.label}</span>
-                  </div>)}
+                  </SourceTag>)}
                 </div>
-                <div className="opts">{step.options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
-                <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>
-                <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>
+                <div className="opts">{step.options.map(([label, value], index) => <ActionTag aria-pressed={actions ? index === 0 : undefined} type={actions ? "button" : undefined} className="opt" data-home-local={actions ? `visualOption${index + 1}` : undefined} data-hx-select-group={actions ? "visual-options" : undefined} data-hx-select-value={actions ? String(index) : undefined} data-hx-cta-href={actions ? actionHref(`visualOption${index + 1}`) : undefined} key={label}>{label} <b>{value}</b></ActionTag>)}</div>
+                <CostTag aria-label={actions ? copyLabel(r, "View pricing") : undefined} className="maker-foot" data-home-local={actions ? "visualCost" : undefined} href={actions ? "#pricing" : undefined}><small>{copyLabel(r, "Cost")}</small><strong>{step.credits}</strong></CostTag>
+                <PrimaryTag aria-hidden={actions ? undefined : true} className="btn btn-grad v-step-submit" data-action-block={actions ? "visualSteps" : undefined} data-home-action={actions ? "visualCreate" : undefined} data-home-cta={actions ? "visualCreate" : undefined} href={actions ? actionHref("visualCreate") : undefined}>{buttonLabel} →</PrimaryTag>
               </div>
             ) : (
               <div className="maker v-step-maker">
                 {isVideo && step.chat?.length ? <div className="v-step-chat">
                   {step.chat.map(({ q, a }, index) => <div className="v-step-chat-exchange" key={`${q}-${index}`}><span className="v-step-chat-ai">{q}</span><span className="v-step-chat-user">{a}</span></div>)}
                   <span className="v-step-chat-confirm">Ready: 9:16{step.length ? ` · ${step.length} s` : ""} · {step.credits}</span>
-                </div> : <div className="v-step-choice-chips" aria-label={isVideo ? "Video choices" : "Photo scene choices"}>{choiceChips.map((chip, index) => <span className={index === 0 ? "is-selected" : undefined} key={`${chip}-${index}`}>{chip}</span>)}</div>}
-                {isVideo && step.chat?.length ? null : <div className="maker-foot"><small>Cost</small><strong>{step.credits}</strong></div>}
-                {step.buttonHref ? <a className="btn btn-grad v-step-submit" href={r.href(step.buttonHref)}>{buttonLabel} →</a> : <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>}
+                </div> : <div className="v-step-choice-chips" role={actions ? "group" : undefined} aria-label={copyLabel(r, "Example selection")}>{choiceChips.map((chip, index) => <ActionTag aria-pressed={actions ? index === 0 : undefined} type={actions ? "button" : undefined} className={!actions && index === 0 ? "is-selected" : undefined} data-home-local={actions ? `visualChoice${index + 1}` : undefined} data-hx-select-group={actions ? "visual-choice" : undefined} data-hx-select-value={actions ? String(index) : undefined} data-hx-cta-href={actions ? actionHref(`visualChoice${index + 1}`) : undefined} key={`${chip}-${index}`}>{chip}</ActionTag>)}</div>}
+                {isVideo && step.chat?.length ? null : <CostTag aria-label={actions ? copyLabel(r, "View pricing") : undefined} className="maker-foot" data-home-local={actions ? "visualCost" : undefined} href={actions ? "#pricing" : undefined}><small>{copyLabel(r, "Cost")}</small><strong>{step.credits}</strong></CostTag>}
+                {step.buttonHref || actions ? <a className="btn btn-grad v-step-submit" data-action-block={actions ? "visualSteps" : undefined} data-home-action={actions ? "visualCreate" : undefined} data-home-cta={actions ? "visualCreate" : undefined} href={actionHref("visualCreate")}>{buttonLabel} →</a> : <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>}
               </div>
             )}
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 02</span><h3>{normalizeStepLabel(step.items[1]?.t ?? "")}</h3><p>{step.items[1]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">{copyLabel(r, "Step 02")}</span><h3>{normalizeStepLabel(step.items[1]?.t ?? "")}</h3><p>{step.items[1]?.d}</p></div>
         </article>
         <article className="v-step-card">
           <div className={`v-step-art v-step-result${hasActorResult ? " v-step-video-result" : ""}`}>
-            {hasActorResult && step.actorResult ? <div className="v-step-video-frame"><VisualImage image={step.actorResult} r={r} /><span className="v-step-duration">{formatLength}</span><span aria-label="Download video" className="v-step-download-icon" role="img">↓</span></div> : <><VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} /><span aria-hidden="true" className="btn btn-ghost v-download">Download</span></>}
+            {hasActorResult && step.actorResult ? <div className="v-step-video-frame">{actions ? <button aria-label={copyLabel(r, "Preview result")} className="v-step-result-link" data-home-local="visualResult" data-hx-dialog={resultPreviewId} type="button"><VisualImage image={step.actorResult} r={r} /></button> : <VisualImage image={step.actorResult} r={r} />}<span className="v-step-duration">{formatLength}</span><ActionTag aria-label={copyLabel(r, actions ? "Preview result" : "Download video")} className="v-step-download-icon" data-home-local={actions ? "visualDownload" : undefined} data-hx-dialog={actions ? resultPreviewId : undefined} type={actions ? "button" : undefined} role={actions ? undefined : "img"}>{actions ? "⌕" : "↓"}</ActionTag></div> : <>{actions ? <button aria-label={copyLabel(r, "Preview result")} className="v-step-result-link" data-home-local="visualResult" data-hx-dialog={resultPreviewId} type="button"><VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} /></button> : <VisualImage image={step.result} r={r} className={step.result.w < step.result.h ? `v-step-result-portrait${step.hideSourceCopy ? " v-step-result-actor" : ""}` : undefined} />}<ActionTag aria-hidden={actions ? undefined : true} className="btn btn-ghost v-download" data-home-local={actions ? "visualDownload" : undefined} data-hx-dialog={actions ? resultPreviewId : undefined} type={actions ? "button" : undefined}>{copyLabel(r, actions ? "Preview result" : "Download")}</ActionTag></>}
           </div>
-          <div className="v-step-copy"><span className="v-step-number">Step 03</span><h3>{normalizeStepLabel(step.items[2]?.t ?? "")}</h3><p>{step.items[2]?.d}</p></div>
+          <div className="v-step-copy"><span className="v-step-number">{copyLabel(r, "Step 03")}</span><h3>{normalizeStepLabel(step.items[2]?.t ?? "")}</h3><p>{step.items[2]?.d}</p></div>
         </article>
+        {actions ? <>{previews.map(({ id, image, label }) => <dialog aria-label={copyLabel(r, label)} className="hx-dialog v-step-preview-dialog" id={id} key={id}><button aria-label={copyLabel(r, "Close preview")} data-home-local="visualClosePreview" data-hx-close type="button">×</button><h3>{image.alt}</h3><VisualImage className="v-step-preview-media" image={image} r={r} /></dialog>)}</> : null}
       </div>
     </Section>
   );
