@@ -137,9 +137,33 @@ export type V2Base = {
 
 export type V2Data = V2Base & Record<string, unknown>;
 
+export type V2PricingCard = {
+  id: string;
+  name: string;
+  summary: string;
+  badgeLabel?: string;
+  features: string[];
+  prices: Partial<Record<"month" | "year", {
+    amount: string;
+    period: string;
+    credits: string;
+    outputEstimate?: {
+      photos: number;
+      fifteenSecondVideos: number;
+      note: string;
+      period: "month" | "year";
+    };
+    equivalentMonthly?: string;
+    savingsLabel?: string;
+    checkoutEnabled: boolean;
+    checkoutHref: string;
+  }>>;
+};
+
 export type V2Resolvers = {
   href: (value: string) => string;
   asset: (value: string) => string;
+  pricingPlans?: V2PricingCard[];
   // The plain link for a workspace address, used where a form must submit there directly.
   direct?: (value: string) => string;
 };

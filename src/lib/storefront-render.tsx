@@ -3340,11 +3340,16 @@ export async function renderStorefrontPage({
       : basePageJson
   );
   const renderDataForPage = isFocusedCollectionPage ? focusedCollectionRenderData : aidreamcapesImageDirectoryRenderData;
+  const isAidreamcapesV2PricingHome = currentSite.id === "site_aidreamcapes" && slug === "/" &&
+    pageJson.sectionsOrder.some((sectionId) => pageJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
+  const trimmedPageData = trimRenderDataForPage(renderDataForPage, pageJson, slug, isCollectionDirectoryPage && !isFocusedCollectionPage);
   let pageRenderData = withPageMediaAssets(
     currentSite,
     pageJson,
     settings,
-    trimRenderDataForPage(renderDataForPage, pageJson, slug, isCollectionDirectoryPage && !isFocusedCollectionPage)
+    isAidreamcapesV2PricingHome
+      ? { ...trimmedPageData, products: trimPricingProductsForStorefront(renderDataForPage, 12) }
+      : trimmedPageData
   );
   if (isFocusedCollectionPage && isAidreamcapesStorefront(currentSite)) {
     pageRenderData = { ...pageRenderData, creativePacks: renderDataForPage.creativePacks.map(lightweightCreativePack) };

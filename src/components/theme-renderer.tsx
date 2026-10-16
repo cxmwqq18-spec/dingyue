@@ -27,6 +27,7 @@ import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/c
 import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
 import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
 import { AidreamcapesV2PolicyPage, isAidreamcapesV2PolicyPage } from "@/components/storefront/aidreamcapes-v2/policy";
+import { aidreamcapesPricingCards } from "@/components/storefront/aidreamcapes-v2/pricing-data";
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
@@ -325,9 +326,13 @@ export function ThemeRenderer({
     const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
     const v2PageSections = entries.map(([, section]) => section);
     const v2PolicyPage = !v2Entry && isAidreamcapesV2PolicyPage(v2PageSections, normalizedPath);
+    const v2Href = (value: string) => hrefFor(routedSite, value);
     const v2Resolvers = {
-      href: (value: string) => hrefFor(routedSite, value),
-      asset: (value: string) => mediaAssetUrl(routedSite, value)
+      href: v2Href,
+      asset: (value: string) => mediaAssetUrl(routedSite, value),
+      ...(displaySite.id === "site_aidreamcapes" && normalizedPath === "/"
+        ? { pricingPlans: aidreamcapesPricingCards(products ?? [], displaySite, { href: v2Href }) }
+        : {})
     };
     // The company named in the site profile is shown in the footer and on the pages about it.
     const v2Company = aidreamcapesV2Company(storefrontContext?.profile?.identity, settings.globalSections?.footer?.settings as Record<string, unknown> | undefined);

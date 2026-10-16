@@ -11,6 +11,7 @@ import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, Visua
 import type { V2Visual } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
+import { AidreamcapesV2PricingSection } from "./pricing";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -191,6 +192,7 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section>],
     ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
+    ["pricing", <AidreamcapesV2PricingSection r={r} />],
     ...pageOwnBlocks(data, r),
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
