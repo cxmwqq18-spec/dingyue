@@ -10,6 +10,7 @@ import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Defin
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -136,7 +137,9 @@ function HomePage({ data, r }: Props) {
   const audience = data.audience as { title?: string; lead?: string; items?: V2Item[] } | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
-  return <>{orderedBlocks(data, r, [
+  return <div className="home-v2">
+    <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_HOME_CSS }} />
+    {orderedBlocks(data, r, [
     ["hero",
       <section className="hero hero-center">
         <div className="wrap">
@@ -192,7 +195,8 @@ function HomePage({ data, r }: Props) {
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
     ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference /></>]
-  ])}</>;
+  ])}
+  </div>;
 }
 
 // Each step of a flow shares the row by the shape of its picture, so every step ends up the same height and the row fits its box.

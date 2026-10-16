@@ -156,6 +156,13 @@ export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 .adc2 .v-mock-steps .s2{top:44%;right:8%}
 .adc2 .v-mock-steps .s3{bottom:12%;left:10%}
 `;
+
+export const AIDREAMCAPES_V2_HOME_CSS = `
+.adc2 .home-v2 .sec-head{align-items:center;max-width:920px;margin-inline:auto;text-align:center}
+.adc2 .home-v2 .sec-head h2,.adc2 .home-v2 .sec-head p{width:100%;margin-inline:auto}
+.adc2 .home-v2 .intro{max-width:860px;margin-inline:auto;text-align:center}
+.adc2 .home-v2 .intro p{margin-inline:auto}
+`;
 // Scene filters are CSS-only radios; one selector per filter position. 20 covers the
 // largest competitor filter set (19 categories; All is handled separately).
 const PICKER_FILTER_MAX = 40;
