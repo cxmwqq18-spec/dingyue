@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
-import { Img } from "./parts";
+import { BenefitIcon, Img, RichText } from "./parts";
 import type { V2Image, V2Resolvers } from "./types";
-import type { HomeExperienceData, HomeExperienceKind } from "./home-experience-types";
+import type { HomeCampaignSections, HomeExperienceData, HomeExperienceKind } from "./home-experience-types";
+import "./home-campaign.css";
 
 function Preview({ id, title, close, images, r, children }: {
   id: string; title: string; close: string; images: V2Image[]; r: V2Resolvers; children?: ReactNode;
@@ -14,8 +15,8 @@ function Preview({ id, title, close, images, r, children }: {
 }
 
 /** Complete HTML from LivePage. Ordinary controls only reveal local presentation. */
-export function HomeExperienceSection({ experience, after, r }: {
-  experience?: HomeExperienceData; after: HomeExperienceKind; r: V2Resolvers;
+export function HomeExperienceSection({ experience, after, campaign, r }: {
+  experience?: HomeExperienceData; after: HomeExperienceKind; campaign?: HomeCampaignSections; r: V2Resolvers;
 }) {
   const block = experience?.blocks.find((item) => item.after === after);
   if (!experience || !block) return null;
@@ -39,6 +40,39 @@ export function HomeExperienceSection({ experience, after, r }: {
     ["draftPresenter", "m02", "t020", "t021", "t022", "t023", "t024", "presenter"],
     ["draftLaunch", "m01", "t025", "t026", "t027", "t028", "t029", "product"]
   ];
+
+  if (after === "audience" && campaign) return (
+    <section className="hx-feature hx-light hx-batch hx-campaign" data-hx-root data-home-experience="audience" id="home-experience-audience" aria-labelledby="home-experience-audience-title">
+      <div className="hx-wrap hx-batch-layout hx-campaign-layout">
+        <div className="hx-campaign-summary">
+          <div className="hx-tag">{c.t001}</div>
+          <h2 id="home-experience-audience-title">{campaign.benefits.title}</h2>
+          {campaign.benefits.lead ? <p className="hx-intro">{campaign.benefits.lead}</p> : null}
+          <div className="hx-campaign-benefits" data-relocated-benefits>
+            {campaign.benefits.items.map(item => <article key={item.t}>
+              {item.icon ? <BenefitIcon name={item.icon} /> : null}
+              <div><h3>{item.t}</h3><p><RichText text={item.d} r={r} /></p></div>
+            </article>)}
+          </div>
+          <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t008}</a>
+          <p className="hx-note">{c.t009}</p>
+        </div>
+        <div className="hx-library hx-campaign-workflow" aria-labelledby="home-campaign-workflow-title">
+          <header className="hx-campaign-workflow-head">
+            <div className="hx-tag">{campaign.workflow.eyebrow}</div>
+            <h2 id="home-campaign-workflow-title">{campaign.workflow.h2}</h2>
+            {campaign.workflow.lead ? <p>{campaign.workflow.lead}</p> : null}
+          </header>
+          <ol className="hx-campaign-steps" data-relocated-workflow>
+            {campaign.workflow.items.map((item, index) => <li key={item.t}>
+              <h3><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{item.t}</h3>
+              <p><RichText text={item.d} r={r} /></p>
+            </li>)}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
 
   switch (after) {
     case "hero": return (

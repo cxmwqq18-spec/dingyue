@@ -8,13 +8,13 @@ import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
 import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
-import type { V2Visual } from "./types";
+import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
 import { AidreamcapesV2PricingSection } from "./pricing";
 import { HomeExperienceSection } from "./home-experience";
 import { HomeExperienceBehavior } from "./home-experience-behavior";
-import { HOME_EXPERIENCE_KINDS, type HomeExperienceData } from "./home-experience-types";
+import { HOME_EXPERIENCE_KINDS, type HomeCampaignSections, type HomeExperienceData } from "./home-experience-types";
 import { copyLabel } from "./types";
 import "./home-experience.css";
 import { HomeComposer, type HomeComposerData } from "./home-composer";
@@ -140,7 +140,16 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 function HomePage({ data, r }: Props) {
   const experience = data.homeExperience as HomeExperienceData | undefined;
   if (experience) r = { ...r, copy: experience.labels };
-  const additions = experience ? Object.fromEntries(HOME_EXPERIENCE_KINDS.map((after) => [after, <HomeExperienceSection after={after} experience={experience} key={after} r={r} />])) : {};
+  const relocate = experience?.blocks.find(block => block.after === "audience")?.presentation?.contentLayout === "benefits-workflow";
+  const benefitItems = list<V2Item>(data.benefits);
+  const workflow = list<V2MoreSection>(data.more_sections)[0];
+  if (relocate && (benefitItems.length !== 6 || !text(data.benefitsH2) || workflow?.items.length !== 6)) {
+    throw new Error("The homepage campaign layout requires its current six benefits and six workflow steps");
+  }
+  const campaign: HomeCampaignSections | undefined = relocate ? {
+    benefits: { title: text(data.benefitsH2), lead: text(data.benefitsLead), items: benefitItems }, workflow
+  } : undefined;
+  const additions = experience ? Object.fromEntries(HOME_EXPERIENCE_KINDS.map((after) => [after, <HomeExperienceSection after={after} campaign={campaign} experience={experience} key={after} r={r} />])) : {};
   const hero = data.hero as { videoHref: string; photoHref: string };
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
@@ -179,8 +188,8 @@ function HomePage({ data, r }: Props) {
       ) : null],
     ["picker", visual ? <VisualPicker pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
     ["steps", visual ? <VisualSteps actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
-    ["benefits", <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
-    ["features", <MoreSections numbered r={r} sections={data.more_sections as never} />],
+    ["benefits", campaign ? null : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
+    ["features", <MoreSections numbered r={r} sections={campaign ? list<V2MoreSection>(data.more_sections).slice(1) : data.more_sections as never} />],
     ["audience", audience?.title ? <Section eyebrow={copyLabel(r, "For growing teams")} lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],
     ["tools",
       <section className="sec">

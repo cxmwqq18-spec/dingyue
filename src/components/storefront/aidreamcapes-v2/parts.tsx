@@ -248,7 +248,7 @@ const BENEFIT_ICON_PATHS: Record<V2BenefitIcon, ReactNode> = {
   play: <path d="m9 6 9 6-9 6V6Z" fill="currentColor" stroke="none" />
 };
 
-function BenefitIcon({ name }: { name: V2BenefitIcon }) {
+export function BenefitIcon({ name }: { name: V2BenefitIcon }) {
   return <span aria-hidden="true" className="v-benefit-icon"><svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" viewBox="0 0 24 24" width="24">{BENEFIT_ICON_PATHS[name]}</svg></span>;
 }
 

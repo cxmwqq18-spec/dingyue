@@ -1,4 +1,9 @@
-import type { V2Image } from "./types";
+import type { V2Image, V2Item, V2MoreSection } from "./types";
+
+export type HomeCampaignSections = {
+  benefits: { title: string; lead?: string; items: V2Item[] };
+  workflow: V2MoreSection;
+};
 
 export const HOME_EXPERIENCE_KINDS = ["hero", "picker", "steps", "features", "audience", "reviews"] as const;
 export type HomeExperienceKind = (typeof HOME_EXPERIENCE_KINDS)[number];
@@ -7,7 +12,7 @@ export type HomeExperienceData = {
   language: "en" | "zh-CN";
   labels: Record<string, string>;
   media: Record<string, V2Image>;
-  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
+  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
 };
 
 /** Page-owned translations; destinations and identifiers retain their original values. */
