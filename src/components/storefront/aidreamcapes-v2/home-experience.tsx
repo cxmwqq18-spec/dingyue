@@ -41,6 +41,60 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
     ["draftLaunch", "m01", "t025", "t026", "t027", "t028", "t029", "product"]
   ];
 
+  if (after === "audience" && campaign && block.presentation?.workflowVisuals) {
+    const visuals = block.presentation?.workflowVisuals;
+    if (!visuals || visuals.length !== 6 || visuals.some(visual => visual.media.some(key => !m[key]))) {
+      throw new Error("Aidreamcapes campaign requires six current page-owned workflow visuals");
+    }
+    const visual = (index: number) => {
+      const stage = visuals[index];
+      return <span className={`hx-process-visual hx-process-${stage.kind}`}>
+        <span className="hx-process-images">{stage.media.map((key, imageIndex) => <span className="hx-process-image" key={`${key}-${imageIndex}`}><Img image={m[key]} r={r} /></span>)}</span>
+        <span className="hx-process-detail"><b>{stage.label}</b><span>{stage.detail}</span></span>
+        {stage.kind === "assembly" ? <span className="hx-process-tracks" aria-hidden="true"><i /><i /><i /></span> : null}
+        {stage.kind === "review" ? <span className="hx-process-play" aria-hidden="true">▶</span> : null}
+      </span>;
+    };
+    return (
+      <section className="hx-feature hx-light hx-batch hx-campaign" data-hx-root data-home-experience="audience" id="home-experience-audience" aria-labelledby="home-experience-audience-title">
+        <div className="hx-wrap hx-batch-layout hx-campaign-layout">
+          <div className="hx-campaign-summary">
+            <div className="hx-tag">{c.t001}</div>
+            <h2 id="home-experience-audience-title">{campaign.benefits.title}</h2>
+            {campaign.benefits.lead ? <p className="hx-intro">{campaign.benefits.lead}</p> : null}
+            <div className="hx-campaign-benefits" data-relocated-benefits>
+              {campaign.benefits.items.map((item, index) => <article key={item.t} data-process-benefit={index + 1}>
+                {item.icon ? <BenefitIcon name={item.icon} /> : null}
+                <div><h3>{item.t}</h3><p><RichText text={item.d} r={r} /></p></div>
+              </article>)}
+            </div>
+            <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t008}</a>
+            <p className="hx-note">{c.t009}</p>
+          </div>
+          <div className="hx-library hx-campaign-workflow" aria-labelledby="home-campaign-workflow-title">
+            <header className="hx-campaign-workflow-head">
+              <div className="hx-tag">{campaign.workflow.eyebrow}</div>
+              <h2 id="home-campaign-workflow-title">{campaign.workflow.h2}</h2>
+              {campaign.workflow.lead ? <p>{campaign.workflow.lead}</p> : null}
+            </header>
+            <ol className="hx-campaign-steps" data-relocated-workflow>
+              {campaign.workflow.items.map((item, index) => <li className="hx-process-card" data-process-step={index + 1} key={item.t}>
+                <button type="button" className="hx-process-preview" data-home-local={`process-${index + 1}`} data-hx-dialog={previewId(`process-${index + 1}`)} aria-label={`${visuals[index].preview}: ${item.t}`}>
+                  {visual(index)}<span className="hx-process-expand" aria-hidden="true">↗</span>
+                </button>
+                <div className="hx-process-copy"><h3><span className="hx-campaign-step-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{item.t}</h3><p><RichText text={item.d} r={r} /></p></div>
+              </li>)}
+            </ol>
+          </div>
+        </div>
+        {campaign.workflow.items.map((item, index) => <dialog className="hx-dialog hx-process-dialog" id={previewId(`process-${index + 1}`)} aria-labelledby={`${previewId(`process-${index + 1}`)}-title`} key={item.t}>
+          <div className="hx-dialog-head"><h3 id={`${previewId(`process-${index + 1}`)}-title`}>{item.t}</h3><form method="dialog"><button type="submit" data-hx-close aria-label={c.uiClose}><span aria-hidden="true">×</span><span>{c.uiClose}</span></button></form></div>
+          {visual(index)}<div className="hx-dialog-copy"><p><RichText text={item.d} r={r} /></p></div>
+        </dialog>)}
+      </section>
+    );
+  }
+
   if (after === "audience" && campaign) return (
     <section className="hx-feature hx-light hx-batch hx-campaign" data-hx-root data-home-experience="audience" id="home-experience-audience" aria-labelledby="home-experience-audience-title">
       <div className="hx-wrap hx-batch-layout hx-campaign-layout">

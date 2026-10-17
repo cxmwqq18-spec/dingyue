@@ -12,7 +12,7 @@ export type HomeExperienceData = {
   language: "en" | "zh-CN";
   labels: Record<string, string>;
   media: Record<string, V2Image>;
-  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
+  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[]; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
 };
 
 /** Page-owned translations; destinations and identifiers retain their original values. */

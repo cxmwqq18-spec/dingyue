@@ -80,3 +80,97 @@
   .adc2:has(.home-v4) header.site .logo { font-size: 16px; gap: 6px; }
   .adc2:has(.home-v4) header.site .hright > .btn-primary { padding-inline: 10px; }
 }
+
+/* Six page-owned visual stages share one product story from upload to delivery. */
+.home-v4 .hx-campaign-steps:has(.hx-process-card) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 22px; }
+.home-v4 .hx-campaign-steps .hx-process-card { overflow: hidden; border: 1px solid #ded5e2; border-radius: 13px; background: #fff; }
+.home-v4 .hx-process-preview { display: block; position: relative; width: 100%; padding: 0; border: 0; text-align: left; cursor: zoom-in; background: #ece7ee; color: #392b43; }
+.home-v4 .hx-process-preview:focus-visible { outline: 3px solid #8054a1; outline-offset: -3px; }
+.home-v4 .hx-process-expand { position: absolute; top: 9px; right: 9px; display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #ffffffec; font-size: 16px; transition: transform .15s; }
+.home-v4 .hx-process-preview:hover .hx-process-expand { transform: translate(1px, -1px); }
+.home-v4 .hx-process-visual { position: relative; display: flex; align-items: center; gap: 12px; height: 155px; padding: 15px; overflow: hidden; background: #eeebf0; }
+.home-v4 .hx-process-images { display: flex; gap: 6px; min-width: 0; height: 100%; }
+.home-v4 .hx-process-image { display: block; min-width: 0; overflow: hidden; border-radius: 7px; }
+.home-v4 .hx-process-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.home-v4 .hx-process-detail { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.home-v4 .hx-process-detail b { font-size: 11px; line-height: 1.5; font-weight: 650; }
+.home-v4 .hx-process-detail > span { font-size: 10px; line-height: 1.6; color: #75687e; }
+.home-v4 .hx-process-product .hx-process-images { width: 50%; padding: 5px; border: 1px dashed #bda5cc; border-radius: 9px; background: #fff; }
+.home-v4 .hx-process-product .hx-process-image { width: 100%; }
+.home-v4 .hx-process-presenter .hx-process-images { width: 67%; }
+.home-v4 .hx-process-presenter .hx-process-image { flex: 1; }
+.home-v4 .hx-process-presenter .hx-process-detail { flex: 1; }
+.home-v4 .hx-process-brief .hx-process-images { width: 65px; height: 78px; flex: none; }
+.home-v4 .hx-process-brief .hx-process-detail { padding: 11px; border: 1px solid #d8cddd; border-radius: 8px; background: #fff; }
+.home-v4 .hx-process-brief .hx-process-detail > span { font-size: 10px; line-height: 1.65; }
+.home-v4 .hx-process-storyboard, .home-v4 .hx-process-assembly { display: block; }
+.home-v4 .hx-process-storyboard .hx-process-images { height: 86px; }
+.home-v4 .hx-process-storyboard .hx-process-image, .home-v4 .hx-process-assembly .hx-process-image { flex: 1; border: 2px solid #fff; }
+.home-v4 .hx-process-storyboard .hx-process-detail, .home-v4 .hx-process-assembly .hx-process-detail { flex-direction: row; align-items: center; justify-content: space-between; margin-top: 8px; gap: 5px; }
+.home-v4 .hx-process-assembly .hx-process-images { height: 67px; gap: 3px; }
+.home-v4 .hx-process-tracks { display: flex; gap: 3px; height: 8px; margin: 7px 0; }
+.home-v4 .hx-process-tracks i { flex: 1; border-radius: 3px; background: #b89bcb; }
+.home-v4 .hx-process-tracks i:nth-child(2) { background: #8c709e; }
+.home-v4 .hx-process-review { justify-content: center; background: #28202f; color: #fff; }
+.home-v4 .hx-process-review .hx-process-images { width: 78px; }
+.home-v4 .hx-process-review .hx-process-detail { max-width: 110px; }
+.home-v4 .hx-process-review .hx-process-detail > span { color: #dfcde9; }
+.home-v4 .hx-process-play { position: absolute; left: 43px; top: 65px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #ffffffda; color: #392b43; font-size: 12px; }
+.home-v4 .hx-process-copy { padding: 15px; }
+.home-v4 .hx-process-copy h3 { display: flex; gap: 8px; align-items: baseline; font-size: 12.5px; line-height: 1.5; }
+.home-v4 .hx-process-copy .hx-campaign-step-number { display: inline; width: auto; height: auto; border-radius: 0; background: none; font-size: 12px; }
+.home-v4 .hx-process-copy p { padding: 0; margin-top: 8px; font-size: 12px; line-height: 1.75; }
+.home-v4 .hx-process-dialog > .hx-process-visual { height: 340px; margin: 20px; border-radius: 14px; padding: 30px; gap: 25px; }
+.home-v4 .hx-process-dialog .hx-process-detail b { font-size: 18px; }
+.home-v4 .hx-process-dialog .hx-process-detail > span { font-size: 15px; }
+.home-v4 .hx-process-dialog .hx-process-brief .hx-process-images { width: 130px; height: 170px; }
+.home-v4 .hx-process-dialog .hx-process-storyboard .hx-process-images { height: 210px; }
+.home-v4 .hx-process-dialog .hx-process-assembly .hx-process-images { height: 180px; }
+.home-v4 .hx-process-dialog .hx-process-review .hx-process-images { width: 170px; }
+.home-v4 .hx-process-dialog .hx-process-review .hx-process-detail { max-width: 220px; }
+.home-v4 .hx-process-dialog .hx-process-play { display: none; }
+@media (max-width: 600px) {
+  .home-v4 .hx-campaign-steps:has(.hx-process-card) { gap: 14px; padding: 16px; }
+  .home-v4 .hx-process-visual { height: 140px; padding: 10px; gap: 7px; }
+  .home-v4 .hx-process-product, .home-v4 .hx-process-presenter { flex-direction: column; gap: 5px; }
+  .home-v4 .hx-process-product .hx-process-images, .home-v4 .hx-process-presenter .hx-process-images { width: 100%; height: 84px; }
+  .home-v4 .hx-process-product .hx-process-detail, .home-v4 .hx-process-presenter .hx-process-detail { flex-direction: row; gap: 5px; align-items: center; }
+  .home-v4 .hx-process-detail b { font-size: 9px; }
+  .home-v4 .hx-process-detail > span { font-size: 8px; }
+  .home-v4 .hx-process-brief .hx-process-images { display: none; }
+  .home-v4 .hx-process-brief .hx-process-detail { padding: 8px; }
+  .home-v4 .hx-process-brief .hx-process-detail > span { font-size: 9px; }
+  .home-v4 .hx-process-review .hx-process-images { width: 56px; flex: none; }
+  .home-v4 .hx-process-play { display: none; }
+  .home-v4 .hx-process-storyboard .hx-process-detail, .home-v4 .hx-process-assembly .hx-process-detail { flex-direction: column; align-items: flex-start; }
+  .home-v4 .hx-process-copy { padding: 12px; }
+  .home-v4 .hx-process-copy h3 { font-size: 12px; gap: 6px; }
+  .home-v4 .hx-process-copy p { font-size: 11px; }
+  .home-v4 .hx-process-dialog > .hx-process-visual { height: 260px; padding: 15px; margin: 12px; }
+  .home-v4 .hx-process-dialog .hx-process-detail b { font-size: 13px; }
+  .home-v4 .hx-process-dialog .hx-process-detail > span { font-size: 11px; }
+}
+@media (max-width: 360px) {
+  .home-v4 .hx-campaign-steps:has(.hx-process-card) { grid-template-columns: minmax(0, 1fr); }
+}
+@media (min-width: 1241px) {
+  .home-v4 .hx-campaign-summary { position: sticky; top: 108px; }
+}
+@media (max-width: 600px) {
+  .home-v4 .hx-campaign-steps:has(.hx-process-card) { grid-template-columns: minmax(0, 1fr); }
+  .home-v4 .hx-process-visual { height: 175px; padding: 16px; gap: 12px; }
+  .home-v4 .hx-process-product, .home-v4 .hx-process-presenter { flex-direction: row; }
+  .home-v4 .hx-process-product .hx-process-images { width: 50%; height: 100%; }
+  .home-v4 .hx-process-presenter .hx-process-images { width: 67%; height: 100%; }
+  .home-v4 .hx-process-product .hx-process-detail, .home-v4 .hx-process-presenter .hx-process-detail { flex-direction: column; align-items: flex-start; }
+  .home-v4 .hx-process-detail b { font-size: 12px; }
+  .home-v4 .hx-process-detail > span { font-size: 11px; }
+  .home-v4 .hx-process-brief .hx-process-images { display: flex; width: 65px; }
+  .home-v4 .hx-process-brief .hx-process-detail > span { font-size: 11px; }
+  .home-v4 .hx-process-storyboard .hx-process-images { height: 100px; }
+  .home-v4 .hx-process-assembly .hx-process-images { height: 90px; }
+  .home-v4 .hx-process-review .hx-process-images { width: 94px; }
+  .home-v4 .hx-process-copy { padding: 16px; }
+  .home-v4 .hx-process-copy h3 { font-size: 15px; }
+  .home-v4 .hx-process-copy p { font-size: 13px; }
+}
