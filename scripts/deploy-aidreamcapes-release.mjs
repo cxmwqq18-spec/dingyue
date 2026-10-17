@@ -12,6 +12,12 @@ const commit = value("--commit");
 assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<40-character SHA>");
 const prebuiltBuild = value("--prebuilt-build");
 const reuseBuildCommit = value("--reuse-build");
+const reusePublicCommit = value("--reuse-public-from-commit");
+if (reusePublicCommit) {
+  assert(/^[a-f0-9]{40}$/.test(reusePublicCommit), "Public asset reuse requires an exact source commit");
+  assert.equal(gitPublicTree(reusePublicCommit), gitPublicTree(commit), "Public asset reuse requires unchanged tracked public assets");
+}
+function gitPublicTree(sha) { return execFileSync("git", ["ls-tree", "-r", sha, "--", "public"], { encoding: "utf8" }).trim(); }
 assert(!(prebuiltBuild && reuseBuildCommit), "Choose either --prebuilt-build or --reuse-build");
 if (prebuiltBuild) {
   const buildDir = path.resolve(prebuiltBuild);
@@ -65,7 +71,9 @@ test ! -e "$RELEASE"
 mkdir -p "$RELEASE"
 tar -xf ${quote(remoteArchive)} -C "$RELEASE"
 rm -f ${quote(remoteArchive)}
-cp -a --reflink=auto "$BASE/public" "$RELEASE/public"
+${reusePublicCommit ? `test "$(cat "$BASE/.deployed-commit")" = ${quote(reusePublicCommit)}
+cp -al "$BASE/public" "$RELEASE/public"
+printf '%s\\n' ${quote(reusePublicCommit)} > "$RELEASE/.public-asset-source-commit"` : 'cp -a --reflink=auto "$BASE/public" "$RELEASE/public"'}
 cp "$BASE/.env.local" "$RELEASE/.env.local"
 cp "$BASE/.env.local" "$RELEASE/.env"
 chmod 600 "$RELEASE/.env.local"
