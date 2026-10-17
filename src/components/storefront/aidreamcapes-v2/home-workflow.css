@@ -26,7 +26,7 @@
 .adc2 .adc-workflow-product-actions{display:flex;flex-direction:column;gap:9px;justify-content:center;min-width:0}
 .adc2 .adc-workflow-product-actions>a{display:flex;gap:8px;align-items:center;justify-content:center;padding:9px 5px;border:1px solid #e5dcf0;border-radius:8px;color:#715092;font-size:12px;min-height:38px}
 .adc2 .adc-workflow-product-note{display:flex;gap:9px;align-items:center;margin-top:3px}
-.adc2 .adc-workflow-product-note>img{width:36px;height:48px;border-radius:5px}
+.adc2 .adc-workflow .adc-workflow-product-note>img{flex:none;width:36px;height:48px;border-radius:5px}
 .adc2 .adc-workflow-product-note>span{min-width:0;flex:1}
 .adc2 .adc-workflow-product-note b{display:block;font-size:11px;line-height:1.4;color:#443454}
 .adc2 .adc-workflow-product-note small{display:block;font-size:10px;color:#9486a3}
