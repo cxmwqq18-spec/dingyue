@@ -1,4 +1,3 @@
-import { AidreamcapesHomeKeywords } from "./home-seo";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
@@ -997,7 +996,7 @@ export function AidreamcapesV2Page({ section, r: baseResolvers, company }: { sec
   const layout = text(settings.layout);
   const data = settings.data as V2Data;
   if (!data) return null;
-  if (layout === "home") return <><AidreamcapesHomeKeywords /><HomePage data={data} r={r} /></>;
+  if (layout === "home") return <HomePage data={data} r={r} />;
   if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;
   if (layout === "tool") return <ToolPage data={data} r={r} />;
   if (layout === "template") return <TemplatePage data={data} r={r} />;
