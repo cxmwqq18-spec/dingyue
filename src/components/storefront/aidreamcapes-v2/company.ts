@@ -3,7 +3,7 @@ import type { StorefrontProfileJson } from "@/lib/types";
 // The company behind the site, as named in the site profile. Pages show these values as they
 // are stored there (the Organization structured data is built from the same record), so the
 // visible text and the structured data cannot drift apart. Nothing here is written into page copy.
-export type V2Company = { name: string; address: string; phone: string; phoneHref: string; email: string; taxId: string; taxIdLabel: string };
+export type V2Company = { name: string; address: string; phone: string; phoneHref: string; email: string };
 
 const clean = (value: string | undefined) => (value ?? "").replace(/\s+/g, " ").trim();
 
@@ -16,7 +16,7 @@ function countryName(code: string): string {
   }
 }
 
-// Tax identifiers are omitted from Aidreamcapes' public company presentation.
+// Public company details include the name and contact information only.
 export function aidreamcapesV2Company(identity: StorefrontProfileJson["identity"] | undefined, _footerSettings?: Record<string, unknown>): V2Company | undefined {
   const name = clean(identity?.legalName);
   if (!name) return undefined;
@@ -28,8 +28,6 @@ export function aidreamcapesV2Company(identity: StorefrontProfileJson["identity"
     address: [clean(address?.line1), clean(address?.line2), clean(address?.city), regionLine, countryName(clean(address?.country))].filter(Boolean).join(", "),
     phone,
     phoneHref: phone.replace(/[^\d+]/g, ""),
-    email: clean(identity?.supportEmail),
-    taxId: "",
-    taxIdLabel: ""
+    email: clean(identity?.supportEmail)
   };
 }

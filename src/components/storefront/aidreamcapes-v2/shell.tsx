@@ -107,7 +107,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
 
 export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company }) {
   const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[] };
-  const footerCompany = company ? { ...homePresentationValue(company, r.copy ?? {}), taxId: "", taxIdLabel: "" } : undefined;
+  const footerCompany = company ? homePresentationValue(company, r.copy ?? {}) : undefined;
   return (
     <footer className="site">
       <div className="wrap">
