@@ -148,7 +148,7 @@ export function AidreamcapesZipFooter({
     ...link,
     ...configuredSocialLinks.get(link.key),
   })).filter((link) => Boolean(link.href));
-  const hasVisibleCompanyDetails = Boolean(company?.legalName || company?.address || company?.email || company?.taxId);
+  const hasVisibleCompanyDetails = Boolean(company?.legalName || company?.address || company?.email);
   const navigationColumns = footerNavigationColumns(groups);
   const legalLinks = [
     { label: "Children's Privacy", href: "/children-privacy" },
@@ -177,7 +177,6 @@ export function AidreamcapesZipFooter({
                 <dl className="grid gap-1.5 text-[13px]">
                   {company?.legalName ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Company</dt><dd className="font-medium text-white/85">{company.legalName}</dd></div> : null}
                   {company?.address ? <div className="flex items-start gap-x-3"><dt className="w-16 shrink-0 pt-0.5 text-xs text-white/40">Address</dt><dd className="min-w-0 max-w-xs flex-1 leading-5 text-white/70">{company.address}</dd></div> : null}
-                  {company?.taxId ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Tax ID</dt><dd className="text-white/70">{company.taxId}</dd></div> : null}
                   {company?.email ? <div className="flex items-baseline gap-x-3"><dt className="w-16 shrink-0 text-xs text-white/40">Email</dt><dd className="min-w-0"><a className="break-all text-white/70 transition-colors hover:text-white" href={`mailto:${company.email}`}>{company.email}</a></dd></div> : null}
                 </dl>
               </address>
@@ -226,8 +225,6 @@ export function AidreamcapesZipFooter({
                   <a className="transition-colors hover:text-white" href={resolveHref(link.href)} key={link.href}>{link.label}</a>
                 ))}
                 {company?.email ? <a className="transition-colors hover:text-white" href={`mailto:${company.email}`}>Contact us</a> : null}
-                {company?.email && company?.taxId ? <span aria-hidden="true" className="text-white/20">•</span> : null}
-                {company?.taxId ? <span>Tax ID {company.taxId}</span> : null}
               </div>
               <p className="mt-1 max-w-[44rem] text-[11px] leading-4 text-white/35">{bottomLine}</p>
             </div>

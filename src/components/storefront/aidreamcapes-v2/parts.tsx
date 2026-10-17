@@ -456,7 +456,6 @@ export function CompanyDetails({ company, className, labels }: { company: V2Comp
       {company.address ? <span>{company.address}</span> : null}
       {company.phone ? <span>{copyLabel({ copy: labels }, "Phone:")} <a href={`tel:${company.phoneHref}`}>{company.phone}</a></span> : null}
       {company.email ? <span>{copyLabel({ copy: labels }, "Email:")} <a href={`mailto:${company.email}`}>{company.email}</a></span> : null}
-      {company.taxId ? <span>{company.taxIdLabel}: {company.taxId}</span> : null}
     </address>
   );
 }
