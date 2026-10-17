@@ -2,7 +2,7 @@
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import { TeamCards,
-  BRAND_NAME, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
+  BRAND_NAME, ThematicLinkChips, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
@@ -66,7 +66,7 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
     <div className="related-groups">
       {visible.map((group) => <div key={group.title}>
         <h3>{group.title}</h3>
-        <ul>{group.links.map((link) => <li key={link.href}><a href={r.href(link.href)}>{link.label}</a></li>)}</ul>
+        <ThematicLinkChips links={group.links} r={r} />
       </div>)}
     </div>
   </Section>;
@@ -75,9 +75,7 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
 function RelatedLinksSection({ links, r, title = "Related Pages", lead }: { links: { label: string; href: string }[]; r: V2Resolvers; title?: string; lead?: string }) {
   if (!links.length) return null;
   return <Section eyebrow={copyLabel(r, "Related Pages")} lead={lead} title={copyLabel(r, title)}>
-    <div className="related">
-      {links.map((link) => <a className="card-title" href={r.href(link.href)} key={link.href}>{link.label}</a>)}
-    </div>
+    <ThematicLinkChips links={links} r={r} />
   </Section>;
 }
 
@@ -215,7 +213,7 @@ function HomePage({ data, r }: Props) {
         </Section>
       ) : null],
     ["picker", visual ? <VisualPicker sectionId="home-product-scenes" pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
-    ["steps", visual ? <VisualSteps sectionId="home-product-image-steps" actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
+    ["steps", visual ? <VisualSteps sectionId="home-product-image-steps" eyebrow={text(data.stepsEyebrow) || undefined} actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
     ["benefits", campaign && toolsDemo ? <HomeBrandTools items={benefitItems} demo={toolsDemo} header={{ eyebrow: text(data.benefitsEyebrow), title: text(data.benefitsH2), lead: text(data.benefitsLead) }} r={r} /> : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
     ["features", <MoreSections numbered r={r} sections={campaign ? list<V2MoreSection>(data.more_sections).slice(1) : data.more_sections as never} />],
     ["audience", audience?.title ? <Section eyebrow={copyLabel(r, "For growing teams")} lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],

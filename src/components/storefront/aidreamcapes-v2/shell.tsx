@@ -1,3 +1,4 @@
+import { CreditCard } from "lucide-react";
 import { isValidElement, type ReactNode } from "react";
 import type { AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
@@ -131,7 +132,10 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
         </div>
         <div className={`fbottom ${socialStyles.bottom}`}>
           <span>{navigation.footer.copyright}</span>
-          <AidreamcapesSocialLinks compact links={footer.socialLinks} />
+          <div className={socialStyles.footerTools}>
+            <AidreamcapesSocialLinks compact links={footer.socialLinks} />
+            <span aria-label="Card payments" className={socialStyles.paymentCard} role="img"><CreditCard aria-hidden="true" size={25} strokeWidth={1.6} /></span>
+          </div>
           <span>
             {navigation.footer.legal.map((item, index) => (
               <span key={item.href}>

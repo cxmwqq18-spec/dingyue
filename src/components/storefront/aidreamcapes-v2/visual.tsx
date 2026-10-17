@@ -68,8 +68,8 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
   return visual.overview ? <div className="v-overview"><p><RichText r={r} text={visual.overview} /></p></div> : null;
 }
 
-export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "", actions, sectionId }: {
-  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string; actions?: Record<string, string>; sectionId?: string
+export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "", eyebrow, actions, sectionId }: {
+  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string; eyebrow?: string; actions?: Record<string, string>; sectionId?: string
 }) {
   const step = visual.steps;
   if (!step) return null;
@@ -106,7 +106,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
     ` }} />
   ) : null;
   return (
-    <Section id={sectionId} eyebrow={copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
+    <Section id={sectionId} eyebrow={eyebrow ?? copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
       <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       {actorStepStyles}
       {actions ? <style dangerouslySetInnerHTML={{ __html: `

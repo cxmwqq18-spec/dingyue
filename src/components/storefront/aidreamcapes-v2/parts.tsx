@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
+import "./thematic-links.css";
 import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ReviewItem, V2TeamIcon, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
 import { copyLabel } from "./types";
@@ -709,7 +710,7 @@ const UploadIcon = () => (
 );
 
 // The storefront's name and icon (the brand was renamed from Aidreamcapes to AIVideosUGC).
-export const BRAND_NAME = "AIVideosUGC";
+export const BRAND_NAME = "AIVIDEOSUGC";
 export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc";
 
 // The AIVideosUGC v2 shell is rendered only for site_aidreamcapes. Its
@@ -1009,13 +1010,49 @@ export function ReasonsSection({ block, r }: { block?: V2CardBlock; r: V2Resolve
   );
 }
 
+// The six homepage assurances retain their current relational copy and order.
+const HOME_TRUST_ICONS = [UserCheck, Languages, MessageCircle, Ratio, Eye, Palette] as const;
+
+function TrustTopicIcon({ item, index, isHomeSet }: { item: V2CardBlockItem; index: number; isHomeSet: boolean }) {
+  const Icon = isHomeSet ? HOME_TRUST_ICONS[index] : REASON_ICONS[item.icon as keyof typeof REASON_ICONS] ?? ShieldCheck;
+  return <span aria-hidden="true" className={`v1-icon v1-tone-${index % 6} v-trust-topic`}><Icon size={25} strokeWidth={1.8} /></span>;
+}
+
+/** Decorative icons follow route semantics; labels and destinations stay page-owned. */
+function relatedTopicIcon(href: string) {
+  if (/url-to|website-to/.test(href)) return Link;
+  if (/actor|avatar|presenter/.test(href)) return UserRound;
+  if (/voice|speech|audio|dubb|language/.test(href)) return Mic;
+  if (/script|caption|subtitle|text-to/.test(href)) return FileText;
+  if (/background|eraser|remove/.test(href)) return Scissors;
+  if (/upscal|enhanc|restore/.test(href)) return WandSparkles;
+  if (/product|ecommerce|shop|commerce/.test(href)) return Package;
+  if (/brand/.test(href)) return Palette;
+  if (/image|photo/.test(href)) return Image;
+  if (/template/.test(href)) return LayoutGrid;
+  if (/ugc|ad-generator|ads/.test(href)) return Megaphone;
+  if (/video|clip|reel|motion/.test(href)) return Clapperboard;
+  if (/guide|help|learn|blog/.test(href)) return FileText;
+  return Sparkles;
+}
+
+export function ThematicLinkChips({ links, r }: { links: { label: string; href: string }[]; r: V2Resolvers }) {
+  return <div className="adc-thematic-links">{links.map((link, index) => {
+    const Icon = relatedTopicIcon(link.href);
+    return <a className={`adc-thematic-link adc-topic-${index % 4}`} href={r.href(link.href)} key={link.href}>
+      <span aria-hidden="true" className="adc-thematic-icon"><Icon size={21} strokeWidth={1.8} /></span>
+      <span>{link.label}</span><span aria-hidden="true" className="adc-thematic-arrow">↗</span>
+    </a>;
+  })}</div>;
+}
+
 export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }) {
   const items = block?.items ?? [];
   if (!block || !items.length) return null;
   return (
     <Section eyebrow={copyLabel(r, "What you can count on")} lead={block.lead} title={block.h2}>
       <CardBlockCss />
-      <div className="v1-cards v1-trust">{items.map((item) => <BlockCard item={item} key={item.t} r={r} />)}</div>
+      <div className="v1-cards v1-trust">{items.map((item, index) => <BlockCard item={item} key={item.t} mark={<TrustTopicIcon item={item} index={index} isHomeSet={items.length === 6} />} r={r} />)}</div>
     </Section>
   );
 }
