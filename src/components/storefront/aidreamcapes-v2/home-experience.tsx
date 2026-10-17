@@ -50,7 +50,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         <div className="hx-wrap">
           <div className="hx-layout">
             <div><div className="hx-tag">{c.t001}</div><h2 id="home-experience-hero-title">{c.t002}<br /><em>{c.t003}</em></h2><p className="hx-intro">{c.t004}</p>
-              <div className="hx-points">{[["#home-experience-picker", "t005"], ["#home-experience-picker", "t006"], ["#home-experience-steps", "t007"], ["#home-experience-reviews", "t008"]].map(([href, text]) => <a className="hx-chip" data-home-local={text} href={href} key={text}>{c[text]}</a>)}</div>
+              <div className="hx-points">{[[block.actions?.anchorProductPhoto ?? "#home-experience-picker", "t005"], [block.actions?.anchorScenes ?? "#home-experience-picker", "t006"], [block.actions?.anchorPresenters ?? "#home-experience-steps", "t007"], [block.actions?.anchorFormats ?? "#home-experience-reviews", "t008"]].map(([href, text]) => <a className="hx-chip" data-home-local={text} href={href} key={text}>{c[text]}</a>)}</div>
               <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t009}</a>
             </div>
             <div className="hx-story">
@@ -60,7 +60,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
               <button type="button" className="hx-mini-version" data-home-local="versions" data-hx-dialog={previewId("versions")}><strong>{c.t015}</strong><p>{c.t016}<br />{c.t017}</p><span aria-hidden="true" className="hx-bars"><i /><i /><i /></span></button>
             </div>
           </div>
-          <div className="hx-path">{[["#home-experience-picker", "t018", "t019"], ["#home-experience-steps", "t020", "t021"], ["#home-experience-features", "t022", "t023"], ["#home-experience-reviews", "t024", "t025"]].map(([href, title, description], index) => <a data-home-local={`step${index + 1}`} href={href} key={title}><b>{c[title]}</b><span>{c[description]}</span></a>)}</div>
+          <div className="hx-path">{[[block.actions?.anchorPathProduct ?? "#home-experience-picker", "t018", "t019"], [block.actions?.anchorPathScene ?? "#home-experience-steps", "t020", "t021"], [block.actions?.anchorPathStoryboard ?? "#home-experience-features", "t022", "t023"], [block.actions?.anchorPathReview ?? "#home-experience-reviews", "t024", "t025"]].map(([href, title, description], index) => <a data-home-local={`step${index + 1}`} href={href} key={title}><b>{c[title]}</b><span>{c[description]}</span></a>)}</div>
         </div>
         <Preview id={previewId("source")} title={c.t010} close={c.uiClose} images={[m.m01]} r={r} />
         <Preview id={previewId("result")} title={c.t011} close={c.uiClose} images={[m.m02]} r={r} />

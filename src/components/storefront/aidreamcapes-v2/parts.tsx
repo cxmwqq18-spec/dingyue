@@ -1022,12 +1022,12 @@ export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }
 
 // Example cards always carry an "Example" label. A card presented as a real review
 // must name its source; without one it is left out.
-export function ReviewWall({ block, r }: { block?: V2ReviewBlock; r: V2Resolvers }) {
+export function ReviewWall({ block, r, id }: { block?: V2ReviewBlock; r: V2Resolvers; id?: string }) {
   const items = (block?.items ?? []).filter((item) => item.example || Boolean(item.source?.trim()));
   if (!block || !items.length) return null;
-  if (items.every((item) => item.srcImg && item.img)) return <ShowcaseWall block={block} items={items} r={r} />;
+  if (items.every((item) => item.srcImg && item.img)) return <ShowcaseWall block={block} items={items} r={r} id={id} />;
   return (
-    <Section eyebrow={items.every((item) => item.example) ? "Seller examples" : "Reviews"} lead={block.lead} title={block.h2}>
+    <Section id={id} eyebrow={items.every((item) => item.example) ? "Seller examples" : "Reviews"} lead={block.lead} title={block.h2}>
       <CardBlockCss />
       <div className="v1-cards v1-reviews">
         {items.map((item) => (
@@ -1115,9 +1115,9 @@ export function TeamCards({ items, r }: { items: V2Item[]; r: V2Resolvers }) {
 }
 
 // Seller showcase: the plain photo a seller uploads, an arrow, and the vertical ad made from it.
-function ShowcaseWall({ block, items, r }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers }) {
+function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers; id?: string }) {
   return (
-    <Section eyebrow={copyLabel(r, "Seller examples")} lead={block.lead} title={block.h2}>
+    <Section id={id} eyebrow={copyLabel(r, "Seller examples")} lead={block.lead} title={block.h2}>
       <style dangerouslySetInnerHTML={{ __html: `
         .adc2 .v-shows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
         .adc2 .v-show{border:1px solid var(--line-2);border-radius:20px;background:#0d0d10;overflow:hidden}

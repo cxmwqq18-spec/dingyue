@@ -90,7 +90,7 @@ function pageOwnBlocks(data: V2Data, r: V2Resolvers): PageBlock[] {
     ["reasons", <ReasonsSection block={data.reasons as V2CardBlock | undefined} r={r} />],
     ["platforms", <LinkCardsSection block={data.platformLinks as V2LinkCardBlock | undefined} eyebrow="Where it runs" r={r} />],
     ["trust", <TrustCards block={data.trust as V2CardBlock | undefined} r={r} />],
-    ["reviews", <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />],
+    ["reviews", <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} id={data.id === "home" ? "home-seller-examples" : undefined} />],
     ["closing", <ClosingStatement block={data.closing as V2ClosingBlock | undefined} r={r} />]
   ];
 }
@@ -207,14 +207,14 @@ function HomePage({ data, r }: Props) {
       </section>],
     ["strip", visual ? <VisualStrip includeOverview visual={visual} r={r} /> : null],
     ["definition", visual && ugc?.title ? (
-        <Section eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
+        <Section id="home-ai-ugc" eyebrow={ugc.eyebrow ?? "AI UGC ads"} title={ugc.title}>
           <Intro paras={list<string>(ugc.paras)} r={r} />
           <HomeComposer data={ugc.composer} r={r} />
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} numbered /></div> : null}
         </Section>
       ) : null],
-    ["picker", visual ? <VisualPicker pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
-    ["steps", visual ? <VisualSteps actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
+    ["picker", visual ? <VisualPicker sectionId="home-product-scenes" pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
+    ["steps", visual ? <VisualSteps sectionId="home-product-image-steps" actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
     ["benefits", campaign && toolsDemo ? <HomeBrandTools items={benefitItems} demo={toolsDemo} header={{ eyebrow: text(data.benefitsEyebrow), title: text(data.benefitsH2), lead: text(data.benefitsLead) }} r={r} /> : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
     ["features", <MoreSections numbered r={r} sections={campaign ? list<V2MoreSection>(data.more_sections).slice(1) : data.more_sections as never} />],
     ["audience", audience?.title ? <Section eyebrow={copyLabel(r, "For growing teams")} lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],

@@ -215,3 +215,7 @@
   .home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 9px; }
   .home-v4 .hx-campaign .hx-campaign-examples .hx-draft-edit { font-size: 8px; }
 }
+
+/* Native in-page navigation leaves room for the fixed homepage header. */
+.adc2 .home-v4 section[id],.adc2 #home-experience-steps-title{scroll-margin-top:112px}
+@media(max-width:700px){.adc2 .home-v4 section[id],.adc2 #home-experience-steps-title{scroll-margin-top:92px}}

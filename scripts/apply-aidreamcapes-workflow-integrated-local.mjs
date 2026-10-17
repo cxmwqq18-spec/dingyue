@@ -46,6 +46,20 @@ try {
         assert.equal(row.id, 'site_aidreamcapes_home');
         const workflow = d.more_sections[0];
         assert.equal(workflow.items.length, 6);
+        const heroIndex = d.homeExperience.blocks.findIndex(b => b.after === 'hero');
+        assert(heroIndex >= 0);
+        patch(`${prefix}/homeExperience/blocks/${heroIndex}/actions`, {
+          ...d.homeExperience.blocks[heroIndex].actions,
+          anchorProductPhoto: '#home-seller-examples',
+          anchorScenes: '#home-product-scenes',
+          anchorPresenters: '#home-experience-steps-title',
+          anchorFormats: '#home-ai-ugc',
+          anchorPathProduct: '#home-product-image-steps',
+          anchorPathScene: '#home-experience-picker',
+          anchorPathStoryboard: '#home-experience-features',
+          anchorPathReview: '#home-product-image-steps'
+        });
+        patch(`${prefix}/stepsH2`, 'Create Product Images in Three Steps');
         const blockIndex = d.homeExperience.blocks.findIndex(b => b.after === 'audience');
         assert(blockIndex >= 0);
         const titles = ['Add your product', 'Choose a scene & presenter', 'Shape your video brief', 'Save & refine the storyboard', 'Generate & assemble shots', 'Review & download'];

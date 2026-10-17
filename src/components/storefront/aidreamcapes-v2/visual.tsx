@@ -68,8 +68,8 @@ export function VisualOverview({ visual, r }: { visual: V2Visual; r: V2Resolvers
   return visual.overview ? <div className="v-overview"><p><RichText r={r} text={visual.overview} /></p></div> : null;
 }
 
-export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "", actions }: {
-  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string; actions?: Record<string, string>
+export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 = "", stepsLead = "", actions, sectionId }: {
+  visual: V2Visual; r: V2Resolvers; buttonLabel?: string; stepsH2?: string; stepsLead?: string; actions?: Record<string, string>; sectionId?: string
 }) {
   const step = visual.steps;
   if (!step) return null;
@@ -106,7 +106,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
     ` }} />
   ) : null;
   return (
-    <Section eyebrow={copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
+    <Section id={sectionId} eyebrow={copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
       <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       {actorStepStyles}
       {actions ? <style dangerouslySetInnerHTML={{ __html: `
@@ -237,12 +237,13 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
   );
 }
 
-export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [] }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
   sourcePage?: string;
   eyebrow?: string;
+  sectionId?: string;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
@@ -254,7 +255,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   const pickerFocusCss = isHub ? `#${pickerId} .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${Array.from({ length: 3 }, (_, index) => `#${pickerId} .v-filter[data-filter-index="${index + 1}"]:focus-visible~.v-picker-chips label[data-filter-index="${index + 1}"]`).join(",")}{outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}` : "";
   const relatedCss = relatedGroups.length ? `#${pickerId} .v-related-groups{margin-top:30px;padding-top:22px;border-top:1px solid rgba(22,34,54,.12)}#${pickerId} .v-related-group+.v-related-group{margin-top:22px}#${pickerId} .v-related-group ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 22px;list-style:none;margin:10px 0 0;padding:0}#${pickerId} .v-related-group a{color:inherit;text-decoration:underline;text-underline-offset:3px}@media(max-width:720px){#${pickerId} .v-related-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}` : "";
   return (
-    <Section eyebrow={sectionEyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
+    <Section id={sectionId} eyebrow={sectionEyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
       {photoGridStyle || pickerFocusCss || relatedCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}\n${relatedCss}` }} /> : null}
       <div className="v-picker" id={pickerId}>
         <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
