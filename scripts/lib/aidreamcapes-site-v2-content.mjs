@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
+import { aidreamcapesBreadcrumbs } from "./aidreamcapes-breadcrumb-taxonomy.mjs";
 
 export const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
@@ -992,7 +993,7 @@ function breadcrumbTrail(model, page) {
   if (page.type === "platform") trail.push({ label: "Platforms", href: "/platforms" });
   if (page.type === "article") trail.push({ label: model.byId[page.section].label, href: model.byId[page.section].url });
   if (page.id !== "home") trail.push({ label: page.label, href: page.url });
-  return trail;
+  return aidreamcapesBreadcrumbs(page.url, trail);
 }
 
 // Credits each job uses in the workspace (standard-quality video; site_aidreamcapes has no custom pricing):

@@ -42,6 +42,11 @@
   line-height: 1.3 !important;
 }
 .home-v4 .hx-campaign-workflow-head p { margin-top: 12px; color: #706574; font-size: 12.5px; line-height: 1.75; }
+.home-v4 .hx-workflow-section { padding-block: 52px; }
+.home-v4 .hx-workflow-section .hx-wrap { max-width: 1280px; }
+.home-v4 .hx-workflow-section .hx-campaign-workflow { width: 100%; }
+.home-v4 .hx-workflow-section .hx-campaign-workflow-head { padding: 24px 26px; }
+.home-v4 .hx-workflow-section .hx-campaign-workflow-head h2 { max-width: 900px; }
 .home-v4 .hx-campaign-steps { list-style: none; margin: 0; padding: 0 22px 16px; }
 .home-v4 .hx-campaign-steps li { min-width: 0; border-top: 1px solid #ded5e2; }
 .home-v4 .hx-campaign-steps summary { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 14px 0; list-style: none; cursor: pointer; }
@@ -58,10 +63,38 @@
 .home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 11px; line-height: 1.5; }
 .home-v4 .hx-campaign .hx-campaign-examples .hx-draft-edit { margin-top: 7px; padding-top: 7px; }
 .home-v4 .hx-campaign .hx-campaign-steps { padding-top: 0; }
+.home-v4 .hx-campaign .hx-campaign-example { display: flex; min-width: 0; flex-direction: column; align-self: stretch; padding: 0; text-align: left; }
+.home-v4 .hx-workflow-gallery { position: relative; display: block; height: 145px; overflow: hidden; background: #ece7ee; }
+.home-v4 .hx-workflow-gallery-images { display: flex; width: 100%; height: 100%; gap: 3px; }
+.home-v4 .hx-workflow-gallery-image { display: block; flex: 1; min-width: 0; height: 100%; overflow: hidden; background: #f8f6f8; }
+.home-v4 .hx-workflow-gallery-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.home-v4 .hx-workflow-gallery-product .hx-workflow-gallery-image img { object-fit: contain; padding: 7px; }
+.home-v4 .hx-workflow-gallery-stage-1 .hx-workflow-gallery-images { padding: 8px 24%; background: #fff; }
+.home-v4 .hx-workflow-gallery-stage-3 .hx-workflow-gallery-images { padding-bottom: 0; }
+.home-v4 .hx-workflow-gallery-stage-3 .hx-workflow-gallery-image img { object-position: 52% 48%; }
+.home-v4 .hx-workflow-gallery-stage-4 .hx-workflow-gallery-images,
+.home-v4 .hx-workflow-gallery-stage-5 .hx-workflow-gallery-images { padding-bottom: 12px; }
+.home-v4 .hx-workflow-brief-overlay { position: absolute; right: 8px; bottom: 18px; left: 8px; display: flex; flex-direction: column; gap: 3px; padding: 7px 9px; border: 1px solid #e7dce9; border-radius: 7px; background: #fffefaed; color: #493c50; box-shadow: 0 4px 12px #281d2b20; }
+.home-v4 .hx-workflow-brief-overlay b { font-size: 9px; line-height: 1.4; }
+.home-v4 .hx-workflow-brief-overlay span { display: -webkit-box; overflow: hidden; color: #786c7c; font-size: 8px; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.home-v4 .hx-workflow-storyboard-track,
+.home-v4 .hx-workflow-assembly-track { position: absolute; right: 8px; bottom: 4px; left: 8px; display: flex; height: 5px; gap: 3px; padding: 1px; border-radius: 3px; background: #fff; }
+.home-v4 .hx-workflow-storyboard-track i,
+.home-v4 .hx-workflow-assembly-track i { flex: 1; border-radius: 2px; background: #bda5cc; }
+.home-v4 .hx-workflow-assembly-track { bottom: 3px; height: 9px; background: #28202f; }
+.home-v4 .hx-workflow-assembly-track i:nth-child(2) { background: #8c709e; }
+.home-v4 .hx-workflow-review-play { position: absolute; top: 50%; left: 50%; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #ffffffbd; border-radius: 50%; background: #17131ab8; color: #fff; font-size: 13px; transform: translate(-50%, -50%); }
+.home-v4 .hx-workflow-gallery-label { position: absolute; top: 8px; left: 8px; max-width: calc(100% - 16px); overflow: hidden; padding: 4px 7px; border: 1px solid #ffffffb3; border-radius: 5px; background: #f7f2f9ed; color: #745386; font-size: 9px; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.home-v4 .hx-campaign .hx-campaign-example .copy { display: flex; flex: 1; flex-direction: column; }
+.home-v4 .hx-campaign .hx-campaign-example .copy strong { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.home-v4 .hx-campaign .hx-campaign-example .hx-draft-edit { margin-top: auto; }
+.home-v4 .hx-campaign-example:focus-visible { outline: 3px solid #8054a1; outline-offset: 2px; }
 @media (max-width: 1240px) {
   .home-v4 .hx-feature.hx-campaign .hx-campaign-layout { grid-template-columns: minmax(0, 1fr); gap: 30px; }
 }
 @media (max-width: 600px) {
+  .home-v4 .hx-workflow-section { padding-block: 34px; }
+  .home-v4 .hx-workflow-section .hx-campaign-workflow-head { padding: 18px; }
   .home-v4 .hx-feature.hx-campaign .hx-campaign-summary h2 { font-size: 28px !important; }
   .home-v4 .hx-campaign-benefits { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .home-v4 .hx-campaign .hx-campaign-workflow-head { padding: 18px; }
@@ -81,9 +114,6 @@
   .adc2:has(.home-v4) header.site .hright > .btn-primary { padding-inline: 10px; }
 }
 
-/* Six page-owned visual stages share one product story from upload to delivery. */
-.home-v4 .hx-campaign-steps:has(.hx-process-card) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 22px; }
-.home-v4 .hx-campaign-steps .hx-process-card { overflow: hidden; border: 1px solid #ded5e2; border-radius: 13px; background: #fff; }
 .home-v4 .hx-process-preview { display: block; position: relative; width: 100%; padding: 0; border: 0; text-align: left; cursor: zoom-in; background: #ece7ee; color: #392b43; }
 .home-v4 .hx-process-preview:focus-visible { outline: 3px solid #8054a1; outline-offset: -3px; }
 .home-v4 .hx-process-expand { position: absolute; top: 9px; right: 9px; display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #ffffffec; font-size: 16px; transition: transform .15s; }
@@ -130,7 +160,6 @@
 .home-v4 .hx-process-dialog .hx-process-review .hx-process-detail { max-width: 220px; }
 .home-v4 .hx-process-dialog .hx-process-play { display: none; }
 @media (max-width: 600px) {
-  .home-v4 .hx-campaign-steps:has(.hx-process-card) { gap: 14px; padding: 16px; }
   .home-v4 .hx-process-visual { height: 140px; padding: 10px; gap: 7px; }
   .home-v4 .hx-process-product, .home-v4 .hx-process-presenter { flex-direction: column; gap: 5px; }
   .home-v4 .hx-process-product .hx-process-images, .home-v4 .hx-process-presenter .hx-process-images { width: 100%; height: 84px; }
@@ -150,14 +179,10 @@
   .home-v4 .hx-process-dialog .hx-process-detail b { font-size: 13px; }
   .home-v4 .hx-process-dialog .hx-process-detail > span { font-size: 11px; }
 }
-@media (max-width: 360px) {
-  .home-v4 .hx-campaign-steps:has(.hx-process-card) { grid-template-columns: minmax(0, 1fr); }
-}
 @media (min-width: 1241px) {
   .home-v4 .hx-campaign-summary { position: sticky; top: 108px; }
 }
 @media (max-width: 600px) {
-  .home-v4 .hx-campaign-steps:has(.hx-process-card) { grid-template-columns: minmax(0, 1fr); }
   .home-v4 .hx-process-visual { height: 175px; padding: 16px; gap: 12px; }
   .home-v4 .hx-process-product, .home-v4 .hx-process-presenter { flex-direction: row; }
   .home-v4 .hx-process-product .hx-process-images { width: 50%; height: 100%; }
@@ -173,4 +198,20 @@
   .home-v4 .hx-process-copy { padding: 16px; }
   .home-v4 .hx-process-copy h3 { font-size: 15px; }
   .home-v4 .hx-process-copy p { font-size: 13px; }
+}
+@media (max-width: 600px) {
+  .home-v4 .hx-campaign .hx-campaign-examples { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding-inline: 14px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .hx-workflow-gallery { height: 112px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy { min-height: 65px; padding: 8px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 10px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .hx-draft-edit { margin-top: 6px; padding-top: 6px; font-size: 9px; }
+  .home-v4 .hx-workflow-brief-overlay { right: 5px; bottom: 16px; left: 5px; padding: 5px; }
+  .home-v4 .hx-workflow-brief-overlay span { font-size: 7px; }
+  .home-v4 .hx-workflow-gallery-label { top: 5px; left: 5px; padding: 3px 5px; font-size: 8px; }
+}
+@media (max-width: 360px) {
+  .home-v4 .hx-campaign .hx-campaign-examples .hx-workflow-gallery { height: 92px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy { min-height: 62px; padding: 7px 6px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .copy strong { font-size: 9px; }
+  .home-v4 .hx-campaign .hx-campaign-examples .hx-draft-edit { font-size: 8px; }
 }

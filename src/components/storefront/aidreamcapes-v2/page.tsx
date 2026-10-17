@@ -19,6 +19,8 @@ import { copyLabel } from "./types";
 import "./home-experience.css";
 import { HomeComposer, type HomeComposerData } from "./home-composer";
 import { HomeComposerBehavior } from "./home-composer-behavior";
+import { HomeBrandTools } from "./home-brand-tools";
+import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -48,6 +50,7 @@ export function BenefitsSection({ data, r, fallbackTitle, eyebrow }: { data: V2D
   if (!items.length) return null;
   return <Section eyebrow={copyLabel(r, eyebrow ?? "Why use it")} lead={text(data.benefitsLead) || undefined} title={text(data.benefitsH2) || fallbackTitle}><Boxes items={items} r={r} /></Section>;
 }
+
 
 // The three-step heading falls back through the visual title to the same default as before.
 export function stepsTitle(data: V2Data, visual: V2Visual | undefined): string {
@@ -95,14 +98,26 @@ function pageOwnBlocks(data: V2Data, r: V2Resolvers): PageBlock[] {
 // Without `blockOrder` a layout shows its blocks in its own order. With it, only the listed
 // blocks show, in the listed order. When the page lists its own related links, the
 // "related" block shows those links instead of the layout's related tools.
-function orderedBlocks(data: V2Data, r: V2Resolvers, blocks: PageBlock[], afterBlocks: Partial<Record<V2BlockId, ReactNode>> = {}): ReactNode {
-  const order = list<V2BlockId>(data.blockOrder);
-  if (!order.length) return blocks.map(([id, node], index) => <Fragment key={index}>{node}{id === "always" ? null : afterBlocks[id]}</Fragment>);
+function orderedBlocks(
+  data: V2Data,
+  r: V2Resolvers,
+  blocks: PageBlock[],
+  afterBlocks: Partial<Record<V2BlockId, ReactNode>> = {},
+  beforeBlocks: Partial<Record<V2BlockId, ReactNode>> = {}
+): ReactNode {
+  const configuredOrder = list<V2BlockId>(data.blockOrder);
+  const order = configuredOrder.length
+    ? [...configuredOrder, "always" as const]
+    : blocks.map(([id]) => id);
   const relatedLinks = list<{ label: string; href: string }>(data.relatedLinks);
-  const render = (id: V2BlockId | "always") => id === "related" && relatedLinks.length
-    ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />
-    : blocks.filter(([blockId]) => blockId === id).map(([, node], index) => <Fragment key={index}>{node}</Fragment>);
-  return [...order, "always" as const].map((id) => <Fragment key={id}>{render(id)}{id === "always" ? null : afterBlocks[id]}</Fragment>);
+  const render = (id: V2BlockId | "always") => <Fragment key={id}>
+    {id === "always" ? null : beforeBlocks[id]}
+    {id === "related" && relatedLinks.length
+      ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={relatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} />
+      : blocks.filter(([blockId]) => blockId === id).map(([, node], index) => <Fragment key={index}>{node}</Fragment>)}
+    {id === "always" ? null : afterBlocks[id]}
+  </Fragment>;
+  return order.map(render);
 }
 
 function splitPhotoHubExamples(examples: V2Examples | undefined) {
@@ -140,16 +155,28 @@ function homeExampleFlows(examples: unknown): V2Flow[] {
 function HomePage({ data, r }: Props) {
   const experience = data.homeExperience as HomeExperienceData | undefined;
   if (experience) r = { ...r, copy: experience.labels };
-  const relocate = experience?.blocks.find(block => block.after === "audience")?.presentation?.contentLayout === "benefits-workflow";
-  const benefitItems = list<V2Item>(data.benefits);
+  // Optional presentation schema activates after the separately deployed LivePage fields arrive.
+  const relocate = experience?.blocks.find(block => block.after === "audience")?.presentation?.contentLayout === "benefits-workflow" && data.brandToolsDemo !== undefined;
+  const benefitItems = list<HomeBrandTool>(data.benefits);
   const workflow = list<V2MoreSection>(data.more_sections)[0];
-  if (relocate && (benefitItems.length !== 6 || !text(data.benefitsH2) || workflow?.items.length !== 6)) {
-    throw new Error("The homepage campaign layout requires its current six benefits and six workflow steps");
+  const toolsDemo = data.brandToolsDemo as HomeBrandToolsDemo | undefined;
+  if (relocate && (
+    benefitItems.length !== 6 ||
+    benefitItems.some((item) => !item.id || !item.img || !item.href || !item.cta || !item.t || !item.d) ||
+    !text(data.benefitsEyebrow) || !text(data.benefitsH2) || !text(data.benefitsLead) ||
+    toolsDemo?.version !== 2 || !toolsDemo.labels.promptValue || !toolsDemo.product || !toolsDemo.presenter || toolsDemo.actors.length !== 5 || toolsDemo.shots.length !== 3 ||
+    workflow?.items.length !== 6
+  )) {
+    throw new Error("The homepage tool directory requires six complete tool cards and the six-step workflow");
   }
-  const campaign: HomeCampaignSections | undefined = relocate ? {
-    benefits: { title: text(data.benefitsH2), lead: text(data.benefitsLead), items: benefitItems }, workflow
-  } : undefined;
-  const additions = experience ? Object.fromEntries(HOME_EXPERIENCE_KINDS.map((after) => [after, <HomeExperienceSection after={after} campaign={campaign} experience={experience} key={after} r={r} />])) : {};
+  const campaign: HomeCampaignSections | undefined = relocate ? { workflow } : undefined;
+  const additions = experience ? Object.fromEntries(HOME_EXPERIENCE_KINDS.map((after) => [
+    after,
+    relocate && (after === "audience" || after === "reviews") ? null : <HomeExperienceSection after={after} campaign={campaign} experience={experience} key={after} r={r} />
+  ])) : {};
+  const beforeBlocks = relocate && experience
+    ? { features: <><HomeExperienceSection after="audience" campaign={campaign} experience={experience} r={r} /><HomeExperienceSection after="reviews" experience={experience} r={r} /></> }
+    : {};
   const hero = data.hero as { videoHref: string; photoHref: string };
   const visual = data.visual as V2Visual | undefined;
   const make = data.make as { title: string; lead: string; video: V2Tool[]; photo: V2Tool[] };
@@ -188,7 +215,7 @@ function HomePage({ data, r }: Props) {
       ) : null],
     ["picker", visual ? <VisualPicker pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
     ["steps", visual ? <VisualSteps actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
-    ["benefits", campaign ? null : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
+    ["benefits", campaign && toolsDemo ? <HomeBrandTools items={benefitItems} demo={toolsDemo} header={{ eyebrow: text(data.benefitsEyebrow), title: text(data.benefitsH2), lead: text(data.benefitsLead) }} r={r} /> : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
     ["features", <MoreSections numbered r={r} sections={campaign ? list<V2MoreSection>(data.more_sections).slice(1) : data.more_sections as never} />],
     ["audience", audience?.title ? <Section eyebrow={copyLabel(r, "For growing teams")} lead={audience.lead ?? ""} title={audience.title}>{list<V2Item>(audience.items).some((item) => item.teamIcon) ? <TeamCards items={list<V2Item>(audience.items)} r={r} /> : <Boxes className="ideas" items={list<V2Item>(audience.items)} r={r} />}</Section> : null],
     ["tools",
@@ -217,7 +244,7 @@ function HomePage({ data, r }: Props) {
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
     ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}{ugc?.composer ? <HomeComposerBehavior /> : null}</>]
-  ], additions)}
+  ], additions, beforeBlocks)}
   </div>;
 }
 

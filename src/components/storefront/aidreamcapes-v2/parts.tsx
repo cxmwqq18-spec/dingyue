@@ -58,11 +58,11 @@ export function Crumbs({ items, r }: { items: V2Crumb[]; r: V2Resolvers }) {
   );
 }
 
-export function SecHead({ eyebrow, title, lead }: { eyebrow: string; title: string; lead?: string }) {
+export function SecHead({ eyebrow, title, lead, titleId }: { eyebrow: string; title: string; lead?: string; titleId?: string }) {
   return (
     <div className="sec-head">
       <div className="eyebrow">{eyebrow}</div>
-      <h2>{title}</h2>
+      <h2 id={titleId}>{title}</h2>
       {lead ? <p>{lead}</p> : null}
     </div>
   );
@@ -478,14 +478,15 @@ function localPathFromAbsoluteHref(href: string): string | undefined {
   return undefined;
 }
 
-// Inline Markdown links support internal paths and the approved official references.
+// Inline links support internal paths, email addresses and approved official references.
 export function RichText({ text, r }: { text: string; r: V2Resolvers }) {
   const parts: ReactNode[] = [];
   let last = 0;
-  for (const match of text.matchAll(/\[([^\]\n]+)\]\((https:\/\/[^)\s]+|\/[^)\s]*)\)/g)) {
+  for (const match of text.matchAll(/\[([^\]\n]+)\]\((https:\/\/[^)\s]+|mailto:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\/[^)\s]*)\)/gi)) {
     const at = match.index ?? 0;
     if (at > last) parts.push(text.slice(last, at));
-    if (/^https:\/\//i.test(match[2])) {
+    if (/^mailto:/i.test(match[2])) parts.push(<a href={match[2]} key={at}>{match[1]}</a>);
+    else if (/^https:\/\//i.test(match[2])) {
       const localPath = localPathFromAbsoluteHref(match[2]);
       if (localPath) parts.push(<a href={r.href(localPath)} key={at}>{match[1]}</a>);
       else if (isApprovedExternalHref(match[2])) parts.push(<a href={match[2]} key={at} rel="noopener noreferrer" target="_blank">{match[1]}</a>);

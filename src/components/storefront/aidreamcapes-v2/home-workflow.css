@@ -1,0 +1,107 @@
+.adc2 .adc-workflow{background:#f1ede7;color:#241f2d;padding:76px 24px 64px}
+.adc2 .adc-workflow-wrap{max-width:1380px;margin:0 auto}
+.adc2 .adc-workflow-heading{text-align:center;max-width:1000px;margin:0 auto 32px}
+.adc2 .adc-workflow-heading .hx-tag{justify-content:center;color:#8050b2;font-size:12px;letter-spacing:.14em;margin-bottom:14px}
+.adc2 .adc-workflow-heading .hx-tag::before{display:none}
+.adc2 .adc-workflow-heading h2{font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal}
+.adc2 .adc-workflow-heading p{font-size:17px;line-height:1.65;color:#756d7f;margin:0}
+.adc2 .adc-workflow-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.adc2 .adc-workflow-card{display:grid;grid-template-rows:auto 224px 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
+.adc2 .adc-workflow-card:hover{border-color:#bca7d2;box-shadow:0 8px 24px #3f285009}
+.adc2 .adc-workflow-card h3{display:flex;align-items:center;gap:10px;font-size:18px;line-height:1.35;color:#241f2d;letter-spacing:-.02em;margin:0;min-height:40px;font-weight:700}
+.adc2 .adc-workflow-card h3>span{flex:none;font-size:15px;color:#8956ba;background:#f2ebfa;border-radius:10px;display:grid;place-items:center;width:34px;height:34px;letter-spacing:0}
+.adc2 .adc-workflow-card>p{font-size:15px;line-height:1.65;margin:0;color:#756d7f}
+.adc2 .adc-workflow-visual{min-width:0;border:1px solid #ece7f3;border-radius:12px;background:#f8f6fb;padding:12px;overflow:hidden}
+.adc2 .adc-workflow svg{width:18px;height:18px;flex:none}
+.adc2 .adc-workflow button,.adc2 .adc-workflow a,.adc2 .adc-workflow select,.adc2 .adc-workflow textarea{font:inherit}
+.adc2 .adc-workflow button{cursor:pointer}
+.adc2 .adc-workflow button:focus-visible,.adc2 .adc-workflow a:focus-visible,.adc2 .adc-workflow textarea:focus-visible,.adc2 .adc-workflow select:focus-visible{outline:3px solid #9466bd;outline-offset:3px}
+.adc2 .adc-workflow img{display:block;width:100%;height:100%;object-fit:cover}
+.adc2 .adc-workflow button{color:#443454;background:none}
+.adc2 .adc-workflow .adc-workflow-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#8051b3;color:#fff;border:1px solid #8051b3;border-radius:9px;padding:10px 14px;text-decoration:none;font-size:12px;font-weight:600;min-height:40px;transition:background .2s,transform .2s}
+.adc2 .adc-workflow .adc-workflow-primary:hover{background:#6d409e;transform:translateY(-1px)}
+.adc2 .adc-workflow-product{display:grid;grid-template-columns:1fr 1.08fr;gap:13px;height:100%}
+.adc2 .adc-workflow-product-photo{position:relative;border:0;border-radius:8px;overflow:hidden;padding:0}
+.adc2 .adc-workflow-product-photo>span{position:absolute;right:6px;bottom:6px;background:#fff9;border-radius:6px;padding:2px 7px}
+.adc2 .adc-workflow-product-actions{display:flex;flex-direction:column;gap:9px;justify-content:center;min-width:0}
+.adc2 .adc-workflow-product-actions>a{display:flex;gap:8px;align-items:center;justify-content:center;padding:9px 5px;border:1px solid #e5dcf0;border-radius:8px;color:#715092;font-size:12px;min-height:38px}
+.adc2 .adc-workflow-product-note{display:flex;gap:9px;align-items:center;margin-top:3px}
+.adc2 .adc-workflow-product-note>img{width:36px;height:48px;border-radius:5px}
+.adc2 .adc-workflow-product-note>span{min-width:0;flex:1}
+.adc2 .adc-workflow-product-note b{display:block;font-size:11px;line-height:1.4;color:#443454}
+.adc2 .adc-workflow-product-note small{display:block;font-size:10px;color:#9486a3}
+.adc2 .adc-workflow-product-note i{display:block;background:#e4deed;height:4px;width:90%;margin-top:5px;border-radius:4px}
+.adc2 .adc-workflow-product-note i:last-child{width:65%}
+.adc2 .adc-workflow-casting{display:grid;grid-template-columns:60px 1fr;gap:9px;height:100%;align-items:center}
+.adc2 .adc-workflow-scene{align-self:start;padding-top:10px}
+.adc2 .adc-workflow-scene>img{aspect-ratio:1;height:auto;border-radius:7px}
+.adc2 .adc-workflow-scene span{display:block;font-size:10px;text-align:center;margin-top:7px;line-height:1.4;color:#89739a}
+.adc2 .adc-workflow-people{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;min-width:0;height:100%}
+.adc2 .adc-workflow-people button{border:2px solid transparent;padding:0;border-radius:9px;position:relative;min-width:0;overflow:hidden}
+.adc2 .adc-workflow-people button img{object-position:center 25%}
+.adc2 .adc-workflow-people button span{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#231b33bb);color:white;font-size:10px;text-align:center;padding:20px 2px 7px;line-height:1.4}
+.adc2 .adc-workflow-people button i{display:none;position:absolute;top:5px;right:5px;border-radius:50%;background:#8956ba;color:white;font:normal 11px/18px sans-serif;width:18px}
+.adc2 .adc-workflow-people button.is-selected{border-color:#9764c1}
+.adc2 .adc-workflow-people button.is-selected i{display:block}
+.adc2 .adc-workflow-stage-3{padding:0;border-color:#bb9ed8;background:#fff}
+.adc2 .adc-workflow-brief{display:flex;flex-direction:column;height:100%;padding:12px;gap:10px}
+.adc2 .adc-workflow-brief-head{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#392449;padding:1px 0 8px;border-bottom:1px solid #e8def1}
+.adc2 .adc-workflow-brief-head>span{color:#9b6bc5}
+.adc2 .adc-workflow-brief-head small{margin-left:auto;color:#9b8aa8;font-size:10px;font-weight:400}
+.adc2 .adc-workflow-brief textarea{width:100%;min-height:0;flex:1;background:#fcfbfe;color:#584366;border:1px solid #e9e2f1;border-radius:7px;padding:10px;resize:none;font-size:12px;line-height:1.6}
+.adc2 .adc-workflow-brief-controls{display:flex;gap:8px;align-items:center}
+.adc2 .adc-workflow-brief-controls select{color:#6c4f80;background:#fff;border:1px solid #e5daef;border-radius:7px;padding:7px;font-size:12px}
+.adc2 .adc-workflow-brief-controls button{margin-left:auto;padding:8px;min-height:34px}
+.adc2 .adc-workflow-board{display:flex;flex-direction:column;gap:12px;height:100%}
+.adc2 .adc-workflow-shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:0;flex:1}
+.adc2 .adc-workflow-shots>div{min-width:0;min-height:0}
+.adc2 .adc-workflow-shots button{display:flex;flex-direction:column;gap:7px;width:100%;height:100%;border:0;padding:0;font-size:10px}
+.adc2 .adc-workflow-shots button img{min-height:0;flex:1;border-radius:6px;object-position:50% 32%}
+.adc2 .adc-workflow-shots button span{display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:10px;width:100%}
+.adc2 .adc-workflow-shots button svg{width:13px;height:13px}
+.adc2 .adc-workflow-saved{display:flex;align-items:center;gap:7px;background:#f0e8f8;border-radius:7px;padding:8px;color:#8051a6;font-size:11px}
+.adc2 .adc-workflow-saved>a{margin-left:auto;font-size:16px}
+.adc2 .adc-workflow-assembly{display:flex;flex-direction:column;gap:8px;height:100%}
+.adc2 .adc-workflow-clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;height:68px}
+.adc2 .adc-workflow-clips>div{min-width:0;min-height:0;height:68px}
+.adc2 .adc-workflow-clips button>img{height:68px;object-position:50% 32%}
+.adc2 .adc-workflow-clips button{border:0;padding:0;width:100%;height:100%;position:relative;border-radius:6px;overflow:hidden}
+.adc2 .adc-workflow-clips button>span{display:none}
+.adc2 .adc-workflow-versions{display:flex;gap:8px;align-items:center;min-height:0;flex:1}
+.adc2 .adc-workflow-versions>span{font-size:10px;color:#967ba6;flex:1}
+.adc2 .adc-workflow-versions button{width:70px;height:64px;position:relative;padding:2px;border:2px solid transparent;border-radius:7px;overflow:hidden}
+.adc2 .adc-workflow-versions button.is-selected{border-color:#9460bf}
+.adc2 .adc-workflow-versions button img{border-radius:4px;object-position:center 26%}
+.adc2 .adc-workflow-versions button span{position:absolute;bottom:2px;left:2px;right:2px;background:#2f233999;color:#fff;font-size:9px;padding:2px}
+.adc2 .adc-workflow-timeline{display:flex;gap:10px;align-items:center}
+.adc2 .adc-workflow-timeline>button{display:grid;place-items:center;border:0;border-radius:50%;background:#8c59bd;color:#fff;width:33px;height:33px;flex:none}
+.adc2 .adc-workflow-timeline>div{position:relative;display:flex;gap:3px;flex:1;background:#ddcbed;padding:3px;border-radius:6px;overflow:hidden}
+.adc2 .adc-workflow-timeline>div span{flex:1;height:28px;min-width:0;border-radius:3px;overflow:hidden}
+.adc2 .adc-workflow-timeline>div i{position:absolute;top:0;bottom:0;left:42%;border-left:2px solid #8e58bf}
+.adc2 .adc-workflow-review{display:flex;gap:20px;justify-content:center;align-items:center;height:100%}
+.adc2 .adc-workflow-phone{height:100%;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
+.adc2 .adc-workflow-phone>img{object-position:50% 20%}
+.adc2 .adc-workflow-phone>span{display:grid;place-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#231b3380;color:white;border:1px solid white;border-radius:50%}
+.adc2 .adc-workflow-phone small{position:absolute;left:5px;right:5px;bottom:7px;font-size:9px;color:white;background:#241b3780;border-radius:4px;padding:4px}
+.adc2 .adc-workflow-delivery{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:150px;text-align:center}
+.adc2 .adc-workflow-delivery>svg{width:38px;height:38px;color:#a580c7}
+.adc2 .adc-workflow-delivery>b{font-size:12px;color:#4c395e}
+.adc2 .adc-workflow-delivery>small{font-size:10px;color:#967fa8;line-height:1.5}
+.adc2 .adc-workflow-delivery>a{font-size:10px;padding:7px;min-height:34px}
+.adc2 .adc-workflow-footer{display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid #dcd3e3;margin-top:24px;padding-top:20px}
+.adc2 .adc-workflow-footer>p{font-size:13px;color:#82718f;margin:0}
+.adc2 .adc-workflow-dialog{background:#f8f5fb;color:#31253c;max-width:680px;border-color:#cdb9de}
+.adc2 .adc-workflow-dialog>figure{margin:20px 0}
+.adc2 .adc-workflow-dialog>figure img{height:330px;object-fit:contain}
+.adc2 .adc-workflow-dialog figcaption{color:#776582;font-size:14px;line-height:1.6;margin-top:14px}
+.adc2 .adc-workflow-sequence{position:relative;margin-top:15px}
+.adc2 .adc-workflow-sequence figure{margin:0}
+.adc2 .adc-workflow-sequence figure[hidden]{display:none}
+.adc2 .adc-workflow-sequence figure img{height:350px;object-fit:contain;background:#efe9f4;border-radius:10px}
+.adc2 .adc-workflow-sequence figure b{display:block;color:#4c365e}
+.adc2 .adc-workflow-sequence>button{display:flex;align-items:center;gap:7px;margin-top:16px;border:1px solid #c7afd9;border-radius:8px;padding:8px 12px;background:#eee3f6}
+.adc2 .adc-workflow-dialog>p{font-size:13px;line-height:1.6;color:#82718f}
+@media(min-width:1101px){.adc2 .adc-workflow-card:nth-child(-n+3) h3{min-height:48px}.adc2 .adc-workflow-card:nth-child(n+4) h3{min-height:48px}}
+@media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px 224px 1fr}}
+@media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:left}.adc2 .adc-workflow-heading .hx-tag{justify-content:flex-start}.adc2 .adc-workflow-heading p{font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto 224px 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
+@media(prefers-reduced-motion:reduce){.adc2 .adc-workflow *{transition:none!important;animation:none!important}}

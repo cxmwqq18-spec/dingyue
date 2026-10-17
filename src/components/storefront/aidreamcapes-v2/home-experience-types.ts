@@ -1,8 +1,16 @@
-import type { V2Image, V2Item, V2MoreSection } from "./types";
+import type { V2Image, V2MoreSection } from "./types";
 
 export type HomeCampaignSections = {
-  benefits: { title: string; lead?: string; items: V2Item[] };
   workflow: V2MoreSection;
+};
+
+export type HomeWorkflowDemo = {
+  version: 1;
+  labels: Record<string, string>;
+  scenes: { id: string; label: string; media: string }[];
+  shots: { label: string; media: string; description: string }[];
+  aspects: string[];
+  durations: { value: string; label: string }[];
 };
 
 export const HOME_EXPERIENCE_KINDS = ["hero", "picker", "steps", "features", "audience", "reviews"] as const;
@@ -12,7 +20,7 @@ export type HomeExperienceData = {
   language: "en" | "zh-CN";
   labels: Record<string, string>;
   media: Record<string, V2Image>;
-  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[]; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
+  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; workflowDemo?: HomeWorkflowDemo; workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[]; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
 };
 
 /** Page-owned translations; destinations and identifiers retain their original values. */
