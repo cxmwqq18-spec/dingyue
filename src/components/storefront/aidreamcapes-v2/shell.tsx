@@ -107,6 +107,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
 
 export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company }) {
   const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[] };
+  const footerCompany = company ? { ...homePresentationValue(company, r.copy ?? {}), taxId: "", taxIdLabel: "" } : undefined;
   return (
     <footer className="site">
       <div className="wrap">
@@ -117,7 +118,7 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
               {BRAND_NAME}
             </a>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
-            {company ? <CompanyDetails className="company-foot" company={homePresentationValue(company, r.copy ?? {})} labels={r.copy} /> : null}
+            {footerCompany ? <CompanyDetails className="company-foot" company={footerCompany} labels={r.copy} /> : null}
           </div>
           {navigation.footer.groups.map((group) => (
             <div key={group.label}>

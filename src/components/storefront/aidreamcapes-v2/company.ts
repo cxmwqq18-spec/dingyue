@@ -16,8 +16,8 @@ function countryName(code: string): string {
   }
 }
 
-// The tax ID is kept in the footer settings, next to the other company details of the site.
-export function aidreamcapesV2Company(identity: StorefrontProfileJson["identity"] | undefined, footerSettings?: Record<string, unknown>): V2Company | undefined {
+// Tax identifiers are omitted from Aidreamcapes' public company presentation.
+export function aidreamcapesV2Company(identity: StorefrontProfileJson["identity"] | undefined, _footerSettings?: Record<string, unknown>): V2Company | undefined {
   const name = clean(identity?.legalName);
   if (!name) return undefined;
   const address = identity?.address;
@@ -29,7 +29,7 @@ export function aidreamcapesV2Company(identity: StorefrontProfileJson["identity"
     phone,
     phoneHref: phone.replace(/[^\d+]/g, ""),
     email: clean(identity?.supportEmail),
-    taxId: clean(typeof footerSettings?.taxId === "string" ? footerSettings.taxId : undefined),
-    taxIdLabel: clean(typeof footerSettings?.taxIdLabel === "string" ? footerSettings.taxIdLabel : undefined) || "Tax ID"
+    taxId: "",
+    taxIdLabel: ""
   };
 }

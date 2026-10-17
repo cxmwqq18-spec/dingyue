@@ -1172,6 +1172,8 @@ function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2
         .adc2 .v-show-body h3{font-size:20px;margin:6px 0 8px}
         .adc2 .v-show-body p{color:var(--ink-2);font-size:15px;line-height:1.6;margin:0}
         .adc2 .v-show-who{color:#c4b5fd;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+        .adc2 .v-show-actions{display:flex;justify-content:center;margin-top:28px}
+        .adc2 .v-show-actions a{text-decoration:none}
         @media(max-width:860px){.adc2 .v-shows{grid-template-columns:minmax(0,1fr)}}
       ` }} />
       <div className="v-shows">
@@ -1188,6 +1190,7 @@ function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2
           </article>;
         })}
       </div>
+      {block.cta?.label && block.cta.href ? <div className="v-show-actions"><a className="btn btn-grad" href={r.href(block.cta.href)}>{block.cta.label} →</a></div> : null}
     </Section>
   );
 }

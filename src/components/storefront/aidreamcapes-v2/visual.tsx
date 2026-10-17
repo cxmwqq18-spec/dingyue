@@ -237,19 +237,21 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
   );
 }
 
-export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
   sourcePage?: string;
   eyebrow?: string;
   sectionId?: string;
+  maxCards?: number;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
+  const cards = maxCards === undefined ? picker.cards : picker.cards.slice(0, Math.max(0, maxCards));
   const sectionEyebrow = eyebrow ?? visual.titles?.m3?.eyebrow ?? "Choose a scene";
   const pickerId = `visual-picker-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
-  if (!picker.cards.length) return null;
+  if (!cards.length) return null;
   const isHub = pageId === "video-hub" || pageId === "photo-hub";
   const photoGridStyle = pageId === "photo-hub" ? `#${pickerId} .v-picker-grid{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:1000px){#${pickerId} .v-picker-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:480px){#${pickerId} .v-picker-chips{flex-wrap:wrap;overflow-x:visible}}` : "";
   const pickerFocusCss = isHub ? `#${pickerId} .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${Array.from({ length: 3 }, (_, index) => `#${pickerId} .v-filter[data-filter-index="${index + 1}"]:focus-visible~.v-picker-chips label[data-filter-index="${index + 1}"]`).join(",")}{outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}` : "";
@@ -265,7 +267,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
         </div>
         <div className="v-picker-grid">
-          {picker.cards.map((card, index) => (
+          {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(pickerPresetHref(card, sourcePage))} key={`${card.image.src}-${index}`}>
               <VisualImage image={card.image} r={r} />
               <span>{card.label}</span>
