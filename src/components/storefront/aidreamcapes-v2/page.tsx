@@ -21,6 +21,7 @@ import { HomeComposer, type HomeComposerData } from "./home-composer";
 import { HomeComposerBehavior } from "./home-composer-behavior";
 import { HomeBrandTools } from "./home-brand-tools";
 import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
+import { AidreamcapesDirectoryLanding } from "./directory-landings";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
 
@@ -1030,5 +1031,8 @@ export function AidreamcapesV2Page({ section, r: baseResolvers, company }: { sec
   if (layout === "collection") return <CollectionPage data={data} r={r} />;
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
+  if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {
+    return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;
+  }
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }
