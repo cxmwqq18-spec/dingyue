@@ -90,7 +90,7 @@ DINGYUE_ENV=production DATABASE_TARGET=production npm run sync:aidreamcapes-trus
 test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
 test -f "$REUSE/.next-build/BUILD_ID"
 cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"
-DINGYUE_ENV=production DATABASE_TARGET=production npm run sync:aidreamcapes-trusted-logos` : "DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=12288 npm run build"}
+DINGYUE_ENV=production DATABASE_TARGET=production npm run sync:aidreamcapes-trusted-logos` : "nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=8192 npm run build"}
 printf '%s\n' "$COMMIT" > .deployed-commit
 CANDIDATE_PORT=$(node -e 'const server=require("node:net").createServer(); server.listen(0,"127.0.0.1",()=>{process.stdout.write(String(server.address().port));server.close();});')
 HOSTNAME=127.0.0.1 PORT="$CANDIDATE_PORT" NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
