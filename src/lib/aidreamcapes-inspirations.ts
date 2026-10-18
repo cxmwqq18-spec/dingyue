@@ -43,6 +43,7 @@ type PickerCardJson = {
   label?: unknown;
   prompt?: unknown;
   sceneSlug?: unknown;
+  publicSlug?: unknown;
   chips?: unknown;
   kind?: unknown;
 };
@@ -342,6 +343,7 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
         toolSlug,
         pageSlug: page.slug,
         sceneSlug: typeof raw.sceneSlug === "string" ? raw.sceneSlug : undefined,
+        publicSlug: typeof raw.publicSlug === "string" ? raw.publicSlug : undefined,
         pageTitle,
         kind: typeof raw.kind === "string" && raw.kind === "photo" && kind === "photo" ? "photo" : kind,
         description: cardDescription(pickerLead, pageTitle),

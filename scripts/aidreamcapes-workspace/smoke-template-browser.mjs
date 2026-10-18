@@ -46,6 +46,11 @@ try {
     createRoot(document.getElementById("root")).render(<AidreamcapesWorkspace
       siteId="site_aidreamcapes" basePath="/site/aidreamcapes" initialCatalog={catalog}
       initialView={taskId ? "agent" : kind === "photo" ? "images" : "home"} initialTaskId={taskId} initialPreset={taskId ? undefined : initialPreset}
+      presenterStudioEnabled={params.get("templates") === "yes"}
+      initialTemplateGallery={params.get("templates") === "yes" ? { categories: [], options: [
+        { ...initialPreset, kind: "video", title: "Canvas Tote Creator Look", publicSlug: "canvas-tote-creator-look", categoryIds: [] },
+        { ...initialPreset, kind: "photo", title: "Canvas Tote Lifestyle Photo", prompt: "A canvas tote on a sunlit wooden table.", publicSlug: "canvas-tote-lifestyle-photo", imageTool: "lifestyle-photos", categoryIds: [] },
+      ] } : undefined}
       customer={customerMode ? { id: "browser-fixture", name: "Browser Fixture", email: "fixture@example.invalid", balance: 100 } : null}
     />);
   `);
@@ -66,8 +71,12 @@ try {
     else resolve();
   }));
   const bundle = await fs.readFile(path.join(temp, "bundle.js"));
-  server = createServer((request, response) => {
+  server = createServer(async (request, response) => {
     if (request.url === "/bundle.js") { response.setHeader("Content-Type", "text/javascript"); response.end(bundle); }
+    else if (/^\/[A-Za-z0-9_.-]+\.js$/.test(request.url)) {
+      try { response.setHeader("Content-Type", "text/javascript"); response.end(await fs.readFile(path.join(temp, request.url.slice(1)))); }
+      catch { response.writeHead(404); response.end("Missing fixture chunk"); }
+    }
     else if (request.url.startsWith("/api/")) { response.writeHead(501); response.end("Unmocked API request"); }
     else if (request.url.startsWith("/media/")) { response.writeHead(204); response.end(); }
     else { response.setHeader("Content-Type", "text/html"); response.end('<!doctype html><html lang="en"><head><meta charset="utf-8"></head><body><div id="root"></div><script src="/bundle.js"></script></body></html>'); }
@@ -176,14 +185,27 @@ try {
 
   for (const customer of [false, true]) {
     const { page, errors, preset } = await openCase("photo", customer);
-    assert.equal(await page.getByLabel("Additional details (optional)").inputValue(), preset.prompt);
-    assert.equal(await page.getByRole("radio", { name: /Lifestyle photo/ }).isChecked(), true);
+    assert.equal(await page.getByLabel("Describe your image idea").inputValue(), preset.prompt);
+    assert.equal(await page.getByRole("combobox", { name: "Image style" }).inputValue(), "lifestyle-photos");
     assert.equal(await page.locator('[data-testid="workspace-template"] img').getAttribute("src"), preset.previewUrl);
     assert.equal(await page.locator("form img").count(), 0, "template preview is not inserted into image assetUrls");
-    assert.equal(await page.getByLabel("Upload image reference").isDisabled(), !customer);
+    assert.equal(await page.getByLabel("Upload image reference photo").isDisabled(), !customer);
     assert.deepEqual(errors, []);
     await page.close();
   }
+
+  const pickerPage = await context.newPage();
+  await pickerPage.goto(`${origin}/?kind=video&customer=no&templates=yes`, { waitUntil: "networkidle" });
+  await pickerPage.getByRole("button", { name: "Choose a template", exact: true }).first().click();
+  await pickerPage.getByRole("button", { name: "Use Canvas Tote Lifestyle Photo", exact: true }).click();
+  assert.equal(new URL(pickerPage.url()).pathname, "/site/aidreamcapes/images/canvas-tote-lifestyle-photo");
+  assert.equal(new URL(pickerPage.url()).search, "", "Image template URLs do not expose internal source or preset IDs.");
+  assert.equal(await pickerPage.getByLabel("Describe your image idea").inputValue(), "A canvas tote on a sunlit wooden table.");
+  await pickerPage.getByRole("button", { name: "Choose a template", exact: true }).first().click();
+  await pickerPage.getByRole("button", { name: "Use Canvas Tote Creator Look", exact: true }).click();
+  assert.equal(new URL(pickerPage.url()).pathname, "/site/aidreamcapes/videos/canvas-tote-creator-look");
+  assert.equal(new URL(pickerPage.url()).search, "", "Video template URLs do not expose internal source or preset IDs.");
+  await pickerPage.close();
 
   assert.deepEqual(unexpected, [], `unexpected real or cross-origin requests: ${JSON.stringify(unexpected)}`);
   console.log("PASS Aidreamcapes template browser smoke: video/photo guest and signed-in presets, preview and prompt hydration, scene selection, task provenance and reload. All APIs fixture-mocked.");

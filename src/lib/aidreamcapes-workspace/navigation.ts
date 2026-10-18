@@ -25,7 +25,7 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
 ];
 
 export function workspaceViewHref(basePath: string, view: WorkspaceView): string {
-  if (view === "inspirations") return "/site/aidreamcapes/app/inspirations";
+  if (view === "inspirations") return `${basePath}/app/inspirations`;
   return `${basePath}/app/create?${new URLSearchParams({ view })}`;
 }
 

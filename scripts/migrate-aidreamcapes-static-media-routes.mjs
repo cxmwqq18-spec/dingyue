@@ -9,6 +9,7 @@ import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { assignPublicSceneSlugs, buildSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
+import { withAidreamcapesDirectoryNavigation } from "./lib/aidreamcapes-directory-navigation.mjs";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = "site_aidreamcapes";
@@ -57,7 +58,7 @@ function actorNavigationFrom(current, generated) {
   const pricingIndex = links.findIndex((item) => item?.href === "/pricing");
   links.splice(pricingIndex < 0 ? links.length : pricingIndex, 0, generatedActor);
   next.links = links;
-  return next;
+  return withAidreamcapesDirectoryNavigation(next);
 }
 
 function replaceActorPath(value) {

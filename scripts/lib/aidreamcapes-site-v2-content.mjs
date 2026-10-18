@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
 import { aidreamcapesBreadcrumbs } from "./aidreamcapes-breadcrumb-taxonomy.mjs";
+import { withAidreamcapesDirectoryNavigation } from "./aidreamcapes-directory-navigation.mjs";
 
 export const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
@@ -2626,7 +2627,7 @@ function buildNavigation(model) {
   // Per the tagshop standard, menu popular lists feature only real templates, never tool pages.
   const group = (label, ids) => ({ label, items: ids.map((id) => (typeof id === "string" ? link(id) : id)) });
   const tplFirst = model.cards.filter((card) => card.pageId.startsWith("tpl-") && model.byId[card.pageId]?.type === "template").slice(0, 10).map((card) => card.pageId);
-  return {
+  return withAidreamcapesDirectoryNavigation({
     version: 2,
     menus: [
       { label: "Video", groups: [{ label: "Make a video", items: VIDEO_TOOLS.map(tool) }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
@@ -2650,7 +2651,7 @@ function buildNavigation(model) {
       legal: [{ label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }, { label: "Refunds", href: "/refunds" }, { label: "Cookies", href: "/cookies" }],
       copyright: "© 2026 AIVideosUGC. All rights reserved."
     }
-  };
+  });
 }
 
 function buildLlmsText(model) {

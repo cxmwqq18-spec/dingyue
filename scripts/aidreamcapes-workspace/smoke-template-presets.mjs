@@ -24,6 +24,19 @@ class WorkspaceError extends Error {
 
 try {
   const presetContract = compileModule("preset-contract", require);
+  const inspirationModule = { exports: {} };
+  const inspirationSource = ts.transpileModule(fs.readFileSync(path.join(source, "../aidreamcapes-inspirations-types.ts"), "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  new Function("require", "module", "exports", inspirationSource)((id) => id === "@/lib/aidreamcapes-workspace/preset-contract" ? presetContract : require(id), inspirationModule, inspirationModule.exports);
+  for (const [kind, family] of [["video", "videos"], ["photo", "images"]]) {
+    const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-videos", prompt: "A product scene." };
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
+  }
+  const navigation = compileModule("navigation", require);
+  assert.equal(navigation.workspaceViewHref("", "inspirations"), "/app/inspirations");
+  assert.equal(navigation.workspaceViewHref("/site/aidreamcapes", "inspirations"), "/site/aidreamcapes/app/inspirations");
   let livePageRow;
   let livePageReads = 0;
   const livePageCalls = [];

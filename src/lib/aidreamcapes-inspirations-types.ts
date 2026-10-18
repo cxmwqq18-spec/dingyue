@@ -2,7 +2,7 @@
 // library. The server-only data loader (prisma, media catalog reads) lives in
 // aidreamcapes-inspirations.ts and must never be imported by client components.
 
-import { workspaceSceneRouteSlug } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { workspaceMediaRoutePath, workspaceSceneRouteSlug } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 export type InspirationCard = {
   id: string;
@@ -14,13 +14,16 @@ export type InspirationCard = {
   toolSlug: string;
   pageSlug: string;
   sceneSlug?: string;
+  publicSlug?: string;
   pageTitle: string;
   kind: "video" | "photo";
   description: string;
   category: string;
 };
 
-export function inspirationCreateHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind" | "pageSlug" | "sceneSlug">, basePath = ""): string {
+export function inspirationCreateHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind" | "pageSlug" | "sceneSlug" | "publicSlug">, basePath = ""): string {
+  const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
+  if (mediaPath) return `${basePath}${mediaPath}`;
   const sceneRouteSlug = workspaceSceneRouteSlug(card.pageSlug, card.sceneSlug);
   if (sceneRouteSlug) return `${basePath}/app/create/scene/${sceneRouteSlug}`;
   const params = new URLSearchParams();
