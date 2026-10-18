@@ -11,6 +11,7 @@ export type AidreamcapesSocialLink = {
 const brandMarks: Record<string, ReactNode> = {
   facebook: <path d="M14.1 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1A22 22 0 0 0 15 3c-2.4 0-4 1.5-4 4.2v2.4H8.3v3.2H11V21z" />,
   instagram: <><rect fill="none" height="17" rx="5" stroke="currentColor" strokeWidth="1.8" width="17" x="3.5" y="3.5" /><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" strokeWidth="1.8" /><circle cx="17.5" cy="6.7" r="1.1" /></>,
+  threads: <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><circle cx="12" cy="12" r="4" /><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" /></g>,
   pinterest: <path d="M12 2a10 10 0 0 0-3.6 19.3c0-.9 0-2 .2-2.8l1.3-5.5s-.3-.7-.3-1.6c0-1.5.9-2.7 2-2.7.9 0 1.3.7 1.3 1.5 0 .9-.6 2.3-.9 3.6-.3 1.1.6 2 1.7 2 2 0 3.5-2.2 3.5-5.5 0-2.9-2.1-4.9-5-4.9-3.4 0-5.4 2.5-5.4 5.2 0 1 .4 2.1.9 2.7l.2.5-.4 1.4c0 .2-.2.3-.5.2-1.4-.7-2.3-2.7-2.3-4.5 0-3.7 2.7-7.1 7.7-7.1 4 0 7.1 2.9 7.1 6.7 0 4-2.5 7.3-6 7.3-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.2 1-1 2.2-1.4 3A10 10 0 1 0 12 2z" />,
   x: <path d="M18.9 3H22l-6.8 7.8L23 21h-6.2l-4.9-6.4L6.3 21H3.1l7.3-8.4L3 3h6.3l4.4 5.9zm-1.1 16.2h1.7L8.4 4.7H6.6z" />,
   youtube: <><path d="M21.6 7.1A3 3 0 0 0 19.5 5C17.7 4.5 12 4.5 12 4.5S6.3 4.5 4.5 5a3 3 0 0 0-2.1 2.1A31 31 0 0 0 2 12a31 31 0 0 0 .4 4.9A3 3 0 0 0 4.5 19c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 22 12a31 31 0 0 0-.4-4.9z" /><path className={styles.cutout} d="m10 15.4 5.7-3.4L10 8.6z" /></>,
