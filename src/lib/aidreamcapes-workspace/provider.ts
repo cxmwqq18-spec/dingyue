@@ -22,20 +22,60 @@ import { isKnownWorkspaceLanguage, modelSupportsWorkspaceDuration, toWorkspaceMo
 import { assertWorkspaceExternalOperation, isWorkspaceStabilityMockMode, mockStructuredDecision } from "./stability";
 import { dispatchWorkspaceJob } from "./dispatch";
 import { customerAssetIdFromDownloadUrl, customerAssetStorageKeyFromLocalUrl, isBuiltinActorCatalogReference, workspaceAssetHasMedia, workspaceAssetStorageKeyMatches } from "./asset-contracts";
+import { AIVIDEOSUGC_SITE_ID } from "./types";
 import actorDirectory from "./actors.json";
 
-export function getWorkspaceActors(): ActorAsset[] {
-  return structuredClone(actorDirectory.actors) as ActorAsset[];
+function actorPortraitsFromLivePage(contentJson: unknown): Map<string, string> {
+  if (!contentJson || typeof contentJson !== "object" || Array.isArray(contentJson)) throw new WorkspaceError("workspace_actor_catalog_unavailable", 503);
+  const sections = (contentJson as Record<string, unknown>).sections;
+  if (!sections || typeof sections !== "object" || Array.isArray(sections)) throw new WorkspaceError("workspace_actor_catalog_unavailable", 503);
+  const portraits = new Map<string, string>();
+  for (const section of Object.values(sections as Record<string, unknown>)) {
+    if (!section || typeof section !== "object" || Array.isArray(section)) continue;
+    const sectionRecord = section as Record<string, unknown>;
+    if (sectionRecord.type !== "aidreamcapes_v2_page") continue;
+    const settings = sectionRecord.settings as Record<string, unknown> | undefined;
+    const data = settings?.data as Record<string, unknown> | undefined;
+    const actors = data?.actors;
+    if (!Array.isArray(actors)) continue;
+    for (const value of actors) {
+      if (!value || typeof value !== "object" || Array.isArray(value)) continue;
+      const actor = value as Record<string, unknown>;
+      const image = actor.image as Record<string, unknown> | undefined;
+      if (typeof actor.id !== "string" || typeof image?.src !== "string" ||
+          !/^\/assets\/sites\/site_aidreamcapes\/[A-Za-z0-9_./@%+-]+\.webp$/.test(image.src)) continue;
+      if (portraits.has(actor.id)) throw new WorkspaceError("workspace_actor_catalog_ambiguous", 503);
+      portraits.set(actor.id, image.src);
+    }
+  }
+  return portraits;
+}
+
+export async function getWorkspaceActors(siteId: string): Promise<ActorAsset[]> {
+  assertWorkspaceSite(siteId);
+  if (siteId !== AIVIDEOSUGC_SITE_ID) throw new WorkspaceError("workspace_site_mismatch", 404);
+  const page = await prisma.livePage.findUnique({
+    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: "/ai-actors" } },
+    select: { contentJson: true },
+  });
+  if (!page) throw new WorkspaceError("workspace_actor_catalog_unavailable", 503);
+  const portraits = actorPortraitsFromLivePage(page.contentJson);
+  const actors = structuredClone(actorDirectory.actors) as ActorAsset[];
+  if (portraits.size !== actors.length || actors.some((actor) => !portraits.has(actor.actorId))) {
+    throw new WorkspaceError("workspace_actor_catalog_mismatch", 503);
+  }
+  return actors.map((actor) => ({ ...actor, imageUrl: portraits.get(actor.actorId)! }));
 }
 function modelCapability(provider: PlatformAiProvider): ModelCapability {
   return toWorkspaceModelCapability(provider, videoProviderAvailabilityReason(provider, { referenceAssetCount: 1 }));
 }
 export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCatalog> {
   assertWorkspaceSite(siteId);
+  const actors = await getWorkspaceActors(siteId);
   if (isWorkspaceStabilityMockMode()) {
     const reason = "workspace_stability_mock_video_dispatch_disabled";
     return {
-      scenes: structuredClone(SCENES), actors: getWorkspaceActors(),
+      scenes: structuredClone(SCENES), actors,
       models: [{ id: "aivideosugc-stability-mock", label: "Stability fixture", model: "mock", available: false, reason,
         durations: [6, 10, 15], aspects: [...WORKSPACE_ASPECTS], nativeSpeech: false, audioReference: false, firstFrame: false, lastFrame: false, multiReference: false,
         features: { output4k: false, videoExtension: false, actorReplacement: false, advancedShotTools: false } }],
@@ -68,7 +108,7 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
   const outputOptions = workspaceOutputOptions(models);
   const available = Boolean(app && models.some((model) => model.available) && process.env.AIVIDEOSUGC_PER_SHOT_BILLING_APPROVED === "1" && process.env.AIVIDEOSUGC_VIDEO_THEME_ID);
   const compositionAvailable = Boolean(imageApp && imageProviders.some((provider) => provider.enabled && provider.apiKey && provider.aiUrl && provider.maxImagesPerRequest >= 2));
-  return { scenes: structuredClone(SCENES), actors: getWorkspaceActors(), models, languages: structuredClone(WORKSPACE_LANGUAGES), aspects: outputOptions.aspects,
+  return { scenes: structuredClone(SCENES), actors, models, languages: structuredClone(WORKSPACE_LANGUAGES), aspects: outputOptions.aspects,
     durations: outputOptions.durations.map((value) => ({ value, label: `${value}s`, credits: value === 6 ? 24 : value === 10 ? 40 : value === 15 ? 60 : 120, generationAvailable: available, reason: available ? undefined : "workspace_billing_configuration_required" })),
     composition: { available: compositionAvailable, credits: imageApp?.creditCost ?? null, reason: compositionAvailable ? undefined : "workspace_composition_provider_unavailable" },
     subtitles: { available: subtitlesAvailable, reason: subtitlesAvailable ? undefined : process.env.AIVIDEOSUGC_ASR_PROVIDER_ID?.trim() ? "workspace_speech_timing_provider_unavailable" : "workspace_speech_timing_provider_required" },
@@ -196,8 +236,9 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
         !workspaceAssetHasMedia(asset, { ...owner, kind: "image" })) throw new WorkspaceError("workspace_reference_not_owned", 403);
     return asset.id;
   }
-  const actor = getWorkspaceActors().find((candidate) => candidate.imageUrl === args.url);
-  if (!actor || !isBuiltinActorCatalogReference(args.url, "image", getWorkspaceActors())) throw new WorkspaceError("workspace_reference_not_owned", 403);
+  const actors = await getWorkspaceActors(args.siteId);
+  const actor = actors.find((candidate) => candidate.imageUrl === args.url);
+  if (!actor || !isBuiltinActorCatalogReference(args.url, "image", actors)) throw new WorkspaceError("workspace_reference_not_owned", 403);
   const extension = args.url.slice(args.url.lastIndexOf("."));
   const label = `workspace-actor-${actor.actorId}${extension}`;
   const actorKey = `sites/${args.siteId}/customers/${args.customerId}/assets/${label}`;

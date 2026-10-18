@@ -1102,7 +1102,15 @@ function toPublicSiteShell(
     storefrontProfile: publicProfile,
     // ThemePage is an internal compatibility shape only. Public data comes
     // exclusively from LivePage.contentJson and has no fallback source.
-    pages: pageRecords.map((page) => toThemePage(page)),
+    pages: pageRecords.map((page) => {
+      const publicPage = toThemePage(page);
+      // Aidreamcapes' public shell reads navigation only from the current
+      // relational homepage payload, never from ThemeSettings publication data.
+      if (record.id === "site_aidreamcapes") {
+        Object.assign(publicPage, { liveContentJson: cloneJson(page.contentJson) });
+      }
+      return publicPage;
+    }),
     mediaAssets
   };
 }
@@ -1888,10 +1896,12 @@ async function loadStorefrontPublicRuntimeState(
     // Header and footer are site-global. Always hydrate the relational pages
     // referenced by that shared shell before publishedPaths is compiled, so a
     // route-specific body query cannot change global navigation visibility.
-    const missingNavigationPageSlugs = Array.from(new Set(
-      storefrontGlobalShellPageSlugs(site.settings?.draftJson)
-        .flatMap((slug) => publicRuntimePageSlugs(slug) ?? [slug])
-    ))
+    const requiredShellPageSlugs = [
+      ...storefrontGlobalShellPageSlugs(site.settings?.draftJson)
+        .flatMap((slug) => publicRuntimePageSlugs(slug) ?? [slug]),
+      ...(siteId === "site_aidreamcapes" ? ["/"] : [])
+    ];
+    const missingNavigationPageSlugs = Array.from(new Set(requiredShellPageSlugs))
       .filter((slug) => !loadedPageSlugs.has(slug));
     const navigationPages = missingNavigationPageSlugs.length
       ? await tx.livePage.findMany({

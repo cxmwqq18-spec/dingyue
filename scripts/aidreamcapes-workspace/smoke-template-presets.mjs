@@ -27,10 +27,21 @@ try {
   let livePageRow;
   let livePageReads = 0;
   const livePageCalls = [];
+  const publicRouteCalls = [];
   const prismaMock = { livePage: { async findUnique(args) {
     livePageReads++; livePageCalls.push(structuredClone(args));
     return livePageRow;
-  } } };
+  } }, async $queryRaw(strings, ...values) {
+    publicRouteCalls.push({ sql: strings.join("?"), values });
+    const [siteId, publicSlug, kind] = values;
+    if (siteId !== "site_aidreamcapes" || !livePageRow) return [];
+    const cards = Object.values(livePageRow.contentJson.sections ?? {}).flatMap((section) =>
+      section?.type === "aidreamcapes_v2_page" && Array.isArray(section?.settings?.data?.visual?.picker?.cards)
+        ? section.settings.data.visual.picker.cards : []);
+    return cards.some((card) => card.publicSlug === publicSlug && card.kind === kind)
+      ? [{ slug: "/templates", ...livePageRow }]
+      : [];
+  } };
   const resolverRequire = (id) => {
     if (id === "server-only") return {};
     if (id === "@/lib/prisma") return { prisma: prismaMock };
@@ -38,7 +49,7 @@ try {
     if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
     return require(id);
   };
-  const { resolveWorkspacePreset } = compileModule("presets.server", resolverRequire);
+  const { resolveWorkspacePreset, resolveWorkspacePublicScenePreset } = compileModule("presets.server", resolverRequire);
   const makeCard = (overrides = {}) => ({
     image: { src: "/media/site_aidreamcapes/picker/creator.webp", w: 720, h: 1280 },
     label: "Creator product demo", prompt: "A creator demonstrates the product in a bright room.",
@@ -86,6 +97,18 @@ try {
   assert.equal(photoPreset.aspect, "16:9");
   assert.equal(photoPreset.duration, 30);
   assert.equal(photoPreset.imageTool, "white-background");
+
+  const staticVideoCard = makeCard({ publicSlug: "creator-product-demo", sceneSlug: "creator-product-demo" });
+  livePageRow = makePage(staticVideoCard);
+  const publicVideoPreset = await resolveWorkspacePublicScenePreset("site_aidreamcapes", "video", "creator-product-demo");
+  assert.equal(publicVideoPreset?.title, staticVideoCard.label, "Readable video routes resolve against the current LivePage card");
+  assert.equal(publicVideoPreset?.publicSlug, "creator-product-demo");
+  assert.equal(presetContract.pickerPresetHref(staticVideoCard, "/templates"), "/videos/creator-product-demo", "Picker links use the short human-readable video path");
+  assert.deepEqual(publicRouteCalls.at(-1)?.values, ["site_aidreamcapes", "creator-product-demo", "video"], "Static route lookup is explicitly scoped to Aidreamcapes and media kind");
+  const staticPhotoCard = makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background", kind: "photo", publicSlug: "clean-product-image", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } });
+  livePageRow = makePage(staticPhotoCard);
+  assert.equal((await resolveWorkspacePublicScenePreset("site_aidreamcapes", "photo", "clean-product-image"))?.kind, "photo", "Readable image routes resolve with the correct media kind");
+  assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/images/clean-product-image", "Picker links use the short human-readable image path");
 
   // Exercise task POST with fully mocked auth, LivePage and store. Auth must happen before lookup.
   const taskInput = { images: { productImages: ["/api/sites/site_aidreamcapes/customers/c_test/assets/a1"] }, fields: { steps: "Show the product" }, creativeDirection: "User revised visual direction.", options: { duration: 10, aspect: "9:16", style: "professional", language: "en", subtitle: false } };

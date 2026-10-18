@@ -41,7 +41,7 @@
     },
     {
       "t": "Choose an AI Actor",
-      "d": "Camera-shy? Pick an AI actor from the [AI actor library](/ai-video-generation/ai-actors). They read the script you approve and stand in for the brand.",
+      "d": "Camera-shy? Pick an AI actor from the [AI actor library](/ai-actors). They read the script you approve and stand in for the brand.",
       "icon": "users"
     },
     {

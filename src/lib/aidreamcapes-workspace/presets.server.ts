@@ -95,7 +95,8 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
   return {
     sourcePage,
     presetId: pickerPresetId(typedCard),
-    sceneSlug: typeof card.sceneSlug === "string" ? card.sceneSlug : undefined,
+    ...(typeof card.sceneSlug === "string" ? { sceneSlug: card.sceneSlug } : {}),
+    ...(typeof card.publicSlug === "string" && /^[a-z0-9][a-z0-9-]{0,119}$/.test(card.publicSlug) ? { publicSlug: card.publicSlug } : {}),
     title: title.slice(0, 160),
     kind: card.kind,
     prompt,
@@ -106,6 +107,33 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
     imageTool,
     sourceUpdatedAt: page.updatedAt.toISOString(),
   };
+}
+
+/** Resolve a clean image/video route against current Aidreamcapes LivePage data. */
+export async function resolveWorkspacePublicScenePreset(siteId: string, kind: "photo" | "video", publicSlug: string): Promise<WorkspacePreset | undefined> {
+  if (siteId !== AIVIDEOSUGC_SITE_ID || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(publicSlug)) return undefined;
+  const pages = await prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; updatedAt: Date }>>`
+    SELECT "slug", "contentJson", "updatedAt"
+    FROM "LivePage"
+    WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
+      AND jsonb_path_exists(
+        "contentJson",
+        '$.sections.*.settings.data.visual.picker.cards[*] ? (@.publicSlug == $slug && @.kind == $kind)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug}, 'kind', ${kind})
+      )
+    LIMIT 3
+  `;
+  if (pages.length !== 1) return undefined;
+  const page = pages[0];
+  for (const picker of pickersFromContent(page.contentJson)) {
+    const cards = Array.isArray(picker.cards) ? picker.cards : [];
+    for (const card of cards) {
+      const candidate = record(card);
+      if (candidate?.publicSlug !== publicSlug || candidate.kind !== kind) continue;
+      return presetFromCard(page, page.slug, card);
+    }
+  }
+  return undefined;
 }
 
 /** Read the current homepage picker cards from Aidreamcapes' relational LivePage row. */

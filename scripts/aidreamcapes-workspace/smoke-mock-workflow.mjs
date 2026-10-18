@@ -5,9 +5,14 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
 import ts from "typescript";
+import { buildSiteV2 } from "../lib/aidreamcapes-site-v2-content.mjs";
 
 const root = process.cwd();
 const workspaceRoot = path.join(root, "src/lib/aidreamcapes-workspace");
+const actorPage = buildSiteV2().pages.find((page) => page.slug === "/ai-actors");
+assert(actorPage, "The generated AI Actors page is available to the mock workflow");
+const actorPageSection = Object.values(actorPage.contentJson.sections).find((section) => section.type === "aidreamcapes_v2_page");
+assert.equal(actorPageSection?.settings?.data?.actors?.length, 53, "The public actor catalog includes all 53 portraits");
 const nativeRequire = createRequire(path.join(root, "package.json"));
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aivideosugc-mock-workflow-"));
 const envKeys = ["AIVIDEOSUGC_STABILITY_MODE", "AIVIDEOSUGC_QUOTE_SECRET", "AIVIDEOSUGC_TEXT_PROVIDER_ID", "AIVIDEOSUGC_ASR_PROVIDER_ID", "AIVIDEOSUGC_RENDER_ROOT", "AIVIDEOSUGC_FFMPEG_BIN"];
@@ -37,14 +42,21 @@ const counters = {
   generationSubmitCalls: 0,
   workerDispatchCalls: 0,
   customerCatalogCalls: 0,
+  livePageCalls: 0,
 };
 const providerFixture = {
   id: "provider-canary", enabled: true, aiUrl: "https://provider.invalid/v1", modelType: "fixture-model",
   label: "must not be used", maxImagesPerRequest: 4, videoDurations: [6, 10, 15], videoAspectRatios: ["9:16"],
 };
 Object.defineProperty(providerFixture, "apiKey", { get() { counters.apiKeyReads++; return "must-not-be-read"; } });
-const recordPrismaCall = () => { counters.prismaCalls++; throw new Error("Mock workflow reached Prisma"); };
-const prisma = new Proxy({}, { get(_target, key) { return key === "$queryRaw" || key === "$executeRaw" ? recordPrismaCall : new Proxy({}, { get: () => recordPrismaCall }); } });
+const recordPrismaCall = () => { counters.prismaCalls++; throw new Error("Mock workflow reached an unexpected Prisma query"); };
+const prisma = new Proxy({
+  livePage: { async findUnique(args) {
+    counters.livePageCalls++;
+    assert.deepEqual(args.where, { siteId_slug: { siteId: "site_aidreamcapes", slug: "/ai-actors" } }, "Built-in actor portraits are read from the current Aidreamcapes page");
+    return { contentJson: actorPage.contentJson };
+  } },
+}, { get(target, key) { return key in target ? target[key] : key === "$queryRaw" || key === "$executeRaw" ? recordPrismaCall : new Proxy({}, { get: () => recordPrismaCall }); } });
 const providerStore = {
   async listPlatformAiProvidersRelational() { counters.providerStoreCalls++; return [providerFixture]; },
   async getPlatformAiProviderRelational() { counters.providerStoreCalls++; return providerFixture; },
@@ -174,7 +186,8 @@ try {
   const stability = loadWorkspace("stability");
   const assetContracts = loadWorkspace("asset-contracts");
   const productBriefSnapshot = loadWorkspace("product-brief-snapshot");
-  const actors = provider.getWorkspaceActors();
+  const actors = await provider.getWorkspaceActors("site_aidreamcapes");
+  assert.equal(counters.livePageCalls, 1, "The mock workflow loads presenter portraits from the current site catalog");
   const actor = actors.find((entry) => entry.actorId === "indoor-1");
   assert(actor, "The deterministic built-in actor fixture is present");
   assert.equal(assetContracts.isBuiltinActorCatalogReference(actor.imageUrl, "image", actors), true);

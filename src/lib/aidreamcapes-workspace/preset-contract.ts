@@ -8,12 +8,14 @@ export interface PickerPresetCard {
   href: string;
   kind: "photo" | "video";
   sceneSlug?: string;
+  publicSlug?: string;
   tool?: string;
   sceneId?: SceneId;
 }
 export interface WorkspacePresetRequest { sourcePage: string; presetId: string }
 export interface WorkspacePreset extends WorkspacePresetRequest {
   sceneSlug?: string;
+  publicSlug?: string;
   title: string;
   kind: "photo" | "video";
   prompt: string;
@@ -91,6 +93,11 @@ export function parseWorkspaceSceneRouteSlug(value: string): { sourcePage: strin
   return { sourcePage, sceneSlug };
 }
 
+export function workspaceMediaRoutePath(kind: "photo" | "video", publicSlug: string | undefined): string | undefined {
+  if (!publicSlug || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(publicSlug)) return undefined;
+  return `/${kind === "photo" ? "images" : "videos"}/${publicSlug}`;
+}
+
 /** Called during public SSR. Only the small identity crosses into the app URL. */
 export function pickerPresetHref(card: PickerPresetCard, sourcePage: string | undefined): string {
   const source = presetSourcePage(sourcePage);
@@ -98,6 +105,8 @@ export function pickerPresetHref(card: PickerPresetCard, sourcePage: string | un
   let target: URL;
   try { target = new URL(card.href, "https://www.aivideosugc.com"); } catch { return card.href; }
   if (!["https:", "http:"].includes(target.protocol) || target.username || target.password || !["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"].includes(target.hostname) || target.pathname !== "/app/create") return card.href;
+  const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
+  if (mediaPath) return mediaPath;
   const sceneRouteSlug = workspaceSceneRouteSlug(source, card.sceneSlug);
   if (sceneRouteSlug) return `/app/create/scene/${sceneRouteSlug}`;
   const query = new URLSearchParams({ source, preset: pickerPresetId(card) });

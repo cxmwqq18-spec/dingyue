@@ -11,7 +11,7 @@ import { WorkspaceError, type ActorAsset, type VideoLanguage } from "@/lib/aidre
 export const dynamic = "force-dynamic";
 type Context = { params: Promise<{ siteId: string }> };
 export async function GET(request: NextRequest, { params }: Context) {
-  try { const { siteId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response; return workspaceResponse({ actors: [...getWorkspaceActors(), ...await listActors(siteId, auth.current.customer.id)] }); }
+  try { const { siteId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response; return workspaceResponse({ actors: [...await getWorkspaceActors(siteId), ...await listActors(siteId, auth.current.customer.id)] }); }
   catch (error) { return workspaceFailure(error); }
 }
 export async function POST(request: NextRequest, { params }: Context) {

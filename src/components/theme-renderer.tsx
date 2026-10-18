@@ -163,6 +163,7 @@ import { themeValueToList, themeValueToString } from "@/lib/theme-values";
 import type {
   CreativePack,
   CreativePackCategory,
+  AidreamcapesV2Navigation,
   SectionBlockInstance,
   SectionInstance,
   Site,
@@ -317,11 +318,12 @@ export function ThemeRenderer({
   };
   const useAidreamcapesImageDirectory = displaySite.id === "site_aidreamcapes" && normalizedPath === "/ai-image-generation" && Boolean(aidreamcapesImageDirectoryCards?.length);
   const previewHasEmptyBody = mode === "preview" && entries.length === 0;
-  // Aidreamcapes.com v2: the site-owned navigation in ThemeSettings switches every
-  // public page of site_aidreamcapes (only) to the v2 header/footer. Pages whose
-  // LivePage contains the v2 section render the v2 body; other pages keep their
-  // existing sections inside the same chrome. No other storefront enters here.
-  const aidreamcapesV2Navigation = displaySite.id === "site_aidreamcapes" ? settings.aidreamcapesV2Navigation : undefined;
+  // Aidreamcapes navigation is part of its current relational homepage data.
+  // The site-id guard keeps this v2 shell isolated from every other storefront.
+  const aidreamcapesRootLiveContent = displaySite.id === "site_aidreamcapes"
+    ? (displaySite.pages.find((page) => page.slug === "/") as unknown as { liveContentJson?: { siteNavigation?: AidreamcapesV2Navigation } } | undefined)?.liveContentJson
+    : undefined;
+  const aidreamcapesV2Navigation = aidreamcapesRootLiveContent?.siteNavigation;
   if (aidreamcapesV2Navigation?.version === 2) {
     const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
     const v2PageSections = entries.map(([, section]) => section);

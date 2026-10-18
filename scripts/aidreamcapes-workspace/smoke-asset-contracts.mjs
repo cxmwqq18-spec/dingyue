@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import ts from "typescript";
+import { buildSiteV2 } from "../lib/aidreamcapes-site-v2-content.mjs";
 
 const root = process.cwd();
 const workspace = path.join(root, "src/lib/aidreamcapes-workspace");
@@ -20,6 +21,13 @@ const SITE = "site_aidreamcapes";
 const FOREIGN_SITE = "site_other";
 const CUSTOMER = "customer_fixture";
 const FOREIGN_CUSTOMER = "customer_other";
+const actorDirectory = JSON.parse(fs.readFileSync(path.join(workspace, "actors.json"), "utf8"));
+const actorPage = buildSiteV2().pages.find((page) => page.slug === "/ai-actors");
+assert(actorPage, "The generated public AI Actors page is available to the fixture");
+const actorPageSection = Object.values(actorPage.contentJson.sections).find((section) => section.type === "aidreamcapes_v2_page");
+const actorPageCards = actorPageSection?.settings?.data?.actors;
+assert.equal(actorPageCards?.length, 53, "The generated AI Actors page has the full 53-person catalog");
+const actorPortraits = new Map(actorPageCards.map((actor) => [actor.id, actor.image.src]));
 const imageAsset = {
   id: "asset_product", siteId: SITE, customerId: CUSTOMER,
   storageKey: `sites/${SITE}/customers/${CUSTOMER}/assets/product.jpg`, mimeType: "image/jpeg", role: "input", deletedAt: null,
@@ -87,6 +95,7 @@ const state = {
   fileReads: [],
   totalFileReads: 0,
   fileMimeType: undefined,
+  livePageQueries: [],
 };
 
 function assetPreview(asset) {
@@ -125,6 +134,13 @@ const assetStore = {
 };
 
 const prisma = {
+  livePage: {
+    async findUnique(args) {
+      state.livePageQueries.push(structuredClone(args));
+      if (args.where?.siteId_slug?.siteId !== SITE || args.where?.siteId_slug?.slug !== "/ai-actors") return null;
+      return { contentJson: actorPage.contentJson };
+    },
+  },
   generationJob: { async findMany() { return []; } },
   assetUpload: {
     async findFirst(args) {
@@ -201,7 +217,11 @@ try {
   const api = loadWorkspaceModule("api");
   const provider = loadWorkspaceModule("provider");
   const mediaRender = loadWorkspaceModule("media-render");
-  const builtins = provider.getWorkspaceActors();
+  const builtins = await provider.getWorkspaceActors(SITE);
+  assert.deepEqual(state.livePageQueries.at(-1), {
+    where: { siteId_slug: { siteId: SITE, slug: "/ai-actors" } }, select: { contentJson: true },
+  }, "The workspace reads portraits from the current Aidreamcapes AI Actors LivePage only");
+  assert.equal(builtins.length, 53);
   const builtin = builtins[0];
   const productUrl = assetPreview(imageAsset);
   const musicUrl = `/api/sites/${SITE}/customers/${CUSTOMER}/assets/${musicAsset.id}/download`;
@@ -209,12 +229,16 @@ try {
 
   for (const actor of builtins) {
     assert(contracts.isBuiltinActorCatalogReference(actor.imageUrl, "image", builtins), `${actor.actorId} portrait is an exact catalog asset`);
-    assert(fs.existsSync(path.join(root, "public", actor.imageUrl.slice(1))), `${actor.actorId} portrait exists in the Aidreamcapes media catalog`);
+    assert.equal(actor.imageUrl, actorPortraits.get(actor.actorId), `${actor.actorId} workspace portrait matches its public AI Actors card`);
+    assert(actor.imageUrl.startsWith("/assets/sites/site_aidreamcapes/"), `${actor.actorId} public portrait is an Aidreamcapes-owned asset`);
+    const voiceDefinition = actorDirectory.actors.find((candidate) => candidate.actorId === actor.actorId)?.voice;
+    assert.deepEqual(actor.voice, voiceDefinition, `${actor.actorId} audio/voice settings remain unchanged`);
     if (actor.voice.refAudio) {
       assert(contracts.isBuiltinActorCatalogReference(actor.voice.refAudio, "audio", builtins), `${actor.actorId} voice sample is an exact catalog asset`);
       assert(fs.existsSync(path.join(root, "public", actor.voice.refAudio.slice(1))), `${actor.actorId} voice sample exists in the Aidreamcapes media catalog`);
     }
   }
+  await assert.rejects(provider.getWorkspaceActors(FOREIGN_SITE), (error) => error.code === "workspace_site_not_allowed");
   assert.equal(contracts.isBuiltinActorCatalogReference(`${builtin.imageUrl}?x=1`, "image", builtins), false, "Catalog references reject URL decorations");
   assert.equal(contracts.isBuiltinActorCatalogReference("/media/site_aidreamcapes/workspace/actors/library/unknown.webp", "image", builtins), false, "Unlisted actor files are not catalog assets");
 

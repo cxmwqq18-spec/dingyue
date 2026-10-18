@@ -1,8 +1,8 @@
 [
- [
-  "/ai-actors",
-  "/ai-video-generation/ai-actors"
- ],
+  [
+    "/ai-video-generation/ai-actors",
+    "/ai-actors"
+  ],
  [
   "/ai-video-generation/url-to-ad",
   "/ai-video-generation/url-to-video"

@@ -1,6 +1,6 @@
 // Aidreamcapes.com v2 storefront content builder.
 // Source of truth for copy: scripts/data/aidreamcapes-site-v2/{master.json,content/*.json}.
-// Output: LivePage rows (contentJson) and the ThemeSettings v2 navigation for site_aidreamcapes only.
+// Output: Aidreamcapes LivePage rows and navigation derived from the current home LivePage.
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert/strict";
@@ -1211,7 +1211,7 @@ function visualFor(model, page, source, maker, group, buttonHref, content, extra
             ? toolAppHref(model, target, card.template, { size: card.size ?? videoSizeForDimensions(image.w, image.h) ?? displayedMakerVideoSize(model, page), explicitSize: true, length: card.length ?? displayedLength ?? "15", promptOverride })
             : toolAppHref(model, target, card.template, { promptOverride })
           : caseTarget(model, page, entry, { width: image.w, height: image.h }, cardKind === "video", promptOverride);
-        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}) };
+        return { image, label: card.label ?? "", chips: Array.isArray(card.chips) ? card.chips.map(String) : [], href, prompt: String(card.prompt ?? genericCasePrompt(model, page, card) ?? ""), kind: cardKind, ...(card.tool ? { tool: card.tool } : {}), ...(typeof card.sceneSlug === "string" ? { sceneSlug: card.sceneSlug } : {}), ...(typeof card.publicSlug === "string" ? { publicSlug: card.publicSlug } : {}) };
       };
   const pickerBuiltCards = pickerCards.map(buildPickerCard);
   // Case-plan cases join the on-page wall only when the source page defines a
@@ -2559,7 +2559,64 @@ export function buildSiteV2(source = loadSiteV2Source()) {
   });
   finalizeCardOverrides(model);
   finalizeCardAssignments(model);
-  return { pages, navigation: buildNavigation(model), redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors, cardAssignmentErrors: model.cardAssignmentErrors };
+  const navigation = buildNavigation(model);
+  assignPublicSceneSlugs(pages);
+  const home = pages.find((page) => page.slug === "/");
+  if (home) home.contentJson.siteNavigation = navigation;
+  return { pages, navigation, redirects: SITE_V2_REDIRECTS, llms: buildLlmsText(model), cardOverrideErrors: model.cardOverrideErrors, cardAssignmentErrors: model.cardAssignmentErrors };
+}
+
+function publicSceneSlugText(value) {
+  return String(value ?? "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 76) || "scene";
+}
+
+export function assignPublicSceneSlugs(pages) {
+  const cards = [];
+  for (const page of [...pages].sort((left, right) => left.slug.localeCompare(right.slug))) {
+    const sections = page.contentJson?.sections ?? {};
+    for (const sectionId of page.contentJson?.sectionsOrder ?? Object.keys(sections)) {
+      const pickerCards = sections[sectionId]?.settings?.data?.visual?.picker?.cards;
+      if (!Array.isArray(pickerCards)) continue;
+      pickerCards.forEach((card, index) => {
+        if ((card?.kind === "photo" || card?.kind === "video") && card?.image?.src && card?.label) {
+          cards.push({ page, card, index, kind: card.kind, base: publicSceneSlugText(card.label) });
+        }
+      });
+    }
+  }
+  const baseCounts = new Map();
+  for (const item of cards) {
+    const key = `${item.kind}\0${item.base}`;
+    baseCounts.set(key, (baseCounts.get(key) ?? 0) + 1);
+  }
+  const used = new Set();
+  for (const item of cards) {
+    const existing = typeof item.card.publicSlug === "string" && /^[a-z0-9][a-z0-9-]{0,119}$/.test(item.card.publicSlug)
+      ? item.card.publicSlug
+      : undefined;
+    if (!existing) continue;
+    const key = `${item.kind}\0${existing}`;
+    if (used.has(key)) throw new Error(`duplicate_existing_public_scene_slug:${item.kind}:${existing}`);
+    used.add(key);
+  }
+  for (const item of cards) {
+    const existing = typeof item.card.publicSlug === "string" && /^[a-z0-9][a-z0-9-]{0,119}$/.test(item.card.publicSlug)
+      ? item.card.publicSlug
+      : undefined;
+    const pageSuffix = publicSceneSlugText(item.page.slug === "/" ? "home" : item.page.slug);
+    const duplicateLabel = baseCounts.get(`${item.kind}\0${item.base}`) > 1;
+    if (existing) continue;
+    let candidate = duplicateLabel ? `${item.base}-${pageSuffix}` : item.base;
+    candidate = candidate.slice(0, 120).replace(/-+$/g, "") || "scene";
+    let suffix = 2;
+    while (used.has(`${item.kind}\0${candidate}`)) {
+      const ending = `-${suffix++}`;
+      candidate = `${(duplicateLabel ? `${item.base}-${pageSuffix}` : item.base).slice(0, 120 - ending.length).replace(/-+$/g, "")}${ending}`;
+    }
+    item.card.publicSlug = candidate;
+    used.add(`${item.kind}\0${candidate}`);
+  }
 }
 
 function buildNavigation(model) {
@@ -2572,12 +2629,12 @@ function buildNavigation(model) {
   return {
     version: 2,
     menus: [
-      { label: "Video", groups: [{ label: "Make a video", items: [...VIDEO_TOOLS.map(tool), link("ai-actors", { description: "Pick from 53 AI actors for your ad", image: mediaImage(model, "n:guide:q4-actor-theo", "inset").src })] }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
+      { label: "Video", groups: [{ label: "Make a video", items: VIDEO_TOOLS.map(tool) }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
       { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["color", "angle", "pack"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
       { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
     ],
-    links: [{ label: "Pricing", href: "/pricing" }],
+    links: [link("ai-actors", { description: "Browse 53 AI actors for product videos" }), link("pricing")],
     actions: { login: { label: "Log in", href: "/login" }, getStarted: { label: "Get started", href: "/app/create" } },
     footer: {
       tagline: "AI video ads and product photos for DTC brands, SaaS and agencies.",

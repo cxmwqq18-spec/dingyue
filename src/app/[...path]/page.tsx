@@ -35,7 +35,7 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesPublicSceneCreatePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -450,6 +450,9 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const requestedPath = `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (hostSiteSlug === "aidreamcapes" && /^(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(path.join("/"))) {
+    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+  }
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
   if (isRetiredAidreamcapesPublicPath(hostSiteSlug, requestedPath)) return {};
@@ -640,6 +643,13 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  if (hostSiteSlug === "aidreamcapes" && path.length === 2 && (firstSegment === "images" || firstSegment === "videos")) {
+    return renderAidreamcapesPublicSceneCreatePage({
+      kind: firstSegment === "images" ? "photo" : "video",
+      publicSlug: path[1],
+      routeSlug: "aidreamcapes",
+    });
+  }
   if (cleanHost(host) === "aidreamshoots.eu" && slug === "/ai-image-generation/urban") {
     permanentRedirect("/ai-image-generation/urbano");
   }

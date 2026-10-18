@@ -34,6 +34,7 @@ export async function renderAidreamcapesWorkspace({
   presetRequest,
   resolvedPreset,
   sceneRouteSlug,
+  sceneRoutePath,
   invalidPreset = false,
   handoff,
   resumeDraft = false,
@@ -47,6 +48,7 @@ export async function renderAidreamcapesWorkspace({
   presetRequest?: WorkspacePresetRequest;
   resolvedPreset?: WorkspacePreset;
   sceneRouteSlug?: string;
+  sceneRoutePath?: string;
   invalidPreset?: boolean;
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
@@ -75,7 +77,9 @@ export async function renderAidreamcapesWorkspace({
     returnQuery.set("tool", "url-to-video");
     returnQuery.set("url", initialProductUrl);
   }
-  const returnPath = sceneRouteSlug
+  const returnPath = sceneRoutePath
+    ? `${basePath}${sceneRoutePath}`
+    : sceneRouteSlug
     ? `${basePath}/app/create/scene/${encodeURIComponent(sceneRouteSlug)}`
     : returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
   return <AidreamcapesWorkspace

@@ -470,7 +470,10 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
 function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname));
+  const hostSlug = storefrontSlugForHost(host.split(",")[0]?.trim());
+  const aidreamcapesScenePath = /^\/(?:site\/(?:aivideosugc|aidreamcapes)\/)?(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(pathname);
+  const privateAidreamcapesScene = aidreamcapesScenePath && (hostSlug === "aivideosugc" || hostSlug === "aidreamcapes" || /^\/site\/(?:aivideosugc|aidreamcapes)\//i.test(pathname));
+  return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname)) || privateAidreamcapesScene;
 }
 
 function isAidreamcapesComPublicHtmlRequest(request: NextRequest): boolean {

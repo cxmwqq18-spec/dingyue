@@ -107,7 +107,7 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
   try {
     const stabilityMock = isWorkspaceStabilityMockMode();
     if (task.sourceAnalysis?.synthetic && !stabilityMock && task.operation!.action !== "restore_version") throw new WorkspaceError("workspace_clone_analysis_mock_only", 409);
-    const catalog = stabilityMock ? { actors: getWorkspaceActors() } : await catalogForCustomer(task.siteId, task.customerId);
+    const catalog = stabilityMock ? { actors: await getWorkspaceActors(task.siteId) } : await catalogForCustomer(task.siteId, task.customerId);
     const action = task.operation!.action;
     if (["storyboard", "reroll", "rewrite"].includes(action)) {
       const before = task.storyboard;

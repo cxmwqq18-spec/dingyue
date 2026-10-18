@@ -16,7 +16,7 @@ import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
-import { workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { workspaceMediaRoutePath, workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -1229,8 +1229,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setComposerTitle(option.title);
     setMessage("");
     const url = new URL(window.location.href);
-    const sceneRouteSlug = workspaceSceneRouteSlug(option.sourcePage, option.sceneSlug);
-    url.pathname = sceneRouteSlug ? `${basePath}/app/create/scene/${sceneRouteSlug}` : `${basePath}/app/create`;
+    const mediaPath = workspaceMediaRoutePath(option.kind, option.publicSlug);
+    const sceneRouteSlug = mediaPath ? undefined : workspaceSceneRouteSlug(option.sourcePage, option.sceneSlug);
+    url.pathname = mediaPath ? `${basePath}${mediaPath}` : sceneRouteSlug ? `${basePath}/app/create/scene/${sceneRouteSlug}` : `${basePath}/app/create`;
     url.search = "";
     url.hash = "";
     if (!sceneRouteSlug) {

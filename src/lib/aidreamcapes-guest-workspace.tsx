@@ -1,8 +1,10 @@
 import { aidreamcapesWorkspaceEntry, renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
 import { AidreamcapesInspirationsPage } from "@/components/storefront/aidreamcapes-inspirations-page";
-import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import { notFound, permanentRedirect } from "next/navigation";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
-import { resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
 import {
   AIDREAMCAPES_INSPIRATIONS_SITE_ID,
   AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
@@ -33,11 +35,33 @@ export async function renderAidreamcapesSceneCreatePage({ sceneRouteSlug, routeS
 }) {
   const preset = await resolveWorkspaceScenePreset(AIVIDEOSUGC_SITE_ID, sceneRouteSlug);
   if (!preset) notFound();
+  const mediaPath = workspaceMediaRoutePath(preset.kind, preset.publicSlug);
+  if (mediaPath) {
+    const headerStore = await headers();
+    const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
+    const hostMode = ["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(host);
+    permanentRedirect(`${hostMode ? "" : `/site/${routeSlug}`}${mediaPath}`);
+  }
   return renderAidreamcapesWorkspace({
     routeSlug,
     resolvedPreset: preset,
     sceneRouteSlug,
     initialView: preset.kind === "photo" ? "images" : "agent"
+  });
+}
+
+export async function renderAidreamcapesPublicSceneCreatePage({ kind, publicSlug, routeSlug = "aidreamcapes" }: {
+  kind: "photo" | "video";
+  publicSlug: string;
+  routeSlug?: "aivideosugc" | "aidreamcapes";
+}) {
+  const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, kind, publicSlug);
+  if (!preset) notFound();
+  return renderAidreamcapesWorkspace({
+    routeSlug,
+    resolvedPreset: preset,
+    sceneRoutePath: `/${kind === "photo" ? "images" : "videos"}/${publicSlug}`,
+    initialView: kind === "photo" ? "images" : "agent"
   });
 }
 

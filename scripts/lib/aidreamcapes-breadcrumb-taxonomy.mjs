@@ -2,6 +2,7 @@
 export const AIDREAMCAPES_BREADCRUMB_NAMES = {
   '/ai-video-generation': 'AI Video Generation',
   '/ai-video-generation/ai-actors': 'AI Actors',
+  '/ai-actors': 'AI Actors',
   '/ai-video-generation/ai-actor-product-ads': 'AI Actor Product Ads',
   '/ai-video-generation/before-after-showcases': 'Before & After Showcases',
   '/ai-video-generation/beauty-routine': 'Beauty Routine',
@@ -52,6 +53,7 @@ export const AIDREAMCAPES_BREADCRUMB_NAMES = {
 };
 
 export function aidreamcapesBreadcrumbs(slug, current) {
+  if (slug === '/ai-actors') return [{ label: 'Home', href: '/' }, { label: 'AI Actors', href: '/ai-actors' }];
   if (!Array.isArray(current) || !current.length) return current;
   const root = ['ai-video-generation', 'ai-image-generation'].find(segment => slug === `/${segment}` || slug.startsWith(`/${segment}/`));
   if (root) {

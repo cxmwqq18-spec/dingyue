@@ -98,6 +98,7 @@ export function parseInput(value: unknown): TaskInput {
 }
 export async function assertOwnedImages(siteId: string, customerId: string, input: TaskInput, actors: ActorAsset[], storyboard?: Storyboard) {
   assertWorkspaceSite(siteId);
+  const builtinActors = await getWorkspaceActors(siteId);
   const { assets } = await getCustomerAssetsRelational({ siteId, customerId });
   const ownedAssets = assets.filter((asset) => asset.siteId === siteId && asset.customerId === customerId && !asset.deletedAt);
   const findOwnedPreview = (url: string) => ownedAssets.find((asset) =>
@@ -106,11 +107,11 @@ export async function assertOwnedImages(siteId: string, customerId: string, inpu
   const selectedActor = input.actorId ? actors.find((actor) => actor.actorId === input.actorId) : undefined;
   if (input.actorId && !selectedActor) throw new WorkspaceError("workspace_actor_selection_required", 403);
   if (selectedActor) {
-    const builtin = getWorkspaceActors().find((actor) => actor.actorId === selectedActor.actorId);
+    const builtin = builtinActors.find((actor) => actor.actorId === selectedActor.actorId);
     if (builtin) {
       if (selectedActor.imageUrl !== builtin.imageUrl || selectedActor.voice.refAudio !== builtin.voice.refAudio ||
-          !isBuiltinActorCatalogReference(selectedActor.imageUrl, "image", getWorkspaceActors()) ||
-          (selectedActor.voice.refAudio && !isBuiltinActorCatalogReference(selectedActor.voice.refAudio, "audio", getWorkspaceActors()))) {
+          !isBuiltinActorCatalogReference(selectedActor.imageUrl, "image", builtinActors) ||
+          (selectedActor.voice.refAudio && !isBuiltinActorCatalogReference(selectedActor.voice.refAudio, "audio", builtinActors))) {
         throw new WorkspaceError("workspace_actor_reference_not_owned", 403);
       }
     } else if (!findOwnedPreview(selectedActor.imageUrl) ||
@@ -130,7 +131,7 @@ export async function assertOwnedImages(siteId: string, customerId: string, inpu
   if (storyboardUrls.some(({ kind, url }) => {
     if (!url) return true;
     if (kind === "actor" && selectedActor && url === selectedActor.imageUrl &&
-        isBuiltinActorCatalogReference(url, "image", getWorkspaceActors())) return false;
+        isBuiltinActorCatalogReference(url, "image", builtinActors)) return false;
     return !findOwnedPreview(url);
   })) throw new WorkspaceError("asset_not_owned", 403);
 
