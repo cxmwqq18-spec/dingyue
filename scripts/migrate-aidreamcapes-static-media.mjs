@@ -345,7 +345,8 @@ async function preparePlan(prisma) {
 
   const targetByPath = new Map([...sourceInfoByPath].map(([pathname, info]) => [pathname, info.targetUrl]));
   for (const [brokenPath, replacementPath] of BROKEN_REFERENCE_REPAIR) {
-    if (sourceInfoByPath.has(brokenPath)) targetByPath.set(brokenPath, sourceInfoByPath.get(brokenPath).targetUrl);
+    if (!sourceInfoByPath.has(brokenPath)) continue;
+    targetByPath.set(brokenPath, sourceInfoByPath.get(brokenPath).targetUrl);
     if (!sourceInfoByPath.has(replacementPath)) throw new Error(`repair_target_not_in_plan:${replacementPath}`);
   }
 
@@ -642,7 +643,7 @@ try {
     }
     const applied = await applyRelationalUpdates(prisma, plan);
     writeAuditFile(path.join(auditRoot, "apply-current.json"), { ...manifest, applied, completedAt: new Date().toISOString() });
-    console.log(JSON.stringify({ ...plan.summary, applied, applyFile: path.join(auditRoot, "apply-current.json") }, null, 2));
+    console.log(JSON.stringify({ ...plan.summary, applied: { ...applied, pageRevisions: undefined }, applyFile: path.join(auditRoot, "apply-current.json") }, null, 2));
   }
 } finally {
   await prisma.$disconnect();
