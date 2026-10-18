@@ -1,6 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import { pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
+import { parseWorkspaceSceneRouteSlug, pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
 import { AIVIDEOSUGC_SITE_ID, type SceneId, type TaskInput } from "./types";
 
 type RecordValue = Record<string, unknown>;
@@ -55,9 +55,14 @@ function cardDuration(href: URL): TaskInput["options"]["duration"] {
 }
 
 function pickerFromContent(contentJson: unknown): RecordValue | undefined {
+  return pickersFromContent(contentJson)[0];
+}
+
+function pickersFromContent(contentJson: unknown): RecordValue[] {
   const content = record(contentJson);
   const sections = record(content?.sections);
   const order = Array.isArray(content?.sectionsOrder) ? content.sectionsOrder : [];
+  const pickers: RecordValue[] = [];
   for (const sectionId of order) {
     if (typeof sectionId !== "string") continue;
     const section = record(sections?.[sectionId]);
@@ -66,9 +71,9 @@ function pickerFromContent(contentJson: unknown): RecordValue | undefined {
     const data = record(settings?.data);
     const visual = record(data?.visual);
     const picker = record(visual?.picker);
-    if (picker && Array.isArray(picker.cards)) return picker;
+    if (picker && Array.isArray(picker.cards)) pickers.push(picker);
   }
-  return undefined;
+  return pickers;
 }
 
 function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: unknown): WorkspacePreset | undefined {
@@ -90,6 +95,7 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
   return {
     sourcePage,
     presetId: pickerPresetId(typedCard),
+    sceneSlug: typeof card.sceneSlug === "string" ? card.sceneSlug : undefined,
     title: title.slice(0, 160),
     kind: card.kind,
     prompt,
@@ -153,6 +159,27 @@ export async function resolveWorkspacePreset(siteId: string, request: WorkspaceP
     if (typedCard.kind !== "video" && typedCard.kind !== "photo") continue;
     if (pickerPresetId(typedCard as unknown as PickerPresetCard) !== request.presetId) continue;
     return presetFromCard(page, sourcePage, card);
+  }
+  return undefined;
+}
+
+/** Resolve a short-lived workspace scene request against its current LivePage card. */
+export async function resolveWorkspaceScenePreset(siteId: string, routeSlug: string): Promise<WorkspacePreset | undefined> {
+  if (siteId !== AIVIDEOSUGC_SITE_ID) return undefined;
+  const locator = parseWorkspaceSceneRouteSlug(routeSlug);
+  if (!locator) return undefined;
+  const page = await prisma.livePage.findUnique({
+    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: locator.sourcePage } },
+    select: { contentJson: true, updatedAt: true },
+  });
+  if (!page) return undefined;
+  for (const picker of pickersFromContent(page.contentJson)) {
+    const cards = Array.isArray(picker.cards) ? picker.cards : [];
+    for (const card of cards) {
+      const candidate = record(card);
+      if (candidate?.sceneSlug !== locator.sceneSlug) continue;
+      return presetFromCard(page, locator.sourcePage, card);
+    }
   }
   return undefined;
 }

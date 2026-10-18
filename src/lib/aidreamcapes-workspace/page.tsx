@@ -11,7 +11,7 @@ import { catalogForCustomer } from "./api";
 import { AIVIDEOSUGC_SITE_ID, type SceneId } from "./types";
 import { isWorkspaceView } from "./navigation";
 import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
-import { presetRequestFromQuery, type WorkspacePresetRequest } from "./preset-contract";
+import { presetRequestFromQuery, type WorkspacePreset, type WorkspacePresetRequest } from "./preset-contract";
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
@@ -32,6 +32,8 @@ export async function renderAidreamcapesWorkspace({
   imageTool,
   initialProductUrl,
   presetRequest,
+  resolvedPreset,
+  sceneRouteSlug,
   invalidPreset = false,
   handoff,
   resumeDraft = false,
@@ -43,12 +45,14 @@ export async function renderAidreamcapesWorkspace({
   imageTool?: WorkspaceImageTool;
   initialProductUrl?: string;
   presetRequest?: WorkspacePresetRequest;
+  resolvedPreset?: WorkspacePreset;
+  sceneRouteSlug?: string;
   invalidPreset?: boolean;
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
 }) {
   if (!taskId && invalidPreset) notFound();
-  const initialPreset = !taskId && presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined;
+  const initialPreset = !taskId ? resolvedPreset ?? (presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined) : undefined;
   if (!taskId && presetRequest && !initialPreset) notFound();
   const [current, cookieStore, headerStore, templateGallery] = await Promise.all([
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
@@ -63,7 +67,7 @@ export async function renderAidreamcapesWorkspace({
   const accountBase = hostMode ? "" : "/site/aidreamcapes";
   const safeHandoff = !initialPreset && !taskId && !resumeDraft ? handoff : undefined;
   const returnQuery = new URLSearchParams(safeHandoff ? workspaceHandoffHref("", safeHandoff).split("?")[1] : undefined);
-  if (initialPreset) { returnQuery.set("source", initialPreset.sourcePage); returnQuery.set("preset", initialPreset.presetId); }
+  if (initialPreset && !sceneRouteSlug) { returnQuery.set("source", initialPreset.sourcePage); returnQuery.set("preset", initialPreset.presetId); }
   if (taskId) returnQuery.set("task", taskId);
   if (!initialPreset && !taskId && initialView !== "home") returnQuery.set("view", initialView);
   if (!initialPreset && !taskId && resumeDraft) returnQuery.set("resumeDraft", "1");
@@ -71,7 +75,9 @@ export async function renderAidreamcapesWorkspace({
     returnQuery.set("tool", "url-to-video");
     returnQuery.set("url", initialProductUrl);
   }
-  const returnPath = returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
+  const returnPath = sceneRouteSlug
+    ? `${basePath}/app/create/scene/${encodeURIComponent(sceneRouteSlug)}`
+    : returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
   return <AidreamcapesWorkspace
     key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? "workspace"}
     siteId={AIVIDEOSUGC_SITE_ID}
