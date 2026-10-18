@@ -1,98 +1,113 @@
 {
   "id": "about",
-  "title": "What AIVideosUGC Makes for Shops | AIVideosUGC",
-  "description": "AIVideosUGC turns a product photo or a product link into store images and short video ads. Shops skip the creator wait and post a file quickly.",
-  "h1": "What AIVideosUGC Makes for Your Shop",
-  "eyebrow": "Built for Shop Owners",
-  "lead": "Shops get stuck waiting on creators, tight dates, and too many handoffs. AIVideosUGC makes store images and short video ads fast, consistent, and easy to finish.",
+  "title": "About AIVideosUGC: AI Product Photos and Video Ads",
+  "description": "AIVideosUGC helps shop owners create product photos, short video ads, and presenter-led videos from a product image or page. Learn who operates the service and how it helps.",
+  "h1": "Product Photos and Videos for Everyday Shop Work",
+  "eyebrow": "About AIVideosUGC",
+  "lead": "AIVideosUGC helps shop owners prepare product visuals for listings, campaigns, and social channels. Start with a product photo or page, shape the message, and review each result before sharing it.",
+  "start_note": "See current plans and review the credit cost before creating.",
   "secondary_keywords": [
-    "AI visuals for Shopify sellers",
-    "product content tool for Etsy shops",
-    "private AI product photo tool"
+    "AI product photos for online shops",
+    "AI product video ads",
+    "product content for ecommerce"
   ],
   "sections": [
     {
-      "h2": "Ads Were Waiting on Creators",
+      "h2": "Made for the Work Between Launches",
       "paras": [
-        "We built AIVideosUGC so you can turn a product photo into a consistent ad in minutes, without waiting on creators or handoffs.",
-        "Start with a photo, like the mug on the desk, or with the product page link. You get a square store image or a short video of 6, 10, 15, or 30 seconds. You read the file before anyone else sees it."
+        "A new listing, seasonal promotion, or product update can call for fresh photos and video. AIVideosUGC gives shops one place to prepare those visuals from product information they already have.",
+        "Start with a product photo or public product page. Choose a scene or presenter, shape the message, and prepare an image or short video for your store and marketing channels."
       ],
       "img": "n:guide:b2f9-about-what-we-make-r1",
       "alt": "Adult seller with a blonde chin-length bob holds a speckled mug on paper beside an open laptop."
     },
     {
-      "h2": "Fast Enough for a Tight Week",
+      "h2": "A Clear Way to Prepare Product Visuals",
       "paras": [
-        "Turn one product photo and a short scene description into a listing image or video ad in minutes, without a traditional shoot.",
-        "Paste a product page when a listing changes, or test several versions from one photo to find your best ad faster. Adjust the words, the presenter, the voice, and the captions before you download."
+        "Bring together the product photo, the details shoppers need, and the channel where you plan to share the result.",
+        "Choose a format and creative direction, then review the wording, scenes, and visuals. You can revise the result before downloading it."
       ],
       "img": "n:guide:fx08-about-who-its-for-r1",
       "alt": "Adult shop owner gets one product ready for a listing at a packing table."
     },
     {
-      "h2": "Your Uploads Stay in Your Account",
+      "h2": "You Decide What Gets Shared",
       "paras": [
-        "Your uploads and drafts stay in your account. Other customers cannot see them.",
-        "Use photos you own or have permission to use. A request that uses a celebrity, a public figure, or a brand mark you do not own can be declined."
+        "Preview each result before you download it. Check that the product, labels, message, and visuals match what you intend to show.",
+        "Upload photos and voice material you own or have permission to use. Review your finished content and the rules of the channel before publishing."
       ],
       "img": "n:guide:b2f9-about-photos-stay-yours-r1",
       "alt": "Adult seller with a copper-red low bun sits by a closed laptop and a small brass padlock."
     },
     {
-      "h2": "High Quality Without a Heavy Bill",
+      "h2": "Know the Cost Before You Create",
       "paras": [
-        "Make polished product photos and ads without a studio bill; you see the credit cost before each job starts.",
-        "A product photo uses 24 credits. Video uses 24 credits at 6 seconds, 40 at 10, 60 at 15, or 120 at 30. A failed job returns its credits, and downloads have no watermark. Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600."
+        "You can see the credit cost for a photo or video job before you start it. Check the Pricing page for current plans and included credits.",
+        "If you have a question about an account, charge, or download, contact support@aivideosugc.com and include the page or file you need help with."
       ],
       "img": "n:guide:b2f9-about-credit-costs-r1",
       "alt": "Adult seller with a short silver crop moves plain wooden tokens beside an open laptop."
     },
     {
-      "h2": "Skip the Shoot for the Next Ad",
+      "h2": "A Presenter Is Optional",
       "paras": [
-        "Stay off camera and still give your ad a presenter: choose an AI actor or make an AI twin from a photo you may use.",
-        "A voice you may use can be cloned, and the same ad can be made again in another language. Email support@aivideosugc.com if you want a person to look at a file. You still see the credit cost before the job starts."
+        "Choose an AI actor when you want a presenter on screen, or make a digital twin from a photo you have permission to use. You can also create product visuals without a presenter.",
+        "Review the script, voice, and finished video before you decide to use it. AIVideosUGC helps prepare the creative; you remain the person who knows your product and approves its claims."
+      ]
+    },
+    {
+      "h2": "Who Is Accountable for AIVideosUGC",
+      "paras": [
+        "AIVideosUGC is operated by BLYDEY INC. NARUEBET NAKPHONG is the company's legal representative.",
+        "We want shop owners to know which company operates the service and where to reach us when they need help. For account, billing, or export questions, contact support@aivideosugc.com."
+      ]
+    },
+    {
+      "h2": "What Guides the Product",
+      "paras": [
+        "The service is shaped around familiar shop tasks: showing what an item looks like, explaining one useful detail, and preparing a version for a chosen channel.",
+        "Our goal is to make those steps easier to review and repeat, while leaving the product knowledge, final checks, and publishing decision with you."
       ]
     }
   ],
   "faq": [
     {
       "q": "Can I make a creator-style clip of my product?",
-      "a": "Yes. Choose an AI actor, add your product, and make a creator-style video in minutes. You can change the message for your next ad."
+      "a": "Yes. Choose an AI actor, add your product, and make a creator-style video. You can review and adjust the message before downloading it."
     },
     {
       "q": "Can I use the same AI actor on my next ad?",
-      "a": "Yes. Choose the same AI actor for your next video to keep a familiar look. You can change the script, voice, or product each time."
+      "a": "Yes. Choose the same AI actor for another video to keep a familiar look. You can change the script, voice, or product each time."
     },
     {
       "q": "Can I make shop ads without booking a studio?",
-      "a": "Yes. Upload a product photo and make ads in minutes without booking a studio or creator. Use the finished files in your marketing."
+      "a": "Yes. Start with a product photo or page, choose a scene or presenter, and review the result before you download it."
     },
     {
       "q": "How much does AIVideosUGC cost?",
-      "a": "Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. A photo costs 24 credits; video credits depend on length."
+      "a": "Visit the Pricing page for current plan options. You can see the credit cost for a photo or video job before it starts."
     },
     {
       "q": "Can I post the ad on my store and on social channels?",
-      "a": "Yes. Download your watermark-free ad for your store, social channels, or paid campaigns. Commercial use is included."
+      "a": "You can download a result for your product page or social channels. Review your plan terms and each channel's rules before using it in a campaign."
     },
     {
       "q": "What can a shop make from one product photo?",
-      "a": "You can make listing photos, video ads, and social posts from one product image. Try new scenes and messages without another shoot."
+      "a": "You can prepare listing photos, product videos, and short ads from product images or a public product page."
     },
     {
       "q": "Can my product video include a voice and captions?",
-      "a": "Yes. Add a voice and captions to your product video, then review the result. Make another version in minutes if you change the message."
+      "a": "Yes. Add a voice and captions, then review the result before you download it."
     },
     {
-      "q": "What can AIVideosUGC make for my shop?",
-      "a": "Make product photos, product videos, and short ads from your images or product links. AI actors, voices, and scripts help you create videos without a shoot."
+      "q": "Who operates AIVideosUGC?",
+      "a": "AIVideosUGC is operated by BLYDEY INC. NARUEBET NAKPHONG is the company's legal representative. For help, contact support@aivideosugc.com."
     }
   ],
-  "ctaTitle": "Start From One Product Photo",
-  "ctaLead": "Pick a photo or a video, see the charge before you start, and make the next listing image or short ad.",
-  "cta_title": "Start From One Product Photo",
-  "cta_lead": "Make high-converting product ads from one photo, with no filming or editing; see the credit cost before you start.",
+  "ctaTitle": "Start With a Product Photo",
+  "ctaLead": "Choose a product photo or video workflow, review the credit cost, and shape a result for your next listing or campaign.",
+  "cta_title": "Start With a Product Photo",
+  "cta_lead": "Choose a product photo or video workflow, review the credit cost, and shape a result for your next listing or campaign.",
   "relatedLinks": [
     "pricing",
     "faq",

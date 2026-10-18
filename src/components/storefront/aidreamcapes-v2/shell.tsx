@@ -10,6 +10,8 @@ import { copyLabel } from "./types";
 import { homePresentationValue, type HomeExperienceData } from "./home-experience-types";
 import { AidreamcapesSocialLinks, type AidreamcapesSocialLink } from "./social-links";
 import socialStyles from "./social-links.module.css";
+import articleStyles from "./footer-articles.module.css";
+import type { AidreamcapesFooterArticle } from "./latest-articles";
 
 const Chevron = () => (
   <svg aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 12 12">
@@ -105,7 +107,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
   );
 }
 
-export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company }) {
+export function AidreamcapesV2Footer({ navigation, r, company, articles = [], articlesTitle }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company; articles?: AidreamcapesFooterArticle[]; articlesTitle?: string }) {
   const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[] };
   const footerCompany = company ? homePresentationValue(company, r.copy ?? {}) : undefined;
   return (
@@ -119,6 +121,18 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
             </a>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
             {footerCompany ? <CompanyDetails className="company-foot" company={footerCompany} labels={r.copy} /> : null}
+            {articles.length ? (
+              <section aria-labelledby="aidreamcapes-latest-articles-title" className={articleStyles.articles}>
+                <h4 id="aidreamcapes-latest-articles-title">{articlesTitle || copyLabel(r, "Latest articles")}</h4>
+                <ol className={articleStyles.list}>
+                  {articles.map((article) => (
+                    <li className={articleStyles.item} key={article.href}>
+                      <a className={articleStyles.link} href={r.href(article.href)} title={article.title}>{article.title}</a>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
           </div>
           {navigation.footer.groups.map((group) => (
             <div key={group.label}>
@@ -155,7 +169,7 @@ export function AidreamcapesV2Footer({ navigation, r, company }: { navigation: A
 // `legacyPublicPage` keeps the existing Aidreamcapes page styles (scoped to
 // main[data-aidreamcapes-public-page]) for pages that still render their own sections,
 // such as login, search, cart and the album page.
-export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company }) {
+export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company, articles = [], articlesTitle }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company; articles?: AidreamcapesFooterArticle[]; articlesTitle?: string }) {
   // The shell's page element already carries the current LivePage section. Use
   // its presentation labels only for this homepage, leaving other routes alone.
   const pageSection = isValidElement<{ section?: SectionInstance }>(children) ? children.props.section : undefined;
@@ -179,7 +193,7 @@ export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-co
       >
         {children}
       </main>
-      <AidreamcapesV2Footer company={company} navigation={navigation} r={r} />
+      <AidreamcapesV2Footer articles={articles} articlesTitle={articlesTitle} company={company} navigation={navigation} r={r} />
       <AidreamcapesV2MenuBehavior />
     </div>
   );

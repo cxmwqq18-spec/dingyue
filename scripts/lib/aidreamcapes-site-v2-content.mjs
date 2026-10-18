@@ -2056,7 +2056,9 @@ function payloadFor(model, page) {
     id: page.id, label: page.label, eyebrow: c.eyebrow || page.label, h1: c.h1, lead: c.lead,
     breadcrumbs: page.id === "home" ? [] : breadcrumbTrail(model, page),
     faq: (c.faq || []).map((item) => ({ q: item.q, a: inlineLinks(model, item.a, page.id) })),
-    startNote: page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
+    startNote: typeof c.start_note === "string" && c.start_note.trim()
+      ? inlineLinks(model, c.start_note, page.id)
+      : page.type === "pricing" ? START_NOTE_PLAIN : START_NOTE,
     ...(typeof c.cta_title === "string" ? { ctaTitle: c.cta_title } : {}),
     ...(typeof c.cta_lead === "string" ? { ctaLead: c.cta_lead } : {}),
     ...(typeof c.templates_lead === "string" ? { templatesLead: c.templates_lead } : {}),

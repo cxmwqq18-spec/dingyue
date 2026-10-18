@@ -24,6 +24,7 @@ import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-vid
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation, aidreamcapesZipFooterItems } from "@/components/storefront/aidreamcapes-zip-navigation";
 import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
+import { aidreamcapesLatestArticlesHeading, latestAidreamcapesArticles } from "@/components/storefront/aidreamcapes-v2/latest-articles";
 import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
 import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
 import { AidreamcapesV2PolicyPage, isAidreamcapesV2PolicyPage } from "@/components/storefront/aidreamcapes-v2/policy";
@@ -336,11 +337,17 @@ export function ThemeRenderer({
         ? { pricingPlans: aidreamcapesPricingCards(products ?? [], displaySite, { href: v2Href }) }
         : {})
     };
+    const aidreamcapesFooterArticles = displaySite.id === "site_aidreamcapes"
+      ? latestAidreamcapesArticles(displaySite.pages as Array<typeof displaySite.pages[number] & { liveContentJson?: unknown }>)
+      : [];
+    const aidreamcapesFooterArticlesTitle = aidreamcapesRootLiveContent
+      ? aidreamcapesLatestArticlesHeading(aidreamcapesRootLiveContent)
+      : undefined;
     // The company named in the site profile is shown in the footer and on the pages about it.
     const v2Company = aidreamcapesV2Company(storefrontContext?.profile?.identity, settings.globalSections?.footer?.settings as Record<string, unknown> | undefined);
     return (
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
-        <AidreamcapesV2Shell company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+        <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
           {v2Entry ? (
             <AidreamcapesV2Page company={v2Company} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (

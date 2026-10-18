@@ -1,0 +1,55 @@
+.articles {
+  max-width: 300px;
+  margin-top: 22px;
+}
+
+.articles h4 {
+  margin: 0 0 8px;
+  color: #f5f5f7;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.list {
+  max-height: 174px;
+  margin: 0;
+  padding: 0 8px 0 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-color: #55525f transparent;
+  scrollbar-width: thin;
+  list-style: none;
+}
+
+.item + .item {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.link {
+  display: block;
+  min-width: 0;
+  padding: 6px 0;
+  overflow: hidden;
+  color: #b8b8c2;
+  font-size: 13px;
+  line-height: 1.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.link:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid #c9baff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .articles {
+    max-width: 420px;
+  }
+}
