@@ -275,7 +275,6 @@ function cardDescription(pickerLead: string | undefined, pageTitle: string): str
 
 export async function getAidreamcapesInspirationCards(): Promise<InspirationCard[]> {
   const catalog = readMediaCatalog();
-  if (!catalog) return [];
   const overrides = readInspirationCategoryOverrides();
   const pages = await prisma.livePage.findMany({
     where: {
@@ -314,20 +313,27 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
     }
     const pageTitle = typeof page.title === "string" && page.title.trim() ? page.title.trim() : toolSlug;
     const kind = mediaKindFromSlug(page.slug);
-    for (const raw of rawCards) {
+    for (const [cardIndex, raw] of rawCards.entries()) {
       const imageSrc = cardImageSrc(raw);
-      const ref = typeof raw.ref === "string" ? raw.ref.trim() : (imageSrc ? mediaRefFromSrc(catalog, imageSrc) ?? "" : "");
-      const label = typeof raw.label === "string" ? raw.label.trim() : "";
+      const sourceRef = typeof raw.ref === "string" ? raw.ref.trim() : (catalog && imageSrc ? mediaRefFromSrc(catalog, imageSrc) ?? "" : "");
+      const ref = sourceRef || (imageSrc ? `src:${imageSrc}` : "");
+      const image = isRecord(raw.image) ? raw.image : undefined;
+      const label = (typeof raw.label === "string" ? raw.label.trim() : "") || (typeof image?.alt === "string" ? image.alt.trim() : "") || pageTitle;
       const prompt = typeof raw.prompt === "string" ? raw.prompt.trim() : "";
-      if (!ref || !label) continue;
-      if (seenRefs.has(ref)) continue;
-      const media = resolveMediaRef(catalog, ref) ?? (imageSrc ? {
+      if (!imageSrc && (!catalog || !sourceRef)) continue;
+      if (!ref || seenRefs.has(ref)) continue;
+      const media = (catalog && sourceRef ? resolveMediaRef(catalog, sourceRef) : undefined) ?? (imageSrc ? {
         src: imageSrc,
-        alt: isRecord(raw.image) && typeof raw.image.alt === "string" ? raw.image.alt : label
+        alt: typeof image?.alt === "string" && image.alt.trim() ? image.alt.trim() : label
       } : undefined);
       if (!media) continue;
+      // The library is a gallery of distinct media examples. Many tool pages
+      // intentionally reuse a reference, so show each published media example
+      // once instead of flooding the full list with duplicate tiles.
       seenRefs.add(ref);
+      const id = `${page.slug}:${cardIndex}:${ref}`;
       cards.push({
+        id,
         ref,
         label,
         prompt,
@@ -339,7 +345,7 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
         pageTitle,
         kind: typeof raw.kind === "string" && raw.kind === "photo" && kind === "photo" ? "photo" : kind,
         description: cardDescription(pickerLead, pageTitle),
-        category: categoryForRef(overrides, ref)
+        category: sourceRef ? categoryForRef(overrides, sourceRef) : CATEGORY_FALLBACK
       });
     }
   }

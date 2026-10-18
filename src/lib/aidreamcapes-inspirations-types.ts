@@ -5,6 +5,7 @@
 import { workspaceSceneRouteSlug } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 export type InspirationCard = {
+  id: string;
   ref: string;
   label: string;
   prompt: string;
