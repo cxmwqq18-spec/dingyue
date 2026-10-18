@@ -34,7 +34,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/indoor-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/indoor-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -68,7 +68,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/indoor-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/indoor-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -102,7 +102,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/home-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/home-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -136,7 +136,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/home-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/home-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -170,7 +170,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/outdoor-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/outdoor-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -204,7 +204,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/outdoor-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/outdoor-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -238,7 +238,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/living-room-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/living-room-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -272,7 +272,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/living-room-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/living-room-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -306,7 +306,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/studio-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/studio-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -340,7 +340,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/studio-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/studio-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -374,7 +374,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/office-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/office-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -408,7 +408,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/office-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/office-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -442,7 +442,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/garden-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garden-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -476,7 +476,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/garden-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garden-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -510,7 +510,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/gym-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/gym-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -544,7 +544,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/gym-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/gym-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -578,7 +578,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/cafe-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/cafe-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -612,7 +612,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/cafe-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/cafe-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -646,7 +646,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/kitchen-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/kitchen-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -680,7 +680,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/kitchen-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/kitchen-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -714,7 +714,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/podcast-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/podcast-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -748,7 +748,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/podcast-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/podcast-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -782,7 +782,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/fitness-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/fitness-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -816,7 +816,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/fitness-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/fitness-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -850,7 +850,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/beach-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/beach-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -884,7 +884,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/beach-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/beach-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -918,7 +918,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/car-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/car-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -952,7 +952,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/car-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/car-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -986,7 +986,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/hospital-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/hospital-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1020,7 +1020,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/hospital-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/hospital-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1054,7 +1054,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/balcony-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/balcony-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1088,7 +1088,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/balcony-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/balcony-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1122,7 +1122,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/pet-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pet-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1156,7 +1156,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/pet-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pet-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1190,7 +1190,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/shopping-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/shopping-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1224,7 +1224,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/shopping-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/shopping-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1258,7 +1258,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/sports-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/sports-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1292,7 +1292,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/sports-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/sports-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1326,7 +1326,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/study-room-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/study-room-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1360,7 +1360,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/study-room-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/study-room-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1394,7 +1394,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/classroom-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/classroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1428,7 +1428,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/terrace-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/terrace-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1462,7 +1462,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/terrace-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/terrace-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1496,7 +1496,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/bathroom-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/bathroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1530,7 +1530,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/exercise-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/exercise-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1564,7 +1564,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/exercise-2.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/exercise-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1598,7 +1598,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/bedroom-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/bedroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1632,7 +1632,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/garage-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garage-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1666,7 +1666,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/interview-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/interview-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1700,7 +1700,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/pool-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pool-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1734,7 +1734,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/reporting-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/reporting-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1768,7 +1768,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/travel-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/travel-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1802,7 +1802,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/media/site_aidreamcapes/workspace/actors/voices/yoga-1.mp3",
+        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/yoga-1.mp3",
         "speed": 1,
         "pitch": 0
       }

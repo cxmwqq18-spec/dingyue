@@ -11,7 +11,7 @@ const presetCatalogUrl = "https://buming001.token6688.com/api/v1/voice-library/p
 const sourcePath = path.join(root, "scripts/data/aidreamcapes-site-v2/content/ai-actors.json");
 const planPath = path.join(root, "docs/plans/aidreamcapes-speech-28-voice-match-clone-plan.md");
 const manifestPath = path.join(root, "scripts/aidreamcapes-workspace/actor-voice-assets.json");
-const outputDir = path.join(root, "public/media/site_aidreamcapes/workspace/actors/voices");
+const outputDir = path.join(root, "public/assets/sites/site_aidreamcapes/workspace/actors/voices");
 const catalogBuilderPath = path.join(root, "scripts/build-aidreamcapes-ugc-actor-catalog.mjs");
 const apiKey = process.env.BUMING_API_KEY;
 
@@ -98,7 +98,7 @@ function resolvePublicPath(assetUrl) {
 }
 
 async function generateOne(row) {
-  const assetUrl = `/media/site_aidreamcapes/workspace/actors/voices/${row.actorId}.mp3`;
+  const assetUrl = `/assets/sites/site_aidreamcapes/workspace/actors/voices/${row.actorId}.mp3`;
   const outputPath = resolvePublicPath(assetUrl);
   const prior = manifest.actors[row.actorId];
   if (prior?.assetUrl === assetUrl && prior.voiceId === row.preset.id && prior.sampleLine === row.card.line) {

@@ -125,7 +125,7 @@
 ### 阶段 B：生成并人工听审 53 张角色卡试听素材（已完成）
 
 1. 已对每个 actorId 使用卡片原始 `sampleLine` 调用 speech-2.8；设置为版本 2.8、Turbo、语速 1.0、pitch 0、自动情绪、无音效。
-2. 已将 MP3 保存到 `public/media/site_aidreamcapes/workspace/actors/voices/{actorId}.mp3`，并把每个音频路径写进 manifest 与 `actors.json` 对应角色卡的 `voice.refAudio`。
+2. 已将 MP3 保存到 `public/assets/sites/site_aidreamcapes/workspace/actors/voices/{actorId}.mp3`，并把每个音频路径写进 manifest 与 `actors.json` 对应角色卡的 `voice.refAudio`。
 3. 53/53 个映射均使用唯一 voice ID 且 voice gender 与角色 gender 相同；文件均有 MP3 ID3 标头，大小超过 4 KiB，`ffprobe` 可读取时长。
 4. 用户已确认完成人工试听。完整 actorId → voice ID → 音色名称/语言 → 音频路径映射见 `scripts/aidreamcapes-workspace/actor-voice-assets.json`；逐条听感日志未单独归档。
 5. 按用户反馈，已重新匹配并合成 Dev、Priyanka、Claire、Tess、Yara、Rina、Tessa、Casey、Ken、Dalia 十张卡：Dev 使用成年男声 `Trustworthy Man`，其余九张使用音色目录标注为 `adult` 的自然成年女声；对应卡片声音描述也已重建为平实、成熟的声线提示。

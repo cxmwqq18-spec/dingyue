@@ -141,6 +141,7 @@
     "smoke:aidreamcapes-video-directory": "node scripts/smoke-aidreamcapes-video-directory.mjs",
     "smoke:aidreamcapes-ugc-video-media": "node scripts/smoke-aidreamcapes-ugc-video-media.mjs",
     "smoke:aidreamcapes-ugc-video-browser": "node scripts/smoke-aidreamcapes-ugc-video-browser.mjs",
+    "smoke:aidreamcapes-actor-voices": "node scripts/smoke-aidreamcapes-actor-voice-assets.mjs",
     "smoke:storefront-seo-fingerprint": "node scripts/smoke-storefront-seo-fingerprint.mjs",
     "smoke:mydreamshoots-seo-fingerprint": "SMOKE_SITE_ID=site_dreamshoot node scripts/smoke-storefront-seo-fingerprint.mjs",
     "smoke:storefront-head-title-order": "node scripts/smoke-storefront-head-title-order.mjs",

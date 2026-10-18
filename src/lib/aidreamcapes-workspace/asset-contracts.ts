@@ -120,7 +120,7 @@ export function isBuiltinActorCatalogReference(
   const isCatalogPath = kind === "image"
     ? /^\/media\/site_aidreamcapes\/workspace\/actors\/library\/[a-z0-9-]+\.webp$/.test(url)
       || /^\/assets\/sites\/site_aidreamcapes\/site-v2\/guide\/[A-Za-z0-9_./@+-]+\.webp$/.test(url)
-    : /^\/media\/site_aidreamcapes\/workspace\/actors\/voices\/[a-z0-9-]+\.mp3$/.test(url);
+    : /^\/assets\/sites\/site_aidreamcapes\/workspace\/actors\/voices\/[a-z0-9-]+\.mp3$/.test(url);
   if (!isCatalogPath) return false;
   return actors.some((actor) => kind === "image" ? actor.imageUrl === url : actor.voice?.refAudio === url);
 }

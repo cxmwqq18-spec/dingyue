@@ -34,7 +34,7 @@ const git = (...argv) => execFileSync("git", argv, { encoding: "utf8" }).trim();
 assert.equal(git("rev-parse", "origin/main"), commit, "Release must equal origin/main");
 assert.equal(git("ls-remote", "origin", "refs/heads/main").split(/\s/)[0], commit, "GitHub main must contain this exact commit");
 const sourcePaths = ["package.json", "package-lock.json", "next.config.mjs", "next-env.d.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json", "tsconfig.typecheck.json", "eslint.config.mjs", "server.mjs", "data/saas-fonts.json", "data/saas-theme-packages.json", "data/saas-theme1-package.json", "prisma", "scripts", "src"];
-const productionAssetPaths = ["public/media/site_aidreamcapes/workspace/actors/voices"];
+const productionAssetPaths = ["public/assets/sites/site_aidreamcapes/workspace/actors/voices"];
 const archivePaths = [...sourcePaths, ...productionAssetPaths];
 const root = "/www/wwwroot/aidreamcapes.com";
 if (reuseBuildCommit) {
