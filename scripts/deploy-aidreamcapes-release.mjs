@@ -13,11 +13,17 @@ assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<4
 const prebuiltBuild = value("--prebuilt-build");
 const reuseBuildCommit = value("--reuse-build");
 const reusePublicCommit = value("--reuse-public-from-commit");
+const reuseDependenciesCommit = value("--reuse-dependencies-from-commit");
 if (reusePublicCommit) {
   assert(/^[a-f0-9]{40}$/.test(reusePublicCommit), "Public asset reuse requires an exact source commit");
   assert.equal(gitPublicTree(reusePublicCommit), gitPublicTree(commit), "Public asset reuse requires unchanged tracked public assets");
 }
 function gitPublicTree(sha) { return execFileSync("git", ["ls-tree", "-r", sha, "--", "public"], { encoding: "utf8" }).trim(); }
+if (reuseDependenciesCommit) {
+  assert(/^[a-f0-9]{40}$/.test(reuseDependenciesCommit), "Dependency reuse requires an exact source commit");
+  const dependencyTree = (sha) => execFileSync("git", ["ls-tree", "-r", sha, "--", "package.json", "package-lock.json", "prisma"], { encoding: "utf8" }).trim();
+  assert.equal(dependencyTree(reuseDependenciesCommit), dependencyTree(commit), "Dependency reuse requires identical package files and Prisma schema/migrations");
+}
 assert(!(prebuiltBuild && reuseBuildCommit), "Choose either --prebuilt-build or --reuse-build");
 if (prebuiltBuild) {
   const buildDir = path.resolve(prebuiltBuild);
@@ -79,8 +85,13 @@ cp "$BASE/.env.local" "$RELEASE/.env"
 chmod 600 "$RELEASE/.env.local"
 chmod 600 "$RELEASE/.env"
 cd "$RELEASE"
-npm ci --no-audit --no-fund
-DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate
+${reuseDependenciesCommit ? `test "$(cat "$BASE/.deployed-commit")" = ${quote(reuseDependenciesCommit)}
+test -d "$BASE/node_modules/.prisma/client"
+cmp -s "$BASE/package.json" "$RELEASE/package.json"
+cmp -s "$BASE/package-lock.json" "$RELEASE/package-lock.json"
+cp -al "$BASE/node_modules" "$RELEASE/node_modules"
+printf '%s\\n' ${quote(reuseDependenciesCommit)} > "$RELEASE/.dependency-source-commit"` : `npm ci --no-audit --no-fund
+DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate`}
 ${prebuiltBuild ? `mkdir -p .next-build
 tar -xf ${quote(remoteBuildArchive)} -C .next-build
 rm -f ${quote(remoteBuildArchive)}
