@@ -63,3 +63,20 @@ export function aidreamcapesBreadcrumbs(slug, current) {
   }
   return current.map(crumb => ({ ...crumb, label: AIDREAMCAPES_BREADCRUMB_NAMES[crumb.href] ?? crumb.label }));
 }
+
+export function aidreamcapesActorBreadcrumbJsonLd(jsonLd) {
+  const next = structuredClone(jsonLd);
+  function visit(value) {
+    if (Array.isArray(value)) { value.forEach(visit); return; }
+    if (!value || typeof value !== 'object') return;
+    const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+    if (types.includes('BreadcrumbList')) {
+      value.itemListElement = aidreamcapesBreadcrumbs('/ai-actors').map((item, index) => ({
+        '@type': 'ListItem', position: index + 1, name: item.label, item: `https://www.aivideosugc.com${item.href}`
+      }));
+    }
+    Object.values(value).forEach(visit);
+  }
+  visit(next);
+  return next;
+}

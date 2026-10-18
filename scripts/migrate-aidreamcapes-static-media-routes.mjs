@@ -10,6 +10,7 @@ import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { assignPublicSceneSlugs, buildSiteV2 } from "./lib/aidreamcapes-site-v2-content.mjs";
 import { withAidreamcapesDirectoryNavigation } from "./lib/aidreamcapes-directory-navigation.mjs";
+import { aidreamcapesActorBreadcrumbJsonLd } from "./lib/aidreamcapes-breadcrumb-taxonomy.mjs";
 import { argumentValue, assertDatabaseTarget, assertNonProductionWriteTarget, hasArgument } from "./lib/database-target.mjs";
 
 const SITE_ID = "site_aidreamcapes";
@@ -81,6 +82,7 @@ function setActorBreadcrumbs(contentJson) {
   data.breadcrumbs = [{ label: "Home", href: "/" }, { label: "AI Actors", href: NEW_ACTOR_PATH }];
   settings.data = data;
   matches[0].settings = settings;
+  if (contentJson.seo?.jsonLd) contentJson.seo.jsonLd = aidreamcapesActorBreadcrumbJsonLd(contentJson.seo.jsonLd);
 }
 
 function pickerCards(page) {
