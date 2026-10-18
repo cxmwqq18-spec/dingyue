@@ -16,7 +16,7 @@ import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
-import type { WorkspacePreset, WorkspaceTemplateGallery, WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -476,7 +476,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   function updateUrl(nextTask: WorkspaceTask | null, nextStep: Step = "input", nextView: View = nextTask ? "agent" : view) {
     const url = new URL(window.location.href);
-    if (nextTask) { url.searchParams.set("task", nextTask.taskId); url.searchParams.set("step", nextStep); url.searchParams.delete("scene"); }
+    if (nextTask) { url.pathname = `${basePath}/app/create`; url.searchParams.set("task", nextTask.taskId); url.searchParams.set("step", nextStep); url.searchParams.delete("scene"); }
     else { url.searchParams.delete("task"); url.searchParams.delete("step"); if (nextView !== "agent") url.searchParams.delete("scene"); }
     url.searchParams.set("view", nextView);
     if (nextView !== "images") { url.searchParams.delete("tool"); url.searchParams.delete("tool_id"); }
@@ -1229,14 +1229,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setComposerTitle(option.title);
     setMessage("");
     const url = new URL(window.location.href);
-    url.searchParams.delete("task");
-    url.searchParams.delete("step");
-    url.searchParams.delete("scene");
-    url.searchParams.set("source", option.sourcePage);
-    url.searchParams.set("preset", option.presetId);
-    url.searchParams.set("view", option.kind === "video" ? "home" : "images");
-    if (option.kind === "photo") url.searchParams.set("tool", option.imageTool);
-    else { url.searchParams.delete("tool"); url.searchParams.delete("tool_id"); }
+    const sceneRouteSlug = workspaceSceneRouteSlug(option.sourcePage, option.sceneSlug);
+    url.pathname = sceneRouteSlug ? `${basePath}/app/create/scene/${sceneRouteSlug}` : `${basePath}/app/create`;
+    url.search = "";
+    url.hash = "";
+    if (!sceneRouteSlug) {
+      url.searchParams.set("source", option.sourcePage);
+      url.searchParams.set("preset", option.presetId);
+      url.searchParams.set("view", option.kind === "video" ? "home" : "images");
+      if (option.kind === "photo") url.searchParams.set("tool", option.imageTool);
+    }
     window.history.replaceState(window.history.state, "", url);
     setModal(null);
     const main = document.querySelector<HTMLElement>(`main.${styles.main}`);
@@ -1283,7 +1285,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
         setActivePreset(undefined); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
         if (!video) setImageInput((current) => ({ ...current, prompt: "", toolId: "custom" }));
-        const url = new URL(window.location.href); url.searchParams.delete("source"); url.searchParams.delete("preset");
+        const url = new URL(window.location.href); url.pathname = `${basePath}/app/create`; url.searchParams.delete("source"); url.searchParams.delete("preset");
+        if (view === "home") url.searchParams.delete("view"); else url.searchParams.set("view", view);
+        url.searchParams.delete("tool"); url.searchParams.delete("tool_id");
         window.history.replaceState(window.history.state, "", url);
       }}><X size={18} /></button>}
     </section>;
