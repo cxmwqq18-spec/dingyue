@@ -451,7 +451,7 @@ function TemplatePage({ data, r }: Props) {
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={maker.href} label={maker.cta} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
         <Maker note={text(data.startNote)} maker={maker} r={r} />
         {text(data.tip) ? <div className="tip"><b>Tip:</b> {text(data.tip)}</div> : null}
       </PageHero>
@@ -518,7 +518,7 @@ function CollectionPage({ data, r }: Props) {
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
-      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} title={data.h1}>
+      <PageHero eyebrow={data.eyebrow} lead={data.lead} quick={<QuickStart href={text(data.appHref)} label={visualMaker?.cta ?? "Get started"} r={r} />} right={heroMedia && (heroMedia.kind === "video" || heroMedia.kind === "loop") ? <HeroMedia media={heroMedia} r={r} /> : undefined} title={data.h1}>
         <Maker note={text(data.startNote)} maker={visualMaker ?? { options: [], cta: "Get started", href: text(data.appHref) }} r={r} />
       </PageHero>
     </>],
