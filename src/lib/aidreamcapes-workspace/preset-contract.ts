@@ -7,11 +7,13 @@ export interface PickerPresetCard {
   prompt: string;
   href: string;
   kind: "photo" | "video";
+  sceneSlug?: string;
   tool?: string;
   sceneId?: SceneId;
 }
 export interface WorkspacePresetRequest { sourcePage: string; presetId: string }
 export interface WorkspacePreset extends WorkspacePresetRequest {
+  sceneSlug?: string;
   title: string;
   kind: "photo" | "video";
   prompt: string;
@@ -52,13 +54,52 @@ export function pickerPresetId(card: Pick<PickerPresetCard, "image" | "kind" | "
   return `p_${hash(0x811c9dc5)}${hash(0x9e3779b9)}${hash(0x85ebca6b)}`;
 }
 
+const SCENE_SLUG_PATTERN = /^[a-z0-9][a-z0-9-]{0,159}$/;
+
+function encodePageToken(page: string): string {
+  const bytes = new TextEncoder().encode(page);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "");
+}
+
+function decodePageToken(token: string): string | undefined {
+  if (!/^[A-Za-z0-9_-]{1,512}$/.test(token)) return undefined;
+  try {
+    const base64 = token.replaceAll("-", "+").replaceAll("_", "/");
+    const binary = atob(base64 + "=".repeat((4 - base64.length % 4) % 4));
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    const page = new TextDecoder().decode(bytes);
+    return encodePageToken(page) === token ? page : undefined;
+  } catch { return undefined; }
+}
+
+/** A route locator carries the source LivePage path and its persisted card slug. */
+export function workspaceSceneRouteSlug(sourcePage: string | undefined, sceneSlug: string | undefined): string | undefined {
+  const source = presetSourcePage(sourcePage);
+  if (!source || !sceneSlug || !SCENE_SLUG_PATTERN.test(sceneSlug)) return undefined;
+  return `${encodePageToken(source)}.${sceneSlug}`;
+}
+
+export function parseWorkspaceSceneRouteSlug(value: string): { sourcePage: string; sceneSlug: string } | undefined {
+  if (value.length > 720) return undefined;
+  const separator = value.indexOf(".");
+  if (separator <= 0 || separator !== value.lastIndexOf(".")) return undefined;
+  const sourcePage = presetSourcePage(decodePageToken(value.slice(0, separator)));
+  const sceneSlug = value.slice(separator + 1);
+  if (!sourcePage || !SCENE_SLUG_PATTERN.test(sceneSlug)) return undefined;
+  return { sourcePage, sceneSlug };
+}
+
 /** Called during public SSR. Only the small identity crosses into the app URL. */
 export function pickerPresetHref(card: PickerPresetCard, sourcePage: string | undefined): string {
   const source = presetSourcePage(sourcePage);
   if (!source) return card.href;
   let target: URL;
   try { target = new URL(card.href, "https://www.aivideosugc.com"); } catch { return card.href; }
-  if (!["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"].includes(target.hostname) || target.pathname !== "/app/create") return card.href;
+  if (!["https:", "http:"].includes(target.protocol) || target.username || target.password || !["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"].includes(target.hostname) || target.pathname !== "/app/create") return card.href;
+  const sceneRouteSlug = workspaceSceneRouteSlug(source, card.sceneSlug);
+  if (sceneRouteSlug) return `/app/create/scene/${sceneRouteSlug}`;
   const query = new URLSearchParams({ source, preset: pickerPresetId(card) });
   return `/app/create?${query.toString()}`;
 }

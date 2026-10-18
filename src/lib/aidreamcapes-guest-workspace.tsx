@@ -1,5 +1,8 @@
 import { aidreamcapesWorkspaceEntry, renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
 import { AidreamcapesInspirationsPage } from "@/components/storefront/aidreamcapes-inspirations-page";
+import { notFound } from "next/navigation";
+import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import { resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import {
   AIDREAMCAPES_INSPIRATIONS_SITE_ID,
   AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
@@ -21,6 +24,20 @@ export async function renderAidreamcapesGuestCreatePage({ query = {} }: {
     routeSlug: "aidreamcapes",
     ...entry,
     initialView: entry.initialView ?? "agent"
+  });
+}
+
+export async function renderAidreamcapesSceneCreatePage({ sceneRouteSlug, routeSlug = "aidreamcapes" }: {
+  sceneRouteSlug: string;
+  routeSlug?: "aivideosugc" | "aidreamcapes";
+}) {
+  const preset = await resolveWorkspaceScenePreset(AIVIDEOSUGC_SITE_ID, sceneRouteSlug);
+  if (!preset) notFound();
+  return renderAidreamcapesWorkspace({
+    routeSlug,
+    resolvedPreset: preset,
+    sceneRouteSlug,
+    initialView: preset.kind === "photo" ? "images" : "agent"
   });
 }
 
