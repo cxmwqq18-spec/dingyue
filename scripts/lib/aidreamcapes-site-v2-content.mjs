@@ -6,6 +6,7 @@ import path from "node:path";
 import assert from "node:assert/strict";
 import { aidreamcapesBreadcrumbs } from "./aidreamcapes-breadcrumb-taxonomy.mjs";
 import { withAidreamcapesDirectoryNavigation } from "./aidreamcapes-directory-navigation.mjs";
+import { AIDREAMCAPES_SOCIAL_LINKS } from "./aidreamcapes-social-links.mjs";
 
 export const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 export const SITE_V2_SOURCE_REVISION = "aidreamcapes-site-v2";
@@ -2641,6 +2642,7 @@ function buildNavigation(model) {
     actions: { login: { label: "Log in", href: "/login" }, getStarted: { label: "Get started", href: "/app/create" } },
     footer: {
       tagline: "AI video ads and product photos for DTC brands, SaaS and agencies.",
+      socialLinks: AIDREAMCAPES_SOCIAL_LINKS.map((item) => ({ ...item })),
       groups: [
         group("Video", ["ai-actors", ...VIDEO_TOOLS, link("video-hub", { label: "All Video Tools" })]),
         group("Photo", [...PHOTO_TOOLS.filter((id) => id !== "photo-hub"), link("photo-hub", { label: "All Photo Tools" })]),
