@@ -140,6 +140,7 @@ async function inspectFile(filePath, extension) {
   else if (extension === "avif") valid = head.subarray(4, 8).toString("ascii") === "ftyp" && head.subarray(8, 12).toString("ascii").startsWith("avif");
   else if (extension === "gif") valid = ["GIF87a", "GIF89a"].includes(head.subarray(0, 6).toString("ascii"));
   else if (extension === "webm") valid = head.subarray(0, 4).equals(Buffer.from("1a45dfa3", "hex"));
+  else if (extension === "mp3") valid = head.subarray(0, 3).toString("ascii") === "ID3" || (head[0] === 0xff && (head[1] & 0xe0) === 0xe0);
   else if (extension === "svg") valid = head.toString("utf8").includes("<svg");
   else throw new Error(`unsupported_media_extension:${extension}`);
   if (!valid) throw new Error(`media_signature_mismatch:${filePath}`);

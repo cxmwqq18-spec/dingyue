@@ -13,10 +13,12 @@ const video = readableMediaTarget("/assets/sites/site_aidreamcapes/public-media/
 assert.deepEqual(video, { targetUrl: "/ai-video-generation/black-friday-countdown.mp4", relativeOutput: "video/black-friday-countdown.mp4" });
 const actor = readableMediaTarget("/assets/sites/site_aidreamcapes/public-media/site-v2/actors/maya-avatar--sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.webp", "webp", true, names);
 assert.deepEqual(actor, { targetUrl: "/ai-image-generation/actors/maya-avatar.webp", relativeOutput: "actor/maya-avatar.webp" });
+const actorAudio = readableMediaTarget("/assets/sites/site_aidreamcapes/workspace/actors/voices/maya--sha256-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.mp3", "mp3", true, names);
+assert.deepEqual(actorAudio, { targetUrl: "/ai-actors/maya.mp3", relativeOutput: "actor/maya.mp3" });
 assert.equal(READABLE_STATIC_RE.test(image.targetUrl), true);
 assert.equal(READABLE_STATIC_RE.test(video.targetUrl), true);
 assert.equal(READABLE_STATIC_RE.test(actor.targetUrl), true);
-assert.equal(/sha256|[a-f0-9]{32,}/i.test(`${image.targetUrl}${video.targetUrl}${actor.targetUrl}`), false);
+assert.equal(/sha256|[a-f0-9]{32,}/i.test(`${image.targetUrl}${video.targetUrl}${actor.targetUrl}${actorAudio.targetUrl}`), false);
 const fixture = `server {\n    listen 443 ssl;\n    server_name www.aivideosugc.com;\n    location /assets/ { proxy_pass http://127.0.0.1:3010; }\n    location / { proxy_pass http://127.0.0.1:3010; }\n}\n`;
 const configured = updateConfig(fixture);
 assert.equal(configured.changed, true);
