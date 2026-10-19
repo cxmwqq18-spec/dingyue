@@ -1016,13 +1016,13 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
   return hero;
 }
 
-export function AidreamcapesV2Page({ section, r: baseResolvers, company }: { section: SectionInstance; r: V2Resolvers; company?: V2Company }) {
+export function AidreamcapesV2Page({ section, r: baseResolvers, company, homeKeywords }: { section: SectionInstance; r: V2Resolvers; company?: V2Company; homeKeywords?: string }) {
   const r = withStartLinks(baseResolvers);
   const settings = section.settings as Record<string, unknown>;
   const layout = text(settings.layout);
   const data = settings.data as V2Data;
   if (!data) return null;
-  if (layout === "home") return <HomePage data={data} r={r} />;
+  if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;
   if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;
   if (layout === "tool") return <ToolPage data={data} r={r} />;
   if (layout === "template") return <TemplatePage data={data} r={r} />;

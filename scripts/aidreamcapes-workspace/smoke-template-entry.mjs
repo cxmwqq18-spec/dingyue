@@ -47,7 +47,9 @@ try {
     if (id === "./api") return { catalogForCustomer: async (siteId, customerId) => ({ siteId, customerId, mode: "customer-catalog" }) };
     if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
     if (id === "./navigation") return { isWorkspaceView: (value) => ["home", "agent", "images", "inspirations", "library", "settings"].includes(value) };
+    if (id === "./handoff") return { workspaceHandoffFromSearchParams: () => undefined, workspaceHandoffHref: () => "" };
     if (id === "@/lib/aidreamcapes-inspirations") return { getAidreamcapesInspirationCards: async () => [] };
+    if (id === "@/lib/aidreamcapes-create-intent") return { aidreamcapesCreateIntentFromSearchParams: () => undefined };
     if (id === "./preset-contract") return presetContract;
     if (id === "./presets.server") return {
       resolveWorkspacePreset: async (siteId, request) => { resolveCalls.push({ siteId, request }); return fixtures[selectedPreset]; },

@@ -13,6 +13,8 @@ function card({ kind = "video", src = "/media/site_aidreamcapes/demo/tote.jpg", 
 
 const videoCard = card();
 const photoCard = card({ kind: "photo", src: "/media/site_aidreamcapes/demo/tote-photo.jpg", label: "Canvas tote lifestyle photo", prompt: "A canvas tote rests on a sunlit table." });
+const shortVideoCard = { ...videoCard, publicSlug: "canvas-tote-creator-ad" };
+const shortPhotoCard = { ...photoCard, publicSlug: "canvas-tote-lifestyle-photo" };
 const videoHref = pickerPresetHref(videoCard, "/");
 const photoHref = pickerPresetHref(photoCard, "/ai-image-generation/lifestyle-scene/");
 const videoUrl = new URL(videoHref, "https://www.aivideosugc.com");
@@ -30,6 +32,9 @@ assert.equal(photoUrl.pathname, "/app/create");
 assert.equal(photoUrl.searchParams.get("source"), "/ai-image-generation/lifestyle-scene");
 assert.equal(photoUrl.searchParams.get("preset"), pickerPresetId(photoCard));
 assert.notEqual(pickerPresetId(videoCard), pickerPresetId(photoCard));
+assert.equal(pickerPresetHref(shortVideoCard, "/"), "/videos/canvas-tote-creator-ad");
+assert.equal(pickerPresetHref(shortPhotoCard, "/ai-image-generation/lifestyle-scene/"), "/images/canvas-tote-lifestyle-photo");
+assert.equal(pickerPresetHref({ ...shortVideoCard, publicSlug: "bad/slug" }, "/"), videoHref);
 
 const otherCardWithSameLegacyHref = card({ src: "/media/site_aidreamcapes/demo/shoes.jpg", label: "Trail shoe street ad" });
 assert.equal(otherCardWithSameLegacyHref.href, videoCard.href);

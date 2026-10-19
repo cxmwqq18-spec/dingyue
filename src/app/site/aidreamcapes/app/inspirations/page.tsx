@@ -1,8 +1,5 @@
-import { aidreamcapesWorkspaceMetadata, renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
+import { redirect } from "next/navigation";
 
-export const metadata = { ...aidreamcapesWorkspaceMetadata, title: "Inspirations | AIVideosUGC" };
-export const dynamic = "force-dynamic";
-
-export default async function AidreamcapesWorkspaceInspirationsPage() {
-  return renderAidreamcapesWorkspace({ routeSlug: "aidreamcapes", initialView: "inspirations" });
+export default function AidreamcapesWorkspaceInspirationsPage() {
+  redirect("/site/aidreamcapes/app/create?view=inspirations");
 }

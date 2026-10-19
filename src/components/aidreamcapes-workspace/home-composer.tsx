@@ -46,8 +46,8 @@ export interface HomeComposerProps {
   loginHref?: string;
 }
 
-const tabs: { id: HomeComposerTab; icon: typeof Video }[] = [
-  { id: "AI Video Agent", icon: WandSparkles }, { id: "AI Video", icon: Video }, { id: "AI Image", icon: ImageIcon },
+const tabs: { id: HomeComposerTab; label: string; icon: typeof Video }[] = [
+  { id: "AI Video Agent", label: "Text to Video", icon: WandSparkles }, { id: "AI Video", label: "AI Video", icon: Video }, { id: "AI Image", label: "AI Image", icon: ImageIcon },
 ];
 const imageStyles: { id: WorkspaceImageTool; label: string }[] = [
   { id: "custom", label: "Custom image" }, { id: "white-background", label: "White background" },
@@ -112,7 +112,7 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
         const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + offset + tabs.length) % tabs.length;
         onTabChange(tabs[next].id);
         event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus();
-      }}><Icon size={17} aria-hidden="true" /><span>{id}</span></button>)}
+      }}><Icon size={17} aria-hidden="true" /><span>{tabs[index].label}</span></button>)}
     </div>}
     <div id={showTabs ? "home-composer-panel" : undefined} role={showTabs ? "tabpanel" : undefined} aria-labelledby={showTabs ? `home-tab-${tabs.findIndex((item) => item.id === activeTab)}` : undefined}>
       <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""}`}>

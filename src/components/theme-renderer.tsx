@@ -322,9 +322,12 @@ export function ThemeRenderer({
   // Aidreamcapes navigation is part of its current relational homepage data.
   // The site-id guard keeps this v2 shell isolated from every other storefront.
   const aidreamcapesRootLiveContent = displaySite.id === "site_aidreamcapes"
-    ? (displaySite.pages.find((page) => page.slug === "/") as unknown as { liveContentJson?: { siteNavigation?: AidreamcapesV2Navigation } } | undefined)?.liveContentJson
+    ? (displaySite.pages.find((page) => page.slug === "/") as unknown as { liveContentJson?: { siteNavigation?: AidreamcapesV2Navigation; seo?: { keywords?: unknown } } } | undefined)?.liveContentJson
     : undefined;
   const aidreamcapesV2Navigation = aidreamcapesRootLiveContent?.siteNavigation;
+  const aidreamcapesHomeKeywords = typeof aidreamcapesRootLiveContent?.seo?.keywords === "string"
+    ? aidreamcapesRootLiveContent.seo.keywords.trim() || undefined
+    : undefined;
   if (aidreamcapesV2Navigation?.version === 2) {
     const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
     const v2PageSections = entries.map(([, section]) => section);
@@ -349,7 +352,7 @@ export function ThemeRenderer({
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
         <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
           {v2Entry ? (
-            <AidreamcapesV2Page company={v2Company} r={v2Resolvers} section={v2Entry[1]} />
+            <AidreamcapesV2Page company={v2Company} homeKeywords={aidreamcapesHomeKeywords} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (
             <AidreamcapesV2PolicyPage company={v2Company} pagePath={normalizedPath} r={v2Resolvers} sections={v2PageSections} supportEmail={storefrontContext?.profile?.identity.supportEmail} />
           ) : (

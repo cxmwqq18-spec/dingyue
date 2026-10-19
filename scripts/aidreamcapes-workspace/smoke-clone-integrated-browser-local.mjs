@@ -117,11 +117,11 @@ with sync_playwright() as p:
      page.get_by_role('button',name='TikTok ad for your brand',exact=True).click()
      assert 'TikTok ad for your brand' in prompt.input_value(),'Quick prompt should fill the composer'
      assert page.url==before,'Quick prompt should not navigate'
-     page.get_by_role('button',name='Create draft copies',exact=True).click()
-     batch_dialog=page.get_by_role('dialog',name='Create draft copies')
-     batch_dialog.wait_for(timeout=10000)
-     assert page.url==before,'Draft copies should open in place'
-     batch_dialog.get_by_role('button',name='Close dialog').click()
+     assert page.get_by_role('button',name='Create draft copies',exact=True).count()==0,'Batch draft shortcut stays hidden while unavailable'
+     page.goto(fixture['origin']+'/site/aidreamcapes/app/create?view=batch',wait_until='networkidle',timeout=120000)
+     page.get_by_role('heading',name='Batch Drafts',exact=True).wait_for(timeout=60000)
+     assert page.get_by_role('button',name='Coming soon',exact=True).is_disabled(),'Direct Batch Drafts route is disabled'
+     assert page.locator('main button').count()==1,'Unavailable Batch Drafts has no active creation controls'
      checks+=4
     elif view=='images':
      page.get_by_role('heading',name='AI Image',exact=True).wait_for(timeout=60000)

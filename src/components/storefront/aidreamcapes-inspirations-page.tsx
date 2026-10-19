@@ -30,7 +30,7 @@ function PublicSideNav() {
     <nav aria-label="Workspace menu" className="insp-side">
       <span className="insp-side-label">Workspace</span>
       <Link href="/app/create"><Home aria-hidden="true" size={17} /> Home</Link>
-      <Link className="is-active" href="/app/inspirations"><Sparkles aria-hidden="true" size={17} /> Inspirations</Link>
+      <Link className="is-active" href="/app/create?view=inspirations"><Sparkles aria-hidden="true" size={17} /> Inspirations</Link>
     </nav>
   );
 }

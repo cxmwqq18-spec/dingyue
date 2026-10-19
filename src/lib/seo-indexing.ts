@@ -1129,6 +1129,11 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       }
     }
   }
+  const aidreamcapesRootLiveContent = site.id === AIDREAMCAPES_SITE_ID
+    ? (site.pages.find((page) => page.slug === "/") as unknown as {
+        liveContentJson?: ThemePageJson & { siteNavigation?: { version?: number } };
+      } | undefined)?.liveContentJson
+    : undefined;
   if (site.id === AIDREAMCAPES_SITE_ID) {
     // Aidreamcapes.com v2: retired v1 URLs answer with 301s, so they never appear in
     // the sitemap. Once the v2 navigation is live, the sitemap lists only indexable

@@ -1,10 +1,10 @@
 .adc2 .adc-workflow{background:#f1ede7;color:#241f2d;padding:76px 24px 64px}
 .adc2 .adc-workflow-wrap{max-width:1380px;margin:0 auto}
-.adc2 .adc-workflow-heading{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:1000px;margin:0 auto 32px}
+.adc2 .adc-workflow-heading{text-align:center;max-width:1000px;margin:0 auto 32px}
 .adc2 .adc-workflow-heading .hx-tag{justify-content:center;color:#8050b2;font-size:12px;letter-spacing:.14em;margin-bottom:14px}
 .adc2 .adc-workflow-heading .hx-tag::before{display:none}
-.adc2 .hx-feature.adc-workflow .adc-workflow-heading h2{width:100%;text-align:center!important;font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal}
-.adc2 .adc-workflow-heading p{width:100%;text-align:center;font-size:17px;line-height:1.65;color:#756d7f;margin:0}
+.adc2 .adc-workflow-heading h2{font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal}
+.adc2 .adc-workflow-heading p{font-size:17px;line-height:1.65;color:#756d7f;margin:0}
 .adc2 .adc-workflow-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .adc2 .adc-workflow-card{display:grid;grid-template-rows:auto 224px 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
 .adc2 .adc-workflow-card:hover{border-color:#bca7d2;box-shadow:0 8px 24px #3f285009}
@@ -103,5 +103,5 @@
 .adc2 .adc-workflow-dialog>p{font-size:13px;line-height:1.6;color:#82718f}
 @media(min-width:1101px){.adc2 .adc-workflow-card:nth-child(-n+3) h3{min-height:48px}.adc2 .adc-workflow-card:nth-child(n+4) h3{min-height:48px}}
 @media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px 224px 1fr}}
-@media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:center}.adc2 .adc-workflow-heading .hx-tag{justify-content:center}.adc2 .adc-workflow-heading h2{text-align:center!important}.adc2 .adc-workflow-heading p{text-align:center}.adc2 .adc-workflow-heading p{font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto 224px 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
+@media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:center}.adc2 .adc-workflow-heading .hx-tag{justify-content:center}.adc2 .adc-workflow-heading h2{text-align:center}.adc2 .adc-workflow-heading p{text-align:center;font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto 224px 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
 @media(prefers-reduced-motion:reduce){.adc2 .adc-workflow *{transition:none!important;animation:none!important}}

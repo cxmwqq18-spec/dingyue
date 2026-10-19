@@ -1,13 +1,12 @@
 "use client";
 
-import { ArrowRight, ImageIcon, Layers3, Link2, Sparkles, UserRound, Video } from "lucide-react";
+import { ArrowRight, ImageIcon, Link2, Sparkles, UserRound, Video } from "lucide-react";
 import { WORKSPACE_MODULES, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
-import type { SceneSchema } from "@/lib/aidreamcapes-workspace/types";
 import { ProductUrlImport, type ConfirmedProductBrief, type ProductUrlImportProps } from "./product-url-import";
 import productStyles from "./product-url-import.module.css";
 import styles from "./workspace.module.css";
 
-export const workspaceModuleIcons = { agent: Sparkles, video: Video, images: ImageIcon, product: Link2, actors: UserRound, batch: Layers3 };
+export const workspaceModuleIcons = { agent: Sparkles, video: Video, images: ImageIcon, product: Link2, actors: UserRound };
 
 export function WorkspaceTools({ all = false, disabled, onNavigate }: { all?: boolean; disabled: boolean; onNavigate: (view: WorkspaceView) => void }) {
   const modules = WORKSPACE_MODULES.filter((item) => item.group === "create" && (all || ["product", "actors", "images"].includes(item.id)));
@@ -50,33 +49,17 @@ export function ProductVideoPage({ products, disabled, onCreate, ...importProps 
   </>;
 }
 
-export function BatchDraftPage({ scenes, sceneId, onSceneChange, prompt, onPromptChange, referenceCount, disabled, onCreate, onOpenLibrary, onAddProduct }: { scenes: SceneSchema[]; sceneId: string; onSceneChange: (id: string) => void; prompt: string; onPromptChange: (value: string) => void; referenceCount: number; disabled: boolean; onCreate: () => void; onOpenLibrary: () => void; onAddProduct: () => void }) {
+export function BatchDraftPage() {
   return <>
     <div className={styles.pageTitle}>
       <h1>Batch Drafts</h1>
-      <p>Create 1–10 separately editable video drafts from the same scene and brief. They stay in Library until you choose to generate them.</p>
+      <p>Create several editable video drafts from one scene and brief. Batch creation is being updated and will be available again soon.</p>
     </div>
-    <section className={styles.formSection}>
-      <div className={styles.fields}>
-        <label className={styles.field}>
-          <span className={styles.fieldLabel}>Video scene</span>
-          <select className={styles.input} value={sceneId} disabled={disabled} onChange={(event) => onSceneChange(event.target.value)}>
-            {scenes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
-          </select>
-        </label>
-        <label className={styles.field}>
-          <span className={styles.fieldLabel}>Shared video brief</span>
-          <textarea className={styles.input} maxLength={2000} value={prompt} disabled={disabled} onChange={(event) => onPromptChange(event.target.value)} placeholder="Add video direction and any verified product details to reuse in each draft…" />
-        </label>
-        <p className={styles.help}>This brief is copied into every draft. You can edit each copy in Library before generating.</p>
-        <div className={styles.sectionHead}>
-          <p className={styles.help}>{referenceCount ? `${referenceCount} product reference ${referenceCount === 1 ? "photo" : "photos"} will be copied into each draft.` : "No product photos are selected, so the drafts will start without product references."}</p>
-          <button type="button" className={styles.linkButton} disabled={disabled} onClick={onAddProduct}>{referenceCount ? "Add another product photo" : "Add product photos"}</button>
-        </div>
-      </div>
-      <div className={styles.footerActions}>
-        <button className={styles.button} onClick={onOpenLibrary}>Open Library</button>
-        <button className={`${styles.button} ${styles.primary}`} disabled={disabled || !scenes.length} onClick={onCreate}><Layers3 size={16} /><span>Choose draft titles</span></button>
+    <section className={styles.panel} aria-label="Batch draft availability">
+      <div className={styles.empty}>
+        <h2>Coming soon</h2>
+        <p>Batch Drafts is temporarily unavailable while we update this feature.</p>
+        <button className={styles.button} type="button" disabled aria-disabled="true">Coming soon</button>
       </div>
     </section>
   </>;

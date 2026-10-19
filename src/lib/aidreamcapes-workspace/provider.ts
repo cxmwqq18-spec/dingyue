@@ -42,10 +42,16 @@ function actorPortraitsFromLivePage(contentJson: unknown): Map<string, string> {
       if (!value || typeof value !== "object" || Array.isArray(value)) continue;
       const actor = value as Record<string, unknown>;
       const image = actor.image as Record<string, unknown> | undefined;
-      if (typeof actor.id !== "string" || typeof image?.src !== "string" ||
-          !/^\/assets\/sites\/site_aidreamcapes\/[A-Za-z0-9_./@%+-]+\.webp$/.test(image.src)) continue;
-      if (portraits.has(actor.id)) throw new WorkspaceError("workspace_actor_catalog_ambiguous", 503);
-      portraits.set(actor.id, image.src);
+      const actorId = actor.id;
+      const imageSrc = image?.src;
+      if (typeof actorId !== "string" || typeof imageSrc !== "string") continue;
+      const siteAssetPortrait = /^\/assets\/sites\/site_aidreamcapes\/[A-Za-z0-9_./@%+-]+\.webp$/.test(imageSrc);
+      // LivePage still references the public readable-media alias for these
+      // same site-owned actor images; accept only this constrained path too.
+      const publicActorPortrait = /^\/ai-image-generation\/actors\/[a-z0-9-]+\.webp$/.test(imageSrc);
+      if (!siteAssetPortrait && !publicActorPortrait) continue;
+      if (portraits.has(actorId)) throw new WorkspaceError("workspace_actor_catalog_ambiguous", 503);
+      portraits.set(actorId, imageSrc);
     }
   }
   return portraits;

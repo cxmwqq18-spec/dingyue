@@ -61,10 +61,10 @@ try {
   await page.route("**/*", (route) => route.abort());
   for (const width of [1120, 390]) {
     await page.setViewportSize({ width, height: 920 });
-    for (const tab of ["AI Video Agent", "AI Video", "AI Image"]) {
+    for (const [tab, label] of [["AI Video Agent", "Text to Video"], ["AI Video", "AI Video"], ["AI Image", "AI Image"]]) {
       await page.setContent(`<html><head><style>*{box-sizing:border-box}body{margin:0;padding:24px;background:#f3f4f6;font-family:Arial;color:#101623}button,input,select,textarea{font:inherit}h2,p{margin:0}${css}</style></head><body>${renderToStaticMarkup(HomeComposer({ ...props, tab }))}</body></html>`);
       await page.waitForLoadState("networkidle");
-      assert.equal(await page.getByRole("tab", { name: tab, exact: true }).getAttribute("aria-selected"), "true");
+      assert.equal(await page.getByRole("tab", { name: label, exact: true }).getAttribute("aria-selected"), "true");
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `${tab} fits ${width}px`);
       assert.equal(await page.getByRole("combobox", { name: "Video model", exact: true }).count(), tab === "AI Image" ? 0 : 1);
       assert.equal(await page.getByRole("combobox", { name: "Image style", exact: true }).count(), tab === "AI Image" ? 1 : 0);

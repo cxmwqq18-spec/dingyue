@@ -499,28 +499,29 @@ async function main() {
 
     await page.goto(`${baseUrl}/site/aidreamcapes/app/create?view=actors`, { waitUntil: "networkidle", timeout: 120_000 });
     assert.match(new URL(page.url()).pathname, /\/site\/aidreamcapes\/app\/create$/);
-    await page.getByRole("heading", { name: "AI Avatars" }).waitFor({ state: "visible" });
-    const actorArticles = page.locator("main article");
-    assert((await actorArticles.count()) > 0, "Aidreamcapes built-in actors are listed in the existing workspace UI.");
-    const allFilter = page.getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: /^All/ });
-    const maleFilter = page.getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: /^Men/ });
+    await page.getByRole("heading", { name: "Create a video with an AI presenter" }).waitFor({ state: "visible" });
+    await page.getByRole("button", { name: "Choose presenter", exact: true }).click();
+    const actorArticles = page.locator('[role="dialog"] article');
+    assert((await actorArticles.count()) > 0, "Aidreamcapes built-in actors are listed in the presenter picker.");
+    const allFilter = page.getByRole("dialog").getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: /^All/ });
+    const maleFilter = page.getByRole("dialog").getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: /^Men/ });
     await maleFilter.click();
     assert((await actorArticles.count()) > 0, "Gender filtering returns matching actors.");
     await allFilter.click();
-    const search = page.getByRole("textbox", { name: "Search actors" });
+    const search = page.getByRole("dialog").getByRole("textbox", { name: "Search actors" });
     await search.fill(actors[0].name);
     assert.equal(await actorArticles.count(), 1, "Accessible actor search returns the matching actor.");
-    await search.fill("");
+    await actorArticles.getByRole("button", { name: "Use this presenter" }).click();
 
     await page.setViewportSize({ width: 390, height: 844 });
     const mobileWidth = await page.evaluate(() => ({ viewport: window.innerWidth, page: document.documentElement.scrollWidth }));
     assert(mobileWidth.page <= mobileWidth.viewport + 1, `Narrow workspace has no horizontal overflow (${mobileWidth.page}px > ${mobileWidth.viewport}px).`);
     await page.getByRole("button", { name: "Open navigation" }).click();
-    await page.getByRole("button", { name: "AI Video Agent" }).click();
-    await page.getByRole("heading", { name: "Create your next video" }).waitFor({ state: "visible" });
+    await page.getByRole("link", { name: "Text to Video", exact: true }).click();
+    await page.getByRole("heading", { name: "Text to Video" }).waitFor({ state: "visible" });
     await page.setViewportSize({ width: 1440, height: 1000 });
 
-    await page.getByRole("button", { name: /Presenter showcase/ }).click();
+    await page.getByRole("button", { name: "Start video draft", exact: true }).click();
     await page.getByLabel("Video title").waitFor({ state: "visible" });
     const createdTaskId = [...tasks.keys()][0];
     assert(createdTaskId, "A mocked task was created through the existing workspace UI.");

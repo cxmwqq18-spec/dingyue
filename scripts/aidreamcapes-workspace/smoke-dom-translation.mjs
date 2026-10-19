@@ -126,7 +126,7 @@ try {
       await settleList();
     }
     await page.getByRole("link", { name: "Home", exact: true }).click();
-    await page.getByRole("tab", { name: "AI Video Agent", exact: true }).waitFor();
+    await page.getByRole("tab", { name: "Text to Video", exact: true }).waitFor();
     await page.evaluate(simulateTranslation);
     await page.getByRole("tab", { name: "AI Video", exact: true }).click();
     await page.getByLabel("Upload video reference photo").waitFor();
@@ -174,19 +174,12 @@ try {
       await page.getByRole("group", { name: "Filter avatars by gender" }).getByRole("button", { name: new RegExp(`^${gender}`) }).click();
     }
     await page.getByRole("link", { name: "Home", exact: true }).click();
-    await page.getByRole("tab", { name: "AI Video Agent", exact: true }).click();
+    await page.getByRole("tab", { name: "Text to Video", exact: true }).click();
     await page.getByRole("button", { name: /^Product/ }).click();
     await page.getByRole("dialog", { name: "Add your product" }).waitFor();
     await page.evaluate(simulateTranslation, '[role="dialog"]');
     await page.getByRole("button", { name: "Close dialog", exact: true }).click();
-    await page.getByRole("button", { name: "Create draft copies", exact: true }).click();
-    await page.getByRole("dialog", { name: "Create draft copies", exact: true }).waitFor();
-    await page.evaluate(simulateTranslation, '[role="dialog"]');
-    await page.getByRole("button", { name: /Add another draft/ }).click();
-    await page.getByRole("textbox", { name: "Draft 2 name", exact: true }).waitFor();
-    await page.evaluate(simulateTranslation, '[role="dialog"]');
-    await page.getByRole("button", { name: "Remove draft 1", exact: true }).click();
-    await page.getByRole("button", { name: "Close dialog", exact: true }).click();
+    assert.equal(await page.getByRole("button", { name: "Create draft copies", exact: true }).count(), 0, "Batch draft shortcut is hidden while unavailable.");
     assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}; unexpected API paths: ${JSON.stringify(unexpected)}`);
     assert.deepEqual(unexpected, [], `unexpected API paths: ${JSON.stringify(unexpected)}`);
     console.log("PASS: real React DOM survives translated Library and tab transitions; separate image/video prompts and uploaded references reach their corresponding editors/draft API. No DB/provider traffic.");

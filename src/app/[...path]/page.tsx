@@ -35,7 +35,7 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesPublicSceneCreatePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesGuestCreatePage, renderAidreamcapesPublicSceneCreatePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -728,9 +728,7 @@ export default async function HostStorefrontCatchAllPage({
     if (!siteSlug) notFound();
     // Inspirations are a published Aidreamcapes gallery, not a customer-owned
     // workspace view. Keep the same SSR list for signed-in and guest visitors.
-    if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") {
-      return renderAidreamcapesInspirationsPage({ query, siteSlug });
-    }
+    if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") redirect("/app/create?view=inspirations");
     if (isGuestAllowedAppRoute && !(await hasAnyCustomerSessionCookie())) {
       if (isAidreamcapesSceneCreateRoute) {
         return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });

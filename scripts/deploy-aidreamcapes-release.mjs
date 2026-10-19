@@ -158,7 +158,7 @@ systemctl restart aidreamcapes.service
 test "$(systemctl is-active aidreamcapes.service)" = active
 READY=0
 for ATTEMPT in $(seq 1 30); do
-  if curl -fsS --max-time 5 -H 'X-Forwarded-Host: www.aivideosugc.com' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3013/ > .origin.html; then READY=1; break; fi
+  if curl -fsS --max-time 20 -H 'X-Forwarded-Host: www.aivideosugc.com' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3013/ > .origin.html; then READY=1; break; fi
   sleep 2
 done
 test "$READY" = 1

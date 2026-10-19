@@ -563,9 +563,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         {video ? (
-          <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
-            <source src={r.asset(video.src)} type="video/mp4" />
-          </video>
+          <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" src={r.asset(video.src)} width={video.width} />
         ) : <Img image={card.image} r={r} />}
       </div>
       <div className="tb">
@@ -823,9 +821,7 @@ export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
 export function VideoPlayer({ video, r }: { video: V2Video; r: V2Resolvers }) {
   return (
     <figure className="vid">
-      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(video.poster.src)} preload="none" width={video.width}>
-        <source src={r.asset(video.src)} type="video/mp4" />
-      </video>
+      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(video.poster.src)} preload="none" src={r.asset(video.src)} width={video.width} />
     </figure>
   );
 }
@@ -839,9 +835,7 @@ export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) 
   if (media.kind === "loop") {
     return (
       <div className="hm hm-loop">
-        <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(media.video.poster.src)} preload="metadata" width={media.video.width}>
-          <source src={r.asset(media.video.src)} type="video/mp4" />
-        </video>
+        <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(media.video.poster.src)} preload="metadata" src={r.asset(media.video.src)} width={media.video.width} />
         {media.inset ? <div className="inset"><span className="lbl">Your product</span><Img eager image={media.inset} r={r} /></div> : null}
       </div>
     );

@@ -62,14 +62,14 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
       </div>;
       case "twin": return <div className="adc-tools-twin-demo">
         <div className="adc-tools-compare" style={{ "--compare": "50%" } as CSSProperties}><div className="adc-tools-twin-result"><Img image={demo.twin} r={r} /></div><div className="adc-tools-twin-source"><Img image={demo.twin} r={r} /></div><span className="adc-tools-compare-line" aria-hidden="true">↔</span><span className="adc-tools-compare-left">{c.twinSource}</span><span className="adc-tools-compare-right">{c.twinResult}</span></div>
-        <label className="adc-tools-compare-control"><span>{c.compareLabel}</span><input type="range" min="0" max="100" defaultValue="50" data-tools-compare aria-label={c.compareLabel} /></label><button className="adc-tools-twin-enlarge" type="button" data-tools-open="twin">{c.previewConcept}<span aria-hidden="true">↗</span></button>
+        <label className="adc-tools-compare-control"><span>{c.compareLabel}</span><input type="range" min="0" max="100" defaultValue="50" data-tools-compare aria-label={c.compareLabel} /></label><a className="adc-tools-twin-enlarge" href={r.href(item.href)}>{c.previewConcept}<span aria-hidden="true">↗</span></a>
       </div>;
     }
   };
   return <section className="sec adc-brand-tools" id="home-ai-tools" aria-labelledby="adc-brand-tools-title" data-home-brand-tools>
     <div className="wrap"><SecHead eyebrow={header.eyebrow} lead={header.lead} title={header.title} titleId="adc-brand-tools-title" />
       <div className="adc-brand-tools__grid">{items.map(item => <article className={`adc-brand-tools__card adc-tools-card-${item.id}`} data-tool-kind={item.id} key={item.id}>
-        <div className="adc-brand-tools__copy"><h3><a href={r.href(item.href)} aria-label={item.cta}>{item.t}<span aria-hidden="true">→</span></a>{item.id === "twin" ? <small>{c.conceptBadge}</small> : null}</h3><p>{item.d}</p></div>
+        <div className="adc-brand-tools__copy"><h3><a href={r.href(item.href)} aria-label={item.cta}>{item.t}<span aria-hidden="true">→</span></a>{item.id === "twin" ? <small><a href={r.href(item.href)}>{c.conceptBadge}</a></small> : null}</h3><p>{item.d}</p></div>
         <div className="adc-brand-tools__visual">{visual(item)}</div>
       </article>)}</div><p className="adc-tools-notice">{c.previewNotice}</p>
     </div>

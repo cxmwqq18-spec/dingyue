@@ -35,8 +35,8 @@ try {
     assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
   }
   const navigation = compileModule("navigation", require);
-  assert.equal(navigation.workspaceViewHref("", "inspirations"), "/app/inspirations");
-  assert.equal(navigation.workspaceViewHref("/site/aidreamcapes", "inspirations"), "/site/aidreamcapes/app/inspirations");
+  assert.equal(navigation.workspaceViewHref("", "inspirations"), "/app/create?view=inspirations");
+  assert.equal(navigation.workspaceViewHref("/site/aidreamcapes", "inspirations"), "/site/aidreamcapes/app/create?view=inspirations");
   let livePageRow;
   let livePageReads = 0;
   const livePageCalls = [];
