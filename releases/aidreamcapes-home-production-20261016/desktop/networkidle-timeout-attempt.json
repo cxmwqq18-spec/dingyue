@@ -1,0 +1,234 @@
+{
+  "target": "https://www.aivideosugc.com/?qa=desktop-d2e30400e",
+  "commit": "d2e30400e8d305ec6420cdd999d42e1f7aa8730b",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "scope": "Real production desktop browser; six added modules and original visualSteps. 38 legacy presets are intentional workspace links. Read-only guest handoffs; no upload, save, generation or payment.",
+  "checks": [
+    {
+      "name": "No-JavaScript HTTP 200",
+      "pass": true,
+      "details": 200
+    },
+    {
+      "name": "No-JavaScript complete homepage copy",
+      "pass": true,
+      "details": {
+        "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+        "h1": [
+          "Create AI UGC Videos from Your Product Photos"
+        ],
+        "legacyScenes": 38,
+        "roots": [
+          {
+            "name": "hero",
+            "ready": null,
+            "heading": "Turn product photos\ninto AI videos and images.",
+            "local": 11,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "picker",
+            "ready": null,
+            "heading": "Find a product video scene.\nPreview it before you create.",
+            "local": 17,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "visualSteps",
+            "ready": null,
+            "heading": null,
+            "local": 8,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "steps",
+            "ready": null,
+            "heading": "Explore AI presenters.\nFind a style for your video.",
+            "local": 8,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "features",
+            "ready": null,
+            "heading": "Explore the video storyboard.\nSee how the shots fit together.",
+            "local": 21,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "audience",
+            "ready": null,
+            "heading": "Plan several product videos.\nStart with one clear brief.",
+            "local": 6,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          },
+          {
+            "name": "reviews",
+            "ready": null,
+            "heading": "Preview product content\nfor different placements.",
+            "local": 3,
+            "nonCtaLinks": [],
+            "imageLinks": []
+          }
+        ],
+        "layout": {
+          "viewport": 1440,
+          "document": 1440,
+          "height": 34840
+        },
+        "visibleHan": [],
+        "internalCopy": []
+      }
+    },
+    {
+      "name": "Acceptance run completes",
+      "pass": false,
+      "details": "Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://www.aivideosugc.com/?qa=desktop-d2e30400e\", waiting until \"networkidle\"\n"
+    }
+  ],
+  "localControls": [],
+  "ctaHandoffs": [],
+  "pageErrors": [
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+    }
+  ],
+  "serverErrors": [],
+  "requestFailures": [
+    {
+      "phase": "ssr",
+      "action": "no JavaScript response",
+      "url": "https://www.aivideosugc.com/_next/static/chunks/webpack-ce09b4531fb4bf4a.js",
+      "type": "script",
+      "failure": "csp"
+    },
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+      "type": "ping",
+      "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    },
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+      "type": "xhr",
+      "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+    }
+  ],
+  "publicDataRequests": [
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+      "type": "xhr",
+      "classification": "platform"
+    }
+  ],
+  "blockedRequests": [
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+      "method": "POST",
+      "reason": "non-GET"
+    },
+    {
+      "phase": "local",
+      "action": "initial desktop load",
+      "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+      "method": "POST",
+      "reason": "non-GET"
+    }
+  ],
+  "unexpectedWorkspaceRequests": [],
+  "screenshots": [],
+  "issues": [],
+  "ssr": {
+    "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+    "h1": [
+      "Create AI UGC Videos from Your Product Photos"
+    ],
+    "legacyScenes": 38,
+    "roots": [
+      {
+        "name": "hero",
+        "ready": null,
+        "heading": "Turn product photos\ninto AI videos and images.",
+        "local": 11,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "picker",
+        "ready": null,
+        "heading": "Find a product video scene.\nPreview it before you create.",
+        "local": 17,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "visualSteps",
+        "ready": null,
+        "heading": null,
+        "local": 8,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "steps",
+        "ready": null,
+        "heading": "Explore AI presenters.\nFind a style for your video.",
+        "local": 8,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "features",
+        "ready": null,
+        "heading": "Explore the video storyboard.\nSee how the shots fit together.",
+        "local": 21,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "audience",
+        "ready": null,
+        "heading": "Plan several product videos.\nStart with one clear brief.",
+        "local": 6,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      },
+      {
+        "name": "reviews",
+        "ready": null,
+        "heading": "Preview product content\nfor different placements.",
+        "local": 3,
+        "nonCtaLinks": [],
+        "imageLinks": []
+      }
+    ],
+    "layout": {
+      "viewport": 1440,
+      "document": 1440,
+      "height": 34840
+    },
+    "visibleHan": [],
+    "internalCopy": []
+  },
+  "fatal": "Traceback (most recent call last):\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/acceptance.py\", line 76, in <module>\n    res=page.goto(URL,wait_until='networkidle',timeout=90000)\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/sync_api/_generated.py\", line 18528, in goto\n    self._sync(\n    ~~~~~~~~~~^\n        self._impl_obj.goto(\n        ^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        )\n        ^\n    )\n    ^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/_impl/_sync_base.py\", line 111, in _sync\n    return task.result()\n           ~~~~~~~~~~~^^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/_impl/_page.py\", line 564, in goto\n    return await self._main_frame.goto(**locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/_impl/_frame.py\", line 157, in goto\n    await self._channel.send(\n        \"goto\", self._navigation_timeout, locals_to_params(locals())\n    )\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/_impl/_connection.py\", line 78, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/.pydeps/playwright/_impl/_connection.py\", line 636, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://www.aivideosugc.com/?qa=desktop-d2e30400e\", waiting until \"networkidle\"\n\n",
+  "passedCheckCount": 2,
+  "failedCheckCount": 1,
+  "ok": false
+}

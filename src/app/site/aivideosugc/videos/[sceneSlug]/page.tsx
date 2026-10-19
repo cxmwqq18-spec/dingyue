@@ -1,12 +1,12 @@
-import { renderAidreamcapesPublicSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
-import { aidreamcapesWorkspaceMetadata } from "@/lib/aidreamcapes-workspace/page";
+import { permanentRedirect } from "next/navigation";
+import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 
-export const metadata = aidreamcapesWorkspaceMetadata;
 export const dynamic = "force-dynamic";
 
-export default async function AIVideosUGCVideoScenePage({ params }: {
+export default async function AIVideosUGCVideoSceneRedirectPage({ params }: {
   params: Promise<{ sceneSlug: string }>;
 }) {
   const { sceneSlug } = await params;
-  return renderAidreamcapesPublicSceneCreatePage({ kind: "video", publicSlug: sceneSlug, routeSlug: "aivideosugc" });
+  if (PUBLIC_SCENE_SLUG_RE.test(sceneSlug)) permanentRedirect(`/site/aivideosugc/ai-video-generation/${sceneSlug}`);
+  permanentRedirect("/site/aivideosugc/ai-video-generation");
 }

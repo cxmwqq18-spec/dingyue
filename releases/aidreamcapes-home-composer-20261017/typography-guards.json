@@ -1,0 +1,20 @@
+[
+  {
+    "script": "guard-public-storefront-ssr.mjs",
+    "code": 0,
+    "stdout": "{\"ok\":true,\"rule\":\"public-storefront-ssr-only\"}\n",
+    "stderr": ""
+  },
+  {
+    "script": "guard-live-storefront-ssr.mjs",
+    "code": 0,
+    "stdout": "{\"ok\":true,\"contract\":\"live-storefront-ssr\"}\n",
+    "stderr": ""
+  },
+  {
+    "script": "guard-storefront-launch-seo-contract.mjs",
+    "code": 0,
+    "stdout": "{\n  \"ok\": true,\n  \"checks\": [\n    \"live-draft-theme-page-home-seo\",\n    \"deploy-precheck-seo-commands\",\n    \"legacy-policy-aliases\"\n  ]\n}\n",
+    "stderr": ""
+  }
+]

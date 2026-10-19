@@ -1,0 +1,142 @@
+{
+  "status": "functional-pass-with-P2-observation",
+  "url": "https://www.aivideosugc.com/?qa=mobile-d2e30400e",
+  "commit": "d2e30400e8d305ec6420cdd999d42e1f7aa8730b",
+  "browser": "Real headless Chromium (Chrome for Testing 1223), mobile/touch emulation; HTTP proxy 127.0.0.1:10904. No physical handset or native translation service test.",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "translationSimulation": true
+    },
+    {
+      "width": 375,
+      "height": 844,
+      "translationSimulation": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "translationSimulation": false
+    }
+  ],
+  "assertions": {
+    "passed": 927,
+    "failed": 0,
+    "excludedInvalidTestAssumptions": 1
+  },
+  "scope": {
+    "localControlActions": 169,
+    "fullControlInventories": {
+      "390": 74,
+      "375": 74
+    },
+    "tabletSample": 21,
+    "faqRowsPerWidth": 18,
+    "faqToggleCycles": 54,
+    "pricingPeriodSelections": 12,
+    "primaryScreenshots": 63,
+    "noJsSSRWidth": 375
+  },
+  "translation": {
+    "readiness": "Explicit React props on pricing and all seven data-hx-root data-hx-ready=true before DOM mutation",
+    "nestedFontNodes": 870,
+    "text": "Original English text preserved; structure-only Chrome nested font simulation",
+    "postMutationControls": 74,
+    "postMutationPriceSelections": 3,
+    "postMutationMenuChecks": true,
+    "postMutationPageErrors": 0
+  },
+  "pricing": {
+    "monthlyAmounts": [
+      "$24.50",
+      "$35",
+      "$63"
+    ],
+    "monthlyCredits": [
+      200,
+      300,
+      600
+    ],
+    "yearlyAmounts": [
+      "$147",
+      "$210",
+      "$378"
+    ],
+    "yearlyCredits": [
+      2400,
+      3600,
+      7200
+    ],
+    "checkout": "All three buttons remain disabled, Checkout coming soon. Expected current draft/payment configuration."
+  },
+  "layout": {
+    "horizontalOverflow": false,
+    "mobileSceneGridColumns": 2,
+    "tabletSceneGridColumns": 3,
+    "selectedFooters": true,
+    "imageSwitching": true,
+    "dialogLayoutAndFocus": true,
+    "socialExactHrefsTargetRel": true
+  },
+  "network": {
+    "publicContentFetchXhrEventsourceRsc": 0,
+    "server5xx": 0,
+    "dangerousRequestsAttempted": 0,
+    "blockedTelemetry": "Cloudflare /cdn-cgi/rum POST/ping; expected guard behavior",
+    "noJsScriptFailure": "A Next.js script CSP failure in the deliberately JavaScript-disabled context is expected."
+  },
+  "issues": [
+    {
+      "severity": "P2",
+      "title": "Escape leaves top-level mobile navigation open",
+      "reproducedWidths": [
+        375,
+        390,
+        768
+      ],
+      "steps": [
+        "Focus Open menu, press Enter.",
+        "Press Escape."
+      ],
+      "actual": "Submenus close; main navigation remains visible and aria-expanded=true. Menu button closes it with click, Enter, or Space.",
+      "evidence": [
+        "375-menu-after-escape.png",
+        "390-translated-menu-after-escape.png",
+        "768-menu-after-escape.png"
+      ]
+    }
+  ],
+  "edgeObservations": [
+    {
+      "title": "React #418 caused by Cloudflare email HTML rewriting before translation",
+      "evidence": "hydration-diagnostic.json and ../seo/hydration-cf-control.json",
+      "result": "Original and decoder-only-blocked contexts reproduce. SEO isolated browser response control restoring only the two email fragments has errors=[]; no application or production mutation. All tested controls still work."
+    }
+  ],
+  "infrastructureNotes": [
+    {
+      "reason": "768px navigation networkidle timeout; responsive controls were not reached. Retrying using DOMContentLoaded plus explicit hydration readiness after bounded networkidle wait.",
+      "original": "Traceback (most recent call last):\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/qa.py\", line 218, in <module>\n    response=page.goto(URL,wait_until='networkidle',timeout=90000)\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py\", line 18528, in goto\n    self._sync(\n    ~~~~~~~~~~^\n        self._impl_obj.goto(\n        ^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        )\n        ^\n    )\n    ^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py\", line 111, in _sync\n    return task.result()\n           ~~~~~~~~~~~^^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/_impl/_page.py\", line 564, in goto\n    return await self._main_frame.goto(**locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/_impl/_frame.py\", line 157, in goto\n    await self._channel.send(\n        \"goto\", self._navigation_timeout, locals_to_params(locals())\n    )\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/_impl/_connection.py\", line 78, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/mobile/.venv/lib/python3.14/site-packages/playwright/_impl/_connection.py\", line 636, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.TimeoutError: Page.goto: Timeout 90000ms exceeded.\nCall log:\n  - navigating to \"https://www.aivideosugc.com/?qa=mobile-d2e30400e\", waiting until \"networkidle\"\n\n"
+    }
+  ],
+  "testAssumptionCorrection": {
+    "excluded": [
+      {
+        "width": 768,
+        "action": "picker/filter-clothing",
+        "public": true,
+        "translated": false,
+        "label": "scene grid exactly two columns",
+        "ok": false,
+        "facts": {
+          "columns": "123.469px 123.469px 123.469px",
+          "count": 6
+        }
+      }
+    ],
+    "reason": "Two-column requirement applies to mobile max-width 700px. Tablet 768px correctly uses three columns. Independent live recheck passed. Raw mobile-qa.json and logs preserved unchanged.",
+    "recheck": "tablet-recheck.json"
+  },
+  "writeScope": "Only releases/aidreamcapes-home-production-20261016/mobile/ was written. No source, database, publication, snapshot, upload, task, generation, quote, reservation, checkout or payment changes."
+}

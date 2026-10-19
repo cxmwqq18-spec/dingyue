@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "popupCases": [
+    {
+      "width": 1440,
+      "control": "adc-demo-product",
+      "bounds": {
+        "x": 158,
+        "y": 532.9375,
+        "width": 290,
+        "height": 127.09375
+      },
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "control": "adc-demo-model",
+      "bounds": {
+        "x": 477.53125,
+        "y": 532.9375,
+        "width": 290,
+        "height": 122.375
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "control": "adc-demo-product",
+      "bounds": {
+        "x": 38,
+        "y": 533.46875,
+        "width": 290,
+        "height": 127.09375
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "control": "adc-demo-model",
+      "bounds": {
+        "x": 353.53125,
+        "y": 533.46875,
+        "width": 290,
+        "height": 122.375
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "control": "adc-demo-product",
+      "bounds": {
+        "x": 30,
+        "y": 454.546875,
+        "width": 290,
+        "height": 127.09375
+      },
+      "pass": true
+    },
+    {
+      "width": 390,
+      "control": "adc-demo-model",
+      "bounds": {
+        "x": 30,
+        "y": 510.546875,
+        "width": 290,
+        "height": 122.375
+      },
+      "pass": true
+    },
+    {
+      "width": 375,
+      "control": "adc-demo-product",
+      "bounds": {
+        "x": 30,
+        "y": 454.640625,
+        "width": 290,
+        "height": 127.09375
+      },
+      "pass": true
+    },
+    {
+      "width": 375,
+      "control": "adc-demo-model",
+      "bounds": {
+        "x": 30,
+        "y": 564.640625,
+        "width": 290,
+        "height": 122.375
+      },
+      "pass": true
+    }
+  ],
+  "translation": {
+    "translationNodes": 18,
+    "expectedCount": 33,
+    "actualCount": 33,
+    "durationVisible": false,
+    "errors": [],
+    "pass": true
+  },
+  "provenance": "8 unchanged popup checks from popup-initial-recheck.json + independently rerun translation case in translation-dom-recheck.json",
+  "excludedInvalidTestAssumption": "The first translation check incorrectly expected 32 characters; actual string length is 33. Raw result retained."
+}

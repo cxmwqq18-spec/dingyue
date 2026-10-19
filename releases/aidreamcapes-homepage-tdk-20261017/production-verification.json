@@ -1,0 +1,89 @@
+{
+  "status": "data-applied-awaiting-keywords-renderer-approval",
+  "verifiedAt": "2026-10-17T05:04:54.448Z",
+  "siteId": "site_aidreamcapes",
+  "pageId": "site_aidreamcapes_home",
+  "sourceOfTruth": "LivePage.contentJson.seo",
+  "codeCommit": "6b73906a9bfad8acb362a41bae80b77e98b2bbd4",
+  "sourceUpdatedAt": "2026-10-17T05:03:11.376Z",
+  "contentHash": "97f78fc9f6e141da097435deea690ab66fc4ea593603e070d36c20f9b6811c58",
+  "derivedState": null,
+  "tdk": {
+    "title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "keywords": "AI UGC ads,AI UGC video ads,AI UGC image ads,AI UGC ad Generator,AI Generated UGC ads,AI Actors ads",
+    "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+  },
+  "outsideTdkFieldsUnchanged": true,
+  "otherAidreamcapesPagesUnchanged": true,
+  "mydreamshootsRelationalPagesUnchanged": true,
+  "mydreamshootsHomepageUnchanged": true,
+  "origin": {
+    "url": "http://127.0.0.1:3013/",
+    "status": 200,
+    "title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "keywords": null,
+    "canonical": "https://www.aivideosugc.com/",
+    "ogTitle": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "ogDescription": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "twitterTitle": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "twitterDescription": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "titleCount": 1,
+    "descriptionCount": 1,
+    "keywordsCount": 0,
+    "webpage": {
+      "@id": "https://www.aivideosugc.com/#webpage",
+      "url": "https://www.aivideosugc.com/",
+      "name": "AI UGC Video and Image Ads Generator | AivideosUGC",
+      "@type": "WebPage",
+      "isPartOf": {
+        "@id": "https://www.aivideosugc.com/#website"
+      },
+      "inLanguage": "en",
+      "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+      "primaryImageOfPage": {
+        "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+        "@type": "ImageObject",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    "visibleHash": "e6368a80bff0a796f172b0bebd4ce2e70048a1ebabd4cea5e02e36da8aacaffd"
+  },
+  "publicReadback": {
+    "url": "https://www.aivideosugc.com/",
+    "status": 200,
+    "title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "keywords": null,
+    "canonical": "https://www.aivideosugc.com/",
+    "ogTitle": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "ogDescription": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "twitterTitle": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "twitterDescription": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "titleCount": 1,
+    "descriptionCount": 1,
+    "keywordsCount": 0,
+    "webpage": {
+      "@id": "https://www.aivideosugc.com/#webpage",
+      "url": "https://www.aivideosugc.com/",
+      "name": "AI UGC Video and Image Ads Generator | AivideosUGC",
+      "@type": "WebPage",
+      "isPartOf": {
+        "@id": "https://www.aivideosugc.com/#website"
+      },
+      "inLanguage": "en",
+      "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+      "primaryImageOfPage": {
+        "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+        "@type": "ImageObject",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    "visibleHash": "e6368a80bff0a796f172b0bebd4ce2e70048a1ebabd4cea5e02e36da8aacaffd"
+  },
+  "keywordsStoredExactly": true,
+  "keywordsHtmlPresent": false,
+  "historicalStateActivated": false
+}

@@ -1,0 +1,469 @@
+{
+  "ok": true,
+  "target": "local",
+  "siteId": "site_aidreamcapes",
+  "pageId": "site_aidreamcapes_home",
+  "owner": "LivePage.contentJson",
+  "applying": true,
+  "sourceRevisionBefore": "aabb603a783384a8db144fd84f5157aaed814d95bf6ac326724e0c07dae8b99d",
+  "sourceRevisionAfter": "6e6da5150ede4e8c11336bcd00511026181de64a7e3b53ba98c13b5ce10e03b9",
+  "derivedState": {
+    "relation": null,
+    "record": null
+  },
+  "protectedBefore": "e4837ab6af10f64648964f42b1d733b2fb28855d9cc0bef81432e7bf16e3f7bd",
+  "protectedAfter": "e4837ab6af10f64648964f42b1d733b2fb28855d9cc0bef81432e7bf16e3f7bd",
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefitsEyebrow",
+      "baseHash": "f1fe99f460bbff642a476f8222ff4581b059143886f6e97bbcaec471d2d63e74",
+      "previousValue": "AI video and image generators",
+      "value": "AI VIDEO TOOLS"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefitsH2",
+      "baseHash": "486428a9e72e6bfec7b54b6a43fb8af878a207d4c3c5e56eff02913f10b5945d",
+      "previousValue": "AI video tools for every product story",
+      "value": "Everything you need to create AI UGC ads"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefitsLead",
+      "baseHash": "2d24a6209fcdb02ec812180f77ab6c04e2bc28c151b9dae075ee58c6fdf63462",
+      "previousValue": "Start with a product URL, a written idea, a product photo or an AI presenter. Choose the tool that fits your brief, then review and refine your content in the workspace.",
+      "value": "Start with a URL, a prompt or a product photo. Create your next ad in one workspace."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits",
+      "baseHash": "1355a36e15bff3d6de09c4246027c526f5b1ce1c12871606c95943414afe333d",
+      "previousValue": [
+        {
+          "d": "Turn a public product URL into a video brief for ads, social media and product pages. Review the imported details and photos, then refine the message before generation.",
+          "t": "Product URL to Video",
+          "cta": "Explore URL to Video",
+          "img": {
+            "alt": "A serum bottle in the original product photo",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/ai-video-generation/url-to-video",
+          "badge": "Start with a product URL",
+          "category": "video"
+        },
+        {
+          "d": "Describe the scene, product and movement you want. Turn a written idea into an AI video brief, then review your prompt and settings before generating.",
+          "t": "Text to Video Generator",
+          "cta": "Open Text to Video",
+          "img": {
+            "alt": "A canvas tote bag on a white background",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-canvas-tote--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/app/create?view=video",
+          "badge": "Start with a prompt",
+          "category": "video"
+        },
+        {
+          "d": "Create product videos with AI presenters and generated scenes in one workspace. Choose a scene, refine your brief, compare shot versions and assemble a video for your product page or social channels.",
+          "t": "AI Video Generator",
+          "cta": "Explore AI Video",
+          "img": {
+            "alt": "A presenter demonstrating a garment steamer",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-steamer-r1--640.webp",
+            "width": 640,
+            "height": 1138
+          },
+          "href": "/ai-video-generation",
+          "badge": "AI product videos",
+          "category": "video"
+        },
+        {
+          "d": "Create an AI video from a single product image. Add a description to guide the scene and movement, then review visual options for ads, social posts and product launches.",
+          "t": "Image to Video AI Generator",
+          "cta": "Explore Image to Video",
+          "img": {
+            "alt": "Close-up of green wireless earbuds",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img3-home-earbuds-r1--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/ai-video-generation/image-to-video",
+          "badge": "Start with a product image",
+          "category": "video"
+        },
+        {
+          "d": "Browse available AI presenters, review voice information and choose a host for your product video. Add a presenter when your story benefits from a spoken introduction or demonstration.",
+          "t": "AI Avatar Generator",
+          "cta": "Browse AI Avatars",
+          "img": {
+            "alt": "Example AI presenter in a home setting",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-home-1-r1--640.webp",
+            "width": 640,
+            "height": 1138
+          },
+          "href": "/ai-video-generation/ai-actors",
+          "badge": "Choose an AI presenter",
+          "category": "presenters"
+        },
+        {
+          "d": "Explore an AI Twin concept for a consistent digital presenter across recurring product campaigns. Preview how one on-camera style can carry through your video briefs.",
+          "t": "AI Twin Generator",
+          "cta": "Preview AI Twin Setup",
+          "img": {
+            "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp",
+            "sizes": "(max-width: 700px) 100vw, 380px",
+            "width": 640,
+            "height": 427,
+            "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--1280.webp 1280w"
+          },
+          "href": "/app/create?view=twin",
+          "badge": "Preview the AI Twin workflow",
+          "category": "presenters"
+        }
+      ],
+      "value": [
+        {
+          "d": "Import product details and photos from a public URL. Shape them into your next video ad.",
+          "t": "Product URL to Video",
+          "cta": "Explore URL to Video",
+          "img": {
+            "alt": "A serum bottle in the original product photo",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/ai-video-generation/url-to-video",
+          "badge": "Start with a product URL",
+          "category": "video",
+          "id": "url"
+        },
+        {
+          "d": "Describe your product, scene and message. Turn your idea into an editable video brief.",
+          "t": "Text to Video Generator",
+          "cta": "Open Text to Video",
+          "img": {
+            "alt": "A canvas tote bag on a white background",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-canvas-tote--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/app/create?view=video",
+          "badge": "Start with a prompt",
+          "category": "video",
+          "id": "text"
+        },
+        {
+          "d": "Build product videos with AI scenes and presenters. Refine your storyboard and assemble the shots you choose.",
+          "t": "AI Video Generator",
+          "cta": "Explore AI Video",
+          "img": {
+            "alt": "A presenter demonstrating a garment steamer",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-steamer-r1--640.webp",
+            "width": 640,
+            "height": 1138
+          },
+          "href": "/ai-video-generation",
+          "badge": "AI product videos",
+          "category": "video",
+          "id": "video"
+        },
+        {
+          "d": "Start with a product photo. Add a prompt to guide the scene and movement.",
+          "t": "Image to Video AI Generator",
+          "cta": "Explore Image to Video",
+          "img": {
+            "alt": "Close-up of green wireless earbuds",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img3-home-earbuds-r1--640.webp",
+            "width": 640,
+            "height": 640
+          },
+          "href": "/ai-video-generation/image-to-video",
+          "badge": "Start with a product image",
+          "category": "video",
+          "id": "image"
+        },
+        {
+          "d": "Choose an AI presenter to introduce your product and deliver your script.",
+          "t": "AI Avatar Generator",
+          "cta": "Browse AI Avatars",
+          "img": {
+            "alt": "Example AI presenter in a home setting",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-home-1-r1--640.webp",
+            "width": 640,
+            "height": 1138
+          },
+          "href": "/ai-video-generation/ai-actors",
+          "badge": "Choose an AI presenter",
+          "category": "presenters",
+          "id": "avatar"
+        },
+        {
+          "d": "Explore a consistent digital presenter for your product stories and recurring campaigns.",
+          "t": "AI Twin Generator",
+          "cta": "Preview AI Twin Setup",
+          "img": {
+            "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+            "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp",
+            "sizes": "(max-width: 700px) 100vw, 380px",
+            "width": 640,
+            "height": 427,
+            "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--1280.webp 1280w"
+          },
+          "href": "/app/create?view=twin",
+          "badge": "Preview the AI Twin workflow",
+          "category": "presenters",
+          "id": "twin"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/brandToolsDemo",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": {
+        "version": 2,
+        "labels": {
+          "enlarge": "Enlarge preview",
+          "previewTitle": "Explore the example",
+          "close": "Close preview",
+          "urlExample": "yourstore.com/product",
+          "previewImport": "Preview URL import",
+          "importExample": "Try the import example",
+          "reviewProduct": "Review product",
+          "importNote": "This sample shows the photos and details you can review after an import.",
+          "promptLabel": "Your video idea",
+          "promptValue": "Create a 15-second video for this serum.",
+          "promptPlaceholder": "Describe your product and the story you want to tell.",
+          "previewBrief": "Preview my brief",
+          "modeLabel": "Choose a creation mode",
+          "productLabel": "Product",
+          "avatarLabel": "Presenter",
+          "formatLabel": "Video format",
+          "durationLabel": "Video length",
+          "sampleProduct": "Example product. Add your own photos in the workspace.",
+          "samplePresenter": "Example presenter. Browse available hosts in the workspace.",
+          "exampleLabel": "Motion preview",
+          "playMotion": "Play motion preview",
+          "pauseMotion": "Pause motion preview",
+          "storyboardLabel": "Storyboard preview",
+          "playStoryboard": "Play storyboard sequence",
+          "pauseStoryboard": "Pause storyboard sequence",
+          "storyDuration": "0:15",
+          "photoLabel": "Product photo",
+          "motionLabel": "Presenter visual",
+          "choosePresenter": "Choose an example presenter",
+          "scriptLabel": "Your presenter script",
+          "scriptValue": "Here is a closer look at our serum, the bottle and the details worth knowing.",
+          "previewPresenter": "Preview the selected presenter and script",
+          "conceptBadge": "Preview",
+          "twinSource": "Your photo",
+          "twinResult": "AI Twin concept",
+          "compareLabel": "Drag to compare",
+          "previewConcept": "Explore the Twin concept",
+          "previewNotice": "Interactive examples. Open a tool to create with your own product.",
+          "briefTitle": "Your video brief",
+          "briefNote": "Review your idea here. Continue in the workspace to add your product and choose your creation settings.",
+          "continueLabel": "Continue in workspace"
+        },
+        "product": {
+          "alt": "A serum bottle in the original product photo",
+          "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+          "width": 640,
+          "height": 640
+        },
+        "presenter": {
+          "alt": "Example of an AI presenter holding a serum bottle",
+          "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad--640.webp",
+          "width": 640,
+          "height": 960
+        },
+        "twin": {
+          "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+          "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp",
+          "sizes": "(max-width: 700px) 100vw, 380px",
+          "width": 640,
+          "height": 427,
+          "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--1280.webp 1280w"
+        },
+        "shots": [
+          {
+            "id": "product",
+            "label": "Shot 01 · Product",
+            "image": {
+              "alt": "A serum bottle in the original product photo",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+              "width": 640,
+              "height": 640
+            }
+          },
+          {
+            "id": "presenter",
+            "label": "Shot 02 · Presenter",
+            "image": {
+              "alt": "Example of an AI presenter holding a serum bottle",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad--640.webp",
+              "width": 640,
+              "height": 960
+            }
+          },
+          {
+            "id": "details",
+            "label": "Shot 03 · Details",
+            "image": {
+              "alt": "A closer view of the serum bottle and dropper",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+              "width": 640,
+              "height": 640
+            }
+          }
+        ],
+        "actors": [
+          {
+            "id": "product-host",
+            "label": "Product host",
+            "image": {
+              "alt": "Example of an AI presenter holding a serum bottle",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad--640.webp",
+              "width": 640,
+              "height": 960
+            }
+          },
+          {
+            "id": "home",
+            "label": "At home",
+            "image": {
+              "alt": "Example AI presenter in a home setting",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-home-1-r1--640.webp",
+              "width": 640,
+              "height": 1138
+            }
+          },
+          {
+            "id": "work",
+            "label": "At work",
+            "image": {
+              "alt": "Example AI presenter in a workplace setting",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-office-1-r1--640.webp",
+              "width": 640,
+              "height": 1138
+            }
+          },
+          {
+            "id": "outdoor",
+            "label": "Outdoors",
+            "image": {
+              "alt": "Example AI presenter outdoors",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-outdoor-1-r1--640.webp",
+              "width": 640,
+              "height": 1138
+            }
+          },
+          {
+            "id": "lifestyle",
+            "label": "Lifestyle",
+            "image": {
+              "alt": "Example of a presenter showing a scented candle at home",
+              "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-ad--640.webp",
+              "width": 640,
+              "height": 960
+            }
+          }
+        ],
+        "tabs": [
+          {
+            "value": "home",
+            "label": "AI Video Agent"
+          },
+          {
+            "value": "video",
+            "label": "AI Video"
+          },
+          {
+            "value": "images",
+            "label": "AI Image"
+          }
+        ],
+        "aspects": [
+          {
+            "value": "9:16",
+            "label": "9:16"
+          },
+          {
+            "value": "1:1",
+            "label": "1:1"
+          },
+          {
+            "value": "16:9",
+            "label": "16:9"
+          }
+        ],
+        "durations": [
+          {
+            "value": "15",
+            "label": "15s"
+          },
+          {
+            "value": "10",
+            "label": "10s"
+          }
+        ]
+      }
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/blockOrder",
+      "baseHash": "ede3f5b0cfc93ec4dadee63a9e7c903ab26af81cf204687cfba4cc2c6f893780",
+      "previousValue": [
+        "hero",
+        "definition",
+        "picker",
+        "steps",
+        "benefits",
+        "features",
+        "audience",
+        "pricing",
+        "related",
+        "trust",
+        "compare",
+        "reviews",
+        "faq",
+        "cta"
+      ],
+      "value": [
+        "hero",
+        "definition",
+        "picker",
+        "steps",
+        "benefits",
+        "features",
+        "reviews",
+        "audience",
+        "pricing",
+        "compare",
+        "trust",
+        "related",
+        "faq",
+        "cta"
+      ]
+    }
+  ],
+  "historicalStateActivated": false
+}

@@ -1,0 +1,49 @@
+{
+  "commit": "e706479173561ed80a0fecbc9a7f12a88905d25a",
+  "scopeFiles": [
+    "scripts/apply-aidreamcapes-home-composer-local.mjs",
+    "scripts/lib/aidreamcapes-home-composer-content.mjs",
+    "src/components/storefront/aidreamcapes-v2/home-composer-behavior.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-composer.css",
+    "src/components/storefront/aidreamcapes-v2/home-composer.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-experience-types.ts",
+    "src/components/storefront/aidreamcapes-v2/home-experience.tsx",
+    "src/components/storefront/aidreamcapes-v2/numbered-cards.css",
+    "src/components/storefront/aidreamcapes-v2/page.tsx",
+    "src/components/storefront/aidreamcapes-v2/parts.tsx",
+    "src/components/storefront/aidreamcapes-v2/shell.tsx",
+    "src/components/storefront/aidreamcapes-v2/social-links.module.css",
+    "src/components/storefront/aidreamcapes-v2/social-links.tsx"
+  ],
+  "allAidreamcapes": true,
+  "preexistingStagedOtherStoreFileExcluded": true,
+  "fullProductionBuild": "passed: final-independent-build.log",
+  "guards": [
+    {
+      "script": "guard-public-storefront-ssr.mjs",
+      "exitCode": 0
+    },
+    {
+      "script": "guard-live-storefront-ssr.mjs",
+      "exitCode": 0
+    },
+    {
+      "script": "guard-storefront-launch-seo-contract.mjs",
+      "exitCode": 0
+    }
+  ],
+  "newBrowserChecks": 102,
+  "newHandoffs": 6,
+  "oldControls": 148,
+  "oldHandoffs": 40,
+  "popupChecks": 8,
+  "translationDom": {
+    "translationNodes": 18,
+    "expectedCount": 33,
+    "actualCount": 33,
+    "durationVisible": false,
+    "errors": [],
+    "pass": true
+  },
+  "oldCtaRetry": "One development-server ERR_EMPTY_RESPONSE was retested in the focused regression; provenance preserved."
+}

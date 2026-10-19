@@ -1,0 +1,1003 @@
+{
+  "ok": true,
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "codeCommit": "6779fe5b66c2b20e7bd260777c466f5deb9b916b",
+  "owner": "LivePage.contentJson",
+  "mode": "plan",
+  "applied": [],
+  "planned": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefitsH2"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefitsLead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefitsEyebrow"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/brandToolsDemo"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/blockOrder"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/eyebrow"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/h2"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorProductPhoto"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorScenes"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorPresenters"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorFormats"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorPathProduct"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorPathScene"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorPathStoryboard"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/0/actions/anchorPathReview"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/0/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/1/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/2/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/2/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/3/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/4/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/4/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/5/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/5/d"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_ai_actor_product_ads",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_ai_actor_product_ads",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_before_after_showcases",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_before_after_showcases",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_background_remove_replace",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_background_remove_replace",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ecommerce_main_image",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ecommerce_main_image",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_feed_ad_still",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_feed_ad_still",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_jewelry_positioning",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_jewelry_positioning",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_lifestyle_scene",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_lifestyle_scene",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_on_model_generation",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_on_model_generation",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packaging_mockup",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packaging_mockup",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packshot_multi_angle",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packshot_multi_angle",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_professional_headshot",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_professional_headshot",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_story_ad_vertical",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_story_ad_vertical",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ugc_still_ad",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ugc_still_ad",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_image_theme_virtual_try_on",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_image_theme_virtual_try_on",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_1401be87d175029e",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_1401be87d175029e",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_3cdceb40eb9fd743",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_3cdceb40eb9fd743",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_bf80d4528b76f1ef",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_bf80d4528b76f1ef",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_promo_category_beauty_routine",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_promo_category_beauty_routine",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_promo_category_black_friday_countdown",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_promo_category_black_friday_countdown",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_promo_category_home_organization",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_promo_category_home_organization",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_actors",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_actors",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_info",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_info",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_examples",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_examples",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_ad_sizes_by_platform",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_ad_sizes_by_platform",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_first_tiktok_video_ad",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_first_tiktok_video_ad",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_product_photo_tips",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_product_photo_tips",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guides",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guides",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_testing_ad_versions",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_testing_ad_versions",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_white_background_amazon",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_white_background_amazon",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_image_to_video",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_image_to_video",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_beauty_skincare",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_beauty_skincare",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_electronics",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_electronics",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_fashion_clothing",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_fashion_clothing",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_food_drinks",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_food_drinks",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_health_wellness",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_health_wellness",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_shoes",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_shoes",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_amazon",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_amazon",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_facebook",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_facebook",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_instagram",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_instagram",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_shopify",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_shopify",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_tiktok",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_tiktok",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_youtube_shorts",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_youtube_shorts",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "aidreamcapes_v2_url_to_video",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "aidreamcapes_v2_url_to_video",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "site_aidreamcapes_about_us",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "site_aidreamcapes_about_us",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    },
+    {
+      "id": "site_aidreamcapes_contact_us",
+      "path": "/sections/v2_main/settings/data/breadcrumbs"
+    },
+    {
+      "id": "site_aidreamcapes_contact_us",
+      "path": "/seo/jsonLd/@graph/1/itemListElement"
+    }
+  ],
+  "conflicts": [],
+  "skipped": [],
+  "protectedBefore": {
+    "otherSites": "d1652fc518a04a32c7f23d50d593edb3b8f6d45eeb44e8762558382bf24ee619",
+    "prices": "ce17293b16bb67da5e451087104bbd26648898f568063a1319c4e994043a0fac",
+    "customer": {
+      "count": 16,
+      "hash": "fad357d44c61aa4572d342101c021da07b30dad39441cf314d983bb547a71f6f"
+    },
+    "customerSession": {
+      "count": 139,
+      "hash": "c22a670c7adee5622f36e4b3c57cb2aee1057b7ed3ff203124043a63fd2dac54"
+    },
+    "subscription": {
+      "count": 1,
+      "hash": "c3ed6d8ebca05d77e0af532f458627f1b97ad74847129e4332f634984f0c4e6d"
+    },
+    "order": {
+      "count": 1,
+      "hash": "e56773091ee35ebea4ddeeeeccd757ffd796ee58405e4848a80e5a1c55cc6c71"
+    },
+    "paymentEvent": {
+      "count": 0,
+      "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "creditBalance": {
+      "count": 16,
+      "hash": "23fe37d1f9d0b4e9123937773c82975376060ab86bc56382d248bc8a96aec87a"
+    },
+    "creditLedger": {
+      "count": 89,
+      "hash": "1c8f94cf8f5f5a552ac6be7de947ff0878fb3da49d46d03b1ad6d4ab60362a8e"
+    },
+    "generationJob": {
+      "count": 50,
+      "hash": "5e92131097d4a130aca80bfeaf1a2be2e14fbd33a0a63b88abec041540b5cf11"
+    },
+    "customerModel": {
+      "count": 0,
+      "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "assetUpload": {
+      "count": 133,
+      "hash": "7e1718cd39e036edda3f71cf5da7c0027515b3889a914737ab3142ed1cd4f981"
+    },
+    "album": {
+      "count": 17,
+      "hash": "f30901bf685d2ff9df48a3e3ea0319e57b7533bc1ccb62dd343a9de79d054439"
+    }
+  },
+  "protectedAfter": {
+    "otherSites": "d1652fc518a04a32c7f23d50d593edb3b8f6d45eeb44e8762558382bf24ee619",
+    "prices": "ce17293b16bb67da5e451087104bbd26648898f568063a1319c4e994043a0fac",
+    "customer": {
+      "count": 16,
+      "hash": "fad357d44c61aa4572d342101c021da07b30dad39441cf314d983bb547a71f6f"
+    },
+    "customerSession": {
+      "count": 139,
+      "hash": "c22a670c7adee5622f36e4b3c57cb2aee1057b7ed3ff203124043a63fd2dac54"
+    },
+    "subscription": {
+      "count": 1,
+      "hash": "c3ed6d8ebca05d77e0af532f458627f1b97ad74847129e4332f634984f0c4e6d"
+    },
+    "order": {
+      "count": 1,
+      "hash": "e56773091ee35ebea4ddeeeeccd757ffd796ee58405e4848a80e5a1c55cc6c71"
+    },
+    "paymentEvent": {
+      "count": 0,
+      "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "creditBalance": {
+      "count": 16,
+      "hash": "23fe37d1f9d0b4e9123937773c82975376060ab86bc56382d248bc8a96aec87a"
+    },
+    "creditLedger": {
+      "count": 89,
+      "hash": "1c8f94cf8f5f5a552ac6be7de947ff0878fb3da49d46d03b1ad6d4ab60362a8e"
+    },
+    "generationJob": {
+      "count": 50,
+      "hash": "5e92131097d4a130aca80bfeaf1a2be2e14fbd33a0a63b88abec041540b5cf11"
+    },
+    "customerModel": {
+      "count": 0,
+      "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "assetUpload": {
+      "count": 133,
+      "hash": "7e1718cd39e036edda3f71cf5da7c0027515b3889a914737ab3142ed1cd4f981"
+    },
+    "album": {
+      "count": 17,
+      "hash": "f30901bf685d2ff9df48a3e3ea0319e57b7533bc1ccb62dd343a9de79d054439"
+    }
+  },
+  "revisions": [
+    {
+      "id": "site_aidreamcapes_home",
+      "slug": "/",
+      "before": "97f78fc9f6e141da097435deea690ab66fc4ea593603e070d36c20f9b6811c58",
+      "after": "848a35b71f9e7facc9e49639d9e22b290b9ae58bf0c53fe52ff58ddfd42520d8"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_ai_actor_product_ads",
+      "slug": "/ai-video-generation/ai-actor-product-ads",
+      "before": "76f539f4ee74a571a5a493eb031811668e6c4fc0c21355a1b15f681232221c1f",
+      "after": "da05943b8dd15bf660a5b142751e3c6c94266b9372ac0420c3ba1cee0a68e5c4"
+    },
+    {
+      "id": "aidreamcapes_ads_testing_before_after_showcases",
+      "slug": "/ai-video-generation/before-after-showcases",
+      "before": "cb01034563781537dd878524dc874bc5073c7ca7dd14bdb71983d2c65663743c",
+      "after": "f7ff6e6fec402d9cf7e60b7302a72744f25d4b021038ba7b34a86486d5aa80fc"
+    },
+    {
+      "id": "aidreamcapes_image_theme_background_remove_replace",
+      "slug": "/ai-image-generation/background-remove-replace",
+      "before": "3c7b3b73202afb5474dd07b6f332eb7621306e5fa8771303bb5f5074ae6d4a5a",
+      "after": "9ffecd0048fc397728cbd20e2aba8d050dcddf0ebb6bb3e12cb13e19f5eb8dba"
+    },
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "slug": "/ai-image-generation/colorway-variations",
+      "before": "2d70fc1b6142b1e8a55246d670fb5d19e981eaa6d07001c581870481dacdaeef",
+      "after": "482808df3b8402c260e22f9a7a5a0dfaf0fec395defef03d644d33e20343d215"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ecommerce_main_image",
+      "slug": "/ai-image-generation/ecommerce-main-image",
+      "before": "89808e0e2d38b4b4c5fabb98712f4833d296e521d5f1c893a3e585ac0d7a71cc",
+      "after": "f97122b542b364e507246969fb00a8138d7564860c5aa74be5d2fe079f0d18a6"
+    },
+    {
+      "id": "aidreamcapes_image_theme_feed_ad_still",
+      "slug": "/ai-image-generation/feed-ad-still",
+      "before": "d15bd7fce769f00ed4dbeafd63e979d4f4f7218ea6bc59159d2680d18bb577dd",
+      "after": "7584a9541f83198455c721a80266d8bbc01f9eb94292451eb3205d83904a6be2"
+    },
+    {
+      "id": "aidreamcapes_image_theme_jewelry_positioning",
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "before": "f12f4651502e8bfa84fdd1455de8b78c0ab20ea1b10b50c41ed8f1eb2dc1647b",
+      "after": "c2178830dc16d332a00ca583f44079389d6575a131cde5c95d8f66b55144f1e7"
+    },
+    {
+      "id": "aidreamcapes_image_theme_lifestyle_scene",
+      "slug": "/ai-image-generation/lifestyle-scene",
+      "before": "2b7698c7908dca08311e331b92927328f74d811934e7ef5b370ae14c3781b066",
+      "after": "f0d6a2318fb1d6b74dd1e7c2ab64f01b8bb9ceff8c2bfff8ea3308b3efea93b6"
+    },
+    {
+      "id": "aidreamcapes_image_theme_on_model_generation",
+      "slug": "/ai-image-generation/on-model-generation",
+      "before": "4aee06d1d64ca19464acadc177abdbefcb13dd39744967468d3b2e9b3201d26c",
+      "after": "b3bd2f1af1cadcaa25eeb3680c52cd9d0c70b72c509e5532d00c8f01af6b035b"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packaging_mockup",
+      "slug": "/ai-image-generation/packaging-mockup",
+      "before": "12c18dbf5a0709c0dc634c8a13af7cd65442343edfdc283e78f9d7abd63e2ec6",
+      "after": "1cf9ec53b7e82a2fcbee21f65e1e79f07d32965aedaedd14de73130c7a770175"
+    },
+    {
+      "id": "aidreamcapes_image_theme_packshot_multi_angle",
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "before": "556e59a965f70bc8d5463a1ade651251d8b707f4a1ec05d465b74356e2c072d9",
+      "after": "34050219687e6e28d9742a255c320d3b1508672dc887b24c3d8201b268c0d029"
+    },
+    {
+      "id": "aidreamcapes_image_theme_professional_headshot",
+      "slug": "/ai-image-generation/professional-headshot",
+      "before": "20bccea9e1e3165f2aa8e037b40c246f6f6da27162f8be951da76987a6db5d2a",
+      "after": "9bec44bdf8a7c3977f8e76c9fcee84c16416e78350810dd09b69dc5a8fcec516"
+    },
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "before": "1bac0a0978cacd760284a993912507ed85ad972f7216807e95747a38243edbd4",
+      "after": "376ee33cc5f6e0e7f725e175de1c7bf5ca7944075e1dd50d013043c7016f0f3c"
+    },
+    {
+      "id": "aidreamcapes_image_theme_story_ad_vertical",
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "before": "b99a631005488da7bffccc34bf9f14e403da46bd117366aadc8fd1a886bad4ff",
+      "after": "8aff01f1e78d05147ecfdc5af8536f3b37f8b4af0ac6f3c84be381baf9d380ed"
+    },
+    {
+      "id": "aidreamcapes_image_theme_ugc_still_ad",
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "before": "ebb03f3c60b7ebf968cb90b4fbb7b3c087d7b44584e75942bbf218251349aacf",
+      "after": "4bbd262b5066d17c68895cf08142f00ec67a86889c870c9bd5ebc994f28e3370"
+    },
+    {
+      "id": "aidreamcapes_image_theme_virtual_try_on",
+      "slug": "/ai-image-generation/virtual-try-on",
+      "before": "ba5acb05a737dd3482930bf761c6c980dced435548e03dd188515d7f105e3b38",
+      "after": "d9e6b9eb5b704cdf83d89b15e6379e2bd80ef5ab70d924a1a3215f944fcb1fd9"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "slug": "/ai-video-generation",
+      "before": "0a0c38f20006502751f27117d5e339a4e9bbb755966cd725da3a768a4a36bad9",
+      "after": "8440614fa3239a1c3cde68571e35b80008216ef5c8cf269212316e50651cbaff"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "slug": "/ai-video-generation/food-video",
+      "before": "e06d002fb8f024b71d0b3ddd57accd323effebc949994c19a530d4df93856f39",
+      "after": "ccbcf7eb279f96de5013145f14075b593f38e67b78890ee7db0b4c55412edf86"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_1401be87d175029e",
+      "slug": "/ai-video-generation/promo-video",
+      "before": "a07eb24afa5de6ecf6c8a9768c327d23be5d3de849b7f190bd354d5dc028189f",
+      "after": "d9624d4ffe406742e031cea5722db8c651d72129459e1467c7937865f3ae8474"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_3cdceb40eb9fd743",
+      "slug": "/ai-image-generation",
+      "before": "dcc4aae4a65f21b66b7057609aa40c0c5f3514cb1d042c19fcff48fc22246bcf",
+      "after": "eeff422de73846a7a1d96998fbe7449abe27cc27f3145468e1385ab98bd81299"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "slug": "/ai-video-generation/ugc-ad-video",
+      "before": "5b6c84e1dfd39f512be97a8570515615628bcb56152bdecd5e30ef219e434771",
+      "after": "d70106b836630ce63f121a0cee9a8162a250a312785a02b0e04fa39f65be07ed"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_bf80d4528b76f1ef",
+      "slug": "/ai-video-generation/product-video",
+      "before": "54711cc310a806996f8c99b883daa2711351edd3c5c30d5dbd5d3e2b1ee57cfc",
+      "after": "b94c044a6020df049d96aef2dd039815ef491c789608d47623ea5956f1d89309"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "slug": "/ai-video-generation/cinematic-video",
+      "before": "e7c8fd4bff72aae66b04077c56d24cd0a3ff3fb7a05ce571949b783ee0bf5c3e",
+      "after": "b1f1c0fad31bf3b152dd5e4ec03ebd52e97c0db11ceeca4de3f52d046478820f"
+    },
+    {
+      "id": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "slug": "/ai-video-generation/how-to-video",
+      "before": "216e866ac1c2fb3f5ad48ba933212b840c06a2f00083992d35df26e7f9c0758c",
+      "after": "bf5d0a8ddd0de92967ab41a586419de7e31994ec7e55a976f25045236331ed27"
+    },
+    {
+      "id": "aidreamcapes_promo_category_beauty_routine",
+      "slug": "/ai-video-generation/beauty-routine",
+      "before": "10da396e6e10f2b27800363e5c55e9b64a31a32501aa6e4bde4a6bb648e8191b",
+      "after": "6a66f6cf46116f32452e59659881e36924f74a7071de5a7147ad6cf6b64efd0d"
+    },
+    {
+      "id": "aidreamcapes_promo_category_black_friday_countdown",
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "before": "d7abb74da111163a1684823b5f713b699b4250941f71b8462db65114a4c2de5d",
+      "after": "707e8a371e45b1b00e146aa5f22e3522a2c625948ee26d333f58eebaec2b1695"
+    },
+    {
+      "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "before": "30eb55406dc97350b6326ee46b24f1ea2c74b356766e318327c37710323d454e",
+      "after": "55d21c28cc002e9d25a7a15bbd974ecab23f56a8224f82194d0ff1845240f248"
+    },
+    {
+      "id": "aidreamcapes_promo_category_home_organization",
+      "slug": "/ai-video-generation/home-organization",
+      "before": "518cb6f1f50ff7e96d7c26bbca7912814e8a90ca1304fb0fca73186133f4d1fb",
+      "after": "a9739c5b6467b083ad0077d522836e4121d8a95a61de7a04fefd74b443f9ae5a"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_actors",
+      "slug": "/ai-video-generation/ai-actors",
+      "before": "928c45d6236774beac9ed6c667deaa145dcc470ab621ad3bb5475ea62c7282e6",
+      "after": "b40e502624b4426e725d8ab7e44ca17c906181d4155a6cc2f21d7b0bb74719d1"
+    },
+    {
+      "id": "aidreamcapes_v2_ai_info",
+      "slug": "/ai-info",
+      "before": "e6093ec14f18b123f87d1ae167795e67cfcf8fe2a94457e256e7017f5fac6498",
+      "after": "0faa5bf580476cf4e31a2a735bb9f80fe9f421745e94f4e8f35ade1827c259a6"
+    },
+    {
+      "id": "aidreamcapes_v2_examples",
+      "slug": "/inspiration",
+      "before": "3bc7e933b5abb7dc7202f50fcfa40dd7aa9e78458f4c8b1198f1666402f4ace8",
+      "after": "8425faa316070315eaee6aa7f50bb6a55bb9bda302dfe3655214701781852ca4"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_ad_sizes_by_platform",
+      "slug": "/guides/ad-sizes-by-platform",
+      "before": "cbf37ea319465b2bd284cafb690238302aa4e852ae7815e856a03e1447de7680",
+      "after": "da0099ab83175c388d17c9416e9ed58ad589b8c3a14d2adb875114ea678580f5"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_first_tiktok_video_ad",
+      "slug": "/guides/first-tiktok-video-ad",
+      "before": "f91b46536f670b70aae4230e85c4c7bb5cd508a84f9201e1cea1ae05d525f0bf",
+      "after": "2c070d5589146c185076da138782e797799c433821378cf9fd9cdeb23c8aa814"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_product_photo_tips",
+      "slug": "/guides/product-photo-tips",
+      "before": "61736cfa11c98d2d835a33c8f223d21e401183209e4efa26c483adf98e49209a",
+      "after": "ddaeb61648fd2866865960a109acfa6756bfe39963f1592cf7fbae4a8c317a0b"
+    },
+    {
+      "id": "aidreamcapes_v2_guides",
+      "slug": "/guides",
+      "before": "8173165f2bf2911337d1909bb27a299bf4283433999f77cbeba31eb22dfad9dc",
+      "after": "e817f36f97d2c183e4f6d1a408ca2958c575b9aa281a5c5385ef9d60423382fb"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_testing_ad_versions",
+      "slug": "/guides/testing-ad-versions",
+      "before": "364b6471d39100ed6d8742129292b2b2b02cba823a2fa1c3b1ddb0f8c4d85774",
+      "after": "b6e71e2830c13e55fb2ac0c6b25ce9de8e1643f53744f6c55cca709813cf105d"
+    },
+    {
+      "id": "aidreamcapes_v2_guide_white_background_amazon",
+      "slug": "/guides/white-background-amazon",
+      "before": "700345e5568fd4541929cb2b4327cf012910f9c7c59a4e93b404cf166f2b0351",
+      "after": "ebc8b80247bcb5977df9eccbb54c45f6f88ea5e8fd3574c5c60c7345092ae1cd"
+    },
+    {
+      "id": "aidreamcapes_v2_image_to_video",
+      "slug": "/ai-video-generation/image-to-video",
+      "before": "cde8b72a3f420548d6dd6d622fda45964eab26e53b0fea10acdfa8ac0910139a",
+      "after": "dea5f5e09f790158249bb388afd4097503ee7cfd722de7e5f6742c1152304a73"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_beauty_skincare",
+      "slug": "/industries/beauty-skincare",
+      "before": "da68836c9eb5c94bc15107df53f4d9b14efea599011d083eee878beb3670e5a2",
+      "after": "f81f4dbf211e0172bcae1b875d493ff349dae6ba01c42e5052757ed8ca6517e1"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_electronics",
+      "slug": "/industries/electronics",
+      "before": "eac23e1c856bcded323cd527b1cb9d6d2f15d12a64aa666fdd8bc9078ea4b1b6",
+      "after": "bd97f254e4641c65f66f7a47993998b3a373425ae96a5d36c441ecd7a379186f"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_fashion_clothing",
+      "slug": "/industries/fashion-clothing",
+      "before": "f7ecc704bd761efef504e2f65e1ac6edf6d8724e0c24beadccc63bf1b034975e",
+      "after": "3d383e1fdfec6faccd11517eb820dcc9dd4b45f8bef582e562c373a4123dc56e"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_food_drinks",
+      "slug": "/industries/food-drinks",
+      "before": "3594f25ff93663c4acd9d2daa9498abccba3f44dbb69e7bb04fcad621212387b",
+      "after": "c204983cafb790f372a46bc88bc18a250f1ad2588ecbea9da49306b36fdf706b"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_health_wellness",
+      "slug": "/industries/health-wellness",
+      "before": "c793a1e1960db0c6e28b1a955a4fdd107923d0060e0b8dd64462f49234b10311",
+      "after": "b9f344dedd983f0c0c31b2e30128011e4e325ed9899733f6dc616423b4f54495"
+    },
+    {
+      "id": "aidreamcapes_v2_ind_shoes",
+      "slug": "/industries/shoes",
+      "before": "04cbe7a3d42b6a550e7ddf1081ecc4709d01f3d1e78a5619347966007ff1cedd",
+      "after": "52cd75532e1bd6fd60548328f117ca39cff1577d790e55e01de9e66f0a2814b7"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_amazon",
+      "slug": "/platforms/amazon-product-photos",
+      "before": "604a5d12b5075de36d9444a278ce7bbc07a63c4a2f664f6349398fd1c2c5dd07",
+      "after": "d2cea1cfb8c237af31bbd23623411e8bdca8614be4bef9737fc41e56909ace1a"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_facebook",
+      "slug": "/platforms/facebook-ads",
+      "before": "333e4c72f4d38383bc1bec0635b61d2880b0dd9e5326951323df32bdb1e9a474",
+      "after": "699ce11ba27a867fb8876544a5c90185a07dbf88c0685c23516914defacaaad6"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_instagram",
+      "slug": "/platforms/instagram-ads",
+      "before": "d9e489126823760e07bf67b00282e5b80fe18858974ed0d641f3a950647cfd04",
+      "after": "74934cb7aa34e672e3da85b3de26b24c9cf0c277650e89336051a9e63fcc9463"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_shopify",
+      "slug": "/platforms/shopify-product-photos",
+      "before": "d5da8ec8160922483958f20edb03c3b34736fc129fc15d832775f13d4c38acf4",
+      "after": "57c2c24e4f527633ac1f4178970a67c84b32e2a15af1ab8b65e2e74063ec6426"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_tiktok",
+      "slug": "/platforms/tiktok-ads",
+      "before": "5483b75d69ae0716a4faf41bf20aff91e68eb095635c421d3a3bef595135c922",
+      "after": "fe1dfc844ecc5fe19f22095458eb0e517ccbf9be3657582cfe8d7efa736194dc"
+    },
+    {
+      "id": "aidreamcapes_v2_plat_youtube_shorts",
+      "slug": "/platforms/youtube-shorts-ads",
+      "before": "5b052c7b03fea898958a4e69759a705dc586bf893ab05dda1ad84ad8bb63ca6c",
+      "after": "721d762123122b44bdeb7f80ceb293d8b1b147f83bd0b79c553751640db96778"
+    },
+    {
+      "id": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "before": "ce9bbfafd5886bbd4df65494423a3d8b077b180756e3a288aaf2362b454ff574",
+      "after": "906de6fbf8ac129c58aef0a9cd32f2128936b1bd800f465349e63dac733de057"
+    },
+    {
+      "id": "aidreamcapes_v2_url_to_video",
+      "slug": "/ai-video-generation/url-to-video",
+      "before": "1f9e407a5f38e6806934102c09daec99ddd9718c9b95a14f5ed39edd2b7bbf68",
+      "after": "3a750846431428553a3f003a6010ac0fce4910d9da5e8008539234bc01ec814c"
+    },
+    {
+      "id": "site_aidreamcapes_about_us",
+      "slug": "/about-us",
+      "before": "5a3f7f837fc51e4e1ab2435623d4c1b0247b5386f682682e3eb6d239aa5665c4",
+      "after": "22a1b4e46f0724df67b4701308092669f2fb3a6ba621e5ae24c3c2134d2c5097"
+    },
+    {
+      "id": "site_aidreamcapes_contact_us",
+      "slug": "/contact-us",
+      "before": "9fc37e4c73def4d5f3ae6c87f3c875b9da9ed0937bec9d989b0dc8fdd48b2af7",
+      "after": "d3b3c5d84b7c103aaf5cfdc212d633fda1ca0897701a46cc4d9b7d59f85c9da0"
+    }
+  ],
+  "derivedState": {
+    "relation": "\"SitePublishedState\"",
+    "storedCache": null,
+    "runtime": "Current relational LivePage on each server request; stored cache is not an activation source"
+  },
+  "historicalStateActivated": false
+}

@@ -1,0 +1,507 @@
+{
+  "title": "真实公网首页 SEO 与用户文案独立审计（首版）",
+  "capturedAt": "2026-10-16T15:03:58.771Z",
+  "completedAt": "2026-10-16T15:15:53.851413+00:00",
+  "url": "https://www.aivideosugc.com/?qa=seo-d2e30400e",
+  "deployedShaProvided": "d2e30400e8d305ec6420cdd999d42e1f7aa8730b",
+  "siteId": "site_aidreamcapes",
+  "conclusion": "技术索引基础通过；新六模块可理解且与工作流相符。旧功能卡和套餐仍有具体能力矛盾，另有Cloudflare引起的无JS邮箱不可读及hydration错误，不能把整页文案真实性判为通过。",
+  "scope": "仅此首页和由其直接链接的62个公开站内页面HTTP读回；不是全站SEO、排名、转化率、法务或生成质量认证。未登录、未创建任务、未发起报价/生成/支付/订阅/客户写入。仅产生审计文件。",
+  "method": "现有Node Playwright Chromium headless，proxy http://127.0.0.1:10904，1440×1000，en-US；JS开启和禁用两个独立上下文；均networkidle；另做CF邮件结构受控对照。Python Playwright未安装，使用仓库现有Node运行时。",
+  "provenance": {
+    "owner": "Current relational LivePage.contentJson",
+    "homeId": "site_aidreamcapes_home",
+    "sourceRevision": "aidreamcapes-home-local-interactions-en",
+    "contentJsonAppliedHash": "79d7d97cd40dd6591b7b62097fc96b7b218fb6d0724fff1e097aae2e0dfcdc77",
+    "evidence": "../content-apply.json",
+    "limitation": "本审计以真实公网HTML核查输出，并引用父任务content-apply的关系字段与hash证明；没有独立访问生产DB，也不能由浏览器证明derived-state revision/origin readback。该闭环由父任务负责。历史publications/snapshots未读取或激活。",
+    "fieldMapping": "旧字段路径从同页现有结构映射，原文逐项与公网渲染复核；FAQ source graph[3]为FAQPage，而公网规范化graph[4]为FAQPage。任何后续写入都应再次按当前关系字段作冲突校验。"
+  },
+  "checks": {
+    "status": {
+      "javascript": 200,
+      "noJavascript": 200
+    },
+    "h1": [
+      {
+        "tag": "H1",
+        "text": "Create AI UGC Videos from Your Product Photos",
+        "visible": true,
+        "id": ""
+      }
+    ],
+    "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+    "description": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+    "canonical": [
+      "https://www.aivideosugc.com/"
+    ],
+    "lang": "en",
+    "headSocialConsistency": true,
+    "javascriptVsNoJavascriptMetadataValuesEqual": false,
+    "robotsMeta": [
+      "index, follow, max-image-preview:large"
+    ],
+    "xRobotsTag": null,
+    "robotsStatus": 200,
+    "robotsRootAllowed": true,
+    "sitemapStatus": 200,
+    "sitemapRootPresent": true,
+    "noIndexBlockingObserved": false,
+    "actualGoogleIndexing": "未查询Search Console/URL Inspection，不推断已被Google索引",
+    "jsonLdTypes": [
+      "Organization",
+      "SoftwareApplication",
+      "WebSite",
+      "WebPage",
+      "FAQPage"
+    ],
+    "faqCount": 18,
+    "faqVisibleAndJsonLdExactInBothModes": true,
+    "faqRichResult": "Google当前官方说明：2026-05-07起停止FAQ富结果，2026-06-15删除文档。保留语义一致性不意味着富结果资格。",
+    "sixModulesSSR": [
+      {
+        "kind": "hero",
+        "visible": true,
+        "textLength": 867
+      },
+      {
+        "kind": "picker",
+        "visible": true,
+        "textLength": 1001
+      },
+      {
+        "kind": "steps",
+        "visible": true,
+        "textLength": 662
+      },
+      {
+        "kind": "features",
+        "visible": true,
+        "textLength": 1044
+      },
+      {
+        "kind": "audience",
+        "visible": true,
+        "textLength": 1049
+      },
+      {
+        "kind": "reviews",
+        "visible": true,
+        "textLength": 712
+      }
+    ],
+    "allSixModuleVisibleCopySameAcrossModes": true,
+    "noJavascriptFAQNativeDetailsReadable": true,
+    "sourceLanguageEnglish": true,
+    "visibleCJK": [],
+    "allImagesHaveAltAttributes": true,
+    "altAssessment": "产品和presenter示例有描述性英文alt。品牌图/重复装饰缩略图使用空alt，不据此认定缺失。",
+    "htmlLinks": 199,
+    "missingEmptyOrJavascriptHref": 0,
+    "linkReadback": {
+      "total": 63,
+      "publicPages200": 62,
+      "errors": [
+        {
+          "path": "/cdn-cgi/l/email-protection",
+          "status": 404,
+          "url": "https://www.aivideosugc.com/cdn-cgi/l/email-protection"
+        }
+      ]
+    },
+    "publicPageDataFetchRequests": [],
+    "observedBrowserXHR": [
+      {
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "method": "POST",
+        "type": "xhr",
+        "purpose": null
+      },
+      {
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "method": "POST",
+        "type": "xhr",
+        "purpose": null
+      }
+    ],
+    "networkAssessment": "只有Cloudflare /cdn-cgi/rum遥测POST；无copy/catalog/nav/SEO/media/customer runtime fetch/XHR/EventSource/_rsc/prefetch。无JS上下文无此类请求。",
+    "disabledPricingCopy": [
+      "Checkout coming soon",
+      "Checkout coming soon",
+      "Checkout coming soon"
+    ],
+    "pricingAvailabilityDisclosure": "Subscription checkout is not currently available.；disabled CTA符合当前配置，不记交互缺陷。",
+    "headingAssessment": "唯一H1，主体模块使用H2，卡片H3。footer使用H4；不要求所有标题与title逐字相同。",
+    "publicCopyBoundary": "新增六模块可见字符串为面向用户的示例、说明、动作标签；未发现任务说明/SEO策略/生成注释变成可见文案。"
+  },
+  "readability": {
+    "positioning": "明确：从自有产品图/产品资料制作AI product videos、presenter introductions和product images。",
+    "audience": "明确：电商品牌、小商家、dropshippers、agencies、creators、app/SaaS。Content Creators旧twin承诺需修。",
+    "workflow": "新增四步概览与原详细六步能够解释draft→storyboard→generate shots→assemble/render→review/download；旧benefit/FAQ仍过度压缩。",
+    "value": "清楚强调自己的产品参考、创意示例、可编辑草稿、分镜版本和预览检查，且Batch的保存与生成分界很好。",
+    "cta": "动作具体、可爬取href存在；预览卡为本地展示，进入workspace的动作独立清楚。",
+    "comparison": "当前10行比较表采用starting point/preparation/cost/version/review等事实维度，没有旧版绝对优越保证，符合操作流程。",
+    "density": "桌面全文约3576英文词，full-page高度22114px；多个场景/流程模块有重复，可后续凭用户研究整理顺序。此数量本身不是Google惩罚或排名结论。",
+    "modules": [
+      {
+        "kind": "hero",
+        "judgment": "通过",
+        "purpose": "说明从自己的产品图和brief开始，预览与生成分开；4步路径包含draft、storyboard、shots、assemble和review。",
+        "cta": "Start a product video →"
+      },
+      {
+        "kind": "picker",
+        "judgment": "通过",
+        "purpose": "过滤/选择场景、查看创意方向，再进入带预填brief的workspace；不声称点击预览已生成用户作品。",
+        "cta": "Use selected scene →"
+      },
+      {
+        "kind": "steps",
+        "judgment": "通过",
+        "purpose": "介绍AI presenter例图，并明确实际presenter、voice、language以workspace为准；voice是信息详情而非假音频播放。",
+        "cta": "Choose a presenter in the workspace →"
+      },
+      {
+        "kind": "features",
+        "judgment": "通过",
+        "purpose": "明确interactive storyboard example、示例framing与真正production的边界，生成storyboard和refine shots在说明中可读。",
+        "cta": "Start an editable video draft →"
+      },
+      {
+        "kind": "audience",
+        "judgment": "通过",
+        "purpose": "准确对应共享scene/shared brief、命名1–10草稿、保存Library、逐个编辑后决定生成；明确saving不会生成视频或消耗generation credits。",
+        "cta": "Create batch drafts with this brief →"
+      },
+      {
+        "kind": "reviews",
+        "judgment": "通过",
+        "purpose": "介绍9:16 presenter visual、1:1 image、product-page imagery，清楚标记例图和review product details要求。",
+        "cta": "Create with this format →"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "SEO-001",
+      "priority": "P1",
+      "title": "AI Twin 承诺与当前不可用的声音克隆冲突",
+      "reason": "当前公开FAQ明确声音克隆不可用；工作区navigation将AI Twin标为simulation，Voice training is not connected。这里却承诺使用自己的脸和声音持续生成广告，属于具体功能矛盾。",
+      "evidence": [
+        "javascript-response.html",
+        "browser-readback.json",
+        "src/lib/aidreamcapes-workspace/navigation.ts:20",
+        "src/components/aidreamcapes-workspace/twin-workbench.tsx:258"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/5/t",
+          "original": "Reuse an Approved AI Twin",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Choose an AI Presenter"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/5/d",
+          "original": "You cannot film every ad yourself. Build an AI twin with your face and voice, then ship more ads without another shoot. Start from [spokesperson videos](/ai-video-generation/ai-actor-product-ads).",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Choose an available AI presenter for your product introduction. Add your own product photo and script, then review the generated shots before assembling your video."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/audience/items/4/d",
+          "original": "Build an AI twin with your face and voice, then publish more often without burning out.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Create presenter-led product videos from your own photos and scripts. Save drafts, refine the storyboard and review the result before posting."
+        }
+      ]
+    },
+    {
+      "id": "SEO-002",
+      "priority": "P1",
+      "title": "复制现有广告风格的成片承诺超出当前模拟能力",
+      "reason": "当前Ad Clone仅模拟时间轴，真实视频分析未连接。原文承诺rebuild winning ad style并在几分钟内交付自己的版本。替换为现有场景、brief和storyboard工作流；不要把模拟能力写成现有生产能力。",
+      "evidence": [
+        "src/lib/aidreamcapes-workspace/navigation.ts:21",
+        "src/components/aidreamcapes-workspace/ad-clone-workbench.tsx:257",
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/2/t",
+          "original": "Rebuild a Winning Ad Style",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Plan Your Own Creative Direction"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/2/d",
+          "original": "Found an ad style that already sells? Rebuild that look, swap in your item, and ship your own version in a few minutes.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Use product examples to plan your own scene, message and shot sequence. Add your own product assets and refine the storyboard before generating."
+        }
+      ]
+    },
+    {
+      "id": "SEO-003",
+      "priority": "P1",
+      "title": "旧功能卡把可编辑分步流程描述成自动交付成片",
+      "reason": "实际需要确认产品资料、保存草稿、生成storyboard、生成各shot、选择版本、assemble/render再review/download。这里writes/sets/finishes及finished ad comes back使用户合理预期自动完整成片，且与新6步说明冲突。",
+      "evidence": [
+        "src/components/aidreamcapes-workspace/workspace.tsx:644",
+        "src/components/aidreamcapes-workspace/workspace.tsx:1084",
+        "src/components/aidreamcapes-workspace/workspace.tsx:1086",
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/1/d",
+          "original": "Talk to the video agent the way you would brief a teammate. It writes the script, sets the actor and the voice, and finishes the edit.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Describe your product and message in a short brief. Save a draft, generate its storyboard, refine the shots and assemble the versions you choose."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/benefits/3/d",
+          "original": "Drop a public product link. The photos and the description come with it, and a finished ad comes back. Open the [page-to-ad tool](/ai-video-generation/url-to-video).",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Import a public product page, review the details and available photos, then use the confirmed information in an editable video draft. Continue in the [page-to-ad workspace](/ai-video-generation/url-to-video)."
+        }
+      ]
+    },
+    {
+      "id": "SEO-004",
+      "priority": "P1",
+      "title": "套餐把图片比例混写成五种视频比例",
+      "reason": "视频输入校验、catalog、editor和render实际只接受9:16、1:1、16:9。4:3与3:4不能作为当前视频可用选项承诺。应按视频/图片真实支持范围写明，并允许模型可用性限制。",
+      "evidence": [
+        "src/lib/aidreamcapes-workspace/api.ts:89",
+        "src/lib/aidreamcapes-workspace/catalogs.ts:8",
+        "src/lib/aidreamcapes-workspace/editor.ts:23",
+        "src/lib/aidreamcapes-workspace/media-render.ts:180",
+        "../content-manifest.json",
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "Product prod_aidreamcapes_starter.metadata",
+          "path": "/features/2",
+          "original": "Choose from five video formats: 9:16, 1:1, 16:9, 4:3, and 3:4.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Choose from supported video formats, including 9:16, 1:1 and 16:9. Availability depends on the selected model."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/trust/items/3/d",
+          "original": "A Reel wants 9:16 and a feed post may want 1:1. 16:9, 4:3, and 3:4 are on the same account, with no watermark. Post it straight to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads).",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Create videos in supported formats such as 9:16, 1:1 and 16:9. Check the available aspect ratios for your selected video or image workflow, then review the output before posting."
+        }
+      ]
+    },
+    {
+      "id": "SEO-005",
+      "priority": "P1",
+      "title": "Cloudflare 邮件改写破坏SSR邮件可读性并触发React #418",
+      "reason": "公网原始HTML将trust段落纯文本邮箱变为CF保护a节点，将footer mailto文本变为保护span；Next Flight仍预期原始结构。无JS两处邮箱显示[email protected]，保护地址GET返回404。两个独立浏览器上下文对照中，原样稳定#418，仅把这两处响应片段还原后errors=[]。没有修改线上、日期、React代码或脚本。",
+      "evidence": [
+        "hydration-cf-control.json",
+        "hydration-restored-email-response.html",
+        "no-javascript-response.html",
+        "browser-readback.json"
+      ],
+      "fields": [],
+      "recommendation": "在仅Aidreamcapes所属域名/响应范围内处理Cloudflare邮件混淆变换，然后重新验证真实公网无JS邮箱与hydration。不要通过隐藏hydration警告或改写公开联系文案掩盖。"
+    },
+    {
+      "id": "SEO-006",
+      "priority": "P2",
+      "title": "固定“几分钟成片”缺少当前运行证据且略去人工检查",
+      "reason": "本审计没有执行生成，也没有时延基准，因此不把几分钟判作虚假或违规；但反复写成通常/必然时间容易形成不受模型、排队、版本和审核影响的保证。FAQ应使用真实操作顺序，时间问题回答影响因素。",
+      "evidence": [
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/faq/0/a",
+          "original": "Upload a product photo or paste its link, choose an AI actor, and add your message. Then generate the ad and download it in minutes.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Upload your product photo or import a public product page. Choose a scene and an available presenter, write your brief and save a draft. Generate and refine the storyboard, create the shots you choose, then assemble, review and download your video.",
+          "jsonLdSourcePath": "/seo/jsonLd/@graph/3/mainEntity/0/acceptedAnswer/text"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/faq/5/a",
+          "original": "Yes. Paste your public product link to start an ad from its photos and details. Choose an actor and make a video in minutes.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Yes. Import a public product link, review its photos and product details, and use the confirmed information in an editable video draft. Generate the storyboard and selected shots, then assemble and review the video before downloading.",
+          "jsonLdSourcePath": "/seo/jsonLd/@graph/3/mainEntity/5/acceptedAnswer/text"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/faq/10/a",
+          "original": "An AI UGC ad usually takes a few minutes. Add a product link, choose an actor, and download the finished video without arranging a shoot.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Timing depends on the selected model, video length, shot count and any revisions. You can save a draft, return from your Library and download the video after its shots are generated and the final render is complete.",
+          "jsonLdSourcePath": "/seo/jsonLd/@graph/3/mainEntity/10/acceptedAnswer/text"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/faq/15/a",
+          "original": "Yes. Use your product photo or link with an AI actor to make a creator-style ad. You can download it in minutes without booking anyone.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Yes. Use your product photo or confirmed product-page details with an available AI presenter. Refine the storyboard, generate the shots and review the assembled video before downloading.",
+          "jsonLdSourcePath": "/seo/jsonLd/@graph/3/mainEntity/15/acceptedAnswer/text"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/audience/items/1/d",
+          "original": "Launch ads for a new product in a few minutes, with no creator and no studio. Test faster, drop the weak cuts, and scale the ones that sell.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Prepare product-video drafts without arranging a creator shoot. Compare creative directions, generate the versions you choose and review the results before launch."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/reviews/lead",
+          "original": "Start with a plain phone photo. Minutes later, you have a creator-style ad ready to run.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Explore examples of how a product photo can guide a creator-style ad. Use your own product facts, then review the generated video before launch."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/reviews/items/0/d",
+          "original": "One plain bottle photo became a creator-style ad that feels like a real review. No creator to book, no shoot, ready in minutes.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "A serum product photo can guide a presenter-style introduction focused on the bottle and visible details. Review the generated product details and spoken claims before posting."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/reviews/items/1/t",
+          "original": "A Cozy Gift Ad in Minutes",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "A Cozy Gift Ad Concept"
+        }
+      ]
+    },
+    {
+      "id": "SEO-007",
+      "priority": "P2",
+      "title": "可量化销售效果写成结果，建议回到可观察产品用途",
+      "reason": "Scroll-stopping等普通营销措辞不自动构成问题；但high-converting from day one与no delay更像不附条件的效果保证。本任务未提供转化实验或客户实绩，不据此断言违规。下列替换保留用途但不许诺成效。",
+      "evidence": [
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/audience/items/0/d",
+          "original": "Make high-converting ads that show the product, with no shoot, no creator, and no delay. Launch faster, test more ads, and keep the store running.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Create product-focused ads without arranging a traditional shoot. Prepare creative variations, review the generated details and test the content in your own campaigns."
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/reviews/items/3/d",
+          "original": "Two sneakers on a counter became a lifestyle ad that looks filmed on location. No crew, no model fees, high-converting from day one.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "A sneaker product photo can guide a lifestyle ad concept with a presenter or product scene. Review the fit, shape and other generated details before using it in a campaign."
+        }
+      ]
+    },
+    {
+      "id": "SEO-008",
+      "priority": "P2",
+      "title": "Logo与自有字体的直接成片能力需要产品证据",
+      "reason": "已检查当前TaskInput、主工作区以及render/editor，未找到选择品牌Logo、自有字体或end-card的直接生成控制。现有品牌资料管理和预设字幕字体并不等同该卡承诺。此项为能力待核实；若没有可演示入口，使用当前可验证审核能力替换。",
+      "evidence": [
+        "src/lib/aidreamcapes-workspace/types.ts:21",
+        "src/lib/aidreamcapes-workspace/media-render.ts",
+        "src/lib/aidreamcapes-workspace/editor.ts:405",
+        "src/components/aidreamcapes-workspace/team-brand-workbench.tsx"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/trust/items/5/t",
+          "original": "Add Your Logo and Type",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Review the Details Before Downloading"
+        },
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/trust/items/5/d",
+          "original": "Put your mark on the end card and keep the type you use on the site. The last frame carries your brand into the ad.",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Check the generated product details, spoken words and supported captions before downloading the assembled video."
+        }
+      ]
+    },
+    {
+      "id": "SEO-009",
+      "priority": "P2",
+      "title": "三个步骤主要讲图片，标题容易被视频首页读者理解为全部流程",
+      "reason": "当前Three Steps标题讲finished content；正文第二步明确image workspace，且只有第三步review/download。旁边详细6步视频说明是正确的，因此为可读性建议，不是SSR或内容缺失。可保留两套但明确图像/视频范围。",
+      "evidence": [
+        "browser-readback.json"
+      ],
+      "fields": [
+        {
+          "owner": "LivePage site_aidreamcapes_home.contentJson",
+          "path": "/sections/v2_main/settings/data/stepsH2",
+          "original": "From Product Photo to Finished Content in Three Steps",
+          "observedInPublicHtml": true,
+          "suggestedEnglish": "Create Product Images in Three Steps"
+        }
+      ]
+    }
+  ],
+  "googleSources": [
+    {
+      "url": "https://developers.google.com/search/docs/appearance/title-link",
+      "supports": "描述性、简洁title和清楚的主标题；不以固定字符数判定成败。"
+    },
+    {
+      "url": "https://developers.google.com/search/docs/appearance/snippet",
+      "supports": "描述应准确概括页面；Google可能用正文生成snippet，不能保证展示给定description。"
+    },
+    {
+      "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "supports": "面向真实用户、完整有帮助并可核查的内容；不由措辞直接推断排名变化。"
+    },
+    {
+      "url": "https://developers.google.com/search/docs/crawling-indexing/links-crawlable",
+      "supports": "使用真实a href和描述性anchor text；本页links符合。"
+    },
+    {
+      "url": "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics",
+      "supports": "SSR把正文放进初始HTTP HTML，支持不能运行JS的机器人；本页初始响应满足核心内容读取。"
+    },
+    {
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/sd-policies",
+      "supports": "结构化数据必须代表真实可读页面内容，不保证Search展示。"
+    },
+    {
+      "url": "https://developers.google.com/search/updates",
+      "supports": "May 8 2026记录FAQ富结果从May 7停止；June 15 2026记录文档移除。旧faqpage链接现重定向此页。"
+    }
+  ],
+  "evidenceFiles": [
+    "browser-readback.json",
+    "javascript-response.html",
+    "no-javascript-response.html",
+    "javascript-dom.html",
+    "no-javascript-dom.html",
+    "javascript-full.png",
+    "no-javascript-full.png",
+    "javascript-fold.png",
+    "no-javascript-fold.png",
+    "robots.txt",
+    "sitemap.xml",
+    "hydration-cf-control.json",
+    "hydration-restored-email-response.html"
+  ]
+}

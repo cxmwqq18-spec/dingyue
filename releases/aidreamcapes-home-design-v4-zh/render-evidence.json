@@ -1,0 +1,240 @@
+[
+  {
+    "viewport": 1440,
+    "height": 20439,
+    "width": 1440,
+    "original": [
+      {
+        "id": "hero",
+        "title": "把你的商品，讲成让人想看的视频"
+      },
+      {
+        "id": "definition",
+        "title": "AI UGC，能为产品做什么？"
+      },
+      {
+        "id": "picker",
+        "title": "先选一个场景，让创意有个起点"
+      },
+      {
+        "id": "steps",
+        "title": "三步，让商品故事动起来"
+      },
+      {
+        "id": "benefits",
+        "title": "把创意需要的工具，放进同一个工作台"
+      },
+      {
+        "id": "features",
+        "title": "从第一张素材，到最后一次审核"
+      },
+      {
+        "id": "audience",
+        "title": "不同的生意，都有值得讲好的产品故事"
+      },
+      {
+        "id": "pricing",
+        "title": "给下一次创作，选一份合适的计划"
+      },
+      {
+        "id": "related",
+        "title": "下一条创意，还可以从这里开始"
+      },
+      {
+        "id": "trust",
+        "title": "把制作过程中的关心，都交代清楚"
+      },
+      {
+        "id": "compare",
+        "title": "选一条适合自己的制作路径"
+      },
+      {
+        "id": "reviews",
+        "title": "从一张商品图，到有人物感的产品故事"
+      },
+      {
+        "id": "faq",
+        "title": "开始创作前，你可能还想知道"
+      },
+      {
+        "id": "closing",
+        "title": "你的下一条产品故事，从这里开始"
+      }
+    ],
+    "additions": [
+      {
+        "name": "商品创意画布",
+        "top": 555,
+        "height": 805
+      },
+      {
+        "name": "场景模板弹窗",
+        "top": 5913,
+        "height": 722
+      },
+      {
+        "name": "AI人物与脚本",
+        "top": 7482,
+        "height": 641
+      },
+      {
+        "name": "分镜与版本选择",
+        "top": 9469,
+        "height": 858
+      },
+      {
+        "name": "批量草稿与素材库",
+        "top": 11492,
+        "height": 651
+      },
+      {
+        "name": "多渠道内容展示",
+        "top": 16996,
+        "height": 902
+      }
+    ],
+    "latin": [
+      "AIVideosUGC",
+      "AI UGC，能为产品做什么？",
+      "UGC 是用户生成内容。AI UGC 运用 AI 人物、生成画面和脚本，呈现产品介绍、使用演示与开箱等熟悉的创作者形式。通过一条短视频，让用户理解产品是什么、适合谁，以及如何使用。",
+      "在 AIVideosUGC，从商品链接、照片或创意出发，选择场景、准备脚本，并在需要时搭配 AI 人物。用自己的产品信息，组织新品发布、社交广告和详情页需要的视频内容。",
+      "支持 JPG、PNG、WebP，建议使用清晰商品图",
+      "费用或导出问题可发送至 support@aivideosugc.com，并附上商品页与文件名称。",
+      "TikTok",
+      "Meta",
+      "AI UGC 产品广告是什么意思？",
+      "真实客户视频和 AI UGC 有什么区别？",
+      "BLYDEY INC",
+      "美国怀俄明州谢里登市 N Gould 街 30 号 R 室，邮编 82801",
+      "support@aivideosugc.com",
+      "Instagram",
+      "Facebook",
+      "YouTube Shorts",
+      "Amazon",
+      "Shopify",
+      "© 2026 AIVideosUGC，保留所有权利。",
+      "Cookie 政策"
+    ],
+    "broken": [],
+    "errors": []
+  },
+  {
+    "viewport": 390,
+    "height": 31110,
+    "width": 390,
+    "original": [
+      {
+        "id": "hero",
+        "title": "把你的商品，讲成让人想看的视频"
+      },
+      {
+        "id": "definition",
+        "title": "AI UGC，能为产品做什么？"
+      },
+      {
+        "id": "picker",
+        "title": "先选一个场景，让创意有个起点"
+      },
+      {
+        "id": "steps",
+        "title": "三步，让商品故事动起来"
+      },
+      {
+        "id": "benefits",
+        "title": "把创意需要的工具，放进同一个工作台"
+      },
+      {
+        "id": "features",
+        "title": "从第一张素材，到最后一次审核"
+      },
+      {
+        "id": "audience",
+        "title": "不同的生意，都有值得讲好的产品故事"
+      },
+      {
+        "id": "pricing",
+        "title": "给下一次创作，选一份合适的计划"
+      },
+      {
+        "id": "related",
+        "title": "下一条创意，还可以从这里开始"
+      },
+      {
+        "id": "trust",
+        "title": "把制作过程中的关心，都交代清楚"
+      },
+      {
+        "id": "compare",
+        "title": "选一条适合自己的制作路径"
+      },
+      {
+        "id": "reviews",
+        "title": "从一张商品图，到有人物感的产品故事"
+      },
+      {
+        "id": "faq",
+        "title": "开始创作前，你可能还想知道"
+      },
+      {
+        "id": "closing",
+        "title": "你的下一条产品故事，从这里开始"
+      }
+    ],
+    "additions": [
+      {
+        "name": "商品创意画布",
+        "top": 495,
+        "height": 989
+      },
+      {
+        "name": "场景模板弹窗",
+        "top": 7465,
+        "height": 947
+      },
+      {
+        "name": "AI人物与脚本",
+        "top": 10012,
+        "height": 966
+      },
+      {
+        "name": "分镜与版本选择",
+        "top": 13714,
+        "height": 1006
+      },
+      {
+        "name": "批量草稿与素材库",
+        "top": 17494,
+        "height": 1023
+      },
+      {
+        "name": "多渠道内容展示",
+        "top": 26742,
+        "height": 796
+      }
+    ],
+    "latin": [
+      "AIVideosUGC",
+      "AI UGC，能为产品做什么？",
+      "UGC 是用户生成内容。AI UGC 运用 AI 人物、生成画面和脚本，呈现产品介绍、使用演示与开箱等熟悉的创作者形式。通过一条短视频，让用户理解产品是什么、适合谁，以及如何使用。",
+      "在 AIVideosUGC，从商品链接、照片或创意出发，选择场景、准备脚本，并在需要时搭配 AI 人物。用自己的产品信息，组织新品发布、社交广告和详情页需要的视频内容。",
+      "支持 JPG、PNG、WebP，建议使用清晰商品图",
+      "费用或导出问题可发送至 support@aivideosugc.com，并附上商品页与文件名称。",
+      "TikTok",
+      "Meta",
+      "AI UGC 产品广告是什么意思？",
+      "真实客户视频和 AI UGC 有什么区别？",
+      "BLYDEY INC",
+      "美国怀俄明州谢里登市 N Gould 街 30 号 R 室，邮编 82801",
+      "support@aivideosugc.com",
+      "Instagram",
+      "Facebook",
+      "YouTube Shorts",
+      "Amazon",
+      "Shopify",
+      "© 2026 AIVideosUGC，保留所有权利。",
+      "Cookie 政策"
+    ],
+    "broken": [],
+    "errors": []
+  }
+]

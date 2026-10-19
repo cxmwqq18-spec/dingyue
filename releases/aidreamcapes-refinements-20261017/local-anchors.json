@@ -1,0 +1,150 @@
+{
+  "ok": true,
+  "url": "http://localhost:3002/site/aidreamcapes",
+  "cases": [
+    {
+      "width": 1440,
+      "control": "01\u3000Add your product\nUpload your own product photo",
+      "href": "#home-product-image-steps",
+      "heading": "Create Product Images in Three Steps",
+      "headingY": 236,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "02\u3000Choose a starting point\nPick a scene and write a short brief",
+      "href": "#home-experience-picker",
+      "heading": "Find a product video scene.\nPreview it before you create.",
+      "headingY": 218,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "03\u3000Save and edit your draft\nReview the storyboard before generating shots",
+      "href": "#home-experience-features",
+      "heading": "Explore the video storyboard.\nSee how the shots fit together.",
+      "headingY": 232,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "04\u3000Review and download\nGenerate clips, assemble and check the result",
+      "href": "#home-product-image-steps",
+      "heading": "Create Product Images in Three Steps",
+      "headingY": 236,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "Your product photo",
+      "href": "#home-seller-examples",
+      "heading": "From One Product Photo to a Scroll-Stopping Ad",
+      "headingY": 236,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "Scene templates",
+      "href": "#home-product-scenes",
+      "heading": "Choose a Scene for Your Product Video",
+      "headingY": 236,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "AI presenters",
+      "href": "#home-experience-steps-title",
+      "heading": "Explore AI presenters.\nFind a style for your video.",
+      "headingY": 112,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "control": "Videos and images",
+      "href": "#home-ai-ugc",
+      "heading": "What Is AI UGC?",
+      "headingY": 236,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "01\u3000Add your product\nUpload your own product photo",
+      "href": "#home-product-image-steps",
+      "heading": "Create Product Images in Three Steps",
+      "headingY": 216,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "02\u3000Choose a starting point\nPick a scene and write a short brief",
+      "href": "#home-experience-picker",
+      "heading": "Find a product video scene.\nPreview it before you create.",
+      "headingY": 164,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "03\u3000Save and edit your draft\nReview the storyboard before generating shots",
+      "href": "#home-experience-features",
+      "heading": "Explore the video storyboard.\nSee how the shots fit together.",
+      "headingY": 178,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "04\u3000Review and download\nGenerate clips, assemble and check the result",
+      "href": "#home-product-image-steps",
+      "heading": "Create Product Images in Three Steps",
+      "headingY": 216,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "Your product photo",
+      "href": "#home-seller-examples",
+      "heading": "From One Product Photo to a Scroll-Stopping Ad",
+      "headingY": 216,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "Scene templates",
+      "href": "#home-product-scenes",
+      "heading": "Choose a Scene for Your Product Video",
+      "headingY": 216,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "AI presenters",
+      "href": "#home-experience-steps-title",
+      "heading": "Explore AI presenters.\nFind a style for your video.",
+      "headingY": 92,
+      "headerBottom": 69,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "control": "Videos and images",
+      "href": "#home-ai-ugc",
+      "heading": "What Is AI UGC?",
+      "headingY": 216,
+      "headerBottom": 69,
+      "passed": true
+    }
+  ]
+}

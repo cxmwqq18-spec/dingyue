@@ -1,0 +1,53 @@
+{
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "codeCommit": "0845156f4fb24dcaf98bad4b1c527a3b87b9b257",
+  "createdAt": "2026-10-16T19:02:14.068393+00:00",
+  "baseUpdatedAt": "2026-10-16T17:56:53.771Z",
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/contentLayout",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "benefits-workflow"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/formats/0/d",
+      "baseHash": "24dc9584e88af9a93661e90b8e72d606949e76324f456f9a4127b992dcb1cfcc",
+      "previousValue": "Turn a public product URL into an AI video brief for ads, social media and product demonstrations. Review the imported photos and details, choose your creative direction and create a product video without arranging a shoot.",
+      "value": "Turn product URL into AI video for ads, social media and product demonstrations.upload photos and choose your creative direction create product video without arranging a shoot."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/formats/1/d",
+      "baseHash": "a0583f18b3236f7eda3dffdaa25f65d9aaf55e7a0aa0fb89079f8d8149f7823e",
+      "previousValue": "Create AI videos from a single product photo. Add a description to guide the scene and movement, then generate dynamic product visuals for ads, social posts and launches without a camera crew.",
+      "value": "Create AI videos from a single product photo. Add a description to guide the scene and movement, then generate product for ads, social posts and launches without a camera crew."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/formats/3/d",
+      "baseHash": "df10b3ba59ab3c5177330c79fbada8abd533a5f8bca9266b0b8d85f50755e454",
+      "previousValue": "Create product videos with AI presenters and generated scenes in one workspace. Choose a scene, refine your brief, compare shot versions and assemble a video for your product page or social channels.",
+      "value": "Create product videos with AI presenters and generated. Choose a scene, refine your brief, compare shot versions and assemble a video for your product page or social channels."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/contentContract/sourceRevision",
+      "baseHash": "709a87064f67aecb434ac571be0d256dc9102dff8f87dcc3ae4ebc1fca4e375f",
+      "previousValue": "aidreamcapes-home-composer-en-20261017",
+      "value": "aidreamcapes-home-campaign-layout-en-20261017"
+    }
+  ]
+}

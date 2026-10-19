@@ -1,0 +1,1302 @@
+{
+  "checks": [
+    {
+      "name": "1440-js six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no page overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 120,
+          "y": 11445.6875,
+          "width": 476.171875,
+          "height": 906.40625
+        },
+        "right": {
+          "x": 632.171875,
+          "y": 11445.6875,
+          "width": 687.828125,
+          "height": 707.984375
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "1440-js no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1440-js benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1024-js six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no page overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 32,
+          "y": 11446.578125,
+          "width": 378,
+          "height": 991.40625
+        },
+        "right": {
+          "x": 446,
+          "y": 11446.578125,
+          "width": 546,
+          "height": 872.15625
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "1024-js no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1024-js benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "768-js six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no page overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 32,
+          "y": 13714.578125,
+          "width": 704,
+          "height": 673.265625
+        },
+        "right": {
+          "x": 32,
+          "y": 14417.84375,
+          "width": 704,
+          "height": 686.984375
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "768-js no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "768-js benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-js six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no page overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 16,
+          "y": 17515.953125,
+          "width": 358,
+          "height": 1168.96875
+        },
+        "right": {
+          "x": 16,
+          "y": 18714.921875,
+          "width": 358,
+          "height": 1300.53125
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "390-js no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-js benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "batch actual workspace handoff",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "320-js six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no page overflow",
+      "pass": false,
+      "detail": null
+    },
+    {
+      "name": "320-js columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 16,
+          "y": 17886.0625,
+          "width": 288,
+          "height": 1389.53125
+        },
+        "right": {
+          "x": 16,
+          "y": 19305.59375,
+          "width": 288,
+          "height": 1534.046875
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "320-js no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "320-js benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-nojs six benefits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs six workflow steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Publish-Ready Photos and Videos",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Start with a Product Brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Plan Your Own Creative Direction",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Turn a Link Into an Ad",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Choose an AI Actor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit moved once Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs benefit copy Keep Your Product Drafts Together",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Add your product assets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Choose a scene and presenter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Write your product brief",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Save your draft and refine the storyboard",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Generate shots and assemble your video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs workflow copy Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no duplicate workflow heading Review and download",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs original standalone benefits section removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs original standalone workflow removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs old brief preview removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs exact Image to Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs exact AI Video",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs six other homepage modules retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs single H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs English copy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no page overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs columns and responsive stack",
+      "pass": true,
+      "detail": {
+        "left": {
+          "x": 16,
+          "y": 17515.953125,
+          "width": 358,
+          "height": 1168.96875
+        },
+        "right": {
+          "x": 16,
+          "y": 18714.921875,
+          "width": 358,
+          "height": 1300.53125
+        },
+        "clipped": []
+      }
+    },
+    {
+      "name": "390-nojs no clipped card text",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-nojs benefit links preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs batch CTA keeps destination",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no browser errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "no public content fetch",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "dataRequests": [],
+  "handoff": "http://localhost:3002/site/aidreamcapes/app/create?view=batch&prompt=Create+a+product+demonstration+using+my+uploaded+product+photo.+Show+the+product+clearly%2C+explain+one+useful+feature+using+the+details+I+provide%2C+and+end+with+a+clear+next+step.&scene=process_demo&aspect=9%3A16&duration=15",
+  "ok": false
+}

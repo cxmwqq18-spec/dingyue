@@ -1,0 +1,28 @@
+{
+  "desktop": "six aligned image-and-description cards; no duplicate accordion; loaded images; no clip overflow",
+  "brief_and_handoff": {
+    "edited_values": {
+      "view": "home",
+      "prompt": "Introduce my product with clear details and a calm tone.",
+      "aspect": "1:1",
+      "duration": "10"
+    },
+    "url_import_link": "/site/aidreamcapes/app/create?view=product&tool=url-to-video"
+  },
+  "interactions": "image dialog, Escape/focus restoration, presenter/version selection, editable brief, timed sequence and close cleanup passed",
+  "preserved_order": [
+    "Explore the video storyboard.See how the shots fit together.",
+    "From One Product Photo to a Scroll-Stopping Ad",
+    "Built for Teams That Ship Fast",
+    "Plans for Your Next Campaign",
+    "Product Content: A Creator Shoot or an AI Workspace?",
+    "Why Sellers Trust AIVideosUGC",
+    "Related Tools for the Next Ad"
+  ],
+  "trust": "updated six public copy fields and clickable support email",
+  "responsive": "1100, 768, 390 and 360 px; no horizontal overflow",
+  "browser_breadcrumbs": "video, image and platform detail pages passed",
+  "no_javascript": "six complete workflow cards and six tools present in SSR HTML",
+  "errors": [],
+  "browser_data_requests": []
+}

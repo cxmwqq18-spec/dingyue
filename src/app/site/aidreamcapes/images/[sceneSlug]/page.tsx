@@ -1,12 +1,12 @@
-import { renderAidreamcapesPublicSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
-import { aidreamcapesWorkspaceMetadata } from "@/lib/aidreamcapes-workspace/page";
+import { permanentRedirect } from "next/navigation";
+import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 
-export const metadata = aidreamcapesWorkspaceMetadata;
 export const dynamic = "force-dynamic";
 
-export default async function AidreamcapesImageScenePage({ params }: {
+export default async function AidreamcapesImageSceneRedirectPage({ params }: {
   params: Promise<{ sceneSlug: string }>;
 }) {
   const { sceneSlug } = await params;
-  return renderAidreamcapesPublicSceneCreatePage({ kind: "photo", publicSlug: sceneSlug, routeSlug: "aidreamcapes" });
+  if (PUBLIC_SCENE_SLUG_RE.test(sceneSlug)) permanentRedirect(`/site/aidreamcapes/ai-image-generation/${sceneSlug}`);
+  permanentRedirect("/site/aidreamcapes/ai-image-generation");
 }

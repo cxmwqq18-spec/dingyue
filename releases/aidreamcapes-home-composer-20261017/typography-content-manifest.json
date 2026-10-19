@@ -1,0 +1,256 @@
+{
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "codeCommit": "f9db146a04d9076078bcf49bde017154ea5af457",
+  "createdAt": "2026-10-16T17:47:38.484Z",
+  "baseUpdatedAt": "2026-10-16T15:19:48.301Z",
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/paras",
+      "baseHash": "8016c80ad27f6efb1b9f426c5339cf470af6fc4657c0292f03683822342835dc",
+      "previousValue": [
+        "UGC stands for user-generated content. AI UGC adapts familiar creator formats, such as product introductions, demonstrations and unboxing videos, using AI presenters, generated visuals and scripted dialogue. For a business, it is a way to explain what a product does, who it is for and how it can be used through a short video.",
+        "Start with a product link, a photo or a written idea. In AIVideosUGC, choose a scene, prepare a product script and select an AI presenter where the format calls for one. Use your own product information to shape a video for a product launch, a social ad or a product-page introduction.",
+        "Explore the four formats below to choose how you want to introduce your product. Each format provides a different starting point for the story, from a direct product explanation to a demonstration or packaging reveal."
+      ],
+      "value": [
+        "UGC stands for user-generated content. AI UGC adapts familiar creator formats, such as product introductions, demonstrations and unboxing videos, using AI presenters, generated visuals and scripted dialogue. For a business, it is a way to explain what a product does, who it is for and how it can be used through a short video."
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/composer",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": {
+        "label": "Try your product video brief",
+        "tabs": [
+          {
+            "label": "AI Video Agent",
+            "view": "home"
+          },
+          {
+            "label": "AI Video",
+            "view": "video"
+          },
+          {
+            "label": "AI Image",
+            "view": "images"
+          }
+        ],
+        "promptLabel": "Your creative brief",
+        "placeholder": "Describe your product and the story you want to tell…",
+        "productLabel": "Product",
+        "productHint": "Add a product name or a key detail to your brief.",
+        "productPlaceholder": "For example: a navy insulated travel mug",
+        "sceneLabel": "Scene",
+        "scenes": [
+          {
+            "value": "presenter_showcase",
+            "label": "AI presenter"
+          },
+          {
+            "value": "process_demo",
+            "label": "Product demo"
+          },
+          {
+            "value": "texture_closeup",
+            "label": "Product close-up"
+          }
+        ],
+        "modelLabel": "Model options",
+        "modelHint": "Choose from the available models in your workspace. You can review supported settings and the credit estimate before generating.",
+        "aspectLabel": "Format",
+        "aspects": [
+          {
+            "value": "9:16",
+            "label": "9:16"
+          },
+          {
+            "value": "1:1",
+            "label": "1:1"
+          },
+          {
+            "value": "16:9",
+            "label": "16:9"
+          }
+        ],
+        "durationLabel": "Length",
+        "durations": [
+          {
+            "value": "6",
+            "label": "6s"
+          },
+          {
+            "value": "10",
+            "label": "10s"
+          },
+          {
+            "value": "15",
+            "label": "15s"
+          },
+          {
+            "value": "30",
+            "label": "30s"
+          }
+        ],
+        "submitLabel": "Continue in workspace",
+        "note": "Prepare your brief here, then continue in your workspace to add your own product photos and review your creation settings."
+      }
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/ugc/formats",
+      "baseHash": "f0f762638bdae46e6f037f60f773fc909c34c33dea03b65dc17c4a2ac15a8e66",
+      "previousValue": [
+        {
+          "d": "Introduce your product through a script spoken by an AI presenter. Focus on the main features, intended audience and everyday uses, so viewers can understand the offer before exploring the details.",
+          "t": "AI Presenter Product Introductions"
+        },
+        {
+          "d": "Build a short story around a customer need. Explain the relevant product feature and illustrate how it could help in that situation, using product information you can support.",
+          "t": "Problem and Solution Videos"
+        },
+        {
+          "d": "Plan a short sequence around a particular use, setup step or visible feature. A focused demonstration gives shoppers context and helps them understand how the product could fit into everyday use.",
+          "t": "Product Demonstration Videos"
+        },
+        {
+          "d": "Plan an opening sequence that reveals the product and highlights its packaging or visible details. Use your actual product information to shape an unboxing introduction for a new launch or social post.",
+          "t": "Unboxing and Product Reveal Videos"
+        }
+      ],
+      "value": [
+        {
+          "t": "URL to Video",
+          "d": "Turn a public product URL into an AI video brief for ads, social media and product demonstrations. Review the imported photos and details, choose your creative direction and create a product video without arranging a shoot."
+        },
+        {
+          "t": "Image to Video",
+          "d": "Create AI videos from a single product photo. Add a description to guide the scene and movement, then generate dynamic product visuals for ads, social posts and launches without a camera crew."
+        },
+        {
+          "t": "Text to Video",
+          "d": "Turn a written idea into an AI video. Describe your product, audience and key message, then refine an editable storyboard before generating the shots you choose for your campaign."
+        },
+        {
+          "t": "AI Video",
+          "d": "Create product videos with AI presenters and generated scenes in one workspace. Choose a scene, refine your brief, compare shot versions and assemble a video for your product page or social channels."
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items",
+      "baseHash": "4d4bad2c4f7df31f51c68dead40a2769c230afab47c531f00c14cbd052d04b08",
+      "previousValue": [
+        {
+          "d": "Upload your product photo or import a public product page. Check the product details you want the video to use.",
+          "t": "Add your product assets"
+        },
+        {
+          "d": "Choose a product demonstration, detail close-up or presenter scene. For presenter videos, select an available AI presenter.",
+          "t": "Choose a scene and presenter"
+        },
+        {
+          "d": "Describe the audience, product facts and key message. Choose the supported video format, duration and other available settings.",
+          "t": "Write a clear product brief"
+        },
+        {
+          "d": "Save the draft to your Library. Generate its storyboard, then refine each shot, including the visuals and dialogue.",
+          "t": "Save a draft and edit its storyboard"
+        },
+        {
+          "d": "Check the credit cost, generate the shots you choose and compare their versions. Assemble your selected clips and review any captions.",
+          "t": "Generate shots and assemble the video"
+        },
+        {
+          "d": "Check the product details, spoken words and complete video. Download the finished file when it is ready for your product page or social channel.",
+          "t": "Review and download"
+        }
+      ],
+      "value": [
+        {
+          "t": "Add your product assets",
+          "d": "Upload a clear product photo or import a public product page. Review the photos, features and product details you want to use, so your video starts with information about your own product."
+        },
+        {
+          "t": "Choose a scene and presenter",
+          "d": "Browse scene templates for product demonstrations, close-ups and presenter introductions. Preview the creative direction and choose an available AI presenter when your video needs someone to explain the product."
+        },
+        {
+          "t": "Write your product brief",
+          "d": "Describe who the product is for, what it does and the message you want viewers to remember. Set an available aspect ratio and duration to suit your product page or social channel."
+        },
+        {
+          "t": "Save your draft and refine the storyboard",
+          "d": "Save an editable draft in your Library, then generate its storyboard. Review the sequence and refine the visuals and dialogue for each shot before you decide which shots to create."
+        },
+        {
+          "t": "Generate shots and assemble your video",
+          "d": "Review the credit estimate and generate the shots you choose. Compare versions, select your preferred clips and assemble them into a video. Check any supported captions alongside the visuals and dialogue."
+        },
+        {
+          "t": "Review and download",
+          "d": "Watch the assembled video and check the product details, spoken words and overall presentation. When the result is ready, download the finished file for your product page, campaign or social media channel."
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/1/presentation/steps",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": [
+        {
+          "number": "01",
+          "title": "Add your product assets",
+          "description": "Add your own product photo or import a public product page."
+        },
+        {
+          "number": "02",
+          "title": "Choose a scene and presenter",
+          "description": "Preview a scene and choose an available presenter where needed."
+        },
+        {
+          "number": "03",
+          "title": "Write your product brief",
+          "description": "Describe your product, audience and the message you want to share."
+        },
+        {
+          "number": "04",
+          "title": "Save your draft and refine the storyboard",
+          "description": "Save to your Library and refine each shot before generating."
+        },
+        {
+          "number": "05",
+          "title": "Generate shots and assemble your video",
+          "description": "Compare generated versions and assemble your selected clips."
+        },
+        {
+          "number": "06",
+          "title": "Review and download",
+          "description": "Check the complete video, then download the finished file."
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/contentContract/sourceRevision",
+      "baseHash": "60a84d252f9103c75c72861d0cbdcaec042cbbf3ef3b286902c3b59133550bd7",
+      "previousValue": "aidreamcapes-home-production-qa-en-20261016",
+      "value": "aidreamcapes-home-composer-en-20261017"
+    }
+  ]
+}

@@ -1,0 +1,3020 @@
+{
+  "target": "https://www.aivideosugc.com/?qa=desktop-d2e30400e",
+  "commit": "d2e30400e8d305ec6420cdd999d42e1f7aa8730b",
+  "capturedAt": "2026-10-16T15:15:22Z",
+  "status": "functional-pass-with-known-platform-warning",
+  "scope": "Real production desktop browser; six added modules and original visualSteps. 38 legacy presets are intentional workspace links. Read-only guest handoffs; no upload, save, generation or payment.",
+  "rawEvidence": "desktop-acceptance.json",
+  "firstNetworkIdleAttempt": "networkidle-timeout-attempt.json",
+  "passedAssertionCount": 607,
+  "rawPassedAssertionCount": 587,
+  "additionalCapturedStateChecks": [
+    {
+      "name": "CTA 1 picker: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "9:16",
+      "values": [
+        "9:16"
+      ]
+    },
+    {
+      "name": "CTA 6 picker: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "9:16",
+      "values": [
+        "9:16"
+      ]
+    },
+    {
+      "name": "CTA 7 visualSteps: native selected tool matches homepage",
+      "pass": true,
+      "expected": "lifestyle-photos",
+      "values": [
+        "lifestyle-photos"
+      ]
+    },
+    {
+      "name": "CTA 7 visualSteps: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    },
+    {
+      "name": "CTA 8 visualSteps: native selected tool matches homepage",
+      "pass": true,
+      "expected": "lifestyle-photos",
+      "values": [
+        "lifestyle-photos"
+      ]
+    },
+    {
+      "name": "CTA 8 visualSteps: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    },
+    {
+      "name": "CTA 9 visualSteps: native selected tool matches homepage",
+      "pass": true,
+      "expected": "white-background",
+      "values": [
+        "white-background"
+      ]
+    },
+    {
+      "name": "CTA 9 visualSteps: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    },
+    {
+      "name": "CTA 10 visualSteps: native selected tool matches homepage",
+      "pass": true,
+      "expected": "custom",
+      "values": [
+        "custom"
+      ]
+    },
+    {
+      "name": "CTA 10 visualSteps: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    },
+    {
+      "name": "CTA 11 visualSteps: native selected tool matches homepage",
+      "pass": true,
+      "expected": "custom",
+      "values": [
+        "custom"
+      ]
+    },
+    {
+      "name": "CTA 11 visualSteps: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "9:16",
+      "values": [
+        "9:16"
+      ]
+    },
+    {
+      "name": "CTA 14 audience: native selected scene matches homepage",
+      "pass": true,
+      "expected": "texture_closeup",
+      "values": [
+        "texture_closeup"
+      ]
+    },
+    {
+      "name": "CTA 15 audience: native selected scene matches homepage",
+      "pass": true,
+      "expected": "presenter_showcase",
+      "values": [
+        "presenter_showcase"
+      ]
+    },
+    {
+      "name": "CTA 16 audience: native selected scene matches homepage",
+      "pass": true,
+      "expected": "presenter_showcase",
+      "values": [
+        "presenter_showcase"
+      ]
+    },
+    {
+      "name": "CTA 17 reviews: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "9:16",
+      "values": [
+        "9:16"
+      ]
+    },
+    {
+      "name": "CTA 18 reviews: native selected tool matches homepage",
+      "pass": true,
+      "expected": "custom",
+      "values": [
+        "custom"
+      ]
+    },
+    {
+      "name": "CTA 18 reviews: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    },
+    {
+      "name": "CTA 19 reviews: native selected tool matches homepage",
+      "pass": true,
+      "expected": "white-background",
+      "values": [
+        "white-background"
+      ]
+    },
+    {
+      "name": "CTA 19 reviews: native selected aspect matches homepage",
+      "pass": true,
+      "expected": "1:1",
+      "values": [
+        "1:1"
+      ]
+    }
+  ],
+  "confirmedFunctionalFailures": [],
+  "p0p1Issues": [],
+  "localControlsVerified": 74,
+  "ctaHandoffsVerified": 20,
+  "legacySceneCards": 38,
+  "scopedModuleCount": 7,
+  "screenshots": [
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/desktop-fold.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-hero.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-hero.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-picker.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-picker.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-visualSteps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-visualSteps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-steps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-steps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-features.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-features.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-audience.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-audience.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-reviews.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-reviews.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-hero.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-picker.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-visualSteps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-steps.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-features.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-audience.png",
+    "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-reviews.png"
+  ],
+  "initialReconScreenshot": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/initial-desktop.png",
+  "excludedInapplicableOrPlatformAssertions": [
+    {
+      "name": "CTA hero/0 selected aspect is visible in workspace",
+      "pass": false,
+      "details": {
+        "aspect": "9:16",
+        "selects": [],
+        "buttons": []
+      },
+      "assessment": "Not applicable to read-only initial form. Agent/Batch scene workflows expose no ratio field before draft save. The query aspect was checked and preserved; persistence after save was not tested."
+    },
+    {
+      "name": "CTA features/13 selected aspect is visible in workspace",
+      "pass": false,
+      "details": {
+        "aspect": "9:16",
+        "selects": [],
+        "buttons": []
+      },
+      "assessment": "Not applicable to read-only initial form. Agent/Batch scene workflows expose no ratio field before draft save. The query aspect was checked and preserved; persistence after save was not tested."
+    },
+    {
+      "name": "CTA audience/14 selected aspect is visible in workspace",
+      "pass": false,
+      "details": {
+        "aspect": "9:16",
+        "selects": [
+          {
+            "value": "texture_closeup",
+            "options": [
+              {
+                "value": "presenter_showcase",
+                "text": "Presenter showcase",
+                "selected": false
+              },
+              {
+                "value": "process_demo",
+                "text": "Product demo",
+                "selected": false
+              },
+              {
+                "value": "texture_closeup",
+                "text": "Product close-up",
+                "selected": true
+              }
+            ]
+          }
+        ],
+        "buttons": []
+      },
+      "assessment": "Not applicable to read-only initial form. Agent/Batch scene workflows expose no ratio field before draft save. The query aspect was checked and preserved; persistence after save was not tested."
+    },
+    {
+      "name": "CTA audience/15 selected aspect is visible in workspace",
+      "pass": false,
+      "details": {
+        "aspect": "9:16",
+        "selects": [
+          {
+            "value": "presenter_showcase",
+            "options": [
+              {
+                "value": "presenter_showcase",
+                "text": "Presenter showcase",
+                "selected": true
+              },
+              {
+                "value": "process_demo",
+                "text": "Product demo",
+                "selected": false
+              },
+              {
+                "value": "texture_closeup",
+                "text": "Product close-up",
+                "selected": false
+              }
+            ]
+          }
+        ],
+        "buttons": []
+      },
+      "assessment": "Not applicable to read-only initial form. Agent/Batch scene workflows expose no ratio field before draft save. The query aspect was checked and preserved; persistence after save was not tested."
+    },
+    {
+      "name": "CTA audience/16 selected aspect is visible in workspace",
+      "pass": false,
+      "details": {
+        "aspect": "9:16",
+        "selects": [
+          {
+            "value": "presenter_showcase",
+            "options": [
+              {
+                "value": "presenter_showcase",
+                "text": "Presenter showcase",
+                "selected": true
+              },
+              {
+                "value": "process_demo",
+                "text": "Product demo",
+                "selected": false
+              },
+              {
+                "value": "texture_closeup",
+                "text": "Product close-up",
+                "selected": false
+              }
+            ]
+          }
+        ],
+        "buttons": []
+      },
+      "assessment": "Not applicable to read-only initial form. Agent/Batch scene workflows expose no ratio field before draft save. The query aspect was checked and preserved; persistence after save was not tested."
+    },
+    {
+      "name": "No browser page errors",
+      "pass": false,
+      "details": [
+        {
+          "phase": "local",
+          "action": "initial desktop load",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA hero/0",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA hero/0 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/1",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/1 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/2",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/2 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/3",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/3 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/4",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/4 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/5",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/5 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA picker/6",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA picker/6 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA visualSteps/7",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA visualSteps/7 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA visualSteps/8",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA visualSteps/8 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA visualSteps/9",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA visualSteps/9 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA visualSteps/10",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA visualSteps/10 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA visualSteps/11",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA visualSteps/11 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA steps/12",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA steps/12 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA features/13",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA features/13 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA audience/14",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA audience/14 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA audience/15",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA audience/15 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA audience/16",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA audience/16 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA reviews/17",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA reviews/17 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA reviews/18",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA reviews/18 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "restore CTA reviews/19",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "return",
+          "action": "CTA reviews/19 logo home",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        },
+        {
+          "phase": "local",
+          "action": "final image load inspection",
+          "message": "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+        }
+      ],
+      "assessment": "Known Cloudflare email-transformation hydration warning. Independent same-origin HTML A/B test restores only two email transformations and removes this exact error. Remains a platform issue until unmodified final public readback clears it.",
+      "evidence": "../seo/hydration-cf-control.json"
+    }
+  ],
+  "readOnlyLimitations": [
+    {
+      "ctaIndex": 0,
+      "root": "hero",
+      "field": "aspect",
+      "status": "query-preserved; no ratio field before draft save",
+      "expected": "9:16"
+    },
+    {
+      "ctaIndex": 13,
+      "root": "features",
+      "field": "aspect",
+      "status": "query-preserved; no ratio field before draft save",
+      "expected": "9:16"
+    },
+    {
+      "ctaIndex": 14,
+      "root": "audience",
+      "field": "aspect",
+      "status": "query-preserved; no ratio field before draft save",
+      "expected": "9:16"
+    },
+    {
+      "ctaIndex": 15,
+      "root": "audience",
+      "field": "aspect",
+      "status": "query-preserved; no ratio field before draft save",
+      "expected": "9:16"
+    },
+    {
+      "ctaIndex": 16,
+      "root": "audience",
+      "field": "aspect",
+      "status": "query-preserved; no ratio field before draft save",
+      "expected": "9:16"
+    }
+  ],
+  "network": {
+    "pageErrorCount": 42,
+    "knownCloudflareHydrationWarnings": 42,
+    "server5xx": [],
+    "publicContentFetches": [],
+    "platformPublicRequests": [
+      {
+        "phase": "local",
+        "action": "initial desktop load",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "initial desktop load",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/t005/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/t006/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/t007/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/t008/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/step1/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/step2/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/step3/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "hero/step4/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "visualSteps/visualCost/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "classification": "platform"
+      }
+    ],
+    "unexpectedWorkspaceRequests": [],
+    "appNonGetAttempts": [],
+    "unexpectedResourceFailures": [],
+    "expectedResourceFailures": [
+      {
+        "phase": "ssr",
+        "action": "no JavaScript response",
+        "url": "https://www.aivideosugc.com/_next/static/chunks/webpack-ce09b4531fb4bf4a.js",
+        "type": "script",
+        "failure": "csp",
+        "assessment": "JavaScript-disabled context CSP blocks script; expected in no-JS test."
+      },
+      {
+        "phase": "local",
+        "action": "initial desktop load",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "initial desktop load",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "initial desktop load",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t005/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t005/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t006/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t006/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t007/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t007/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t008/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/t008/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step1/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step1/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step2/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step2/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step3/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step3/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step4/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "hero/step4/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "visualSteps/visualCost/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "visualSteps/visualCost/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA hero/0",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA hero/0 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA hero/0 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA hero/0 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/1",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/1 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/1 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/1 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/2",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/2 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/2 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/2 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/3",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/3 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/3 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/3 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/4",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/4 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/5",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/5 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA picker/6",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/6 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/6 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA picker/6 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/7",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/7 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/7 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/7 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/8",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/8 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/9",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/9 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/10",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/10 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/10 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/10 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA visualSteps/11",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/11 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/11 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA visualSteps/11 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA steps/12",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA steps/12 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA features/13",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA features/13 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA features/13 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA features/13 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/14",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/14 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/15",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/15 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/15 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/15 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA audience/16",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/16 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/16 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA audience/16 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/17",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA reviews/17 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/18",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA reviews/18 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "restore CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "guest",
+        "action": "CTA reviews/19",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "return",
+        "action": "CTA reviews/19 logo home",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "ping",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      },
+      {
+        "phase": "local",
+        "action": "final image load inspection",
+        "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+        "type": "xhr",
+        "failure": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+        "assessment": "Test guard blocked Cloudflare RUM POST; no app write."
+      }
+    ]
+  },
+  "visualReview": {
+    "reviewedScreenshots": [
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-hero.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-picker.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-visualSteps.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-steps.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-features.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-audience.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-reviews.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-hero.png",
+      "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-audience.png"
+    ],
+    "finding": "Seven module screenshots visually inspected: scoped media rendered, readable public English copy, no internal implementation instructions, no desktop overflow. Guest agent and batch forms show selected brief and correct scene context."
+  },
+  "notes": [
+    "74 local controls were exercised with pointer and sampled keyboard activation. Dialog checks cover accessible naming, focus containment, Escape focus return, and visible close control.",
+    "20 distinct module/CTA destinations were clicked from restored homepage selections, using only anonymous read-only guest navigation.",
+    "Aspect is visibly selected in all applicable image/video ratio controls. Agent/Batch flows have no initial ratio control; query preservation is verified, persistence after saving is outside authorization.",
+    "No upload, save, task, generation, payment or credit action was performed. Historical publications/snapshots were not accessed or activated.",
+    "Relational source ownership and derived revision are verified by the release coordinator; this independent test establishes public browser readback only."
+  ]
+}

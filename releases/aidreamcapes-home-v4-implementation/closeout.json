@@ -1,0 +1,85 @@
+{
+  "completedAt": "2026-10-16T12:46:29.814721+00:00",
+  "siteId": "site_aidreamcapes",
+  "scope": "Local Aidreamcapes homepage V4 implementation; no production deployment",
+  "preview": "http://localhost:3002/site/aidreamcapes",
+  "implemented": [
+    "Six Chinese homepage presentation sections from approved V4 design",
+    "All original homepage modules, 38 scene cards and 20 filters retained",
+    "Four format cards numbered 01–04; six workflow cards numbered 01–06",
+    "Nine supplied social URLs with inline SVG logos, visible labels and safe new-tab behavior",
+    "Template CTA opens the existing workspace template modal"
+  ],
+  "mediaAudit": {
+    "siteId": "site_aidreamcapes",
+    "pages": 171,
+    "uniqueMedia": 1963,
+    "rootRelativeStatic": 1963,
+    "dynamic": [],
+    "external": 0,
+    "externalSample": []
+  },
+  "dataOwnership": {
+    "content": "LivePage.contentJson: site_aidreamcapes_home, site_aidreamcapes, /",
+    "navigation": "ThemeSettings current draftJson.aidreamcapesV2Navigation.footer.socialLinks; compatibility publishedJson field patched independently",
+    "sourceRevision": "aidreamcapes-home-v4-zh",
+    "derivedState": "SitePublishedState retired/absent; no snapshot or historical publication activated"
+  },
+  "validation": {
+    "typecheck": "passed",
+    "liveStorefrontSsrGuard": "passed",
+    "diffCheck": "passed",
+    "browserAcceptance": "passed; see browser-acceptance.json",
+    "viewports": [
+      1440,
+      390
+    ],
+    "noJavaScriptSsr": "passed",
+    "pageErrors": 0,
+    "server5xx": 0,
+    "publicDataRequests": 0,
+    "unsafeOrSupplierRequests": 0,
+    "horizontalOverflow": false,
+    "myDreamShoots": "Unchanged; relational and rendered content hashes match before/after"
+  },
+  "existingGlobalGuardIssues": [
+    "storefront-single-source legacy checks fail on untouched shared/MyDreamShoots source and old snapshot expectations; PostgreSQL-only subguard passes",
+    "public-storefront-ssr fails on pre-existing staged dreamshoot-showcase-video.tsx client behavior; outside Aidreamcapes scope"
+  ],
+  "publication": {
+    "siteId": "site_aidreamcapes",
+    "target": "local",
+    "origin": {
+      "status": 200,
+      "title": "AI 产品视频与商品图片创作 | AIVideosUGC",
+      "h1": "把你的商品，讲成让人想看的视频",
+      "description": "从商品链接、一张照片或一句创意出发，搭配 AI 人物、场景模板和可编辑分镜，制作产品介绍视频与商品图片。",
+      "canonical": "https://www.aivideosugc.com/",
+      "ogDescription": "从商品链接、一张照片或一句创意出发，搭配 AI 人物、场景模板和可编辑分镜，制作产品介绍视频与商品图片。",
+      "twitterDescription": "从商品链接、一张照片或一句创意出发，搭配 AI 人物、场景模板和可编辑分镜，制作产品介绍视频与商品图片。",
+      "experienceBlocks": 6,
+      "socialLinks": 9,
+      "faqSchemaQuestions": 18,
+      "jsonLdMatchesVisibleFaq": true
+    },
+    "public": {
+      "error": "fetch failed",
+      "statusNote": "local V4 has not been deployed"
+    },
+    "deployed": false,
+    "owner": {
+      "table": "LivePage",
+      "id": "site_aidreamcapes_home",
+      "siteId": "site_aidreamcapes",
+      "sourceRevision": "aidreamcapes-home-v4-zh",
+      "updatedAt": "2026-10-16T12:35:46.877Z"
+    }
+  },
+  "primaryScreenshots": [
+    "home-v4-numbered-definition-1440.png",
+    "home-v4-numbered-workflow-390.png",
+    "home-v4-footer-390.png",
+    "home-v4-hero-1440.png"
+  ],
+  "remaining": "Production deployment is not requested and was not performed; global pre-existing guard failures require separate scoped work before a full release."
+}

@@ -1,0 +1,55 @@
+{
+  "url": "https://www.aivideosugc.com/",
+  "checks": [
+    {
+      "viewport": 1566,
+      "thumbnail": {
+        "x": 315.859375,
+        "y": 525.859375,
+        "width": 36,
+        "height": 48
+      },
+      "descriptionVisible": true
+    },
+    {
+      "viewport": 1100,
+      "thumbnail": {
+        "x": 267.75,
+        "y": 536.75,
+        "width": 36,
+        "height": 48
+      },
+      "descriptionVisible": true
+    },
+    {
+      "viewport": 768,
+      "thumbnail": {
+        "x": 187.9375,
+        "y": 540.90625,
+        "width": 36,
+        "height": 48
+      },
+      "descriptionVisible": true
+    },
+    {
+      "viewport": 390,
+      "thumbnail": {
+        "x": 195.46875,
+        "y": 523.890625,
+        "width": 36,
+        "height": 48
+      },
+      "descriptionVisible": true
+    },
+    {
+      "viewport": 360,
+      "thumbnail": {
+        "x": 181.046875,
+        "y": 524.59375,
+        "width": 36,
+        "height": 48
+      },
+      "descriptionVisible": true
+    }
+  ]
+}

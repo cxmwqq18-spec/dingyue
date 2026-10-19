@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "applied": true,
+  "siteId": "site_aidreamcapes",
+  "pageId": "site_aidreamcapes_home",
+  "owner": "LivePage.contentJson",
+  "operations": 2,
+  "retainedIntentTargets": 82,
+  "beforeRevision": "b49d2c8ce61cb73f2c0393494fb224f446de4966a7e18f4d88f1b802f25a3ffa",
+  "afterRevision": "e67b5368ece3a6f5789ff11d7f9bda672c000565442ac32f60ba3b1f977da854",
+  "sourceRevision": "aidreamcapes-home-local-interactions-en",
+  "language": "en",
+  "sceneCards": 38,
+  "addedModules": 6,
+  "myDreamShootsHashBefore": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3",
+  "myDreamShootsHashAfter": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3",
+  "derivedState": {
+    "relation": null,
+    "runtimeUse": "Public SSR reads the current LivePage; no historical state is restored or activated"
+  }
+}

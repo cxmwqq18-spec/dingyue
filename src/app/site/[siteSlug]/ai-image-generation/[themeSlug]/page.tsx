@@ -15,6 +15,17 @@ import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPa
 import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isMydreamshootsTopicGroupActive, mydreamshootsImageTopicGroupForSlug } from "@/lib/mydreamshoots-topic-groups";
+import { renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
+import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+
+async function resolveAidreamcapesImageScene(siteSlug: string, themeSlug: string) {
+  if (siteSlug !== "aidreamcapes" && siteSlug !== "aivideosugc") return undefined;
+  if (!PUBLIC_SCENE_SLUG_RE.test(themeSlug)) return undefined;
+  const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, "photo", themeSlug);
+  return preset ? { preset, routeSlug: (siteSlug === "aivideosugc" ? "aivideosugc" : "aidreamcapes") as "aivideosugc" | "aidreamcapes" } : undefined;
+}
 import { isPrimaryMydreamshootsSlug } from "@/lib/storefront-context/capabilities";
 import type { PlatformState, Site } from "@/lib/types";
 
@@ -51,6 +62,10 @@ async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise
 
 export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {
   const { siteSlug, themeSlug } = await params;
+  const imageScene = await resolveAidreamcapesImageScene(siteSlug, themeSlug);
+  if (imageScene) {
+    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+  }
   const group = mydreamshootsImageTopicGroupForSlug(themeSlug);
   if (group && isPrimaryMydreamshootsSlug(siteSlug)) {
     const loadedGroup = await loadMydreamshootsImageTopicGroup(siteSlug, group);
@@ -138,6 +153,10 @@ export default async function ImageThemePage({
 }) {
   const resolved = await params;
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
+  const imageScene = await resolveAidreamcapesImageScene(resolved.siteSlug, resolved.themeSlug);
+  if (imageScene) {
+    return renderAidreamcapesResolvedScenePage({ kind: "photo", preset: imageScene.preset, routeSlug: imageScene.routeSlug });
+  }
   const group = mydreamshootsImageTopicGroupForSlug(resolved.themeSlug);
   if (group && isPrimaryMydreamshootsSlug(resolved.siteSlug)) {
     const loadedGroup = await loadMydreamshootsImageTopicGroup(resolved.siteSlug, group);

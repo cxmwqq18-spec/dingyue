@@ -1,0 +1,22 @@
+{
+  "path": "/Users/a1/orca/workspaces/dingyue/aidreamcapes-workflow-release-20261017",
+  "files": [
+    "scripts/lib/aidreamcapes-site-v2-content.mjs",
+    "scripts/lib/aidreamcapes-breadcrumb-taxonomy.mjs",
+    "scripts/apply-aidreamcapes-home-tools-bento-local.mjs",
+    "scripts/apply-aidreamcapes-workflow-integrated-local.mjs",
+    "docs/content-locks/aivideosugc-homepage-tdk-approved.json",
+    "src/components/storefront/aidreamcapes-v2/home-campaign.css",
+    "src/components/storefront/aidreamcapes-v2/home-experience-types.ts",
+    "src/components/storefront/aidreamcapes-v2/home-experience.tsx",
+    "src/components/storefront/aidreamcapes-v2/page.tsx",
+    "src/components/storefront/aidreamcapes-v2/parts.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-brand-tools-behavior.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-brand-tools-types.ts",
+    "src/components/storefront/aidreamcapes-v2/home-brand-tools.css",
+    "src/components/storefront/aidreamcapes-v2/home-brand-tools.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-workflow-behavior.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-workflow.css",
+    "src/components/storefront/aidreamcapes-v2/home-workflow.tsx"
+  ]
+}

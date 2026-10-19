@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "apply": true,
+  "owner": "LivePage.contentJson",
+  "operations": 1,
+  "revisions": [
+    {
+      "id": "site_aidreamcapes_home",
+      "slug": "/",
+      "before": "e51d471ebb341fe2e9c5a3b6c2429f6def740a9b05da8fae0eb0eb5c3c513883",
+      "after": "c3a91415b61dda7d65ab2c262c95ff52191562db0e4c11ad6c725966611d903e"
+    }
+  ],
+  "protectedBefore": "e4837ab6af10f64648964f42b1d733b2fb28855d9cc0bef81432e7bf16e3f7bd",
+  "protectedAfter": "e4837ab6af10f64648964f42b1d733b2fb28855d9cc0bef81432e7bf16e3f7bd",
+  "derivedState": {
+    "relation": null
+  },
+  "historicalStateActivated": false
+}

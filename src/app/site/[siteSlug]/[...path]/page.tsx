@@ -26,7 +26,20 @@ import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editoria
 import { isMydreamshootsSaveDateTopicGroupPathRequest, isMydreamshootsTopicGroupActive, isMydreamshootsVideoTopicGroupPathRequest, mydreamshootsTopicGroupForPath } from "@/lib/mydreamshoots-topic-groups";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
+import { renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
+import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import type { PlatformState, ThemePage } from "@/lib/types";
+
+async function resolveAidreamcapesPathModeScene(publicSite: string, path: string[]) {
+  if ((publicSite !== "aidreamcapes" && publicSite !== "aivideosugc") || path.length !== 2) return undefined;
+  if (path[0] !== "ai-video-generation" && path[0] !== "ai-image-generation") return undefined;
+  if (!PUBLIC_SCENE_SLUG_RE.test(path[1])) return undefined;
+  const kind: "photo" | "video" = path[0] === "ai-image-generation" ? "photo" : "video";
+  const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, kind, path[1]);
+  return preset ? { kind, preset, routeSlug: (publicSite === "aivideosugc" ? "aivideosugc" : "aidreamcapes") as "aivideosugc" | "aidreamcapes" } : undefined;
+}
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -345,6 +358,10 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
+  const scene = await resolveAidreamcapesPathModeScene(publicSiteSlug(siteSlug), path);
+  if (scene) {
+    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+  }
   if ((isMydreamshootsVideoTopicGroupPathRequest(publicSiteSlug(siteSlug), path) || isMydreamshootsSaveDateTopicGroupPathRequest(publicSiteSlug(siteSlug), path)) && !mydreamshootsTopicGroupForPath(requestedSlug)) {
     return { robots: { index: false, follow: false } };
   }
@@ -570,6 +587,10 @@ export default async function SiteCatchAllPage({
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
+  const pathModeScene = await resolveAidreamcapesPathModeScene(publicSlug, path);
+  if (pathModeScene) {
+    return renderAidreamcapesResolvedScenePage({ kind: pathModeScene.kind, preset: pathModeScene.preset, routeSlug: pathModeScene.routeSlug });
+  }
   if ((isMydreamshootsVideoTopicGroupPathRequest(publicSlug, path) || isMydreamshootsSaveDateTopicGroupPathRequest(publicSlug, path)) && !mydreamshootsTopicGroupForPath(slug)) notFound();
   const imageThemePath = aidreamcapesImageThemePathForRequest(publicSlug, slug);
   if (imageThemePath) {

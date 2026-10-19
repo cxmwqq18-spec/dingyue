@@ -1,0 +1,298 @@
+{
+  "ok": true,
+  "target": "local",
+  "deployed": false,
+  "owner": {
+    "relation": "LivePage",
+    "field": "contentJson",
+    "siteId": "site_aidreamcapes",
+    "pageId": "site_aidreamcapes_home",
+    "sourceRevision": "aidreamcapes-home-local-interactions-en",
+    "revision": "e67b5368ece3a6f5789ff11d7f9bda672c000565442ac32f60ba3b1f977da854",
+    "updatedAt": "2026-10-16T14:06:47.122Z"
+  },
+  "origin": {
+    "url": "http://localhost:3002/site/aidreamcapes",
+    "status": 200,
+    "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+    "h1": [
+      "Create AI UGC Videos from Your Product Photos"
+    ],
+    "description": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+    "canonical": "https://www.aivideosugc.com/",
+    "ogUrl": "https://www.aivideosugc.com/",
+    "schemas": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.aivideosugc.com/#organization",
+        "name": "AIVideosUGC",
+        "legalName": "BLYDEY INC",
+        "url": "https://www.aivideosugc.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-512.png?v=20261011ugc",
+          "contentUrl": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-512.png?v=20261011ugc"
+        },
+        "description": "AIVideosUGC is an online tool that turns a product photo or a product page link into short video ads and store-ready product images for online stores.",
+        "email": "support@aivideosugc.com",
+        "telephone": "(+1)307-310-3014",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "support@aivideosugc.com",
+          "telephone": "(+1)307-310-3014",
+          "contactType": "customer support",
+          "availableLanguage": [
+            "en"
+          ]
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "30 N GOULD ST STE R",
+          "addressLocality": "SHERIDAN",
+          "addressRegion": "WY",
+          "postalCode": "82801",
+          "addressCountry": "US"
+        },
+        "identifier": [
+          {
+            "@type": "PropertyValue",
+            "propertyID": "Legal entity",
+            "name": "Legal entity",
+            "value": "BLYDEY INC"
+          },
+          {
+            "@type": "PropertyValue",
+            "propertyID": "Entity type",
+            "name": "Entity type",
+            "value": "company"
+          }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/aidreamcapes",
+          "https://www.facebook.com/aidreamcapes",
+          "https://www.pinterest.com/aidreamcapes",
+          "https://www.youtube.com/@aidreamcapes",
+          "https://x.com/aidreamcapes",
+          "https://www.tiktok.com/@aidreamcapes"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "@id": "https://www.aivideosugc.com/#plans",
+          "name": "AIVideosUGC AI image and video plans",
+          "url": "https://www.aivideosugc.com/pricing"
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.aivideosugc.com/#app",
+        "name": "AIVideosUGC",
+        "description": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "url": "https://www.aivideosugc.com/",
+        "provider": {
+          "@id": "https://www.aivideosugc.com/#organization"
+        },
+        "offers": []
+      },
+      {
+        "@id": "https://www.aivideosugc.com/#website",
+        "url": "https://www.aivideosugc.com/",
+        "name": "AIVideosUGC",
+        "@type": "WebSite",
+        "publisher": {
+          "@id": "https://www.aivideosugc.com/#organization"
+        },
+        "inLanguage": "en"
+      },
+      {
+        "@id": "https://www.aivideosugc.com/#webpage",
+        "url": "https://www.aivideosugc.com/",
+        "name": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+        "@type": "WebPage",
+        "isPartOf": {
+          "@id": "https://www.aivideosugc.com/#website"
+        },
+        "inLanguage": "en",
+        "description": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+        "primaryImageOfPage": {
+          "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+          "@type": "ImageObject",
+          "width": 1200,
+          "height": 630
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "inLanguage": "en",
+        "mainEntity": [
+          {
+            "name": "How do I make a UGC ad with an AI actor?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Upload a product photo or paste its link, choose an AI actor, and add your message. Then generate the ad and download it in minutes.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "How much does it cost to make an AI UGC ad?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Choose a monthly or yearly plan based on the credits you expect to use. Each plan shows its price and included credits, and the cost of each photo or video appears before you start.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I use the finished ads for a client?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. You can use the finished ads in client campaigns. Use product photos, voices, and other material you have permission to use.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Why are AI UGC ads effective?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "AI UGC ads get attention because they look like the creator posts people already watch. Open with a clear problem, then show your product solving it.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I make a testimonial-style ad for TikTok?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Choose a vertical format and an AI actor to make a TikTok-style product ad. Check TikTok’s labeling rules before posting.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I turn a product link into a UGC ad?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Paste your public product link to start an ad from its photos and details. Choose an actor and make a video in minutes.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I make the same ad in another language?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Change the script and choose a matching voice to make an ad for another language. You can reuse the same product photo.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I make another version of an ad later?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Start from the same product photo, change the script or scene, and render a new version. You see the credit cost before each run.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "What does AI UGC mean for a product ad?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "AI UGC is a creator-style product video made with an AI actor and voice. You can make one from a product photo without filming or hiring a creator.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I change the ad after it is generated?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Change the script, actor, voice, or captions and make another version. You can test fresh openings without another shoot.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "How long does an AI UGC ad take?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "An AI UGC ad usually takes a few minutes. Add a product link, choose an actor, and download the finished video without arranging a shoot.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Should I use an AI actor or hire a person?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Use AI actors when you need several ads quickly or want to reach buyers in different languages. Hire people when a real personal endorsement matters.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Will Meta accept an AI-generated product ad?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "AI-generated product ads can run on Meta when they meet its ad policies. Check your claims and any required AI labels before posting.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can an AI actor use a voice we already recorded?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Custom voice cloning is not currently available. Choose from the presenter voice options listed in the workspace, and review the supported languages before creating your video.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Do these AI UGC ads need a signed release?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "No signed release is needed for our AI actors, and the download is cleared for commercial use without a watermark. Use only product photos and audio you have rights to.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "Can I post creator-style ads without hiring anyone?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Yes. Use your product photo or link with an AI actor to make a creator-style ad. You can download it in minutes without booking anyone.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "How is a customer video different from AI UGC?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Customer videos are filmed by real people; AI UGC uses generated actors and voices. It gives your ads a creator-style look without organizing a shoot.",
+              "@type": "Answer"
+            }
+          },
+          {
+            "name": "What should a small shop look for in an AI UGC tool?",
+            "@type": "Question",
+            "acceptedAnswer": {
+              "text": "Look for simple photo-to-video steps, realistic actors, and commercial downloads without a watermark. Check the credit cost before making each ad.",
+              "@type": "Answer"
+            }
+          }
+        ]
+      }
+    ],
+    "modules": 6,
+    "sceneCards": 38,
+    "localControls": 76,
+    "explicitCtas": 19,
+    "voiceAnswer": "Can an AI actor use a voice we already recorded?Custom voice cloning is not currently available. Choose from the presenter voice options listed in the workspace, and review the supported languages before creating your video."
+  },
+  "publicReadback": {
+    "reachable": false,
+    "error": "fetch failed",
+    "localChangesDeployed": false
+  },
+  "myDreamShoots": {
+    "readOnly": true,
+    "status": 200,
+    "baselineMainSha256": "6d7417a73d32ac317ab17c8ecd2f9473bfdb15b9902db56ce013e116fe35a01d",
+    "currentMainSha256": "6d7417a73d32ac317ab17c8ecd2f9473bfdb15b9902db56ce013e116fe35a01d",
+    "unchanged": true
+  },
+  "seoReferences": [
+    "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "https://developers.google.com/search/docs/crawling-indexing/links-crawlable"
+  ]
+}

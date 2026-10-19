@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "siteId": "site_aidreamcapes",
+  "domain": "aivideosugc.com",
+  "zoneId": "8bd33b91a4bc763f3d994e0d0777bbf9",
+  "endpoint": "/zones/8bd33b91a4bc763f3d994e0d0777bbf9/settings/email_obfuscation",
+  "before": "on",
+  "desired": "off",
+  "after": "off",
+  "changed": true,
+  "otherZonesModified": false
+}

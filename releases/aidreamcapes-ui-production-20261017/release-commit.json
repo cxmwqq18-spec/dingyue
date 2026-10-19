@@ -1,0 +1,7 @@
+{
+  "sha": "2d9afd12a837eb8ec8b854f083d8b06d6f6054c1",
+  "frontendBuildCommit": "6779fe5b66c2b20e7bd260777c466f5deb9b916b",
+  "frontendBuildInputsMatch": true,
+  "workspace": "/Users/a1/orca/workspaces/dingyue/aidreamcapes-workflow-release-20261017",
+  "prebuilt": "/Users/a1/orca/workspaces/dingyue/aidreamcapes-workflow-release-20261017/.next-build"
+}

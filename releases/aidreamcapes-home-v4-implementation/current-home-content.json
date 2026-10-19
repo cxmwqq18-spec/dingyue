@@ -1,0 +1,2131 @@
+{
+  "seo": {
+    "index": true,
+    "title": "AI UGC Ads in Minutes | AIVideosUGC",
+    "jsonLd": {
+      "@graph": [
+        {
+          "@id": "https://www.aivideosugc.com/#organization",
+          "url": "https://www.aivideosugc.com/",
+          "name": "AIVideosUGC",
+          "@type": "Organization"
+        },
+        {
+          "@id": "https://www.aivideosugc.com/#website",
+          "url": "https://www.aivideosugc.com/",
+          "name": "AIVideosUGC",
+          "@type": "WebSite",
+          "publisher": {
+            "@id": "https://www.aivideosugc.com/#organization"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@id": "https://www.aivideosugc.com/#webpage",
+          "url": "https://www.aivideosugc.com/",
+          "name": "AI UGC Ads in Minutes | AIVideosUGC",
+          "@type": "WebPage",
+          "isPartOf": {
+            "@id": "https://www.aivideosugc.com/#website"
+          },
+          "inLanguage": "en",
+          "description": "Make AI UGC ads in a few minutes from a product link, a photo, or one line. Skip the creator and the shoot, and download a realistic, high-converting ad.",
+          "primaryImageOfPage": {
+            "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+            "@type": "ImageObject",
+            "width": 1200,
+            "height": 630
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "name": "Why do creator-style AI ads get attention?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "They open like a recommendation, so the problem and the product show up before a polished brand spot would.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "What does AI UGC mean for a product ad?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "It is a creator-style product ad read by an AI actor, not a review from a buyer. Start from your photo or your product page, then read the words before you download.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "What does a paid plan include before the first ad?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Starter is $24.50 a month for 200 credits, Pro is $35 for 300, and Premium is $63 for 600. A photo is 24 credits. Videos of 6, 10, 15, and 30 seconds cost 24, 40, 60, and 120 credits. You see the charge before you start.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "How long does an AI UGC ad take?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "You stay on the page and can edit the line while the file renders, then download it when it finishes. A failed job returns the credits.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "How do I make a UGC ad with an AI actor?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Upload a product photo or paste a page link, pick an AI actor, and read the script. Change the line if it does not fit, then generate.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Where do the AI actors for these ads come from?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "They come from a library of 53 adult AI actors. Pick a face that fits the buyer, then pair it with a voice from the same library.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can I turn a product link into a UGC ad?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. Paste a public product page so the tool can start from the product image and the name. Add who the ad is for before you review it.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Do these AI UGC ads need a signed release?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "No signed release is needed for an AIVideosUGC AI actor, and the file is cleared for commercial use with no watermark. You still need rights to the product photo and to any voice sample you upload.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can I change the ad after it is generated?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. Edit the script, swap the face, change the captions, and render another version. The credit charge shows before you confirm that next job.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "How is a customer video different from AI UGC?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "A customer video is filmed by a person who bought the product. An AI actor ad uses a generated face and a line you approved. Do not present it as a review from a buyer.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Should I use an AI actor or hire a person?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Use an AI actor when you need the ad without a shoot, or several versions to test. Hire a person when a real founder has to be the one on camera.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can I make the same ad in another language?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. Write the product sentence in the language you sell in, then pick a voice that matches it. Render the same offer again for the next market.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Which languages can the spoken line use?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Any language you can write the product sentence in. Pick a voice that matches it. The same offer can be cut for TikTok and for Meta.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Where do I get help before a promotion date?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Email support@aivideosugc.com with the product page and the line you want spoken. We help you get the script right before that date.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can an AI actor use a voice we already recorded?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. An AI actor can use a cloned voice when you have rights to the sample. Upload only audio you own or are allowed to use.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can I post creator-style ads without hiring anyone?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. Start from your product photo and an AI actor, then publish the download in your ad account like any other video.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "Can I make a testimonial-style ad for TikTok?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "Yes. Make a vertical testimonial-style ad with an AI actor, approve the line, and download it for TikTok. Check that platform's label rules before you post.",
+                "@type": "Answer"
+              }
+            },
+            {
+              "name": "What should a small shop look for in a UGC tool?",
+              "@type": "Question",
+              "acceptedAnswer": {
+                "text": "A tool that shows the credit cost first and lets you approve the script. It should export 9:16, 1:1, 16:9, 4:3, and 3:4 with no watermark. Failed jobs return credits. You can send up to 7 reference images with a job.",
+                "@type": "Answer"
+              }
+            }
+          ]
+        }
+      ],
+      "@context": "https://schema.org"
+    },
+    "robots": {
+      "index": true,
+      "follow": true,
+      "maxImagePreview": "large"
+    },
+    "ogImage": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+    "keywords": "AI product video generator, AI product photo generator, AI UGC video ads, white background product photos, AI ads for ecommerce",
+    "canonical": "https://www.aivideosugc.com/",
+    "ogImageAlt": "An adult woman in a parked car holds a plain amber serum bottle beside her face and speaks directly to camera.",
+    "description": "Make AI UGC ads in a few minutes from a product link, a photo, or one line. Skip the creator and the shoot, and download a realistic, high-converting ad.",
+    "canonicalPath": "/",
+    "primaryKeyword": "AI product videos and photos",
+    "twitterDescription": "Make AI UGC ads in a few minutes from a product link, a photo, or one line. Skip the creator and the shoot, and download a realistic, high-converting ad."
+  },
+  "version": 2,
+  "pageType": "home",
+  "sections": {
+    "v2_main": {
+      "type": "aidreamcapes_v2_page",
+      "blocks": [],
+      "settings": {
+        "data": {
+          "h1": "Make AI UGC Ads in a Few Minutes",
+          "id": "home",
+          "faq": [
+            {
+              "a": "Upload a product photo or paste its link, choose an AI actor, and add your message. Then generate the ad and download it in minutes.",
+              "q": "How do I make a UGC ad with an AI actor?"
+            },
+            {
+              "a": "Choose a monthly or yearly plan based on the credits you expect to use. Each plan shows its price and included credits, and the cost of each photo or video appears before you start.",
+              "q": "How much does it cost to make an AI UGC ad?"
+            },
+            {
+              "a": "Yes. You can use the finished ads in client campaigns. Use product photos, voices, and other material you have permission to use.",
+              "q": "Can I use the finished ads for a client?"
+            },
+            {
+              "a": "AI UGC ads get attention because they look like the creator posts people already watch. Open with a clear problem, then show your product solving it.",
+              "q": "Why are AI UGC ads effective?"
+            },
+            {
+              "a": "Yes. Choose a vertical format and an AI actor to make a TikTok-style product ad. Check TikTok’s labeling rules before posting.",
+              "q": "Can I make a testimonial-style ad for TikTok?"
+            },
+            {
+              "a": "Yes. Paste your public product link to start an ad from its photos and details. Choose an actor and make a video in minutes.",
+              "q": "Can I turn a product link into a UGC ad?"
+            },
+            {
+              "a": "Yes. Change the script and choose a matching voice to make an ad for another language. You can reuse the same product photo.",
+              "q": "Can I make the same ad in another language?"
+            },
+            {
+              "a": "Yes. Start from the same product photo, change the script or scene, and render a new version. You see the credit cost before each run.",
+              "q": "Can I make another version of an ad later?"
+            },
+            {
+              "a": "AI UGC is a creator-style product video made with an AI actor and voice. You can make one from a product photo without filming or hiring a creator.",
+              "q": "What does AI UGC mean for a product ad?"
+            },
+            {
+              "a": "Yes. Change the script, actor, voice, or captions and make another version. You can test fresh openings without another shoot.",
+              "q": "Can I change the ad after it is generated?"
+            },
+            {
+              "a": "An AI UGC ad usually takes a few minutes. Add a product link, choose an actor, and download the finished video without arranging a shoot.",
+              "q": "How long does an AI UGC ad take?"
+            },
+            {
+              "a": "Use AI actors when you need several ads quickly or want to reach buyers in different languages. Hire people when a real personal endorsement matters.",
+              "q": "Should I use an AI actor or hire a person?"
+            },
+            {
+              "a": "AI-generated product ads can run on Meta when they meet its ad policies. Check your claims and any required AI labels before posting.",
+              "q": "Will Meta accept an AI-generated product ad?"
+            },
+            {
+              "a": "Yes. Upload a voice sample you own or have permission to use. Your AI actor can speak your ad in that voice.",
+              "q": "Can an AI actor use a voice we already recorded?"
+            },
+            {
+              "a": "No signed release is needed for our AI actors, and the download is cleared for commercial use without a watermark. Use only product photos and audio you have rights to.",
+              "q": "Do these AI UGC ads need a signed release?"
+            },
+            {
+              "a": "Yes. Use your product photo or link with an AI actor to make a creator-style ad. You can download it in minutes without booking anyone.",
+              "q": "Can I post creator-style ads without hiring anyone?"
+            },
+            {
+              "a": "Customer videos are filmed by real people; AI UGC uses generated actors and voices. It gives your ads a creator-style look without organizing a shoot.",
+              "q": "How is a customer video different from AI UGC?"
+            },
+            {
+              "a": "Look for simple photo-to-video steps, realistic actors, and commercial downloads without a watermark. Check the credit cost before making each ad.",
+              "q": "What should a small shop look for in an AI UGC tool?"
+            }
+          ],
+          "ugc": {
+            "paras": [
+              "UGC stands for user-generated content. AI UGC adapts familiar creator formats, such as product introductions, demonstrations and unboxing videos, using AI presenters, generated visuals and scripted dialogue. For a business, it is a way to explain what a product does, who it is for and how it can be used through a short video.",
+              "Start with a product link, a photo or a written idea. In AIVideosUGC, choose a scene, prepare a product script and select an AI presenter where the format calls for one. Use your own product information to shape a video for a product launch, a social ad or a product-page introduction.",
+              "Explore the four formats below to choose how you want to introduce your product. Each format provides a different starting point for the story, from a direct product explanation to a demonstration or packaging reveal."
+            ],
+            "title": "What Is AI UGC?",
+            "eyebrow": "AI UGC explained",
+            "formats": [
+              {
+                "d": "Introduce your product through a script spoken by an AI presenter. Focus on the main features, intended audience and everyday uses, so viewers can understand the offer before exploring the details.",
+                "t": "AI Presenter Product Introductions"
+              },
+              {
+                "d": "Build a short story around a customer need. Explain the relevant product feature and illustrate how it could help in that situation, using product information you can support.",
+                "t": "Problem and Solution Videos"
+              },
+              {
+                "d": "Plan a short sequence around a particular use, setup step or visible feature. A focused demonstration gives shoppers context and helps them understand how the product could fit into everyday use.",
+                "t": "Product Demonstration Videos"
+              },
+              {
+                "d": "Plan an opening sequence that reveals the product and highlights its packaging or visible details. Use your actual product information to shape an unboxing introduction for a new launch or social post.",
+                "t": "Unboxing and Product Reveal Videos"
+              }
+            ]
+          },
+          "hero": {
+            "photoHref": "/app/create?tool_id=image_generator&tool=white-background&template=white",
+            "videoHref": "/app/create?tool=video-ads&template=creator#step-video"
+          },
+          "lead": "AI UGC is a casual review or unboxing ad, made with an AI actor, a script, and a realistic voice. It stands in for hired influencers, so you save time and money. Skip the creator and the shoot. Paste a product link, upload a photo, or type one line, and get a realistic, high-converting ad in a few minutes.",
+          "make": {
+            "lead": "Start from a product link, a photo, or one line. Pick video or photo, and read the credit cost before you generate.",
+            "photo": [
+              {
+                "id": "photo-hub",
+                "href": "/ai-image-generation",
+                "group": "photo",
+                "label": "Product Photos",
+                "description": "Studio-quality shots from any photo"
+              },
+              {
+                "id": "white-background",
+                "href": "/ai-image-generation/ecommerce-main-image",
+                "group": "photo",
+                "label": "White Background Photos",
+                "description": "Ready for Amazon and Shopify"
+              },
+              {
+                "id": "lifestyle-photos",
+                "href": "/ai-image-generation/lifestyle-scene",
+                "group": "photo",
+                "label": "Lifestyle Photos",
+                "description": "Your product in a real-life scene"
+              },
+              {
+                "id": "model-photos",
+                "href": "/ai-image-generation/on-model-generation",
+                "group": "photo",
+                "label": "Model Photos",
+                "description": "Your clothes and accessories on a model"
+              },
+              {
+                "id": "change-background",
+                "href": "/ai-image-generation/background-remove-replace",
+                "group": "photo",
+                "label": "Change Background",
+                "description": "New background, same product"
+              },
+              {
+                "id": "social-ad-photos",
+                "href": "/ai-image-generation/feed-ad-still",
+                "group": "photo",
+                "label": "Social Ad Photos",
+                "description": "Images for Facebook and Instagram ads"
+              }
+            ],
+            "title": "Build an AI UGC Ad for Your Product",
+            "video": [
+              {
+                "id": "image-to-video",
+                "href": "/ai-video-generation/image-to-video",
+                "group": "video",
+                "label": "Image to Video",
+                "description": "Animate one product photo into a short clip"
+              },
+              {
+                "id": "url-to-video",
+                "href": "/ai-video-generation/url-to-video",
+                "group": "video",
+                "label": "URL to Video",
+                "description": "Paste a product link, get a video"
+              },
+              {
+                "id": "video-ads",
+                "href": "/ai-video-generation/ugc-ad-video",
+                "group": "video",
+                "label": "Video Ads",
+                "description": "Short ads for TikTok, Reels and Shorts"
+              },
+              {
+                "id": "product-videos",
+                "href": "/ai-video-generation/product-video",
+                "group": "video",
+                "label": "Product Videos",
+                "description": "Demo how your product works, one action per clip"
+              },
+              {
+                "id": "before-after-videos",
+                "href": "/ai-video-generation/before-after-showcases",
+                "group": "video",
+                "label": "Before & After Videos",
+                "description": "Show the difference your product makes"
+              },
+              {
+                "id": "spokesperson-videos",
+                "href": "/ai-video-generation/ai-actor-product-ads",
+                "group": "video",
+                "label": "Spokesperson Videos",
+                "description": "A presenter shows your product on camera"
+              }
+            ]
+          },
+          "label": "Home",
+          "maker": {
+            "cta": "Make my photos",
+            "uploadTitle": "",
+            "photoOptions": [
+              [
+                "Template",
+                "White background"
+              ],
+              [
+                "Size",
+                "Square"
+              ]
+            ],
+            "videoOptions": [
+              [
+                "Size",
+                "9:16 · TikTok & Reels"
+              ],
+              [
+                "Length",
+                "15 seconds"
+              ],
+              [
+                "Template",
+                "Creator video ad"
+              ]
+            ]
+          },
+          "steps": [
+            {
+              "d": "Paste a product page, or upload a clear photo. Add who the ad is for if you want a tighter draft.",
+              "t": "Upload Your Product Photo"
+            },
+            {
+              "d": "Answer a few questions on the buyer, the offer, and the look. That chat is the brief the ad follows.",
+              "t": "Brief the Ad"
+            },
+            {
+              "d": "You get a script, an AI actor, a voice, scenes, and captions in one file, ready to post.",
+              "t": "Edit and Publish"
+            }
+          ],
+          "trust": {
+            "h2": "Why Sellers Trust AIVideosUGC",
+            "lead": "The details a team that posts every week asks about before they upload a file.",
+            "items": [
+              {
+                "d": "Choose an adult actor who fits the people you already sell to. A supplement brand and a payroll tool should not share a face.",
+                "t": "Pick From 53 AI Actors"
+              },
+              {
+                "d": "You supply the sentence, then pick a voice for that language. The edit does not wait on a translation vendor.",
+                "t": "Match the Language You Sell In"
+              },
+              {
+                "d": "A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.",
+                "t": "Email Support When a Job Sticks"
+              },
+              {
+                "d": "A Reel wants 9:16 and a feed post may want 1:1. 16:9, 4:3, and 3:4 are on the same account, with no watermark. Post it straight to [TikTok](/platforms/tiktok-ads) or [Meta](/platforms/facebook-ads).",
+                "t": "Export the Frame You Need"
+              },
+              {
+                "d": "When the render is done, download the file. It does not sit in a freelancer's queue while the promotion date gets closer.",
+                "t": "Download When the Render Ends"
+              },
+              {
+                "d": "Put your mark on the end card and keep the type you use on the site. The last frame carries your brand into the ad.",
+                "t": "Add Your Logo and Type"
+              }
+            ]
+          },
+          "visual": {
+            "uses": [],
+            "input": [],
+            "steps": {
+              "mode": "photo",
+              "items": [
+                {
+                  "d": "Paste a product page, or upload a clear photo. Add who the ad is for if you want a tighter draft.",
+                  "t": "Upload Your Product Photo"
+                },
+                {
+                  "d": "Answer a few questions on the buyer, the offer, and the look. That chat is the brief the ad follows.",
+                  "t": "Brief the Ad"
+                },
+                {
+                  "d": "You get a script, an AI actor, a voice, scenes, and captions in one file, ready to post.",
+                  "t": "Edit and Publish"
+                }
+              ],
+              "prompt": "A quick, natural look at this insulated travel mug in my car before I head out.",
+              "result": {
+                "h": 640,
+                "w": 640,
+                "alt": "Adult man with short gray hair holds the same plain matte navy insulated travel mug beside his face in a parked car.",
+                "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img1-home-steps-result-r1--640.webp",
+                "kind": "photo"
+              },
+              "source": {
+                "h": 640,
+                "w": 640,
+                "alt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
+                "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img1-home-steps-source-r1--640.webp",
+                "kind": "photo"
+              },
+              "credits": "24 credits",
+              "options": [
+                [
+                  "Template",
+                  "Lifestyle scene"
+                ],
+                [
+                  "Size",
+                  "9:16 · 1:1 · 16:9 · 4:3 · 3:4"
+                ]
+              ]
+            },
+            "strip": [],
+            "picker": {
+              "href": "/app/create?tool=video-ads&template=creator#step-video",
+              "lead": "Explore product video examples by category, from product close-ups and demonstrations to AI presenter introductions and unboxing ideas. Select a scene that matches what you want to show, then add your product photo and adapt the script or visual description in the workspace. Compare the examples to find a creative direction before generating a video for your own product.",
+              "cards": [
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "accessories"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Natural canvas tote bag shown upright on seamless white.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-canvas-tote--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Canvas Tote Product Detail",
+                  "prompt": "Canvas tote bag shown upright in a clean product-detail scene, with the full shape and handles visible."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "accessories"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img3-home-earbuds-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Stemless Earbud Product Detail",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case. Realistic square product framing, no readable text, logos, or watermark; soft natural light."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "apparel"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult man with short brown hair uses a plain handheld steamer on a shirt, with a smooth panel beside remaining wrinkles.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-steamer-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Shirt Steamer UGC",
+                  "prompt": "Show a handheld steamer smoothing a shirt in a clear before-and-after ad."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "apparel"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult woman with a short blonde bob wears a plain navy cardigan in four views, showing the sleeves, back and hem.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-cardigan-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Cardigan Turn Reel",
+                  "prompt": "Show the navy cardigan from front, side and back so shoppers can see the fit."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "apps"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Adult creator presenting a generic phone grip beside a plain phone.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q9-head-phone-grip-demo--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Phone Grip App Demo UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult creator presenting a generic phone grip beside a plain phone. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "apps"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "An adult man presents a generic smartphone and points to a softly blurred, text-free app interface, no logo.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-apps-2-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "App Screen Walkthrough UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult man presents a generic smartphone and points to a softly blurred, text-free app interface, no logo. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "beauty-personal-care"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "A clean spatula lifts a smooth ribbon of pale green clay mask from an open plain jar, the textured cream held above the rim.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-mask--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Clay Mask Texture Demo",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A clean spatula lifts a smooth ribbon of pale green clay mask from an open plain jar, the textured cream held above the rim. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "beauty-personal-care"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Coral lipstick on a softly lit vanity",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-home-lipstick-vanity--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Tinted Balm Vanity Reel",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Coral lipstick on a softly lit vanity. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "clothing"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult hands hold a plain cotton shirt toward the camera with collar and seams visible.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-clothing-1-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Cotton Shirt Fit Check",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands hold a plain cotton shirt toward the camera with collar and seams visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "clothing"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult woman with short silver hair folds plain charcoal trousers on a bright bed.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-trousers-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Trousers Fold Demo",
+                  "prompt": "Show charcoal trousers folded flat with the full garment visible."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "e-commerce"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult hands open a plain shipping carton to reveal an unbranded product pouch, no readable marks.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-e-commerce-1-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Package Reveal Unboxing UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands open a plain shipping carton to reveal an unbranded product pouch, no readable marks. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "e-commerce"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "An adult packs a plain unbranded skincare carton into a kraft mailer on a clean table.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-e-commerce-2-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Skincare Order Packing Reel",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult packs a plain unbranded skincare carton into a kraft mailer on a clean table. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "education"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult woman holds a plain box grater beside a bowl in a bright kitchen lesson.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-kitchen-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Kitchen Tool Lesson Demo",
+                  "prompt": "Teach shoppers how a box grater works with a clear kitchen demo."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "education"
+                  ],
+                  "image": {
+                    "h": 360,
+                    "w": 640,
+                    "alt": "Compact countertop coffee maker pouring coffee into a white ceramic cup.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-product-videos-gallery-feature-action-t06--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Coffee Maker How-To Demo",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Compact countertop coffee maker pouring coffee into a white ceramic cup. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "explainer"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-explainer-1-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Cable Organizer Before After",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "explainer"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Compact rectangular Bluetooth speaker on a desk",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-change-background-uses-1-image--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Speaker Feature Walkthrough",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Compact rectangular Bluetooth speaker on a desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "financial-services"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-k6-templates-strip-deskset--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Budget Desk Overview",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "financial-services"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Mechanical keyboard with blank keycaps on a tidy desk.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-change-background-picker-cards-1-image--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Budget Tool Desk Explainer",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Mechanical keyboard with blank keycaps on a tidy desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "food-beverage"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "A hand squeezes a thin ribbon of sauce from a plain bottle onto a fresh taco, with the bottle and food both clearly visible.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-hot-sauce--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Hot Sauce Taco Drizzle",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A hand squeezes a thin ribbon of sauce from a plain bottle onto a fresh taco, with the bottle and food both clearly visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "food-beverage"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult man pours a plain yellow citrus drink from a clear bottle into a glass of ice.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-citrus-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Citrus Drink Pour UGC",
+                  "prompt": "Show a plain citrus drink poured over ice in a bright kitchen scene."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "footwear"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-runner--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Trail Shoe Step Ad",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "footwear"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Three unbranded running shoes in charcoal, teal and rust are lined up beside a doorway.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-shoes-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Running Shoe Color Lineup",
+                  "prompt": "Show three running-shoe color options lined up for a quick comparison."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "health-fitness"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult stretches on a plain teal yoga mat beside a window.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-health-fitness-3-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Yoga Mat Stretch UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult stretches on a plain teal yoga mat beside a window. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "health-fitness"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult man holds a plain sage-green insulated bottle at a quiet trail rest stop.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-bottle-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Trail Bottle Detail",
+                  "prompt": "Show a plain sage bottle held at a trail rest stop."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "jewelry-accessories"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Adult man fastens simple brushed silver cufflinks on a white shirt.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q9-jewel-cufflinks-demo--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Cufflink Detail Demo",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult man fastens simple brushed silver cufflinks on a white shirt. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "jewelry-accessories"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Close view of a silver solitaire ring and its setting.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q16-jewelry-ring-macro--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Silver Ring Size Detail",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Close view of a silver solitaire ring and its setting. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "kids-toy"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "A child plays with a plain wooden stacking toy while an adult hand demonstrates one piece.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-kids-toy-1-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Wooden Stacker Play Demo",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. A child plays with a plain wooden stacking toy while an adult hand demonstrates one piece. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "kids-toy"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-kids-toy-2-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Color Block Unboxing UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Adult hands open a plain box of colorful wooden building blocks with no letters or logos. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "pet"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Pet grooming kit with brush, folded towel and plain shampoo bottle revealed.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-unboxing-picker-pet-kit--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Pet Grooming Kit Unboxing",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Pet grooming kit with brush, folded towel and plain shampoo bottle revealed. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "pet"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-dog-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Dog Brush Care Demo",
+                  "prompt": "Show a calm dog being brushed with a plain pet brush."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "sports-gym"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Unbranded protein powder pouch with a completely blank label on a gym bench after a workout.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-k6-video-hub-picker-protein--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Protein Pouch Gym Detail",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Unbranded protein powder pouch with a completely blank label on a gym bench after a workout. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "sports-gym"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Sage-green insulated bottle on a bright work desk.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q14-spark-og--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Sage Bottle Desk Detail",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Sage-green insulated bottle on a bright work desk. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "tech-electronics"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Two matte black stemless earbuds rest beside a closed laptop as an adult hand reaches toward one.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-earbuds-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Stemless Earbud Desk Demo",
+                  "prompt": "Show stemless earbuds beside a laptop in a clean desk detail."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "tech-electronics"
+                  ],
+                  "image": {
+                    "h": 360,
+                    "w": 640,
+                    "alt": "Plain rectangular black speaker on a console beside a large window.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-unboxing-template-film-speaker--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Speaker Feature Detail",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain rectangular black speaker on a console beside a large window. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "ugc"
+                  ],
+                  "image": {
+                    "h": 1138,
+                    "w": 640,
+                    "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-video-card-headphones--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Headphone Creator Review",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "ugc"
+                  ],
+                  "image": {
+                    "h": 360,
+                    "w": 640,
+                    "alt": "Plain white portable table lamp glows on a desk beside a closed laptop.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-product-videos-template-table-lamp--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Desk Lamp Product Demo UGC",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Plain white portable desk lamp glows on a desk beside a closed laptop for a clean product demo. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "trending"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Coral-orange lipstick in a plain matte black tube stands beside a matching swatch.",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-lipstick-r1--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Coral Lipstick Swatch",
+                  "prompt": "Show a coral-orange lipstick beside its matching swatch."
+                },
+                {
+                  "href": "/app/create?tool=video-ads&template=creator#step-video",
+                  "kind": "video",
+                  "chips": [
+                    "trending"
+                  ],
+                  "image": {
+                    "h": 640,
+                    "w": 640,
+                    "alt": "Three simple ceramic mugs in distinct glaze colors",
+                    "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-home-card-color--640.webp",
+                    "kind": "video"
+                  },
+                  "label": "Mug Color Reveal Hook",
+                  "prompt": "Use the uploaded product image as the subject and preserve its shape and color. Three simple ceramic mugs in distinct glaze colors. Realistic vertical product video framing, no readable text, logos, or watermark; natural hands and lighting."
+                }
+              ],
+              "chips": [
+                {
+                  "id": "accessories",
+                  "label": "Accessories"
+                },
+                {
+                  "id": "apparel",
+                  "label": "Apparel"
+                },
+                {
+                  "id": "apps",
+                  "label": "Apps"
+                },
+                {
+                  "id": "beauty-personal-care",
+                  "label": "Beauty & Personal Care"
+                },
+                {
+                  "id": "clothing",
+                  "label": "Clothing"
+                },
+                {
+                  "id": "e-commerce",
+                  "label": "E-Commerce"
+                },
+                {
+                  "id": "education",
+                  "label": "Education"
+                },
+                {
+                  "id": "explainer",
+                  "label": "Explainer"
+                },
+                {
+                  "id": "financial-services",
+                  "label": "Financial Services"
+                },
+                {
+                  "id": "food-beverage",
+                  "label": "Food & Beverage"
+                },
+                {
+                  "id": "footwear",
+                  "label": "Footwear"
+                },
+                {
+                  "id": "health-fitness",
+                  "label": "Health & Fitness"
+                },
+                {
+                  "id": "jewelry-accessories",
+                  "label": "Jewelry & Accessories"
+                },
+                {
+                  "id": "kids-toy",
+                  "label": "Kids & Toy"
+                },
+                {
+                  "id": "pet",
+                  "label": "Pet"
+                },
+                {
+                  "id": "sports-gym",
+                  "label": "Sports & Gym"
+                },
+                {
+                  "id": "tech-electronics",
+                  "label": "Tech & Electronics"
+                },
+                {
+                  "id": "ugc",
+                  "label": "UGC"
+                },
+                {
+                  "id": "trending",
+                  "label": "Viral"
+                }
+              ],
+              "title": "Choose a Scene for Your Product Video",
+              "button": "Start a video ad like this"
+            },
+            "titles": {
+              "m2": {
+                "h2": "How to Make AI Product Videos and Photos in 3 Simple Steps"
+              },
+              "m3": {
+                "h2": "Choose a Scene for Your Product Video",
+                "lead": "Explore product video examples by category, from product close-ups and demonstrations to AI presenter introductions and unboxing ideas. Select a scene that matches what you want to show, then add your product photo and adapt the script or visual description in the workspace. Compare the examples to find a creative direction before generating a video for your own product.",
+                "eyebrow": "Explore product ad scenes"
+              },
+              "faq": {
+                "h2": "Questions About AI UGC Ads"
+              }
+            },
+            "outputs": [],
+            "limitations": {
+              "h2": "What to Check Before You Post",
+              "items": [
+                {
+                  "label": "Add the Real Size",
+                  "detail": "Add the real size and fit notes so buyers are not guessing from the picture.",
+                  "supported": false
+                },
+                {
+                  "label": "Show the Hidden Side",
+                  "detail": "Photograph ports, seams, or the back yourself when the upload hides them.",
+                  "supported": false
+                },
+                {
+                  "label": "Keep Claims You Can Stand Behind",
+                  "detail": "Only post a demo that matches a test you already ran.",
+                  "supported": false
+                },
+                {
+                  "label": "Read the Offer, Then Post",
+                  "detail": "Read the caption, the price, and the offer in the editor, then post the ad.",
+                  "supported": false
+                },
+                {
+                  "label": "Match the Color You Ship",
+                  "detail": "Compare the file with the product you ship, then post the one that matches.",
+                  "supported": false
+                }
+              ]
+            }
+          },
+          "compare": [
+            [
+              "Time to a First Cut",
+              "Days of booking a creator and a place",
+              "You start as soon as the product is ready"
+            ],
+            [
+              "When the File Arrives",
+              "Often days after the shoot",
+              "Download the file after the render finishes"
+            ],
+            [
+              "What the Ad Costs",
+              "Creator fees, a location, and an editor",
+              "Starter is $24.50 a month for 200 credits. No creator fee"
+            ],
+            [
+              "How Many You Can Make",
+              "Only as many as the people you booked",
+              "Another version is another render, paid with credits you have"
+            ],
+            [
+              "Who Holds the Tone",
+              "The person on set decides a lot of the feel",
+              "You set the tone, the look, and the spoken line"
+            ],
+            [
+              "What Can Change",
+              "You get that person's voice and their way of filming",
+              "Swap the product, the buyer, or the room, and keep the offer"
+            ],
+            [
+              "The Line, Every Time",
+              "Two creators will not say it the same way",
+              "The approved sentence is the one that gets spoken"
+            ],
+            [
+              "Another Opening",
+              "A new test means a new booking",
+              "Try a different first line on the same product"
+            ],
+            [
+              "When the Message Slips",
+              "A hired person can wander off the brief",
+              "Nothing goes out until you accept the script"
+            ],
+            [
+              "How It Feels",
+              "A real take, plus another round if the mood is wrong",
+              "Ask for a calmer read on the same product"
+            ]
+          ],
+          "ctaLead": "No creator, no studio, and no long wait. You leave with a scroll-stopping ad built to convert. The credit cost shows before you generate.",
+          "eyebrow": "AI UGC Ads for Your Business",
+          "reviews": {
+            "h2": "From One Product Photo to a Scroll-Stopping Ad",
+            "lead": "Start with a plain phone photo. Minutes later, you have a creator-style ad ready to run.",
+            "items": [
+              {
+                "d": "One plain bottle photo became a creator-style ad that feels like a real review. No creator to book, no shoot, ready in minutes.",
+                "t": "A Serum Ad That Sells the Glow",
+                "alt": "A person in a bathrobe holds the same serum bottle and talks to the camera.",
+                "img": {
+                  "alt": "A person in a bathrobe holds the same serum bottle and talks to the camera.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 960,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-ad.webp 1024w"
+                },
+                "who": "Skincare founder",
+                "length": 15,
+                "srcImg": {
+                  "alt": "A plain phone photo of an amber serum dropper bottle on a counter.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r1-src.webp 1024w"
+                },
+                "caption": "My new nightly glow step",
+                "example": true
+              },
+              {
+                "d": "A countertop candle shot turned into a warm, scroll-stopping gift ad. No lights to set up, no studio day, just post and sell.",
+                "t": "A Cozy Gift Ad in Minutes",
+                "alt": "A person in a cozy living room holds the same lit candle toward the camera.",
+                "img": {
+                  "alt": "A person in a cozy living room holds the same lit candle toward the camera.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-ad--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 960,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-ad--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-ad.webp 1024w"
+                },
+                "who": "Candle maker",
+                "length": 10,
+                "srcImg": {
+                  "alt": "A plain phone photo of a ribbed glass candle with a wooden lid.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-src--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-src--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r2-src.webp 1024w"
+                },
+                "caption": "The candle everyone asks about",
+                "example": true
+              },
+              {
+                "d": "A simple bottle photo became a friendly on-camera pitch shoppers trust. Skip the talking-head shoot and test new hooks today.",
+                "t": "A Bottle Pitch That Builds Trust",
+                "alt": "A person in a kitchen holds the same supplement bottle beside a glass of water.",
+                "img": {
+                  "alt": "A person in a kitchen holds the same supplement bottle beside a glass of water.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-ad--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 960,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-ad--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-ad.webp 1024w"
+                },
+                "who": "Supplement shop",
+                "length": 15,
+                "srcImg": {
+                  "alt": "A plain phone photo of a white supplement bottle with a green label.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-src--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-src--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r3-src.webp 1024w"
+                },
+                "caption": "My morning routine, simplified",
+                "example": true
+              },
+              {
+                "d": "Two sneakers on a counter became a lifestyle ad that looks filmed on location. No crew, no model fees, high-converting from day one.",
+                "t": "A Sneaker Ad Without a Crew",
+                "alt": "A person on front steps holds up one of the same white sneakers to the camera.",
+                "img": {
+                  "alt": "A person on front steps holds up one of the same white sneakers to the camera.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-ad--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 960,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-ad--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-ad.webp 1024w"
+                },
+                "who": "Footwear brand",
+                "length": 10,
+                "srcImg": {
+                  "alt": "A plain phone photo of a pair of white leather sneakers.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-src--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 640,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-src--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-r4-src.webp 1024w"
+                },
+                "caption": "Clean white sneakers, every day",
+                "example": true
+              }
+            ]
+          },
+          "stepsH2": "How to Make UGC Video Ads in 3 Simple Steps",
+          "audience": {
+            "lead": "Shops, dropshippers, small businesses, agencies, creators, and app teams each bring a different job.",
+            "items": [
+              {
+                "d": "Make high-converting ads that show the product, with no shoot, no creator, and no delay. Launch faster, test more ads, and keep the store running.",
+                "t": "Ecommerce and D2C Brands",
+                "alt": "A plain photo of a floral water bottle beside a phone showing a person holding the same bottle in an ad.",
+                "img": {
+                  "alt": "A plain photo of a floral water bottle beside a phone showing a person holding the same bottle in an ad.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud1-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud1-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud1-r1--1280.webp 1280w"
+                },
+                "teamIcon": "cart"
+              },
+              {
+                "d": "Launch ads for a new product in a few minutes, with no creator and no studio. Test faster, drop the weak cuts, and scale the ones that sell.",
+                "t": "Dropshippers",
+                "alt": "Three phones show three ad versions for the same handheld fan.",
+                "img": {
+                  "alt": "Three phones show three ad versions for the same handheld fan.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud2-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud2-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud2-r1--1280.webp 1280w"
+                },
+                "teamIcon": "box"
+              },
+              {
+                "d": "Explain what you sell with an AI actor video, without an expensive shoot or an agency. Stay visible, even when the budget is small.",
+                "t": "Small Businesses",
+                "alt": "A bakery owner in an apron holds up a fresh loaf to the camera in the shop.",
+                "img": {
+                  "alt": "A bakery owner in an apron holds up a fresh loaf to the camera in the shop.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud3-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud3-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud3-r1--1280.webp 1280w"
+                },
+                "teamIcon": "store"
+              },
+              {
+                "d": "Make fresh ads every day, test faster, and spend less on production. Stay on the media plan while the files get made.",
+                "t": "Marketers and Agencies",
+                "alt": "A marketer reviews a grid of ad thumbnails for many different products on a monitor.",
+                "img": {
+                  "alt": "A marketer reviews a grid of ad thumbnails for many different products on a monitor.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud4-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud4-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud4-r1--1280.webp 1280w"
+                },
+                "teamIcon": "megaphone"
+              },
+              {
+                "d": "Build an AI twin with your face and voice, then publish more often without burning out.",
+                "t": "Content Creators",
+                "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+                "img": {
+                  "alt": "A creator films at a desk while a laptop shows the same person speaking in a video.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud5-r1--1280.webp 1280w"
+                },
+                "teamIcon": "calendar"
+              },
+              {
+                "d": "Explain the product, show one real use, and ask for the signup with a creator-style video. No heavy shoot required.",
+                "t": "App and SaaS Teams",
+                "alt": "A person holds up a phone showing a simple app screen and explains it to the camera.",
+                "img": {
+                  "alt": "A person holds up a phone showing a simple app screen and explains it to the camera.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud6-r1--640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 427,
+                  "srcSet": "/assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud6-r1--640.webp 640w, /assets/sites/site_aidreamcapes/site-v2/guide/teams1-home-aud6-r1--1280.webp 1280w"
+                },
+                "teamIcon": "apps"
+              }
+            ],
+            "title": "Built for Teams That Ship Fast"
+          },
+          "benefits": [
+            {
+              "d": "Turn one product photo, or a short prompt, into a still and a video you can post. No design tool and no freelancer. Open the [AI product photo generator](/ai-image-generation).",
+              "t": "Publish-Ready Photos and Videos",
+              "icon": "sparkle"
+            },
+            {
+              "d": "Talk to the video agent the way you would brief a teammate. It writes the script, sets the actor and the voice, and finishes the edit.",
+              "t": "Brief the Ad in a Chat",
+              "icon": "play"
+            },
+            {
+              "d": "Found an ad style that already sells? Rebuild that look, swap in your item, and ship your own version in a few minutes.",
+              "t": "Rebuild a Winning Ad Style",
+              "icon": "refresh"
+            },
+            {
+              "d": "Drop a public product link. The photos and the description come with it, and a finished ad comes back. Open the [page-to-ad tool](/ai-video-generation/url-to-video).",
+              "t": "Turn a Link Into an Ad",
+              "icon": "layers"
+            },
+            {
+              "d": "Camera-shy? Pick an AI actor from the [AI actor library](/ai-video-generation/ai-actors). They read the script you approve and stand in for the brand.",
+              "t": "Choose an AI Actor",
+              "icon": "users"
+            },
+            {
+              "d": "You cannot film every ad yourself. Build an AI twin with your face and voice, then ship more ads without another shoot. Start from [spokesperson videos](/ai-video-generation/ai-actor-product-ads).",
+              "t": "Reuse an Approved AI Twin",
+              "icon": "shield"
+            }
+          ],
+          "ctaTitle": "Build Your Next AI UGC Ad",
+          "examples": {
+            "flows": []
+          },
+          "compareH2": "AI UGC Ads Compared With a Usual Shoot",
+          "platforms": {
+            "items": [
+              {
+                "href": "/platforms/tiktok-ads",
+                "spec": "",
+                "label": "TikTok"
+              },
+              {
+                "href": "/platforms/instagram-ads",
+                "spec": "",
+                "label": "Instagram"
+              },
+              {
+                "href": "/platforms/facebook-ads",
+                "spec": "",
+                "label": "Facebook"
+              },
+              {
+                "href": "/platforms/youtube-shorts-ads",
+                "spec": "",
+                "label": "YouTube Shorts"
+              },
+              {
+                "href": "/platforms/amazon-product-photos",
+                "spec": "",
+                "label": "Amazon"
+              },
+              {
+                "href": "/platforms/shopify-product-photos",
+                "spec": "",
+                "label": "Shopify"
+              }
+            ],
+            "title": null
+          },
+          "relatedH2": "Related Tools for the Next Ad",
+          "startNote": "[See monthly and yearly plans](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+          "stepsLead": "Share the product, answer a short brief, and download a creator-style ad.",
+          "templates": {
+            "lead": null,
+            "cards": [
+              {
+                "key": "beauty",
+                "href": "/app/create?tool=video-ads&template=beauty#step-video",
+                "kind": "video",
+                "line": "Your product in a daily routine",
+                "name": "Beauty Routine",
+                "tags": [],
+                "image": {
+                  "alt": "Adult woman with a short silver pixie presses plain moisturizer onto her fingertips at a bright sink.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/gen/sh1-beauty-alt0-r1--640.webp",
+                  "width": 640,
+                  "height": 427
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "launch",
+                "href": "/app/create?tool=video-ads&template=launch#step-video",
+                "kind": "video",
+                "line": "Announce something new",
+                "name": "Launch Promo",
+                "tags": [],
+                "image": {
+                  "alt": "White portable table lamp on a desk beside a laptop with a city view",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/frames/promo-video-t05--640.webp",
+                  "width": 640,
+                  "height": 289
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "bf",
+                "href": "/app/create?tool=video-ads&template=bf#step-video",
+                "kind": "video",
+                "line": "Holiday sale clip, add your price later",
+                "name": "Black Friday Video",
+                "tags": [],
+                "image": {
+                  "alt": "Folded electric bike beside a decorated Christmas tree with warm lights",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/frames/black-friday-countdown-t11--640.webp",
+                  "width": 640,
+                  "height": 289
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "color",
+                "href": "/app/create?tool_id=image_generator&tool=photo-hub&template=color",
+                "kind": "photo",
+                "line": "Every color you sell, same style",
+                "name": "Color Variants",
+                "tags": [],
+                "image": {
+                  "alt": "Three unbranded running shoes in distinct neutral colorways shown side by side on a bright white background.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-template-color--640.webp",
+                  "width": 640,
+                  "height": 640
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "angle",
+                "href": "/app/create?tool_id=image_generator&tool=photo-hub&template=angle",
+                "kind": "photo",
+                "line": "Front, side, back and top views",
+                "name": "Every Angle",
+                "tags": [],
+                "image": {
+                  "alt": "Plain sage-green insulated travel tumbler at a three-quarter angle on a light studio tabletop.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/gen/sh1-angle-r1--640.webp",
+                  "width": 640,
+                  "height": 427
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "tryon",
+                "href": "/app/create?tool_id=image_generator&tool=model-photos&template=tryon",
+                "kind": "photo",
+                "line": "See a piece worn before the shoot",
+                "name": "Clothing Try-On",
+                "tags": [],
+                "image": {
+                  "alt": "Front view of the blue jacket on a person",
+                  "src": "/assets/sites/site_aidreamcapes/virtual-try-on-v1/virtual-try-on/_responsive/example-01--640.webp",
+                  "width": 640,
+                  "height": 360
+                },
+                "platforms": [],
+                "industries": []
+              },
+              {
+                "key": "ugc",
+                "href": "/app/create?tool_id=image_generator&tool=social-ad-photos&template=ugc",
+                "kind": "photo",
+                "line": "Looks like a customer shared it",
+                "name": "Creator-Style Photo",
+                "tags": [],
+                "image": {
+                  "alt": "Adult hand holds a plain teal phone case with one small circular camera opening in a park.",
+                  "src": "/assets/sites/site_aidreamcapes/site-v2/gen/sh1-phone-ugc-r1--640.webp",
+                  "width": 640,
+                  "height": 427
+                },
+                "platforms": [],
+                "industries": []
+              }
+            ],
+            "title": null,
+            "total": 18
+          },
+          "benefitsH2": "Everything You Need to Grow the Brand",
+          "blockOrder": [
+            "hero",
+            "definition",
+            "picker",
+            "steps",
+            "benefits",
+            "features",
+            "audience",
+            "pricing",
+            "related",
+            "trust",
+            "compare",
+            "reviews",
+            "faq",
+            "cta"
+          ],
+          "breadcrumbs": [],
+          "limitations": {
+            "h2": "What to Check Before You Post",
+            "items": [
+              {
+                "d": "Add the real size and fit notes so buyers are not guessing from the picture.",
+                "t": "Add the Real Size"
+              },
+              {
+                "d": "Photograph ports, seams, or the back yourself when the upload hides them.",
+                "t": "Show the Hidden Side"
+              },
+              {
+                "d": "Only post a demo that matches a test you already ran.",
+                "t": "Keep Claims You Can Stand Behind"
+              },
+              {
+                "d": "Read the caption, the price, and the offer in the editor, then post the ad.",
+                "t": "Read the Offer, Then Post"
+              },
+              {
+                "d": "Compare the file with the product you ship, then post the one that matches.",
+                "t": "Match the Color You Ship"
+              }
+            ]
+          },
+          "relatedLead": "A link, a face, a longer clip, or a still. Each job has its own page.",
+          "benefitsLead": "One place covers the script, the actor, the voice, and the edit. You do not book a freelancer for every cut.",
+          "relatedLinks": [
+            {
+              "href": "/ai-video-generation/url-to-video",
+              "label": "URL to Video"
+            },
+            {
+              "href": "/ai-video-generation/ai-actor-product-ads",
+              "label": "Spokesperson Videos"
+            },
+            {
+              "href": "/ai-video-generation/product-video",
+              "label": "Product Videos"
+            },
+            {
+              "href": "/ai-video-generation/image-to-video",
+              "label": "Image to Video"
+            },
+            {
+              "href": "/ai-video-generation/ugc-ad-video",
+              "label": "Video Ads"
+            },
+            {
+              "href": "/ai-video-generation",
+              "label": "AI Video"
+            }
+          ],
+          "more_sections": [
+            {
+              "h2": "Create Your Product Video from Start to Finish",
+              "lead": "Bring your product photos, key selling points and script into one workspace. Choose a scene and an AI presenter where needed, then set the supported language and video format. Adapt the message for a product launch, a feature explanation or an offer, and preview the generated result before downloading.",
+              "items": [
+                {
+                  "d": "Upload clear product photos as visual references for generation. Decide whether to focus on the full product, its packaging or a particular detail. Compare the result with your original photos, since generated details can vary.",
+                  "t": "Use Product Photos to Guide the Video"
+                },
+                {
+                  "d": "Choose an AI presenter and review the voice profile included with that presenter. Select a supported language and write the message for the audience you want to reach, so the product introduction fits the market you are addressing.",
+                  "t": "Choose a Presenter and Supported Language"
+                },
+                {
+                  "d": "Describe the speaking style and product details you want to emphasize in your brief. Use a direct script for a feature explanation or a conversational script for a lifestyle introduction. Your instructions guide the generated performance.",
+                  "t": "Guide the Tone of the Presentation"
+                },
+                {
+                  "d": "Write an opening that makes the subject clear, explain the main product benefit, and end with the next step you want viewers to take. Update the script when product details or offers change, then generate a version for that campaign.",
+                  "t": "Adapt the Script to Each Campaign"
+                },
+                {
+                  "d": "When captions are available for the selected video, choose a caption style and review the text and timing. Captions keep product names and key points visible on screen, giving viewers another way to follow the message when browsing with sound off.",
+                  "t": "Add Captions to Support the Message"
+                },
+                {
+                  "d": "Watch the generated clips and any captions together to see how the product, dialogue and story work as a whole. Once you are satisfied with the result, download the video and prepare it for the product page or social channel you plan to use.",
+                  "t": "Preview and Download Your Video"
+                }
+              ],
+              "eyebrow": "A clear video creation process"
+            }
+          ],
+          "relatedGroups": [
+            {
+              "links": [
+                {
+                  "href": "/ai-video-generation/product-video",
+                  "label": "Product Videos"
+                },
+                {
+                  "href": "/ai-video-generation/url-to-video",
+                  "label": "URL to Video"
+                },
+                {
+                  "href": "/ai-video-generation/image-to-video",
+                  "label": "Image to Video"
+                },
+                {
+                  "href": "/ai-video-generation/ai-actors",
+                  "label": "AI Actors"
+                },
+                {
+                  "href": "/ai-video-generation/ai-actor-product-ads",
+                  "label": "Spokesperson Videos"
+                }
+              ],
+              "title": "Video tools"
+            },
+            {
+              "links": [
+                {
+                  "href": "/ai-image-generation/ecommerce-main-image",
+                  "label": "White Background Photos"
+                },
+                {
+                  "href": "/ai-image-generation/lifestyle-scene",
+                  "label": "Lifestyle Photos"
+                },
+                {
+                  "href": "/ai-image-generation/background-remove-replace",
+                  "label": "Change Background"
+                },
+                {
+                  "href": "/ai-image-generation/on-model-generation",
+                  "label": "Model Photos"
+                }
+              ],
+              "title": "Photo tools"
+            }
+          ]
+        },
+        "layout": "home"
+      }
+    }
+  },
+  "mediaManifest": [
+    {
+      "alt": "An adult woman in a parked car holds a plain amber serum bottle beside her face and speaks directly to camera.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-home-og-r2.webp",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "alt": "Plain matte navy insulated travel mug with a simple black lid, fully visible on a clean white background.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img1-home-steps-source-r1--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Adult man with short gray hair holds the same plain matte navy insulated travel mug beside his face in a parked car.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img1-home-steps-result-r1--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Natural canvas tote bag shown upright on seamless white.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-white-background-canvas-tote--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/img3-home-earbuds-r1--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Adult man with short brown hair uses a plain handheld steamer on a shirt, with a smooth panel beside remaining wrinkles.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-steamer-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult woman with a short blonde bob wears a plain navy cardigan in four views, showing the sleeves, back and hem.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-cardigan-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult creator presenting a generic phone grip beside a plain phone.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q9-head-phone-grip-demo--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "An adult man presents a generic smartphone and points to a softly blurred, text-free app interface, no logo.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-apps-2-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "A clean spatula lifts a smooth ribbon of pale green clay mask from an open plain jar, the textured cream held above the rim.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-mask--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Coral lipstick on a softly lit vanity",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-home-lipstick-vanity--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Adult hands hold a plain cotton shirt toward the camera with collar and seams visible.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-clothing-1-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult woman with short silver hair folds plain charcoal trousers on a bright bed.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-trousers-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult hands open a plain shipping carton to reveal an unbranded product pouch, no readable marks.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-e-commerce-1-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "An adult packs a plain unbranded skincare carton into a kraft mailer on a clean table.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-e-commerce-2-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult woman holds a plain box grater beside a bowl in a bright kitchen lesson.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-kitchen-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Compact countertop coffee maker pouring coffee into a white ceramic cup.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-product-videos-gallery-feature-action-t06--640.webp",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "alt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-explainer-1-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Compact rectangular Bluetooth speaker on a desk",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-change-background-uses-1-image--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-k6-templates-strip-deskset--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Mechanical keyboard with blank keycaps on a tidy desk.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-change-background-picker-cards-1-image--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "A hand squeezes a thin ribbon of sauce from a plain bottle onto a fresh taco, with the bottle and food both clearly visible.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-hot-sauce--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Adult man pours a plain yellow citrus drink from a clear bottle into a glass of ice.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-citrus-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-home-picker-runner--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Three unbranded running shoes in charcoal, teal and rust are lined up beside a doorway.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-shoes-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult stretches on a plain teal yoga mat beside a window.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-health-fitness-3-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult man holds a plain sage-green insulated bottle at a quiet trail rest stop.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-bottle-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult man fastens simple brushed silver cufflinks on a white shirt.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q9-jewel-cufflinks-demo--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Close view of a silver solitaire ring and its setting.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q16-jewelry-ring-macro--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "A child plays with a plain wooden stacking toy while an adult hand demonstrates one piece.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-kids-toy-1-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/mx1w-home-kids-toy-2-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Pet grooming kit with brush, folded towel and plain shampoo bottle revealed.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-unboxing-picker-pet-kit--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-dog-r1--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Unbranded protein powder pouch with a completely blank label on a gym bench after a workout.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-k6-video-hub-picker-protein--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Sage-green insulated bottle on a bright work desk.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q14-spark-og--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Two matte black stemless earbuds rest beside a closed laptop as an adult hand reaches toward one.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-earbuds-r1--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Plain rectangular black speaker on a console beside a large window.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-unboxing-template-film-speaker--640.webp",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/q1-video-card-headphones--640.webp",
+      "width": 640,
+      "height": 1138
+    },
+    {
+      "alt": "Plain white portable table lamp glows on a desk beside a closed laptop.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k1-product-videos-template-table-lamp--640.webp",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "alt": "Coral-orange lipstick in a plain matte black tube stands beside a matching swatch.",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/im03-home-picker-lipstick-r1--640.webp",
+      "width": 640,
+      "height": 640
+    },
+    {
+      "alt": "Three simple ceramic mugs in distinct glaze colors",
+      "src": "/assets/sites/site_aidreamcapes/site-v2/guide/k5-home-card-color--640.webp",
+      "width": 640,
+      "height": 640
+    }
+  ],
+  "sectionsOrder": [
+    "v2_main"
+  ],
+  "contentContract": {
+    "seoSource": "LivePage.contentJson",
+    "mediaSource": "LivePage.contentJson",
+    "sourceRevision": "aidreamcapes-site-v2"
+  }
+}

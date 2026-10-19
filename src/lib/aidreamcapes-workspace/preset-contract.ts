@@ -93,9 +93,11 @@ export function parseWorkspaceSceneRouteSlug(value: string): { sourcePage: strin
   return { sourcePage, sceneSlug };
 }
 
+export const PUBLIC_SCENE_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,119}$/i;
+
 export function workspaceMediaRoutePath(kind: "photo" | "video", publicSlug: string | undefined): string | undefined {
-  if (!publicSlug || !/^[a-z0-9][a-z0-9-]{0,119}$/.test(publicSlug)) return undefined;
-  return `/${kind === "photo" ? "images" : "videos"}/${publicSlug}`;
+  if (!publicSlug || !PUBLIC_SCENE_SLUG_RE.test(publicSlug)) return undefined;
+  return `/${kind === "photo" ? "ai-image-generation" : "ai-video-generation"}/${publicSlug}`;
 }
 
 /** Called during public SSR. Only the small identity crosses into the app URL. */

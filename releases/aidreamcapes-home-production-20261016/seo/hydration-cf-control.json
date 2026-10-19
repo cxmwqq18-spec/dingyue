@@ -1,0 +1,33 @@
+{
+  "capturedAt": "2026-10-16T15:08:38.000Z",
+  "method": "Live same-origin HTML response transformation in isolated browser only; no origin/CDN/data/code mutation",
+  "cases": [
+    {
+      "mode": "original",
+      "status": 200,
+      "rewriteCounts": null,
+      "errors": [
+        "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+      ],
+      "dom": {
+        "cfProtected": 0,
+        "footerEmail": "<a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a>",
+        "trust": "<div class=\"v1-card-copy\"><span aria-hidden=\"true\" class=\"v1-mark\"></span><h3>Email Support When a Job Sticks</h3><p>A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.</p></div>"
+      }
+    },
+    {
+      "mode": "restore-email-only",
+      "status": 200,
+      "rewriteCounts": {
+        "footer": 1,
+        "plainEmail": 1
+      },
+      "errors": [],
+      "dom": {
+        "cfProtected": 0,
+        "footerEmail": "<a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a>",
+        "trust": "<div class=\"v1-card-copy\"><span aria-hidden=\"true\" class=\"v1-mark\"></span><h3>Email Support When a Job Sticks</h3><p>A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.</p></div>"
+      }
+    }
+  ]
+}

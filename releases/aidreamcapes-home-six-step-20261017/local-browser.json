@@ -1,0 +1,857 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "1440-js six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "1440-js description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "1440-js keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1440-js all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 1 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 1 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 1 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 2 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 2 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 2 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 3 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 3 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 3 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 4 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 4 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 4 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 5 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 5 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 5 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 6 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 6 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js step 6 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1440-js explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "1024-js description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "1024-js keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "1024-js all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 1 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 1 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 1 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 2 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 2 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 2 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 3 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 3 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 3 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 4 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 4 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 4 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 5 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 5 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 5 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 6 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 6 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js step 6 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "1024-js explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "768-js description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "768-js keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "768-js all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 1 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 1 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 1 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 2 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 2 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 2 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 3 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 3 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 3 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 4 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 4 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 4 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 5 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 5 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 5 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 6 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 6 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js step 6 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "768-js explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "390-js description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "390-js keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-js all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 1 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 1 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 1 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 2 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 2 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 2 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 3 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 3 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 3 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 4 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 4 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 4 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 5 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 5 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 5 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 6 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 6 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js step 6 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-js explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "320-js description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "320-js keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "320-js all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 1 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 1 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 1 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 2 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 2 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 2 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 3 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 3 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 3 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 4 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 4 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 4 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 5 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 5 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 5 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 6 preview local",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 6 matching preview",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js step 6 focus restored",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320-js explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs six visual steps",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs six matching benefit summaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs all step introductions visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs complete SSR without accordion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs six other home modules",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs one H1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs title exact",
+      "pass": true,
+      "detail": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "name": "390-nojs description exact",
+      "pass": true,
+      "detail": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "name": "390-nojs keywords exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs no clipped copy",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "390-nojs all materials load",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390-nojs explicit workspace CTA",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "no public runtime data requests",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "dataRequests": []
+}

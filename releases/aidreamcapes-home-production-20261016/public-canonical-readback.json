@@ -1,0 +1,66 @@
+{
+  "status": 200,
+  "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+  "h1": [
+    "Create AI UGC Videos from Your Product Photos"
+  ],
+  "description": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+  "canonical": "https://www.aivideosugc.com/",
+  "modules": 7,
+  "socialLinks": [
+    {
+      "href": "https://www.facebook.com/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://www.instagram.com/aivideosugc/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://www.pinterest.com/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://x.com/AiVideosUGC",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://www.youtube.com/@AiVideosUGC",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://www.tiktok.com/@aivideosugc",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://www.reddit.com/user/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    },
+    {
+      "href": "https://discord.gg/F52827j3Nm",
+      "target": "_blank",
+      "rel": "noopener noreferrer",
+      "svg": 1
+    }
+  ]
+}

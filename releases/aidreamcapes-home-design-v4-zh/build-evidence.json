@@ -1,0 +1,6 @@
+{
+  "originalSections": 14,
+  "translatedTextNodes": 476,
+  "additions": 6,
+  "source": "read-only localhost:3002 DOM; no application or database writes"
+}

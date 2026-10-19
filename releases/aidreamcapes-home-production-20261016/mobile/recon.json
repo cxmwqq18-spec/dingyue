@@ -1,0 +1,1001 @@
+{
+  "status": "complete",
+  "width": 390,
+  "scroll": 390,
+  "title": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+  "header": "<header class=\"site\"><div class=\"wrap hbar\"><a aria-label=\"AIVideosUGC home\" class=\"logo\" href=\"/\"><img alt=\"\" class=\"logo-mark\" height=\"28\" width=\"28\" src=\"/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc\">AIVideosUGC</a><nav aria-label=\"Main\" class=\"main\" id=\"adc2-main-nav\"><div class=\"nav-item\"><button aria-expanded=\"false\" class=\"nav-btn\" type=\"button\">Video<svg aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 12 12\"><path d=\"M2.5 4.5 6 8l3.5-3.5\"></path></svg></button><div class=\"panel two\"><div><div class=\"ph\">Make a video</div><div class=\"mlist\"><a class=\"mi\" href=\"/ai-video-generation/image-to-video\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/ecommerce-main-image-v1/ecommerce-main-image/_responsive/example-07--640.webp\"><div><b>Image to Video</b><span>Animate one product photo into a short clip</span></div></a><a class=\"mi\" href=\"/ai-video-generation/url-to-video\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/gen/url-to-video-concept--640.webp\"><div><b>URL to Video</b><span>Paste a product link, get a video</span></div></a><a class=\"mi\" href=\"/ai-video-generation/ugc-ad-video\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_creator_ad-r2.webp\"><div><b>Video Ads</b><span>Short ads for TikTok, Reels and Shorts</span></div></a><a class=\"mi\" href=\"/ai-video-generation/product-video\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_demo.webp\"><div><b>Product Videos</b><span>Demo how your product works, one action per clip</span></div></a><a class=\"mi\" href=\"/ai-video-generation/before-after-showcases\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_ba.webp\"><div><b>Before &amp; After Videos</b><span>Show the difference your product makes</span></div></a><a class=\"mi\" href=\"/ai-video-generation/ai-actor-product-ads\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/presenter-r2.webp\"><div><b>Spokesperson Videos</b><span>A presenter shows your product on camera</span></div></a><a class=\"mi\" href=\"/ai-video-generation/ai-actors\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/guide/gen2guide-q4-actor-theo-r1--640.webp\"><div><b>AI Actors</b><span>Pick from 53 AI actors for your ad</span></div></a></div></div><div class=\"pop\"><div class=\"ph\">Popular templates</div><div class=\"popc\"><a href=\"/ai-video-generation/beauty-routine\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_beauty-r1.webp\">Beauty Routine</a><a href=\"/ai-video-generation/black-friday-countdown\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_bf_rc4.webp\">Black Friday Video</a><a href=\"/ai-video-generation/promo-video\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/v_launch.webp\">Launch Promo</a></div></div><div class=\"pfoot\"><a href=\"/ai-video-generation\">All video tools \u2192</a><a href=\"/templates?type=video\">Browse all video templates \u2192</a></div></div></div><div class=\"nav-item\"><button aria-expanded=\"false\" class=\"nav-btn\" type=\"button\">Photo<svg aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 12 12\"><path d=\"M2.5 4.5 6 8l3.5-3.5\"></path></svg></button><div class=\"panel two\"><div><div class=\"ph\">Make photos</div><div class=\"mlist\"><a class=\"mi\" href=\"/ai-image-generation/ecommerce-main-image\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_white.webp\"><div><b>White Background Photos</b><span>Ready for Amazon and Shopify</span></div></a><a class=\"mi\" href=\"/ai-image-generation/lifestyle-scene\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_life.webp\"><div><b>Lifestyle Photos</b><span>Your product in a real-life scene</span></div></a><a class=\"mi\" href=\"/ai-image-generation/on-model-generation\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_model.webp\"><div><b>Model Photos</b><span>Your clothes and accessories on a model</span></div></a><a class=\"mi\" href=\"/ai-image-generation/background-remove-replace\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_bg.webp\"><div><b>Change Background</b><span>New background, same product</span></div></a><a class=\"mi\" href=\"/ai-image-generation/feed-ad-still\"><img alt=\"\" decoding=\"async\" height=\"46\" loading=\"lazy\" width=\"46\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_feed.webp\"><div><b>Social Ad Photos</b><span>Images for Facebook and Instagram ads</span></div></a></div></div><div class=\"pop\"><div class=\"ph\">Popular templates</div><div class=\"popc\"><a href=\"/ai-image-generation/colorway-variations\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/rc1-tpl-color-cover.webp\">Color Variants</a><a href=\"/ai-image-generation/packshot-multi-angle\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_angle.webp\">Every Angle</a><a href=\"/ai-image-generation/packaging-mockup\"><img alt=\"\" decoding=\"async\" loading=\"lazy\" src=\"/assets/sites/site_aidreamcapes/site-v2/p_pack-r1.webp\">Packaging Preview</a></div></div><div class=\"pfoot\"><a href=\"/ai-image-generation\">All photo tools \u2192</a><a href=\"/templates?type=photo\">Browse all photo templates \u2192</a></div></div></div><div class=\"nav-item\"><button aria-expanded=\"false\" class=\"nav-btn\" type=\"button\">Templates<svg aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 12 12\"><path d=\"M2.5 4.5 6 8l3.5-3.5\"></path></svg></button><div class=\"panel\"><div class=\"pcol tlist\"><div class=\"ph\">By industry</div><a href=\"/industries/beauty-skincare\">Beauty &amp; Personal Care</a><a href=\"/industries/fashion-clothing\">Clothing</a><a href=\"/industries/shoes\">Footwear</a><a href=\"/industries/jewelry-accessories\">Jewelry &amp; Accessories</a><a href=\"/industries/electronics\">Tech &amp; Electronics</a><a href=\"/industries/health-wellness\">Health &amp; Fitness</a><a href=\"/industries/food-drinks\">Food &amp; Beverage</a><a href=\"/industries/home-living\">Home &amp; Living</a></div><div class=\"pcol tlist\"><div class=\"ph\">By platform</div><a href=\"/platforms/tiktok-ads\">TikTok</a><a href=\"/platforms/instagram-ads\">Instagram</a><a href=\"/platforms/facebook-ads\">Facebook</a><a href=\"/platforms/youtube-shorts-ads\">YouTube Shorts</a><a href=\"/platforms/amazon-product-photos\">Amazon</a><a href=\"/platforms/shopify-product-photos\">Shopify</a></div><div class=\"pcol tlist\"><div class=\"ph\">By occasion</div><a href=\"/occasions/sale-discount\">Sale &amp; Discount</a><a href=\"/occasions/black-friday\">Black Friday</a><a href=\"/occasions/holidays\">Holidays</a></div><div class=\"pfoot\"><a href=\"/templates\">See all 18 templates \u2192</a></div></div></div><div class=\"nav-item\"><button aria-expanded=\"false\" class=\"nav-btn\" type=\"button\">Resources<svg aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 12 12\"><path d=\"M2.5 4.5 6 8l3.5-3.5\"></path></svg></button><div class=\"panel\"><div class=\"pcol tlist\"><div class=\"ph\">Learn and get help</div><a href=\"/inspiration\">Examples</a><a href=\"/guides\">How-to Guides</a><a href=\"/blog\">Blog</a><a href=\"/faq\">FAQ</a><a href=\"/glossary\">Glossary</a><a href=\"/contact-us\">Contact</a></div></div></div><a class=\"nav-btn\" href=\"/pricing\">Pricing</a></nav><div class=\"hright\"><a class=\"login\" href=\"/login\">Log in</a><a class=\"btn btn-primary\" href=\"/app/create\">Get started</a><button aria-controls=\"adc2-main-nav\" aria-expanded=\"false\" aria-label=\"Open menu\" class=\"menu-toggle\" id=\"adc2-menu-toggle\" type=\"button\"><svg fill=\"none\" height=\"20\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 20 20\" width=\"20\"><path d=\"M3 6h14M3 10h14M3 14h14\"></path></svg></button></div></div></header>",
+  "roots": [
+    {
+      "name": "hero",
+      "heading": "Turn product photosinto AI videos and images.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "A",
+          "text": "Your product photo",
+          "key": "t005",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "A",
+          "text": "Scene templates",
+          "key": "t006",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "A",
+          "text": "AI presenters",
+          "key": "t007",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 3,
+          "tag": "A",
+          "text": "Videos and images",
+          "key": "t008",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "Your starting point \u00b7 A product photo",
+          "key": "source",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-hero-preview-source",
+          "visible": true
+        },
+        {
+          "i": 5,
+          "tag": "BUTTON",
+          "text": "Preview exampleGive your product the spotlight.Make the details clear.",
+          "key": "result",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-hero-preview-result",
+          "visible": true
+        },
+        {
+          "i": 6,
+          "tag": "BUTTON",
+          "text": "Compare the photo and exampleSee the product reference beside an example visual.Use the comparison to plan your own content.",
+          "key": "versions",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-hero-preview-versions",
+          "visible": true
+        },
+        {
+          "i": 7,
+          "tag": "A",
+          "text": "01\u3000Add your productUpload your own product photo",
+          "key": "step1",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 8,
+          "tag": "A",
+          "text": "02\u3000Choose a starting pointPick a scene and write a short brief",
+          "key": "step2",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 9,
+          "tag": "A",
+          "text": "03\u3000Save and edit your draftReview the storyboard before generating shots",
+          "key": "step3",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 10,
+          "tag": "A",
+          "text": "04\u3000Review and downloadGenerate clips, assemble and check the result",
+          "key": "step4",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "picker",
+      "heading": "Find a product video scene.Preview it before you create.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "All",
+          "key": "filter-all",
+          "group": null,
+          "value": null,
+          "filter": "all",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "Beauty & personal care",
+          "key": "filter-beauty",
+          "group": null,
+          "value": null,
+          "filter": "beauty",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "Fashion & accessories",
+          "key": "filter-clothing",
+          "group": null,
+          "value": null,
+          "filter": "clothing",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 3,
+          "tag": "BUTTON",
+          "text": "Tech & electronics",
+          "key": "filter-tech",
+          "group": null,
+          "value": null,
+          "filter": "tech",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "Home",
+          "key": "filter-home",
+          "group": null,
+          "value": null,
+          "filter": "home",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 5,
+          "tag": "BUTTON",
+          "text": "AI presenter \u00b7 Product introduction",
+          "key": "presenter",
+          "group": "scene",
+          "value": "presenter",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 6,
+          "tag": "BUTTON",
+          "text": "Wireless earbuds \u00b7 Product close-up",
+          "key": "earbuds",
+          "group": "scene",
+          "value": "earbuds",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 7,
+          "tag": "BUTTON",
+          "text": "Garment steamer \u00b7 Demonstration",
+          "key": "steamer",
+          "group": "scene",
+          "value": "steamer",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 8,
+          "tag": "BUTTON",
+          "text": "Canvas tote \u00b7 Product details",
+          "key": "tote",
+          "group": "scene",
+          "value": "tote",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 9,
+          "tag": "BUTTON",
+          "text": "Knit cardigan \u00b7 Multiple angles",
+          "key": "cardigan",
+          "group": "scene",
+          "value": "cardigan",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 10,
+          "tag": "BUTTON",
+          "text": "Home fragrance \u00b7 Lifestyle scene",
+          "key": "fragrance",
+          "group": "scene",
+          "value": "fragrance",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 11,
+          "tag": "BUTTON",
+          "text": "Selected sceneAI presenter \u00b7 Product introduction",
+          "key": "preview-presenter",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-presenter",
+          "visible": true
+        },
+        {
+          "i": 12,
+          "tag": "BUTTON",
+          "text": "Selected sceneWireless earbuds \u00b7 Product close-up",
+          "key": "preview-earbuds",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-earbuds",
+          "visible": false
+        },
+        {
+          "i": 13,
+          "tag": "BUTTON",
+          "text": "Selected sceneGarment steamer \u00b7 Demonstration",
+          "key": "preview-steamer",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-steamer",
+          "visible": false
+        },
+        {
+          "i": 14,
+          "tag": "BUTTON",
+          "text": "Selected sceneCanvas tote \u00b7 Product details",
+          "key": "preview-tote",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-tote",
+          "visible": false
+        },
+        {
+          "i": 15,
+          "tag": "BUTTON",
+          "text": "Selected sceneKnit cardigan \u00b7 Multiple angles",
+          "key": "preview-cardigan",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-cardigan",
+          "visible": false
+        },
+        {
+          "i": 16,
+          "tag": "BUTTON",
+          "text": "Selected sceneHome fragrance \u00b7 Lifestyle scene",
+          "key": "preview-fragrance",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-picker-preview-fragrance",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "visualSteps",
+      "heading": null,
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "Drop your product photo hereJPG, PNG or WebP \u00b7 any clear photo works",
+          "key": "visualSource",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "home-visual-source-preview",
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "Lifestyle",
+          "key": "visualChoice1",
+          "group": "visual-choice",
+          "value": "0",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "White background",
+          "key": "visualChoice2",
+          "group": "visual-choice",
+          "value": "1",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 3,
+          "tag": "BUTTON",
+          "text": "Product detail",
+          "key": "visualChoice3",
+          "group": "visual-choice",
+          "value": "2",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "Social image",
+          "key": "visualChoice4",
+          "group": "visual-choice",
+          "value": "3",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 5,
+          "tag": "A",
+          "text": "CostShown before generation",
+          "key": "visualCost",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 6,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "visualResult",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "home-visual-result-preview",
+          "visible": true
+        },
+        {
+          "i": 7,
+          "tag": "BUTTON",
+          "text": "Preview example",
+          "key": "visualDownload",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "home-visual-result-preview",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "steps",
+      "heading": "Explore AI presenters.Find a style for your video.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "main",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-steps-preview-main",
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "main-presenterHome",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-steps-preview-presenterHome",
+          "visible": false
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "main-presenterWork",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-steps-preview-presenterWork",
+          "visible": false
+        },
+        {
+          "i": 3,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "main-presenterOutdoor",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-steps-preview-presenterOutdoor",
+          "visible": false
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "At home",
+          "key": "presenterHome",
+          "group": "presenter",
+          "value": "presenterHome",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 5,
+          "tag": "BUTTON",
+          "text": "At work",
+          "key": "presenterWork",
+          "group": "presenter",
+          "value": "presenterWork",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 6,
+          "tag": "BUTTON",
+          "text": "Outdoors",
+          "key": "presenterOutdoor",
+          "group": "presenter",
+          "value": "presenterOutdoor",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 7,
+          "tag": "SUMMARY",
+          "text": "Voice and language informationView details",
+          "key": "voice",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "features",
+      "heading": "Explore the video storyboard.See how the shots fit together.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "\u2460 Product brief",
+          "key": "stage-product",
+          "group": "stage",
+          "value": "product",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "\u2461 Storyboard",
+          "key": "stage-storyboard",
+          "group": "stage",
+          "value": "storyboard",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "\u2462 Assemble",
+          "key": "stage-assembly",
+          "group": "stage",
+          "value": "assembly",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 3,
+          "tag": "BUTTON",
+          "text": "\u2463 Review",
+          "key": "stage-delivery",
+          "group": "stage",
+          "value": "delivery",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "product-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-product",
+          "visible": false
+        },
+        {
+          "i": 5,
+          "tag": "BUTTON",
+          "text": "Shot 01 \u00b7 Product details",
+          "key": "shot1-first-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot1-first",
+          "visible": true
+        },
+        {
+          "i": 6,
+          "tag": "BUTTON",
+          "text": "Shot 01 \u00b7 Product details",
+          "key": "shot1-second-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot1-second",
+          "visible": false
+        },
+        {
+          "i": 7,
+          "tag": "BUTTON",
+          "text": "Wider framing",
+          "key": "shot1-first",
+          "group": "shot1",
+          "value": "first",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 8,
+          "tag": "BUTTON",
+          "text": "Closer framing",
+          "key": "shot1-second",
+          "group": "shot1",
+          "value": "second",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 9,
+          "tag": "BUTTON",
+          "text": "Shot 02 \u00b7 Product introduction",
+          "key": "shot2-first-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot2-first",
+          "visible": false
+        },
+        {
+          "i": 10,
+          "tag": "BUTTON",
+          "text": "Shot 02 \u00b7 Product introduction",
+          "key": "shot2-second-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot2-second",
+          "visible": true
+        },
+        {
+          "i": 11,
+          "tag": "BUTTON",
+          "text": "Wider framing",
+          "key": "shot2-first",
+          "group": "shot2",
+          "value": "first",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 12,
+          "tag": "BUTTON",
+          "text": "Closer framing",
+          "key": "shot2-second",
+          "group": "shot2",
+          "value": "second",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 13,
+          "tag": "BUTTON",
+          "text": "Shot 03 \u00b7 Closing message",
+          "key": "shot3-first-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot3-first",
+          "visible": true
+        },
+        {
+          "i": 14,
+          "tag": "BUTTON",
+          "text": "Shot 03 \u00b7 Closing message",
+          "key": "shot3-second-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-shot3-second",
+          "visible": false
+        },
+        {
+          "i": 15,
+          "tag": "BUTTON",
+          "text": "Wider framing",
+          "key": "shot3-first",
+          "group": "shot3",
+          "value": "first",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 16,
+          "tag": "BUTTON",
+          "text": "Closer framing",
+          "key": "shot3-second",
+          "group": "shot3",
+          "value": "second",
+          "filter": null,
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 17,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "assembly-frame-1",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-product",
+          "visible": false
+        },
+        {
+          "i": 18,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "assembly-frame-2",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-result",
+          "visible": false
+        },
+        {
+          "i": 19,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "assembly-frame-3",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-product",
+          "visible": false
+        },
+        {
+          "i": 20,
+          "tag": "BUTTON",
+          "text": "",
+          "key": "delivery-preview",
+          "group": null,
+          "value": null,
+          "filter": null,
+          "dialog": "hx-features-preview-result",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "audience",
+      "heading": "Plan several product videos.Start with one clear brief.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "All briefs",
+          "key": "filter-all",
+          "group": null,
+          "value": null,
+          "filter": "all",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "Product focus",
+          "key": "filter-product",
+          "group": null,
+          "value": null,
+          "filter": "product",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "Presenter stories",
+          "key": "filter-presenter",
+          "group": null,
+          "value": null,
+          "filter": "presenter",
+          "dialog": null,
+          "visible": true
+        },
+        {
+          "i": 3,
+          "tag": "BUTTON",
+          "text": "Example briefProduct detailsFocus on the bottle and packaging.Start with a clear view of your product.Preview brief \u2192",
+          "key": "draftDetails",
+          "group": "brief",
+          "value": "draftDetails",
+          "filter": null,
+          "dialog": "hx-audience-preview-draftDetails",
+          "visible": true
+        },
+        {
+          "i": 4,
+          "tag": "BUTTON",
+          "text": "Example briefPresenter introductionIntroduce the product with a presenter.Use facts from your own product brief.Preview brief \u2192",
+          "key": "draftPresenter",
+          "group": "brief",
+          "value": "draftPresenter",
+          "filter": null,
+          "dialog": "hx-audience-preview-draftPresenter",
+          "visible": true
+        },
+        {
+          "i": 5,
+          "tag": "BUTTON",
+          "text": "Example briefNew launch openingLead with a new product or offer.Try a different first line for the campaign.Preview brief \u2192",
+          "key": "draftLaunch",
+          "group": "brief",
+          "value": "draftLaunch",
+          "filter": null,
+          "dialog": "hx-audience-preview-draftLaunch",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "heading": "Preview product contentfor different placements.",
+      "controls": [
+        {
+          "i": 0,
+          "tag": "BUTTON",
+          "text": "Presenter visual \u00b7 9:16Preview the vertical format",
+          "key": "video",
+          "group": "format",
+          "value": "video",
+          "filter": null,
+          "dialog": "hx-reviews-preview-video",
+          "visible": true
+        },
+        {
+          "i": 1,
+          "tag": "BUTTON",
+          "text": "Product image \u00b7 1:1Preview the square format",
+          "key": "image",
+          "group": "format",
+          "value": "image",
+          "filter": null,
+          "dialog": "hx-reviews-preview-image",
+          "visible": true
+        },
+        {
+          "i": 2,
+          "tag": "BUTTON",
+          "text": "Product page imageryPreview the product detail format",
+          "key": "productPage",
+          "group": "format",
+          "value": "productPage",
+          "filter": null,
+          "dialog": "hx-reviews-preview-productPage",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "pricing": null,
+  "faqs": [
+    {
+      "class": "hx-voice-details",
+      "text": "Voice and language informationView details"
+    },
+    {
+      "class": "",
+      "text": "How do I make a UGC ad with an AI actor?"
+    },
+    {
+      "class": "",
+      "text": "How much does it cost to make an AI UGC ad?"
+    },
+    {
+      "class": "",
+      "text": "Can I use the finished ads for a client?"
+    },
+    {
+      "class": "",
+      "text": "Why are AI UGC ads effective?"
+    },
+    {
+      "class": "",
+      "text": "Can I make a testimonial-style ad for TikTok?"
+    },
+    {
+      "class": "",
+      "text": "Can I turn a product link into a UGC ad?"
+    },
+    {
+      "class": "",
+      "text": "Can I make the same ad in another language?"
+    },
+    {
+      "class": "",
+      "text": "Can I make another version of an ad later?"
+    },
+    {
+      "class": "",
+      "text": "What does AI UGC mean for a product ad?"
+    },
+    {
+      "class": "",
+      "text": "Can I change the ad after it is generated?"
+    },
+    {
+      "class": "",
+      "text": "How long does an AI UGC ad take?"
+    },
+    {
+      "class": "",
+      "text": "Should I use an AI actor or hire a person?"
+    },
+    {
+      "class": "",
+      "text": "Will Meta accept an AI-generated product ad?"
+    },
+    {
+      "class": "",
+      "text": "Can an AI actor use a voice we already recorded?"
+    },
+    {
+      "class": "",
+      "text": "Do these AI UGC ads need a signed release?"
+    },
+    {
+      "class": "",
+      "text": "Can I post creator-style ads without hiring anyone?"
+    },
+    {
+      "class": "",
+      "text": "How is a customer video different from AI UGC?"
+    },
+    {
+      "class": "",
+      "text": "What should a small shop look for in an AI UGC tool?"
+    }
+  ],
+  "social": [
+    {
+      "text": "Facebook",
+      "href": "https://www.facebook.com/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Instagram",
+      "href": "https://www.instagram.com/aivideosugc/",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Pinterest",
+      "href": "https://www.pinterest.com/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "X",
+      "href": "https://x.com/AiVideosUGC",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "YouTube",
+      "href": "https://www.youtube.com/@AiVideosUGC",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "TikTok",
+      "href": "https://www.tiktok.com/@aivideosugc",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Reddit",
+      "href": "https://www.reddit.com/user/AiVideosUGC/",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "WhatsApp",
+      "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Discord",
+      "href": "https://discord.gg/F52827j3Nm",
+      "target": "_blank",
+      "rel": "noopener noreferrer"
+    }
+  ],
+  "http": 200
+}

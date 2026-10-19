@@ -1,0 +1,250 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "codeCommit": "d2e30400e8d305ec6420cdd999d42e1f7aa8730b",
+  "owner": "Current relational LivePage.contentJson, ThemeSettings footer and Product metadata",
+  "applied": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/5/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/5/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/4/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/2/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/2/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/0/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/0/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/5/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/5/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/10/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/10/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/15/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/15/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/1/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/stepsH2"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/1/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/visual/steps/actorResult"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/contentContract/sourceRevision"
+    },
+    {
+      "id": "prod_aidreamcapes_starter",
+      "path": "/features/2"
+    }
+  ],
+  "planned": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/5/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/5/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/4/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/2/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/2/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/trust/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/0/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/0/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/5/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/5/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/10/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/10/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/faq/15/a"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/seo/jsonLd/@graph/3/mainEntity/15/acceptedAnswer/text"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/1/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/audience/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/reviews/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/stepsH2"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/benefits/1/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/visual/steps/actorResult"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/contentContract/sourceRevision"
+    },
+    {
+      "id": "prod_aidreamcapes_starter",
+      "path": "/features/2"
+    }
+  ],
+  "skipped": [],
+  "conflicts": [],
+  "protectedHashBefore": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "protectedHashAfter": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "derivedState": {
+    "relation": "\"SitePublishedState\"",
+    "restored": false
+  },
+  "revisions": [
+    {
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "before": "79d7d97cd40dd6591b7b62097fc96b7b218fb6d0724fff1e097aae2e0dfcdc77",
+      "after": "8d242b207d6f479f20e642e5eb0f6c67c811ea41f2a6092df12fd7f6a0a05766"
+    },
+    {
+      "id": "prod_aidreamcapes_starter",
+      "field": "metadata",
+      "before": "4d13d6a8de5cb2fda3f632962b03c323a150a4753df60b436a5bb01a62e95b96",
+      "after": "35a14635e216b6a158a42d042f32b17300bc71a72e30f84a233232d956b1efd1"
+    }
+  ]
+}

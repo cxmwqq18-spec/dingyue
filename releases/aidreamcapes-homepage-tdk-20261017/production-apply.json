@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "reportPath": "/www/wwwroot/aidreamcapes.com/ops/homepage-tdk-20261017/apply.md",
+  "report": {
+    "applied": [
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/title",
+        "operation": "upsert",
+        "baseHash": "1211b5be1aa2d075ce1ab3d2dd0f1611826add5a06f3294a79a96f555f2d4f91",
+        "previousValue": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+        "value": "AI UGC Video and Image Ads Generator | AivideosUGC"
+      },
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/keywords",
+        "operation": "upsert",
+        "baseHash": "986045b2fbacb8c1650033b9674ab71b14823c456bf5625ebffdbd2794be8b22",
+        "previousValue": "AI UGC video generator, AI product videos, AI presenter videos, product video templates, AI product photos",
+        "value": "AI UGC ads,AI UGC video ads,AI UGC image ads,AI UGC ad Generator,AI Generated UGC ads,AI Actors ads"
+      },
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/description",
+        "operation": "upsert",
+        "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+        "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+        "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+      },
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/twitterDescription",
+        "operation": "upsert",
+        "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+        "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+        "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+      },
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/jsonLd/@graph/2/name",
+        "operation": "upsert",
+        "baseHash": "1211b5be1aa2d075ce1ab3d2dd0f1611826add5a06f3294a79a96f555f2d4f91",
+        "previousValue": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+        "value": "AI UGC Video and Image Ads Generator | AivideosUGC"
+      },
+      {
+        "entityType": "live_page",
+        "entityKey": "site_aidreamcapes_home",
+        "field": "contentJson",
+        "fieldPath": "/seo/jsonLd/@graph/2/description",
+        "operation": "upsert",
+        "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+        "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+        "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+      }
+    ],
+    "conflicts": [],
+    "skipped": [],
+    "deletions": []
+  }
+}

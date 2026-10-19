@@ -1,0 +1,29 @@
+{
+  "scope": "Aidreamcapes English homepage; copy and workflow review",
+  "references": [
+    "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "https://developers.google.com/search/docs/crawling-indexing/links-crawlable"
+  ],
+  "findingsBefore": [
+    "Several visual buttons were spans, so apparent controls had no action.",
+    "New modules did not carry a selected scene or brief into the workspace.",
+    "Some phrases described automatic chat, exact delivery or performance more strongly than the current workflow supports.",
+    "The comparison table used vague labels and duplicated a plan price instead of explaining the production choice.",
+    "Large standalone numbers interrupted scanning."
+  ],
+  "copyChanges": [
+    "Descriptive English product headings identify AI product videos, product photos, scene templates, AI presenters and batch drafts.",
+    "Calls to action name the actual next destination, including Browse templates, Use this brief, Open Batch Drafts and Create a product image.",
+    "The process now follows product assets, scene/presenter, brief, saved draft/storyboard, selected shot generation/assembly, and review/download.",
+    "Comparison copy explains concrete choices without claims about guaranteed sales or creator performance.",
+    "Illustrative draft cards remain examples and create form prefills; they never impersonate existing customer tasks."
+  ],
+  "seoChecks": [
+    "Content remains complete server-rendered HTML owned by current LivePage.contentJson.",
+    "One descriptive H1; structured headings; contextual anchor links with href; descriptive image alt text.",
+    "Title, meta description and WebPage JSON-LD are updated together; canonical remains https://www.aivideosugc.com/.",
+    "Private workspace routes retain noindex behavior; no public copy or navigation API fetch added."
+  ],
+  "conversionAssessment": "Clearer next steps and form prefills reduce ambiguity and repeat typing. A conversion-rate increase has not been measured; it requires observed user behavior or an A/B test.",
+  "language": "English source; browser translation remains available."
+}

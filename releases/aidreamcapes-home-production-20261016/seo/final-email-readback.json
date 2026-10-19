@@ -1,0 +1,135 @@
+{
+  "startedAt": "2026-10-16T15:17:46.241Z",
+  "method": "Direct live public request with fresh cache-busting query; no interception, response transformation, routing override or source substitution",
+  "cases": [
+    {
+      "mode": "javascript",
+      "url": "https://www.aivideosugc.com/?qa=final-email-1792163866241-javascript",
+      "status": 200,
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=60, s-maxage=300, stale-while-revalidate=1800",
+        "cdn-cache-control": "public, s-maxage=300, stale-while-revalidate=1800",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a4b808510b7722b3-LAX",
+        "content-encoding": "zstd",
+        "content-security-policy": "frame-ancestors 'self'",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Fri, 16 Oct 2026 15:17:53 GMT",
+        "link": "</_next/static/css/a96b3d563ae3d450.css>; rel=preload; as=\"style\", </_next/static/css/adfff2c45557dfb5.css>; rel=preload; as=\"style\"",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=DP0cIU%2BMFqmTy6Wn0ib871fZyUa8VVmY9rDgvmblXFBcmxSX%2FZ5xH4tTMONeBkFB36DJcejz2pxcQe1%2BrqCLL2sUWkvisy%2F%2FCr2BvTTicYrKw6jCLItPJnXqQ5yogcIkwEG07r7M\"}]}",
+        "server": "cloudflare",
+        "server-timing": "ssr;dur=3986.0, html;dur=3986.0;desc=\"723243 bytes\", ssr;dur=4416.4, html;dur=4416.4;desc=\"723276 bytes\", cfCacheStatus;desc=\"DYNAMIC\", cfEdge;dur=27,cfOrigin;dur=4688",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding, rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN"
+      },
+      "errors": [],
+      "dataRequests": [
+        {
+          "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+          "type": "xhr",
+          "method": "POST"
+        },
+        {
+          "url": "https://www.aivideosugc.com/cdn-cgi/rum?",
+          "type": "xhr",
+          "method": "POST"
+        }
+      ],
+      "htmlCfEmailMarkers": 0,
+      "htmlProtectedEmail": 0,
+      "htmlEmailSnippets": [
+        " product page link into short video ads and store-ready product images for online stores.\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-",
+        "ort@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactType\":\"customer support\",\"availableLanguage\":[\"en\"]},\"address\":{\"@type\":\"PostalAddress",
+        "k\"></span><h3>Email Support When a Job Sticks</h3><p>A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.</p></div></article><article class=\"v1-card\"><div class=\"v1-card-copy\"><span aria-hid",
+        "<!-- --> <a href=\"tel:+13073103014\">(+1)307-310-3014</a></span><span>Email:<!-- --> <a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a></span><span>Tax ID<!-- -->: <!-- -->41-5317529</span></address></div><div><h4>Video</h4><ul><li><",
+        "073103014\">(+1)307-310-3014</a></span><span>Email:<!-- --> <a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a></span><span>Tax ID<!-- -->: <!-- -->41-5317529</span></address></div><div><h4>Video</h4><ul><li><a href=\"/ai-video-generat",
+        " product page link into short video ads and store-ready product images for online stores.\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-",
+        "ort@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactType\":\"customer support\",\"availableLanguage\":[\"en\"]},\"address\":{\"@type\":\"PostalAddress",
+        "14\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Email:\\\",\\\" \\\",[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"mailto:support@aivideosugc.com\\\",\\\"children\\\":\\\"support@aivideosugc.com\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Tax ID\\\",\\\": \\\",\\\"41-5317529\\\"]}]]}]]}],",
+        "n\\\":[\\\"Email:\\\",\\\" \\\",[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"mailto:support@aivideosugc.com\\\",\\\"children\\\":\\\"support@aivideosugc.com\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Tax ID\\\",\\\": \\\",\\\"41-5317529\\\"]}]]}]]}],[[\\\"$\\\",\\\"div\\\",\\\"Video\\\",{\\\"children\\\":[",
+        "duct page link into short video ads and store-ready product images for online stores.\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactPoint\\\":{\\\"@type\\\":\\\"ContactPoint\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"tele",
+        "c.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactPoint\\\":{\\\"@type\\\":\\\"ContactPoint\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactType\\\":\\\"customer support\\\",\\\"availableLanguage\\\":[\\\"en\\\"]},\\\"address\\\":{\\\"@type",
+        " Sticks\\\",null]}],[\\\"$\\\",\\\"p\\\",null,{\\\"children\\\":[\\\"A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.\\\"]}],\\\"$undefined\\\"]}]]}],[\\\"$\\\",\\\"article\\\",\\\"Export the Frame You Need\\\",{\\\"classN"
+      ],
+      "visible": {
+        "emailProtectedText": false,
+        "mailLinks": [
+          {
+            "href": "mailto:support@aivideosugc.com",
+            "text": "support@aivideosugc.com"
+          }
+        ],
+        "footer": "BLYDEY INC\n30 N GOULD ST STE R, SHERIDAN, WY 82801, United States\nPhone: (+1)307-310-3014\nEmail: support@aivideosugc.com\nTax ID: 41-5317529",
+        "trust": "Email Support When a Job Sticks\n\nA billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.",
+        "cfEmailNodes": 0
+      },
+      "pass": true
+    },
+    {
+      "mode": "no-javascript",
+      "url": "https://www.aivideosugc.com/?qa=final-email-1792163866241-no-javascript",
+      "status": 200,
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=60, s-maxage=300, stale-while-revalidate=1800",
+        "cdn-cache-control": "public, s-maxage=300, stale-while-revalidate=1800",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a4b8084fe905f596-LAX",
+        "content-encoding": "zstd",
+        "content-security-policy": "frame-ancestors 'self'",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Fri, 16 Oct 2026 15:17:52 GMT",
+        "link": "</_next/static/css/a96b3d563ae3d450.css>; rel=preload; as=\"style\", </_next/static/css/adfff2c45557dfb5.css>; rel=preload; as=\"style\"",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "permissions-policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=c7SijNdGwSGr%2Bf9CV1jyUUilLtGHcKkLa%2BIlvz4t0QnmJYNJ78NPy1Fp7%2FNuhLzCrw3v%2BRQQcjZbRXaYqNa1sS3cKpqjObRVgFE8UoiXawwDLv1V9KWKPBzFs%2BBygK%2Fi68fOVHjC\"}]}",
+        "server": "cloudflare",
+        "server-timing": "ssr;dur=3579.8, html;dur=3579.8;desc=\"723249 bytes\", ssr;dur=3825.8, html;dur=3825.8;desc=\"723282 bytes\", cfCacheStatus;desc=\"DYNAMIC\", cfEdge;dur=23,cfOrigin;dur=3937",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding, rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN"
+      },
+      "errors": [],
+      "dataRequests": [],
+      "htmlCfEmailMarkers": 0,
+      "htmlProtectedEmail": 0,
+      "htmlEmailSnippets": [
+        " product page link into short video ads and store-ready product images for online stores.\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-",
+        "ort@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactType\":\"customer support\",\"availableLanguage\":[\"en\"]},\"address\":{\"@type\":\"PostalAddress",
+        "k\"></span><h3>Email Support When a Job Sticks</h3><p>A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.</p></div></article><article class=\"v1-card\"><div class=\"v1-card-copy\"><span aria-hid",
+        "<!-- --> <a href=\"tel:+13073103014\">(+1)307-310-3014</a></span><span>Email:<!-- --> <a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a></span><span>Tax ID<!-- -->: <!-- -->41-5317529</span></address></div><div><h4>Video</h4><ul><li><",
+        "073103014\">(+1)307-310-3014</a></span><span>Email:<!-- --> <a href=\"mailto:support@aivideosugc.com\">support@aivideosugc.com</a></span><span>Tax ID<!-- -->: <!-- -->41-5317529</span></address></div><div><h4>Video</h4><ul><li><a href=\"/ai-video-generat",
+        " product page link into short video ads and store-ready product images for online stores.\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-",
+        "ort@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactPoint\":{\"@type\":\"ContactPoint\",\"email\":\"support@aivideosugc.com\",\"telephone\":\"(+1)307-310-3014\",\"contactType\":\"customer support\",\"availableLanguage\":[\"en\"]},\"address\":{\"@type\":\"PostalAddress",
+        "14\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Email:\\\",\\\" \\\",[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"mailto:support@aivideosugc.com\\\",\\\"children\\\":\\\"support@aivideosugc.com\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Tax ID\\\",\\\": \\\",\\\"41-5317529\\\"]}]]}]]}],",
+        "n\\\":[\\\"Email:\\\",\\\" \\\",[\\\"$\\\",\\\"a\\\",null,{\\\"href\\\":\\\"mailto:support@aivideosugc.com\\\",\\\"children\\\":\\\"support@aivideosugc.com\\\"}]]}],[\\\"$\\\",\\\"span\\\",null,{\\\"children\\\":[\\\"Tax ID\\\",\\\": \\\",\\\"41-5317529\\\"]}]]}]]}],[[\\\"$\\\",\\\"div\\\",\\\"Video\\\",{\\\"children\\\":[",
+        "duct page link into short video ads and store-ready product images for online stores.\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactPoint\\\":{\\\"@type\\\":\\\"ContactPoint\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"tele",
+        "c.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactPoint\\\":{\\\"@type\\\":\\\"ContactPoint\\\",\\\"email\\\":\\\"support@aivideosugc.com\\\",\\\"telephone\\\":\\\"(+1)307-310-3014\\\",\\\"contactType\\\":\\\"customer support\\\",\\\"availableLanguage\\\":[\\\"en\\\"]},\\\"address\\\":{\\\"@type",
+        " Sticks\\\",null]}],[\\\"$\\\",\\\"p\\\",null,{\\\"children\\\":[\\\"A billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.\\\"]}],\\\"$undefined\\\"]}]]}],[\\\"$\\\",\\\"article\\\",\\\"Export the Frame You Need\\\",{\\\"classN"
+      ],
+      "visible": {
+        "emailProtectedText": false,
+        "mailLinks": [
+          {
+            "href": "mailto:support@aivideosugc.com",
+            "text": "support@aivideosugc.com"
+          }
+        ],
+        "footer": "BLYDEY INC\n30 N GOULD ST STE R, SHERIDAN, WY 82801, United States\nPhone: (+1)307-310-3014\nEmail: support@aivideosugc.com\nTax ID: 41-5317529",
+        "trust": "Email Support When a Job Sticks\n\nA billing question or a stuck export can go to support@aivideosugc.com. Send the product page and the file name.",
+        "cfEmailNodes": 0
+      },
+      "pass": true
+    }
+  ],
+  "completedAt": "2026-10-16T15:18:05.457Z",
+  "pass": true
+}

@@ -1,0 +1,125 @@
+{
+  "files": [
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/acceptance.py",
+      "bytes": 22921
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/desktop-acceptance.json",
+      "bytes": 778422
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/desktop-fold.png",
+      "bytes": 435316
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/desktop-review.json",
+      "bytes": 115787
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-audience.png",
+      "bytes": 300596
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-features.png",
+      "bytes": 279816
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-hero.png",
+      "bytes": 281595
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-picker.png",
+      "bytes": 335471
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-reviews.png",
+      "bytes": 332137
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-steps.png",
+      "bytes": 332209
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/dialog-visualSteps.png",
+      "bytes": 14907
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/initial-desktop.png",
+      "bytes": 3625715
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-audience.png",
+      "bytes": 235757
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-features.png",
+      "bytes": 176549
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-hero.png",
+      "bytes": 331712
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-picker.png",
+      "bytes": 385959
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-reviews.png",
+      "bytes": 462398
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-steps.png",
+      "bytes": 524734
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/module-visualSteps.png",
+      "bytes": 362502
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/networkidle-timeout-attempt.json",
+      "bytes": 8662
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/recon.json",
+      "bytes": 112223
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/recon.py",
+      "bytes": 2216
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/review.py",
+      "bytes": 6126
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-audience.png",
+      "bytes": 105661
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-features.png",
+      "bytes": 141069
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-hero.png",
+      "bytes": 141069
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-picker.png",
+      "bytes": 105884
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-reviews.png",
+      "bytes": 105884
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-steps.png",
+      "bytes": 189120
+    },
+    {
+      "path": "/Users/a1/orca/workspaces/dingyue/main-2/releases/aidreamcapes-home-production-20261016/desktop/workspace-visualSteps.png",
+      "bytes": 106040
+    }
+  ],
+  "temporaryRuntimeDependenciesRemoved": true
+}

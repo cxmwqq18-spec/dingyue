@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "target": "local",
+  "deployed": false,
+  "siteId": "site_aidreamcapes",
+  "change": "Ordinary homepage images, filters, selection controls, storyboards, briefs and formats now operate locally. Only explicit creation CTAs navigate to the workspace with selected intent.",
+  "language": "English",
+  "sourceOwner": {
+    "relation": "LivePage",
+    "field": "contentJson",
+    "siteId": "site_aidreamcapes",
+    "pageId": "site_aidreamcapes_home",
+    "sourceRevision": "aidreamcapes-home-local-interactions-en",
+    "revision": "e67b5368ece3a6f5789ff11d7f9bda672c000565442ac32f60ba3b1f977da854",
+    "updatedAt": "2026-10-16T14:06:47.122Z"
+  },
+  "derivedState": {
+    "relation": null,
+    "runtimeUse": "Public SSR reads the current LivePage; no historical state is restored or activated"
+  },
+  "preserved": {
+    "originalGalleryCards": 38,
+    "originalModules": true,
+    "media": true
+  },
+  "checks": {
+    "typecheck": "passed",
+    "liveStorefrontSsrGuard": "passed",
+    "gitDiffCheck": "passed",
+    "localInteractions": 148,
+    "explicitCtaStates": 40,
+    "viewports": [
+      1440,
+      390
+    ],
+    "noJavaScriptSSR": "passed",
+    "translationAfterHydration": "passed",
+    "keyboardDialogsAndFocus": "passed",
+    "remainingSourceOperations": 0,
+    "failures": [],
+    "pageErrors": [],
+    "serverErrors": [],
+    "publicDataRequests": [],
+    "localAppRequests": [],
+    "blockedRequests": []
+  },
+  "copy": "Clarified product-video headings, preview vs creation intent, draft/storyboard/shot/render workflow and Batch Drafts. Corrected the unavailable voice-cloning promise in visible FAQ and matching JSON-LD.",
+  "seoReferences": [
+    "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+    "https://developers.google.com/search/docs/crawling-indexing/links-crawlable"
+  ],
+  "myDreamShoots": {
+    "readOnly": true,
+    "status": 200,
+    "baselineMainSha256": "6d7417a73d32ac317ab17c8ecd2f9473bfdb15b9902db56ce013e116fe35a01d",
+    "currentMainSha256": "6d7417a73d32ac317ab17c8ecd2f9473bfdb15b9902db56ce013e116fe35a01d",
+    "unchanged": true,
+    "relationalHashBefore": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3",
+    "relationalHashAfter": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3"
+  },
+  "scope": "Only Aidreamcapes components, scoped scripts, artifacts and the exact site_aidreamcapes homepage LivePage row were changed in this task. The previously staged shared dreamshoot-showcase-video.tsx change was not edited.",
+  "originAndPublicReadback": "seo-and-readback.json",
+  "publicReadback": {
+    "reachable": false,
+    "error": "fetch failed",
+    "localChangesDeployed": false
+  },
+  "evidence": [
+    "local-interaction-acceptance.json",
+    "initial-local-acceptance.json",
+    "picker-mobile-css-recheck.json",
+    "final-ssr-copy-qa.json",
+    "local-interaction-apply-evidence.json",
+    "local-interaction-current-plan.json"
+  ]
+}

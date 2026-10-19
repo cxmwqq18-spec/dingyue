@@ -1,0 +1,54 @@
+Use case: ui-mockup.
+Asset: high-fidelity desktop website SECTION redesign for AIVideosUGC, the existing AI UGC video and image ad creation website. Create ONE polished, readable, complete design board showing ONLY this six-tool module. This is a substantial redesign of our existing brand-tools module, using the supplied reference website's actual composition. This is not a whole homepage, not a dashboard, and not a generic product catalog.
+
+REFERENCE ROLES:
+Image 1 is the actual Tagshop.ai “Get Everything to Scale Your Brand” section, a COMPOSITION reference. Closely study and adopt its deep-black background, alternating WIDE/NARROW two-column rows, quiet rounded card borders, title + short explanation above a large FUNCTIONAL product demo visual. Its six cards occupy three rows. Retain that spatial logic; replace all competitor content, branding and visuals.
+Image 2 is OUR AIVideosUGC homepage section: BRAND and PRODUCT reference. Preserve its near-black/deep-charcoal-purple palette, lavender accents, bold upright rounded geometric sans-serif typography, our white-label amber dropper serum product and brunette presenter. No italic or serif type.
+Image 3 is OUR REAL workspace: FUNCTIONAL UI reference. Use its composer anatomy (AI Video Agent / AI Video / AI Image tabs, prompt area, Product, Avatar, 9:16, 15s controls, purple submit arrow) when illustrating our tools. Recolor these mini UIs to match the dark public website, rather than using the white dashboard.
+Image 4 is OUR presenter section: PRESENTER and brand reference. Use these natural presenter styles and warm real photography, especially the man with glasses, the bald man and the dark-haired woman. Do not reproduce its page layout.
+
+OVERALL COMPOSITION:
+A premium production-ready 1600px-wide website module, approximately 1600 x 1760 or 1800px, all SIX cards fully visible. A restrained centered header takes the top 190px, followed by THREE tidy rows of TWO cards. 64px outer side padding, 20px gutters, around 395px height per row. Row 1 widths 40% / 60%. Row 2 widths 60% / 40%. Row 3 widths 60% / 40%. Top copy padding 28-32px per card. Strong alignment and generous yet purposeful spacing. Each card has a subtle charcoal 1px border, 18px radius, deep #121216 surface against #08080b backdrop. White headings, soft light-gray body copy, small lavender arrows/selected states, limited purple-blue action accents consistent with our site. A slightly elevated active card is acceptable but no rainbow outlines, no cream or white outer cards, no gradients across the whole section. Avoid a uniform 3-column grid, filter tabs, pill category badges, excessive icons, numbered cards or text-only cards.
+
+TYPE:
+Crisp shippable web UI. Bold upright rounded geometric sans-serif like our site. Heading around 48px, card titles around 25px, body around 17px with comfortable line height. All English wording must be accurate and legible. Keep body text to roughly two lines on the wide cards and three on narrow ones. Every card has its title and concise description at the top, and one purposeful visual filling the lower 60-65%. Title has a small lavender arrow on its right as the explicit tool entry. No repeated “Explore tool” line at the bottom.
+
+EXACT HEADER TEXT:
+Eyebrow: “AI VIDEO TOOLS”
+Main headline: “Everything you need to create AI UGC ads”
+Supporting line: “Start with a URL, a prompt or a product photo. Create your next ad in one workspace.”
+
+SIX CARDS, reading order left-to-right then top-to-bottom:
+1. ROW1 LEFT, narrow:
+Title: “Product URL to Video”
+Description: “Import product details and photos from a public URL. Shape them into your next video ad.”
+Visual: prominent dark URL input “yourstore.com/product” with a compact violet import arrow. Below it, a tasteful extracted product panel with the reference amber serum bottle and 2 small product thumbnails, a subtle checkmark and short label “Review product”. This is a real URL-import workflow, not just a photograph.
+
+2. ROW1 RIGHT, wide:
+Title: “Text to Video Generator”
+Description: “Describe your product, scene and message. Turn your idea into an editable video brief.”
+Visual: a beautifully simplified dark version of OUR composer from Image3, on the left/middle, with the three tabs and a short prompt “Create a 15-second video for this serum.” Below it the Product, Avatar, 9:16 and 15s controls and purple submit arrow. At the right a modest 9:16 video preview of the same brunette presenter holding the same serum. The functional input and result form one composed visual. Do not use microscopic full-dashboard screenshots.
+
+3. ROW2 LEFT, wide:
+Title: “AI Video Generator”
+Description: “Build product videos with AI scenes and presenters. Refine your storyboard and assemble the shots you choose.”
+Visual: a large dark storyboard/editor preview with three meaningful visual shots: the product alone, the brunette holding the product, and a closing product shot. Use photographic frames with tiny clear “Shot 01”, “Shot 02”, “Shot 03” labels, a restrained purple selected outline, and a short timeline below. Show enough controls to communicate editing, without complex unreadable chrome. Beautiful photographic image-to-scene storytelling.
+
+4. ROW2 RIGHT, narrow:
+Title: “Image to Video AI Generator”
+Description: “Start with a product photo. Add a prompt to guide the scene and movement.”
+Visual: a clearly composed photo-to-video transformation. A smaller square photo of the amber bottle at left, a thin lavender directional arrow, and a larger 9:16 video frame featuring the same bottle in a softly lit product scene at right. Small “Photo” and “Video” labels, a restrained play triangle. Polished, tangible input/result contrast.
+
+5. ROW3 LEFT, wide:
+Title: “AI Avatar Generator”
+Description: “Choose an AI presenter to introduce your product and deliver your script.”
+Visual: a well-spaced horizontal gallery of 4-5 large natural presenter portraits derived from our supplied presenter reference, including the man with glasses, the bald man and a dark-haired woman. One portrait is selected with a slim lavender border. A small script panel below says “Introduce your product in your own words.” Make the faces realistic, friendly, distinct, and professionally lit. No unsupported avatar counts, language counts or invented creator names.
+
+6. ROW3 RIGHT, narrow:
+Title: “AI Twin Generator”
+Add one understated small “Preview” text label next to this title, indicating a preview capability.
+Description: “Explore a consistent digital presenter for your product stories and recurring campaigns.”
+Visual: two overlapping vertical photographic frames of the SAME brunette person, natural reference portrait on the left and a polished presenter video holding the serum on the right. Small “Your photo” and “AI Twin” labels, connected by a subtle lavender arrow; modest audio-waveform detail permitted. This communicates the concept without unsupported performance claims.
+
+FINAL QUALITY REQUIREMENTS:
+Deliver a finished believable web section screenshot with exactly six cards, all complete and legible, no browser chrome, no navigation bar, no workflow accordion, no seller cases, no audience modules, no footer, no design annotations, no watermarks. This must visually resemble the supplied Tagshop composition much more than our previous pastel six-card catalog, while clearly belonging to AIVideosUGC through OUR tools, OUR real composer UI anatomy, OUR product/presenter content and OUR dark-purple brand. Do not copy Tagshop logo, names, wording, claims or screenshot contents. Use original concise copy given above. Keep all headings horizontal, visually aligned and readable.

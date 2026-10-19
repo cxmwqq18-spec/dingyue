@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "target": "local",
+  "siteId": "site_aidreamcapes",
+  "id": "site_aidreamcapes_home",
+  "owner": "LivePage.contentJson",
+  "applying": false,
+  "operations": [],
+  "revisionBefore": "02bc45e29ad5305ac9ec8d8711532be1eba6a54edeea88a3d7943616d5da8147",
+  "revisionAfter": "02bc45e29ad5305ac9ec8d8711532be1eba6a54edeea88a3d7943616d5da8147",
+  "sourceRevision": "aidreamcapes-home-campaign-layout-en-20261017",
+  "protectedBefore": "ecd247f2d81f3a50c0247d2a85529695d641c3929c47613c18c1bf249ad6ea7e",
+  "protectedAfter": "ecd247f2d81f3a50c0247d2a85529695d641c3929c47613c18c1bf249ad6ea7e",
+  "derivedState": {
+    "relation": null,
+    "record": null
+  },
+  "historicalStateActivated": false
+}

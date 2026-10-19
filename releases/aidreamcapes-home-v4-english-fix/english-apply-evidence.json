@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "applied": true,
+  "siteId": "site_aidreamcapes",
+  "pageId": "site_aidreamcapes_home",
+  "operations": 497,
+  "conflicts": [],
+  "beforeRevision": "20ecccaf9c447eb41c93c5dba1463dbc9528e740b7761b3555c7720c2ff9be69",
+  "afterRevision": "8ef4640ddc63d38274283c23cea928123e98d0f8edcca610c19828ee78a106e5",
+  "sourceRevision": "aidreamcapes-home-v4-en",
+  "language": "en",
+  "retainedSceneCards": 38,
+  "retainedAddedModules": 6,
+  "myDreamShootsHashBefore": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3",
+  "myDreamShootsHashAfter": "03407e8db97b8827806c24ae9edbfbd27ad1371a718ce13565859114b3726ed3",
+  "derivedState": {
+    "relation": null,
+    "runtimeUse": "Current LivePage read on every public SSR request; no snapshot activated or restored"
+  }
+}

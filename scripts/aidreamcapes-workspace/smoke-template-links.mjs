@@ -32,8 +32,8 @@ assert.equal(photoUrl.pathname, "/app/create");
 assert.equal(photoUrl.searchParams.get("source"), "/ai-image-generation/lifestyle-scene");
 assert.equal(photoUrl.searchParams.get("preset"), pickerPresetId(photoCard));
 assert.notEqual(pickerPresetId(videoCard), pickerPresetId(photoCard));
-assert.equal(pickerPresetHref(shortVideoCard, "/"), "/videos/canvas-tote-creator-ad");
-assert.equal(pickerPresetHref(shortPhotoCard, "/ai-image-generation/lifestyle-scene/"), "/images/canvas-tote-lifestyle-photo");
+assert.equal(pickerPresetHref(shortVideoCard, "/"), "/ai-video-generation/canvas-tote-creator-ad");
+assert.equal(pickerPresetHref(shortPhotoCard, "/ai-image-generation/lifestyle-scene/"), "/ai-image-generation/canvas-tote-lifestyle-photo");
 assert.equal(pickerPresetHref({ ...shortVideoCard, publicSlug: "bad/slug" }, "/"), videoHref);
 
 const otherCardWithSameLegacyHref = card({ src: "/media/site_aidreamcapes/demo/shoes.jpg", label: "Trail shoe street ad" });

@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "siteId": "site_aidreamcapes",
+  "url": "https://www.aivideosugc.com/",
+  "codeCommit": "f9db146a04d9076078bcf49bde017154ea5af457",
+  "githubBranch": "main",
+  "productionBrowserChecks": 50,
+  "publicDataRequests": [],
+  "runtimeErrors": [],
+  "workspaceHandoffs": [
+    {
+      "mode": "home",
+      "url": "https://www.aivideosugc.com/app/create?view=home&tool=video-ads&prompt=Show+my+navy+travel+mug+in+a+bright+kitchen.&scene=process_demo&aspect=16%3A9&duration=10"
+    },
+    {
+      "mode": "video",
+      "url": "https://www.aivideosugc.com/app/create?view=video&tool=video-ads&prompt=Show+my+navy+travel+mug+in+a+bright+kitchen.&scene=process_demo&aspect=16%3A9&duration=10"
+    },
+    {
+      "mode": "images",
+      "url": "https://www.aivideosugc.com/app/create?view=images&tool=custom&tool_id=image_generator&prompt=Show+my+navy+travel+mug+in+a+bright+kitchen.&aspect=16%3A9"
+    }
+  ],
+  "typographyWidths": [
+    1440,
+    768,
+    390,
+    375
+  ],
+  "typographyMatches": true,
+  "originReadback": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "owner": "LivePage.contentJson",
+    "updatedAt": "2026-10-16T17:56:53.771Z",
+    "contentHash": "1b2bffa84c45a1d9b26cc596f06439e92303665e26b578107f86119817f4fd50",
+    "sourceRevision": "aidreamcapes-home-composer-en-20261017",
+    "derivedState": null,
+    "restored": false,
+    "originStatus": 200,
+    "originSSRComposer": true,
+    "verifiedCurrentFields": 6,
+    "mediaManifestHash": "04799dbed42d53c443224d53635e64af848d64ccc9c4516064dc04c506ff1bf0",
+    "unchangedFieldsOutsideManifest": true
+  },
+  "protectedRelationalDataUnchanged": true,
+  "derivedState": null,
+  "noSnapshotRestore": true,
+  "scope": [
+    "scripts/apply-aidreamcapes-home-composer-local.mjs",
+    "scripts/lib/aidreamcapes-home-composer-content.mjs",
+    "src/components/storefront/aidreamcapes-v2/home-composer-behavior.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-composer.css",
+    "src/components/storefront/aidreamcapes-v2/home-composer.tsx",
+    "src/components/storefront/aidreamcapes-v2/home-experience-types.ts",
+    "src/components/storefront/aidreamcapes-v2/home-experience.css",
+    "src/components/storefront/aidreamcapes-v2/home-experience.tsx",
+    "src/components/storefront/aidreamcapes-v2/numbered-cards.css",
+    "src/components/storefront/aidreamcapes-v2/page.tsx",
+    "src/components/storefront/aidreamcapes-v2/parts.tsx",
+    "src/components/storefront/aidreamcapes-v2/shell.tsx",
+    "src/components/storefront/aidreamcapes-v2/social-links.module.css",
+    "src/components/storefront/aidreamcapes-v2/social-links.tsx"
+  ],
+  "excludedUserStagedFile": "src/components/storefront/dreamshoot-showcase-video.tsx",
+  "otherServicesUnchanged": true
+}

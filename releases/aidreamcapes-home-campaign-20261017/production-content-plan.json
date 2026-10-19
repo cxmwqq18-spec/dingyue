@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "mode": "plan",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "codeCommit": "ad61f5b31d42a0a5d213cccc7e919750c5e95c1c",
+  "owner": "Current relational LivePage.contentJson, ThemeSettings footer and Product metadata",
+  "applied": [],
+  "planned": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/contentLayout"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/ugc/formats/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/ugc/formats/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/ugc/formats/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/contentContract/sourceRevision"
+    }
+  ],
+  "skipped": [],
+  "conflicts": [],
+  "protectedHashBefore": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "protectedHashAfter": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "derivedState": {
+    "relation": "\"SitePublishedState\"",
+    "restored": false
+  },
+  "revisions": [
+    {
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "before": "1b2bffa84c45a1d9b26cc596f06439e92303665e26b578107f86119817f4fd50",
+      "after": "b559fc711ceb2e468afb5aa66b10e6fa5c993f9c699779452c3b72dc8ad73f1c"
+    }
+  ]
+}

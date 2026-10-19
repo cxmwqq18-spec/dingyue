@@ -1,0 +1,280 @@
+{
+  "ecommerce": {
+    "file": "ecommerce-main-image",
+    "path": "/ai-image-generation/ecommerce-main-image",
+    "name": "White Background Photos",
+    "cn": "白底商品图",
+    "eyebrow": "WHITE PHOTOS READY TO LIST",
+    "title": "Put a Product Photo<br>on a White Background",
+    "lead": "Put any product photo on white in a few minutes. You get the plain white look a marketplace wants on the main image. One photo at a time in the app, or the whole folder through the API.",
+    "button": "Make a white background photo",
+    "source": "white-source.webp",
+    "result": "white-result.webp",
+    "source_alt": "Brown leather wallet on a warm marble tabletop.",
+    "result_alt": "The same brown leather wallet on a clean white background.",
+    "overview": "What a Plain White Field<br>Does for the Listing",
+    "overview_lead": "A white field makes the product easier to see. It clears distractions and brings out color and texture.",
+    "features": [
+      [
+        "PRODUCT DETAILS",
+        "Color and Texture<br>Stay Easy to See",
+        "Shoppers can read the shape and the weave in the search result. The busy table is gone, so the product is what the card shows.",
+        "white-tote.webp",
+        "The same woven straw tote on a linen table and on white."
+      ],
+      [
+        "FROM YOUR PHOTO",
+        "A Catalog Look<br>From a Phone Photo",
+        "A shot taken in a real room can still look like a catalog photo. The whole item stays in frame, and a short shadow keeps it from looking pasted on.",
+        "white-clothing.webp",
+        "An olive bomber and yellow polo shown on a chair and against white."
+      ],
+      [
+        "ONE CATALOG LOOK",
+        "The Same White<br>on Every Item",
+        "Buyers paging the shop see one white, even when the next photo was shot under a warmer bulb. The grid matches.",
+        "white-shoes.webp",
+        "A beige block-heel pump in a room and a matching group of pumps on white."
+      ],
+      [
+        "MORE WAYS TO USE IT",
+        "A Clean Base<br>for the Next Crop",
+        "One saved white file covers more than one placement. The store grid gets a square crop, and the email gets a tighter crop of the same item.",
+        "white-sofa.webp",
+        "Coral sofa shown in a living room, on white and in a second room."
+      ]
+    ],
+    "steps_title": "How to Make a White Background<br>in 3 Steps",
+    "steps_lead": "Upload the photo you already took, choose white, and download your image.",
+    "steps": [
+      [
+        "Upload Your Product Photo",
+        "Upload a product image where the whole item sits inside the frame. Start from that photo instead of another shoot."
+      ],
+      [
+        "Choose a White Background",
+        "Choose white and a crop for your listing. Review the credit cost before generating."
+      ],
+      [
+        "Download and Post",
+        "Check the product details against your original photo, then download the file for your listing."
+      ]
+    ],
+    "cases_title": "How Shops Use a White Main Image",
+    "cases_lead": "Each shop takes a photo they already shot and downloads a file with the room gone.",
+    "cases": [
+      [
+        "LEATHER-GOODS SELLER",
+        "Clear the Desk off the Wallet",
+        "They shot the wallet beside the keys and download a file with the table gone. That file is the main image on the listing.",
+        "white-seller-wallet.webp"
+      ],
+      [
+        "CATALOG SELLER",
+        "Give the Folder One White",
+        "They run a folder of product photos onto the same white field. The grid matches, and nobody opens each file by hand.",
+        "white-seller-catalog.webp"
+      ],
+      [
+        "TABLEWARE SELLER",
+        "Set the Bowl on White",
+        "They take the stoneware bowl off the wood table and onto white. The listing main image is that file.",
+        "white-seller-bowl.webp"
+      ]
+    ],
+    "faq_title": "Answers on White Background Photos",
+    "closing": "Make the Main Image Plain White",
+    "closing_lead": "Upload one product photo and download a white listing file. See the credit cost before you start.",
+    "workspace": "/app/create?view=images&tool_id=image_generator&tool=white-background&aspect=1%3A1&prompt=Create+a+clean+white-background+product+photo+from+my+reference.+Show+the+full+item+with+clear+edges%2C+natural+proportions+and+a+soft+grounding+shadow.",
+    "seo": {
+      "title": "AI White Background Product Photo Generator | AIVideosUGC",
+      "description": "Create white-background product photos from your own images. Choose a crop, compare the result with your source, and download an image for your online store.",
+      "canonical": "https://www.aivideosugc.com/ai-image-generation/ecommerce-main-image"
+    },
+    "faq": [
+      [
+        "Can I use my own product photo?",
+        "Yes. Upload a clear photo of the product you want to show. Review the generated result before using it in a listing."
+      ],
+      [
+        "Will product details stay exactly the same?",
+        "AI can change small details. Compare logos, labels, colors, edges and proportions with your original photo before using the result."
+      ],
+      [
+        "How much does an image cost?",
+        "The image workspace shows the current credit quote for your selected settings before you generate. Visit Pricing to compare available plans."
+      ],
+      [
+        "Can I use the result in a marketplace listing?",
+        "Check the destination’s current image rules before uploading. Background, framing and permitted image content can vary between marketplaces."
+      ],
+      [
+        "What should the starting photo show?",
+        "Start with a clear photo of the full product. Keep important edges, labels and visible details inside the frame."
+      ],
+      [
+        "Where can I find other product photo tools?",
+        "Explore Lifestyle Photos and Change Background to prepare the other images your listing needs."
+      ]
+    ],
+    "related": [
+      [
+        "Lifestyle Photos",
+        "/ai-image-generation/lifestyle-scene",
+        "feed-result.webp",
+        "Show your product in an everyday setting."
+      ],
+      [
+        "Change Background",
+        "/ai-image-generation/background-remove-replace",
+        "feed-mug.webp",
+        "Explore a different backdrop for your product."
+      ],
+      [
+        "Social Ad Images",
+        "/ai-image-generation/feed-ad-still",
+        "feed-tote.webp",
+        "Create a still image for your next campaign."
+      ]
+    ]
+  },
+  "feed": {
+    "file": "feed-ad-still",
+    "path": "/ai-image-generation/feed-ad-still",
+    "name": "Social Ad Photos",
+    "cn": "社交广告图片",
+    "eyebrow": "SOCIAL POSTS FROM ONE PHOTO",
+    "title": "Turn Your Products Into<br>Social Posts That Sell",
+    "lead": "Make social media posts that earn a second look. Clear visuals, ready in minutes from a photo on your phone, with no studio and no shoot.",
+    "button": "Create a social ad image",
+    "source": "feed-source.webp",
+    "result": "feed-result.webp",
+    "source_alt": "Matte sage-green bottle on a pale studio surface.",
+    "result_alt": "The same sage-green insulated bottle on a warm wood cafe counter.",
+    "overview": "Instagram Photos<br>and Other Ad Spots",
+    "overview_lead": "The product stays clear, and you still have room for the line you add later.",
+    "features": [
+      [
+        "EVERYDAY CONTEXT",
+        "Show a<br>Morning Routine",
+        "Place a plain bottle in a work bag so the ad shows a commute, not the product alone.",
+        "feed-context.webp",
+        "An adult hand places a sage bottle into a canvas tote on an entryway bench."
+      ],
+      [
+        "PRODUCT IN USE",
+        "Make the<br>Carry Obvious",
+        "A sidewalk moment shows how the bag is used. Keep the product large enough to recognize when the photo is small.",
+        "feed-tote.webp",
+        "An adult carries a cream canvas tote on a quiet sidewalk."
+      ],
+      [
+        "SPACE FOR YOUR MESSAGE",
+        "Leave a Calm Area<br>for the Offer",
+        "A desk scene keeps the product easy to see and leaves a calm spot for your offer. Add the price after download.",
+        "feed-mug.webp",
+        "Cream mug beside a laptop on a warm oak desk."
+      ],
+      [
+        "A NEW SETTING",
+        "Show It<br>in a Second Place",
+        "Put the same bottle on a gym bench, or move it to a holiday table when the next post is seasonal.",
+        "feed-gym.webp",
+        "A matte teal bottle placed on a gym bench beside a towel."
+      ]
+    ],
+    "steps_title": "How to Make Social Media Posts<br>in 3 Simple Steps",
+    "steps_lead": "Bring a photo you already have. Leave with a square you can post.",
+    "steps": [
+      [
+        "Upload Your Product Photo",
+        "Upload a clear photo of the product you want to show. Use it as the reference for your image."
+      ],
+      [
+        "Pick a Scene",
+        "Pick a scene or describe a setting, with room for the line you add later. Review the credit cost before generating."
+      ],
+      [
+        "Finish and Download",
+        "Check the generated result, download the square, add your offer, and post it."
+      ]
+    ],
+    "cases_title": "How Stores Make a Square Post",
+    "cases_lead": "Each seller turns one product photo into a square and skips the studio booking.",
+    "cases": [
+      [
+        "SHOE SELLER",
+        "Hiking Shoe Square for the Feed",
+        "They turn a packing-table photo of the charcoal hiking shoe into a square post. They publish it while the offer is still the one they planned, with no studio booking.",
+        "feed-shoe.webp"
+      ],
+      [
+        "TOTE SELLER",
+        "Cream Tote in a Square",
+        "They place the cream canvas tote in a square with room for a line they type later. The product stays the tote they uploaded.",
+        "feed-tote.webp"
+      ],
+      [
+        "ONE-PRODUCT SHOP",
+        "Cream Mug in a Quiet Scene",
+        "They try the cream mug in quiet scenes and choose a square that shows the product clearly, with room for an offer added after download.",
+        "feed-mug.webp"
+      ]
+    ],
+    "faq_title": "Social Media Post Answers",
+    "closing": "Make the Next Social Post",
+    "closing_lead": "Upload one product photo and pick a scene. See the credit cost before you start.",
+    "workspace": "/app/create?view=images&tool_id=image_generator&tool=lifestyle-photos&aspect=1%3A1&prompt=Create+a+square+social+ad+image+using+my+product+photo+as+a+visual+reference.+Place+the+product+on+a+warm+cafe+counter+in+soft+daylight%2C+with+clear+space+for+a+headline+I+will+add+after+download.",
+    "seo": {
+      "title": "AI Social Media Ad Image Generator | AIVideosUGC",
+      "description": "Create social media ad images from your product photos. Explore scenes for Instagram and Facebook feed creatives, review your result, and download your image.",
+      "canonical": "https://www.aivideosugc.com/ai-image-generation/feed-ad-still"
+    },
+    "faq": [
+      [
+        "Is this a still image or a video?",
+        "This tool creates still images. For moving product creatives, explore our AI Video tools."
+      ],
+      [
+        "Can I use my own product photo?",
+        "Yes. Start with your own clear JPG, PNG or WebP image. Your photo guides the product’s appearance in the generated scene."
+      ],
+      [
+        "Can I add a headline or an offer?",
+        "Describe the space you need for a headline when preparing your image. Add final text, prices and promotional details in your editor after download."
+      ],
+      [
+        "How much does an image cost?",
+        "The workspace shows the current credit quote for your selected settings before you generate. Visit Pricing to compare available plans."
+      ],
+      [
+        "Can one product photo make several social posts?",
+        "Try different scenes or prompts using your own product photo. Check the quoted credit cost before generating each new version."
+      ],
+      [
+        "Where can I use a square social ad image?",
+        "You can prepare a square for social feeds or a product campaign. Check the destination’s current image and advertising requirements before publishing."
+      ]
+    ],
+    "related": [
+      [
+        "White Background Photos",
+        "/ai-image-generation/ecommerce-main-image",
+        "white-mug.webp",
+        "Create a clean image for a product listing."
+      ],
+      [
+        "UGC Still Ads",
+        "/ai-image-generation/ugc-still-ad",
+        "feed-context.webp",
+        "Explore product images with everyday context."
+      ],
+      [
+        "Story Images",
+        "/ai-image-generation/story-ad-vertical",
+        "feed-outdoor.webp",
+        "Find a vertical direction for Story placements."
+      ]
+    ]
+  }
+}

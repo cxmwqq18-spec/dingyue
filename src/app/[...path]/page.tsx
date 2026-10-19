@@ -35,7 +35,10 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesPublicSceneCreatePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesGuestCreatePage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -451,7 +454,20 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
   if (hostSiteSlug === "aidreamcapes" && /^(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(path.join("/"))) {
-    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+    // Retired short scene paths are redirected by the page handler.
+    return {};
+  }
+  if (
+    hostSiteSlug === "aidreamcapes"
+    && path.length === 2
+    && (path[0] === "ai-image-generation" || path[0] === "ai-video-generation")
+    && PUBLIC_SCENE_SLUG_RE.test(path[1] ?? "")
+  ) {
+    const sceneKind = path[0] === "ai-image-generation" ? "photo" : "video";
+    const scenePreset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, sceneKind, path[1] as string);
+    if (scenePreset) {
+      return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+    }
   }
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
   if (isAidreamshootsPublicSlug(hostSiteSlug) && aidreamshootsLegacyVideoSaveTheDatePath(requestedPath)) return {};
@@ -643,12 +659,22 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
-  if (hostSiteSlug === "aidreamcapes" && path.length === 2 && (firstSegment === "images" || firstSegment === "videos")) {
-    return renderAidreamcapesPublicSceneCreatePage({
-      kind: firstSegment === "images" ? "photo" : "video",
-      publicSlug: path[1],
-      routeSlug: "aidreamcapes",
-    });
+  if (hostSiteSlug === "aidreamcapes" && path.length === 2) {
+    // Retired short scene routes now live under the same prefixes as media.
+    if (firstSegment === "images" || firstSegment === "videos") {
+      if (PUBLIC_SCENE_SLUG_RE.test(path[1])) {
+        permanentRedirect(`/${firstSegment === "images" ? "ai-image-generation" : "ai-video-generation"}/${path[1]}`);
+      }
+    }
+    // Scene recreate pages share the SEO directory prefix. Resolve a scene
+    // first; unmatched slugs fall through to the published directory page.
+    if ((firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation") && PUBLIC_SCENE_SLUG_RE.test(path[1])) {
+      const sceneKind = firstSegment === "ai-image-generation" ? "photo" : "video";
+      const scenePreset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, sceneKind, path[1]);
+      if (scenePreset) {
+        return renderAidreamcapesResolvedScenePage({ kind: sceneKind, preset: scenePreset, routeSlug: "aidreamcapes" });
+      }
+    }
   }
   if (cleanHost(host) === "aidreamshoots.eu" && slug === "/ai-image-generation/urban") {
     permanentRedirect("/ai-image-generation/urbano");

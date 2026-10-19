@@ -50,6 +50,19 @@ export async function renderAidreamcapesSceneCreatePage({ sceneRouteSlug, routeS
   });
 }
 
+export function renderAidreamcapesResolvedScenePage({ kind, preset, routeSlug = "aidreamcapes" }: {
+  kind: "photo" | "video";
+  preset: NonNullable<Awaited<ReturnType<typeof resolveWorkspacePublicScenePreset>>>;
+  routeSlug?: "aivideosugc" | "aidreamcapes";
+}) {
+  return renderAidreamcapesWorkspace({
+    routeSlug,
+    resolvedPreset: preset,
+    sceneRoutePath: `/${kind === "photo" ? "ai-image-generation" : "ai-video-generation"}/${preset.publicSlug}`,
+    initialView: kind === "photo" ? "images" : "agent"
+  });
+}
+
 export async function renderAidreamcapesPublicSceneCreatePage({ kind, publicSlug, routeSlug = "aidreamcapes" }: {
   kind: "photo" | "video";
   publicSlug: string;
@@ -57,12 +70,7 @@ export async function renderAidreamcapesPublicSceneCreatePage({ kind, publicSlug
 }) {
   const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, kind, publicSlug);
   if (!preset) notFound();
-  return renderAidreamcapesWorkspace({
-    routeSlug,
-    resolvedPreset: preset,
-    sceneRoutePath: `/${kind === "photo" ? "images" : "videos"}/${publicSlug}`,
-    initialView: kind === "photo" ? "images" : "agent"
-  });
+  return renderAidreamcapesResolvedScenePage({ kind, preset, routeSlug });
 }
 
 export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "" }: {

@@ -1,0 +1,15 @@
+Production mobile QA completed against d2e30400e8d305ec6420cdd999d42e1f7aa8730b.
+
+927 valid assertions passed, 0 functional failures. One incorrect test assumption (two scene columns at 768px) was excluded and replaced with an independent live passing three-column tablet check. Raw results remain in mobile-qa.json; tablet-recheck.json records the correction.
+
+Real Chromium mobile/touch contexts: 390x844, 375x844, 768x1024; plus 375px JavaScript-disabled SSR. 169 local control actions, 54 FAQ toggle cycles, 12 pricing period selections, and 63 primary screenshots. No horizontal overflow. Scene filtering, mobile two-column grid, selected footer, presenter images, brief/format panels, dialog focus/close controls, exact prices and credits, and nine social href/target/rel checks passed. Checkout coming soon is disabled as expected.
+
+Translation coverage is a structural simulation only: after pricing React hydration and all seven ready controllers, 870 text nodes were replaced by nested font wrappers. All 74 local controls, prices and menus continued working; no page errors occurred after injection. Original text was retained. The native Chrome translation service and physical handsets were not tested.
+
+P2: Escape closes submenus but leaves the top-level mobile navigation open (375/390/768). Reproduce by focusing Open menu, pressing Enter, then Escape. aria-expanded remains true. The menu button closes normally with click, Enter, or Space. Evidence: 375-menu-after-escape.png, 390-translated-menu-after-escape.png, 768-menu-after-escape.png.
+
+Edge observation: React #418 appears before translation because Cloudflare rewrites two email HTML fragments. Our original/decoder-blocked comparison is in hydration-diagnostic.json. The SEO agent's isolated response control restores only these two fragments and records errors=[] in ../seo/hydration-cf-control.json. This is not a translation regression and caused no observed control failure.
+
+Public content fetch/XHR/EventSource/RSC: 0. Server 5xx: 0. No dangerous application operation was attempted. Guards blocked Cloudflare telemetry POST/ping only. One initial 768px networkidle wait timed out; the subsequent explicit hydration-ready retry and focused tablet recheck passed. Deliberate no-JS context produced an expected script CSP failure.
+
+All writes are limited to this mobile QA directory; no app source or database changes. Primary report: mobile-summary.json; detailed raw evidence: mobile-qa.json; executable test: qa.py; diagnostics: hydration-diagnostic.py, tablet-recheck.py. Python dependency: playwright==1.64.0, using installed Chromium executable noted in the scripts.

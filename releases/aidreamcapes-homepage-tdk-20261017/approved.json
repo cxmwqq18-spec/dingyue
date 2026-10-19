@@ -1,0 +1,23 @@
+{
+  "lockVersion": 1,
+  "lockedAt": "2026-10-17",
+  "policy": {
+    "owner": "AIVideosUGC site owner",
+    "rule": "The homepage title, keywords, and description are locked to this approved baseline. Do not change these fields unless the site owner explicitly requests a TDK change.",
+    "sourceOfTruth": "PostgreSQL LivePage.contentJson.seo for site_aidreamcapes / site_aidreamcapes_home"
+  },
+  "site": {
+    "id": "site_aidreamcapes",
+    "primaryDomain": "www.aivideosugc.com"
+  },
+  "page": {
+    "id": "site_aidreamcapes_home",
+    "slug": "/",
+    "pageType": "home"
+  },
+  "seo": {
+    "title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "keywords": "AI UGC ads,AI UGC video ads,AI UGC image ads,AI UGC ad Generator,AI Generated UGC ads,AI Actors ads",
+    "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+  }
+}

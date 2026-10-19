@@ -1,0 +1,47 @@
+{
+  "desktop_card_widths": {
+    "url": 489.5,
+    "text": 692.5,
+    "video": 692.5,
+    "image": 489.5,
+    "avatar": 692.5,
+    "twin": 489.5
+  },
+  "requested_module_order": [
+    "Explore the video storyboard.See how the shots fit together.",
+    "From One Product Photo to a Scroll-Stopping Ad",
+    "Built for Teams That Ship Fast",
+    "Plans for Your Next Campaign",
+    "Product Content: A Creator Shoot or an AI Workspace?",
+    "Why Sellers Trust AIVideosUGC",
+    "Related Tools for the Next Ad"
+  ],
+  "url_import_and_image_modal": "passed",
+  "editable_brief_and_workspace_handoff": "passed",
+  "storyboard_and_motion_controls": "passed",
+  "presenter_and_twin_controls": "passed",
+  "responsive": [
+    {
+      "viewport": 768,
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "viewport": 390,
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "viewport": 360,
+      "width": 360,
+      "scrollWidth": 360
+    }
+  ],
+  "reduced_motion": "passed",
+  "page_errors": [],
+  "public_api_data_requests": [],
+  "no_javascript_ssr": "passed",
+  "seo_title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+  "seo_description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+  "ok": true
+}

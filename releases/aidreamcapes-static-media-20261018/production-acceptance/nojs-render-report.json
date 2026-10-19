@@ -1,0 +1,49 @@
+{
+  "source": "Fresh production origin SSR HTML and production CSS; local image bytes verified against hashes in those URLs. Delivery is separately verified by the origin/public HTTP reports.",
+  "htmlSha256": "93782d865a51cb6a7d23723714682d35e257bc5245385e510f0b5cc1f3c25e6c",
+  "verifiedImages": 39,
+  "reports": [
+    {
+      "viewport": "desktop",
+      "javascript": false,
+      "h1": "Create AI UGC Videos from Your Product Photos",
+      "visibleBrokenImages": [],
+      "horizontalOverflow": false,
+      "taxIdVisible": false
+    },
+    {
+      "viewport": "mobile",
+      "javascript": false,
+      "h1": "Create AI UGC Videos from Your Product Photos",
+      "visibleBrokenImages": [],
+      "horizontalOverflow": false,
+      "taxIdVisible": false
+    }
+  ],
+  "fixtureResourceFailures": [
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    },
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    },
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    },
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    },
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    },
+    {
+      "path": "/css2",
+      "error": "render_fixture_resource_unavailable"
+    }
+  ]
+}

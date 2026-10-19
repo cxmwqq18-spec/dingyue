@@ -1,0 +1,403 @@
+{
+  "ok": true,
+  "target": "local",
+  "siteId": "site_aidreamcapes",
+  "id": "site_aidreamcapes_home",
+  "owner": "LivePage.contentJson",
+  "applying": true,
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/title",
+      "baseHash": "1211b5be1aa2d075ce1ab3d2dd0f1611826add5a06f3294a79a96f555f2d4f91",
+      "previousValue": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+      "value": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/keywords",
+      "baseHash": "986045b2fbacb8c1650033b9674ab71b14823c456bf5625ebffdbd2794be8b22",
+      "previousValue": "AI UGC video generator, AI product videos, AI presenter videos, product video templates, AI product photos",
+      "value": "AI UGC ads,AI UGC video ads,AI UGC image ads,AI UGC ad Generator,AI Generated UGC ads,AI Actors ads"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/description",
+      "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+      "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+      "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/twitterDescription",
+      "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+      "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+      "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowVisuals",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": [
+        {
+          "kind": "product",
+          "media": [
+            "m01"
+          ],
+          "label": "Product photo",
+          "detail": "Your starting point",
+          "preview": "Preview step"
+        },
+        {
+          "kind": "presenter",
+          "media": [
+            "m02",
+            "m08"
+          ],
+          "label": "Scene + presenter",
+          "detail": "Choose your style",
+          "preview": "Preview step"
+        },
+        {
+          "kind": "brief",
+          "media": [
+            "m01"
+          ],
+          "label": "Creative brief",
+          "detail": "Introduce the serum to skincare shoppers. Show the bottle and dropper in a calm, clear product demonstration.",
+          "preview": "Preview step"
+        },
+        {
+          "kind": "storyboard",
+          "media": [
+            "m01",
+            "m02",
+            "m01"
+          ],
+          "label": "Editable storyboard",
+          "detail": "Product · Presenter · Details",
+          "preview": "Preview step"
+        },
+        {
+          "kind": "assembly",
+          "media": [
+            "m01",
+            "m02",
+            "m01"
+          ],
+          "label": "Selected clips",
+          "detail": "Compare · Arrange · Assemble",
+          "preview": "Preview step"
+        },
+        {
+          "kind": "review",
+          "media": [
+            "m02"
+          ],
+          "label": "Review your video",
+          "detail": "Preview before downloading",
+          "preview": "Preview step"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/copy/t001",
+      "baseHash": "52bc89dc659fd3b2053aec0ebc24c4c886e82edf5a9f14e1421667cd58d63fbe",
+      "previousValue": "Batch Drafts for product campaigns",
+      "value": "From product to finished content"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefitsLead",
+      "baseHash": "15cae0e3348e6ecfc57000c1a1ce980e020552a70239865f5e988340f9fa1a34",
+      "previousValue": "One place covers the script, the actor, the voice, and the edit. You do not book a freelancer for every cut.",
+      "value": "Bring your product, shape the story and choose the clips you want to share. Keep your creative direction in one workspace."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/lead",
+      "baseHash": "0eaff5243ff122e9ba9741e870946490bf489b4f880cf18429599106c06f5699",
+      "previousValue": "Start with your own product photo and a short brief. Save an editable draft, shape its storyboard and generate only the shots you choose before assembling and downloading the video.",
+      "value": "Follow six clear steps, from your product photo or URL to an editable storyboard and a finished AI product video."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/contentContract/sourceRevision",
+      "baseHash": "a58bd29f6c3bd7dd7c81a75488c30cebc5abeac39ee3617a5f5092313f102b7d",
+      "previousValue": "aidreamcapes-home-campaign-layout-en-20261017",
+      "value": "aidreamcapes-home-six-step-visuals-en-20261017"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/0/t",
+      "baseHash": "fed7b228c347cbe2301f95cffc7f44ff6d60c034b7b2e66446d5f60c8f0fb14b",
+      "previousValue": "Add your product assets",
+      "value": "Add your product"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/0/d",
+      "baseHash": "cf4f7c1ad4892ff4b40ccd463f271243267d2c902cb7e6cb367d2d82ea0fa810",
+      "previousValue": "Upload a clear product photo or import a public product page. Review the photos, features and product details you want to use, so your video starts with information about your own product.",
+      "value": "Upload a product photo or import a public product URL. Review the photos and details you want to use in your AI video."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/1/d",
+      "baseHash": "843c2db49aec10abe984be57cd1c84027a75328260689eaba68adaa43d27fd71",
+      "previousValue": "Browse scene templates for product demonstrations, close-ups and presenter introductions. Preview the creative direction and choose an available AI presenter when your video needs someone to explain the product.",
+      "value": "Preview product scenes and choose an AI presenter when your video needs someone to introduce or demonstrate the product."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/2/t",
+      "baseHash": "d40604cd55d60b6d2b2d6cdf2aa3b15f0bc0d4236218d96090974e2c9576c671",
+      "previousValue": "Write your product brief",
+      "value": "Write your brief and creative direction"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/2/d",
+      "baseHash": "f25b215ef11127e9696b78a35a00d8dc1b8cd506e3e7ac0331001fddb31d8ecb",
+      "previousValue": "Describe who the product is for, what it does and the message you want viewers to remember. Set an available aspect ratio and duration to suit your product page or social channel.",
+      "value": "Describe your audience, product benefits and creative idea. Choose the tone, scene, aspect ratio and available duration."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/3/d",
+      "baseHash": "13c279b83bafe188c1fbfe705d10bab5c6a5553c8242ca8b6bd6e497c19f7021",
+      "previousValue": "Save an editable draft in your Library, then generate its storyboard. Review the sequence and refine the visuals and dialogue for each shot before you decide which shots to create.",
+      "value": "Keep an editable draft in your Library. Review the shot sequence, visuals and dialogue before generating your selected shots."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/d",
+      "baseHash": "0fe285702eabc335c758f751f3acdc328682d2427fb022de6e4b4aea731b6988",
+      "previousValue": "Review the credit estimate and generate the shots you choose. Compare versions, select your preferred clips and assemble them into a video. Check any supported captions alongside the visuals and dialogue.",
+      "value": "Check the credit estimate, generate selected shots and compare versions. Assemble your preferred clips and review supported captions."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/5/d",
+      "baseHash": "6cd3f8dc6808dac6acd65788e7350c149eea9fcd1acb13e39649be130c3b4247",
+      "previousValue": "Watch the assembled video and check the product details, spoken words and overall presentation. When the result is ready, download the finished file for your product page, campaign or social media channel.",
+      "value": "Preview the finished video and check your product details and voiceover. Download it for ads, social media or your product page."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/0/t",
+      "baseHash": "381f365d8b91a87bd1edce2b1bf11faf094264326c098dc96ed9a854a736397c",
+      "previousValue": "Publish-Ready Photos and Videos",
+      "value": "Start with your own product"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/0/d",
+      "baseHash": "8953c3832289aed4bc3f534312f9d5631e449b2b5889352800c1b0e46f6c0643",
+      "previousValue": "Turn one product photo, or a short prompt, into a still and a video you can post. No design tool and no freelancer. Open the [AI product photo generator](/ai-image-generation).",
+      "value": "Bring a photo or [product URL](/ai-video-generation/url-to-video). Keep your product details at the heart of the video."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/1/t",
+      "baseHash": "c0eb94cbd99e2d50d0cd8e999b1c1e949060b125adbe0ce60e453ab91c2270a1",
+      "previousValue": "Start with a Product Brief",
+      "value": "Find the right scene and voice"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/1/d",
+      "baseHash": "cd456a15299b988a3e3fb5ad94ba98edce743f752c0f9b95f2a0e40118e27754",
+      "previousValue": "Describe your product and message in a short brief. Save a draft, generate its storyboard, refine the shots and assemble the versions you choose.",
+      "value": "Explore product scenes and [AI presenters](/ai-video-generation/ai-actors) to find a style that suits your brand."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/1/icon",
+      "baseHash": "794b9442dad2887a6eae8986a825c0615c703971ed11493f75d7145bb3d13804",
+      "previousValue": "play",
+      "value": "users"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/2/t",
+      "baseHash": "1515a83cb1e343bcd08c3191cb573782c24dac3b067f05872936715aa92cfaba",
+      "previousValue": "Plan Your Own Creative Direction",
+      "value": "Make your creative idea clear"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/2/d",
+      "baseHash": "1d6d639af509f8f72f222b4e0d7d67b66519aadcc603387a259b0546a07a25bd",
+      "previousValue": "Use product examples to plan your own scene, message and shot sequence. Add your own product assets and refine the storyboard before generating.",
+      "value": "Give your audience a clear message. Set the benefits, tone and visual direction in one product brief."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/2/icon",
+      "baseHash": "e9423b395d6cbbd9188f8e0b63e3a3c8c4e2a5e57693113809a35eca28274c8f",
+      "previousValue": "refresh",
+      "value": "play"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/3/t",
+      "baseHash": "e159f5834d060d1c64f2160243e236fda143662e6297dfa37287c4e880072d8b",
+      "previousValue": "Turn a Link Into an Ad",
+      "value": "Keep control of the storyboard"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/3/d",
+      "baseHash": "1a6837c75167273bb62c4b739940699386a355481ca3601ad7f19e0888cf958d",
+      "previousValue": "Import a public product page, review the details and available photos, then use the confirmed information in an editable video draft. Continue in the [page-to-ad workspace](/ai-video-generation/url-to-video).",
+      "value": "Save your draft, then refine each shot and line of dialogue. Your ideas stay editable before generation."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/3/icon",
+      "baseHash": "4c78faca29505a2025e0d7c6b86b36b4e7587f36b611385f10214a25a9e9df44",
+      "previousValue": "layers",
+      "value": "shield"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/4/t",
+      "baseHash": "2a13bbdeaf1b9123ac4be66fcc76715b1c3653557c60d316a73f2e9a2080457e",
+      "previousValue": "Choose an AI Actor",
+      "value": "Build the version you prefer"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/4/d",
+      "baseHash": "15a610ead214c97e8a1a94b4697576ab0f8a3a1e613eeafcd3ec60e1a3cf6916",
+      "previousValue": "Camera-shy? Pick an AI actor from the [AI actor library](/ai-video-generation/ai-actors). They read the script you approve and stand in for the brand.",
+      "value": "Generate the shots you choose, compare alternatives and assemble your preferred clips into one video."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/4/icon",
+      "baseHash": "774733b7024a79689d3a476ef4062d71c2168479d805d71888edb2aac9865d0d",
+      "previousValue": "users",
+      "value": "layers"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/5/t",
+      "baseHash": "7aa39cd1b2e5c2025433834afdfa7d7f30d12439984f3b557e5b9785dabce614",
+      "previousValue": "Keep Your Product Drafts Together",
+      "value": "Prepare content for your channels"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/5/d",
+      "baseHash": "f9c2c4692094ec823e59b66884777ed1f35298e13659c546e7128ba2b75069ff",
+      "previousValue": "Save named video drafts in your Library. Return to refine the storyboard, compare shot versions and assemble the clips you choose.",
+      "value": "Review your product video before downloading. Reuse your product assets for [AI product images](/ai-image-generation) too."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/benefits/5/icon",
+      "baseHash": "1fd594ce5ca21108b78ad0caccf475b16e20f26294e0c8f55ec5b60c5bb3973f",
+      "previousValue": "shield",
+      "value": "refresh"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph/2/name",
+      "baseHash": "1211b5be1aa2d075ce1ab3d2dd0f1611826add5a06f3294a79a96f555f2d4f91",
+      "previousValue": "AI UGC Video Generator & Product Photos | AIVideosUGC",
+      "value": "AI UGC Video and Image Ads Generator | AivideosUGC"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph/2/description",
+      "baseHash": "e32a69774443b62a932e42c5d83c3179137cb34f9d9ede4c63d3321bcd661885",
+      "previousValue": "Create AI product videos and photos from your own product images. Choose a scene or AI presenter, save editable drafts, then review and download your content.",
+      "value": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
+    }
+  ],
+  "revisionBefore": "02bc45e29ad5305ac9ec8d8711532be1eba6a54edeea88a3d7943616d5da8147",
+  "revisionAfter": "6a775d7dbd548a01ae20862fc01a74ba9b2457459584e30cc66e82bb5070d2ff",
+  "sourceRevision": "aidreamcapes-home-six-step-visuals-en-20261017",
+  "protectedBefore": "ecd247f2d81f3a50c0247d2a85529695d641c3929c47613c18c1bf249ad6ea7e",
+  "protectedAfter": "ecd247f2d81f3a50c0247d2a85529695d641c3929c47613c18c1bf249ad6ea7e",
+  "derivedState": {
+    "relation": null,
+    "record": null
+  },
+  "historicalStateActivated": false
+}

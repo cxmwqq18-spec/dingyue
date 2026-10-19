@@ -470,10 +470,17 @@ function shouldRewriteStorefrontHtml(request: NextRequest): boolean {
 function isPrivateStorefrontHtmlRequest(request: NextRequest): boolean {
   const pathname = request.nextUrl.pathname;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
-  const hostSlug = storefrontSlugForHost(host.split(",")[0]?.trim());
-  const aidreamcapesScenePath = /^\/(?:site\/(?:aivideosugc|aidreamcapes)\/)?(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(pathname);
-  const privateAidreamcapesScene = aidreamcapesScenePath && (hostSlug === "aivideosugc" || hostSlug === "aidreamcapes" || /^\/site\/(?:aivideosugc|aidreamcapes)\//i.test(pathname));
-  return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname)) || privateAidreamcapesScene;
+  return PRIVATE_STORE_PATH_RE.test(pathname) || (TARGET_HOST_RE.test(host) && HOST_PRIVATE_STORE_PATH_RE.test(pathname));
+}
+
+// Scene recreate pages share the /ai-image-generation/ and /ai-video-generation/
+// prefixes with public SEO directory pages. A path shape alone cannot tell them
+// apart; classify after upstream rendering using the workspace shell marker.
+function aidreamcapesSceneCandidateRequest(request: NextRequest): boolean {
+  const hostValue = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  const hostSlug = storefrontSlugForHost(hostValue.split(",")[0]?.trim());
+  if (hostSlug !== "aidreamcapes" && hostSlug !== "aivideosugc") return false;
+  return /^\/ai-(?:image|video)-generation\/[a-z0-9][a-z0-9-]{0,119}$/i.test(request.nextUrl.pathname);
 }
 
 function isAidreamcapesComPublicHtmlRequest(request: NextRequest): boolean {
@@ -1105,6 +1112,12 @@ export async function middleware(request: NextRequest) {
   }
 
   const html = await upstreamResponse.text();
+  if (aidreamcapesSceneCandidateRequest(request) && html.includes('id="workspace-template"')) {
+    headers.set("cache-control", PRIVATE_STOREFRONT_CACHE_CONTROL);
+    headers.delete("cdn-cache-control");
+    headers.delete("cloudflare-cdn-cache-control");
+    headers.set("x-robots-tag", "noindex, nofollow");
+  }
   return finalizeStorefrontResponse(new Response(rewriteStorefrontHtmlFull(html, request, shouldReorder, bufferSeoJsonLd), {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,

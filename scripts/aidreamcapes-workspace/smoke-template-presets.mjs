@@ -29,7 +29,7 @@ try {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   new Function("require", "module", "exports", inspirationSource)((id) => id === "@/lib/aidreamcapes-workspace/preset-contract" ? presetContract : require(id), inspirationModule, inspirationModule.exports);
-  for (const [kind, family] of [["video", "videos"], ["photo", "images"]]) {
+  for (const [kind, family] of [["video", "ai-video-generation"], ["photo", "ai-image-generation"]]) {
     const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-videos", prompt: "A product scene." };
     assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
     assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
@@ -116,12 +116,12 @@ try {
   const publicVideoPreset = await resolveWorkspacePublicScenePreset("site_aidreamcapes", "video", "creator-product-demo");
   assert.equal(publicVideoPreset?.title, staticVideoCard.label, "Readable video routes resolve against the current LivePage card");
   assert.equal(publicVideoPreset?.publicSlug, "creator-product-demo");
-  assert.equal(presetContract.pickerPresetHref(staticVideoCard, "/templates"), "/videos/creator-product-demo", "Picker links use the short human-readable video path");
+  assert.equal(presetContract.pickerPresetHref(staticVideoCard, "/templates"), "/ai-video-generation/creator-product-demo", "Picker links use the prefixed readable video path");
   assert.deepEqual(publicRouteCalls.at(-1)?.values, ["site_aidreamcapes", "creator-product-demo", "video"], "Static route lookup is explicitly scoped to Aidreamcapes and media kind");
   const staticPhotoCard = makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background", kind: "photo", publicSlug: "clean-product-image", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } });
   livePageRow = makePage(staticPhotoCard);
   assert.equal((await resolveWorkspacePublicScenePreset("site_aidreamcapes", "photo", "clean-product-image"))?.kind, "photo", "Readable image routes resolve with the correct media kind");
-  assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/images/clean-product-image", "Picker links use the short human-readable image path");
+  assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/ai-image-generation/clean-product-image", "Picker links use the prefixed readable image path");
 
   // Exercise task POST with fully mocked auth, LivePage and store. Auth must happen before lookup.
   const taskInput = { images: { productImages: ["/api/sites/site_aidreamcapes/customers/c_test/assets/a1"] }, fields: { steps: "Show the product" }, creativeDirection: "User revised visual direction.", options: { duration: 10, aspect: "9:16", style: "professional", language: "en", subtitle: false } };

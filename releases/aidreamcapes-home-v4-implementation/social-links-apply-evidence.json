@@ -1,0 +1,66 @@
+{
+  "mode": "apply-local",
+  "siteId": "site_aidreamcapes",
+  "owner": "ThemeSettings:settings_site_aidreamcapes",
+  "target": {
+    "host": "127.0.0.1",
+    "port": 15433,
+    "database": "dingyue_local"
+  },
+  "writes": 1,
+  "fields": [
+    "draftJson.aidreamcapesV2Navigation.footer.socialLinks",
+    "publishedJson.aidreamcapesV2Navigation.footer.socialLinks"
+  ],
+  "beforeHash": "296078215ae8c0f846a86a34e4bc7b97370a8228583126be0450b24c21545cbc",
+  "afterHash": "06ae939c4d6a56e060040d4d5c4696e750e8e651077dbce4ace49afb05b545fc",
+  "liveField": "draftJson.aidreamcapesV2Navigation.footer.socialLinks",
+  "links": [
+    {
+      "key": "facebook",
+      "label": "Facebook",
+      "href": "https://www.facebook.com/AiVideosUGC/"
+    },
+    {
+      "key": "instagram",
+      "label": "Instagram",
+      "href": "https://www.instagram.com/aivideosugc/"
+    },
+    {
+      "key": "pinterest",
+      "label": "Pinterest",
+      "href": "https://www.pinterest.com/AiVideosUGC/"
+    },
+    {
+      "key": "x",
+      "label": "X",
+      "href": "https://x.com/AiVideosUGC"
+    },
+    {
+      "key": "youtube",
+      "label": "YouTube",
+      "href": "https://www.youtube.com/@AiVideosUGC"
+    },
+    {
+      "key": "tiktok",
+      "label": "TikTok",
+      "href": "https://www.tiktok.com/@aivideosugc"
+    },
+    {
+      "key": "reddit",
+      "label": "Reddit",
+      "href": "https://www.reddit.com/user/AiVideosUGC/"
+    },
+    {
+      "key": "whatsapp",
+      "label": "WhatsApp",
+      "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36"
+    },
+    {
+      "key": "discord",
+      "label": "Discord",
+      "href": "https://discord.gg/F52827j3Nm"
+    }
+  ],
+  "readbackVerified": true
+}
