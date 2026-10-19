@@ -1,3 +1,5 @@
+import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
+
 export const AIDREAMCAPES_IMAGE_THEME_ROOT_PATH = "/ai-image-generation";
 
 export const AIDREAMCAPES_IMAGE_THEME_DEFINITIONS = [
@@ -137,6 +139,7 @@ const imageThemeByPath = new Map(
     definition
   ])
 );
+const aidreamcapesSiteV2RedirectSources = new Set<string>((aidreamcapesSiteV2Redirects as [string, string][]).map(([from]) => from));
 
 export function aidreamcapesImageThemePath(slug: string): string {
   return `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${slug}`;
@@ -160,6 +163,12 @@ export function aidreamcapesImageThemePathForRequest(siteSlug: string | undefine
 
 export function isAidreamcapesImageThemePath(siteSlug: string | undefined, path: string): boolean {
   return Boolean(aidreamcapesImageThemePathForRequest(siteSlug, path));
+}
+
+export function isAidreamcapesV2RedirectPath(siteSlug: string | undefined, path: string): boolean {
+  if (siteSlug !== "aidreamcapes") return false;
+  const normalizedPath = path.split("?")[0]?.split("#")[0]?.replace(/\/$/, "") || "/";
+  return aidreamcapesSiteV2RedirectSources.has(normalizedPath);
 }
 
 export function isAidreamcapesEcommerceMainImagePath(siteSlug: string | undefined, path: string): boolean {

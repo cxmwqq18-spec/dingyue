@@ -7,7 +7,7 @@ import { canonicalAbsoluteUrlForSite, canonicalOriginForSite, storefrontBaseUrl 
 import { aiVideoTopicLandingContentFromSection } from "@/lib/ai-video-topic-content";
 import { talkingPhotoContentFromSection } from "@/lib/talking-photo-content";
 import { imageThemeDetailContentFromSection } from "@/lib/aidreamcapes-image-theme-content";
-import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, isAidreamcapesImageThemePath, isAidreamcapesV2RedirectPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_DIRECTORY_SLUGS, aidreamcapesEuSaveTheDateSeoFromPath, aidreamcapesEuSeoContentForSlug } from "@/lib/aidreamcapes-eu-seo-content";
 import { aidreamcapesEuVideoTopic, aidreamcapesEuVideoTopicFromPath } from "@/lib/aidreamcapes-eu-video-media";
 import { dreamshootToolDetailFaqItems } from "@/lib/dreamshoot-tool-faq";
@@ -1458,7 +1458,12 @@ function collectionPageSchema(input: JsonLdInput, title: string, description: st
   const path = schemaPagePath(input.site, input.routeMode, input.pagePath);
   const url = absoluteUrl(input.site, input.routeMode, path);
   if (input.site.id === "site_aidreamcapes" && input.pagePath === "/ai-image-generation") {
-    const itemListElement = AIDREAMCAPES_IMAGE_THEME_DEFINITIONS.map((definition, index) => {
+    const publishedPaths = new Set(input.publishedRoutePaths ?? []);
+    const activeImageDefinitions = AIDREAMCAPES_IMAGE_THEME_DEFINITIONS.filter((definition) => {
+      const themePath = `/ai-image-generation/${definition.slug}`;
+      return publishedPaths.has(themePath) && !isAidreamcapesV2RedirectPath(input.site.slug, themePath);
+    });
+    const itemListElement = activeImageDefinitions.map((definition, index) => {
       const themePath = `/ai-image-generation/${definition.slug}`;
       return {
         "@type": "ListItem",

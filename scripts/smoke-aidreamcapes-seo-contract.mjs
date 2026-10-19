@@ -208,6 +208,13 @@ if (siteV2) {
   assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
+  for (const path of ["/ai-image-generation", "/templates?type=photo"]) {
+    const response = await get(path);
+    assert.equal(response.status(), 200, `${path}: current v2 page status`);
+    const html = await response.text();
+    assert.match(html, /<nav[^>]*id=["']adc2-main-nav["']/i, `${path}: current v2 navigation must render`);
+    assert.match(html, /href=["']\/pricing["']/i, `${path}: current pricing link must render`);
+  }
   if (!preNavigationMigration) {
     const headerLinks = homepageDom("header.site a").toArray().map((node) => ({
       href: homepageDom(node).attr("href"),

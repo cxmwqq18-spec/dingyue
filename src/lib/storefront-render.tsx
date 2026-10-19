@@ -58,7 +58,8 @@ import { buildCollectionDirectoryJsonLd, buildStorefrontJsonLd, buildToolDirecto
 import { dreamshootAiStudioTemplates, dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_TOOLS_FAQ } from "@/lib/aidreamcapes-eu-tools-faq";
-import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, AIDREAMCAPES_IMAGE_THEME_ROOT_PATH } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesV2RedirectPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { isRenderableAidreamcapesImageThemeContentJson } from "@/lib/aidreamcapes-image-theme-content";
 import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 import { mydreamshootsVideoWatchPagesForState, type MyDreamShootsVideoWatchPage } from "@/lib/mydreamshoots-video-watch";
@@ -214,6 +215,26 @@ function landingContentForPage(snapshot: ReturnType<typeof createPublishedSiteSn
   return content as Record<string, unknown>;
 }
 
+function aidreamcapesImagePageVisibleCopy(contentJson: ThemePageJson | undefined): { title: string; description: string } | undefined {
+  if (!contentJson) return undefined;
+  const section = contentJson.sectionsOrder
+    .map((sectionId) => contentJson.sections[sectionId])
+    .find((candidate) => candidate?.type === "ai_image_theme_landing" || candidate?.type === "aidreamcapes_v2_page");
+  const settings = section?.settings && typeof section.settings === "object" && !Array.isArray(section.settings)
+    ? section.settings as Record<string, unknown>
+    : undefined;
+  const rawContent = settings?.content ?? settings?.data;
+  const content = rawContent && typeof rawContent === "object" && !Array.isArray(rawContent)
+    ? rawContent as Record<string, unknown>
+    : undefined;
+  const hero = content?.hero && typeof content.hero === "object" && !Array.isArray(content.hero)
+    ? content.hero as Record<string, unknown>
+    : undefined;
+  const title = typeof hero?.title === "string" ? hero.title.trim() : typeof content?.h1 === "string" ? content.h1.trim() : "";
+  const description = typeof hero?.body === "string" ? hero.body.trim() : typeof content?.lead === "string" ? content.lead.trim() : "";
+  return title && description ? { title, description } : undefined;
+}
+
 function buildAidreamcapesDirectoryProjection(
   snapshot: ReturnType<typeof createPublishedSiteSnapshot>,
   currentSite: Site,
@@ -228,16 +249,24 @@ function buildAidreamcapesDirectoryProjection(
   const imageCards = AIDREAMCAPES_IMAGE_THEME_DEFINITIONS
     .map((definition): AidreamcapesImageDirectoryCard | undefined => {
       const path = `/ai-image-generation/${definition.slug}`;
-      const pageContent = landingContentForPage(snapshot, path, "image");
-      const hero = pageContent?.hero && typeof pageContent.hero === "object" && !Array.isArray(pageContent.hero)
-        ? pageContent.hero as Record<string, unknown>
-        : undefined;
+      const livePage = snapshot.pages.find((page) => directoryPath(page.slug) === path);
+      const liveContentJson = (livePage as (ThemePage & { liveContentJson?: ThemePageJson }) | undefined)?.liveContentJson;
+      // The image directory is generated from current LivePage-backed state.
+      // Do not advertise a registered route if its relational page is missing,
+      // invalid, or already redirected to a different workflow.
+      if (
+        currentSite.id !== "site_aidreamcapes" ||
+        isAidreamcapesV2RedirectPath(currentSite.slug, path) ||
+        !livePage ||
+        !isRenderableAidreamcapesImageThemeContentJson(liveContentJson)
+      ) return undefined;
+      const visibleCopy = aidreamcapesImagePageVisibleCopy(liveContentJson);
+      if (!visibleCopy) return undefined;
       const entity = snapshot.publishedPageEntities.find((candidate) => candidate.canonicalPath === path);
       const media = entity ? mediaForRoute({ pageEntityId: entity.pageEntityId, routeKind: "ai-image-theme-leaf" }) : undefined;
       const contentImage = contentImageForPage(snapshot, path, "image");
       const lane = imageDirectoryLane(definition.slug);
-      const title = definition.label;
-      const heroBody = typeof hero?.body === "string" ? hero.body.trim() : "";
+      const { title, description } = visibleCopy;
       const mediaImage = media?.primaryImage?.trim();
       const contentImageUrl = contentImage?.src?.trim();
       const imageUrl = [contentImageUrl, mediaImage, AIDREAMCAPES_DIRECTORY_FALLBACK_IMAGE]
@@ -249,7 +278,7 @@ function buildAidreamcapesDirectoryProjection(
         slug: definition.slug,
         href: hrefForDirectoryPath(path),
         title,
-        description: entity?.content.detailIntro?.trim() || heroBody || entity?.metadata.description?.trim() || `Explore the ${title.toLowerCase()} direction in a private Aidreamcapes workflow.`,
+        description,
         group: lane.key,
         groupLabel: lane.label,
         imageUrl,

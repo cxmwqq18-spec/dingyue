@@ -1666,18 +1666,29 @@ const getStorefrontPublicCollectionSiteShellBySlug = cache(async (slug: string):
       // footer links (privacy, refunds, terms, etc.) while the homepage shows
       // them from its broader runtime query.
       const loadedPageSlugs = new Set(site.livePages.map((page) => page.slug));
+      // Aidreamcapes v2 navigation is stored on the current relational
+      // homepage LivePage. Collection shells render the same navigation as
+      // the homepage, so load that row explicitly for this site only.
+      const aidreamcapesHomepage = site.id === "site_aidreamcapes" && !loadedPageSlugs.has("/")
+        ? await prisma.livePage.findFirst({
+            where: { siteId: site.id, slug: "/" },
+            select: publicRuntimeSiteSelect.livePages.select
+          })
+        : null;
       const missingNavigationPageSlugs = Array.from(new Set(
         storefrontGlobalShellPageSlugs(site.settings?.draftJson)
           .flatMap((pageSlug) => publicRuntimePageSlugs(pageSlug) ?? [pageSlug])
       )).filter((pageSlug) => !loadedPageSlugs.has(pageSlug));
-      if (!missingNavigationPageSlugs.length) return site;
-      const navigationPages = await prisma.livePage.findMany({
-        where: { siteId: site.id, slug: { in: missingNavigationPageSlugs } },
-        orderBy: { slug: "asc" },
-        select: publicRuntimeSiteSelect.livePages.select
-      });
-      return navigationPages.length
-        ? { ...site, livePages: [...site.livePages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
+      const navigationPages = missingNavigationPageSlugs.length
+        ? await prisma.livePage.findMany({
+            where: { siteId: site.id, slug: { in: missingNavigationPageSlugs } },
+            orderBy: { slug: "asc" },
+            select: publicRuntimeSiteSelect.livePages.select
+          })
+        : [];
+      const supplementalPages = [...(aidreamcapesHomepage ? [aidreamcapesHomepage] : []), ...navigationPages];
+      return supplementalPages.length
+        ? { ...site, livePages: [...site.livePages, ...supplementalPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
         : site;
     },
     0

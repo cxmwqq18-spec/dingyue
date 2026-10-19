@@ -226,8 +226,18 @@ export function imageThemeDetailContentFromSection(section: SectionInstance): Ai
 /** A registered Aidreamcapes image route renders either the v1 image theme detail or a v2 page. */
 export function isRenderableAidreamcapesImageThemePage(page: Pick<ThemePage, "publishedJson"> | undefined): boolean {
   if (!page) return false;
-  const isV2 = page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
-  return isV2 || Boolean(imageThemeDetailContentFromPage(page));
+  return isRenderableAidreamcapesImageThemeContentJson(page.publishedJson);
+}
+
+/** Validate image landing content without choosing a storage source. */
+export function isRenderableAidreamcapesImageThemeContentJson(contentJson: ThemePage["publishedJson"] | undefined): boolean {
+  if (!contentJson) return false;
+  const isV2 = contentJson.sectionsOrder.some((sectionId) => contentJson.sections[sectionId]?.type === "aidreamcapes_v2_page");
+  if (isV2) return true;
+  const section = contentJson.sectionsOrder
+    .map((sectionId) => contentJson.sections[sectionId])
+    .find((candidate) => candidate?.type === "ai_image_theme_landing");
+  return Boolean(section && imageThemeDetailContentFromSection(section));
 }
 
 export function imageThemeDetailContentFromPage(page: Pick<ThemePage, "publishedJson">): AidreamcapesImageThemeDetailContent | undefined {

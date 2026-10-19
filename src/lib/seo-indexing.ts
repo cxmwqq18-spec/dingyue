@@ -22,7 +22,7 @@ import {
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES,
   aidreamshootsVideoTopicSlugForPath
 } from "@/lib/aidreamshoots-video-media";
-import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesImageThemePath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
+import { AIDREAMCAPES_IMAGE_THEME_DEFINITIONS, aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesImageThemePath, isAidreamcapesV2RedirectPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS, canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isPrimaryMydreamshootsSite } from "@/lib/storefront-context/capabilities";
 import storefrontSourcePageMap from "../../scripts/data/storefront-source-page-map-2026-09-27.json";
@@ -785,6 +785,7 @@ function collectAidreamcapesImageDirectorySitemapImages(
   const seen = new Set<string>();
   for (const definition of AIDREAMCAPES_IMAGE_THEME_DEFINITIONS) {
     const path = `/ai-image-generation/${definition.slug}`;
+    if (isAidreamcapesV2RedirectPath(site.slug, path)) continue;
     const page = pageForCanonicalSeoPath(snapshot, site, path);
     const manifest = page?.publishedJson.mediaManifest;
     // Directory cards display the generated output, not the source input.
@@ -1132,11 +1133,19 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     // Aidreamcapes.com v2: retired v1 URLs answer with 301s, so they never appear in
     // the sitemap. Once the v2 navigation is live, the sitemap lists only indexable
     // v2 pages plus the kept policy pages, so leftover v1 rows stay out as well.
-    const aidreamcapesV2Paths = site.themeSettings.publishedJson.aidreamcapesV2Navigation?.version === 2
+    const aidreamcapesRootLiveContent = (site.pages.find((page) => page.slug === "/") as (ThemePage & { liveContentJson?: ThemePageJson & { siteNavigation?: { version?: number } } }) | undefined)?.liveContentJson;
+    const aidreamcapesV2Enabled = aidreamcapesRootLiveContent?.siteNavigation?.version === 2;
+    const aidreamcapesV2Paths = aidreamcapesV2Enabled
       ? new Set<string>([
-          ...snapshot.pages
-            .filter((page) => page.publishedJson.sectionsOrder.some((sectionId) => page.publishedJson.sections[sectionId]?.type === "aidreamcapes_v2_page"))
-            .filter((page) => page.publishedJson.seo?.index !== false && page.publishedJson.seo?.robots?.index !== false)
+          ...site.pages
+            .filter((page) => {
+              const liveContent = (page as ThemePage & { liveContentJson?: ThemePageJson }).liveContentJson;
+              return Boolean(liveContent?.sectionsOrder?.some((sectionId) => liveContent.sections[sectionId]?.type === "aidreamcapes_v2_page"));
+            })
+            .filter((page) => {
+              const liveSeo = (page as ThemePage & { liveContentJson?: ThemePageJson }).liveContentJson?.seo;
+              return liveSeo?.index !== false && liveSeo?.robots?.index !== false;
+            })
             .map((page) => page.slug),
           ...AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS
         ].filter((path) => !aidreamcapesSiteV2RedirectSources.has(path)))
@@ -1199,11 +1208,15 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
       const path = new URL(entry.loc).pathname;
       // The v1 photo directory lists its theme images; the v2 page lists its own image.
-      if (path === "/ai-image-generation" && site.themeSettings.publishedJson.aidreamcapesV2Navigation?.version !== 2) return entry;
+      const aidreamcapesRootLiveContent = site.id === AIDREAMCAPES_SITE_ID
+        ? (site.pages.find((candidate) => candidate.slug === "/") as (ThemePage & { liveContentJson?: ThemePageJson & { siteNavigation?: { version?: number } } }) | undefined)?.liveContentJson
+        : undefined;
+      if (path === "/ai-image-generation" && aidreamcapesRootLiveContent?.siteNavigation?.version !== 2) return entry;
       // Match the renderer's current LivePage JSON, not media injected into
       // the legacy catalogue projection for a different layout.
       const page = site.pages.find((candidate) => normalizePath(candidate.slug) === path);
-      return page ? { ...entry, images: collectPageSitemapImages(site, { ...page, publishedJson: page.draftJson }) } : entry;
+      const liveContent = (page as (ThemePage & { liveContentJson?: ThemePageJson }) | undefined)?.liveContentJson;
+      return page && liveContent ? { ...entry, images: collectPageSitemapImages(site, { ...page, publishedJson: liveContent }) } : entry;
     })
     .map((entry) => overrideAidreamcapesHomepageSitemapImages(site, entry))
     .sort((left, right) => left.loc.localeCompare(right.loc));
