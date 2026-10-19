@@ -136,7 +136,7 @@ try {
   await page.getByText('No API keys yet.', { exact: true }).waitFor();
   await go('Inspirations', 'inspirations');
   await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations opens its own page.');
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/inspirations', 'Inspirations opens its own page.');
   checks.push('AI Twin and Ad Clone open integrated forms; adjacent avatar and inspiration navigation remains available.');
   await go('Home', 'home');
   await page.getByRole('button', { name: 'See All', exact: true }).click();
@@ -212,7 +212,7 @@ try {
   checks.push('URL import is a real module and its imported product reaches the correct video setup.');
   await go('Inspirations', 'inspirations');
   await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations has a dedicated URL.');
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/inspirations', 'Inspirations has a dedicated URL.');
   assert.equal(await sidebar().count(), 0, 'The creation workspace is not mounted around examples.');
   const inspirationCount = await page.locator('[data-inspiration-card]').count();
   checks.push(`Standalone inspiration library displays ${inspirationCount} examples from current LivePage rows and returns to creation.`);

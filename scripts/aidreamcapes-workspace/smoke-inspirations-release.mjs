@@ -36,8 +36,8 @@ try {
   const cards = await read("/app/create/inspirations");
   assert(cards.length > 0, "Current relational examples must exist before releasing the gallery");
   assert.deepEqual(await read("/app/inspirations"), cards, "Both standalone entries expose the same current examples");
-  const video = await read("/app/create/inspirations?kind=video");
-  const photo = await read("/app/create/inspirations?kind=photo");
+  const video = await read("/app/inspirations?kind=video");
+  const photo = await read("/app/inspirations?kind=photo");
   assert.equal(video.length + photo.length, cards.length);
   assert(video.length > 0 && photo.length > 0);
   for (const card of cards) {

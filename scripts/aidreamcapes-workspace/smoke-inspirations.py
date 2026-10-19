@@ -127,7 +127,7 @@ with sync_playwright() as playwright:
 
     # Check the alias and historical query entry separately, without client mocks.
     for route, expected in (
-        ("/site/aidreamcapes/app/create/inspirations", "/site/aidreamcapes/app/create/inspirations"),
+        ("/site/aidreamcapes/app/create/inspirations", "/site/aidreamcapes/app/inspirations"),
         ("/site/aidreamcapes/app/create?view=inspirations", "/site/aidreamcapes/app/inspirations"),
         ("/site/aivideosugc/app/inspirations", "/site/aivideosugc/app/inspirations"),
         ("/site/aivideosugc/app/create?view=inspirations", "/site/aivideosugc/app/inspirations"),
