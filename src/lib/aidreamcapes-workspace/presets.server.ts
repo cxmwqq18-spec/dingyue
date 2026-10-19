@@ -12,7 +12,7 @@ const IMAGE_TOOL_ALIASES: Record<string, WorkspacePreset["imageTool"]> = {
   "ecommerce-main-image": "white-background", "lifestyle-scene": "lifestyle-photos",
   "on-model-generation": "model-photos", "background-remove-replace": "change-background",
 };
-const SAFE_PREVIEW_PATH = /^\/(?:media\/site_aidreamcapes|assets\/sites\/site_aidreamcapes)\/[A-Za-z0-9_./@%+-]+(?:\.(?:avif|gif|jpe?g|png|webp|mp4|webm))?$/i;
+const SAFE_PREVIEW_PATH = /^(?:\/(?:media\/site_aidreamcapes|assets\/sites\/site_aidreamcapes)\/[A-Za-z0-9_./@%+-]+|\/ai-(?:image|video)-generation\/(?:actors\/)?[A-Za-z0-9_.@%+-]+)(?:\.(?:avif|gif|jpe?g|png|webp|mp4|webm))?$/i;
 
 function record(value: unknown): RecordValue | undefined {
   return value && typeof value === "object" && !Array.isArray(value) ? value as RecordValue : undefined;
