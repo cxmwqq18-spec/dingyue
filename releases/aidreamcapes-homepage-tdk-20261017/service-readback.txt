@@ -1,3 +1,0 @@
-MainPID=2101
-WorkingDirectory=/www/wwwroot/aidreamcapes.com/releases/6b73906a9bfad8acb362a41bae80b77e98b2bbd4-seo
-ActiveState=active

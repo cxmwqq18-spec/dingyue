@@ -63,3 +63,9 @@ releases/manifests/*
 releases/remote-snapshots/
 releases/*.conf
 docs/releases/
+# Local release artifact directories and agent reports
+releases/*/
+!releases/manifests/
+__pycache__/
+*.pyc
+docs/plans/aidreamcapes-static-media-and-recreate-plan-2026-10-18.md

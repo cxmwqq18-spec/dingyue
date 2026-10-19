@@ -1,1 +1,0 @@
-{"ok":true,"origin":"http://127.0.0.1:3013","storefront":"site-v2","redirects":54,"targetMetadataPages":24,"sitemapPages":80,"sitemapImageRecords":1124,"uniqueSitemapImages":496,"checks":["metadata","jsonld","site-v2-redirects","canonical","robots","sitemap-xml","image-page-membership","image-status","random-404","retired-410","https-www-redirects","security-headers","hsts"]}

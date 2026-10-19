@@ -1,8 +1,0 @@
-{
-  "ok": false,
-  "stage": "first-post-content-check",
-  "assertion": "sitemap image not referenced by page",
-  "url": "https://www.aivideosugc.com/assets/sites/site_aidreamcapes/site-v2/guide/steps2-home-actor-r1--640.webp",
-  "cause": "Unused legacy visual.steps.actorResult src still discovered by current sitemap projection",
-  "remediation": "Current-field inverse-safe manifest updates that owned field to the current displayed result; no shared loader change or historical state activation"
-}

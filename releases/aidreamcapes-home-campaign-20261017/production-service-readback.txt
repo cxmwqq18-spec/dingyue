@@ -1,3 +1,0 @@
-/dev/mapper/centos-root     1013G 1010G        4G 100% /
-active
-0845156f4fb24dcaf98bad4b1c527a3b87b9b257
