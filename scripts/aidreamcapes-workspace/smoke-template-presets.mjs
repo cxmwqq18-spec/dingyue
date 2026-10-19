@@ -136,11 +136,12 @@ try {
   assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/ai-image-generation/clean-product-image", "Picker links use the prefixed readable image path");
 
   for (const [kind, tool] of [["video", "spokesperson-videos"], ["photo", "white-background"]]) {
-    const migratedCard = makeCard({ kind, tool: undefined, publicSlug: "migrated-scene", href: `/app/create/tool/${tool}#step-video` });
+    const migratedCard = makeCard({ kind, tool: undefined, label: "Balcony update", prompt: "A person speaks beside a plant.", publicSlug: "migrated-scene", href: `/app/create/tool/${tool}#step-video` });
     livePageRow = makePage(migratedCard);
     const migrated = await resolveWorkspacePublicScenePreset("site_aidreamcapes", kind, "migrated-scene");
     assert.equal(migrated?.title, migratedCard.label, "Current cards with fixed tool URLs still resolve to their scene");
     if (kind === "photo") assert.equal(migrated.imageTool, tool);
+    else assert.equal(migrated.sceneId, "presenter_showcase", "Fixed spokesperson tool paths preserve presenter intent");
   }
   for (const href of ["/app/create/tool/INVALID", "/app/create/library/all", "https://evil.example/app/create/tool/video-ads", "https://user@www.aivideosugc.com/app/create/tool/video-ads"]) {
     livePageRow = makePage(makeCard({ publicSlug: "invalid-target", href }));

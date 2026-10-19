@@ -27,9 +27,9 @@ function safePreviewPath(value: string): boolean {
   } catch { return false; }
 }
 
-function sceneFromCard(card: RecordValue, href: URL, prompt: string, label: string): SceneId {
+function sceneFromCard(card: RecordValue, href: URL, prompt: string, label: string, tool: string): SceneId {
   if (typeof card.sceneId === "string" && SCENES.has(card.sceneId as SceneId)) return card.sceneId as SceneId;
-  const explicitTool = [card.videoTool, card.tool, href.searchParams.get("tool")].filter((value): value is string => typeof value === "string").join(" ").toLowerCase();
+  const explicitTool = [card.videoTool, card.tool, tool, href.searchParams.get("tool")].filter((value): value is string => typeof value === "string").join(" ").toLowerCase();
   const direction = `${explicitTool} ${label} ${prompt}`.toLowerCase();
   if (/\b(?:close.?up|texture|material|detail|finish|macro)\b/.test(direction)) return "texture_closeup";
   if (/\b(?:creator|ugc|presenter|spokesperson|talk(?:s|ing)? to camera|introduc(?:e|es|ing))\b/.test(direction)) return "presenter_showcase";
@@ -104,7 +104,7 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
     kind: card.kind,
     prompt,
     previewUrl: src,
-    sceneId: sceneFromCard(card, href, prompt, title),
+    sceneId: sceneFromCard(card, href, prompt, title, rawTool),
     aspect: cardAspect(card, href),
     duration: cardDuration(href),
     imageTool,
