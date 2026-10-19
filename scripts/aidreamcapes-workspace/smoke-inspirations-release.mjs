@@ -5,6 +5,7 @@ import "../load-runtime-env.mjs";
 // Read-only release gate. Validate the deployed SSR against this database's
 // current Aidreamcapes LivePage records, never a content export or snapshot.
 const origin = process.env.AIDREAMCAPES_INSPIRATIONS_ORIGIN || "https://www.aivideosugc.com";
+const mediaOrigin = process.env.AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN || origin;
 const siteId = "site_aidreamcapes";
 const prisma = new PrismaClient();
 const headers = { "x-forwarded-host": "www.aivideosugc.com", "x-forwarded-proto": "https" };
@@ -64,7 +65,15 @@ try {
   const urls = [...new Set(cards.map((card) => card.src))];
   for (let start = 0; start < urls.length; start += 8) {
     await Promise.all(urls.slice(start, start + 8).map(async (src) => {
-      const response = await fetch(new URL(src, origin), { headers, signal: AbortSignal.timeout(30000) });
+      let response;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          response = await fetch(new URL(src, mediaOrigin), { headers, signal: AbortSignal.timeout(30000) });
+          if (![429, 502, 503, 504].includes(response.status) || attempt === 2) break;
+          await response.body?.cancel();
+        } catch (error) { if (attempt === 2) throw error; }
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
       assert.equal(response.status, 200, `Example image loads: ${src}`);
       assert.match(response.headers.get("content-type") || "", /^image\//);
       const image = await response.arrayBuffer();

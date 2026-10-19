@@ -50,7 +50,7 @@ if (reuseBuildCommit) {
 }
 const release = `${root}/releases/${commit}-seo`;
 const quote = (s) => `'${String(s).replaceAll("'", "'\\''")}'`;
-const connection = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15"];
+const connection = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15", "-o", "ServerAliveInterval=15", "-o", "ServerAliveCountMax=6", "-o", "Compression=yes"];
 if (process.env.SSH_CONFIG_PATH) connection.push("-F", process.env.SSH_CONFIG_PATH);
 if (process.env.AI_PROJECT_SSH_KEY_PATH) connection.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
 const port = process.env.AI_PROJECT_SSH_PORT || "11765";
@@ -129,7 +129,7 @@ done
 test "$READY" = 1
 AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
 cat .candidate-contract.json
-${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
+${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
 # Apply the exact release's forward-only schema migrations after the built
@@ -172,7 +172,7 @@ cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
 AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json
-${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}
+${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"
 test "$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoots.service -p MainPID -p WorkingDirectory)" = "$OTHER_SERVICES"
