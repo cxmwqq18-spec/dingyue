@@ -220,8 +220,12 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   const html = await response.text();
   const title = htmlTitle(html);
   const description = htmlMeta(html, "description");
-  // Titles come from the stored pages, which name the brand from before the rename (Aidreamcapes) until the page data is refreshed.
-  assert(/\| (?:AIVideosUGC|Aidreamcapes)$/.test(title), `${path}: missing brand suffix (${title})`);
+  // Most pages suffix the brand. The approved About title leads with the brand, so require its
+  // identity there without rewriting the page-owned title just to satisfy a suffix convention.
+  const hasBrand = path === "/about-us"
+    ? /(?:AIVideosUGC|Aidreamcapes)/.test(title)
+    : /\| (?:AIVideosUGC|Aidreamcapes)$/.test(title);
+  assert(hasBrand, `${path}: missing brand identity (${title})`);
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
   assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
