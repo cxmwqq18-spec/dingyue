@@ -70,6 +70,7 @@ try {
     if (id === "server-only") return {};
     if (id === "@/lib/prisma") return { prisma: prismaMock };
     if (id === "./preset-contract") return presetContract;
+    if (id === "./static-routes") return navigationRequire("./static-routes");
     if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
     return require(id);
   };
@@ -133,6 +134,18 @@ try {
   livePageRow = makePage(staticPhotoCard);
   assert.equal((await resolveWorkspacePublicScenePreset("site_aidreamcapes", "photo", "clean-product-image"))?.kind, "photo", "Readable image routes resolve with the correct media kind");
   assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/ai-image-generation/clean-product-image", "Picker links use the prefixed readable image path");
+
+  for (const [kind, tool] of [["video", "spokesperson-videos"], ["photo", "white-background"]]) {
+    const migratedCard = makeCard({ kind, tool: undefined, publicSlug: "migrated-scene", href: `/app/create/tool/${tool}#step-video` });
+    livePageRow = makePage(migratedCard);
+    const migrated = await resolveWorkspacePublicScenePreset("site_aidreamcapes", kind, "migrated-scene");
+    assert.equal(migrated?.title, migratedCard.label, "Current cards with fixed tool URLs still resolve to their scene");
+    if (kind === "photo") assert.equal(migrated.imageTool, tool);
+  }
+  for (const href of ["/app/create/tool/INVALID", "/app/create/library/all", "https://evil.example/app/create/tool/video-ads", "https://user@www.aivideosugc.com/app/create/tool/video-ads"]) {
+    livePageRow = makePage(makeCard({ publicSlug: "invalid-target", href }));
+    assert.equal(await resolveWorkspacePublicScenePreset("site_aidreamcapes", "video", "invalid-target"), undefined, "Invalid or unrelated creation targets are rejected");
+  }
 
   // Exercise task POST with fully mocked auth, LivePage and store. Auth must happen before lookup.
   const taskInput = { images: { productImages: ["/api/sites/site_aidreamcapes/customers/c_test/assets/a1"] }, fields: { steps: "Show the product" }, creativeDirection: "User revised visual direction.", options: { duration: 10, aspect: "9:16", style: "professional", language: "en", subtitle: false } };

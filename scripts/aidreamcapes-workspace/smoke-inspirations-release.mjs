@@ -40,6 +40,8 @@ try {
   const photo = await read("/app/inspirations?kind=photo");
   assert.equal(video.length + photo.length, cards.length);
   assert(video.length > 0 && photo.length > 0);
+  const photoIds = new Set(photo.map((card) => card.id));
+  const creationTargets = new Set();
   for (const card of cards) {
     const pageSlug = [...currentSources.keys()].find((slug) => card.id.startsWith(`${slug}:`));
     assert(pageSlug, `Example ${card.id} has a current Aidreamcapes relational owner`);
@@ -48,6 +50,16 @@ try {
     assert(source, `Example ${card.id} resolves to its current picker card`);
     if (source.image?.src) assert.equal(card.src, source.image.src.trim(), "SSR uses the current relational image URL");
     else assert(source.ref, "Reference-only media must retain a current relational binding");
+    if (source.publicSlug) creationTargets.add(`/${photoIds.has(card.id) ? "ai-image-generation" : "ai-video-generation"}/${source.publicSlug}`);
+  }
+  const targets = [...creationTargets];
+  for (let start = 0; start < targets.length; start += 4) {
+    await Promise.all(targets.slice(start, start + 4).map(async (target) => {
+      const response = await fetch(new URL(target, origin), { headers, signal: AbortSignal.timeout(45000) });
+      assert.equal(response.status, 200, `Current example creation target resolves: ${target}`);
+      const html = await response.text();
+      assert.doesNotMatch(html, /NEXT_HTTP_ERROR_FALLBACK;404/);
+    }));
   }
   const urls = [...new Set(cards.map((card) => card.src))];
   for (let start = 0; start < urls.length; start += 8) {
@@ -63,7 +75,7 @@ try {
   const derivedState = stateTable[0]?.name
     ? await prisma.sitePublishedState.findUnique({ where: { siteId }, select: { revision: true, contentHash: true } })
     : null;
-  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, videos: video.length, photos: photo.length, checkedImages: urls.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
+  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, videos: video.length, photos: photo.length, checkedImages: urls.length, checkedCreationTargets: targets.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

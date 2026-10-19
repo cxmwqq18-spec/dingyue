@@ -2,6 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import { parseWorkspaceSceneRouteSlug, pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
 import { AIVIDEOSUGC_SITE_ID, type SceneId, type TaskInput } from "./types";
+import { parseStaticCreateSegments } from "./static-routes";
 
 type RecordValue = Record<string, unknown>;
 const SCENES = new Set<SceneId>(["presenter_showcase", "process_demo", "texture_closeup"]);
@@ -89,8 +90,10 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
   let href: URL;
   try { href = new URL(typeof card.href === "string" ? card.href : "/app/create", "https://www.aivideosugc.com"); }
   catch { return undefined; }
-  if (!["https:", "http:"].includes(href.protocol) || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || href.pathname !== "/app/create") return undefined;
-  const rawTool = typeof card.tool === "string" ? card.tool : href.searchParams.get("tool") ?? "";
+  const staticTarget = href.pathname.startsWith("/app/create/")
+    ? parseStaticCreateSegments(href.pathname.slice("/app/create/".length).split("/")) : undefined;
+  if (!["https:", "http:"].includes(href.protocol) || href.username || href.password || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || (href.pathname !== "/app/create" && staticTarget?.kind !== "tool")) return undefined;
+  const rawTool = typeof card.tool === "string" ? card.tool : staticTarget?.kind === "tool" ? staticTarget.tool : href.searchParams.get("tool") ?? "";
   const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
   return {
     sourcePage,
