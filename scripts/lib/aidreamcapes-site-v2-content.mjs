@@ -2634,9 +2634,9 @@ function buildNavigation(model) {
     version: 2,
     menus: [
       { label: "Video", groups: [{ label: "Make a video", items: VIDEO_TOOLS.map(tool) }], popular: popular(["beauty", "bf", "launch"]), hubLink: link("video-hub", { label: "All video tools →" }), footerLink: { label: "Browse all video templates →", href: "/templates?type=video" } },
-      { label: "Photo", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["color", "angle", "pack"]), hubLink: link("photo-hub", { label: "All photo tools →" }), footerLink: { label: "Browse all photo templates →", href: "/templates?type=photo" } },
+      { label: "Image", groups: [{ label: "Make photos", items: PHOTO_TOOLS.filter((id) => id !== "photo-hub").map(tool) }], popular: popular(["color", "angle", "pack"]), hubLink: link("photo-hub", { label: "All image tools →" }), footerLink: { label: "Browse all image templates →", href: "/templates?type=photo" } },
       { label: "Templates", groups: [group("By industry", Object.keys(model.ind).map((slug) => `ind-${slug}`)), group("By platform", Object.keys(model.plat).map((slug) => `plat-${slug}`)), group("By occasion", Object.keys(model.occ).map((slug) => `occ-${slug}`))], footerLink: { label: `See all ${realTemplateCount(model)} templates →`, href: "/templates" } },
-      { label: "Resources", groups: [group("Learn and get help", ["examples", "guides", "blog", "faq", "glossary", "contact"])] }
+      { label: "Resources", groups: [group("Learn and get help", [link("templates", { label: "Templates" }), "guides", "blog", "faq", "glossary", "contact"])] }
     ],
     links: [link("ai-actors", { description: "Browse 53 AI actors for product videos" }), link("pricing")],
     actions: { login: { label: "Log in", href: "/login" }, getStarted: { label: "Get started", href: "/app/create" } },
@@ -2645,7 +2645,7 @@ function buildNavigation(model) {
       socialLinks: AIDREAMCAPES_SOCIAL_LINKS.map((item) => ({ ...item })),
       groups: [
         group("Video", ["ai-actors", ...VIDEO_TOOLS, link("video-hub", { label: "All Video Tools" })]),
-        group("Photo", [...PHOTO_TOOLS.filter((id) => id !== "photo-hub"), link("photo-hub", { label: "All Photo Tools" })]),
+        group("Image", [...PHOTO_TOOLS.filter((id) => id !== "photo-hub"), link("photo-hub", { label: "All Image Tools" })]),
         // Like the competitor's footer ("All Industries", "All Features"): the hub or directory link closes its column under an "All …" name,
         // so every other entry is a page of its own and none repeats the heading.
         group("Templates", [...tplFirst, link("templates", { label: "All Templates" })]),

@@ -3,21 +3,21 @@ export type AidreamcapesNavGroup = { label: string; items: AidreamcapesNavItem[]
 
 export const aidreamcapesZipVideoGroups: AidreamcapesNavGroup[] = [
   { label: "Ads Testing", items: [
-    { label: "UGC Product Ad", href: "/ai-video-generation/ugc-ad-video" },
+    { label: "Video Ads", href: "/ai-video-generation/video-ads" },
     { label: "URL to Ad", href: "/ai-video-generation/url-to-ad" },
     { label: "Hook Lab (First 3s)", href: "/ai-video-generation/hook-lab" },
     { label: "PAS Formula Ads", href: "/ai-video-generation/pas-formula-ads" },
     { label: "Testimonial Ads", href: "/ai-video-generation/testimonial-ads" },
-    { label: "Before-After Showcases", href: "/ai-video-generation/before-after-showcases" },
+    { label: "Before & After Videos", href: "/ai-video-generation/before-after-videos" },
     { label: "Talking Photo Recs", href: "/ai-video-generation/talking-photo-recs" },
-    { label: "AI Actor Product Ads", href: "/ai-video-generation/ai-actor-product-ads" },
+    { label: "Spokesperson Videos", href: "/ai-video-generation/spokesperson-videos" },
     { label: "TikTok / Reels / Shorts", href: "/ai-video-generation/tiktok-reels-shorts" },
     { label: "Native Spark Ads", href: "/ai-video-generation/native-spark-ads" },
     { label: "Carousel Storytelling", href: "/ai-video-generation/carousel-storytelling" },
     { label: "Retargeting / Urgency", href: "/ai-video-generation/retargeting-urgency" }
   ] },
   { label: "Conversion / Seeding", items: [
-    { label: "Product Demo", href: "/ai-video-generation/product-video" },
+    { label: "Product Videos", href: "/ai-video-generation/product-videos" },
     { label: "Unboxing Experience", href: "/ai-video-generation/unboxing-experience" },
     { label: "How-to Tutorial", href: "/ai-video-generation/how-to-video" },
     { label: "Feature Callout", href: "/ai-video-generation/feature-callout" },
@@ -56,11 +56,13 @@ export const aidreamcapesZipVideoGroups: AidreamcapesNavGroup[] = [
 export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "image-to-video",
   "url-to-video",
-  "ugc-ad-video",
-  "product-video",
+  "video-ads",
+  "product-videos",
   "unboxing-experience",
-  "before-after-showcases",
-  "ai-actor-product-ads",
+  "before-after-videos",
+  "spokesperson-videos",
+  "text-to-video",
+  "ai-twin",
   "ai-actors",
   "how-to-video",
   "cinematic-video",
@@ -84,8 +86,8 @@ export function isAidreamcapesPublicVideoGenerationSlug(slug: string | undefined
 
 export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
   { label: "Listing / Store", items: [
-    { label: "Ecommerce Main Image", href: "/ai-image-generation/ecommerce-main-image" },
-    { label: "Lifestyle Scene", href: "/ai-image-generation/lifestyle-scene" },
+    { label: "White Background Photos", href: "/ai-image-generation/white-background-photos" },
+    { label: "Lifestyle Photos", href: "/ai-image-generation/lifestyle-photos" },
     { label: "Packshot Multi-angle", href: "/ai-image-generation/packshot-multi-angle" },
     { label: "Macro Details", href: "/ai-image-generation/macro-details" },
     { label: "Bundle Sets", href: "/ai-image-generation/bundle-sets" },
@@ -94,7 +96,7 @@ export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
     { label: "Comparison Chart", href: "/ai-image-generation/comparison-chart" }
   ] },
   { label: "Static Ads / Feed", items: [
-    { label: "Feed Ad Still", href: "/ai-image-generation/feed-ad-still" },
+    { label: "Social Ad Photos", href: "/ai-image-generation/social-ad-photos" },
     { label: "UGC Still Ad", href: "/ai-image-generation/ugc-still-ad" },
     { label: "Story 9:16 Ad", href: "/ai-image-generation/story-ad-vertical" },
     { label: "Carousel Set", href: "/ai-image-generation/carousel-set" },
@@ -102,7 +104,7 @@ export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
     { label: "Lookbook Cover", href: "/ai-image-generation/lookbook-cover" }
   ] },
   { label: "Model / Try-On", items: [
-    { label: "On-Model Generation", href: "/ai-image-generation/on-model-generation" },
+    { label: "Model Photos", href: "/ai-image-generation/model-photos" },
     { label: "Virtual Try-On", href: "/ai-image-generation/virtual-try-on" },
     { label: "Hair / Makeup Preview", href: "/ai-image-generation/hair-makeup-preview" },
     { label: "Jewelry Positioning", href: "/ai-image-generation/jewelry-positioning" },
@@ -110,7 +112,7 @@ export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
     { label: "Colorway Variations", href: "/ai-image-generation/colorway-variations" }
   ] },
   { label: "AI Tools", items: [
-    { label: "Background Remove / Replace", href: "/ai-image-generation/background-remove-replace" },
+    { label: "Change Background", href: "/ai-image-generation/change-background" },
     { label: "Enhance / Upscale", href: "/ai-image-generation/enhance-upscale" },
     { label: "Old Photo Restore", href: "/ai-image-generation/old-photo-restore" },
     { label: "Commercial Lighting", href: "/ai-image-generation/commercial-lighting" },
@@ -127,23 +129,23 @@ export const aidreamcapesZipImageGroups: AidreamcapesNavGroup[] = [
 
 export const aidreamcapesZipMarketingGroups: AidreamcapesNavGroup[] = [
   { label: "Ad Testing", items: [
-    { label: "UGC Ads", href: "/ai-video-generation/ugc-ad-video" },
-    { label: "URL to Ad", href: "/ai-video-generation/url-to-ad" },
+    { label: "Video Ads", href: "/ai-video-generation/video-ads" },
+    { label: "URL to Video", href: "/ai-video-generation/url-to-video" },
     { label: "Hook Lab", href: "/ai-video-generation/hook-lab" },
     { label: "Testimonial Ads", href: "/ai-video-generation/testimonial-ads" },
-    { label: "Before-After Ads", href: "/ai-video-generation/before-after-showcases" },
-    { label: "Actors & Talking", href: "/ai-video-generation/ai-actor-product-ads" }
+    { label: "Before & After Videos", href: "/ai-video-generation/before-after-videos" },
+    { label: "Spokesperson Videos", href: "/ai-video-generation/spokesperson-videos" }
   ] },
   { label: "Product Videos", items: [
-    { label: "Product Demo", href: "/ai-video-generation/product-video" },
+    { label: "Product Videos", href: "/ai-video-generation/product-videos" },
     { label: "Unboxing", href: "/ai-video-generation/unboxing-experience" },
     { label: "How-to Guide", href: "/ai-video-generation/how-to-video" }
   ] },
   { label: "Listing Stills", items: [
-    { label: "Main Image", href: "/ai-image-generation/ecommerce-main-image" },
-    { label: "Lifestyle Scene", href: "/ai-image-generation/lifestyle-scene" },
+    { label: "White Background Photos", href: "/ai-image-generation/white-background-photos" },
+    { label: "Lifestyle Photos", href: "/ai-image-generation/lifestyle-photos" },
     { label: "Packshot", href: "/ai-image-generation/packshot-multi-angle" },
-    { label: "Feed / Story Static Ad", href: "/ai-image-generation/feed-ad-still" }
+    { label: "Social Ad Photos", href: "/ai-image-generation/social-ad-photos" }
   ] },
   { label: "Promo", items: [
     { label: "Launch / Sale", href: "/ai-video-generation/promo-video" },
@@ -151,7 +153,7 @@ export const aidreamcapesZipMarketingGroups: AidreamcapesNavGroup[] = [
     { label: "Drop Campaign", href: "/ai-video-generation/promo-video" }
   ] },
   { label: "Catalog / Try-On", items: [
-    { label: "On-Model", href: "/ai-image-generation/on-model-generation" },
+    { label: "Model Photos", href: "/ai-image-generation/model-photos" },
     { label: "Virtual Try-On", href: "/ai-image-generation/virtual-try-on" },
     { label: "App / SaaS Ads", href: "/ai-video-generation/app-saas-demo" }
   ] }
@@ -179,7 +181,7 @@ export const aidreamcapesZipScenarioGroups: AidreamcapesNavGroup[] = [
 ];
 
 export const aidreamcapesZipVideoCollection: AidreamcapesNavItem = { label: "View all video →", href: "/ai-video-generation" };
-export const aidreamcapesZipImageCollection: AidreamcapesNavItem = { label: "View all photo →", href: "/ai-image-generation" };
+export const aidreamcapesZipImageCollection: AidreamcapesNavItem = { label: "View all image tools →", href: "/ai-image-generation" };
 export const aidreamcapesZipMarketingCollection: AidreamcapesNavItem = { label: "Open Marketing Hub →", href: "/marketing" };
 export const aidreamcapesZipScenarioCollection: AidreamcapesNavItem = { label: "View all scenarios →", href: "/ai-save-the-date/save-the-date" };
 

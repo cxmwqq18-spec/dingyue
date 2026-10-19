@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 
 export const AIDREAMCAPES_DIRECTORY_NAV_ITEMS = [
-  { label: "Text to Video", href: "/text-to-video", description: "Turn a written product brief into an editable video plan.", image: "/assets/sites/site_aidreamcapes/public-media/site-v2/gen/im01-video-hub-og-r1--sha256-3b549a466f941595c849a7e0408ec37686852de1a761003a4fa2df15aa4376d6.webp" },
-  { label: "AI Twin", href: "/ai-twin", description: "Explore a consistent presenter style for your product stories.", image: "/assets/sites/site_aidreamcapes/public-media/site-v2/guide/img1-video-hub-hero-beauty-r1--640--sha256-c606c4c3481ea49aae7aa1a3e44b0735492187cc4ac5550d3233554dac2ef7b1.webp" },
+  { label: "Text to Video", href: "/ai-video-generation/text-to-video", description: "Turn a written product brief into an editable video plan.", image: "/assets/sites/site_aidreamcapes/public-media/site-v2/gen/im01-video-hub-og-r1--sha256-3b549a466f941595c849a7e0408ec37686852de1a761003a4fa2df15aa4376d6.webp" },
+  { label: "AI Twin", href: "/ai-video-generation/ai-twin", description: "Explore a consistent presenter style for your product stories.", image: "/assets/sites/site_aidreamcapes/public-media/site-v2/guide/img1-video-hub-hero-beauty-r1--640--sha256-c606c4c3481ea49aae7aa1a3e44b0735492187cc4ac5550d3233554dac2ef7b1.webp" },
 ];
 
 // Append missing directory links while preserving every existing online field.

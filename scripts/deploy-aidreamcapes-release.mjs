@@ -54,7 +54,13 @@ function run(command, argv) {
   const result = spawnSync(command, argv, { stdio: "inherit" });
   assert.equal(result.status, 0, `${command} failed (${result.status})`);
 }
-console.log(JSON.stringify({ domain: "www.aivideosugc.com", service: "aidreamcapes.service", commit, release, databaseWrites: false }));
+console.log(JSON.stringify({
+  domain: "www.aivideosugc.com",
+  service: "aidreamcapes.service",
+  commit,
+  release,
+  appliesAidreamcapesLivePagePathMigration: args.includes("--apply")
+}));
 if (!args.includes("--apply")) process.exit(0);
 assert.equal(value("--confirm"), "deploy-aidreamcapes", "Explicit target confirmation is required");
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
@@ -116,7 +122,7 @@ for ATTEMPT in $(seq 1 60); do
   sleep 2
 done
 test "$READY" = 1
-AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
+AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
 cat .candidate-contract.json
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
@@ -127,7 +133,19 @@ DROPIN=/etc/systemd/system/aidreamcapes.service.d/release.conf
 cp "$DROPIN" .previous-release.conf
 OLD_CURRENT=$(readlink -f "$ROOT/current")
 printf '%s\n' '[Service]' "WorkingDirectory=$RELEASE" 'EnvironmentFile=' "EnvironmentFile=$RELEASE/.env.local" 'Environment=NODE_ENV=production' 'Environment=DINGYUE_ENV=production' 'Environment=DATABASE_TARGET=production' 'Environment=PLATFORM_STATE_POSTGRES_STRICT=1' 'Environment=NEXT_DIST_DIR=.next-build' 'Environment=HOSTNAME=127.0.0.1' 'Environment=PORT=3013' "Environment=GIT_COMMIT_SHA=$COMMIT" "Environment=NEXT_PUBLIC_RELEASE_COMMIT=$COMMIT" 'ExecStart=' "ExecStart=/usr/local/bin/node $RELEASE/server.mjs" > .next-release.conf
-rollback() { STATUS=$?; cp "$RELEASE/.previous-release.conf" "$DROPIN"; ln -sfn "$OLD_CURRENT" "$ROOT/current"; systemctl daemon-reload; systemctl restart aidreamcapes.service || true; exit "$STATUS"; }
+MIGRATION_APPLIED=0
+rollback() {
+  STATUS=$?
+  if [ "$MIGRATION_APPLIED" = 1 ]; then
+    echo 'Aidreamcapes LivePage migration committed; keeping the new release active for forward repair.' >&2
+    exit "$STATUS"
+  fi
+  cp "$RELEASE/.previous-release.conf" "$DROPIN"
+  ln -sfn "$OLD_CURRENT" "$ROOT/current"
+  systemctl daemon-reload
+  systemctl restart aidreamcapes.service || true
+  exit "$STATUS"
+}
 trap rollback EXIT
 cp .next-release.conf "$DROPIN"
 ln -sfn "$RELEASE" "$ROOT/current.next"
@@ -141,6 +159,9 @@ for ATTEMPT in $(seq 1 30); do
   sleep 2
 done
 test "$READY" = 1
+DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
+cat .navigation-path-migration.json
+MIGRATION_APPLIED=1
 AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"

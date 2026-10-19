@@ -7,6 +7,10 @@ import { XMLParser, XMLValidator } from "fast-xml-parser";
 import { request } from "playwright";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_SEO_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
+// The Aidreamcapes release candidate is checked before its guarded LivePage
+// path migration. In that one phase, validate the existing SSR surface and
+// redirects while leaving the renamed rows for the post-switch readback.
+const preNavigationMigration = process.env.AIDREAMCAPES_SEO_PRE_NAV_MIGRATION === "1";
 const SITE_HEADERS = {
   "x-forwarded-host": "www.aivideosugc.com",
   "x-forwarded-proto": "https"
@@ -14,13 +18,22 @@ const SITE_HEADERS = {
 // Aidreamcapes.com v2 retires v1 URLs with 301 redirects (applied by the middleware).
 const SITE_V2_REDIRECTS = JSON.parse(readFileSync(new URL("../src/lib/aidreamcapes-site-v2-redirects.json", import.meta.url), "utf8"));
 const SITE_V2_REDIRECT_SOURCES = new Set(SITE_V2_REDIRECTS.map(([from]) => from));
+const SITE_V2_REDIRECT_TARGETS = new Set(SITE_V2_REDIRECTS.map(([, to]) => to));
 const SITE_V2_TARGET_PATHS = [
   "/ai-video-generation",
   "/ai-video-generation/url-to-video",
-  "/ai-video-generation/ugc-ad-video",
+  "/ai-video-generation/video-ads",
+  "/ai-video-generation/product-videos",
+  "/ai-video-generation/before-after-videos",
+  "/ai-video-generation/spokesperson-videos",
+  "/ai-video-generation/text-to-video",
+  "/ai-video-generation/ai-twin",
   "/ai-image-generation",
-  "/ai-image-generation/ecommerce-main-image",
-  "/ai-image-generation/lifestyle-scene",
+  "/ai-image-generation/white-background-photos",
+  "/ai-image-generation/lifestyle-photos",
+  "/ai-image-generation/model-photos",
+  "/ai-image-generation/change-background",
+  "/ai-image-generation/social-ad-photos",
   "/templates",
   "/industries/beauty-skincare",
   "/platforms/tiktok-ads",
@@ -153,7 +166,11 @@ const homepageDom = load(homepageHtml);
 // Before that (for example while a new release is checked against current data) the v1
 // pages are still served and only redirected v1 paths are skipped.
 const siteV2 = homepageDom('main[data-aidreamcapes-v2="true"]').length > 0;
-const TARGET_PATHS = siteV2 ? SITE_V2_TARGET_PATHS : V1_TARGET_PATHS.filter((path) => !SITE_V2_REDIRECT_SOURCES.has(path));
+const TARGET_PATHS = siteV2
+  ? preNavigationMigration
+    ? SITE_V2_TARGET_PATHS.filter((path) => !SITE_V2_REDIRECT_SOURCES.has(path) && !SITE_V2_REDIRECT_TARGETS.has(path))
+    : SITE_V2_TARGET_PATHS
+  : V1_TARGET_PATHS.filter((path) => !SITE_V2_REDIRECT_SOURCES.has(path));
 const bodyMarkers = homepageDom('body script[data-storefront-json-ld="body-marker"]');
 assert(bodyMarkers.length > 0, "JSON-LD body markers must remain present for React hydration");
 assert(bodyMarkers.toArray().every((node) => homepageDom(node).attr("type") === "application/json"), "body markers must be inert JSON, not duplicate structured data");
@@ -190,6 +207,31 @@ if (siteV2) {
   assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
+  if (!preNavigationMigration) {
+    const headerLinks = homepageDom("header.site a").toArray().map((node) => ({
+      href: homepageDom(node).attr("href"),
+      text: homepageDom(node).text().replace(/\s+/g, " ").trim()
+    }));
+    for (const [label, href] of [
+      ["Video Ads", "/ai-video-generation/video-ads"],
+      ["Product Videos", "/ai-video-generation/product-videos"],
+      ["Before & After Videos", "/ai-video-generation/before-after-videos"],
+      ["Spokesperson Videos", "/ai-video-generation/spokesperson-videos"],
+      ["Text to Video", "/ai-video-generation/text-to-video"],
+      ["AI Twin", "/ai-video-generation/ai-twin"],
+      ["White Background Photos", "/ai-image-generation/white-background-photos"],
+      ["Lifestyle Photos", "/ai-image-generation/lifestyle-photos"],
+      ["Model Photos", "/ai-image-generation/model-photos"],
+      ["Change Background", "/ai-image-generation/change-background"],
+      ["Social Ad Photos", "/ai-image-generation/social-ad-photos"],
+      ["Templates", "/templates"]
+    ]) {
+      assert(headerLinks.some((link) => link.href === href && link.text.includes(label)), `header ${label} route`);
+    }
+    const headerMenuLabels = homepageDom("header.site nav#adc2-main-nav button").toArray().map((node) => homepageDom(node).text().trim());
+    assert(headerMenuLabels.includes("Image"), "Image menu label");
+    assert(!headerLinks.some((link) => ["/text-to-video", "/ai-twin"].includes(link.href)), "Video directory routes include the video generation level");
+  }
   // The company named in the Organization structured data is also visible on the page: in the
   // footer of every page, and in the main content of the About and Contact pages.
   const company = homepageOrganization ?? {};
@@ -229,6 +271,13 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
   assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
+  if (path === "/ai-video-generation/text-to-video" || path === "/ai-video-generation/ai-twin") {
+    const pageSchemas = flattenJsonLd(parseJsonLd(html));
+    const webPage = pageSchemas.find((node) => node["@type"] === "WebPage");
+    assert.equal(webPage?.url, `https://www.aivideosugc.com${path}`, `${path}: WebPage schema canonical URL`);
+    assert.equal(webPage?.name, title, `${path}: WebPage schema title matches metadata`);
+    assert.equal(webPage?.description, description, `${path}: WebPage schema description matches metadata`);
+  }
   return { path, title, description };
 });
 assert.equal(new Set(metadataResults.map(({ title }) => title)).size, metadataResults.length, "target titles must be unique");
@@ -265,13 +314,16 @@ assert.equal(XMLValidator.validate(sitemapXml), true, "sitemap must parse as XML
 const entries = new XMLParser({ isArray: (name) => ["url", "image:image"].includes(name) }).parse(sitemapXml).urlset.url;
 const pageUrls = entries.map((entry) => entry.loc);
 const imageUrls = entries.flatMap((entry) => (entry["image:image"] || []).map((image) => image["image:loc"]));
+const entriesForReadback = preNavigationMigration
+  ? entries.filter((entry) => !SITE_V2_REDIRECT_SOURCES.has(new URL(entry.loc).pathname))
+  : entries;
 assert(pageUrls.length > 0, "sitemap page count");
 assert.equal(new Set(pageUrls).size, pageUrls.length, "sitemap page URLs unique");
 assert(!pageUrls.some((url) => /\/login(?:[/?]|$)|\/404(?:[/?]|$)/i.test(url)), "private/404 URL in sitemap");
 assert(!sitemapXml.includes("engagement-photo image"), "stale sitemap image title");
 assert(!sitemapXml.includes("An intimate engagement announcement"), "stale sitemap image caption");
 
-const pageStatus = await mapLimit(entries, 3, async (entry) => {
+const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   const url = entry.loc;
   assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
   const response = await get(new URL(url).pathname);
@@ -305,6 +357,7 @@ console.log(JSON.stringify({
   origin: BASE_URL,
   storefront: siteV2 ? "site-v2" : "v1",
   redirects: SITE_V2_REDIRECTS.length,
+  preNavigationMigration,
   targetMetadataPages: metadataResults.length,
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,
