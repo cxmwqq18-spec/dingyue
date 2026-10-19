@@ -52,6 +52,12 @@ export const STATIC_DEMOS: StaticDemo[] = [
     scene: "texture_closeup", aspect: "9:16", duration: 15,
   },
   {
+    slug: "serum-15s-video",
+    view: "home",
+    prompt: "Create a 15-second video for this serum.",
+    aspect: "9:16", duration: 15,
+  },
+  {
     slug: "skincare-presenter-intro",
     view: "video",
     prompt: "Create a natural AI presenter introduction to my skincare serum. Show the bottle and dropper, use only the product details I provide, and end with an invitation to learn more.",

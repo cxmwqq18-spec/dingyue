@@ -5571,7 +5571,10 @@ function hrefFor(site: Site, href: string): string {
     const [rawPath, rawHash = ""] = href.split("#", 2);
     const anchor = rawHash.trim();
     const allowedAnchors = new Set(["step-upload", "step-create", "step-video", "source-photos", "review-request"]);
-    if (allowedAnchors.has(anchor)) {
+    // Fixed static create paths keep real fragment anchors; only the legacy
+    // query form is rewritten into the nextHash bridge the shell consumes.
+    const staticCreatePath = rawPath.startsWith("/app/create/") && !rawPath.includes("?");
+    if (!staticCreatePath && allowedAnchors.has(anchor)) {
       const separator = rawPath.includes("?") ? "&" : "?";
       return routedSitePath(site, `${rawPath}${separator}nextHash=${encodeURIComponent(anchor)}`);
     }
