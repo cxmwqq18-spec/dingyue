@@ -919,6 +919,16 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
     upstreamUrl.search = "";
     return upstreamUrl;
   }
+  // Fixed template-filter paths keep the public URL static while the gallery
+  // page applies the same filter it reads from ?type today.
+  if (hostSlug === "aidreamcapes") {
+    const templateType = upstreamUrl.pathname.match(/^\/templates\/(video|photo)$/)?.[1];
+    if (templateType) {
+      upstreamUrl.pathname = "/templates";
+      upstreamUrl.search = `type=${templateType}`;
+      return upstreamUrl;
+    }
+  }
   // Video watch pages are standalone routes for all three storefront hosts.
   // Keep them on the top-level App Router path so they do not fall through to
   // the database-backed storefront catch-all and lose their site-specific
@@ -1009,6 +1019,13 @@ export async function middleware(request: NextRequest) {
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
   const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
   if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
+  // Fixed gallery paths replace the old ?type query links.
+  const templateFilterMatch = request.headers.get(REORDER_SKIP_HEADER) !== "1" && request.nextUrl.pathname === "/templates"
+    ? ["video", "photo"].find((type) => request.nextUrl.searchParams.get("type") === type)
+    : undefined;
+  if (templateFilterMatch && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "aidreamcapes") {
+    return finalizeStorefrontResponse(NextResponse.redirect(new URL(`/templates/${templateFilterMatch}`, request.url), 308), request);
+  }
   const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
   if (legacyGalleryRedirect) return finalizeStorefrontResponse(legacyGalleryRedirect, request);
   const retiredImageToolResponse = retiredAidreamcapesImageToolResponse(request);

@@ -1,0 +1,262 @@
+// Static, bookmark-safe routes for Aidreamcapes workspace entry points.
+// Public pages must never link to /app/create with query parameters; known
+// intents live at fixed path segments instead:
+//   /app/create/<view>                     fixed workspace view
+//   /app/create/tool/<tool>[/<template>]   start a tool/template
+//   /app/create/demo/<slug>                curated demo prompt
+// Free-form customer input (typed prompts, product URLs, post-login task
+// continuation) is not part of this scheme and never appears in public links.
+import { isWorkspaceView, WORKSPACE_VIEWS, type WorkspaceView } from "./navigation";
+
+export type StaticCreateTarget =
+  | { kind: "view"; view: WorkspaceView }
+  | { kind: "tool"; tool: string; template?: string }
+  | { kind: "demo"; slug: string }
+  | { kind: "templates"; category?: string }
+  | { kind: "library"; filter: string };
+
+export const TEMPLATE_CATEGORY_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
+export const LIBRARY_FILTERS = new Set(["all", "completed", "draft"]);
+
+const TOOL_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,60}$/;
+const TEMPLATE_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
+const DEMO_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
+
+export type StaticDemo = {
+  slug: string;
+  view: WorkspaceView;
+  prompt: string;
+  scene?: "presenter_showcase" | "process_demo" | "texture_closeup";
+  aspect?: "9:16" | "1:1" | "16:9";
+  duration?: 6 | 10 | 15 | 30;
+  tool?: string;
+};
+
+export const STATIC_DEMOS: StaticDemo[] = [
+  {
+    slug: "product-demonstration",
+    view: "agent",
+    prompt: "Create a product demonstration using my uploaded product photo. Show the product clearly, explain one useful feature using the details I provide, and end with a clear next step.",
+    scene: "process_demo", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "new-product-intro",
+    view: "agent",
+    prompt: "Introduce my new product with a clear opening, one main product benefit supported by the details I provide, and a short invitation to learn more.",
+    scene: "process_demo", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "product-closeup",
+    view: "agent",
+    prompt: "Show close-up views of my product, including the packaging and visible details. Keep the product recognizable from my reference photo and use a clean, focused presentation.",
+    scene: "texture_closeup", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "skincare-presenter-intro",
+    view: "video",
+    prompt: "Create a natural AI presenter introduction to my skincare serum. Show the bottle and dropper, use only the product details I provide, and end with an invitation to learn more.",
+    scene: "presenter_showcase", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "skincare-presenter-agent",
+    view: "agent",
+    prompt: "Create a natural AI presenter introduction to my skincare serum. Show the bottle and dropper, use only the product details I provide, and end with an invitation to learn more.",
+    scene: "presenter_showcase", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "fragrance-presenter",
+    view: "video",
+    prompt: "Create a relaxed presenter video introducing my home fragrance product. Use my own product photo, show the packaging clearly and describe only the details I provide.",
+    scene: "presenter_showcase", aspect: "9:16", duration: 15,
+  },
+  {
+    slug: "mug-car-morning",
+    view: "images",
+    prompt: "Show my insulated travel mug in a parked car as part of a relaxed morning routine. Keep the mug shape and color consistent with my own uploaded product photo.",
+    aspect: "1:1", tool: "lifestyle-photos",
+  },
+  {
+    slug: "clean-reference-photo",
+    view: "images",
+    prompt: "Create a clean product photo using my own reference image. Keep the product shape and color consistent, use soft natural lighting, and place the product in a simple everyday setting.",
+    aspect: "1:1", tool: "custom",
+  },
+  {
+    slug: "everyday-setting-photo",
+    view: "images",
+    prompt: "Place my product in a simple everyday setting with soft natural lighting. Keep its shape and color consistent with my uploaded reference photo.",
+    aspect: "1:1", tool: "lifestyle-photos",
+  },
+  {
+    slug: "white-background-product",
+    view: "images",
+    prompt: "Show my product clearly on a clean white background. Keep the shape, color and visible details consistent with my uploaded reference photo.",
+    aspect: "1:1", tool: "white-background",
+  },
+  {
+    slug: "closeup-product-detail",
+    view: "images",
+    prompt: "Create a clear close-up product image that emphasizes the visible details of my uploaded product photo without changing the product design.",
+    aspect: "1:1", tool: "custom",
+  },
+  {
+    slug: "vertical-social-product",
+    view: "images",
+    prompt: "Create a vertical product image for a social post. Give the product a clear visual focus and leave room around it for a short message.",
+    aspect: "9:16", tool: "custom",
+  },
+  {
+    slug: "square-product-image",
+    view: "images",
+    prompt: "Create a square product image using my own uploaded product photo. Keep the product details clear and consistent.",
+    aspect: "1:1", tool: "custom",
+  },
+  {
+    slug: "square-product-page",
+    view: "images",
+    prompt: "Create a square product photo for my product page. Use a clean background, clear lighting and a close view of the product details. Keep the product consistent with my reference photo.",
+    aspect: "1:1", tool: "white-background",
+  },
+];
+
+const demoBySlug = new Map(STATIC_DEMOS.map((demo) => [demo.slug, demo]));
+
+export function staticDemoForHref(href: string): { slug: string } | undefined {
+  try {
+    const url = new URL(href, "https://www.aivideosugc.com");
+    if (url.pathname !== "/app/create" || !url.searchParams.get("prompt")) return undefined;
+    const view = url.searchParams.get("view") ?? "";
+    // Batch duplicates of the curated agent demos land on the same agent view.
+    const normalizedView = view === "batch" ? "agent" : view;
+    const prompt = url.searchParams.get("prompt");
+    // Match on the curated (view, prompt) pair; the registry supplies the
+    // canonical scene/aspect/duration/tool regardless of link variants.
+    const demo = STATIC_DEMOS.find((candidate) => candidate.view === normalizedView && candidate.prompt === prompt);
+    return demo ? { slug: demo.slug } : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Parse fixed segments after /app/create. Returns undefined for non-static or reserved (scene/jobs) routes. */
+export function parseStaticCreateSegments(segments: string[]): StaticCreateTarget | undefined {
+  if (segments.length < 1 || segments.length > 3) return undefined;
+  const [first, second, third] = segments;
+  if (first === "scene" || first === "jobs") return undefined;
+  if (segments.length === 1) {
+    return isWorkspaceView(first) ? { kind: "view", view: first } : undefined;
+  }
+  if (first === "tool" && segments.length >= 2 && TOOL_SEGMENT_RE.test(second)) {
+    if (segments.length === 2) return { kind: "tool", tool: second };
+    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: second, template: third };
+    return undefined;
+  }
+  if (first === "demo" && segments.length === 2 && DEMO_SLUG_RE.test(second) && demoBySlug.has(second)) {
+    return { kind: "demo", slug: second };
+  }
+  if (first === "templates" && (segments.length === 1 || (segments.length === 2 && TEMPLATE_CATEGORY_RE.test(second)))) {
+    return { kind: "templates", ...(segments.length === 2 ? { category: second } : {}) };
+  }
+  if (first === "library" && segments.length === 2 && LIBRARY_FILTERS.has(second)) {
+    return { kind: "library", filter: second };
+  }
+  return undefined;
+}
+
+/** Query-object equivalent understood by aidreamcapesWorkspaceEntry. */
+export function staticCreateQuery(target: StaticCreateTarget): Record<string, string> {
+  if (target.kind === "view") return { view: target.view };
+  if (target.kind === "demo") {
+    const demo = demoBySlug.get(target.slug);
+    if (!demo) return {};
+    const query: Record<string, string> = { view: demo.view, prompt: demo.prompt };
+    if (demo.scene) query.scene = demo.scene;
+    if (demo.aspect) query.aspect = demo.aspect;
+    if (demo.duration !== undefined) query.duration = String(demo.duration);
+    if (demo.tool) query.tool = demo.tool;
+    if (demo.view === "images") query.tool_id = "image_generator";
+    return query;
+  }
+  if (target.kind === "templates") return { view: "home", templates: "1", ...(target.category ? { category: target.category } : {}) };
+  if (target.kind === "library") return { view: "library", filter: target.filter };
+  // Tool routes: image tools carry tool_id; video tools open the video panel.
+  const imageTools = new Set(["custom", "change-background", "white-background", "model-photos", "lifestyle-photos", "photo-hub", "social-ad-photos"]);
+  const query: Record<string, string> = { tool: target.tool };
+  if (imageTools.has(target.tool)) query.tool_id = "image_generator";
+  if (target.template) query.template = target.template;
+  return query;
+}
+
+export function staticViewHref(basePath: string, view: WorkspaceView): string {
+  return `${basePath}/app/create/${view}`;
+}
+
+export function staticToolHref(basePath: string, tool: string, template?: string): string | undefined {
+  if (!TOOL_SEGMENT_RE.test(tool)) return undefined;
+  if (template && !TEMPLATE_SEGMENT_RE.test(template)) return undefined;
+  return `${basePath}/app/create/tool/${tool}${template ? `/${template}` : ""}`;
+}
+
+export function staticDemoHref(basePath: string, slug: string): string | undefined {
+  if (!demoBySlug.has(slug)) return undefined;
+  return `${basePath}/app/create/demo/${slug}`;
+}
+
+/**
+ * Map a legacy /app/create query URL to its fixed path. Only links whose
+ * entire state is staticizable are redirected; task continuation, login
+ * returns, product URLs, filters and arbitrary prompts keep their query.
+ */
+export function legacyCreateHrefToStatic(href: string): string | undefined {
+  let url: URL;
+  try { url = new URL(href, "https://www.aivideosugc.com"); } catch { return undefined; }
+  if (url.pathname !== "/app/create") return undefined;
+  const params = url.searchParams;
+  const keys = [...params.keys()].sort();
+  if (!keys.length) return "/app/create";
+  const kept = new Set(["view", "tool", "tool_id", "template", "prompt", "scene", "aspect", "duration", "plan", "nextHash", "templates", "category", "filter", "videoMode"]);
+  if (keys.some((key) => !kept.has(key))) return undefined;
+  // Legacy video modes renamed before the static route work.
+  const legacyVideoMode: Record<string, string> = { "ugc-ad": "video-ads", "product-video": "product-videos" };
+  if (params.get("videoMode")) {
+    if (keys.length !== 1) return undefined;
+    const tool = legacyVideoMode[params.get("videoMode") ?? ""];
+    return tool ? `/app/create/tool/${tool}` : undefined;
+  }
+  if (params.get("prompt")) {
+    const demo = staticDemoForHref(href);
+    return demo ? `/app/create/demo/${demo.slug}` : undefined;
+  }
+  if (params.get("plan")) return "/app/create";
+  const view = params.get("view");
+  if (params.get("templates") === "1" && (!view || view === "home")) {
+    const category = params.get("category");
+    if (!category) return "/app/create/templates";
+    return TEMPLATE_CATEGORY_RE.test(category) ? `/app/create/templates/${category}` : undefined;
+  }
+  if (view === "library" && keys.length === 2 && params.get("filter") && LIBRARY_FILTERS.has(params.get("filter") ?? "")) {
+    return `/app/create/library/${params.get("filter")}`;
+  }
+  const tool = params.get("tool");
+  const toolId = params.get("tool_id");
+  const template = params.get("template");
+  if (tool || toolId) {
+    if (params.get("nextHash") && !template) return undefined;
+    if (view && !isWorkspaceView(view)) return undefined;
+    return staticToolHref("", tool ?? "", template ?? undefined) ?? (toolId && !tool ? "/app/create/images" : undefined);
+  }
+  if (view && keys.length === 1 && isWorkspaceView(view)) return `/app/create/${view}`;
+  return undefined;
+}
+
+/** Convert a fixed workspace path to the same intent params the client uses from search. */
+export function staticCreateSearchFromPath(pathname: string): URLSearchParams | null {
+  const match = pathname.match(/^(?:\/site\/(?:aidreamcapes|aivideosugc))?\/app\/create\/(.+)$/);
+  if (!match) return null;
+  const segments = decodeURIComponent(match[1]).split("/").filter(Boolean);
+  const target = parseStaticCreateSegments(segments);
+  if (!target) return null;
+  return new URLSearchParams(staticCreateQuery(target));
+}
+
+export { WORKSPACE_VIEWS };

@@ -922,7 +922,7 @@ export function Plans({ plans, r }: { plans: V2Plan[]; r: V2Resolvers }) {
           <p className="who">{plan.who}</p>
           <p className="credits">{plan.credits} credits / month</p>
           <ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-          <a className={plan.popular ? "btn btn-grad" : "btn btn-ghost"} href={r.href(`/app/create?plan=${plan.name.toLowerCase()}`)}>Choose {plan.name}</a>
+          <a className={plan.popular ? "btn btn-grad" : "btn btn-ghost"} href={r.href("/app/create")}>Choose {plan.name}</a>
         </div>
       ))}
     </div>

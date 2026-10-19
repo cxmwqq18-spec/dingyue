@@ -17,6 +17,7 @@ import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } f
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
 import { workspaceMediaRoutePath, workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-workspace/static-routes";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -310,7 +311,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const controller = new AbortController();
     const navigation = navigationSerial.current;
     const active = () => !controller.signal.aborted && navigation === navigationSerial.current;
+    const staticPathParams = staticCreateSearchFromPath(window.location.pathname);
     const params = new URLSearchParams(window.location.search);
+    if (staticPathParams) {
+      staticPathParams.forEach((value, key) => { if (!params.has(key)) params.set(key, value); });
+    }
     const createIntent = aidreamcapesCreateIntentFromSearchParams(params);
     const handoff = workspaceHandoffFromSearchParams(params);
     const resumingGuestDraft = params.get("resumeDraft") === "1";
@@ -476,11 +481,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   function updateUrl(nextTask: WorkspaceTask | null, nextStep: Step = "input", nextView: View = nextTask ? "agent" : view) {
     const url = new URL(window.location.href);
-    if (nextTask) { url.pathname = `${basePath}/app/create`; url.searchParams.set("task", nextTask.taskId); url.searchParams.set("step", nextStep); url.searchParams.delete("scene"); }
-    else { url.searchParams.delete("task"); url.searchParams.delete("step"); if (nextView !== "agent") url.searchParams.delete("scene"); }
-    url.searchParams.set("view", nextView);
-    if (nextView !== "images") { url.searchParams.delete("tool"); url.searchParams.delete("tool_id"); }
-    if (nextTask) { url.searchParams.delete("source"); url.searchParams.delete("preset"); }
+    if (nextTask) {
+      url.pathname = `${basePath}/app/create`;
+      url.search = new URLSearchParams({ task: nextTask.taskId, step: nextStep }).toString();
+    } else {
+      // Fixed view paths keep the address bar free of query state.
+      url.pathname = nextView === "home" ? `${basePath}/app/create` : staticViewHref(basePath, nextView);
+      url.search = "";
+      url.hash = "";
+    }
     window.history.replaceState(window.history.state, "", url);
   }
 
@@ -562,9 +571,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setView("agent");
     visibleView.current = "agent";
     updateUrl(null, "input", "agent");
-    const url = new URL(window.location.href);
-    url.searchParams.set("scene", selected.id);
-    window.history.replaceState(window.history.state, "", url);
+    window.history.replaceState({ ...window.history.state, scene: selected.id }, "");
   }
 
   async function saveNewDraft() {
@@ -910,6 +917,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   useEffect(() => {
     if (!canBrowseTemplates || templateHandoffConsumed.current) return;
     const url = new URL(window.location.href);
+    const staticParams = staticCreateSearchFromPath(window.location.pathname);
+    if (staticParams) staticParams.forEach((value, key) => { if (!url.searchParams.has(key)) url.searchParams.set(key, value); });
     if (url.searchParams.get("templates") !== "1") return;
     templateHandoffConsumed.current = true;
     const handoff = workspaceHandoffFromSearchParams(url.searchParams);
@@ -1277,16 +1286,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {video && !task && presenterStudioEnabled && <div className={styles.templateScene}><span>Video scene</span><strong>{catalog?.scenes.find((item) => item.id === selectedScene)?.name ?? selectedScene}</strong></div>}
         {video && !task && !presenterStudioEnabled && <label className={styles.templateScene}><span>Video scene</span><select className={styles.input} aria-label="Video scene" value={selectedScene} disabled={working} onChange={(event) => {
           const nextScene = event.target.value as WorkspacePreset["sceneId"]; setPresetSceneId(nextScene);
-          if (view === "agent" && selectedSceneId) { setSelectedSceneId(nextScene); const url = new URL(window.location.href); url.searchParams.set("scene", nextScene); window.history.replaceState(window.history.state, "", url); }
+          if (view === "agent" && selectedSceneId) { setSelectedSceneId(nextScene); window.history.replaceState({ ...window.history.state, scene: nextScene }, ""); }
         }}>{catalog?.scenes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
         {video && task && <p>{catalog?.scenes.find((item) => item.id === selectedScene)?.name}</p>}
       </div>
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
         setActivePreset(undefined); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
         if (!video) setImageInput((current) => ({ ...current, prompt: "", toolId: "custom" }));
-        const url = new URL(window.location.href); url.pathname = `${basePath}/app/create`; url.searchParams.delete("source"); url.searchParams.delete("preset");
-        if (view === "home") url.searchParams.delete("view"); else url.searchParams.set("view", view);
-        url.searchParams.delete("tool"); url.searchParams.delete("tool_id");
+        const url = new URL(window.location.href); url.pathname = view === "home" ? `${basePath}/app/create` : staticViewHref(basePath, view);
+        url.search = ""; url.hash = "";
         window.history.replaceState(window.history.state, "", url);
       }}><X size={18} /></button>}
     </section>;

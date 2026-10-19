@@ -35,10 +35,11 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
 import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { legacyCreateHrefToStatic, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -733,20 +734,32 @@ export default async function HostStorefrontCatchAllPage({
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const needsPrivateRuntime = firstSegment === "app" || firstSegment === "account" || firstSegment === "dashboard";
   const isAidreamcapesSceneCreateRoute = hostSiteSlug === "aidreamcapes" && firstSegment === "app" && path[1] === "create" && path[2] === "scene" && path.length === 4;
+  // Fixed workspace entry paths (/app/create/<view>, /tool/..., /demo/...).
+  const aidreamcapesStaticCreate = hostSiteSlug === "aidreamcapes" && firstSegment === "app" && path[1] === "create" && path.length >= 3
+    ? parseStaticCreateSegments(path.slice(2))
+    : undefined;
+  // Legacy query links are permanent redirects to their fixed paths.
+  if (hostSiteSlug === "aidreamcapes" && slug === "/app/create" && searchParams) {
+    const legacyQuery = await searchParams;
+    if (Object.keys(legacyQuery).length) {
+      const staticPath = legacyCreateHrefToStatic(`/app/create?${new URLSearchParams(Object.entries(legacyQuery).flatMap(([k, v]) => Array.isArray(v) ? v.map((item) => [k, String(item)] as [string, string]) : [[k, String(v)]]))}`);
+      if (staticPath) permanentRedirect(staticPath);
+    }
+  }
   // AIVideosUGC lets unsigned visitors open the create workspace and the
   // in-site inspiration library; every other private route still requires a
   // session. This allowance applies to aidreamcapes only.
   const isGuestAllowedAppRoute =
     firstSegment === "app" &&
     hostSiteSlug === "aidreamcapes" &&
-    (slug === "/app/create" || slug === "/app/inspirations" || isAidreamcapesSceneCreateRoute);
+    (slug === "/app/create" || slug === "/app/inspirations" || isAidreamcapesSceneCreateRoute || Boolean(aidreamcapesStaticCreate));
   if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie()) && !isGuestAllowedAppRoute) {
     const query = searchParams ? await searchParams : {};
     redirect(`/login?next=${encodeURIComponent(`${slug}${searchParamsSuffix(query)}`)}`);
   }
   const canUseFastWorkspaceShell = firstSegment === "app" && !(path[1] === "jobs" && path[2] && path[2] !== "progress");
   if (canUseFastWorkspaceShell) {
-    const query = searchParams ? await searchParams : {};
+    let query = searchParams ? await searchParams : {};
     const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
@@ -754,15 +767,20 @@ export default async function HostStorefrontCatchAllPage({
     if (!siteSlug) notFound();
     // Inspirations are a published Aidreamcapes gallery, not a customer-owned
     // workspace view. Keep the same SSR list for signed-in and guest visitors.
-    if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") redirect("/app/create?view=inspirations");
+    if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") {
+      return renderAidreamcapesInspirationsPage({ query, siteSlug });
+    }
     if (isGuestAllowedAppRoute && !(await hasAnyCustomerSessionCookie())) {
       if (isAidreamcapesSceneCreateRoute) {
         return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });
       }
-      return renderAidreamcapesGuestCreatePage({ query, siteSlug });
+      return renderAidreamcapesGuestCreatePage({ query: aidreamcapesStaticCreate ? staticCreateQuery(aidreamcapesStaticCreate) : query, siteSlug });
     }
     if (hostSiteSlug === "aidreamcapes" && isAidreamcapesSceneCreateRoute) {
       return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });
+    }
+    if (hostSiteSlug === "aidreamcapes" && aidreamcapesStaticCreate) {
+      query = { ...query, ...staticCreateQuery(aidreamcapesStaticCreate) };
     }
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }

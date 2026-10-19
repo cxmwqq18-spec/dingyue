@@ -208,7 +208,7 @@ if (siteV2) {
   assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
-  for (const path of ["/ai-image-generation", "/templates?type=photo"]) {
+  for (const path of ["/ai-image-generation", "/templates/photo"]) {
     const response = await get(path);
     assert.equal(response.status(), 200, `${path}: current v2 page status`);
     const html = await response.text();

@@ -3,6 +3,7 @@ import { Img, SecHead } from "./parts";
 import type { V2Image, V2Resolvers } from "./types";
 import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
 import { HomeBrandToolsBehavior } from "./home-brand-tools-behavior";
+import { staticDemoForHref } from "@/lib/aidreamcapes-workspace/static-routes";
 import "./home-brand-tools.css";
 
 function Icon({ kind }: { kind: "arrow" | "play" | "link" | "spark" | "image" | "person" | "close" }) {
@@ -19,7 +20,9 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
     ...demo.actors.map(actor => ({ id: `actor-${actor.id}`, image: actor.image }))
   ];
   const openImage = (id: string, image: V2Image, className = "", children?: ReactNode) => <button type="button" className={`adc-tools-photo ${className}`} data-tools-open={id} aria-label={`${c.enlarge}: ${image.alt}`}><Img image={image} r={r} />{children}<span className="adc-tools-enlarge" aria-hidden="true">↗</span></button>;
-  const promptHref = `${r.href("/app/create")}?${new URLSearchParams({ view: demo.tabs[0].value, prompt: c.promptValue, aspect: "9:16", duration: "15" }).toString()}`;
+  const promptQueryHref = `${r.href("/app/create")}?${new URLSearchParams({ view: demo.tabs[0].value, prompt: c.promptValue, aspect: "9:16", duration: "15" }).toString()}`;
+  const promptDemo = staticDemoForHref(promptQueryHref);
+  const promptHref = promptDemo ? r.href(`/app/create/demo/${promptDemo.slug}`) : promptQueryHref;
   const visual = (item: HomeBrandTool) => {
     switch (item.id) {
       case "url": return <div className="adc-tools-import" data-imported="false">

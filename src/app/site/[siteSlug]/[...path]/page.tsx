@@ -29,6 +29,7 @@ import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamsh
 import { renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
 import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import type { PlatformState, ThemePage } from "@/lib/types";
 
@@ -678,7 +679,12 @@ export default async function SiteCatchAllPage({
   }
   if (path[0] === "app") {
     if (slug === "/app") redirect(routePath("/app/create"));
-    const query = searchParams ? await searchParams : {};
+    let query = searchParams ? await searchParams : {};
+    if ((publicSlug === "aidreamcapes" || publicSlug === "aivideosugc") && path[1] === "create" && path.length >= 3) {
+      const staticTarget = parseStaticCreateSegments(path.slice(2));
+      if (staticTarget) query = { ...query, ...staticCreateQuery(staticTarget) };
+      else if (!["scene"].includes(path[2] ?? "")) notFound();
+    }
     const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug, query, routeMode });

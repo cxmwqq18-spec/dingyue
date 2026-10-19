@@ -164,6 +164,8 @@ done
 test "$READY" = 1
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
 cat .navigation-path-migration.json
+DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-static-create-links.mjs --target=production --apply --confirm=site_aidreamcapes-static-create-links > .static-create-links-migration.json
+cat .static-create-links-migration.json
 MIGRATION_APPLIED=1
 AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json

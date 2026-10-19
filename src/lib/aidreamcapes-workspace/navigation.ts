@@ -24,7 +24,7 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
 ];
 
 export function workspaceViewHref(basePath: string, view: WorkspaceView): string {
-  return `${basePath}/app/create?${new URLSearchParams({ view })}`;
+  return `${basePath}/app/create/${view}`;
 }
 
 export type WorkspaceQuickStart = { label: string; sceneId: SceneId; aspect?: "9:16" | "1:1" | "16:9"; duration?: 6 | 10 | 15 | 30 };
