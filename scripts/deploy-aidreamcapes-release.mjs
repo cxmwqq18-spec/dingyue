@@ -125,7 +125,7 @@ for ATTEMPT in $(seq 1 60); do
   sleep 2
 done
 test "$READY" = 1
-AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
+AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
 cat .candidate-contract.json
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
@@ -165,7 +165,7 @@ test "$READY" = 1
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
 cat .navigation-path-migration.json
 MIGRATION_APPLIED=1
-AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
+AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"

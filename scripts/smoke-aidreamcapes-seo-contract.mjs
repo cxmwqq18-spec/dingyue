@@ -7,6 +7,7 @@ import { XMLParser, XMLValidator } from "fast-xml-parser";
 import { request } from "playwright";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_SEO_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
+const MEDIA_BASE_URL = String(process.env.AIDREAMCAPES_SEO_MEDIA_ORIGIN || BASE_URL).replace(/\/$/, "");
 // The Aidreamcapes release candidate is checked before its guarded LivePage
 // path migration. In that one phase, validate the existing SSR surface and
 // redirects while leaving the renamed rows for the post-switch readback.
@@ -346,7 +347,8 @@ const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
 assert.equal(new Set(pageStatus.map(({ title }) => title)).size, pageStatus.length, "all sitemap page titles must be unique");
 assert.equal(new Set(pageStatus.map(({ description }) => description)).size, pageStatus.length, "all sitemap page descriptions must be unique");
 const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
-  const response = await get(new URL(url).pathname + new URL(url).search);
+  const imageUrl = new URL(url);
+  const response = await http.get(`${MEDIA_BASE_URL}${imageUrl.pathname}${imageUrl.search}`, { maxRedirects: 0 });
   assert.equal(response.status(), 200, `sitemap image status ${response.status()}: ${url}`);
   assert.match(response.headers()["content-type"] || "", /^image\//, `sitemap asset must be an image: ${url}`);
   return url;

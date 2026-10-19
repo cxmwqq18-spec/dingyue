@@ -55,6 +55,7 @@ const DREAMSHOOT_SITE_ID = "site_dreamshoot";
 const DREAMSHOOT_SITE_SLUGS = new Set(["mydreamshoots", "dreamshoot", "grownstride"]);
 const AIDREAMCAPES_SITE_ID = "site_aidreamcapes";
 const AIDREAMCAPES_SITE_SLUGS = new Set(["aidreamcapes"]);
+const AIDREAMCAPES_READABLE_MEDIA_ROOT = "/www/wwwroot/aidreamcapes.com/shared/sites/public-media";
 const GROWNSTRIDE_HOSTS = new Set(["grownstride.com", "www.grownstride.com", "test.grownstride.com"]);
 const GROWNSTRIDE_RESERVED_HOSTS = new Set(["grownstride.com", "www.grownstride.com"]);
 
@@ -476,8 +477,49 @@ function sitemapMediaUrl(site: Site, value: string | undefined): string {
   if (!resolved) return "";
   if (site.id === AIDREAMCAPES_SITE_ID) {
     try {
-      const pathname = new URL(resolved).pathname;
+      const parsed = new URL(resolved);
+      const pathname = parsed.pathname;
       if (/\/assets\/sites\/site_aidreamcapes\/(?:creative-packs|fan-holiday-theme)(?:\/|$)/i.test(pathname)) return "";
+      // Readable media is served by the www.aivideosugc.com vhost from the
+      // Aidreamcapes persistent media directory. Keep this path handling
+      // strictly site-scoped so shared SEO indexing cannot expose these files
+      // through another storefront's sitemap.
+      const expectedHost = originHost(AIDREAMCAPES_ORIGIN);
+      if (parsed.host.toLowerCase() !== expectedHost || parsed.search || parsed.hash) return "";
+      const decodedPath = decodeURIComponent(pathname);
+      const readableMedia = decodedPath.match(/^\/(ai-image-generation|ai-video-generation|ai-actors)\/(.+)$/i);
+      if (readableMedia) {
+        const [, route, leaf] = readableMedia;
+        let mediaDirectory = "";
+        let relativeLeaf = leaf;
+        let extensionPattern: RegExp;
+        if (/^ai-image-generation$/i.test(route)) {
+          if (/^actors\//i.test(leaf)) {
+            mediaDirectory = "actor";
+            relativeLeaf = leaf.replace(/^actors\//i, "");
+            extensionPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)$/i;
+          } else {
+            mediaDirectory = "image";
+            extensionPattern = /\.(?:avif|gif|jpe?g|png|svg|webp)$/i;
+          }
+        } else if (/^ai-video-generation$/i.test(route)) {
+          if (/^actors\//i.test(leaf)) {
+            mediaDirectory = "actor";
+            relativeLeaf = leaf.replace(/^actors\//i, "");
+          } else {
+            mediaDirectory = "video";
+          }
+          extensionPattern = /\.(?:m4v|mov|mp4|webm)$/i;
+        } else {
+          mediaDirectory = "actor";
+          extensionPattern = /\.(?:m4a|mp3|ogg|wav)$/i;
+        }
+        if (!/^[a-z0-9][a-z0-9._-]*$/i.test(relativeLeaf) || !extensionPattern.test(relativeLeaf)) return "";
+        const mediaRoot = nodePath.resolve(AIDREAMCAPES_READABLE_MEDIA_ROOT, mediaDirectory);
+        const localAsset = nodePath.resolve(mediaRoot, relativeLeaf);
+        if (!localAsset.startsWith(`${mediaRoot}${nodePath.sep}`) || !fs.existsSync(localAsset)) return "";
+        return resolved;
+      }
     } catch {
       return "";
     }
