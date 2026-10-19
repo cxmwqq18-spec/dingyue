@@ -17,6 +17,7 @@ const videoPreset = { sourcePage: "/templates", presetId, title: "Creator scene"
 const photoPreset = { ...videoPreset, title: "Clean white product", kind: "photo", prompt: "A product on a white background.", imageTool: "white-background" };
 const templateGallery = { categories: [{ id: "accessories", label: "Accessories" }], options: [{ ...videoPreset, imageAlt: "A creator presents a product.", categoryIds: ["accessories"] }] };
 const NotFound = class extends Error { constructor() { super("NEXT_NOT_FOUND"); this.code = "NEXT_NOT_FOUND"; } };
+class Redirect extends Error { constructor(location) { super("NEXT_REDIRECT"); this.location = location; } }
 
 try {
   const contractFile = path.join(source, "preset-contract.ts");
@@ -35,7 +36,10 @@ try {
   const workspaceMarker = function AidreamcapesWorkspace() {};
   const scopedRequire = (id) => {
     if (id === "server-only") return {};
-    if (id === "next/navigation") return { notFound: () => { throw new NotFound(); } };
+    if (id === "next/navigation") return {
+      notFound: () => { throw new NotFound(); },
+      redirect: (location) => { throw new Redirect(location); },
+    };
     if (id === "next/headers") return {
       cookies: async () => ({ get: () => ({ value: "csrf-test" }) }),
       headers: async () => ({ get: (name) => name === "x-forwarded-host" ? host : null }),
@@ -72,6 +76,20 @@ try {
   assert.equal(aidreamcapesWorkspaceEntry({ source: "//evil.example", preset: presetId }).invalidPreset, true);
   assert.equal(aidreamcapesWorkspaceEntry({ tool_id: "image_generator", tool: "white-background" }).initialView, "images");
   assert.equal(aidreamcapesWorkspaceEntry({ view: "inspirations" }).initialView, "inspirations");
+
+  // Historical view links must reach the standalone gallery without loading
+  // customer auth, private catalogs, or template data for a creation workspace.
+  const authReadsBeforeGallery = currentCustomerCalls;
+  for (const [requestHost, routeSlug, expected] of [
+    ["www.aivideosugc.com", "aidreamcapes", "/app/inspirations"],
+    ["localhost:3002", "aidreamcapes", "/site/aidreamcapes/app/inspirations"],
+    ["localhost:3002", "aivideosugc", "/site/aivideosugc/app/inspirations"],
+  ]) {
+    host = requestHost;
+    await assert.rejects(renderAidreamcapesWorkspace({ routeSlug, initialView: "inspirations" }), (error) => error instanceof Redirect && error.location === expected);
+  }
+  assert.equal(currentCustomerCalls, authReadsBeforeGallery, "Opening examples does not load private workspace data");
+  assert.equal(templateGalleryCalls, 0, "Opening examples does not load the workspace template picker");
 
   resolveCalls = []; selectedPreset = "video"; customer = undefined; host = "www.aivideosugc.com";
   const videoElement = await renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", ...entry, initialView: "agent" });

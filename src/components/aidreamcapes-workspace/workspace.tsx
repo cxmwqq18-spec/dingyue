@@ -32,8 +32,6 @@ import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { modelSupportsWorkspaceDuration } from "@/lib/aidreamcapes-workspace/capabilities";
 import { WorkspaceTools, ProductVideoPage, BatchDraftPage, workspaceModuleIcons } from "./module-pages";
 import { useImageDraft } from "./use-image-draft";
-import { AidreamcapesInspirationsPage } from "@/components/storefront/aidreamcapes-inspirations-page";
-import type { InspirationCard } from "@/lib/aidreamcapes-inspirations-types";
 export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 
 type View = WorkspaceView;
@@ -69,7 +67,6 @@ export interface AidreamcapesWorkspaceProps {
   customer?: { id: string; name: string; email: string; balance?: number } | null;
   csrfToken?: string;
   initialCatalog?: WorkspaceCatalog;
-  initialInspirations?: InspirationCard[];
   initialView?: WorkspaceView;
   initialTaskId?: string;
   initialSceneId?: SceneSchema["id"];
@@ -117,7 +114,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialInspirations = [], initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -1002,7 +999,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           />
           {canBrowseTemplates && templatePickerCallout()}
         </>}
-        {view === "inspirations" && <AidreamcapesInspirationsPage cards={initialInspirations} basePath={basePath} embedded />}
 
         {view === "agent" && !task && !selectedScene && <>
           <div className={styles.pageTitle}><h1>Text to Video</h1><p>Turn a written idea and product details into an editable video storyboard. Review each shot, generate your video, and save it to your Library.</p></div>

@@ -14,6 +14,7 @@ const tasks = new Map();
 const actors = JSON.parse(fs.readFileSync('src/lib/aidreamcapes-workspace/actors.json','utf8')).actors;
 const unexpected = [], errors = [], fixtureHydrationRecoveries = [], calls = [], checks = [];
 const artifacts = fs.mkdtempSync(path.join(os.tmpdir(), 'aidreamcapes-navigation-'));
+const viewFromUrl = (url) => url.searchParams.get('view') ?? url.pathname.match(/\/app\/create\/([a-z-]+)$/)?.[1] ?? (url.pathname.endsWith('/app/create') ? 'home' : undefined);
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, serviceWorkers: 'block' });
 const json = (route, value) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(value) });
@@ -64,9 +65,19 @@ try {
       unexpected.push(key); return json(route, { error: 'unexpected_navigation_api' });
     }
     if (req.isNavigationRequest() && url.pathname.startsWith('/site/aidreamcapes/app')) {
-      const response = await route.fetch();
+      // This suite has a browser-only synthetic customer, not a server login.
+      // Serve private fixed-view reloads through the guest create entry before
+      // injecting that customer; real gallery documents are never rewritten.
+      const fixedView = url.pathname.match(/^\/site\/aidreamcapes\/app\/create\/([a-z-]+)$/)?.[1];
+      const fixtureUrl = new URL(url);
+      if (fixedView && fixedView !== 'inspirations') {
+        fixtureUrl.pathname = '/site/aidreamcapes/app/create';
+        fixtureUrl.search = new URLSearchParams({ view: fixedView }).toString();
+      }
+      const response = await route.fetch({ url: fixtureUrl.href });
       assert.equal(response.status(), 200, `App document ${url.pathname} loads.`);
       let html = await response.text();
+      if (url.pathname.endsWith('/inspirations')) return route.fulfill({ response });
       const seam = String.raw`\"customer\":\"$undefined\"`;
       assert(html.includes(seam), 'Browser-only customer seam is present; no real session is used.');
       html = html.replaceAll(seam, String.raw`\"customer\":{\"id\":\"navigation-fixture-customer\",\"name\":\"Navigation Fixture\",\"email\":\"navigation@example.invalid\"}`);
@@ -79,13 +90,29 @@ try {
   });
   const page = await context.newPage();
   page.on('pageerror', (error) => {
-    if (error.message.startsWith('Hydration failed') && new URL(page.url()).searchParams.get('view') === 'images' && error.message.includes('disabled={false}')) fixtureHydrationRecoveries.push('Expected synthetic customer / anonymous SSR difference on image reload.');
+    if (error.message.startsWith('Hydration failed') && viewFromUrl(new URL(page.url())) === 'images' && error.message.includes('disabled={false}')) fixtureHydrationRecoveries.push('Expected synthetic customer / anonymous SSR difference on image reload.');
     else errors.push(error.stack || error.message);
   });
   const sidebar = () => page.getByRole('complementary', { name: 'Workspace navigation' });
   const menu = (name) => sidebar().getByRole('link', { name, exact: true });
-  const plannedMenu = (name, view) => sidebar().getByRole('link', { name: new RegExp(`^${name}`) }).click().then(() => page.waitForURL((url) => url.searchParams.get('view') === view));
-  const go = async (name, view) => { await menu(name).click(); await page.waitForURL((url) => url.pathname.endsWith('/app/create') && url.searchParams.get('view') === view); assert.equal(await menu(name).getAttribute('aria-current'), 'page'); };
+  const plannedMenu = (name, view) => sidebar().getByRole('link', { name: new RegExp(`^${name}`) }).click().then(() => page.waitForURL((url) => viewFromUrl(url) === view));
+  const go = async (name, view) => {
+    if (await page.locator('[data-aidreamcapes-inspirations]').count()) {
+      await page.getByRole('link', { name: 'Back to workspace', exact: true }).click();
+      // This fixture rewrites anonymous SSR into a synthetic customer. Wait for
+      // React to attach the navigation handler before clicking a raw SSR link.
+      await page.waitForFunction(() => [...document.querySelectorAll('aside a')].some((link) =>
+        Object.keys(link).some((key) => key.startsWith('__reactProps$') && typeof link[key]?.onClick === 'function')));
+    }
+    await menu(name).click();
+    if (view === 'inspirations') {
+      await page.waitForURL((url) => url.pathname.endsWith('/inspirations'));
+      assert.equal(await sidebar().count(), 0, 'Examples have an independent browsing page.');
+    } else {
+      await page.waitForURL((url) => viewFromUrl(url) === view);
+      assert.equal(await menu(name).getAttribute('aria-current'), 'page');
+    }
+  };
   await page.goto(`${baseUrl}/site/aidreamcapes/app/create?view=home`, { waitUntil: 'networkidle' });
   await menu('Text to Video').waitFor({timeout:15000}).catch(async (error) => { console.log('Fixture DOM:', await page.locator('body').innerText()); console.log('Fixture errors:', errors); console.log('Calls:',calls); console.log('Unexpected:',unexpected); throw error; });
   for (const label of ['Text to Video', 'AI Video', 'AI Image']) await page.getByRole('tab', { name: label, exact: true }).waitFor();
@@ -108,15 +135,15 @@ try {
   await page.getByRole('heading', { name: 'Developer access', exact: true }).waitFor();
   await page.getByText('No API keys yet.', { exact: true }).waitFor();
   await go('Inspirations', 'inspirations');
-  await page.getByRole('heading', { name: 'Find a direction for your next ad' }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create', 'Inspirations opens inside the workbench route.');
+  await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations opens its own page.');
   checks.push('AI Twin and Ad Clone open integrated forms; adjacent avatar and inspiration navigation remains available.');
   await go('Home', 'home');
   await page.getByRole('button', { name: 'See All', exact: true }).click();
   await page.getByRole('heading', { name: 'All Tools', exact: true }).waitFor();
   for (const [name, view] of [['AI Image', 'images'], ['URL to Video', 'product'], ['AI Avatar', 'actors'], ['AI Video', 'video'], ['Text to Video', 'agent']]) {
     await page.locator('main button').filter({ has: page.getByRole('heading', { name, exact: true }) }).click();
-    assert.equal(await menu(name).getAttribute('aria-current'), 'page'); assert.equal(new URL(page.url()).searchParams.get('view'), view);
+    assert.equal(await menu(name).getAttribute('aria-current'), 'page'); assert.equal(viewFromUrl(new URL(page.url())), view);
     if (view === 'agent') {
       await page.getByRole('heading', { name: 'Text to Video', exact: true }).waitFor();
       assert.match((await page.locator('main').innerText()).replace(/\s+/g, ' '), /editable video storyboard.*review each shot.*generate your video.*save it to your library/i);
@@ -184,12 +211,11 @@ try {
   await page.getByRole('img', { name: 'Product photo 1', exact: true }).waitFor();
   checks.push('URL import is a real module and its imported product reaches the correct video setup.');
   await go('Inspirations', 'inspirations');
-  await page.getByRole('heading', { name: 'Find a direction for your next ad' }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create', 'Inspirations does not leave the workspace shell.');
-  assert.equal(await menu('Inspirations').getAttribute('aria-current'), 'page');
-  assert.equal(await menu('AI Image').count(), 1);
-  const inspirationCount = await page.locator('.insp-card').count();
-  checks.push(`Inspiration library stays inside the full workspace navigation (${inspirationCount} visible video cards from current LivePage rows).`);
+  await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations has a dedicated URL.');
+  assert.equal(await sidebar().count(), 0, 'The creation workspace is not mounted around examples.');
+  const inspirationCount = await page.locator('[data-inspiration-card]').count();
+  checks.push(`Standalone inspiration library displays ${inspirationCount} examples from current LivePage rows and returns to creation.`);
   await page.screenshot({ path: path.join(artifacts, 'desktop-inspirations.png'), fullPage: true });
   await go('AI Image', 'images');
   await page.getByRole('img', { name: 'Image reference 1', exact: true }).evaluate((image) => image.decode());
@@ -228,6 +254,7 @@ try {
   fs.writeFileSync(path.join(artifacts, 'result.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } catch (error) {
-  console.error('Navigation acceptance diagnostic:', JSON.stringify({ error: error instanceof Error ? error.message : 'failed', calls, errors, unexpected }));
+  const currentPage = context.pages().at(-1);
+  console.error('Navigation acceptance diagnostic:', JSON.stringify({ error: error instanceof Error ? error.message : 'failed', url: currentPage?.url(), body: currentPage ? (await currentPage.locator('body').innerText()).slice(0, 1800) : undefined, calls, errors, unexpected }));
   throw error;
 } finally { await browser.close(); }

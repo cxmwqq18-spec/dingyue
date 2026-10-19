@@ -5,8 +5,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { inspirationCreateHref } from "@/lib/aidreamcapes-inspirations-types";
 import {
-  AIDREAMCAPES_INSPIRATIONS_SITE_ID,
   AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
   getAidreamcapesInspirationCards
 } from "@/lib/aidreamcapes-inspirations";
@@ -73,11 +73,29 @@ export async function renderAidreamcapesPublicSceneCreatePage({ kind, publicSlug
   return renderAidreamcapesResolvedScenePage({ kind, preset, routeSlug });
 }
 
-export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "" }: {
+export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "", query = {} }: {
   query?: GuestRouteQuery;
   siteSlug: string;
   basePath?: string;
 }) {
-  const cards = siteSlug === AIDREAMCAPES_INSPIRATIONS_SITE_SLUG ? await getAidreamcapesInspirationCards() : [];
-  return <AidreamcapesInspirationsPage cards={cards} basePath={basePath} />;
+  if (siteSlug !== AIDREAMCAPES_INSPIRATIONS_SITE_SLUG) notFound();
+  const cards = await getAidreamcapesInspirationCards();
+  const kind = query.kind === "video" || query.kind === "photo" ? query.kind : "all";
+  return <AidreamcapesInspirationsPage
+    cards={cards.map((card) => ({
+      id: card.id,
+      label: card.label,
+      imageSrc: card.imageSrc,
+      imageAlt: card.imageAlt,
+      pageTitle: card.pageTitle,
+      kind: card.kind,
+      description: card.description,
+      category: card.category,
+      createHref: inspirationCreateHref(card, basePath),
+    }))}
+    basePath={basePath}
+    initialKind={kind}
+    initialCategory={typeof query.category === "string" ? query.category : "All"}
+    initialQuery={typeof query.q === "string" ? query.q.slice(0, 180) : ""}
+  />;
 }

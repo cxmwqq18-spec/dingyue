@@ -1,7 +1,7 @@
 import "server-only";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { csrfCookieName } from "@/lib/security/csrf";
 import { AidreamcapesWorkspace, type WorkspaceView } from "@/components/aidreamcapes-workspace/workspace";
@@ -10,7 +10,6 @@ import { getWorkspaceCatalog } from "./provider";
 import { catalogForCustomer } from "./api";
 import { AIVIDEOSUGC_SITE_ID, type SceneId } from "./types";
 import { isWorkspaceView } from "./navigation";
-import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
 import { presetRequestFromQuery, type WorkspacePreset, type WorkspacePresetRequest } from "./preset-contract";
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
@@ -53,6 +52,11 @@ export async function renderAidreamcapesWorkspace({
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
 }) {
+  if (initialView === "inspirations") {
+    const headerStore = await headers();
+    const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
+    redirect(`${workspaceHosts.has(host) ? "" : `/site/${routeSlug}`}/app/inspirations`);
+  }
   if (!taskId && invalidPreset) notFound();
   const initialPreset = !taskId ? resolvedPreset ?? (presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined) : undefined;
   if (!taskId && presetRequest && !initialPreset) notFound();
@@ -95,7 +99,6 @@ export async function renderAidreamcapesWorkspace({
     initialHandoff={safeHandoff}
     initialTemplateGallery={templateGallery}
     initialCatalog={catalog}
-    initialInspirations={initialView === "inspirations" ? await getAidreamcapesInspirationCards() : []}
     csrfToken={cookieStore.get(csrfCookieName(`customer:${AIVIDEOSUGC_SITE_ID}`))?.value}
     customer={current ? { id: current.customer.id, name: current.customer.name, email: current.customer.email, balance: current.customer.balance.available } : undefined}
     loginPath={`${accountBase}/login?next=${encodeURIComponent(returnPath)}`}

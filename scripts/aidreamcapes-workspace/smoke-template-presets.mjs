@@ -14,9 +14,9 @@ const transpile = (name) => ts.transpileModule(fs.readFileSync(path.join(source,
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true },
 }).outputText;
 const compileModule = (name, scopedRequire) => {
-  const module = { exports: {} };
-  new Function("require", "module", "exports", transpile(name))(scopedRequire, module, module.exports);
-  return module.exports;
+  const compiled = { exports: {} };
+  new Function("require", "module", "exports", transpile(name))(scopedRequire, compiled, compiled.exports);
+  return compiled.exports;
 };
 class WorkspaceError extends Error {
   constructor(code, status = 400, details) { super(code); this.code = code; this.status = status; this.details = details; }
@@ -34,9 +34,20 @@ try {
     assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
     assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
   }
-  const navigation = compileModule("navigation", require);
-  assert.equal(navigation.workspaceViewHref("", "inspirations"), "/app/create?view=inspirations");
-  assert.equal(navigation.workspaceViewHref("/site/aidreamcapes", "inspirations"), "/site/aidreamcapes/app/create?view=inspirations");
+  const navigationModules = new Map();
+  const navigationRequire = (id) => {
+    if (!id.startsWith("./")) return require(id);
+    const name = id.slice(2);
+    if (navigationModules.has(name)) return navigationModules.get(name).exports;
+    const entry = { exports: {} };
+    navigationModules.set(name, entry);
+    new Function("require", "module", "exports", transpile(name))(navigationRequire, entry, entry.exports);
+    return entry.exports;
+  };
+  const navigation = navigationRequire("./navigation");
+  assert.equal(navigation.workspaceViewHref("", "inspirations"), "/app/create/inspirations");
+  assert.equal(navigation.workspaceViewHref("/site/aidreamcapes", "inspirations"), "/site/aidreamcapes/app/create/inspirations");
+  assert.equal(navigation.workspaceViewHref("/site/aivideosugc", "inspirations"), "/site/aivideosugc/app/create/inspirations");
   let livePageRow;
   let livePageReads = 0;
   const livePageCalls = [];

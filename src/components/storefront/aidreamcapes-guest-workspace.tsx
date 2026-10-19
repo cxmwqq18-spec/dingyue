@@ -56,7 +56,7 @@ export function AidreamcapesGuestCreateWorkspace({ siteId, siteSlug, initialInte
         <Link className="guest-brand" href="/">AIVideosUGC</Link>
         <nav aria-label="Workspace menu" className="guest-top-nav">
           <Link href="/app/create" className="is-active">Home</Link>
-          <Link href="/app/create?view=inspirations">Inspirations</Link>
+          <Link href="/app/inspirations" prefetch={false}>Inspirations</Link>
         </nav>
         <Link className="guest-login" href="/login">Log In</Link>
       </header>

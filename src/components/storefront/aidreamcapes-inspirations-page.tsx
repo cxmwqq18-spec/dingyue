@@ -1,192 +1,197 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Clapperboard, Home, Image as ImageIcon, Search, Sparkles, X } from "lucide-react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Grid2X2, Image as ImageIcon, Search, Sparkles, X } from "lucide-react";
 import type { InspirationCard } from "@/lib/aidreamcapes-inspirations-types";
-import { inspirationCreateHref } from "@/lib/aidreamcapes-inspirations-types";
+import styles from "./aidreamcapes-inspirations-page.module.css";
 
-// Card data is server-rendered from the current Aidreamcapes LivePage rows.
-// This component handles presentation only and never fetches public data.
-
-type InspirationsTab = "video" | "photo";
-
+// The server supplies current LivePage examples. Filters and the detail dialog
+// operate on that HTML/data without fetching storefront or customer runtime.
+type InspirationKind = "all" | "video" | "photo";
+type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & { createHref: string };
 const ALL_CATEGORY = "All";
+const mediaFilters = [
+  { value: "all", label: "All examples", icon: Grid2X2 },
+  { value: "video", label: "Video ideas", icon: Clapperboard },
+  { value: "photo", label: "Photo ideas", icon: ImageIcon },
+] as const;
 
-function PublicTopBar() {
-  return (
-    <header className="insp-top">
-      <Link className="insp-brand" href="/" aria-label="AIVideosUGC home">
-        <span aria-hidden="true" className="insp-brand-mark">A</span>
-        <span>AIVideosUGC</span>
-      </Link>
-      <Link className="insp-login" href="/login">Log in <ArrowUpRight aria-hidden="true" size={15} /></Link>
-    </header>
-  );
-}
+function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
+  card: InspirationExample;
+  position: number;
+  total: number;
+  onClose: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const titleId = useId();
 
-function PublicSideNav() {
-  return (
-    <nav aria-label="Workspace menu" className="insp-side">
-      <span className="insp-side-label">Workspace</span>
-      <Link href="/app/create"><Home aria-hidden="true" size={17} /> Home</Link>
-      <Link className="is-active" href="/app/create?view=inspirations"><Sparkles aria-hidden="true" size={17} /> Inspirations</Link>
-    </nav>
-  );
-}
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialog.showModal();
+    closeRef.current?.focus();
+    return () => {
+      dialog.close();
+      document.body.style.overflow = overflow;
+      if (previousFocus?.isConnected) previousFocus.focus();
+    };
+  }, []);
 
-function CardModal({ card, basePath, embedded, onClose }: { card: InspirationCard; basePath: string; embedded: boolean; onClose: () => void }) {
   return (
-    <div aria-modal="true" aria-labelledby="insp-modal-title" className="insp-modal-backdrop" onClick={onClose} role="dialog">
-      <div className="insp-modal" onClick={(event) => event.stopPropagation()}>
-        <button aria-label="Close example" className="insp-modal-close" onClick={onClose} type="button">
-          <X strokeWidth={1.8} />
-        </button>
-        <div className="insp-modal-preview">
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={titleId}
+      className={styles.dialog}
+      onCancel={(event) => { event.preventDefault(); onClose(); }}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
+      onKeyDown={(event) => {
+        if (event.key === "Tab") {
+          const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>("a[href], button:not(:disabled)"));
+          const first = controls[0];
+          const last = controls.at(-1);
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+          if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+        }
+        if (event.key === "ArrowLeft" && position > 0) { event.preventDefault(); onPrevious(); }
+        if (event.key === "ArrowRight" && position < total - 1) { event.preventDefault(); onNext(); }
+      }}
+    >
+      <div className={styles.detail}>
+        <button aria-label="Close example" className={styles.close} onClick={onClose} ref={closeRef} type="button"><X size={20} /></button>
+        <div className={styles.preview}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img alt={card.imageAlt} src={card.imageSrc} />
         </div>
-        <div className="insp-modal-body">
-          <span className="insp-modal-kicker">{card.kind === "video" ? "VIDEO EXAMPLE" : "PHOTO EXAMPLE"}</span>
-          <h2 id="insp-modal-title">{card.label}</h2>
+        <div className={styles.detailBody}>
+          <span className={styles.eyebrow}>{card.kind === "video" ? "Video idea" : "Photo idea"}</span>
+          <h2 id={titleId}>{card.label}</h2>
           <p>{card.description}</p>
-          <span className="insp-modal-tool">From {card.pageTitle}</span>
-          <Link className="insp-recreate" aria-label={embedded ? (card.kind === "video" ? "Create a video like this" : "Create an image like this") : undefined} href={inspirationCreateHref(card, embedded ? basePath : "")}>
-            <span>{embedded ? (card.kind === "video" ? "Create a video like this" : "Create an image like this") : "Recreate this idea"}</span>
-            <ArrowRight aria-hidden="true" size={16} />
-          </Link>
+          <dl className={styles.detailMeta}>
+            <div><dt>Collection</dt><dd>{card.pageTitle}</dd></div>
+            {card.category !== ALL_CATEGORY ? <div><dt>Category</dt><dd>{card.category}</dd></div> : null}
+          </dl>
+          <a className={styles.create} href={card.createHref}>
+            <span>{card.kind === "video" ? "Create a video like this" : "Create an image like this"}</span><ArrowUpRight size={18} />
+          </a>
+          <div className={styles.detailNavigation}>
+            <span aria-live="polite">{position + 1} / {total}</span>
+            <div>
+              <button aria-label="Previous example" disabled={position === 0} onClick={onPrevious} type="button"><ChevronLeft size={18} /></button>
+              <button aria-label="Next example" disabled={position === total - 1} onClick={onNext} type="button"><ChevronRight size={18} /></button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
 
-export function AidreamcapesInspirationsPage({ cards, basePath = "", embedded = false }: { cards: InspirationCard[]; basePath?: string; embedded?: boolean }) {
-  const [tab, setTab] = useState<InspirationsTab>("video");
-  const [category, setCategory] = useState<string>(ALL_CATEGORY);
-  const [query, setQuery] = useState("");
+export function AidreamcapesInspirationsPage({ cards, basePath = "", initialKind = "all", initialCategory = ALL_CATEGORY, initialQuery = "" }: {
+  cards: InspirationExample[];
+  basePath?: string;
+  initialKind?: InspirationKind;
+  initialCategory?: string;
+  initialQuery?: string;
+}) {
+  const [kind, setKind] = useState<InspirationKind>(initialKind);
+  const [category, setCategory] = useState(initialCategory);
+  const [query, setQuery] = useState(initialQuery);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
-  const videoCards = useMemo(() => cards.filter((card) => card.kind === "video"), [cards]);
-  const photoCards = useMemo(() => cards.filter((card) => card.kind === "photo"), [cards]);
-  const selectedCards = tab === "video" ? videoCards : photoCards;
-
-  const categoriesForTab = useMemo(() => {
-    const values = Array.from(new Set(selectedCards.map((card) => card.category)))
-      .filter((value) => value !== ALL_CATEGORY)
-      .sort((left, right) => left.localeCompare(right));
-    return [ALL_CATEGORY, ...values];
-  }, [selectedCards]);
-
+  const counts = useMemo(() => ({
+    all: cards.length,
+    video: cards.filter((card) => card.kind === "video").length,
+    photo: cards.filter((card) => card.kind === "photo").length,
+  }), [cards]);
+  const selectedCards = useMemo(() => kind === "all" ? cards : cards.filter((card) => card.kind === kind), [cards, kind]);
+  const categories = useMemo(() => [ALL_CATEGORY, ...Array.from(new Set(selectedCards.map((card) => card.category)))
+    .filter((value) => value !== ALL_CATEGORY).sort((a, b) => a.localeCompare(b))], [selectedCards]);
   const visibleCards = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-    return selectedCards.filter((card) => {
-      if (category !== ALL_CATEGORY && card.category !== category) return false;
-      if (normalizedQuery && !`${card.label} ${card.imageAlt} ${card.pageTitle} ${card.category} ${card.prompt}`.toLowerCase().includes(normalizedQuery)) return false;
-      return true;
-    });
+    const search = query.trim().toLowerCase();
+    return selectedCards.filter((card) => (category === ALL_CATEGORY || card.category === category)
+      && (!search || `${card.label} ${card.imageAlt} ${card.pageTitle} ${card.category}`.toLowerCase().includes(search)));
   }, [selectedCards, category, query]);
+  const activeIndex = activeCardId ? visibleCards.findIndex((card) => card.id === activeCardId) : -1;
+  const activeCard = visibleCards[activeIndex];
 
-  const activeCard = activeCardId ? cards.find((card) => card.id === activeCardId) : undefined;
-
-  useEffect(() => {
-    if (!activeCardId) return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveCardId(null);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [activeCardId]);
-
-  function switchTab(next: InspirationsTab) {
-    setTab(next);
-    setCategory(ALL_CATEGORY);
+  function updateFilters(nextKind: InspirationKind, nextCategory: string, nextQuery: string) {
+    setKind(nextKind);
+    setCategory(nextCategory);
+    setQuery(nextQuery);
     setActiveCardId(null);
+    const url = new URL(window.location.href);
+    for (const [key, value] of [["kind", nextKind === "all" ? "" : nextKind], ["category", nextCategory === ALL_CATEGORY ? "" : nextCategory], ["q", nextQuery]]) {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    }
+    window.history.replaceState(window.history.state, "", url);
   }
 
-  const content = (
-    <main className={`insp-main${embedded ? " is-embedded" : ""}`}>
-      <div className="insp-heading-row">
-        <div className="insp-intro">
-          <p className="insp-eyebrow"><span aria-hidden="true" /> Creative library</p>
-          <h1>Find a direction for your next ad</h1>
-          <p className="insp-intro-copy">Explore product video and photo examples from our creative workflows. Open an idea to review it, then start a version for your own product.</p>
-        </div>
-        <aside aria-label="Example totals" className="insp-totals">
-          <span className="insp-totals-label">Browse the library</span>
-          <div><strong>{cards.length}</strong><span> examples</span></div>
-          <p><span>{videoCards.length} videos</span><i aria-hidden="true" /><span>{photoCards.length} photos</span></p>
+  return (
+    <div className={styles.page} data-aidreamcapes-inspirations="true">
+      <header className={styles.header}>
+        <a aria-label="AIVideosUGC home" className={styles.brand} href={basePath || "/"}>
+          <span aria-hidden="true" className={styles.brandMark}><Sparkles size={18} /></span>AIVideosUGC
+        </a>
+        <span className={styles.headerLabel}>Inspiration library</span>
+        <a className={styles.back} href={`${basePath}/app/create`}><ArrowLeft size={15} /><span>Back to workspace</span></a>
+      </header>
+
+      <div className={styles.layout}>
+        <aside aria-label="Browse examples" className={styles.sidebar}>
+          <p className={styles.eyebrow}>Browse</p>
+          <div aria-label="Example type" className={styles.mediaFilters} role="group">
+            {mediaFilters.map(({ value, label, icon: Icon }) => <button aria-pressed={kind === value} className={kind === value ? styles.selected : undefined} key={value} onClick={() => updateFilters(value, ALL_CATEGORY, query)} type="button">
+              <Icon aria-hidden="true" size={17} /><span>{label}</span><b>{counts[value]}</b>
+            </button>)}
+          </div>
+          <div className={styles.sidebarNote}><Sparkles aria-hidden="true" size={20} /><p>A little inspiration.<br />Your own creation.</p><span>Choose an example, then make it yours with your product and idea.</span></div>
         </aside>
+
+        <main className={styles.main}>
+          <div className={styles.heading}>
+            <div><p className={styles.eyebrow}>Explore. Imagine. Create.</p><h1>Inspirations<span>.</span></h1><p className={styles.intro}>Discover a look for your next product video or photo.</p></div>
+            <div className={styles.total}><strong>{cards.length}</strong><span>ideas to explore</span></div>
+          </div>
+          <section aria-label="Inspiration gallery">
+            <div className={styles.toolbar}>
+              <h2>{mediaFilters.find((item) => item.value === kind)?.label}<span>{selectedCards.length}</span></h2>
+              <label className={styles.search}><Search aria-hidden="true" size={17} /><span className="sr-only">Search inspirations</span>
+                <input maxLength={180} onChange={(event) => updateFilters(kind, category, event.target.value)} placeholder="Search examples" type="search" value={query} />
+                {query ? <button aria-label="Clear search" onClick={() => updateFilters(kind, category, "")} type="button"><X size={16} /></button> : null}
+              </label>
+            </div>
+            <div className={styles.filterRow}>
+              <div aria-label="Category filters" className={styles.categories} role="group">{categories.map((value) => <button aria-pressed={category === value} key={value} onClick={() => updateFilters(kind, value, query)} type="button">{value === ALL_CATEGORY ? "All categories" : value}</button>)}</div>
+              <p aria-live="polite" className={styles.resultCount}>{visibleCards.length} {visibleCards.length === 1 ? "example" : "examples"}</p>
+            </div>
+
+            {visibleCards.length ? <div className={styles.grid}>
+              {visibleCards.map((card) => <button aria-label={`Open ${card.label} example`} className={styles.card} data-inspiration-card={card.id} key={card.id} onClick={() => setActiveCardId(card.id)} type="button">
+                <span className={styles.cardImage}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img alt={card.imageAlt} decoding="async" loading="lazy" src={card.imageSrc} />
+                  <span className={styles.cardKind}>{card.kind === "video" ? <Clapperboard size={12} /> : <ImageIcon size={12} />}{card.kind === "video" ? "Video idea" : "Photo idea"}</span>
+                  <span aria-hidden="true" className={styles.cardOpen}><ArrowUpRight size={19} /></span>
+                </span>
+                <span className={styles.cardInfo}><span>{card.label}</span><small>{card.category === ALL_CATEGORY ? card.pageTitle : card.category}</small></span>
+              </button>)}
+            </div> : <div className={styles.empty}>
+              {cards.length ? <Search aria-hidden="true" size={28} /> : <ImageIcon aria-hidden="true" size={28} />}
+              <h2>{cards.length ? "No matching examples" : "Examples are unavailable"}</h2>
+              <p>{cards.length ? "Try another search or explore a different category." : "Please check back soon for video and photo ideas."}</p>
+              {cards.length ? <button onClick={() => updateFilters("all", ALL_CATEGORY, "")} type="button">Clear filters <ArrowRight size={15} /></button> : null}
+            </div>}
+          </section>
+        </main>
       </div>
 
-      <section aria-label="Browse inspirations" className="insp-browser">
-        <div className="insp-browser-top">
-          <div aria-label="Inspiration type" className="insp-tabs" role="tablist">
-            <button aria-controls="inspiration-results" aria-selected={tab === "video"} className={tab === "video" ? "is-active" : ""} id="insp-video-tab" onClick={() => switchTab("video")} role="tab" type="button">
-              <Clapperboard aria-hidden="true" size={16} /><span>Video</span><b>{videoCards.length}</b>
-            </button>
-            <button aria-controls="inspiration-results" aria-selected={tab === "photo"} className={tab === "photo" ? "is-active" : ""} id="insp-photo-tab" onClick={() => switchTab("photo")} role="tab" type="button">
-              <ImageIcon aria-hidden="true" size={16} /><span>Photo</span><b>{photoCards.length}</b>
-            </button>
-          </div>
-          <label className="insp-search">
-            <Search aria-hidden="true" size={17} />
-            <span className="sr-only">Search inspirations</span>
-            <input onChange={(event) => setQuery(event.target.value)} placeholder="Search scenes, products, or tools" type="search" value={query} />
-            {query ? <button aria-label="Clear search" onClick={() => setQuery("")} type="button"><X size={15} /></button> : null}
-          </label>
-        </div>
-
-        <div className="insp-filter-row">
-          <div aria-label="Category filters" className="insp-categories" role="group">
-            {categoriesForTab.map((value) => (
-              <button aria-pressed={category === value} className={category === value ? "is-active" : ""} key={value} onClick={() => setCategory(value)} type="button">{value}</button>
-            ))}
-          </div>
-          <p aria-live="polite" className="insp-result-count">Showing <strong>{visibleCards.length}</strong> of {selectedCards.length}</p>
-        </div>
-
-        {cards.length === 0 ? (
-          <div className="insp-empty insp-empty-library">
-            <span className="insp-empty-icon"><Sparkles aria-hidden="true" size={20} /></span>
-            <h2>Inspiration examples are unavailable</h2>
-            <p>Please check back soon to browse video and photo ideas.</p>
-          </div>
-        ) : visibleCards.length ? (
-          <div aria-labelledby={tab === "video" ? "insp-video-tab" : "insp-photo-tab"} className="insp-grid" id="inspiration-results" role="tabpanel" tabIndex={0}>
-            {visibleCards.map((card) => (
-              <button aria-label={`Open ${card.label} example`} className="insp-card" key={card.id} onClick={() => setActiveCardId(card.id)} type="button">
-                <span className="insp-card-image">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt={card.imageAlt} loading="lazy" src={card.imageSrc} />
-                  <span className="insp-card-kind">{card.kind === "video" ? "VIDEO" : "PHOTO"}</span>
-                  <span aria-hidden="true" className="insp-card-open"><ArrowUpRight size={17} /></span>
-                </span>
-                <span className="insp-card-info">
-                  <span className="insp-card-label">{card.label}</span>
-                  <span className="insp-card-meta"><span>{card.category === ALL_CATEGORY ? card.pageTitle : card.category}</span><ArrowRight aria-hidden="true" size={14} /></span>
-                </span>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="insp-empty">
-            <span className="insp-empty-icon"><Search aria-hidden="true" size={19} /></span>
-            <h2>No matching ideas</h2>
-            <p>Try another search or choose a different category.</p>
-            <button className="insp-clear-filters" onClick={() => { setQuery(""); setCategory(ALL_CATEGORY); }} type="button">Clear filters</button>
-          </div>
-        )}
-      </section>
-    </main>
+      {activeCard ? <CardModal card={activeCard} position={activeIndex} total={visibleCards.length} onClose={() => setActiveCardId(null)} onPrevious={() => setActiveCardId(visibleCards[activeIndex - 1]?.id ?? activeCard.id)} onNext={() => setActiveCardId(visibleCards[activeIndex + 1]?.id ?? activeCard.id)} /> : null}
+    </div>
   );
-
-  const modal = activeCard ? <CardModal card={activeCard} basePath={basePath} embedded={embedded} onClose={() => setActiveCardId(null)} /> : null;
-  if (embedded) return <section className="insp-page is-embedded">{content}{modal}</section>;
-  return <div className="insp-page"><PublicTopBar /><div className="insp-layout"><PublicSideNav />{content}</div>{modal}</div>;
 }

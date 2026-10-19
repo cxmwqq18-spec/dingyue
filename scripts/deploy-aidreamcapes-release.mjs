@@ -9,6 +9,8 @@ import "./load-runtime-env.mjs";
 const args = process.argv.slice(2);
 const value = (key) => args.find((arg) => arg.startsWith(`${key}=`))?.slice(key.length + 1);
 const commit = value("--commit");
+const codeOnly = args.includes("--code-only");
+const verifyInspirations = args.includes("--verify-inspirations");
 assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<40-character SHA>");
 const prebuiltBuild = value("--prebuilt-build");
 const reuseBuildCommit = value("--reuse-build");
@@ -62,7 +64,7 @@ console.log(JSON.stringify({
   service: "aidreamcapes.service",
   commit,
   release,
-  appliesAidreamcapesLivePagePathMigration: args.includes("--apply")
+  appliesAidreamcapesLivePagePathMigration: args.includes("--apply") && !codeOnly
 }));
 if (!args.includes("--apply")) process.exit(0);
 assert.equal(value("--confirm"), "deploy-aidreamcapes", "Explicit target confirmation is required");
@@ -127,6 +129,7 @@ done
 test "$READY" = 1
 AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
 cat .candidate-contract.json
+${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
 # Apply the exact release's forward-only schema migrations after the built
@@ -162,13 +165,14 @@ for ATTEMPT in $(seq 1 30); do
   sleep 2
 done
 test "$READY" = 1
-DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
+${codeOnly ? "# Code-only release: current relational content is read without content migrations." : `DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-navigation-paths.mjs --target=production --apply --confirm=site_aidreamcapes-navigation-paths > .navigation-path-migration.json
 cat .navigation-path-migration.json
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-static-create-links.mjs --target=production --apply --confirm=site_aidreamcapes-static-create-links > .static-create-links-migration.json
 cat .static-create-links-migration.json
-MIGRATION_APPLIED=1
-AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
+MIGRATION_APPLIED=1`}
+AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json
+${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"
 test "$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoots.service -p MainPID -p WorkingDirectory)" = "$OTHER_SERVICES"

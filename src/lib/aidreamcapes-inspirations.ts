@@ -287,7 +287,8 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
         { slug: { startsWith: "ai-image-generation/" } }
       ]
     },
-    select: { slug: true, title: true, contentJson: true }
+    select: { slug: true, title: true, contentJson: true },
+    orderBy: { slug: "asc" }
   });
   const cards: InspirationCard[] = [];
   const seenRefs = new Set<string>();
@@ -323,10 +324,11 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
       const prompt = typeof raw.prompt === "string" ? raw.prompt.trim() : "";
       if (!imageSrc && (!catalog || !sourceRef)) continue;
       if (!ref || seenRefs.has(ref)) continue;
-      const media = (catalog && sourceRef ? resolveMediaRef(catalog, sourceRef) : undefined) ?? (imageSrc ? {
+      // A current relational image edit takes precedence over a catalog reference.
+      const media = imageSrc ? {
         src: imageSrc,
         alt: typeof image?.alt === "string" && image.alt.trim() ? image.alt.trim() : label
-      } : undefined);
+      } : catalog && sourceRef ? resolveMediaRef(catalog, sourceRef) : undefined;
       if (!media) continue;
       // The library is a gallery of distinct media examples. Many tool pages
       // intentionally reuse a reference, so show each published media example
