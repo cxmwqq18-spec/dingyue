@@ -23,7 +23,7 @@
       "sourceRef": "n:guide:ac1-actor-card-indoor-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult East Asian woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Ari. Match this character description exactly: an adult East Asian woman in her twenties. The character card is for a Indoor doorway video in a Indoor setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing just inside a warmly lit room doorway, shoulders square to camera, hands relaxed at waist. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/indoor-1.webp",
+      "imageUrl": "/ai-image-generation/actors/indoor-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:indoor-1:v1",
         "gender": "female",
@@ -34,7 +34,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/indoor-1.mp3",
+        "refAudio": "/ai-actors/indoor-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -57,7 +57,7 @@
       "sourceRef": "n:guide:ac1-actor-card-indoor-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Mila. Match this character description exactly: an adult white woman in her thirties. The character card is for a Indoor close-up in a Indoor setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: close chest-up selfie by a softly lit interior wall, one hand resting below frame. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/indoor-2.webp",
+      "imageUrl": "/ai-image-generation/actors/indoor-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:indoor-2:v1",
         "gender": "female",
@@ -68,7 +68,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/indoor-2.mp3",
+        "refAudio": "/ai-actors/indoor-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -91,7 +91,7 @@
       "sourceRef": "n:guide:ac1-actor-card-home-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Dev. Match this character description exactly: an adult South Asian man in his thirties. The character card is for a Home living-room video in a Home setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a cozy living room with bookshelf behind him, hands loosely clasped. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/home-1.webp",
+      "imageUrl": "/ai-image-generation/actors/home-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:home-1:v1",
         "gender": "male",
@@ -102,7 +102,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/home-1.mp3",
+        "refAudio": "/ai-actors/home-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -125,7 +125,7 @@
       "sourceRef": "n:guide:ac1-actor-card-home-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her forties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Elena. Match this character description exactly: an adult white woman in her forties. The character card is for a Home living-room video in a Home setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: close chest-up portrait in a warm home library, speaking with one hand lightly raised. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/home-2.webp",
+      "imageUrl": "/ai-image-generation/actors/home-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:home-2:v1",
         "gender": "female",
@@ -136,7 +136,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/home-2.mp3",
+        "refAudio": "/ai-actors/home-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -159,7 +159,7 @@
       "sourceRef": "n:guide:ac1-actor-card-outdoor-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Priyanka. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Outdoor city video in a Outdoor setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: leaning at an evening rooftop railing with city lights behind, shoulders turned toward camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/outdoor-1.webp",
+      "imageUrl": "/ai-image-generation/actors/outdoor-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:outdoor-1:v1",
         "gender": "female",
@@ -170,7 +170,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/outdoor-1.mp3",
+        "refAudio": "/ai-actors/outdoor-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -193,7 +193,7 @@
       "sourceRef": "n:guide:ac1-actor-card-outdoor-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latino man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Jon. Match this character description exactly: an adult Latino man in his thirties. The character card is for a Outdoor city video in a Outdoor setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a bright city sidewalk, relaxed shoulders and hands at his sides. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/outdoor-2.webp",
+      "imageUrl": "/ai-image-generation/actors/outdoor-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:outdoor-2:v1",
         "gender": "male",
@@ -204,7 +204,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/outdoor-2.mp3",
+        "refAudio": "/ai-actors/outdoor-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -227,7 +227,7 @@
       "sourceRef": "n:guide:ac1-actor-card-living-room-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult East Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Celine. Match this character description exactly: an adult East Asian woman in her thirties. The character card is for a Living-room video in a Living Room setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated on a bright living-room sofa with a plant behind, one hand gesturing gently. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/living-room-1.webp",
+      "imageUrl": "/ai-image-generation/actors/living-room-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:living-room-1:v1",
         "gender": "female",
@@ -238,7 +238,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/living-room-1.mp3",
+        "refAudio": "/ai-actors/living-room-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -261,7 +261,7 @@
       "sourceRef": "n:guide:ac1-actor-card-living-room-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white man in his sixties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Gordon. Match this character description exactly: an adult white man in his sixties. The character card is for a Living-room video in a Living Room setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in a colorful living room, hands folded near his lap and looking directly at camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/living-room-2.webp",
+      "imageUrl": "/ai-image-generation/actors/living-room-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:living-room-2:v1",
         "gender": "male",
@@ -272,7 +272,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/living-room-2.mp3",
+        "refAudio": "/ai-actors/living-room-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -295,7 +295,7 @@
       "sourceRef": "n:guide:ac1-actor-card-studio-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Ravi. Match this character description exactly: an adult South Asian man in his thirties. The character card is for a Studio video in a Studio setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at a clean studio desk, speaking toward a plain black broadcast microphone on a stand. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/studio-1.webp",
+      "imageUrl": "/ai-image-generation/actors/studio-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:studio-1:v1",
         "gender": "male",
@@ -306,7 +306,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/studio-1.mp3",
+        "refAudio": "/ai-actors/studio-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -329,7 +329,7 @@
       "sourceRef": "n:guide:ac1-actor-card-studio-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black man in his twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Evan. Match this character description exactly: an adult Black man in his twenties. The character card is for a Studio video in a Studio setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: chest-up portrait in a dim studio with a soft colored rim light, hands below frame. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/studio-2.webp",
+      "imageUrl": "/ai-image-generation/actors/studio-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:studio-2:v1",
         "gender": "male",
@@ -340,7 +340,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/studio-2.mp3",
+        "refAudio": "/ai-actors/studio-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -363,7 +363,7 @@
       "sourceRef": "n:guide:ac1-actor-card-office-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Arab man in his forties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Omar. Match this character description exactly: an adult Arab man in his forties. The character card is for a Office video in a Office setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at an office desk, forearms resting naturally and looking into camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/office-1.webp",
+      "imageUrl": "/ai-image-generation/actors/office-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:office-1:v1",
         "gender": "male",
@@ -374,7 +374,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/office-1.mp3",
+        "refAudio": "/ai-actors/office-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -397,7 +397,7 @@
       "sourceRef": "n:guide:ac1-actor-card-office-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Nisha. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Office close-up in a Office setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: close chest-up in a quiet office, hands folded below frame. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/office-2.webp",
+      "imageUrl": "/ai-image-generation/actors/office-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:office-2:v1",
         "gender": "female",
@@ -408,7 +408,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/office-2.mp3",
+        "refAudio": "/ai-actors/office-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -431,7 +431,7 @@
       "sourceRef": "n:guide:ac1-actor-card-garden-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Claire. Match this character description exactly: an adult white woman in her thirties. The character card is for a Garden video in a Garden setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing among garden greenery in daylight, one hand gesturing toward the plants. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/garden-1.webp",
+      "imageUrl": "/ai-image-generation/actors/garden-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:garden-1:v1",
         "gender": "female",
@@ -442,7 +442,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garden-1.mp3",
+        "refAudio": "/ai-actors/garden-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -465,7 +465,7 @@
       "sourceRef": "n:guide:ac1-actor-card-garden-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Amara. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Garden video in a Garden setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a garden path with shoulders open and both hands relaxed. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/garden-2.webp",
+      "imageUrl": "/ai-image-generation/actors/garden-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:garden-2:v1",
         "gender": "female",
@@ -476,7 +476,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garden-2.mp3",
+        "refAudio": "/ai-actors/garden-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -499,7 +499,7 @@
       "sourceRef": "n:guide:ac1-actor-card-gym-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Sofia. Match this character description exactly: an adult white woman in her thirties. The character card is for a Gym video in a Gym setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing beside gym equipment, elbows relaxed and addressing camera after a set. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/gym-1.webp",
+      "imageUrl": "/ai-image-generation/actors/gym-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:gym-1:v1",
         "gender": "female",
@@ -510,7 +510,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/gym-1.mp3",
+        "refAudio": "/ai-actors/gym-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -533,7 +533,7 @@
       "sourceRef": "n:guide:ac1-actor-card-gym-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Lana. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Gym video in a Gym setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at the edge of a gym training area in a composed review pose, hands resting on knees. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/gym-2.webp",
+      "imageUrl": "/ai-image-generation/actors/gym-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:gym-2:v1",
         "gender": "female",
@@ -544,7 +544,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/gym-2.mp3",
+        "refAudio": "/ai-actors/gym-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -567,7 +567,7 @@
       "sourceRef": "n:guide:ac1-actor-card-cafe-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Tess. Match this character description exactly: an adult white woman in her twenties. The character card is for a Cafe video in a Cafe setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at a bright cafe table, leaning slightly toward camera with hands near the table edge. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/cafe-1.webp",
+      "imageUrl": "/ai-image-generation/actors/cafe-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:cafe-1:v1",
         "gender": "female",
@@ -578,7 +578,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/cafe-1.mp3",
+        "refAudio": "/ai-actors/cafe-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -601,7 +601,7 @@
       "sourceRef": "n:guide:ac1-actor-card-cafe-2-r2",
       "identityPrompt": "Match the same fictional actor described as an adult Middle Eastern woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Yara. Match this character description exactly: an adult Middle Eastern woman in her thirties. The character card is for a Cafe window video in a Cafe setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing near a cafe window with one hand making a small conversational gesture. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/cafe-2.webp",
+      "imageUrl": "/ai-image-generation/actors/cafe-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:cafe-2:v1",
         "gender": "female",
@@ -612,7 +612,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/cafe-2.mp3",
+        "refAudio": "/ai-actors/cafe-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -635,7 +635,7 @@
       "sourceRef": "n:guide:im08-ai-actors-kitchen-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Asha. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Kitchen video in a Kitchen setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing at a bright kitchen counter, one hand gesturing while the other rests on the counter. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/kitchen-1.webp",
+      "imageUrl": "/ai-image-generation/actors/kitchen-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:kitchen-1:v1",
         "gender": "female",
@@ -646,7 +646,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/kitchen-1.mp3",
+        "refAudio": "/ai-actors/kitchen-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -669,7 +669,7 @@
       "sourceRef": "n:guide:ac1-actor-card-kitchen-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Mara. Match this character description exactly: an adult Latina woman in her thirties. The character card is for a Kitchen video in a Kitchen setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a home kitchen with shoulders turned toward camera and hands relaxed. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/kitchen-2.webp",
+      "imageUrl": "/ai-image-generation/actors/kitchen-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:kitchen-2:v1",
         "gender": "female",
@@ -680,7 +680,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/kitchen-2.mp3",
+        "refAudio": "/ai-actors/kitchen-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -703,7 +703,7 @@
       "sourceRef": "n:guide:ac1-actor-card-podcast-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Leonie. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Podcast video in a Podcast setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in a podcast chair with a plain microphone on a boom arm beside her, speaking to camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/podcast-1.webp",
+      "imageUrl": "/ai-image-generation/actors/podcast-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:podcast-1:v1",
         "gender": "female",
@@ -714,7 +714,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/podcast-1.mp3",
+        "refAudio": "/ai-actors/podcast-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -737,7 +737,7 @@
       "sourceRef": "n:guide:ac1-actor-card-podcast-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Bria. Match this character description exactly: an adult Black woman in her twenties. The character card is for a Podcast video in a Podcast setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in a moody podcast corner with red studio light, hands below frame. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/podcast-2.webp",
+      "imageUrl": "/ai-image-generation/actors/podcast-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:podcast-2:v1",
         "gender": "female",
@@ -748,7 +748,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/podcast-2.mp3",
+        "refAudio": "/ai-actors/podcast-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -771,7 +771,7 @@
       "sourceRef": "n:guide:ac1-actor-card-fitness-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Caleb. Match this character description exactly: an adult Black man in his thirties. The character card is for a Fitness video in a Fitness setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: close chest-up fitness check in a bright training space, shoulders angled as if between exercises. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/fitness-1.webp",
+      "imageUrl": "/ai-image-generation/actors/fitness-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:fitness-1:v1",
         "gender": "male",
@@ -782,7 +782,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/fitness-1.mp3",
+        "refAudio": "/ai-actors/fitness-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -805,7 +805,7 @@
       "sourceRef": "n:guide:ac1-actor-card-fitness-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Rina. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Fitness video in a Fitness setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a dark gym with soft spotlights, hands resting at her sides after a set. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/fitness-2.webp",
+      "imageUrl": "/ai-image-generation/actors/fitness-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:fitness-2:v1",
         "gender": "female",
@@ -816,7 +816,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/fitness-2.mp3",
+        "refAudio": "/ai-actors/fitness-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -839,7 +839,7 @@
       "sourceRef": "n:guide:ac1-actor-card-beach-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Nia. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Beach video in a Beach setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing near a calm shoreline with sea behind, hands relaxed and shoulders square. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/beach-1.webp",
+      "imageUrl": "/ai-image-generation/actors/beach-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:beach-1:v1",
         "gender": "female",
@@ -850,7 +850,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/beach-1.mp3",
+        "refAudio": "/ai-actors/beach-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -873,7 +873,7 @@
       "sourceRef": "n:guide:fx50-ai-actors-lola-beach",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties with a short sandy-blonde bob. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Lola. Match this character description exactly: an adult white woman in her thirties with a short sandy-blonde bob. The character card is for a Beachfront video in a Beach setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on open beach sand with the sea clearly behind her, facing camera with empty hands. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/beach-2.webp",
+      "imageUrl": "/ai-image-generation/actors/beach-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:beach-2:v1",
         "gender": "female",
@@ -884,7 +884,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/beach-2.mp3",
+        "refAudio": "/ai-actors/beach-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -907,7 +907,7 @@
       "sourceRef": "n:guide:ac1-actor-card-car-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latino man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Mateo. Match this character description exactly: an adult Latino man in his thirties. The character card is for a Car video in a Car setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in the driver seat of a parked car, both hands low near the steering wheel. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/car-1.webp",
+      "imageUrl": "/ai-image-generation/actors/car-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:car-1:v1",
         "gender": "male",
@@ -918,7 +918,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/car-1.mp3",
+        "refAudio": "/ai-actors/car-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -941,7 +941,7 @@
       "sourceRef": "n:guide:ac1-actor-card-car-2-r2",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Jade. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Car video in a Car setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: driver-seat selfie framing in daylight, shoulders turned slightly toward the camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/car-2.webp",
+      "imageUrl": "/ai-image-generation/actors/car-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:car-2:v1",
         "gender": "female",
@@ -952,7 +952,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/car-2.mp3",
+        "refAudio": "/ai-actors/car-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -975,7 +975,7 @@
       "sourceRef": "n:guide:ac1-actor-card-hospital-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Adrian. Match this character description exactly: an adult white man in his thirties. The character card is for a Hospital video in a Hospital setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a bright hospital corridor with a clipboard held low and no writing visible. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/hospital-1.webp",
+      "imageUrl": "/ai-image-generation/actors/hospital-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:hospital-1:v1",
         "gender": "male",
@@ -986,7 +986,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/hospital-1.mp3",
+        "refAudio": "/ai-actors/hospital-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1009,7 +1009,7 @@
       "sourceRef": "n:guide:ac1-actor-card-hospital-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Sana. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Hospital video in a Hospital setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a softly lit clinic corridor with a plain stethoscope around her neck. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/hospital-2.webp",
+      "imageUrl": "/ai-image-generation/actors/hospital-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:hospital-2:v1",
         "gender": "female",
@@ -1020,7 +1020,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/hospital-2.mp3",
+        "refAudio": "/ai-actors/hospital-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1043,7 +1043,7 @@
       "sourceRef": "n:guide:ac1-actor-card-balcony-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Tessa. Match this character description exactly: an adult Latina woman in her thirties. The character card is for a Balcony video in a Balcony setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a bright city balcony with one hand gesturing and skyline behind. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/balcony-1.webp",
+      "imageUrl": "/ai-image-generation/actors/balcony-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:balcony-1:v1",
         "gender": "female",
@@ -1054,7 +1054,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/balcony-1.mp3",
+        "refAudio": "/ai-actors/balcony-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1077,7 +1077,7 @@
       "sourceRef": "n:guide:ac1-actor-card-balcony-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her forties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Iris. Match this character description exactly: an adult white woman in her forties. The character card is for a Balcony video in a Balcony setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a sunny balcony beside railing, arms relaxed and looking into camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/balcony-2.webp",
+      "imageUrl": "/ai-image-generation/actors/balcony-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:balcony-2:v1",
         "gender": "female",
@@ -1088,7 +1088,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/balcony-2.mp3",
+        "refAudio": "/ai-actors/balcony-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1111,7 +1111,7 @@
       "sourceRef": "n:guide:ac1-actor-card-pet-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Rhea. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Pet video in a Pet setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in a home living room beside a calm golden retriever, one hand resting near the dog. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/pet-1.webp",
+      "imageUrl": "/ai-image-generation/actors/pet-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:pet-1:v1",
         "gender": "female",
@@ -1122,7 +1122,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pet-1.mp3",
+        "refAudio": "/ai-actors/pet-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1145,7 +1145,7 @@
       "sourceRef": "n:guide:ac1-actor-card-pet-2-r3",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties with dark straight hair in a tidy low bun. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Anika. Match this character description exactly: an adult South Asian woman in her thirties with dark straight hair in a tidy low bun. The character card is for a Pet video in a Pet setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated on a sofa cuddling a calm gray cat against her chest, looking to camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/pet-2.webp",
+      "imageUrl": "/ai-image-generation/actors/pet-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:pet-2:v1",
         "gender": "female",
@@ -1156,7 +1156,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pet-2.mp3",
+        "refAudio": "/ai-actors/pet-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1179,7 +1179,7 @@
       "sourceRef": "n:guide:ac1-actor-card-shopping-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Lena. Match this character description exactly: an adult white woman in her thirties. The character card is for a Shopping video in a Shopping setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a bright clothing store aisle with two blank shopping bags held low. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/shopping-1.webp",
+      "imageUrl": "/ai-image-generation/actors/shopping-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:shopping-1:v1",
         "gender": "female",
@@ -1190,7 +1190,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/shopping-1.mp3",
+        "refAudio": "/ai-actors/shopping-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1213,7 +1213,7 @@
       "sourceRef": "n:guide:ac1-actor-card-shopping-2-r3",
       "identityPrompt": "Match the same fictional actor described as an adult East Asian woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Casey. Match this character description exactly: an adult East Asian woman in her twenties. The character card is for a Shopping video in a Shopping setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a beauty and personal-care store aisle with generic shelves behind, hands relaxed. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/shopping-2.webp",
+      "imageUrl": "/ai-image-generation/actors/shopping-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:shopping-2:v1",
         "gender": "female",
@@ -1224,7 +1224,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/shopping-2.mp3",
+        "refAudio": "/ai-actors/shopping-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1247,7 +1247,7 @@
       "sourceRef": "n:guide:ac1-actor-card-sports-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Damon. Match this character description exactly: an adult Black man in his thirties. The character card is for a Sports video in a Sports setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on an outdoor sports court in a ready stance with empty hands. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/sports-1.webp",
+      "imageUrl": "/ai-image-generation/actors/sports-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:sports-1:v1",
         "gender": "male",
@@ -1258,7 +1258,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/sports-1.mp3",
+        "refAudio": "/ai-actors/sports-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1281,7 +1281,7 @@
       "sourceRef": "n:guide:ac1-actor-card-sports-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Mireya. Match this character description exactly: an adult Latina woman in her twenties. The character card is for a Sports video in a Sports setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing by a tennis court fence with relaxed arms, ready between points. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/sports-2.webp",
+      "imageUrl": "/ai-image-generation/actors/sports-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:sports-2:v1",
         "gender": "female",
@@ -1292,7 +1292,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/sports-2.mp3",
+        "refAudio": "/ai-actors/sports-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1315,7 +1315,7 @@
       "sourceRef": "n:guide:ac1-actor-card-study-room-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white man in his thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Maxwell. Match this character description exactly: an adult white man in his thirties. The character card is for a Study-room video in a Study Room setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at a dark study desk with an open laptop showing only soft abstract color blocks. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/study-room-1.webp",
+      "imageUrl": "/ai-image-generation/actors/study-room-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:study-room-1:v1",
         "gender": "male",
@@ -1326,7 +1326,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/study-room-1.mp3",
+        "refAudio": "/ai-actors/study-room-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1349,7 +1349,7 @@
       "sourceRef": "n:guide:ac1-actor-card-study-room-2-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Sora. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Study-room video in a Study Room setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated at a study desk beside an open laptop with a softly blurred abstract screen. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/study-room-2.webp",
+      "imageUrl": "/ai-image-generation/actors/study-room-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:study-room-2:v1",
         "gender": "female",
@@ -1360,7 +1360,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/study-room-2.mp3",
+        "refAudio": "/ai-actors/study-room-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1383,7 +1383,7 @@
       "sourceRef": "n:guide:ac1-actor-card-classroom-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white man in his twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Noah. Match this character description exactly: an adult white man in his twenties. The character card is for a Classroom video in a Classroom setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a bright classroom with a blank world map and clean board behind, hands relaxed. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/classroom-1.webp",
+      "imageUrl": "/ai-image-generation/actors/classroom-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:classroom-1:v1",
         "gender": "male",
@@ -1394,7 +1394,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/classroom-1.mp3",
+        "refAudio": "/ai-actors/classroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1417,7 +1417,7 @@
       "sourceRef": "n:guide:ac1-actor-card-terrace-1-r3",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her thirties with a straight chin-length copper-red bob. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Elise. Match this character description exactly: an adult Latina woman in her thirties with a straight chin-length copper-red bob. The character card is for a Terrace video in a Terrace setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a rooftop terrace among planters, giving a small open-hand conversational gesture. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/terrace-1.webp",
+      "imageUrl": "/ai-image-generation/actors/terrace-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:terrace-1:v1",
         "gender": "female",
@@ -1428,7 +1428,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/terrace-1.mp3",
+        "refAudio": "/ai-actors/terrace-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1451,7 +1451,7 @@
       "sourceRef": "n:guide:ac1-actor-card-terrace-2-r2",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Ken. Match this character description exactly: an adult Black woman in her thirties. The character card is for a Terrace video in a Terrace setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a sunny rooftop terrace among planters, giving two thumbs-up gestures to camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/terrace-2.webp",
+      "imageUrl": "/ai-image-generation/actors/terrace-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:terrace-2:v1",
         "gender": "female",
@@ -1462,7 +1462,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/terrace-2.mp3",
+        "refAudio": "/ai-actors/terrace-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1485,7 +1485,7 @@
       "sourceRef": "n:guide:ac1-actor-card-bathroom-1-r2",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Lila. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Bathroom video in a Bathroom setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: bathroom mirror selfie holding a plain dark phone with one small circular camera lens. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/bathroom-1.webp",
+      "imageUrl": "/ai-image-generation/actors/bathroom-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:bathroom-1:v1",
         "gender": "female",
@@ -1496,7 +1496,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/bathroom-1.mp3",
+        "refAudio": "/ai-actors/bathroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1519,7 +1519,7 @@
       "sourceRef": "n:guide:ac1-actor-card-exercise-1-r3",
       "identityPrompt": "Match the same fictional actor described as an adult Black woman in her forties with short tightly coiled natural hair under a white sun visor. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Vera. Match this character description exactly: an adult Black woman in her forties with short tightly coiled natural hair under a white sun visor. The character card is for a Exercise video in a Exercise setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on an outdoor waterside trail, speaking to camera and holding a plain clear water bottle. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/exercise-1.webp",
+      "imageUrl": "/ai-image-generation/actors/exercise-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:exercise-1:v1",
         "gender": "female",
@@ -1530,7 +1530,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/exercise-1.mp3",
+        "refAudio": "/ai-actors/exercise-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1553,7 +1553,7 @@
       "sourceRef": "n:guide:ac1-actor-card-exercise-2-r2",
       "identityPrompt": "Match the same fictional actor described as an adult East Asian woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Akio. Match this character description exactly: an adult East Asian woman in her twenties. The character card is for a Exercise video in a Exercise setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated cross-legged on a park exercise mat, both hands open toward camera. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/exercise-2.webp",
+      "imageUrl": "/ai-image-generation/actors/exercise-2.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:exercise-2:v1",
         "gender": "female",
@@ -1564,7 +1564,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/exercise-2.mp3",
+        "refAudio": "/ai-actors/exercise-2.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1587,7 +1587,7 @@
       "sourceRef": "n:guide:ac1-actor-card-bedroom-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Nora. Match this character description exactly: an adult white woman in her thirties. The character card is for a Bedroom video in a Bedroom setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a calm bedroom mirror-selfie pose with one hand near her waist. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/bedroom-1.webp",
+      "imageUrl": "/ai-image-generation/actors/bedroom-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:bedroom-1:v1",
         "gender": "female",
@@ -1598,7 +1598,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/bedroom-1.mp3",
+        "refAudio": "/ai-actors/bedroom-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1621,7 +1621,7 @@
       "sourceRef": "n:guide:ac1-actor-card-garage-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Black man in his fifties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Luis. Match this character description exactly: an adult Black man in his fifties. The character card is for a Garage video in a Garage setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing in a residential garage with hands at his sides and shelves softly blurred behind. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/garage-1.webp",
+      "imageUrl": "/ai-image-generation/actors/garage-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:garage-1:v1",
         "gender": "male",
@@ -1632,7 +1632,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/garage-1.mp3",
+        "refAudio": "/ai-actors/garage-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1655,7 +1655,7 @@
       "sourceRef": "n:guide:ac1-actor-card-interview-1-r3",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her thirties with a straight chin-length pale-blonde bob. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Gianna. Match this character description exactly: an adult Latina woman in her thirties with a straight chin-length pale-blonde bob. The character card is for a Interview video in a Interview setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a pedestrian street in a street-interview pose with hands relaxed. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/interview-1.webp",
+      "imageUrl": "/ai-image-generation/actors/interview-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:interview-1:v1",
         "gender": "female",
@@ -1666,7 +1666,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/interview-1.mp3",
+        "refAudio": "/ai-actors/interview-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1689,7 +1689,7 @@
       "sourceRef": "n:guide:ac1-actor-card-pool-1-r2",
       "identityPrompt": "Match the same fictional actor described as an adult white woman in her twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Tara. Match this character description exactly: an adult white woman in her twenties. The character card is for a Pool video in a Pool setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing at a sunny poolside with palm trees, speaking to camera with empty hands. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/pool-1.webp",
+      "imageUrl": "/ai-image-generation/actors/pool-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:pool-1:v1",
         "gender": "female",
@@ -1700,7 +1700,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/pool-1.mp3",
+        "refAudio": "/ai-actors/pool-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1723,7 +1723,7 @@
       "sourceRef": "n:guide:ac1-actor-card-reporting-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult Latina woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Dalia. Match this character description exactly: an adult Latina woman in her thirties. The character card is for a Reporting video in a Reporting setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: standing on a city sidewalk in a reporter stance, holding a plain black handheld microphone. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/reporting-1.webp",
+      "imageUrl": "/ai-image-generation/actors/reporting-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:reporting-1:v1",
         "gender": "female",
@@ -1734,7 +1734,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/reporting-1.mp3",
+        "refAudio": "/ai-actors/reporting-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1757,7 +1757,7 @@
       "sourceRef": "n:guide:ac1-actor-card-travel-1-r2",
       "identityPrompt": "Match the same fictional actor described as an adult white man in his twenties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Avery. Match this character description exactly: an adult white man in his twenties. The character card is for a Travel video in a Travel setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated in an airplane cabin seat by the window, speaking to camera with both hands gesturing. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/travel-1.webp",
+      "imageUrl": "/ai-image-generation/actors/travel-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:male:travel-1:v1",
         "gender": "male",
@@ -1768,7 +1768,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/travel-1.mp3",
+        "refAudio": "/ai-actors/travel-1.mp3",
         "speed": 1,
         "pitch": 0
       }
@@ -1791,7 +1791,7 @@
       "sourceRef": "n:guide:ac1-actor-card-yoga-1-r1",
       "identityPrompt": "Match the same fictional actor described as an adult South Asian woman in her thirties. Keep the person's face, stated age range, appearance, and hairstyle consistent with the supplied actor reference.",
       "portraitPrompt": "Create one photorealistic portrait of an original fictional adult AI actor named Anjali. Match this character description exactly: an adult South Asian woman in her thirties. The character card is for a Yoga video in a Yoga setting. Depict this same person in a simple chest-up portrait, using this scene and pose as visual guidance: seated cross-legged on a plain mat in a quiet yoga studio, hands resting on knees. Natural skin texture and age details, recognizable face, direct friendly eye contact, realistic anatomy, candid commercial-photo style, one person only. Do not change the character's stated gender, age range, or appearance. No public-figure likeness, text, lettering, logos, watermarks, collage, border, or extra people.",
-      "imageUrl": "/media/site_aidreamcapes/workspace/actors/library/yoga-1.webp",
+      "imageUrl": "/ai-image-generation/actors/yoga-1.webp",
       "voice": {
         "voiceId": "mock:aidreamcapes:female:yoga-1:v1",
         "gender": "female",
@@ -1802,7 +1802,7 @@
         "languages": [
           "en"
         ],
-        "refAudio": "/assets/sites/site_aidreamcapes/workspace/actors/voices/yoga-1.mp3",
+        "refAudio": "/ai-actors/yoga-1.mp3",
         "speed": 1,
         "pitch": 0
       }

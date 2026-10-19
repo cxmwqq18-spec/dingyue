@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Aidreamcapes-only public-media hash migration.
+ * Aidreamcapes-only public-media readable URL migration.
  *
  * Run from the active production release with DATABASE_TARGET=production.
  * `plan` reads current LivePage.contentJson and MediaAsset rows, `stage` copies
- * verified files into the persistent static root, and `apply` updates only
- * those relational URL fields. Stable sceneSlug fields are opt-in because the
+ * verified files into typed persistent directories, and `apply` updates only
+ * those relational URL fields. SHA-256 remains an integrity check, never a
+ * public filename. Stable sceneSlug fields are opt-in because the
  * Recreate route has a separate host-router release gate. This script never
  * reads ThemePage, snapshots, AssetUpload file URLs, or another site's rows.
  */
@@ -16,6 +17,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createReadStream } from "node:fs";
 import { PrismaClient } from "@prisma/client";
+import { readableMediaTarget, READABLE_STATIC_RE } from "./lib/aidreamcapes-readable-media.mjs";
 
 const SITE_ID = "site_aidreamcapes";
 const SITE_ROOT = "/www/wwwroot/aidreamcapes.com";
@@ -87,7 +89,7 @@ function normalizedMediaUrl(raw) {
   if (!HOSTS.has(host)) throw new Error(`external_media_host:${host}`);
   if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("non_http_media_url");
   const pathname = decodeURIComponent(url.pathname);
-  if (!pathname.startsWith("/assets/sites/site_aidreamcapes/")) throw new Error(`outside_site_media_root:${pathname}`);
+  if (!pathname.startsWith("/assets/sites/site_aidreamcapes/") && !READABLE_STATIC_RE.test(pathname)) throw new Error(`outside_site_media_root:${pathname}`);
   const normalized = path.posix.normalize(pathname);
   if (normalized !== pathname || pathname.includes("..") || pathname.includes("\\")) throw new Error(`unsafe_media_path:${pathname}`);
   if (url.username || url.password) throw new Error("credentialed_media_url");
@@ -261,14 +263,19 @@ function rewriteJson(value, targetByPath, page, pointer, fieldChanges) {
 
 async function preparePlan(prisma) {
   const publicRoot = fs.realpathSync(path.resolve("public"));
-  const mediaRoot = path.join(SITE_ROOT, "shared", "aidreamcapes-public-media");
-  const publicLink = path.join(publicRoot, "assets", "sites", SITE_ID, "public-media");
+  const mediaRoot = path.join(SITE_ROOT, "shared", "sites", "public-media");
+  const legacyMediaRoot = path.join(SITE_ROOT, "shared", "aidreamcapes-public-media");
   const [pages, assets, derivedState] = await Promise.all([
     prisma.livePage.findMany({ where: { siteId: SITE_ID }, select: { id: true, siteId: true, slug: true, contentJson: true, updatedAt: true }, orderBy: { slug: "asc" } }),
     prisma.mediaAsset.findMany({ where: { siteId: SITE_ID }, select: { id: true, siteId: true, label: true, mimeType: true, usageType: true, previewUrl: true, originUrl: true, updatedAt: true }, orderBy: { id: "asc" } }),
     prisma.sitePublishedState.findUnique({ where: { siteId: SITE_ID }, select: { revision: true, contentHash: true, publishedAt: true } }),
   ]);
   if (pages.some((page) => page.siteId !== SITE_ID) || assets.some((asset) => asset.siteId !== SITE_ID)) throw new Error("cross_site_row_detected");
+  const actorPathSet = new Set();
+  for (const asset of assets) {
+    if (!/actor|avatar|presenter|spokesperson|voice/i.test(`${asset.usageType} ${asset.sourceType ?? ""}`)) continue;
+    for (const value of [asset.previewUrl, asset.originUrl]) if (value) actorPathSet.add(normalizedMediaUrl(value).pathname);
+  }
 
   const sourcePathOccurrences = new Map();
   const uniqueLivePageUrlStrings = new Set();
@@ -305,6 +312,7 @@ async function preparePlan(prisma) {
   }
 
   const sourceInfoByPath = new Map();
+  const usedPublicNames = new Set();
   for (const [pathname, refs] of sourcePathOccurrences) {
     let repairedFrom;
     let sourcePath = pathname;
@@ -317,14 +325,28 @@ async function preparePlan(prisma) {
     let targetUrl;
     let relativeOutput;
     let info;
+    const readableStatic = sourcePath.match(READABLE_STATIC_RE);
     if (staticMatch) {
-      relativeOutput = sourcePath.slice("/assets/sites/site_aidreamcapes/public-media/".length);
-      sourceFile = path.resolve(mediaRoot, relativeOutput);
-      if (!sourceFile.startsWith(`${mediaRoot}${path.sep}`) || !fs.existsSync(sourceFile)) throw new Error(`hashed_static_file_missing:${sourcePath}`);
+      const oldRelative = sourcePath.slice("/assets/sites/site_aidreamcapes/public-media/".length);
+      sourceFile = path.resolve(legacyMediaRoot, oldRelative);
+      if (!sourceFile.startsWith(`${legacyMediaRoot}${path.sep}`) || !fs.existsSync(sourceFile)) throw new Error(`hashed_static_file_missing:${sourcePath}`);
       const extension = staticMatch[3].toLowerCase();
       info = await inspectFile(sourceFile, extension);
       if (info.sha256 !== staticMatch[2]) throw new Error(`hashed_static_digest_mismatch:${sourcePath}`);
+      const isActor = actorPathSet.has(sourcePath) || /(?:^|[\/_-])(?:actor|actors|avatar|presenter|spokesperson)(?:[\/_-]|$)/i.test(sourcePath);
+      ({ targetUrl, relativeOutput } = readableMediaTarget(sourcePath, extension, isActor, usedPublicNames));
+    } else if (readableStatic) {
       targetUrl = sourcePath;
+      const prefix = readableStatic[1];
+      const leaf = path.posix.basename(sourcePath);
+      const physicalFolder = prefix === "ai-actors" || /\/(?:actors)\//.test(sourcePath) ? "actor"
+        : prefix === "ai-video-generation" ? "video" : "image";
+      relativeOutput = `${physicalFolder}/${leaf}`;
+      sourceFile = path.resolve(mediaRoot, relativeOutput);
+      if (!sourceFile.startsWith(`${mediaRoot}${path.sep}`) || !fs.existsSync(sourceFile)) throw new Error(`readable_static_file_missing:${sourcePath}`);
+      const extension = path.posix.extname(sourcePath).slice(1).toLowerCase();
+      info = await inspectFile(sourceFile, extension);
+      usedPublicNames.add(targetUrl);
     } else {
       sourceFile = absolutePublicFile(publicRoot, sourcePath);
       if (!fs.existsSync(sourceFile) || !fs.statSync(sourceFile).isFile()) {
@@ -334,13 +356,33 @@ async function preparePlan(prisma) {
       if (!realSource.startsWith(`${publicRoot}${path.sep}`)) throw new Error(`media_symlink_escapes_site_root:${pathname}`);
       const extension = path.posix.extname(sourcePath).slice(1).toLowerCase();
       info = await inspectFile(sourceFile, extension);
-      const relative = sourcePath.slice("/assets/sites/site_aidreamcapes/".length);
-      const extensionWithDot = path.posix.extname(relative);
-      const stem = extensionWithDot ? relative.slice(0, -extensionWithDot.length) : relative;
-      targetUrl = `/assets/sites/site_aidreamcapes/public-media/${stem}--sha256-${info.sha256}${extensionWithDot}`;
-      relativeOutput = targetUrl.slice("/assets/sites/site_aidreamcapes/public-media/".length);
+      const isActor = actorPathSet.has(sourcePath) || /(?:^|[\/_-])(?:actor|actors|avatar|presenter|spokesperson)(?:[\/_-]|$)/i.test(sourcePath);
+      ({ targetUrl, relativeOutput } = readableMediaTarget(sourcePath, extension, isActor, usedPublicNames));
     }
     sourceInfoByPath.set(pathname, { pathname, sourcePath, repairedFrom, sourceFile, relativeOutput, targetUrl, ...info, refs });
+  }
+
+  // The built-in Aidreamcapes actor catalog is a code-owned relationally
+  // independent asset source used by /app. Keep its portraits and voice samples
+  // in the same persistent actor directory, while their public URLs stay short.
+  const actorCatalogPath = path.resolve("src/lib/aidreamcapes-workspace/actors.json");
+  const actorCatalog = JSON.parse(fs.readFileSync(actorCatalogPath, "utf8"));
+  if (actorCatalog.actors?.length !== 53) throw new Error("aidreamcapes_actor_catalog_count_changed_review_required");
+  const codeAssetFiles = [];
+  for (const actor of actorCatalog.actors) {
+    if (!/^[a-z0-9][a-z0-9-]{0,80}$/.test(actor.actorId)) throw new Error(`invalid_builtin_actor_id:${actor.actorId}`);
+    const specs = [
+      { sourceFile: path.resolve(publicRoot, `media/site_aidreamcapes/workspace/actors/library/${actor.actorId}.webp`), targetUrl: `/ai-image-generation/actors/${actor.actorId}.webp`, extension: "webp" },
+      { sourceFile: path.resolve(publicRoot, `assets/sites/site_aidreamcapes/workspace/actors/voices/${actor.actorId}.mp3`), targetUrl: `/ai-actors/${actor.actorId}.mp3`, extension: "mp3" },
+    ];
+    for (const spec of specs) {
+      if (!spec.sourceFile.startsWith(`${publicRoot}${path.sep}`) || !fs.existsSync(spec.sourceFile)) throw new Error(`builtin_actor_asset_missing:${actor.actorId}:${spec.extension}`);
+      const info = await inspectFile(spec.sourceFile, spec.extension);
+      const relativeOutput = `actor/${actor.actorId}.${spec.extension}`;
+      const existing = codeAssetFiles.find((item) => item.targetUrl === spec.targetUrl);
+      if (existing && (existing.sha256 !== info.sha256 || existing.bytes !== info.bytes)) throw new Error(`builtin_actor_asset_conflict:${spec.targetUrl}`);
+      if (!existing) codeAssetFiles.push({ sourcePath: spec.sourceFile.slice(publicRoot.length), sourceFile: spec.sourceFile, relativeOutput, targetUrl: spec.targetUrl, ...info, actorId: actor.actorId });
+    }
   }
 
   const targetByPath = new Map([...sourceInfoByPath].map(([pathname, info]) => [pathname, info.targetUrl]));
@@ -390,6 +432,11 @@ async function preparePlan(prisma) {
     const current = actualFiles.get(key);
     if (!current) actualFiles.set(key, info);
   }
+  for (const item of codeAssetFiles) {
+    const current = actualFiles.get(item.targetUrl);
+    if (current && (current.sha256 !== item.sha256 || current.bytes !== item.bytes)) throw new Error(`actor_asset_target_conflict:${item.targetUrl}`);
+    if (!current) actualFiles.set(item.targetUrl, item);
+  }
   const actualPaths = [...actualFiles.values()];
   const repairedReferences = [...BROKEN_REFERENCE_REPAIR].flatMap(([from, to]) => {
     const refs = sourcePathOccurrences.get(from);
@@ -420,8 +467,9 @@ async function preparePlan(prisma) {
     repairedBrokenReferences: repairedReferences,
     derivedState: derivedState ? { revision: derivedState.revision, contentHash: derivedState.contentHash, publishedAt: derivedState.publishedAt.toISOString() } : null,
     persistentStaticRoot: mediaRoot,
-    publicStaticServing: "Nginx alias in the www.aivideosugc.com TLS vhost",
+    publicStaticServing: "Extension-qualified Nginx aliases in the www.aivideosugc.com TLS vhost",
     noPrivateAssetUploadsRead: true,
+    builtinActorAssets: codeAssetFiles.length,
   };
 
   const fieldManifest = [];
@@ -452,8 +500,8 @@ async function preparePlan(prisma) {
     summary,
     publicRoot,
     mediaRoot,
-    publicLink,
     sourceInfoByPath,
+    codeAssetFiles,
     targetByPath,
     actualFiles,
     plannedPages,
@@ -487,12 +535,6 @@ async function stageFiles(plan) {
   fs.mkdirSync(plan.mediaRoot, { recursive: true, mode: 0o755 });
   const mediaRootStat = fs.lstatSync(plan.mediaRoot);
   if (!mediaRootStat.isDirectory() || mediaRootStat.isSymbolicLink()) throw new Error("persistent_static_root_must_be_a_real_directory");
-  if (fs.existsSync(plan.publicLink)) {
-    const link = fs.lstatSync(plan.publicLink);
-    if (!link.isSymbolicLink() || path.resolve(path.dirname(plan.publicLink), fs.readlinkSync(plan.publicLink)) !== path.resolve(plan.mediaRoot)) {
-      throw new Error(`public_static_path_conflict:${plan.publicLink}`);
-    }
-  }
   const statfs = fs.statfsSync(plan.mediaRoot);
   const available = statfs.bavail * statfs.bsize;
   const newBytes = [...plan.actualFiles.values()].filter((item) => !fs.existsSync(path.join(plan.mediaRoot, item.relativeOutput))).reduce((sum, item) => sum + item.bytes, 0);
@@ -527,10 +569,8 @@ async function stageFiles(plan) {
     }
   }
 
-  // Next.js does not serve this release's public files through a directory
-  // symlink. The exact Aidreamcapes hostname uses an Nginx alias to mediaRoot.
-  // Remove only the symlink created by this migration after verifying target.
-  if (fs.existsSync(plan.publicLink)) fs.unlinkSync(plan.publicLink);
+  // Media is served through explicit Nginx aliases. Leave the previous
+  // compatibility symlink in place until the new routes are fully verified.
   for (const item of plan.actualFiles.values()) {
     const targetFile = path.join(plan.mediaRoot, item.relativeOutput);
     const check = await inspectFile(targetFile, path.extname(targetFile).slice(1).toLowerCase());
@@ -576,15 +616,15 @@ async function applyRelationalUpdates(prisma, plan) {
     const collected = collectUrlOccurrences(page.contentJson, page);
     if (collected.errors.length) readbackErrors.push(...collected.errors);
     for (const row of collected.urls.values()) {
-      if (!row.pathname.startsWith("/assets/sites/site_aidreamcapes/public-media/")) remainingCurrentPaths += 1;
+      if (!READABLE_STATIC_RE.test(row.pathname)) remainingCurrentPaths += 1;
       const target = plan.targetByPath.get(row.pathname);
-      if (!target && !HASHED_STATIC_RE.test(row.pathname)) readbackErrors.push({ slug: page.slug, pointer: row.occurrences[0]?.pointer, reason: `unmigrated:${row.pathname}` });
+      if (!target && !READABLE_STATIC_RE.test(row.pathname)) readbackErrors.push({ slug: page.slug, pointer: row.occurrences[0]?.pointer, reason: `unmigrated:${row.pathname}` });
     }
   }
   let remainingMediaFields = 0;
   let remainingMediaMimeMismatches = 0;
   for (const asset of assets) for (const field of ["previewUrl", "originUrl"]) if (asset[field]) {
-    if (!String(asset[field]).startsWith("/assets/sites/site_aidreamcapes/public-media/")) remainingMediaFields += 1;
+    if (!READABLE_STATIC_RE.test(new URL(asset[field], "https://www.aivideosugc.com").pathname)) remainingMediaFields += 1;
     const normalized = normalizedMediaUrl(asset[field]);
     const expected = EXTENSION_MIME[normalized.extension];
     if (expected && asset.mimeType !== expected) remainingMediaMimeMismatches += 1;

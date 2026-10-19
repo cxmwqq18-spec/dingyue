@@ -41,7 +41,8 @@ function request(file, kind = "head") {
 }
 
 async function verify(file) {
-  if (!file.targetUrl.startsWith("/assets/sites/site_aidreamcapes/public-media/") || file.targetUrl.includes("?") || !file.targetUrl.includes(`--sha256-${file.sha256}.`)) throw new Error("invalid_static_media_target");
+  const expectedPrefix = file.mimeType.startsWith("video/") ? "/ai-video-generation/" : file.mimeType.startsWith("audio/") ? "/ai-actors/" : "/ai-image-generation/";
+  if (!file.targetUrl.startsWith(expectedPrefix) || file.targetUrl.includes("?") || /--sha256-[a-f0-9]{64}/i.test(file.targetUrl)) throw new Error("invalid_readable_static_media_target");
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
       const head = await request(file);

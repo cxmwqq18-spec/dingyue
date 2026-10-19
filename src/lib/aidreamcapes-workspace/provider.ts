@@ -247,7 +247,14 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
     if (!workspaceAssetStorageKeyMatches(existing.storageKey, actorKey) || !workspaceAssetHasMedia(existing, { ...owner, kind: "image" })) throw new WorkspaceError("workspace_reference_not_owned", 403);
     return existing.id;
   }
-  const bytes = await fs.readFile(path.join(process.cwd(), "public", args.url.slice(1)));
+  const sharedActorFile = path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", `${actor.actorId}.webp`);
+  const releaseActorFile = path.join(process.cwd(), "public", "media/site_aidreamcapes/workspace/actors/library", `${actor.actorId}.webp`);
+  let bytes: Buffer;
+  try { bytes = await fs.readFile(sharedActorFile); }
+  catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    bytes = await fs.readFile(releaseActorFile);
+  }
   await writeCustomerAssetFileShared({ storageKey: actorKey, bytes, mimeType: "image/webp" });
   return (await createAssetUploadRelational({ siteId: args.siteId, customerId: args.customerId, label, mimeType: "image/webp", storageKey: actorKey })).asset.id;
 }
