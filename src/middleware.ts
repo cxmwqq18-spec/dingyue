@@ -1024,7 +1024,7 @@ export async function middleware(request: NextRequest) {
     ? ["video", "photo"].find((type) => request.nextUrl.searchParams.get("type") === type)
     : undefined;
   if (templateFilterMatch && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "aidreamcapes") {
-    return finalizeStorefrontResponse(NextResponse.redirect(new URL(`/templates/${templateFilterMatch}`, request.url), 308), request);
+    return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, `/templates/${templateFilterMatch}`), 308), request);
   }
   const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
   if (legacyGalleryRedirect) return finalizeStorefrontResponse(legacyGalleryRedirect, request);
