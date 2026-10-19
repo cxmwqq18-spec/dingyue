@@ -347,7 +347,7 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
         sceneSlug: typeof raw.sceneSlug === "string" ? raw.sceneSlug : undefined,
         publicSlug: typeof raw.publicSlug === "string" ? raw.publicSlug : undefined,
         pageTitle,
-        kind: typeof raw.kind === "string" && raw.kind === "photo" && kind === "photo" ? "photo" : kind,
+        kind: raw.kind === "photo" || raw.kind === "video" ? raw.kind : kind,
         description: cardDescription(pickerLead, pageTitle),
         category: sourceRef ? categoryForRef(overrides, sourceRef) : CATEGORY_FALLBACK
       });

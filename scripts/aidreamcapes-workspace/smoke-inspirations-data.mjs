@@ -50,4 +50,8 @@ rows = [page("/ai-image-generation/product-photos", [{ ...original, ref: undefin
 assert.equal((await getAidreamcapesInspirationCards()).some((card) => card.kind === "photo" && card.imageSrc === original.image.src), true, "Current image-only rows need no historical/catalog fallback");
 rows = [];
 assert.deepEqual(await getAidreamcapesInspirationCards(), [], "Missing current rows stay empty");
+rows = [page("/ai-image-generation/product-photos", [{ ...original, kind: "video" }])];
+assert.equal((await getAidreamcapesInspirationCards())[0].kind, "video", "A current video example reused on a photo page keeps its own media kind and creation route");
+rows = [page("/ai-video-generation/product-videos", [{ ...original, kind: "photo" }])];
+assert.equal((await getAidreamcapesInspirationCards())[0].kind, "photo", "A current photo example reused on a video page keeps its own media kind");
 console.log("PASS: independent gallery reads only site_aidreamcapes LivePage rows; current images override catalog references and update on the next read.");
