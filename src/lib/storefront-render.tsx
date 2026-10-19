@@ -1195,20 +1195,21 @@ function clientSiteForThemeRender(site: Site, activePage: ThemePageJson, pagePat
   const pageMap = new Map<string, ThemePage>();
   const includeSearchEntries = pageNeedsSearchEntries(activePage);
   const includeBlogEntries = pageNeedsBlogEntries(activePage, pagePath);
+  const includeAidreamcapesFooterArticles = site.id === "site_aidreamcapes";
   for (const page of site.pages) {
     const includeFullContent = includeSearchEntries || (includeBlogEntries && page.slug === pagePath);
     if (
       page.slug === pagePath ||
       page.slug === "/" ||
       page.slug === "/404" ||
-      (includeBlogEntries && page.slug.startsWith("/blog/")) ||
+      ((includeBlogEntries || includeAidreamcapesFooterArticles) && page.slug.startsWith("/blog/")) ||
       (includeSearchEntries && (["/help", "/blog", "/pricing", "/collections", "/search"].includes(page.slug) || page.slug.startsWith("/policies/")))
     ) {
       pageMap.set(
         page.id,
         includeFullContent
           ? lightweightPageForClient(page, true)
-          : includeBlogEntries && page.slug.startsWith("/blog/")
+          : (includeBlogEntries || includeAidreamcapesFooterArticles) && page.slug.startsWith("/blog/")
             ? lightweightBlogArticlePageForClient(page)
             : lightweightPageForClient(page, false)
       );

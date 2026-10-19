@@ -1903,15 +1903,28 @@ async function loadStorefrontPublicRuntimeState(
     ];
     const missingNavigationPageSlugs = Array.from(new Set(requiredShellPageSlugs))
       .filter((slug) => !loadedPageSlugs.has(slug));
-    const navigationPages = missingNavigationPageSlugs.length
+    const shellPageWhere: Prisma.LivePageWhereInput | undefined = siteId === "site_aidreamcapes"
+      ? {
+          siteId,
+          OR: [
+            { slug: { in: missingNavigationPageSlugs } },
+            { slug: { startsWith: "/blog/" } }
+          ]
+        }
+      : missingNavigationPageSlugs.length
+        ? { siteId, slug: { in: missingNavigationPageSlugs } }
+        : undefined;
+    const shellPages = shellPageWhere
       ? await tx.livePage.findMany({
-          where: { siteId, slug: { in: missingNavigationPageSlugs } },
+          where: shellPageWhere,
           orderBy: { slug: "asc" },
           select: publicRuntimeSiteSelect.livePages.select
         })
       : [];
-    const siteWithNavigationPages = navigationPages.length
-      ? { ...site, livePages: [...site.livePages, ...navigationPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
+    const loadedPageIds = new Set(site.livePages.map((page) => page.id));
+    const additionalShellPages = shellPages.filter((page) => !loadedPageIds.has(page.id));
+    const siteWithShellPages = additionalShellPages.length
+      ? { ...site, livePages: [...site.livePages, ...additionalShellPages].sort((left, right) => left.slug.localeCompare(right.slug)) }
       : site;
     const limits = publicRuntimeLimits(needs.profile);
     const [products, siteAiApps, creativePacks, creativePackCategories, mediaAssets, toolCategories, toolMenuItems, videoThemeCategories, videoThemes] = await Promise.all([
@@ -1945,7 +1958,7 @@ async function loadStorefrontPublicRuntimeState(
     });
 
     const mappedMediaAssets = isolateAidreamcapesEnglishCollection(siteId, mediaAssets.map(toMediaAsset));
-    const mappedSite = toPublicSiteShell(siteWithNavigationPages, mappedMediaAssets);
+    const mappedSite = toPublicSiteShell(siteWithShellPages, mappedMediaAssets);
     const state = emptyPlatformState({
     sites: [mappedSite],
     siteDomains: site.domains.map(toSiteDomain),
