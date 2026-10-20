@@ -1,3 +1,4 @@
+import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -660,6 +661,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  await redirectLegacyAidreamcapesTemplateDirectory(hostSiteSlug, slug);
   if (hostSiteSlug === "aidreamcapes" && path.length === 2) {
     // Retired short scene routes now live under the same prefixes as media.
     if (firstSegment === "images" || firstSegment === "videos") {
