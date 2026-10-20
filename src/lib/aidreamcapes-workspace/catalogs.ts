@@ -7,6 +7,10 @@ export const WORKSPACE_LANGUAGES: { value: VideoLanguage; label: string }[] = [
 ];
 export const WORKSPACE_ASPECTS = ["9:16", "1:1", "16:9"] as const;
 export const WORKSPACE_DURATIONS = [6, 10, 15, 30] as const;
+// The workspace sells two length tiers today. Longer videos are planned as
+// several 15 second shots, so a 30 second video is two clips of the same
+// length the 15 second tier uses.
+export const WORKSPACE_VIDEO_DURATIONS = [15, 30] as const;
 export const SCENES: SceneSchema[] = [
   {
     id: "presenter_showcase", name: "Presenter showcase", summary: "An on-camera creator introduces your product and its benefits.",

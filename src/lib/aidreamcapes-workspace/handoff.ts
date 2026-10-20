@@ -19,7 +19,7 @@ export type WorkspaceHandoff = {
 };
 
 const aspects = ["9:16", "1:1", "16:9"] as const;
-const durations = [6, 10, 15, 30] as const;
+const durations = [15, 30] as const;
 const scenes = ["presenter_showcase", "process_demo", "texture_closeup"] as const;
 const tools = ["custom", "change-background", "white-background", "model-photos", "lifestyle-photos", "video-ads", "spokesperson-videos", "product-videos", "before-after-videos", "unboxing-videos", "url-to-video"] as const;
 

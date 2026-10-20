@@ -32,7 +32,7 @@ const pipeline = load("pipeline");
 const legacy = capabilities.toWorkspaceModelCapability({
   id: "legacy-veo", label: "Legacy model", modelType: "veo-3.1", maxImagesPerRequest: 1,
 });
-assert.deepEqual(legacy.durations, [6, 10, 15], "Legacy rows retain the prior clip duration defaults");
+assert.deepEqual(legacy.durations, [15, 30], "Legacy rows serve the two workspace length tiers");
 assert.deepEqual(legacy.aspects, ["9:16", "1:1", "16:9"], "Legacy rows retain the prior workspace aspect defaults");
 assert.equal(legacy.nativeSpeech, true, "Legacy native speech keeps its model-name compatibility inference");
 assert.deepEqual(legacy.features, { output4k: false, videoExtension: false, actorReplacement: false, advancedShotTools: false }, "Legacy provider rows never infer the planned features");
@@ -41,7 +41,12 @@ const configured = capabilities.toWorkspaceModelCapability({
   id: "vertical-only", label: "Vertical only", modelType: "fixture-video", maxImagesPerRequest: 2,
   videoDurations: [10, 6, 10, -1], videoAspectRatios: ["9:16", "unknown", "9:16"], videoNativeSpeech: false,
 });
-assert.deepEqual(configured.durations, [6, 10], "Configured durations are sanitized and deduplicated");
+assert.deepEqual(configured.durations, [], "A provider that cannot produce a 15 second shot serves no workspace tier");
+const tiered = capabilities.toWorkspaceModelCapability({
+  id: "tiered", label: "Tiered", modelType: "fixture-video", maxImagesPerRequest: 1,
+  videoDurations: [6, 10, 15], videoAspectRatios: ["9:16", "1:1", "16:9"], videoNativeSpeech: false,
+});
+assert.deepEqual(tiered.durations, [15, 30], "A 15 second capable provider serves both workspace length tiers");
 assert.deepEqual(configured.aspects, ["9:16"], "Unknown aspects are never surfaced as workspace options");
 assert.equal(configured.nativeSpeech, false, "An explicit false value overrides legacy model inference");
 assert.deepEqual(configured.features, { output4k: false, videoExtension: false, actorReplacement: false, advancedShotTools: false }, "Unrelated provider limits do not imply planned feature support");
@@ -57,25 +62,39 @@ const unavailable = capabilities.toWorkspaceModelCapability({
 }, "provider_disabled");
 assert.equal(unavailable.available, false);
 assert.deepEqual(capabilities.workspaceOutputOptions([configured, unavailable]), {
-  aspects: ["9:16"], durations: [6, 10],
+  aspects: ["9:16"], durations: [],
 }, "Unavailable models cannot widen the catalog options");
+assert.deepEqual(capabilities.workspaceOutputOptions([tiered]), {
+  aspects: ["9:16", "1:1", "16:9"], durations: [15, 30],
+}, "A runnable provider offers exactly the two workspace length tiers");
 assert.deepEqual(capabilities.workspaceOutputOptions([unavailable]), {
-  aspects: ["9:16", "1:1", "16:9"], durations: [6, 10, 15, 30],
+  aspects: ["9:16", "1:1", "16:9"], durations: [15, 30],
 }, "No-runnable-provider drafts retain the existing workspace defaults");
 
 const input = catalogs.defaultTaskInput("process_demo");
-input.modelId = configured.id;
-input.options.duration = 6;
-assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [configured] }), undefined);
-input.options.aspect = "16:9";
-assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [configured] }), "workspace_video_aspect_unsupported");
-input.options.aspect = "9:16";
+input.modelId = tiered.id;
 input.options.duration = 15;
-assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [configured] }), "workspace_shot_duration_unsupported");
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [tiered] }), undefined);
+input.options.duration = 30;
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [tiered] }), undefined, "A 30 second video is planned as two 15 second shots");
+const vertical = capabilities.toWorkspaceModelCapability({
+  id: "vertical", label: "Vertical", modelType: "fixture-video", maxImagesPerRequest: 1,
+  videoDurations: [15], videoAspectRatios: ["9:16"], videoNativeSpeech: false,
+});
+input.modelId = vertical.id;
+input.options.aspect = "16:9";
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [vertical] }), "workspace_video_aspect_unsupported");
+input.modelId = tiered.id;
+input.options.aspect = "9:16";
+input.modelId = configured.id;
+input.options.duration = 15;
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [configured] }), "workspace_shot_duration_unsupported", "A provider that serves no workspace tier cannot run a clip");
+input.modelId = tiered.id;
+input.options.duration = 15;
 input.modelId = unavailable.id;
-assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [configured, unavailable] }), "workspace_video_provider_unavailable");
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [tiered, unavailable] }), "workspace_video_provider_unavailable");
 input.modelId = undefined;
-assert.equal(capabilities.workspaceCapabilityError({ sceneId: "presenter_showcase", input, models: [configured] }), "workspace_native_speech_unsupported");
+assert.equal(capabilities.workspaceCapabilityError({ sceneId: "presenter_showcase", input, models: [tiered] }), "workspace_native_speech_unsupported");
 assert.equal(capabilities.workspaceCapabilityError({ sceneId: "process_demo", input, models: [unavailable], requireAvailable: true }), "workspace_video_provider_unavailable");
 assert.throws(() => pipeline.validateTaskInput("process_demo", input, [], false, [configured]), (error) => error.code === "workspace_shot_duration_unsupported");
 

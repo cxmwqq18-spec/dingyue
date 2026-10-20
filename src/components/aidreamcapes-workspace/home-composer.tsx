@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown, ImageIcon, Plus, Ratio, Sparkles, Timer, Uploa
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
+import { WorkspaceSelect } from "./workspace-select";
 import styles from "./home-composer.module.css";
 
 export type HomeComposerTab = "AI Video Agent" | "AI Video" | "AI Image";
@@ -102,6 +103,16 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
   const canContinue = !disabled && !(imageMode && onImageGenerate && imageGenerateDisabled) && (imageMode || draftMode || validVideo) && !tooManyReferences;
   const promptValue = imageMode ? imageInput.prompt : prompt;
   const imageAspects = WORKSPACE_ASPECTS;
+  const imageStyleOptions = imageStyles.map((style) => ({ value: style.id, label: style.label }));
+  const imageAspectOptions = imageAspects.map((value) => ({ value, label: value }));
+  const modelOptions = (catalog?.models ?? []).map((item) => ({
+    value: item.id,
+    label: item.label || item.model,
+    disabled: !item.available,
+    hint: item.available ? undefined : "Not connected yet"
+  }));
+  const aspectOptions = aspects.map((value) => ({ value, label: value }));
+  const durationOptions = durations.map((item) => ({ value: String(item.value), label: item.label }));
 
   return <section className={styles.composer} aria-label="Create your next project">
     {showTabs && <div className={styles.tabs} role="tablist" aria-label="Creation tools">
@@ -132,12 +143,55 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             <button type="button" className={styles.controlButton} disabled={disabled} onClick={onOpenAvatar}><UserRound size={16} aria-hidden="true" /><span>{avatarName || "Avatar"}</span><ChevronDown size={13} aria-hidden="true" /></button>
           </>}
         {imageMode ? <>
-          <label className={styles.setting}><ImageIcon size={15} aria-hidden="true" /><span>Style</span><select aria-label="Image style" disabled={disabled} value={imageInput.toolId} onChange={(event) => onImageInputChange({ ...imageInput, toolId: event.target.value as WorkspaceImageTool })}>{imageStyles.map((style) => <option key={style.id} value={style.id}>{style.label}</option>)}</select></label>
-          <label className={styles.setting}><Ratio size={15} aria-hidden="true" /><span>Ratio</span><select aria-label="Image aspect ratio" disabled={disabled || !imageAspects.length} value={imageInput.aspect} onChange={(event) => onImageInputChange({ ...imageInput, aspect: event.target.value as Aspect })}>{!imageAspects.length && <option value={imageInput.aspect}>{imageInput.aspect}</option>}{imageAspects.map((value) => <option key={value}>{value}</option>)}</select></label>
+          <div className={styles.setting}><ImageIcon size={15} aria-hidden="true" /><span>Style</span><WorkspaceSelect
+            ariaLabel="Image style"
+            disabled={disabled}
+            value={imageInput.toolId}
+            options={imageStyleOptions}
+            onChange={(value) => onImageInputChange({ ...imageInput, toolId: value as WorkspaceImageTool })}
+            bare
+            buttonClassName={styles.settingSelect}
+          /></div>
+          <div className={styles.setting}><Ratio size={15} aria-hidden="true" /><span>Ratio</span><WorkspaceSelect
+            ariaLabel="Image aspect ratio"
+            disabled={disabled || !imageAspects.length}
+            value={imageInput.aspect}
+            options={imageAspectOptions}
+            onChange={(value) => onImageInputChange({ ...imageInput, aspect: value as Aspect })}
+            bare
+            buttonClassName={styles.settingSelect}
+          /></div>
         </> : <>
-          <label className={`${styles.setting} ${styles.modelSetting}`}><Sparkles size={15} aria-hidden="true" /><select aria-label="Video model" disabled={disabled || !catalog?.models.length} value={model?.id ?? ""} onChange={(event) => onModelChange(event.target.value)}>{!catalog?.models.length && <option value="">No model connected</option>}{catalog?.models.map((item) => <option key={item.id} value={item.id} disabled={!item.available}>{item.label || item.model}</option>)}</select><span className={`${styles.modelDot} ${model?.available ? "" : styles.unavailable}`} aria-label={model?.available ? "Model available" : "Model unavailable"} /></label>
-          <label className={styles.setting}><Ratio size={15} aria-hidden="true" /><select aria-label="Video aspect ratio" disabled={disabled || !aspects.length} value={selectedAspect ?? ""} onChange={(event) => onAspectChange(event.target.value as Aspect)}>{!aspects.length && <option value="">Unavailable</option>}{aspects.map((value) => <option key={value}>{value}</option>)}</select></label>
-          <label className={styles.setting}><Timer size={15} aria-hidden="true" /><select aria-label="Video duration" disabled={disabled || !durations.length} value={selectedDuration ?? ""} onChange={(event) => onDurationChange(Number(event.target.value) as Duration)}>{!durations.length && <option value="">Unavailable</option>}{durations.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label>
+          <div className={`${styles.setting} ${styles.modelSetting}`}><Sparkles size={15} aria-hidden="true" /><WorkspaceSelect
+            ariaLabel="Video model"
+            disabled={disabled || !catalog?.models.length}
+            value={model?.id ?? ""}
+            options={modelOptions}
+            onChange={onModelChange}
+            bare
+            buttonClassName={`${styles.settingSelect} ${styles.modelSelect}`}
+            placeholder="No model connected"
+          /><span className={`${styles.modelDot} ${model?.available ? "" : styles.unavailable}`} aria-label={model?.available ? "Model available" : "Model unavailable"} /></div>
+          <div className={styles.setting}><Ratio size={15} aria-hidden="true" /><WorkspaceSelect
+            ariaLabel="Video aspect ratio"
+            disabled={disabled || !aspects.length}
+            value={selectedAspect ?? ""}
+            options={aspectOptions}
+            onChange={(value) => onAspectChange(value as Aspect)}
+            bare
+            buttonClassName={styles.settingSelect}
+            placeholder="Unavailable"
+          /></div>
+          <div className={styles.setting}><Timer size={15} aria-hidden="true" /><WorkspaceSelect
+            ariaLabel="Video duration"
+            disabled={disabled || !durations.length}
+            value={selectedDuration != null ? String(selectedDuration) : ""}
+            options={durationOptions}
+            onChange={(value) => onDurationChange(Number(value) as Duration)}
+            bare
+            buttonClassName={styles.settingSelect}
+            placeholder="Unavailable"
+          /></div>
         </>}
         </div>
         <div className={styles.footerActions}>

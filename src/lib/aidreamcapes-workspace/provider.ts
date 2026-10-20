@@ -16,7 +16,7 @@ import { videoDurationCreditCost, videoResolutionCreditCost, normalizeVideoDurat
 import { videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
 import type { VideoModelFamily } from "@/lib/video-frame-config";
-import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, assertWorkspaceSite, sceneSchema } from "./catalogs";
+import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, assertWorkspaceSite, sceneSchema } from "./catalogs";
 import { compileShot, compileStoryboard, referencePool, resolveShotReferences, validateTaskInput } from "./pipeline";
 import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type WorkspaceCatalog, type WorkspaceTask } from "./types";
 import type { WorkspacePreset } from "./preset-contract";
@@ -134,10 +134,10 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
     return {
       scenes: structuredClone(SCENES), actors,
       models: [{ id: "aivideosugc-stability-mock", label: "Stability fixture", model: "mock", available: false, reason,
-        durations: [6, 10, 15], aspects: [...WORKSPACE_ASPECTS], nativeSpeech: false, audioReference: false, firstFrame: false, lastFrame: false, multiReference: false,
+        durations: [...WORKSPACE_VIDEO_DURATIONS], aspects: [...WORKSPACE_ASPECTS], nativeSpeech: false, audioReference: false, firstFrame: false, lastFrame: false, multiReference: false,
         features: { output4k: false, videoExtension: false, actorReplacement: false, advancedShotTools: false } }],
       languages: structuredClone(WORKSPACE_LANGUAGES), aspects: [...WORKSPACE_ASPECTS],
-      durations: WORKSPACE_DURATIONS.map((value) => ({ value, label: `${value}s`, credits: value === 6 ? 24 : value === 10 ? 40 : value === 15 ? 60 : 120, generationAvailable: false, reason })),
+      durations: WORKSPACE_VIDEO_DURATIONS.map((value) => ({ value, label: `${value}s`, credits: value === 15 ? 60 : 120, generationAvailable: false, reason })),
       composition: { available: false, credits: null, reason: "workspace_stability_mock_image_dispatch_disabled" },
       subtitles: { available: true },
       quickStarts: [

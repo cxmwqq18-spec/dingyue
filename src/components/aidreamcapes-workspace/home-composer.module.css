@@ -50,8 +50,8 @@
 .controlButton > span { max-width: 180px; overflow: hidden; color: var(--ink, #101623); text-overflow: ellipsis; }
 .controlThumbnail { width: 25px; height: 25px; border-radius: 5px; object-fit: cover; }
 .setting > span { white-space: nowrap; }
-.setting select { min-width: 0; max-width: 230px; border: 0; outline: 0; color: var(--ink, #101623); background: transparent; padding: 0 2px; cursor: pointer; font-weight: 500; font-size: 12px; }
-.modelSetting select { max-width: 260px; }
+.settingSelect { min-width: 0; max-width: 230px; font-weight: 500; font-size: 12px; }
+.modelSelect { max-width: 260px; }
 .modelDot { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: #18a46d; }
 .unavailable { background: #a3a8b2; }
 .footerActions { display: flex; flex: 0 0 auto; align-items: center; justify-content: flex-end; gap: 10px; }
@@ -80,7 +80,7 @@
   .controls { gap: 6px; }
   .controlButton, .setting { min-height: 36px; gap: 5px; padding: 6px 7px; font-size: 11px; }
   .controlButton > span { max-width: 105px; }
-  .setting select, .modelSetting select { max-width: 120px; font-size: 11px; }
+  .settingSelect, .modelSelect { max-width: 120px; font-size: 11px; }
   .footerActions { gap: 6px; }
   .footerNote, .loginLink { max-width: 125px; font-size: 10px; }
   .continue { width: 38px; height: 38px; flex-basis: 38px; }

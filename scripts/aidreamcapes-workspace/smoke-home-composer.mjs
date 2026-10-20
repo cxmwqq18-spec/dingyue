@@ -10,8 +10,25 @@ import { chromium } from "playwright";
 
 const require = createRequire(import.meta.url);
 const file = "src/components/aidreamcapes-workspace/home-composer.tsx";
-const context = vm.createContext({ exports: {}, require: (name) => name === "@/lib/aidreamcapes-workspace/catalogs" ? { WORKSPACE_ASPECTS: ["9:16", "1:1", "16:9"] } : name.endsWith(".css") ? { default: new Proxy({}, { get: (_target, key) => `hc-${String(key)}` }) } : require(name) });
-vm.runInContext(ts.transpileModule(fs.readFileSync(file, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText, context);
+const selectFile = "src/components/aidreamcapes-workspace/workspace-select.tsx";
+const cssProxy = (prefix) => new Proxy({}, { get: (_target, key) => `${prefix}-${String(key)}` });
+const transpile = (source) => ts.transpileModule(fs.readFileSync(source, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
+const selectContext = vm.createContext({
+  exports: {},
+  require: (name) => name === "react-dom" ? { createPortal: () => null }
+    : name === "lucide-react" ? new Proxy({}, { get: () => () => null })
+      : name.endsWith(".css") ? { default: cssProxy("ws") }
+        : require(name)
+});
+vm.runInContext(transpile(selectFile), selectContext);
+const context = vm.createContext({
+  exports: {},
+  require: (name) => name === "@/lib/aidreamcapes-workspace/catalogs" ? { WORKSPACE_ASPECTS: ["9:16", "1:1", "16:9"] }
+    : name === "./workspace-select" ? selectContext.exports
+      : name.endsWith(".css") ? { default: cssProxy("hc") }
+        : require(name)
+});
+vm.runInContext(transpile(file), context);
 const { HomeComposer, homeComposerVideoOptions } = context.exports;
 const calls = [];
 const model = { id: "fixture", label: "Fixture model", model: "fixture", available: true, aspects: ["16:9"], durations: [6], multiReference: false };

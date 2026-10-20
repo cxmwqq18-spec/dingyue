@@ -1,11 +1,11 @@
 import type { PlatformAiProvider } from "@/lib/types";
-import { WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, sceneSchema } from "./catalogs";
+import { WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, sceneSchema } from "./catalogs";
 import { WorkspaceError, type ModelCapability, type SceneId, type TaskInput, type VideoAspect, type VideoDuration, type VideoLanguage } from "./types";
 
 export type ProviderVideoCapabilitySource = Pick<PlatformAiProvider,
   "id" | "label" | "modelType" | "maxImagesPerRequest" | "videoDurations" | "videoAspectRatios" | "videoNativeSpeech">;
 
-const LEGACY_VIDEO_DURATIONS = [6, 10, 15] as const;
+const LEGACY_VIDEO_DURATIONS = [15, 30] as const;
 
 /**
  * Convert the existing provider row fields into workspace capabilities.
@@ -17,7 +17,10 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
   const legacyNativeSpeech = model.includes("grok-imagine-video") || model.includes("grok-imagine-1.5") || model.includes("seedance-2") || /veo[-.]?3/.test(model);
   const configuredDurations = provider.videoDurations == null ? LEGACY_VIDEO_DURATIONS : provider.videoDurations;
   const configuredAspects = provider.videoAspectRatios == null ? WORKSPACE_ASPECTS : provider.videoAspectRatios;
-  const durations = [...new Set(configuredDurations.filter((value) => Number.isSafeInteger(value) && value > 0))].sort((a, b) => a - b);
+  const supported = [...new Set(configuredDurations.filter((value) => Number.isSafeInteger(value) && value > 0))].sort((a, b) => a - b);
+  // The workspace only offers its own length tiers. A model serves a tier when
+  // it can produce a shot of the planned shot length for that tier.
+  const durations = WORKSPACE_VIDEO_DURATIONS.filter((tier) => supported.some((value) => value >= plannedShotDuration(tier)));
   const aspects = WORKSPACE_ASPECTS.filter((aspect) => configuredAspects.includes(aspect));
   return {
     id: provider.id,
@@ -55,10 +58,10 @@ export function modelSupportsWorkspaceDuration(model: ModelCapability, duration:
  */
 export function workspaceOutputOptions(models: ModelCapability[]): { aspects: VideoAspect[]; durations: VideoDuration[] } {
   const runnable = models.filter((model) => model.available);
-  if (!runnable.length) return { aspects: [...WORKSPACE_ASPECTS], durations: [...WORKSPACE_DURATIONS] };
+  if (!runnable.length) return { aspects: [...WORKSPACE_ASPECTS], durations: [...WORKSPACE_VIDEO_DURATIONS] };
   return {
     aspects: WORKSPACE_ASPECTS.filter((aspect) => runnable.some((model) => model.aspects.includes(aspect))),
-    durations: WORKSPACE_DURATIONS.filter((duration) => runnable.some((model) => modelSupportsWorkspaceDuration(model, duration))),
+    durations: WORKSPACE_VIDEO_DURATIONS.filter((duration) => runnable.some((model) => modelSupportsWorkspaceDuration(model, duration))),
   };
 }
 

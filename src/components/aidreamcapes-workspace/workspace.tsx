@@ -17,6 +17,7 @@ import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/a
 import { type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-workspace/static-routes";
 import { WorkspaceEntryBehavior } from "./entry-behavior";
+import { WorkspaceSelect } from "./workspace-select";
 import { entryCookieName, readWorkspaceEntry } from "@/lib/aidreamcapes-workspace/entry-transfer";
 const EmbeddedInspirations = dynamic(() => import("./inspirations-embedded").then(module => module.EmbeddedInspirations), { loading: () => <p role="status">Loading inspirations…</p> });
 const WorkspaceHelpDialog = dynamic(() => import("./help-dialog").then(module => module.WorkspaceHelpDialog));
@@ -144,7 +145,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
   const [modal, setModal] = useState<"guide" | "support" | "actors" | "product" | "templates" | null>(null);
-  const [templateKindFilter, setTemplateKindFilter] = useState<"all" | "video" | "photo">(initialHandoff?.kind && initialTemplateGallery?.options.some((item) => item.kind === initialHandoff.kind) ? initialHandoff.kind : "all");
   const [templateCategoryFilter, setTemplateCategoryFilter] = useState(initialHandoff?.category && initialTemplateGallery?.categories.some((item) => item.id === initialHandoff.category) ? initialHandoff.category : "all");
   const [templateSearch, setTemplateSearch] = useState("");
   const closeModal = useCallback(() => setModal(null), []);
@@ -162,6 +162,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [batchOpen, setBatchOpen] = useState(false);
   const [batchSceneId, setBatchSceneId] = useState(initialSceneId ?? "");
   const [composerTitle, setComposerTitle] = useState(initialPreset?.title ?? "");
+  const [presets, setPresets] = useState<{ photo?: WorkspacePreset; video?: WorkspacePreset }>(() => (initialPreset ? { [initialPreset.kind]: initialPreset } : {}));
+  // Photo and video templates live in separate modules. Each module keeps its
+  // own template so a video template never appears in the image workspace.
+  const templateModuleKind: "photo" | "video" = view === "images" ? "photo" : view === "home" && composerTab === "AI Image" ? "photo" : "video";
+  const activePreset = presets[templateModuleKind];
   const [libraryFilter, setLibraryFilter] = useState<string>(initialHandoff?.filter ?? "all");
   const [actorSearch, setActorSearch] = useState("");
   const [actorGenderFilter, setActorGenderFilter] = useState<"all" | "female" | "male">("all");
@@ -182,7 +187,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [balance, setBalance] = useState(customer?.balance);
   const [tagDrafts, setTagDrafts] = useState<Record<string, string>>({});
   const [videoReferenceUrls, setVideoReferenceUrls] = useState<string[]>([]);
-  const [activePreset, setActivePreset] = useState(initialPreset);
   const [presetSceneId, setPresetSceneId] = useState(initialPreset?.sceneId);
   const currentRef = useRef<WorkspaceTask | null>(null);
   const savedRef = useRef<WorkspaceTask | null>(null);
@@ -622,7 +626,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       } : undefined;
       const source = activePreset?.kind === "video" ? { sourcePage: activePreset.sourcePage, presetId: activePreset.presetId, sourceUpdatedAt: activePreset.sourceUpdatedAt } : undefined;
       const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: selected.id, input, title: composerTitle.trim() || selected.name, ...(productBrief ? { productBrief } : {}), ...(source ? { preset: source } : {}) }) });
-      setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setComposerTitle(""); setPrompt(""); setActivePreset(undefined); setPresetSceneId(undefined);
+      setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
       acceptTask(result.task); setView("agent"); setStep("input"); updateUrl(result.task); setMobileOpen(false);
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
@@ -927,6 +931,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       event.preventDefault(); if (!busy) void navigate(item.id);
     }}><Icon size={21} strokeWidth={1.8} /><span>{item.title}</span>{item.status && <small className={`${styles.planned} ${item.status === "simulation" ? styles.simulation : ""}`}>{item.status === "simulation" ? "Simulation" : "Planned"}</small>}</a>;
   });
+  const sceneOptions = (catalog?.scenes ?? []).map((item) => ({ value: item.id, label: item.name }));
+  const editorModelOptions = (catalog?.models ?? []).map((model) => ({ value: model.id, label: displayModel(model.model), disabled: !model.available || Boolean(scene?.needsActor && !model.nativeSpeech) }));
+  const editorDurationOptions = (catalog?.durations ?? []).map((item) => ({ value: String(item.value), label: item.credits != null ? `${item.label} · ${item.credits} credits` : item.label }));
+  const editorAspectOptions = (catalog?.aspects ?? []).map((item) => ({ value: item, label: item }));
+  const editorStyleOptions = (scene?.styleOptions ?? []).map((item) => ({ value: item.value, label: item.label }));
+  const editorLanguageOptions = (catalog?.languages ?? []).map((item) => ({ value: item.value, label: item.label }));
   const activeModel = catalog?.models.find((model) => model.available) ?? catalog?.models[0];
   const selectedModel = catalog?.models.find((model) => model.id === (task?.input.modelId || composerModel)) ?? activeModel;
   const durationCapability = catalog?.durations.find((duration) => duration.value === task?.input.options.duration);
@@ -943,20 +953,33 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (url.searchParams.get("templates") !== "1" && !initialHandoff?.templates) return;
     templateHandoffConsumed.current = true;
     const handoff = initialHandoff?.templates ? initialHandoff : workspaceHandoffFromSearchParams(url.searchParams);
-    if (handoff.category && initialTemplateGallery?.categories.some((item) => item.id === handoff.category)) setTemplateCategoryFilter(handoff.category);
-    if (handoff.kind && initialTemplateGallery?.options.some((item) => item.kind === handoff.kind)) setTemplateKindFilter(handoff.kind);
+    if (handoff.kind && initialTemplateGallery?.options.some((item) => item.kind === handoff.kind) && handoff.kind !== templateModuleKind) {
+      // The gallery follows the module, so a handoff for the other module
+      // opens that module instead of mixing both template kinds.
+      if (handoff.kind === "photo") { setView("images"); setComposerTab("AI Image"); }
+      else { setView("video"); setComposerTab("AI Video"); }
+      setTemplateCategoryFilter("all");
+    } else if (handoff.category && initialTemplateGallery?.categories.some((item) => item.id === handoff.category)) {
+      setTemplateCategoryFilter(handoff.category);
+    }
     setModal("templates");
     url.searchParams.delete("templates");
     window.history.replaceState(window.history.state, "", url);
-  }, [canBrowseTemplates, initialTemplateGallery, initialHandoff]);
-  const availableTemplateKinds = (["video", "photo"] as const).filter((kind) => initialTemplateGallery?.options.some((option) => option.kind === kind));
-  const templateFilterKinds = ["all" as const, ...availableTemplateKinds];
+  }, [canBrowseTemplates, initialTemplateGallery, initialHandoff, templateModuleKind]);
+  // The gallery is scoped to the module: the image workspace only offers
+  // photo templates and the video workspaces only offer video templates.
+  const templateCategories = (initialTemplateGallery?.categories ?? []).filter((category) => category.id === templateModuleKind);
   const visibleTemplates = (initialTemplateGallery?.options ?? []).filter((item) => {
-    if (templateKindFilter !== "all" && item.kind !== templateKindFilter) return false;
+    if (item.kind !== templateModuleKind) return false;
     if (templateCategoryFilter !== "all" && !item.categoryIds.includes(templateCategoryFilter)) return false;
     const query = templateSearch.trim().toLocaleLowerCase();
     return !query || item.title.toLocaleLowerCase().includes(query) || item.prompt.toLocaleLowerCase().includes(query);
   });
+  useEffect(() => {
+    if (templateCategoryFilter !== "all" && !templateCategories.some((category) => category.id === templateCategoryFilter)) {
+      setTemplateCategoryFilter("all");
+    }
+  }, [templateCategories, templateCategoryFilter]);
 
   // Keep text beside icons/conditional children in host elements: browser
   // translation replaces bare Text nodes that React would otherwise remove.
@@ -1093,7 +1116,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               return optionalFields.length ? <section key={section.id} className={styles.formSection}><h2>{section.label} (optional)</h2><div className={styles.fields}>{optionalFields.map((field) => renderField(field))}</div></section> : null;
             })}
           {scene?.needsActor && <section className={styles.formSection}><div className={styles.sectionHead}><div><h2>Your presenter</h2><p className={styles.help}>One avatar and its voice throughout your video.</p></div><button className={styles.button} disabled={editingDisabled} onClick={() => setModal("actors")}><UserRound size={16} /><span>{actor ? "Change avatar" : "Choose avatar"}</span></button></div>{actor ? <div className={styles.row}><img loading="lazy" decoding="async" src={actor.imageUrl} alt={actor.name} width={64} height={70} style={{ objectFit: "contain", borderRadius: 8 }} /><div><strong>{actor.name}</strong><p className={styles.help}><span>{actor.voice.label || "Voice profile"}</span><span> · </span><span>{languageLabel(actor.voice.language)}</span></p>{actor.voice.refAudio && <audio src={actor.voice.refAudio} controls preload="none" aria-label={`${actor.name} voice sample`} style={{ height: 30, maxWidth: 220 }} />}</div></div> : <p className={styles.help}>Choose a presenter to continue. The presenter card includes its voice profile.</p>}</section>}
-            <section className={styles.formSection}><h2>Video settings</h2><p>Choose the format, language and style for this video.</p>{catalog?.billing && <div className={styles.notice}><span>{catalog.billing.creditsPerShot}</span><span> credits per generated clip. Your total depends on how many clips and new versions you generate.</span></div>}<div className={styles.parameterGrid}><label className={styles.field}><span className={styles.fieldLabel}>Video model</span><select className={styles.input} disabled={editingDisabled} value={task.input.modelId || activeModel?.id || ""} onChange={(event) => updateInput((input) => ({ ...input, modelId: event.target.value }))}>{!catalog?.models.length && <option value="">No model connected</option>}{catalog?.models.map((model) => <option key={model.id} value={model.id} disabled={!model.available || Boolean(scene?.needsActor && !model.nativeSpeech)}>{displayModel(model.model)}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Duration</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.duration} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, duration: Number(event.target.value) as TaskInput["options"]["duration"] } }))}>{catalog?.durations.map((item) => <option key={item.value} value={item.value}>{item.label}{item.credits != null ? ` · ${item.credits} credits` : ""}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Aspect ratio</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.aspect} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, aspect: event.target.value as TaskInput["options"]["aspect"] } }))}>{catalog?.aspects.map((item) => <option key={item}>{item}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Style</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.style} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, style: event.target.value } }))}>{scene?.styleOptions.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Language</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.language} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, language: event.target.value as TaskInput["options"]["language"] } }))}>{catalog?.languages.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label><label className={styles.field}><span className={styles.fieldLabel}>Captions</span><select className={styles.input} disabled={editingDisabled || !scene?.needsActor} value={String(task.input.options.subtitle)} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitle: event.target.value === "true" } }))}><option value="false">Without captions</option><option value="true" disabled={catalog?.subtitles?.available === false}>With captions</option></select>{!scene?.needsActor ? <span className={styles.help}>This scene has no spoken dialogue.</span> : catalog?.subtitles?.available === false ? <span className={styles.help}>Captions are not available for this connection yet.</span> : null}</label>{task.input.options.subtitle && scene?.needsActor && <label className={styles.field}><span className={styles.fieldLabel}>Caption style</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.subtitleStyle ?? "classic"} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitleStyle: event.target.value as TaskInput["options"]["subtitleStyle"] } }))}><option value="classic">Classic</option><option value="bold">Bold</option><option value="minimal">Minimal</option></select></label>}</div>{catalog?.durations.find((item) => item.value === task.input.options.duration)?.reason && <div className={styles.notice}>{catalog.durations.find((item) => item.value === task.input.options.duration)?.reason ? humanError(catalog.durations.find((item) => item.value === task.input.options.duration)?.reason) : ""}</div>}{scene?.needsActor && !actorSpeechSupported && <div className={styles.notice}>{humanError("native_audio_required")}</div>}</section>
+            <section className={styles.formSection}><h2>Video settings</h2><p>Choose the format, language and style for this video.</p>{catalog?.billing && <div className={styles.notice}><span>{catalog.billing.creditsPerShot}</span><span> credits per generated clip. Your total depends on how many clips and new versions you generate.</span></div>}<div className={styles.parameterGrid}><div className={styles.field}><span className={styles.fieldLabel}>Video model</span><WorkspaceSelect ariaLabel="Video model" disabled={editingDisabled} value={task.input.modelId || activeModel?.id || ""} options={editorModelOptions} onChange={(value) => updateInput((input) => ({ ...input, modelId: value }))} placeholder="No model connected" /></div><div className={styles.field}><span className={styles.fieldLabel}>Duration</span><WorkspaceSelect ariaLabel="Duration" disabled={editingDisabled} value={String(task.input.options.duration)} options={editorDurationOptions} onChange={(value) => updateInput((input) => ({ ...input, options: { ...input.options, duration: Number(value) as TaskInput["options"]["duration"] } }))} /></div><div className={styles.field}><span className={styles.fieldLabel}>Aspect ratio</span><WorkspaceSelect ariaLabel="Aspect ratio" disabled={editingDisabled} value={task.input.options.aspect} options={editorAspectOptions} onChange={(value) => updateInput((input) => ({ ...input, options: { ...input.options, aspect: value as TaskInput["options"]["aspect"] } }))} /></div><div className={styles.field}><span className={styles.fieldLabel}>Style</span><WorkspaceSelect ariaLabel="Style" disabled={editingDisabled} value={task.input.options.style} options={editorStyleOptions} onChange={(value) => updateInput((input) => ({ ...input, options: { ...input.options, style: value } }))} /></div><div className={styles.field}><span className={styles.fieldLabel}>Language</span><WorkspaceSelect ariaLabel="Language" disabled={editingDisabled} value={task.input.options.language} options={editorLanguageOptions} onChange={(value) => updateInput((input) => ({ ...input, options: { ...input.options, language: value as TaskInput["options"]["language"] } }))} /></div><label className={styles.field}><span className={styles.fieldLabel}>Captions</span><select className={styles.input} disabled={editingDisabled || !scene?.needsActor} value={String(task.input.options.subtitle)} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitle: event.target.value === "true" } }))}><option value="false">Without captions</option><option value="true" disabled={catalog?.subtitles?.available === false}>With captions</option></select>{!scene?.needsActor ? <span className={styles.help}>This scene has no spoken dialogue.</span> : catalog?.subtitles?.available === false ? <span className={styles.help}>Captions are not available for this connection yet.</span> : null}</label>{task.input.options.subtitle && scene?.needsActor && <label className={styles.field}><span className={styles.fieldLabel}>Caption style</span><select className={styles.input} disabled={editingDisabled} value={task.input.options.subtitleStyle ?? "classic"} onChange={(event) => updateInput((input) => ({ ...input, options: { ...input.options, subtitleStyle: event.target.value as TaskInput["options"]["subtitleStyle"] } }))}><option value="classic">Classic</option><option value="bold">Bold</option><option value="minimal">Minimal</option></select></label>}</div>{catalog?.durations.find((item) => item.value === task.input.options.duration)?.reason && <div className={styles.notice}>{catalog.durations.find((item) => item.value === task.input.options.duration)?.reason ? humanError(catalog.durations.find((item) => item.value === task.input.options.duration)?.reason) : ""}</div>}{scene?.needsActor && !actorSpeechSupported && <div className={styles.notice}>{humanError("native_audio_required")}</div>}</section>
             <MusicTrackPicker siteId={siteId} selectedUrl={task.input.musicUrl} onSelect={(musicUrl) => updateInput((input) => ({ ...input, musicUrl }))} csrfToken={csrfToken} disabled={editingDisabled} />
             {customer && <MusicCatalogPicker siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
             </details>
@@ -1252,7 +1275,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setComposerTab("AI Image");
       setImageInput((current) => ({ ...current, prompt: option.prompt, aspect: option.aspect, toolId: option.imageTool }));
     }
-    setActivePreset(option);
+    setPresets((current) => ({ ...current, [option.kind]: option }));
     setPresetSceneId(option.sceneId);
     setSelectedSceneId(option.sceneId);
     setComposerTitle(option.title);
@@ -1268,23 +1291,22 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   function renderTemplatePickerDialog() {
-    const categories = initialTemplateGallery?.categories ?? [];
     return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${styles.templateGalleryModal}`} role="dialog" aria-modal="true" aria-label="Choose a product template">
       <div className={styles.modalHeader}><div><h2>Choose a product template</h2><p className={styles.help}>Pick a scene from the storefront gallery to fill your workspace prompt.</p></div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>
       <label className={styles.templateSearch}><Search size={18} /><input type="search" value={templateSearch} onChange={(event) => setTemplateSearch(event.target.value)} aria-label="Search templates" placeholder="Search templates" /></label>
       <div className={styles.templateFilters} role="group" aria-label="Template type">
-        {templateFilterKinds.map((kind) => <button type="button" key={kind} aria-pressed={templateKindFilter === kind} className={templateKindFilter === kind ? styles.templateFilterActive : ""} onClick={() => setTemplateKindFilter(kind)}>{kind === "all" ? "All" : kind === "video" ? "Video" : "Photo"}</button>)}
+        <span className={styles.templateScopeLabel}>{templateModuleKind === "photo" ? "Photo templates" : "Video templates"}</span>
       </div>
-      {categories.length > 0 && <div className={styles.templateCategories} role="group" aria-label="Template category">
+      {templateCategories.length > 0 && <div className={styles.templateCategories} role="group" aria-label="Template category">
         <button type="button" aria-pressed={templateCategoryFilter === "all"} className={templateCategoryFilter === "all" ? styles.templateFilterActive : ""} onClick={() => setTemplateCategoryFilter("all")}>All categories</button>
-        {categories.map((category) => <button type="button" key={category.id} aria-pressed={templateCategoryFilter === category.id} className={templateCategoryFilter === category.id ? styles.templateFilterActive : ""} onClick={() => setTemplateCategoryFilter(category.id)}>{category.label}</button>)}
+        {templateCategories.map((category) => <button type="button" key={category.id} aria-pressed={templateCategoryFilter === category.id} className={templateCategoryFilter === category.id ? styles.templateFilterActive : ""} onClick={() => setTemplateCategoryFilter(category.id)}>{category.label}</button>)}
       </div>}
       <p className={styles.templateResultCount} aria-live="polite">{visibleTemplates.length} {visibleTemplates.length === 1 ? "template" : "templates"}</p>
       {visibleTemplates.length ? <div className={styles.templateGalleryGrid}>{visibleTemplates.map((option) => <button type="button" key={option.presetId} className={`${styles.templateGalleryCard} ${activePreset?.presetId === option.presetId ? styles.templateGalleryCardSelected : ""}`} onClick={() => selectTemplate(option)} aria-label={`Use ${option.title}`}>
         {/* This is the public preview already used by the homepage picker. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img loading="lazy" decoding="async" src={option.previewUrl} alt={option.imageAlt} />
-        <span className={styles.templateGalleryCardCopy}><span className={styles.templateGalleryCardMeta}><small>{option.kind === "video" ? "Video" : "Photo"}</small>{option.categoryIds.slice(0, 2).map((categoryId) => { const category = categories.find((item) => item.id === categoryId); return category ? <small key={category.id}>{category.label}</small> : null; })}</span><strong>{option.title}</strong><span className={styles.templateGalleryCardAction}>{activePreset?.presetId === option.presetId ? <><Check size={15} /> Selected</> : <>Use this template <ArrowRight size={15} /></>}</span></span>
+        <span className={styles.templateGalleryCardCopy}><span className={styles.templateGalleryCardMeta}>{option.categoryIds.slice(0, 2).map((categoryId) => { const category = templateCategories.find((item) => item.id === categoryId); return category ? <small key={category.id}>{category.label}</small> : null; })}</span><strong>{option.title}</strong><span className={styles.templateGalleryCardAction}>{activePreset?.presetId === option.presetId ? <><Check size={15} /> Selected</> : <>Use this template <ArrowRight size={15} /></>}</span></span>
       </button>)}</div> : <div className={styles.templateGalleryEmpty}><Clapperboard size={26} /><p>No templates match your search.</p></div>}
     </section></div>;
   }
@@ -1298,14 +1320,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       <img className={styles.templatePreview} src={preset.previewUrl} alt={preset.title} decoding="async" />
       <div className={styles.templateCopy}><span className={styles.badge}>{video ? "Video template" : "Image template"}</span><h2>{preset.title}</h2><p>Use this style with your own product photos and details.</p>
         {video && !task && presenterStudioEnabled && <div className={styles.templateScene}><span>Video scene</span><strong>{catalog?.scenes.find((item) => item.id === selectedScene)?.name ?? selectedScene}</strong></div>}
-        {video && !task && !presenterStudioEnabled && <label className={styles.templateScene}><span>Video scene</span><select className={styles.input} aria-label="Video scene" value={selectedScene} disabled={working} onChange={(event) => {
-          const nextScene = event.target.value as WorkspacePreset["sceneId"]; setPresetSceneId(nextScene);
-          if (view === "agent" && selectedSceneId) { setSelectedSceneId(nextScene); window.history.replaceState({ ...window.history.state, scene: nextScene }, ""); }
-        }}>{catalog?.scenes.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>}
+        {video && !task && !presenterStudioEnabled && <div className={styles.templateScene}><span>Video scene</span><WorkspaceSelect
+          ariaLabel="Video scene"
+          value={selectedScene}
+          disabled={working}
+          options={sceneOptions}
+          onChange={(value) => {
+            const nextScene = value as WorkspacePreset["sceneId"]; setPresetSceneId(nextScene);
+            if (view === "agent" && selectedSceneId) { setSelectedSceneId(nextScene); window.history.replaceState({ ...window.history.state, scene: nextScene }, ""); }
+          }}
+        /></div>}
         {video && task && <p>{catalog?.scenes.find((item) => item.id === selectedScene)?.name}</p>}
       </div>
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
-        setActivePreset(undefined); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
+        setPresets((current) => ({ ...current, [preset.kind]: undefined })); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
         if (!video) setImageInput((current) => ({ ...current, prompt: "", toolId: "custom" }));
         const url = new URL(window.location.href); url.pathname = staticViewHref(basePath, view);
         url.search = ""; url.hash = "";

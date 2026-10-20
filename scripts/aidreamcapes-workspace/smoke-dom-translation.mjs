@@ -142,7 +142,8 @@ try {
     await page.getByLabel("Describe your video idea").fill("A hand turns the product slowly beside a window.");
     await page.getByRole("tab", { name: "AI Image", exact: true }).click();
     await page.getByLabel("Describe your image idea").fill("A product on a clean white background.");
-    await page.getByRole("combobox", { name: "Image style", exact: true }).selectOption("white-background");
+    await page.getByRole("combobox", { name: "Image style", exact: true }).click();
+    await page.getByRole("option", { name: "White background", exact: true }).click();
     if (process.env.AIVIDEOSUGC_BROWSER_ARTIFACTS) await page.screenshot({ path: path.join(process.env.AIVIDEOSUGC_BROWSER_ARTIFACTS, "image-desktop.png"), fullPage: true });
     await page.evaluate(simulateTranslation);
     await page.getByRole("button", { name: "Continue to image", exact: true }).click();

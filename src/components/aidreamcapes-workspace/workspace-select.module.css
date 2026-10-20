@@ -1,0 +1,144 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.trigger {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line, #e3e6ec);
+  border-radius: 9px;
+  background: var(--surface, #fff);
+  color: var(--ink, #101623);
+  padding: 7px 9px 7px 11px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+
+.trigger:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--purple, #6035ff) 46%, var(--line, #e3e6ec));
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--purple, #6035ff);
+  outline-offset: 2px;
+}
+
+.trigger:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+.triggerBare {
+  border-color: transparent;
+  background: transparent;
+  padding: 0 2px;
+  color: var(--ink, #101623);
+  font-weight: 500;
+}
+
+.triggerBare:hover:not(:disabled) {
+  border-color: transparent;
+  background: transparent;
+}
+
+.leading {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted, #73777d);
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  flex: none;
+  color: var(--muted, #73777d);
+  transition: transform .16s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: fixed;
+  z-index: 90;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line, #e3e6ec);
+  border-radius: 12px;
+  background: var(--surface, #fff);
+  box-shadow: 0 18px 44px #10162324, 0 2px 8px #10162314;
+  padding: 6px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink, #101623);
+  cursor: pointer;
+}
+
+.optionActive {
+  background: color-mix(in srgb, var(--purple, #6035ff) 10%, var(--surface, #fff));
+}
+
+.optionSelected {
+  font-weight: 600;
+}
+
+.optionDisabled {
+  color: var(--muted, #73777d);
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+.optionText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optionLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.optionHint {
+  color: var(--muted, #73777d);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.optionCheck {
+  flex: none;
+  color: var(--purple, #6035ff);
+}
+
+.empty {
+  padding: 12px;
+  color: var(--muted, #73777d);
+  font-size: 12px;
+  text-align: center;
+}

@@ -140,7 +140,7 @@ try {
   for (const customer of [false, true]) {
     const { page, errors, preset } = await openCase("video", customer);
     assert.equal(await page.getByLabel("Describe your video idea").inputValue(), preset.prompt);
-    assert.equal(await page.getByRole("combobox", { name: "Video scene", exact: true }).inputValue(), preset.sceneId);
+    assert.equal(await page.getByRole("combobox", { name: "Video scene", exact: true }).getAttribute("data-value"), preset.sceneId);
     assert.equal(await page.locator('[data-testid="workspace-template"] img').count(), 1, "template preview is displayed without uploading it as a product asset");
     if (!customer) {
       assert.equal(await page.getByLabel("Upload video reference photo").isDisabled(), true);
@@ -186,7 +186,7 @@ try {
   for (const customer of [false, true]) {
     const { page, errors, preset } = await openCase("photo", customer);
     assert.equal(await page.getByLabel("Describe your image idea").inputValue(), preset.prompt);
-    assert.equal(await page.getByRole("combobox", { name: "Image style" }).inputValue(), "lifestyle-photos");
+    assert.equal(await page.getByRole("combobox", { name: "Image style" }).getAttribute("data-value"), "lifestyle-photos");
     assert.equal(await page.locator('[data-testid="workspace-template"] img').getAttribute("src"), preset.previewUrl);
     assert.equal(await page.locator("form img").count(), 0, "template preview is not inserted into image assetUrls");
     assert.equal(await page.getByLabel("Upload image reference photo").isDisabled(), !customer);

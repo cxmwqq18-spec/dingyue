@@ -407,6 +407,7 @@ textarea.input { resize: vertical; min-height: 100px; }
 .templateSearch input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font: inherit; }
 .templateFilters, .templateCategories { display: flex; align-items: center; gap: 7px; }
 .templateFilters { margin-bottom: 10px; }
+.templateScopeLabel { display: inline-flex; align-items: center; min-height: 33px; padding: 6px 14px; border: 1px solid var(--purple); border-radius: 999px; color: #fff; background: var(--purple); font-size: 12px; font-weight: 600; }
 .templateCategories { flex-wrap: wrap; padding: 1px 2px 5px; }
 .templateFilters button, .templateCategories button { min-height: 33px; flex: 0 0 auto; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: var(--surface); font-size: 12px; font-weight: 600; cursor: pointer; }
 .templateFilters button:hover, .templateCategories button:hover { border-color: var(--purple); color: var(--ink); }
