@@ -713,6 +713,7 @@ function IndexPage({ data, r }: Props) {
 
 type V2ActorCard = { id: string; name: string; style: string; scene: string; age: string; gender: string; use: string; category: string; image: V2Image; href: string };
 type V2ActorDetail = V2ActorCard & { talent: string; line: string };
+const actorWorkspaceEntry = (actor: Pick<V2ActorCard, "id">) => ({ view: "actors" as const, query: { actor: actor.id }, expires: 0 });
 const actorDirectoryCss = `
 .adc2 .actor-directory-shell{position:relative}
 .adc2 .actor-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:36px;align-items:start}
@@ -781,7 +782,7 @@ function ActorDirectoryPage({ data, r }: Props) {
                         <h3>{actor.name}</h3>
                         <p className="actor-style">{actor.style}</p>
                         <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-                        <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Use {actor.name} →</WorkspaceEntryLink>
+                        <WorkspaceEntryLink className="btn btn-grad" href={r.href("/app/create/ai-actors")} entry={actorWorkspaceEntry(actor)}>Use {actor.name} →</WorkspaceEntryLink>
                       </div>
                     </article>)}
                   </div>
@@ -876,7 +877,7 @@ function ActorCategoryPage({ data, r }: Props) {
               <h3>{actor.name}</h3>
               <p className="actor-style">{actor.style}</p>
               <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-              <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Meet {actor.name} →</WorkspaceEntryLink>
+              <WorkspaceEntryLink className="btn btn-grad" href={r.href("/app/create/ai-actors")} entry={actorWorkspaceEntry(actor)}>Meet {actor.name} →</WorkspaceEntryLink>
             </div>
           </li>)}
         </ul>
@@ -921,7 +922,7 @@ function ActorDetailPage({ data, r }: Props) {
             </dl>
             <blockquote className="actor-detail-line"><b>Sample line</b>“{actor.line}”</blockquote>
             <div className="actor-detail-actions">
-              <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Put {actor.name} in your next ad →</WorkspaceEntryLink>
+              <WorkspaceEntryLink className="btn btn-grad" href={r.href("/app/create/ai-actors")} entry={actorWorkspaceEntry(actor)}>Put {actor.name} in your next ad →</WorkspaceEntryLink>
               <StartNote note={text(data.startNote)} r={r} />
             </div>
           </div>

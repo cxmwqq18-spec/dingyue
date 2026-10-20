@@ -80,6 +80,7 @@ export interface AidreamcapesWorkspaceProps {
   supportPath?: string;
   presenterStudioEnabled?: boolean;
   initialImageTool?: WorkspaceImageTool;
+  initialActorId?: string;
   initialPreset?: WorkspacePreset;
   initialHandoff?: WorkspaceHandoff;
   initialTemplateGallery?: WorkspaceTemplateGallery;
@@ -118,7 +119,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery, initialInspirations }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialActorId, initialPreset, initialHandoff, initialTemplateGallery, initialInspirations }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -163,7 +164,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [libraryFilter, setLibraryFilter] = useState<string>(initialHandoff?.filter ?? "all");
   const [actorSearch, setActorSearch] = useState("");
   const [actorGenderFilter, setActorGenderFilter] = useState<"all" | "female" | "male">("all");
-  const [avatarSelectionId, setAvatarSelectionId] = useState("");
+  const [avatarSelectionId, setAvatarSelectionId] = useState(initialActorId ?? "");
   const [avatarScript, setAvatarScript] = useState("");
   const [avatarProductImages, setAvatarProductImages] = useState<string[]>([]);
   const [avatarModelId, setAvatarModelId] = useState("");

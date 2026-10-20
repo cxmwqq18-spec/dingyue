@@ -135,6 +135,8 @@ done
 test "$READY" = 1
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/smoke-aidreamcapes-release-routes.mjs > .candidate-routes.json
 cat .candidate-routes.json
+AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs > .candidate-card-links.json
+cat .candidate-card-links.json
 ${fullSeoContract ? 'AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json\ncat .candidate-contract.json' : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
@@ -179,6 +181,8 @@ cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-release-routes.mjs > .origin-routes.json
 cat .origin-routes.json
+AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs > .origin-card-links.json
+cat .origin-card-links.json
 ${fullSeoContract ? `AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
 cat .origin-contract.json` : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}

@@ -58,6 +58,8 @@ export async function renderAidreamcapesWorkspace({
   const entryCookies = await cookies();
   const transfer = !taskId && !resolvedPreset && !presetRequest
     ? readWorkspaceEntry(entryCookies.get(entryCookieName(initialView))?.value, initialView) : undefined;
+  const initialActorId = transfer?.query.actor && /^[a-z0-9][a-z0-9-]{0,80}$/i.test(transfer.query.actor)
+    ? transfer.query.actor : undefined;
   if (transfer) {
     const entry = aidreamcapesWorkspaceEntry(transfer.query);
     presetRequest = entry.presetRequest;
@@ -105,10 +107,11 @@ export async function renderAidreamcapesWorkspace({
     ? `${basePath}/app/create/scene/${encodeURIComponent(sceneRouteSlug)}`
     : returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
   return <AidreamcapesWorkspace
-    key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? "workspace"}
+    key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? initialActorId ?? "workspace"}
     siteId={AIVIDEOSUGC_SITE_ID}
     basePath={basePath}
     initialView={initialPreset ? initialPreset.kind === "photo" ? "images" : "video" : initialView}
+    initialActorId={initialActorId}
     initialTaskId={taskId}
     initialSceneId={sceneId}
     initialProductUrl={initialProductUrl}
@@ -124,7 +127,7 @@ export async function renderAidreamcapesWorkspace({
     accountPath={`${accountBase}/account`}
     logoutPath={`${accountBase}/logout`}
     supportPath={`${accountBase}/contact-us`}
-    presenterStudioEnabled={routeSlug === "aidreamcapes"}
+    presenterStudioEnabled={routeSlug === "aidreamcapes" || initialView === "actors"}
   />;
 }
 

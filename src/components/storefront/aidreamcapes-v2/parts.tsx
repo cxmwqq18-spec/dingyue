@@ -1,4 +1,5 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
 import "./thematic-links.css";
@@ -557,9 +558,24 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
   );
 }
 
+/** Carry the selected case identity outside the URL; the server resolves it from the source row. */
+function workspaceCardEntry(card: V2Card, r: V2Resolvers) {
+  const target = workspaceEntryTarget(r.href(card.href));
+  if (!target.transfer) return undefined;
+  return {
+    ...target.transfer,
+    query: {
+      ...target.transfer.query,
+      ...(card.prompt ? { prompt: card.prompt.slice(0, 2048) } : {}),
+      ...(card.aspect ? { aspect: card.aspect } : {})
+    }
+  };
+}
+
 /** A page-specific example. Case cards keep the result, format and next action together. */
 export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   const video = card.video;
+  const entry = workspaceCardEntry(card, r);
   return (
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
@@ -569,7 +585,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
       </div>
       <div className="tb">
         <h3>{card.name}<SoonLabel soon={card.soon} /></h3>
-        <WorkspaceEntryLink className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</WorkspaceEntryLink>
+        <WorkspaceEntryLink className="use" href={r.href(card.href)} entry={entry}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</WorkspaceEntryLink>
       </div>
     </article>
   );
@@ -595,6 +611,8 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
     industries: [],
     platforms: [],
     mediaRef: item.mediaRef,
+    ...(item.prompt ? { prompt: item.prompt } : {}),
+    ...(item.aspect ? { aspect: item.aspect } : {}),
     ...(item.video ? { video: item.video } : {})
   }} r={r} />;
 }

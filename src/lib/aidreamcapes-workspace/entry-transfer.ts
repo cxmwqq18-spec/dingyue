@@ -9,7 +9,7 @@ export type WorkspaceEntryTransfer = {
   scene?: string;
   expires: number;
 };
-const allowedKeys = new Set(["view", "prompt", "aspect", "duration", "scene", "tool", "tool_id", "template", "size", "length", "templates", "category", "kind", "filter", "source", "preset", "url"]);
+const allowedKeys = new Set(["view", "prompt", "aspect", "duration", "scene", "tool", "tool_id", "template", "size", "length", "templates", "category", "kind", "filter", "source", "preset", "url", "actor"]);
 export const entryCookieName = (view: WorkspaceView) => `adc_workspace_entry_${view}`;
 
 /** Only inert public inputs can cross into a workspace; never tasks or assets. */
