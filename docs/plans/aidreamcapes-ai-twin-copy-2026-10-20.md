@@ -281,3 +281,14 @@ A 版已按字段级增量写入，不使用整页快照。字段清单见
 1. 先采用 A 版（预览安全），还是等真实克隆能力完成后直接使用 B 版？
 2. A 版是否保留“AI Twin is in preview”的顶部 notice？我建议保留，至少在能力上线前保留。
 3. 是否同意把当前页面 12 个 section 中的 `twin-presenters` 改为“credible AI Twin”四点（Likeness / Voice / Consent / Review）？
+
+## 8. 落库与线上回读记录（2026-10-20）
+
+- 已确认采用 A 版，保留 preview notice，并替换 `twin-presenters`。
+- 代码发布：`bfcf7fa0a29aa1004ad022072ce0e2df61a6da40`（仅代码，无内容快照）。
+- 内容 manifest：`a2aba4681`，字段清单 `scripts/manifests/aidreamcapes-ai-twin-copy-2026-10-20.json`。
+- 目标行：`site_aidreamcapes_ai_twin`；写入后 `updatedAt=2026-10-20T13:12:04.042Z`。
+- 写入方式：当前 `LivePage.contentJson` 字段级 patch + `updatedAt` compare-and-set；未写 `SitePublishedState`，未读取 `ThemePage`/`draftJson`/`publishedJson` 或历史 publication。
+- 线上无 JavaScript 回读通过：H1、preview notice、可信度四点、对比表、7 个 FAQ 和 CTA 均在 SSR HTML 中；canonical、ogImage 和图片未改变。
+- 回读 JSON-LD：`Organization` / `WebPage` / `FAQPage`，FAQPage 7 个问题。
+- 站点隔离：写入只匹配 `site_aidreamcapes_ai_twin`；MyDreamShoots 和 Aidreamcapes EU 未写入。
