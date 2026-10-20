@@ -47,6 +47,9 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
           {navigation.menus.map((menu) => {
             const rich = menu.groups.length === 1 && menu.groups[0].items.some((item) => item.description);
             const wideDirectory = !rich && menu.groups.some((group) => group.columns);
+            const sceneGroupIndex = wideDirectory
+              ? menu.groups.findIndex((group) => group.columns === "2")
+              : -1;
             return (
               <div className="nav-item" key={menu.label}>
                 <button aria-expanded="false" className="nav-btn" type="button">
@@ -62,8 +65,8 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                       </div>
                     </div>
                   ) : (
-                    menu.groups.map((group) => (
-                      <div className={group.columns ? "pcol tlist cols3" : "pcol tlist"} key={group.label}>
+                    menu.groups.map((group, index) => (
+                      <div className={group.columns ? `pcol tlist cols3${index === sceneGroupIndex ? " scene-directory" : ""}` : "pcol tlist single-column"} key={group.label}>
                         <div className="ph">{group.label}</div>
                         {group.items.map((item) => <MenuLink key={item.href} link={item} r={r} />)}
                       </div>
