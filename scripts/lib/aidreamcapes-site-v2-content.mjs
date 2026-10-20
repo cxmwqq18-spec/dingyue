@@ -2691,6 +2691,7 @@ export function assignPublicSceneSlugs(pages) {
       ? item.card.publicSlug
       : undefined;
     if (!existing) continue;
+    item.card.href = `/${item.kind === "video" ? "ai-video-generation" : "ai-image-generation"}/${existing}`;
     const key = `${item.kind}\0${existing}`;
     if (used.has(key)) throw new Error(`duplicate_existing_public_scene_slug:${item.kind}:${existing}`);
     used.add(key);
@@ -2710,6 +2711,7 @@ export function assignPublicSceneSlugs(pages) {
       candidate = `${(duplicateLabel ? `${item.base}-${pageSuffix}` : item.base).slice(0, 120 - ending.length).replace(/-+$/g, "")}${ending}`;
     }
     item.card.publicSlug = candidate;
+    item.card.href = `/${item.kind === "video" ? "ai-video-generation" : "ai-image-generation"}/${candidate}`;
     used.add(`${item.kind}\0${candidate}`);
   }
 }
@@ -3239,6 +3241,12 @@ export function validateSiteV2(build = buildSiteV2()) {
         const labelWords = wordCount(card.label);
         if (labelWords < 2 || labelWords > 6) errors.push(`${pageId}: visual picker card labels must contain 2-6 words (${card.label})`);
         if (!Array.isArray(card.chips) || !card.chips.length || card.chips.some((id) => !chips.some((chip) => chip.id === id))) errors.push(`${pageId}: visual picker card has an unknown or missing filter (${card.label})`);
+        if (card.publicSlug) {
+          // Fixed scene route: /ai-video-generation/<slug> or /ai-image-generation/<slug>, no parameters.
+          const staticSceneHref = `/${card.kind === "video" ? "ai-video-generation" : "ai-image-generation"}/${card.publicSlug}`;
+          if (card.href !== staticSceneHref) errors.push(`${pageId}: scene card ${card.label} must link its fixed route ${staticSceneHref}`);
+          continue;
+        }
         if (card.tool) {
           const target = validationSource.master.pages.find((page) => page.id === card.tool);
           // Hub cards are make-this examples: they open the workspace on their own tool (no prompt in the link).
