@@ -61,7 +61,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                     </div>
                   ) : (
                     menu.groups.map((group) => (
-                      <div className="pcol tlist" key={group.label}>
+                      <div className={group.columns === "2" ? "pcol tlist cols2" : "pcol tlist"} key={group.label}>
                         <div className="ph">{group.label}</div>
                         {group.items.map((item) => <MenuLink key={item.href} link={item} r={r} />)}
                       </div>

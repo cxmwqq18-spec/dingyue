@@ -179,13 +179,13 @@ function content(slug, data, seo) {
 const records = [
   { id: "site_aidreamcapes_ai_twin", slug: "/ai-twin", title: "AI Twin concept for product video presenters | AIVideosUGC", contentJson: content("/ai-twin", twin, {
     title: "AI Twin Concept for Product Video Presenters | AIVideosUGC",
-    description: "Explore AI Twin presenter concepts for product videos. Plan a visual style, setting and message, then continue with available AI presenters and an editable storyboard.",
+    description: "Explore AI Twin presenter concepts for product videos. Plan a visual style, setting and message, then continue with the available AI presenters.",
     keywords: "AI Twin concept, AI presenter for product videos, AI video presenter, product video storyboard",
     primaryKeyword: "AI Twin concept", ogImage: twin.heroImage.src, ogImageAlt: twin.heroImage.alt
   }) },
   { id: "site_aidreamcapes_text_to_video", slug: "/text-to-video", title: "Text to Video AI Generator for Product Ads | AIVideosUGC", contentJson: content("/text-to-video", textVideo, {
     title: "Text to Video AI Generator for Product Ads | AIVideosUGC",
-    description: "Turn product facts, photos and a written brief into an editable video storyboard. Refine scenes, generate selected shots, compare versions and review the video before download.",
+    description: "Turn product facts, photos and a written brief into an editable video storyboard. Refine scenes, compare versions and review the video before download.",
     keywords: "text to video AI generator, text to video for product ads, AI product video, editable video storyboard, AI video ads",
     primaryKeyword: "text to video AI generator", ogImage: textVideo.heroImage.src, ogImageAlt: textVideo.heroImage.alt
   }) }

@@ -585,7 +585,12 @@ function CollectionPage({ data, r }: Props) {
 }
 
 function IndexPage({ data, r }: Props) {
+  // Derived AI-actor directory pages carry their own kind and layout.
   if (data.id === "ai-actors") return <ActorDirectoryPage data={data} r={r} />;
+  const actorKind = text(data.kind);
+  if (actorKind === "ai-actors-scene-hub" || actorKind === "ai-actors-age-hub") return <ActorHubPage data={data} r={r} />;
+  if (actorKind === "ai-actors-scene" || actorKind === "ai-actors-gender" || actorKind === "ai-actors-age") return <ActorCategoryPage data={data} r={r} />;
+  if (actorKind === "ai-actors-detail") return <ActorDetailPage data={data} r={r} />;
   const cards = list<V2Card>(data.cards);
   const filters = data.filters as { types: [string, string][]; industries: [string, string][]; platforms: [string, string][] } | undefined;
   const items = list<{ label: string; href: string; text: string; image: V2Image; filterTags?: string[] }>(data.items);
@@ -704,6 +709,7 @@ function IndexPage({ data, r }: Props) {
 }
 
 type V2ActorCard = { id: string; name: string; style: string; scene: string; age: string; gender: string; use: string; category: string; image: V2Image; href: string };
+type V2ActorDetail = V2ActorCard & { talent: string; line: string };
 const actorDirectoryCss = `
 .adc2 .actor-directory-shell{position:relative}
 .adc2 .actor-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:36px;align-items:start}
@@ -727,6 +733,8 @@ const actorDirectoryCss = `
 .adc2 .actor-filter-control{width:100%;padding:9px 10px;border:1px solid var(--line-2);border-radius:10px;background:var(--bg-2);color:var(--ink);font:inherit;font-size:13px}
 .adc2 .actor-filter-control:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
 .adc2 .actor-filter-count{font-size:12px;color:var(--ink-3);min-height:18px}
+.adc2 .actor-grid.actorgroup-list{list-style:none;margin:0;padding:0}
+.adc2 .cardlist .actor-hub-image{object-position:center top}
 @media(max-width:900px){.adc2 .actor-layout{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .actor-filters{position:static;grid-row:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end}.adc2 .actor-filters h2,.adc2 .actor-filter-count{grid-column:1/-1}}
 @media(max-width:640px){.adc2 .actor-main{grid-template-columns:minmax(0,1fr)}.adc2 .actor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .actor-card-copy{padding:11px}.adc2 .actor-card h3{font-size:17px}.adc2 .actor-card .btn{font-size:12px}.adc2 .actor-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px}.adc2 .actor-filter-row label{font-size:11px}.adc2 .actor-filter-control{font-size:12px;padding:8px 7px}}
 `;
@@ -800,7 +808,8 @@ function ActorDirectoryPage({ data, r }: Props) {
     {howTo.length ? <Section eyebrow="How it works" lead={text(data.stepsLead)} title={text(data.stepsH2) || "Make a spoken product ad"}><Steps items={howTo} /></Section> : null}
     <MoreSections r={r} sections={data.more_sections as never} />
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
-    {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} /> : relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
+    {/* The library's own directory links and the hand-written related pages show together. */}
+    {relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
@@ -808,9 +817,115 @@ function ActorDirectoryPage({ data, r }: Props) {
         </div>)}
       </div>
     </Section> : null}
+    {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} /> : null}
     <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
     <Faq items={data.faq} title="Questions" r={r} />
     {cta?.href ? <CtaBand href={r.href(cta.href)} lead={cta.lead} r={r} title={cta.title} /> : null}
+  </>;
+}
+
+function ActorPageFooter({ data, r, cta }: { data: V2Data; r: V2Resolvers; cta?: { title: string; lead: string; href: string } | undefined }) {
+  const links = list<{ label: string; href: string }>(data.relatedLinks);
+  return <>
+    {links.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={links} r={r} title={text(data.relatedH2) || "Related Pages"} /> : null}
+    <Faq items={data.faq} title="Questions" r={r} />
+    {cta?.href ? <CtaBand note={text(data.startNote)} href={r.href(cta.href)} lead={cta.lead} r={r} title={cta.title} /> : null}
+  </>;
+}
+
+// A hub page (/ai-actors/scene, /ai-actors/age-range): one linked card per directory page.
+function ActorHubPage({ data, r }: Props) {
+  const items = list<{ label: string; href: string; text: string; image: V2Image }>(data.items);
+  return <>
+    <Crumbs items={data.breadcrumbs} r={r} />
+    <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+    <section style={{ paddingBottom: 40 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
+    <section style={{ paddingBottom: 60 }}>
+      <div className="wrap cardlist">
+        {items.map((item) => (
+          <article className="cardlist-card" key={item.href}>
+            <Img className="actor-hub-image" image={item.image} r={r} />
+            <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+          </article>
+        ))}
+      </div>
+    </section>
+    <ActorPageFooter cta={data.cta as { title: string; lead: string; href: string } | undefined} data={data} r={r} />
+  </>;
+}
+
+// A category page (/ai-actors/scene/<scene>, /ai-actors/men, /ai-actors/women,
+// /ai-actors/age-range/<range>): the same actor cards as the home directory, but only
+// the actors of this category, each card opening the actor's own page.
+function ActorCategoryPage({ data, r }: Props) {
+  const actors = list<V2ActorCard>(data.actors);
+  return <>
+    <Crumbs items={data.breadcrumbs} r={r} />
+    <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+    <section style={{ paddingBottom: 34 }}><div className="wrap"><Intro paras={list<string>(data.intro)} r={r} /></div></section>
+    <section className="actor-directory-section" aria-label="AI actors in this category">
+      <div className="wrap">
+        <style>{actorDirectoryCss}</style>
+        <ul className="actor-grid actorgroup-list">
+          {actors.map((actor, index) => <li className="actor-card" key={actor.id}>
+            <Img className="actor-card-image" eager={index < 2} image={actor.image} r={r} />
+            <div className="actor-card-copy">
+              <h3>{actor.name}</h3>
+              <p className="actor-style">{actor.style}</p>
+              <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
+              <a className="btn btn-grad" href={r.href(actor.href)}>Meet {actor.name} →</a>
+            </div>
+          </li>)}
+        </ul>
+      </div>
+    </section>
+    <ActorPageFooter cta={data.cta as { title: string; lead: string; href: string } | undefined} data={data} r={r} />
+  </>;
+}
+
+// One presenter's own page (/ai-actors/men|women/<name>): portrait, facts, a sample
+// line and the workspace button preloaded with the ad format.
+const actorDetailCss = `
+.adc2 .actor-detail{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:40px;align-items:start;padding-bottom:40px}
+.adc2 .actor-detail-media img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:18px;border:1px solid var(--line);background:#15151a}
+.adc2 .actor-detail-info{display:flex;flex-direction:column;gap:22px;min-width:0}
+.adc2 .actor-detail-facts{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:10px 24px;font-size:15px;margin:0}
+.adc2 .actor-detail-facts dt{color:var(--ink-3);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;align-self:center}
+.adc2 .actor-detail-facts dd{margin:0;color:var(--ink);word-break:break-word}
+.adc2 .actor-detail-line{border-left:3px solid var(--purple);background:rgba(139,92,246,.08);border-radius:0 12px 12px 0;padding:14px 18px;color:var(--ink-2);font-size:15.5px;line-height:1.6;margin:0}
+.adc2 .actor-detail-line b{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.adc2 .actor-detail-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.adc2 .actor-detail-actions p.start-note{width:100%}
+@media(max-width:860px){.adc2 .actor-detail{grid-template-columns:minmax(0,1fr);gap:24px}.adc2 .actor-detail-media{max-width:340px}}
+`;
+
+function ActorDetailPage({ data, r }: Props) {
+  const actor = data.actor as V2ActorDetail | undefined;
+  if (!actor) return null;
+  const facts = list<[string, string]>(data.facts);
+  return <>
+    <Crumbs items={data.breadcrumbs} r={r} />
+    <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
+    <section className="actor-detail-section" aria-label="AI actor profile">
+      <div className="wrap">
+        <style>{actorDetailCss}</style>
+        <div className="actor-detail">
+          <Img className="actor-detail-media" eager image={actor.image} r={r} />
+          <div className="actor-detail-info">
+            <Intro paras={list<string>(data.intro)} r={r} />
+            <dl className="actor-detail-facts">
+              {facts.map(([label, value]) => <Fragment key={label}><dt>{label}</dt><dd>{value}</dd></Fragment>)}
+            </dl>
+            <blockquote className="actor-detail-line"><b>Sample line</b>“{actor.line}”</blockquote>
+            <div className="actor-detail-actions">
+              <a className="btn btn-grad" href={r.href(actor.href)}>Put {actor.name} in your next ad →</a>
+              <StartNote note={text(data.startNote)} r={r} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <ActorPageFooter cta={data.cta as { title: string; lead: string; href: string } | undefined} data={data} r={r} />
   </>;
 }
 

@@ -106,6 +106,8 @@ export interface AidreamcapesV2Navigation {
 export interface AidreamcapesZipNavigationGroup {
   label: string;
   items: ThemeNavLink[];
+  /** A long link column may split its items into a second sub-column ("2"). */
+  columns?: string;
 }
 
 export interface AidreamcapesZipNavigationMenu {

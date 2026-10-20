@@ -27,8 +27,21 @@ for (const href of ["/ai-video-generation/text-to-video", "/ai-video-generation/
   assert.equal(video.groups.flatMap((group) => group.items).filter((item) => item.href === href).length, 1);
   assert.equal(navigation.footer.groups.find((group) => group.label === "Video").items.filter((item) => item.href === href).length, 1);
 }
-assert(navigation.links.some((item) => item.href === "/ai-actors"));
+// The AI Actors mega-menu mirrors the Templates menu; the flat top-level link is gone.
+const actorsMenu = navigation.menus.find((menu) => menu.label === "AI Actors");
+assert(actorsMenu, "The AI Actors menu must exist");
+assert.deepEqual(actorsMenu.groups.map((group) => group.items.length), [31, 2, 5], "The AI Actors menu shows 31 scenes, 2 genders and 5 age ranges.");
+assert.equal(actorsMenu.groups[0].columns, "2", "The scene column renders in two sub-columns.");
+assert.deepEqual(actorsMenu.groups[1].items.map((item) => item.href), ["/ai-actors/women", "/ai-actors/men"]);
+assert.equal(actorsMenu.footerLink.href, "/ai-actors");
+assert(!navigation.links.some((item) => item.href === "/ai-actors"), "AI Actors is a menu now, not a flat top-level link.");
 assert(!video.groups.flatMap((group) => group.items).some((item) => item.href === "/ai-actors"));
+// Every menu link opens a page that exists in the generated site.
+const routeSet = new Set(buildSiteV2().pages.map((page) => page.slug));
+for (const item of [...actorsMenu.groups.flatMap((group) => group.items), actorsMenu.footerLink]) {
+  assert(routeSet.has(item.href), `AI Actors menu link opens a real page: ${item.href}`);
+}
+assert.deepEqual(actorsMenu.groups[0].items.map((item) => item.href).slice(0, 3), ["/ai-actors/scene/indoor", "/ai-actors/scene/home", "/ai-actors/scene/outdoor"]);
 const current = structuredClone(navigation);
 current.menus[0].groups[0].items[0].description = "An online edit to preserve.";
 const repaired = withAidreamcapesDirectoryNavigation(current);

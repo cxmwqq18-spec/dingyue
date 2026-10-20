@@ -2,6 +2,38 @@
   "version": 1,
   "entries": [
     {
+      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-garage-1-r1",
+      "rule": "one-page",
+      "pages": [
+        "ai-actors-age-range",
+        "ai-actors-scene"
+      ]
+    },
+    {
+      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-home-1-r1",
+      "rule": "one-page",
+      "pages": [
+        "ai-actors",
+        "ai-actors-scene"
+      ]
+    },
+    {
+      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-indoor-1-r1",
+      "rule": "one-page",
+      "pages": [
+        "ai-actors",
+        "ai-actors-scene"
+      ]
+    },
+    {
+      "image": "/assets/sites/site_aidreamcapes/site-v2/guide/ac1-actor-card-outdoor-1-r1",
+      "rule": "one-page",
+      "pages": [
+        "ai-actors",
+        "ai-actors-scene"
+      ]
+    },
+    {
       "image": "/assets/sites/site_aidreamcapes/site-v2/guide/tw1-wall-accessories-1",
       "rule": "one-page",
       "pages": [
