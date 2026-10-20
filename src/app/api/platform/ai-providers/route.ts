@@ -97,6 +97,7 @@ async function payload(extra: Record<string, unknown> = {}) {
       priceImageQualities: provider.priceImageQualities,
       priceImageResolutions: provider.priceImageResolutions,
       priceImageInput: provider.priceImageInput,
+      priceVideoInput: provider.priceVideoInput,
       priceVideoInputPerSecond: provider.priceVideoInputPerSecond,
       priceAudioInput: provider.priceAudioInput,
       priceAudioInputPerSecond: provider.priceAudioInputPerSecond,
@@ -168,6 +169,7 @@ export async function PUT(request: NextRequest) {
     priceImageQualities?: unknown;
     priceImageResolutions?: unknown;
     priceImageInput?: number;
+    priceVideoInput?: number;
     priceVideoInputPerSecond?: number;
     priceAudioInput?: number;
     priceAudioInputPerSecond?: number;
@@ -231,6 +233,7 @@ export async function PUT(request: NextRequest) {
     priceImageQualities: body.priceImageQualities,
     priceImageResolutions: body.priceImageResolutions,
     priceImageInput: body.priceImageInput,
+    priceVideoInput: body.priceVideoInput,
     priceVideoInputPerSecond: body.priceVideoInputPerSecond,
     priceAudioInput: body.priceAudioInput,
     priceAudioInputPerSecond: body.priceAudioInputPerSecond,

@@ -826,6 +826,7 @@ export interface PlatformAiProvider {
   priceImageQualities?: Record<string, number>;
   priceImageResolutions?: Record<string, number>;
   priceImageInput?: number;
+  priceVideoInput?: number;
   priceVideoInputPerSecond?: number;
   priceAudioInput?: number;
   priceAudioInputPerSecond?: number;

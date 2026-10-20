@@ -1,9 +1,21 @@
 # AI 网关：模型级价格维护与多模态计费设计
 
 - 日期：2026-10-20
-- 状态：设计文档；本文不代表数据库已迁移、价格已录入或线上已生效
+- 状态：已实现（本地库已应用迁移并通过 smoke 验收）；线上发布需随 release 执行 `prisma migrate deploy`
 - 适用范围：平台后台 AI 网关（共享层），影响 `PlatformAiProvider` 派发与所有消费积分的生成入口
 - 前置整改：已完成「中转平台 + 一键同步模型」与 5 个派发缺陷修复
+
+## 0. 实施结果速览
+
+| 项 | 落地位置 |
+|---|---|
+| 价格字段 | `PlatformAiProvider` 新增 12 列（`priceEnabled` / `priceCredits` / 4 个维度价格矩阵 / 5 个输入计费标量） |
+| 迁移 | `20261020160000_add_platform_ai_provider_pricing` |
+| 计价核心 | `src/lib/ai-provider-pricing.ts`（纯函数）+ `src/lib/ai-provider-billing.ts`（通道选择与同源入口） |
+| 扣费接入 | `src/lib/stores/job-store.ts` 预扣费 |
+| 报价接入 | `src/lib/aidreamcapes-workspace/provider.ts`（`workspaceShotCredits`） |
+| 后台 UI | `platform-ai-provider-panel.tsx` 新增「03 价格与计费」，模型 ID 改为下拉，调度策略顺延为 04 |
+| 验收 | `smoke-ai-provider-pricing.mjs`（12 项单测）+ `smoke-ai-provider-pricing-api.mjs`（5 步端到端） |
 
 ## 1. 现状：积分到底定义在哪
 
@@ -168,14 +180,24 @@ export function resolveAiProviderCredits(input: AiProviderPriceInput): number;
 - `priceEnabled` 默认 `false` → 现有计价链路逐字节不变。
 - 现有 `VideoTheme.modelPricing` 与 `creditCost` 保留，继续作为回退层。
 
-## 9. 验收
+## 9. 验收（已执行）
 
-1. `resolveAiProviderCredits` 单测：未定价返回 null；时长/分辨率/画质覆盖正确；输入模态加价正确；outputCount 正确；负值归零。
-2. 报价与扣费一致性：同一参数两处结果必须相等（工作台 409 回归）。
-3. 未开启 `priceEnabled` 的模型，扣费金额与改动前完全一致（对比迁移前后）。
-4. 后台 UI：模型下拉可选中同步来的模型；价格矩阵可编辑并保存回读一致。
+1. `resolveAiProviderPrice` 单测 12 项：未定价返回 null；时长/分辨率/画质覆盖顺序正确；图片/视频/音频输入分别加价；outputCount 参与总价；负值归零；价格矩阵忽略空键位与非法值。→ `npm run smoke:ai-provider-pricing` 全通过。
+2. 价格 API 端到端 5 步：创建带价通道 → 回读一致（基础分/时长矩阵/分辨率矩阵/三类输入价）→ 未定价通道不受影响 → 计价数学正确（15s+2 图 = 98 分，1080p = 120 分）→ 关闭 `priceEnabled` 后回落主题价口径。→ `scripts/smoke-ai-provider-pricing-api.mjs` 全通过。
+3. 既有回归：`smoke-ai-providers`、`smoke-ai-relay-sync` 全通过；`tsc --noEmit` 与 `eslint` 零错误零警告。
+4. 浏览器实测：抽屉内模型下拉可选中已同步模型，价格区字段齐全，保存后回读值一致（基础 36 / 图片输入 5 / 低画质 50），无 console 错误。
 
-## 10. 风险
+## 10. 遗留与注意事项
+
+| 事项 | 说明 |
+|---|---|
+| 影灵时长档位 | 平台时长集合已放开为 5/6/10/15/30，但上游实际支持的档位需逐模型核对后再勾选 |
+| 视频/音频输入时长 | 素材表不持久化时长，按秒计费依赖请求携带 `inputDurations[assetId]`；缺失时只按条计费，不会凭空估算 |
+| 工作台 30s | 工作台 30 秒由 2 段 15 秒拼成，模型价按单段时长计算，与既有行为一致 |
+| 主题价仍可覆盖 | 主题级 `creditCost` / `modelPricing` 保留为回落层，模型价优先级最高 |
+| 硬编码残留 | `video-frame-config.ts` 的时长/分辨率倍率仍作为「未定价模型」的兜底口径，属预期保留 |
+
+## 11. 风险
 
 | 风险 | 缓解 |
 |---|---|

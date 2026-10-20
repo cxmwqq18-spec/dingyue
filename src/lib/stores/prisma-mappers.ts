@@ -1469,6 +1469,7 @@ export function toPlatformAiProvider(record: {
   priceImageQualities?: unknown;
   priceImageResolutions?: unknown;
   priceImageInput?: number | null;
+  priceVideoInput?: number | null;
   priceVideoInputPerSecond?: number | null;
   priceAudioInput?: number | null;
   priceAudioInputPerSecond?: number | null;
@@ -1515,6 +1516,7 @@ export function toPlatformAiProvider(record: {
     priceImageQualities: readPriceMatrix(record.priceImageQualities),
     priceImageResolutions: readPriceMatrix(record.priceImageResolutions),
     priceImageInput: Number.isFinite(Number(record.priceImageInput)) ? Math.max(0, Math.trunc(Number(record.priceImageInput))) : 0,
+    priceVideoInput: Number.isFinite(Number(record.priceVideoInput)) ? Math.max(0, Math.trunc(Number(record.priceVideoInput))) : 0,
     priceVideoInputPerSecond: Number.isFinite(Number(record.priceVideoInputPerSecond)) ? Math.max(0, Math.trunc(Number(record.priceVideoInputPerSecond))) : 0,
     priceAudioInput: Number.isFinite(Number(record.priceAudioInput)) ? Math.max(0, Math.trunc(Number(record.priceAudioInput))) : 0,
     priceAudioInputPerSecond: Number.isFinite(Number(record.priceAudioInputPerSecond)) ? Math.max(0, Math.trunc(Number(record.priceAudioInputPerSecond))) : 0,

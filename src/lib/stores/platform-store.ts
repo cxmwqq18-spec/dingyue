@@ -1784,6 +1784,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   priceImageQualities?: unknown;
   priceImageResolutions?: unknown;
   priceImageInput?: number;
+  priceVideoInput?: number;
   priceVideoInputPerSecond?: number;
   priceAudioInput?: number;
   priceAudioInputPerSecond?: number;
@@ -1843,6 +1844,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             priceImageQualities: normalizeProviderPriceMatrix(params.priceImageQualities ?? existing.priceImageQualities),
             priceImageResolutions: normalizeProviderPriceMatrix(params.priceImageResolutions ?? existing.priceImageResolutions),
             priceImageInput: normalizePriceCredits(params.priceImageInput ?? existing.priceImageInput),
+            priceVideoInput: normalizePriceCredits(params.priceVideoInput ?? existing.priceVideoInput),
             priceVideoInputPerSecond: normalizePriceCredits(params.priceVideoInputPerSecond ?? existing.priceVideoInputPerSecond),
             priceAudioInput: normalizePriceCredits(params.priceAudioInput ?? existing.priceAudioInput),
             priceAudioInputPerSecond: normalizePriceCredits(params.priceAudioInputPerSecond ?? existing.priceAudioInputPerSecond),
@@ -1879,6 +1881,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             priceImageQualities: normalizeProviderPriceMatrix(params.priceImageQualities),
             priceImageResolutions: normalizeProviderPriceMatrix(params.priceImageResolutions),
             priceImageInput: normalizePriceCredits(params.priceImageInput),
+            priceVideoInput: normalizePriceCredits(params.priceVideoInput),
             priceVideoInputPerSecond: normalizePriceCredits(params.priceVideoInputPerSecond),
             priceAudioInput: normalizePriceCredits(params.priceAudioInput),
             priceAudioInputPerSecond: normalizePriceCredits(params.priceAudioInputPerSecond),
