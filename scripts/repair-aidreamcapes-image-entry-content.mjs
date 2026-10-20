@@ -183,11 +183,10 @@ try {
       addOperation(`/sections/${sectionKey}/settings/data/examples/lead`, "examples.lead", leadExpected.before, leadExpected.after);
     }
 
-    const groupByLabel = new Map(groups.map((group, index) => [group.label, { group, index }]));
     for (const expected of groupsExpected) {
-      const match = groupByLabel.get(expected.before);
-      assert(match, `Missing current example group ${expected.before}`);
-      addOperation(`/sections/${sectionKey}/settings/data/examples/groups/${match.index}/label`, `examples.groups.${match.index}.label`, expected.before, expected.after);
+      const groupIndex = groups.findIndex((group) => group.label === expected.before || group.label === expected.after);
+      assert(groupIndex >= 0, `Missing current example group ${expected.before}`);
+      addOperation(`/sections/${sectionKey}/settings/data/examples/groups/${groupIndex}/label`, `examples.groups.${groupIndex}.label`, expected.before, expected.after);
     }
 
     const found = new Set();
