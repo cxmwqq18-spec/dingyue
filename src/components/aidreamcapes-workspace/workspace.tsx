@@ -18,6 +18,7 @@ import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-cre
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
 import { workspaceMediaRoutePath, workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-workspace/static-routes";
+import { EmbeddedInspirations, type EmbeddedInspiration } from "./inspirations-embedded";
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -80,6 +81,7 @@ export interface AidreamcapesWorkspaceProps {
   initialPreset?: WorkspacePreset;
   initialHandoff?: WorkspaceHandoff;
   initialTemplateGallery?: WorkspaceTemplateGallery;
+  initialInspirations?: EmbeddedInspiration[];
 }
 
 const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
@@ -114,7 +116,7 @@ function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<Wor
   };
 }
 
-export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery }: AidreamcapesWorkspaceProps) {
+export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, initialCatalog, initialView = "home", initialTaskId, initialSceneId, initialProductUrl, loginPath, accountPath, logoutPath, supportPath, presenterStudioEnabled = false, initialImageTool = "custom", initialPreset, initialHandoff, initialTemplateGallery, initialInspirations }: AidreamcapesWorkspaceProps) {
   const api = `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`;
   const loginHref = loginPath ?? `${basePath}/login?next=${encodeURIComponent(`${basePath}/app`)}`;
   const accountHref = accountPath ?? `${basePath}/account`;
@@ -124,6 +126,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     return `${target.pathname}${target.search}${target.hash}`;
   };
   const [catalog, setCatalog] = useState<WorkspaceCatalog | undefined>(initialCatalog);
+  const [inspirationCards, setInspirationCards] = useState<EmbeddedInspiration[]>(initialInspirations ?? []);
+  const [inspirationsLoading, setInspirationsLoading] = useState(initialView === "inspirations" && !(initialInspirations?.length));
   const [view, setView] = useState<View>(initialView);
   const [task, setTask] = useState<WorkspaceTask | null>(null);
   const [tasks, setTasks] = useState<WorkspaceTask[]>([]);
@@ -261,6 +265,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setTasks((items) => [next, ...items.filter((item) => item.taskId !== next.taskId)]);
   }, []);
 
+  const inspirationsLoaded = useRef(Boolean(initialInspirations?.length));
+  const loadInspirations = useCallback(async () => {
+    if (inspirationsLoaded.current) return;
+    setInspirationsLoading(true);
+    try {
+      const result = await request<{ cards: EmbeddedInspiration[] }>("/inspirations");
+      setInspirationCards(result.cards);
+      inspirationsLoaded.current = true;
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Couldn't load inspirations.");
+    } finally {
+      setInspirationsLoading(false);
+    }
+  }, [request]);
+
   const persist = useCallback(async () => {
     if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
     const execute = async () => {
@@ -336,6 +355,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
     if (entryView === "library" && handoff.filter) setLibraryFilter(handoff.filter);
     setView(entryView);
+    if (entryView === "inspirations" && !initialInspirations?.length) void loadInspirations();
     if (customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
       params.delete("resumeDraft");
       const restoredUrl = `${window.location.pathname}${params.size ? `?${params.toString()}` : ""}${window.location.hash}`;
@@ -394,7 +414,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setLoading(false);
     });
     return () => controller.abort();
-  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, request, siteId]);
+  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, initialInspirations, loadInspirations, request, siteId]);
 
   const taskRunning = Boolean(operationActive || task?.status === "rendering" || clipsProcessing);
   const taskId = task?.taskId;
@@ -493,13 +513,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   async function navigate(next: View) {
     if (next === "images" && composerProducts.length) setImageInput((current) => current.assetUrls.length ? current : { ...current, assetUrls: composerProducts.map((asset) => asset.previewUrl).slice(0, 4) });
     if (next === "inspirations") {
-      try {
-        await persist();
-        window.location.assign(workspaceViewHref(basePath, next));
-      } catch (error) {
-        setMessage(error instanceof Error ? error.message : "Unable to save your changes.");
-      }
-      return;
+      void loadInspirations();
     }
     const navigation = ++navigationSerial.current;
     visibleView.current = next;
@@ -983,6 +997,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </>}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
+        {view === "inspirations" && <EmbeddedInspirations cards={inspirationCards} loading={inspirationsLoading} />}
         {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={initialProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>

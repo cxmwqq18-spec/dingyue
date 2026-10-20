@@ -14,6 +14,8 @@ import { presetRequestFromQuery, type WorkspacePreset, type WorkspacePresetReque
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
+import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
+import { inspirationCreateHref } from "@/lib/aidreamcapes-inspirations-types";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -52,19 +54,21 @@ export async function renderAidreamcapesWorkspace({
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
 }) {
-  if (initialView === "inspirations") {
-    const headerStore = await headers();
-    const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
-    redirect(`${workspaceHosts.has(host) ? "" : `/site/${routeSlug}`}/app/inspirations`);
-  }
   if (!taskId && invalidPreset) notFound();
   const initialPreset = !taskId ? resolvedPreset ?? (presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined) : undefined;
   if (!taskId && presetRequest && !initialPreset) notFound();
-  const [current, cookieStore, headerStore, templateGallery] = await Promise.all([
+  const [current, cookieStore, headerStore, templateGallery, inspirationCards] = await Promise.all([
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
     cookies(),
     headers(),
     routeSlug === "aidreamcapes" ? getWorkspaceTemplateGallery(AIVIDEOSUGC_SITE_ID) : Promise.resolve(undefined),
+    initialView === "inspirations"
+      ? getAidreamcapesInspirationCards().then((cards) => cards.map((card) => ({
+        id: card.id, label: card.label, imageSrc: card.imageSrc, imageAlt: card.imageAlt,
+        pageTitle: card.pageTitle, kind: card.kind, description: card.description,
+        category: card.category, createHref: inspirationCreateHref(card),
+      })))
+      : Promise.resolve(undefined),
   ]);
   const catalog = current ? await catalogForCustomer(AIVIDEOSUGC_SITE_ID, current.customer.id) : await getWorkspaceCatalog(AIVIDEOSUGC_SITE_ID);
   const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
@@ -98,6 +102,7 @@ export async function renderAidreamcapesWorkspace({
     initialPreset={initialPreset}
     initialHandoff={safeHandoff}
     initialTemplateGallery={templateGallery}
+    initialInspirations={inspirationCards}
     initialCatalog={catalog}
     csrfToken={cookieStore.get(csrfCookieName(`customer:${AIVIDEOSUGC_SITE_ID}`))?.value}
     customer={current ? { id: current.customer.id, name: current.customer.name, email: current.customer.email, balance: current.customer.balance.available } : undefined}

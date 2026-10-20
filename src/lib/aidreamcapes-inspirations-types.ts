@@ -21,6 +21,9 @@ export type InspirationCard = {
   category: string;
 };
 
+/** Server/client-safe example shape used by the standalone page and embedded workspace tab. */
+export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & { createHref: string };
+
 export function inspirationCreateHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind" | "pageSlug" | "sceneSlug" | "publicSlug">, basePath = ""): string {
   const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
   if (mediaPath) return `${basePath}${mediaPath}`;
