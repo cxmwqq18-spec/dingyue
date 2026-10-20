@@ -500,3 +500,14 @@ AIDREAMCAPES_CARD_BROWSER_ORIGIN=http://127.0.0.1:3003 \
 node scripts/plan-aidreamcapes-example-media-slugs.mjs --target=local
 node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=local
 ```
+
+### 13.6 上线记录（2026-10-21）
+
+| 步骤 | 命令 / 结果 |
+|---|---|
+| 代码提交 | `47440da29` + `3ce79c1a1`（构建堆可配置）已推送到 `origin/main` |
+| 数据上线 | 生产库字段级 manifest 应用完成（23 页 / 66 卡，0 冲突），见 13.2 |
+| 代码上线 | `node scripts/deploy-aidreamcapes-release.mjs --commit=3ce79c1a1… --apply --confirm=deploy-aidreamcapes --verify-media-details` |
+| 发布前门禁 | 服务器候选实例执行 `smoke-aidreamcapes-release-routes.mjs`、`audit-card-entry-links.mjs`、`verify-media-detail-remediation.mjs`（含 sitemap/演员/退役路径） |
+| 隔离核验 | `docs/audits/aidreamcapes-media-detail-store-isolation-2026-10-21.md`：MyDreamShoots 与 Aidreamshoots 页面、链接与 sitemap 零差异，数据库仅 `site_aidreamcapes` 被写入 |
+| 构建内存 | 生产构建曾在固定 10 GB 堆上 OOM；构建堆改为可配置（`AIDREAMCAPES_BUILD_HEAP_MB`，默认 12288） |
