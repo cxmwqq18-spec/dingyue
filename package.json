@@ -22,7 +22,6 @@
     "smoke:aidreamcapes-homepage-reviews": "node scripts/smoke-aidreamcapes-homepage-reviews.mjs",
     "smoke:aidreamcapes-seo-browser": "node scripts/smoke-aidreamcapes-seo-browser.mjs",
     "smoke:aidreamcapes-seo-contract": "node scripts/smoke-aidreamcapes-seo-contract.mjs",
-    "smoke:aidreamcapes-release-routes": "node scripts/smoke-aidreamcapes-release-routes.mjs",
     "smoke:aidreamcapes-save-the-date-retirement": "node scripts/smoke-aidreamcapes-save-the-date-retirement.mjs",
     "repair:aidreamshoots-xby-seo-media": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs",
     "repair:aidreamshoots-xby-seo-media:apply": "node --no-warnings --experimental-strip-types scripts/repair-aidreamshoots-xby-seo-media.mjs --apply",
