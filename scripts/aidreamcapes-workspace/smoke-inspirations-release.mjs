@@ -64,7 +64,7 @@ async function read(path, { workspace = false } = {}) {
     assert(card.entry.query && typeof card.entry.query === "object" && !Array.isArray(card.entry.query), `Card ${card.id} CTA payload carries query inputs`);
     // React Flight serializes absent optional fields as the "$undefined" sentinel.
     const scene = card.entry.scene && card.entry.scene !== "$undefined" ? card.entry.scene : undefined;
-    if (scene) assert.match(cta.pathname, /\/app\/create\/(?:scene\/[a-z0-9._-]+|ai-image-generation)$/i, `Card ${card.id} CTA enters its scene or media workspace view`);
+    if (scene) assert.match(cta.pathname, /\/app\/create\/(?:scene\/[a-z0-9._-]+|ai-image-generation|ai-video-generation)$/i, `Card ${card.id} CTA enters its scene or media workspace view`);
     else assert.match(cta.pathname, /\/app\/create\/(?:ai-image-generation|ai-video-generation)$/, `Card ${card.id} CTA enters the media workspace view`);
     const cardLink = new URL(card.createHref, origin);
     assert(!cardLink.searchParams.has("prompt"), `Card ${card.id} has no prompt in its URL`);
