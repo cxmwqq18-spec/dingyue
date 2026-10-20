@@ -23,22 +23,22 @@ const localRequireShim = (id) => {
 };
 const routes = compile("static-routes", localRequireShim);
 
-// Legacy query links map to fixed paths under the canonical public directory naming.
+// Legacy query links map to the canonical short tool paths.
 const cases = [
-  ["/app/create?tool_id=image_generator&tool=photo-hub&template=color", "/app/create/ai-image-generation/photo-hub/color"],
-  ["/app/create?tool=video-ads&template=creator", "/app/create/ai-video-generation/video-ads/creator"],
-  ["/app/create?tool=spokesperson-videos", "/app/create/ai-video-generation/spokesperson-videos"],
-  ["/app/create?tool=unboxing-videos", "/app/create/ai-video-generation/unboxing-videos"],
-  ["/app/create?tool_id=image_generator&tool=white-background", "/app/create/ai-image-generation/white-background"],
+  ["/app/create?tool_id=image_generator&tool=photo-hub&template=color", "/app/create/photo-hub/color"],
+  ["/app/create?tool=video-ads&template=creator", "/app/create/video-ads/creator"],
+  ["/app/create?tool=spokesperson-videos", "/app/create/spokesperson-videos"],
+  ["/app/create?tool=unboxing-videos", "/app/create/unboxing-videos"],
+  ["/app/create?tool_id=image_generator&tool=white-background", "/app/create/white-background"],
   ["/app/create?tool_id=image_generator", "/app/create/ai-image-generation"],
-  ["/app/create?tool=image-to-video&size=9:16&length=10", "/app/create/ai-video-generation/image-to-video?size=9%3A16&length=10"],
+  ["/app/create?tool=image-to-video&size=9:16&length=10", "/app/create/image-to-video?size=9%3A16&length=10"],
   ["/app/create?plan=pro", "/app/create"],
   ["/app/create?", "/app/create"],
-  ["/app/create?videoMode=product-video", "/app/create/ai-video-generation/product-videos"],
+  ["/app/create?videoMode=product-video", "/app/create/product-videos"],
   ["/app/create?view=video", "/app/create/ai-video-generation"],
   ["/app/create?view=images", "/app/create/ai-image-generation"],
   ["/app/create?view=actors", "/app/create/ai-actors"],
-  ["/app/create?view=product", "/app/create/ai-video-generation/url-to-video"],
+  ["/app/create?view=product", "/app/create/url-to-video"],
   ["/app/create?view=library&filter=completed", "/app/create/library/completed"],
   ["/app/create?view=home&templates=1&category=tech-electronics", "/app/create/templates/tech-electronics"],
   ["/app/create?view=home&templates=1", "/app/create/templates"],
@@ -46,18 +46,23 @@ const cases = [
 ];
 for (const [from, to] of cases) assert.equal(routes.legacyCreateHrefToStatic(from), to, from);
 
-// Superseded fixed paths redirect to their canonical group path.
+// Superseded view aliases redirect to the canonical short path. Legacy case
+// URLs render once and are normalized by the workspace so their selection is
+// not lost in a redirect.
 const legacyPaths = [
   [["video"], "/app/create/ai-video-generation"],
   [["images"], "/app/create/ai-image-generation"],
   [["actors"], "/app/create/ai-actors"],
-  [["product"], "/app/create/ai-video-generation/url-to-video"],
-  [["agent"], "/app/create/ai-video-generation/text-to-video"],
-  [["tool", "image-to-video"], "/app/create/ai-video-generation/image-to-video"],
-  [["tool", "lifestyle-photos"], "/app/create/ai-image-generation/lifestyle-photos"],
-  [["tool", "video-ads", "creator"], "/app/create/ai-video-generation/video-ads/creator"],
-  [["tool", "text-to-video"], "/app/create/ai-video-generation/text-to-video"],
+  [["product"], "/app/create/url-to-video"],
+  [["agent"], "/app/create/text-to-video"],
+  [["tool", "image-to-video"], undefined],
+  [["tool", "lifestyle-photos"], undefined],
+  [["tool", "video-ads", "creator"], undefined],
+  [["tool", "text-to-video"], "/app/create/text-to-video"],
   [["tool", "unknown-tool"], undefined],
+  [["ai-video-generation", "url-to-video"], undefined],
+  [["ai-video-generation", "text-to-video"], "/app/create/text-to-video"],
+  [["ai-image-generation", "photo-hub", "color"], undefined],
   [["scene", "garden"], undefined],
   [["demo", "serum-15s-video"], undefined],
 ];
@@ -90,6 +95,9 @@ assert.equal(routes.parseStaticCreateSegments(["ai-video-generation", "text-to-v
 assert.equal(routes.parseStaticCreateSegments(["ai-video-generation", "image-to-video"])?.tool, "image-to-video");
 assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "white-background"])?.tool, "white-background");
 assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "white-background", "white"])?.template, "white");
+assert.equal(routes.parseStaticCreateSegments(["url-to-video"])?.tool, "url-to-video");
+assert.equal(routes.parseStaticCreateSegments(["photo-hub", "color"])?.tool, "photo-hub");
+assert.equal(routes.parseStaticCreateSegments(["text-to-video"])?.view, "agent");
 // A tool filed under the wrong directory does not parse.
 assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "video-ads"])?.kind ?? undefined, undefined);
 assert.equal(routes.parseStaticCreateSegments(["tool", "video-ads", "creator"])?.kind, "tool");
@@ -109,21 +117,25 @@ assert.equal(demoQuery.view, "images");
 assert.match(demoQuery.prompt, /travel mug/);
 
 // Location helper for client bootstrap.
-const sp = routes.staticCreateSearchFromPath("/app/create/ai-video-generation/video-ads/creator");
+const sp = routes.staticCreateSearchFromPath("/app/create/video-ads/creator");
 assert.equal(sp?.get("tool"), "video-ads");
 const imageView = routes.staticCreateSearchFromPath("/app/create/ai-image-generation");
 assert.equal(imageView?.get("view"), "images");
+assert.equal(routes.staticCreateSearchFromPath("/app/create/url-to-video")?.get("tool"), "url-to-video");
+assert.equal(routes.staticCreateSearchFromPath("/app/create/text-to-video")?.get("view"), "agent");
 const actorsView = routes.staticCreateSearchFromPath("/site/aidreamcapes/app/create/ai-actors");
 assert.equal(actorsView?.get("view"), "actors");
 const libView = routes.staticCreateSearchFromPath("/site/aidreamcapes/app/create/library");
 assert.equal(libView?.get("view"), "library");
 assert.equal(routes.staticCreateSearchFromPath("/site/aidreamcapes/app/create/library/completed")?.get("filter"), "completed");
 
-// View hrefs carry the canonical directory segments.
+// Base views keep their directory segments; individual tools use short paths.
 assert.equal(routes.staticViewHref("", "video"), "/app/create/ai-video-generation");
 assert.equal(routes.staticViewHref("", "images"), "/app/create/ai-image-generation");
 assert.equal(routes.staticViewHref("", "actors"), "/app/create/ai-actors");
-assert.equal(routes.staticToolHref("", "url-to-video"), "/app/create/ai-video-generation/url-to-video");
-assert.equal(routes.staticToolHref("/site/aidreamcapes", "model-photos"), "/site/aidreamcapes/app/create/ai-image-generation/model-photos");
+assert.equal(routes.staticViewHref("", "product"), "/app/create/url-to-video");
+assert.equal(routes.staticViewHref("", "agent"), "/app/create/text-to-video");
+assert.equal(routes.staticToolHref("", "url-to-video"), "/app/create/url-to-video");
+assert.equal(routes.staticToolHref("/site/aidreamcapes", "model-photos"), "/site/aidreamcapes/app/create/model-photos");
 
 console.log("Aidreamcapes static create route smoke passed.");

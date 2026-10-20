@@ -22,10 +22,8 @@ const TOOL_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,60}$/;
 const TEMPLATE_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
 const DEMO_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
 
-// Composer tool routes live under the public directory naming: video tools at
-// /app/create/ai-video-generation/<tool>, photo tools at
-// /app/create/ai-image-generation/<tool>. A tool outside both sets has no
-// canonical group and stays on the query-form entry.
+// Individual tools use /app/create/<tool>. Group membership validates old
+// prefixed links before redirecting them to the short canonical path.
 const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "url-to-video", "video-ads", "product-videos", "before-after-videos", "spokesperson-videos", "unboxing-videos"]);
 const IMAGE_GROUP_TOOLS = new Set(["custom", "photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"]);
 
@@ -71,7 +69,7 @@ export const STATIC_DEMOS: StaticDemo[] = [
   },
   {
     slug: "serum-15s-video",
-    view: "home",
+    view: "video",
     prompt: "Create a 15-second video for this serum.",
     aspect: "9:16", duration: 15,
   },
@@ -151,7 +149,7 @@ export function staticDemoForHref(href: string): { slug: string } | undefined {
     if (url.pathname !== "/app/create" || !url.searchParams.get("prompt")) return undefined;
     const view = url.searchParams.get("view") ?? "";
     // Batch duplicates of the curated agent demos land on the same agent view.
-    const normalizedView = view === "batch" ? "agent" : view;
+    const normalizedView = view === "batch" ? "agent" : view === "home" ? "video" : view;
     const prompt = url.searchParams.get("prompt");
     // Match on the curated (view, prompt) pair; the registry supplies the
     // canonical scene/aspect/duration/tool regardless of link variants.
@@ -177,6 +175,9 @@ export function parseStaticCreateSegments(segments: string[]): StaticCreateTarge
     if (segments.length === 2) return { kind: "tool", tool: second };
     if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: second, template: third };
     return undefined;
+  }
+  if (workspaceToolGroup(first) && segments.length <= 2 && (!second || TEMPLATE_SEGMENT_RE.test(second))) {
+    return { kind: "tool", tool: first, ...(second ? { template: second } : {}) };
   }
   if (segments.length === 1) {
     if (groupView) return { kind: "view", view: groupView };
@@ -232,17 +233,32 @@ export function staticToolHref(basePath: string, tool: string, template?: string
   if (template && !TEMPLATE_SEGMENT_RE.test(template)) return undefined;
   const group = workspaceToolGroup(tool);
   if (!group) return undefined;
-  return `${basePath}/app/create/${group === "video" ? WORKSPACE_VIEW_SEGMENTS.video : WORKSPACE_VIEW_SEGMENTS.images}/${tool}${template ? `/${template}` : ""}`;
+  return `${basePath}/app/create/${tool}${template ? `/${template}` : ""}`;
 }
 
 /**
- * Superseded fixed workspace paths redirect to their canonical group path so
- * the address bar always shows the public directory naming. Returns the path
+ * Superseded fixed workspace paths redirect to their canonical short path.
+ * Returns the path
  * (without the /app/create prefix context) or undefined when the segments are
  * not a legacy form.
  */
 export function legacyStaticCreateRedirect(segments: string[]): string | undefined {
   const [first, second, third] = segments;
+  const target = parseStaticCreateSegments(segments);
+  // Legacy case URLs still render their selection once; the workspace replaces
+  // the address with its module URL after consuming it. New SSR links already
+  // point directly to that module and carry selection outside the URL.
+  if (target && target.kind !== "view" && target.kind !== "library") {
+    // The old tool alias for text-to-video is not a case URL; it has a direct
+    // module equivalent and must not keep a tool-shaped address.
+    if (first === "tool" && second === "text-to-video" && segments.length === 2) return `/app/create/${WORKSPACE_VIEW_SEGMENTS.agent}`;
+    return undefined;
+  }
+  if (["ai-video-generation", "ai-image-generation"].includes(first) && second && segments.length <= 3) {
+    if (first === "ai-video-generation" && second === "text-to-video" && segments.length === 2) return "/app/create/text-to-video";
+    const group = workspaceToolGroup(second);
+    if (group === (first === "ai-video-generation" ? "video" : "image")) return staticToolHref("", second, third);
+  }
   if (segments.length === 1) {
     if (first === "video") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.video}`;
     if (first === "images") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.images}`;
@@ -289,7 +305,17 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
   }
   if (params.get("prompt")) {
     const demo = staticDemoForHref(href);
-    return demo ? `/app/create/demo/${demo.slug}` : undefined;
+    if (demo) return `/app/create/demo/${demo.slug}`;
+    // Free-form form submissions retain their input while landing directly in
+    // the matching editor. They must never activate the Home module.
+    const view = params.get("view");
+    const targetView: WorkspaceView = params.get("tool_id") === "image_generator" || view === "images" ? "images"
+      : view === "home" || view === "agent" || !params.get("tool") ? "agent"
+      : params.get("tool") === "url-to-video" ? "product" : "video";
+    const path = staticViewHref("", targetView);
+    const extras = new URLSearchParams(params);
+    extras.delete("view");
+    return `${path}?${extras}`;
   }
   if (params.get("plan")) return "/app/create";
   const view = params.get("view");

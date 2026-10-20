@@ -1,13 +1,14 @@
 "use client";
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 
 // Inspiration gallery rendered inside the workspace content area. It reuses the
 // same card data and interactions as the public standalone inspiration page
 // but follows the workspace's light theme and never leaves the workspace shell.
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Image as ImageIcon, Loader2, Search, Sparkles, X } from "lucide-react";
 import styles from "./inspirations-embedded.module.css";
 
-import type { InspirationExample } from "@/lib/aidreamcapes-inspirations-types";
+import type { InspirationExample, InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
 export type EmbeddedInspiration = InspirationExample;
 
@@ -79,9 +80,9 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
             <div><dt>Collection</dt><dd>{card.pageTitle}</dd></div>
             {card.category !== ALL_CATEGORY ? <div><dt>Category</dt><dd>{card.category}</dd></div> : null}
           </dl>
-          <a className={styles.create} href={card.createHref}>
+          <WorkspaceEntryLink className={styles.create} href={card.createHref} entry={card.entry}>
             {card.kind === "video" ? "Create a video like this" : "Create an image like this"} <ArrowUpRight size={17} />
-          </a>
+          </WorkspaceEntryLink>
           <div className={styles.detailNavigation}>
             <span aria-live="polite">{position + 1} / {total}</span>
             <div>
@@ -95,29 +96,73 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
   );
 }
 
-export function EmbeddedInspirations({ cards, loading = false }: { cards: EmbeddedInspiration[]; loading?: boolean }) {
+export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { initialPage?: InspirationPage; endpoint: string; basePath: string }) {
   const [kind, setKind] = useState<Kind>("all");
   const [category, setCategory] = useState(ALL_CATEGORY);
   const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
-  const counts = useMemo(() => ({
-    all: cards.length,
-    video: cards.filter((card) => card.kind === "video").length,
-    photo: cards.filter((card) => card.kind === "photo").length,
-  }), [cards]);
-  const selectedCards = useMemo(() => kind === "all" ? cards : cards.filter((card) => card.kind === kind), [cards, kind]);
-  const categories = useMemo(() => [ALL_CATEGORY, ...Array.from(new Set(selectedCards.map((card) => card.category)))
-    .filter((value) => value !== ALL_CATEGORY).sort((a, b) => a.localeCompare(b))], [selectedCards]);
-  const visibleCards = useMemo(() => {
-    const search = query.trim().toLowerCase();
-    return selectedCards.filter((card) => (category === ALL_CATEGORY || card.category === category)
-      && (!search || `${card.label} ${card.imageAlt} ${card.pageTitle} ${card.category}`.toLowerCase().includes(search)));
-  }, [selectedCards, category, query]);
+  const [page, setPage] = useState<InspirationPage | undefined>(initialPage);
+  const [loading, setLoading] = useState(!initialPage);
+  const [error, setError] = useState("");
+  const [retry, setRetry] = useState(0);
+  const sentinel = useRef<HTMLDivElement>(null);
+  const controller = useRef<AbortController | null>(null);
+  const pending = useRef(false);
+  const generation = useRef(0);
+  const filterKey = `${kind}\n${category}\n${search}`;
+  const loadedFilter = useRef(initialPage ? filterKey : "");
+  useEffect(() => { const timer = setTimeout(() => setSearch(query.trim()), 300); return () => clearTimeout(timer); }, [query]);
+  const load = useCallback(async (offset: number, replace: boolean) => {
+    if (pending.current && !replace) return;
+    controller.current?.abort();
+    const abort = new AbortController();
+    controller.current = abort;
+    const requestGeneration = ++generation.current;
+    pending.current = true;
+    setLoading(true); setError("");
+    const params = new URLSearchParams({ offset: String(offset), kind, category, q: search, basePath });
+    try {
+      const response = await fetch(`${endpoint}?${params}`, { signal: abort.signal, credentials: "same-origin", cache: "no-store" });
+      if (!response.ok) throw new Error("Couldn't load inspirations. Please try again.");
+      const next = await response.json() as InspirationPage;
+      if (generation.current !== requestGeneration) return;
+      loadedFilter.current = `${kind}\n${category}\n${search}`;
+      setPage(previous => ({ ...next, cards: replace ? next.cards : [...(previous?.cards ?? []), ...next.cards.filter(card => !previous?.cards.some(existing => existing.id === card.id))] }));
+    } catch (cause) {
+      if (!abort.signal.aborted && generation.current === requestGeneration) setError(cause instanceof Error ? cause.message : "Couldn't load inspirations.");
+    } finally {
+      if (generation.current === requestGeneration) { pending.current = false; setLoading(false); }
+    }
+  }, [endpoint, kind, category, search, basePath]);
+  useEffect(() => {
+    if (initialPage && kind === "all" && category === ALL_CATEGORY && !search && !retry) {
+      controller.current?.abort(); generation.current++; pending.current = false;
+      loadedFilter.current = filterKey;
+      setPage(initialPage); setLoading(false); setError("");
+      return;
+    }
+    setActiveCardId(null);
+    void load(0, true);
+    return () => { controller.current?.abort(); generation.current++; pending.current = false; };
+  }, [filterKey, load, retry, initialPage, kind, category, search]);
+  useEffect(() => {
+    const node = sentinel.current;
+    if (!node || loading || error || page?.nextOffset == null) return;
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) void load(page.nextOffset!, false);
+    }, { rootMargin: "400px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [load, loading, error, page]);
+  const cards = page?.cards ?? [];
+  const visibleCards = cards;
+  const counts = page?.counts ?? { all: 0, video: 0, photo: 0 };
+  const categories = page?.categories ?? [ALL_CATEGORY];
   const activeIndex = activeCardId ? visibleCards.findIndex((card) => card.id === activeCardId) : -1;
   const activeCard = visibleCards[activeIndex];
 
-  if (loading) {
+  if (loading && !page) {
     return <div className={styles.loading}><Loader2 className={styles.spin} size={22} /><span>Loading inspirations…</span></div>;
   }
 
@@ -129,11 +174,11 @@ export function EmbeddedInspirations({ cards, loading = false }: { cards: Embedd
           <h1 className={styles.title}>Inspirations</h1>
           <p className={styles.intro}>Discover a look for your next product video or photo.</p>
         </div>
-        <div className={styles.total}><strong>{cards.length}</strong><span>ideas to explore</span></div>
+        <div className={styles.total}><strong>{counts.all}</strong><span>ideas to explore</span></div>
       </div>
 
       <div className={styles.toolbar}>
-        <h2>{mediaFilters.find((item) => item.value === kind)?.label}<span>{selectedCards.length}</span></h2>
+        <h2>{mediaFilters.find((item) => item.value === kind)?.label}<span>{page?.total ?? 0}</span></h2>
         <div className={styles.kindFilters} role="group" aria-label="Example type">
           {mediaFilters.map(({ value, label, icon: Icon }) => (
             <button aria-pressed={kind === value} className={styles.kind} key={value} onClick={() => { setKind(value); setCategory(ALL_CATEGORY); setActiveCardId(null); }} type="button">
@@ -151,11 +196,11 @@ export function EmbeddedInspirations({ cards, loading = false }: { cards: Embedd
         <div aria-label="Category filters" className={styles.categories} role="group">
           {categories.map((value) => <button aria-pressed={category === value} className={styles.category} key={value} onClick={() => { setCategory(value); setActiveCardId(null); }} type="button">{value === ALL_CATEGORY ? "All categories" : value}</button>)}
         </div>
-        <p aria-live="polite" className={styles.resultCount}>{visibleCards.length} {visibleCards.length === 1 ? "example" : "examples"}</p>
+        <p aria-live="polite" className={styles.resultCount}>{page?.total ?? 0} {page?.total === 1 ? "example" : "examples"}</p>
       </div>
 
       {visibleCards.length ? (
-        <div className={styles.grid}>
+        <div className={styles.grid} aria-busy={loading}>
           {visibleCards.map((card) => (
             <button aria-label={`Open ${card.label} example`} className={styles.card} data-inspiration-card={card.id} key={card.id} onClick={() => setActiveCardId(card.id)} type="button">
               <span className={styles.cardImage}>
@@ -170,12 +215,18 @@ export function EmbeddedInspirations({ cards, loading = false }: { cards: Embedd
         </div>
       ) : (
         <div className={styles.empty}>
-          {cards.length ? <Search aria-hidden="true" size={28} /> : <ImageIcon aria-hidden="true" size={28} />}
-          <h2>{cards.length ? "No matching examples" : "Examples are unavailable"}</h2>
-          <p>{cards.length ? "Try another search or explore a different category." : "Please check back soon for video and photo ideas."}</p>
-          {cards.length ? <button onClick={() => { setKind("all"); setCategory(ALL_CATEGORY); setQuery(""); }} type="button">Clear filters</button> : null}
+          {counts.all ? <Search aria-hidden="true" size={28} /> : <ImageIcon aria-hidden="true" size={28} />}
+          <h2>{counts.all ? "No matching examples" : "Examples are unavailable"}</h2>
+          <p>{counts.all ? "Try another search or explore a different category." : "Please check back soon for video and photo ideas."}</p>
+          {counts.all ? <button onClick={() => { setKind("all"); setCategory(ALL_CATEGORY); setQuery(""); }} type="button">Clear filters</button> : null}
         </div>
       )}
+
+      <div ref={sentinel} className={styles.pagination} aria-live="polite">
+        {loading ? <span>Loading more examples…</span> : null}
+        {error ? <><p role="alert">{error}</p><button type="button" onClick={() => page && loadedFilter.current === filterKey ? void load(page.nextOffset ?? 0, false) : setRetry(value => value + 1)}>Try again</button></> : null}
+        {!loading && !error && page?.nextOffset != null ? <button type="button" onClick={() => void load(page.nextOffset!, false)}>Load more examples</button> : null}
+      </div>
 
       {activeCard ? <CardModal card={activeCard} position={activeIndex} total={visibleCards.length} onClose={() => setActiveCardId(null)} onPrevious={() => setActiveCardId(visibleCards[activeIndex - 1]?.id ?? activeCard.id)} onNext={() => setActiveCardId(visibleCards[activeIndex + 1]?.id ?? activeCard.id)} /> : null}
     </>

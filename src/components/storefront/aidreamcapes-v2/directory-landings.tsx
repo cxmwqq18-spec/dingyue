@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Clapperboard, Film, Play, Sparkles, UserRound } from "lucide-react";
 import { Fragment } from "react";
 import type { V2Data, V2Resolvers } from "./types";
@@ -69,7 +70,7 @@ function section(value: unknown): LandingSectionData | undefined {
 function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers }) {
   const sectionClass = `landing-section landing-section-${item.kind}${item.kind === "split" ? " landing-split" : ""}`;
   const picture = (entry: LandingImage, className = "") => <img alt={entry.alt} className={className} decoding="async" loading="lazy" src={r.asset(entry.src)} />;
-  const link = (href: string, label: string, className = "landing-link") => <a className={className} href={r.href(href)}>{label}<ArrowUpRight aria-hidden="true" size={16} /></a>;
+  const link = (href: string, label: string, className = "landing-link") => <WorkspaceEntryLink className={className} href={r.href(href)}>{label}<ArrowUpRight aria-hidden="true" size={16} /></WorkspaceEntryLink>;
 
   return (
     <section className={sectionClass} id={item.id}>
@@ -132,10 +133,10 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
         </div> : null}
 
         {item.kind === "related" ? <div className="landing-related">
-          {item.cards?.map((card, index) => <a className="landing-related-card" href={r.href(card.href || "/ai-video-generation")} key={card.title}>
+          {item.cards?.map((card, index) => <WorkspaceEntryLink className="landing-related-card" href={r.href(card.href || "/ai-video-generation")} key={card.title}>
             <span className="landing-related-icon">{index % 3 === 0 ? <Film /> : index % 3 === 1 ? <UserRound /> : <Clapperboard />}</span>
             <span><b>{card.title}</b><small>{card.body}</small></span><ArrowRight aria-hidden="true" size={18} />
-          </a>)}
+          </WorkspaceEntryLink>)}
         </div> : null}
 
         {item.kind === "cta" ? <div className="landing-cta-copy">
@@ -162,10 +163,10 @@ export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data
 
   return <div className={`adc-landing ${twin ? "adc-twin-page" : "adc-text-video-page"}`}>
     <style dangerouslySetInnerHTML={{ __html: landingCss }} />
-    <nav aria-label={string(data.breadcrumbLabel)} className="landing-breadcrumb"><a href={r.href("/")}>{string(data.homeLabel)}</a><span>/</span><span>{string(data.label)}</span></nav>
+    <nav aria-label={string(data.breadcrumbLabel)} className="landing-breadcrumb"><WorkspaceEntryLink href={r.href("/")}>{string(data.homeLabel)}</WorkspaceEntryLink><span>/</span><span>{string(data.label)}</span></nav>
     <header className="landing-hero landing-wrap">
       <div className="landing-hero-copy"><p className="landing-eyebrow"><i />{string(data.eyebrow)}</p><h1>{data.h1}</h1><p className="landing-lead">{string(data.lead)}</p>
-        <div className="landing-hero-actions">{href && cta ? <a className="landing-button" href={r.href(href)}>{cta}<ArrowRight aria-hidden="true" size={17} /></a> : null}{secondaryHref && secondaryCta ? <a className="landing-secondary-button" href={secondaryHref.startsWith("#") ? secondaryHref : r.href(secondaryHref)}>{secondaryCta}<ArrowUpRight aria-hidden="true" size={16} /></a> : null}</div>
+        <div className="landing-hero-actions">{href && cta ? <WorkspaceEntryLink className="landing-button" href={r.href(href)}>{cta}<ArrowRight aria-hidden="true" size={17} /></WorkspaceEntryLink> : null}{secondaryHref && secondaryCta ? <WorkspaceEntryLink className="landing-secondary-button" href={secondaryHref.startsWith("#") ? secondaryHref : r.href(secondaryHref)}>{secondaryCta}<ArrowUpRight aria-hidden="true" size={16} /></WorkspaceEntryLink> : null}</div>
         {string(data.notice) ? <p className="landing-disclosure">{string(data.notice)}</p> : null}
       </div>
       <div className={`landing-hero-art ${twin ? "twin-art" : "brief-art"}`}>

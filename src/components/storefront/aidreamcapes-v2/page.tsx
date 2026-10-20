@@ -1,3 +1,5 @@
+import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
@@ -198,8 +200,8 @@ function HomePage({ data, r }: Props) {
             <p className="lead">{data.lead}</p>
           </div>
           <div className="hero-ctas">
-            <a className="btn btn-grad" href={r.href(hero.videoHref)}>{copyLabel(r, "Make my video →")}</a>
-            <a className="btn btn-ghost" href={r.href(hero.photoHref)}>{copyLabel(r, "Make my photos →")}</a>
+            <WorkspaceEntryLink className="btn btn-grad" href={r.href(hero.videoHref)}>{copyLabel(r, "Make my video →")}</WorkspaceEntryLink>
+            <WorkspaceEntryLink className="btn btn-ghost" href={r.href(hero.photoHref)}>{copyLabel(r, "Make my photos →")}</WorkspaceEntryLink>
           </div>
           <StartNote note={text(data.startNote)} r={r} />
         </div>
@@ -252,7 +254,7 @@ const flowAspect = (step: V2Flow["steps"][number]) => (step.tall ? 9 / 16 : (ste
 
 // A link to the full start-to-finish examples under a page's own examples.
 function MoreExamples({ r }: { r: V2Resolvers }) {
-  return <p className="meta-line" style={{ marginTop: 18 }}><a href={r.href("/inspiration")}>See start-to-finish product examples →</a></p>;
+  return <p className="meta-line" style={{ marginTop: 18 }}><WorkspaceEntryLink href={r.href("/inspiration")}>See start-to-finish product examples →</WorkspaceEntryLink></p>;
 }
 
 function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; filterChips?: { id: string; label: string }[] }) {
@@ -263,7 +265,7 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
     <div className={`ex${filterChips?.length ? " v-filter-grid" : ""}`}>
       {flows.map((flow) => (
         <div className={`exrow${filterChips?.length ? " v-filter-card" : ""}`} data-filter-indexes={filterChips?.length ? indexesFor(flow).join(" ") : undefined} key={flow.t}>
-          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p>{flow.cta ? <a className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</a> : null}</div>
+          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p>{flow.cta ? <WorkspaceEntryLink className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</WorkspaceEntryLink> : null}</div>
           <div className="flow">
             {flow.steps.map((step, index) => (
               <Fragment key={`${step.label}-${index}`}>
@@ -636,7 +638,7 @@ function IndexPage({ data, r }: Props) {
             const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);
             return <article className="cardlist-card v-filter-card" data-filter-indexes={indexes.join(" ")} key={item.href}>
               <Img image={item.image} r={r} />
-              <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+              <div><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></div>
             </article>;
           })}
         </div>
@@ -681,7 +683,7 @@ function IndexPage({ data, r }: Props) {
             {items.map((item) => (
               <article className="cardlist-card" key={item.href}>
                 <Img image={item.image} r={r} />
-                <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+                <div><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></div>
               </article>
             ))}
           </div>
@@ -692,10 +694,10 @@ function IndexPage({ data, r }: Props) {
           <div className="wrap articles">
             {data.id === "guides" ? <h2>All Guides</h2> : data.id === "blog" ? <h2>All Articles</h2> : null}
             {articles.map((article) => (
-              <a className="art" href={r.href(article.href)} key={article.href}>
+              <WorkspaceEntryLink className="art" href={r.href(article.href)} key={article.href}>
                 <Img image={article.image} r={r} />
                 <div><small>{article.minutes} min read</small><h3>{article.title}</h3><p>{article.summary}</p></div>
-              </a>
+              </WorkspaceEntryLink>
             ))}
           </div>
         </section>
@@ -778,7 +780,7 @@ function ActorDirectoryPage({ data, r }: Props) {
                         <h3>{actor.name}</h3>
                         <p className="actor-style">{actor.style}</p>
                         <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-                        <a className="btn btn-grad" href={r.href(actor.href)}>Use {actor.name} →</a>
+                        <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Use {actor.name} →</WorkspaceEntryLink>
                       </div>
                     </article>)}
                   </div>
@@ -813,7 +815,7 @@ function ActorDirectoryPage({ data, r }: Props) {
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
-          <ul>{group.links.map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
+          <ul>{group.links.map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
         </div>)}
       </div>
     </Section> : null}
@@ -845,7 +847,7 @@ function ActorHubPage({ data, r }: Props) {
         {items.map((item) => (
           <article className="cardlist-card" key={item.href}>
             <Img className="actor-hub-image" image={item.image} r={r} />
-            <div><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></div>
+            <div><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></div>
           </article>
         ))}
       </div>
@@ -873,7 +875,7 @@ function ActorCategoryPage({ data, r }: Props) {
               <h3>{actor.name}</h3>
               <p className="actor-style">{actor.style}</p>
               <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-              <a className="btn btn-grad" href={r.href(actor.href)}>Meet {actor.name} →</a>
+              <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Meet {actor.name} →</WorkspaceEntryLink>
             </div>
           </li>)}
         </ul>
@@ -918,7 +920,7 @@ function ActorDetailPage({ data, r }: Props) {
             </dl>
             <blockquote className="actor-detail-line"><b>Sample line</b>“{actor.line}”</blockquote>
             <div className="actor-detail-actions">
-              <a className="btn btn-grad" href={r.href(actor.href)}>Put {actor.name} in your next ad →</a>
+              <WorkspaceEntryLink className="btn btn-grad" href={r.href(actor.href)}>Put {actor.name} in your next ad →</WorkspaceEntryLink>
               <StartNote note={text(data.startNote)} r={r} />
             </div>
           </div>
@@ -959,8 +961,8 @@ function ArticlePage({ data, r }: Props) {
                   <b>{tryBox.title}</b>
                   <span>{tryBox.text}</span>
                   <div className="row">
-                    <a className="btn btn-grad" href={r.href(tryBox.href)}>{tryBox.label} →</a>
-                    {tryBox.more ? <a className="trymore" href={r.href(tryBox.more.href)}>{tryBox.more.label}</a> : null}
+                    <WorkspaceEntryLink className="btn btn-grad" href={r.href(tryBox.href)}>{tryBox.label} →</WorkspaceEntryLink>
+                    {tryBox.more ? <WorkspaceEntryLink className="trymore" href={r.href(tryBox.more.href)}>{tryBox.more.label}</WorkspaceEntryLink> : null}
                   </div>
                 </aside>
               ) : null}
@@ -971,7 +973,7 @@ function ArticlePage({ data, r }: Props) {
             <>
               <h2>Related</h2>
               <div className="related">
-                {related.map((item) => <article className="related-card" key={item.href}><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></article>)}
+                {related.map((item) => <article className="related-card" key={item.href}><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></article>)}
               </div>
             </>
           ) : null}
@@ -1003,7 +1005,7 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
   return (
     <Section eyebrow="Keep going" title="Where to Go Next">
       <div className="related">
-        {links.map((item) => <article className="related-card" key={item.href}><b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b><span>{item.text}</span></article>)}
+        {links.map((item) => <article className="related-card" key={item.href}><b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></b><span>{item.text}</span></article>)}
       </div>
     </Section>
   );
@@ -1038,7 +1040,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <section style={{ paddingBottom: 40 }}>
           <div className="wrap">
             <Intro paras={list<string>(data.intro)} />
-            <p className="meta-line" style={{ fontSize: 17 }}>Email: <a href={`mailto:${text(data.email)}`}>{text(data.email)}</a></p>
+            <p className="meta-line" style={{ fontSize: 17 }}>Email: <WorkspaceEntryLink href={`mailto:${text(data.email)}`}>{text(data.email)}</WorkspaceEntryLink></p>
           </div>
         </section>
         {list<V2Item>(data.topics).length ? <Section eyebrow="We can help with" title="What to Contact Us About"><Boxes className="ideas" items={list<V2Item>(data.topics)} /></Section> : null}
@@ -1095,7 +1097,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <Flows filterChips={visual.picker.chips} flows={list<V2Flow>(data.flows)} r={r} />
         <div className="v-directory-related">
           <h3>Results by Template</h3>
-          <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>)}</ul>
+          <ul>{list<{ label: string; href: string }>(data.relatedTemplates).map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
         </div>
       </VisualDirectoryFilter>
       <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />
@@ -1131,7 +1133,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
   return hero;
 }
 
-export function AidreamcapesV2Page({ section, r: baseResolvers, company, homeKeywords }: { section: SectionInstance; r: V2Resolvers; company?: V2Company; homeKeywords?: string }) {
+function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKeywords }: { section: SectionInstance; r: V2Resolvers; company?: V2Company; homeKeywords?: string }) {
   const r = withStartLinks(baseResolvers);
   const settings = section.settings as Record<string, unknown>;
   const layout = text(settings.layout);
@@ -1148,4 +1150,8 @@ export function AidreamcapesV2Page({ section, r: baseResolvers, company, homeKey
     return <AidreamcapesDirectoryLanding data={data} layout={layout} r={r} />;
   }
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
+}
+
+export function AidreamcapesV2Page(props: Parameters<typeof AidreamcapesV2PageContent>[0]) {
+  return <><WorkspaceEntryBehavior /><AidreamcapesV2PageContent {...props} /></>;
 }

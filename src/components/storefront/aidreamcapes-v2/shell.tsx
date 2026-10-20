@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { CreditCard } from "lucide-react";
 import { isValidElement, type ReactNode } from "react";
 import type { AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
@@ -22,26 +23,26 @@ const Chevron = () => (
 function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   if (link.image || link.description) {
     return (
-      <a className="mi" href={r.href(link.href)}>
+      <WorkspaceEntryLink className="mi" href={r.href(link.href)}>
         {link.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(link.image)} width={46} /> : null}
         <div>
           <b>{link.label}</b>
           {link.description ? <span>{link.description}</span> : null}
         </div>
-      </a>
+      </WorkspaceEntryLink>
     );
   }
-  return <a href={r.href(link.href)}>{link.label}</a>;
+  return <WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>;
 }
 
 export function AidreamcapesV2Header({ navigation, r }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers }) {
   return (
     <header className="site">
       <div className="wrap hbar">
-        <a aria-label={copyLabel(r, "AIVideosUGC home")} className="logo" href={r.href("/")}>
+        <WorkspaceEntryLink aria-label={copyLabel(r, "AIVideosUGC home")} className="logo" href={r.href("/")}>
           <img alt="" className="logo-mark" height={28} src={r.asset(BRAND_ICON)} width={28} />
           {BRAND_NAME}
-        </a>
+        </WorkspaceEntryLink>
         <nav aria-label={copyLabel(r, "Main")} className="main" id="adc2-main-nav">
           {navigation.menus.map((menu) => {
             const rich = menu.groups.length === 1 && menu.groups[0].items.some((item) => item.description);
@@ -72,17 +73,17 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                       <div className="ph">{copyLabel(r, "Popular templates")}</div>
                       <div className="popc">
                         {menu.popular.map((item) => (
-                          <a href={r.href(item.href)} key={item.href}>
+                          <WorkspaceEntryLink href={r.href(item.href)} key={item.href}>
                             {item.image ? <img alt="" decoding="async" loading="lazy" src={r.asset(item.image)} /> : null}
                             {item.label}
-                          </a>
+                          </WorkspaceEntryLink>
                         ))}
                       </div>
                     </div>
                   ) : null}
                   {menu.hubLink || menu.footerLink ? (
                     <div className="pfoot">
-                      {[menu.hubLink, menu.footerLink].map((link) => (link ? <a href={r.href(link.href)} key={link.href}>{link.label}</a> : null))}
+                      {[menu.hubLink, menu.footerLink].map((link) => (link ? <WorkspaceEntryLink href={r.href(link.href)} key={link.href}>{link.label}</WorkspaceEntryLink> : null))}
                     </div>
                   ) : null}
                 </div>
@@ -90,12 +91,12 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
             );
           })}
           {navigation.links.map((link) => (
-            <a className="nav-btn" href={r.href(link.href)} key={link.href}>{link.label}</a>
+            <WorkspaceEntryLink className="nav-btn" href={r.href(link.href)} key={link.href}>{link.label}</WorkspaceEntryLink>
           ))}
         </nav>
         <div className="hright">
-          <a className="login" href={r.href(navigation.actions.login.href)}>{navigation.actions.login.label}</a>
-          <a className="btn btn-primary" href={withStartLinks(r).href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</a>
+          <WorkspaceEntryLink className="login" href={r.href(navigation.actions.login.href)}>{navigation.actions.login.label}</WorkspaceEntryLink>
+          <WorkspaceEntryLink className="btn btn-primary" href={withStartLinks(r).href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</WorkspaceEntryLink>
           <button aria-controls="adc2-main-nav" aria-expanded="false" aria-label={copyLabel(r, "Open menu")} className="menu-toggle" id="adc2-menu-toggle" type="button">
             <svg fill="none" height="20" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 20 20" width="20">
               <path d="M3 6h14M3 10h14M3 14h14" />
@@ -115,10 +116,10 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
       <div className="wrap">
         <div className="fgrid seo">
           <div>
-            <a className="logo" href={r.href("/")}>
+            <WorkspaceEntryLink className="logo" href={r.href("/")}>
               <img alt="" className="logo-mark" height={28} loading="lazy" src={r.asset(BRAND_ICON)} width={28} />
               {BRAND_NAME}
-            </a>
+            </WorkspaceEntryLink>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>
             {footerCompany ? <CompanyDetails className="company-foot" company={footerCompany} labels={r.copy} /> : null}
             {articles.length ? (
@@ -127,7 +128,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
                 <ol className={articleStyles.list}>
                   {articles.map((article) => (
                     <li className={articleStyles.item} key={article.href}>
-                      <a className={articleStyles.link} href={r.href(article.href)} title={article.title}>{article.title}</a>
+                      <WorkspaceEntryLink className={articleStyles.link} href={r.href(article.href)} title={article.title}>{article.title}</WorkspaceEntryLink>
                     </li>
                   ))}
                 </ol>
@@ -139,7 +140,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
               <h4>{group.label}</h4>
               <ul>
                 {group.items.map((item) => (
-                  <li key={item.href}><a href={r.href(item.href)}>{item.label}</a></li>
+                  <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>
                 ))}
               </ul>
             </div>
@@ -155,7 +156,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
             {navigation.footer.legal.map((item, index) => (
               <span key={item.href}>
                 {index > 0 ? " · " : null}
-                <a href={r.href(item.href)}>{item.label}</a>
+                <WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink>
               </span>
             ))}
           </span>

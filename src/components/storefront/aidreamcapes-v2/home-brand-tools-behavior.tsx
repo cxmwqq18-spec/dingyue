@@ -1,5 +1,6 @@
 "use client";
 
+import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
 import { useEffect } from "react";
 
 /** Reviewed presentation-only enhancement of page-owned SSR HTML. No data requests. */
@@ -75,7 +76,7 @@ export function HomeBrandToolsBehavior() {
           const output = root.querySelector<HTMLElement>("[data-tools-brief-output]");
           if (output) output.textContent = prompt.value;
           const link = root.querySelector<HTMLAnchorElement>("[data-tools-continue]");
-          if (link) { const url = new URL(form.action); new FormData(form).forEach((value, key) => { if (typeof value === "string") url.searchParams.set(key, value); }); link.href = url.toString(); }
+          if (link) { const url = new URL(form.action); new FormData(form).forEach((value, key) => { if (typeof value === "string") url.searchParams.set(key, value); }); const target = workspaceEntryTarget(url.toString()); link.href = target.href; if (target.transfer) link.dataset.workspaceEntry = JSON.stringify(target.transfer); else delete link.dataset.workspaceEntry; }
           show(briefDialog, button);
         }
         if (button.dataset.toolsShot) { stop(); selectShot(button.dataset.toolsShot); }

@@ -1,3 +1,4 @@
+import { parseStaticCreateSegments, staticViewHref } from "./static-routes";
 import type { SceneId, TaskInput } from "./types";
 import type { WorkspaceImageTool } from "@/components/aidreamcapes-workspace/image-tool-picker";
 
@@ -116,10 +117,11 @@ export function pickerPresetHref(card: PickerPresetCard, sourcePage: string | un
   // wrapper, so both the legacy query form and the static tool path collapse
   // into the same opaque identity link.
   const toolPathMatch = target.pathname.match(/^\/app\/create\/tool\/([a-z0-9][a-z0-9-]{0,60})(?:\/([a-z0-9][a-z0-9-]{0,40}))?$/);
-  const isCreateEntry = target.pathname === "/app/create" || Boolean(toolPathMatch);
+  const fixedTarget = target.pathname.startsWith("/app/create/") ? parseStaticCreateSegments(target.pathname.slice("/app/create/".length).split("/")) : undefined;
+  const isCreateEntry = target.pathname === "/app/create" || Boolean(toolPathMatch) || fixedTarget?.kind === "tool" || (fixedTarget?.kind === "view" && ["video", "images", "agent"].includes(fixedTarget.view));
   if (!isCreateEntry) return card.href;
   const query = new URLSearchParams({ source, preset: pickerPresetId(card) });
-  return `/app/create?${query.toString()}`;
+  return `${staticViewHref("", card.kind === "photo" ? "images" : "video")}?${query.toString()}`;
 }
 
 export function presetRequestFromQuery(query: Record<string, string | string[] | undefined>): WorkspacePresetRequest | undefined {

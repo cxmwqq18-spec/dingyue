@@ -21,7 +21,7 @@ export function HomeComposerBehavior() {
       const mode = tab.dataset.demoTab;
       if (mode !== "home" && mode !== "video" && mode !== "images") return;
       form.querySelectorAll<HTMLElement>("[data-demo-tab]").forEach(button => button.setAttribute("aria-pressed", String(button === tab)));
-      view.value = mode;
+      view.value = mode === "home" ? "agent" : mode;
       tool.value = mode === "images" ? "custom" : "video-ads";
       imageTool.disabled = mode !== "images";
       if (scene) scene.disabled = mode === "images";

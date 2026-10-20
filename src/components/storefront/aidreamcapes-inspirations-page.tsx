@@ -1,14 +1,16 @@
 "use client";
+import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Grid2X2, Image as ImageIcon, Search, Sparkles, X } from "lucide-react";
-import type { InspirationCard } from "@/lib/aidreamcapes-inspirations-types";
+import type { InspirationExample } from "@/lib/aidreamcapes-inspirations-types";
 import styles from "./aidreamcapes-inspirations-page.module.css";
 
 // The server supplies current LivePage examples. Filters and the detail dialog
 // operate on that HTML/data without fetching storefront or customer runtime.
 type InspirationKind = "all" | "video" | "photo";
-type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & { createHref: string };
+
 const ALL_CATEGORY = "All";
 const mediaFilters = [
   { value: "all", label: "All examples", icon: Grid2X2 },
@@ -76,9 +78,9 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
             <div><dt>Collection</dt><dd>{card.pageTitle}</dd></div>
             {card.category !== ALL_CATEGORY ? <div><dt>Category</dt><dd>{card.category}</dd></div> : null}
           </dl>
-          <a className={styles.create} href={card.createHref}>
+          <WorkspaceEntryLink className={styles.create} href={card.createHref} entry={card.entry}>
             <span>{card.kind === "video" ? "Create a video like this" : "Create an image like this"}</span><ArrowUpRight size={18} />
-          </a>
+          </WorkspaceEntryLink>
           <div className={styles.detailNavigation}>
             <span aria-live="polite">{position + 1} / {total}</span>
             <div>
@@ -133,7 +135,7 @@ export function AidreamcapesInspirationsPage({ cards, basePath = "", initialKind
   }
 
   return (
-    <div className={styles.page} data-aidreamcapes-inspirations="true">
+    <div className={styles.page} data-aidreamcapes-inspirations="true"><WorkspaceEntryBehavior />
       <header className={styles.header}>
         <a aria-label="AIVideosUGC home" className={styles.brand} href={basePath || "/"}>
           <span aria-hidden="true" className={styles.brandMark}><Sparkles size={18} /></span>AIVideosUGC

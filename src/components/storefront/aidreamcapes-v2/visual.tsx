@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import type { ReactNode } from "react";
 import { copyLabel } from "./types";
 import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -164,7 +165,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
                   <span className="v-step-chat-confirm">Ready: 9:16{step.length ? ` · ${step.length} s` : ""} · {step.credits}</span>
                 </div> : <div className="v-step-choice-chips" role={actions ? "group" : undefined} aria-label={copyLabel(r, "Example selection")}>{choiceChips.map((chip, index) => <ActionTag aria-pressed={actions ? index === 0 : undefined} type={actions ? "button" : undefined} className={!actions && index === 0 ? "is-selected" : undefined} data-home-local={actions ? `visualChoice${index + 1}` : undefined} data-hx-select-group={actions ? "visual-choice" : undefined} data-hx-select-value={actions ? String(index) : undefined} data-hx-cta-href={actions ? actionHref(`visualChoice${index + 1}`) : undefined} key={`${chip}-${index}`}>{chip}</ActionTag>)}</div>}
                 {isVideo && step.chat?.length ? null : <CostTag aria-label={actions ? copyLabel(r, "View pricing") : undefined} className="maker-foot" data-home-local={actions ? "visualCost" : undefined} href={actions ? "#pricing" : undefined}><small>{copyLabel(r, "Cost")}</small><strong>{step.credits}</strong></CostTag>}
-                {step.buttonHref || actions ? <a className="btn btn-grad v-step-submit" data-action-block={actions ? "visualSteps" : undefined} data-home-action={actions ? "visualCreate" : undefined} data-home-cta={actions ? "visualCreate" : undefined} href={actionHref("visualCreate")}>{buttonLabel} →</a> : <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>}
+                {step.buttonHref || actions ? <WorkspaceEntryLink className="btn btn-grad v-step-submit" data-action-block={actions ? "visualSteps" : undefined} data-home-action={actions ? "visualCreate" : undefined} data-home-cta={actions ? "visualCreate" : undefined} href={actionHref("visualCreate")}>{buttonLabel} →</WorkspaceEntryLink> : <span aria-hidden="true" className="btn btn-grad v-step-submit">{buttonLabel} →</span>}
               </div>
             )}
           </div>
@@ -205,7 +206,7 @@ export function VisualFreshLook({ heading, lead, items, button, href, r }: {
             <div className="v-fresh-copy">
               {heading ? <h2>{heading}</h2> : null}
               {lead ? <p>{lead}</p> : null}
-              {button && href ? <a className="btn btn-grad" href={r.href(href)}>{button} →</a> : null}
+              {button && href ? <WorkspaceEntryLink className="btn btn-grad" href={r.href(href)}>{button} →</WorkspaceEntryLink> : null}
             </div>
           </div>
         </div>
@@ -268,19 +269,19 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         </div>
         <div className="v-picker-grid">
           {cards.map((card, index) => (
-            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(pickerPresetHref(card, sourcePage))} key={`${card.image.src}-${index}`}>
+            <WorkspaceEntryLink mediaLink className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(pickerPresetHref(card, sourcePage))} key={`${card.image.src}-${index}`}>
               <VisualImage image={card.image} r={r} />
               <span>{card.label}</span>
-            </a>
+            </WorkspaceEntryLink>
           ))}
         </div>
         {relatedGroups.length ? <div className="v-related-groups">
           {relatedGroups.map((group) => <div className="v-related-group" key={group.title}>
             <h3>{group.title}</h3>
-            <ul>{group.links.map((link) => <li key={link.href}><a href={r.href(link.href)}>{link.label}</a></li>)}</ul>
+            <ul>{group.links.map((link) => <li key={link.href}><WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink></li>)}</ul>
           </div>)}
         </div> : null}
-        <div className="v-picker-action"><a className="btn btn-grad" href={r.href(picker.href)}>{picker.button} →</a></div>
+        <div className="v-picker-action"><WorkspaceEntryLink className="btn btn-grad" href={r.href(picker.href)}>{picker.button} →</WorkspaceEntryLink></div>
       </div>
     </Section>
   );
@@ -326,7 +327,7 @@ export function VisualUses({ visual, r }: { visual: V2Visual; r: V2Resolvers }) 
     }));
     return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><ImageItemRows items={rows} r={r} /></Section>;
   }
-  return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.href ? <a href={r.href(item.href)}>{item.h}</a> : item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
+  return <Section eyebrow="Where to use it" title={visual.titles?.m4?.h2 ?? "Put each result to work"}><div className="v-uses">{visual.uses.map((item, index) => <article className="v-use-row" key={`${item.frame}-${index}`}><div className="v-use-art"><div className="v-use-art-inner"><MockFrame item={item} r={r} /></div></div><div className="v-use-copy"><h3>{item.href ? <WorkspaceEntryLink href={r.href(item.href)}>{item.h}</WorkspaceEntryLink> : item.h}</h3><p>{item.d}</p></div></article>)}</div></Section>;
 }
 
 function InputPair({ item, r }: { item: V2VisualInput; r: V2Resolvers }) {

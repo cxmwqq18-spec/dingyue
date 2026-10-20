@@ -16,9 +16,11 @@ import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
-import { workspaceMediaRoutePath, workspaceSceneRouteSlug, type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-workspace/static-routes";
-import { EmbeddedInspirations, type EmbeddedInspiration } from "./inspirations-embedded";
+import { WorkspaceEntryBehavior } from "./entry-behavior";
+import { entryCookieName, readWorkspaceEntry } from "@/lib/aidreamcapes-workspace/entry-transfer";
+const EmbeddedInspirations = dynamic(() => import("./inspirations-embedded").then(module => module.EmbeddedInspirations), { loading: () => <p role="status">Loading inspirations…</p> });
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -81,7 +83,7 @@ export interface AidreamcapesWorkspaceProps {
   initialPreset?: WorkspacePreset;
   initialHandoff?: WorkspaceHandoff;
   initialTemplateGallery?: WorkspaceTemplateGallery;
-  initialInspirations?: EmbeddedInspiration[];
+  initialInspirations?: import("@/lib/aidreamcapes-inspirations-types").InspirationPage;
 }
 
 const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
@@ -125,9 +127,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     target.searchParams.set("next", `${basePath}/app/create?view=${targetView}`);
     return `${target.pathname}${target.search}${target.hash}`;
   };
+  const [entryProductUrl, setEntryProductUrl] = useState(initialProductUrl);
   const [catalog, setCatalog] = useState<WorkspaceCatalog | undefined>(initialCatalog);
-  const [inspirationCards, setInspirationCards] = useState<EmbeddedInspiration[]>(initialInspirations ?? []);
-  const [inspirationsLoading, setInspirationsLoading] = useState(initialView === "inspirations" && !(initialInspirations?.length));
   const [view, setView] = useState<View>(initialView);
   const [task, setTask] = useState<WorkspaceTask | null>(null);
   const [tasks, setTasks] = useState<WorkspaceTask[]>([]);
@@ -265,21 +266,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setTasks((items) => [next, ...items.filter((item) => item.taskId !== next.taskId)]);
   }, []);
 
-  const inspirationsLoaded = useRef(Boolean(initialInspirations?.length));
-  const loadInspirations = useCallback(async () => {
-    if (inspirationsLoaded.current) return;
-    setInspirationsLoading(true);
-    try {
-      const result = await request<{ cards?: EmbeddedInspiration[] }>("/inspirations");
-      setInspirationCards(Array.isArray(result.cards) ? result.cards : []);
-      inspirationsLoaded.current = true;
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Couldn't load inspirations.");
-    } finally {
-      setInspirationsLoading(false);
-    }
-  }, [request]);
-
   const persist = useCallback(async () => {
     if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
     const execute = async () => {
@@ -336,7 +322,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const handoff = workspaceHandoffFromSearchParams(params);
     const resumingGuestDraft = params.get("resumeDraft") === "1";
     const queryView = params.get("view");
-    const entryView = initialPreset ? initialPreset.kind === "photo" ? "images" : "home" : isWorkspaceView(queryView) ? queryView : initialView;
+    const hasHandoffInput = Boolean(handoff.prompt || createIntent || handoff.scene);
+    const requestedView = isWorkspaceView(queryView) ? queryView : initialView;
+    const handoffView = requestedView === "home" && hasHandoffInput
+      ? initialView === "home" ? "agent" : initialView : requestedView;
+    const entryView = initialPreset ? initialPreset.kind === "photo" ? "images" : "video" : handoffView;
     const taskId = initialTaskId ?? params.get("task");
     if (!initialPreset && !resumingGuestDraft && !taskId) {
       const entryPrompt = handoff.prompt ?? createIntent?.prompt;
@@ -355,7 +345,28 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
     if (entryView === "library" && handoff.filter) setLibraryFilter(handoff.filter);
     setView(entryView);
-    if (entryView === "inspirations" && !initialInspirations?.length) void loadInspirations();
+    if (!taskId && !resumingGuestDraft) {
+      // Initial SSR consumed the bounded cookie. Long free-form inputs use
+      // this tab's storage, never a URL parameter or a public data fetch.
+      try {
+        const stored = readWorkspaceEntry(sessionStorage.getItem(entryCookieName(entryView)) ?? undefined, entryView);
+        if (stored) {
+          const input = workspaceHandoffFromSearchParams(new URLSearchParams(stored.query));
+          if (input.prompt) {
+            if (entryView === "images") setImageInput(current => ({ ...current, prompt: input.prompt! }));
+            else setPrompt(input.prompt);
+          }
+          const intent = aidreamcapesCreateIntentFromSearchParams(new URLSearchParams(stored.query));
+          if (intent?.kind === "video" && intent.productUrl) setEntryProductUrl(intent.productUrl);
+          sessionStorage.removeItem(entryCookieName(entryView));
+        }
+      } catch { /* The SSR transfer remains usable when tab storage is blocked. */ }
+      document.cookie = `${entryCookieName(entryView)}=; Path=${basePath}/app/create; Max-Age=0; SameSite=Lax`;
+      const canonical = new URL(window.location.href);
+      canonical.pathname = staticViewHref(basePath, entryView);
+      canonical.search = ""; canonical.hash = "";
+      window.history.replaceState(window.history.state, "", canonical);
+    }
     if (customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
       params.delete("resumeDraft");
       const restoredUrl = `${window.location.pathname}${params.size ? `?${params.toString()}` : ""}${window.location.hash}`;
@@ -414,7 +425,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setLoading(false);
     });
     return () => controller.abort();
-  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, initialInspirations, loadInspirations, request, siteId]);
+  }, [acceptTask, customerId, initialCatalog, initialTaskId, initialView, initialPreset, request, siteId]);
 
   const taskRunning = Boolean(operationActive || task?.status === "rendering" || clipsProcessing);
   const taskId = task?.taskId;
@@ -503,7 +514,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       url.search = new URLSearchParams({ task: nextTask.taskId, step: nextStep }).toString();
     } else {
       // Fixed view paths keep the address bar free of query state.
-      url.pathname = nextView === "home" ? `${basePath}/app/create` : staticViewHref(basePath, nextView);
+      url.pathname = staticViewHref(basePath, nextView);
       url.search = "";
       url.hash = "";
     }
@@ -512,9 +523,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   async function navigate(next: View) {
     if (next === "images" && composerProducts.length) setImageInput((current) => current.assetUrls.length ? current : { ...current, assetUrls: composerProducts.map((asset) => asset.previewUrl).slice(0, 4) });
-    if (next === "inspirations") {
-      void loadInspirations();
-    }
     const navigation = ++navigationSerial.current;
     visibleView.current = next;
     setView(next); setMobileOpen(false); setMessage(""); window.scrollTo({ top: 0 }); setLoading(false);
@@ -930,15 +938,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const url = new URL(window.location.href);
     const staticParams = staticCreateSearchFromPath(window.location.pathname);
     if (staticParams) staticParams.forEach((value, key) => { if (!url.searchParams.has(key)) url.searchParams.set(key, value); });
-    if (url.searchParams.get("templates") !== "1") return;
+    if (url.searchParams.get("templates") !== "1" && !initialHandoff?.templates) return;
     templateHandoffConsumed.current = true;
-    const handoff = workspaceHandoffFromSearchParams(url.searchParams);
+    const handoff = initialHandoff?.templates ? initialHandoff : workspaceHandoffFromSearchParams(url.searchParams);
     if (handoff.category && initialTemplateGallery?.categories.some((item) => item.id === handoff.category)) setTemplateCategoryFilter(handoff.category);
     if (handoff.kind && initialTemplateGallery?.options.some((item) => item.kind === handoff.kind)) setTemplateKindFilter(handoff.kind);
     setModal("templates");
     url.searchParams.delete("templates");
     window.history.replaceState(window.history.state, "", url);
-  }, [canBrowseTemplates, initialTemplateGallery]);
+  }, [canBrowseTemplates, initialTemplateGallery, initialHandoff]);
   const availableTemplateKinds = (["video", "photo"] as const).filter((kind) => initialTemplateGallery?.options.some((option) => option.kind === kind));
   const templateFilterKinds = ["all" as const, ...availableTemplateKinds];
   const visibleTemplates = (initialTemplateGallery?.options ?? []).filter((item) => {
@@ -951,6 +959,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   // Keep text beside icons/conditional children in host elements: browser
   // translation replaces bare Text nodes that React would otherwise remove.
   return <div className={`${styles.workspace} ${collapsed ? styles.collapsed : ""} ${mobileOpen ? styles.mobileOpen : ""} ${dark ? styles.dark : ""}`} translate="yes">
+    <WorkspaceEntryBehavior />
     {mobileOpen && <button className={styles.closeOverlay} onClick={() => setMobileOpen(false)} aria-label="Close navigation" />}
     <aside className={styles.sidebar} aria-label="Workspace navigation">
       <a className={styles.brand} href={basePath || "/"} aria-label="AIVideosUGC storefront"><img className={styles.brandLogo} src="/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc" alt="" width={36} height={36} /><span>AIVideosUGC</span></a>
@@ -997,8 +1006,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </>}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
-        {view === "inspirations" && <EmbeddedInspirations cards={inspirationCards} loading={inspirationsLoading} />}
-        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={initialProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
+        {view === "inspirations" && <EmbeddedInspirations initialPage={initialInspirations} endpoint={`${api}/inspirations`} basePath={basePath} />}
+        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
           <HomeComposer
@@ -1231,7 +1240,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   function selectTemplate(option: WorkspaceTemplateOption) {
     if (option.kind === "video") {
-      setView("home");
+      setView("video");
       setComposerTab("AI Video");
       setPrompt(option.prompt);
       setComposerAspect(option.aspect);
@@ -1247,17 +1256,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setComposerTitle(option.title);
     setMessage("");
     const url = new URL(window.location.href);
-    const mediaPath = workspaceMediaRoutePath(option.kind, option.publicSlug);
-    const sceneRouteSlug = mediaPath ? undefined : workspaceSceneRouteSlug(option.sourcePage, option.sceneSlug);
-    url.pathname = mediaPath ? `${basePath}${mediaPath}` : sceneRouteSlug ? `${basePath}/app/create/scene/${sceneRouteSlug}` : `${basePath}/app/create`;
+    url.pathname = staticViewHref(basePath, option.kind === "photo" ? "images" : "video");
     url.search = "";
     url.hash = "";
-    if (!mediaPath && !sceneRouteSlug) {
-      url.searchParams.set("source", option.sourcePage);
-      url.searchParams.set("preset", option.presetId);
-      url.searchParams.set("view", option.kind === "video" ? "home" : "images");
-      if (option.kind === "photo") url.searchParams.set("tool", option.imageTool);
-    }
     window.history.replaceState(window.history.state, "", url);
     setModal(null);
     const main = document.querySelector<HTMLElement>(`main.${styles.main}`);
@@ -1304,7 +1305,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
         setActivePreset(undefined); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
         if (!video) setImageInput((current) => ({ ...current, prompt: "", toolId: "custom" }));
-        const url = new URL(window.location.href); url.pathname = view === "home" ? `${basePath}/app/create` : staticViewHref(basePath, view);
+        const url = new URL(window.location.href); url.pathname = staticViewHref(basePath, view);
         url.search = ""; url.hash = "";
         window.history.replaceState(window.history.state, "", url);
       }}><X size={18} /></button>}

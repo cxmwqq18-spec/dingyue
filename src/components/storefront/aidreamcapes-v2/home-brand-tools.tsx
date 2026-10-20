@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import type { CSSProperties, ReactNode } from "react";
 import { Img, SecHead } from "./parts";
 import type { V2Image, V2Resolvers } from "./types";
@@ -65,19 +66,19 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
       </div>;
       case "twin": return <div className="adc-tools-twin-demo">
         <div className="adc-tools-compare" style={{ "--compare": "50%" } as CSSProperties}><div className="adc-tools-twin-result"><Img image={demo.twin} r={r} /></div><div className="adc-tools-twin-source"><Img image={demo.twin} r={r} /></div><span className="adc-tools-compare-line" aria-hidden="true">↔</span><span className="adc-tools-compare-left">{c.twinSource}</span><span className="adc-tools-compare-right">{c.twinResult}</span></div>
-        <label className="adc-tools-compare-control"><span>{c.compareLabel}</span><input type="range" min="0" max="100" defaultValue="50" data-tools-compare aria-label={c.compareLabel} /></label><a className="adc-tools-twin-enlarge" href={r.href(item.href)}>{c.previewConcept}<span aria-hidden="true">↗</span></a>
+        <label className="adc-tools-compare-control"><span>{c.compareLabel}</span><input type="range" min="0" max="100" defaultValue="50" data-tools-compare aria-label={c.compareLabel} /></label><WorkspaceEntryLink className="adc-tools-twin-enlarge" href={r.href(item.href)}>{c.previewConcept}<span aria-hidden="true">↗</span></WorkspaceEntryLink>
       </div>;
     }
   };
   return <section className="sec adc-brand-tools" id="home-ai-tools" aria-labelledby="adc-brand-tools-title" data-home-brand-tools>
     <div className="wrap"><SecHead eyebrow={header.eyebrow} lead={header.lead} title={header.title} titleId="adc-brand-tools-title" />
       <div className="adc-brand-tools__grid">{items.map(item => <article className={`adc-brand-tools__card adc-tools-card-${item.id}`} data-tool-kind={item.id} key={item.id}>
-        <div className="adc-brand-tools__copy"><h3><a href={r.href(item.href)} aria-label={item.cta}>{item.t}<span aria-hidden="true">→</span></a>{item.id === "twin" ? <small><a href={r.href(item.href)}>{c.conceptBadge}</a></small> : null}</h3><p>{item.d}</p></div>
+        <div className="adc-brand-tools__copy"><h3><WorkspaceEntryLink href={r.href(item.href)} aria-label={item.cta}>{item.t}<span aria-hidden="true">→</span></WorkspaceEntryLink>{item.id === "twin" ? <small><WorkspaceEntryLink href={r.href(item.href)}>{c.conceptBadge}</WorkspaceEntryLink></small> : null}</h3><p>{item.d}</p></div>
         <div className="adc-brand-tools__visual">{visual(item)}</div>
       </article>)}</div><p className="adc-tools-notice">{c.previewNotice}</p>
     </div>
     <dialog className="adc-tools-dialog" id="adc-tools-media-dialog" aria-labelledby="adc-tools-media-title"><div className="adc-tools-dialog-head"><h3 id="adc-tools-media-title">{c.previewTitle}</h3><form method="dialog"><button type="submit" aria-label={c.close}><Icon kind="close" /></button></form></div>{media.map((entry, index) => <figure key={entry.id} data-tools-media={entry.id} hidden={index !== 0}><Img image={entry.image} r={r} /><figcaption>{entry.image.alt}</figcaption></figure>)}<p className="adc-tools-dialog-script" data-tools-script-output hidden /><p>{c.previewNotice}</p></dialog>
-    <dialog className="adc-tools-dialog adc-tools-brief-dialog" id="adc-tools-brief-dialog" aria-labelledby="adc-tools-brief-title"><div className="adc-tools-dialog-head"><h3 id="adc-tools-brief-title">{c.briefTitle}</h3><form method="dialog"><button type="submit" aria-label={c.close}><Icon kind="close" /></button></form></div><blockquote data-tools-brief-output>{c.promptValue}</blockquote><p>{c.briefNote}</p><a className="btn btn-grad" href={promptHref} data-tools-continue>{c.continueLabel}<Icon kind="arrow" /></a></dialog>
+    <dialog className="adc-tools-dialog adc-tools-brief-dialog" id="adc-tools-brief-dialog" aria-labelledby="adc-tools-brief-title"><div className="adc-tools-dialog-head"><h3 id="adc-tools-brief-title">{c.briefTitle}</h3><form method="dialog"><button type="submit" aria-label={c.close}><Icon kind="close" /></button></form></div><blockquote data-tools-brief-output>{c.promptValue}</blockquote><p>{c.briefNote}</p><WorkspaceEntryLink className="btn btn-grad" href={promptHref} data-tools-continue>{c.continueLabel}<Icon kind="arrow" /></WorkspaceEntryLink></dialog>
     <HomeBrandToolsBehavior />
   </section>;
 }

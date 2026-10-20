@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import type { ReactNode } from "react";
 import { Img } from "./parts";
 import type { V2Image, V2Resolvers } from "./types";
@@ -50,8 +51,8 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         <div className="hx-wrap">
           <div className="hx-layout">
             <div><div className="hx-tag">{c.t001}</div><h2 id="home-experience-hero-title">{c.t002}<br /><em>{c.t003}</em></h2><p className="hx-intro">{c.t004}</p>
-              <div className="hx-points">{[[block.actions?.anchorProductPhoto ?? "#home-experience-picker", "t005"], [block.actions?.anchorScenes ?? "#home-experience-picker", "t006"], [block.actions?.anchorPresenters ?? "#home-experience-steps", "t007"], [block.actions?.anchorFormats ?? "#home-experience-reviews", "t008"]].map(([href, text]) => <a className="hx-chip" data-home-local={text} href={href} key={text}>{c[text]}</a>)}</div>
-              <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t009}</a>
+              <div className="hx-points">{[[block.actions?.anchorProductPhoto ?? "#home-experience-picker", "t005"], [block.actions?.anchorScenes ?? "#home-experience-picker", "t006"], [block.actions?.anchorPresenters ?? "#home-experience-steps", "t007"], [block.actions?.anchorFormats ?? "#home-experience-reviews", "t008"]].map(([href, text]) => <WorkspaceEntryLink className="hx-chip" data-home-local={text} href={href} key={text}>{c[text]}</WorkspaceEntryLink>)}</div>
+              <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t009}</WorkspaceEntryLink>
             </div>
             <div className="hx-story">
               <button type="button" className="hx-source" data-home-local="source" data-hx-dialog={previewId("source")}><div className="hx-photo"><Img image={m.m01} r={r} /></div><span>{c.t010}</span></button>
@@ -60,7 +61,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
               <button type="button" className="hx-mini-version" data-home-local="versions" data-hx-dialog={previewId("versions")}><strong>{c.t015}</strong><p>{c.t016}<br />{c.t017}</p><span aria-hidden="true" className="hx-bars"><i /><i /><i /></span></button>
             </div>
           </div>
-          <div className="hx-path">{[[block.actions?.anchorPathProduct ?? "#home-experience-picker", "t018", "t019"], [block.actions?.anchorPathScene ?? "#home-experience-steps", "t020", "t021"], [block.actions?.anchorPathStoryboard ?? "#home-experience-features", "t022", "t023"], [block.actions?.anchorPathReview ?? "#home-experience-reviews", "t024", "t025"]].map(([href, title, description], index) => <a data-home-local={`step${index + 1}`} href={href} key={title}><b>{c[title]}</b><span>{c[description]}</span></a>)}</div>
+          <div className="hx-path">{[[block.actions?.anchorPathProduct ?? "#home-experience-picker", "t018", "t019"], [block.actions?.anchorPathScene ?? "#home-experience-steps", "t020", "t021"], [block.actions?.anchorPathStoryboard ?? "#home-experience-features", "t022", "t023"], [block.actions?.anchorPathReview ?? "#home-experience-reviews", "t024", "t025"]].map(([href, title, description], index) => <WorkspaceEntryLink data-home-local={`step${index + 1}`} href={href} key={title}><b>{c[title]}</b><span>{c[description]}</span></WorkspaceEntryLink>)}</div>
         </div>
         <Preview id={previewId("source")} title={c.t010} close={c.uiClose} images={[m.m01]} r={r} />
         <Preview id={previewId("result")} title={c.t011} close={c.uiClose} images={[m.m02]} r={r} />
@@ -79,7 +80,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <div className="hx-scene-grid">{scenes.map(([key, image, title], index) => <button type="button" className={`hx-scene-card${index === 0 ? " is-selected" : ""}`} data-home-local={key} data-hx-filter-tags={(block.presentation?.sceneCategories?.[key] ?? []).join(" ")} data-hx-select-group="scene" data-hx-select-value={key} aria-pressed={index === 0} key={key}><span className="photo"><Img image={m[image]} r={r} /></span><b>{c[title]}</b></button>)}</div>
             {scenes.map(([key, image, title], index) => <div className="hx-selector-footer" data-hx-panel-group="scene" data-hx-panel-value={key} hidden={index !== 0} key={key}>
               <button type="button" className="hx-selected" data-home-local={`preview-${key}`} data-hx-dialog={previewId(key)}><Img image={m[image]} r={r} /><span><small>{c.t027}</small>{c[title]}</span></button>
-              <a className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t029}</a>
+              <WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t029}</WorkspaceEntryLink>
             </div>)}
           </div>
         </div>
@@ -96,7 +97,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
           </div>
           <div className="hx-presenter-copy"><div className="hx-tag">{c.t004}</div><h2 id="home-experience-steps-title">{c.t005}<br /><em>{c.t006}</em></h2><p className="hx-intro">{c.t007}</p>
             <div className="hx-script"><span>{c.t008}</span><p>{c.t009}</p><details className="hx-voice-details"><summary className="hx-voice" data-home-local="voice"><span>{c.t010}</span><span className="hx-wave" aria-hidden="true">{[9, 16, 25, 12, 21, 30, 17, 9, 22, 27, 14, 19, 9].map((height, index) => <i key={index} style={{ height }} />)}</span><span>{c.t011}</span></summary><div className="hx-voice-information"><strong>{c.uiVoiceTitle}</strong><p>{c.uiVoiceDescription}</p><p>{c.uiVoiceNotice}</p></div></details></div>
-            <p className="hx-note">{c.t012}</p><a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t013}</a>
+            <p className="hx-note">{c.t012}</p><WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t013}</WorkspaceEntryLink>
           </div>
         </div>
         <Preview id={previewId("main")} title={c.t008} close={c.uiClose} images={[m.m02]} r={r} />
@@ -121,7 +122,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <div className="hx-stage-panel" data-hx-panel-group="stage" data-hx-panel-value="delivery" hidden><button type="button" className="hx-stage-preview" data-home-local="delivery-preview" data-hx-dialog={previewId("result")}><Img image={m.m02} r={r} /></button><div><h3>{c.t009}</h3><p>{c.uiDeliveryStage}</p></div></div>
           </div>
           <div className="hx-board-bottom">{[["t027", "t028"], ["t029", "t030"], ["t031", "t032"]].map(([title, description]) => <span key={title}><b>{c[title]}</b>{c[description]}</span>)}</div>
-          <a className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t033}</a>
+          <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t033}</WorkspaceEntryLink>
         </div>
         <Preview id={previewId("product")} title={c.t006} close={c.uiClose} images={[m.m01]} r={r} />
         <Preview id={previewId("result")} title={c.t009} close={c.uiClose} images={[m.m02]} r={r} />
@@ -132,7 +133,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
       <section className="hx-feature hx-light hx-batch" data-hx-root data-home-experience="audience" id="home-experience-audience" aria-labelledby="home-experience-audience-title">
         <div className="hx-wrap hx-batch-layout">
           <div><div className="hx-tag">{c.t001}</div><h2 id="home-experience-audience-title">{c.t002}<br /><em>{c.t003}</em></h2><p className="hx-intro">{c.t004}</p><div className="hx-batch-pills">{["t005", "t006", "t007"].map((text) => <span className="hx-chip" key={text}>{c[text]}</span>)}</div>
-            {briefs.map(([key, , , title], index) => <div data-hx-panel-group="brief" data-hx-panel-value={key} hidden={index !== 0} key={key}><p className="hx-selected-brief">{c[title]}</p><a className="hx-button hx-action" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</a></div>)}
+            {briefs.map(([key, , , title], index) => <div data-hx-panel-group="brief" data-hx-panel-value={key} hidden={index !== 0} key={key}><p className="hx-selected-brief">{c[title]}</p><WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</WorkspaceEntryLink></div>)}
             <p className="hx-note">{c.t009}</p>
           </div>
           <div className="hx-library"><div className="hx-library-head"><span>{c.t010}</span><small>{c.t011}</small></div><div className="hx-library-filter">{[["all", "t012"], ["product", "t013"], ["presenter", "t014"]].map(([key, text], index) => <button type="button" className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${key}`} data-hx-filter={key} aria-pressed={index === 0} key={key}>{c[text]}</button>)}</div>
@@ -140,7 +141,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <p className="hx-local-empty" data-hx-empty hidden>{c.uiEmpty}</p><div className="hx-library-foot">{c.t030}</div>
           </div>
         </div>
-        {briefs.map(([key, image, , title, line1, line2]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c[line1]} {c[line2]}</p><p>{c.t009}</p><a className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</a></Preview>)}
+        {briefs.map(([key, image, , title, line1, line2]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c[line1]} {c[line2]}</p><p>{c.t009}</p><WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</WorkspaceEntryLink></Preview>)}
       </section>
     );
     case "reviews": return (
@@ -152,7 +153,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <button type="button" className="hx-format-web" data-home-local="productPage" data-hx-select-group="format" data-hx-select-value="productPage" data-hx-dialog={previewId("productPage")} aria-pressed={false}><span className="hx-browser-dots" aria-hidden="true"><i /><i /><i /></span><span className="photo"><Img image={m.m01} r={r} /><Img image={m.m02} r={r} /></span><span>{c.t009}<br />{c.t010}</span></button>
           </div>
           <div className="hx-formats-foot">{["t011", "t012", "t013", "t014", "t015"].map((text) => <span key={text}>{c[text]}</span>)}</div>
-          <div className="hx-format-action">{[["video", "t005"], ["image", "t007"], ["productPage", "t009"]].map(([key, title], index) => <div data-hx-panel-group="format" data-hx-panel-value={key} hidden={index !== 0} key={key}><p className="hx-selected-format">{c[title]}</p><a className="hx-button hx-action" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t016}</a></div>)}</div><p className="hx-note">{c.t017}</p>
+          <div className="hx-format-action">{[["video", "t005"], ["image", "t007"], ["productPage", "t009"]].map(([key, title], index) => <div data-hx-panel-group="format" data-hx-panel-value={key} hidden={index !== 0} key={key}><p className="hx-selected-format">{c[title]}</p><WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t016}</WorkspaceEntryLink></div>)}</div><p className="hx-note">{c.t017}</p>
         </div>
         <Preview id={previewId("video")} title={c.t005} close={c.uiClose} images={[m.m02]} r={r} />
         <Preview id={previewId("image")} title={c.t007} close={c.uiClose} images={[m.m01]} r={r} />

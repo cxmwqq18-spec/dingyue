@@ -77,8 +77,8 @@ function modelCapability(provider: PlatformAiProvider): ModelCapability {
 }
 export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCatalog> {
   assertWorkspaceSite(siteId);
-  const actors = await getWorkspaceActors(siteId);
   if (isWorkspaceStabilityMockMode()) {
+    const actors = await getWorkspaceActors(siteId);
     const reason = "workspace_stability_mock_video_dispatch_disabled";
     return {
       scenes: structuredClone(SCENES), actors,
@@ -103,12 +103,13 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
       ],
     };
   }
-  const [providers, app, imageProviders, imageApp, subtitlesAvailable] = await Promise.all([
+  const [providers, app, imageProviders, imageApp, subtitlesAvailable, actors] = await Promise.all([
     listWorkspaceProviderRows({ providerType: "video" }),
     prisma.siteAiApp.findFirst({ where: { siteId, enabled: true, aiApp: { slug: "video_generator" } }, select: { creditCost: true } }),
     listWorkspaceProviderRows({ providerType: "image" }),
     prisma.siteAiApp.findFirst({ where: { siteId, enabled: true, aiApp: { slug: "image_generator" } }, select: { creditCost: true } }),
     workspaceAsrAvailable(),
+    getWorkspaceActors(siteId),
   ]);
   const models = providers.map((provider) => { const capability = modelCapability(provider); return app ? capability : { ...capability, available: false, reason: "workspace_generation_app_missing" }; });
   const outputOptions = workspaceOutputOptions(models);

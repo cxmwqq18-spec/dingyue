@@ -26,7 +26,7 @@ export type HomeComposerData = {
 export function HomeComposer({ data: c, r }: { data?: HomeComposerData; r: V2Resolvers }) {
   if (!c) return null;
   return <form action={r.href("/app/create")} method="get" className="adc-home-composer" data-home-composer aria-label={c.label}>
-    <input name="view" type="hidden" defaultValue="home" data-demo-view />
+    <input name="view" type="hidden" defaultValue="agent" data-demo-view />
     <input name="tool" type="hidden" defaultValue="video-ads" data-demo-tool />
     <input name="tool_id" type="hidden" defaultValue="image_generator" disabled data-demo-image-tool />
     <div className="adc-demo-tabs" role="group" aria-label={c.label}>

@@ -347,3 +347,6 @@
   .preview { min-height: 220px; max-height: 320px; }
   .search { min-width: 0; width: 100%; }
 }
+
+.pagination { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 24px; color: var(--text-secondary, #667085); }
+.pagination button { border: 1px solid #d9dbe5; border-radius: 10px; padding: 10px 18px; background: white; color: #3f2a94; cursor: pointer; }

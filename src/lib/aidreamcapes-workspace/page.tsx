@@ -1,3 +1,4 @@
+import { entryCookieName, readWorkspaceEntry } from "./entry-transfer";
 import "server-only";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
@@ -11,11 +12,10 @@ import { catalogForCustomer } from "./api";
 import { AIVIDEOSUGC_SITE_ID, type SceneId } from "./types";
 import { isWorkspaceView } from "./navigation";
 import { presetRequestFromQuery, type WorkspacePreset, type WorkspacePresetRequest } from "./preset-contract";
-import { getWorkspaceTemplateGallery, resolveWorkspacePreset } from "./presets.server";
+import { getWorkspaceTemplateGallery, resolveWorkspacePreset, resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
-import { getAidreamcapesInspirationCards } from "@/lib/aidreamcapes-inspirations";
-import { inspirationCreateHref } from "@/lib/aidreamcapes-inspirations-types";
+import { getWorkspaceInspirationPage } from "./inspirations-page.server";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -55,22 +55,36 @@ export async function renderAidreamcapesWorkspace({
   resumeDraft?: boolean;
 }) {
   if (!taskId && invalidPreset) notFound();
-  const initialPreset = !taskId ? resolvedPreset ?? (presetRequest ? await resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined) : undefined;
-  if (!taskId && presetRequest && !initialPreset) notFound();
-  const [current, cookieStore, headerStore, templateGallery, inspirationCards] = await Promise.all([
-    getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
-    cookies(),
-    headers(),
+  const entryCookies = await cookies();
+  const transfer = !taskId && !resolvedPreset && !presetRequest
+    ? readWorkspaceEntry(entryCookies.get(entryCookieName(initialView))?.value, initialView) : undefined;
+  if (transfer) {
+    const entry = aidreamcapesWorkspaceEntry(transfer.query);
+    presetRequest = entry.presetRequest;
+    invalidPreset = entry.invalidPreset;
+    sceneId = entry.sceneId ?? sceneId;
+    imageTool = entry.imageTool ?? imageTool;
+    initialProductUrl = entry.initialProductUrl ?? initialProductUrl;
+    handoff = entry.handoff;
+    if (transfer.media) resolvedPreset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, transfer.media.kind, transfer.media.slug);
+    else if (transfer.scene) resolvedPreset = await resolveWorkspaceScenePreset(AIVIDEOSUGC_SITE_ID, transfer.scene);
+    if (invalidPreset || ((transfer.media || transfer.scene) && !resolvedPreset)) notFound();
+  }
+  const currentPromise = getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID);
+  const catalogPromise = getWorkspaceCatalog(AIVIDEOSUGC_SITE_ID);
+  const headerPromise = headers();
+  const inspirationsPromise = initialView === "inspirations" ? headerPromise.then(header => {
+    const host = (header.get("x-forwarded-host") ?? header.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
+    return getWorkspaceInspirationPage({ basePath: workspaceHosts.has(host) ? "" : `/site/${routeSlug}` });
+  }) : Promise.resolve(undefined);
+  const [initialPreset, current, cookieStore, headerStore, templateGallery, catalog, inspirations] = await Promise.all([
+    !taskId ? resolvedPreset ?? (presetRequest ? resolveWorkspacePreset(AIVIDEOSUGC_SITE_ID, presetRequest) : undefined) : undefined,
+    currentPromise, cookies(), headerPromise,
     routeSlug === "aidreamcapes" ? getWorkspaceTemplateGallery(AIVIDEOSUGC_SITE_ID) : Promise.resolve(undefined),
-    initialView === "inspirations"
-      ? getAidreamcapesInspirationCards().then((cards) => cards.map((card) => ({
-        id: card.id, label: card.label, imageSrc: card.imageSrc, imageAlt: card.imageAlt,
-        pageTitle: card.pageTitle, kind: card.kind, description: card.description,
-        category: card.category, createHref: inspirationCreateHref(card),
-      })))
-      : Promise.resolve(undefined),
+    currentPromise.then(current => current ? catalogForCustomer(AIVIDEOSUGC_SITE_ID, current.customer.id, catalogPromise) : catalogPromise),
+    inspirationsPromise
   ]);
-  const catalog = current ? await catalogForCustomer(AIVIDEOSUGC_SITE_ID, current.customer.id) : await getWorkspaceCatalog(AIVIDEOSUGC_SITE_ID);
+  if (!taskId && presetRequest && !initialPreset) notFound();
   const host = (headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
   const hostMode = workspaceHosts.has(host);
   const basePath = hostMode ? "" : `/site/${routeSlug}`;
@@ -94,7 +108,7 @@ export async function renderAidreamcapesWorkspace({
     key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? "workspace"}
     siteId={AIVIDEOSUGC_SITE_ID}
     basePath={basePath}
-    initialView={initialPreset ? initialPreset.kind === "photo" ? "images" : "home" : initialView}
+    initialView={initialPreset ? initialPreset.kind === "photo" ? "images" : "video" : initialView}
     initialTaskId={taskId}
     initialSceneId={sceneId}
     initialProductUrl={initialProductUrl}
@@ -102,7 +116,7 @@ export async function renderAidreamcapesWorkspace({
     initialPreset={initialPreset}
     initialHandoff={safeHandoff}
     initialTemplateGallery={templateGallery}
-    initialInspirations={inspirationCards}
+    initialInspirations={inspirations}
     initialCatalog={catalog}
     csrfToken={cookieStore.get(csrfCookieName(`customer:${AIVIDEOSUGC_SITE_ID}`))?.value}
     customer={current ? { id: current.customer.id, name: current.customer.name, email: current.customer.email, balance: current.customer.balance.available } : undefined}
@@ -132,8 +146,15 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
   };
   const sceneId = requestedScene ?? (createIntent?.kind === "video" ? sceneByTool[createIntent.tool] : undefined);
   const intentView: WorkspaceView | undefined = createIntent?.kind === "video" ? createIntent.tool === "url-to-video" ? "product" : "video" : undefined;
-  const initialView: WorkspaceView | undefined = isWorkspaceView(queryView) ? queryView : value("tool_id") === "image_generator" || (tool && imageTools.includes(tool as WorkspaceImageTool)) ? "images" : intentView;
-  const imageTool = initialView === "images" && tool && imageTools.includes(tool as WorkspaceImageTool) ? tool as WorkspaceImageTool : undefined;
+  const requestedView = isWorkspaceView(queryView)
+    ? queryView === "home" && (handoff.prompt || tool || handoff.scene) ? "agent" : queryView
+    : undefined;
+  const initialView: WorkspaceView | undefined = requestedView
+    ?? (value("tool_id") === "image_generator" || (tool && imageTools.includes(tool as WorkspaceImageTool)) ? "images" : intentView);
+  const imageTool = initialView === "images"
+    ? tool && imageTools.includes(tool as WorkspaceImageTool) ? tool as WorkspaceImageTool
+      : tool === "photo-hub" && value("template") === "white" ? "white-background" : undefined
+    : undefined;
   const presetRequest = presetRequestFromQuery(query);
   const invalidPreset = Boolean(query.source !== undefined || query.preset !== undefined) && !presetRequest;
   return {

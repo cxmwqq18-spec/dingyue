@@ -1,3 +1,4 @@
+import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
 import "./thematic-links.css";
@@ -51,7 +52,7 @@ export function Crumbs({ items, r }: { items: V2Crumb[]; r: V2Resolvers }) {
         {items.map((item, index) => (
           <span key={`${item.href}-${index}`} style={{ display: "contents" }}>
             {index > 0 ? <span aria-hidden="true">›</span> : null}
-            {index === items.length - 1 ? <span>{item.label}</span> : <a href={r.href(item.href)}>{item.label}</a>}
+            {index === items.length - 1 ? <span>{item.label}</span> : <WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink>}
           </span>
         ))}
       </nav>
@@ -172,7 +173,7 @@ export function SellerScenarioSection({ scenarios, r }: { scenarios: V2SellerSce
           <figure><Img image={item.image} r={r} /></figure>
           <div className="seller-scenario-copy">
             <h3>{item.audience}</h3>
-            <p className="seller-scenario-tool">Tool: <a href={r.href(item.href)}>{item.tool}</a></p>
+            <p className="seller-scenario-tool">Tool: <WorkspaceEntryLink href={r.href(item.href)}>{item.tool}</WorkspaceEntryLink></p>
             <p>{item.task}</p>
           </div>
         </article>)}
@@ -229,7 +230,7 @@ export function GlossaryEntries({ entries, r }: { entries: V2GlossaryEntry[]; r:
   return <dl className="glossary-list">
     {entries.map((entry) => <div className="glossary-entry" id={glossaryAnchor(entry.term)} key={entry.term}>
       <dt>{entry.term}</dt>
-      <dd><p>{entry.definition}</p>{entry.related.length ? <p className="glossary-related">Related: {entry.related.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<a href={r.href(link.href)}>{link.label}</a></span>)}</p> : null}</dd>
+      <dd><p>{entry.definition}</p>{entry.related.length ? <p className="glossary-related">Related: {entry.related.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink></span>)}</p> : null}</dd>
     </div>)}
   </dl>;
 }
@@ -283,7 +284,7 @@ export function ImageItemRows({ items, r, numbered = false }: { items: V2ImageIt
         const image = item.alt ? { ...item.img, alt: item.alt } : item.img;
         const frame = item.frame && item.frame !== "none" ? `v-image-frame-${item.frame}` : "v-image-frame-none";
         return <article className="v-image-item-row" key={`${item.t}-${index}`}>
-          <div className="v-image-item-copy"><h3>{numbered ? <CardNumber index={index} /> : null}{item.href ? <a href={r.href(item.href)}>{item.t}</a> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
+          <div className="v-image-item-copy"><h3>{numbered ? <CardNumber index={index} /> : null}{item.href ? <WorkspaceEntryLink href={r.href(item.href)}>{item.t}</WorkspaceEntryLink> : item.t}<SoonLabel soon={item.soon} /></h3><p>{r ? <RichText r={r} text={item.d} /> : item.d}</p></div>
           <div className="v-image-item-media"><figure className={frame}><Img image={image} r={r} /></figure></div>
         </article>;
       })}
@@ -351,7 +352,7 @@ export function DirectoryScenes({ items, r }: { items: V2DirectoryScene[]; r: V2
       <div className="ideas directory-scenes">
         {items.map((item) => <div key={item.t}>
           {item.image ? <Img image={item.image} r={r} className="directory-scene-media" /> : null}
-          <b>{item.href ? <a href={r.href(item.href)}>{item.t} →</a> : item.t}<SoonLabel soon={item.soon} /></b>
+          <b>{item.href ? <WorkspaceEntryLink href={r.href(item.href)}>{item.t} →</WorkspaceEntryLink> : item.t}<SoonLabel soon={item.soon} /></b>
           <p><RichText r={r} text={item.d} /></p>
         </div>)}
       </div>
@@ -420,7 +421,7 @@ export function TextSections({ sections, r }: { sections: V2TextSection[]; r: V2
                 {card.img ? <div className="text-section-media"><Img image={card.img} r={r} /></div> : null}
                 <b>{card.t}<SoonLabel soon={card.soon} /></b>
                 <p><RichText r={r} text={card.d} /></p>
-                {card.href ? <p className="meta-line"><a href={r.href(card.href)}>{card.label || card.t} →</a></p> : null}
+                {card.href ? <p className="meta-line"><WorkspaceEntryLink href={r.href(card.href)}>{card.label || card.t} →</WorkspaceEntryLink></p> : null}
               </div>
             ))}
           </div>
@@ -439,7 +440,7 @@ export function Specs({ rows, r }: { rows: V2SpecRow[]; r: V2Resolvers }) {
           <small>{label}</small>
           <b>
             {links?.length
-              ? links.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<a href={r.href(link.href)}>{link.label}</a></span>)
+              ? links.map((link, index) => <span key={link.href}>{index > 0 ? ", " : null}<WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink></span>)
               : value}
           </b>
         </div>
@@ -454,8 +455,8 @@ export function CompanyDetails({ company, className, labels }: { company: V2Comp
     <address className={className ? `company ${className}` : "company"}>
       <b>{company.name}</b>
       {company.address ? <span>{company.address}</span> : null}
-      {company.phone ? <span>{copyLabel({ copy: labels }, "Phone:")} <a href={`tel:${company.phoneHref}`}>{company.phone}</a></span> : null}
-      {company.email ? <span>{copyLabel({ copy: labels }, "Email:")} <a href={`mailto:${company.email}`}>{company.email}</a></span> : null}
+      {company.phone ? <span>{copyLabel({ copy: labels }, "Phone:")} <WorkspaceEntryLink href={`tel:${company.phoneHref}`}>{company.phone}</WorkspaceEntryLink></span> : null}
+      {company.email ? <span>{copyLabel({ copy: labels }, "Email:")} <WorkspaceEntryLink href={`mailto:${company.email}`}>{company.email}</WorkspaceEntryLink></span> : null}
     </address>
   );
 }
@@ -485,13 +486,13 @@ export function RichText({ text, r }: { text: string; r: V2Resolvers }) {
   for (const match of text.matchAll(/\[([^\]\n]+)\]\((https:\/\/[^)\s]+|mailto:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\/[^)\s]*)\)/gi)) {
     const at = match.index ?? 0;
     if (at > last) parts.push(text.slice(last, at));
-    if (/^mailto:/i.test(match[2])) parts.push(<a href={match[2]} key={at}>{match[1]}</a>);
+    if (/^mailto:/i.test(match[2])) parts.push(<WorkspaceEntryLink href={match[2]} key={at}>{match[1]}</WorkspaceEntryLink>);
     else if (/^https:\/\//i.test(match[2])) {
       const localPath = localPathFromAbsoluteHref(match[2]);
-      if (localPath) parts.push(<a href={r.href(localPath)} key={at}>{match[1]}</a>);
-      else if (isApprovedExternalHref(match[2])) parts.push(<a href={match[2]} key={at} rel="noopener noreferrer" target="_blank">{match[1]}</a>);
+      if (localPath) parts.push(<WorkspaceEntryLink href={r.href(localPath)} key={at}>{match[1]}</WorkspaceEntryLink>);
+      else if (isApprovedExternalHref(match[2])) parts.push(<WorkspaceEntryLink href={match[2]} key={at} rel="noopener noreferrer" target="_blank">{match[1]}</WorkspaceEntryLink>);
       else parts.push(match[0]);
-    } else parts.push(<a href={r.href(match[2])} key={at}>{match[1]}</a>);
+    } else parts.push(<WorkspaceEntryLink href={r.href(match[2])} key={at}>{match[1]}</WorkspaceEntryLink>);
     last = at + match[0].length;
   }
   if (last < text.length) parts.push(text.slice(last));
@@ -506,7 +507,7 @@ export function Reading({ items, r }: { items: V2Article[]; r: V2Resolvers }) {
       <div className="related">
         {items.map((item) => (
           <article className="related-card" key={item.href}>
-            <b><a className="card-title" href={r.href(item.href)}>{item.title}</a></b>
+            <b><WorkspaceEntryLink className="card-title" href={r.href(item.href)}>{item.title}</WorkspaceEntryLink></b>
             <span>{item.text}</span>
             <small>{item.minutes} min read</small>
           </article>
@@ -548,7 +549,7 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
-        <h3><a className="card-title" href={r.href(card.href)}>{card.name}</a><SoonLabel soon={card.soon} /></h3>
+        <h3><WorkspaceEntryLink className="card-title" href={r.href(card.href)}>{card.name}</WorkspaceEntryLink><SoonLabel soon={card.soon} /></h3>
         {card.line ? <p>{card.line}</p> : null}
         <span className="use">Use this template →</span>
       </div>
@@ -568,7 +569,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
       </div>
       <div className="tb">
         <h3>{card.name}<SoonLabel soon={card.soon} /></h3>
-        <a className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</a>
+        <WorkspaceEntryLink className="use" href={r.href(card.href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</WorkspaceEntryLink>
       </div>
     </article>
   );
@@ -632,7 +633,7 @@ export function ToolLink({ tool, r }: { tool: V2Tool; r: V2Resolvers }) {
     <div className="mi">
       {tool.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
       <div>
-        <b><a className="card-title" href={r.href(tool.href)}>{tool.label}</a></b>
+        <b><WorkspaceEntryLink className="card-title" href={r.href(tool.href)}>{tool.label}</WorkspaceEntryLink></b>
         <span>{tool.description}</span>
       </div>
     </div>
@@ -651,7 +652,7 @@ export function MakeToolCard({ tool, r }: { tool: MakeTool; r: V2Resolvers }) {
     <article className="make-card">
       {tool.image ? <div className="make-card-media"><Img image={tool.image} r={r} /></div> : null}
       <div className="make-card-body">
-        <h4><a className="card-title" href={r.href(tool.href)}>{tool.label}</a></h4>
+        <h4><WorkspaceEntryLink className="card-title" href={r.href(tool.href)}>{tool.label}</WorkspaceEntryLink></h4>
         <p>{tool.description}</p>
       </div>
     </article>
@@ -667,8 +668,8 @@ export function MakeToolGuide({ guide, r }: { guide: MakeGuide; r: V2Resolvers }
         <h4>{guide.title}</h4>
         <p>{guide.description}</p>
         <div className="make-guide-actions">
-          <a className="btn btn-grad" href={r.href(guide.href)}>{guide.label}</a>
-          <a className="btn btn-ghost" href={r.href(guide.secondaryHref)}>{guide.secondaryLabel}</a>
+          <WorkspaceEntryLink className="btn btn-grad" href={r.href(guide.href)}>{guide.label}</WorkspaceEntryLink>
+          <WorkspaceEntryLink className="btn btn-ghost" href={r.href(guide.secondaryHref)}>{guide.secondaryLabel}</WorkspaceEntryLink>
         </div>
       </div>
     </article>
@@ -688,7 +689,7 @@ export function MakeToolGroup({ title, subtitle, allLabel, allHref, tools, r, gu
     <div className="make-group">
       <div className="make-group-head">
         <div><h3>{title}</h3><p>{subtitle}</p></div>
-        <a className="make-all" href={r.href(allHref)}>{allLabel} →</a>
+        <WorkspaceEntryLink className="make-all" href={r.href(allHref)}>{allLabel} →</WorkspaceEntryLink>
       </div>
       <div className="make-grid">
         {tools.map((tool) => <MakeToolCard key={tool.id} r={r} tool={tool} />)}
@@ -787,7 +788,7 @@ export function Maker({ maker, r, note }: { maker: V2Maker; r: V2Resolvers; note
       </div>
       <div className="opts">{options.map(([label, value]) => <span className="opt" key={label}>{label} <b>{value}</b></span>)}</div>
       <div className="maker-foot">
-        <a className="btn btn-grad" href={r.href(maker.href)}>{maker.cta} →</a>
+        <WorkspaceEntryLink className="btn btn-grad" href={r.href(maker.href)}>{maker.cta} →</WorkspaceEntryLink>
         <small>See the cost before you start</small>
       </div>
       <StartNote note={note} r={r} />
@@ -875,7 +876,7 @@ export function Gallery({ images, r }: { images: V2Image[]; r: V2Resolvers }) {
 
 // On phones the example picture sits between the lead and the full start box, so a compact start button follows the lead.
 export function QuickStart({ label, href, r }: { label: string; href: string; r: V2Resolvers }) {
-  return <div className="hero-quick"><a className="btn btn-grad" href={r.href(href)}>{label} →</a></div>;
+  return <div className="hero-quick"><WorkspaceEntryLink className="btn btn-grad" href={r.href(href)}>{label} →</WorkspaceEntryLink></div>;
 }
 
 export function PageHero({ eyebrow, title, lead, right, children, quick }: { eyebrow: string; title: string; lead: string; right?: ReactNode; children?: ReactNode; quick?: ReactNode }) {
@@ -902,8 +903,8 @@ export function CtaBand({ title, lead, href, r, note }: { title: string; lead: s
         <h2>{title}</h2>
         <p>{lead}</p>
         <div className="row">
-          <a className="btn btn-primary" href={r.href(href)}>{copyLabel(r, "Get started")}</a>
-          <a className="btn btn-ghost" href={r.href("/templates")}>{copyLabel(r, "Browse templates")}</a>
+          <WorkspaceEntryLink className="btn btn-primary" href={r.href(href)}>{copyLabel(r, "Get started")}</WorkspaceEntryLink>
+          <WorkspaceEntryLink className="btn btn-ghost" href={r.href("/templates")}>{copyLabel(r, "Browse templates")}</WorkspaceEntryLink>
         </div>
         <StartNote note={note} r={r} />
       </section>
@@ -922,7 +923,7 @@ export function Plans({ plans, r }: { plans: V2Plan[]; r: V2Resolvers }) {
           <p className="who">{plan.who}</p>
           <p className="credits">{plan.credits} credits / month</p>
           <ul>{plan.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-          <a className={plan.popular ? "btn btn-grad" : "btn btn-ghost"} href={r.href("/app/create")}>Choose {plan.name}</a>
+          <WorkspaceEntryLink className={plan.popular ? "btn btn-grad" : "btn btn-ghost"} href={r.href("/app/create")}>Choose {plan.name}</WorkspaceEntryLink>
         </div>
       ))}
     </div>
@@ -1032,10 +1033,10 @@ function relatedTopicIcon(href: string) {
 export function ThematicLinkChips({ links, r }: { links: { label: string; href: string }[]; r: V2Resolvers }) {
   return <div className="adc-thematic-links">{links.map((link, index) => {
     const Icon = relatedTopicIcon(link.href);
-    return <a className={`adc-thematic-link adc-topic-${index % 4}`} href={r.href(link.href)} key={link.href}>
+    return <WorkspaceEntryLink className={`adc-thematic-link adc-topic-${index % 4}`} href={r.href(link.href)} key={link.href}>
       <span aria-hidden="true" className="adc-thematic-icon"><Icon size={21} strokeWidth={1.8} /></span>
       <span>{link.label}</span><span aria-hidden="true" className="adc-thematic-arrow">↗</span>
-    </a>;
+    </WorkspaceEntryLink>;
   })}</div>;
 }
 
@@ -1095,7 +1096,7 @@ export function LinkCardsSection({ block, eyebrow, r }: { block?: V2LinkCardBloc
       <div className="v1-cards v1-links">
         {items.map((item) => (
           <BlockCard item={item} key={item.t} r={r}>
-            {item.href ? <a className="v1-card-link" href={r.href(item.href)}>{item.label || item.t} →</a> : null}
+            {item.href ? <WorkspaceEntryLink className="v1-card-link" href={r.href(item.href)}>{item.label || item.t} →</WorkspaceEntryLink> : null}
           </BlockCard>
         ))}
       </div>
@@ -1183,7 +1184,7 @@ function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2
           </article>;
         })}
       </div>
-      {block.cta?.label && block.cta.href ? <div className="v-show-actions"><a className="btn btn-grad" href={r.href(block.cta.href)}>{block.cta.label} →</a></div> : null}
+      {block.cta?.label && block.cta.href ? <div className="v-show-actions"><WorkspaceEntryLink className="btn btn-grad" href={r.href(block.cta.href)}>{block.cta.label} →</WorkspaceEntryLink></div> : null}
     </Section>
   );
 }

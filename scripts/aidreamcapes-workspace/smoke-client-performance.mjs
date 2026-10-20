@@ -45,6 +45,9 @@ function harness(props, search = "", responses = new Map()) {
     if (name === "react/jsx-runtime") return { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }), Fragment: "fragment" };
     if (name === "./polling") return { startWorkspacePolling };
     if (name.endsWith("/navigation")) return navigation;
+    if (name.endsWith("/handoff")) return { workspaceHandoffFromSearchParams: () => ({}) };
+    if (name.endsWith("/aidreamcapes-create-intent")) return { aidreamcapesCreateIntentFromSearchParams: () => undefined };
+    if (name.endsWith("/inspirations-embedded")) return { EmbeddedInspirations: () => null };
     if (name.endsWith("/catalogs")) return { WORKSPACE_ASPECTS: ["9:16", "1:1", "16:9"] };
     if (name === "./use-image-draft") return { useImageDraft() {} };
     if (name.includes("client-csrf")) return { customerJsonHeaders: () => ({}), csrfHeader: () => ({}) };
@@ -66,7 +69,7 @@ function find(tree, predicate) {
   const h = harness({ initialCatalog: catalog, initialTaskId: task.taskId, initialView: "agent" });
   h.render(); const stop = h.effects[0](); await flush();
   assert.deepEqual(h.calls.map((call) => call.path), [`/tasks/${task.taskId}`]);
-  assert.equal(h.states[2].taskId, task.taskId); stop();
+  assert.equal(h.states.find((state) => state && typeof state === "object" && state.taskId === task.taskId)?.taskId, task.taskId); stop();
 }
 {
   const pendingCatalog = deferred(), pendingTask = deferred();
@@ -90,12 +93,12 @@ function find(tree, predicate) {
   find(tree, (node) => node.type === "input" && node.props["aria-label"] === "Video title").props.onChange({ target: { value: "Updated draft" } });
   tree = h.render();
   find(tree, (node) => node.type === "a" && node.props.children?.some?.((child) => child?.type === "span" && child.props.children === "Home")).props.onClick({ preventDefault() {} });
-  assert.equal(h.states[1], "home", "navigation displays next module before slow draft save");
+  assert.equal(h.states[2], "home", "navigation displays next module before slow draft save");
   await flush(); assert.equal(h.calls.filter((call) => call.init.method === "PATCH").length, 1);
   pendingSave.resolve({ error: "revision_conflict" }); await flush();
-  assert.equal(h.states[1], "agent", "failed save returns to editable draft");
-  assert.equal(h.states[2].title, "Updated draft", "failed save retains unsaved edit");
-  assert.equal(h.states[9], "Not saved — retry below"); stop();
+  assert.equal(h.states[2], "agent", "failed save returns to editable draft");
+  assert.equal(h.states[3].title, "Updated draft", "failed save retains unsaved edit");
+  assert.equal(h.states[10], "Not saved — retry below"); stop();
 }
 {
   const pendingSave = deferred();
@@ -107,8 +110,8 @@ function find(tree, predicate) {
   find(tree, (node) => node.type === "a" && node.props.children?.some?.((child) => child?.type === "span" && child.props.children === "Home")).props.onClick({ preventDefault() {} });
   await flush();
   pendingSave.resolve({ task: { ...task, title: "Saved draft", revision: 2 } }); await flush();
-  assert.equal(h.states[1], "home"); assert.equal(h.states[2], null, "background save does not reopen the old task");
-  assert.equal(h.states[3][0].revision, 2, "saved draft revision is retained in task cards"); stop();
+  assert.equal(h.states[2], "home"); assert.equal(h.states[3], null, "background save does not reopen the old task");
+  assert.equal(h.states[4][0].revision, 2, "saved draft revision is retained in task cards"); stop();
 }
 {
   const pendingTask = deferred();
@@ -116,7 +119,7 @@ function find(tree, predicate) {
   const tree = h.render(); const stop = h.effects[0]();
   find(tree, (node) => node.type === "a" && node.props.children?.some?.((child) => child?.type === "span" && child.props.children === "Home")).props.onClick({ preventDefault() {} });
   await flush(); pendingTask.resolve({ task }); await flush();
-  assert.equal(h.states[1], "home"); assert.equal(h.states[2], null, "late initial detail does not override later navigation"); stop();
+  assert.equal(h.states[2], "home"); assert.equal(h.states[3], null, "late initial detail does not override later navigation"); stop();
 }
 {
   const pendingList = deferred();
@@ -126,7 +129,7 @@ function find(tree, predicate) {
   tree = h.render();
   find(tree, (node) => node.type === "a" && node.props.children?.some?.((child) => child?.type === "span" && child.props.children === "Home")).props.onClick({ preventDefault() {} });
   await flush(); pendingList.resolve({ tasks: [task] }); await flush();
-  assert.equal(h.states[1], "home"); assert.equal(h.states[3].length, 0, "late Library response is ignored after a later click"); stop();
+  assert.equal(h.states[2], "home"); assert.equal(h.states[4].length, 0, "late Library response is ignored after a later click"); stop();
 }
 {
   const h = harness({ initialCatalog: catalog });

@@ -84,15 +84,32 @@
 |---|---|
 | 线上冷加载（CDN miss，本机 playwright） | **23.4s** domcontentloaded |
 | 线上热加载（CDN hit） | 0.10s |
-| 本地同代码+同规模数据 home 渲染 | **~0.9–1.0s**（548KB HTML） |
-| 本地 site_aidreamcapes LivePage | 266 行 / contentJson 合计 4.2MB |
-| 其中 93 个派生演员页 | 仅 +0.6MB（+35% 行数，DB 读取 80ms） |
+| 本地同代码+同规模数据 home 渲染 | **0.11s 冷 / 0.005s 热**（548KB HTML，build8 实测） |
+| 本地 `/ai-video-generation` | 1.03s 冷 / 0.52s 热 |
+| 本地 `/ai-actors` | 0.44s 冷 / 0.42s 热 |
+| 本地 `/ai-image-generation` | 0.57s 冷 / 0.59s 热 |
+| 本地 `/templates`、`/blog`、`/save-the-date`、`/app/create` | 0.02–0.46s |
+| 本地 site_aidreamcapes LivePage | 266 行 / contentJson 合计 **4.4MB** |
+| 其中 blog 页 | 9 行 / 148KB（每个非 home 页面都会作为 shell 附带读取） |
+| 其中 93 个派生演员页 | 629KB（占全站 14%，不是慢的主因） |
+| 公共媒体资产（theme/package/sample） | **784 行 / 264KB**，home 等 profile 无 LIMIT |
 
-线上首页响应头：`Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=1800` —— 热加载走 CDN，冷加载回源。
+线上首页响应头：`Cache-Control: public, max-age=60, s-maxage=300, stale-while-revalidate=1800` —— 热加载走 CDN，冷加载回源。本地 `.env.local` 的 `DINGYUE_ENV=local` 会强制 `private, no-store`，因此本地量测都是真实回源渲染，不含 CDN 因素。
+
+### 本地是否已经做了响应优化？
+
+**没有做代码级优化，本地也没有慢到需要优化的程度。** 当前本地结论是“功能正确 + 耗时正常”，不是“已优化”：
+
+- 本地 DB 与 Next 进程同机，即使每次请求都全量读库，20 条主要路由也都在 0.02–1.03s；
+- 本地 `.env.local` 明确设置 `STOREFRONT_PUBLIC_CACHE_TTL_MS=0`（关闭进程内缓存）；
+- 工作树中 `site-store.ts`、`storefront-global-shell.ts`、`middleware.ts` 均无改动；
+- 23.4s 的放大只出现在生产 CDN 冷回源，本地复现不出来，必须用生产侧打点定位。
+
+同时修正前一版方案中的一个错误假设：`STOREFRONT_PUBLIC_CACHE_TTL_MS` **只作用于导航/集合等参考数据**（`getStorefrontPublicNavigationDataForSite`，site-store.ts:430），页面主体 runtime 的 TTL 是**硬编码 0**（`getStorefrontPublicRuntimeStateForSite`，site-store.ts:1448–1452）。所以“生产设 60s TTL 就能缓存首页投影”并不成立，需要改代码才能缓存页面 runtime。
 
 ### 首页回源渲染的完整读取路径（site-store.ts，home profile）
 
-每次 CDN 冷回源会执行（无进程内缓存，`STOREFRONT_PUBLIC_CACHE_TTL_MS` 默认 0）：
+每次 CDN 冷回源会执行（页面 runtime 的进程内缓存硬编码为 0，见 `getStorefrontPublicRuntimeStateForSite`）：
 
 1. **全部 LivePage**（home profile 不带 slug 过滤，266 行起，生产可能更多）
 2. **全部公共媒体资产**：`mediaAssets` 的 home limit 是 `undefined`（无 LIMIT！），条件 `usageType IN ('theme','package','sample')` —— 生产上这是全站所有示例/包媒体，行数未知，是最大嫌疑
@@ -122,10 +139,11 @@ SELECT count(*) FROM "CreativePack" WHERE "siteId"='site_aidreamcapes' AND statu
 
 ### 处置方案（按优先级）
 
-1. **零代码、立即生效**：生产环境设置 `STOREFRONT_PUBLIC_CACHE_TTL_MS=60000`（进程内缓存 home 投影 60s，与 CDN s-maxage=300 对齐），冷回源从每次都全量查询降为每分钟一次。
-2. **代码级**：给 home profile 的 `mediaAssets` 加一个宽松上限（如 2000，`publicRuntimeLimits`），避免媒体资产无限增长后首页回源线性变慢；需要回归验证公开投影完整性（storefront 注释警告截断会让页面看起来未发布，所以要选足够大的上限并配回归）。
-3. **CDN**：把首页 `s-maxage` 从 300 提到 1800–3600（内容发布频率低，配合 no-snapshot 增量发布下线通知即可）。
-4. **核实**：93 个演员页仅使回源数据 +0.6MB/+35% 行数，本地实测增量 <100ms，不是慢的主因；部署 URL 修复不会改变首页性能。
+1. **先在生产定位，不先改缓存语义**：`STOREFRONT_PROFILE=1` + 直连源站计时 + 表行数（784 行媒体资产、266 行 LivePage、9 行 blog），确认 23s 是“DB 往返 + 全量反序列化”还是“机器 CPU/冷启动”。本地同样的查询只要 0.1–1.0s。
+2. **代码级正确做法：按 revision 失效的进程内缓存**（不是时间 TTL）。仓库契约要求 `LivePage` 提交后**下一个请求**即可见，不能引入 60s 陈旧窗口；可以 `siteId + pageKey + max(LivePage.updatedAt)/count` 作为缓存键，命中时省掉 4.4MB 读取，任一行更新后键变化、下一请求自动回源。预计是收益最大的改动，但位于共享层（`site-store.ts`），会影响 MyDreamShoots 的读取路径，**需要你明确批准后才能动**。
+3. **代码级：给 home/indexing 等 profile 的 `mediaAssets` 加宽松上限**（如 2000，`publicRuntimeLimits`），避免资产继续增长；需回归确认首页/编辑页投影完整。同为共享层改动，需批准。
+4. **CDN**：确认生产 HTML 的 `s-maxage=300` 实际生效（`cdn-cache-control`/`cloudflare-cdn-cache-control` 已由 middleware 下发）；若客户端路由（RSC）导航绕过 CDN，则再评估提升到 1800–3600 或改为关键跨区链接整页导航。
+5. **不需要动 93 个演员页**：629KB/14%，本地增量 <100ms，部署 URL 修复不会改变首页性能。
 
 ### 顺手修复的阻塞项（与本次排查相关）
 

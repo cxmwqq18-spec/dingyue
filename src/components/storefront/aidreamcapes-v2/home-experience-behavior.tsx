@@ -1,5 +1,6 @@
 "use client";
 
+import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
 import { useEffect } from "react";
 
 /** Presentation-only controls over HTML already rendered by the server. */
@@ -27,7 +28,7 @@ export function HomeExperienceBehavior() {
         const value = control.dataset.hxSelectValue;
         if (group && value) select(root, group, value);
         const destination = control.dataset.hxCtaHref;
-        if (destination) root.querySelectorAll<HTMLAnchorElement>("a[data-home-cta]").forEach((cta) => cta.setAttribute("href", destination));
+        if (destination) root.querySelectorAll<HTMLAnchorElement>("a[data-home-cta]").forEach((cta) => { const target = workspaceEntryTarget(destination); cta.setAttribute("href", target.href); if (target.transfer) cta.dataset.workspaceEntry = JSON.stringify(target.transfer); else delete cta.dataset.workspaceEntry; });
         const filter = control.dataset.hxFilter;
         if (filter) {
           root.querySelectorAll<HTMLElement>("[data-hx-filter]").forEach((button) => {

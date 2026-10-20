@@ -5,7 +5,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { inspirationCreateHref } from "@/lib/aidreamcapes-inspirations-types";
+import { inspirationCreateHref, inspirationCreateTarget } from "@/lib/aidreamcapes-inspirations-types";
 import {
   AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
   getAidreamcapesInspirationCards
@@ -91,7 +91,7 @@ export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = 
       kind: card.kind,
       description: card.description,
       category: card.category,
-      createHref: inspirationCreateHref(card, basePath),
+      createHref: inspirationCreateHref(card, basePath), entry: inspirationCreateTarget(card, basePath).transfer,
     }))}
     basePath={basePath}
     initialKind={kind}

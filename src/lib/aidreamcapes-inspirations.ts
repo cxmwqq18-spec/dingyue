@@ -232,14 +232,14 @@ function cardImageSrc(card: PickerCardJson): string | undefined {
 // The last URL segment is the workspace tool slug (page.id for tool pages),
 // e.g. /ai-video-generation/ugc-ad-video -> "ugc-ad-video".
 function toolSlugFromPageSlug(slug: string): string | undefined {
-  const normalized = slug.split("?")[0].split("#")[0];
+  const normalized = `/${slug.replace(/^\/+/, "")}`.split("?")[0].split("#")[0];
   const segments = normalized.split("/").filter(Boolean);
   if (segments[0] !== "ai-video-generation" && segments[0] !== "ai-image-generation") return undefined;
   return segments[1];
 }
 
 function mediaKindFromSlug(slug: string): "video" | "photo" {
-  return slug.startsWith("/ai-video-generation") ? "video" : "photo";
+  return slug.replace(/^\/+/, "").startsWith("ai-video-generation") ? "video" : "photo";
 }
 
 const CATEGORY_FALLBACK = "All";
@@ -275,8 +275,6 @@ function cardDescription(pickerLead: string | undefined, pageTitle: string): str
 }
 
 export async function getAidreamcapesInspirationCards(): Promise<InspirationCard[]> {
-  const catalog = readMediaCatalog();
-  const overrides = readInspirationCategoryOverrides();
   const pages = await prisma.livePage.findMany({
     where: {
       siteId: AIDREAMCAPES_INSPIRATIONS_SITE_ID,
@@ -290,9 +288,15 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
     select: { slug: true, title: true, contentJson: true },
     orderBy: { slug: "asc" }
   });
+  return getAidreamcapesInspirationCardsFromRows(pages);
+}
+
+export function getAidreamcapesInspirationCardsFromRows(pages: Array<PageLike & { title?: string; cardIndex?: number }>): InspirationCard[] {
+  const catalog = readMediaCatalog();
+  const overrides = readInspirationCategoryOverrides();
   const cards: InspirationCard[] = [];
   const seenRefs = new Set<string>();
-  for (const page of pages as Array<PageLike & { title?: string }>) {
+  for (const page of pages) {
     const toolSlug = toolSlugFromPageSlug(page.slug);
     if (!toolSlug) continue;
     const rawCards = pickerCardsFromContent(page.contentJson);
@@ -334,7 +338,7 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
       // intentionally reuse a reference, so show each published media example
       // once instead of flooding the full list with duplicate tiles.
       seenRefs.add(ref);
-      const id = `${page.slug}:${cardIndex}:${ref}`;
+      const id = `${page.slug}:${page.cardIndex ?? cardIndex}:${ref}`;
       cards.push({
         id,
         ref,
@@ -358,3 +362,17 @@ export async function getAidreamcapesInspirationCards(): Promise<InspirationCard
 }
 
 export { CATEGORY_OVERRIDES_PATH };
+
+/** Resolve catalog aliases without reading any page or carrying page content. */
+export function inspirationCategoryLookup(): Record<string, string> {
+  const overrides = readInspirationCategoryOverrides();
+  const catalog = readMediaCatalog();
+  const lookup = { ...overrides };
+  if (catalog) for (const [ref, category] of Object.entries(overrides)) {
+    const media = resolveMediaRef(catalog, ref);
+    if (!media) continue;
+    lookup[media.src] = category;
+    lookup[media.src.replace(/--\d+\.webp$/, "")] = category;
+  }
+  return lookup;
+}

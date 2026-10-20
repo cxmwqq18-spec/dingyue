@@ -10,9 +10,9 @@ import { AIVIDEOSUGC_SITE_ID, type WorkspaceTask } from "./types";
 import { customerAssetIdFromDownloadUrl, isBuiltinActorCatalogReference, workspaceAssetHasMedia } from "./asset-contracts";
 import { assertWorkspaceSite } from "./catalogs";
 
-export async function catalogForCustomer(siteId: string, customerId?: string) {
+export async function catalogForCustomer(siteId: string, customerId?: string, catalogPromise?: ReturnType<typeof getWorkspaceCatalog>) {
   const [catalog, customerActors] = await Promise.all([
-    getWorkspaceCatalog(siteId),
+    catalogPromise ?? getWorkspaceCatalog(siteId),
     customerId ? listActors(siteId, customerId) : Promise.resolve([]),
   ]);
   catalog.actors.push(...customerActors);

@@ -23,16 +23,32 @@ class WorkspaceError extends Error {
 }
 
 try {
-  const presetContract = compileModule("preset-contract", require);
+  const localModules = new Map();
+  const localRequire = (id) => {
+    if (!id.startsWith("./")) return require(id);
+    const name = id.slice(2);
+    if (localModules.has(name)) return localModules.get(name).exports;
+    const module = { exports: {} };
+    localModules.set(name, module);
+    new Function("require", "module", "exports", transpile(name))(localRequire, module, module.exports);
+    return module.exports;
+  };
+  const presetContract = localRequire("./preset-contract");
   const inspirationModule = { exports: {} };
   const inspirationSource = ts.transpileModule(fs.readFileSync(path.join(source, "../aidreamcapes-inspirations-types.ts"), "utf8"), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
-  new Function("require", "module", "exports", inspirationSource)((id) => id === "@/lib/aidreamcapes-workspace/preset-contract" ? presetContract : require(id), inspirationModule, inspirationModule.exports);
+  new Function("require", "module", "exports", inspirationSource)((id) => {
+    if (id === "@/lib/aidreamcapes-workspace/preset-contract") return presetContract;
+    if (id === "@/lib/aidreamcapes-workspace/static-routes") return localRequire("./static-routes");
+    if (id === "@/lib/aidreamcapes-workspace/entry-transfer") return localRequire("./entry-transfer");
+    if (id === "@/lib/aidreamcapes-workspace/types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
+    return require(id);
+  }, inspirationModule, inspirationModule.exports);
   for (const [kind, family] of [["video", "ai-video-generation"], ["photo", "ai-image-generation"]]) {
     const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-videos", prompt: "A product scene." };
-    assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
-    assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/app/create/${family}`);
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/app/create/${family}`);
   }
   const navigationModules = new Map();
   const navigationRequire = (id) => {

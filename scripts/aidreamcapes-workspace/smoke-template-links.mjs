@@ -1,10 +1,30 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { createRequire } from "node:module";
+import ts from "typescript";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const contract = await import(path.join(root, "src/lib/aidreamcapes-workspace/preset-contract.ts"));
+const workspaceSource = path.join(root, "src/lib/aidreamcapes-workspace");
+const require = createRequire(path.join(workspaceSource, "entry.cjs"));
+const transpile = (name) => ts.transpileModule(
+  readFileSync(path.join(workspaceSource, `${name}.ts`), "utf8"),
+  { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }
+).outputText;
+const localModules = new Map();
+const localRequire = (id) => {
+  if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
+  if (!id.startsWith("./")) return require(id);
+  const name = id.slice(2);
+  if (localModules.has(name)) return localModules.get(name).exports;
+  const module = { exports: {} };
+  localModules.set(name, module);
+  new Function("require", "module", "exports", transpile(name))(localRequire, module, module.exports);
+  return module.exports;
+};
+const contract = localRequire("./preset-contract");
 const { pickerPresetHref, pickerPresetId, presetSourcePage } = contract;
 
 function card({ kind = "video", src = "/media/site_aidreamcapes/demo/tote.jpg", label = "Canvas tote creator ad", prompt = "A creator shows this canvas tote on a sunny walk." } = {}) {
@@ -21,14 +41,14 @@ const videoUrl = new URL(videoHref, "https://www.aivideosugc.com");
 const photoUrl = new URL(photoHref, "https://www.aivideosugc.com");
 
 assert.equal(videoUrl.origin, "https://www.aivideosugc.com");
-assert.equal(videoUrl.pathname, "/app/create");
+assert.equal(videoUrl.pathname, "/app/create/ai-video-generation");
 assert.deepEqual([...videoUrl.searchParams.keys()].sort(), ["preset", "source"]);
 assert.equal(videoUrl.searchParams.get("source"), "/");
 assert.equal(videoUrl.searchParams.get("preset"), pickerPresetId(videoCard));
 assert.doesNotMatch(videoHref, /creator|nextHash|prompt|sunny|tote/i);
 
 assert.equal(photoUrl.origin, "https://www.aivideosugc.com");
-assert.equal(photoUrl.pathname, "/app/create");
+assert.equal(photoUrl.pathname, "/app/create/ai-image-generation");
 assert.equal(photoUrl.searchParams.get("source"), "/ai-image-generation/lifestyle-scene");
 assert.equal(photoUrl.searchParams.get("preset"), pickerPresetId(photoCard));
 assert.notEqual(pickerPresetId(videoCard), pickerPresetId(photoCard));
@@ -51,12 +71,14 @@ assert.equal(pickerPresetHref({ ...videoCard, href: "https://aivideosugc.com/app
 // identity link: the case data travels through the server-side preset wrapper.
 const toolPathCard = { ...videoCard, href: "/app/create/tool/video-ads/creator#step-video" };
 const toolPathHref = pickerPresetHref(toolPathCard, "/");
-assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").pathname, "/app/create");
+assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").pathname, "/app/create/ai-video-generation");
 assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").searchParams.get("source"), "/");
 assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId(toolPathCard));
 assert.doesNotMatch(toolPathHref, /creator|video-ads|step-video/i);
 const photoToolPathCard = { ...photoCard, kind: "photo", href: "/app/create/tool/white-background/white" };
-assert.equal(new URL(pickerPresetHref(photoToolPathCard, "/"), "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId(photoToolPathCard));
+const photoToolHref = pickerPresetHref(photoToolPathCard, "/");
+assert.equal(new URL(photoToolHref, "https://www.aivideosugc.com").pathname, "/app/create/ai-image-generation");
+assert.equal(new URL(photoToolHref, "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId(photoToolPathCard));
 // Any tool-shaped path collapses like the legacy query form; a card whose
 // preset cannot resolve simply opens the workspace without preselection.
 assert.equal(new URL(pickerPresetHref({ ...toolPathCard, href: "/app/create/tool/unknown-tool" }, "/"), "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId({ ...toolPathCard, href: "/app/create/tool/unknown-tool" }));
@@ -73,7 +95,7 @@ const visualSource = await readFile(path.join(root, "src/components/storefront/a
 assert.match(pageSource, /if \(data\.id === "home"\) return "\/"/);
 assert.match(pageSource, /data\.breadcrumbs\.at\(-1\)\?\.href/);
 assert.match(pageSource, /return presetSourcePage\(lastHref\)/);
-assert.match(visualSource, /<a className="v-pick-card"[^\n]*href=\{r\.href\(pickerPresetHref\(card, sourcePage\)\)\}/);
+assert.match(visualSource, /<WorkspaceEntryLink mediaLink className="v-pick-card"[^\n]*href=\{r\.href\(pickerPresetHref\(card, sourcePage\)\)\}/);
 assert.doesNotMatch(visualSource, /use client/);
 
 console.log("Aidreamcapes template-link smoke passed (video/photo IDs, privacy, legacy links, source safety, first-party targets, SSR anchors).");

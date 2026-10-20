@@ -13,13 +13,14 @@ const decode = (value) => value.replaceAll("&amp;", "&").replaceAll("&quot;", '"
 const cardsFromHtml = (html) => [...html.matchAll(/<button\b[^>]*data-inspiration-card="([^"]+)"[\s\S]*?<\/button>/g)].map((match) => ({
   id: decode(match[1]), src: decode(match[0].match(/<img\b[^>]*\bsrc="([^"]+)"/)?.[1] || ""),
 }));
-async function read(path) {
+async function read(path, { workspace = false } = {}) {
   const response = await fetch(new URL(path, origin), { headers, signal: AbortSignal.timeout(45000) });
   assert.equal(response.status, 200, `${path} responds with HTTP 200`);
   const html = await response.text();
   assert.match(html, /data-aidreamcapes-inspirations="true"/);
   assert.match(html, /<meta[^>]*name="robots"[^>]*content="noindex, nofollow"/);
-  assert.doesNotMatch(html, /aria-label="Workspace navigation"|<iframe\b/);
+  if (workspace) assert.doesNotMatch(html, /<iframe\b/);
+  else assert.doesNotMatch(html, /aria-label="Workspace navigation"|<iframe\b/);
   assert.doesNotMatch(html, /\\"prompt\\":/);
   return cardsFromHtml(html);
 }
@@ -34,9 +35,13 @@ try {
     const picker = (content?.sectionsOrder || []).map((id) => content.sections?.[id]).find((section) => section?.type === "aidreamcapes_v2_page" && Array.isArray(section.settings?.data?.visual?.picker?.cards));
     return [page.slug, picker?.settings?.data?.visual?.picker?.cards || []];
   }));
-  const cards = await read("/app/create/inspirations");
+  const embeddedCards = await read("/app/create/inspirations", { workspace: true });
+  const cards = await read("/app/inspirations");
   assert(cards.length > 0, "Current relational examples must exist before releasing the gallery");
-  assert.deepEqual(await read("/app/inspirations"), cards, "Both standalone entries expose the same current examples");
+  assert(embeddedCards.length > 0, "The workspace gallery renders its first server page");
+  assert(embeddedCards.length <= cards.length, "The workspace gallery is a page of the standalone gallery");
+  const standaloneIds = new Set(cards.map((card) => card.id));
+  for (const card of embeddedCards) assert(standaloneIds.has(card.id), `Workspace example ${card.id} exists in the standalone gallery`);
   const video = await read("/app/inspirations?kind=video");
   const photo = await read("/app/inspirations?kind=photo");
   assert.equal(video.length + photo.length, cards.length);
@@ -84,7 +89,7 @@ try {
   const derivedState = stateTable[0]?.name
     ? await prisma.sitePublishedState.findUnique({ where: { siteId }, select: { revision: true, contentHash: true } })
     : null;
-  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, videos: video.length, photos: photo.length, checkedImages: urls.length, checkedCreationTargets: targets.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
+  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, embeddedExamples: embeddedCards.length, videos: video.length, photos: photo.length, checkedImages: urls.length, checkedCreationTargets: targets.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

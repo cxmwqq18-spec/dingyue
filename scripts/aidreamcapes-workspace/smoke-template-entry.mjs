@@ -20,11 +20,19 @@ const NotFound = class extends Error { constructor() { super("NEXT_NOT_FOUND"); 
 class Redirect extends Error { constructor(location) { super("NEXT_REDIRECT"); this.location = location; } }
 
 try {
-  const contractFile = path.join(source, "preset-contract.ts");
-  const contractModule = { exports: {} };
-  const contractCode = ts.transpileModule(fs.readFileSync(contractFile, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
-  new Function("require", "module", "exports", contractCode)((id) => id === "node:crypto" ? require(id) : require(id), contractModule, contractModule.exports);
-  const presetContract = contractModule.exports;
+  const contractModules = new Map();
+  const contractRequire = (id) => {
+    if (!id.startsWith("./")) return require(id);
+    const name = id.slice(2);
+    if (contractModules.has(name)) return contractModules.get(name).exports;
+    const module = { exports: {} };
+    contractModules.set(name, module);
+    new Function("require", "module", "exports", ts.transpileModule(fs.readFileSync(path.join(source, `${name}.ts`), "utf8"), {
+      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true },
+    }).outputText)(contractRequire, module, module.exports);
+    return module.exports;
+  };
+  const presetContract = contractRequire("./preset-contract");
   const validQuery = { source: "/templates", preset: presetId };
   const fixtures = { video: videoPreset, photo: photoPreset, missing: undefined };
   let selectedPreset = "video";
@@ -52,6 +60,13 @@ try {
     if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
     if (id === "./navigation") return { isWorkspaceView: (value) => ["home", "agent", "images", "inspirations", "library", "settings"].includes(value) };
     if (id === "./handoff") return { workspaceHandoffFromSearchParams: () => undefined, workspaceHandoffHref: () => "" };
+    if (id === "./entry-transfer") return {
+      entryCookieName: (view) => `adc_workspace_entry_${view}`,
+      readWorkspaceEntry: () => undefined,
+    };
+    if (id === "./inspirations-page.server") return {
+      getWorkspaceInspirationPage: async () => ({ cards: [], counts: { all: 0, video: 0, photo: 0 }, categories: [], total: 0, nextOffset: null }),
+    };
     if (id === "@/lib/aidreamcapes-inspirations") return { getAidreamcapesInspirationCards: async () => [] };
     if (id === "@/lib/aidreamcapes-inspirations-types") {
       const module = { exports: {} };
@@ -94,13 +109,14 @@ try {
     const gallery = await renderAidreamcapesWorkspace({ routeSlug, initialView: "inspirations" });
     assert.equal(gallery.type, workspaceMarker);
     assert.equal(gallery.props.initialView, "inspirations");
-    assert.deepEqual(gallery.props.initialInspirations, []);
+    assert.deepEqual(gallery.props.initialInspirations.cards, []);
+    assert.equal(gallery.props.initialInspirations.total, 0);
   }
 
   resolveCalls = []; selectedPreset = "video"; customer = undefined; host = "www.aivideosugc.com"; templateGalleryCalls = 0;
   const videoElement = await renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", ...entry, initialView: "agent" });
   assert.equal(videoElement.type, workspaceMarker);
-  assert.equal(videoElement.props.initialView, "home", "video preset opens video composer home");
+  assert.equal(videoElement.props.initialView, "video", "video preset opens the video editor directly");
   assert.deepEqual(videoElement.props.initialPreset, videoPreset);
   assert.equal(videoElement.props.basePath, "", "canonical host uses host routes");
   assert.equal(videoElement.props.initialTemplateGallery, undefined, "AIVideosUGC alias does not load Aidreamcapes-only picker data");
