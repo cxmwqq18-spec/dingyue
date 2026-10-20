@@ -1,4 +1,4 @@
-import { TemplateDirectory, templateDetailResolvers, resolveTemplateCardLinks } from "./template-directory.server";
+import { TemplateDirectory, templateDetailResolvers } from "./template-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
@@ -1154,9 +1154,6 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }
 
-export async function AidreamcapesV2Page(props: Parameters<typeof AidreamcapesV2PageContent>[0]) {
-  const settings = props.section.settings as Record<string, unknown>;
-  const data = settings.data as V2Data;
-  const section = data && !data.templateDirectory ? { ...props.section, settings: { ...settings, data: await resolveTemplateCardLinks(data) } as unknown as SectionInstance["settings"] } : props.section;
-  return <><WorkspaceEntryBehavior /><AidreamcapesV2PageContent {...props} section={section} /></>;
+export function AidreamcapesV2Page(props: Parameters<typeof AidreamcapesV2PageContent>[0]) {
+  return <><WorkspaceEntryBehavior /><AidreamcapesV2PageContent {...props} /></>;
 }

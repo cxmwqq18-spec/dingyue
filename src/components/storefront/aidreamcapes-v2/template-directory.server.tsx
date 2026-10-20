@@ -1,15 +1,11 @@
 import "server-only";
-import styles from "./template-directory.module.css";
-import { Crumbs, Faq } from "./parts";
 import { cache } from "react";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
-import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
-
-type Directory = { paths: string[]; links: { label: string; href: string }[] };
-type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
+import { ThemeRenderer } from "@/components/theme-renderer";
+import type { SectionInstance, ThemePageJson } from "@/lib/types";
+import type { V2Data } from "./types";
+import type { Directory, Template } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
   const pages = await prisma.$queryRaw<Array<{ slug: string; definition: Template | null }>>`
@@ -25,46 +21,6 @@ const readTemplates = cache(async (paths: string[]) => {
     return [{ ...definition, path }];
   });
 });
-
-export async function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2Resolvers; query?: Record<string, string | string[] | undefined> }) {
-  const directory = data.templateDirectory as Directory;
-  const all = await readTemplates(directory.paths);
-  const value = (key: string) => typeof query[key] === "string" ? query[key] as string : "";
-  const templates = all.filter(t => (!value("kind") || t.kind === value("kind")) && (["industries", "platforms", "occasions"] as const).every(key => !value(key) || t[key].includes(value(key))));
-  const paths = [...new Set(all.flatMap(t => [...t.industries, ...t.platforms, ...t.occasions]))];
-  const facets = paths.length ? await prisma.$queryRaw<Array<{ slug: string; title: string; label: string | null }>>`
-    SELECT "slug", "title", jsonb_path_query_first("contentJson", '$.sections.*.settings.data.label') #>> '{}' AS label
-    FROM "LivePage" WHERE "siteId" = 'site_aidreamcapes' AND "slug" IN (${Prisma.join(paths)})
-  ` : [];
-  const label = (path: string) => facets.find(page => page.slug === path)?.label ?? facets.find(page => page.slug === path)?.title ?? path;
-  return <>
-    <section className="sec"><div className={`wrap ${styles.directory}`}>
-      <Crumbs items={data.breadcrumbs} r={r} />
-      <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
-      <nav aria-label="Browse templates" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
-      <form method="get" className={styles.filters} aria-label="Filter templates">
-        <label>Type <select name="kind" defaultValue={value("kind")}><option value="">All types</option>{[...new Set(all.map(t => t.kind))].map(kind => <option key={kind} value={kind}>{kind === "photo" ? "Photo" : "Video"}</option>)}</select></label>
-        {(["industries", "platforms", "occasions"] as const).map(key => <label key={key}>{key === "industries" ? "Industry" : key === "platforms" ? "Platform" : "Occasion"} <select name={key} defaultValue={value(key)}><option value="">All</option>{[...new Set(all.flatMap(t => t[key]))].map(path => <option key={path} value={path}>{label(path)}</option>)}</select></label>)}
-        <button className="btn btn-primary" type="submit">Apply filters</button>
-      </form>
-      <p className="meta-line">{templates.length} templates</p>
-      <div className="tgrid">{templates.map(template => <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
-        <WorkspaceEntryLink className="ti" href={r.href(template.path)}><img className={styles.cardImage} loading="lazy" decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
-        <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><WorkspaceEntryLink href={r.href(template.path)}>{template.name}</WorkspaceEntryLink></h2><p>{template.description}</p><WorkspaceEntryLink className="use" href={r.href(template.path)}>View template →</WorkspaceEntryLink></div>
-      </article>)}</div>
-      {!templates.length ? <p>No templates are available in this category yet.</p> : null}
-    </div></section>
-    {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
-  </>;
-}
-
-/** Use the detail owner's current preset for every CTA on that detail. */
-export function templateDetailResolvers(data: V2Data, r: V2Resolvers): V2Resolvers {
-  const template = data.templateDefinition as Template | undefined;
-  if (!template) return r;
-  const target = `/app/create/${template.kind === "photo" ? "ai-image-generation" : "ai-video-generation"}?source=${encodeURIComponent(template.path)}&preset=${pickerPresetId(template.card)}`;
-  return { ...r, href: value => value.startsWith("/app/create") ? r.href(target) : r.href(value) };
-}
 
 /** Resolve reusable template cards to one current detail owner, across public pages. */
 const readDefinitions = cache(async () => {
@@ -94,4 +50,27 @@ export async function resolveTemplateCardLinks(data: V2Data): Promise<V2Data> {
   const definition = data.templateDefinition as Template | undefined;
   if (definition && result.visual) result.visual = { ...(result.visual as Record<string, unknown>), picker: { ...((result.visual as { picker: object }).picker), cards: [definition.card] } };
   return result;
+}
+
+export async function AidreamcapesTemplateRenderer(props: Parameters<typeof ThemeRenderer>[0]) {
+  const sections = { ...props.page.sections };
+  for (const [id, section] of Object.entries(sections)) {
+    if (section.type !== "aidreamcapes_v2_page") continue;
+    const settings = section.settings as Record<string, unknown>;
+    const data = settings.data as V2Data;
+    if (!data) continue;
+    let resolved: V2Data;
+    if (data.templateDirectory) {
+      const directory = data.templateDirectory as Directory;
+      const all = await readTemplates(directory.paths);
+      const paths = [...new Set(all.flatMap(t => [...t.industries, ...t.platforms, ...t.occasions]))];
+      const facets = paths.length ? await prisma.$queryRaw<Array<{ slug: string; title: string; label: string | null }>>`
+        SELECT "slug", "title", jsonb_path_query_first("contentJson", '$.sections.*.settings.data.label') #>> '{}' AS label
+        FROM "LivePage" WHERE "siteId" = 'site_aidreamcapes' AND "slug" IN (${Prisma.join(paths)})
+      ` : [];
+      resolved = { ...data, directoryTemplates: all, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
+    } else resolved = await resolveTemplateCardLinks(data);
+    sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
+  }
+  return <ThemeRenderer {...props} page={{ ...props.page, sections } as ThemePageJson} />;
 }

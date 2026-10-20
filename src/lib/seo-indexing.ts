@@ -1,3 +1,4 @@
+import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
 import nodePath from "node:path";
@@ -702,6 +703,9 @@ function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEnt
 }
 
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
+  const templateMedia = aidreamcapesTemplateSitemapMedia(site, page);
+  if (templateMedia !== undefined) return templateMedia.map(image => ({ loc: imageSitemapUrl(site, image.src), title: image.alt, caption: image.alt })).filter(image => image.loc);
+
   const themeManifest = (site.id === AIDREAMCAPES_SITE_ID && normalizePath(page.slug) !== "/") || isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
     ? page.publishedJson.mediaManifest
     : undefined;
