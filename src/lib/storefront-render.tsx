@@ -1,3 +1,4 @@
+import { AidreamcapesTemplateRenderer } from "@/components/storefront/aidreamcapes-v2/template-directory.server";
 import { notFound, redirect } from "next/navigation";
 import { cache, type ReactElement } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
@@ -3101,9 +3102,10 @@ function renderThemePage({
     : "Explora los vídeos publicados en Aidreamshoots.";
   const videoDirectoryCta = currentSite.id === "site_aidreamcapes_xby" ? "Voir tous les exemples vidéo" : "Ver todos los ejemplos de vídeo";
 
+  const PageRenderer = currentSite.id === "site_aidreamcapes" ? AidreamcapesTemplateRenderer : ThemeRenderer;
   return (
     <div style={themeStyleVars(resolvedSettings)}>
-      <ThemeRenderer
+      <PageRenderer
         creativePackCategories={isolatedRenderData.creativePackCategories}
         creativePacks={isolatedRenderData.creativePacks}
         page={page}
