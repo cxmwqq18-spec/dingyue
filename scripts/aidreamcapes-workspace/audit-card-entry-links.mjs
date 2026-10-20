@@ -198,16 +198,22 @@ const hrefStatusCache = new Map();
 async function hrefStatus(pathname) {
   if (hrefStatusCache.has(pathname)) return hrefStatusCache.get(pathname);
   let status = 0;
-  try {
-    const response = await fetch(`${origin}${base}${pathname}`, {
-      redirect: "follow",
-      headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
-      signal: AbortSignal.timeout(requestTimeout)
-    });
-    await response.text();
-    status = response.status;
-  } catch {
-    status = 0;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(`${origin}${base}${pathname}`, {
+        redirect: "follow",
+        headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
+        signal: AbortSignal.timeout(requestTimeout)
+      });
+      await response.text();
+      status = response.status;
+      break;
+    } catch {
+      // The dev server drops idle sockets while it compiles; a reset is not a
+      // dead link.
+      status = 0;
+      await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+    }
   }
   hrefStatusCache.set(pathname, status);
   return status;
