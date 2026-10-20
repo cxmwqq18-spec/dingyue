@@ -73,6 +73,26 @@ try {
   checks.push(`/ai-image-generation: prompt prefilled (${expectedPrompt.length} chars) without query`);
   await imagePage.close();
 
+  const templatePage = await newPage(context);
+  await templatePage.goto(`${origin}/templates/photo`, { waitUntil: "domcontentloaded", timeout: 120_000 });
+  await hydrated(templatePage);
+  const templateLink = templatePage.locator('.tgrid article.tc a[href="/app/create/ai-image-generation"][data-workspace-entry]').first();
+  await templateLink.waitFor({ state: "visible", timeout: 60_000 });
+  const templateEntry = JSON.parse(await templateLink.getAttribute("data-workspace-entry"));
+  assert.equal(templateEntry.view, "images", "template entry view");
+  assert.ok(templateEntry.query.source && templateEntry.query.preset, "template entry must carry source and preset");
+  await Promise.all([
+    templatePage.waitForURL("**/app/create/ai-image-generation", { timeout: 120_000 }),
+    templateLink.click(),
+  ]);
+  assert.equal(new URL(templatePage.url()).search, "", "template URL must stay canonical");
+  const templateTextarea = templatePage.locator('textarea[aria-label="Describe your image idea"]');
+  await templateTextarea.waitFor({ state: "visible", timeout: 60_000 });
+  const templatePrompt = await templateTextarea.inputValue();
+  assert.ok(templatePrompt.length > 20, "template prompt must be prefilled");
+  checks.push(`/templates/photo: ${templateEntry.query.source} resolved with ${templatePrompt.length}-char prompt without query`);
+  await templatePage.close();
+
   await context.close();
   console.log(JSON.stringify({ ok: true, origin, checks }, null, 2));
 } catch (error) {
