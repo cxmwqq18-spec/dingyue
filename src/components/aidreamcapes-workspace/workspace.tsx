@@ -270,8 +270,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (inspirationsLoaded.current) return;
     setInspirationsLoading(true);
     try {
-      const result = await request<{ cards: EmbeddedInspiration[] }>("/inspirations");
-      setInspirationCards(result.cards);
+      const result = await request<{ cards?: EmbeddedInspiration[] }>("/inspirations");
+      setInspirationCards(Array.isArray(result.cards) ? result.cards : []);
       inspirationsLoaded.current = true;
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Couldn't load inspirations.");

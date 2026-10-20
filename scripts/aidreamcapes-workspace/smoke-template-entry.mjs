@@ -83,21 +83,21 @@ try {
   assert.equal(aidreamcapesWorkspaceEntry({ tool_id: "image_generator", tool: "white-background" }).initialView, "images");
   assert.equal(aidreamcapesWorkspaceEntry({ view: "inspirations" }).initialView, "inspirations");
 
-  // Historical view links must reach the standalone gallery without loading
-  // customer auth, private catalogs, or template data for a creation workspace.
-  const authReadsBeforeGallery = currentCustomerCalls;
-  for (const [requestHost, routeSlug, expected] of [
-    ["www.aivideosugc.com", "aidreamcapes", "/app/inspirations"],
-    ["localhost:3002", "aidreamcapes", "/site/aidreamcapes/app/inspirations"],
-    ["localhost:3002", "aivideosugc", "/site/aivideosugc/app/inspirations"],
+  // The inspiration tab is a workspace view: it renders inside the shell for
+  // both the public host and path-mode entries instead of redirecting away.
+  for (const [requestHost, routeSlug] of [
+    ["www.aivideosugc.com", "aidreamcapes"],
+    ["localhost:3002", "aidreamcapes"],
+    ["localhost:3002", "aivideosugc"],
   ]) {
     host = requestHost;
-    await assert.rejects(renderAidreamcapesWorkspace({ routeSlug, initialView: "inspirations" }), (error) => error instanceof Redirect && error.location === expected);
+    const gallery = await renderAidreamcapesWorkspace({ routeSlug, initialView: "inspirations" });
+    assert.equal(gallery.type, workspaceMarker);
+    assert.equal(gallery.props.initialView, "inspirations");
+    assert.deepEqual(gallery.props.initialInspirations, []);
   }
-  assert.equal(currentCustomerCalls, authReadsBeforeGallery, "Opening examples does not load private workspace data");
-  assert.equal(templateGalleryCalls, 0, "Opening examples does not load the workspace template picker");
 
-  resolveCalls = []; selectedPreset = "video"; customer = undefined; host = "www.aivideosugc.com";
+  resolveCalls = []; selectedPreset = "video"; customer = undefined; host = "www.aivideosugc.com"; templateGalleryCalls = 0;
   const videoElement = await renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", ...entry, initialView: "agent" });
   assert.equal(videoElement.type, workspaceMarker);
   assert.equal(videoElement.props.initialView, "home", "video preset opens video composer home");

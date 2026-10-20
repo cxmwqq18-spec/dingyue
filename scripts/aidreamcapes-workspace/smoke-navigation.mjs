@@ -38,6 +38,7 @@ try {
       const key = `${req.method()} ${url.pathname}`; calls.push(key);
       let body = {}; try { body = req.postDataJSON() ?? {}; } catch {}
       if (url.pathname === `${api}/actors`) return json(route, { actors });
+      if (url.pathname === `${api}/inspirations`) return json(route, { cards: [{ id: 'navigation-inspiration', label: 'Navigation example', imageSrc: reference, imageAlt: 'Navigation example', pageTitle: 'Navigation examples', kind: 'video', description: 'A navigation fixture example.', category: 'All', createHref: '/app/create/ai-video-generation' }] });
       if (url.pathname === `${api}/clones`) return json(route, { productionReady: false, mockAvailable: true, analysisBeforeTask: true, voiceTwin: { available: false, state: 'mock_only' }, adReference: { available: false, state: 'mock_only' }, components: { database: { available: true } } });
       if (url.pathname === `${api}/clones/jobs`) return json(route, { jobs: [] });
       if (url.pathname === `${api}/clones/consents`) return json(route, { consents: [] });
@@ -112,12 +113,11 @@ try {
         Object.keys(link).some((key) => key.startsWith('__reactProps$') && typeof link[key]?.onClick === 'function')));
     }
     await menu(name).click();
+    await page.waitForURL((url) => viewFromUrl(url) === view);
+    assert.equal(await menu(name).getAttribute('aria-current'), 'page');
     if (view === 'inspirations') {
-      await page.waitForURL((url) => url.pathname.endsWith('/inspirations'));
-      assert.equal(await sidebar().count(), 0, 'Examples have an independent browsing page.');
-    } else {
-      await page.waitForURL((url) => viewFromUrl(url) === view);
-      assert.equal(await menu(name).getAttribute('aria-current'), 'page');
+      assert.equal(await sidebar().count(), 1, 'Examples keep the workspace navigation visible.');
+      assert.equal(await page.locator('[data-aidreamcapes-inspirations]').count(), 0, 'Examples render inside the workspace, not the standalone page.');
     }
   };
   await page.goto(`${baseUrl}/site/aidreamcapes/app/create?view=home`, { waitUntil: 'networkidle' });
@@ -142,8 +142,8 @@ try {
   await page.getByRole('heading', { name: 'Developer access', exact: true }).waitFor();
   await page.getByText('No API keys yet.', { exact: true }).waitFor();
   await go('Inspirations', 'inspirations');
-  await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/inspirations', 'Inspirations opens its own page.');
+  await page.getByRole('heading', { name: 'Inspirations', exact: true }).waitFor();
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations switches the workspace view.');
   checks.push('AI Twin and Ad Clone open integrated forms; adjacent avatar and inspiration navigation remains available.');
   await go('Home', 'home');
   await page.getByRole('button', { name: 'See All', exact: true }).click();
@@ -218,11 +218,11 @@ try {
   await page.getByRole('img', { name: 'Product photo 1', exact: true }).waitFor();
   checks.push('URL import is a real module and its imported product reaches the correct video setup.');
   await go('Inspirations', 'inspirations');
-  await page.getByRole('heading', { name: 'Inspirations.', exact: true }).waitFor();
-  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/inspirations', 'Inspirations has a dedicated URL.');
-  assert.equal(await sidebar().count(), 0, 'The creation workspace is not mounted around examples.');
+  await page.getByRole('heading', { name: 'Inspirations', exact: true }).waitFor();
+  assert.equal(new URL(page.url()).pathname, '/site/aidreamcapes/app/create/inspirations', 'Inspirations has a workspace URL.');
+  assert.equal(await sidebar().count(), 1, 'The creation workspace stays mounted around examples.');
   const inspirationCount = await page.locator('[data-inspiration-card]').count();
-  checks.push(`Standalone inspiration library displays ${inspirationCount} examples from current LivePage rows and returns to creation.`);
+  checks.push(`Workspace inspiration library displays ${inspirationCount} examples from current LivePage rows and returns to creation.`);
   await page.screenshot({ path: path.join(artifacts, 'desktop-inspirations.png'), fullPage: true });
   await go('AI Image', 'images');
   await page.getByRole('img', { name: 'Image reference 1', exact: true }).evaluate((image) => image.decode());
