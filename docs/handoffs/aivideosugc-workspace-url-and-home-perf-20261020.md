@@ -170,6 +170,11 @@ SELECT count(*) FROM "CreativePack" WHERE "siteId"='site_aidreamcapes' AND statu
 
 > 部署后提醒：codex worktree `main-2` 仍停在 `0f78be95b`，下次从该分支部署前须先同步到 `origin/main`（`efa88c049…`），否则会回退本次性能修复。
 
+### 后续发布（2026-10-20 深夜）
+
+- 当前生产 commit：`d198de292783ff316f0302d2252cf58a8c0f98ac`（`current` → `releases/d198de292…-seo`），在 `efa88c049` 之上只追加了入口提交拦截修复与 codex 的目录标题调整，**性能修复原样保留**。
+- 生产源站复测：`/` 约 3.1s、`/ai-actors` 约 1.5s、`/ai-image-generation` 约 1.8s（直连源站，绕过 CDN）；本机到 Cloudflare 的 TLS 仍被重置，浏览器门禁改为经 SSH 隧道在源站执行。
+
 ### 顺手修复的阻塞项（与本次排查相关）
 
 - `smoke-template-entry` 因其他任务引入的 `@/lib/aidreamcapes-inspirations-types` 导入而无法加载 → 已在 smoke shim 中补编译该模块。

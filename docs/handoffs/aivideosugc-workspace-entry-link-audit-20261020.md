@@ -130,3 +130,26 @@ P1 三项与 P2 门禁已完成；本节取代上一节的“P1 未通过 / P2 �
 - **公网复核**：首页 41 条入口链接、图片区 4 条提示词、演员 53/53、模板 18/9/9、视频页 48 条；所有卡片 href 为固定 `/app/create/...`，无案例数据参数。sitemap URL 集合保持 177 条不变。
 - **范围确认**：未改动 MyDreamShoots 的页面、内容、路由、SEO 或导航输出；MyDreamShoots 服务与读回在部署前后一致。
 
+## 入口提交拦截回归与修复（2026-10-20 深夜，已部署 `d198de292`）
+
+### 现象
+
+工作台 "URL to Video" 模块里粘贴商品页链接并点击 “Preview product” 后，整页跳到 Text to Video，商品页预览步骤与已输入链接丢失。该流程在 `e12d78eff` 之前是正常的，`smoke-navigation` 一直在这一条断言上超时（本地与线上都复现）。
+
+### 根因
+
+P0 的入口交接在 `src/components/aidreamcapes-workspace/entry-behavior.tsx` 注册了 document 级 `submit` 拦截：凡是把表单提交改写成固定 `/app/create/...` 路径跳转。工作台自己的商品页预览表单（`product-url-import.tsx` 的 React `onSubmit` 已 `preventDefault` 并用 fetch 取商品页摘要）也被这条拦截器接管，页面离开预览态；`workspaceEntryTarget` 把该表单解析成 `view=product` 之外的分支时，地址最终落到 Text to Video。
+
+### 修复
+
+拦截器在 `event.defaultPrevented` 时直接放行：已经由应用自身处理过的表单继续走原有逻辑，未被接管的普通表单仍走固定路径跳转。改动只涉及一个客户端组件，不改变任何 URL 契约或内容。
+
+### 发布记录
+
+- commit：`d198de292783ff316f0302d2252cf58a8c0f98ac`（含 codex `b900c13ce` 目录标题调整），已推送到 `origin/main`。
+- 生产：`current` → `/www/wwwroot/aidreamcapes.com/releases/d198de292783ff316f0302d2252cf58a8c0f98ac-seo`；code-only 部署，public 与依赖复用 `efa88c049`，无内容写入、无快照导入。
+- 候选机与源站门禁：`smoke-aidreamcapes-release-routes.mjs` + `audit-card-entry-links.mjs` 全部通过（首页 41 条固定入口、图片 4 条提示词、演员 53/53、模板 18/9/9、视频 48）。
+- 源站浏览器门禁（经 SSH 隧道执行）：`smoke-card-entry-browser` 三条入口通过（演员选中、图片提示词预填、模板 photo 解析），`smoke-navigation` 全量通过，含 “URL import is a real module and its imported product reaches the correct video setup”。
+- 回归确认：sitemap 仍为 **177** 条 loc；MyDreamShoots release 目录与标题未变；`aidreamcapes` / `mydreamshoots` / `aidreamcapes-eu` / `aidreamshoots` 四个服务均 active。
+- 环境限制：本机到 Cloudflare 的 TLS 连接会被重置，浏览器门禁改为在生产源站执行；隧道带宽下需要放宽 Playwright 超时，仓库内门禁脚本保持默认超时不变。
+
