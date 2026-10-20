@@ -3,7 +3,8 @@
 - 日期：2026-10-20
 - 页面：`https://www.aivideosugc.com/ai-video-generation/ai-twin`
 - 数据源：`LivePage.contentJson`（`site_aidreamcapes`，页面 id `site_aidreamcapes_ai_twin`）
-- 状态：**设计稿，尚未写入 LivePage，也不涉及发布或快照恢复**
+- 状态：**A 版已确认，按字段级 manifest 写入；不涉及发布快照或历史恢复**
+- 已确认：采用 A 版，保留 preview notice，并将 `twin-presenters` 替换为可信度四点。
 - 参考页面：Tagshop `https://tagshop.ai/ai-twin`（只参考信息结构、搜索意图和表达角度，不复制原文）
 
 ## 1. 先确认一个边界
@@ -42,16 +43,16 @@
 
 ```json
 {
-  "seo.title": "AI Twin for Brand Videos | AIVideosUGC",
-  "seo.description": "Explore AI Twin, a preview of reusable digital presenters for brand videos. See the planned workflow, use cases and what you can create today with AI actors.",
+  "seo.title": "AI Twin Generator for Brand Videos | AIVideosUGC",
+  "seo.description": "Explore an authorized AI Twin for brand videos. Preview the likeness, voice, consent and review workflow, and create with available AI presenters today.",
   "seo.keywords": "AI Twin, AI twin for brand videos, digital twin presenter, AI brand ambassador, AI presenter for product videos",
   "seo.primaryKeyword": "AI Twin",
   "seo.ogImageAlt": "Presenter concept for an AI Twin brand video"
 }
 ```
 
-- Title 长度：43 字符。
-- Description 长度：约 154 字符，包含主关键词和“preview”限定。
+- Title 长度：48 字符。
+- Description 长度：152 字符，包含主关键词和“preview”限定。
 - `ogImage`、`canonical` 保持当前值，不新增图片。
 
 ### 3.2 Hero
@@ -263,7 +264,9 @@ Tagshop 的页面重点是大规模、快速、照片生成、24 小时可用、
 
 ## 6. 建议的落库方式
 
-如果确认采用 A 版，按字段级增量写入，不使用整页快照：
+A 版已按字段级增量写入，不使用整页快照。字段清单见
+`scripts/manifests/aidreamcapes-ai-twin-copy-2026-10-20.json`，执行器见
+`scripts/apply-aidreamcapes-ai-twin-copy.mjs`。
 
 - 页面：`site_aidreamcapes_ai_twin`，slug `/ai-video-generation/ai-twin`；
 - 字段：`LivePage.contentJson.sections.v2_main.settings.data.*` 与 `LivePage.contentJson.seo.*`；

@@ -1,0 +1,251 @@
+{
+  "siteId": "site_aidreamcapes",
+  "id": "site_aidreamcapes_ai_twin",
+  "slug": "/ai-video-generation/ai-twin",
+  "title": "AI Twin Generator for Brand Videos | AIVideosUGC",
+  "contentContract": {
+    "sourceRevision": "aidreamcapes-ai-twin-copy-20261020-v1"
+  },
+  "seo": {
+    "title": "AI Twin Generator for Brand Videos | AIVideosUGC",
+    "description": "Explore an authorized AI Twin for brand videos. Preview the likeness, voice, consent and review workflow, and create with available AI presenters today.",
+    "keywords": "AI Twin, AI twin generator, AI twin for brand videos, digital twin presenter, AI brand ambassador, authorized AI twin",
+    "primaryKeyword": "AI Twin",
+    "ogImageAlt": "Presenter concept for an AI Twin brand video"
+  },
+  "data": {
+    "eyebrow": "AI TWIN PREVIEW",
+    "h1": "Your AI Twin for brand videos.",
+    "lead": "Turn your on-camera presence into a repeatable creative direction. Define how you look, sound and tell a product story, then explore new script variations without another studio day.",
+    "notice": "AI Twin is in preview. Face and voice cloning are not available yet. Explore the concept and create with an available AI presenter today.",
+    "demoLabel": "Illustrative AI Twin direction",
+    "heroChips": [
+      "Authorized likeness",
+      "Consistent delivery",
+      "New script variations"
+    ]
+  },
+  "sections": {
+    "twin-statement": {
+      "items": [
+        "One authorized identity.",
+        "Many script directions.",
+        "A consistent brand presence."
+      ]
+    },
+    "twin-benefits": {
+      "eyebrow": "WHY AN AI TWIN",
+      "title": "A brand presence that can work beyond one shoot.",
+      "lead": "An AI Twin is designed to keep the person your audience trusts consistent while the product, offer and script change.",
+      "cards": [
+        {
+          "title": "Stay camera-ready",
+          "body": "Use an approved on-camera identity as the starting point for new product stories, without rebuilding the same setup each time."
+        },
+        {
+          "title": "Keep recognition consistent",
+          "body": "Carry the same face, tone and delivery across launches, campaigns and markets."
+        },
+        {
+          "title": "Test more angles",
+          "body": "Explore hooks, offers and product benefits in new script variations without booking a studio for every version."
+        },
+        {
+          "title": "Move with the campaign",
+          "body": "Plan videos around launch dates and channel needs instead of production calendars."
+        },
+        {
+          "title": "Scale one identity",
+          "body": "Keep the presenter consistent while products, scenes and formats change."
+        },
+        {
+          "title": "Review every claim",
+          "body": "Keep scripts, product facts and disclosures visible in an editable storyboard before you publish."
+        }
+      ]
+    },
+    "twin-steps": {
+      "eyebrow": "THE INTENDED WORKFLOW",
+      "title": "From an authorized identity to a new video.",
+      "lead": "AI Twin is being designed around consent, review and reuse. Here is the workflow the concept is built for.",
+      "cards": [
+        {
+          "title": "Confirm the person and the rights",
+          "body": "Record explicit permission for the likeness, voice and intended use. The person represented stays in control."
+        },
+        {
+          "title": "Create a reusable twin",
+          "body": "Build a private presenter profile from approved reference material and keep its status visible."
+        },
+        {
+          "title": "Write the next script",
+          "body": "Choose a product, scene and message, then review the generated video before it goes live."
+        }
+      ]
+    },
+    "twin-product-first": {
+      "eyebrow": "ONE IDENTITY, MANY STORIES",
+      "title": "A consistent presenter, without repeating the same shoot.",
+      "lead": "The value of an AI Twin is not another avatar. It is a reliable on-camera presence you can return to as products, offers and channels change.",
+      "items": [
+        "Keep the person your audience recognizes",
+        "Change the product, scene and message",
+        "Review each script and claim before publishing"
+      ],
+      "button": "Explore AI presenters",
+      "href": "/ai-video-generation/ai-actors"
+    },
+    "twin-presenters": {
+      "eyebrow": "WHAT MAKES IT CREDIBLE",
+      "title": "A digital double needs more than a likeness.",
+      "lead": "The useful version is the one people can recognize, trust and control.",
+      "cards": [
+        {
+          "tag": "Identity",
+          "title": "Likeness",
+          "body": "An identity the audience recognizes, built from authorized references."
+        },
+        {
+          "tag": "Voice",
+          "title": "Voice",
+          "body": "A delivery that sounds like the person, not a generic presenter."
+        },
+        {
+          "tag": "Consent",
+          "title": "Consent",
+          "body": "Clear permission, scope and revocation for every use."
+        },
+        {
+          "tag": "Control",
+          "title": "Review",
+          "body": "A human check before any video is published."
+        }
+      ]
+    },
+    "twin-use-cases": {
+      "eyebrow": "WHERE AN AI TWIN FITS",
+      "title": "One brand presence. Four content jobs.",
+      "lead": "Use the same identity across the moments that usually require another filming day.",
+      "cards": [
+        {
+          "title": "Product launches",
+          "body": "Introduce a new product with the same trusted face and a fresh script."
+        },
+        {
+          "title": "Founder-led ads",
+          "body": "Put the founder's point of view in every campaign without another studio session."
+        },
+        {
+          "title": "Always-on social",
+          "body": "Keep short-form content moving while the message changes."
+        },
+        {
+          "title": "Market variations",
+          "body": "Adapt the same offer for different audiences, languages and channels."
+        }
+      ]
+    },
+    "twin-options": {
+      "eyebrow": "CHOOSE THE RIGHT STARTING POINT",
+      "title": "AI Twin or an AI presenter?",
+      "lead": "Both can carry a product story. The right choice depends on whether the identity itself is part of the message.",
+      "columns": [
+        "",
+        "AI Twin (preview)",
+        "AI presenters (available now)"
+      ],
+      "rows": [
+        [
+          "Identity",
+          "The authorized person you choose",
+          "A presenter from the library"
+        ],
+        [
+          "Voice",
+          "Designed around the person's own voice",
+          "Preset voice options"
+        ],
+        [
+          "Best for",
+          "Founder-led and recurring brand content",
+          "Fast product ads and tests"
+        ],
+        [
+          "Available now",
+          "Preview and concept",
+          "Yes, in the workspace"
+        ],
+        [
+          "Control",
+          "Consent and review are central",
+          "Choose a presenter and script"
+        ]
+      ],
+      "note": "AI Twin is a preview. Face and voice cloning are not available yet."
+    },
+    "twin-faq": {
+      "eyebrow": "Questions, answered",
+      "title": "AI Twin questions, answered.",
+      "lead": "Understand what AI Twin is, what is available today and how consent works.",
+      "cards": [
+        {
+          "title": "What is an AI Twin?",
+          "body": "An AI Twin is a digital version of a real person, designed to carry their likeness and voice into new videos. Unlike a generic AI presenter, the identity belongs to a specific authorized person."
+        },
+        {
+          "title": "Is AI Twin available now?",
+          "body": "Not yet. This page previews the concept. Face cloning, voice cloning and a production-ready digital twin are not available here. You can create product videos today with the available AI presenters and video workflow."
+        },
+        {
+          "title": "How is an AI Twin different from an AI presenter?",
+          "body": "An AI presenter is a library performer you choose for a video. An AI Twin is designed to represent one real person, with explicit consent and a consistent identity across videos."
+        },
+        {
+          "title": "What will I need to create one?",
+          "body": "The intended workflow uses approved reference images and audio, explicit permission from the person represented, and a clear scope for how the twin can be used."
+        },
+        {
+          "title": "Can I use my own face and voice?",
+          "body": "That is the goal of AI Twin, but the capability is not live on this page yet. Do not upload or use another person's likeness or voice without their permission."
+        },
+        {
+          "title": "What can I create today?",
+          "body": "You can choose an AI presenter, write a product brief, edit a storyboard, generate selected shots and assemble a video in the workspace."
+        },
+        {
+          "title": "How will consent work?",
+          "body": "The concept requires explicit authorization, a defined scope and the ability to revoke future use. A twin should never be created from someone else's likeness without their permission."
+        }
+      ]
+    },
+    "twin-related": {
+      "eyebrow": "CONTINUE EXPLORING",
+      "title": "Find the right tool for your next step.",
+      "lead": "",
+      "cards": [
+        {
+          "title": "AI presenters",
+          "body": "Browse available presenters for product videos.",
+          "href": "/ai-video-generation/ai-actors"
+        },
+        {
+          "title": "Text to Video",
+          "body": "Turn a product brief into an editable video plan.",
+          "href": "/ai-video-generation/text-to-video"
+        },
+        {
+          "title": "Image to Video",
+          "body": "Start a product video from a still image.",
+          "href": "/ai-video-generation/image-to-video"
+        }
+      ]
+    },
+    "twin-cta": {
+      "eyebrow": "START WITH WHAT IS AVAILABLE TODAY",
+      "title": "Create your next product video with an AI presenter.",
+      "lead": "AI Twin is in preview. Choose an available presenter, add your product facts and review an editable storyboard before you generate.",
+      "button": "Explore AI presenters",
+      "href": "/ai-video-generation/ai-actors"
+    }
+  }
+}
