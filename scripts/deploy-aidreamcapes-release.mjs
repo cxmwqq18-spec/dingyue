@@ -12,6 +12,10 @@ const commit = value("--commit");
 // Deploying application code never authorizes writes to editable site content.
 const codeOnly = true;
 const verifyInspirations = args.includes("--verify-inspirations");
+// The exhaustive sitemap SEO contract is a separate task. Pass this flag (or
+// AIDREAMCAPES_RELEASE_FULL_SEO=1) only for releases that change public SEO,
+// metadata or large amounts of published content.
+const fullSeoContract = args.includes("--full-seo-contract") || process.env.AIDREAMCAPES_RELEASE_FULL_SEO === "1";
 assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<40-character SHA>");
 const prebuiltBuild = value("--prebuilt-build");
 const reuseBuildCommit = value("--reuse-build");
@@ -65,6 +69,7 @@ console.log(JSON.stringify({
   service: "aidreamcapes.service",
   commit,
   release,
+  fullSeoContract,
   appliesAidreamcapesLivePagePathMigration: args.includes("--apply") && !codeOnly
 }));
 if (!args.includes("--apply")) process.exit(0);
@@ -128,8 +133,9 @@ for ATTEMPT in $(seq 1 60); do
   sleep 2
 done
 test "$READY" = 1
-AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json
-cat .candidate-contract.json
+AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/smoke-aidreamcapes-release-routes.mjs > .candidate-routes.json
+cat .candidate-routes.json
+${fullSeoContract ? 'AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json\ncat .candidate-contract.json' : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
@@ -171,8 +177,10 @@ cat .navigation-path-migration.json
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-static-create-links.mjs --target=production --apply --confirm=site_aidreamcapes-static-create-links > .static-create-links-migration.json
 cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
-AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
-cat .origin-contract.json
+AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-release-routes.mjs > .origin-routes.json
+cat .origin-routes.json
+${fullSeoContract ? `AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
+cat .origin-contract.json` : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"
