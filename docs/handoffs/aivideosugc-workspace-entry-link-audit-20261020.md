@@ -6,7 +6,7 @@
 
 同时确认了 3 个同源问题：模板页 photo/video 两个 URL 内容完全相同；图片页所有 “Make a photo like this” 指向同一个通用工具；演员页所有 “Use <actor>” 指向同一个通用工具，卡片身份没有带过去。
 
-**2026-10-20 晚已按 P0 完成 code-only 部署并通过生产验收，见下一节。** P1 的三个数据/页面问题仍未修复。
+**2026-10-20 晚已按 P0 完成 code-only 部署并通过生产验收，见下一节。** P1 的三项（演员身份、图片 preset、模板 photo/video 过滤）与 P2 门禁随后也已实现并部署，最终状态见文末“最终验收”。
 
 ## P0 部署与生产验收（2026-10-20 晚）
 
@@ -102,7 +102,7 @@
 ## 实施顺序与注意事项
 
 1. 入口交接与 URL 规范化已经提交（`e12d78eff`、`66d6392c4`、`649acfc06`）；部署前再跑一次 `typecheck`、入口相关 smoke 与 production build。
-2. P0 已部署（`data-workspace-entry` 入口节点已上线）；第 7–10 条是后续防回归门禁，当前尚未实现，不能代替本次手工验收。
+2. P0 已部署（`data-workspace-entry` 入口节点已上线）；第 7–10 条随后已实现为发布门禁（见文末“最终验收”），但仍不能替代人工验收。
 3. P1 第 4–6 条涉及内容字段（photo 模板、演员身份、图片 preset），走字段级 compare-and-set manifest，禁止全站生成或快照回滚；不触碰 MyDreamShoots。
 
 ## 验收标准（用户视角）
@@ -112,8 +112,21 @@
 - 工作台左侧栏 href 与落地 URL 一致，均为固定目录。
 - 模板页 photo/video 不再展示同一批视频模板。
 
-## 验收结果
+## 验收结果（P0 阶段，历史记录）
 
 - **P0 通过**：5 个公共页面的卡片入口全部是固定 `/app/create/...`；点击后 URL 无案例数据、无 hash；首页与模板页 composer 已预填；刷新后入口 cookie 已消费。
-- **P1 未通过**：`/ai-image-generation` 的 “Make a photo like this” composer 仍为空；`/ai-actors` 的 “Use” 仍落到 video view 且 composer 为空；`/templates/photo` 与 `/templates/video` 仍与 `/templates` 展示同一批 37 张视频模板。
-- **P2 未实现**：SSR 链接审计 smoke 与点击 E2E 尚未加入发布门禁；本次生产验收为手工执行。
+- **P1 当时未通过**：`/ai-image-generation` 的 “Make a photo like this” composer 仍为空；`/ai-actors` 的 “Use” 仍落到 video view 且 composer 为空；`/templates/photo` 与 `/templates/video` 仍与 `/templates` 展示同一批 37 张视频模板。
+- **P2 当时未实现**：SSR 链接审计 smoke 与点击 E2E 尚未加入发布门禁。
+
+## 最终验收（2026-10-20 晚，已部署）
+
+P1 三项与 P2 门禁已完成；本节取代上一节的“P1 未通过 / P2 未实现”。
+
+- **部署批次**：`bfcf7fa0a`（演员卡栅格/导航与页面调整）→ `efa88c049`（首页回源性能修复）。生产 `current` 指向 `efa88c04963a0da14a56ace6123f56eca82091ca-seo`，均为 code-only 部署，无内容全站生成、无快照导入。
+- **演员入口**（P1-5）：演员卡固定落到 `/app/create/ai-actors`，演员身份通过入口 payload 传入（`actor.id`），工作台 `initialActorId` 预选对应头像；53 个演员 ID 与 `actors.json` **53/53** 匹配。演示者（presenter）入口仅对 Aidreamcapes 或含 `actors` 的来源开放，其他站点/页面不受影响。
+- **图片入口**（P1-6）：`/ai-image-generation` 的 4 张 “Make a photo like this” 现在各自携带提示词与画幅，composer 打开即预填；文案/title/alt/分组通过字段级 compare-and-set manifest 写入，最终内容哈希 `788590224a74081a6af4343a17e5080d61f51c0b79b1d12997122a1e3ae4a8d2`，本地与生产读回一致。
+- **模板目录**（P1-4）：`/templates` 卡片改用工作台 preset 固定 URL，匹配键为 `href + name + kind` 唯一命中；`/templates/photo` 与 `/templates/video` 按 `kind` 服务端过滤，分别输出 **9 / 9** 张不同卡片，不再复用同一批视频模板。
+- **P2 门禁**：`scripts/aidreamcapes-workspace/audit-card-entry-links.mjs`（SSR 链接审计，纳入发布门禁）与 `scripts/aidreamcapes-workspace/smoke-card-entry-browser.mjs`（Playwright 点击 E2E）已加入并通过；本地 production build 全绿。
+- **公网复核**：首页 41 条入口链接、图片区 4 条提示词、演员 53/53、模板 18/9/9、视频页 48 条；所有卡片 href 为固定 `/app/create/...`，无案例数据参数。sitemap URL 集合保持 177 条不变。
+- **范围确认**：未改动 MyDreamShoots 的页面、内容、路由、SEO 或导航输出；MyDreamShoots 服务与读回在部署前后一致。
+

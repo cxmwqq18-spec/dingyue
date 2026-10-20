@@ -147,6 +147,29 @@ SELECT count(*) FROM "CreativePack" WHERE "siteId"='site_aidreamcapes' AND statu
 4. **CDN**：确认生产 HTML 的 `s-maxage=300` 实际生效（`cdn-cache-control`/`cloudflare-cdn-cache-control` 已由 middleware 下发）；若客户端路由（RSC）导航绕过 CDN，则再评估提升到 1800–3600 或改为关键跨区链接整页导航。
 5. **不需要动 93 个演员页**：629KB/14%，本地增量 <100ms，部署 URL 修复不会改变首页性能。
 
+### 生产定位结论与最终修复（2026-10-20 晚，已 code-only 部署）
+
+生产 23.4s 的冷回源放大**不是** DB 行数或媒体资产 LIMIT 造成，而是首页 JSON 上的链接遍历：
+
+- **根因**：`src/lib/seo-indexing.ts` 的 `collectInternalHrefPaths` 会递归遍历首页 LivePage JSON 中的**每一个字符串**，包括媒体 URL、提示词、alt 文本，并对每个候选串执行目录解析。首页 JSON 里媒体/文案越多，这一步越接近 O(字符串总数 × 目录解析)，成为回源渲染的主要成本。
+- **修复**：在同一函数内加 **仅 Aidreamcapes 生效** 的字符串预过滤（明显不是站内路由的串直接跳过）并对字符串/对象去重；MyDreamShoots 的遍历路径保持不变。没有引入任何 TTL 缓存，`LivePage` 提交后下一个请求仍然立即可见。
+- **提交**：`efa88c04963a0da14a56ace6123f56eca82091ca`（`Skip non-route strings in Aidreamcapes indexable-link scan`），`origin/main` 已同步到该提交。
+- **部署方式**：远端构建在本机约 10GB 处 OOM（`CALL_AND_RETRY_LAST Allocation failed`），因此使用本地 prebuilt `.next-build`（标记 `efa88c049…`）部署，public 与 node_modules 复用 `bfcf7fa0a` 的 release；发布目录 `/www/wwwroot/aidreamcapes.com/releases/efa88c04963a0da14a56ace6123f56eca82091ca-seo`。codex 的 `0f78be95b` 只增加 docs/scripts/manifests，不是运行时构建输入，因此 prebuilt 内容与提交一致。
+- **效果（生产源站直连，绕过 CDN）**：
+
+  | 指标 | 修复前 | 修复后 |
+  |---|---|---|
+  | 首页 TTFB | ~9.1s | **~3.1s** |
+  | `/ai-actors`、`/templates` | — | ~1.8s |
+  | 本地 production build 首页 | ~0.11s（旧数据规模） | 0.60–0.64s（当前数据规模） |
+  | 本地 production build actors/templates | — | 0.35–0.37s |
+
+- **回归门禁**：候选与源站路由 smoke、固定入口审计、公网 CDN 审计均通过 —— 首页 41 条入口链接、图片区 4 条提示词、演员 53/53、模板 18/9/9、视频 48；sitemap URL 集合部署前后均为 **177** 条，无增删。
+- **范围**：本次仅代码，无内容行写入；MyDreamShoots 标题与读回未变，MyDreamShoots / Aidreamcapes EU / Aidreamshoots 服务保持运行。
+- **仍存在的成本**：首页源站仍约 3s，属于渲染本身（548KB HTML + 全量投影）。继续下降只能靠裁剪 V2 首页渲染内容，或经明确批准的 **按 revision 失效** 缓存；**不要**用时间 TTL 兜底。共享层 `site-store.ts` 的缓存/媒体上限改动对本回归不再必要。
+
+> 部署后提醒：codex worktree `main-2` 仍停在 `0f78be95b`，下次从该分支部署前须先同步到 `origin/main`（`efa88c049…`），否则会回退本次性能修复。
+
 ### 顺手修复的阻塞项（与本次排查相关）
 
 - `smoke-template-entry` 因其他任务引入的 `@/lib/aidreamcapes-inspirations-types` 导入而无法加载 → 已在 smoke shim 中补编译该模块。
