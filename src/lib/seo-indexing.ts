@@ -1644,18 +1644,47 @@ function addPublicPath(state: PlatformState, site: Site, paths: Set<string>, hre
   paths.add(normalized);
 }
 
-function collectInternalHrefPaths(state: PlatformState, site: Site, paths: Set<string>, value: unknown): void {
+const NON_PAGE_HREF_EXTENSION_RE = /\.(?:avif|gif|jpe?g|png|svg|webp|mp4|m4v|mov|webm|mp3|wav|ogg|css|js|mjs|json|xml|pdf|woff2?|ttf|otf)(?:[?#].*)?$/i;
+
+/**
+ * The Aidreamcapes V2 content tree contains long copy, prompts, alt text and
+ * media paths beside real links. Running the directory resolver on every
+ * string made the homepage's indexable-path pass take seconds. Only strings
+ * that can become a public route are forwarded; the resolver would discard
+ * the rest anyway.
+ */
+function isPotentialAidreamcapesPageHref(value: string): boolean {
+  const raw = value.trim();
+  if (!raw || /\s/.test(raw)) return false;
+  if (!(raw.startsWith("/") || raw.startsWith("http://") || raw.startsWith("https://"))) return false;
+  if (raw.startsWith("//")) return false;
+  return !NON_PAGE_HREF_EXTENSION_RE.test(raw);
+}
+
+function collectInternalHrefPaths(
+  state: PlatformState,
+  site: Site,
+  paths: Set<string>,
+  value: unknown,
+  seenStrings: Set<string> = new Set(),
+  seenObjects: WeakSet<object> = new WeakSet()
+): void {
   if (typeof value === "string") {
+    if (site.id === AIDREAMCAPES_SITE_ID && !isPotentialAidreamcapesPageHref(value)) return;
+    if (seenStrings.has(value)) return;
+    seenStrings.add(value);
     addPublicPath(state, site, paths, value);
     return;
   }
+  if (!value || typeof value !== "object") return;
+  if (seenObjects.has(value)) return;
+  seenObjects.add(value);
   if (Array.isArray(value)) {
-    for (const item of value) collectInternalHrefPaths(state, site, paths, item);
+    for (const item of value) collectInternalHrefPaths(state, site, paths, item, seenStrings, seenObjects);
     return;
   }
-  if (!value || typeof value !== "object") return;
   for (const item of Object.values(value)) {
-    collectInternalHrefPaths(state, site, paths, item);
+    collectInternalHrefPaths(state, site, paths, item, seenStrings, seenObjects);
   }
 }
 
@@ -1706,8 +1735,12 @@ function collectDynamicIndexablePaths(state: PlatformState, site: Site): string[
     const href = blockHref(block);
     addPublicPath(state, site, paths, href);
   }
-  collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson);
-  for (const page of sitePages) collectInternalHrefPaths(state, site, paths, page.publishedJson);
+  const seenHrefStrings = new Set<string>();
+  const seenHrefObjects = new WeakSet<object>();
+  collectInternalHrefPaths(state, site, paths, site.themeSettings.publishedJson, seenHrefStrings, seenHrefObjects);
+  for (const page of sitePages) {
+    collectInternalHrefPaths(state, site, paths, page.publishedJson, seenHrefStrings, seenHrefObjects);
+  }
 
   // Keep the public editorial inventory in the same candidate set as dynamic
   // catalogue links. The final resolver below still requires a published
