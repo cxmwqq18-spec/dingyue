@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { CustomerAccountShell } from "@/components/storefront/customer-account-shell";
+import dynamic from "next/dynamic";
 import { CUSTOMER_BOOTSTRAP_INVALIDATE_EVENT, type CustomerBootstrapInvalidationDetail } from "@/components/storefront/customer-bootstrap-events";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
-import { CustomerWorkspaceShell, type CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
+import type { CustomerWorkspacePanel } from "@/components/storefront/customer-workspace-shell";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { UserRound } from "lucide-react";
 import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, SiteAiApp, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
+
+const CustomerAccountShell = dynamic(() => import("@/components/storefront/customer-account-shell").then(module => module.CustomerAccountShell));
+const CustomerWorkspaceShell = dynamic(() => import("@/components/storefront/customer-workspace-shell").then(module => module.CustomerWorkspaceShell));
 
 type CustomerBootstrapSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain">;
 export type CustomerBootstrap = {

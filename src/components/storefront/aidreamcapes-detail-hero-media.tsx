@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesProjectedImage as AidreamcapesResponsiveImage } from "./aidreamcapes-projected-image.client";
 import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 import type { AidreamcapesAdsTestingImage, AiVideoTopicVideo } from "@/lib/ai-video-topic-content";
 

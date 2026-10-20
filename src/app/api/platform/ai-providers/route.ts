@@ -90,6 +90,16 @@ async function payload(extra: Record<string, unknown> = {}) {
       videoDurations: provider.videoDurations,
       videoAspectRatios: provider.videoAspectRatios,
       videoNativeSpeech: provider.videoNativeSpeech,
+      priceEnabled: provider.priceEnabled,
+      priceCredits: provider.priceCredits,
+      priceVideoDurations: provider.priceVideoDurations,
+      priceVideoResolutions: provider.priceVideoResolutions,
+      priceImageQualities: provider.priceImageQualities,
+      priceImageResolutions: provider.priceImageResolutions,
+      priceImageInput: provider.priceImageInput,
+      priceVideoInputPerSecond: provider.priceVideoInputPerSecond,
+      priceAudioInput: provider.priceAudioInput,
+      priceAudioInputPerSecond: provider.priceAudioInputPerSecond,
       createdAt: provider.createdAt,
       updatedAt: provider.updatedAt,
       updatedBy: provider.updatedBy,
@@ -151,6 +161,16 @@ export async function PUT(request: NextRequest) {
     videoDurations?: number[];
     videoAspectRatios?: string[];
     videoNativeSpeech?: boolean | null;
+    priceEnabled?: boolean;
+    priceCredits?: number;
+    priceVideoDurations?: unknown;
+    priceVideoResolutions?: unknown;
+    priceImageQualities?: unknown;
+    priceImageResolutions?: unknown;
+    priceImageInput?: number;
+    priceVideoInputPerSecond?: number;
+    priceAudioInput?: number;
+    priceAudioInputPerSecond?: number;
     priority?: unknown;
   };
   if (!body.label?.trim()) return NextResponse.json({ error: "missing_ai_provider_label" }, { status: 400 });
@@ -204,6 +224,16 @@ export async function PUT(request: NextRequest) {
     videoDurations: body.videoDurations,
     videoAspectRatios: body.videoAspectRatios,
     videoNativeSpeech: body.videoNativeSpeech,
+    priceEnabled: body.priceEnabled,
+    priceCredits: body.priceCredits,
+    priceVideoDurations: body.priceVideoDurations,
+    priceVideoResolutions: body.priceVideoResolutions,
+    priceImageQualities: body.priceImageQualities,
+    priceImageResolutions: body.priceImageResolutions,
+    priceImageInput: body.priceImageInput,
+    priceVideoInputPerSecond: body.priceVideoInputPerSecond,
+    priceAudioInput: body.priceAudioInput,
+    priceAudioInputPerSecond: body.priceAudioInputPerSecond,
     priority: body.priority,
     actor: permission.current.platformAdmin.id
   });

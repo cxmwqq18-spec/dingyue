@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesProjectedImage as AidreamcapesResponsiveImage } from "./aidreamcapes-projected-image.client";
 import type { AidreamcapesAdsTestingImage } from "@/lib/ai-video-topic-content";
 
 export type AdsTestingGalleryImage = AidreamcapesAdsTestingImage;

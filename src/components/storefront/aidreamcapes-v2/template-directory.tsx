@@ -25,10 +25,10 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         <button className="btn btn-primary" type="submit">Apply filters</button>
       </form>
       <p className="meta-line">{templates.length} templates</p>
-      <div className="tgrid">{templates.map(template => {
+      <div className="tgrid">{templates.map((template, index) => {
         const href = pickerPresetHref(template.card, template.path);
         return <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
-          <WorkspaceEntryLink className="ti" href={r.href(href)}><img className={styles.cardImage} loading="lazy" decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
+          <WorkspaceEntryLink className="ti" href={r.href(href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
           <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><WorkspaceEntryLink href={r.href(href)}>{template.name}</WorkspaceEntryLink></h2><p>{template.description}</p><WorkspaceEntryLink className="use" href={r.href(href)}>View template →</WorkspaceEntryLink></div>
         </article>;
       })}</div>

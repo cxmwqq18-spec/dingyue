@@ -64,7 +64,7 @@ let videoProviderId = "";
 
 const page = await request("/platform?module=gateway", { cookie });
 const html = await page.text();
-for (const marker of ["AI 配置面板", "供应商列表", "新增供应商", "测试连通性", "AI 网关策略", "域名管理"]) {
+for (const marker of ["AI 配置面板", "模型与供应商", "中转平台与模型同步", "新增中转平台", "AI 网关策略", "域名管理"]) {
   if (!html.includes(marker)) throw new Error(`platform gateway page missing marker: ${marker}`);
 }
 

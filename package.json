@@ -266,6 +266,8 @@
     "smoke:api-crud-latency": "node scripts/smoke-api-crud-latency.mjs",
     "ops:prod-diagnose": "node scripts/ops-production-diagnose.mjs",
     "smoke:ai-providers": "node scripts/smoke-ai-providers.mjs",
+    "smoke:ai-provider-pricing": "node --no-warnings --experimental-strip-types scripts/smoke-ai-provider-pricing.mjs",
+    "smoke:ai-relay-sync": "node scripts/smoke-ai-relay-sync.mjs",
     "smoke:platform-email-settings": "node scripts/smoke-platform-email-settings.mjs",
     "smoke:platform-email-config-bindings": "node scripts/smoke-platform-email-config-bindings.mjs",
     "smoke:platform-cloudflare-settings": "node scripts/smoke-platform-cloudflare-settings.mjs",

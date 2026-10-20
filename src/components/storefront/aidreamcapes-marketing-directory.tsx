@@ -6,7 +6,7 @@ import type { AidreamcapesZipNavigation, Site } from "@/lib/types";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import type { AidreamcapesImageDirectoryCard } from "@/components/storefront/aidreamcapes-image-directory";
 import type { AidreamcapesVideoThemeCover } from "@/components/storefront/aidreamcapes-video-directory";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesProjectedImage as AidreamcapesResponsiveImage } from "./aidreamcapes-projected-image.client";
 
 export type AidreamcapesMarketingDirectoryCopy = {
   eyebrow: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesProjectedImage as AidreamcapesResponsiveImage } from "./aidreamcapes-projected-image.client";
 import type { AidreamcapesImageThemeImage } from "@/lib/aidreamcapes-image-theme-content";
 
 type AidreamcapesImageAssetProps = {

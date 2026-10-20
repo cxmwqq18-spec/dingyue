@@ -22,6 +22,7 @@ import { GatewayEditor } from "@/components/platform/gateway-editor";
 import { PlatformSiteAdminLink } from "@/components/platform/platform-site-admin-link";
 import { PlatformAuditPanel } from "@/components/platform/platform-audit-panel";
 import { PlatformAiProviderPanel } from "@/components/platform/platform-ai-provider-panel";
+import { PlatformAiRelayPanel } from "@/components/platform/platform-ai-relay-panel";
 import { PlatformBillingPanel } from "@/components/platform/platform-billing-panel";
 import { PlatformCloudflarePanel } from "@/components/platform/platform-cloudflare-panel";
 import { PlatformEmailPanel } from "@/components/platform/platform-email-panel";
@@ -445,6 +446,8 @@ async function PlatformModuleContent({
         <ErpSection description="平台级 AI 供应商配置，按 AI 生图和 AI 生成视频两类独立维护优先 provider 和 fallback 队列。" eyebrow="ai provider" title="AI 配置面板">
           <PlatformAiProviderPanel initialStatus={platformAiProviderStatus} />
         </ErpSection>
+
+        <PlatformAiRelayPanel />
 
         <ErpSection description="AI 中转默认对所有站点域名可用；域名新增仍在站点工厂处理，这里只查看全平台使用范围和少量兜底策略。" eyebrow="域名与网关" title="域名与网关工作台">
           {selectedSnapshot ? (

@@ -3,14 +3,14 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import type { HomeComposerImageInput } from "./home-composer";
 
-export function useImageDraft(siteId: string, customerId: string | undefined, input: HomeComposerImageInput, setInput: Dispatch<SetStateAction<HomeComposerImageInput>>) {
+export function useImageDraft(siteId: string, customerId: string | undefined, input: HomeComposerImageInput, setInput: Dispatch<SetStateAction<HomeComposerImageInput>>, hasEntryInput = false) {
   const key = `aidreamcapes:image-draft:${encodeURIComponent(siteId)}:${encodeURIComponent(customerId ?? "guest")}`;
   const [readyKey, setReadyKey] = useState("");
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const resumingGuestDraft = customerId !== undefined && params.get("resumeDraft") === "1";
-      const explicitInput = !resumingGuestDraft && ["source", "preset", "prompt", "tool", "tool_id"].some((name) => params.has(name));
+      const explicitInput = !resumingGuestDraft && (hasEntryInput || ["source", "preset", "prompt", "tool", "tool_id"].some((name) => params.has(name)));
       const raw = sessionStorage.getItem(key);
       const guestKey = `aidreamcapes:image-draft:${encodeURIComponent(siteId)}:guest`;
       const guestRaw = customerId && (resumingGuestDraft || (!raw && !explicitInput)) ? sessionStorage.getItem(guestKey) : null;
@@ -34,7 +34,7 @@ export function useImageDraft(siteId: string, customerId: string | undefined, in
       }
     } catch { /* The form remains usable when browser storage is unavailable. */ }
     setReadyKey(key);
-  }, [customerId, key, setInput, siteId]);
+  }, [customerId, hasEntryInput, key, setInput, siteId]);
   useEffect(() => {
     if (readyKey !== key) return;
     try { sessionStorage.setItem(key, JSON.stringify({ version: 1, savedAt: Date.now(), input })); } catch { /* Private browser modes may disable storage. */ }

@@ -1423,6 +1423,20 @@ export function toPlatformCloudflareAccount(record: {
   };
 }
 
+/** 读取模型通道的维度价格矩阵，非法项直接丢弃。 */
+function readPriceMatrix(value: unknown): Record<string, number> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const matrix: Record<string, number> = {};
+  for (const [key, raw] of Object.entries(value as Record<string, unknown>)) {
+    const trimmed = key.trim();
+    if (!trimmed) continue;
+    const parsed = typeof raw === "number" || typeof raw === "string" ? Number(raw) : Number.NaN;
+    if (!Number.isFinite(parsed) || parsed < 0) continue;
+    matrix[trimmed] = Math.trunc(parsed);
+  }
+  return matrix;
+}
+
 export function toPlatformAiProvider(record: {
   id: string;
   label: string;
@@ -1445,6 +1459,19 @@ export function toPlatformAiProvider(record: {
   videoDurations?: number[] | null;
   videoAspectRatios?: string[] | null;
   videoNativeSpeech?: boolean | null;
+  relayId?: string | null;
+  upstreamModelId?: string | null;
+  syncState?: string | null;
+  priceEnabled?: boolean | null;
+  priceCredits?: number | null;
+  priceVideoDurations?: unknown;
+  priceVideoResolutions?: unknown;
+  priceImageQualities?: unknown;
+  priceImageResolutions?: unknown;
+  priceImageInput?: number | null;
+  priceVideoInputPerSecond?: number | null;
+  priceAudioInput?: number | null;
+  priceAudioInputPerSecond?: number | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   updatedBy?: string | null;
@@ -1478,6 +1505,19 @@ export function toPlatformAiProvider(record: {
     videoDurations: videoDurations.length ? videoDurations : [6, 10, 15],
     videoAspectRatios: videoAspectRatios.length ? videoAspectRatios : ["9:16", "1:1", "16:9"],
     videoNativeSpeech: record.videoNativeSpeech ?? null,
+    relayId: record.relayId ?? undefined,
+    upstreamModelId: record.upstreamModelId ?? undefined,
+    syncState: record.syncState === "synced" || record.syncState === "upstream_removed" ? record.syncState : "manual",
+    priceEnabled: Boolean(record.priceEnabled),
+    priceCredits: Number.isFinite(Number(record.priceCredits)) ? Math.max(0, Math.trunc(Number(record.priceCredits))) : 0,
+    priceVideoDurations: readPriceMatrix(record.priceVideoDurations),
+    priceVideoResolutions: readPriceMatrix(record.priceVideoResolutions),
+    priceImageQualities: readPriceMatrix(record.priceImageQualities),
+    priceImageResolutions: readPriceMatrix(record.priceImageResolutions),
+    priceImageInput: Number.isFinite(Number(record.priceImageInput)) ? Math.max(0, Math.trunc(Number(record.priceImageInput))) : 0,
+    priceVideoInputPerSecond: Number.isFinite(Number(record.priceVideoInputPerSecond)) ? Math.max(0, Math.trunc(Number(record.priceVideoInputPerSecond))) : 0,
+    priceAudioInput: Number.isFinite(Number(record.priceAudioInput)) ? Math.max(0, Math.trunc(Number(record.priceAudioInput))) : 0,
+    priceAudioInputPerSecond: Number.isFinite(Number(record.priceAudioInputPerSecond)) ? Math.max(0, Math.trunc(Number(record.priceAudioInputPerSecond))) : 0,
     createdAt: toIsoString(record.createdAt) ?? new Date().toISOString(),
     updatedAt: toIsoString(record.updatedAt) ?? new Date().toISOString(),
     updatedBy: record.updatedBy ?? undefined

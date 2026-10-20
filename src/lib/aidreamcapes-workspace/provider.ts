@@ -14,6 +14,8 @@ import { videoProviderAvailabilityReason } from "@/lib/video-provider-availabili
 import type { PlatformAiProvider } from "@/lib/types";
 import { videoDurationCreditCost, videoResolutionCreditCost, normalizeVideoDurationSecondsForFrameCount } from "@/lib/video-frame-config";
 import { videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
+import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
+import type { VideoModelFamily } from "@/lib/video-frame-config";
 import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, assertWorkspaceSite, sceneSchema } from "./catalogs";
 import { compileShot, compileStoryboard, referencePool, resolveShotReferences, validateTaskInput } from "./pipeline";
 import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type WorkspaceCatalog, type WorkspaceTask } from "./types";
@@ -75,6 +77,55 @@ export async function getWorkspaceActors(siteId: string): Promise<ActorAsset[]> 
 function modelCapability(provider: PlatformAiProvider): ModelCapability {
   return toWorkspaceModelCapability(provider, videoProviderAvailabilityReason(provider, { referenceAssetCount: 1 }));
 }
+
+/**
+ * 单镜头计费：优先使用模型通道价格（平台 AI 网关维护），未定价时回落到主题价口径。
+ * 报价（quoteWorkspaceAction）与扣费（submitShotGeneration）都必须调用本函数。
+ */
+function workspaceShotCredits(params: {
+  provider: PlatformAiProvider;
+  theme: { creditCost: number; modelPricing?: unknown };
+  durationSeconds: number;
+  modelFamily: VideoModelFamily;
+  resolution: string;
+  imageInputCount: number;
+}): number {
+  const modelPrice = providerCreditsForRequest(params.provider, {
+    capabilityType: "video",
+    durationSeconds: params.durationSeconds,
+    resolution: params.resolution,
+    imageInputCount: params.imageInputCount,
+    outputCount: 1
+  });
+  if (modelPrice) return modelPrice.unitCredits;
+  return videoResolutionCreditCost(
+    videoDurationCreditCost(params.theme.creditCost, params.durationSeconds, params.modelFamily, params.theme.modelPricing),
+    params.resolution
+  );
+}
+
+/** 时长档位的展示价：取已定价模型中该时长的最低可用价；无模型价则返回 null 交由上层回落。 */
+function workspaceDurationCredits(
+  providers: PlatformAiProvider[],
+  durations: readonly number[]
+): Map<number, number> {
+  const priced = providers.filter((provider) => provider.priceEnabled);
+  if (!priced.length) return new Map();
+  const credits = new Map<number, number>();
+  for (const duration of durations) {
+    const candidates = priced
+      .map((provider) => providerCreditsForRequest(provider, {
+        capabilityType: "video",
+        durationSeconds: duration,
+        resolution: "720p",
+        outputCount: 1
+      }))
+      .filter((value): value is NonNullable<typeof value> => Boolean(value))
+      .map((value) => value.unitCredits);
+    if (candidates.length) credits.set(duration, Math.min(...candidates));
+  }
+  return credits;
+}
 export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCatalog> {
   assertWorkspaceSite(siteId);
   if (isWorkspaceStabilityMockMode()) {
@@ -115,8 +166,10 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
   const outputOptions = workspaceOutputOptions(models);
   const available = Boolean(app && models.some((model) => model.available) && process.env.AIVIDEOSUGC_PER_SHOT_BILLING_APPROVED === "1" && process.env.AIVIDEOSUGC_VIDEO_THEME_ID);
   const compositionAvailable = Boolean(imageApp && imageProviders.some((provider) => provider.enabled && provider.apiKey && provider.aiUrl && provider.maxImagesPerRequest >= 2));
+  // 时长展示价：优先取模型通道价格（模型页维护），无模型价时回落到既有主题价口径。
+  const durationCredits = workspaceDurationCredits(providers, outputOptions.durations);
   return { scenes: structuredClone(SCENES), actors, models, languages: structuredClone(WORKSPACE_LANGUAGES), aspects: outputOptions.aspects,
-    durations: outputOptions.durations.map((value) => ({ value, label: `${value}s`, credits: value === 6 ? 24 : value === 10 ? 40 : value === 15 ? 60 : 120, generationAvailable: available, reason: available ? undefined : "workspace_billing_configuration_required" })),
+    durations: outputOptions.durations.map((value) => ({ value, label: `${value}s`, credits: durationCredits.get(value) ?? null, generationAvailable: available, reason: available ? undefined : "workspace_billing_configuration_required" })),
     composition: { available: compositionAvailable, credits: imageApp?.creditCost ?? null, reason: compositionAvailable ? undefined : "workspace_composition_provider_unavailable" },
     subtitles: { available: subtitlesAvailable, reason: subtitlesAvailable ? undefined : process.env.AIVIDEOSUGC_ASR_PROVIDER_ID?.trim() ? "workspace_speech_timing_provider_unavailable" : "workspace_speech_timing_provider_required" },
     quickStarts: [
@@ -304,7 +357,16 @@ export async function submitShotGeneration(args: {
   if (!providerDuration) throw new WorkspaceError("workspace_shot_duration_unsupported", 422);
   const modelFamily = videoProviderModelFamilyForProvider(provider);
   const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, assetIds.length, 15, modelFamily);
-  const billedCredits = videoResolutionCreditCost(videoDurationCreditCost(theme.creditCost, billedDuration, modelFamily, theme.modelPricing), "720p");
+  // 计价统一入口：优先用模型通道价格，未定价时回落到主题价。
+  // 与 quoteWorkspaceAction 使用同一函数，避免报价与扣费不一致触发 409。
+  const billedCredits = workspaceShotCredits({
+    provider,
+    theme,
+    durationSeconds: billedDuration,
+    modelFamily,
+    resolution: "720p",
+    imageInputCount: assetIds.length
+  });
   if (args.expectedCredits === undefined || args.expectedCredits !== billedCredits) throw new WorkspaceError("workspace_price_quote_changed", 409);
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
@@ -416,8 +478,16 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
   if (!plannedDuration) return { available: false, reason: "workspace_shot_duration_unsupported" };
   const family = videoProviderModelFamilyForProvider(provider);
   const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, shot.refKinds.length, 15, family);
-  const credits = videoResolutionCreditCost(videoDurationCreditCost(theme.creditCost, duration, family, theme.modelPricing), "720p");
-  if (credits !== plannedDuration * 4) return { available: false, reason: "workspace_pricing_configuration_mismatch" };
+  // 与 submitShotGeneration 使用同一计价函数，确保报价与实际扣费一致。
+  const credits = workspaceShotCredits({
+    provider,
+    theme,
+    durationSeconds: duration,
+    modelFamily: family,
+    resolution: "720p",
+    imageInputCount: shot.refKinds.length
+  });
+  if (!provider.priceEnabled && credits !== plannedDuration * 4) return { available: false, reason: "workspace_pricing_configuration_mismatch" };
   return { available: true, credits, providerId: provider.id, priceBinding: crypto.createHash("sha256").update(JSON.stringify({ theme: theme.id, pricing: theme.modelPricing, duration, credits, providerId: provider.id, model: provider.modelType, scene: args.task.sceneId, input: args.task.input, shot })).digest("hex") };
 }
 export async function refreshShotGeneration(args: { siteId: string; customerId: string; generationJobId: string }) {

@@ -121,14 +121,52 @@ model PlatformAiProvider {
   videoDurations     Int[]    @default([6, 10, 15])
   videoAspectRatios  String[] @default(["9:16", "1:1", "16:9"])
   videoNativeSpeech  Boolean?
+  relayId            String?
+  upstreamModelId    String?
+  syncState          String   @default("manual")
+  priceEnabled       Boolean  @default(false)
+  priceCredits       Int      @default(0)
+  priceVideoDurations   Json?
+  priceVideoResolutions Json?
+  priceImageQualities   Json?
+  priceImageResolutions Json?
+  priceImageInput       Int   @default(0)
+  priceVideoInput       Int   @default(0)
+  priceVideoInputPerSecond Int @default(0)
+  priceAudioInput       Int   @default(0)
+  priceAudioInputPerSecond Int @default(0)
   updatedBy           String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+
+  relay PlatformAiRelay? @relation(fields: [relayId], references: [id], onDelete: SetNull)
 
   @@index([preferred, priority])
   @@index([enabled, preferred, priority])
   @@index([providerType, preferred, priority])
   @@index([providerType, enabled, preferred, priority])
+  @@index([relayId, upstreamModelId])
+  @@unique([relayId, upstreamModelId])
+}
+
+model PlatformAiRelay {
+  id                 String   @id
+  label              String
+  baseUrl            String
+  apiKey             String?
+  protocol           String   @default("newapi")
+  enabled            Boolean  @default(true)
+  lastSyncedAt       DateTime?
+  lastSyncStatus     String?
+  lastSyncError      String?
+  lastSyncModelCount Int      @default(0)
+  updatedBy          String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  providers PlatformAiProvider[]
+
+  @@index([enabled])
 }
 
 model PlatformAsyncJob {

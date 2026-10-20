@@ -1425,9 +1425,12 @@ async function getPublishedHomepageShowcasesForHeader(
   site: Site,
   routeMode: "host" | "path",
   state: PlatformState,
-  currentSite: Site
+  currentSite: Site,
+  requestSnapshot?: ReturnType<typeof createPublishedSiteSnapshot>
 ): Promise<PublishedHomepageShowcaseItem[]> {
-  const scopedSnapshot = createPublishedSiteSnapshot(state, currentSite);
+  const scopedSnapshot = currentSite.id === "site_aidreamcapes" && requestSnapshot?.site.id === currentSite.id
+    ? requestSnapshot
+    : createPublishedSiteSnapshot(state, currentSite);
   const scopedShowcases = isolateAidreamcapesEnglishCollection(currentSite.id, scopedSnapshot.publishedHomepageShowcases ?? []);
   const expectedSaveTheDateItems = currentSite.themeSettings.publishedJson.saveTheDateNavigation?.groups
     ?.flatMap((group) => group.items)
@@ -3207,7 +3210,7 @@ export async function renderStorefrontPage({
   // Shared navigation and the Save the Date directory both require the full
   // published catalogue, even when the current route loaded a scoped page
   // projection for its body.
-  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite);
+  const publishedHomepageShowcases = await getPublishedHomepageShowcasesForHeader(site, routeMode, state, currentSite, publishedSnapshot);
   const liveSite = providedState?.sites.find((item) => item.id === site.id);
   const collectionCategory = typeof query.category === "string" ? query.category : "";
   const collectionRootPath = publicCollectionRootPathForSite(currentSite);

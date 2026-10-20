@@ -246,6 +246,54 @@ function imageBase64List(body: ImageGenerationResponse): string[] {
   return values.length ? values : imageBase64(body) ? [imageBase64(body)!] : [];
 }
 
+/** 中转平台可能只返回图片 URL（不回传 base64），这里提取可下载的地址。 */
+function imageResultUrls(body: ImageGenerationResponse): string[] {
+  const values = [
+    ...(body.data ?? []).map((item) => item.url ?? item.original_url),
+    ...(body.output ?? []).map((item) => item.url ?? item.original_url)
+  ].filter((item): item is string => typeof item === "string" && item.length > 0);
+  return Array.from(new Set(values));
+}
+
+/** 通道级图片参数（分辨率/质量）映射到 OpenAI 兼容的 size / quality。 */
+function imageProviderRequestSize(provider: WorkerImageProvider) {
+  const ratio = (provider.imageAspectRatio ?? "auto").trim().toLowerCase();
+  if (ratio === "auto" || !ratio) return process.env.LOCAL_AI_WORKER_IMAGE_SIZE ?? "1024x1024";
+  const shortEdge = provider.imageResolution === "2K" ? 2048 : provider.imageResolution === "4K" ? 4096 : 1024;
+  const [ratioWidth, ratioHeight] = ratio.split(":").map((part) => Number(part));
+  if (!Number.isFinite(ratioWidth) || !Number.isFinite(ratioHeight) || ratioWidth <= 0 || ratioHeight <= 0) {
+    return `${shortEdge}x${shortEdge}`;
+  }
+  const ratioValue = ratioWidth / ratioHeight;
+  if (ratioValue >= 1) return `${Math.round(shortEdge * ratioValue)}x${shortEdge}`;
+  return `${shortEdge}x${Math.round(shortEdge / ratioValue)}`;
+}
+
+function imageProviderRequestQuality(provider: WorkerImageProvider) {
+  const quality = (provider.imageQuality ?? "low").trim().toLowerCase();
+  if (quality === "auto" || quality === "low" || quality === "medium" || quality === "high") return quality;
+  return "low";
+}
+
+async function downloadImageResultUrl(url: string, provider: WorkerImageProvider, apiKey: string | undefined, timeoutMs: number) {
+  const sameProviderOrigin = (() => {
+    try {
+      return new URL(url).origin === new URL(normalizeBaseUrl(provider.aiUrl)).origin;
+    } catch {
+      return false;
+    }
+  })();
+  const response = await fetchWithTimeout(url, {
+    method: "GET",
+    headers: sameProviderOrigin && apiKey ? { Authorization: `Bearer ${apiKey}` } : undefined,
+    cache: "no-store"
+  }, timeoutMs, "ai_provider_image_download_timeout");
+  if (!response.ok) throw new Error(`ai_provider_image_download_failed_${response.status}`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length) throw new Error("ai_provider_image_empty_payload");
+  return { bytes, mimeType: imageMimeTypeFromBytes(bytes, "image/png") };
+}
+
 function textValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
@@ -463,6 +511,18 @@ function isImageGenerationModel(model: string) {
   return !isVideoGenerationModel(normalized) && (normalized.startsWith("gpt-image") || normalized.includes("image"));
 }
 
+/**
+ * 图片通道判定以平台配置的能力类型为准，模型名只作为兜底。
+ * 中转平台同步进来的图片模型（如 nano-banana、flux-*）模型名里没有 "image"，
+ * 只靠模型名会把这些通道整批过滤掉。
+ */
+function isImageProviderModel(provider: { providerType?: string | null; modelType?: string | null }) {
+  const providerType = (provider.providerType ?? "").trim().toLowerCase();
+  if (providerType === "video") return false;
+  if (providerType === "image") return true;
+  return isImageGenerationModel(provider.modelType ?? "");
+}
+
 function requestedModelOverride(payload: WorkerPayload) {
   const fields = recordValue(payload.params.fields);
   return textValue(payload.params.modelOverride) || textValue(fields?.modelOverride);
@@ -503,7 +563,7 @@ function isVideoGenerationRequest(payload: WorkerPayload) {
 }
 
 function orderedImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageProviderModel(provider));
   const selection = recordValue(payload.providerSelection) ?? {};
   const selectedProviderId = textValue(selection?.providerId);
   const forcedSelectedProvider = selectedProviderId
@@ -558,7 +618,7 @@ function orderedVideoProviders(payload: WorkerPayload): WorkerImageProvider[] {
 }
 
 function orderedVideoSceneImageProviders(payload: WorkerPayload): WorkerImageProvider[] {
-  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && provider.providerType !== "video" && isImageGenerationModel(provider.modelType));
+  const imageProviders = payload.aiProviderFallback.providers.filter((provider) => provider.id && provider.enabled !== false && isImageProviderModel(provider));
   const editCapableProviders = imageProviders.filter((provider) => provider.supportsEditN);
   const candidateProviders = editCapableProviders.length ? editCapableProviders : imageProviders;
   const fields = recordValue(payload.params.fields);
@@ -2661,6 +2721,9 @@ function shouldPreferOpenAiJsonVideoRequest(params: {
   if (params.protocol !== "openai-videos") return false;
   const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
   if (explicitMode === "multipart" || explicitMode === "form") return false;
+  // 影灵（New API 兼容）只接受单数 image 字段，走普通 form/URL 提交流程；
+  // 若套用 smartpicklid 的 JSON 多图分支会把参考图整段丢掉。
+  if (isYinglingApiBaseUrl(params.baseUrl)) return false;
   return isGrokImagineVideoModel(params.model) || isSmartPickLidBaseUrl(params.baseUrl);
 }
 
@@ -3533,8 +3596,8 @@ async function generateWithProvider(params: {
               body: JSON.stringify({
                 model,
                 prompt: promptForSlot,
-                size: process.env.LOCAL_AI_WORKER_IMAGE_SIZE ?? "1024x1024",
-                quality: process.env.LOCAL_AI_WORKER_IMAGE_QUALITY ?? "low",
+                size: imageProviderRequestSize(selectedProvider),
+                quality: imageProviderRequestQuality(selectedProvider),
                 response_format: "b64_json"
               }),
               cache: "no-store",
@@ -3546,9 +3609,13 @@ async function generateWithProvider(params: {
             throw new Error(`ai_provider_${mode}_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
           }
           const [b64] = imageBase64List(body);
-          if (!b64) throw new Error("ai_provider_empty_image_payload");
-          const bytes = Buffer.from(b64, "base64");
-          return { bytes, mimeType: imageMimeTypeFromBytes(bytes, "image/png") };
+          if (b64) {
+            const bytes = Buffer.from(b64, "base64");
+            return { bytes, mimeType: imageMimeTypeFromBytes(bytes, "image/png") };
+          }
+          const [resultUrl] = imageResultUrls(body);
+          if (!resultUrl) throw new Error("ai_provider_empty_image_payload");
+          return downloadImageResultUrl(resultUrl, selectedProvider, providerApiKey, timeoutMs);
         })();
       throwIfLocalWorkerAborted(params.signal);
       const preparedOutput = prepareCompressedCustomerImage({

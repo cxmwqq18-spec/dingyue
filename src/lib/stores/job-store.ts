@@ -12,6 +12,7 @@ import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDura
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
 import { videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
+import { providerCreditsForRequest, selectBillingProvider } from "@/lib/ai-provider-billing";
 import { isGeminiVideoFrameMimeType, type VideoProviderFailure } from "@/lib/video-provider-policy";
 import { videoProviderCreateTimeoutMs, videoProviderWorkerTimeoutMs } from "@/lib/video-provider-timeouts";
 import type { WorkerOutputSlot } from "@/lib/worker";
@@ -760,6 +761,114 @@ function providerRecordIsRunnable(provider: {
     Boolean(provider.modelType?.trim());
 }
 
+/**
+ * 计算模型级价格；返回 null 表示本次请求没有命中开启 priceEnabled 的通道，
+ * 调用方应回落到主题价/应用价。
+ */
+async function resolveModelPricedCreditsForJob(
+  tx: Tx,
+  params: {
+    requestJson?: Record<string, unknown>;
+    siteAiApp: Prisma.SiteAiAppGetPayload<{ include: { aiApp: true } }>;
+    requestedAssetIds: string[];
+    videoTheme?: GenerationVideoTheme | null;
+    durationSeconds?: number | null;
+    resolution?: string | null;
+    outputCount: number;
+  }
+): Promise<number | null> {
+  const providerType = platformProviderTypeForAppType(params.siteAiApp.aiApp.appType);
+  const selection = jsonObject<Record<string, unknown>>(params.requestJson?.providerSelection as Prisma.JsonValue | undefined);
+  const fields = jsonObject<Record<string, unknown>>(params.requestJson?.fields as Prisma.JsonValue | undefined);
+  const modelOverride = typeof params.requestJson?.modelOverride === "string"
+    ? params.requestJson.modelOverride
+    : typeof fields?.modelOverride === "string"
+      ? fields.modelOverride
+      : "";
+  const selectionProviderId = typeof selection?.providerId === "string" ? selection.providerId : "";
+
+  const providers = await tx.platformAiProvider.findMany({
+    where: { enabled: true, providerType },
+    select: {
+      id: true,
+      label: true,
+      aiUrl: true,
+      apiKey: true,
+      modelType: true,
+      providerType: true,
+      enabled: true,
+      priority: true,
+      preferred: true,
+      videoModelFamily: true,
+      priceEnabled: true,
+      priceCredits: true,
+      priceVideoDurations: true,
+      priceVideoResolutions: true,
+      priceImageQualities: true,
+      priceImageResolutions: true,
+      priceImageInput: true,
+      priceVideoInputPerSecond: true,
+      priceAudioInput: true,
+      priceAudioInputPerSecond: true
+    },
+    orderBy: [{ priority: "asc" }, { preferred: "desc" }]
+  });
+  if (!providers.some((provider) => provider.priceEnabled)) return null;
+
+  const family = typeof params.requestJson?.videoModelFamily === "string"
+    ? params.requestJson.videoModelFamily
+    : typeof fields?.videoModelFamily === "string"
+      ? fields.videoModelFamily
+      : undefined;
+
+  const billingProvider = selectionProviderId
+    ? providers.find((provider) => provider.id === selectionProviderId) ?? null
+    : selectBillingProvider({ providers, providerType, modelOverride, modelFamily: family });
+  if (!billingProvider?.priceEnabled) return null;
+
+  // 输入模态计费：按客户实际提供的素材类型统计。
+  // 素材表不持久化时长，视频/音频的按秒计费只统计明确传入时长的输入，
+  // 未提供时长时按条数计费，避免凭空估算出错的价格。
+  let imageInputCount = 0;
+  let videoInputSeconds = 0;
+  let videoInputCount = 0;
+  let audioInputCount = 0;
+  let audioInputSeconds = 0;
+  const inputDurations = jsonObject<Record<string, unknown>>(params.requestJson?.inputDurations as Prisma.JsonValue | undefined);
+  if (params.requestedAssetIds.length) {
+    const assets = await tx.assetUpload.findMany({
+      where: { id: { in: params.requestedAssetIds }, siteId: params.siteAiApp.siteId, deletedAt: null },
+      select: { id: true, mimeType: true }
+    });
+    for (const asset of assets) {
+      const mimeType = (asset.mimeType ?? "").toLowerCase();
+      const durationSeconds = Number(inputDurations?.[asset.id]);
+      if (mimeType.startsWith("image/")) imageInputCount += 1;
+      else if (mimeType.startsWith("video/")) {
+        videoInputCount += 1;
+        if (Number.isFinite(durationSeconds) && durationSeconds > 0) videoInputSeconds += Math.trunc(durationSeconds);
+      } else if (mimeType.startsWith("audio/")) {
+        audioInputCount += 1;
+        if (Number.isFinite(durationSeconds) && durationSeconds > 0) audioInputSeconds += Math.trunc(durationSeconds);
+      }
+    }
+  }
+
+  const breakdown = providerCreditsForRequest(billingProvider, {
+    capabilityType: providerType,
+    durationSeconds: params.durationSeconds ?? null,
+    resolution: params.resolution ?? null,
+    quality: typeof fields?.quality === "string" ? fields.quality : null,
+    imageInputCount,
+    videoInputCount,
+    videoInputSeconds,
+    audioInputCount,
+    audioInputSeconds,
+    outputCount: 1
+  });
+  return breakdown ? breakdown.unitCredits : null;
+}
+
 async function normalizeProviderSelectionForAvailability(
   tx: Tx,
   params: { provider: AiProviderConfig; providerType: PlatformAiProviderType }
@@ -1287,15 +1396,30 @@ async function createGenerationJobInTx(tx: Tx, params: {
   const requestedVideoResolution = videoTheme
     ? normalizeVideoResolution(fields.resolution ?? params.requestJson?.resolution)
     : undefined;
-  const durationCreditCost = videoTheme
+  const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
+
+  // 模型级计价：只有显式开启 priceEnabled 的通道才接管价格，否则沿用主题价/应用价。
+  // 报价与扣费必须走同一函数（src/lib/ai-provider-billing.ts），否则工作台会 409。
+  const modelPricedCredits = await resolveModelPricedCreditsForJob(tx, {
+    requestJson: params.requestJson,
+    siteAiApp,
+    requestedAssetIds,
+    videoTheme,
+    durationSeconds: requestedVideoDurationSeconds,
+    resolution: requestedVideoResolution,
+    outputCount
+  });
+
+  const durationCreditCost = modelPricedCredits ?? (videoTheme
     ? (requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY) === AUTO_VIDEO_MODEL_FAMILY
       ? videoDurationCreditCostForModelFamilies(videoTheme.creditCost, requestedVideoDurationSeconds, videoCandidateModelFamilies, videoTheme.modelPricing)
       : videoDurationCreditCost(videoTheme.creditCost, requestedVideoDurationSeconds, requestedModelPreference, videoTheme.modelPricing)
-    : creativePack?.creditCost ?? siteAiApp.creditCost;
-  const unitCreditCost = videoTheme
-    ? videoResolutionCreditCost(durationCreditCost, requestedVideoResolution)
-    : durationCreditCost;
-  const outputCount = videoTheme ? 1 : isThemeModeRequest(params.requestJson) ? requestedOutputCount(params.requestJson) : 1;
+    : creativePack?.creditCost ?? siteAiApp.creditCost);
+  const unitCreditCost = modelPricedCredits !== null && modelPricedCredits !== undefined
+    ? modelPricedCredits
+    : videoTheme
+      ? videoResolutionCreditCost(durationCreditCost, requestedVideoResolution)
+      : durationCreditCost;
   const billableCredits = unitCreditCost * outputCount;
   const creditsReserved = billableCredits;
   const hasPaidCreditRequest = creditsReserved > 0;

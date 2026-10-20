@@ -1914,7 +1914,11 @@ async function loadStorefrontPublicRuntimeState(
     ];
     const missingNavigationPageSlugs = Array.from(new Set(requiredShellPageSlugs))
       .filter((slug) => !loadedPageSlugs.has(slug));
-    const shellPageWhere: Prisma.LivePageWhereInput | undefined = siteId === "site_aidreamcapes"
+    // An unscoped LivePage read already includes every shell/blog owner.
+    // Re-reading those rows only repeats the same current relational payload.
+    const shellPageWhere: Prisma.LivePageWhereInput | undefined = siteId === "site_aidreamcapes" && !pageWhere
+      ? undefined
+      : siteId === "site_aidreamcapes"
       ? {
           siteId,
           OR: [

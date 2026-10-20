@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { AidreamcapesProjectedImage as AidreamcapesResponsiveImage } from "./aidreamcapes-projected-image.client";
 
 export type AidreamcapesImageDirectoryCard = {
   slug: string;

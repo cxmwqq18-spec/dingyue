@@ -816,6 +816,35 @@ export interface PlatformAiProvider {
   videoDurations?: number[];
   videoAspectRatios?: string[];
   videoNativeSpeech?: boolean | null;
+  relayId?: string;
+  upstreamModelId?: string;
+  syncState?: "manual" | "synced" | "upstream_removed";
+  priceEnabled?: boolean;
+  priceCredits?: number;
+  priceVideoDurations?: Record<string, number>;
+  priceVideoResolutions?: Record<string, number>;
+  priceImageQualities?: Record<string, number>;
+  priceImageResolutions?: Record<string, number>;
+  priceImageInput?: number;
+  priceVideoInputPerSecond?: number;
+  priceAudioInput?: number;
+  priceAudioInputPerSecond?: number;
+  createdAt: string;
+  updatedAt: string;
+  updatedBy?: string;
+}
+
+export interface PlatformAiRelay {
+  id: string;
+  label: string;
+  baseUrl: string;
+  apiKey?: string;
+  protocol: "newapi";
+  enabled: boolean;
+  lastSyncedAt?: string;
+  lastSyncStatus?: "succeeded" | "failed";
+  lastSyncError?: string;
+  lastSyncModelCount: number;
   createdAt: string;
   updatedAt: string;
   updatedBy?: string;

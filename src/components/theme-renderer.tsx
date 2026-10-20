@@ -90,6 +90,7 @@ import { GUARDED_STOREFRONT_FOOTER_PATHS } from "@/lib/storefront-global-shell";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import { aidreamcapesZipFooterGroups } from "@/lib/aidreamcapes-navigation";
 import { storefrontResponsiveImageDimensions, storefrontResponsiveImageSet } from "@/lib/storefront-responsive-images";
+import { AidreamcapesImageProjection } from "@/components/storefront/aidreamcapes-responsive-image-projection";
 import {
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_MEDIA,
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_SUBTITLES,
@@ -217,7 +218,17 @@ type BlogArticleCard = {
   sortTime: number;
 };
 
-export function ThemeRenderer({
+export function ThemeRenderer(props: Parameters<typeof ThemeRendererBody>[0]) {
+  const hasBlogList = Object.values(props.page.sections).some(section => section.type === "blog_list");
+  return <AidreamcapesImageProjection value={{
+    page: props.page,
+    imageCards: props.aidreamcapesImageDirectoryCards,
+    videoCovers: props.aidreamcapesVideoThemeCovers,
+    articles: hasBlogList ? props.site.pages.filter(page => page.slug.startsWith("/blog/")) : undefined
+  }}><ThemeRendererBody {...props} /></AidreamcapesImageProjection>;
+}
+
+function ThemeRendererBody({
   site,
   page,
   settings,

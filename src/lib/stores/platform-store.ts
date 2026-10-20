@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { latestActivity, siteDemoSnapshot } from "@/lib/ops";
@@ -1725,6 +1725,27 @@ function normalizeProviderPriority(value: unknown, fallback: number): number {
   return Number.isFinite(numeric) ? Math.max(0, Math.trunc(numeric)) : Math.max(0, Math.trunc(fallback));
 }
 
+/** 积分只接受非负整数。 */
+function normalizePriceCredits(value: unknown): number {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return 0;
+  return Math.max(0, Math.trunc(numeric));
+}
+
+/** 维度价格矩阵归一化：键值保留，非法项丢弃。 */
+function normalizeProviderPriceMatrix(value: unknown): Prisma.InputJsonValue | typeof Prisma.JsonNull {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return Prisma.JsonNull;
+  const matrix: Record<string, number> = {};
+  for (const [key, raw] of Object.entries(value as Record<string, unknown>)) {
+    const parsed = typeof raw === "number" || typeof raw === "string" ? Number(raw) : Number.NaN;
+    if (!Number.isFinite(parsed) || parsed < 0) continue;
+    const trimmed = key.trim();
+    if (!trimmed) continue;
+    matrix[trimmed] = Math.trunc(parsed);
+  }
+  return Object.keys(matrix).length ? matrix : Prisma.JsonNull;
+}
+
 async function nextPlatformAiProviderPriorityForType(tx: Prisma.TransactionClient, providerType: PlatformAiProviderType): Promise<number> {
   const provider = await tx.platformAiProvider.findFirst({
     where: { providerType },
@@ -1756,6 +1777,16 @@ export async function upsertPlatformAiProviderRelational(params: {
   videoDurations?: number[];
   videoAspectRatios?: string[];
   videoNativeSpeech?: boolean | null;
+  priceEnabled?: boolean;
+  priceCredits?: number;
+  priceVideoDurations?: unknown;
+  priceVideoResolutions?: unknown;
+  priceImageQualities?: unknown;
+  priceImageResolutions?: unknown;
+  priceImageInput?: number;
+  priceVideoInputPerSecond?: number;
+  priceAudioInput?: number;
+  priceAudioInputPerSecond?: number;
   actor?: string;
 }): Promise<PlatformAiProvider> {
   const existing = params.id ? await prisma.platformAiProvider.findUnique({ where: { id: params.id } }) : null;
@@ -1772,11 +1803,15 @@ export async function upsertPlatformAiProviderRelational(params: {
     });
     const nextEnabled = params.makeCurrent ? true : params.enabled;
     const shouldPrefer = Boolean(params.makeCurrent || (!existing && providerCount === 0) || (!currentForType && (nextEnabled ?? existing?.enabled ?? true)));
-    const nextPriority = params.priority === undefined
-      ? existing
-        ? existingProviderType !== providerType ? defaultPriority : existing.priority
-        : defaultPriority
-      : normalizeProviderPriority(params.priority, existing?.priority ?? defaultPriority);
+    // 显式勾选“设为该类型优先供应商”时必须真正排到队首：排序键是 priority 优先于 preferred，
+    // 只置 preferred 会让同类型内 priority 更小的通道继续排在前面（历史缺陷）。
+    const nextPriority = params.makeCurrent
+      ? 0
+      : params.priority === undefined
+        ? existing
+          ? existingProviderType !== providerType ? defaultPriority : existing.priority
+          : defaultPriority
+        : normalizeProviderPriority(params.priority, existing?.priority ?? defaultPriority);
     const updated = existing
       ? await tx.platformAiProvider.update({
           where: { id: existing.id },
@@ -1801,6 +1836,16 @@ export async function upsertPlatformAiProviderRelational(params: {
             videoDurations: normalizeProviderVideoDurations(params.videoDurations ?? existing.videoDurations),
             videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios ?? existing.videoAspectRatios),
             videoNativeSpeech: params.videoNativeSpeech !== undefined ? params.videoNativeSpeech : existing.videoNativeSpeech,
+            priceEnabled: params.priceEnabled ?? existing.priceEnabled ?? false,
+            priceCredits: normalizePriceCredits(params.priceCredits ?? existing.priceCredits),
+            priceVideoDurations: normalizeProviderPriceMatrix(params.priceVideoDurations ?? existing.priceVideoDurations),
+            priceVideoResolutions: normalizeProviderPriceMatrix(params.priceVideoResolutions ?? existing.priceVideoResolutions),
+            priceImageQualities: normalizeProviderPriceMatrix(params.priceImageQualities ?? existing.priceImageQualities),
+            priceImageResolutions: normalizeProviderPriceMatrix(params.priceImageResolutions ?? existing.priceImageResolutions),
+            priceImageInput: normalizePriceCredits(params.priceImageInput ?? existing.priceImageInput),
+            priceVideoInputPerSecond: normalizePriceCredits(params.priceVideoInputPerSecond ?? existing.priceVideoInputPerSecond),
+            priceAudioInput: normalizePriceCredits(params.priceAudioInput ?? existing.priceAudioInput),
+            priceAudioInputPerSecond: normalizePriceCredits(params.priceAudioInputPerSecond ?? existing.priceAudioInputPerSecond),
             updatedBy: params.actor
           }
         })
@@ -1827,6 +1872,16 @@ export async function upsertPlatformAiProviderRelational(params: {
             videoDurations: normalizeProviderVideoDurations(params.videoDurations),
             videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios),
             videoNativeSpeech: params.videoNativeSpeech ?? null,
+            priceEnabled: params.priceEnabled ?? false,
+            priceCredits: normalizePriceCredits(params.priceCredits),
+            priceVideoDurations: normalizeProviderPriceMatrix(params.priceVideoDurations),
+            priceVideoResolutions: normalizeProviderPriceMatrix(params.priceVideoResolutions),
+            priceImageQualities: normalizeProviderPriceMatrix(params.priceImageQualities),
+            priceImageResolutions: normalizeProviderPriceMatrix(params.priceImageResolutions),
+            priceImageInput: normalizePriceCredits(params.priceImageInput),
+            priceVideoInputPerSecond: normalizePriceCredits(params.priceVideoInputPerSecond),
+            priceAudioInput: normalizePriceCredits(params.priceAudioInput),
+            priceAudioInputPerSecond: normalizePriceCredits(params.priceAudioInputPerSecond),
             updatedBy: params.actor
           }
         });

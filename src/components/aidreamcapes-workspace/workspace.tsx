@@ -7,11 +7,9 @@ import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, Task
 import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import styles from "./workspace.module.css";
-import { WorkspaceHelpDialog } from "./help-dialog";
-import { ProductUrlImport, type ConfirmedProductBrief, type ImportedProductAsset } from "./product-url-import";
+import type { ConfirmedProductBrief, ImportedProductAsset } from "./product-url-import";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { BatchDraftDialog, type BatchDraftItem } from "./batch-draft-dialog";
-import { MusicTrackPicker } from "./music-track-picker";
 import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
@@ -21,6 +19,9 @@ import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-w
 import { WorkspaceEntryBehavior } from "./entry-behavior";
 import { entryCookieName, readWorkspaceEntry } from "@/lib/aidreamcapes-workspace/entry-transfer";
 const EmbeddedInspirations = dynamic(() => import("./inspirations-embedded").then(module => module.EmbeddedInspirations), { loading: () => <p role="status">Loading inspirations…</p> });
+const WorkspaceHelpDialog = dynamic(() => import("./help-dialog").then(module => module.WorkspaceHelpDialog));
+const ProductUrlImport = dynamic(() => import("./product-url-import").then(module => module.ProductUrlImport), { loading: () => <p role="status">Loading product import…</p> });
+const MusicTrackPicker = dynamic(() => import("./music-track-picker").then(module => module.MusicTrackPicker), { loading: () => <p role="status">Loading music…</p> });
 
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
@@ -175,7 +176,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [actorDraft, setActorDraft] = useState({ name: "", gender: "female" as "female" | "male", ageRange: "25-30", imageUrl: "", languages: ["en"] as TaskInput["options"]["language"][] });
   const [quotes, setQuotes] = useState<Record<string, ActionQuote>>({});
   const [imageInput, setImageInput] = useState<{ prompt: string; assetUrls: string[]; aspect: TaskInput["options"]["aspect"]; toolId: WorkspaceImageTool }>({ prompt: initialPreset?.kind === "photo" ? initialPreset.prompt : initialView === "images" ? initialHandoff?.prompt ?? "" : "", assetUrls: [], aspect: initialPreset?.kind === "photo" ? initialPreset.aspect : initialView === "images" ? initialHandoff?.aspect ?? "1:1" : "1:1", toolId: initialPreset?.kind === "photo" ? initialPreset.imageTool : initialImageTool });
-  useImageDraft(siteId, customer?.id, imageInput, setImageInput);
+  useImageDraft(siteId, customer?.id, imageInput, setImageInput, initialPreset?.kind === "photo" || (initialView === "images" && Boolean(initialHandoff?.prompt)));
   const [imageQuote, setImageQuote] = useState<ActionQuote | null>(null);
   const [imageResults, setImageResults] = useState<ImageResult>({ jobs: [], assets: [] });
   const [balance, setBalance] = useState(customer?.balance);
