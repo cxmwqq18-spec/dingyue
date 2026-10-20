@@ -42,7 +42,12 @@ export function WorkspaceEntryBehavior() {
     };
     document.addEventListener("click", click, true);
     document.addEventListener("submit", submit);
-    return () => { document.removeEventListener("click", click, true); document.removeEventListener("submit", submit); };
+    document.documentElement.dataset.workspaceEntryReady = "true";
+    return () => {
+      delete document.documentElement.dataset.workspaceEntryReady;
+      document.removeEventListener("click", click, true);
+      document.removeEventListener("submit", submit);
+    };
   }, []);
   return null;
 }

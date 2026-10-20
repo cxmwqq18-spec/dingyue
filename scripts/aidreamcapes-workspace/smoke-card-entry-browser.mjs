@@ -24,10 +24,9 @@ async function newPage(context) {
 
 async function hydrated(page) {
   await page.waitForLoadState("domcontentloaded");
-  // WorkspaceEntryBehavior is attached in useEffect. Wait for hydration before
-  // clicking so the test measures the real browser path, not a pre-hydration
-  // direct navigation.
-  await page.waitForTimeout(1800);
+  // WorkspaceEntryBehavior is attached in useEffect. Wait for its marker so
+  // the test measures the real browser path, not a pre-hydration navigation.
+  await page.waitForFunction(() => document.documentElement.dataset.workspaceEntryReady === "true", undefined, { timeout: 60_000 });
 }
 
 try {
