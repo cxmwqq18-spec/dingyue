@@ -38,7 +38,10 @@ function useProductionConnection() {
   }
   const connected = parseDatabaseUrl(process.env.DATABASE_URL);
   if (["127.0.0.1", "localhost", "::1"].includes(connected.host)) {
-    assert.equal(connected.port, 15432, "Production tunnel access must use port 15432.");
+    // Port 15432 is the protected developer tunnel; 5432 is the production
+    // server's local PostgreSQL. Both require the explicit production target
+    // and confirmation checked below.
+    assert([15432, 5432].includes(connected.port), "Production database must use the protected tunnel or the server-local PostgreSQL port.");
   }
 }
 
