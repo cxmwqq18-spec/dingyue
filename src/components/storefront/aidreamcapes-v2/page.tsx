@@ -1,6 +1,7 @@
 import { TemplateDirectory, templateDetailResolvers } from "./template-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/lib/aidreamcapes-workspace/media-detail";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
@@ -714,6 +715,22 @@ function IndexPage({ data, r }: Props) {
 type V2ActorCard = { id: string; name: string; style: string; scene: string; age: string; gender: string; use: string; category: string; image: V2Image; href: string };
 type V2ActorDetail = V2ActorCard & { talent: string; line: string };
 const actorWorkspaceEntry = (actor: Pick<V2ActorCard, "id">) => ({ view: "actors" as const, query: { actor: actor.id }, expires: 0 });
+// Cards open the actor's own page at its flat address (/ai-actors/<name>); the
+// stored rows keep their gendered folder, so the link is a rendering projection.
+function actorCardHref(actor: Pick<V2ActorCard, "name">): string {
+  return actorDetailPath(actor.name) ?? `/${ACTOR_DETAIL_ROOT}`;
+}
+// Stored related links still name the gendered actor folder; show them flat.
+function actorFlatLinkHref(href: string): string {
+  const path = href.replace(/^https?:\/\/[^/]+/i, "").split(/[?#]/)[0] ?? "";
+  const segments = path.split("/").filter(Boolean).map((segment) => segment.toLowerCase());
+  const rootIndex = segments.indexOf(ACTOR_DETAIL_ROOT);
+  const flat = rootIndex >= 0 ? actorFlatRedirectTarget(segments.slice(rootIndex)) : undefined;
+  return flat ?? href;
+}
+function actorFlatLinks(links: { label: string; href: string }[]): { label: string; href: string }[] {
+  return links.map((link) => ({ ...link, href: actorFlatLinkHref(link.href) }));
+}
 const actorDirectoryCss = `
 .adc2 .actor-directory-shell{position:relative}
 .adc2 .actor-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:36px;align-items:start}
@@ -784,7 +801,7 @@ function ActorDirectoryPage({ data, r }: Props) {
                         <h3>{actor.name}</h3>
                         <p className="actor-style">{actor.style}</p>
                         <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-                        <WorkspaceEntryLink className="btn btn-grad" href={r.href("/app/create/ai-actors")} entry={actorWorkspaceEntry(actor)}>Use {actor.name} →</WorkspaceEntryLink>
+                        <a className="btn btn-grad" href={r.href(actorCardHref(actor))}>Meet {actor.name} →</a>
                       </div>
                     </article>)}
                   </div>
@@ -819,7 +836,7 @@ function ActorDirectoryPage({ data, r }: Props) {
       <div className="related">
         {relatedGroups.map((group) => <div key={group.title}>
           <h3>{group.title}</h3>
-          <ul>{group.links.map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
+          <ul>{actorFlatLinks(group.links).map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
         </div>)}
       </div>
     </Section> : null}
@@ -831,7 +848,7 @@ function ActorDirectoryPage({ data, r }: Props) {
 }
 
 function ActorPageFooter({ data, r, cta }: { data: V2Data; r: V2Resolvers; cta?: { title: string; lead: string; href: string } | undefined }) {
-  const links = list<{ label: string; href: string }>(data.relatedLinks);
+  const links = actorFlatLinks(list<{ label: string; href: string }>(data.relatedLinks));
   return <>
     {links.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={links} r={r} title={text(data.relatedH2) || "Related Pages"} /> : null}
     <Faq items={data.faq} title="Questions" r={r} />
@@ -879,7 +896,7 @@ function ActorCategoryPage({ data, r }: Props) {
               <h3>{actor.name}</h3>
               <p className="actor-style">{actor.style}</p>
               <p className="actor-tags">{actor.gender} · {actor.age} · {actor.use}</p>
-              <WorkspaceEntryLink className="btn btn-grad" href={r.href("/app/create/ai-actors")} entry={actorWorkspaceEntry(actor)}>Meet {actor.name} →</WorkspaceEntryLink>
+              <a className="btn btn-grad" href={r.href(actorCardHref(actor))}>Meet {actor.name} →</a>
             </div>
           </li>)}
         </ul>
@@ -910,7 +927,7 @@ function ActorDetailPage({ data, r }: Props) {
   if (!actor) return null;
   const facts = list<[string, string]>(data.facts);
   return <>
-    <Crumbs items={data.breadcrumbs} r={r} />
+    <Crumbs items={actorFlatLinks(data.breadcrumbs)} r={r} />
     <PageHero eyebrow={data.eyebrow} lead={data.lead} title={data.h1} />
     <section className="actor-detail-section" aria-label="AI actor profile">
       <div className="wrap">

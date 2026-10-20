@@ -1,7 +1,8 @@
 import styles from "./template-directory.module.css";
 import { Crumbs, Faq } from "./parts";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { pickerPresetHref, pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[] };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
@@ -26,10 +27,10 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
       </form>
       <p className="meta-line">{templates.length} templates</p>
       <div className="tgrid">{templates.map((template, index) => {
-        const href = pickerPresetHref(template.card, template.path);
+        const href = mediaCardHref(template.card.kind, template.card.publicSlug, template.path);
         return <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
-          <WorkspaceEntryLink className="ti" href={r.href(href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
-          <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><WorkspaceEntryLink href={r.href(href)}>{template.name}</WorkspaceEntryLink></h2><p>{template.description}</p><WorkspaceEntryLink className="use" href={r.href(href)}>View template →</WorkspaceEntryLink></div>
+          <a className="ti" href={r.href(href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></a>
+          <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><a href={r.href(href)}>{template.name}</a></h2><p>{template.description}</p><a className="use" href={r.href(href)}>View template →</a></div>
         </article>;
       })}</div>
       {!templates.length ? <p>No templates are available in this category yet.</p> : null}

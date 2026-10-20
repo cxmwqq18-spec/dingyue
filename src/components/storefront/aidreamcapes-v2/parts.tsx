@@ -1,5 +1,5 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
 import "./thematic-links.css";
@@ -544,38 +544,25 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
 
 export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   if (card.cardType === "case") return <CaseCard card={card} r={r} filterIndexes={filterIndexes} />;
+  const href = mediaCardHref(card.kind, card.publicSlug, card.href);
   return (
     <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         <Img image={card.image} r={r} />
       </div>
       <div className="tb">
-        <h3><WorkspaceEntryLink className="card-title" href={r.href(card.href)}>{card.name}</WorkspaceEntryLink><SoonLabel soon={card.soon} /></h3>
+        <h3><a className="card-title" href={r.href(href)}>{card.name}</a><SoonLabel soon={card.soon} /></h3>
         {card.line ? <p>{card.line}</p> : null}
-        <WorkspaceEntryLink className="use" href={r.href(card.href)}>View template →</WorkspaceEntryLink>
+        <a className="use" href={r.href(href)}>View template →</a>
       </div>
     </article>
   );
 }
 
-/** Carry the selected case identity outside the URL; the server resolves it from the source row. */
-function workspaceCardEntry(card: V2Card, r: V2Resolvers) {
-  const target = workspaceEntryTarget(r.href(card.href));
-  if (!target.transfer) return undefined;
-  return {
-    ...target.transfer,
-    query: {
-      ...target.transfer.query,
-      ...(card.prompt ? { prompt: card.prompt.slice(0, 2048) } : {}),
-      ...(card.aspect ? { aspect: card.aspect } : {})
-    }
-  };
-}
-
 /** A page-specific example. Case cards keep the result, format and next action together. */
 export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   const video = card.video;
-  const entry = workspaceCardEntry(card, r);
+  const href = mediaCardHref(card.kind, card.publicSlug, card.href);
   return (
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
@@ -585,7 +572,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
       </div>
       <div className="tb">
         <h3>{card.name}<SoonLabel soon={card.soon} /></h3>
-        <WorkspaceEntryLink className="use" href={r.href(card.href)} entry={entry}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</WorkspaceEntryLink>
+        <a className="use" href={r.href(href)}>Make a {card.kind === "video" || card.videoExample ? "video" : "photo"} like this →</a>
       </div>
     </article>
   );
@@ -603,7 +590,8 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
   return <CaseCard card={{
     key: item.key,
     name: item.title,
-    kind: item.kind === "clip" ? "video" : "photo",
+    // A clip and a scene are moving pictures; only a still example is a photo.
+    kind: item.kind === "photo" ? "photo" : "video",
     videoExample: item.kind === "clip" || item.kind === "scene",
     href: item.href,
     image: item.image,
@@ -611,6 +599,7 @@ function ExampleCard({ item, r }: { item: V2Example; r: V2Resolvers }) {
     industries: [],
     platforms: [],
     mediaRef: item.mediaRef,
+    ...(item.publicSlug ? { publicSlug: item.publicSlug } : {}),
     ...(item.prompt ? { prompt: item.prompt } : {}),
     ...(item.aspect ? { aspect: item.aspect } : {}),
     ...(item.video ? { video: item.video } : {})

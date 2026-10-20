@@ -1,7 +1,7 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { getAidreamcapesInspirationCardsFromRows, inspirationCategoryLookup } from "@/lib/aidreamcapes-inspirations";
-import { inspirationCreateHref, inspirationCreateTarget, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
+import { inspirationExampleLinks, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
 // Project picker cards in PostgreSQL. Only one bounded batch crosses the DB
 // connection; page bodies and the remainder of the gallery are never loaded.
@@ -54,7 +54,7 @@ export async function getWorkspaceInspirationPage(params: { offset?: number; kin
   }))).map(card => ({
     id: card.id, label: card.label, imageSrc: card.imageSrc, imageAlt: card.imageAlt,
     pageTitle: card.pageTitle, kind: card.kind, description: card.description, category: card.category,
-    createHref: inspirationCreateHref(card, params.basePath), entry: inspirationCreateTarget(card, params.basePath).transfer
+    ...inspirationExampleLinks(card, params.basePath)
   }));
   return { cards, counts: result.counts, categories: ['All', ...result.categories], total: result.total,
     nextOffset: offset + result.rows.length < result.total ? offset + result.rows.length : null };

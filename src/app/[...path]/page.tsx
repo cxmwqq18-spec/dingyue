@@ -36,9 +36,15 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
-import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
-import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import {
+  aidreamcapesMediaDetailMetadata,
+  renderAidreamcapesCreatePage,
+  renderAidreamcapesInspirationsPage,
+  renderAidreamcapesMediaDetailPage,
+  renderAidreamcapesSceneCreatePage
+} from "@/lib/aidreamcapes-guest-workspace";
+import { actorFlatRedirectTarget, isActorDetailSegment } from "@/lib/aidreamcapes-workspace/media-detail";
+import { resolveActorDetail, resolveMediaDetail, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 
@@ -465,10 +471,39 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
     && (path[0] === "ai-image-generation" || path[0] === "ai-video-generation")
     && PUBLIC_SCENE_SLUG_RE.test(path[1] ?? "")
   ) {
-    const sceneKind = path[0] === "ai-image-generation" ? "photo" : "video";
-    const scenePreset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, sceneKind, path[1] as string);
-    if (scenePreset) {
-      return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+    // Public media cards own a detail page. Slugs without a current card are
+    // real published content pages or collection leaves and keep their own
+    // metadata below.
+    const detailKind = path[0] === "ai-image-generation" ? "photo" : "video";
+    const detailMetadata = await aidreamcapesMediaDetailMetadata({ kind: detailKind, slug: path[1] as string });
+    if (detailMetadata) return detailMetadata;
+  }
+  if (hostSiteSlug === "aidreamcapes" && firstSegment === "ai-actors") {
+    // Legacy gendered actor addresses are permanent redirects to the flat page.
+    if (path.length === 3 && (path[1] === "men" || path[1] === "women")) return {};
+    if (path.length === 2 && isActorDetailSegment(path[1])) {
+      const actor = await resolveActorDetail(path[1]);
+      if (actor) {
+        const flatPath = `/ai-actors/${actor.slug}`;
+        const actorState = await getHostPublicRuntimeStateWithFallback(hostCandidates, actor.detailPageSlug);
+        const actorSite = actorState
+          ? getSiteByHostCandidatesFromState(actorState, hostCandidates) ?? actorState.sites[0]
+          : undefined;
+        const actorPage = actorSite ? findPage(actorSite, actor.detailPageSlug) : undefined;
+        if (actorState && actorSite && actorPage) {
+          return {
+            ...(await metadataForPublishedStorefrontPage({
+              site: actorSite,
+              page: actorPage,
+              path: flatPath,
+              products: actorState.products,
+              creativePacks: actorState.creativePacks,
+              snapshot: createPublishedSiteSnapshot(actorState, actorSite, { source: "platform-state" })
+            })),
+            robots: { index: true, follow: true }
+          };
+        }
+      }
     }
   }
   const imageThemePath = aidreamcapesImageThemePathForRequest(hostSiteSlug, requestedPath);
@@ -585,6 +620,29 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       creativePacks: resolved.state.creativePacks
     });
   }
+  if (isCollectionRequest && path.length === 2 && path[0] === "ai-image-generation" && isAidreamcapesSite(site)) {
+    // Photo template pages share the collection prefix. Read the exact page
+    // projection so an existing published page wins over the collection leaf.
+    const photoPageSlug = `/${path.join("/")}`;
+    const photoPageState = await getHostPublicRuntimeStateWithFallback(hostCandidates, photoPageSlug);
+    const photoPageSite = photoPageState
+      ? getSiteByHostCandidatesFromState(photoPageState, hostCandidates) ?? photoPageState.sites[0]
+      : undefined;
+    const photoPage = photoPageState && photoPageSite ? findPage(photoPageSite, photoPageSlug) : undefined;
+    if (photoPageState && photoPageSite && photoPage) {
+      const photoPageSnapshot = createPublishedSiteSnapshot(photoPageState, photoPageSite, { source: "platform-state" });
+      if (resolvePublishedRouteDisposition(photoPageSnapshot, photoPageSlug).kind === "render") {
+        return metadataForPublishedStorefrontPage({
+          site: photoPageSite,
+          page: photoPage,
+          path: photoPageSlug,
+          products: photoPageState.products,
+          creativePacks: photoPageState.creativePacks,
+          snapshot: photoPageSnapshot
+        });
+      }
+    }
+  }
   if (isCollectionRequest) {
     const collectionRoute = parsePublicCollectionRouteForSite(site, path);
     if (!collectionRoute) return {};
@@ -669,13 +727,30 @@ export default async function HostStorefrontCatchAllPage({
         permanentRedirect(`/${firstSegment === "images" ? "ai-image-generation" : "ai-video-generation"}/${path[1]}`);
       }
     }
-    // Scene recreate pages share the SEO directory prefix. Resolve a scene
-    // first; unmatched slugs fall through to the published directory page.
+    // A public media card owns its detail route. Unmatched slugs fall through
+    // to the published content pages and collection routes below.
     if ((firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation") && PUBLIC_SCENE_SLUG_RE.test(path[1])) {
-      const sceneKind = firstSegment === "ai-image-generation" ? "photo" : "video";
-      const scenePreset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, sceneKind, path[1]);
-      if (scenePreset) {
-        return renderAidreamcapesResolvedScenePage({ kind: sceneKind, preset: scenePreset, routeSlug: "aidreamcapes" });
+      const detailKind = firstSegment === "ai-image-generation" ? "photo" : "video";
+      const detail = await resolveMediaDetail(detailKind, path[1]);
+      if (detail) {
+        return renderAidreamcapesMediaDetailPage({ kind: detailKind, slug: path[1], basePath: "", detail });
+      }
+    }
+  }
+  // Actor detail pages are flat. Legacy gendered addresses redirect to the
+  // actor's own name; the stored row renders at that flat public path.
+  let actorRenderSlug: string | undefined;
+  let actorPublicPath: string | undefined;
+  if (hostSiteSlug === "aidreamcapes" && firstSegment === "ai-actors") {
+    if (path.length === 3) {
+      const target = actorFlatRedirectTarget(path);
+      if (target) permanentRedirect(target);
+    }
+    if (path.length === 2 && isActorDetailSegment(path[1])) {
+      const actor = await resolveActorDetail(path[1]);
+      if (actor) {
+        actorRenderSlug = actor.detailPageSlug;
+        actorPublicPath = `/ai-actors/${actor.slug}`;
       }
     }
   }
@@ -691,6 +766,10 @@ export default async function HostStorefrontCatchAllPage({
   if (hostSiteSlug === "aidreamcapes") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) notFound();
+    // Retired paths in the v2 redirect map keep working while a live page row
+    // always wins the address.
+    const legacyPathTarget = await aidreamcapesMissingPageRedirect(slug);
+    if (legacyPathTarget) permanentRedirect(legacyPathTarget);
   }
   const legacyVideoTarget = mydreamshootsLegacyVideoPathTarget(slug);
   const isMydreamshootsHost = isMydreamshootsPublicSlug(knownWorkspaceSiteSlugForHost([host ?? null]));
@@ -818,13 +897,40 @@ export default async function HostStorefrontCatchAllPage({
     : isVideoGenerationRequest
     ? path[1] ? `/ai-video-generation/${path[1]}` : "/ai-video-generation"
     : firstSegment === "tools" && path[1] ? `/tools/${path[1]}` : legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(`/${path.join("/")}`);
-  const sourcePageSlug = isMydreamshootsHost && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
+  const sourcePageSlug = actorRenderSlug ?? (isMydreamshootsHost && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
     : isAidreamshootsPublicSlug(hostSiteSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
-    : publicPageSlug;
+    : publicPageSlug);
   const collectionLookupSlug = collectionRouteLookupSlug(path);
   const videoLookupSlug = isVideoGenerationRequest ? path[1] || "" : "";
+  // Photo template pages share the /ai-image-generation prefix with the
+  // collection directory. Resolve the exact published page from its own
+  // projection before the collection route can shadow it.
+  if (hostSiteSlug === "aidreamcapes" && path.length === 2 && firstSegment === "ai-image-generation" && PUBLIC_SCENE_SLUG_RE.test(path[1])) {
+    const photoPageSlug = `/${path.join("/")}`;
+    const photoPageState = await getHostPublicRuntimeStateWithFallback(hostCandidates, photoPageSlug);
+    const photoPageSite = photoPageState
+      ? getSiteByHostCandidatesFromState(photoPageState, hostCandidates) ?? photoPageState.sites[0]
+      : undefined;
+    const photoPage = photoPageState && photoPageSite && isAidreamcapesSite(photoPageSite)
+      ? findPage(photoPageSite, photoPageSlug)
+      : undefined;
+    if (photoPageState && photoPageSite && photoPage) {
+      const photoPageSnapshot = createPublishedSiteSnapshot(photoPageState, photoPageSite, { source: "platform-state" });
+      if (resolvePublishedRouteDisposition(photoPageSnapshot, photoPageSlug).kind === "render") {
+        return renderStorefrontPage({
+          site: photoPageSite,
+          slug: photoPageSlug,
+          publicPath: photoPageSlug,
+          query: searchParams ? await searchParams : {},
+          routeMode: "host",
+          state: photoPageState,
+          deferCustomerRuntime: true
+        });
+      }
+    }
+  }
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
     : isVideoGenerationRequest && videoLookupSlug
@@ -856,6 +962,19 @@ export default async function HostStorefrontCatchAllPage({
     permanentRedirect(publicSiteUrl(site, "/ai-image-generation/urbano"));
   }
   const snapshot = createPublishedSiteSnapshot(state, site, { source: "platform-state" });
+  // The flat actor address has no published route row of its own; it renders
+  // the stored actor page and must resolve before the published checks.
+  if (actorRenderSlug && actorPublicPath) {
+    return renderStorefrontPage({
+      site,
+      slug: actorRenderSlug,
+      publicPath: actorPublicPath,
+      query: searchParams ? await searchParams : {},
+      routeMode: "host",
+      state,
+      deferCustomerRuntime: true
+    });
+  }
   const publishedDisposition = resolvePublishedRouteDisposition(snapshot, slug);
   if (publishedDisposition.kind === "redirect" && publishedDisposition.targetPath) {
     permanentRedirect(publishedDisposition.targetPath);

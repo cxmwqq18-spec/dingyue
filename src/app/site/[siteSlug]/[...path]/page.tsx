@@ -27,20 +27,21 @@ import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editoria
 import { isMydreamshootsSaveDateTopicGroupPathRequest, isMydreamshootsTopicGroupActive, isMydreamshootsVideoTopicGroupPathRequest, mydreamshootsTopicGroupForPath } from "@/lib/mydreamshoots-topic-groups";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import { renderAidreamcapesCreatePage, renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
-import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import {
+  aidreamcapesMediaDetailMetadata,
+  renderAidreamcapesCreatePage,
+  renderAidreamcapesMediaDetailPage
+} from "@/lib/aidreamcapes-guest-workspace";
+import { actorFlatRedirectTarget, isActorDetailSegment, parseMediaDetailSegments } from "@/lib/aidreamcapes-workspace/media-detail";
+import { resolveActorDetail, resolveMediaDetail, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
-import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import type { PlatformState, ThemePage } from "@/lib/types";
 
-async function resolveAidreamcapesPathModeScene(publicSite: string, path: string[]) {
-  if ((publicSite !== "aidreamcapes" && publicSite !== "aivideosugc") || path.length !== 2) return undefined;
-  if (path[0] !== "ai-video-generation" && path[0] !== "ai-image-generation") return undefined;
-  if (!PUBLIC_SCENE_SLUG_RE.test(path[1])) return undefined;
-  const kind: "photo" | "video" = path[0] === "ai-image-generation" ? "photo" : "video";
-  const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, kind, path[1]);
-  return preset ? { kind, preset, routeSlug: (publicSite === "aivideosugc" ? "aivideosugc" : "aidreamcapes") as "aivideosugc" | "aidreamcapes" } : undefined;
+// AIVideosUGC is served as the aidreamcapes storefront; both names address the
+// same site in path mode.
+function isAidreamcapesPathModeSite(publicSite: string): boolean {
+  return publicSite === "aidreamcapes" || publicSite === "aivideosugc";
 }
 
 export const dynamic = "force-dynamic";
@@ -360,9 +361,39 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const metadataQuery = searchParams ? await searchParams : {};
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
-  const scene = await resolveAidreamcapesPathModeScene(publicSiteSlug(siteSlug), path);
-  if (scene) {
-    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+  const pathModePublicSlug = publicSiteSlug(siteSlug);
+  const mediaDetail = isAidreamcapesPathModeSite(pathModePublicSlug) ? parseMediaDetailSegments(path) : undefined;
+  if (mediaDetail) {
+    // A current public card owns its detail page; the workspace is only
+    // reachable from that page. Non-card slugs keep their published metadata.
+    const mediaDetailMetadata = await aidreamcapesMediaDetailMetadata({ kind: mediaDetail.kind, slug: mediaDetail.slug });
+    if (mediaDetailMetadata) return mediaDetailMetadata;
+  }
+  if (isAidreamcapesPathModeSite(pathModePublicSlug) && path[0] === "ai-actors") {
+    // Legacy gendered actor addresses are permanent redirects to the flat page.
+    if (path.length === 3 && (path[1] === "men" || path[1] === "women")) return {};
+    if (path.length === 2 && isActorDetailSegment(path[1])) {
+      const actor = await resolveActorDetail(path[1]);
+      if (actor) {
+        const flatPath = `/ai-actors/${actor.slug}`;
+        const actorState = await readPathModePublicRuntimeState(pathModePublicSlug, actor.detailPageSlug);
+        const actorSite = actorState?.sites[0];
+        const actorPage = actorSite ? findPage(actorSite, actor.detailPageSlug) : undefined;
+        if (actorState && actorSite && actorPage) {
+          return {
+            ...(await metadataForPublishedStorefrontPage({
+              site: actorSite,
+              page: actorPage,
+              path: flatPath,
+              products: actorState.products,
+              creativePacks: actorState.creativePacks,
+              snapshot: createPublishedSiteSnapshot(actorState, actorSite, { source: "platform-state" })
+            })),
+            robots: { index: true, follow: true }
+          };
+        }
+      }
+    }
   }
   if ((isMydreamshootsVideoTopicGroupPathRequest(publicSiteSlug(siteSlug), path) || isMydreamshootsSaveDateTopicGroupPathRequest(publicSiteSlug(siteSlug), path)) && !mydreamshootsTopicGroupForPath(requestedSlug)) {
     return { robots: { index: false, follow: false } };
@@ -520,6 +551,27 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     return page ? metadataForPublishedStorefrontPage({ site, page, products: state.products, creativePacks: state.creativePacks, snapshot }) : {};
   }
   const collectionRoute = isCollectionRequest ? parsePublicCollectionRouteForSite(site, collectionPath) : undefined;
+  if (isCollectionRequest && path.length === 2 && path[0] === "ai-image-generation" && isAidreamcapesPathModeSite(pathModePublicSlug)) {
+    // Photo template pages share the collection prefix. Read the exact page
+    // projection so an existing published page wins over the collection leaf.
+    const photoPageSlug = `/${path.join("/")}`;
+    const photoPageState = await readPathModePublicRuntimeState(pathModePublicSlug, photoPageSlug);
+    const photoPageSite = photoPageState?.sites[0];
+    const photoPage = photoPageSite ? findPage(photoPageSite, photoPageSlug) : undefined;
+    if (photoPageState && photoPageSite && photoPage) {
+      const photoPageSnapshot = createPublishedSiteSnapshot(photoPageState, photoPageSite, { source: "platform-state" });
+      if (resolvePublishedRouteDisposition(photoPageSnapshot, photoPageSlug).kind === "render") {
+        return metadataForPublishedStorefrontPage({
+          site: photoPageSite,
+          page: photoPage,
+          path: photoPageSlug,
+          products: photoPageState.products,
+          creativePacks: photoPageState.creativePacks,
+          snapshot: photoPageSnapshot
+        });
+      }
+    }
+  }
   if (isCollectionRequest) {
     if (!collectionRoute) return {};
     if (collectionRoute.collectionSlug && !isSpanishStorefrontSite(site)) {
@@ -590,9 +642,36 @@ export default async function SiteCatchAllPage({
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
-  const pathModeScene = await resolveAidreamcapesPathModeScene(publicSlug, path);
-  if (pathModeScene) {
-    return renderAidreamcapesResolvedScenePage({ kind: pathModeScene.kind, preset: pathModeScene.preset, routeSlug: pathModeScene.routeSlug });
+  const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
+  if (mediaDetail) {
+    // A current public card owns its detail page. Unmatched slugs fall through
+    // to the published content pages and collection routes below.
+    const detail = await resolveMediaDetail(mediaDetail.kind, mediaDetail.slug);
+    if (detail) {
+      return renderAidreamcapesMediaDetailPage({
+        kind: mediaDetail.kind,
+        slug: mediaDetail.slug,
+        basePath: routePath("/"),
+        detail
+      });
+    }
+  }
+  // Actor detail pages are flat. Legacy gendered addresses redirect to the
+  // actor's own name; the stored row renders at that flat public path.
+  let actorRenderSlug: string | undefined;
+  let actorPublicPath: string | undefined;
+  if (isAidreamcapesPathModeSite(publicSlug) && path[0] === "ai-actors") {
+    if (path.length === 3) {
+      const target = actorFlatRedirectTarget(path);
+      if (target) permanentRedirect(routePath(target));
+    }
+    if (path.length === 2 && isActorDetailSegment(path[1])) {
+      const actor = await resolveActorDetail(path[1]);
+      if (actor) {
+        actorRenderSlug = actor.detailPageSlug;
+        actorPublicPath = `/ai-actors/${actor.slug}`;
+      }
+    }
   }
   if ((isMydreamshootsVideoTopicGroupPathRequest(publicSlug, path) || isMydreamshootsSaveDateTopicGroupPathRequest(publicSlug, path)) && !mydreamshootsTopicGroupForPath(slug)) notFound();
   const imageThemePath = aidreamcapesImageThemePathForRequest(publicSlug, slug);
@@ -622,6 +701,12 @@ export default async function SiteCatchAllPage({
   if (publicSlug === "aidreamcapes" || publicSlug === "aidreamcapes-eu") {
     const legacySaveTheDateTarget = aidreamcapesLegacyVideoSaveTheDatePath(slug);
     if (legacySaveTheDateTarget) permanentRedirect(routePath(legacySaveTheDateTarget));
+  }
+  if (publicSlug === "aidreamcapes") {
+    // Retired paths in the v2 redirect map keep working; a live page row always
+    // wins the address.
+    const legacyPathTarget = await aidreamcapesMissingPageRedirect(slug);
+    if (legacyPathTarget) permanentRedirect(routePath(legacyPathTarget));
   }
   const isSpanishAIdreamshoots = isSpanishAIdreamshootsSlug(publicSlug);
   if ((isPrimaryMydreamshootsSlug(publicSlug) || isSpanishAIdreamshoots) && ["/shipping", "/shipping-policy", "/delivery-policy", "/policies/shipping", "/policies/delivery", "/policies/delivery-policy"].includes(slug)) {
@@ -718,11 +803,36 @@ export default async function SiteCatchAllPage({
   const pageSlug = isCollectionRequest ? collectionRootPageSlug : isVideoGenerationRequest ? "/ai-video-generation" : mydreamLegacyTarget ?? (legacyPathTarget ? publicContentPageSlug(legacyPathTarget) : publicContentPageSlug(canonicalSaveTheDatePath(slug)));
   const legacySaveDateSlug = isPrimaryMydreamshootsSlug(publicSlug) ? legacySaveTheDatePath(pageSlug) : undefined;
   const isAidreamcapesPromptGuide = publicSlug === "aidreamcapes" && slug === "/prompt-guide";
-  const sourcePageSlug = isAidreamcapesPromptGuide
+  const sourcePageSlug = actorRenderSlug ?? (isAidreamcapesPromptGuide
     ? "/workflow"
     : isSpanishWeddingInvitationCompatibilitySite(publicSlug) && slug === MYDREAMSHOOTS_WEDDING_INVITATION_PATH
     ? MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH
-    : pageSlug;
+    : pageSlug);
+  // Photo template pages share the /ai-image-generation prefix with the
+  // collection directory. Resolve the exact published page from its own
+  // projection before the collection route can shadow it.
+  if (isAidreamcapesPathModeSite(publicSlug) && path.length === 2 && path[0] === "ai-image-generation" && PUBLIC_SCENE_SLUG_RE.test(path[1])) {
+    const photoPageSlug = `/${path.join("/")}`;
+    const photoPageState = routeMode === "host"
+      ? await readRoutePublicRuntimeState(headerStore, routeMode, publicSlug, photoPageSlug)
+      : await readPathModePublicRuntimeState(publicSlug, photoPageSlug);
+    const photoPageSite = photoPageState?.sites[0];
+    const photoPage = photoPageSite ? findPage(photoPageSite, photoPageSlug) : undefined;
+    if (photoPageState && photoPageSite && photoPage) {
+      const photoPageSnapshot = createPublishedSiteSnapshot(photoPageState, photoPageSite, { source: "platform-state" });
+      if (resolvePublishedRouteDisposition(photoPageSnapshot, photoPageSlug).kind === "render") {
+        return renderStorefrontPage({
+          site: photoPageSite,
+          slug: photoPageSlug,
+          publicPath: photoPageSlug,
+          query,
+          routeMode,
+          state: photoPageState,
+          deferCustomerRuntime: true
+        });
+      }
+    }
+  }
   const loadedState = isVideoGenerationRequest
     ? await readVideoGenerationRouteState(publicSlug, videoLookupSlug)
     : isCollectionRequest && collectionLookupSlug
@@ -740,6 +850,19 @@ export default async function SiteCatchAllPage({
     notFound();
   }
   const snapshot = createPublishedSiteSnapshot(state, publicSite, { source: "platform-state" });
+  // The flat actor address has no published route row of its own; it renders
+  // the stored actor page and must resolve before the published checks.
+  if (actorRenderSlug && actorPublicPath) {
+    return renderStorefrontPage({
+      site: publicSite,
+      slug: actorRenderSlug,
+      publicPath: actorPublicPath,
+      query,
+      routeMode,
+      state,
+      deferCustomerRuntime: true
+    });
+  }
   // The Spanish storefront has a published standard-content page at the
   // canonical Save the Date URL. Only the primary myDreamshoots site needs
   // the legacy ai_tool compatibility projection.

@@ -15,16 +15,15 @@ import { AIDREAMSHOOTS_ENGAGEMENT_FRENCH_COPY, isAidreamshootsEngagementFrenchPa
 import { AIDREAMCAPES_IMAGE_THEME_ROOT_PATH, isAidreamcapesImageThemePath } from "@/lib/aidreamcapes-image-theme-routes";
 import { canonicalAidreamcapesEuPublicPath, isAidreamcapesEuRetiredPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { isMydreamshootsTopicGroupActive, mydreamshootsImageTopicGroupForSlug } from "@/lib/mydreamshoots-topic-groups";
-import { renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
-import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
-import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import { renderAidreamcapesMediaDetailPage, aidreamcapesMediaDetailMetadata } from "@/lib/aidreamcapes-guest-workspace";
+import { resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { publicSiteSlug } from "@/lib/domain-routing";
 
 async function resolveAidreamcapesImageScene(siteSlug: string, themeSlug: string) {
-  if (siteSlug !== "aidreamcapes" && siteSlug !== "aivideosugc") return undefined;
-  if (!PUBLIC_SCENE_SLUG_RE.test(themeSlug)) return undefined;
-  const preset = await resolveWorkspacePublicScenePreset(AIVIDEOSUGC_SITE_ID, "photo", themeSlug);
-  return preset ? { preset, routeSlug: (siteSlug === "aivideosugc" ? "aivideosugc" : "aidreamcapes") as "aivideosugc" | "aidreamcapes" } : undefined;
+  if (publicSiteSlug(siteSlug) !== "aidreamcapes") return undefined;
+  const detail = await resolveMediaDetail("photo", themeSlug);
+  return detail ? { detail } : undefined;
 }
 import { isPrimaryMydreamshootsSlug } from "@/lib/storefront-context/capabilities";
 import type { PlatformState, Site } from "@/lib/types";
@@ -46,8 +45,9 @@ async function loadMydreamshootsImageTopicGroup(siteSlug: string, group: NonNull
 
 async function loadImageThemeState(siteSlug: string, themeSlug: string): Promise<{ state: PlatformState; site: Site } | undefined> {
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
-  if (isAidreamcapesEuRetiredPublicPath(siteSlug, requestedPath)) return undefined;
-  if (isAidreamcapesImageThemePath(siteSlug, requestedPath)) {
+  const publicSlug = publicSiteSlug(siteSlug);
+  if (isAidreamcapesEuRetiredPublicPath(publicSlug, requestedPath)) return undefined;
+  if (isAidreamcapesImageThemePath(publicSlug, requestedPath)) {
     const state = await readPathModePublicRuntimeState(siteSlug, requestedPath);
     const site = state?.sites[0];
     const page = site ? findPage(site, requestedPath) : undefined;
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
   const { siteSlug, themeSlug } = await params;
   const imageScene = await resolveAidreamcapesImageScene(siteSlug, themeSlug);
   if (imageScene) {
-    return { title: "Workspace | AIVideosUGC", description: "Create, edit and download your product photos and videos.", robots: { index: false, follow: false } };
+    return (await aidreamcapesMediaDetailMetadata({ kind: "photo", slug: themeSlug, basePath: `/site/${siteSlug}` })) ?? {};
   }
   const group = mydreamshootsImageTopicGroupForSlug(themeSlug);
   if (group && isPrimaryMydreamshootsSlug(siteSlug)) {
@@ -80,11 +80,32 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
     });
   }
   if (siteSlug === "aidreamcapes-eu" && canonicalAidreamcapesEuPublicPath(`${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) !== `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`) return {};
+  // Published template pages live at the same address as the legacy collection
+  // items; the page row wins so the canonical metadata follows the page.
+  if (publicSiteSlug(siteSlug) === "aidreamcapes") {
+    const contentPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
+    const contentState = await readPathModePublicRuntimeState(siteSlug, contentPath);
+    const contentSite = contentState?.sites[0];
+    const contentPage = contentSite ? findPage(contentSite, contentPath) : undefined;
+    if (contentState && contentSite && contentPage) {
+      const contentSnapshot = createPublishedSiteSnapshot(contentState, contentSite, { source: "postgres" });
+      if (resolvePublishedRouteDisposition(contentSnapshot, contentPath).kind === "render") {
+        return metadataForPublishedStorefrontPage({
+          site: contentSite,
+          page: contentPage,
+          path: contentPath,
+          products: contentState.products,
+          creativePacks: contentState.creativePacks,
+          snapshot: contentSnapshot
+        });
+      }
+    }
+  }
   const loaded = await loadImageThemeState(siteSlug, themeSlug);
   if (!loaded) return isPrimaryMydreamshootsSlug(siteSlug) ? { robots: { index: false, follow: false } } : {};
   const { state, site } = loaded;
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${themeSlug}`;
-  if (isAidreamcapesImageThemePath(siteSlug, requestedPath)) {
+  if (isAidreamcapesImageThemePath(publicSiteSlug(siteSlug), requestedPath)) {
     const page = findPage(site, requestedPath);
     return page && isRenderableAidreamcapesImageThemePage(page)
       ? metadataForPublishedStorefrontPage({
@@ -155,7 +176,12 @@ export default async function ImageThemePage({
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
   const imageScene = await resolveAidreamcapesImageScene(resolved.siteSlug, resolved.themeSlug);
   if (imageScene) {
-    return renderAidreamcapesResolvedScenePage({ kind: "photo", preset: imageScene.preset, routeSlug: imageScene.routeSlug });
+    return renderAidreamcapesMediaDetailPage({
+      kind: "photo",
+      slug: resolved.themeSlug,
+      basePath: `/site/${resolved.siteSlug}`,
+      detail: imageScene.detail
+    });
   }
   const group = mydreamshootsImageTopicGroupForSlug(resolved.themeSlug);
   if (group && isPrimaryMydreamshootsSlug(resolved.siteSlug)) {
@@ -180,10 +206,39 @@ export default async function ImageThemePage({
       permanentRedirect(storefrontPathForRouteMode(resolved.siteSlug, canonicalEuPath, routeMode));
     }
   }
+  // `/ai-image-generation/<slug>` is shared by published template pages and the
+  // legacy collection items. A published page renders first; the collection
+  // item remains the fallback for slugs with no page row.
+  if (publicSiteSlug(resolved.siteSlug) === "aidreamcapes") {
+    const contentState = await readPathModePublicRuntimeState(resolved.siteSlug, requestedPath);
+    const contentSite = contentState?.sites[0];
+    const contentPage = contentSite ? findPage(contentSite, requestedPath) : undefined;
+    if (contentState && contentSite && contentPage) {
+      const snapshot = createPublishedSiteSnapshot(contentState, contentSite, { source: "postgres" });
+      if (resolvePublishedRouteDisposition(snapshot, requestedPath).kind === "render") {
+        const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
+        return renderStorefrontPage({
+          site: contentSite,
+          slug: requestedPath,
+          publicPath: requestedPath,
+          routeMode,
+          state: contentState,
+          deferCustomerRuntime: true
+        });
+      }
+    }
+  }
+  const legacyPathTarget = publicSiteSlug(resolved.siteSlug) === "aidreamcapes"
+    ? await aidreamcapesMissingPageRedirect(requestedPath)
+    : undefined;
+  if (legacyPathTarget) {
+    const legacyRouteMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
+    permanentRedirect(storefrontPathForRouteMode(resolved.siteSlug, legacyPathTarget, legacyRouteMode));
+  }
   const loaded = await loadImageThemeState(resolved.siteSlug, resolved.themeSlug);
   if (!loaded) notFound();
   const { state, site } = loaded;
-  if (isAidreamcapesImageThemePath(resolved.siteSlug, requestedPath)) {
+  if (isAidreamcapesImageThemePath(publicSiteSlug(resolved.siteSlug), requestedPath)) {
     const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
     if (!isRenderableAidreamcapesImageThemePage(findPage(site, requestedPath))) notFound();
     return renderStorefrontPage({

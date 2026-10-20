@@ -7,8 +7,11 @@ import assert from "node:assert/strict";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_ROUTE_SMOKE_ORIGIN || "http://127.0.0.1:3013").replace(/\/$/, "");
 const MEDIA_BASE_URL = String(process.env.AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN || "https://www.aivideosugc.com").replace(/\/$/, "");
+// The public host is always the production hostname, including loopback runs:
+// forwarding a loopback host:port would send the canonical-host redirect to
+// https://loopback and fail TLS. The origin (and the port) comes from BASE_URL.
 const forwardedHeaders = {
-  "x-forwarded-host": new URL(MEDIA_BASE_URL).host,
+  "x-forwarded-host": process.env.AIDREAMCAPES_ROUTE_SMOKE_PUBLIC_HOST || "www.aivideosugc.com",
   "x-forwarded-proto": "https",
 };
 const started = Date.now();

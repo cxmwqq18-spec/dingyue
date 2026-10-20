@@ -76,20 +76,39 @@ function pickersFromContent(contentJson: unknown): RecordValue[] {
     if (record(definition?.card)) pickers.push({ cards: [definition!.card] });
     if (picker && Array.isArray(picker.cards)) pickers.push(picker);
     if (Array.isArray(data?.workspaceCases)) pickers.push({ cards: data.workspaceCases });
+    const groups = record(data?.examples)?.groups;
+    if (Array.isArray(groups)) {
+      const items = groups.flatMap((group) => {
+        const list = record(group)?.items;
+        return Array.isArray(list) ? list : [];
+      });
+      if (items.length) pickers.push({ cards: items });
+    }
   }
   return pickers;
+}
+
+/** Photo stays photo; clips and scenes are moving pictures. */
+function presetKind(value: unknown): "photo" | "video" | undefined {
+  if (value === "photo") return "photo";
+  if (value === "video" || value === "clip" || value === "scene") return "video";
+  return undefined;
 }
 
 function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: unknown): WorkspacePreset | undefined {
   const card = record(value);
   const image = record(card?.image);
-  if (!card || !image || typeof image.src !== "string" || typeof card.kind !== "string" || typeof card.label !== "string") return undefined;
-  if (card.kind !== "video" && card.kind !== "photo") return undefined;
-  const typedCard = card as unknown as PickerPresetCard;
+  if (!card || !image || typeof image.src !== "string") return undefined;
+  const kind = presetKind(card.kind);
+  if (!kind) return undefined;
+  const label = typeof card.label === "string" ? card.label : typeof card.title === "string" ? card.title : "";
   const src = image.src.trim();
-  const title = card.label.trim();
+  const title = label.trim();
+  // Legacy example cards carry no prompt; the workspace then opens the tool
+  // with the template preview and an empty prompt instead of guessing copy.
   const prompt = typeof card.prompt === "string" ? card.prompt.trim() : "";
-  if (!title || !prompt || prompt.length > 4000 || !safePreviewPath(src)) return undefined;
+  if (!title || prompt.length > 4000 || !safePreviewPath(src)) return undefined;
+  const presetCard = { ...card, kind, label: title };
   let href: URL;
   try { href = new URL(typeof card.href === "string" ? card.href : "/app/create", "https://www.aivideosugc.com"); }
   catch { return undefined; }
@@ -100,11 +119,11 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
   const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
   return {
     sourcePage,
-    presetId: pickerPresetId(typedCard),
+    presetId: pickerPresetId(presetCard as unknown as PickerPresetCard),
     ...(typeof card.sceneSlug === "string" ? { sceneSlug: card.sceneSlug } : {}),
     ...(typeof card.publicSlug === "string" && /^[a-z0-9][a-z0-9-]{0,119}$/.test(card.publicSlug) ? { publicSlug: card.publicSlug } : {}),
     title: title.slice(0, 160),
-    kind: card.kind,
+    kind,
     prompt,
     previewUrl: src,
     sceneId: sceneFromCard(card, href, prompt, title, rawTool),
@@ -124,12 +143,20 @@ export async function resolveWorkspacePublicScenePreset(siteId: string, kind: "p
     WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
       AND (jsonb_path_exists(
         "contentJson",
-        '$.sections.*.settings.data.visual.picker.cards[*] ? (@.publicSlug == $slug && @.kind == $kind)'::jsonpath,
-        jsonb_build_object('slug', ${publicSlug}, 'kind', ${kind})
+        '$.sections.*.settings.data.visual.picker.cards[*] ? (@.publicSlug == $slug)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug})
       ) OR jsonb_path_exists(
         "contentJson",
-        '$.sections.*.settings.data.workspaceCases[*] ? (@.publicSlug == $slug && @.kind == $kind)'::jsonpath,
-        jsonb_build_object('slug', ${publicSlug}, 'kind', ${kind})
+        '$.sections.*.settings.data.workspaceCases[*] ? (@.publicSlug == $slug)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug})
+      ) OR jsonb_path_exists(
+        "contentJson",
+        '$.sections.*.settings.data.examples.groups[*].items[*] ? (@.publicSlug == $slug)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug})
+      ) OR jsonb_path_exists(
+        "contentJson",
+        '$.sections.*.settings.data.templateDefinition.card ? (@.publicSlug == $slug)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug})
       ))
     LIMIT 3
   `;
@@ -139,7 +166,7 @@ export async function resolveWorkspacePublicScenePreset(siteId: string, kind: "p
     const cards = Array.isArray(picker.cards) ? picker.cards : [];
     for (const card of cards) {
       const candidate = record(card);
-      if (candidate?.publicSlug !== publicSlug || candidate.kind !== kind) continue;
+      if (candidate?.publicSlug !== publicSlug || presetKind(candidate.kind) !== kind) continue;
       return presetFromCard(page, page.slug, card);
     }
   }

@@ -9,6 +9,7 @@ import { MYDREAMSHOOTS_LEGACY_PUBLIC_REDIRECTS as MYDREAMSHOOTS_PUBLISHED_LEGACY
 import { aidreamcapesLegacyGalleryRedirectForPath, isAidreamcapesGonePublicPath, isRetiredAidreamcapesPublicPath } from "@/lib/aidreamcapes-image-theme-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { aidreamcapesNotFoundResponse } from "@/lib/aidreamcapes-not-found";
+import { fetchAidreamcapesInternal } from "@/lib/aidreamcapes-internal-fetch";
 
 const TARGET_SITE_PATH_RE = /^\/site\/(?:aivideosugc|(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby|-eu)?)(?:\/|$)/i;
 const TARGET_HOST_RE = /(?:^|\.)(?:(?:aidreamcapes|mydreamshoots|aidreamshoots|grownstride)(?:-xby)?\.localhost|(?:aidreamcapes|aivideosugc|mydreamshoots|grownstride)\.com|(?:aidreamcapes|aidreamshoots)\.eu)(?::\d+)?$/i;
@@ -1079,10 +1080,13 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const upstreamResponse = await fetch(upstreamUrl, {
+  const upstreamInit: RequestInit = {
     headers: sanitizeUpstreamHeaders(upstreamHeaders),
     redirect: "manual"
-  });
+  };
+  const upstreamResponse = isAidreamcapesComPublicHtmlRequest(request)
+    ? await fetchAidreamcapesInternal(upstreamUrl, upstreamInit)
+    : await fetch(upstreamUrl, upstreamInit);
 
   const contentType = upstreamResponse.headers.get("content-type") ?? "";
   if (upstreamResponse.status === 404 && contentType.includes("text/html") && isAidreamcapesComPublicHtmlRequest(request)) {

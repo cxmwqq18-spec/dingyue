@@ -2,6 +2,7 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import type { ReactNode } from "react";
 import { copyLabel } from "./types";
 import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
@@ -269,10 +270,10 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         </div>
         <div className="v-picker-grid">
           {cards.map((card, index) => (
-            <WorkspaceEntryLink mediaLink className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(pickerPresetHref(card, sourcePage))} key={`${card.image.src}-${index}`}>
+            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, card.publicSlug, pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
               <VisualImage image={card.image} r={r} />
               <span>{card.label}</span>
-            </WorkspaceEntryLink>
+            </a>
           ))}
         </div>
         {relatedGroups.length ? <div className="v-related-groups">

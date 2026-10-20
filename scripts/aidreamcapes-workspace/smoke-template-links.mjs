@@ -95,7 +95,9 @@ const visualSource = await readFile(path.join(root, "src/components/storefront/a
 assert.match(pageSource, /if \(data\.id === "home"\) return "\/"/);
 assert.match(pageSource, /data\.breadcrumbs\.at\(-1\)\?\.href/);
 assert.match(pageSource, /return presetSourcePage\(lastHref\)/);
-assert.match(visualSource, /<WorkspaceEntryLink mediaLink className="v-pick-card"[^\n]*href=\{r\.href\(pickerPresetHref\(card, sourcePage\)\)\}/);
+assert.match(visualSource, /<a className="v-pick-card"[^\n]*href=\{r\.href\(mediaCardHref\(card\.kind, card\.publicSlug, pickerPresetHref\(card, sourcePage\)\)\)\}/);
+// A media card never opens the workspace; the picker's own action button does.
+assert.doesNotMatch(visualSource, /<WorkspaceEntryLink mediaLink className="v-pick-card"/);
 assert.doesNotMatch(visualSource, /use client/);
 
 console.log("Aidreamcapes template-link smoke passed (video/photo IDs, privacy, legacy links, source safety, first-party targets, SSR anchors).");

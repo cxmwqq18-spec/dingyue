@@ -24,11 +24,19 @@ export type InspirationCard = {
 };
 
 /** Server/client-safe example shape used by the standalone page and embedded workspace tab. */
-export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & { createHref: string; entry?: WorkspaceEntryTransfer };
+export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & {
+  /** Public card link: the media detail page when the example owns one. */
+  createHref: string;
+  /** Fixed workspace entry path used only by the example's creation CTA. */
+  workspaceHref: string;
+  entry?: WorkspaceEntryTransfer;
+};
 
-function inspirationSelectionHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind" | "pageSlug" | "sceneSlug" | "publicSlug">, basePath = ""): string {
-  const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
-  if (mediaPath) return `${basePath}${mediaPath}`;
+/**
+ * The workspace destination for one example. It never points at a content
+ * page: the workspace path is fixed so the entry payload stays meaningful.
+ */
+function inspirationWorkspaceHref(card: Pick<InspirationCard, "toolSlug" | "prompt" | "kind" | "pageSlug" | "sceneSlug">, basePath = ""): string {
   const sceneRouteSlug = workspaceSceneRouteSlug(card.pageSlug, card.sceneSlug);
   if (sceneRouteSlug) return `${basePath}/app/create/scene/${sceneRouteSlug}`;
   const params = new URLSearchParams();
@@ -49,8 +57,8 @@ export type InspirationPage = {
   categories: string[];
 };
 
-export function inspirationCreateTarget(card: Parameters<typeof inspirationSelectionHref>[0], basePath = "") {
-  const target = workspaceEntryTarget(inspirationSelectionHref(card, basePath), true);
+export function inspirationCreateTarget(card: Parameters<typeof inspirationWorkspaceHref>[0], basePath = "") {
+  const target = workspaceEntryTarget(inspirationWorkspaceHref(card, basePath), true);
   if (target.transfer?.scene && card.kind === "photo") {
     target.transfer.view = "images";
     target.href = staticViewHref(basePath, "images");
@@ -58,6 +66,30 @@ export function inspirationCreateTarget(card: Parameters<typeof inspirationSelec
   return target;
 }
 
-export function inspirationCreateHref(card: Parameters<typeof inspirationSelectionHref>[0], basePath = ""): string {
+/**
+ * Public card link. A card that owns a detail page links there first; the
+ * workspace stays behind that page's own CTA. Cards without a slug keep their
+ * current workspace destination.
+ */
+export function inspirationCreateHref(card: Parameters<typeof inspirationWorkspaceHref>[0] & Pick<InspirationCard, "publicSlug">, basePath = ""): string {
+  const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
+  if (mediaPath) return `${basePath}${mediaPath}`;
   return inspirationCreateTarget(card, basePath).href;
+}
+
+/**
+ * Both destinations for one example, resolved once where the cards are built:
+ * the card keeps its public link while the creation CTA always enters the
+ * fixed workspace path that owns the entry payload.
+ */
+export function inspirationExampleLinks(
+  card: Parameters<typeof inspirationWorkspaceHref>[0] & Pick<InspirationCard, "publicSlug">,
+  basePath = ""
+): Pick<InspirationExample, "createHref" | "workspaceHref" | "entry"> {
+  const workspace = inspirationCreateTarget(card, basePath);
+  return {
+    createHref: inspirationCreateHref(card, basePath),
+    workspaceHref: workspace.href,
+    entry: workspace.transfer
+  };
 }

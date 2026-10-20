@@ -80,7 +80,7 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
             <div><dt>Collection</dt><dd>{card.pageTitle}</dd></div>
             {card.category !== ALL_CATEGORY ? <div><dt>Category</dt><dd>{card.category}</dd></div> : null}
           </dl>
-          <WorkspaceEntryLink className={styles.create} href={card.createHref} entry={card.entry}>
+          <WorkspaceEntryLink className={styles.create} href={card.workspaceHref} entry={card.entry}>
             {card.kind === "video" ? "Create a video like this" : "Create an image like this"} <ArrowUpRight size={17} />
           </WorkspaceEntryLink>
           <div className={styles.detailNavigation}>

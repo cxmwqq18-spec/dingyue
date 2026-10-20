@@ -1745,8 +1745,19 @@ function aidreamcapesV2StoredGraph(site: Site, pageJson: ThemePageJson | undefin
 
 // Stored v2 graphs written before the move to www.aivideosugc.com name the former address; show every URL at the current origin.
 const AIDREAMCAPES_FORMER_ORIGIN_RE = /^https:\/\/(?:www\.)?(?:aidreamcapes|aivideosugc)\.com(?=\/|$)/i;
+
+// Actor detail rows are stored under `/ai-actors/{men|women}/<name>` while the
+// public route addresses each actor as `/ai-actors/<name>`. Normalize only page
+// URLs so breadcrumbs and profile nodes never publish the nested address.
+const AIDREAMCAPES_NESTED_ACTOR_URL_RE = /\/ai-actors\/(?:men|women)\/([a-z0-9-]+)/gi;
+
+function aidreamcapesPublicActorUrl(value: string): string {
+  const isPageUrl = value.startsWith("/") || /^https?:\/\//i.test(value);
+  return isPageUrl ? value.replace(AIDREAMCAPES_NESTED_ACTOR_URL_RE, "/ai-actors/$1") : value;
+}
+
 function withAidreamcapesOrigin<T>(value: T): T {
-  if (typeof value === "string") return value.replace(AIDREAMCAPES_FORMER_ORIGIN_RE, "https://www.aivideosugc.com") as T;
+  if (typeof value === "string") return aidreamcapesPublicActorUrl(value).replace(AIDREAMCAPES_FORMER_ORIGIN_RE, "https://www.aivideosugc.com") as T;
   if (Array.isArray(value)) return value.map((item) => withAidreamcapesOrigin(item)) as T;
   if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, withAidreamcapesOrigin(item)])) as T;
   return value;

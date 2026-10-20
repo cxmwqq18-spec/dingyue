@@ -12,6 +12,7 @@ const commit = value("--commit");
 // Deploying application code never authorizes writes to editable site content.
 const codeOnly = true;
 const verifyInspirations = args.includes("--verify-inspirations");
+const verifyMediaDetails = args.includes("--verify-media-details");
 // The exhaustive sitemap SEO contract is a separate task. Pass this flag (or
 // AIDREAMCAPES_RELEASE_FULL_SEO=1) only for releases that change public SEO,
 // metadata or large amounts of published content.
@@ -146,6 +147,7 @@ AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_
 cat .candidate-card-links.json
 ${fullSeoContract ? 'AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json\ncat .candidate-contract.json' : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .candidate-inspirations.json\ncat .candidate-inspirations.json' : ""}
+${verifyMediaDetails ? 'AIDREAMCAPES_AUDIT_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_AUDIT_CONCURRENCY=2 node scripts/aidreamcapes-workspace/verify-media-detail-remediation.mjs > .candidate-media-details.json\ncat .candidate-media-details.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
 # Apply the exact release's forward-only schema migrations after the built

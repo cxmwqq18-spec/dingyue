@@ -805,6 +805,18 @@ function collectAidreamcapesImageDirectorySitemapImages(
   return images;
 }
 
+// AIVideosUGC actor detail rows are still stored at `/ai-actors/{men|women}/<name>`
+// while the public route addresses each actor as `/ai-actors/<name>`. The sitemap
+// publishes the public address; every eligibility lookup above keeps using the
+// stored path because that is what the published snapshot indexes.
+const AIDREAMCAPES_ACTOR_DETAIL_SITEMAP_PATH_RE = /^\/ai-actors\/(?:men|women)\/([a-z0-9-]+)$/;
+
+function aidreamcapesActorSitemapPathForSite(site: Site, path: string): string {
+  if (site.id !== AIDREAMCAPES_SITE_ID) return path;
+  const match = normalizePath(path).match(AIDREAMCAPES_ACTOR_DETAIL_SITEMAP_PATH_RE);
+  return match ? `/ai-actors/${match[1]}` : path;
+}
+
 function pageSitemapPathForSite(site: Site, page: ThemePage): string {
   if (page.siteId !== site.id) return "";
   if (isAidreamcapesEuRetiredPublicPath(site.id, page.slug)) return "";
@@ -865,8 +877,9 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     const path = isRegisteredImageTheme
       ? canonicalPath
       : effective.context.seo.canonicalPath;
+    const publicSitemapPath = aidreamcapesActorSitemapPathForSite(site, path);
     const loc = site.id === AIDREAMCAPES_SITE_ID
-      ? sitemapUrl(site, path)
+      ? sitemapUrl(site, publicSitemapPath)
       : isAidreamcapesImageThemePath(site.slug, page.slug) && configuredCanonical && /^https?:\/\//i.test(configuredCanonical)
         ? configuredCanonical
         : effective.context.seo.canonicalUrl;
@@ -1209,6 +1222,31 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         if (!allowedPaths.has(new URL(loc).pathname)) entries.delete(loc);
       } catch {
         entries.delete(loc);
+      }
+    }
+  }
+  if (site.id === AIDREAMCAPES_SITE_ID) {
+    // Public actor detail routes are flat (`/ai-actors/<name>`) while the stored
+    // rows stay gendered. Only the published address is rewritten here; every
+    // eligibility decision above keeps using the stored path.
+    for (const [loc, entry] of Array.from(entries)) {
+      let pathname: string;
+      try {
+        pathname = new URL(loc).pathname;
+      } catch {
+        continue;
+      }
+      const flatPath = aidreamcapesActorSitemapPathForSite(site, pathname);
+      if (flatPath === pathname) continue;
+      entries.delete(loc);
+      const flatLoc = sitemapUrl(site, flatPath);
+      if (!entries.has(flatLoc)) {
+        entries.set(flatLoc, {
+          ...entry,
+          loc: flatLoc,
+          changefreq: sitemapChangeFrequencyForPath(flatPath),
+          priority: sitemapPriorityForPath(flatPath)
+        });
       }
     }
   }

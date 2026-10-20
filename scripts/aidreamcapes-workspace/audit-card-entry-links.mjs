@@ -1,37 +1,153 @@
 #!/usr/bin/env node
-// Release gate for public catalog cards. The SSR HTML must carry a canonical
-// fixed workspace path; prompt/actor/template identity travels in the inert
-// data-workspace-entry payload, never in the href.
-import assert from "node:assert/strict";
+// Release gate for public media cards (AIVideosUGC / site_aidreamcapes).
+//
+// Contract (media detail remediation, 2026-10-21):
+//   * every media card links to THAT item's own detail page:
+//       /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug>,
+//       /ai-actors/<name> (flat);
+//   * the card link is a plain path: no query string, no fragment, and no
+//     inert `data-workspace-entry` payload;
+//   * the workspace is reached only from the detail page CTA, never from a card.
+//
+// The card inventory comes from the relational LivePage rows (read-only) using
+// the same shapes the public renderer owns: `templateDefinition.card`,
+// `visual.picker.cards[*]` and `workspaceCases[*]`. The DOM comes from the
+// running server. Pages that are not reachable as public pages (404, still
+// rendering the workspace shell, transient rebuild) are reported as skipped
+// instead of failing the run.
+//
+// Legacy example galleries (`data.examples.groups[*].items[*]`) are out of
+// scope here: they carry no `publicSlug`, so they cannot own a detail page and
+// keep their current workspace link.
+//
+// Usage:
+//   node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs
+//   AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3003 \
+//   AIDREAMCAPES_AUDIT_SITE_SLUG=aidreamcapes node .../audit-card-entry-links.mjs
+import "../load-runtime-env.mjs";
+import { PrismaClient } from "@prisma/client";
 import { load } from "cheerio";
 
-const origin = String(process.env.AIDREAMCAPES_ROUTE_SMOKE_ORIGIN || "http://127.0.0.1:3013").replace(/\/$/, "");
-const mediaOrigin = String(process.env.AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN || "https://www.aivideosugc.com").replace(/\/$/, "");
-const headers = { "x-forwarded-host": new URL(mediaOrigin).host, "x-forwarded-proto": "https" };
-const forbidden = new Set(["prompt", "actor", "size", "length", "source", "preset", "template", "tool_id", "tool", "view", "kind", "filter"]);
+const origin = String(process.env.AIDREAMCAPES_ROUTE_SMOKE_ORIGIN || "http://127.0.0.1:3003").replace(/\/$/, "");
+const siteSlug = String(process.env.AIDREAMCAPES_AUDIT_SITE_SLUG || "aidreamcapes");
+const pathMode = process.env.AIDREAMCAPES_AUDIT_PATH_MODE !== "0";
+const base = pathMode ? `/site/${siteSlug}` : "";
+const siteId = "site_aidreamcapes";
+const requestTimeout = Number(process.env.AIDREAMCAPES_AUDIT_TIMEOUT || 60000);
+
+const MEDIA_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,119}$/i;
+const DETAIL_HREF_RE = /^\/(ai-image-generation|ai-video-generation)\/([a-z0-9][a-z0-9-]{0,119})$/i;
+const ACTOR_HREF_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]{0,79})$/i;
+const WORKSPACE_PREFIX = "/app/create";
+// Cards that cannot own a media detail page yet: they carry no `publicSlug`, and
+// no other card publishes the same image, so no truthful detail route exists.
+// The renderer keeps their tool/preset link until the field-level manifest
+// assigns a slug. These are exactly the `chips:["example"]` picker cards and the
+// legacy `examples` gallery; the counts are asserted so the gap cannot grow.
+const EXAMPLE_PICKER_CHIP = "example";
+const EXAMPLE_GALLERY_SELECTOR = ".example-gallery";
+// A "media card" is a card the public renderer emits for a public media item.
+const CARD_SELECTOR = [
+  "a.v-pick-card",
+  "article.case-card a[href]",
+  "article.tc a[href]",
+  "article.actor-card a[href]",
+].join(", ");
+
+const MEDIA_ROOT = { photo: "ai-image-generation", video: "ai-video-generation" };
 const failures = [];
-const checks = [];
+const offenders = [];
+const skipped = [];
+const pages = [];
+const templatePageHrefs = new Set();
 
 function fail(scope, message) {
   failures.push(`${scope}: ${message}`);
 }
 
-async function page(path) {
-  const response = await fetch(`${origin}${path}`, { headers, redirect: "follow" });
-  assert.equal(response.status, 200, `${path}: status ${response.status}`);
-  const html = await response.text();
-  assert.match(html, /<html[\s>]/i, `${path}: HTML document`);
-  return load(html);
+function record(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : undefined;
 }
 
-function workspacePath(href) {
+function detailPath(kind, slug) {
+  return `/${MEDIA_ROOT[kind]}/${slug}`;
+}
+
+function actorSlug(name) {
+  return String(name || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+/** Mirrors the public renderer's card shapes, in rendering order. */
+function pageCards(contentJson) {
+  const out = [];
+  const content = record(contentJson);
+  const sections = record(content?.sections);
+  const order = Array.isArray(content?.sectionsOrder) ? content.sectionsOrder : [];
+  for (const sectionId of order) {
+    const section = record(sections?.[sectionId]);
+    if (section?.type !== "aidreamcapes_v2_page") continue;
+    const data = record(record(section.settings)?.data);
+    const definition = record(record(data?.templateDefinition)?.card);
+    if (definition) out.push({ source: "templateDefinition", card: definition });
+    const picker = record(record(data?.visual)?.picker);
+    if (Array.isArray(picker?.cards)) {
+      for (const value of picker.cards) {
+        const card = record(value);
+        if (card) out.push({ source: "picker", card });
+      }
+    }
+    if (Array.isArray(data?.workspaceCases)) {
+      for (const value of data.workspaceCases) {
+        const card = record(value);
+        if (card) out.push({ source: "workspaceCases", card });
+      }
+    }
+    const groups = record(data?.examples)?.groups;
+    if (Array.isArray(groups)) {
+      for (const group of groups) {
+        const items = record(group)?.items;
+        if (!Array.isArray(items)) continue;
+        for (const value of items) {
+          const card = record(value);
+          if (card) out.push({ source: "examples", card });
+        }
+      }
+    }
+  }
+  return out;
+}
+
+function mediaOf(card) {
+  // A clip and a scene are moving pictures; only a still example is a photo.
+  const kind = card.kind === "photo" ? "photo" : card.kind === "video" || card.kind === "clip" || card.kind === "scene" ? "video" : undefined;
+  const slug = typeof card.publicSlug === "string" && MEDIA_SLUG_RE.test(card.publicSlug) ? card.publicSlug : undefined;
+  if (!kind || !slug) return undefined;
+  const image = record(card.image);
+  return {
+    kind,
+    slug,
+    label: typeof card.label === "string" ? card.label : typeof card.title === "string" ? card.title : "",
+    image: typeof image?.src === "string" ? image.src : ""
+  };
+}
+
+/** Normalises a rendered href to its site-relative path (drops the store prefix). */
+function pathOf(href) {
+  let url;
   try {
-    const url = new URL(href, origin);
-    const pathname = url.pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/, "");
-    return pathname.startsWith("/app/create") ? { pathname, search: url.search } : undefined;
+    url = new URL(href, `${origin}/`);
   } catch {
     return undefined;
   }
+  let pathname = url.pathname;
+  const prefix = pathname.match(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/)?.[0];
+  if (prefix) pathname = pathname.slice(prefix.length) || "/";
+  return {
+    pathname,
+    query: url.search,
+    hash: url.hash,
+    absolute: /^https?:\/\//i.test(href)
+  };
 }
 
 function entryOf(anchor) {
@@ -40,116 +156,296 @@ function entryOf(anchor) {
   try {
     return JSON.parse(raw);
   } catch {
-    return undefined;
+    return null;
   }
 }
 
-function auditWorkspaceAnchors($, scope) {
-  let count = 0;
-  $("a[href]").each((_, node) => {
-    const anchor = $(node);
-    const href = anchor.attr("href");
-    if (!href) return;
-    const target = workspacePath(href);
-    if (!target) return;
-    count += 1;
-    if (target.search) {
-      const keys = [...new URLSearchParams(target.search).keys()];
-      const leaked = keys.filter((key) => forbidden.has(key));
-      fail(scope, `${href} carries query ${target.search}${leaked.length ? ` (${leaked.join(",")})` : ""}`);
+/** The visible title of the card that owns this anchor. */
+function cardLabel($, anchor) {
+  const container = anchor.closest("article, .tc, .v-pick-card, .case-card");
+  const heading = (container.length ? container : anchor)
+    .find("h2, h3, h4, strong")
+    .first()
+    .text()
+    .replace(/\s+/g, " ")
+    .trim();
+  if (heading) return heading;
+  return anchor.text().replace(/\s+/g, " ").trim().slice(0, 120);
+}
+
+async function fetchPage(pagePath) {
+  const url = `${origin}${base}${pagePath === "/" ? "" : pagePath}`;
+  const response = await fetch(url, {
+    redirect: "follow",
+    headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
+    signal: AbortSignal.timeout(requestTimeout)
+  });
+  const html = await response.text();
+  return { status: response.status, html, finalPath: new URL(response.url).pathname };
+}
+
+const hrefStatusCache = new Map();
+async function hrefStatus(pathname) {
+  if (hrefStatusCache.has(pathname)) return hrefStatusCache.get(pathname);
+  let status = 0;
+  try {
+    const response = await fetch(`${origin}${base}${pathname}`, {
+      redirect: "follow",
+      headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
+      signal: AbortSignal.timeout(requestTimeout)
+    });
+    await response.text();
+    status = response.status;
+  } catch {
+    status = 0;
+  }
+  hrefStatusCache.set(pathname, status);
+  return status;
+}
+
+const prisma = new PrismaClient({ errorFormat: "minimal" });
+
+try {
+  // ---- Relational inventory (read-only) -----------------------------------
+  const rows = await prisma.livePage.findMany({
+    where: { siteId },
+    select: { slug: true, contentJson: true }
+  });
+
+  const owners = [];
+  const knownSlugs = new Set();
+  for (const row of rows) {
+    const cards = pageCards(row.contentJson);
+    const media = cards.map((entry) => mediaOf(entry.card)).filter(Boolean);
+    if (!media.length) continue;
+    const bySource = { picker: 0, workspaceCases: 0, templateDefinition: 0 };
+    for (const entry of cards) {
+      if (mediaOf(entry.card)) bySource[entry.source] += 1;
     }
-    if (anchor.attr("data-workspace-entry")) {
-      const entry = entryOf(anchor);
-      if (!entry || typeof entry !== "object" || !entry.view || !entry.query) {
-        fail(scope, `${href} has an invalid data-workspace-entry`);
+    for (const item of media) knownSlugs.add(detailPath(item.kind, item.slug));
+    owners.push({
+      page: row.slug,
+      bySource,
+      expected: [...new Map(media.map((item) => [detailPath(item.kind, item.slug), item])).values()],
+      pickerSlugs: [...new Set(cards.filter((entry) => entry.source === "picker").map((entry) => mediaOf(entry.card)).filter(Boolean).map((item) => detailPath(item.kind, item.slug)))],
+      caseSlugs: [...new Set(cards.filter((entry) => entry.source === "workspaceCases").map((entry) => mediaOf(entry.card)).filter(Boolean).map((item) => detailPath(item.kind, item.slug)))],
+      templateCards: cards.filter((entry) => entry.source === "templateDefinition" && mediaOf(entry.card)).length
+    });
+  }
+
+  const actorRows = rows.filter((row) => /^\/ai-actors\/(?:men|women)\/[^/]+$/.test(row.slug));
+  const actorSlugs = new Set();
+  for (const row of actorRows) {
+    const sections = record(record(row.contentJson)?.sections);
+    for (const section of Object.values(sections ?? {})) {
+      const actor = record(record(record(section)?.settings)?.data?.actor);
+      if (typeof actor?.name === "string") {
+        const slug = actorSlug(actor.name);
+        if (slug) actorSlugs.add(slug);
+        break;
       }
     }
-  });
-  return count;
-}
-
-function expectFixed(anchor, expected, scope, label) {
-  const href = anchor.attr("href") || "";
-  const target = workspacePath(href);
-  if (!target) return fail(scope, `${label} does not target /app/create (${href})`);
-  if (target.pathname !== expected) fail(scope, `${label} targets ${target.pathname}, expected ${expected}`);
-  if (target.search) fail(scope, `${label} leaks a query into the URL (${target.search})`);
-}
-
-const pages = [
-  { path: "/", minWorkspaceLinks: 1 },
-  { path: "/ai-image-generation", kind: "image" },
-  { path: "/ai-actors", kind: "actor" },
-  { path: "/templates", kind: "templates" },
-  { path: "/templates/photo", kind: "templates", expectedType: "photo" },
-  { path: "/templates/video", kind: "templates", expectedType: "video" },
-  { path: "/ai-video-generation", minWorkspaceLinks: 1 },
-];
-
-for (const spec of pages) {
-  const $ = await page(spec.path);
-  const workspaceCount = auditWorkspaceAnchors($, spec.path);
-  if (spec.minWorkspaceLinks) {
-    assert.ok(workspaceCount >= spec.minWorkspaceLinks, `${spec.path}: expected at least ${spec.minWorkspaceLinks} workspace link(s), found ${workspaceCount}`);
-    checks.push(`${spec.path}: ${workspaceCount} fixed workspace link(s)`);
   }
 
-  if (spec.kind === "image") {
-    const cards = $(".case-card a.use");
-    assert.ok(cards.length >= 4, `${spec.path}: expected at least 4 case cards, found ${cards.length}`);
-    cards.each((_, node) => {
-      const anchor = $(node);
-      expectFixed(anchor, "/app/create/ai-image-generation", spec.path, "case card");
-      const entry = entryOf(anchor);
-      assert.equal(entry?.view, "images", `${spec.path}: case card entry view`);
-      assert.ok(typeof entry?.query?.prompt === "string" && entry.query.prompt.length > 20, `${spec.path}: case card entry prompt`);
-    });
-    checks.push(`${spec.path}: ${cards.length} case cards carry prompts outside the URL`);
+  // Every public media card must own a detail route, so every stored card needs
+  // a `publicSlug`. A card without one cannot be linked to truthfully.
+  let cardsWithoutSlug = { picker: 0, examples: 0 };
+  for (const row of rows) {
+    for (const entry of pageCards(row.contentJson)) {
+      if (entry.source === "picker" && !entry.card.publicSlug) cardsWithoutSlug.picker += 1;
+      if (entry.source === "examples" && !entry.card.publicSlug) cardsWithoutSlug.examples += 1;
+    }
+  }
+  if (cardsWithoutSlug.picker > 0) {
+    failures.push(`${cardsWithoutSlug.picker} picker card(s) have no publicSlug; every media card must own a detail route`);
+  }
+  if (cardsWithoutSlug.examples > 0) {
+    failures.push(`${cardsWithoutSlug.examples} example-gallery card(s) have no publicSlug; every media card must own a detail route`);
   }
 
-  if (spec.kind === "actor") {
-    const cards = $("article.actor-card a[href]");
-    assert.ok(cards.length >= 53, `${spec.path}: expected at least 53 actor links, found ${cards.length}`);
-    const ids = new Set();
-    cards.each((_, node) => {
-      const anchor = $(node);
-      expectFixed(anchor, "/app/create/ai-actors", spec.path, "actor card");
-      const entry = entryOf(anchor);
-      assert.equal(entry?.view, "actors", `${spec.path}: actor entry view`);
-      assert.match(String(entry?.query?.actor || ""), /^[a-z0-9][a-z0-9-]{0,80}$/i, `${spec.path}: actor entry id`);
-      ids.add(entry.query.actor);
-    });
-    assert.ok(ids.size >= 53, `${spec.path}: expected at least 53 unique actor IDs, found ${ids.size}`);
-    checks.push(`${spec.path}: ${cards.length} actor links / ${ids.size} unique actors`);
-  }
+  // ---- DOM audit ----------------------------------------------------------
+  let serverAvailable = true;
+  const targets = owners.map((owner) => ({ page: owner.page, owner })).concat([{ page: "/ai-actors", owner: undefined }]);
 
-  if (spec.kind === "templates") {
-    const cards = $(".tgrid article.tc");
-    assert.ok(cards.length >= 9, `${spec.path}: expected at least 9 template cards, found ${cards.length}`);
-    const ids = new Set();
-    cards.each((_, node) => {
-      const card = $(node);
-      const type = card.attr("data-type");
-      if (spec.expectedType) assert.equal(type, spec.expectedType, `${spec.path}: template type`);
-      const id = card.attr("data-template-id");
-      if (id) ids.add(id);
-      const links = card.find("a[href]");
-      assert.ok(links.length >= 1, `${spec.path}: template card has no link`);
-      links.each((__, link) => {
-        const anchor = $(link);
-        expectFixed(anchor, type === "photo" ? "/app/create/ai-image-generation" : "/app/create/ai-video-generation", spec.path, "template card");
-        const entry = entryOf(anchor);
-        assert.ok(entry?.query?.source && entry?.query?.preset, `${spec.path}: template card must carry source and preset outside the URL`);
+  for (const target of targets) {
+    const scope = target.page;
+    let page;
+    try {
+      page = await fetchPage(target.page);
+    } catch (error) {
+      serverAvailable = false;
+      skipped.push({ page: scope, reason: `server unavailable (${error instanceof Error ? error.message : String(error)})` });
+      continue;
+    }
+    if (page.status !== 200) {
+      skipped.push({ page: scope, reason: `http ${page.status}` });
+      continue;
+    }
+    const $ = load(page.html);
+    const title = $("title").first().text().trim();
+    const publicPage = $("main[data-aidreamcapes-v2]").length > 0;
+    if (!publicPage || /workspace/i.test(title)) {
+      skipped.push({
+        page: scope,
+        reason: publicPage ? `still renders the workspace shell (${title})` : "not a public storefront page",
+        finalPath: page.finalPath
       });
+      continue;
+    }
+
+    const anchors = $(CARD_SELECTOR);
+    const detailHrefs = new Set();
+    let cardCount = 0;
+    let pickerCount = 0;
+    let actorCardCount = 0;
+    const workspaceCards = [];
+    const exampleCards = [];
+    const pendingStatusChecks = [];
+
+    anchors.each((_, node) => {
+      const anchor = $(node);
+      const href = anchor.attr("href");
+      if (!href) return;
+      cardCount += 1;
+      if (anchor.hasClass("v-pick-card")) pickerCount += 1;
+      const inActorCard = anchor.closest("article.actor-card").length > 0;
+      if (inActorCard) actorCardCount += 1;
+      const target = inActorCard ? "actor" : "media";
+      const label = cardLabel($, anchor);
+      const parsed = pathOf(href);
+      if (!parsed) {
+        offenders.push({ page: scope, href, label, problem: "unparseable href" });
+        return;
+      }
+
+      // Example galleries and example-chipped picker cards are media cards
+      // like any other: they must open their own detail page. They are only
+      // tracked separately when they still fall back to a tool link.
+      const exampleKind = inActorCard
+        ? undefined
+        : anchor.closest(EXAMPLE_GALLERY_SELECTOR).length
+          ? "gallery"
+          : anchor.hasClass("v-pick-card") && (anchor.attr("data-chips") ?? "").split(/\s+/).includes(EXAMPLE_PICKER_CHIP)
+            ? "picker"
+            : undefined;
+      if (exampleKind && parsed.pathname.startsWith(WORKSPACE_PREFIX)) {
+        exampleCards.push({ page: scope, href, label, kind: exampleKind });
+        return;
+      }
+
+      if (parsed.query) offenders.push({ page: scope, href, label, problem: "card href carries a query string" });
+      if (parsed.hash) offenders.push({ page: scope, href, label, problem: "card href carries a fragment" });
+      const entry = entryOf(anchor);
+      if (entry !== undefined) {
+        offenders.push({ page: scope, href, label, problem: `card href carries data-workspace-entry${entry ? ` (view ${entry.view})` : " (unreadable)"}` });
+      }
+
+      if (target === "actor") {
+        const match = parsed.pathname.match(ACTOR_HREF_RE);
+        if (!match) {
+          if (parsed.pathname.startsWith(WORKSPACE_PREFIX)) {
+            offenders.push({ page: scope, href, label, problem: "actor card still enters the workspace instead of /ai-actors/<name>" });
+          } else {
+            offenders.push({ page: scope, href, label, problem: "actor card is not an /ai-actors/<name> detail route" });
+          }
+          return;
+        }
+        if (!actorSlugs.has(match[1])) {
+          offenders.push({ page: scope, href, label, problem: `actor card points at an unknown actor slug (${match[1]})` });
+        }
+        const heading = anchor.closest("article.actor-card").find("h3").first().text().trim();
+        if (heading && actorSlug(heading) !== match[1]) {
+          offenders.push({ page: scope, href, label, problem: `actor card for "${heading}" links to ${match[1]}` });
+        }
+        return;
+      }
+
+      const match = parsed.pathname.match(DETAIL_HREF_RE);
+      if (!match) {
+        if (parsed.pathname.startsWith(WORKSPACE_PREFIX)) {
+          workspaceCards.push({ page: scope, href, label });
+          offenders.push({ page: scope, href, label, problem: "media card still enters the workspace instead of its detail page" });
+        } else {
+          offenders.push({ page: scope, href, label, problem: "media card is not an /ai-image-generation|/ai-video-generation detail route" });
+        }
+        return;
+      }
+      const canonical = `/${match[1]}/${match[2]}`;
+      if (!knownSlugs.has(canonical)) {
+        // Template cards point at their template page, which is a published
+        // page rather than a media card row. Accept any address the server
+        // actually serves; a dead address is still a defect.
+        pendingStatusChecks.push({ page: scope, href, label, canonical });
+      }
+      detailHrefs.add(canonical);
     });
-    assert.equal(ids.size, cards.length, `${spec.path}: template IDs must be unique`);
-    checks.push(`${spec.path}: ${cards.length} ${spec.expectedType || "mixed"} template cards`);
+
+    for (const check of pendingStatusChecks) {
+      const status = await hrefStatus(check.canonical);
+      if (status === 200) {
+        templatePageHrefs.add(check.canonical);
+      } else {
+        offenders.push({ page: check.page, href: check.href, label: check.label, problem: `card link resolves to ${status} (${check.canonical})` });
+      }
+    }
+
+    if (target.owner) {
+      // Pages filter and paginate their cards, so the DOM is not expected to
+      // render every stored card. A page that renders no card link at all is
+      // reported as skipped rather than failed.
+      if (!cardCount && (target.owner.pickerSlugs.length || target.owner.caseSlugs.length)) {
+        skipped.push({ page: scope, reason: "page filtered all of its cards out of the HTML" });
+      }
+    } else if (actorSlugs.size && actorCardCount < actorSlugs.size) {
+      offenders.push({
+        page: scope,
+        href: "",
+        label: "",
+        problem: `rendered ${actorCardCount} actor card link(s) for ${actorSlugs.size} current actor(s)`
+      });
+    }
+
+    pages.push({
+      page: scope,
+      anchors: cardCount,
+      pickerCards: pickerCount,
+      actorCards: actorCardCount,
+      exampleCards: exampleCards.length,
+      exampleCardKinds: exampleCards.reduce((counts, card) => ({ ...counts, [card.kind]: (counts[card.kind] ?? 0) + 1 }), {}),
+      distinctDetailRoutes: detailHrefs.size,
+      workspaceCards: workspaceCards.length
+    });
   }
-}
 
-if (failures.length) {
-  console.error(JSON.stringify({ ok: false, origin, failures }, null, 2));
-  process.exit(1);
+  if (!serverAvailable) {
+    console.log(`SKIP: server unavailable at ${origin}${base} (${skipped[0]?.reason ?? "connection failed"}).`);
+    console.log(JSON.stringify({ ok: true, skipped: true, origin, databaseOwners: owners.length, pages: [], skippedPages: skipped, offenders: [] }, null, 2));
+    process.exitCode = 0;
+  } else {
+    const result = {
+      ok: offenders.length === 0,
+      origin,
+      pathMode,
+      database: {
+        cardOwnerPages: owners.length,
+        distinctMediaRoutes: knownSlugs.size,
+        actors: actorSlugs.size
+      },
+      pages,
+      skippedPages: skipped,
+      offenders,
+      failures
+    };
+    if (offenders.length) {
+      console.error(JSON.stringify(result, null, 2));
+      process.exitCode = 1;
+    } else {
+      console.log(JSON.stringify(result, null, 2));
+    }
+  }
+} catch (error) {
+  console.error(JSON.stringify({ ok: false, origin, error: error instanceof Error ? error.stack : String(error) }, null, 2));
+  process.exitCode = 1;
+} finally {
+  await prisma.$disconnect();
 }
-
-console.log(JSON.stringify({ ok: true, origin, checks }, null, 2));

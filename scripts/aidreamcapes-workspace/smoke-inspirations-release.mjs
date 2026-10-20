@@ -49,16 +49,36 @@ async function read(path, { workspace = false } = {}) {
   if (workspace) assert.doesNotMatch(html, /<iframe\b/);
   else assert.doesNotMatch(html, /aria-label="Workspace navigation"|<iframe\b/);
   // Workspace quick starts and explicit entry transfers may carry editable
-  // prompts. Inspiration cards must expose only the display projection, and
-  // their creation URLs must stay fixed instead of serializing prompts.
+  // prompts. Inspiration cards must expose only the display projection, while
+  // the card link opens the example's own page and the creation CTA is the
+  // fixed workspace entry that owns the inert payload.
   const cards = workspace ? serializedValueFromHtml(html, "initialInspirations").cards : serializedValueFromHtml(html, "cards");
   assert(Array.isArray(cards) && cards.length > 0);
+  const workspaceEntryPath = /^(?:\/site\/(?:aidreamcapes|aivideosugc))?\/app\/create(?:\/[a-z0-9-]+){1,2}$/;
   for (const card of cards) {
     assert(!Object.hasOwn(card, "prompt"), `Card ${card.id} has no raw prompt field`);
-    assert(!new URL(card.createHref, origin).searchParams.has("prompt"), `Card ${card.id} has no prompt in its URL`);
+    const cta = new URL(card.workspaceHref, origin);
+    assert.match(cta.pathname, workspaceEntryPath, `Card ${card.id} CTA enters a fixed workspace path`);
+    assert.equal(cta.search, "", `Card ${card.id} CTA carries no query string`);
+    assert(card.entry && ["video", "images"].includes(card.entry.view), `Card ${card.id} CTA payload targets a media workspace view`);
+    assert(card.entry.query && typeof card.entry.query === "object" && !Array.isArray(card.entry.query), `Card ${card.id} CTA payload carries query inputs`);
+    // React Flight serializes absent optional fields as the "$undefined" sentinel.
+    const scene = card.entry.scene && card.entry.scene !== "$undefined" ? card.entry.scene : undefined;
+    if (scene) assert.match(cta.pathname, /\/app\/create\/(?:scene\/[a-z0-9._-]+|ai-image-generation)$/i, `Card ${card.id} CTA enters its scene or media workspace view`);
+    else assert.match(cta.pathname, /\/app\/create\/(?:ai-image-generation|ai-video-generation)$/, `Card ${card.id} CTA enters the media workspace view`);
+    const cardLink = new URL(card.createHref, origin);
+    assert(!cardLink.searchParams.has("prompt"), `Card ${card.id} has no prompt in its URL`);
+    assert.match(cardLink.pathname, /^(?:\/site\/(?:aidreamcapes|aivideosugc))?\/(?:app\/create(?:\/[a-z0-9-]+){1,2}|ai-(?:image|video)-generation\/[a-z0-9-]+)$/, `Card ${card.id} link stays inside the site`);
   }
   if (workspace) assert.deepEqual(cards.map((card) => card.id), cardsFromHtml(html).map((card) => card.id));
-  return cardsFromHtml(html);
+  // Merge the two rendered destinations onto each HTML card so the relational
+  // pass can prove card links open detail pages while CTAs enter the workspace.
+  const serialized = new Map(cards.map((card) => [card.id, card]));
+  return cardsFromHtml(html).map((card) => ({
+    ...card,
+    createHref: serialized.get(card.id)?.createHref,
+    workspaceHref: serialized.get(card.id)?.workspaceHref,
+  }));
 }
 
 try {
@@ -92,7 +112,13 @@ try {
     assert(source, `Example ${card.id} resolves to its current picker card`);
     if (source.image?.src) assert.equal(card.src, source.image.src.trim(), "SSR uses the current relational image URL");
     else assert(source.ref, "Reference-only media must retain a current relational binding");
-    if (source.publicSlug) creationTargets.add(`/${photoIds.has(card.id) ? "ai-image-generation" : "ai-video-generation"}/${source.publicSlug}`);
+    if (source.publicSlug) {
+      const detailPath = `/${photoIds.has(card.id) ? "ai-image-generation" : "ai-video-generation"}/${source.publicSlug}`;
+      assert(new URL(card.createHref, origin).pathname.endsWith(detailPath), `Example ${card.id} card link opens its own detail page`);
+      creationTargets.add(detailPath);
+    } else {
+      assert.equal(card.createHref, card.workspaceHref, `Example ${card.id} without a public page keeps the workspace destination on both links`);
+    }
   }
   const targets = [...creationTargets];
   for (let start = 0; start < targets.length; start += 4) {

@@ -47,8 +47,8 @@ try {
   }, inspirationModule, inspirationModule.exports);
   for (const [kind, family] of [["video", "ai-video-generation"], ["photo", "ai-image-generation"]]) {
     const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-videos", prompt: "A product scene." };
-    assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/app/create/${family}`);
-    assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/app/create/${family}`);
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
+    assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
   }
   const navigationModules = new Map();
   const navigationRequire = (id) => {
