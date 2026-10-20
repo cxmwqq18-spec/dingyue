@@ -128,6 +128,10 @@ const leadExpected = {
   before: "Give the product a new look. Coastal, desert, plain studio, or indoor. Upload your product and name the setting.",
   after: "Give the product a new look: a tabletop scene, a splash of water, underwater, or indoors. Upload your product and name the setting.",
 };
+const pickerLeadExpected = {
+  before: "Try a beach, a desert, a plain studio, or a room. These four photos are examples. Upload your own product and describe the setting.",
+  after: "Try a tabletop scene, a splash of water, an underwater shot, or an indoor setting. These four photos are examples. Upload your own product and describe the setting.",
+};
 
 const stable = (value) => Array.isArray(value)
   ? value.map(stable)
@@ -184,6 +188,14 @@ try {
 
     if (Object.prototype.hasOwnProperty.call(examples, "lead")) {
       addOperation(`/sections/${sectionKey}/settings/data/examples/lead`, "examples.lead", leadExpected.before, leadExpected.after);
+    }
+
+    for (const [path, key] of [
+      [`/sections/${sectionKey}/settings/data/visual/picker/lead`, "visual.picker.lead"],
+      [`/sections/${sectionKey}/settings/data/visual/titles/m3/lead`, "visual.titles.m3.lead"],
+    ]) {
+      assert.notEqual(valueAt(content, path), undefined, `Missing current copy at ${path}`);
+      addOperation(path, key, pickerLeadExpected.before, pickerLeadExpected.after);
     }
 
     for (const expected of groupsExpected) {
