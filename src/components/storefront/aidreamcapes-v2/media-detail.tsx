@@ -1,4 +1,5 @@
 import type { AidreamcapesV2Navigation } from "@/lib/types";
+import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import type { MediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
@@ -8,6 +9,8 @@ import {
   mediaDetailIntro
 } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { V2Resolvers } from "./types";
+import type { V2Company } from "./company";
+import type { AidreamcapesFooterArticle } from "./latest-articles";
 import { AidreamcapesV2Shell } from "./shell";
 
 // Public media detail page. Complete server-rendered HTML: the card, its media,
@@ -75,14 +78,17 @@ function RelatedGrid({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   );
 }
 
-export function AidreamcapesMediaDetailPage({ detail, navigation, r }: {
+export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, articles, articlesTitle }: {
   detail: MediaDetail;
   navigation: AidreamcapesV2Navigation;
   r: V2Resolvers;
+  company?: V2Company;
+  articles?: AidreamcapesFooterArticle[];
+  articlesTitle?: string;
 }) {
   const { card } = detail;
   const intro = mediaDetailIntro(card);
-  const crumbs = mediaDetailCrumbs(card, detail.ownerLabel);
+  const crumbs = mediaDetailCrumbs(card);
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
@@ -101,9 +107,9 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r }: {
   ].filter((item): item is { label: string; value: string } => Boolean(item));
 
   return (
-    <AidreamcapesV2Shell mainId="media-detail" navigation={navigation} r={r}>
+    <AidreamcapesV2Shell articles={articles} articlesTitle={articlesTitle} company={company} mainId="media-detail" navigation={navigation} r={r}>
       <WorkspaceEntryBehavior />
-      <script type="application/ld+json" data-storefront-json-ld="media-detail" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph).replace(/</g, "\\u003c") }} />
+      <StorefrontJsonLd nodes={[graph]} preserveBodyMarker />
       <style dangerouslySetInnerHTML={{ __html: `
 #media-detail .v-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;align-items:start;padding:24px 0 8px}
 #media-detail .v-detail-media{margin:0;border-radius:18px;overflow:hidden;background:#0d1220;box-shadow:0 18px 60px rgba(10,16,32,.18)}
@@ -146,7 +152,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r }: {
             ) : null}
             <div className="v-detail-actions">
               <WorkspaceEntryLink className="btn btn-grad" entry={detail.cta.entry} href={r.href(detail.cta.href)}>
-                {detail.kind === "photo" ? "Use this template" : "Make a video like this"} →
+                {`${detail.kind === "photo" ? "Use this template" : "Make a video like this"} →`}
               </WorkspaceEntryLink>
               <a className="btn" href={r.href(detail.ownerPath)}>Browse the full directory</a>
             </div>

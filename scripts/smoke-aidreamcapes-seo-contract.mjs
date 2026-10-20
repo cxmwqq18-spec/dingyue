@@ -382,8 +382,25 @@ const sitemapPathSet = new Set(pageUrls.map((url) => new URL(url).pathname));
 const nestedActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/(?:men|women)\//.test(path));
 assert.equal(nestedActorUrls.length, 0, `sitemap submits ${nestedActorUrls.length} nested actor URL(s)`);
 const ACTOR_HUB_PATHS = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-actors/scene", "/ai-actors/age-range"]);
+const FLAT_ACTOR_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]*)$/i;
 const flatActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path) && !ACTOR_HUB_PATHS.has(path));
 assert(flatActorUrls.length > 0, "sitemap submits no flat actor URL");
+
+// The sitemap submits exactly the actor pages the directory publishes.
+const actorDirectory = await get("/ai-actors");
+assert.equal(actorDirectory.status(), 200, `/ai-actors: status ${actorDirectory.status()}`);
+const actorDirectoryDom = load(await actorDirectory.text());
+const directoryActorPaths = new Set();
+actorDirectoryDom("article.actor-card a[href]").each((_, node) => {
+  const href = actorDirectoryDom(node).attr("href") || "";
+  const path = new URL(href, `${BASE_URL}/`).pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/, "");
+  if (FLAT_ACTOR_RE.test(path)) directoryActorPaths.add(path);
+});
+assert(directoryActorPaths.size > 0, "the actor directory publishes no actor page");
+assert.equal(flatActorUrls.length, directoryActorPaths.size, `sitemap submits ${flatActorUrls.length} actor URLs, the directory publishes ${directoryActorPaths.size}`);
+for (const path of directoryActorPaths) {
+  assert(flatActorUrls.includes(path), `sitemap is missing the actor page ${path}`);
+}
 
 const mediaDetailPaths = new Set();
 for (const listing of ["/ai-video-generation", "/ai-image-generation"]) {

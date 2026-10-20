@@ -2,6 +2,13 @@ import "server-only";
 
 import { prisma } from "@/lib/prisma";
 import aidreamcapesV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
+import { getStorefrontProfileRelational } from "@/lib/stores/storefront-profile-store";
+import type { StorefrontProfileJson } from "@/lib/types";
+import {
+  aidreamcapesLatestArticlesHeading,
+  latestAidreamcapesArticles,
+  type AidreamcapesFooterArticle
+} from "@/components/storefront/aidreamcapes-v2/latest-articles";
 import { AIVIDEOSUGC_SITE_ID } from "./types";
 import {
   MEDIA_DETAIL_SLUG_PATTERN,
@@ -276,6 +283,9 @@ function actorFromPage(contentJson: unknown): RecordValue | undefined {
 export type AidreamcapesSiteChrome = {
   navigation: unknown;
   keywords?: string;
+  articles: AidreamcapesFooterArticle[];
+  articlesTitle?: string;
+  identity?: StorefrontProfileJson["identity"];
 };
 
 /** Navigation is published once on the home LivePage and shared by every route. */
@@ -289,9 +299,31 @@ export async function loadAidreamcapesChrome(): Promise<AidreamcapesSiteChrome |
   if (!record(navigation)) return undefined;
   const seo = record(content?.seo);
   const keywords = str(seo?.keywords);
+  // The footer carries the same company block and article list on every
+  // storefront route, so the detail shell has to load them from the same
+  // current rows the home route reads.
+  const [articlePages, profile] = await Promise.all([
+    prisma.livePage.findMany({
+      where: { siteId: AIVIDEOSUGC_SITE_ID, slug: { startsWith: "/blog/" } },
+      select: { slug: true, pageType: true, title: true, updatedAt: true, contentJson: true },
+    }),
+    getStorefrontProfileRelational(AIVIDEOSUGC_SITE_ID),
+  ]);
+  const articles = latestAidreamcapesArticles(articlePages.map((article) => ({
+    slug: article.slug,
+    pageType: article.pageType ?? undefined,
+    title: article.title,
+    updatedAt: article.updatedAt,
+    liveContentJson: article.contentJson,
+  })));
+  const articlesTitle = aidreamcapesLatestArticlesHeading(page?.contentJson);
+  const identity = profile?.publishedJson?.identity;
   return {
     navigation,
     ...(keywords ? { keywords } : {}),
+    articles,
+    articlesTitle,
+    ...(identity ? { identity } : {}),
   };
 }
 

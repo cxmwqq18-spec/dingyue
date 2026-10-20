@@ -10,6 +10,7 @@ import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-con
 import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
 import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
+import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
 import { inspirationExampleLinks } from "@/lib/aidreamcapes-inspirations-types";
 import {
   AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
@@ -112,6 +113,9 @@ export async function renderAidreamcapesMediaDetailPage({ kind, slug, basePath =
       detail={detail}
       navigation={chrome.navigation as AidreamcapesV2Navigation}
       r={publicResolvers(basePath)}
+      company={aidreamcapesV2Company(chrome.identity)}
+      articles={chrome.articles}
+      articlesTitle={chrome.articlesTitle}
     />
   );
 }

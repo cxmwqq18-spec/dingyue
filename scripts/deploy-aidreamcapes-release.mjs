@@ -48,6 +48,10 @@ const productionAssetPaths = [
 ];
 const archivePaths = [...sourcePaths, ...productionAssetPaths];
 const root = "/www/wwwroot/aidreamcapes.com";
+// The production bundle of this storefront is large. The build heap is
+// configurable so a release can be given the room it needs instead of
+// failing with a heap limit on the release host.
+const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "12288";
 if (reuseBuildCommit) {
   assert(/^[a-f0-9]{40}$/.test(reuseBuildCommit), "Reuse requires an exact --reuse-build=<40-character SHA>");
   const buildInputs = (sha) => git("ls-tree", "-r", sha, "--", ...sourcePaths)
@@ -128,7 +132,7 @@ test -f .next-build/BUILD_ID
 test "$(cat .next-build/.build-commit)" = ${quote(commit)}` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
 test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
 test -f "$REUSE/.next-build/BUILD_ID"
-cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : "nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=10240 node scripts/build-production.mjs"}
+cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : "nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=${buildHeapMb} node scripts/build-production.mjs"}
 printf '%s\n' "$COMMIT" > .deployed-commit
 CANDIDATE_PORT=$(node -e 'const server=require("node:net").createServer(); server.listen(0,"127.0.0.1",()=>{process.stdout.write(String(server.address().port));server.close();});')
 HOSTNAME=127.0.0.1 PORT="$CANDIDATE_PORT" NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &

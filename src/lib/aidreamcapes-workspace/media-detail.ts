@@ -18,6 +18,16 @@ export const MEDIA_DETAIL_ROOT: Record<MediaDetailKind, string> = {
   video: "ai-video-generation",
 };
 
+/**
+ * Public name of each detail root. A breadcrumb is navigation, so it has to
+ * read like the address it links to. The directory page headline is a
+ * marketing sentence and never belongs in a trail.
+ */
+const MEDIA_DETAIL_ROOT_LABEL: Record<MediaDetailKind, string> = {
+  photo: "AI Image Generation",
+  video: "AI Video Generation",
+};
+
 export const MEDIA_DETAIL_SLUG_PATTERN = /^[a-z0-9][a-z0-9-]{0,119}$/;
 
 /** Public card shape the detail page is rendered from. */
@@ -90,11 +100,11 @@ export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "li
 }
 
 /** Breadcrumb trail for a detail page: home -> owning directory -> the card. */
-export function mediaDetailCrumbs(card: Pick<MediaDetailCard, "kind" | "label">, ownerLabel?: string): { label: string; href: string }[] {
+export function mediaDetailCrumbs(card: Pick<MediaDetailCard, "kind" | "label">): { label: string; href: string }[] {
   const rootPath = `/${MEDIA_DETAIL_ROOT[card.kind]}`;
   return [
     { label: "Home", href: "/" },
-    { label: ownerLabel || (card.kind === "photo" ? "AI product photos" : "AI video ads"), href: rootPath },
+    { label: MEDIA_DETAIL_ROOT_LABEL[card.kind], href: rootPath },
     { label: mediaDetailTitle(card), href: "" },
   ];
 }

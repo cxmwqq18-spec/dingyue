@@ -89,6 +89,7 @@ function cardLinks(html) {
     const href = anchor.attr("href") || "";
     const url = new URL(href, `${origin}/`);
     links.push({
+      href,
       path: publicPath(href),
       query: url.search,
       hash: url.hash,
@@ -150,6 +151,14 @@ async function checkPath(path) {
       assert.equal(card.query, referenceCards[index].query, `${scope} [${mode.name}]: card ${index} query differs`);
       assert.equal(card.hash, referenceCards[index].hash, `${scope} [${mode.name}]: card ${index} fragment differs`);
       assert.equal(card.entry, referenceCards[index].entry, `${scope} [${mode.name}]: card ${index} entry payload differs`);
+      // A card link is a plain path in the mode that serves the page: the host
+      // mode never carries a path-mode prefix and the path mode always does.
+      assert.ok(card.href.startsWith("/"), `${scope} [${mode.name}]: card link is not a root-relative path (${card.href})`);
+      if (mode.prefix) {
+        assert.ok(card.href.startsWith(`${mode.prefix}/`), `${scope} [${mode.name}]: card link does not use the path-mode prefix (${card.href})`);
+      } else {
+        assert.ok(!card.href.includes("/site/"), `${scope} [${mode.name}]: card link leaks a path-mode prefix (${card.href})`);
+      }
     }
     const cta = workspaceCta(page.html);
     assert.equal(cta.count, referenceCta.count, `${scope} [${mode.name}]: workspace CTA count differs`);
