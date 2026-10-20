@@ -9,7 +9,8 @@ import "./load-runtime-env.mjs";
 const args = process.argv.slice(2);
 const value = (key) => args.find((arg) => arg.startsWith(`${key}=`))?.slice(key.length + 1);
 const commit = value("--commit");
-const codeOnly = args.includes("--code-only");
+// Deploying application code never authorizes writes to editable site content.
+const codeOnly = true;
 const verifyInspirations = args.includes("--verify-inspirations");
 assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<40-character SHA>");
 const prebuiltBuild = value("--prebuilt-build");

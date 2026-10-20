@@ -36,6 +36,7 @@ const applyLocal = hasArgument("--apply-local");
 const applyProduction = hasArgument("--apply-production");
 assert(!(applyLocal && applyProduction), "Choose one database write target.");
 const apply = applyLocal || applyProduction;
+assert(!apply, "Full-site content generation writes are disabled. Do not regenerate or overwrite existing storefront content. Use an explicitly scoped field-level relational manifest with conflict checks.");
 const requestedSiteId = argumentValue("--site-id") ?? SITE_ID;
 const confirmation = argumentValue("--confirm") ?? "";
 const backupRoot = argumentValue("--backup-dir") ?? path.resolve("releases/backups/aidreamcapes");

@@ -11,6 +11,15 @@ data owner, derived-state revision, origin/public readback, and regression check
 
 ## No-Snapshot Publication Rule
 
+### Aidreamcapes full-site generation ban
+
+Full-site generation must never write Aidreamcapes content, in production or
+local development. `scripts/migrate-aidreamcapes-site-v2.mjs` write modes are
+disabled. Do not bypass this guard, run an older copy, or regenerate existing
+pages to deploy a feature or repair content. Code deployment is code-only.
+Content repairs and updates require explicit field-level manifests against
+current relational rows, with compare-and-set checks; online edits win.
+
 During development, testing, release preparation, and production deployment,
 do not switch to, restore, import, or silently fall back to any historical
 publication or snapshot without the site owner's explicit approval in the
