@@ -138,6 +138,16 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
   };
 }
 
+/** Keep live actor copy and indexing settings, replacing only the public URL. */
+export function aidreamcapesActorPublicMetadata(metadata: Metadata, path: string): Metadata {
+  const canonical = new URL(path, MEDIA_DETAIL_PUBLIC_ORIGIN).href;
+  return {
+    ...metadata,
+    alternates: { ...metadata.alternates, canonical },
+    openGraph: { ...metadata.openGraph, url: canonical },
+  };
+}
+
 export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "", query = {} }: {
   query?: GuestRouteQuery;
   siteSlug: string;

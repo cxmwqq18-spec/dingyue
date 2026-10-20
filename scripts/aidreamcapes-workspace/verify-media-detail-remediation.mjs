@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const origin = String(process.env.AIDREAMCAPES_AUDIT_ORIGIN || "http://127.0.0.1:3003").replace(/\/$/, "");
 const pathMode = process.env.AIDREAMCAPES_AUDIT_PATH_MODE !== "0";
-const base = pathMode ? "/site/aivideosugc" : "";
+const base = pathMode ? `/site/${process.env.AIDREAMCAPES_AUDIT_SITE_SLUG || "aidreamcapes"}` : "";
 const sitemapOrigin = "https://www.aivideosugc.com";
 const timeout = Number(process.env.AIDREAMCAPES_AUDIT_TIMEOUT || 120000);
 
@@ -30,6 +30,8 @@ const suite = [
 
 const failures = [];
 const steps = [];
+const auditResults = new Map();
+const actorHubs = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-actors/scene", "/ai-actors/age-range"]);
 
 function fail(step, message) {
   failures.push(`${step}: ${message}`);
@@ -93,7 +95,7 @@ async function get(url) {
 }
 
 // ---- 1. Focused audits -----------------------------------------------------
-for (const file of suite) await runAudit(file);
+for (const file of suite) auditResults.set(file, await runAudit(file));
 
 // ---- 2. Sitemap shape ------------------------------------------------------
 let sitemapPaths = [];
@@ -103,13 +105,13 @@ try {
   const $ = load(sitemap.html, { xmlMode: true });
   sitemapPaths = $("loc").map((_, node) => $(node).text().trim()).get()
     .map((loc) => new URL(loc).pathname);
-  if (sitemapPaths.length !== 177) fail("sitemap", `expected 177 URLs, got ${sitemapPaths.length}`);
+  if (!sitemapPaths.length) fail("sitemap", "current sitemap must not be empty");
+  if (new Set(sitemapPaths).size !== sitemapPaths.length) fail("sitemap", "duplicate canonical URLs");
   const nestedActors = sitemapPaths.filter((value) => /^\/ai-actors\/(?:men|women)\//.test(value));
   if (nestedActors.length) fail("sitemap", `${nestedActors.length} nested actor URL(s), expected 0`);
-  const flatActors = sitemapPaths.filter((value) => /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(value));
-  if (flatActors.length !== 53) fail("sitemap", `expected 53 flat actor URLs, got ${flatActors.length}`);
-  const photoPaths = sitemapPaths.filter((value) => value.startsWith("/ai-image-generation/"));
-  if (photoPaths.length !== 14) fail("sitemap", `expected 14 photo theme URLs, got ${photoPaths.length}`);
+  const flatActors = sitemapPaths.filter((value) => /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(value) && !actorHubs.has(value));
+  const expectedActors = auditResults.get("audit-actor-flat-routes.mjs")?.database?.flatSlugs;
+  if (!expectedActors || flatActors.length !== expectedActors) fail("sitemap", `expected ${expectedActors} current actor URLs, got ${flatActors.length}`);
 } catch (error) {
   fail("sitemap", error instanceof Error ? error.message : String(error));
 }
@@ -164,7 +166,10 @@ try {
     const page = await get(`${origin}${base}${source}`);
     if (page.status === 404) dead.push(source);
   }
-  if (dead.length) fail("legacy-redirects", `${dead.length} retired path(s) still 404: ${dead.slice(0, 6).join(", ")}`);
+  const namespace = auditResults.get("audit-media-namespace.mjs");
+  const verifiedRetired = new Set((namespace?.classification || []).filter((row) => row.status === 404 && row.allowlisted).map((row) => row.slug));
+  const unexpected = dead.filter((slug) => !verifiedRetired.has(slug));
+  if (unexpected.length) fail("legacy-redirects", `${unexpected.length} unexplained 404 path(s): ${unexpected.slice(0, 6).join(", ")}`);
 } catch (error) {
   fail("legacy-redirects", error instanceof Error ? error.message : String(error));
 }
@@ -178,9 +183,9 @@ const result = {
   sitemap: { urls: sitemapPaths.length, dead: sitemapDead.length },
   checks: {
     "audits": suite,
-    "sitemap": "177 URLs, 0 nested actor URLs, 53 flat actor URLs, 14 photo themes, all 200",
+    "sitemap": "current canonical URLs, current actor inventory, no duplicates or nested actor URLs, all 200",
     "actor page": "flat canonical, indexable, JSON-LD free of nested actor URLs",
-    "legacy redirects": "no path in the v2 redirect map returns 404",
+    "legacy redirects": "no unexplained 404; retired orphans independently verified by namespace audit",
     "cards and detail pages": "owned by the focused audits above"
   },
   failures

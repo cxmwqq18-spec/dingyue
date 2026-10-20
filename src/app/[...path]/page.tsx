@@ -38,6 +38,7 @@ import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editoria
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import {
   aidreamcapesMediaDetailMetadata,
+  aidreamcapesActorPublicMetadata,
   renderAidreamcapesCreatePage,
   renderAidreamcapesInspirationsPage,
   renderAidreamcapesMediaDetailPage,
@@ -491,17 +492,14 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
           : undefined;
         const actorPage = actorSite ? findPage(actorSite, actor.detailPageSlug) : undefined;
         if (actorState && actorSite && actorPage) {
-          return {
-            ...(await metadataForPublishedStorefrontPage({
+          return aidreamcapesActorPublicMetadata(await metadataForPublishedStorefrontPage({
               site: actorSite,
               page: actorPage,
-              path: flatPath,
+              path: actor.detailPageSlug,
               products: actorState.products,
               creativePacks: actorState.creativePacks,
               snapshot: createPublishedSiteSnapshot(actorState, actorSite, { source: "platform-state" })
-            })),
-            robots: { index: true, follow: true }
-          };
+            }), flatPath);
         }
       }
     }

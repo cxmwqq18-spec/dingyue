@@ -29,6 +29,7 @@ import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveThe
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import {
   aidreamcapesMediaDetailMetadata,
+  aidreamcapesActorPublicMetadata,
   renderAidreamcapesCreatePage,
   renderAidreamcapesMediaDetailPage
 } from "@/lib/aidreamcapes-guest-workspace";
@@ -380,17 +381,14 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         const actorSite = actorState?.sites[0];
         const actorPage = actorSite ? findPage(actorSite, actor.detailPageSlug) : undefined;
         if (actorState && actorSite && actorPage) {
-          return {
-            ...(await metadataForPublishedStorefrontPage({
+          return aidreamcapesActorPublicMetadata(await metadataForPublishedStorefrontPage({
               site: actorSite,
               page: actorPage,
-              path: flatPath,
+              path: actor.detailPageSlug,
               products: actorState.products,
               creativePacks: actorState.creativePacks,
               snapshot: createPublishedSiteSnapshot(actorState, actorSite, { source: "platform-state" })
-            })),
-            robots: { index: true, follow: true }
-          };
+            }), flatPath);
         }
       }
     }
