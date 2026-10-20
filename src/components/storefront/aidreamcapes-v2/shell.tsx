@@ -46,13 +46,14 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
         <nav aria-label={copyLabel(r, "Main")} className="main" id="adc2-main-nav">
           {navigation.menus.map((menu) => {
             const rich = menu.groups.length === 1 && menu.groups[0].items.some((item) => item.description);
+            const wideDirectory = !rich && menu.groups.some((group) => group.columns);
             return (
               <div className="nav-item" key={menu.label}>
                 <button aria-expanded="false" className="nav-btn" type="button">
                   {menu.label}
                   <Chevron />
                 </button>
-                <div className={rich && menu.popular?.length ? "panel two" : "panel"}>
+                <div className={rich && menu.popular?.length ? "panel two" : wideDirectory ? "panel directory-wide" : "panel"}>
                   {rich ? (
                     <div>
                       <div className="ph">{menu.groups[0].label}</div>
@@ -62,7 +63,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
                     </div>
                   ) : (
                     menu.groups.map((group) => (
-                      <div className={group.columns === "2" ? "pcol tlist cols2" : "pcol tlist"} key={group.label}>
+                      <div className={group.columns ? "pcol tlist cols3" : "pcol tlist"} key={group.label}>
                         <div className="ph">{group.label}</div>
                         {group.items.map((item) => <MenuLink key={item.href} link={item} r={r} />)}
                       </div>

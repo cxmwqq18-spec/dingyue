@@ -729,7 +729,7 @@ const actorDirectoryCss = `
 .adc2 .actor-card h3{margin:0;font-size:19px;line-height:1.2}
 .adc2 .actor-style{color:var(--ink-2);font-size:14px;line-height:1.45}
 .adc2 .actor-tags{color:var(--ink-3);font-size:12px;line-height:1.5;margin:0}
-.adc2 .actor-card .btn{margin-top:auto;padding:9px 12px;font-size:13px}
+.adc2 .actor-card .btn{margin-top:auto;max-width:100%;padding:9px 12px;font-size:13px;line-height:1.25;text-align:left;white-space:normal}
 .adc2 .actor-filters{position:sticky;top:100px;display:flex;flex-direction:column;gap:12px;padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
 .adc2 .actor-filters h2{font-size:17px;margin:0}
 .adc2 .actor-filter-row{display:flex;flex-direction:column;gap:5px}
@@ -737,9 +737,11 @@ const actorDirectoryCss = `
 .adc2 .actor-filter-control{width:100%;padding:9px 10px;border:1px solid var(--line-2);border-radius:10px;background:var(--bg-2);color:var(--ink);font:inherit;font-size:13px}
 .adc2 .actor-filter-control:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
 .adc2 .actor-filter-count{font-size:12px;color:var(--ink-3);min-height:18px}
-.adc2 .actor-grid.actorgroup-list{list-style:none;margin:0;padding:0}
+.adc2 .actor-grid.actorgroup-list{grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;margin:0;padding:0}
 .adc2 .cardlist .actor-hub-image{object-position:center top}
+@media(max-width:1100px){.adc2 .actor-grid.actorgroup-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:900px){.adc2 .actor-layout{grid-template-columns:minmax(0,1fr);gap:20px}.adc2 .actor-filters{position:static;grid-row:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:end}.adc2 .actor-filters h2,.adc2 .actor-filter-count{grid-column:1/-1}}
+@media(max-width:760px){.adc2 .actor-grid.actorgroup-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.adc2 .actor-main{grid-template-columns:minmax(0,1fr)}.adc2 .actor-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.adc2 .actor-card-copy{padding:11px}.adc2 .actor-card h3{font-size:17px}.adc2 .actor-card .btn{font-size:12px}.adc2 .actor-filters{grid-template-columns:repeat(2,minmax(0,1fr));padding:13px}.adc2 .actor-filter-row label{font-size:11px}.adc2 .actor-filter-control{font-size:12px;padding:8px 7px}}
 `;
 
