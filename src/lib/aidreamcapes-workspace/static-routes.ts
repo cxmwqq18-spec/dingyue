@@ -6,7 +6,7 @@
 //   /app/create/demo/<slug>                curated demo prompt
 // Free-form customer input (typed prompts, product URLs, post-login task
 // continuation) is not part of this scheme and never appears in public links.
-import { isWorkspaceView, WORKSPACE_VIEWS, type WorkspaceView } from "./navigation";
+import { isWorkspaceView, WORKSPACE_VIEWS, workspaceViewSegment, WORKSPACE_VIEW_SEGMENTS, type WorkspaceView } from "./navigation";
 
 export type StaticCreateTarget =
   | { kind: "view"; view: WorkspaceView }
@@ -21,6 +21,24 @@ export const LIBRARY_FILTERS = new Set(["all", "completed", "draft"]);
 const TOOL_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,60}$/;
 const TEMPLATE_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
 const DEMO_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
+
+// Composer tool routes live under the public directory naming: video tools at
+// /app/create/ai-video-generation/<tool>, photo tools at
+// /app/create/ai-image-generation/<tool>. A tool outside both sets has no
+// canonical group and stays on the query-form entry.
+const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "url-to-video", "video-ads", "product-videos", "before-after-videos", "spokesperson-videos", "unboxing-videos"]);
+const IMAGE_GROUP_TOOLS = new Set(["custom", "photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"]);
+
+export function workspaceToolGroup(tool: string): "video" | "image" | undefined {
+  if (VIDEO_GROUP_TOOLS.has(tool)) return "video";
+  if (IMAGE_GROUP_TOOLS.has(tool)) return "image";
+  return undefined;
+}
+
+function groupViewForSegment(segment: string): WorkspaceView | undefined {
+  const entry = Object.entries(WORKSPACE_VIEW_SEGMENTS).find(([, candidate]) => candidate === segment);
+  return entry?.[0] as WorkspaceView | undefined;
+}
 
 export type StaticDemo = {
   slug: string;
@@ -149,7 +167,19 @@ export function parseStaticCreateSegments(segments: string[]): StaticCreateTarge
   if (segments.length < 1 || segments.length > 3) return undefined;
   const [first, second, third] = segments;
   if (first === "scene" || first === "jobs") return undefined;
+  const groupView = groupViewForSegment(first);
+  if (groupView && segments.length >= 2) {
+    // The text-to-video storyboard is a module view, not a tool: it lives at
+    // ai-video-generation/text-to-video.
+    if (second === "text-to-video" && segments.length === 2 && groupView === "video") return { kind: "view", view: "agent" };
+    // Tool routes filed under their public directory: the tool must belong to it.
+    if (!TOOL_SEGMENT_RE.test(second) || workspaceToolGroup(second) !== (groupView === "images" ? "image" : "video")) return undefined;
+    if (segments.length === 2) return { kind: "tool", tool: second };
+    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: second, template: third };
+    return undefined;
+  }
   if (segments.length === 1) {
+    if (groupView) return { kind: "view", view: groupView };
     return isWorkspaceView(first) ? { kind: "view", view: first } : undefined;
   }
   if (first === "tool" && segments.length >= 2 && TOOL_SEGMENT_RE.test(second)) {
@@ -194,13 +224,41 @@ export function staticCreateQuery(target: StaticCreateTarget): Record<string, st
 }
 
 export function staticViewHref(basePath: string, view: WorkspaceView): string {
-  return `${basePath}/app/create/${view}`;
+  return `${basePath}/app/create/${workspaceViewSegment(view)}`;
 }
 
 export function staticToolHref(basePath: string, tool: string, template?: string): string | undefined {
   if (!TOOL_SEGMENT_RE.test(tool)) return undefined;
   if (template && !TEMPLATE_SEGMENT_RE.test(template)) return undefined;
-  return `${basePath}/app/create/tool/${tool}${template ? `/${template}` : ""}`;
+  const group = workspaceToolGroup(tool);
+  if (!group) return undefined;
+  return `${basePath}/app/create/${group === "video" ? WORKSPACE_VIEW_SEGMENTS.video : WORKSPACE_VIEW_SEGMENTS.images}/${tool}${template ? `/${template}` : ""}`;
+}
+
+/**
+ * Superseded fixed workspace paths redirect to their canonical group path so
+ * the address bar always shows the public directory naming. Returns the path
+ * (without the /app/create prefix context) or undefined when the segments are
+ * not a legacy form.
+ */
+export function legacyStaticCreateRedirect(segments: string[]): string | undefined {
+  const [first, second, third] = segments;
+  if (segments.length === 1) {
+    if (first === "video") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.video}`;
+    if (first === "images") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.images}`;
+    if (first === "actors") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.actors}`;
+    if (first === "product") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.product}`;
+    if (first === "agent") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.agent}`;
+    return undefined;
+  }
+  if (first === "tool" && segments.length <= 3 && TOOL_SEGMENT_RE.test(second ?? "")) {
+    if (second === "text-to-video" && segments.length === 2) return `/app/create/${WORKSPACE_VIEW_SEGMENTS.agent}`;
+    const group = workspaceToolGroup(second ?? "");
+    if (!group) return undefined;
+    if (segments.length === 3 && !TEMPLATE_SEGMENT_RE.test(third ?? "")) return undefined;
+    return `${staticToolHref("", second ?? "", segments.length === 3 ? third : undefined)}`;
+  }
+  return undefined;
 }
 
 export function staticDemoHref(basePath: string, slug: string): string | undefined {
@@ -220,14 +278,14 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
   const params = url.searchParams;
   const keys = [...params.keys()].sort();
   if (!keys.length) return "/app/create";
-  const kept = new Set(["view", "tool", "tool_id", "template", "prompt", "scene", "aspect", "duration", "plan", "nextHash", "templates", "category", "filter", "videoMode"]);
+  const kept = new Set(["view", "tool", "tool_id", "template", "prompt", "scene", "aspect", "duration", "plan", "nextHash", "templates", "category", "filter", "videoMode", "size", "length"]);
   if (keys.some((key) => !kept.has(key))) return undefined;
   // Legacy video modes renamed before the static route work.
   const legacyVideoMode: Record<string, string> = { "ugc-ad": "video-ads", "product-video": "product-videos" };
   if (params.get("videoMode")) {
     if (keys.length !== 1) return undefined;
     const tool = legacyVideoMode[params.get("videoMode") ?? ""];
-    return tool ? `/app/create/tool/${tool}` : undefined;
+    return tool ? staticToolHref("", tool) : undefined;
   }
   if (params.get("prompt")) {
     const demo = staticDemoForHref(href);
@@ -249,9 +307,20 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
   if (tool || toolId) {
     if (params.get("nextHash") && !template) return undefined;
     if (view && !isWorkspaceView(view)) return undefined;
-    return staticToolHref("", tool ?? "", template ?? undefined) ?? (toolId && !tool ? "/app/create/images" : undefined);
+    const target = staticToolHref("", tool ?? "", template ?? undefined)
+      ?? (tool === "text-to-video" && !template ? `/app/create/${WORKSPACE_VIEW_SEGMENTS.agent}` : undefined)
+      ?? (toolId && !tool ? `/app/create/${WORKSPACE_VIEW_SEGMENTS.images}` : undefined);
+    if (!target) return undefined;
+    // Format preselection (size/length) stays in the query; the path carries
+    // only the canonical tool, like the product-URL handoff keeps its state.
+    const extras = new URLSearchParams();
+    for (const key of ["size", "length"]) if (params.get(key)) extras.set(key, params.get(key) ?? "");
+    return target + (extras.toString() ? `?${extras.toString()}` : "");
   }
-  if (view && keys.length === 1 && isWorkspaceView(view)) return `/app/create/${view}`;
+  if (view && keys.length === 1 && isWorkspaceView(view)) {
+    if (view === "product") return `/app/create/${WORKSPACE_VIEW_SEGMENTS.product}`;
+    return `/app/create/${workspaceViewSegment(view)}`;
+  }
   return undefined;
 }
 

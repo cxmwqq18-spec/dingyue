@@ -24,7 +24,23 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
 ];
 
 export function workspaceViewHref(basePath: string, view: WorkspaceView): string {
-  return `${basePath}/app/create/${view}`;
+  return `${basePath}/app/create/${workspaceViewSegment(view)}`;
+}
+
+// Composer URLs for the storefront-facing groups mirror the public directory
+// naming (/ai-video-generation, /ai-image-generation, /ai-actors); every other
+// module keeps its own workspace-only segment.
+export const WORKSPACE_VIEW_SEGMENTS = {
+  video: "ai-video-generation",
+  images: "ai-image-generation",
+  actors: "ai-actors",
+  product: "ai-video-generation/url-to-video",
+  agent: "ai-video-generation/text-to-video",
+} as const;
+export type WorkspaceViewSegment = keyof typeof WORKSPACE_VIEW_SEGMENTS;
+
+export function workspaceViewSegment(view: WorkspaceView): string {
+  return (WORKSPACE_VIEW_SEGMENTS as Record<string, string | undefined>)[view] ?? view;
 }
 
 export type WorkspaceQuickStart = { label: string; sceneId: SceneId; aspect?: "9:16" | "1:1" | "16:9"; duration?: 6 | 10 | 15 | 30 };

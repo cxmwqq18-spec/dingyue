@@ -106,11 +106,18 @@ export function pickerPresetHref(card: PickerPresetCard, sourcePage: string | un
   if (!source) return card.href;
   let target: URL;
   try { target = new URL(card.href, "https://www.aivideosugc.com"); } catch { return card.href; }
-  if (!["https:", "http:"].includes(target.protocol) || target.username || target.password || !["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"].includes(target.hostname) || target.pathname !== "/app/create") return card.href;
+  if (!["https:", "http:"].includes(target.protocol) || target.username || target.password || !["www.aivideosugc.com", "aivideosugc.com", "aidreamcapes.com", "www.aidreamcapes.com"].includes(target.hostname)) return card.href;
   const mediaPath = workspaceMediaRoutePath(card.kind, card.publicSlug);
   if (mediaPath) return mediaPath;
   const sceneRouteSlug = workspaceSceneRouteSlug(source, card.sceneSlug);
   if (sceneRouteSlug) return `/app/create/scene/${sceneRouteSlug}`;
+  // Fixed tool paths carry only tool/template; the case data (prompt, scene,
+  // aspect, duration) must reach the workspace through the server-side preset
+  // wrapper, so both the legacy query form and the static tool path collapse
+  // into the same opaque identity link.
+  const toolPathMatch = target.pathname.match(/^\/app\/create\/tool\/([a-z0-9][a-z0-9-]{0,60})(?:\/([a-z0-9][a-z0-9-]{0,40}))?$/);
+  const isCreateEntry = target.pathname === "/app/create" || Boolean(toolPathMatch);
+  if (!isCreateEntry) return card.href;
   const query = new URLSearchParams({ source, preset: pickerPresetId(card) });
   return `/app/create?${query.toString()}`;
 }

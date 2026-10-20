@@ -14,7 +14,14 @@ const tasks = new Map();
 const actors = JSON.parse(fs.readFileSync('src/lib/aidreamcapes-workspace/actors.json','utf8')).actors;
 const unexpected = [], errors = [], fixtureHydrationRecoveries = [], calls = [], checks = [];
 const artifacts = fs.mkdtempSync(path.join(os.tmpdir(), 'aidreamcapes-navigation-'));
-const viewFromUrl = (url) => url.searchParams.get('view') ?? url.pathname.match(/\/app\/create\/([a-z-]+)$/)?.[1] ?? (url.pathname.endsWith('/app/create') ? 'home' : undefined);
+const VIEW_SEGMENTS = { 'ai-video-generation': 'video', 'ai-image-generation': 'images', 'ai-actors': 'actors', 'url-to-video': 'product', 'text-to-video': 'agent' };
+const viewFromUrl = (url) => {
+  if (url.searchParams.get('view')) return url.searchParams.get('view');
+  const match = url.pathname.match(/\/app\/create\/(.+)$/);
+  if (!match) return url.pathname.endsWith('/app/create') ? 'home' : undefined;
+  const segments = match[1].split('/');
+  return VIEW_SEGMENTS[segments[1]] ?? VIEW_SEGMENTS[segments[0]] ?? segments[0];
+};
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, serviceWorkers: 'block' });
 const json = (route, value) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(value) });

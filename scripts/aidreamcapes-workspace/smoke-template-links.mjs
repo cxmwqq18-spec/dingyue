@@ -47,6 +47,21 @@ assert.equal(pickerPresetHref({ ...videoCard, href: "/templates" }, "/"), "/temp
 assert.equal(pickerPresetHref({ ...videoCard, href: "https://example.com/app/create?tool=video-ads" }, "/"), "https://example.com/app/create?tool=video-ads");
 assert.equal(pickerPresetHref({ ...videoCard, href: "https://aivideosugc.com/app/other" }, "/"), "https://aivideosugc.com/app/other");
 
+// Static tool paths (the production link form) collapse into the same opaque
+// identity link: the case data travels through the server-side preset wrapper.
+const toolPathCard = { ...videoCard, href: "/app/create/tool/video-ads/creator#step-video" };
+const toolPathHref = pickerPresetHref(toolPathCard, "/");
+assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").pathname, "/app/create");
+assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").searchParams.get("source"), "/");
+assert.equal(new URL(toolPathHref, "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId(toolPathCard));
+assert.doesNotMatch(toolPathHref, /creator|video-ads|step-video/i);
+const photoToolPathCard = { ...photoCard, kind: "photo", href: "/app/create/tool/white-background/white" };
+assert.equal(new URL(pickerPresetHref(photoToolPathCard, "/"), "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId(photoToolPathCard));
+// Any tool-shaped path collapses like the legacy query form; a card whose
+// preset cannot resolve simply opens the workspace without preselection.
+assert.equal(new URL(pickerPresetHref({ ...toolPathCard, href: "/app/create/tool/unknown-tool" }, "/"), "https://www.aivideosugc.com").searchParams.get("preset"), pickerPresetId({ ...toolPathCard, href: "/app/create/tool/unknown-tool" }));
+assert.equal(pickerPresetHref({ ...toolPathCard, href: "/app/create/demo/serum-15s-video" }, "/"), "/app/create/demo/serum-15s-video");
+
 for (const invalid of ["https://evil.example/path", "//evil.example/path", "/a/../b", "/a/%2e%2e/b", "/a%2fb", "/a%5cb", "/a?x=1", "/a#part", "/a b", "\\evil.example\\x"]) {
   assert.equal(presetSourcePage(invalid), undefined, `unsafe source should be rejected: ${invalid}`);
 }

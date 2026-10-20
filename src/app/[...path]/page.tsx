@@ -39,7 +39,7 @@ import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, 
 import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { legacyCreateHrefToStatic, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
+import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -744,6 +744,15 @@ export default async function HostStorefrontCatchAllPage({
     if (Object.keys(legacyQuery).length) {
       const staticPath = legacyCreateHrefToStatic(`/app/create?${new URLSearchParams(Object.entries(legacyQuery).flatMap(([k, v]) => Array.isArray(v) ? v.map((item) => [k, String(item)] as [string, string]) : [[k, String(v)]]))}`);
       if (staticPath) permanentRedirect(staticPath);
+    }
+  }
+  // Superseded fixed paths (…/video, …/tool/<tool>) redirect to the canonical
+  // public directory naming (…/ai-video-generation, …/ai-image-generation, …/ai-actors).
+  if (hostSiteSlug === "aidreamcapes" && firstSegment === "app" && path[1] === "create" && path.length >= 3) {
+    const legacyStaticPath = legacyStaticCreateRedirect(path.slice(2));
+    if (legacyStaticPath) {
+      const legacyQuery = searchParams ? await searchParams : {};
+      permanentRedirect(`${legacyStaticPath}${searchParamsSuffix(legacyQuery)}`);
     }
   }
   // AIVideosUGC lets unsigned visitors open the create workspace and the

@@ -53,6 +53,12 @@ try {
     if (id === "./navigation") return { isWorkspaceView: (value) => ["home", "agent", "images", "inspirations", "library", "settings"].includes(value) };
     if (id === "./handoff") return { workspaceHandoffFromSearchParams: () => undefined, workspaceHandoffHref: () => "" };
     if (id === "@/lib/aidreamcapes-inspirations") return { getAidreamcapesInspirationCards: async () => [] };
+    if (id === "@/lib/aidreamcapes-inspirations-types") {
+      const module = { exports: {} };
+      const code = ts.transpileModule(fs.readFileSync(path.join(root, "src/lib/aidreamcapes-inspirations-types.ts"), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
+      new Function("require", "module", "exports", code)((childId) => childId === "@/lib/aidreamcapes-workspace/preset-contract" ? presetContract : require(childId), module, module.exports);
+      return module.exports;
+    }
     if (id === "@/lib/aidreamcapes-create-intent") return { aidreamcapesCreateIntentFromSearchParams: () => undefined };
     if (id === "./preset-contract") return presetContract;
     if (id === "./presets.server") return {
