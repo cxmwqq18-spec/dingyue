@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "rule": "video picker link must carry only the tool",
+      "pages": [
+        "home",
+        "product-videos",
+        "spokesperson-videos",
+        "templates",
+        "tpl-angle",
+        "tpl-beauty",
+        "tpl-bf",
+        "tpl-color",
+        "tpl-drink",
+        "tpl-film",
+        "tpl-head",
+        "tpl-home",
+        "tpl-howto",
+        "tpl-jewel",
+        "tpl-launch",
+        "tpl-outfit",
+        "tpl-pack",
+        "tpl-sale",
+        "tpl-spark-ads-style-video",
+        "tpl-story",
+        "tpl-tryon",
+        "tpl-ugc",
+        "video-ads",
+        "video-hub"
+      ]
+    },
+    {
+      "rule": "visual image file is missing from public",
+      "pages": [
+        "before-after-videos",
+        "home",
+        "image-to-video",
+        "ind-beauty-skincare",
+        "ind-electronics",
+        "ind-fashion-clothing",
+        "ind-food-drinks",
+        "ind-health-wellness",
+        "ind-home-living",
+        "ind-jewelry-accessories",
+        "ind-shoes",
+        "industries",
+        "occ-black-friday",
+        "occ-holidays",
+        "occ-sale-discount",
+        "plat-facebook",
+        "plat-instagram",
+        "plat-tiktok",
+        "plat-youtube-shorts",
+        "product-videos",
+        "spokesperson-videos",
+        "templates",
+        "tpl-bf",
+        "tpl-drink",
+        "tpl-launch",
+        "tpl-outfit",
+        "tpl-spark-ads-style-video",
+        "url-to-video",
+        "video-ads",
+        "video-hub"
+      ]
+    },
+    {
+      "rule": "internal wording",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "rule": "opening copy and SEO metadata do not name the topic \"what AIVideosUGC makes for shops\"",
+      "pages": [
+        "about"
+      ]
+    },
+    {
+      "rule": "/ai-video-generation/text-to-video",
+      "pages": [
+        "redirect target missing"
+      ]
+    },
+    {
+      "rule": "/ai-video-generation/ai-twin",
+      "pages": [
+        "redirect target missing"
+      ]
+    }
+  ]
+}
