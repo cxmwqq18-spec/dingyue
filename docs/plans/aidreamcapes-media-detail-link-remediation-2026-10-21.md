@@ -511,3 +511,6 @@ node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=local
 | 发布前门禁 | 服务器候选实例执行 `smoke-aidreamcapes-release-routes.mjs`、`audit-card-entry-links.mjs`、`verify-media-detail-remediation.mjs`（含 sitemap/演员/退役路径） |
 | 隔离核验 | `docs/audits/aidreamcapes-media-detail-store-isolation-2026-10-21.md`：MyDreamShoots 与 Aidreamshoots 页面、链接与 sitemap 零差异，数据库仅 `site_aidreamcapes` 被写入 |
 | 构建内存 | 生产构建曾在固定 10 GB 堆上 OOM；构建堆改为可配置（`AIDREAMCAPES_BUILD_HEAP_MB`，默认 12288） |
+| 上线结果 | `deployed_commit=360efb26c955451bafdf9ab8022b2c22ffff13dc`，`current=/www/wwwroot/aidreamcapes.com/releases/360efb26c955451bafdf9ab8022b2c22ffff13dc-seo`，`service=aidreamcapes.service`（候选实例与切换后两轮门禁均通过） |
+| 生产回读 | 详情页 200 + `noindex, follow` + 自引用 canonical + 唯一工作台 CTA（`media:{kind,slug}`）；`/ai-actors/<name>` 200 + 扁平 canonical；嵌套地址 308 → 扁平；退役路径 301 → 映射目标；视频/图片目录卡链 100/52 条详情链接、0 条直达 `/app/create`；sitemap 177 条、嵌套 actor 0 条、扁平 actor 53 条、派生详情页 0 条 |
+| 构建方式 | 发布主机内存不足以完成整包构建（曾 OOM），改为本地 `scripts/build-production.mjs` 产出 `.next-build` 并以 `--prebuilt-build` 上传（构建时对齐生产的 `NEXT_PUBLIC_*`） |
