@@ -19,19 +19,43 @@ const checks = [];
 const warnings = [];
 
 async function get(path, { redirect = "follow", timeout = 45_000 } = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeout);
-  try {
-    return await fetch(`${BASE_URL}${path}`, { redirect, headers: forwardedHeaders, signal: controller.signal });
-  } finally {
-    clearTimeout(timer);
+  // The dev server closes idle keep-alive sockets and restarts while it
+  // recompiles. A transient socket reset is retried against the same path; a
+  // real failure still fails the gate.
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    try {
+      return await fetch(`${BASE_URL}${path}`, { redirect, headers: forwardedHeaders, signal: controller.signal });
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  throw lastError;
+}
+
+/** Reads a response body, retrying a socket that closed mid-stream. */
+async function getText(path, options) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await get(path, options);
+      return { response, html: await response.text() };
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+    }
+  }
+  throw lastError;
 }
 
 async function expectPage(path, markers) {
-  const response = await get(path);
+  const { response, html } = await getText(path);
   assert.equal(response.status, 200, `${path}: status ${response.status}`);
-  const html = await response.text();
   assert.match(html, /<html[\s>]/i, `${path}: HTML document`);
   for (const marker of markers) assert.ok(html.includes(marker), `${path}: missing ${marker}`);
   checks.push(`${path}: 200`);
@@ -42,6 +66,101 @@ async function expectRedirect(path, location) {
   assert.equal(response.status, 308, `${path}: status ${response.status}`);
   assert.equal(response.headers.get("location"), location, `${path}: location`);
   checks.push(`${path}: 308 -> ${location}`);
+}
+
+// ---- Public media detail contract (media detail remediation, 2026-10-21) ---
+//
+// Every public media card opens the item's own detail page:
+//   /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug> and
+//   /ai-actors/<name> (flat). The card link is a plain path: no query string,
+// no fragment and no inert `data-workspace-entry` payload. The workspace is
+// reached from the detail page CTA, which carries the card identity. Derived
+// detail pages are `noindex, follow` and stay out of the sitemap.
+const MEDIA_DETAIL_RE = /^\/(ai-image-generation|ai-video-generation)\/([a-z0-9][a-z0-9-]{0,119})$/i;
+const FLAT_ACTOR_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]{0,79})$/i;
+const NESTED_ACTOR_RE = /^\/ai-actors\/(?:men|women)\/[a-z0-9][a-z0-9-]{0,79}$/i;
+
+function sitePath(href) {
+  let url;
+  try {
+    url = new URL(href, `${BASE_URL}/`);
+  } catch {
+    return undefined;
+  }
+  let pathname = url.pathname;
+  const prefix = pathname.match(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/)?.[0];
+  if (prefix) pathname = pathname.slice(prefix.length) || "/";
+  return { pathname, query: url.search, hash: url.hash };
+}
+
+function robotsContent(html) {
+  const tag = (html.match(/<meta\b[^>]*\bname=["']robots["'][^>]*>/i) || [""])[0];
+  return (tag.match(/\bcontent=["']([^"']*)["']/i)?.[1] || "").toLowerCase();
+}
+
+function documentTitle(html) {
+  return (html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] || "").trim();
+}
+
+/** Card anchors on a public media page: `<a class="v-pick-card">` and `<article class="tc">`. */
+function mediaCardAnchors(html) {
+  const anchors = [];
+  for (const match of html.matchAll(/<a\b[^>]*\bclass=["'][^"']*\bv-pick-card\b[^"']*["'][^>]*>/gi)) anchors.push(match[0]);
+  for (const match of html.matchAll(/<article\b[^>]*\bclass=["'][^"']*\btc\b[^"']*["'][\s\S]{0,4000}?<\/article>/gi)) {
+    for (const anchor of match[0].matchAll(/<a\b[^>]*>/gi)) anchors.push(anchor[0]);
+  }
+  return anchors;
+}
+
+function anchorHref(anchor) {
+  return anchor.match(/\bhref=["']([^"']*)["']/i)?.[1] || "";
+}
+
+/**
+ * A public media card must point at its own detail route and carry no
+ * workspace payload: the card opens the page, the page owns the workspace.
+ */
+function assertCardOpensDetailPage(scope, anchor) {
+  const href = anchorHref(anchor);
+  assert.ok(href, `${scope}: media card has no href`);
+  const parsed = sitePath(href);
+  assert.ok(parsed, `${scope}: media card href is not a path (${href})`);
+  assert.equal(parsed.query, "", `${scope}: media card href carries a query string (${href})`);
+  assert.equal(parsed.hash, "", `${scope}: media card href carries a fragment (${href})`);
+  assert.doesNotMatch(anchor, /\bdata-workspace-entry=/i, `${scope}: media card href carries a data-workspace-entry payload (${href})`);
+  assert.ok(
+    MEDIA_DETAIL_RE.test(parsed.pathname) || FLAT_ACTOR_RE.test(parsed.pathname),
+    `${scope}: media card does not open a detail route (${href})`
+  );
+  assert.ok(!parsed.pathname.startsWith("/app/create"), `${scope}: media card still enters the workspace (${href})`);
+  return parsed.pathname;
+}
+
+/**
+ * A detail page answers 200, is not the workspace shell, stays out of the
+ * index and owns exactly one workspace CTA that names this card.
+ */
+async function expectDetailPage(path, { kind, slug }) {
+  const { response, html } = await getText(path);
+  assert.equal(response.status, 200, `${path}: status ${response.status}`);
+  assert.match(html, /<html[\s>]/i, `${path}: HTML document`);
+  assert.doesNotMatch(documentTitle(html), /workspace/i, `${path}: detail page renders the workspace shell`);
+  const robots = robotsContent(html);
+  assert.match(robots, /noindex/, `${path}: robots must be noindex (${robots || "missing"})`);
+  assert.match(robots, /follow/, `${path}: robots must be follow (${robots || "missing"})`);
+  assert.doesNotMatch(robots, /nofollow/, `${path}: robots must not be nofollow (${robots})`);
+  const ctas = [...html.matchAll(/<a\b[^>]*\bdata-workspace-entry=(["'])([\s\S]*?)\1[^>]*>/gi)];
+  assert.equal(ctas.length, 1, `${path}: expected exactly one workspace CTA, found ${ctas.length}`);
+  let payload;
+  try {
+    payload = JSON.parse(ctas[0][2].replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&amp;/g, "&"));
+  } catch (error) {
+    assert.fail(`${path}: workspace CTA payload is unreadable (${error.message})`);
+  }
+  assert.equal(payload?.media?.kind, kind, `${path}: workspace CTA media kind`);
+  assert.equal(payload?.media?.slug, slug, `${path}: workspace CTA media slug`);
+  checks.push(`${path}: 200 detail page (noindex, follow, one workspace CTA for ${kind}/${slug})`);
+  return html;
 }
 
 await expectPage("/", ["AIVideosUGC"]);
@@ -78,6 +197,74 @@ await expectRedirect("/app/create?view=product", "/app/create/url-to-video");
 await expectRedirect("/app/create?view=library&filter=completed", "/app/create/library/completed");
 await expectRedirect("/site/aidreamcapes/app/create?view=images", "/site/aidreamcapes/app/create/ai-image-generation");
 
+// ---- Public media cards open their own detail page -------------------------
+// The card inventory is read from the live pages, so the gate follows the
+// current relational content instead of a frozen slug list.
+const detailSamples = [];
+for (const listing of ["/ai-video-generation", "/ai-image-generation"]) {
+  const { response: listingResponse, html: listingHtml } = await getText(listing);
+  assert.equal(listingResponse.status, 200, `${listing}: status ${listingResponse.status}`);
+  const anchors = mediaCardAnchors(listingHtml);
+  assert.ok(anchors.length > 0, `${listing}: no media cards were rendered`);
+  for (const anchor of anchors) assertCardOpensDetailPage(listing, anchor);
+  checks.push(`${listing}: ${anchors.length} media card(s) open their own detail page`);
+  for (const anchor of anchors) {
+    const pathname = sitePath(anchorHref(anchor)).pathname;
+    const match = pathname.match(MEDIA_DETAIL_RE);
+    if (!match) continue;
+    const slug = match[2];
+    const kind = match[1] === "ai-image-generation" ? "photo" : "video";
+    if (detailSamples.some((sample) => sample.kind === kind)) continue;
+    detailSamples.push({ kind, slug, path: pathname });
+  }
+}
+assert.ok(
+  detailSamples.some((sample) => sample.kind === "video") && detailSamples.some((sample) => sample.kind === "photo"),
+  "media listings did not expose both a video and a photo detail page"
+);
+for (const sample of detailSamples) await expectDetailPage(sample.path, sample);
+
+// ---- Actor pages are flat; the stored nested rows redirect -----------------
+const { response: actorDirectory, html: actorHtml } = await getText("/ai-actors");
+assert.equal(actorDirectory.status, 200, `/ai-actors: status ${actorDirectory.status}`);
+const actorCards = [...actorHtml.matchAll(/<article\b[^>]*\bclass=["'][^"']*\bactor-card\b[^"']*["'][\s\S]{0,4000}?<\/article>/gi)].map((match) => match[0]);
+assert.ok(actorCards.length > 0, "/ai-actors: no actor cards were rendered");
+for (const card of actorCards) {
+  const anchor = (card.match(/<a\b[^>]*>/i) || [""])[0];
+  const href = anchorHref(anchor);
+  const parsed = sitePath(href);
+  assert.ok(parsed, `/ai-actors: actor card href is not a path (${href})`);
+  assert.equal(parsed.query, "", `/ai-actors: actor card href carries a query string (${href})`);
+  assert.equal(parsed.hash, "", `/ai-actors: actor card href carries a fragment (${href})`);
+  assert.doesNotMatch(anchor, /\bdata-workspace-entry=/i, `/ai-actors: actor card href carries a data-workspace-entry payload (${href})`);
+  assert.ok(FLAT_ACTOR_RE.test(parsed.pathname), `/ai-actors: actor card does not open a flat actor page (${href})`);
+}
+checks.push(`/ai-actors: ${actorCards.length} actor card(s) open their flat /ai-actors/<name> page`);
+
+const actorSlugs = actorCards
+  .map((card) => {
+    const anchor = (card.match(/<a\b[^>]*>/i) || [""])[0];
+    const parsed = sitePath(anchorHref(anchor));
+    return parsed?.pathname.match(FLAT_ACTOR_RE)?.[1];
+  })
+  .filter(Boolean);
+assert.ok(actorSlugs.length > 0, "/ai-actors: no flat actor slug was found");
+for (const slug of actorSlugs.slice(0, 3)) {
+  const { response: flat, html: flatHtml } = await getText(`/ai-actors/${slug}`);
+  assert.equal(flat.status, 200, `/ai-actors/${slug}: status ${flat.status}`);
+  assert.doesNotMatch(documentTitle(flatHtml), /workspace/i, `/ai-actors/${slug}: renders the workspace shell`);
+  for (const gender of ["men", "women"]) {
+    const nested = await get(`/ai-actors/${gender}/${slug}`, { redirect: "manual" });
+    assert.ok(
+      nested.status === 301 || nested.status === 308,
+      `/ai-actors/${gender}/${slug}: expected a permanent redirect, got ${nested.status}`
+    );
+    const location = sitePath(nested.headers.get("location") || "")?.pathname;
+    assert.equal(location, `/ai-actors/${slug}`, `/ai-actors/${gender}/${slug}: redirect target`);
+  }
+}
+checks.push(`/ai-actors: ${Math.min(3, actorSlugs.length)} flat actor page(s) 200 and their nested addresses redirect permanently`);
+
 const inspirationResponse = await get("/api/sites/site_aidreamcapes/aivideosugc/inspirations");
 assert.equal(inspirationResponse.status, 200, `inspirations API: status ${inspirationResponse.status}`);
 const inspirationBody = await inspirationResponse.json();
@@ -87,9 +274,8 @@ assert.equal(typeof inspirationBody.nextOffset, "number", "inspirations API: nex
 assert.ok(inspirationBody.counts && typeof inspirationBody.counts.all === "number", "inspirations API: counts");
 checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspirationBody.total} total`);
 
-const home = await get("/");
+const { response: home, html: homeHtml } = await getText("/");
 assert.equal(home.status, 200, "home: status");
-const homeHtml = await home.text();
 const legacyQueryLinks = (homeHtml.match(/href="[^"]*\/app\/create\?[^"]*(?:tool|template|prompt|size|length|view)=/gi) || []).length;
 const nextHashLinks = (homeHtml.match(/nextHash=/gi) || []).length;
 if (legacyQueryLinks || nextHashLinks) {
@@ -98,9 +284,24 @@ if (legacyQueryLinks || nextHashLinks) {
   checks.push("home: no legacy query workspace links");
 }
 
-const sitemap = await get("/sitemap.xml");
+const { response: sitemap, html: sitemapXml } = await getText("/sitemap.xml");
 assert.equal(sitemap.status, 200, `sitemap: status ${sitemap.status}`);
-assert.match(await sitemap.text(), /<urlset[\s>]/i, "sitemap: urlset");
+assert.match(sitemapXml, /<urlset[\s>]/i, "sitemap: urlset");
+// The sitemap submits canonical public pages only: the nested actor rows are
+// permanent redirects and the derived media detail pages stay out of the index.
+const sitemapPaths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) => {
+  try {
+    return new URL(match[1].trim()).pathname;
+  } catch {
+    return "";
+  }
+}).filter(Boolean);
+const nestedActorUrls = sitemapPaths.filter((path) => NESTED_ACTOR_RE.test(path));
+assert.equal(nestedActorUrls.length, 0, `sitemap: ${nestedActorUrls.length} nested actor URL(s)`);
+for (const sample of detailSamples) {
+  assert.ok(!sitemapPaths.includes(sample.path), `sitemap: derived detail page must stay out of the index (${sample.path})`);
+}
+checks.push(`sitemap: ${sitemapPaths.length} URL(s), no nested actor URL, no derived media detail page`);
 const robots = await get("/robots.txt");
 assert.equal(robots.status, 200, `robots: status ${robots.status}`);
 // The origin is reached over plain HTTP on loopback, so the robots route also

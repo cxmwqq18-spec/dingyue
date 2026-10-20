@@ -81,8 +81,22 @@ function pathOf(location) {
   }
 }
 
+/** The dev server drops idle sockets while it compiles; retry a reset once. */
+async function fetchWithRetry(url, init = {}) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await fetch(url, init);
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+    }
+  }
+  throw lastError;
+}
+
 async function request(path, { follow = false } = {}) {
-  const response = await fetch(`${origin}${base}${path}`, {
+  const response = await fetchWithRetry(`${origin}${base}${path}`, {
     redirect: follow ? "follow" : "manual",
     headers: { "user-agent": "aidreamcapes-media-namespace-audit/1.0" },
     signal: AbortSignal.timeout(requestTimeout)
@@ -129,7 +143,7 @@ function collectMediaValues(contentJson, pagePath, out) {
 }
 
 async function sitemapPaths() {
-  const response = await fetch(`${origin}${base}/sitemap.xml`, {
+  const response = await fetchWithRetry(`${origin}${base}/sitemap.xml`, {
     headers: { "user-agent": "aidreamcapes-media-namespace-audit/1.0" },
     signal: AbortSignal.timeout(requestTimeout)
   });
@@ -230,9 +244,10 @@ try {
   }
 
   if (!serverAvailable) {
-    console.log(`SKIP: server unavailable at ${origin}${base}; namespace classification needs HTTP readback.`);
-    console.log(JSON.stringify({
-      ok: true,
+    // A server that cannot answer is a failed gate, never a pass.
+    console.error(`FAIL: server unavailable at ${origin}${base}; namespace classification needs HTTP readback.`);
+    console.error(JSON.stringify({
+      ok: false,
       skipped: true,
       origin,
       inventory: {
@@ -242,9 +257,9 @@ try {
         internalMediaValues: internal.size
       },
       skippedChecks: skipped,
-      failures: []
+      failures: ["server unavailable; the audit could not complete its readback"]
     }, null, 2));
-    process.exitCode = 0;
+    process.exitCode = 1;
   } else {
     const counts = { 200: 0, "301": 0, "308": 0, "404": 0, other: 0 };
     for (const entry of classification) {

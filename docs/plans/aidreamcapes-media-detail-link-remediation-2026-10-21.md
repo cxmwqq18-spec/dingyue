@@ -460,8 +460,10 @@ FROM actors;
 - 应用：`scripts/apply-aidreamcapes-example-media-slugs.mjs`（`--target` / `--apply` / `--confirm` / `--base-hash` 逐页 CAS）
 - 本地库已应用：picker 18 + examples 30 + templateDefinition 18 = 66 张卡片补齐 `publicSlug`；重复执行 0 写入
 - 覆盖校验：四种卡片形态 `publicSlug` 覆盖率 100%（picker 242/242、workspaceCases 715/715、examples 30/30、templateDefinition 18/18）
-- **生产尚未应用**：需用同一清单执行
-  `node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=production --apply --confirm=site_aidreamcapes-example-media-slugs --base-hash=<清单 planHash>`
+- **生产已应用**（2026-10-21）：同一流程对生产库执行
+  `node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=production --manifest=scripts/manifests/aidreamcapes-example-media-slugs-2026-10-21.production.json --apply --confirm=site_aidreamcapes-example-media-slugs --base-hash=38008e65c2f53b8d42ea8ed701a2e92b8bcd2daed4fecec51d92d5f121372620`
+  → 23 个页面、66 张卡片写入，0 冲突；生产回读：picker 242/242、workspaceCases 715/715、examples 30/30、templateDefinition 18/18 均有 `publicSlug`。
+  清单内记录 `target`，本地清单无法被用于生产写入。
 
 ### 13.3 与原计划的偏差
 

@@ -57,8 +57,22 @@ function pathOf(value) {
   }
 }
 
+/** The dev server drops idle sockets while it compiles; retry a reset once. */
+async function fetchWithRetry(url, init = {}) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await fetch(url, init);
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+    }
+  }
+  throw lastError;
+}
+
 async function request(path, { follow = false } = {}) {
-  const response = await fetch(`${origin}${base}${path}`, {
+  const response = await fetchWithRetry(`${origin}${base}${path}`, {
     redirect: follow ? "follow" : "manual",
     headers: { "user-agent": "aidreamcapes-actor-flat-route-audit/1.0" },
     signal: AbortSignal.timeout(requestTimeout)
@@ -129,7 +143,7 @@ try {
       if (result.status !== 200) fail(hub, `actor directory hub returned ${result.status}`);
     }
 
-    const sitemapResponse = await fetch(`${origin}${base}/sitemap.xml`, {
+    const sitemapResponse = await fetchWithRetry(`${origin}${base}/sitemap.xml`, {
       headers: { "user-agent": "aidreamcapes-actor-flat-route-audit/1.0" },
       signal: AbortSignal.timeout(requestTimeout)
     });
@@ -169,16 +183,17 @@ try {
   }
 
   if (!serverAvailable) {
-    console.log(`SKIP: server unavailable at ${origin}${base}.`);
-    console.log(JSON.stringify({
-      ok: true,
+    // A server that cannot answer is a failed gate, never a pass.
+    console.error(`FAIL: server unavailable at ${origin}${base}.`);
+    console.error(JSON.stringify({
+      ok: false,
       skipped: true,
       origin,
       database: { actors: actors.length, flatSlugs: slugs.size },
       skippedChecks: skipped,
-      failures: []
+      failures: ["server unavailable; the audit could not complete its readback"]
     }, null, 2));
-    process.exitCode = 0;
+    process.exitCode = 1;
   } else {
     const result = {
       ok: failures.length === 0,

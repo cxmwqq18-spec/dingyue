@@ -158,7 +158,16 @@ function requestUrlFromSitemap(value) {
 
 const homepage = await get("/");
 assert.equal(homepage.status(), 200, `homepage status: ${homepage.status()}`);
-assert.equal(homepage.headers()["strict-transport-security"], "max-age=31536000; includeSubDomains", "Aidreamcapes HSTS header");
+// The TLS terminator owns HSTS, and only the public origin reaches it. A
+// loopback run talks to the application directly, so the header is required on
+// the public origin and reported as edge-owned here instead of passing silently.
+const publicOrigin = new URL(BASE_URL).hostname === "www.aivideosugc.com";
+const edgeOwnedChecks = [];
+if (publicOrigin) {
+  assert.equal(homepage.headers()["strict-transport-security"], "max-age=31536000; includeSubDomains", "Aidreamcapes HSTS header");
+} else {
+  edgeOwnedChecks.push("HSTS is served by the TLS terminator and is required on the public origin");
+}
 assert.equal(homepage.headers()["x-content-type-options"], "nosniff", "content type protection");
 assert(homepage.headers()["referrer-policy"], "referrer policy missing");
 assert(homepage.headers()["x-frame-options"], "frame protection missing");
@@ -186,7 +195,6 @@ const homepageCatalog = homepageNodes.find((node) => node["@type"] === "OfferCat
 assert.equal(homepageApplication?.applicationCategory, "MultimediaApplication", "homepage application category");
 assert.equal(homepageCatalog?.name, "AIVideosUGC AI image and video plans", "homepage OfferCatalog name");
 assert(Array.isArray(homepageApplication?.offers) && homepageApplication.offers.every((offer) => offer["@type"] === "Offer"), "application offers must not be an OfferCatalog");
-const publicOrigin = new URL(BASE_URL).hostname === "www.aivideosugc.com";
 // The apex host and the former aidreamcapes.com addresses move permanently to https://www.aivideosugc.com.
 const OTHER_HOSTS = [["apex", "aivideosugc.com", "https"], ["former", "aidreamcapes.com", "https"], ["former-www", "www.aidreamcapes.com", "https"], ["http", "www.aivideosugc.com", "http"]];
 for (const [variant, host, protocol] of OTHER_HOSTS) {
@@ -362,12 +370,86 @@ const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
   return url;
 });
 
+// ---- Public media detail contract (media detail remediation, 2026-10-21) ---
+//
+// Every public media card opens the item's own detail page:
+//   /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug> and
+//   /ai-actors/<name> (flat). The card link is a plain path without a query
+// string, a fragment or an inert `data-workspace-entry` payload. Derived
+// detail pages are `noindex, follow` and stay out of the sitemap. The stored
+// nested actor rows answer with a permanent redirect to the flat address.
+const sitemapPathSet = new Set(pageUrls.map((url) => new URL(url).pathname));
+const nestedActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/(?:men|women)\//.test(path));
+assert.equal(nestedActorUrls.length, 0, `sitemap submits ${nestedActorUrls.length} nested actor URL(s)`);
+const ACTOR_HUB_PATHS = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-actors/scene", "/ai-actors/age-range"]);
+const flatActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path) && !ACTOR_HUB_PATHS.has(path));
+assert(flatActorUrls.length > 0, "sitemap submits no flat actor URL");
+
+const mediaDetailPaths = new Set();
+for (const listing of ["/ai-video-generation", "/ai-image-generation"]) {
+  const listingResponse = await get(listing);
+  assert.equal(listingResponse.status(), 200, `${listing}: status ${listingResponse.status()}`);
+  const listingHtml = await listingResponse.text();
+  const listingDom = load(listingHtml);
+  const cards = listingDom("a.v-pick-card, article.tc a[href], article.actor-card a[href]");
+  assert(cards.length > 0, `${listing}: no media cards were rendered`);
+  cards.each((_, node) => {
+    const anchor = listingDom(node);
+    const href = anchor.attr("href") || "";
+    const url = new URL(href, `${BASE_URL}/`);
+    assert.equal(url.search, "", `${listing}: media card href carries a query string (${href})`);
+    assert.equal(url.hash, "", `${listing}: media card href carries a fragment (${href})`);
+    assert.equal(anchor.attr("data-workspace-entry"), undefined, `${listing}: media card carries a data-workspace-entry payload (${href})`);
+    assert.match(
+      url.pathname,
+      /^\/(ai-image-generation|ai-video-generation)\/[a-z0-9][a-z0-9-]*$|^\/ai-actors\/[a-z0-9][a-z0-9-]*$/i,
+      `${listing}: media card does not open a detail route (${href})`
+    );
+    mediaDetailPaths.add(url.pathname);
+  });
+}
+assert(mediaDetailPaths.size > 0, "no media detail route was discovered on the public listings");
+
+const mediaDetailResults = await mapLimit([...mediaDetailPaths], 4, async (path) => {
+  const response = await get(path);
+  assert.equal(response.status(), 200, `${path}: detail page status ${response.status()}`);
+  const html = await response.text();
+  assert.doesNotMatch(htmlTitle(html), /workspace/i, `${path}: detail page renders the workspace shell`);
+  const robots = htmlMeta(html, "robots");
+  assert.match(robots, /noindex/i, `${path}: robots is not noindex (${robots || "missing"})`);
+  assert.match(robots, /follow/i, `${path}: robots is not follow (${robots || "missing"})`);
+  assert.doesNotMatch(robots, /nofollow/i, `${path}: robots is nofollow (${robots})`);
+  assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
+  assert(!sitemapPathSet.has(path), `${path}: derived detail page must stay out of the sitemap`);
+  return path;
+});
+
+const actorRedirectResults = await mapLimit(flatActorUrls, 3, async (path) => {
+  const slug = path.split("/").pop();
+  for (const gender of ["men", "women"]) {
+    const nestedPath = `/ai-actors/${gender}/${slug}`;
+    const response = await get(nestedPath, { maxRedirects: 0 });
+    assert(
+      response.status() === 301 || response.status() === 308,
+      `${nestedPath}: expected a permanent redirect to the flat actor page, got ${response.status()}`
+    );
+    assert.equal(response.headers().location, `https://www.aivideosugc.com${path}`, `${nestedPath}: redirect target`);
+  }
+  return path;
+});
+
 console.log(JSON.stringify({
   ok: true,
   origin: BASE_URL,
   storefront: siteV2 ? "site-v2" : "v1",
   redirects: SITE_V2_REDIRECTS.length,
   preNavigationMigration,
+  edgeOwnedChecks,
+  mediaDetail: {
+    detailPages: mediaDetailResults.length,
+    flatActorUrls: actorRedirectResults.length,
+    nestedActorUrls: nestedActorUrls.length
+  },
   targetMetadataPages: metadataResults.length,
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,

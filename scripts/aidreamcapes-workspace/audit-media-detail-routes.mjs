@@ -148,8 +148,22 @@ function pathOf(href) {
   }
 }
 
+/** The dev server drops idle sockets while it compiles; retry a reset once. */
+async function fetchWithRetry(url, init = {}) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      return await fetch(url, init);
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+    }
+  }
+  throw lastError;
+}
+
 async function fetchPage(path) {
-  const response = await fetch(`${origin}${base}${path}`, {
+  const response = await fetchWithRetry(`${origin}${base}${path}`, {
     redirect: "follow",
     headers: { "user-agent": "aidreamcapes-media-detail-audit/1.0" },
     signal: AbortSignal.timeout(requestTimeout)

@@ -176,10 +176,13 @@ export default async function ImageThemePage({
   const requestedPath = `${AIDREAMCAPES_IMAGE_THEME_ROOT_PATH}/${resolved.themeSlug}`;
   const imageScene = await resolveAidreamcapesImageScene(resolved.siteSlug, resolved.themeSlug);
   if (imageScene) {
+    // A host-mode store serves the media at its own address; only the
+    // path-mode store carries the `/site/<slug>` prefix.
+    const routeMode = storefrontRouteModeForHeaders(await headers(), resolved.siteSlug);
     return renderAidreamcapesMediaDetailPage({
       kind: "photo",
       slug: resolved.themeSlug,
-      basePath: `/site/${resolved.siteSlug}`,
+      basePath: routeMode === "host" ? "" : `/site/${resolved.siteSlug}`,
       detail: imageScene.detail
     });
   }

@@ -38,7 +38,7 @@ try {
       const key = `${req.method()} ${url.pathname}`; calls.push(key);
       let body = {}; try { body = req.postDataJSON() ?? {}; } catch {}
       if (url.pathname === `${api}/actors`) return json(route, { actors });
-      if (url.pathname === `${api}/inspirations`) return json(route, { cards: [{ id: 'navigation-inspiration', label: 'Navigation example', imageSrc: reference, imageAlt: 'Navigation example', pageTitle: 'Navigation examples', kind: 'video', description: 'A navigation fixture example.', category: 'All', createHref: '/app/create/ai-video-generation' }] });
+      if (url.pathname === `${api}/inspirations`) return json(route, { cards: [{ id: 'navigation-inspiration', label: 'Navigation example', imageSrc: reference, imageAlt: 'Navigation example', pageTitle: 'Navigation examples', kind: 'video', description: 'A navigation fixture example.', category: 'All', createHref: '/site/aidreamcapes/ai-video-generation/navigation-example', workspaceHref: '/site/aidreamcapes/app/create/ai-video-generation', entry: { view: 'video', query: { tool: 'product-videos' }, expires: 0 } }] });
       if (url.pathname === `${api}/clones`) return json(route, { productionReady: false, mockAvailable: true, analysisBeforeTask: true, voiceTwin: { available: false, state: 'mock_only' }, adReference: { available: false, state: 'mock_only' }, components: { database: { available: true } } });
       if (url.pathname === `${api}/clones/jobs`) return json(route, { jobs: [] });
       if (url.pathname === `${api}/clones/consents`) return json(route, { consents: [] });
@@ -225,6 +225,18 @@ try {
   assert.equal(await sidebar().count(), 1, 'The creation workspace stays mounted around examples.');
   const inspirationCount = await page.locator('[data-inspiration-card]').count();
   checks.push(`Workspace inspiration library displays ${inspirationCount} examples from current LivePage rows and returns to creation.`);
+  // An example card opens its own public page; the creation CTA is the only
+  // workspace entry and carries the inert entry payload.
+  await page.locator('[data-inspiration-card]').first().click();
+  const inspirationDialog = page.locator('dialog[open]');
+  await inspirationDialog.waitFor({ state: 'visible', timeout: 15000 });
+  const inspirationCta = inspirationDialog.locator('a[data-workspace-entry]').first();
+  await inspirationCta.waitFor({ state: 'visible', timeout: 15000 });
+  const inspirationCtaHref = await inspirationCta.getAttribute('href');
+  assert.equal(new URL(inspirationCtaHref, baseUrl).pathname, '/site/aidreamcapes/app/create/ai-video-generation', 'The inspiration CTA enters the fixed workspace path.');
+  assert.ok(await inspirationCta.getAttribute('data-workspace-entry'), 'The inspiration CTA carries the inert entry payload.');
+  await page.keyboard.press('Escape');
+  checks.push('An example CTA enters the fixed workspace path with its entry payload; the card itself links to the example page.');
   await page.screenshot({ path: path.join(artifacts, 'desktop-inspirations.png'), fullPage: true });
   await go('AI Image', 'images');
   await page.getByRole('img', { name: 'Image reference 1', exact: true }).evaluate((image) => image.decode());

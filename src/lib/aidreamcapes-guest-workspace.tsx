@@ -18,11 +18,14 @@ import {
 
 /** Site-relative links gain the path-mode prefix; assets and absolute URLs do not. */
 function publicResolvers(basePath: string) {
+  // A host-mode store has no path prefix. "/" is the site root, not a prefix,
+  // so it must never be prepended to another absolute path.
+  const prefix = basePath === "/" ? "" : basePath;
   const href = (value: string) => {
-    if (!value) return basePath || "/";
+    if (!value) return prefix || "/";
     if (/^(?:[a-z]+:|\/\/)/i.test(value) || value.startsWith("#")) return value;
-    if (basePath && value.startsWith(`${basePath}/`)) return value;
-    return value.startsWith("/") ? `${basePath}${value}` : value;
+    if (prefix && value.startsWith(`${prefix}/`)) return value;
+    return value.startsWith("/") ? `${prefix}${value}` : value;
   };
   return { href, asset: (value: string) => value };
 }

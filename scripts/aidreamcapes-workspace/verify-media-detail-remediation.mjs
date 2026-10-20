@@ -59,16 +59,22 @@ async function runAudit(file) {
   child.stderr.on("data", (chunk) => { stderr += chunk; });
   const code = await new Promise((resolve) => child.on("close", resolve));
   const raw = `${stdout}\n${stderr}`;
-  const start = raw.indexOf("{");
+  // A script may print a human line before its JSON report, so the report is
+  // the last JSON object in the output.
   let parsed;
-  try {
-    parsed = start >= 0 ? JSON.parse(raw.slice(start)) : undefined;
-  } catch {
-    parsed = undefined;
+  for (const start of [raw.lastIndexOf("\n{"), raw.indexOf("{")]) {
+    if (start < 0) continue;
+    try {
+      parsed = JSON.parse(raw.slice(start));
+      break;
+    } catch {
+      parsed = undefined;
+    }
   }
   const ok = code === 0 && parsed?.ok === true && parsed?.skipped !== true;
   if (!ok) {
-    const detail = parsed?.failures?.slice(0, 5) ?? [raw.slice(0, 600).replace(/\s+/g, " ")];
+    const detail = parsed?.failures?.slice(0, 5)
+      ?? [parsed?.skipped ? "the audit skipped its checks" : raw.slice(0, 600).replace(/\s+/g, " ")];
     fail(file, `exit ${code}; ${detail.join(" | ")}`);
   }
   steps.push({ audit: file, ok, ms: Date.now() - started, failures: parsed?.failures?.length ?? (ok ? 0 : 1) });

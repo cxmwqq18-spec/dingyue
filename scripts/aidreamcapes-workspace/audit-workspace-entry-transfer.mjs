@@ -68,11 +68,22 @@ async function get(path, headers = {}) {
   // site-relative paths need the audit base prepended.
   const prefix = absolute || path.startsWith("/site/") ? "" : base;
   const target = absolute ? path : `${origin}${prefix}${path === "/" ? "" : path}`;
-  const response = await fetch(target, {
-    headers: { "user-agent": "aidreamcapes-entry-audit/2.0", ...headers },
-    redirect: "follow"
-  });
-  return { status: response.status, html: await response.text(), url: response.url };
+  // The dev server drops idle sockets and restarts while it compiles; a
+  // transient reset is retried against the same address.
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(target, {
+        headers: { "user-agent": "aidreamcapes-entry-audit/2.0", ...headers },
+        redirect: "follow"
+      });
+      return { status: response.status, html: await response.text(), url: response.url };
+    } catch (error) {
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 800 * (attempt + 1)));
+    }
+  }
+  throw lastError;
 }
 
 function entryPayload(anchor) {
