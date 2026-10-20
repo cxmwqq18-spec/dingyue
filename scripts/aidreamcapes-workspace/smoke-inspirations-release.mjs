@@ -17,7 +17,10 @@ async function read(path, { workspace = false } = {}) {
   const response = await fetch(new URL(path, origin), { headers, signal: AbortSignal.timeout(45000) });
   assert.equal(response.status, 200, `${path} responds with HTTP 200`);
   const html = await response.text();
-  assert.match(html, /data-aidreamcapes-inspirations="true"/);
+  // The standalone gallery owns its page marker; the embedded gallery uses
+  // workspace chrome and exposes the same relational cards directly.
+  if (workspace) assert.match(html, /aria-label="Workspace navigation"/);
+  else assert.match(html, /data-aidreamcapes-inspirations="true"/);
   assert.match(html, /<meta[^>]*name="robots"[^>]*content="noindex, nofollow"/);
   if (workspace) assert.doesNotMatch(html, /<iframe\b/);
   else assert.doesNotMatch(html, /aria-label="Workspace navigation"|<iframe\b/);
