@@ -141,14 +141,15 @@ async function mapLimit(items, limit, worker) {
 
 const http = await request.newContext({ extraHTTPHeaders: SITE_HEADERS, timeout: 60000 });
 
-async function get(path, options = {}) {
+async function getUrl(url, options = {}) {
   for (let attempt = 0; attempt < 3; attempt++) {
-    const response = await http.get(`${BASE_URL}${path}`, { maxRedirects: 0, ...options });
-    if (![502, 503, 504, 522, 524].includes(response.status()) || attempt === 2) return response;
+    const response = await http.get(url, { maxRedirects: 0, maxRetries: 2, ...options });
+    if (![429, 502, 503, 504, 522, 524].includes(response.status()) || attempt === 2) return response;
     await response.dispose();
     await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
   }
 }
+const get = (path, options) => getUrl(`${BASE_URL}${path}`, options);
 
 function requestUrlFromSitemap(value) {
   const url = new URL(value);
@@ -273,8 +274,8 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   // Most pages suffix the brand. The approved About title leads with the brand, so require its
   // identity there without rewriting the page-owned title just to satisfy a suffix convention.
   const hasBrand = path === "/about-us"
-    ? /(?:AIVideosUGC|Aidreamcapes)/.test(title)
-    : /\| (?:AIVideosUGC|Aidreamcapes)$/.test(title);
+    ? /(?:AIVideosUGC|Aidreamcapes)/i.test(title)
+    : /\| (?:AIVideosUGC|Aidreamcapes)$/i.test(title);
   assert(hasBrand, `${path}: missing brand identity (${title})`);
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
@@ -355,7 +356,7 @@ assert.equal(new Set(pageStatus.map(({ title }) => title)).size, pageStatus.leng
 assert.equal(new Set(pageStatus.map(({ description }) => description)).size, pageStatus.length, "all sitemap page descriptions must be unique");
 const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
   const imageUrl = new URL(url);
-  const response = await http.get(`${MEDIA_BASE_URL}${imageUrl.pathname}${imageUrl.search}`, { maxRedirects: 0 });
+  const response = await getUrl(`${MEDIA_BASE_URL}${imageUrl.pathname}${imageUrl.search}`);
   assert.equal(response.status(), 200, `sitemap image status ${response.status()}: ${url}`);
   assert.match(response.headers()["content-type"] || "", /^image\//, `sitemap asset must be an image: ${url}`);
   return url;
