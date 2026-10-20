@@ -35,7 +35,7 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesCreatePage, renderAidreamcapesInspirationsPage, renderAidreamcapesResolvedScenePage, renderAidreamcapesSceneCreatePage } from "@/lib/aidreamcapes-guest-workspace";
 import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -779,17 +779,15 @@ export default async function HostStorefrontCatchAllPage({
     if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") {
       return renderAidreamcapesInspirationsPage({ query, siteSlug });
     }
-    if (isGuestAllowedAppRoute && !(await hasAnyCustomerSessionCookie())) {
-      if (isAidreamcapesSceneCreateRoute) {
-        return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });
-      }
-      return renderAidreamcapesGuestCreatePage({ query: aidreamcapesStaticCreate ? staticCreateQuery(aidreamcapesStaticCreate) : query, siteSlug });
-    }
     if (hostSiteSlug === "aidreamcapes" && isAidreamcapesSceneCreateRoute) {
       return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });
     }
-    if (hostSiteSlug === "aidreamcapes" && aidreamcapesStaticCreate) {
-      query = { ...query, ...staticCreateQuery(aidreamcapesStaticCreate) };
+    if (hostSiteSlug === "aidreamcapes" && (slug === "/app/create" || aidreamcapesStaticCreate)) {
+      // Authentication changes customer data, never the workspace implementation.
+      return renderAidreamcapesCreatePage({
+        query: aidreamcapesStaticCreate ? { ...query, ...staticCreateQuery(aidreamcapesStaticCreate) } : query,
+        siteSlug,
+      });
     }
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });
   }

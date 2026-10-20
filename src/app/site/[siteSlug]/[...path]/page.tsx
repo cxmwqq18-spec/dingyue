@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { findPage } from "@/lib/data";
 import { imageThemeDetailContentFromPage } from "@/lib/aidreamcapes-image-theme-content";
@@ -26,16 +26,12 @@ import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editoria
 import { isMydreamshootsSaveDateTopicGroupPathRequest, isMydreamshootsTopicGroupActive, isMydreamshootsVideoTopicGroupPathRequest, mydreamshootsTopicGroupForPath } from "@/lib/mydreamshoots-topic-groups";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
-import { renderAidreamcapesGuestCreatePage, renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
+import { renderAidreamcapesCreatePage, renderAidreamcapesResolvedScenePage } from "@/lib/aidreamcapes-guest-workspace";
 import { resolveWorkspacePublicScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import type { PlatformState, ThemePage } from "@/lib/types";
-
-async function hasAnyCustomerSessionCookie(): Promise<boolean> {
-  return (await cookies()).getAll().some((cookie) => cookie.name.startsWith("customer_session_") && Boolean(cookie.value));
-}
 
 async function resolveAidreamcapesPathModeScene(publicSite: string, path: string[]) {
   if ((publicSite !== "aidreamcapes" && publicSite !== "aivideosugc") || path.length !== 2) return undefined;
@@ -696,11 +692,9 @@ export default async function SiteCatchAllPage({
         const staticTarget = parseStaticCreateSegments(path.slice(2));
         if (staticTarget) {
           query = { ...query, ...staticCreateQuery(staticTarget) };
-          // Fixed create paths are public in host mode, so path mode keeps the
-          // same guest workspace instead of bouncing visitors to the login page.
-          if (!(await hasAnyCustomerSessionCookie())) {
-            return renderAidreamcapesGuestCreatePage({ query, siteSlug: publicSlug });
-          }
+          // Aidreamcapes uses one workspace for guests and signed-in customers.
+          // The workspace renderer resolves the customer and authenticated catalog.
+          return renderAidreamcapesCreatePage({ query, siteSlug: publicSlug });
         } else if (!["scene"].includes(path[2] ?? "")) notFound();
       }
     }

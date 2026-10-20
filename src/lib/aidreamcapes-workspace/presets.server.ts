@@ -38,7 +38,7 @@ function sceneFromCard(card: RecordValue, href: URL, prompt: string, label: stri
 }
 
 function cardAspect(card: RecordValue, href: URL): TaskInput["options"]["aspect"] {
-  const requested = href.searchParams.get("size");
+  const requested = typeof card.aspect === "string" ? card.aspect : href.searchParams.get("size");
   if (requested && ASPECTS.has(requested as TaskInput["options"]["aspect"])) return requested as TaskInput["options"]["aspect"];
   const image = record(card.image);
   const width = typeof image?.w === "number" && Number.isFinite(image.w) && image.w > 0 ? image.w : undefined;
@@ -50,8 +50,8 @@ function cardAspect(card: RecordValue, href: URL): TaskInput["options"]["aspect"
   return "1:1";
 }
 
-function cardDuration(href: URL): TaskInput["options"]["duration"] {
-  const duration = Number(href.searchParams.get("length"));
+function cardDuration(href: URL, card: RecordValue): TaskInput["options"]["duration"] {
+  const duration = Number(card.duration ?? href.searchParams.get("length"));
   return DURATIONS.has(duration as TaskInput["options"]["duration"]) ? duration as TaskInput["options"]["duration"] : 15;
 }
 
@@ -72,7 +72,10 @@ function pickersFromContent(contentJson: unknown): RecordValue[] {
     const data = record(settings?.data);
     const visual = record(data?.visual);
     const picker = record(visual?.picker);
+    const definition = record(data?.templateDefinition);
+    if (record(definition?.card)) pickers.push({ cards: [definition!.card] });
     if (picker && Array.isArray(picker.cards)) pickers.push(picker);
+    if (Array.isArray(data?.workspaceCases)) pickers.push({ cards: data.workspaceCases });
   }
   return pickers;
 }
@@ -106,7 +109,7 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
     previewUrl: src,
     sceneId: sceneFromCard(card, href, prompt, title, rawTool),
     aspect: cardAspect(card, href),
-    duration: cardDuration(href),
+    duration: cardDuration(href, card),
     imageTool,
     sourceUpdatedAt: page.updatedAt.toISOString(),
   };
@@ -119,11 +122,15 @@ export async function resolveWorkspacePublicScenePreset(siteId: string, kind: "p
     SELECT "slug", "contentJson", "updatedAt"
     FROM "LivePage"
     WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
-      AND jsonb_path_exists(
+      AND (jsonb_path_exists(
         "contentJson",
         '$.sections.*.settings.data.visual.picker.cards[*] ? (@.publicSlug == $slug && @.kind == $kind)'::jsonpath,
         jsonb_build_object('slug', ${publicSlug}, 'kind', ${kind})
-      )
+      ) OR jsonb_path_exists(
+        "contentJson",
+        '$.sections.*.settings.data.workspaceCases[*] ? (@.publicSlug == $slug && @.kind == $kind)'::jsonpath,
+        jsonb_build_object('slug', ${publicSlug}, 'kind', ${kind})
+      ))
     LIMIT 3
   `;
   if (pages.length !== 1) return undefined;
@@ -139,36 +146,31 @@ export async function resolveWorkspacePublicScenePreset(siteId: string, kind: "p
   return undefined;
 }
 
-/** Read the current homepage picker cards from Aidreamcapes' relational LivePage row. */
+/** One relational template registry, shared by storefront directories and the workspace. */
 export async function getWorkspaceTemplateGallery(siteId: string): Promise<WorkspaceTemplateGallery | undefined> {
   if (siteId !== AIVIDEOSUGC_SITE_ID) return undefined;
   const page = await prisma.livePage.findUnique({
-    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: "/" } },
-    select: { contentJson: true, updatedAt: true },
+    where: { siteId_slug: { siteId: AIVIDEOSUGC_SITE_ID, slug: "/templates" } },
+    select: { contentJson: true },
   });
-  if (!page) return undefined;
-  const picker = pickerFromContent(page.contentJson);
-  if (!picker || !Array.isArray(picker.cards)) return undefined;
-  const categories = (Array.isArray(picker.chips) ? picker.chips : []).flatMap((value) => {
-    const category = record(value);
-    const id = typeof category?.id === "string" ? category.id.trim() : "";
-    const label = typeof category?.label === "string" ? category.label.trim() : "";
-    return /^[a-z0-9-]{1,80}$/.test(id) && label ? [{ id, label: label.slice(0, 100) }] : [];
-  });
-  const categoryIds = new Set(categories.map((category) => category.id));
-  const options = picker.cards.flatMap((value) => {
-    const preset = presetFromCard(page, "/", value);
+  const sections = record(record(page?.contentJson)?.sections);
+  const directory = Object.values(sections ?? {}).map(section => record(record(record(section)?.settings)?.data)?.templateDirectory).map(record).find(Boolean);
+  const paths = Array.isArray(directory?.paths) ? directory.paths.filter((path): path is string => typeof path === "string") : [];
+  if (!paths.length) return undefined;
+  const pages = await prisma.livePage.findMany({ where: { siteId: AIVIDEOSUGC_SITE_ID, slug: { in: paths } }, select: { slug: true, contentJson: true, updatedAt: true } });
+  const options = paths.flatMap(path => {
+    const owner = pages.find(item => item.slug === path);
+    if (!owner) return [];
+    const sections = record(record(owner.contentJson)?.sections);
+    const definition = Object.values(sections ?? {}).map(section => record(record(record(section)?.settings)?.data)?.templateDefinition).map(record).find(Boolean);
+    const card = record(definition?.card);
+    if (!card) return [];
+    const preset = presetFromCard(owner, owner.slug, card);
     if (!preset) return [];
-    const card = record(value);
-    const image = record(card?.image);
-    const tags = Array.isArray(card?.chips) ? card.chips.filter((item): item is string => typeof item === "string" && categoryIds.has(item)) : [];
-    return [{
-      ...preset,
-      imageAlt: typeof image?.alt === "string" && image.alt.trim() ? image.alt.trim().slice(0, 300) : preset.title,
-      categoryIds: [...new Set(tags)],
-    }];
+    const image = record(card.image);
+    return [{ ...preset, imageAlt: typeof image?.alt === "string" ? image.alt : preset.title, categoryIds: [preset.kind] }];
   });
-  return { categories, options };
+  return { categories: [{ id: "photo", label: "Photo templates" }, { id: "video", label: "Video templates" }], options };
 }
 
 /** Resolve a picker card exclusively from the current Aidreamcapes LivePage row. */
@@ -181,8 +183,7 @@ export async function resolveWorkspacePreset(siteId: string, request: WorkspaceP
     select: { contentJson: true, updatedAt: true },
   });
   if (!page) return undefined;
-  const cards = pickerFromContent(page.contentJson)?.cards;
-  if (!Array.isArray(cards)) return undefined;
+  const cards = pickersFromContent(page.contentJson).flatMap(picker => Array.isArray(picker.cards) ? picker.cards : []);
   for (const card of cards) {
     const typedCard = record(card);
     const image = record(typedCard?.image);
@@ -210,6 +211,27 @@ export async function resolveWorkspaceScenePreset(siteId: string, routeSlug: str
       const candidate = record(card);
       if (candidate?.sceneSlug !== locator.sceneSlug) continue;
       return presetFromCard(page, locator.sourcePage, card);
+    }
+  }
+  return undefined;
+}
+
+/** Compatibility for published tool/template links, using the current detail owner. */
+export async function resolveWorkspaceLegacyTemplatePreset(tool: string, template: string): Promise<WorkspacePreset | undefined> {
+  const pages = await prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; updatedAt: Date }>>`
+    SELECT "slug", "contentJson", "updatedAt" FROM "LivePage"
+    WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
+      AND jsonb_path_exists("contentJson", '$.sections.*.settings.data.templateDefinition')
+  `;
+  for (const page of pages) {
+    const sections = record(record(page.contentJson)?.sections);
+    for (const section of Object.values(sections ?? {})) {
+      const definition = record(record(record(section)?.settings)?.data)?.templateDefinition;
+      const card = record(record(definition)?.card);
+      if (typeof card?.href !== "string") continue;
+      const path = new URL(card.href, "https://www.aivideosugc.com").pathname;
+      const target = parseStaticCreateSegments(path.slice("/app/create/".length).split("/"));
+      if (target?.kind === "tool" && target.tool === tool && target.template === template) return presetFromCard(page, page.slug, card);
     }
   }
   return undefined;

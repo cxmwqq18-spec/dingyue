@@ -34,7 +34,7 @@ export async function getWorkspaceInspirationPage(params: { offset?: number; kin
         AND (ltrim(p.slug, '/') LIKE 'ai-video-generation/%' OR ltrim(p.slug, '/') LIKE 'ai-image-generation/%')
         AND (NULLIF(c.card#>>'{image,src}', '') IS NOT NULL OR NULLIF(c.card->>'ref', '') IS NOT NULL)
     ), distinct_cards AS (
-      SELECT DISTINCT ON (ref) raw.*, COALESCE(lookup.categories->>ref, lookup.categories->>regexp_replace(card#>>'{image,src}', '--[0-9]+[.]webp$', ''), 'All') AS category
+      SELECT DISTINCT ON (ref) raw.*, COALESCE(lookup.categories->>ref, lookup.categories->>regexp_replace(card#>>'{image,src}', '-{1,2}[0-9]+[.]webp$', ''), 'All') AS category
       FROM raw CROSS JOIN lookup WHERE ref IS NOT NULL ORDER BY ref, slug, "cardIndex"
     ), filtered AS (
       SELECT * FROM distinct_cards WHERE (${kind} = 'all' OR kind = ${kind})

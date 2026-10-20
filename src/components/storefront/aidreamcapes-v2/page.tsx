@@ -1,3 +1,4 @@
+import { TemplateDirectory, templateDetailResolvers, resolveTemplateCardLinks } from "./template-directory.server";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
@@ -1133,12 +1134,13 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
   return hero;
 }
 
-function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKeywords }: { section: SectionInstance; r: V2Resolvers; company?: V2Company; homeKeywords?: string }) {
-  const r = withStartLinks(baseResolvers);
+function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKeywords, query }: { section: SectionInstance; r: V2Resolvers; company?: V2Company; homeKeywords?: string; query?: Record<string, string | string[] | undefined> }) {
   const settings = section.settings as Record<string, unknown>;
   const layout = text(settings.layout);
   const data = settings.data as V2Data;
   if (!data) return null;
+  const r = templateDetailResolvers(data, withStartLinks(baseResolvers));
+  if (data.templateDirectory) return <TemplateDirectory data={data} r={r} query={query} />;
   if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;
   if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;
   if (layout === "tool") return <ToolPage data={data} r={r} />;
@@ -1152,6 +1154,9 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   return <SimplePage company={company} data={data} layout={layout} r={r} />;
 }
 
-export function AidreamcapesV2Page(props: Parameters<typeof AidreamcapesV2PageContent>[0]) {
-  return <><WorkspaceEntryBehavior /><AidreamcapesV2PageContent {...props} /></>;
+export async function AidreamcapesV2Page(props: Parameters<typeof AidreamcapesV2PageContent>[0]) {
+  const settings = props.section.settings as Record<string, unknown>;
+  const data = settings.data as V2Data;
+  const section = data && !data.templateDirectory ? { ...props.section, settings: { ...settings, data: await resolveTemplateCardLinks(data) } as unknown as SectionInstance["settings"] } : props.section;
+  return <><WorkspaceEntryBehavior /><AidreamcapesV2PageContent {...props} section={section} /></>;
 }

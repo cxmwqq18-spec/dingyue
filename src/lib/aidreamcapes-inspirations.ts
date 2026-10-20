@@ -94,6 +94,20 @@ export function readInspirationCategoryOverrides(): Record<string, string> {
 function mediaRefFromSrc(catalog: MediaCatalog, src: string): string | undefined {
   const normalized = src.trim().split(/[?#]/, 1)[0];
   if (!normalized) return undefined;
+  // The active production media server exposes the same files through
+  // readable aliases. Resolve those identities as well as original paths.
+  if (/^\/ai-image-generation\/(?:actors\/)?[^/]+\.webp$/.test(normalized)) {
+    const file = path.posix.basename(normalized).replace(/-{1,2}\d+\.webp$/, "").replace(/\.webp$/, "");
+    const guide = Object.entries(catalog.guide?.items ?? {}).find(([, meta]) => meta.file === file);
+    if (guide) return `n:guide:${guide[0]}`;
+    for (const [tool, gallery] of Object.entries(catalog.galleries ?? {})) if (gallery.items[file]) return `g:${tool}/${file}`;
+    if (catalog.gen?.[file]) return `n:${file}`;
+    const gen2 = Object.keys(catalog.gen2 ?? {}).find(key => key.replace(/:/g, "") === file);
+    if (gen2) return `n:${gen2}`;
+    const ugc = Object.entries(catalog.ugc?.items ?? {}).find(([key, meta]) => (meta.file ?? key) === file);
+    if (ugc) return `u:${ugc[0]}`;
+    if (catalog.clipFrames?.[file]) return `f:${file}`;
+  }
   const guidePrefix = `${catalog.guide?.dir ?? ""}/`;
   if (guidePrefix && normalized.startsWith(guidePrefix)) {
     const file = normalized.slice(guidePrefix.length).replace(/--\d+\.webp$/, "");
@@ -373,6 +387,9 @@ export function inspirationCategoryLookup(): Record<string, string> {
     if (!media) continue;
     lookup[media.src] = category;
     lookup[media.src.replace(/--\d+\.webp$/, "")] = category;
+    const stem = path.posix.basename(media.src).replace(/--\d+\.webp$/, "").replace(/\.webp$/, "");
+    lookup[`/ai-image-generation/${stem}`] = category;
+    lookup[`/ai-image-generation/actors/${stem}`] = category;
   }
   return lookup;
 }

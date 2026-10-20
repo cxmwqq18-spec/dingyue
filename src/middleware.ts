@@ -905,6 +905,13 @@ function applyGrownstrideNoindex(response: Response, request: NextRequest): Resp
 
 function finalizeStorefrontResponse(response: Response, request: NextRequest): Response {
   const guarded = withStorefrontGuardCookie(response, request);
+  const path = request.nextUrl.pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/, "");
+  const aidreamcapes = /^\/site\/(?:aidreamcapes|aivideosugc)(?:\/|$)/.test(request.nextUrl.pathname)
+    || storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "aidreamcapes";
+  if (aidreamcapes && /^\/(?:templates|industries|platforms|occasions)(?:\/|$)/.test(path)
+    && ["kind", "industries", "platforms", "occasions"].some(key => Boolean(request.nextUrl.searchParams.get(key)))) {
+    guarded.headers.set("X-Robots-Tag", "noindex, follow");
+  }
   return applyGrownstrideNoindex(guarded, request);
 }
 
@@ -918,16 +925,6 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
     upstreamUrl.pathname = "/api/aidreamcapes/llms-txt";
     upstreamUrl.search = "";
     return upstreamUrl;
-  }
-  // Fixed template-filter paths keep the public URL static while the gallery
-  // page applies the same filter it reads from ?type today.
-  if (hostSlug === "aidreamcapes") {
-    const templateType = upstreamUrl.pathname.match(/^\/templates\/(video|photo)$/)?.[1];
-    if (templateType) {
-      upstreamUrl.pathname = "/templates";
-      upstreamUrl.search = `type=${templateType}`;
-      return upstreamUrl;
-    }
   }
   // Video watch pages are standalone routes for all three storefront hosts.
   // Keep them on the top-level App Router path so they do not fall through to

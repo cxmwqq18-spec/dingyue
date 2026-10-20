@@ -3,7 +3,7 @@ import { AidreamcapesInspirationsPage } from "@/components/storefront/aidreamcap
 import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
-import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "@/lib/aidreamcapes-workspace/presets.server";
+import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset, resolveWorkspaceLegacyTemplatePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { inspirationCreateHref, inspirationCreateTarget } from "@/lib/aidreamcapes-inspirations-types";
 import {
@@ -11,19 +11,22 @@ import {
   getAidreamcapesInspirationCards
 } from "@/lib/aidreamcapes-inspirations";
 
-// Server-side entry points for Aidreamcapes guest workspace and inspiration
+// Server-side entry points for Aidreamcapes workspace and inspiration
 // routes. Guests receive the complete workspace shell and public catalog; task,
 // asset, account, and generation operations remain customer-authenticated.
 
 type GuestRouteQuery = Record<string, string | string[] | undefined>;
 
-export async function renderAidreamcapesGuestCreatePage({ query = {} }: {
+export async function renderAidreamcapesCreatePage({ query = {}, siteSlug }: {
   query?: GuestRouteQuery;
   siteSlug: string;
 }) {
   const entry = aidreamcapesWorkspaceEntry(query);
+  const resolvedPreset = !entry.taskId && !entry.presetRequest && typeof query.tool === "string" && typeof query.template === "string"
+    ? await resolveWorkspaceLegacyTemplatePreset(query.tool, query.template) : undefined;
   return renderAidreamcapesWorkspace({
-    routeSlug: "aidreamcapes",
+    resolvedPreset,
+    routeSlug: siteSlug === "aivideosugc" ? "aivideosugc" : "aidreamcapes",
     ...entry,
     initialView: entry.initialView ?? "agent"
   });

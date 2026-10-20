@@ -352,7 +352,7 @@ export function ThemeRenderer({
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
         <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
           {v2Entry ? (
-            <AidreamcapesV2Page company={v2Company} homeKeywords={aidreamcapesHomeKeywords} r={v2Resolvers} section={v2Entry[1]} />
+            <AidreamcapesV2Page query={query} company={v2Company} homeKeywords={aidreamcapesHomeKeywords} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (
             <AidreamcapesV2PolicyPage company={v2Company} pagePath={normalizedPath} r={v2Resolvers} sections={v2PageSections} supportEmail={storefrontContext?.profile?.identity.supportEmail} />
           ) : (

@@ -1,0 +1,10 @@
+.directory h1 { margin: 28px 0 16px; font-size: clamp(32px, 4vw, 56px); line-height: 1.12; }
+.directory > p { max-width: 760px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+.filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; gap: 14px; align-items: end; padding: 20px; margin: 24px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
+.filters label { display: grid; gap: 8px; font-size: 14px; color: var(--ink-2); }
+.filters select { min-width: 0; width: 100%; padding: 12px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 10px; font: inherit; }
+.filters select:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+.cardImage { display: block; aspect-ratio: 1 / 1; object-fit: cover; width: 100%; height: auto; }
+@media (max-width: 900px) { .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .filters { grid-template-columns: minmax(0, 1fr); } }

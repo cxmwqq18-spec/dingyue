@@ -551,7 +551,7 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
       <div className="tb">
         <h3><WorkspaceEntryLink className="card-title" href={r.href(card.href)}>{card.name}</WorkspaceEntryLink><SoonLabel soon={card.soon} /></h3>
         {card.line ? <p>{card.line}</p> : null}
-        <span className="use">Use this template →</span>
+        <WorkspaceEntryLink className="use" href={r.href(card.href)}>View template →</WorkspaceEntryLink>
       </div>
     </article>
   );
