@@ -50,6 +50,8 @@ await expectPage("/app/create/ai-video-generation/url-to-video", ["Workspace nav
 await expectPage("/app/create/ai-video-generation/text-to-video", ["Workspace navigation", "Text to Video"]);
 await expectPage("/app/create/inspirations", ["Workspace navigation", "data-inspiration-card="]);
 await expectPage("/app/inspirations", ["AIVideosUGC"]);
+await expectPage("/site/aidreamcapes/app/create/ai-image-generation", ["Workspace navigation", "AI Image"]);
+await expectPage("/site/aidreamcapes/app/create/ai-video-generation/url-to-video", ["Workspace navigation", "URL to Video"]);
 await expectPage("/templates", ["AIVideosUGC"]);
 await expectPage("/templates/video", ["AIVideosUGC"]);
 await expectPage("/ai-video-generation", ["AIVideosUGC"]);
@@ -65,6 +67,7 @@ await expectRedirect("/app/create/agent", "/app/create/ai-video-generation/text-
 await expectRedirect("/app/create/tool/video-ads/creator", "/app/create/ai-video-generation/video-ads/creator");
 await expectRedirect("/app/create?tool=image-to-video&size=9:16&length=10", "/app/create/ai-video-generation/image-to-video?size=9%3A16&length=10");
 await expectRedirect("/app/create?view=library&filter=completed", "/app/create/library/completed");
+await expectRedirect("/site/aidreamcapes/app/create?view=images", "/site/aidreamcapes/app/create/ai-image-generation");
 
 const inspirationResponse = await get("/api/sites/site_aidreamcapes/aivideosugc/inspirations");
 assert.equal(inspirationResponse.status, 200, `inspirations API: status ${inspirationResponse.status}`);
@@ -88,10 +91,11 @@ assert.equal(sitemap.status, 200, `sitemap: status ${sitemap.status}`);
 assert.match(await sitemap.text(), /<urlset[\s>]/i, "sitemap: urlset");
 const robots = await get("/robots.txt");
 assert.equal(robots.status, 200, `robots: status ${robots.status}`);
-const robotsText = await robots.text();
-if (/Sitemap:/i.test(robotsText)) checks.push("sitemap.xml and robots.txt: 200");
-else warnings.push("robots.txt: no Sitemap reference (non-production environment?)");
-if (/Disallow:\s*\/\s*$/im.test(robotsText)) warnings.push("robots.txt: disallows the whole site (non-production environment?)");
+// The origin is reached over plain HTTP on loopback, so the robots route also
+// sees a non-production Host alongside X-Forwarded-Host. Checking the body here
+// would report a false "Disallow: /" on every release; the exhaustive SEO
+// contract owns robots content.
+checks.push("robots.txt: 200 (content owned by the full SEO contract)");
 
 console.log(JSON.stringify({
   ok: true,
