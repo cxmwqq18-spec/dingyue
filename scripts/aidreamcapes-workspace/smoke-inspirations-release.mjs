@@ -13,6 +13,30 @@ const decode = (value) => value.replaceAll("&amp;", "&").replaceAll("&quot;", '"
 const cardsFromHtml = (html) => [...html.matchAll(/<button\b[^>]*data-inspiration-card="([^"]+)"[\s\S]*?<\/button>/g)].map((match) => ({
   id: decode(match[1]), src: decode(match[0].match(/<img\b[^>]*\bsrc="([^"]+)"/)?.[1] || ""),
 }));
+function serializedValueFromHtml(html, field) {
+  const prefix = "self.__next_f.push(";
+  const flight = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map((match) => match[1])
+    .filter((script) => script.startsWith(prefix) && script.endsWith(")"))
+    .map((script) => JSON.parse(script.slice(prefix.length, -1)))
+    .filter((entry) => typeof entry[1] === "string").map((entry) => entry[1]).join("");
+  const key = `"${field}":`;
+  const keyIndex = flight.indexOf(key);
+  assert(keyIndex >= 0, `SSR serializes ${field}`);
+  const start = keyIndex + key.length;
+  assert(["{", "["].includes(flight[start]));
+  let depth = 0, quoted = false, escaped = false;
+  for (let index = start; index < flight.length; index++) {
+    const character = flight[index];
+    if (quoted) {
+      if (escaped) escaped = false;
+      else if (character === "\\") escaped = true;
+      else if (character === '"') quoted = false;
+    } else if (character === '"') quoted = true;
+    else if (character === "{" || character === "[") depth++;
+    else if ((character === "}" || character === "]") && --depth === 0) return JSON.parse(flight.slice(start, index + 1));
+  }
+  assert.fail(`${field} must be complete JSON`);
+}
 async function read(path, { workspace = false } = {}) {
   const response = await fetch(new URL(path, origin), { headers, signal: AbortSignal.timeout(45000) });
   assert.equal(response.status, 200, `${path} responds with HTTP 200`);
@@ -24,7 +48,16 @@ async function read(path, { workspace = false } = {}) {
   assert.match(html, /<meta[^>]*name="robots"[^>]*content="noindex, nofollow"/);
   if (workspace) assert.doesNotMatch(html, /<iframe\b/);
   else assert.doesNotMatch(html, /aria-label="Workspace navigation"|<iframe\b/);
-  assert.doesNotMatch(html, /\\"prompt\\":/);
+  // Workspace quick starts and explicit entry transfers may carry editable
+  // prompts. Inspiration cards must expose only the display projection, and
+  // their creation URLs must stay fixed instead of serializing prompts.
+  const cards = workspace ? serializedValueFromHtml(html, "initialInspirations").cards : serializedValueFromHtml(html, "cards");
+  assert(Array.isArray(cards) && cards.length > 0);
+  for (const card of cards) {
+    assert(!Object.hasOwn(card, "prompt"), `Card ${card.id} has no raw prompt field`);
+    assert(!new URL(card.createHref, origin).searchParams.has("prompt"), `Card ${card.id} has no prompt in its URL`);
+  }
+  if (workspace) assert.deepEqual(cards.map((card) => card.id), cardsFromHtml(html).map((card) => card.id));
   return cardsFromHtml(html);
 }
 
