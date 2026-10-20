@@ -3,10 +3,15 @@
 // no `publicSlug` yet.
 //
 // Scope (2026-10-21): 18 `visual.picker.cards[*]` entries carrying the
-// `example` chip and 30 `data.examples.groups[*].items[*]` gallery entries.
-// Those two shapes are the only cards the public renderer still sends to a
-// preset/tool link instead of a media detail page
+// `example` chip, 30 `data.examples.groups[*].items[*]` gallery entries and the
+// 18 `data.templateDefinition.card` entries the template pages render in their
+// picker. Those three shapes are the only cards the public renderer still
+// sends to a preset/tool link instead of a media detail page
 // (`/ai-image-generation/<slug>` or `/ai-video-generation/<slug>`).
+//
+// A template definition card and the picker card next to it are the same media
+// (same image, same label), so both name the same detail page and share one
+// slug.
 //
 // This script only reads the relational rows and writes the reviewable
 // manifest. It never writes the database. Run
@@ -38,10 +43,17 @@ import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget } from "./lib/database-target.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const manifestPath = path.join(here, "manifests", "aidreamcapes-example-media-slugs-2026-10-21.json");
+const defaultManifestPath = path.join(here, "manifests", "aidreamcapes-example-media-slugs-2026-10-21.json");
+// `--manifest=<path>` keeps the reviewed production plan next to the local one
+// instead of overwriting it.
+const manifestPath = (() => {
+  const requested = argumentValue("--manifest");
+  if (!requested) return defaultManifestPath;
+  return path.isAbsolute(requested) ? requested : path.resolve(process.cwd(), requested);
+})();
 const CONTRACT = "aidreamcapes-example-media-slugs-2026-10-21-v1";
 const SITE_ID = "site_aidreamcapes";
-const EXPECTED = { picker: 18, examples: 30 };
+const EXPECTED = { picker: 18, examples: 30, definition: 18 };
 const SLUG_MAX = 80;
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const FAMILY = { photo: "ai-image-generation", video: "ai-video-generation" };
@@ -105,6 +117,40 @@ try {
   });
   assert(rows.length > 0, `No LivePage rows for ${siteId}.`);
 
+  /** Every card of the four public shapes with its slug, in page order. */
+  const cardsWithSlugs = (contentJson) => {
+    const found = [];
+    const content = record(contentJson) ?? {};
+    const sections = record(content.sections) ?? {};
+    const order = Array.isArray(content.sectionsOrder) && content.sectionsOrder.length
+      ? content.sectionsOrder
+      : Object.keys(sections);
+    for (const sectionId of order) {
+      const section = record(sections[sectionId]);
+      if (!section || section.type !== "aidreamcapes_v2_page") continue;
+      const data = record(record(section.settings)?.data);
+      if (!data) continue;
+      const push = (value) => {
+        const card = record(value);
+        const slug = typeof card?.publicSlug === "string" ? card.publicSlug.trim() : "";
+        if (card && slug) found.push([slug, card]);
+      };
+      const pickerCards = record(record(data.visual)?.picker)?.cards;
+      if (Array.isArray(pickerCards)) pickerCards.forEach(push);
+      if (Array.isArray(data.workspaceCases)) data.workspaceCases.forEach(push);
+      const groups = record(data.examples)?.groups;
+      if (Array.isArray(groups)) {
+        for (const group of groups) {
+          const items = record(group)?.items;
+          if (Array.isArray(items)) items.forEach(push);
+        }
+      }
+      const definition = record(record(data.templateDefinition)?.card);
+      if (definition) push(definition);
+    }
+    return found;
+  };
+
   // ---- Uniqueness domain --------------------------------------------------
   const existingCardSlugs = new Set();
   const livePageSlugs = new Set();
@@ -126,8 +172,34 @@ try {
     livePageSlugs.add(row.slug);
     collectCardSlugs(row.contentJson);
   }
-  // A slug value belongs to exactly one card; the correction below relies on it.
-  assert.equal(cardSlugValues, existingCardSlugs.size, "Card publicSlug values are not distinct; review the uniqueness domain before planning.");
+  // A slug value belongs to exactly one media item. Two card shapes of the same
+  // page may carry the same slug when they are the same media (a template
+  // definition card and the picker card beside it). The same slug on two
+  // different media, or on two pages, would make the detail address ambiguous
+  // and is rejected here.
+  const sharedMediaPairs = [];
+  const slugOwners = new Map();
+  for (const row of rows) {
+    const perPage = new Map();
+    for (const [slug, card] of cardsWithSlugs(row.contentJson)) {
+      const imageSrc = String(record(card.image)?.src ?? "");
+      const owner = slugOwners.get(slug);
+      assert(!owner || owner.page === row.slug, `Slug ${slug} is used on two pages (${owner?.page} and ${row.slug}).`);
+      slugOwners.set(slug, { page: row.slug, imageSrc: owner?.imageSrc ?? imageSrc });
+      const previous = perPage.get(slug);
+      if (previous === undefined) {
+        perPage.set(slug, imageSrc);
+        continue;
+      }
+      assert(previous === imageSrc, `Slug ${slug} is used by two different media on ${row.slug}.`);
+      sharedMediaPairs.push({ page: row.slug, slug, imageSrc });
+    }
+  }
+  assert.equal(
+    cardSlugValues - existingCardSlugs.size,
+    sharedMediaPairs.length,
+    "Card publicSlug values are not distinct; review the uniqueness domain before planning."
+  );
 
   // ---- Previous review (for the applied / superseded distinction) ---------
   // A card that already carries the slug this manifest planned is "applied".
@@ -195,6 +267,22 @@ try {
             imageSrc: String(record(card.image)?.src ?? ""),
             current: typeof card.publicSlug === "string" ? card.publicSlug.trim() : ""
           });
+        });
+      }
+
+      const definition = record(record(data.templateDefinition)?.card);
+      if (definition) {
+        // A template page renders this card in its own picker, so it needs the
+        // same detail slug as the picker card next to it.
+        cards.push({
+          source: "definition",
+          jsonPath: `sections.${sectionId}.settings.data.templateDefinition.card`,
+          kind: definition.kind === "video" ? "video" : definition.kind === "photo" ? "photo" : undefined,
+          label: String(definition.label ?? ""),
+          storedLabel: String(definition.label ?? ""),
+          labelSource: "card",
+          imageSrc: String(record(definition.image)?.src ?? ""),
+          current: typeof definition.publicSlug === "string" ? definition.publicSlug.trim() : ""
         });
       }
 
@@ -267,6 +355,32 @@ try {
         assignmentProblems.push({ page: page.slug, jsonPath: card.jsonPath, reason: `label "${card.label}" does not slugify` });
         continue;
       }
+      // A template definition card and the picker card beside it are the same
+      // media. Both must name the same detail page, so the definition card
+      // reuses its sibling's slug instead of claiming a second address.
+      const sibling = page.cards.find((candidate) => candidate !== card
+        && candidate.imageSrc === card.imageSrc
+        && candidate.kind === card.kind
+        && candidate.publicSlug);
+      if (sibling) {
+        card.publicSlug = sibling.publicSlug;
+        card.pageSlug = page.slug;
+        card.detailPath = detailPath(card.kind, card.publicSlug);
+        card.sharesSlugWith = sibling.jsonPath;
+        card.state = !card.current ? "new" : card.current === card.publicSlug ? "applied" : "superseded";
+        if (card.state === "superseded") {
+          card.supersedes = card.current;
+          history.push({
+            page: page.slug,
+            jsonPath: card.jsonPath,
+            label: card.label,
+            from: card.current,
+            to: card.publicSlug,
+            reason: "slug shared with the template picker card that renders the same media"
+          });
+        }
+        continue;
+      }
       // The card's own current value (written by an earlier revision of this
       // manifest) is not a foreign collision; free it before choosing the slug.
       if (card.current) used.delete(card.current);
@@ -326,6 +440,7 @@ try {
       publicSlug: card.publicSlug,
       detailPath: card.detailPath,
       state: card.state,
+      ...(card.sharesSlugWith ? { sharesSlugWith: card.sharesSlugWith } : {}),
       ...(card.supersedes ? { supersedes: card.supersedes } : {})
     }))
   }));
@@ -333,6 +448,9 @@ try {
   const manifest = {
     siteId,
     contract: CONTRACT,
+    // The database this plan was reviewed against. It may only be applied to
+    // the same target.
+    target,
     routeFamilies: FAMILY,
     slugRules: {
       base: "<pageSlugLeaf>-<slugify(cardLabel)>, leaf omitted on /ai-image-generation and /ai-video-generation",
@@ -358,6 +476,7 @@ try {
     cards: cards.length,
     picker: cards.filter((card) => card.source === "picker").length,
     examples: cards.filter((card) => card.source === "examples").length,
+    definition: cards.filter((card) => card.source === "definition").length,
     photo: cards.filter((card) => card.kind === "photo").length,
     video: cards.filter((card) => card.kind === "video").length,
     new: cards.filter((card) => card.state === "new").length,

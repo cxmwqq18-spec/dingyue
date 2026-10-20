@@ -433,3 +433,68 @@ SELECT count(*) AS total, count(DISTINCT name) AS unique_names,
        count(*) FILTER (WHERE name IN ('men','women','scene','age-range')) AS reserved_collisions
 FROM actors;
 ```
+
+---
+
+## 13. 实施记录（2026-10-21）
+
+### 13.1 已落地的代码
+
+| 位置 | 变更 |
+|---|---|
+| `src/lib/aidreamcapes-workspace/media-detail.ts` | 纯函数：详情地址、卡片 href、演员地址与重定向目标、文案助手 |
+| `src/lib/aidreamcapes-workspace/media-detail.server.ts` | 从当前 `LivePage.contentJson` 解析媒体/演员详情页、导航外壳、退役路径跳转、库存盘点 |
+| `src/components/storefront/aidreamcapes-v2/media-detail.tsx` | 详情页 UI（外壳 + 主图 + 规格 + 单一 CTA + 相关卡片） |
+| `src/app/[...path]/page.tsx`、`src/app/site/[siteSlug]/[...path]/page.tsx` | 路由优先级：媒体详情 → 演员扁平/嵌套 308 → 内容页 → 合集页 |
+| `src/app/site/[siteSlug]/ai-image-generation/[themeSlug]/page.tsx` | 图片命名空间优先级：内容页 > 合集项；详情页优先 |
+| `src/components/storefront/aidreamcapes-v2/{visual,parts,template-directory,page,types}.tsx` | 卡片改为普通 `<a>` 指向自己的详情页；演员卡与面包屑扁平化 |
+| `src/lib/seo-indexing.ts` | 仅对 `site_aidreamcapes` 把 `/ai-actors/{men\|women}/<name>` 映射为 `/ai-actors/<name>` 再写 sitemap |
+| `src/lib/theme/json-ld.ts` | AIVideosUGC 的 JSON-LD 内嵌套演员地址归一为扁平地址 |
+| `src/lib/aidreamcapes-workspace/presets.server.ts` | 工作台预填可解析四种卡片形态（picker / workspaceCases / examples / templateDefinition） |
+| `src/lib/aidreamcapes-inspirations-types.ts` 及两个 inspiration 组件 | 卡片链详情页，CTA 固定进工作台并带 entry 载荷 |
+
+### 13.2 数据变更（字段级 manifest + compare-and-set）
+
+- 清单：`scripts/manifests/aidreamcapes-example-media-slugs-2026-10-21.json`（66 张卡片、23 个页面）
+- 计划：`scripts/plan-aidreamcapes-example-media-slugs.mjs`（只读，产出可评审的清单）
+- 应用：`scripts/apply-aidreamcapes-example-media-slugs.mjs`（`--target` / `--apply` / `--confirm` / `--base-hash` 逐页 CAS）
+- 本地库已应用：picker 18 + examples 30 + templateDefinition 18 = 66 张卡片补齐 `publicSlug`；重复执行 0 写入
+- 覆盖校验：四种卡片形态 `publicSlug` 覆盖率 100%（picker 242/242、workspaceCases 715/715、examples 30/30、templateDefinition 18/18）
+- **生产尚未应用**：需用同一清单执行
+  `node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=production --apply --confirm=site_aidreamcapes-example-media-slugs --base-hash=<清单 planHash>`
+
+### 13.3 与原计划的偏差
+
+1. **不做运行时 canonical 去重**：`publicSlug` 重复的媒体组约 19/37，其标题不一致，合并会让可见文案与数据不符；本阶段以 `noindex, follow` + 不入 sitemap 控制重复，canonical 收口留到后续字段级 manifest。
+2. **演员旧地址返回 308 而非 301**：Next 的 `permanentRedirect` 固定返回 308，语义同为永久跳转；门禁同时接受 301/308。
+3. **示例卡片范围从 48 张扩到 66 张**：模板页渲染的其实是 `data.templateDefinition.card`（`resolveTemplateCardLinks` 会用它覆盖 picker 卡片），因此 18 张模板定义卡片同样需要 `publicSlug`；模板定义卡片与其旁边的 picker 卡片是同一媒体，共用一个详情地址。
+4. **`scene` 类示例按视频归族**：示例项 `kind` 为 `clip`/`scene`/`photo`，只有 `photo` 是静态图；渲染与解析层统一为 `clip`/`scene` → video。
+
+### 13.4 已知边界
+
+- 5 个模板页的 `blockOrder` 不含 `picker`，因此不渲染卡片网格（改为步骤 UI）；门禁按「合法跳过」记录，不计失败。
+- 派生详情页不进 sitemap，一律 `noindex, follow`。
+- 本机无法访问 `https://www.aivideosugc.com`，生产回读与生产 manifest 应用需在可访问生产的机器上执行。
+
+### 13.5 验证命令
+
+```bash
+# 汇总门禁（5 个专项审计 + sitemap 形状 + 演员页 + 退役路径）
+AIDREAMCAPES_AUDIT_ORIGIN=http://127.0.0.1:3003 \
+  node scripts/aidreamcapes-workspace/verify-media-detail-remediation.mjs
+
+# 专项
+node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs
+node scripts/aidreamcapes-workspace/audit-media-detail-routes.mjs
+node scripts/aidreamcapes-workspace/audit-actor-flat-routes.mjs
+node scripts/aidreamcapes-workspace/audit-media-namespace.mjs
+node scripts/aidreamcapes-workspace/audit-workspace-entry-transfer.mjs
+
+# 浏览器点击链路（卡片 → 详情页 → 工作台）
+AIDREAMCAPES_CARD_BROWSER_ORIGIN=http://127.0.0.1:3003 \
+  node scripts/aidreamcapes-workspace/smoke-card-entry-browser.mjs
+
+# 数据面
+node scripts/plan-aidreamcapes-example-media-slugs.mjs --target=local
+node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=local
+```

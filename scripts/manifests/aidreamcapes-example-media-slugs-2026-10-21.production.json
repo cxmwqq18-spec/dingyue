@@ -1,0 +1,1054 @@
+{
+  "siteId": "site_aidreamcapes",
+  "contract": "aidreamcapes-example-media-slugs-2026-10-21-v1",
+  "target": "production",
+  "routeFamilies": {
+    "photo": "ai-image-generation",
+    "video": "ai-video-generation"
+  },
+  "slugRules": {
+    "base": "<pageSlugLeaf>-<slugify(cardLabel)>, leaf omitted on /ai-image-generation and /ai-video-generation",
+    "cardLabel": "picker: card.label; gallery: item.title, or the group label when the video hub renders one row of single-item groups",
+    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+    "maxLength": 80,
+    "uniqueAgainst": [
+      "existing card publicSlug values",
+      "LivePage.slug paths",
+      "slugs planned in this run"
+    ],
+    "collisionSuffix": "-2, -3, ...",
+    "supersede": "a card may only replace a value this manifest planned earlier; any other non-empty publicSlug aborts the plan"
+  },
+  "baseHashScheme": "sha256(stableJSON({id, siteId, slug, title, pageType, templateKey, contentJson, updatedAt}))",
+  "uniquenessDomain": {
+    "existingCardSlugs": 939,
+    "livePageSlugs": 266
+  },
+  "expected": {
+    "picker": 18,
+    "examples": 30,
+    "definition": 18
+  },
+  "collisions": [],
+  "history": [],
+  "planHash": "38008e65c2f53b8d42ea8ed701a2e92b8bcd2daed4fecec51d92d5f121372620",
+  "pages": [
+    {
+      "id": "aidreamcapes_mirror_page_3cdceb40eb9fd743",
+      "slug": "/ai-image-generation",
+      "title": "AI Product Photo Generator for Instant Photoshoots",
+      "baseHash": "b118715eb5f61da1b6fc4aa74e8a83b767aa78a4a60734e3f0b9c6ca497862c8",
+      "updatedAt": "2026-10-20T12:30:40.890Z",
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Set the Sauce Bottle with Tomatoes",
+          "storedLabel": "Set the Sauce Bottle with Tomatoes",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-1-scene-r1-640.webp",
+          "publicSlug": "set-the-sauce-bottle-with-tomatoes",
+          "detailPath": "/ai-image-generation/set-the-sauce-bottle-with-tomatoes",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Show the Sauce Bottle on White",
+          "storedLabel": "Show the Sauce Bottle on White",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-1-white-r1-640.webp",
+          "publicSlug": "show-the-sauce-bottle-on-white",
+          "detailPath": "/ai-image-generation/show-the-sauce-bottle-on-white",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "Splash the Pump Bottle",
+          "storedLabel": "Splash the Pump Bottle",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-2-scene-r1-640.webp",
+          "publicSlug": "splash-the-pump-bottle",
+          "detailPath": "/ai-image-generation/splash-the-pump-bottle",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[1]",
+          "kind": "photo",
+          "label": "Show the Pump Bottle on White",
+          "storedLabel": "Show the Pump Bottle on White",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-2-white-r1-640.webp",
+          "publicSlug": "show-the-pump-bottle-on-white",
+          "detailPath": "/ai-image-generation/show-the-pump-bottle-on-white",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[2].items[0]",
+          "kind": "photo",
+          "label": "Place the Blue Bottle Underwater",
+          "storedLabel": "Place the Blue Bottle Underwater",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-3-scene-r1-640.webp",
+          "publicSlug": "place-the-blue-bottle-underwater",
+          "detailPath": "/ai-image-generation/place-the-blue-bottle-underwater",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[2].items[1]",
+          "kind": "photo",
+          "label": "Show the Blue Bottle on White",
+          "storedLabel": "Show the Blue Bottle on White",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-3-white-r1-640.webp",
+          "publicSlug": "show-the-blue-bottle-on-white",
+          "detailPath": "/ai-image-generation/show-the-blue-bottle-on-white",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[0]",
+          "kind": "photo",
+          "label": "Steam the Ceramic Canister",
+          "storedLabel": "Steam the Ceramic Canister",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-4-scene-r1-640.webp",
+          "publicSlug": "steam-the-ceramic-canister",
+          "detailPath": "/ai-image-generation/steam-the-ceramic-canister",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[1]",
+          "kind": "photo",
+          "label": "Show the Canister on White",
+          "storedLabel": "Show the Canister on White",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-photo-hub-examples-4-white-r1-640.webp",
+          "publicSlug": "show-the-canister-on-white",
+          "detailPath": "/ai-image-generation/show-the-canister-on-white",
+          "state": "new"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "slug": "/ai-image-generation/colorway-variations",
+      "title": "Create Product Color Variation Photos",
+      "baseHash": "7e539831042156ed9f34d9583a22c586b570e08a2797c3ee44afcfe569422ea9",
+      "updatedAt": "2026-10-20T12:22:08.038Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Color Variants",
+          "storedLabel": "Color Variants",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+          "publicSlug": "colorway-variations-color-variants",
+          "detailPath": "/ai-image-generation/colorway-variations-color-variants",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Color Variants",
+          "storedLabel": "Color Variants",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+          "publicSlug": "colorway-variations-color-variants",
+          "detailPath": "/ai-image-generation/colorway-variations-color-variants",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_jewelry_positioning",
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "title": "AI Jewelry Product Photography That Stays True",
+      "baseHash": "4c6982007ff33104399e9d7e69daa63ff1bc6810e2d7b7809323d533ecd76af1",
+      "updatedAt": "2026-10-20T12:22:08.171Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Jewelry On Model",
+          "storedLabel": "Jewelry On Model",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+          "publicSlug": "jewelry-positioning-jewelry-on-model",
+          "detailPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Jewelry On Model",
+          "storedLabel": "Jewelry On Model",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+          "publicSlug": "jewelry-positioning-jewelry-on-model",
+          "detailPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_packaging_mockup",
+      "slug": "/ai-image-generation/packaging-mockup",
+      "title": "AI Packaging Design Generator",
+      "baseHash": "7f9b8c7af4fef553238d79debef3591e4f9b413476f4b1c0a724b31b59638d4e",
+      "updatedAt": "2026-10-20T12:22:08.315Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Packaging Preview",
+          "storedLabel": "Packaging Preview",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+          "publicSlug": "packaging-mockup-packaging-preview",
+          "detailPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Packaging Preview",
+          "storedLabel": "Packaging Preview",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+          "publicSlug": "packaging-mockup-packaging-preview",
+          "detailPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_packshot_multi_angle",
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "title": "Multi-Angle Product Packshot Photos",
+      "baseHash": "c42fb49710d67a00fe322a60138ad61c4c5b38c24ba83cb5fc12abe9c6b5d9de",
+      "updatedAt": "2026-10-20T12:22:08.462Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Every Angle",
+          "storedLabel": "Every Angle",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+          "publicSlug": "packshot-multi-angle-every-angle",
+          "detailPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Every Angle",
+          "storedLabel": "Every Angle",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+          "publicSlug": "packshot-multi-angle-every-angle",
+          "detailPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_professional_headshot",
+      "slug": "/ai-image-generation/professional-headshot",
+      "title": "AI Professional Headshots for Your Team",
+      "baseHash": "01fd3b7738cecd9ec1419d3c2816b90c93899ed0e43c67d51856b9a2df5b1679",
+      "updatedAt": "2026-10-20T12:22:08.608Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Team Headshots",
+          "storedLabel": "Team Headshots",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+          "publicSlug": "professional-headshot-team-headshots",
+          "detailPath": "/ai-image-generation/professional-headshot-team-headshots",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Team Headshots",
+          "storedLabel": "Team Headshots",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+          "publicSlug": "professional-headshot-team-headshots",
+          "detailPath": "/ai-image-generation/professional-headshot-team-headshots",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "title": "Instagram Sales Post for Your Next Offer",
+      "baseHash": "b81196e988e292fd719b66f7bebd1dfb2460eff316cc6379f379ff9de6a5ac82",
+      "updatedAt": "2026-10-20T12:22:08.755Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Sale Banner",
+          "storedLabel": "Sale Banner",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+          "publicSlug": "sale-campaign-key-visual-sale-banner",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Sale Banner",
+          "storedLabel": "Sale Banner",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+          "publicSlug": "sale-campaign-key-visual-sale-banner",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Suitcase With Room for the Offer",
+          "storedLabel": "Suitcase With Room for the Offer",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-1-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-suitcase-with-room-for-the-offer",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-suitcase-with-room-for-the-offer",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Sandals Tried On at the Market",
+          "storedLabel": "Sandals Tried On at the Market",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-2-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-sandals-tried-on-at-the-market",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-sandals-tried-on-at-the-market",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]",
+          "kind": "photo",
+          "label": "Running Shoes Before the Jog",
+          "storedLabel": "Running Shoes Before the Jog",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-3-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-running-shoes-before-the-jog",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-running-shoes-before-the-jog",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[3]",
+          "kind": "photo",
+          "label": "Tote With Space for the Offer",
+          "storedLabel": "Tote With Space for the Offer",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-4-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-tote-with-space-for-the-offer",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-tote-with-space-for-the-offer",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[4]",
+          "kind": "photo",
+          "label": "Cardigan Ready for Season End",
+          "storedLabel": "Cardigan Ready for Season End",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-5-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-cardigan-ready-for-season-end",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-cardigan-ready-for-season-end",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[5]",
+          "kind": "photo",
+          "label": "Wallet Unboxing With Offer Space",
+          "storedLabel": "Wallet Unboxing With Offer Space",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-6-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-wallet-unboxing-with-offer-space",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-wallet-unboxing-with-offer-space",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[6]",
+          "kind": "photo",
+          "label": "Lunch Box on the Last Day",
+          "storedLabel": "Lunch Box on the Last Day",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-7-r1-640.webp",
+          "publicSlug": "sale-campaign-key-visual-lunch-box-on-the-last-day",
+          "detailPath": "/ai-image-generation/sale-campaign-key-visual-lunch-box-on-the-last-day",
+          "state": "new"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_story_ad_vertical",
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "title": "Make a Vertical Instagram Story Image",
+      "baseHash": "6523f2afa5d92e3e254404340267bf90290dbe070c8be44e2ad5d724a51b6aa5",
+      "updatedAt": "2026-10-20T12:22:08.903Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Story Ad",
+          "storedLabel": "Story Ad",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+          "publicSlug": "story-ad-vertical-story-ad",
+          "detailPath": "/ai-image-generation/story-ad-vertical-story-ad",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Story Ad",
+          "storedLabel": "Story Ad",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+          "publicSlug": "story-ad-vertical-story-ad",
+          "detailPath": "/ai-image-generation/story-ad-vertical-story-ad",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_ugc_still_ad",
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "title": "Make UGC Style Product Photos for Ads",
+      "baseHash": "9bd7127f83b2916e36ebe17674a6f9487819962645dc666d571cad134b64281e",
+      "updatedAt": "2026-10-20T12:22:09.034Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Creator-Style Photo",
+          "storedLabel": "Creator-Style Photo",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+          "publicSlug": "ugc-still-ad-creator-style-photo",
+          "detailPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Creator-Style Photo",
+          "storedLabel": "Creator-Style Photo",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+          "publicSlug": "ugc-still-ad-creator-style-photo",
+          "detailPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_virtual_try_on",
+      "slug": "/ai-image-generation/virtual-try-on",
+      "title": "AI Virtual Try-On Photos for Clothing",
+      "baseHash": "f37aa23e0db5f308a5017d65c321f35b9e5e5d367813b5c2eaed59a609f9c88e",
+      "updatedAt": "2026-10-20T12:22:09.184Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Clothing Try-On",
+          "storedLabel": "Clothing Try-On",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+          "publicSlug": "virtual-try-on-clothing-try-on",
+          "detailPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Clothing Try-On",
+          "storedLabel": "Clothing Try-On",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+          "publicSlug": "virtual-try-on-clothing-try-on",
+          "detailPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "slug": "/ai-video-generation",
+      "title": "AI Video Generator for Brands, Agencies, and Creators",
+      "baseHash": "1a4d3fb5bb3d0f740605775a102d78fb194a9aa61e43d54984ff09e58699b072",
+      "updatedAt": "2026-10-20T04:59:40.821Z",
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "A Spoken Ad With a Person on Camera",
+          "storedLabel": "Bottle Ad With a Person",
+          "labelSource": "group",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g1-640.webp",
+          "publicSlug": "a-spoken-ad-with-a-person-on-camera",
+          "detailPath": "/ai-image-generation/a-spoken-ad-with-a-person-on-camera",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "The Same Product Walkthrough",
+          "storedLabel": "Bento Box Walkthrough",
+          "labelSource": "group",
+          "imageSrc": "/ai-image-generation/im01-video-hub-bento-r1-640.webp",
+          "publicSlug": "the-same-product-walkthrough",
+          "detailPath": "/ai-image-generation/the-same-product-walkthrough",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[2].items[0]",
+          "kind": "photo",
+          "label": "A Showcase in a Real Room",
+          "storedLabel": "Perfume Bottle in a Room",
+          "labelSource": "group",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g7-640.webp",
+          "publicSlug": "a-showcase-in-a-real-room",
+          "detailPath": "/ai-image-generation/a-showcase-in-a-real-room",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[0]",
+          "kind": "photo",
+          "label": "An Actor Matched to the Buyer",
+          "storedLabel": "An Avatar Holds the Shaker",
+          "labelSource": "group",
+          "imageSrc": "/ai-image-generation/gen2spokesperson-videos-c3-640.webp",
+          "publicSlug": "an-actor-matched-to-the-buyer",
+          "detailPath": "/ai-image-generation/an-actor-matched-to-the-buyer",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[4].items[0]",
+          "kind": "photo",
+          "label": "A Clip Sized for the Feed",
+          "storedLabel": "Sneaker Photo for the Feed",
+          "labelSource": "group",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g3-640.webp",
+          "publicSlug": "a-clip-sized-for-the-feed",
+          "detailPath": "/ai-image-generation/a-clip-sized-for-the-feed",
+          "state": "new"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_beauty_routine",
+      "slug": "/ai-video-generation/beauty-routine",
+      "title": "Beauty Video Templates You Can Recreate",
+      "baseHash": "155850ee00528d7d4d1d835fa277eb133e3af820d701a1bfb08051b152f489dc",
+      "updatedAt": "2026-10-20T12:22:09.314Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Beauty Routine",
+          "storedLabel": "Beauty Routine",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+          "publicSlug": "beauty-routine-beauty-routine",
+          "detailPath": "/ai-video-generation/beauty-routine-beauty-routine",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Beauty Routine",
+          "storedLabel": "Beauty Routine",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+          "publicSlug": "beauty-routine-beauty-routine",
+          "detailPath": "/ai-video-generation/beauty-routine-beauty-routine",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_black_friday_countdown",
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "title": "Black Friday Templates for a Clear Promotion",
+      "baseHash": "e9582b00be0eb018e3bc07489960bce55e64ae74491474db67a3df3b3054f677",
+      "updatedAt": "2026-10-20T12:22:09.476Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Black Friday Video",
+          "storedLabel": "Black Friday Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+          "publicSlug": "black-friday-countdown-black-friday-video",
+          "detailPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Black Friday Video",
+          "storedLabel": "Black Friday Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+          "publicSlug": "black-friday-countdown-black-friday-video",
+          "detailPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "slug": "/ai-video-generation/cinematic-video",
+      "title": "Cinematic Ads With Studio-Style Motion",
+      "baseHash": "db57ec11e5d50e646f0e4c38aa495cd57c26c92de64003815cd47eb07884a54a",
+      "updatedAt": "2026-10-20T12:22:09.633Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Brand Film",
+          "storedLabel": "Brand Film",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+          "publicSlug": "cinematic-video-brand-film",
+          "detailPath": "/ai-video-generation/cinematic-video-brand-film",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Brand Film",
+          "storedLabel": "Brand Film",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+          "publicSlug": "cinematic-video-brand-film",
+          "detailPath": "/ai-video-generation/cinematic-video-brand-film",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "title": "Clothing Video Ad Templates for Brands",
+      "baseHash": "40562c1f0236176429a3a961f2f91bb7acb17d97f8db7e340a11483c4e20c26d",
+      "updatedAt": "2026-10-20T12:22:09.772Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Outfit Reel",
+          "storedLabel": "Outfit Reel",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+          "publicSlug": "fashion-try-on-reel-outfit-reel",
+          "detailPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Outfit Reel",
+          "storedLabel": "Outfit Reel",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+          "publicSlug": "fashion-try-on-reel-outfit-reel",
+          "detailPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "slug": "/ai-video-generation/food-video",
+      "title": "Food and Beverage Video Templates You Can Recreate",
+      "baseHash": "52c44c3b766cbd4ae5c2a0c5b82e2bf70776e4386888ef7f3d645b0c4ea533e5",
+      "updatedAt": "2026-10-20T12:22:09.940Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Drink Pour",
+          "storedLabel": "Drink Pour",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+          "publicSlug": "food-video-drink-pour",
+          "detailPath": "/ai-video-generation/food-video-drink-pour",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Drink Pour",
+          "storedLabel": "Drink Pour",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+          "publicSlug": "food-video-drink-pour",
+          "detailPath": "/ai-video-generation/food-video-drink-pour",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_home_organization",
+      "slug": "/ai-video-generation/home-organization",
+      "title": "Home Organization Video Templates for Product Ads",
+      "baseHash": "187f37190dceff8d9eaf1df4cac68f3e52ef9cb7e452e5d297ae6a4f208df0da",
+      "updatedAt": "2026-10-20T12:22:10.094Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Home Organizing",
+          "storedLabel": "Home Organizing",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+          "publicSlug": "home-organization-home-organizing",
+          "detailPath": "/ai-video-generation/home-organization-home-organizing",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Home Organizing",
+          "storedLabel": "Home Organizing",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+          "publicSlug": "home-organization-home-organizing",
+          "detailPath": "/ai-video-generation/home-organization-home-organizing",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "slug": "/ai-video-generation/how-to-video",
+      "title": "How-To Video Templates for Product Demos",
+      "baseHash": "4f04df20ecc52615e4f988272fa5fdcb5c3afd0f410e1343ef9584e43655a96f",
+      "updatedAt": "2026-10-20T12:22:10.230Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "How-To Video",
+          "storedLabel": "How-To Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+          "publicSlug": "how-to-video-how-to-video",
+          "detailPath": "/ai-video-generation/how-to-video-how-to-video",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "How-To Video",
+          "storedLabel": "How-To Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+          "publicSlug": "how-to-video-how-to-video",
+          "detailPath": "/ai-video-generation/how-to-video-how-to-video",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_1401be87d175029e",
+      "slug": "/ai-video-generation/promo-video",
+      "title": "Generate a Promo Video Faster With AI",
+      "baseHash": "987a9ad1a746bb55c9a1e40c7c774aff13a4a35a3ff5cd82ce8099ab1698057c",
+      "updatedAt": "2026-10-20T12:22:10.380Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Launch Promo",
+          "storedLabel": "Launch Promo",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+          "publicSlug": "promo-video-launch-promo",
+          "detailPath": "/ai-video-generation/promo-video-launch-promo",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Launch Promo",
+          "storedLabel": "Launch Promo",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+          "publicSlug": "promo-video-launch-promo",
+          "detailPath": "/ai-video-generation/promo-video-launch-promo",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "title": "TikTok Spark Ads You Can Make in Minutes",
+      "baseHash": "45b092d2803d75960f8c306b9f75c37875d5c9d3a2a53be95e57c5f65f550545",
+      "updatedAt": "2026-10-20T12:22:10.538Z",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Spark Ads Style Video",
+          "storedLabel": "Spark Ads Style Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+          "publicSlug": "spark-ads-style-video-spark-ads-style-video",
+          "detailPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+          "state": "new"
+        },
+        {
+          "source": "definition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Spark Ads Style Video",
+          "storedLabel": "Spark Ads Style Video",
+          "labelSource": "card",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+          "publicSlug": "spark-ads-style-video-spark-ads-style-video",
+          "detailPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+          "state": "new",
+          "sharesSlugWith": "sections.v2_main.settings.data.visual.picker.cards[0]"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_black_friday",
+      "slug": "/occasions/black-friday",
+      "title": "Create Black Friday Ad Creatives Fast",
+      "baseHash": "b7930304a2cf63a687b1e0c61581bca6f8eb500536ca25b27b4a5252a71489d4",
+      "updatedAt": "2026-10-20T12:22:11.092Z",
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Gift box ready for a Black Friday offer",
+          "storedLabel": "Gift box ready for a Black Friday offer",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/gen2occ-black-friday-g1-640.webp",
+          "publicSlug": "black-friday-gift-box-ready-for-a-black-friday-offer",
+          "detailPath": "/ai-image-generation/black-friday-gift-box-ready-for-a-black-friday-offer",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Lunch bag packed for a Black Friday deal",
+          "storedLabel": "Lunch bag packed for a Black Friday deal",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/f13-occ-black-friday-card-10-640.webp",
+          "publicSlug": "black-friday-lunch-bag-packed-for-a-black-friday-deal",
+          "detailPath": "/ai-image-generation/black-friday-lunch-bag-packed-for-a-black-friday-deal",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "Gaming monitor framed for a Black Friday post",
+          "storedLabel": "Gaming monitor framed for a Black Friday post",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-bf-output-01-r2-640.webp",
+          "publicSlug": "black-friday-gaming-monitor-framed-for-a-black-friday-post",
+          "detailPath": "/ai-image-generation/black-friday-gaming-monitor-framed-for-a-black-friday-post",
+          "state": "new"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_holidays",
+      "slug": "/occasions/holidays",
+      "title": "Make a Festive Holiday Video From a Link",
+      "baseHash": "7bcd45f1e0284a071305c9667775bc710c102953e789b4e3e30a0a14ddec5acf",
+      "updatedAt": "2026-10-20T12:22:11.181Z",
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Skincare Gift Set Lifted From Tissue",
+          "storedLabel": "Skincare Gift Set Lifted From Tissue",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/f13-occ-holidays-rework-card-15-640.webp",
+          "publicSlug": "holidays-skincare-gift-set-lifted-from-tissue",
+          "detailPath": "/ai-image-generation/holidays-skincare-gift-set-lifted-from-tissue",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Gift Bottle Held in Both Hands",
+          "storedLabel": "Gift Bottle Held in Both Hands",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/fx02-occ-holidays-g2-640.webp",
+          "publicSlug": "holidays-gift-bottle-held-in-both-hands",
+          "detailPath": "/ai-image-generation/holidays-gift-bottle-held-in-both-hands",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]",
+          "kind": "photo",
+          "label": "Winter Jacket Revealed From a Gift Box",
+          "storedLabel": "Winter Jacket Revealed From a Gift Box",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-holiday-example-03-640.webp",
+          "publicSlug": "holidays-winter-jacket-revealed-from-a-gift-box",
+          "detailPath": "/ai-image-generation/holidays-winter-jacket-revealed-from-a-gift-box",
+          "state": "new"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_sale_discount",
+      "slug": "/occasions/sale-discount",
+      "title": "Create Your Countdown Sale Video With AI",
+      "baseHash": "939d4d900acdab17db120323f0d97c34d389013d764103f047aae9623a2379e2",
+      "updatedAt": "2026-10-20T12:22:11.281Z",
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Hand Applies Balm From a Plain Jar",
+          "storedLabel": "Hand Applies Balm From a Plain Jar",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-discount-card-08-640.webp",
+          "publicSlug": "sale-discount-hand-applies-balm-from-a-plain-jar",
+          "detailPath": "/ai-image-generation/sale-discount-hand-applies-balm-from-a-plain-jar",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Quilted Jacket Lifted From a Gift Box",
+          "storedLabel": "Quilted Jacket Lifted From a Gift Box",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-gallery-01-640.webp",
+          "publicSlug": "sale-discount-quilted-jacket-lifted-from-a-gift-box",
+          "detailPath": "/ai-image-generation/sale-discount-quilted-jacket-lifted-from-a-gift-box",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "Running Jacket Checked in a Mirror",
+          "storedLabel": "Running Jacket Checked in a Mirror",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-example-04-640.webp",
+          "publicSlug": "sale-discount-running-jacket-checked-in-a-mirror",
+          "detailPath": "/ai-image-generation/sale-discount-running-jacket-checked-in-a-mirror",
+          "state": "new"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[1]",
+          "kind": "photo",
+          "label": "Gold Necklace Revealed From Tissue",
+          "storedLabel": "Gold Necklace Revealed From Tissue",
+          "labelSource": "item",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-example-05-640.webp",
+          "publicSlug": "sale-discount-gold-necklace-revealed-from-tissue",
+          "detailPath": "/ai-image-generation/sale-discount-gold-necklace-revealed-from-tissue",
+          "state": "new"
+        }
+      ]
+    }
+  ]
+}

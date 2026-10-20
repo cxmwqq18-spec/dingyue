@@ -175,13 +175,23 @@ function cardLabel($, anchor) {
 
 async function fetchPage(pagePath) {
   const url = `${origin}${base}${pagePath === "/" ? "" : pagePath}`;
-  const response = await fetch(url, {
-    redirect: "follow",
-    headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
-    signal: AbortSignal.timeout(requestTimeout)
-  });
-  const html = await response.text();
-  return { status: response.status, html, finalPath: new URL(response.url).pathname };
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        redirect: "follow",
+        headers: { "user-agent": "aidreamcapes-card-entry-audit/2.0" },
+        signal: AbortSignal.timeout(requestTimeout)
+      });
+      const html = await response.text();
+      return { status: response.status, html, finalPath: new URL(response.url).pathname };
+    } catch (error) {
+      // The dev server drops connections while it compiles a cold route.
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)));
+    }
+  }
+  throw lastError;
 }
 
 const hrefStatusCache = new Map();
@@ -223,9 +233,14 @@ try {
       if (mediaOf(entry.card)) bySource[entry.source] += 1;
     }
     for (const item of media) knownSlugs.add(detailPath(item.kind, item.slug));
+    const sections = record(record(row.contentJson)?.sections);
+    const blockOrder = Object.values(sections ?? {})
+      .map((section) => record(record(record(section)?.settings)?.data)?.blockOrder)
+      .find((value) => Array.isArray(value));
     owners.push({
       page: row.slug,
       bySource,
+      blockOrder: blockOrder ? blockOrder.map(String) : undefined,
       expected: [...new Map(media.map((item) => [detailPath(item.kind, item.slug), item])).values()],
       pickerSlugs: [...new Set(cards.filter((entry) => entry.source === "picker").map((entry) => mediaOf(entry.card)).filter(Boolean).map((item) => detailPath(item.kind, item.slug)))],
       caseSlugs: [...new Set(cards.filter((entry) => entry.source === "workspaceCases").map((entry) => mediaOf(entry.card)).filter(Boolean).map((item) => detailPath(item.kind, item.slug)))],
@@ -394,7 +409,15 @@ try {
       // render every stored card. A page that renders no card link at all is
       // reported as skipped rather than failed.
       if (!cardCount && (target.owner.pickerSlugs.length || target.owner.caseSlugs.length)) {
-        skipped.push({ page: scope, reason: "page filtered all of its cards out of the HTML" });
+        // A template page can deliberately leave the picker block out of its
+        // block order; then the page shows its step UI instead of a card grid.
+        const noPickerBlock = target.owner.blockOrder ? !target.owner.blockOrder.includes("picker") : false;
+        skipped.push({
+          page: scope,
+          reason: noPickerBlock
+            ? "page block order has no picker block; it renders its step UI instead of a card grid"
+            : "page rendered no media card link"
+        });
       }
     } else if (actorSlugs.size && actorCardCount < actorSlugs.size) {
       offenders.push({
@@ -418,9 +441,10 @@ try {
   }
 
   if (!serverAvailable) {
-    console.log(`SKIP: server unavailable at ${origin}${base} (${skipped[0]?.reason ?? "connection failed"}).`);
-    console.log(JSON.stringify({ ok: true, skipped: true, origin, databaseOwners: owners.length, pages: [], skippedPages: skipped, offenders: [] }, null, 2));
-    process.exitCode = 0;
+    // A server that cannot answer is a failed gate, never a pass.
+    failures.push(`server unavailable at ${origin}${base} (${skipped[0]?.reason ?? "connection failed"})`);
+    console.error(JSON.stringify({ ok: false, origin, databaseOwners: owners.length, pages: [], skippedPages: skipped, offenders: [], failures }, null, 2));
+    process.exitCode = 1;
   } else {
     const result = {
       ok: offenders.length === 0,

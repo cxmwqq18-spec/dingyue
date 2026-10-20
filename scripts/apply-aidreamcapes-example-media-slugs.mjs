@@ -41,7 +41,14 @@ import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const manifestPath = path.join(here, "manifests", "aidreamcapes-example-media-slugs-2026-10-21.json");
+const defaultManifestPath = path.join(here, "manifests", "aidreamcapes-example-media-slugs-2026-10-21.json");
+// `--manifest=<path>` selects the reviewed plan to apply. The production plan
+// is a separate artifact, so a local plan is never applied by accident.
+const manifestPath = (() => {
+  const requested = argumentValue("--manifest");
+  if (!requested) return defaultManifestPath;
+  return path.isAbsolute(requested) ? requested : path.resolve(process.cwd(), requested);
+})();
 const CONTRACT = "aidreamcapes-example-media-slugs-2026-10-21-v1";
 const CONFIRM = "site_aidreamcapes-example-media-slugs";
 const SITE_ID = "site_aidreamcapes";
@@ -67,7 +74,10 @@ assertDatabaseTarget({
 });
 if (apply) {
   assert(confirmed, `Applying the manifest requires --confirm=${CONFIRM}.`);
-  assert(target === "local", "This manifest is reviewed for the local database only; refusing another write target.");
+  // A manifest is reviewed against one database. The plan records the target it
+  // was built from, and it may only be applied to that same target.
+  const manifestTarget = manifest.target ?? "local";
+  assert.equal(manifestTarget, target, `This manifest was reviewed for ${manifestTarget}; refusing to apply it to ${target}.`);
   assert(expectedBaseHash, "Applying the manifest requires --base-hash=<manifest planHash>.");
   assert.equal(expectedBaseHash, manifest.planHash, "The reviewed plan hash does not match the manifest; re-run the plan and review it again.");
 }
@@ -146,7 +156,7 @@ function resolveGroupLabel(contentJson, jsonPath) {
   return typeof label === "string" ? label.trim() : undefined;
 }
 function kindOf(card, source) {
-  if (source === "picker") return card.kind;
+  if (source === "picker" || source === "definition") return card.kind;
   return card.kind === "clip" ? "video" : "photo";
 }
 function collectCardSlugs(value, into = new Set()) {
@@ -277,9 +287,16 @@ try {
     }
 
     // Uniqueness is asserted against the whole current inventory, ignoring the
-    // values this plan is about to create (they are empty right now).
+    // values this plan is about to create (they are empty right now). A slug
+    // may be shared by two cards of the same page only when they are the same
+    // media (one template definition card and the picker card beside it).
+    const sharedMedia = new Map();
+    for (const card of page.cards ?? []) {
+      if (!card.sharesSlugWith) continue;
+      sharedMedia.set(card.publicSlug, card.sharesSlugWith);
+    }
     for (const { card } of writes) {
-      if (existingCardSlugs.has(card.publicSlug)) {
+      if (existingCardSlugs.has(card.publicSlug) && !sharedMedia.has(card.publicSlug)) {
         aborted.push({ page: scope, card: card.jsonPath, reason: `slug ${card.publicSlug} already exists on another card` });
       }
       const detail = detailPath(card.kind, card.publicSlug);
@@ -291,12 +308,20 @@ try {
   }
 
   const uniquePlanned = new Set();
+  const sharedPlanned = new Map();
   for (const entry of plan) {
     for (const { card } of entry.writes) {
       if (uniquePlanned.has(card.publicSlug)) {
-        aborted.push({ page: entry.page.slug, card: card.jsonPath, reason: `slug ${card.publicSlug} is planned twice` });
+        // The same media may be addressed by two cards of one page (a template
+        // definition card and the picker card beside it). Two different pages
+        // may never share an address.
+        const owner = sharedPlanned.get(card.publicSlug);
+        if (!owner || owner.page !== entry.page.slug) {
+          aborted.push({ page: entry.page.slug, card: card.jsonPath, reason: `slug ${card.publicSlug} is planned twice` });
+        }
       }
       uniquePlanned.add(card.publicSlug);
+      sharedPlanned.set(card.publicSlug, { page: entry.page.slug, imageSrc: card.imageSrc });
     }
   }
 
