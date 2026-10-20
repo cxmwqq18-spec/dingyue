@@ -1,5 +1,7 @@
 # AIVideosUGC 工作台 URL 规范化与首页慢加载排查（2026-10-20）
 
+> **状态更新（2026-10-20 晚）**：P0 已按 `e12d78eff9dfc6b19e46bfa73bb816147b4eaef5` 完成 code-only 部署，生产验收见 [`aivideosugc-workspace-entry-link-audit-20261020.md`](./aivideosugc-workspace-entry-link-audit-20261020.md)。最终入口契约是“固定 `/app/create/...` href + `data-workspace-entry` + 2 分钟 cookie”，不是本文早期描述的 `?source=&preset=` 查询串。以下“尚未部署 / 等待提交/部署”等段落均为部署前历史记录，不再代表当前生产状态。
+
 ## 问题 0（补充）：案例数据要通过"传参包装"带入工作台，不能展示在 URL 里
 
 ### 现状与根因
