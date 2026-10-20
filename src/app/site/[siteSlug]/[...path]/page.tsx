@@ -1,3 +1,4 @@
+import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -584,6 +585,7 @@ export default async function SiteCatchAllPage({
   const { siteSlug, path } = await params;
   const slug = `/${path.join("/")}`;
   const publicSlug = publicSiteSlug(siteSlug);
+  await redirectLegacyAidreamcapesTemplateDirectory(publicSlug, slug, `/site/${publicSlug}`);
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
