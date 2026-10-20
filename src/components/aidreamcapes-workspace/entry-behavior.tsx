@@ -28,6 +28,9 @@ export function WorkspaceEntryBehavior() {
     };
     const submit = (event: SubmitEvent) => {
       if (!(event.target instanceof HTMLFormElement)) return;
+      // A form the workspace already handles (product-page preview, uploads)
+      // keeps its own behaviour: navigating away would drop the review step.
+      if (event.defaultPrevented) return;
       const form = event.target;
       const action = new URL(form.action);
       if (!action.pathname.match(/^(?:\/site\/(?:aidreamcapes|aivideosugc))?\/app\/create(?:\/|$)/)) return;

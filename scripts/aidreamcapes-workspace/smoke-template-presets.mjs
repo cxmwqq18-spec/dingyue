@@ -145,7 +145,7 @@ try {
   assert.equal(publicVideoPreset?.title, staticVideoCard.label, "Readable video routes resolve against the current LivePage card");
   assert.equal(publicVideoPreset?.publicSlug, "creator-product-demo");
   assert.equal(presetContract.pickerPresetHref(staticVideoCard, "/templates"), "/ai-video-generation/creator-product-demo", "Picker links use the prefixed readable video path");
-  assert.deepEqual(publicRouteCalls.at(-1)?.values, ["site_aidreamcapes", "creator-product-demo", "video"], "Static route lookup is explicitly scoped to Aidreamcapes and media kind");
+  assert.deepEqual(publicRouteCalls.at(-1)?.values, ["site_aidreamcapes", "creator-product-demo", "video", "creator-product-demo", "video"], "Static route lookup is explicitly scoped to Aidreamcapes and media kind");
   const staticPhotoCard = makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background", kind: "photo", publicSlug: "clean-product-image", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } });
   livePageRow = makePage(staticPhotoCard);
   assert.equal((await resolveWorkspacePublicScenePreset("site_aidreamcapes", "photo", "clean-product-image"))?.kind, "photo", "Readable image routes resolve with the correct media kind");
