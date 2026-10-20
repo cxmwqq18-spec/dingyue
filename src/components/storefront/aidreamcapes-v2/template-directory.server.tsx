@@ -5,7 +5,7 @@ import { cache } from "react";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
+import { pickerPresetHref, pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 
 type Directory = { paths: string[]; links: { label: string; href: string }[] };
@@ -48,10 +48,13 @@ export async function TemplateDirectory({ data, r, query = {} }: { data: V2Data;
         <button className="btn btn-primary" type="submit">Apply filters</button>
       </form>
       <p className="meta-line">{templates.length} templates</p>
-      <div className="tgrid">{templates.map(template => <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
-        <WorkspaceEntryLink className="ti" href={r.href(template.path)}><img className={styles.cardImage} loading="lazy" decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
-        <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><WorkspaceEntryLink href={r.href(template.path)}>{template.name}</WorkspaceEntryLink></h2><p>{template.description}</p><WorkspaceEntryLink className="use" href={r.href(template.path)}>View template →</WorkspaceEntryLink></div>
-      </article>)}</div>
+      <div className="tgrid">{templates.map(template => {
+        const href = pickerPresetHref(template.card, template.path);
+        return <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
+          <WorkspaceEntryLink className="ti" href={r.href(href)}><img className={styles.cardImage} loading="lazy" decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></WorkspaceEntryLink>
+          <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><WorkspaceEntryLink href={r.href(href)}>{template.name}</WorkspaceEntryLink></h2><p>{template.description}</p><WorkspaceEntryLink className="use" href={r.href(href)}>View template →</WorkspaceEntryLink></div>
+        </article>;
+      })}</div>
       {!templates.length ? <p>No templates are available in this category yet.</p> : null}
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
@@ -84,8 +87,12 @@ export async function resolveTemplateCardLinks(data: V2Data): Promise<V2Data> {
     if (!value || typeof value !== "object") return value;
     const item = value as Record<string, unknown>;
     if (typeof item.name === "string" && typeof item.href === "string" && item.cardType !== "case") {
-      const definition = definitions.find(t => t.card.href === item.href);
-      if (definition) return { ...item, href: definition.path, name: definition.name, kind: definition.kind };
+      // Several catalogs reuse the same tool CTA. Resolve only an unambiguous
+      // template owner; never collapse distinct templates by a shared href.
+      const matches = definitions.filter(t => t.card.href === item.href
+        && t.name === item.name
+        && (!item.kind || t.kind === item.kind));
+      if (matches.length === 1) return { ...item, href: matches[0].path, name: matches[0].name, kind: matches[0].kind };
     }
     // Preset identity fields must retain their original tool path.
     return Object.fromEntries(Object.entries(item).map(([key, entry]) => [key, key === "templateDefinition" || key === "workspaceCases" ? entry : rewrite(entry)]));
