@@ -168,12 +168,13 @@ SELECT count(*) FROM "CreativePack" WHERE "siteId"='site_aidreamcapes' AND statu
 - **范围**：本次仅代码，无内容行写入；MyDreamShoots 标题与读回未变，MyDreamShoots / Aidreamcapes EU / Aidreamshoots 服务保持运行。
 - **仍存在的成本**：首页源站仍约 3s，属于渲染本身（548KB HTML + 全量投影）。继续下降只能靠裁剪 V2 首页渲染内容，或经明确批准的 **按 revision 失效** 缓存；**不要**用时间 TTL 兜底。共享层 `site-store.ts` 的缓存/媒体上限改动对本回归不再必要。
 
-> 部署后提醒：codex worktree `main-2` 仍停在 `0f78be95b`，下次从该分支部署前须先同步到 `origin/main`（`efa88c049…`），否则会回退本次性能修复。
+> 部署后提醒：codex worktree `main-2` 曾长期停在 `0f78be95b`（其中 `src/lib/seo-indexing.ts` 仍是旧版，直接构建会回退本次性能修复）。2026-10-20 深夜已把 `main-2` 的 `main` 快进到 `origin/main`，其未提交在制品（platform AI relay / pricing）原样保留在新的基线上，快照另存于分支 `codex/wip-platform-ai-relay-20261020`。同时在 `scripts/deploy-aidreamcapes-release.mjs` 加了回退护栏：待发布 commit 必须包含线上正在运行的 commit，否则拒绝发布。
 
 ### 后续发布（2026-10-20 深夜）
 
 - 当前生产 commit：`d198de292783ff316f0302d2252cf58a8c0f98ac`（`current` → `releases/d198de292…-seo`），在 `efa88c049` 之上只追加了入口提交拦截修复与 codex 的目录标题调整，**性能修复原样保留**。
 - 生产源站复测：`/` 约 3.1s、`/ai-actors` 约 1.5s、`/ai-image-generation` 约 1.8s（直连源站，绕过 CDN）；本机到 Cloudflare 的 TLS 仍被重置，浏览器门禁改为经 SSH 隧道在源站执行。
+- `main-2` 同步（同一晚）：`main` 由 `0f78be95b` 快进到 `f2b675707`（= `origin/main`），在制品保持在工作区，另有快照分支 `codex/wip-platform-ai-relay-20261020`；同步前后对比确认工作区与快照的差异只有 `origin/main` 推进的 5 个文件（2 份交接文档、preset 断言、入口拦截修复、性能修复 `src/lib/seo-indexing.ts` +45 行）。
 
 ### 顺手修复的阻塞项（与本次排查相关）
 

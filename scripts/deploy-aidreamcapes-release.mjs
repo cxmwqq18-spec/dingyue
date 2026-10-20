@@ -74,6 +74,15 @@ console.log(JSON.stringify({
 }));
 if (!args.includes("--apply")) process.exit(0);
 assert.equal(value("--confirm"), "deploy-aidreamcapes", "Explicit target confirmation is required");
+// A release must never move the site backwards. The commit being deployed has
+// to contain the commit that is live right now, so a stale or force-pushed
+// base cannot roll back a shipped fix.
+const liveCommit = execFileSync("ssh", ["-p", port, ...connection, host, `cat ${quote(`${root}/current/.deployed-commit`)} 2>/dev/null || true`], { encoding: "utf8" }).trim();
+if (/^[a-f0-9]{40}$/.test(liveCommit)) {
+  const keepsLive = spawnSync("git", ["merge-base", "--is-ancestor", liveCommit, commit]).status === 0;
+  assert(keepsLive, `Refusing to deploy ${commit}: the live commit ${liveCommit} is not an ancestor of it, so this release would roll the site back.`);
+  console.log(JSON.stringify({ liveCommit, containsLiveCommit: true }));
+}
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
 const archive = path.join(temp, "source.tar");
 const buildArchive = path.join(temp, "build.tar");
