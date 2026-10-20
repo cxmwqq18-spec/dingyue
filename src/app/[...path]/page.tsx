@@ -770,7 +770,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   const canUseFastWorkspaceShell = firstSegment === "app" && !(path[1] === "jobs" && path[2] && path[2] !== "progress");
   if (canUseFastWorkspaceShell) {
-    let query = searchParams ? await searchParams : {};
+    const query = searchParams ? await searchParams : {};
     const videoMode = Array.isArray(query.videoMode) ? query.videoMode[0] : query.videoMode;
     if (videoMode === "text-to-video" || videoMode === "image-to-video") notFound();
     if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
