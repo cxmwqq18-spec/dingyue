@@ -514,3 +514,53 @@ node scripts/apply-aidreamcapes-example-media-slugs.mjs --target=local
 | 上线结果 | `deployed_commit=360efb26c955451bafdf9ab8022b2c22ffff13dc`，`current=/www/wwwroot/aidreamcapes.com/releases/360efb26c955451bafdf9ab8022b2c22ffff13dc-seo`，`service=aidreamcapes.service`（候选实例与切换后两轮门禁均通过） |
 | 生产回读 | 详情页 200 + `noindex, follow` + 自引用 canonical + 唯一工作台 CTA（`media:{kind,slug}`）；`/ai-actors/<name>` 200 + 扁平 canonical；嵌套地址 308 → 扁平；退役路径 301 → 映射目标；视频/图片目录卡链 100/52 条详情链接、0 条直达 `/app/create`；sitemap 177 条、嵌套 actor 0 条、扁平 actor 53 条、派生详情页 0 条 |
 | 构建方式 | 发布主机内存不足以完成整包构建（曾 OOM），改为本地 `scripts/build-production.mjs` 产出 `.next-build` 并以 `--prebuilt-build` 上传（构建时对齐生产的 `NEXT_PUBLIC_*`） |
+
+### 13.7 线上流程测试（2026-10-21 12:20–13:10）
+
+被测对象：生产实例 `aidreamcapes.service`，`deployed_commit=360efb26c955451bafdf9ab8022b2c22ffff13dc`，`current=…/releases/360efb26c…-seo`。
+
+测试链路说明：本机无法直连 `https://www.aivideosugc.com`（`000`），因此请求直达生产进程
+`127.0.0.1:3013`（SSH 隧道，携带生产 `X-Forwarded-Host/Proto`）；浏览器用例经本地边缘替身转发并注入同样的主机头。
+替身只把绝对 `Location` 改写为相对地址以便浏览器留在本地；绝对跳转值已在服务器本机单独核验。
+
+| 层 | 覆盖 | 结果 |
+|---|---|---|
+| SSR 契约（服务器本机） | 视频/图片派生详情页、演员详情、JSON-LD、面包屑、媒体元素 | 200；`noindex, follow`；自引用 canonical；唯一 `media:{kind,slug}` CTA；0 协议相对链接；0 `/site` 泄漏；1 个 JSON-LD |
+| HTTP 流程（88 项断言） | 视频目录 38 张媒体卡、图片目录 9 张模板卡、首页 20 张 picker 卡、演员 53 张扁平卡、模板页 picker、退役路径、未知 slug、sitemap | 85 项通过；3 项为测试口径误差（见下） |
+| 浏览器（Chromium，JS 开启） | 视频详情 → CTA → 工作台；图片详情 → CTA → 工作台；演员详情 → CTA → 工作台；模板目录 → 模板页 → CTA → 工作台预填 | 4/4 通过；工作台 URL 无查询串，且分别显示 “Drink Pour”“Creator-Style Photo”“Akio”，模板预填 79 字符 prompt |
+
+关键读回：
+
+- 视频目录 38 张 `v-pick-card` 全部是纯路径、无 entry 载荷；抽样 3 张均为 `#media-detail` 派生详情页，页面唯一 CTA 的载荷与路径 slug 一致。
+- 图片目录是模板索引（9 张 `a.use` 模板卡 → 模板页）；模板页的 picker 卡进入媒体详情页。这是既定设计，不是绕过详情页。
+- 首页 20 张 picker 卡全部为纯路径；抽样卡片进入派生详情页并通过完整契约。
+- 演员目录 53 张扁平卡；`/ai-actors/{men|women}/<name>` 生产返回 308，`Location` 为绝对扁平地址。
+- 退役路径 301 → 映射目标；未知媒体 slug 404，不落到工作台外壳。
+- sitemap 177 条：嵌套演员 0、扁平演员 53、演员目录页 4、场景/年龄分面 36，派生详情页 0。
+
+3 项“失败”均为测试脚本口径问题，不是站点缺陷：
+
+1. 嵌套演员 308 的 `Location` 在生产是绝对地址；本地替身为把浏览器留在本地改写成相对地址，断言按绝对地址比较才失败。
+2. sitemap 演员计数正则把 `men`、`women`、`scene`、`age-range` 4 个目录页也算作演员页（57 = 53 + 4）。
+3. 首版脚本把图片目录当媒体卡目录取 `v-pick-card`，实际该目录是模板索引。
+
+#### 测试中发现的线上稳定性问题（既有问题，非本次整改引入）
+
+- 用 16 并发抓取 sitemap 的 177 条 URL 时，生产 Node 进程两次 OOM 崩溃并自动重启：
+  `12:46:21`、`12:56:41`（`FATAL ERROR: Ineffective mark-compacts near heap limit`），重启各约 5 秒；
+  并发期间还出现 Prisma `Unable to start a transaction in the given time`（连接池耗尽）。
+- 同一时期之前已有 4 次同类 OOM：`Oct 20 20:43`、`Oct 21 01:18`、`01:48`、`02:22`，均早于本次发布（当前 release 06:16 启动），
+  因此属于既有容量/内存问题。
+- 串行访问同一批页面全部 200（`/` 3.5s，其余 1.5–2.2s）；4 并发访问新增的媒体详情页全部 200（0.37–0.55s），
+  进程 RSS 1315MB → 1325MB，稳定。说明新增详情页路径本身不是触发器，触发条件是“大量既有重页面并发 SSR”。
+- 建议（另行排期，不纳入本次整改）：
+  1) 边缘（Nginx）对公开 SSR 路由做 `limit_req`/`limit_conn`，给爬虫与突发流量设上限；
+  2) 按 LivePage 修订号在进程内缓存已解析的 `contentJson`（修订变化立即失效，仍满足“下一次请求即生效”的无快照规则），
+     避免每次请求重复 `JSON.parse` 大文档造成瞬时分配峰值；
+  3) 如仍需提高上限，再评估 `NODE_OPTIONS=--max-old-space-size`，不能替代前两项。
+
+#### 范围说明
+
+- `/inspiration` 页的 6 个 “flow” 场景卡仍以 `query.tool` 工具预设直接进工作台；它们不带媒体身份（无 `publicSlug`），
+  不属于本次“媒体卡”范围。若要求这类场景卡也先到详情页，需要先为每个场景补 `publicSlug`（内容变更，另行评审）。
+- 5 个模板页的 `blockOrder` 不含 `picker`，仍按合法跳过记录。
