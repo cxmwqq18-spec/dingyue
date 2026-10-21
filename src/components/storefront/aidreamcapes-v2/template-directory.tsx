@@ -2,6 +2,8 @@ import styles from "./template-directory.module.css";
 import { Crumbs, Faq } from "./parts";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
+import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
+import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[] };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
@@ -10,10 +12,13 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
   const directory = data.templateDirectory as Directory;
   const all = data.directoryTemplates as Template[] | undefined;
   if (!all) return null;
-  const value = (key: string) => typeof query[key] === "string" ? query[key] as string : "";
-  const templates = all.filter(t => (!value("kind") || t.kind === value("kind")) && (["industries", "platforms", "occasions"] as const).every(key => !value(key) || t[key].includes(value(key))));
+  const state = data.directoryFilterState as TemplateFilterState | undefined;
+  const value = (key: string) => state ? state.filters[key as keyof typeof state.filters] ?? "" : typeof query[key] === "string" ? query[key] as string : "";
+  const templates = state?.invalid ? [] : all.filter(t => templateMatchesFilters(t, state?.filters ?? Object.fromEntries(["kind", "industries", "platforms", "occasions"].map(key => [key, value(key)]))));
+  const media = state?.invalid ? [] : ((data.directoryMedia as DirectoryMediaCard[] | undefined) ?? []).filter(card => !value("kind") || card.kind === value("kind"));
   const labels = data.directoryLabels as Record<string, string>;
   const label = (path: string) => labels[path] ?? path;
+  const mediaHeading = String(data.label ?? "").trim() || "category";
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -25,6 +30,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         <button className="btn btn-primary" type="submit">Apply filters</button>
       </form>
       <p className="meta-line">{templates.length} templates</p>
+      {templates.length && data.templateHeading ? <h2>{String(data.templateHeading)}</h2> : null}
       <div className="tgrid">{templates.map((template, index) => {
         // A template card in the directory opens the template's own page. The
         // media of the template is a separate detail page, linked from the
@@ -36,6 +42,17 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         </article>;
       })}</div>
       {!templates.length ? <p>No templates are available in this category yet.</p> : null}
+      {media.length ? <section aria-labelledby="category-media-heading" className={styles.mediaSection} data-directory-media="true">
+        <div className="sec-head">
+          <div className="eyebrow">More examples</div>
+          <h2 id="category-media-heading">{data.mediaHeading ? String(data.mediaHeading) : `More ${mediaHeading} examples`}</h2>
+          {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
+        </div>
+        <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
+          <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+          <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
+        </article>)}</div>
+      </section> : null}
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;

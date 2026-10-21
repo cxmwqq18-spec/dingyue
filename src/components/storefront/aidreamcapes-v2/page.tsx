@@ -1,4 +1,5 @@
 import { TemplateDirectory, templateDetailResolvers } from "./template-directory";
+import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/lib/aidreamcapes-workspace/media-detail";
@@ -1160,6 +1161,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   const data = settings.data as V2Data;
   if (!data) return null;
   const r = templateDetailResolvers(data, withStartLinks(baseResolvers));
+  if (layout === "platform-directory") return <PlatformDirectory data={data} r={r} />;
   if (data.templateDirectory) return <TemplateDirectory data={data} r={r} query={query} />;
   if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;
   if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;

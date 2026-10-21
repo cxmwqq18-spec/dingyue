@@ -6,6 +6,8 @@ import { ThemeRenderer } from "@/components/theme-renderer";
 import type { SectionInstance, ThemePageJson } from "@/lib/types";
 import type { V2Data } from "./types";
 import type { Directory, Template } from "./template-directory";
+import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
+import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
   const pages = await prisma.$queryRaw<Array<{ slug: string; definition: Template | null }>>`
@@ -66,13 +68,22 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
     let resolved: V2Data;
     if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
-      const all = await readTemplates(directory.paths);
+      const kind = typeof data.kind === "string" ? data.kind : "";
+      const isFacet = kind === "industry" || kind === "platform" || kind === "occasion";
+      const filterState = props.pagePath ? await resolveAidreamcapesTemplateFilter(props.pagePath, props.query ?? {}) : undefined;
+      const [all, directoryMedia] = await Promise.all([
+        readTemplates(directory.paths),
+        isFacet && props.pagePath ? resolveDirectoryMedia(props.pagePath) : Promise.resolve([])
+      ]);
       const paths = [...new Set(all.flatMap(t => [...t.industries, ...t.platforms, ...t.occasions]))];
       const facets = paths.length ? await prisma.$queryRaw<Array<{ slug: string; title: string; label: string | null }>>`
         SELECT "slug", "title", jsonb_path_query_first("contentJson", '$.sections.*.settings.data.label') #>> '{}' AS label
         FROM "LivePage" WHERE "siteId" = 'site_aidreamcapes' AND "slug" IN (${Prisma.join(paths)})
       ` : [];
-      resolved = { ...data, directoryTemplates: all, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
+      const selectedFacets = Object.values(filterState?.filters ?? {}).filter(value => value.startsWith("/"));
+      const intersections = await Promise.all(selectedFacets.filter(value => value !== props.pagePath).map(resolveDirectoryMedia));
+      const filteredMedia = directoryMedia.filter(card => intersections.every(cards => cards.some(other => other.kind === card.kind && other.slug === card.slug)));
+      resolved = { ...data, directoryFilterState: filterState, directoryTemplates: all, directoryMedia: filteredMedia, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
     } else resolved = await resolveTemplateCardLinks(data);
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
   }

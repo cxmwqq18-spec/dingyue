@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { normalizeAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter";
 import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
 import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
@@ -1017,12 +1018,17 @@ export async function middleware(request: NextRequest) {
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
   const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
   if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
-  // Fixed gallery paths replace the old ?type query links.
-  const templateFilterMatch = request.headers.get(REORDER_SKIP_HEADER) !== "1" && request.nextUrl.pathname === "/templates"
-    ? ["video", "photo"].find((type) => request.nextUrl.searchParams.get("type") === type)
-    : undefined;
-  if (templateFilterMatch && storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "aidreamcapes") {
-    return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, `/templates/${templateFilterMatch}`), 308), request);
+  // Normalize types before SSR without losing a facet or tracking parameter.
+  const filterPathMatch = request.nextUrl.pathname.match(/^(\/site\/(?:aidreamcapes|aivideosugc))?(\/(?:templates(?:\/(?:photo|video))?|(?:industries|platforms|occasions)\/[a-z0-9-]+))$/);
+  const filterHost = storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host"));
+  if (filterPathMatch && (filterPathMatch[1] || filterHost === "aidreamcapes") && ["GET", "HEAD"].includes(request.method)) {
+    const filterQuery = Object.fromEntries([...new Set(request.nextUrl.searchParams.keys())].map(key => {
+      const values = request.nextUrl.searchParams.getAll(key);
+      return [key, values.length === 1 ? values[0] : values];
+    }));
+    const filter = normalizeAidreamcapesTemplateFilter(filterPathMatch[2], filterQuery);
+    if (filter.badRequest) return finalizeStorefrontResponse(new NextResponse("Invalid filters. Please select a category from the template directory.", { status: 400, headers: { "content-type": "text/plain; charset=utf-8", "X-Robots-Tag": "noindex, nofollow" } }), request);
+    if (filter.redirectPath) return finalizeStorefrontResponse(NextResponse.redirect(publicRedirectUrlForRequest(request, `${filterPathMatch[1] ?? ""}${filter.redirectPath}`), 308), request);
   }
   const legacyGalleryRedirect = aidreamcapesLegacyGalleryRedirect(request);
   if (legacyGalleryRedirect) return finalizeStorefrontResponse(legacyGalleryRedirect, request);

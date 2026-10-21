@@ -1,4 +1,5 @@
 import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
+import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -363,6 +364,8 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const hintedCollectionSlug = (await headers()).get("x-storefront-image-theme")?.trim();
   const requestedSlug = `/${path.join("/")}`;
   const pathModePublicSlug = publicSiteSlug(siteSlug);
+  const filterMetadata = await aidreamcapesTemplateFilterMetadata(pathModePublicSlug, requestedSlug, metadataQuery);
+  if (filterMetadata) return filterMetadata;
   const mediaDetail = isAidreamcapesPathModeSite(pathModePublicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
     // A current public card owns its detail page; the workspace is only
@@ -636,6 +639,7 @@ export default async function SiteCatchAllPage({
   const slug = `/${path.join("/")}`;
   const publicSlug = publicSiteSlug(siteSlug);
   await redirectLegacyAidreamcapesTemplateDirectory(publicSlug, slug, `/site/${publicSlug}`);
+  await redirectAidreamcapesTemplateFilter(publicSlug, slug, searchParams ? await searchParams : {}, `/site/${publicSlug}`);
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);

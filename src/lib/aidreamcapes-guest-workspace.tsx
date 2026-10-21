@@ -9,6 +9,7 @@ import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset, resolve
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
 import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
 import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
 import { inspirationExampleLinks } from "@/lib/aidreamcapes-inspirations-types";
@@ -108,6 +109,8 @@ export async function renderAidreamcapesMediaDetailPage({ kind, slug, basePath =
 }) {
   const [detail, chrome] = await Promise.all([provided ? Promise.resolve(provided) : resolveMediaDetail(kind, slug), loadAidreamcapesChrome()]);
   if (!detail || !chrome) notFound();
+  if (detail.slug !== slug) permanentRedirect(`${basePath === "/" ? "" : basePath}${detail.path}`);
+  const placements = await resolveMediaPlacements(detail);
   return (
     <AidreamcapesMediaDetailPage
       detail={detail}
@@ -116,6 +119,7 @@ export async function renderAidreamcapesMediaDetailPage({ kind, slug, basePath =
       company={aidreamcapesV2Company(chrome.identity)}
       articles={chrome.articles}
       articlesTitle={chrome.articlesTitle}
+      placements={placements}
     />
   );
 }

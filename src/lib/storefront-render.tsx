@@ -1,4 +1,5 @@
 import { AidreamcapesTemplateRenderer } from "@/components/storefront/aidreamcapes-v2/template-directory.server";
+import { aidreamcapesFilterJsonLd } from "@/lib/aidreamcapes-template-filter";
 import { notFound, redirect } from "next/navigation";
 import { cache, type ReactElement } from "react";
 import { CustomerAccountClientPage, CustomerWorkspaceClientPage } from "@/components/storefront/customer-bootstrap-client";
@@ -3000,7 +3001,7 @@ function renderThemePage({
   videoWatchPages?: readonly MyDreamShootsVideoWatchPage[];
   lightweightChrome?: boolean;
 }) {
-  const jsonLdNodes = jsonLd;
+  const jsonLdNodes = currentSite.id === "site_aidreamcapes" ? aidreamcapesFilterJsonLd(jsonLd, pagePath, query) : jsonLd;
   const navigationPagePaths = new Set(currentSite.pages.flatMap((publishedPage) => [
     publishedPage.slug,
     publishedPage.publishedJson.seo?.canonical,

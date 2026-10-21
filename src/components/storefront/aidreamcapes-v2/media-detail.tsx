@@ -3,6 +3,7 @@ import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import type { MediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import type { MediaPlacementGroup } from "@/lib/aidreamcapes-workspace/media-placement";
 import {
   MEDIA_DETAIL_PUBLIC_ORIGIN,
   mediaDetailCrumbs,
@@ -78,13 +79,14 @@ function RelatedGrid({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   );
 }
 
-export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, articles, articlesTitle }: {
+export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, articles, articlesTitle, placements = [] }: {
   detail: MediaDetail;
   navigation: AidreamcapesV2Navigation;
   r: V2Resolvers;
   company?: V2Company;
   articles?: AidreamcapesFooterArticle[];
   articlesTitle?: string;
+  placements?: MediaPlacementGroup[];
 }) {
   const { card } = detail;
   const intro = mediaDetailIntro(card);
@@ -121,9 +123,16 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail-specs dd{margin:2px 0 0;font-weight:600}
 #media-detail .v-detail-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 #media-detail .v-detail-note{margin:14px 0 0;font-size:.86rem;opacity:.65}
+#media-detail .v-detail-categories{margin:0 0 26px;padding-top:18px;border-top:1px solid var(--line)}
+#media-detail .v-detail-categories dl{display:grid;gap:10px;margin:10px 0 0}
+#media-detail .v-detail-categories dl>div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:start}
+#media-detail .v-detail-categories dt{padding-top:6px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+#media-detail .v-detail-categories dd{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+#media-detail .v-detail-categories .chip:hover{border-color:var(--line-2);color:var(--ink)}
 #media-detail .v-crumbs{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem;opacity:.75;padding-top:8px}
 #media-detail .v-crumbs a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:880px){#media-detail .v-detail{grid-template-columns:minmax(0,1fr);gap:26px}}
+@media(max-width:520px){#media-detail .v-detail-categories dl>div{grid-template-columns:1fr;gap:4px}#media-detail .v-detail-categories dt{padding-top:0}}
       ` }} />
       <div className="wrap">
         <nav aria-label="Breadcrumb" className="v-crumbs">
@@ -149,6 +158,23 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
                   </div>
                 ))}
               </dl>
+            ) : null}
+            {placements.length ? (
+              <nav aria-label="Browse by category" className="v-detail-categories" data-media-categories="true">
+                <div className="eyebrow">Browse by category</div>
+                <dl>
+                  {placements.map((group) => (
+                    <div key={group.kind}>
+                      <dt>{group.label}</dt>
+                      <dd>
+                        {group.links.map((link) => (
+                          <a className="chip" href={r.href(link.href)} key={link.href}>{link.label}</a>
+                        ))}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </nav>
             ) : null}
             <div className="v-detail-actions">
               <WorkspaceEntryLink className="btn btn-grad" entry={detail.cta.entry} href={r.href(detail.cta.href)}>

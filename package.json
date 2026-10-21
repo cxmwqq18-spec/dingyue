@@ -45,6 +45,8 @@
     "audit:dreamshoot": "node scripts/audit-dreamshoot-parity.mjs",
     "audit:aidreamcapes-sync": "node scripts/audit-aidreamcapes-sync.mjs",
     "audit:aidreamcapes-media-placement": "node scripts/audit-aidreamcapes-media-placement.mjs --target=local",
+    "audit:aidreamcapes-media-products": "node scripts/audit-aidreamcapes-media-products.mjs --target=local --write",
+    "smoke:aidreamcapes-media-product-placement": "node scripts/smoke-aidreamcapes-media-product-placement.mjs",
     "audit:domains": "node scripts/audit-domain-routing.mjs",
     "audit:store-isolation": "node scripts/audit-store-isolation.mjs",
     "audit:creative-pack-covers": "node scripts/audit-creative-pack-covers.mjs",

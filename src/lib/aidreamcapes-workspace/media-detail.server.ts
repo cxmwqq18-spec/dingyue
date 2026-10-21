@@ -18,6 +18,8 @@ import {
   type MediaDetailCard,
   type MediaDetailKind
 } from "./media-detail";
+import { cardsFromContent, templateDefinitionFrom, toDetailCard, type OwnerTemplate } from "./media-cards.server";
+import { mediaAliasTarget } from "./media-alias.server";
 
 // Server-side resolution for public media detail pages. Every field is read
 // from the current LivePage row; nothing is cached, generated, or persisted.
@@ -36,12 +38,6 @@ function str(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value : undefined;
 }
 
-function num(value: unknown): number | undefined {
-  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
-}
-
-type RawCard = { card: RecordValue; ownerPath: string; ownerLabel?: string };
-
 function pageLabel(contentJson: unknown): string | undefined {
   const sections = record(record(contentJson)?.sections);
   for (const section of Object.values(sections ?? {})) {
@@ -50,95 +46,6 @@ function pageLabel(contentJson: unknown): string | undefined {
     if (label) return label;
   }
   return undefined;
-}
-
-function cardValues(contentJson: unknown): RecordValue[] {
-  const content = record(contentJson);
-  const sections = record(content?.sections);
-  const order = Array.isArray(content?.sectionsOrder) ? content.sectionsOrder : [];
-  const cards: RecordValue[] = [];
-  for (const sectionId of order) {
-    if (typeof sectionId !== "string") continue;
-    const section = record(sections?.[sectionId]);
-    if (section?.type !== "aidreamcapes_v2_page") continue;
-    const data = record(record(section.settings)?.data);
-    const definition = record(data?.templateDefinition);
-    if (record(definition?.card)) cards.push(definition!.card as RecordValue);
-    const picker = record(record(data?.visual)?.picker);
-    if (picker && Array.isArray(picker.cards)) cards.push(...picker.cards.map(record).filter((item): item is RecordValue => Boolean(item)));
-    if (Array.isArray(data?.workspaceCases)) cards.push(...data.workspaceCases.map(record).filter((item): item is RecordValue => Boolean(item)));
-    // Legacy example galleries (`data.examples.groups[*].items[*]`) are cards too:
-    // they carry `title` + `kind` instead of `label` + `kind` and can own a
-    // public detail slug like any other media card.
-    const examples = record(data?.examples);
-    if (examples && Array.isArray(examples.groups)) {
-      for (const group of examples.groups) {
-        const items = record(group)?.items;
-        if (Array.isArray(items)) cards.push(...items.map(record).filter((item): item is RecordValue => Boolean(item)));
-      }
-    }
-  }
-  return cards;
-}
-
-/** Photo stays photo; clips and scenes are moving pictures. */
-function mediaKindOf(value: unknown): MediaDetailKind | undefined {
-  if (value === "photo") return "photo";
-  if (value === "video" || value === "clip" || value === "scene") return "video";
-  return undefined;
-}
-
-function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
-  const image = record(value.image);
-  const src = str(image?.src);
-  const label = str(value.label) ?? str(value.title);
-  const kind = mediaKindOf(value.kind);
-  if (!src || !label || !kind) return undefined;
-  const video = record(value.video);
-  const poster = record(video?.poster);
-  const width = num(image?.w);
-  const height = num(image?.h);
-  const duration = value.duration;
-  const imageAlt = str(image?.alt);
-  const line = str(value.line);
-  const href = str(value.href);
-  const publicSlug = str(value.publicSlug);
-  const sceneSlug = str(value.sceneSlug);
-  const tool = str(value.tool);
-  const aspect = str(value.aspect);
-  const videoSrc = str(video?.src);
-  const posterSrc = str(poster?.src);
-  const posterAlt = str(poster?.alt);
-  const videoWidth = num(video?.width);
-  const videoHeight = num(video?.height);
-  return {
-    kind,
-    label,
-    prompt: str(value.prompt) ?? "",
-    ...(line ? { line } : {}),
-    ...(href ? { href } : {}),
-    ...(publicSlug ? { publicSlug } : {}),
-    ...(sceneSlug ? { sceneSlug } : {}),
-    ...(tool ? { tool } : {}),
-    ...(aspect ? { aspect } : {}),
-    ...(typeof duration === "number" || typeof duration === "string" ? { duration } : {}),
-    image: {
-      src,
-      ...(imageAlt ? { alt: imageAlt } : {}),
-      ...(width ? { w: width } : {}),
-      ...(height ? { h: height } : {}),
-    },
-    ...(videoSrc
-      ? {
-          video: {
-            src: videoSrc,
-            ...(posterSrc ? { poster: { src: posterSrc, ...(posterAlt ? { alt: posterAlt } : {}) } } : {}),
-            ...(videoWidth ? { width: videoWidth } : {}),
-            ...(videoHeight ? { height: videoHeight } : {}),
-          },
-        }
-      : {}),
-  };
 }
 
 /** Pages that contain the requested public card slug for this media kind. */
@@ -166,6 +73,9 @@ async function pagesOwningSlug(slug: string) {
         "contentJson",
         '$.sections.*.settings.data.templateDefinition.card ? (@.publicSlug == $slug)'::jsonpath,
         jsonb_build_object('slug', ${slug})
+      ) OR jsonb_path_exists(
+        "contentJson", '$.**.publicAliases[*] ? (@ == $slug)'::jsonpath,
+        jsonb_build_object('slug', ${slug})
       ))
     LIMIT 3
   `;
@@ -177,6 +87,8 @@ export type MediaDetail = {
   path: string;
   ownerPath: string;
   ownerLabel?: string;
+  /** Present when the owner page is a reusable template page. */
+  ownerTemplate?: OwnerTemplate;
   card: MediaDetailCard;
   /** Canonical in-site path of the card itself. */
   canonicalPath: string;
@@ -191,18 +103,25 @@ export type MediaDetail = {
  * Returns undefined when the slug is not a public card, so callers can fall
  * through to published content pages and their own 404 handling.
  */
-export async function resolveMediaDetail(kind: MediaDetailKind, slug: string): Promise<MediaDetail | undefined> {
+export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, followAlias = true): Promise<MediaDetail | undefined> {
   if (!MEDIA_DETAIL_SLUG_PATTERN.test(slug)) return undefined;
   const pages = await pagesOwningSlug(slug);
   if (pages.length !== 1) return undefined;
   const owner = pages[0];
-  const cards = cardValues(owner.contentJson);
+  const cards = cardsFromContent(owner.contentJson);
   const ownerCard = cards
     .map(toDetailCard)
     .find((card): card is MediaDetailCard => Boolean(card) && card!.kind === kind && card!.publicSlug === slug);
-  if (!ownerCard) return undefined;
+  if (!ownerCard) {
+    if (followAlias) {
+      const target = await mediaAliasTarget(kind, slug);
+      if (target) return resolveMediaDetail(kind, target, false);
+    }
+    return undefined;
+  }
   const path = mediaDetailPath(kind, slug);
   if (!path) return undefined;
+  const ownerTemplate = templateDefinitionFrom(owner.contentJson, owner.slug);
 
   const related = cards
     .map(toDetailCard)
@@ -226,6 +145,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string): P
     path,
     ownerPath: owner.slug,
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
+    ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,
     canonicalPath: path,
     cta: mediaDetailWorkspaceEntry(path),
@@ -335,7 +255,7 @@ export async function listMediaDetailSlugs(): Promise<Array<{ kind: MediaDetailK
   });
   const rows: Array<{ kind: MediaDetailKind; slug: string; ownerPath: string; label: string }> = [];
   for (const page of pages) {
-    for (const value of cardValues(page.contentJson)) {
+    for (const value of cardsFromContent(page.contentJson)) {
       const card = toDetailCard(value);
       if (!card?.publicSlug) continue;
       rows.push({ kind: card.kind, slug: card.publicSlug, ownerPath: page.slug, label: card.label });

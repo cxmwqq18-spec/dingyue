@@ -1,4 +1,5 @@
 import { redirectLegacyAidreamcapesTemplateDirectory } from "@/lib/aidreamcapes-template-directory-route";
+import { aidreamcapesTemplateFilterMetadata, redirectAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
@@ -454,7 +455,7 @@ async function resolveHostToolPageWithFallback(hosts: Array<string | null>, tool
   return resolveHostToolPage(homeState, hosts, toolSlug);
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ path: string[] }> }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ path: string[] }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
   const [resolvedParams, headerStore] = await Promise.all([params, headers()]);
   const { path } = resolvedParams;
   const firstSegment = path[0] ?? "";
@@ -462,6 +463,8 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   const requestedPath = `/${path.join("/")}`;
   const hostCandidates = [headerStore.get("x-forwarded-host"), headerStore.get("host")];
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
+  const filterMetadata = await aidreamcapesTemplateFilterMetadata(hostSiteSlug, requestedPath, searchParams ? await searchParams : {});
+  if (filterMetadata) return filterMetadata;
   if (hostSiteSlug === "aidreamcapes" && /^(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(path.join("/"))) {
     // Retired short scene paths are redirected by the page handler.
     return {};
@@ -718,6 +721,7 @@ export default async function HostStorefrontCatchAllPage({
   const slug = `/${path.join("/")}`;
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
   await redirectLegacyAidreamcapesTemplateDirectory(hostSiteSlug, slug);
+  await redirectAidreamcapesTemplateFilter(hostSiteSlug, slug, searchParams ? await searchParams : {});
   if (hostSiteSlug === "aidreamcapes" && path.length === 2) {
     // Retired short scene routes now live under the same prefixes as media.
     if (firstSegment === "images" || firstSegment === "videos") {

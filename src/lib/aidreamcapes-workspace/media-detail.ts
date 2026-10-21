@@ -42,6 +42,8 @@ export type MediaDetailCard = {
   tool?: string;
   aspect?: string;
   duration?: number | string;
+  /** Canonical facet directory slugs this card is directly placed in. */
+  placement?: string[];
   image: { src: string; alt?: string; w?: number; h?: number };
   video?: { src: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
 };

@@ -6,5 +6,6 @@
 .filters select { min-width: 0; width: 100%; padding: 12px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 10px; font: inherit; }
 .filters select:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
 .cardImage { display: block; aspect-ratio: 1 / 1; object-fit: cover; width: 100%; height: auto; }
+.mediaSection { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
 @media (max-width: 900px) { .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .filters { grid-template-columns: minmax(0, 1fr); } }
