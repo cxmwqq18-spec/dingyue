@@ -14,6 +14,7 @@ import { MYDREAMSHOOTS_STANDARD_SEO_ROUTES } from "@/lib/mydreamshoots-editorial
 import { canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { AIDREAMCAPES_EU_SITE_ID, canonicalAidreamcapesEuPublicPath } from "@/lib/aidreamcapes-eu-retired-routes";
 import { replaceAidreamcapesEuLegacyMedia } from "@/lib/aidreamcapes-eu-legacy-media";
+import { siteSnapshotCacheEnabled } from "@/lib/site-content-revision";
 import type {
   EffectiveIndexability,
   EffectivePublishedPage,
@@ -30,6 +31,12 @@ function normalizePath(value: string): string {
   const clean = value.trim().split("?")[0] || "/";
   return clean === "/" ? "/" : `/${clean.replace(/^\/+|\/+$/g, "")}`;
 }
+
+// Snapshots are pure projections of a PlatformState. The revision-keyed state
+// cache reuses the same state object for the lifetime of a content revision,
+// so this weak map reuses the derived projection too and releases it together
+// with the state.
+const publishedSnapshotByState = new WeakMap<PlatformState, Map<string, PublishedSiteSnapshot>>();
 
 const AIDREAMCAPES_EU_MIRROR_MEDIA_PATTERN = /\/assets\/sites\/site_aidreamcapes_eu\/mirror\/[^"'\\\s<>|)]+/g;
 
@@ -235,6 +242,12 @@ export function createPublishedSiteSnapshot(
   // Public content is compiled from the latest draft records on every request.
   // The projection remains in-memory only; no publication/current-state row is
   // consulted and no historical payload can become a public fallback.
+  const cacheKey = `${site.id}:${options.source ?? "platform-state"}`;
+  const cacheable = siteSnapshotCacheEnabled(site.id) && state.sites.includes(site);
+  if (cacheable) {
+    const cached = publishedSnapshotByState.get(state)?.get(cacheKey);
+    if (cached) return cached;
+  }
   const sourceSite: Site = {
     ...site,
     // Exclude malformed unrelated pages from the projection. The requested
@@ -322,7 +335,7 @@ export function createPublishedSiteSnapshot(
     ...publishedStandardPageMedia.map((media) => ({ entityType: "page_media" as const, entityId: media.mediaEntityId, ownerId: media.pageEntityId, revision: media.revision }))
   ];
   const factsRevision = snapshotRevisions.factsRevision ?? publishedFacts?.claimRevision ?? revision({ siteId: site.id, profile: publishedProfile });
-  return {
+  const snapshot: PublishedSiteSnapshot = {
     boundary: {
       siteId: site.id,
       source: options.source ?? "platform-state",
@@ -362,6 +375,15 @@ export function createPublishedSiteSnapshot(
     capability: resolveSiteCapability(publishedSite),
     entityReferences
   };
+  if (cacheable) {
+    let perState = publishedSnapshotByState.get(state);
+    if (!perState) {
+      perState = new Map();
+      publishedSnapshotByState.set(state, perState);
+    }
+    perState.set(cacheKey, snapshot);
+  }
+  return snapshot;
 }
 
 export async function loadPublishedSiteSnapshotByHost(host: string | null | undefined): Promise<PublishedSiteSnapshot> {

@@ -12,6 +12,7 @@ import { prisma, runPrismaReadWithReconnect } from "@/lib/prisma";
 import { mutateLocalPlatformStateFallback, readLocalPlatformStateFallback, readPlatformState } from "@/lib/server-store";
 import { createServerTtlCache } from "@/lib/server-ttl-cache";
 import { policyPageSlug } from "@/lib/site-route-canonical";
+import { readSiteContentRevision, siteSnapshotCacheAnyEnabled, siteSnapshotCacheEnabled } from "@/lib/site-content-revision";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { storefrontGlobalShellPageSlugs } from "@/lib/storefront-global-shell";
 import { withStorefrontPublicWatermarkUrl } from "@/lib/storefront-public-watermark-url";
@@ -1440,14 +1441,86 @@ function storefrontPerfMark(label: string, startedAt: number, meta: Record<strin
   });
 }
 
+type PublicRuntimeCacheEntry = {
+  siteId: string;
+  revision: string;
+  createdAt: number;
+  state: PlatformState;
+};
+
+// Revision-keyed, per-process cache for opted-in storefronts. The revision
+// probe runs on every request, so a committed content write invalidates the
+// entry on the next request. The entries are derived state only and are never
+// used as a fallback when the probe or the relational read fails.
+const publicRuntimeCache = new Map<string, PublicRuntimeCacheEntry>();
+const publicRuntimeCacheInFlight = new Map<string, Promise<PlatformState | undefined>>();
+
+function publicRuntimeCacheMaxEntries(): number {
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 8);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 8;
+}
+
+function publicRuntimeCacheTtlMs(): number {
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 300_000);
+  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 300_000;
+}
+
+async function getCachedPublicRuntimeState(
+  cacheKey: string,
+  siteId: string,
+  loader: () => Promise<PlatformState | undefined>
+): Promise<PlatformState | undefined> {
+  if (!siteSnapshotCacheEnabled(siteId)) return loader();
+
+  const revision = await readSiteContentRevision(siteId);
+  if (!revision) return loader();
+
+  const cached = publicRuntimeCache.get(cacheKey);
+  const ttl = publicRuntimeCacheTtlMs();
+  if (cached && cached.revision === revision && (ttl === 0 || Date.now() - cached.createdAt < ttl)) {
+    return cached.state;
+  }
+
+  // Collapse concurrent cold misses (for example a crawler burst) into one
+  // relational read. The revision is part of the key so a caller that already
+  // observed a newer write never joins an older load.
+  const inFlightKey = `${cacheKey}|${revision}`;
+  const inFlight = publicRuntimeCacheInFlight.get(inFlightKey);
+  if (inFlight) return inFlight;
+
+  const pending = (async () => {
+    const state = await loader();
+    if (!state) return state;
+    if (state.sites[0]?.id !== siteId) return state;
+
+    for (const [key, entry] of publicRuntimeCache) {
+      if (entry.siteId === siteId && entry.revision !== revision) publicRuntimeCache.delete(key);
+    }
+    publicRuntimeCache.set(cacheKey, { siteId, revision, createdAt: Date.now(), state });
+    const maxEntries = publicRuntimeCacheMaxEntries();
+    while (publicRuntimeCache.size > maxEntries) {
+      const oldest = publicRuntimeCache.keys().next().value;
+      if (oldest === undefined) break;
+      publicRuntimeCache.delete(oldest);
+    }
+    return state;
+  })();
+  publicRuntimeCacheInFlight.set(inFlightKey, pending);
+  try {
+    return await pending;
+  } finally {
+    publicRuntimeCacheInFlight.delete(inFlightKey);
+  }
+}
+
 export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: string, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
   const pageKey = pageSlugs?.join("|") ?? "all";
   const contextKey = contextSlug ? slugify(contextSlug) : "none";
-  return siteReadCache.get(
-    `public-runtime:${siteId}:${pageKey}:${contextKey}`,
-    () => loadStorefrontPublicRuntimeState({ id: siteId }, pageSlugs, contextSlug),
-    0
+  return getCachedPublicRuntimeState(
+    `site:${siteId}:${pageKey}:${contextKey}`,
+    siteId,
+    () => loadStorefrontPublicRuntimeState({ id: siteId }, pageSlugs, contextSlug)
   );
 });
 
@@ -1611,11 +1684,22 @@ export const getStorefrontPublicVideoThemesForSite = cache(async (siteId: string
 export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug: string, collectionSlug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
   const normalizedCollectionSlug = slugify(collectionSlug);
+  const load = async () => {
+    return loadStorefrontPublicCollectionDetailState(slug, normalizedCollectionSlug);
+  };
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) {
+      return getCachedPublicRuntimeState(
+        `collection-detail:${siteId}:${normalizedCollectionSlug}`,
+        siteId,
+        load
+      );
+    }
+  }
   return siteReadCache.get(
     `public-collection-shell:${canonicalSlug}:${normalizedCollectionSlug}`,
-    async () => {
-      return loadStorefrontPublicCollectionDetailState(slug, normalizedCollectionSlug);
-    },
+    load,
     0
   );
 });
@@ -1623,26 +1707,40 @@ export const getStorefrontPublicCollectionDetailStateBySlug = cache(async (slug:
 export const getStorefrontPublicCollectionDirectoryStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
   if (instantDraftPreviewEnabled()) return loadStorefrontPublicCollectionDirectoryState(slug);
+  const load = async () => loadStorefrontPublicCollectionDirectoryState(slug);
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) {
+      return getCachedPublicRuntimeState(`collection-directory:${siteId}`, siteId, load);
+    }
+  }
   return siteReadCache.get(
     `public-collection-directory-shell:${canonicalSlug}`,
-    async () => loadStorefrontPublicCollectionDirectoryState(slug),
+    load,
     0
   );
 });
 
 export const getStorefrontPublicCollectionMetadataStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
+  const load = async () => {
+    const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
+    if (!site) return undefined;
+    const mappedSite = toPublicSiteShell(site, []);
+    return emptyPlatformState({
+      sites: [mappedSite],
+      siteDomains: site.domains.map(toSiteDomain)
+    });
+  };
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) {
+      return getCachedPublicRuntimeState(`collection-metadata:${siteId}`, siteId, load);
+    }
+  }
   return siteReadCache.get(
     `public-collection-metadata-shell:${canonicalSlug}`,
-    async () => {
-      const site = await getStorefrontPublicCollectionSiteShellBySlug(slug);
-      if (!site) return undefined;
-      const mappedSite = toPublicSiteShell(site, []);
-      return emptyPlatformState({
-        sites: [mappedSite],
-        siteDomains: site.domains.map(toSiteDomain)
-      });
-    },
+    load,
     0
   );
 });
@@ -2317,53 +2415,85 @@ export const getStorefrontRuntimeStateBySlug = cache(async (slug: string): Promi
 export const getStorefrontPublicRuntimeStateByHost = cache(async (host: string | null | undefined, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {
   const pageSlugs = publicRuntimePageSlugs(pageSlug);
   const lookup = getPublicRuntimeHostLookup(host);
-  return lookup ? loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug) : undefined;
+  if (!lookup) return undefined;
+  if (!siteSnapshotCacheAnyEnabled()) return loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug);
+  const resolved = await getPublicRuntimeSiteLookupByHost(host);
+  const siteId = resolved && "id" in resolved ? resolved.id : undefined;
+  if (!siteId) return loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug);
+  const pageKey = pageSlugs?.join("|") ?? "all";
+  const contextKey = contextSlug ? slugify(contextSlug) : "none";
+  return getCachedPublicRuntimeState(
+    `host:${siteId}:${pageKey}:${contextKey}`,
+    siteId,
+    () => loadStorefrontPublicRuntimeState(lookup, pageSlugs, contextSlug)
+  );
 });
 
 export const getStorefrontPublicIndexingStateByHost = cache(async (host: string | null | undefined): Promise<PlatformState | undefined> => {
   const lookup = getPublicRuntimeHostLookup(host);
-  return lookup ? loadStorefrontPublicRuntimeState(lookup, undefined, undefined, { indexing: true }) : undefined;
+  if (!lookup) return undefined;
+  if (!siteSnapshotCacheAnyEnabled()) return loadStorefrontPublicRuntimeState(lookup, undefined, undefined, { indexing: true });
+  const resolved = await getPublicRuntimeSiteLookupByHost(host);
+  const siteId = resolved && "id" in resolved ? resolved.id : undefined;
+  if (!siteId) return loadStorefrontPublicRuntimeState(lookup, undefined, undefined, { indexing: true });
+  return getCachedPublicRuntimeState(
+    `indexing:${siteId}`,
+    siteId,
+    () => loadStorefrontPublicRuntimeState(lookup, undefined, undefined, { indexing: true })
+  );
 });
 
 export const getStorefrontPublicPageMetadataStateByHost = cache(async (host: string | null | undefined, pageSlug?: string): Promise<PlatformState | undefined> => {
   const key = cleanHost(host) || "empty";
   const normalizedPageSlug = pageSlug ? (pageSlug.startsWith("/") ? pageSlug : `/${pageSlug}`) : "";
+  const load = async () => {
+    const lookup = await getPublicRuntimeSiteLookupByHost(host);
+    if (!lookup) return undefined;
+    const pageWhere = normalizedPageSlug ? { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } } : undefined;
+    const select = {
+      ...publicMetadataSiteSelect,
+      livePages: pageWhere
+        ? {
+            ...publicMetadataSiteSelect.livePages,
+            where: pageWhere
+          }
+        : publicMetadataSiteSelect.livePages
+    } satisfies Prisma.SiteSelect;
+    const site = "id" in lookup
+      ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
+      : await prisma.site.findFirst({
+          where: { slug: { in: lookup.slugCandidates } },
+          orderBy: { updatedAt: "desc" },
+          select
+        });
+    if (!site) return undefined;
+    const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
+      ? await prisma.mediaAsset.findMany({
+          where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
+          select: publicRuntimeMediaAssetSelect,
+          orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+        })
+      : [];
+    const mappedMediaAssets = mediaAssets.map(toMediaAsset);
+    return emptyPlatformState({
+      sites: [toPublicSiteShell(site, mappedMediaAssets)],
+      mediaAssets: mappedMediaAssets
+    });
+  };
+  if (siteSnapshotCacheAnyEnabled()) {
+    const resolved = await getPublicRuntimeSiteLookupByHost(host);
+    const siteId = resolved && "id" in resolved ? resolved.id : undefined;
+    if (siteId) {
+      return getCachedPublicRuntimeState(
+        `metadata-page-host:${siteId}:${normalizedPageSlug || "site"}`,
+        siteId,
+        load
+      );
+    }
+  }
   return siteReadCache.get(
     `public-page-metadata-host:${key}:${normalizedPageSlug || "site"}`,
-    async () => {
-      const lookup = await getPublicRuntimeSiteLookupByHost(host);
-      if (!lookup) return undefined;
-      const pageWhere = normalizedPageSlug ? { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } } : undefined;
-      const select = {
-        ...publicMetadataSiteSelect,
-        livePages: pageWhere
-          ? {
-              ...publicMetadataSiteSelect.livePages,
-              where: pageWhere
-            }
-          : publicMetadataSiteSelect.livePages
-      } satisfies Prisma.SiteSelect;
-      const site = "id" in lookup
-        ? await prisma.site.findUnique({ where: { id: lookup.id }, select })
-        : await prisma.site.findFirst({
-            where: { slug: { in: lookup.slugCandidates } },
-            orderBy: { updatedAt: "desc" },
-            select
-          });
-      if (!site) return undefined;
-      const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
-        ? await prisma.mediaAsset.findMany({
-            where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
-            select: publicRuntimeMediaAssetSelect,
-            orderBy: [{ createdAt: "desc" }, { id: "asc" }]
-          })
-        : [];
-      const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-      return emptyPlatformState({
-        sites: [toPublicSiteShell(site, mappedMediaAssets)],
-        mediaAssets: mappedMediaAssets
-      });
-    },
+    load,
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
@@ -2374,6 +2504,16 @@ export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, 
   const pageKey = pageSlugs?.join("|") ?? "all";
   const contextKey = contextSlug ? slugify(contextSlug) : "none";
   if (instantDraftPreviewEnabled()) return loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug);
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) {
+      return getCachedPublicRuntimeState(
+        `slug:${siteId}:${pageKey}:${contextKey}`,
+        siteId,
+        () => loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug)
+      );
+    }
+  }
   return siteReadCache.get(
     `public-runtime-slug:${canonicalSlug}:${pageKey}:${contextKey}`,
     () => loadStorefrontPublicRuntimeState({ slugCandidates: legacySiteSlugCandidates(slug) }, pageSlugs, contextSlug),
@@ -2383,19 +2523,24 @@ export const getStorefrontPublicRuntimeStateBySlug = cache(async (slug: string, 
 
 export const getStorefrontPublicMetadataStateBySlug = cache(async (slug: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
+  const load = async () => {
+    const site = await prisma.site.findFirst({
+      where: { slug: { in: legacySiteSlugCandidates(slug) } },
+      orderBy: { updatedAt: "desc" },
+      select: publicMetadataSiteSelect
+    });
+    if (!site) return undefined;
+    return emptyPlatformState({
+      sites: [toPublicSiteShell(site)]
+    });
+  };
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) return getCachedPublicRuntimeState(`metadata-slug:${siteId}`, siteId, load);
+  }
   return siteReadCache.get(
     `public-metadata:${canonicalSlug}`,
-    async () => {
-      const site = await prisma.site.findFirst({
-        where: { slug: { in: legacySiteSlugCandidates(slug) } },
-        orderBy: { updatedAt: "desc" },
-        select: publicMetadataSiteSelect
-      });
-      if (!site) return undefined;
-      return emptyPlatformState({
-        sites: [toPublicSiteShell(site)]
-      });
-    },
+    load,
     Number(process.env.STOREFRONT_PUBLIC_CACHE_TTL_MS ?? 0)
   );
 });
@@ -2403,36 +2548,47 @@ export const getStorefrontPublicMetadataStateBySlug = cache(async (slug: string)
 export const getStorefrontPublicPageMetadataStateBySlug = cache(async (slug: string, pageSlug?: string): Promise<PlatformState | undefined> => {
   const canonicalSlug = canonicalSiteSlug(slug);
   const normalizedPageSlug = pageSlug ? (pageSlug.startsWith("/") ? pageSlug : `/${pageSlug}`) : "";
+  const load = async () => {
+    const site = await prisma.site.findFirst({
+      where: { slug: { in: legacySiteSlugCandidates(slug) } },
+      orderBy: { updatedAt: "desc" },
+      select: {
+        ...publicMetadataSiteSelect,
+        livePages: normalizedPageSlug
+          ? {
+              ...publicMetadataSiteSelect.livePages,
+              where: { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } }
+            }
+          : publicMetadataSiteSelect.livePages
+      }
+    });
+    if (!site) return undefined;
+    const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
+      ? await prisma.mediaAsset.findMany({
+          where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
+          select: publicRuntimeMediaAssetSelect,
+          orderBy: [{ createdAt: "desc" }, { id: "asc" }]
+        })
+      : [];
+    const mappedMediaAssets = mediaAssets.map(toMediaAsset);
+    return emptyPlatformState({
+      sites: [toPublicSiteShell(site, mappedMediaAssets)],
+      mediaAssets: mappedMediaAssets
+    });
+  };
+  if (siteSnapshotCacheAnyEnabled()) {
+    const siteId = await getSiteIdBySlugRelational(slug);
+    if (siteId) {
+      return getCachedPublicRuntimeState(
+        `metadata-page-slug:${siteId}:${normalizedPageSlug || "site"}`,
+        siteId,
+        load
+      );
+    }
+  }
   return siteReadCache.get(
     `public-page-metadata:${canonicalSlug}:${normalizedPageSlug || "site"}`,
-    async () => {
-      const site = await prisma.site.findFirst({
-        where: { slug: { in: legacySiteSlugCandidates(slug) } },
-        orderBy: { updatedAt: "desc" },
-        select: {
-          ...publicMetadataSiteSelect,
-          livePages: normalizedPageSlug
-            ? {
-                ...publicMetadataSiteSelect.livePages,
-                where: { slug: { in: Array.from(new Set([normalizedPageSlug, "/404"])) } }
-              }
-            : publicMetadataSiteSelect.livePages
-        }
-      });
-      if (!site) return undefined;
-      const mediaAssets = /^\/(?:ai-save-the-date|holidays-events)\//.test(normalizedPageSlug)
-        ? await prisma.mediaAsset.findMany({
-            where: { siteId: site.id, usageType: { in: ["theme", "package", "sample"] } },
-            select: publicRuntimeMediaAssetSelect,
-            orderBy: [{ createdAt: "desc" }, { id: "asc" }]
-          })
-        : [];
-      const mappedMediaAssets = mediaAssets.map(toMediaAsset);
-      return emptyPlatformState({
-        sites: [toPublicSiteShell(site, mappedMediaAssets)],
-        mediaAssets: mappedMediaAssets
-      });
-    },
+    load,
     0
   );
 });

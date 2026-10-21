@@ -1678,3 +1678,12 @@ model DeploymentRelease {
   @@index([environment, siteId, appliedAt])
   @@index([manifestHash])
 }
+
+// Monotonic per-site content revision maintained by database triggers.
+// Public SSR uses it as a cheap cache probe; it is derived state and is never
+// a content source or a publication/rollback record.
+model SiteContentRevision {
+  siteId    String   @id
+  revision  BigInt   @default(0)
+  updatedAt DateTime @default(now())
+}
