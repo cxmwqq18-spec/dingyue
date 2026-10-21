@@ -4,7 +4,17 @@ import { load } from 'cheerio';
 const origin = process.env.AIDREAMCAPES_AUDIT_ORIGIN || 'http://127.0.0.1:3113';
 const output = process.env.AIDREAMCAPES_AUDIT_OUTPUT;
 const report = {ok:true,origin,checks:[],errors:[],writes:false};
-const aliases = JSON.parse(fs.readFileSync('scripts/manifests/aidreamcapes-seo-media-alias-local-2026-10-21.json')).operations;
+// Every retired address must answer 308 with the canonical product address.
+// The list is the union of the local pilot manifest and the current plan
+// manifest, so a release gate covers all migrated addresses.
+const aliasEntries = [];
+for(const file of ['scripts/manifests/aidreamcapes-seo-media-alias-local-2026-10-21.json','scripts/manifests/aidreamcapes-media-slug-alias-local-2026-10-22.json','scripts/manifests/aidreamcapes-media-slug-alias-production-2026-10-22.json']) {
+  if(!fs.existsSync(file))continue;
+  const manifest=JSON.parse(fs.readFileSync(file,'utf8'));
+  for(const operation of manifest.operations??[])aliasEntries.push({oldPath:operation.oldPath,newPath:operation.newPath});
+  for(const address of manifest.addresses??[])aliasEntries.push({oldPath:address.oldPath,newPath:address.newPath});
+}
+const aliases=[...new Map(aliasEntries.map(entry=>[entry.oldPath,entry])).values()].sort((a,b)=>a.oldPath.localeCompare(b.oldPath));
 for(const mode of ['path','host']) {
   const base = mode==='path'?'/site/aidreamcapes':'';
   const headers = mode==='host'?{'x-forwarded-host':'www.aivideosugc.com','x-forwarded-proto':'https'}:{};
@@ -16,7 +26,7 @@ for(const mode of ['path','host']) {
   await check('unknown category is an empty noindex result',async()=>{const{r,$}=await get('/templates?industries=%2Findustries%2Fdoes-not-exist');assert.equal(r.status,200);assert.equal($('[data-template-id]').length,0);assert($('meta[name=robots]').attr('content').includes('noindex'));});
   await check('malformed categories fail without external redirect',async()=>{const{r}=await get('/templates?industries=https%3A%2F%2Fother.example');assert.equal(r.status,400);assert.equal(r.headers.get('location'),null);});
   await check('footwear examples and general templates remain separate',async()=>{const{r,$}=await get('/industries/shoes');assert.equal(r.status,200);assert.equal($('[data-template-id]').length,4);assert($('[data-directory-media] article').length>=6);assert($('h2').text().includes('Reusable Templates for Footwear'));assert($('h2').text().includes('Footwear Examples'));for(const img of $('[data-directory-media] img').toArray())assert(/shoe|sandal/i.test($(img).attr('alt')));});
-  for(const entry of aliases)await check('alias '+entry.afterSlug,async()=>{const old=await get(entry.oldPath);assert.equal(old.r.status,308);assert(new URL(old.r.headers.get('location'),origin).pathname.endsWith(entry.newPath));const current=await get(entry.newPath);assert.equal(current.r.status,200);assert.equal(current.$('link[rel=canonical]').attr('href'),'https://www.aivideosugc.com'+entry.newPath);assert(current.$('meta[name=robots]').attr('content').includes('noindex'));assert.equal(current.$('a[data-workspace-entry]').filter((_,e)=>current.$(e).attr('href')?.includes('/app/create/')).length,1);});
+  for(const entry of aliases)await check('alias '+entry.oldPath,async()=>{const old=await get(entry.oldPath);assert.equal(old.r.status,308);assert(new URL(old.r.headers.get('location'),origin).pathname.endsWith(entry.newPath));const current=await get(entry.newPath);assert.equal(current.r.status,200);assert.equal(current.$('link[rel=canonical]').attr('href'),'https://www.aivideosugc.com'+entry.newPath);assert(current.$('meta[name=robots]').attr('content').includes('noindex'));assert.equal(current.$('a[data-workspace-entry]').filter((_,e)=>current.$(e).attr('href')?.includes('/app/create/')).length,1);});
   await check('sitemap contains platform hub and excludes aliases',async()=>{const{html}=await get('/sitemap.xml');assert(html.includes('<loc>https://www.aivideosugc.com/platforms</loc>'));for(const entry of aliases)assert(!html.includes('<loc>https://www.aivideosugc.com'+entry.oldPath+'</loc>'));});
 }
 report.ok=report.errors.length===0;

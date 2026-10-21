@@ -1,0 +1,75 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-media-slug-alias-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "planHash": "a231dec8bf39ed7f76558051bab5370db4479d9ec31e65e0fe42152aed49c3ee",
+  "manifest": "scripts/manifests/aidreamcapes-media-slug-alias-local-2026-10-22.json",
+  "pages": 2,
+  "cardsPlanned": 32,
+  "cardsAlreadyApplied": 0,
+  "aborted": [],
+  "skipped": [],
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "local",
+    "planHash": "a231dec8bf39ed7f76558051bab5370db4479d9ec31e65e0fe42152aed49c3ee",
+    "owner": "LivePage.contentJson",
+    "applied": [
+      {
+        "page": "/ai-video-generation",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[6]",
+          "sections.v2_main.settings.data.visual.picker.cards[9]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/video-ads",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[6]",
+          "sections.v2_main.settings.data.visual.picker.cards[7]",
+          "sections.v2_main.settings.data.visual.picker.cards[8]",
+          "sections.v2_main.settings.data.visual.picker.cards[9]",
+          "sections.v2_main.settings.data.visual.picker.cards[10]",
+          "sections.v2_main.settings.data.visual.picker.cards[11]",
+          "sections.v2_main.settings.data.visual.picker.cards[12]",
+          "sections.v2_main.settings.data.visual.picker.cards[13]",
+          "sections.v2_main.settings.data.visual.picker.cards[15]",
+          "sections.v2_main.settings.data.visual.picker.cards[16]",
+          "sections.v2_main.settings.data.visual.picker.cards[17]",
+          "sections.v2_main.settings.data.visual.picker.cards[18]",
+          "sections.v2_main.settings.data.visual.picker.cards[19]",
+          "sections.v2_main.settings.data.visual.picker.cards[20]",
+          "sections.v2_main.settings.data.visual.picker.cards[21]",
+          "sections.v2_main.settings.data.visual.picker.cards[22]",
+          "sections.v2_main.settings.data.visual.picker.cards[23]",
+          "sections.v2_main.settings.data.visual.picker.cards[24]",
+          "sections.v2_main.settings.data.visual.picker.cards[25]",
+          "sections.v2_main.settings.data.visual.picker.cards[26]",
+          "sections.v2_main.settings.data.visual.picker.cards[27]",
+          "sections.v2_main.settings.data.visual.picker.cards[28]",
+          "sections.v2_main.settings.data.visual.picker.cards[29]",
+          "sections.v2_main.settings.data.visual.picker.cards[30]",
+          "sections.v2_main.settings.data.visual.picker.cards[31]",
+          "sections.v2_main.settings.data.visual.picker.cards[32]",
+          "sections.v2_main.settings.data.visual.picker.cards[33]",
+          "sections.v2_main.settings.data.visual.picker.cards[34]",
+          "sections.v2_main.settings.data.visual.picker.cards[35]",
+          "sections.v2_main.settings.data.visual.picker.cards[36]"
+        ]
+      }
+    ],
+    "fieldsApplied": 64,
+    "revisionBefore": "10",
+    "revisionAfter": "12",
+    "revisionDelta": "2",
+    "protectedMyDreamShootsHashBefore": "ea0816f41e8b6bff8c67173b79a723d9ba12d5003ba8c2f871710779c6c6fba0",
+    "protectedMyDreamShootsHashAfter": "ea0816f41e8b6bff8c67173b79a723d9ba12d5003ba8c2f871710779c6c6fba0",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-media-slug-alias-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "0295dc666ff9ca04244b2dd6e33fc1321ce09895df7a6f2d9c0775b50960a636",
+  "manifest": "../../ops/aidreamcapes-media-slug-alias-20261022/production-plan.json",
+  "pages": 2,
+  "cardsPlanned": 37,
+  "cardsAlreadyApplied": 0,
+  "aborted": [],
+  "skipped": [],
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "production",
+    "planHash": "0295dc666ff9ca04244b2dd6e33fc1321ce09895df7a6f2d9c0775b50960a636",
+    "owner": "LivePage.contentJson",
+    "applied": [
+      {
+        "page": "/ai-video-generation",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[6]",
+          "sections.v2_main.settings.data.visual.picker.cards[9]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/video-ads",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[1]",
+          "sections.v2_main.settings.data.visual.picker.cards[2]",
+          "sections.v2_main.settings.data.visual.picker.cards[3]",
+          "sections.v2_main.settings.data.visual.picker.cards[4]",
+          "sections.v2_main.settings.data.visual.picker.cards[5]",
+          "sections.v2_main.settings.data.visual.picker.cards[6]",
+          "sections.v2_main.settings.data.visual.picker.cards[7]",
+          "sections.v2_main.settings.data.visual.picker.cards[8]",
+          "sections.v2_main.settings.data.visual.picker.cards[9]",
+          "sections.v2_main.settings.data.visual.picker.cards[10]",
+          "sections.v2_main.settings.data.visual.picker.cards[11]",
+          "sections.v2_main.settings.data.visual.picker.cards[12]",
+          "sections.v2_main.settings.data.visual.picker.cards[13]",
+          "sections.v2_main.settings.data.visual.picker.cards[15]",
+          "sections.v2_main.settings.data.visual.picker.cards[16]",
+          "sections.v2_main.settings.data.visual.picker.cards[17]",
+          "sections.v2_main.settings.data.visual.picker.cards[18]",
+          "sections.v2_main.settings.data.visual.picker.cards[19]",
+          "sections.v2_main.settings.data.visual.picker.cards[20]",
+          "sections.v2_main.settings.data.visual.picker.cards[21]",
+          "sections.v2_main.settings.data.visual.picker.cards[22]",
+          "sections.v2_main.settings.data.visual.picker.cards[23]",
+          "sections.v2_main.settings.data.visual.picker.cards[24]",
+          "sections.v2_main.settings.data.visual.picker.cards[25]",
+          "sections.v2_main.settings.data.visual.picker.cards[26]",
+          "sections.v2_main.settings.data.visual.picker.cards[27]",
+          "sections.v2_main.settings.data.visual.picker.cards[28]",
+          "sections.v2_main.settings.data.visual.picker.cards[29]",
+          "sections.v2_main.settings.data.visual.picker.cards[30]",
+          "sections.v2_main.settings.data.visual.picker.cards[31]",
+          "sections.v2_main.settings.data.visual.picker.cards[32]",
+          "sections.v2_main.settings.data.visual.picker.cards[33]",
+          "sections.v2_main.settings.data.visual.picker.cards[34]",
+          "sections.v2_main.settings.data.visual.picker.cards[35]",
+          "sections.v2_main.settings.data.visual.picker.cards[36]"
+        ]
+      }
+    ],
+    "fieldsApplied": 74,
+    "revisionBefore": "1",
+    "revisionAfter": "3",
+    "revisionDelta": "2",
+    "protectedMyDreamShootsHashBefore": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "protectedMyDreamShootsHashAfter": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

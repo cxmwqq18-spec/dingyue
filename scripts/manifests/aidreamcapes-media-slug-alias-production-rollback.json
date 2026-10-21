@@ -1,0 +1,640 @@
+{
+  "contract": "aidreamcapes-media-slug-alias-2026-10-22-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "0295dc666ff9ca04244b2dd6e33fc1321ce09895df7a6f2d9c0775b50960a636",
+  "generatedAt": "2026-10-21T22:26:03.283Z",
+  "owner": "LivePage.contentJson",
+  "note": "Field-level inverse of this apply. Each operation restores the retired publicSlug and publicAliases of one card.",
+  "operations": [
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[6]",
+      "kind": "video",
+      "label": "Tinted Balm Vanity Reel",
+      "imageSrc": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
+      "beforeSlug": "tinted-balm-vanity-reel-ai-video-generation",
+      "beforeAliases": null,
+      "afterSlug": "tinted-balm-vanity-reel",
+      "afterAliases": [
+        "tinted-balm-vanity-reel-ai-video-generation"
+      ],
+      "oldPath": "/ai-video-generation/tinted-balm-vanity-reel-ai-video-generation",
+      "newPath": "/ai-video-generation/tinted-balm-vanity-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[9]",
+      "kind": "video",
+      "label": "Trousers Fold Demo",
+      "imageSrc": "/ai-image-generation/mx1w-video-hub-clothing-2-r1-640.webp",
+      "beforeSlug": "trousers-fold-demo-ai-video-generation",
+      "beforeAliases": null,
+      "afterSlug": "trousers-fold-demo",
+      "afterAliases": [
+        "trousers-fold-demo-ai-video-generation"
+      ],
+      "oldPath": "/ai-video-generation/trousers-fold-demo-ai-video-generation",
+      "newPath": "/ai-video-generation/trousers-fold-demo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[1]",
+      "kind": "video",
+      "label": "Cinematic Watch Detail",
+      "imageSrc": "/ai-image-generation/tw1-wall-accessories-2-640.webp",
+      "beforeSlug": "cinematic-watch-detail-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "cinematic-watch-detail",
+      "afterAliases": [
+        "cinematic-watch-detail-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/cinematic-watch-detail-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/cinematic-watch-detail"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[2]",
+      "kind": "video",
+      "label": "Bedroom Try-On: Knitwear",
+      "imageSrc": "/ai-image-generation/tw1-wall-apparel-1-640.webp",
+      "beforeSlug": "bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "bedroom-try-on-knitwear",
+      "afterAliases": [
+        "bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/bedroom-try-on-knitwear"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[3]",
+      "kind": "video",
+      "label": "Street Style: Linen Set",
+      "imageSrc": "/ai-image-generation/tw1-wall-apparel-2-640.webp",
+      "beforeSlug": "street-style-linen-set-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "street-style-linen-set",
+      "afterAliases": [
+        "street-style-linen-set-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/street-style-linen-set-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/street-style-linen-set"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[4]",
+      "kind": "video",
+      "label": "Lifestyle App Recommendation",
+      "imageSrc": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+      "beforeSlug": "lifestyle-app-recommendation-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "lifestyle-app-recommendation",
+      "afterAliases": [
+        "lifestyle-app-recommendation-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/lifestyle-app-recommendation"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[5]",
+      "kind": "video",
+      "label": "Streamer Reaction: App",
+      "imageSrc": "/ai-image-generation/tw1-wall-apps-2-640.webp",
+      "beforeSlug": "streamer-reaction-app-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "streamer-reaction-app",
+      "afterAliases": [
+        "streamer-reaction-app-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/streamer-reaction-app-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/streamer-reaction-app"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[6]",
+      "kind": "video",
+      "label": "Routine Demo: Cream",
+      "imageSrc": "/ai-image-generation/tw1-wall-beauty-personal-care-1-640.webp",
+      "beforeSlug": "routine-demo-cream-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "routine-demo-cream",
+      "afterAliases": [
+        "routine-demo-cream-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/routine-demo-cream-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/routine-demo-cream"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[7]",
+      "kind": "video",
+      "label": "Bathroom Review: Moisturizer",
+      "imageSrc": "/ai-image-generation/tw1-wall-beauty-personal-care-2-640.webp",
+      "beforeSlug": "bathroom-review-moisturizer-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "bathroom-review-moisturizer",
+      "afterAliases": [
+        "bathroom-review-moisturizer-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/bathroom-review-moisturizer-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/bathroom-review-moisturizer"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[8]",
+      "kind": "video",
+      "label": "Get-Ready Unboxing: Knitwear",
+      "imageSrc": "/ai-image-generation/tw1-wall-clothing-1-640.webp",
+      "beforeSlug": "get-ready-unboxing-knitwear-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "get-ready-unboxing-knitwear",
+      "afterAliases": [
+        "get-ready-unboxing-knitwear-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/get-ready-unboxing-knitwear-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/get-ready-unboxing-knitwear"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[9]",
+      "kind": "video",
+      "label": "Mirror Selfie: Denim",
+      "imageSrc": "/ai-image-generation/tw1-wall-clothing-2-640.webp",
+      "beforeSlug": "mirror-selfie-denim-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "mirror-selfie-denim",
+      "afterAliases": [
+        "mirror-selfie-denim-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/mirror-selfie-denim-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/mirror-selfie-denim"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[10]",
+      "kind": "video",
+      "label": "360 Showcase: Linen Shirt",
+      "imageSrc": "/ai-image-generation/tw1-wall-e-commerce-1-640.webp",
+      "beforeSlug": "360-showcase-linen-shirt-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "360-showcase-linen-shirt",
+      "afterAliases": [
+        "360-showcase-linen-shirt-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/360-showcase-linen-shirt-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/360-showcase-linen-shirt"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[11]",
+      "kind": "video",
+      "label": "Street Interview: Fitness Gear",
+      "imageSrc": "/ai-image-generation/tw1-wall-e-commerce-2-640.webp",
+      "beforeSlug": "street-interview-fitness-gear-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "street-interview-fitness-gear",
+      "afterAliases": [
+        "street-interview-fitness-gear-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/street-interview-fitness-gear-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/street-interview-fitness-gear"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[12]",
+      "kind": "video",
+      "label": "Tutor Demo: Study Tool",
+      "imageSrc": "/ai-image-generation/tw1-wall-education-1-640.webp",
+      "beforeSlug": "tutor-demo-study-tool-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "tutor-demo-study-tool",
+      "afterAliases": [
+        "tutor-demo-study-tool-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/tutor-demo-study-tool-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/tutor-demo-study-tool"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[13]",
+      "kind": "video",
+      "label": "Talking Head: Skin Lesson",
+      "imageSrc": "/ai-image-generation/tw1-wall-education-2-640.webp",
+      "beforeSlug": "talking-head-skin-lesson-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "talking-head-skin-lesson",
+      "afterAliases": [
+        "talking-head-skin-lesson-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/talking-head-skin-lesson-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/talking-head-skin-lesson"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[15]",
+      "kind": "video",
+      "label": "Hook: Home App Walkthrough",
+      "imageSrc": "/ai-image-generation/tw1-wall-explainer-2-640.webp",
+      "beforeSlug": "hook-home-app-walkthrough-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "hook-home-app-walkthrough",
+      "afterAliases": [
+        "hook-home-app-walkthrough-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/hook-home-app-walkthrough-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/hook-home-app-walkthrough"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[16]",
+      "kind": "video",
+      "label": "Finance Hook: Phone Demo",
+      "imageSrc": "/ai-image-generation/tw1-wall-financial-services-1-640.webp",
+      "beforeSlug": "finance-hook-phone-demo-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "finance-hook-phone-demo",
+      "afterAliases": [
+        "finance-hook-phone-demo-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/finance-hook-phone-demo-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/finance-hook-phone-demo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[17]",
+      "kind": "video",
+      "label": "Realtor Walkthrough: Home",
+      "imageSrc": "/ai-image-generation/tw1-wall-financial-services-2-640.webp",
+      "beforeSlug": "realtor-walkthrough-home-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "realtor-walkthrough-home",
+      "afterAliases": [
+        "realtor-walkthrough-home-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/realtor-walkthrough-home-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/realtor-walkthrough-home"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[18]",
+      "kind": "video",
+      "label": "Sensory Hook: Citrus Sip",
+      "imageSrc": "/ai-image-generation/tw1-wall-food-beverage-1-640.webp",
+      "beforeSlug": "sensory-hook-citrus-sip-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "sensory-hook-citrus-sip",
+      "afterAliases": [
+        "sensory-hook-citrus-sip-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/sensory-hook-citrus-sip-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/sensory-hook-citrus-sip"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[19]",
+      "kind": "video",
+      "label": "Street Interview: Snack Bite",
+      "imageSrc": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+      "beforeSlug": "street-interview-snack-bite-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "street-interview-snack-bite",
+      "afterAliases": [
+        "street-interview-snack-bite-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/street-interview-snack-bite-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/street-interview-snack-bite"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[20]",
+      "kind": "video",
+      "label": "Running Shoe Creator Showcase",
+      "imageSrc": "/ai-image-generation/tw2-wall-footwear-1-640.webp",
+      "beforeSlug": "running-shoe-creator-showcase-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "running-shoe-creator-showcase",
+      "afterAliases": [
+        "running-shoe-creator-showcase-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/running-shoe-creator-showcase-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/running-shoe-creator-showcase"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[21]",
+      "kind": "video",
+      "label": "Trail Shoe Lace-Up Demo",
+      "imageSrc": "/ai-image-generation/tw2-wall-footwear-2-640.webp",
+      "beforeSlug": "trail-shoe-lace-up-demo-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "trail-shoe-lace-up-demo",
+      "afterAliases": [
+        "trail-shoe-lace-up-demo-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/trail-shoe-lace-up-demo-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/trail-shoe-lace-up-demo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[22]",
+      "kind": "video",
+      "label": "Berry Bowl First Bite Reel",
+      "imageSrc": "/ai-image-generation/tw2-wall-health-fitness-1-640.webp",
+      "beforeSlug": "berry-bowl-first-bite-reel-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "berry-bowl-first-bite-reel",
+      "afterAliases": [
+        "berry-bowl-first-bite-reel-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/berry-bowl-first-bite-reel-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/berry-bowl-first-bite-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[23]",
+      "kind": "video",
+      "label": "Resistance Band Home Demo",
+      "imageSrc": "/ai-image-generation/tw2-wall-health-fitness-2-640.webp",
+      "beforeSlug": "resistance-band-home-demo-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "resistance-band-home-demo",
+      "afterAliases": [
+        "resistance-band-home-demo-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/resistance-band-home-demo-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/resistance-band-home-demo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[24]",
+      "kind": "video",
+      "label": "Pendant Creator Try-On",
+      "imageSrc": "/ai-image-generation/tw2-wall-jewelry-accessories-1-640.webp",
+      "beforeSlug": "pendant-creator-try-on-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "pendant-creator-try-on",
+      "afterAliases": [
+        "pendant-creator-try-on-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/pendant-creator-try-on-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/pendant-creator-try-on"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[25]",
+      "kind": "video",
+      "label": "Silver Signet Macro Reveal",
+      "imageSrc": "/ai-image-generation/tw2-wall-jewelry-accessories-2-640.webp",
+      "beforeSlug": "silver-signet-macro-reveal-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "silver-signet-macro-reveal",
+      "afterAliases": [
+        "silver-signet-macro-reveal-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/silver-signet-macro-reveal-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/silver-signet-macro-reveal"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[26]",
+      "kind": "video",
+      "label": "Wooden Toy Parent Play",
+      "imageSrc": "/ai-image-generation/tw2-wall-kids-toy-1-640.webp",
+      "beforeSlug": "wooden-toy-parent-play-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "wooden-toy-parent-play",
+      "afterAliases": [
+        "wooden-toy-parent-play-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/wooden-toy-parent-play-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/wooden-toy-parent-play"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[27]",
+      "kind": "video",
+      "label": "Dog Harness Park Setup",
+      "imageSrc": "/ai-image-generation/tw2-wall-pet-1-640.webp",
+      "beforeSlug": "dog-harness-park-setup-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "dog-harness-park-setup",
+      "afterAliases": [
+        "dog-harness-park-setup-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/dog-harness-park-setup-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/dog-harness-park-setup"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[28]",
+      "kind": "video",
+      "label": "Pet Brush Living Room Demo",
+      "imageSrc": "/ai-image-generation/tw2-wall-pet-2-640.webp",
+      "beforeSlug": "pet-brush-living-room-demo-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "pet-brush-living-room-demo",
+      "afterAliases": [
+        "pet-brush-living-room-demo-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/pet-brush-living-room-demo-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/pet-brush-living-room-demo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[29]",
+      "kind": "video",
+      "label": "Post-Workout Bottle Check-In",
+      "imageSrc": "/ai-image-generation/tw2-wall-sports-gym-1-640.webp",
+      "beforeSlug": "post-workout-bottle-check-in-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "post-workout-bottle-check-in",
+      "afterAliases": [
+        "post-workout-bottle-check-in-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/post-workout-bottle-check-in-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/post-workout-bottle-check-in"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[30]",
+      "kind": "video",
+      "label": "Kettlebell Powder Reveal Reel",
+      "imageSrc": "/ai-image-generation/tw2-wall-sports-gym-2-r1-640.webp",
+      "beforeSlug": "kettlebell-powder-reveal-reel-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "kettlebell-powder-reveal-reel",
+      "afterAliases": [
+        "kettlebell-powder-reveal-reel-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/kettlebell-powder-reveal-reel-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/kettlebell-powder-reveal-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[31]",
+      "kind": "video",
+      "label": "Kitchen Appliance Evening Demo Reel",
+      "imageSrc": "/ai-image-generation/tw2-wall-tech-electronics-1-r1-640.webp",
+      "beforeSlug": "kitchen-appliance-evening-demo-reel-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "kitchen-appliance-evening-demo-reel",
+      "afterAliases": [
+        "kitchen-appliance-evening-demo-reel-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/kitchen-appliance-evening-demo-reel-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/kitchen-appliance-evening-demo-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[32]",
+      "kind": "video",
+      "label": "Low Profile Keyboard Review",
+      "imageSrc": "/ai-image-generation/tw2-wall-tech-electronics-2-640.webp",
+      "beforeSlug": "low-profile-keyboard-review-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "low-profile-keyboard-review",
+      "afterAliases": [
+        "low-profile-keyboard-review-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/low-profile-keyboard-review-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/low-profile-keyboard-review"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[33]",
+      "kind": "video",
+      "label": "Pump Moisturizer Routine Reel",
+      "imageSrc": "/ai-image-generation/tw2-wall-ugc-1-r1-640.webp",
+      "beforeSlug": "pump-moisturizer-routine-reel-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "pump-moisturizer-routine-reel",
+      "afterAliases": [
+        "pump-moisturizer-routine-reel-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/pump-moisturizer-routine-reel-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/pump-moisturizer-routine-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[34]",
+      "kind": "video",
+      "label": "Sage Overshirt Unboxing",
+      "imageSrc": "/ai-image-generation/tw2-wall-ugc-2-640.webp",
+      "beforeSlug": "sage-overshirt-unboxing-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "sage-overshirt-unboxing",
+      "afterAliases": [
+        "sage-overshirt-unboxing-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/sage-overshirt-unboxing-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/sage-overshirt-unboxing"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[35]",
+      "kind": "video",
+      "label": "Mint Face Mist Hook",
+      "imageSrc": "/ai-image-generation/tw2-wall-viral-1-640.webp",
+      "beforeSlug": "mint-face-mist-hook-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "mint-face-mist-hook",
+      "afterAliases": [
+        "mint-face-mist-hook-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/mint-face-mist-hook-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/mint-face-mist-hook"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[36]",
+      "kind": "video",
+      "label": "Stadium Hydration Fan Moment",
+      "imageSrc": "/ai-image-generation/tw2-wall-viral-2-640.webp",
+      "beforeSlug": "stadium-hydration-fan-moment-ai-video-generation-ugc-ad-video",
+      "beforeAliases": null,
+      "afterSlug": "stadium-hydration-fan-moment",
+      "afterAliases": [
+        "stadium-hydration-fan-moment-ai-video-generation-ugc-ad-video"
+      ],
+      "oldPath": "/ai-video-generation/stadium-hydration-fan-moment-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/stadium-hydration-fan-moment"
+    }
+  ]
+}

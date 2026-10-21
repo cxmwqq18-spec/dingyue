@@ -158,6 +158,8 @@ done
 test "$READY" = 1
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/smoke-aidreamcapes-release-routes.mjs > .candidate-routes.json
 cat .candidate-routes.json
+AIDREAMCAPES_AUDIT_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/aidreamcapes-workspace/smoke-media-slug-aliases.mjs > .candidate-seo-paths.json
+cat .candidate-seo-paths.json
 ${verifyLoad ? `AIDREAMCAPES_LOAD_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/smoke-aidreamcapes-concurrency.mjs --limit=24 --concurrency=4 --max-p95-ms=20000 > .candidate-load.json
 cat .candidate-load.json` : ""}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs > .candidate-card-links.json
@@ -206,6 +208,8 @@ DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcap
 cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-release-routes.mjs > .origin-routes.json
+AIDREAMCAPES_AUDIT_ORIGIN=http://127.0.0.1:3013 node scripts/aidreamcapes-workspace/smoke-media-slug-aliases.mjs > .origin-seo-paths.json
+cat .origin-seo-paths.json
 cat .origin-routes.json
 ${verifyLoad ? `AIDREAMCAPES_LOAD_ORIGIN=http://127.0.0.1:3013 node scripts/smoke-aidreamcapes-concurrency.mjs --limit=24 --concurrency=4 --max-p95-ms=20000 > .origin-load.json
 cat .origin-load.json` : ""}
