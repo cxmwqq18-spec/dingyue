@@ -412,3 +412,61 @@ end $$;
 6. 告警接入渠道（现有 IM/邮件/监控）与值班人。
 
 批准后按第 5 节顺序执行；P0 完成即回报基线量测，P1 合并前提供本地与候选实例压测报告。
+
+---
+
+## 10. 实施结果（2026-10-21）
+
+状态：P0 + P1 核心已上线。生产提交 `918ab3a19e421ac515015b94b6264535452fe6a7`，服务 `aidreamcapes.service`（`127.0.0.1:3013`）保持 active。
+
+### 10.1 实际生效配置
+
+| 项 | 结果 |
+|---|---|
+| Nginx | 先以 4 并发止血；P1 验证后提高到 `limit_conn perserver 8`，`limit_req 6r/s burst=12 nodelay`，超限 429 |
+| DB 连接 | `connection_limit=6&pool_timeout=10` |
+| 应用闸门 | `STOREFRONT_PUBLIC_TX_CONCURRENCY=3`，wait 8000ms，timeout 15000ms |
+| systemd | `MemoryLimit=6G`，`NODE_OPTIONS=--max-old-space-size=3584`（drop-in `memory.conf`） |
+| 迁移 | `20261021150000_add_site_content_revision` 于 14:58:36 应用；15 个触发器；`site_aidreamcapes` 修订行 revision=0 |
+| 缓存开关 | `STOREFRONT_SNAPSHOT_CACHE_SITES=site_aidreamcapes`，TTL 300000ms，MAX 8 |
+
+触发器统一调用带 `p_site_id <> 'site_aidreamcapes'` 早退守卫的函数；已核对 15 张表均具备 `siteId`（`Site` 使用 `id`），MyDreamShoots/Aidreamshoots 写入不产生修订记录。
+
+### 10.2 验收结果
+
+本地：
+
+- `tsc`、生产构建、5 项媒体/演员/卡片/工作区审计通过。
+- 177 个 URL 在并发 1/4/8/16 下全部 200；16 并发峰值约 3.33GB（4GB heap），无 OOM。
+- 新鲜度：更新本地 `LivePage.updatedAt` 后 revision 0→1，下一请求缓存 miss 并重新加载，再下一请求命中；未使用快照或历史 publication。
+
+生产：
+
+| 场景 | 结果 |
+|---|---|
+| 直连 3013，并发 4 | 177/177 200，123.7s，p50 2.72s，p95 3.78s，RSS 0.70→2.33→1.40GB |
+| 直连 3013，并发 8 | 177/177 200，108.3s，p50 5.10s，p95 6.97s，RSS 0.87→2.52→2.27GB |
+| 直连 3013，并发 16 | 177/177 200，117.6s，p50 10.43s，p95 15.27s，RSS 2.33→2.93→2.63GB |
+| Nginx 入口，并发 4（cap 4） | 177/177 200，115.0s，p50 2.53s，p95 3.70s，RSS 1.96→2.71→1.69GB |
+| Nginx 入口，并发 8（cap 8） | 177/177 200，112.2s，p50 5.27s，p95 6.72s，RSS 1.05→2.58→2.24GB |
+| Nginx 入口，并发 16（cap 8） | 8×200 + 169×429，5.96s；429 为并发上限预期行为 |
+
+- 部署后服务无 OOM、无 P2028；最终 RSS 约 1.8GB（限制 6G）。
+- 媒体详情页 200，`noindex, follow`，自引用 canonical，单一工作区 CTA；演员页扁平 canonical、可索引；sitemap 177 条、0 条嵌套演员 URL。
+- MyDreamShoots 服务未改动；首页只读回读 200，部署后无错误日志。
+
+上述直连/入口 p50 是 **177 个不同 URL 的冷遍历**；重复访问同一页面时详情页约 0.12s、演员页约 0.6s。
+
+### 10.3 回滚路径
+
+- 代码：`current` 指回 `360efb26c955451bafdf9ab8022b2c22ffff13dc-seo` 并重启服务。迁移为 additive，旧代码忽略 `SiteContentRevision`。
+- Nginx：`/root/aidreamcapes-nginx-cap8-20261021152312.conf`（cap 8 之前的配置）。
+- 环境变量：`/root/aidreamcapes-env-backup-20261021144206.env`、`.local`。
+- P0 配置备份：`/root/aidreamcapes-oom-fix-20261021135625`。
+- 回滚不使用历史 publication/snapshot；本次未写入任何公开内容。
+
+### 10.4 未完成 / P2
+
+- 并发压测目前为临时脚本，尚未并入发布门禁；健康端点、sitemap 修订号缓存、告警渠道未实施。
+- Nginx 当前上限 8 是运行期安全阀；16 并发仍会快速 429。后续应根据真实 429 率、RSS 和 p95 决定是否提高到 12。
+- 冷遍历在 8 并发下 p50 约 5s，主要受单机 CPU/SSR 成本限制；缓存命中路径已明显更快，但 SEO 大规模冷爬仍需评估容量或预热策略。
