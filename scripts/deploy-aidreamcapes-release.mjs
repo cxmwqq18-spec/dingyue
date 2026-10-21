@@ -52,7 +52,17 @@ const root = "/www/wwwroot/aidreamcapes.com";
 // The production bundle of this storefront is large. The build heap is
 // configurable so a release can be given the room it needs instead of
 // failing with a heap limit on the release host.
-const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "12288";
+//
+// The default is deliberately smaller than the host's RAM. A measured build of
+// this storefront peaks at about 5.5GB of resident memory, but the release host
+// shares 15.9GB with five live storefront services. When the heap limit is
+// larger than what the host can actually hand out, V8 responds to allocation
+// latency by growing the heap instead of collecting, the build page-faults
+// through swap and dies with "Reached heap limit" even though the live set
+// never needed that much. An 8GB cap keeps the working set inside the host's
+// free memory, so the same build finishes in a few minutes. Raise it only on a
+// host that can back the limit with real memory.
+const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "8192";
 if (reuseBuildCommit) {
   assert(/^[a-f0-9]{40}$/.test(reuseBuildCommit), "Reuse requires an exact --reuse-build=<40-character SHA>");
   const buildInputs = (sha) => git("ls-tree", "-r", sha, "--", ...sourcePaths)

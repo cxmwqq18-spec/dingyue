@@ -58,9 +58,13 @@
 ## 5 构建注意
 
 服务器端 `next build` 在 12GB 堆上限下 OOM（`Reached heap limit`），发布前失败且未切流量，线上仍是旧版本
-`4fb509bfb`。改用仓库支持的 `--prebuilt-build` 路径：在本地以生产环境变量（生产库经 SSH 隧道只读访问、
+`4fb509bfb`。本次改用仓库支持的 `--prebuilt-build` 路径：在本地以生产环境变量（生产库经 SSH 隧道只读访问、
 `NEXT_PUBLIC_CUSTOMER_ASSET_READ_BASE_URL` 与线上一致）执行 `scripts/build-production.mjs`，产物不含平台相关原生二进制，
-候选实例仍先跑完整 SSR 冒烟再切流。服务器端构建需要提高 `AIDREAMCAPES_BUILD_HEAP_MB` 后再恢复。
+候选实例仍先跑完整 SSR 冒烟再切流。
+
+随后已定位并修复根因：这份代码的构建实测峰值只有 5.4GB 内存，12GB 堆上限反而让 V8 在主机内存压力下把堆撑大直至撞限。
+服务器端把堆降到 8GB 后构建成功（3.4 分钟编译，全流程约 9 分钟），发布脚本默认堆上限已由 12288 改为 8192。
+详见 `docs/plans/aidreamcapes-release-build-memory-2026-10-22.md`。
 
 ## 6 店铺隔离证据
 
