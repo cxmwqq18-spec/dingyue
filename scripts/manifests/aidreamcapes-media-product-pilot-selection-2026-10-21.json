@@ -1,0 +1,225 @@
+{
+  "contract": "aidreamcapes-media-product-pilot-selection-2026-10-21-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "notes": [
+    "Product scope: one image/video asset = one product.",
+    "18 duplicate groups + canvas-tote-product-detail; 19 canonical writes total.",
+    "Existing six /industries/shoes placements are online edits and are not part of this selection.",
+    "reviewNote marks a mapping that needs human confirmation before apply."
+  ],
+  "items": [
+    {
+      "productKey": "mp_8bb4c6cbeb5d",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "bathroom-review-moisturizer-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Bathroom Review: Moisturizer",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-beauty-personal-care-2-640.webp",
+      "placement": [
+        "/industries/beauty-skincare"
+      ]
+    },
+    {
+      "productKey": "mp_f3d423e17453",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "routine-demo-cream-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Routine Demo: Cream",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-beauty-personal-care-1-640.webp",
+      "placement": [
+        "/industries/beauty-skincare"
+      ]
+    },
+    {
+      "productKey": "mp_7629bcd41906",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "kitchen-appliance-evening-demo-reel-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Kitchen Appliance Evening Demo Reel",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-tech-electronics-1-r1-640.webp",
+      "placement": [
+        "/industries/electronics"
+      ],
+      "reviewNote": "Kitchen appliance: chip says tech-electronics; review Electronics vs Home & Living."
+    },
+    {
+      "productKey": "mp_a44b89b5de05",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "low-profile-keyboard-review-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Low Profile Keyboard Review",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-tech-electronics-2-640.webp",
+      "placement": [
+        "/industries/electronics"
+      ]
+    },
+    {
+      "productKey": "mp_68846e3da50e",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "bedroom-try-on-knitwear",
+      "expectedLabel": "Bedroom Try-On: Knitwear",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-apparel-1-640.webp",
+      "placement": [
+        "/industries/fashion-clothing"
+      ]
+    },
+    {
+      "productKey": "mp_8c1ea7a50d06",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "get-ready-unboxing-knitwear-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Get-Ready Unboxing: Knitwear",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-clothing-1-640.webp",
+      "placement": [
+        "/industries/fashion-clothing"
+      ]
+    },
+    {
+      "productKey": "mp_fbad14284713",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "mirror-selfie-denim-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Mirror Selfie: Denim",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-clothing-2-640.webp",
+      "placement": [
+        "/industries/fashion-clothing"
+      ]
+    },
+    {
+      "productKey": "mp_0981f2af46fb",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "street-style-linen-set",
+      "expectedLabel": "Street Style: Linen Set",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-apparel-2-640.webp",
+      "placement": [
+        "/industries/fashion-clothing"
+      ]
+    },
+    {
+      "productKey": "mp_8998e5ee5f66",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "sensory-hook-citrus-sip-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Sensory Hook: Citrus Sip",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-food-beverage-1-640.webp",
+      "placement": [
+        "/industries/food-drinks"
+      ]
+    },
+    {
+      "productKey": "mp_bea98587d3e2",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "street-interview-snack-bite-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Street Interview: Snack Bite",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+      "placement": [
+        "/industries/food-drinks"
+      ]
+    },
+    {
+      "productKey": "mp_60e1c809f0a7",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "berry-bowl-first-bite-reel-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Berry Bowl First Bite Reel",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-health-fitness-1-640.webp",
+      "placement": [
+        "/industries/food-drinks"
+      ],
+      "reviewNote": "Chip says health-fitness, label is food; review Food & Beverage vs Health & Fitness."
+    },
+    {
+      "productKey": "mp_a178c7ef3960",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "resistance-band-home-demo-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Resistance Band Home Demo",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-health-fitness-2-640.webp",
+      "placement": [
+        "/industries/health-wellness"
+      ]
+    },
+    {
+      "productKey": "mp_cf653ec3b6f6",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "cinematic-watch-detail",
+      "expectedLabel": "Cinematic Watch Detail",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-accessories-2-640.webp",
+      "placement": [
+        "/industries/jewelry-accessories"
+      ]
+    },
+    {
+      "productKey": "mp_2f6cee4ac15c",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "pendant-creator-try-on-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Pendant Creator Try-On",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-jewelry-accessories-1-640.webp",
+      "placement": [
+        "/industries/jewelry-accessories"
+      ]
+    },
+    {
+      "productKey": "mp_bc528cb67d35",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "quiet-unboxing-makeup-tools",
+      "expectedLabel": "Quiet Unboxing: Makeup Tools",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+      "placement": [
+        "/industries/beauty-skincare"
+      ],
+      "reviewNote": "Chip says accessories, content is makeup tools; review Beauty & Personal Care vs Jewelry & Accessories."
+    },
+    {
+      "productKey": "mp_d1b314c2d57d",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "silver-signet-macro-reveal-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Silver Signet Macro Reveal",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-jewelry-accessories-2-640.webp",
+      "placement": [
+        "/industries/jewelry-accessories"
+      ]
+    },
+    {
+      "productKey": "mp_7a4285340423",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "running-shoe-creator-showcase-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Running Shoe Creator Showcase",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-footwear-1-640.webp",
+      "placement": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "productKey": "mp_e095c92804d0",
+      "canonicalOwnerPath": "/ai-video-generation/video-ads",
+      "canonicalPublicSlug": "trail-shoe-lace-up-demo-ai-video-generation-ugc-ad-video",
+      "expectedLabel": "Trail Shoe Lace-Up Demo",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/tw2-wall-footwear-2-640.webp",
+      "placement": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "productKey": "mp_fa87d11b78d4",
+      "canonicalOwnerPath": "/",
+      "canonicalPublicSlug": "canvas-tote-product-detail",
+      "expectedLabel": "Canvas Tote Product Detail",
+      "expectedMediaType": "image",
+      "expectedMediaSrc": "/ai-image-generation/gen2guide-white-background-canvas-tote-640.webp",
+      "placement": [
+        "/industries/jewelry-accessories"
+      ]
+    }
+  ]
+}

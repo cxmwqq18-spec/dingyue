@@ -1,0 +1,361 @@
+{
+  "version": 1,
+  "target": "local",
+  "siteId": "site_aidreamcapes",
+  "mode": "explicit-field-manifest",
+  "sourcePreconditions": [
+    {
+      "slug": "/platforms/tiktok-ads",
+      "contentHash": "7910565aa3ac770491cde4596705bf36a2e1fb51b89dac2cced39f3a56e6594c"
+    },
+    {
+      "slug": "/platforms/instagram-ads",
+      "contentHash": "3b44d573fd29995b278b5e08d146d58ee4f8f29dcc7de3673e9a11893e8016c4"
+    },
+    {
+      "slug": "/platforms/facebook-ads",
+      "contentHash": "7c0f0c33a97983cb808f26fcc42b851b10d5c6194e0ca9e2f3bb97771c0d17c2"
+    },
+    {
+      "slug": "/platforms/youtube-shorts-ads",
+      "contentHash": "9c75fbfb9580ad88112f511383bb0b9de12f1ffd427325af407a2fc9190e887e"
+    },
+    {
+      "slug": "/platforms/amazon-product-photos",
+      "contentHash": "d5ac85d2bea2e64528ce1e9d49e32a6596807952049c687270c9c4f7b0d59f1e"
+    },
+    {
+      "slug": "/platforms/shopify-product-photos",
+      "contentHash": "76117a6ec29fd7e6bb78be2e521cf5680d5714726379a08c409b9a9cb79a66a8"
+    }
+  ],
+  "operations": [
+    {
+      "op": "create",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "slug": "/platforms",
+      "expectedAbsent": true,
+      "value": {
+        "id": "site_aidreamcapes_platforms",
+        "siteId": "site_aidreamcapes",
+        "slug": "/platforms",
+        "title": "Find Ideas for Where You Sell",
+        "pageType": "content",
+        "templateKey": "aidreamcapes-v2",
+        "contentJson": {
+          "version": 2,
+          "pageType": "content",
+          "seo": {
+            "index": true,
+            "title": "AI Ad and Product Photo Platforms | AIVideosUGC",
+            "description": "Browse AI product video and photo ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
+            "canonical": "https://www.aivideosugc.com/platforms",
+            "canonicalPath": "/platforms",
+            "robots": {
+              "index": true,
+              "follow": true
+            },
+            "ogImage": "/ai-image-generation/t33-plat-tiktok-og-r2.webp",
+            "ogImageAlt": "Adult hands lift black over-ear headphones from a plain box on a bright desk.",
+            "jsonLd": {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "CollectionPage",
+                  "@id": "https://www.aivideosugc.com/platforms#webpage",
+                  "url": "https://www.aivideosugc.com/platforms",
+                  "name": "AI Ad and Product Photo Platforms | AIVideosUGC",
+                  "description": "Browse AI product video and photo ideas for TikTok, Instagram, Facebook, YouTube Shorts, Amazon and Shopify.",
+                  "inLanguage": "en"
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "name": "Home",
+                      "item": "https://www.aivideosugc.com/"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 2,
+                      "name": "Platforms",
+                      "item": "https://www.aivideosugc.com/platforms"
+                    }
+                  ]
+                },
+                {
+                  "@type": "ItemList",
+                  "itemListElement": [
+                    {
+                      "@type": "ListItem",
+                      "position": 1,
+                      "name": "TikTok",
+                      "url": "https://www.aivideosugc.com/platforms/tiktok-ads"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 2,
+                      "name": "Instagram",
+                      "url": "https://www.aivideosugc.com/platforms/instagram-ads"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 3,
+                      "name": "Facebook",
+                      "url": "https://www.aivideosugc.com/platforms/facebook-ads"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 4,
+                      "name": "YouTube Shorts",
+                      "url": "https://www.aivideosugc.com/platforms/youtube-shorts-ads"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 5,
+                      "name": "Amazon",
+                      "url": "https://www.aivideosugc.com/platforms/amazon-product-photos"
+                    },
+                    {
+                      "@type": "ListItem",
+                      "position": 6,
+                      "name": "Shopify",
+                      "url": "https://www.aivideosugc.com/platforms/shopify-product-photos"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "sectionsOrder": [
+            "v2_main"
+          ],
+          "sections": {
+            "v2_main": {
+              "type": "aidreamcapes_v2_page",
+              "blocks": [],
+              "settings": {
+                "layout": "platform-directory",
+                "data": {
+                  "id": "platforms",
+                  "label": "Platforms",
+                  "eyebrow": "Browse by platform",
+                  "h1": "Find Ideas for Where You Sell",
+                  "lead": "Choose a platform to explore product video and photo ideas for your next campaign or listing.",
+                  "breadcrumbs": [
+                    {
+                      "label": "Home",
+                      "href": "/"
+                    },
+                    {
+                      "label": "Platforms",
+                      "href": "/platforms"
+                    }
+                  ],
+                  "faq": [],
+                  "items": [
+                    {
+                      "href": "/platforms/tiktok-ads",
+                      "label": "TikTok",
+                      "text": "Explore vertical product ads for TikTok.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-tiktok-og-r2.webp",
+                        "alt": "Adult hands lift black over-ear headphones from a plain box on a bright desk.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    },
+                    {
+                      "href": "/platforms/instagram-ads",
+                      "label": "Instagram",
+                      "text": "Explore product photos and videos for Reels, Stories and feeds.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-instagram-og-r2.webp",
+                        "alt": "An adult applies white hand cream while holding the tube beside a bathroom mirror.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    },
+                    {
+                      "href": "/platforms/facebook-ads",
+                      "label": "Facebook",
+                      "text": "Find product ad ideas for Facebook feeds.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-facebook-og-r2.webp",
+                        "alt": "An adult hand pours water from a pale-blue insulated bottle into a glass on a sunny desk.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    },
+                    {
+                      "href": "/platforms/youtube-shorts-ads",
+                      "label": "YouTube Shorts",
+                      "text": "Browse short vertical video ideas for your products.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-youtube-shorts-og-r2.webp",
+                        "alt": "White handheld steamer smoothing a blue shirt.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    },
+                    {
+                      "href": "/platforms/amazon-product-photos",
+                      "label": "Amazon",
+                      "text": "Explore white-background and lifestyle photos for product listings.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-amazon-og-r2.webp",
+                        "alt": "Hand lifts a plain ceramic mug at a bright breakfast table.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    },
+                    {
+                      "href": "/platforms/shopify-product-photos",
+                      "label": "Shopify",
+                      "text": "Find product photo ideas for your store.",
+                      "image": {
+                        "src": "/ai-image-generation/t33-plat-shopify-og-r2.webp",
+                        "alt": "Four coordinated ceramic bowls arranged with fruit on a light dining table.",
+                        "width": 1280,
+                        "height": 672
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_image_theme_feed_ad_still",
+      "slug": "/ai-image-generation/social-ad-photos",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/0/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "charcoal-hiking-shoe-city-curb",
+        "imageSrc": "/ai-image-generation/fx18-social-picker-curb-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_image_theme_feed_ad_still",
+      "slug": "/ai-image-generation/social-ad-photos",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/14/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "leather-sandal-strap",
+        "imageSrc": "/ai-image-generation/fx18-social-picker-sandal-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "site_aidreamcapes_home",
+      "slug": "/",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/20/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "trail-shoe-step-ad",
+        "imageSrc": "/ai-image-generation/q1-home-picker-runner-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "site_aidreamcapes_home",
+      "slug": "/",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/21/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "running-shoe-color-lineup",
+        "imageSrc": "/ai-image-generation/im03-home-picker-shoes-r1-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "slug": "/ai-video-generation",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/20/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "performance-shoe-step-ad",
+        "imageSrc": "/ai-image-generation/q1-video-card-flashshoe-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "slug": "/ai-video-generation",
+      "path": "/sections/v2_main/settings/data/visual/picker/cards/21/placement",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedCard": {
+        "publicSlug": "trail-shoe-wet-path-reel",
+        "imageSrc": "/ai-image-generation/q1-video-ex-trailshoe-640.webp"
+      },
+      "value": [
+        "/industries/shoes"
+      ]
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_v2_ind_shoes",
+      "slug": "/industries/shoes",
+      "path": "/sections/v2_main/settings/data/templateHeading",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "value": "Reusable Templates for Footwear"
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_v2_ind_shoes",
+      "slug": "/industries/shoes",
+      "path": "/sections/v2_main/settings/data/mediaHeading",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "value": "Footwear Examples"
+    },
+    {
+      "op": "set",
+      "entity": "LivePage",
+      "siteId": "site_aidreamcapes",
+      "id": "aidreamcapes_v2_ind_shoes",
+      "slug": "/industries/shoes",
+      "path": "/sections/v2_main/settings/data/mediaLead",
+      "baseHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "value": "Explore shoes and sandals in real product scenes, then open an example to make your own."
+    }
+  ]
+}

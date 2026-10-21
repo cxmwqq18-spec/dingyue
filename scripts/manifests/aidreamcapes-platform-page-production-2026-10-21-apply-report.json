@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-platform-page-2026-10-21-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "7ed418bd7e2ba3287f48c550358f434ecb8d69df4e5e15ed6dc77db88d8acf1f",
+  "manifest": "scripts/manifests/aidreamcapes-platform-page-production-2026-10-21.json",
+  "slug": "/platforms",
+  "expectedAbsent": true,
+  "alreadyApplied": false,
+  "assets": 6,
+  "writes": 1,
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "production",
+    "planHash": "7ed418bd7e2ba3287f48c550358f434ecb8d69df4e5e15ed6dc77db88d8acf1f",
+    "owner": "LivePage.contentJson",
+    "created": {
+      "id": "site_aidreamcapes_platforms",
+      "slug": "/platforms",
+      "title": "Find Ideas for Where You Sell",
+      "contentHash": "08aaa4ef534e6269d480ca4db0234423512017831c3dd47eef6ce730dcfb71ef",
+      "updatedAt": "2026-10-21T15:19:49.873Z"
+    },
+    "fieldsApplied": 1,
+    "revisionBefore": "0",
+    "revisionAfter": "1",
+    "revisionDelta": "1",
+    "protectedMyDreamShootsHashBefore": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "protectedMyDreamShootsHashAfter": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

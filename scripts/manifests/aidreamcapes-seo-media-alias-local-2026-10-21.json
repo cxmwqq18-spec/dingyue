@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "target": "local",
+  "siteId": "site_aidreamcapes",
+  "mode": "explicit-media-alias-manifest",
+  "operations": [
+    {
+      "siteId": "site_aidreamcapes",
+      "ownerId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "/sections/v2_main/settings/data/visual/picker/cards/1",
+      "beforeSlug": "cinematic-watch-detail-ai-video-generation-ugc-ad-video",
+      "afterSlug": "cinematic-watch-detail",
+      "beforeAliases": null,
+      "afterAliases": [
+        "cinematic-watch-detail-ai-video-generation-ugc-ad-video"
+      ],
+      "imageSrc": "/ai-image-generation/tw1-wall-accessories-2-640.webp",
+      "label": "Cinematic Watch Detail",
+      "kind": "video",
+      "oldPath": "/ai-video-generation/cinematic-watch-detail-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/cinematic-watch-detail"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "ownerId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "/sections/v2_main/settings/data/visual/picker/cards/2",
+      "beforeSlug": "bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video",
+      "afterSlug": "bedroom-try-on-knitwear",
+      "beforeAliases": null,
+      "afterAliases": [
+        "bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video"
+      ],
+      "imageSrc": "/ai-image-generation/tw1-wall-apparel-1-640.webp",
+      "label": "Bedroom Try-On: Knitwear",
+      "kind": "video",
+      "oldPath": "/ai-video-generation/bedroom-try-on-knitwear-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/bedroom-try-on-knitwear"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "ownerId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "/sections/v2_main/settings/data/visual/picker/cards/3",
+      "beforeSlug": "street-style-linen-set-ai-video-generation-ugc-ad-video",
+      "afterSlug": "street-style-linen-set",
+      "beforeAliases": null,
+      "afterAliases": [
+        "street-style-linen-set-ai-video-generation-ugc-ad-video"
+      ],
+      "imageSrc": "/ai-image-generation/tw1-wall-apparel-2-640.webp",
+      "label": "Street Style: Linen Set",
+      "kind": "video",
+      "oldPath": "/ai-video-generation/street-style-linen-set-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/street-style-linen-set"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "ownerId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "/sections/v2_main/settings/data/visual/picker/cards/4",
+      "beforeSlug": "lifestyle-app-recommendation-ai-video-generation-ugc-ad-video",
+      "afterSlug": "lifestyle-app-recommendation",
+      "beforeAliases": null,
+      "afterAliases": [
+        "lifestyle-app-recommendation-ai-video-generation-ugc-ad-video"
+      ],
+      "imageSrc": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+      "label": "Lifestyle App Recommendation",
+      "kind": "video",
+      "oldPath": "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/lifestyle-app-recommendation"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "ownerId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "/sections/v2_main/settings/data/visual/picker/cards/5",
+      "beforeSlug": "streamer-reaction-app-ai-video-generation-ugc-ad-video",
+      "afterSlug": "streamer-reaction-app",
+      "beforeAliases": null,
+      "afterAliases": [
+        "streamer-reaction-app-ai-video-generation-ugc-ad-video"
+      ],
+      "imageSrc": "/ai-image-generation/tw1-wall-apps-2-640.webp",
+      "label": "Streamer Reaction: App",
+      "kind": "video",
+      "oldPath": "/ai-video-generation/streamer-reaction-app-ai-video-generation-ugc-ad-video",
+      "newPath": "/ai-video-generation/streamer-reaction-app"
+    }
+  ]
+}
