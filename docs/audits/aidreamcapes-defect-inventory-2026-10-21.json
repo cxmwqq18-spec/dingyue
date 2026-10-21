@@ -1,0 +1,1641 @@
+{
+  "generatedAt": "2026-10-21T09:11:22.298Z",
+  "pages": 268,
+  "summary": {
+    "byKind": {
+      "seo.canonical.mismatch": 228,
+      "seo.index.false": 1,
+      "seo.title.length": 13,
+      "seo.description.length": 12
+    },
+    "brokenLinks": 45,
+    "missingMedia": 11,
+    "missingAlt": 10,
+    "orphans": 64,
+    "dupTitle": 3,
+    "dupDesc": 3,
+    "dupBody": 2
+  },
+  "defects": [
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/indoor",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/indoor"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/home",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/home"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/outdoor",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/outdoor"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/living-room",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/living-room"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/studio",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/studio"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/office",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/office"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/garden",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/garden"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/gym",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/gym"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/cafe",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/cafe"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/kitchen",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/kitchen"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/podcast",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/podcast"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/fitness",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/fitness"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/beach",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/beach"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/car",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/car"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/ari",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/ari"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/hospital",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/hospital"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/balcony",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/balcony"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/pet",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/pet"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/mila",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/mila"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/dev",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/dev"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/shopping",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/shopping"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/sports",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/sports"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/study-room",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/study-room"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/classroom",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/classroom"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/terrace",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/terrace"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/bathroom",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/bathroom"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/exercise",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/exercise"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/elena",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/elena"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/priyanka",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/priyanka"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/jon",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/jon"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/celine",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/celine"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/gordon",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/gordon"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/adrian",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/adrian"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/bedroom",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/bedroom"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/garage",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/garage"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/interview",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/interview"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/pool",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/pool"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/reporting",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/reporting"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/sana",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/sana"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/iris",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/iris"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/rhea",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/rhea"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/travel",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/travel"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/scene/yoga",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/scene/yoga"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range/20s",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range/20s"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range/30s",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range/30s"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range/40s",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range/40s"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range/50s",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range/50s"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/age-range/60s-plus",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/age-range/60s-plus"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/ravi",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/ravi"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/evan",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/evan"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/omar",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/omar"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/anika",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/anika"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/lena",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/lena"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/before-after-videos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/before-after-videos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/casey",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/casey"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/nisha",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/nisha"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/claire",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/claire"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/amara",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/amara"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/sofia",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/sofia"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/lana",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/lana"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/damon",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/damon"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/mireya",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/mireya"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/maxwell",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/maxwell"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/ugc-still-ad"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/social-ad-photos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/social-ad-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/carousel-storytelling",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/carousel-storytelling"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/sora",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/sora"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/tess",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/tess"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/yara",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/yara"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/asha",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/asha"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/mara",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/mara"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/feature-callout",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/feature-callout"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/glossary",
+      "detail": "canonical=https://www.aivideosugc.com/glossary"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides/ad-sizes-by-platform",
+      "detail": "canonical=https://www.aivideosugc.com/guides/ad-sizes-by-platform"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides/first-tiktok-video-ad",
+      "detail": "canonical=https://www.aivideosugc.com/guides/first-tiktok-video-ad"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides/product-photo-tips",
+      "detail": "canonical=https://www.aivideosugc.com/guides/product-photo-tips"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/leonie",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/leonie"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/bria",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/bria"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/caleb",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/caleb"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/noah",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/noah"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/elise",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/elise"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/ken",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/ken"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/rina",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/rina"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/nia",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/nia"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/lola",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/lola"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/discount-free-shipping",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/discount-free-shipping"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/mateo",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/mateo"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/jade",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/jade"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/beauty-routine",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/beauty-routine"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/black-friday-countdown"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/fashion-try-on-reel"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/hair-makeup-preview",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/hair-makeup-preview"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/lifestyle-photos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/lifestyle-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/tessa",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/tessa"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/lookbook-cover",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/lookbook-cover"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/packshot-multi-angle"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/lila",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/lila"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/vera",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/vera"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/akio",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/akio"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/nora",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/nora"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/",
+      "detail": "canonical=https://www.aivideosugc.com/"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/white-background-photos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/white-background-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/proposal",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/proposal"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/luis",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/luis"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/gianna",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/gianna"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/text-to-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/text-to-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/tara",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/tara"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/dalia",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/dalia"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/men/avery",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/men/avery"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-actors/women/anjali",
+      "detail": "canonical=https://www.aivideosugc.com/ai-actors/women/anjali"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/ai-twin",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/ai-twin"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/comparison-chart",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/comparison-chart"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/feature-infographic",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/feature-infographic"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/model-photos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/model-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/virtual-try-on",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/virtual-try-on"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/carousel-set",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/carousel-set"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/mothers-day",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/mothers-day"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/save-the-date",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/save-the-date"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/thanksgiving",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/thanksgiving"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/wedding-anniversary",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/wedding-anniversary"
+    },
+    {
+      "kind": "seo.index.false",
+      "slug": "/ai-save-the-date/wedding-anniversary",
+      "detail": "index=false"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/professional-headshot",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/professional-headshot"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/story-ad-vertical"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/wedding-ceremony",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/wedding-ceremony"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/duet-reaction",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/duet-reaction"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/privacy-policy",
+      "detail": "canonical=/privacy"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/green-screen-speaking",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/green-screen-speaking"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/digital-delivery",
+      "detail": "canonical=https://www.aivideosugc.com/digital-delivery"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/change-background",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/change-background"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/enhance-upscale",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/enhance-upscale"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/old-photo-restore",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/old-photo-restore"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/app-saas-demo",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/app-saas-demo"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/fathers-day",
+      "detail": "12 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/fathers-day",
+      "detail": "60 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/founder-update",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/founder-update"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/colorway-variations",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/colorway-variations"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/packaging-mockup",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/packaging-mockup"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/home-organization",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/home-organization"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/local-service-ad",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/local-service-ad"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/mothers-day",
+      "detail": "12 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/mothers-day",
+      "detail": "54 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/multilingual-video",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/multilingual-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/native-spark-ads",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/native-spark-ads"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/proposal",
+      "detail": "8 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/proposal",
+      "detail": "53 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/retargeting-urgency",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/retargeting-urgency"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/social-proof-animation",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/social-proof-animation"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/food-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/food-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/how-to-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/how-to-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/promo-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/promo-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/product-videos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/product-videos"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/save-the-date",
+      "detail": "13 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/save-the-date",
+      "detail": "52 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/spokesperson-videos",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/spokesperson-videos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/talking-photo-recs",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/talking-photo-recs"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/url-to-ad",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/url-to-ad"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/url-to-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/url-to-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/fathers-day",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/fathers-day"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/halloween",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/halloween"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/new-year",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/new-year"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/privacy",
+      "detail": "canonical=/privacy"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/valentines-day",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/valentines-day"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/engagement",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/engagement"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/hook-lab",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/hook-lab"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/limited-drop-alert",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/limited-drop-alert"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/pas-formula-ads",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/pas-formula-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/supplement-highlight",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/supplement-highlight"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/testimonial-ads",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/testimonial-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/tiktok-reels-shorts",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/tiktok-reels-shorts"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/new-year",
+      "detail": "8 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/new-year",
+      "detail": "44 字符"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/thanksgiving",
+      "detail": "12 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/thanksgiving",
+      "detail": "56 字符"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/valentines-day",
+      "detail": "15 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/valentines-day",
+      "detail": "52 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/wedding-invitation",
+      "detail": "canonical=/ai-save-the-date/wedding-invitation"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/wedding-invitation",
+      "detail": "18 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/wedding-invitation",
+      "detail": "55 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/terms",
+      "detail": "canonical=/terms"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/christmas",
+      "detail": "9 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/christmas",
+      "detail": "58 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/music-video",
+      "detail": "canonical=https://aidreamcapes.com/ai-video-generation/music-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-info",
+      "detail": "canonical=https://www.aivideosugc.com/ai-info"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/cookie-policy",
+      "detail": "canonical=https://aidreamcapes.com/cookies"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog/ai-product-photography-guide",
+      "detail": "canonical=https://www.aivideosugc.com/blog/ai-product-photography-guide"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog/ai-ugc-video-ads-guide",
+      "detail": "canonical=https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog/ai-video-review-checklist",
+      "detail": "canonical=https://www.aivideosugc.com/blog/ai-video-review-checklist"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog/model-photos-without-a-photoshoot",
+      "detail": "canonical=https://www.aivideosugc.com/blog/model-photos-without-a-photoshoot"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/cinematic-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/cinematic-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/contact-us",
+      "detail": "canonical=https://www.aivideosugc.com/contact-us"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/cookies",
+      "detail": "canonical=https://www.aivideosugc.com/cookies"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries",
+      "detail": "canonical=https://www.aivideosugc.com/industries"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/home-living",
+      "detail": "canonical=https://www.aivideosugc.com/industries/home-living"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/halloween",
+      "detail": "9 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/halloween",
+      "detail": "60 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog/unboxing-videos-for-launches",
+      "detail": "canonical=https://www.aivideosugc.com/blog/unboxing-videos-for-launches"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/jewelry-accessories",
+      "detail": "canonical=https://www.aivideosugc.com/industries/jewelry-accessories"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/inspiration",
+      "detail": "canonical=https://www.aivideosugc.com/inspiration"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/marketing",
+      "detail": "canonical=https://aidreamcapes.com/marketing"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/facebook-ads",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/facebook-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/occasions/black-friday",
+      "detail": "canonical=https://www.aivideosugc.com/occasions/black-friday"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/occasions/holidays",
+      "detail": "canonical=https://www.aivideosugc.com/occasions/holidays"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/occasions/sale-discount",
+      "detail": "canonical=https://www.aivideosugc.com/occasions/sale-discount"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/beauty-skincare",
+      "detail": "canonical=https://www.aivideosugc.com/industries/beauty-skincare"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/image-to-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/image-to-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides",
+      "detail": "canonical=https://www.aivideosugc.com/guides"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides/testing-ad-versions",
+      "detail": "canonical=https://www.aivideosugc.com/guides/testing-ad-versions"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/guides/white-background-amazon",
+      "detail": "canonical=https://www.aivideosugc.com/guides/white-background-amazon"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/easter",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/easter"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/electronics",
+      "detail": "canonical=https://www.aivideosugc.com/industries/electronics"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/fashion-clothing",
+      "detail": "canonical=https://www.aivideosugc.com/industries/fashion-clothing"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/food-drinks",
+      "detail": "canonical=https://www.aivideosugc.com/industries/food-drinks"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/instagram-ads",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/instagram-ads"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/engagement",
+      "detail": "16 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/engagement",
+      "detail": "59 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/video-ads",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/video-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/health-wellness",
+      "detail": "canonical=https://www.aivideosugc.com/industries/health-wellness"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/industries/shoes",
+      "detail": "canonical=https://www.aivideosugc.com/industries/shoes"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/amazon-product-photos",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/amazon-product-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "detail": "canonical=https://www.aivideosugc.com/ai-video-generation/spark-ads-style-video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/shopify-product-photos",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/shopify-product-photos"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/about-us",
+      "detail": "canonical=https://www.aivideosugc.com/about-us"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/tiktok-ads",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/tiktok-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-save-the-date/christmas",
+      "detail": "canonical=https://aidreamcapes.com/ai-save-the-date/christmas"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/ai-video-generation/wedding-ceremony",
+      "detail": "16 字符"
+    },
+    {
+      "kind": "seo.description.length",
+      "slug": "/ai-video-generation/wedding-ceremony",
+      "detail": "51 字符"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/creator-portrait",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/creator-portrait"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/ghost-mannequin",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/ghost-mannequin"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/platforms/youtube-shorts-ads",
+      "detail": "canonical=https://www.aivideosugc.com/platforms/youtube-shorts-ads"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/social-profile-photo",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/social-profile-photo"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/team-directory",
+      "detail": "canonical=https://aidreamcapes.com/ai-image-generation/team-directory"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "detail": "canonical=https://www.aivideosugc.com/ai-image-generation/jewelry-positioning"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/refunds",
+      "detail": "canonical=/refunds"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/content",
+      "detail": "canonical=/content"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/children-privacy",
+      "detail": "canonical=/children-privacy"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/terms-of-service",
+      "detail": "canonical=/terms"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/blog",
+      "detail": "canonical=https://www.aivideosugc.com/blog"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/templates",
+      "detail": "canonical=https://www.aivideosugc.com/templates"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/faq",
+      "detail": "canonical=https://www.aivideosugc.com/faq"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/trust-and-safety",
+      "detail": "canonical=https://www.aivideosugc.com/trust-and-safety"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/cookies",
+      "detail": "canonical=https://aidreamcapes.com/cookies"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/templates/photo",
+      "detail": "canonical=https://www.aivideosugc.com/templates/photo"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/templates/video",
+      "detail": "canonical=https://www.aivideosugc.com/templates/video"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/pricing",
+      "detail": "canonical=https://www.aivideosugc.com/pricing"
+    },
+    {
+      "kind": "seo.canonical.mismatch",
+      "slug": "/policies/shipping",
+      "detail": "canonical=https://aidreamcapes.com/digital-delivery"
+    },
+    {
+      "kind": "seo.title.length",
+      "slug": "/policies/state-privacy",
+      "detail": "18 字符"
+    }
+  ],
+  "brokenLinks": [
+    {
+      "from": "/glossary",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/glossary",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/guides/product-photo-tips",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-image-generation/lookbook-cover",
+      "to": "/ai-image-generation/fashion-editorial"
+    },
+    {
+      "from": "/",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-video-generation/text-to-video",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-video-generation/text-to-video",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-video-generation/ai-twin",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-video-generation/ai-twin",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-video-generation/ai-twin",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/ai-image-generation/comparison-chart",
+      "to": "/ai-image-generation/commercial-lighting"
+    },
+    {
+      "from": "/ai-image-generation/feature-infographic",
+      "to": "/ai-image-generation/macro-details"
+    },
+    {
+      "from": "/ai-save-the-date/mothers-day",
+      "to": "/holidays-events/wedding-invitation"
+    },
+    {
+      "from": "/collections",
+      "to": "/ai-image-generation/motion-generator"
+    },
+    {
+      "from": "/ai-save-the-date/fathers-day",
+      "to": "/holidays-events/wedding-invitation"
+    },
+    {
+      "from": "/blog/ai-video-review-checklist",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/industries/home-living",
+      "to": "/platforms"
+    },
+    {
+      "from": "/blog/unboxing-videos-for-launches",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/industries/jewelry-accessories",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/facebook-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/facebook-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/occasions/black-friday",
+      "to": "/platforms"
+    },
+    {
+      "from": "/occasions/holidays",
+      "to": "/platforms"
+    },
+    {
+      "from": "/occasions/sale-discount",
+      "to": "/platforms"
+    },
+    {
+      "from": "/industries/beauty-skincare",
+      "to": "/platforms"
+    },
+    {
+      "from": "/guides/testing-ad-versions",
+      "to": "/ai-video-generation/ai-actors"
+    },
+    {
+      "from": "/industries/electronics",
+      "to": "/platforms"
+    },
+    {
+      "from": "/industries/fashion-clothing",
+      "to": "/platforms"
+    },
+    {
+      "from": "/industries/food-drinks",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/instagram-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/instagram-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/industries/health-wellness",
+      "to": "/platforms"
+    },
+    {
+      "from": "/industries/shoes",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/amazon-product-photos",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/amazon-product-photos",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/shopify-product-photos",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/shopify-product-photos",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/tiktok-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/tiktok-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/youtube-shorts-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/platforms/youtube-shorts-ads",
+      "to": "/platforms"
+    },
+    {
+      "from": "/templates",
+      "to": "/platforms"
+    },
+    {
+      "from": "/templates/photo",
+      "to": "/platforms"
+    },
+    {
+      "from": "/templates/video",
+      "to": "/platforms"
+    }
+  ],
+  "missingMedia": [
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/hero-ai-mothers-day-family-breakfast.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/hero-ai-mothers-day-garden-portrait.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/hero-ai-mothers-day-gift-breakfast.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-brunch-table.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-family-baking.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-gift-still-life.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-phone-photo.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-family-toast.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-cozy-living-room.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-pet-portrait.jpg",
+      1
+    ],
+    [
+      "/assets/sites/site_aidreamcapes/mirror/aidreamcapes/dreamshoot/seasonal/easter/ai-mothers-day-spring-walk.jpg",
+      1
+    ]
+  ],
+  "orphans": [
+    "/ai-video-generation/carousel-storytelling",
+    "/help",
+    "/ai-video-generation/discount-free-shipping",
+    "/ai-image-generation/lookbook-cover",
+    "/ai-save-the-date/proposal",
+    "/ai-image-generation/carousel-set",
+    "/ai-save-the-date/mothers-day",
+    "/ai-save-the-date/save-the-date",
+    "/ai-save-the-date/wedding-anniversary",
+    "/ai-save-the-date/wedding-ceremony",
+    "/ai-video-generation/duet-reaction",
+    "/privacy-policy",
+    "/ai-video-generation/green-screen-speaking",
+    "/digital-delivery",
+    "/ai-video-generation/app-saas-demo",
+    "/ai-video-generation/fathers-day",
+    "/ai-video-generation/local-service-ad",
+    "/ai-video-generation/mothers-day",
+    "/ai-video-generation/native-spark-ads",
+    "/ai-video-generation/proposal",
+    "/ai-video-generation/retargeting-urgency",
+    "/ai-video-generation/social-proof-animation",
+    "/collections",
+    "/ai-video-generation/save-the-date",
+    "/ai-save-the-date/fathers-day",
+    "/ai-save-the-date/halloween",
+    "/ai-save-the-date/valentines-day",
+    "/ai-save-the-date/engagement",
+    "/ai-video-generation/limited-drop-alert",
+    "/ai-video-generation/pas-formula-ads",
+    "/ai-video-generation/supplement-highlight",
+    "/ai-video-generation/testimonial-ads",
+    "/ai-video-generation/tiktok-reels-shorts",
+    "/ai-video-generation/new-year",
+    "/children-privacy",
+    "/ai-video-generation/thanksgiving",
+    "/ai-video-generation/valentines-day",
+    "/ai-video-generation/wedding-invitation",
+    "/best-ai-image",
+    "/best-ai-video",
+    "/ai-video-generation/christmas",
+    "/ai-video-generation/music-video",
+    "/best-save-the-date",
+    "/cookie-policy",
+    "/blog/ai-talking-photo-video-guide",
+    "/blog/motion-generator-video-guide",
+    "/creators-circle",
+    "/ai-video-generation/halloween",
+    "/marketing",
+    "/ai-save-the-date/easter",
+    "/ai-video-generation/engagement",
+    "/ai-video-generation/wedding-ceremony",
+    "/ai-image-generation/ghost-mannequin",
+    "/ai-image-generation/team-directory",
+    "/policies/refunds",
+    "/policies/content",
+    "/album",
+    "/policies/children-privacy",
+    "/terms-of-service",
+    "/state-privacy",
+    "/policies/shipping",
+    "/search",
+    "/policies/state-privacy",
+    "/tools"
+  ],
+  "dupTitle": [
+    {
+      "title": "Aidreamcapes Privacy Policy | Data and AI Uploads",
+      "slugs": [
+        "/privacy-policy",
+        "/policies/privacy"
+      ]
+    },
+    {
+      "title": "Aidreamcapes Terms of Service | Use of AI Tools",
+      "slugs": [
+        "/policies/terms",
+        "/terms-of-service"
+      ]
+    },
+    {
+      "title": "Cookie Policy | Aidreamcapes",
+      "slugs": [
+        "/cookie-policy",
+        "/policies/cookies"
+      ]
+    }
+  ],
+  "dupDesc": [
+    {
+      "desc": "Read how Aidreamcapes handles account details, uploaded images, generated results, payments, cookies, and privacy requests when you use the service.",
+      "slugs": [
+        "/privacy-policy",
+        "/policies/privacy"
+      ]
+    },
+    {
+      "desc": "Read the Aidreamcapes terms for accounts, uploads, generated content, credits, payments, acceptable use, intellectual property, and service limitations.",
+      "slugs": [
+        "/policies/terms",
+        "/terms-of-service"
+      ]
+    },
+    {
+      "desc": "How Aidreamcapes uses essential browser storage for sign-in, checkout continuity, security, preferences, and private AI photo and video galleries.",
+      "slugs": [
+        "/cookie-policy",
+        "/policies/cookies"
+      ]
+    }
+  ],
+  "dupBody": [
+    [
+      "/privacy-policy",
+      "/policies/privacy"
+    ],
+    [
+      "/cookie-policy",
+      "/policies/cookies"
+    ]
+  ]
+}
