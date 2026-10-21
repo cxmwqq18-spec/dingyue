@@ -13,6 +13,7 @@ const commit = value("--commit");
 const codeOnly = true;
 const verifyInspirations = args.includes("--verify-inspirations");
 const verifyMediaDetails = args.includes("--verify-media-details");
+const verifyLoad = args.includes("--verify-load");
 // The exhaustive sitemap SEO contract is a separate task. Pass this flag (or
 // AIDREAMCAPES_RELEASE_FULL_SEO=1) only for releases that change public SEO,
 // metadata or large amounts of published content.
@@ -147,6 +148,8 @@ done
 test "$READY" = 1
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/smoke-aidreamcapes-release-routes.mjs > .candidate-routes.json
 cat .candidate-routes.json
+${verifyLoad ? `AIDREAMCAPES_LOAD_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" node scripts/smoke-aidreamcapes-concurrency.mjs --limit=24 --concurrency=4 --max-p95-ms=20000 > .candidate-load.json
+cat .candidate-load.json` : ""}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN="https://www.aivideosugc.com" node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs > .candidate-card-links.json
 cat .candidate-card-links.json
 ${fullSeoContract ? 'AIDREAMCAPES_SEO_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_SEO_MEDIA_ORIGIN="https://www.aivideosugc.com" AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 node scripts/smoke-aidreamcapes-seo-contract.mjs > .candidate-contract.json\ncat .candidate-contract.json' : ""}
@@ -194,6 +197,8 @@ cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-release-routes.mjs > .origin-routes.json
 cat .origin-routes.json
+${verifyLoad ? `AIDREAMCAPES_LOAD_ORIGIN=http://127.0.0.1:3013 node scripts/smoke-aidreamcapes-concurrency.mjs --limit=24 --concurrency=4 --max-p95-ms=20000 > .origin-load.json
+cat .origin-load.json` : ""}
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs > .origin-card-links.json
 cat .origin-card-links.json
 ${fullSeoContract ? `AIDREAMCAPES_SEO_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_SEO_MEDIA_ORIGIN=https://www.aivideosugc.com ${codeOnly ? "AIDREAMCAPES_SEO_PRE_NAV_MIGRATION=1 " : ""}node scripts/smoke-aidreamcapes-seo-contract.mjs > .origin-contract.json
