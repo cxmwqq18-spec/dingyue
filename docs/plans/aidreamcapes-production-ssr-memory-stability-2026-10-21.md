@@ -417,7 +417,7 @@ end $$;
 
 ## 10. 实施结果（2026-10-21）
 
-状态：P0 + P1 核心已上线。生产提交 `918ab3a19e421ac515015b94b6264535452fe6a7`，服务 `aidreamcapes.service`（`127.0.0.1:3013`）保持 active。
+状态：P0 + P1 + P2 门禁/可观测性已上线。生产提交 `4fb509bfb5ee7cc3512065901abc70e63291fa57`（P1 为 `918ab3a19e421ac515015b94b6264535452fe6a7`），服务 `aidreamcapes.service`（`127.0.0.1:3013`）保持 active。
 
 ### 10.1 实际生效配置
 
@@ -459,14 +459,27 @@ end $$;
 
 ### 10.3 回滚路径
 
-- 代码：`current` 指回 `360efb26c955451bafdf9ab8022b2c22ffff13dc-seo` 并重启服务。迁移为 additive，旧代码忽略 `SiteContentRevision`。
+- 代码：`current` 当前指向 `4fb509bfb5ee7cc3512065901abc70e63291fa57-seo`；回滚到 P1 版本 `918ab3a19e421ac515015b94b6264535452fe6a7-seo`，再前一版为 `360efb26c955451bafdf9ab8022b2c22ffff13dc-seo`。迁移为 additive，旧代码忽略 `SiteContentRevision`。
 - Nginx：`/root/aidreamcapes-nginx-cap8-20261021152312.conf`（cap 8 之前的配置）。
-- 环境变量：`/root/aidreamcapes-env-backup-20261021144206.env`、`.local`。
+- 环境变量：`/root/aidreamcapes-env-backup-20261021144206.env`、`.local`（P1 缓存开关前）；`/root/aidreamcapes-health-env-backup-20261021180955.env`、`.local`（健康 token 前）。
+- 健康探针 token：`/root/.aidreamcapes-health-token.env`（权限 600）。
 - P0 配置备份：`/root/aidreamcapes-oom-fix-20261021135625`。
 - 回滚不使用历史 publication/snapshot；本次未写入任何公开内容。
 
-### 10.4 未完成 / P2
+### 10.4 剩余优化项
 
-- 并发压测目前为临时脚本，尚未并入发布门禁；健康端点、sitemap 修订号缓存、告警渠道未实施。
-- Nginx 当前上限 8 是运行期安全阀；16 并发仍会快速 429。后续应根据真实 429 率、RSS 和 p95 决定是否提高到 12。
-- 冷遍历在 8 并发下 p50 约 5s，主要受单机 CPU/SSR 成本限制；缓存命中路径已明显更快，但 SEO 大规模冷爬仍需评估容量或预热策略。
+- sitemap 修订号缓存未实施；当前命中缓存后仍约 1.0–1.1s，CDN `s-maxage=900` 已覆盖爬虫重取。
+- 外部告警渠道/值班人未确定；当前 `aidreamcapes-health.timer` 只写 journal，需接入现有 IM/邮件/监控。
+- 冷遍历在 8 并发下 p50 约 5s，主要受单机 CPU/SSR 成本限制；未做预热或扩容，SEO 大规模冷爬仍需评估容量策略。
+- Nginx 上限保持 8；16 并发仍会快速 429。是否提高到 12 应以真实 429 率、RSS 和 p95 为依据。
+
+### 10.5 P2 门禁与可观测性（2026-10-21 18:21–18:28）
+
+状态：已上线。生产提交 `4fb509bfb5ee7cc3512065901abc70e63291fa57`，代码-only 部署，公开内容未写入。
+
+- **健康端点**：`GET /api/aidreamcapes/health`。仅当 `AIDREAMCAPES_HEALTH_TOKEN` 已配置且请求头 token 匹配时返回；否则 404。返回 `ok/database/revision/commit/uptimeSec/rssMb/probeMs`，不读取或返回页面内容。生产回读：`ok:true`、`database:"ok"`、`revision:"0"`、`commit:"4fb509b..."`，probe 约 3–4ms。
+- **并发门禁**：新增 `scripts/smoke-aidreamcapes-concurrency.mjs`（`npm run smoke:aidreamcapes-concurrency`）。默认直连 loopback，支持 `--edge`、`--limit`、`--concurrency`、`--pid`、`--max-p95-ms`、`--allow-429`；输出 JSON 和 RSS 采样，失败非零退出。
+- **发布挂钩**：`scripts/deploy-aidreamcapes-release.mjs` 新增 opt-in `--verify-load`。本次候选 24 URL@4：24/24 200，p95 3.36s；切流后 24 URL@4：24/24 200，p95 2.88s；均低于 20s 阈值。
+- **生产复核**：直连 48 URL@4：48/48 200，p50 2.45s，p95 3.03s，RSS 703→2031→1964MB；Nginx 入口 24 URL@8：24/24 200，p50 4.62s，p95 7.65s，RSS 841→986→875MB；无 OOM/P2028。
+- **定时探针**：`aidreamcapes-health.timer` 每 2 分钟运行 `aidreamcapes-health.service`，读取 root-only token 文件并写入 journal；18:26:58 首次周期运行成功（revision 0，RSS 834MB）。外部告警渠道尚未接入，当前以 systemd failed unit + journal 作为接入点。
+- **回滚**：`systemctl disable --now aidreamcapes-health.timer`，移除 `/etc/systemd/system/aidreamcapes-health.{service,timer}`，`systemctl daemon-reload`。健康 token 可保留或从 `.env.local`/`.env` 移除；移除后端点自动返回 404。
