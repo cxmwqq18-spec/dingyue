@@ -1763,14 +1763,61 @@ function withAidreamcapesOrigin<T>(value: T): T {
   return value;
 }
 
+// Stored v2 graphs also carry site-relative image paths (for example
+// `/ai-image-generation/<cover>.webp`). Schema.org image values must be absolute
+// URLs, so resolve them against the public origin instead of rewriting content.
+const AIDREAMCAPES_SCHEMA_URL_KEYS = new Set([
+  "@id",
+  "url",
+  "image",
+  "logo",
+  "contentUrl",
+  "thumbnailUrl",
+  "embedUrl",
+  "sameAs"
+]);
+
+function withAidreamcapesAbsoluteSchemaUrls<T>(value: T, site: Site, routeMode: "host" | "path", key?: string): T {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (key && AIDREAMCAPES_SCHEMA_URL_KEYS.has(key) && /^\/(?!\/)/.test(trimmed)) {
+      return absoluteUrl(site, routeMode, trimmed) as T;
+    }
+    return value;
+  }
+  if (Array.isArray(value)) return value.map((item) => withAidreamcapesAbsoluteSchemaUrls(item, site, routeMode, key)) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([entryKey, item]) => [entryKey, withAidreamcapesAbsoluteSchemaUrls(item, site, routeMode, entryKey)])
+    ) as T;
+  }
+  return value;
+}
+
 function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): JsonLdNode[] {
   const seo = input.pageJson?.seo as { title?: unknown; description?: unknown } | undefined;
   const title = cleanText(seo?.title) || pageTitle(input.site, input.page, input.context);
   const description = cleanText(seo?.description) || pageDescription(input.site, input.page, input.context);
+  // Stored v2 graphs were written without a breadcrumb node, so every v2 page
+  // published a WebPage graph with no navigation path. Derive the breadcrumb
+  // from the live route instead of editing stored content: nested pages get
+  // Home > page, and the home page stays without a one-item breadcrumb.
+  const pagePath = input.context?.seo.canonicalPath ?? input.pagePath;
+  const hasStoredBreadcrumb = storedGraph.some((node) => {
+    const type = node?.["@type"];
+    return Array.isArray(type) ? type.includes("BreadcrumbList") : type === "BreadcrumbList";
+  });
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(input.site, input.routeMode, input.context, input.pagePath),
     storefrontApplicationSchema(input, title, description),
-    ...withAidreamcapesOrigin(storedGraph.filter((node) => node["@type"] !== "Organization"))
+    ...(hasStoredBreadcrumb || pagePath.split("/").filter(Boolean).length === 0
+      ? []
+      : [breadcrumbs(input.site, input.routeMode, pagePath, title, input.publishedRoutePaths)]),
+    ...withAidreamcapesAbsoluteSchemaUrls(
+      withAidreamcapesOrigin(storedGraph.filter((node) => node["@type"] !== "Organization")),
+      input.site,
+      input.routeMode
+    )
   ];
   return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
 }

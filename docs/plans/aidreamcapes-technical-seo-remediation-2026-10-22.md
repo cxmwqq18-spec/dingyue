@@ -37,6 +37,7 @@
 | 构建堆上限 | 已完成 | `edb086696`，默认 8192 MB，服务器 8 GB 堆构建成功 |
 | 生产缓存开关 | 已启用 | `STOREFRONT_SNAPSHOT_CACHE_SITES=site_aidreamcapes` |
 | 缓存容量 | **仍不足** | `STOREFRONT_SNAPSHOT_CACHE_MAX=8`，`TTL=300000` |
+| 缓存失效覆盖 | **有 3 个缺口** | `StripeConnectAccount`、`AiApp`、`VideoThemeExample` 无触发器，已补迁移 |
 | 复数→单数 URL 改名 | **未上线** | 线上 `/product-video` 仍 301 到 `/product-videos`；`/spokesperson-video`、`/before-after-video` 仍 404 |
 
 ### 1.2 当前仍存在的问题（按影响）
@@ -50,7 +51,7 @@
 | P1-1 | `/platforms` hub 过薄 | 正文 86 词 | 目录页无聚合价值 |
 | P1-2 | 演员/场景页占索引面 53% | 94 页，正文中位 280 词 | 内容质量、索引价值密度 |
 | P1-3 | 薄 hub | industries 490 词、templates 362 词、occasions 475 词 | 商业落地页竞争力 |
-| P1-4 | 结构化数据/元数据缺口 | JSON-LD 相对图片、5 页缺面包屑、8 页缺 `max-image-preview`、首页 description 标点 | 富结果、元数据完整性 |
+| P1-4 | 结构化数据/元数据缺口 | JSON-LD 相对图片、5 页缺面包屑、9 页缺 `max-image-preview`、首页 description 标点 | 富结果、元数据完整性 |
 | P2-1 | 媒体索引策略未定 | 214 个 noindex 页；sitemap 0 个 video 条目 | 与 placement batch 3 耦合 |
 | P2-2 | URL 边界 | host 2 跳、大小写 404、品牌域 410、`/platforms/instagram` 404 | 少量流量与体验 |
 | P2-3 | 缺少持续门禁 | 现有 smoke 未覆盖内链 301、JSON-LD 绝对 URL、体积预算 | 回归风险 |
@@ -63,6 +64,12 @@
 - `/ai-actors` 冷读 `ssr ~1.67 s`，第二次、第三次 `~0.53 s`。
 - 首页冷读 `~1.62 s`，热读 `~0.95–1.29 s`（仍有渲染成本）。
 - 全站 `LivePage.contentJson` 合计约 4.2 MB（本地关系库 269 行，均值 16 KB，最大 112 KB），缓存条目本身不贵；生产条目还要加上导航、产品、媒体等关联数据，需按 RSS 实测。
+
+**实测后修正（2026-10-22，详见 [缓存审计报告](../audits/aidreamcapes-cache-revision-audit-2026-10-22.md)）**：
+工作集是 **288 个 key**（不是 178），`MAX=256` 仍会每轮淘汰 601 次；`MAX=512` 淘汰 0 次。
+失效覆盖有 **3 个缺口**：`StripeConnectAccount`（结账可用性）、`AiApp`（工具卡片文案）、
+`VideoThemeExample`（提示词示例）被公共投影读取但没有触发器，已补迁移。
+另：`DINGYUE_ENV=local` 会让 slug 路径绕过修订缓存，本地命中率不可代表生产。
 
 **传输层存在重复处理迹象。**
 每个 HTML 响应带两组 `ssr;dur`，且两次的 HTML 字节数固定相差 33 字节（例如 587508 / 587541、829369 / 829402）。`server.mjs` 会全量缓冲 HTML、重排 `<head>`、重设 `content-length`，再写回。需要确认是“两层拦截器”还是“两次渲染”；无论哪种，都应改为一次渲染、一次 head 重排、尽早 flush。
@@ -119,22 +126,63 @@
 
 ### P0-1 运行时缓存调优
 
+> **执行结果（2026-10-22，见 [缓存审计报告](../audits/aidreamcapes-cache-revision-audit-2026-10-22.md)）**
+>
+> 本节的初始假设有两处被实测推翻，已按实测结论修正：
+>
+> 1. **失效覆盖有 3 个真实缺口**：`StripeConnectAccount`、`AiApp`、`VideoThemeExample` 都被公共投影读取但没有触发器。已通过迁移 `20261022160000_close_site_content_revision_gaps` 补齐。
+> 2. **工作集是 288 个 key，不是 178 个页面**。`MAX=256` 仍然每轮淘汰 601 次，必须用 `MAX=512`。
+>
+> 另有一个方法论陷阱：`DINGYUE_ENV=local` 时 `instantDraftPreviewEnabled()` 为真，
+> `getStorefrontPublicRuntimeStateBySlug` 会直接回源、**完全绕过修订缓存**。
+> 本地开发模式下测出的命中率不能代表生产，所有数字均在
+> `DINGYUE_ENV=production` 等价环境下重测。
+>
+> 实测对比（177 个 sitemap URL、连续 3 遍、并发 1）：
+>
+> | 配置 | 关系库全量读取 | 缓存命中 | 淘汰次数 | 不同 key | `mapSize` |
+> |---|---|---|---|---|---|
+> | `MAX=8`（现生产值） | 681 | 390 | 949 | 288 | 8 |
+> | `MAX=256` | 589 | 482 | 609 | 288 | 256 |
+> | `MAX=512` | **196** | 1059 | **0** | 288 | 288 |
+>
+> 内存（`--expose-gc` 强制 GC 后）：`MAX=512` 下 `heapUsed` 稳定在 ≈1.09 GB，
+> RSS 峰值 ≈2.4 GB、稳态 ≈1.9 GB，在 6 GB cgroup 与 3.5 GB V8 堆上限内。
+>
+> 正确性已验证：字段级 CAS 提交 `LivePage.contentJson` 后**下一次请求**即返回新标题
+> （无需重启），逆向 manifest 还原后 `contentJson` MD5 与原值逐字节一致；
+> 8 个并发冷请求只触发 2 次关系库读取。
+>
+> 生产目标值：`STOREFRONT_SNAPSHOT_CACHE_MAX=512`，`TTL` 保持 `300000`。
+> 生产变更待审批窗口执行。
+
 **问题**
 生产已启用 revision-keyed 公共缓存，但 `STOREFRONT_SNAPSHOT_CACHE_MAX=8`、`TTL=300000`。178 个页面顺序访问会不断淘汰，缓存命中率接近 0；热读与冷读差距约 3 倍。
 
 **改动**
 1. 只读审计 `SiteContentRevision` 的失效覆盖：确认所有影响公开状态的写路径都会 bump revision（`LivePage`、导航/内容块、`MediaAsset`、`Product`、`CreativePack`、域名/站点设置等）。如果存在未覆盖的表，先补触发器或写入路径，再调大缓存。
+   - 已完成。新增 `scripts/audit-aidreamcapes-cache-revision-coverage.mjs` 作为可重复门禁：对比公共投影实际读取的 18 张表与数据库中实际存在的触发器，有未覆盖表即非零退出。
 2. 在候选环境设置：
-   - `STOREFRONT_SNAPSHOT_CACHE_MAX=256`（起点）
-   - `STOREFRONT_SNAPSHOT_CACHE_TTL_MS=0`（不按时间过期，只按 revision + LRU）
+   - `STOREFRONT_SNAPSHOT_CACHE_MAX=512`（实测工作集 288，256 会抖动）
+   - `STOREFRONT_SNAPSHOT_CACHE_TTL_MS=300000`（保留非零 TTL）
+     - 每次请求都先比对 revision，命中与否与 TTL 无关，所以 TTL 不会延迟失效；
+       它只在“某个写路径漏 bump revision”时提供最多 5 分钟的有界自愈。
+     - 代价实测：TTL 是**绝对过期**（`createdAt + TTL`）。连续爬取时每 5 分钟会有一次
+       整批回源；空闲超过 5 分钟后第一遍爬取也会整批回源（实测 333 s 空闲 → 单遍 192 次读取，
+       热缓存单遍为 0 次）。192 次读取合计约 4–6 s，相对于整站请求量可以忽略，
+       且 in-flight collapse 保证同一 key 的并发冷读只回源一次。
+     - 因此不设为 0：`MAX=512` 的收益已经由容量拿到，用 5 分钟 TTL 换取“漏触发器”时的自愈能力。
 3. 顺序爬取 178 页两遍，记录第一遍/第二遍 TTFB p50/p90、进程 RSS、`systemctl show -p MemoryCurrent`。
 4. 若 RSS < 2.5 GB 且第二遍 p50 明显下降，升到 512；若 RSS > 2.8 GB，回退到 128。
 5. 把最终值写入当前 release 的 `.env.local`（部署脚本会从 `$BASE/.env.local` 复制到新 release），并记录到运维 runbook，避免下次部署回退。
 
 **正确性测试（必须先做）**
 - 本地/候选环境：提交一次 `LivePage` 字段更新（走正式字段级 manifest），下一次请求必须看到新内容；再用 inverse manifest 回退。
+  - 已完成。注意公共页面的 `<title>` 来自 `LivePage.contentJson` 的 `seo.title`，**不是** `LivePage.title` 列；按 `title` 列改不会影响页面。
 - 并发测试：4 并发冷启动，确认 in-flight collapse 生效，只有一次关系库读取。
+  - 已完成（8 并发 → 2 次关系库读取）。
 - 失败路径：revision 探测失败时必须回源，不能回退旧缓存；确认代码现有行为。
+  - 已确认：`readSiteContentRevision()` 返回 `null` 时 `getCachedPublicRuntimeState()` 直接 `return loader()`，回源而不回退旧缓存。
 
 **验收**
 - 第二次全站爬取 TTFB p50 ≤700 ms、p90 ≤1.4 s。
@@ -147,16 +195,48 @@
 
 **风险**
 - revision 触发器覆盖不全 → 读到旧内容。这是本项唯一的硬风险，必须先审计。
+  - 已通过 3 个新触发器 + 可重复门禁脚本收敛。
 - 内存增长 → 设置在 6 GB cgroup、3.5 GB V8 堆下要留余量；按 RSS 阶梯调整。
+  - 已实测：`MAX=512` 堆占用 ≈1.09 GB，在限值内。
+- **缓存扩容到其他站点**：`bump_site_content_revision()` 的守卫写死 `site_aidreamcapes`，门禁脚本会因其它站点缺触发器而失败。扩容前需另开迁移放宽守卫。
 
 ### P0-2 传输层去重与流式化
 
 **问题**
 每个 HTML 响应出现两组 `ssr;dur`，字节数相差 33；`server.mjs` 全量缓冲 HTML 后重排 `<head>`。可能是两层拦截器，也可能是两次渲染，当前没有请求级 trace 区分。
 
+**根因已定位（2026-10-22，本地复现）**
+
+不是两次 SSR，也不是 `server.mjs` 装了两层拦截器。真实链路是：
+
+1. `src/middleware.ts` 对 storefront HTML 不是 `NextResponse.rewrite`，而是**同进程内部 `fetch`**：
+   `sameServerStorefrontUrl(request)` 把 `/privacy` 变成 `/site/aidreamcapes/privacy`，
+   并向该内部请求写入 `x-storefront-head-seo-reorder-skip: 1`（`middleware.ts:1063-1095`）。
+2. 这个内部请求同样经过 `server.mjs` 的 `interceptHtmlResponse()`，于是**第一次**缓冲 + 重排 + 写
+   `Server-Timing`（实测 `/privacy` 291721 bytes）。
+3. 中间件拿到内部响应后，用 `new Headers(upstreamResponse.headers)` 原样继承头（含 `Server-Timing`），
+   再做**第二次** `rewriteStorefrontHtmlFull()` 重排（291754 bytes，+33 bytes），最后 `end` 时
+   `server.mjs` 又追加一组 transport timing → 客户端看到两组 `ssr;dur`。
+
+证据（本地，Node 22，`Host: www.aivideosugc.com`）：
+
+- 每次客户端请求只产生两次 `response.end`，分别属于 `/privacy` 与 `/site/aidreamcapes/privacy` 两个响应对象；
+  每个响应对象只被拦截一次。
+- 外层响应 `end` 时 `getHeader("Server-Timing")` 已等于内层那一组
+  `ssr;dur=406.3, html;dur=406.3;desc="291721 bytes"`。
+- 因此：**没有重复渲染**，多出来的是「内部跳 + 双重 head 重排 + 计时头泄漏」，
+  成本约为每页一次 290–830 KB 的二次字符串正则重排（实测 2–36 ms）。
+
+**结论**
+`server.mjs` 没有遵守中间件已经发出的 `x-storefront-head-seo-reorder-skip: 1` 约定。
+
 **改动**
 1. 在 `server.mjs` 的拦截路径和 Next 响应路径加一次性 request id / 计数日志（只在 `STOREFRONT_PROFILE=1` 时输出），确认层级。
-2. 如果确认是两层拦截：删除重复的一层，保留一次 head 重排。
+   - 已完成（临时探针，已移除）。结论见上。
+2. 让 `server.mjs` 遵守 `x-storefront-head-seo-reorder-skip: 1`：带该头的内部请求不再安装 HTML 拦截器，
+   head 重排只在外层做一次，`Server-Timing` 也只留一组。
+   - 该头由中间件对**所有** storefront 内部请求写入，直接全局改动会影响 MyDreamShoots 的传输行为，
+     需要单独批准；Aidreamcapes 单站收口可先加 host 判定（`aidreamcapes`/`aivideosugc`）。
 3. 把全量缓冲改为“只缓冲到 `</head>`，之后流式写出”；保留 `content-length` 时需谨慎，流式下改为 chunked 或先计算头部长度。
 4. 评估 `request.headers["accept-encoding"] = "identity"`：当前由 nginx/Cloudflare 压缩，用户侧无影响；不要为了省源站带宽而引入新的压缩风险。此项只记录，不优先改。
 
@@ -314,10 +394,50 @@ head 重排逻辑对 JSON-LD 去重、title 位置有副作用；必须用现有
 | 子项 | 改动 | 类型 | 文件 |
 |---|---|---|---|
 | JSON-LD 图片绝对 URL | `ImageObject.url`、`primaryImageOfPage`、`BlogPosting.image`、`Article.image` 统一转绝对 URL；幂等，避免二次前缀 | 代码 | `src/lib/theme/json-ld.ts` |
-| 5 页面包屑 | 为首页、`/ai-video-generation/ai-twin`、`/text-to-video`、`/templates/photo`、`/templates/video` 补 BreadcrumbList；首页可只保留 WebSite | 代码 | `src/lib/theme/json-ld.ts` |
-| `max-image-preview` | 可索引页默认 `large`；noindex 页不加；`/platforms` 如走内容字段则随 manifest | 代码 + 内容 | `src/lib/storefront-metadata.ts` |
+| 5 页面包屑 | v2 存储图没有 BreadcrumbList，渲染层按当前路由补一条（首页不加单条面包屑） | 代码 | `src/lib/theme/json-ld.ts` |
+| `max-image-preview` | 可索引页默认 `large`；noindex 页不加；显式内容值优先 | 代码 | `src/lib/storefront-context/core.ts` |
 | 首页 description | `Ai actors ,ready-to-use` → 正确标点与文案 | 内容 | `home` LivePage |
 | SearchAction 一致性 | 要么 178 页统一，要么全部移除；不做 8 页特例 | 代码 | JSON-LD 构建器 |
+
+**执行结果（2026-10-22）**
+
+生产 178 个 URL 逐页探针（`scripts/audit-aidreamcapes-metadata-gaps.mjs`，全部 200）：
+9 页缺 `max-image-preview`（全部是 policy/directory 页），5 页缺 BreadcrumbList。
+
+两类缺口都在**渲染层**收口，不写内容行：
+
+1. **面包屑**：5 页都是 `aidreamcapes_v2_page`，JSON-LD 直接来自 `LivePage.contentJson.seo.jsonLd` 的存储图，
+   绕过了 `buildStorefrontJsonLd()` 里的 `breadcrumbs()`。存储图里没有 BreadcrumbList 时，
+   由 `aidreamcapesV2JsonLd()` 按当前 canonical 路由补一条，首页（深度 0）不加。
+   该分支本身有 `site.id === "site_aidreamcapes"` 守卫，其它站点输出不变。
+2. **`max-image-preview`**：这 9 页的 `contentJson.seo.robots` 里本来就没有该字段。
+   它是 meta 指令而不是页面文案，和 `index`/`follow` 的默认值同类，所以在
+   `resolveSeo()` 里对 `site_aidreamcapes` 的**可索引**页默认 `large`；
+   内容里显式写了 `none`/`standard` 时仍然以内容为准。守卫同样限定站点，MyDreamShoots 不变。
+3. **JSON-LD 相对图片**：10 个 blog/guide 页的存储图里 `image` 是站内相对路径
+   （例如 `/ai-image-generation/rd1-…-cover-r1.webp`）。v2 存储图在输出前统一把
+   `image`/`contentUrl`/`thumbnailUrl`/`logo`/`url`/`@id` 等字段的相对值解析成绝对 URL，
+   幂等（已是绝对 URL 的值不动），仍然只在 `site_aidreamcapes` 的 v2 分支生效。
+
+**本地验证（2026-10-22，178 个 sitemap URL）**
+
+```
+node scripts/audit-aidreamcapes-metadata-gaps.mjs \
+  --origin=http://127.0.0.1:3100 --host=www.aivideosugc.com
+```
+
+| 指标 | 修复前（生产） | 修复后（本地候选） |
+|---|---|---|
+| 缺 `max-image-preview` | 9 | **0** |
+| 缺 BreadcrumbList | 5 | **0**（首页按约定例外） |
+| JSON-LD 相对图片页 | 10 | **0** |
+| JSON-LD 无法解析 | 0 | **0** |
+
+`scripts/smoke-aidreamcapes-seo-contract.mjs` 在同一构建上通过（exit 0，
+32 个目标页 + 178 个 sitemap 页 + 67 条重定向）。
+
+门禁：`scripts/smoke-aidreamcapes-seo-contract.mjs` 新增断言——导航目标页、policy 页、
+`/templates/photo`、`/templates/video` 必须同时具备 `max-image-preview:large` 与至少两级 BreadcrumbList。
 
 **验收**
 - 178 个可索引页 JSON-LD 可解析；图片字段 100% 绝对 URL。

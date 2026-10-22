@@ -173,6 +173,25 @@ function instantDraftPreviewEnabled(): boolean {
 
 热读 p50 稳定在 ≈111 ms，相对冷读下降约 25%。
 
+### 4.4 TTL 行为实测
+
+代码是**绝对过期**：`createdAt` 只在回填时写入，命中路径不刷新（`site-store.ts:1480`）。
+所以每 5 分钟（`TTL=300000`）整批 key 会同时过期，与 revision 变化无关。
+
+实测（`MAX=512`、`TTL=300000`、串行整站爬取）：
+
+| 场景 | 单遍关系库读取 |
+|---|---|
+| 热缓存，紧接上一遍 | **0** |
+| 空闲 333 s 后第一遍（> TTL） | **192** |
+
+结论：
+
+- TTL 到期不会造成“每页重复回源”的雪崩；一次整批回填 ≈192 次读取，合计约 4–6 s。
+- 但因为过期时间集中，空闲超过 5 分钟后的第一遍一定会整批回填；低峰期第一个爬虫会承担这部分成本。
+- 保留 `TTL=300000` 而不是 0：每次请求都先比对 revision，TTL 不参与失效判定，
+  只在“某个写路径漏 bump revision”时提供 ≤5 分钟的有界自愈。
+
 ---
 
 ## 5. 内存
@@ -282,4 +301,8 @@ node scripts/benchmark-aidreamcapes-cache.mjs \
   站点前需要另开迁移放宽守卫。
 - `VideoThemeExample` 缺口今天不产生可见错误（该站点当前不投影 video themes），
   迁移属于前瞻性修复。
-- P0-2（传输层重复 `ssr` 计时）未开始。
+- P0-2（传输层重复 `ssr` 计时）已完成根因定位：不是两次渲染，而是中间件用同进程内部
+  `fetch` 访问 `/site/aidreamcapes/...`，内层已经过 `server.mjs` 拦截并重排一次，
+  外层又重排一次并继承了内层的 `Server-Timing`。细节与修复方案见
+  [整改计划 P0-2](../plans/aidreamcapes-technical-seo-remediation-2026-10-22.md#p0-2-传输层去重与流式化)。
+  修复需要改共享 `server.mjs`，待批准后按 Aidreamcapes 单站收口。

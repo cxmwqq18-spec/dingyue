@@ -217,12 +217,19 @@ if (siteV2) {
   assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
-  for (const path of ["/ai-image-generation", "/templates/photo"]) {
+  for (const path of ["/ai-image-generation", "/templates/photo", "/templates/video"]) {
     const response = await get(path);
     assert.equal(response.status(), 200, `${path}: current v2 page status`);
     const html = await response.text();
     assert.match(html, /<nav[^>]*id=["']adc2-main-nav["']/i, `${path}: current v2 navigation must render`);
     assert.match(html, /href=["']\/pricing["']/i, `${path}: current pricing link must render`);
+    // Stored v2 page graphs carry no breadcrumb node; the renderer must derive it.
+    const v2Nodes = flattenJsonLd(parseJsonLd(html));
+    assert(
+      v2Nodes.some((node) => node["@type"] === "BreadcrumbList" && Array.isArray(node.itemListElement) && node.itemListElement.length >= 2),
+      `${path}: stored v2 graph must publish a derived BreadcrumbList`
+    );
+    assert.match(htmlMeta(html, "robots"), /max-image-preview:\s*large/i, `${path}: robots must allow large image previews`);
   }
   if (!preNavigationMigration) {
     const headerLinks = homepageDom("header.site a").toArray().map((node) => ({
@@ -243,7 +250,13 @@ if (siteV2) {
       ["Social Ad Photos", "/ai-image-generation/social-ad-photos"],
       ["Templates", "/templates"]
     ]) {
-      assert(headerLinks.some((link) => link.href === href && link.text.includes(label)), `header ${label} route`);
+      // Labels are page-owned copy: the Templates entry now reads
+      // "See all 18 templates →", so match the route word case-insensitively
+      // instead of pinning one exact string.
+      assert(
+        headerLinks.some((link) => link.href === href && link.text.toLowerCase().includes(label.toLowerCase())),
+        `header ${label} route`
+      );
     }
     const headerMenuLabels = homepageDom("header.site nav#adc2-main-nav button").toArray().map((node) => homepageDom(node).text().trim());
     assert(headerMenuLabels.includes("Image"), "Image menu label");
@@ -288,8 +301,16 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   assert(title.length <= 60, `${path}: title too long (${title.length})`);
   assert(description.length >= 140 && description.length <= 160, `${path}: description length ${description.length}`);
   assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
+  const robotsMeta = htmlMeta(html, "robots");
+  assert.match(robotsMeta, /max-image-preview:\s*large/i, `${path}: robots must allow large image previews (${robotsMeta})`);
+  const pageNodes = flattenJsonLd(parseJsonLd(html));
+  const breadcrumbNode = pageNodes.find((node) => node["@type"] === "BreadcrumbList");
+  assert(
+    breadcrumbNode && Array.isArray(breadcrumbNode.itemListElement) && breadcrumbNode.itemListElement.length >= 2,
+    `${path}: BreadcrumbList must list the home page and this page`
+  );
   if (path === "/ai-video-generation/text-to-video" || path === "/ai-video-generation/ai-twin") {
-    const pageSchemas = flattenJsonLd(parseJsonLd(html));
+    const pageSchemas = pageNodes;
     const webPage = pageSchemas.find((node) => node["@type"] === "WebPage");
     assert.equal(webPage?.url, `https://www.aivideosugc.com${path}`, `${path}: WebPage schema canonical URL`);
     assert.equal(webPage?.name, title, `${path}: WebPage schema title matches metadata`);
@@ -298,6 +319,21 @@ const metadataResults = await mapLimit(TARGET_PATHS, 3, async (path) => {
   return { path, title, description };
 });
 assert.equal(new Set(metadataResults.map(({ title }) => title)).size, metadataResults.length, "target titles must be unique");
+
+// Policy pages that are not part of the navigation target list still have to
+// publish the large image preview directive; they read robots from page
+// content that predates it, so the renderer supplies the default.
+for (const path of ["/cookies", "/digital-delivery", "/platforms"]) {
+  const response = await get(path);
+  assert.equal(response.status(), 200, `${path}: policy page status ${response.status()}`);
+  const html = await response.text();
+  assert.match(htmlMeta(html, "robots"), /max-image-preview:\s*large/i, `${path}: robots must allow large image previews`);
+  const nodes = flattenJsonLd(parseJsonLd(html));
+  assert(
+    nodes.some((node) => node["@type"] === "BreadcrumbList" && Array.isArray(node.itemListElement) && node.itemListElement.length >= 2),
+    `${path}: BreadcrumbList must list the home page and this page`
+  );
+}
 
 const login = await get("/login");
 assert.equal(login.status(), 200, `login status: ${login.status()}`);

@@ -145,7 +145,15 @@ function resolveSeo(bundle: StorefrontContextBundle, pageJson: ThemePageJson, se
       : clean(pageSeo?.ogImage) || (pageScopedSocial ? undefined : clean(settings.seo?.defaultOgImage) || undefined),
     index: indexable,
     follow: followable,
-    maxImagePreview: euIndexable ? "large" : pageSeo?.robots?.maxImagePreview,
+    // Google only honours the large preview directive when a page sets it, and
+    // the Aidreamcapes storefront reads it from page content that predates the
+    // directive for most policy pages. Falling back to `large` here keeps every
+    // indexable Aidreamcapes page eligible for large image previews without
+    // rewriting content rows; an explicit page value still wins, and no other
+    // site's output changes.
+    maxImagePreview: euIndexable
+      ? "large"
+      : pageSeo?.robots?.maxImagePreview ?? (bundle.site.id === "site_aidreamcapes" && indexable ? "large" : undefined),
     sitemapEligible: indexable
   };
 }
