@@ -25,25 +25,53 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
   --out=/tmp/aidc-tech-seo.json --concurrency=6
 ```
 
+## 0.1 2026-10-23 执行结果（线上 commit `e4cb769ccc9963de34f1f7ea35e1b8568679917f`）
+
+本节记录按上表执行后的线上事实；下文各节保留原始审计口径，便于对照。
+
+### 已关闭
+
+| 编号 | 处置 | 证据 |
+| --- | --- | --- |
+| A1 / A2 / A3 / A4 | 依据**运行时路由代码**（`aidreamcapes-site-v2-redirects.json`、`AIDREAMCAPES_GONE_PUBLIC_PATHS`、`AIDREAMCAPES_LEGACY_GALLERY_REDIRECTS`、`AIDREAMCAPES_LEGACY_VIDEO_SAVE_THE_DATE_SLUGS`）重新判定，实际 **69 行**（比原口径多 12 行：3 个旧 gallery 301 源 + 12 个旧视频 Save The Date 别名） | `scripts/manifests/aidreamcapes-retired-rows-production-2026-10-23.json`（planHash `e30d6676…`）；CAS 删除，`revision 300 → 369`（+69 精确匹配）；`LivePage` 行数 `267 → 198`；逆向清单含全部可写列；**69 个地址状态码逐一复核 0 mismatch**；sitemap 仍 178 条且不含这些地址；MyDreamShoots 93 行、`max(updatedAt)` 仍为 2026-10-03 |
+| B1 | 41 条指向 301 旧地址的内链改写为直连（字段级清单，覆盖 13 个页面） | `scripts/manifests/aidreamcapes-internal-links-production-2026-10-23.json`（planHash `568ee840…`）；`revision 280 → 300`；复爬 `brokenLinks` 由 125 → 0 |
+| B2 | 84 条指向 308 旧工作台地址的内链来自代码：别名卡（`detailAliasOf`）直连规范地址，别名关系由 `sceneSlug` 前缀证明 | 候选 smoke 门禁 `internal-link-redirect-targets` → `redirectingTargets: 0`；生产复爬 `brokenLinks: 0` |
+| D4 | 首页 description 的 3 个渲染 pointer 同步修正（`/seo/description`、`/seo/twitterDescription`、`/seo/jsonLd/@graph/2/description`） | 线上回读三个 meta 均为新串 |
+| D1 / D2 / D3 | 代码层修复并上线 | 生产探针 178/178：`max-image-preview` 0 缺、BreadcrumbList 0 缺、相对 JSON-LD 图片 0、无法解析 0 |
+| C4 | 源站无法完成 webpack 构建（8 GB 堆 874 s OOM / 10 GB 堆把机器压到 0 可用内存），改为**本地干净 worktree 预构建 + `--prebuilt-build` 上传** | 线上 release 的 `.next-build` 含 `.build-commit` 与本机路径，与既有形态一致 |
+| F1 | Aidreamcapes 三个脚本的审计报告默认输出改到 release 内 `reports/`（写前 `mkdir -p`）；MyDreamShoots 脚本未动 | `scripts/audit-aidreamcapes-media-products.mjs`、`scripts/aidreamcapes-apply-plural-s-rename.mjs`、`scripts/smoke-aidreamcapes-media-product-placement.mjs` |
+
+### 部分完成
+
+- **C1 边缘 HTML 缓存**：线上站点 `www.aivideosugc.com` 是**独立 zone**，而既有边缘脚本配的是 `aidreamcapes.com` zone，这就是 HTML 长期 `cf-cache-status: DYNAMIC` 的根因。已改为按站点名解析 zone，缓存规则与 purge 集合同源于线上 sitemap（`scripts/lib/aidreamcapes-public-cache-surface.mjs`），发布脚本在重启后自动 purge（`scripts/purge-aidreamcapes-public-cache.mjs`，实测 30 个精确路径 + 9 个目录前缀 = 2 次请求）。**尚未开启缓存规则**：当前 `CLOUDFLARE_API_TOKEN` 无 rulesets 写权限（API 返回 `10405`），开启需要具备「Zone → Cache Rules → Edit」的凭据；purge 权限已验证可用。
+- **C3 图片**：首页首屏图改为 `fetchpriority="high"` + `eager`，并由渲染器自动产出 1 条 `preload`；`/ai-actors` 由 2 张高优先级收敛为 1 张；其余 176 张保持 lazy。`Img` 组件已支持 `srcSet`/`sizes`（缺省不输出，行为与之前逐字节一致），受控生成脚本可产出 126 张 320w 变体（DPR=1 时该批图片字节减少 76%）；**索引提交态为空**，需在 release 目录、构建之前生成变体才能启用，否则 srcset 指向不存在的文件。
+
+### 本轮未改动
+
+- 首页可见文本、链接集合、class 集合、图片序列与样式表数量在发布前后**完全一致**，仅新增 1 条 preload 与若干 `loading`/`fetchpriority` 属性；页脚 4 篇博客文章因被更新而在列表中轮转（集合不变）。
+- MyDreamShoots、Aidreamcapes EU、Aidreamshoots EU 的数据、路由、资产、SEO、导航与部署记录零改动（哈希断言）。
+
+---
+
 ## 1. 总览
 
 | 编号 | 问题 | 级别 | 类型 | 状态 |
 | --- | --- | --- | --- | --- |
-| A1 | 41 条 LivePage 行是 301 重定向源 | P2 | 数据一致性 | 未解决 |
-| A2 | 16 条 Save The Date 退役 URL 的 LivePage 行残留 | P2 | 数据一致性 | 未解决 |
-| B1 | 41 条内链指向 301 旧地址 | P2 | 内容 / 内链 | 未解决 |
-| B2 | 84 条内链指向 308 旧工作台地址 | P3 | 内容 / 内链 | 已登记为已知遗留 |
+| A1 | 41 条 LivePage 行是 301 重定向源 | P2 | 数据一致性 | **已清理（2026-10-23，连同 A2/A3/A4 共 69 行）** |
+| A2 | 16 条 Save The Date 退役 URL 的 LivePage 行残留 | P2 | 数据一致性 | **已清理（2026-10-23，实际 13 行）** |
+| B1 | 41 条内链指向 301 旧地址 | P2 | 内容 / 内链 | **已修复（2026-10-23，字段级清单直连）** |
+| B2 | 84 条内链指向 308 旧工作台地址 | P3 | 内容 / 内链 | **已修复（2026-10-23，别名卡直连规范地址）** |
 | B3 | 全站导航+页脚链接压平链接权重 | P1 | 内链架构 | 未解决 |
 | B4 | 216 个 noindex 媒体页被大量内链指向（上一轮 663 条） | P1 | 索引策略 | 待决策 |
 | B5 | sitemap 无 video 条目 | P3 | 索引面 | 未解决 |
-| C1 | Cloudflare 不缓存 HTML | P1 | 性能 / 边缘 | 未解决 |
+| C1 | Cloudflare 不缓存 HTML | P1 | 性能 / 边缘 | **部分完成（2026-10-23：zone 纠正 + 提交即 purge 已上线；开规则缺 token 权限）** |
 | C2 | HTML 体积过大（首页 827 KB） | P1 | 性能 | 未解决 |
-| C3 | 全站 0 srcset、0 LCP fetchpriority | P2 | 性能 | 未解决 |
-| C4 | 发布机 fresh build 堆上限 OOM | P1 | 运维 | 未解决 |
-| D1 | 9 个可索引页缺 `max-image-preview:large` | P2 | 元数据 | 未解决 |
-| D2 | 5 页缺 BreadcrumbList | P3 | 结构化数据 | 未解决 |
-| D3 | `BlogPosting.image` 使用相对路径 | P3 | 结构化数据 | 未解决 |
-| D4 | 首页 description 标点错误 | P2 | 元数据 | 未解决 |
+| C3 | 全站 0 srcset、0 LCP fetchpriority | P2 | 性能 | **部分完成（2026-10-23：首屏 LCP 图已提权 + preload；srcset 代码路径就绪，变体待生成）** |
+| C4 | 发布机 fresh build 堆上限 OOM | P1 | 运维 | **已绕过（2026-10-23：本地干净 worktree 预构建 + `--prebuilt-build`）** |
+| D1 | 9 个可索引页缺 `max-image-preview:large` | P2 | 元数据 | **已修复并上线（2026-10-22）** |
+| D2 | 5 页缺 BreadcrumbList | P3 | 结构化数据 | **已修复并上线（2026-10-22）** |
+| D3 | `BlogPosting.image` 使用相对路径 | P3 | 结构化数据 | **已修复并上线（2026-10-22）** |
+| D4 | 首页 description 标点错误 | P2 | 元数据 | **已修复（2026-10-23，3 个渲染 pointer 同步）** |
 | D5 | 94 个演员/场景页正文约 280 词 | P2 | 内容深度 | 未解决 |
 | D6 | 4 个 Photos 工具页是否改单数 | P3 | 待产品决策 | 未解决 |
 | D7 | 3 个行业映射待确认 | P3 | 待内容确认 | 未解决 |
@@ -53,7 +81,7 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 | E2 | 大小写路径 404 | P3 | URL | 未解决 |
 | E3 | 近似 slug 无 301 兜底 | P3 | URL | 未解决 |
 | E4 | 品牌域 `aidreamcapes.com` 410 | P3 | 业务决策 | 现状保留 |
-| F1 | release 归档不含 `docs/`，服务器侧写审计清单失败 | P2 | 工具链 | 脚本已修，目录问题仍在 |
+| F1 | release 归档不含 `docs/`，服务器侧写审计清单失败 | P2 | 工具链 | **已修（2026-10-23：Aidreamcapes 脚本默认输出改到 release 内 `reports/`）** |
 | F2 | CDN 重置本地非浏览器出口连接 | P3 | 环境 | 已固化做法 |
 
 上一轮评估中已被修复、不再是待办的问题：页脚 708 条指向 301 的博客链接（现为 0）、canonical 与最终 URL 不一致（0）、孤儿页（0）、`/platforms` 86 词薄页（现 587 词）、`/templates` 362 词（现 1494 词）、`/industries` 490 词（现 1676 词）。

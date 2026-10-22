@@ -38,6 +38,8 @@
 | 生产缓存开关 | 已启用 | `STOREFRONT_SNAPSHOT_CACHE_SITES=site_aidreamcapes` |
 | 缓存容量 | **已调整到 512** | 2026-10-22 18:19 上线 `f21a03ae4`；`MemoryCurrent` 2.46–2.70 GB / 6 GB |
 | 缓存失效覆盖 | **已补齐 18/18** | 迁移 `20261022160000` 已在生产应用，门禁 `ok: true`、`uncovered: []` |
+| 跳板内链 | **已归零** | 41 条内容内链 + 84 条代码内链改直连；复爬 `brokenLinks: 0` |
+| 退役 LivePage 行 | **已清理 69 行** | `revision 300 → 369`，行数 `267 → 198`，69 个地址状态码 0 mismatch |
 | P0-2 重复 `ssr` 计时 | **已修复上线** | 线上单组 `Server-Timing`；HTML 逐字节不变 |
 | 复数→单数 URL 改名 | **未上线** | 线上 `/product-video` 仍 301 到 `/product-videos`；`/spokesperson-video`、`/before-after-video` 仍 404 |
 
@@ -47,7 +49,7 @@
 |---|---|---|---|
 | P0-1 | ~~缓存容量过小~~ **已关闭（18:19 上线）** | `MAX=512` + 18/18 触发器；生产门禁 `ok: true` | — |
 | P0-2 | ~~传输层重复处理~~ **已关闭（18:19 上线）** | 线上单组 `ssr` 计时；HTML 字节不变 | — |
-| P0-3 | 图片无 `srcset`、无 LCP 优先级 | 首页 177 张图，0 个 `srcset`，0 个 `fetchpriority` | LCP、移动端流量 |
+| P0-3 | 图片 **首屏优先级已做**；`srcset` 代码路径就绪但变体未生成 | 首页首屏图已 `fetchpriority=high` + preload；126 张 320w 变体生成器就绪 | LCP、移动端流量 |
 | P0-4 | 全局内链过平 + noindex 链接过多 | 审计时每页 113 条全局链接、166 条内链；663 条指向 214 个 noindex 页 | 链接权重、抓取效率 |
 | P1-1 | `/platforms` hub 过薄 | 正文 86 词 | 目录页无聚合价值 |
 | P1-2 | 演员/场景页占索引面 53% | 94 页，正文中位 280 词 | 内容质量、索引价值密度 |
@@ -215,6 +217,22 @@
 **构建约束**：源站（15 GB，另有 4 个站点常驻）无法完成 webpack 构建——8 GB 堆在第 874 s
 OOM，10 GB 堆把机器压到 0 可用内存。改用**本地干净 worktree 预构建 + `--prebuilt-build`**，
 与线上上一版 `38faa0861…` 的产物形态一致（同样带 `.build-commit` 和本机路径）。
+
+### 2026-10-23 批次执行结果（线上 commit `e4cb769ccc9963de34f1f7ea35e1b8568679917f`）
+
+| 项 | 结果 | 证据 |
+|---|---|---|
+| B1 内容内链 | 41 条 301 跳板内链 → 直连 | 字段级清单 `planHash 568ee840…`；`revision 280 → 300`；MyDreamShoots 哈希不变 |
+| B2 代码内链 | 84 条 308 跳板内链 → 直连 | 别名卡改用 `detailAliasOf` 规范地址（`sceneSlug` 前缀证明）；候选门禁 `redirectingTargets: 0` |
+| D4 首页描述 | 3 个 pointer 同步修正 | 线上三个 meta 回读一致 |
+| A1/A2 + 追加 | 69 行不可见退役行删除 | `revision 300 → 369`；行数 `267 → 198`；69 地址状态码 0 mismatch；sitemap 178 不变 |
+| P0-3a LCP | 首页首屏图 `eager` + `fetchpriority=high` + 1 条 preload；`/ai-actors` 高优先级由 2 张收敛为 1 张 | 首页前后：可见文本 / 链接集合 / class 集合 / 图片序列 / 样式表数量全部一致 |
+| P0-3b srcset | 代码路径就绪（缺省不输出 → 行为不变）；126 张 320w 变体生成器就绪；**索引提交态为空，未启用** | 启用需在 release 目录构建前生成变体，否则 srcset 指向缺失文件 |
+| C1 边缘缓存 | zone 纠正 + 提交即 purge 上线；**缓存规则未开启**（token 无 rulesets 写权限 `10405`） | purge 实测 2 次请求（30 精确 + 9 前缀）可用 |
+| F1 | 审计报告默认写到 release 内 `reports/` | 三个 Aidreamcapes 脚本已改；MyDreamShoots 脚本未动 |
+| 回归门禁 | smoke 新增「内链不得指向 301/308」 | 候选与生产均 `redirectingTargets: 0` |
+
+停服窗口：18:53:38–18:53:40 三次采样为 `503` + 维护文案，18:58 恢复 `200`；全程无默认 502。
 
 ### P0-2 传输层去重与流式化
 
