@@ -22,6 +22,12 @@ assert.equal(hash({ contract: manifest.contract, siteId: manifest.siteId, target
 if (apply) {
   assert.equal(argumentValue("--base-hash"), manifest.planHash, "Explicit reviewed plan hash is required");
   assert.equal(argumentValue("--confirm"), `aidreamcapes-chain-${target}`);
+  if (target === "production") {
+    const commit = argumentValue("--deployed-commit");
+    assert(/^[a-f0-9]{40}$/.test(commit || ""), "Production content apply requires the exact deployed commit");
+    assert.equal(fs.readFileSync(".deployed-commit", "utf8").trim(), commit,
+      "Run production apply only from the verified deployed release");
+  }
 }
 const parts = (pointer) => pointer.slice(1).split("/").map((s) => s.replaceAll("~1", "/").replaceAll("~0", "~"));
 const read = (content, pointer) => parts(pointer).reduce((value, key) => value?.[key], content);
@@ -80,6 +86,7 @@ try {
     assert.equal(protectedBefore, protectedAfter, "Protected store changed");
     if (apply) assert.equal(BigInt(revisionAfter) - BigInt(revisionBefore), BigInt(patches.size));
     return { ok: conflicts.length === 0, mode: apply ? "apply" : "dry-run", siteId: "site_aidreamcapes", target, planHash: manifest.planHash,
+      deployedCommit: argumentValue("--deployed-commit") || null,
       pages: patches.size, fields: applied.length, revisionBefore, revisionAfter, myDreamShootsUnchanged: true, conflicts, skipped, applied, inverse,
       completedAt: new Date().toISOString() };
   }, { timeout: 120000 });
