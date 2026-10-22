@@ -1,1 +1,1388 @@
-{}
+{
+  "/ai-image-generation/actors/ac1-actor-card-balcony-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-balcony-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-balcony-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-balcony-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-balcony-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-balcony-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-bathroom-1-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-bathroom-1-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-bathroom-1-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-beach-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-beach-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-beach-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-bedroom-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-bedroom-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-bedroom-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-cafe-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-cafe-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-cafe-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-cafe-2-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-cafe-2-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-cafe-2-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-car-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-car-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-car-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-car-2-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-car-2-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-car-2-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-exercise-1-r3-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-exercise-1-r3-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-exercise-1-r3-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-fitness-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-fitness-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-fitness-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-fitness-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-fitness-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-fitness-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-garage-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-garage-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garage-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-garden-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-garden-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garden-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-garden-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-garden-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garden-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-gym-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-gym-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-gym-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-gym-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-gym-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-gym-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-home-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-home-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-home-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-home-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-hospital-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-hospital-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-hospital-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-hospital-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-hospital-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-hospital-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-indoor-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-indoor-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-indoor-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-interview-1-r3-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-interview-1-r3-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-interview-1-r3-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-kitchen-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-kitchen-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-kitchen-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-living-room-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-living-room-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-living-room-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-living-room-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-living-room-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-living-room-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-office-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-office-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-office-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-office-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-office-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-office-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-outdoor-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-outdoor-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-outdoor-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-pet-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-pet-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pet-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-pet-2-r3-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-pet-2-r3-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pet-2-r3-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-podcast-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-podcast-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-podcast-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-podcast-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-podcast-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-podcast-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-pool-1-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-pool-1-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pool-1-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-reporting-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-reporting-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-reporting-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-shopping-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-shopping-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-shopping-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-shopping-2-r3-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-shopping-2-r3-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-shopping-2-r3-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-sports-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-sports-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-sports-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-sports-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-sports-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-sports-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-studio-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-studio-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-studio-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-studio-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-studio-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-studio-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-study-room-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-study-room-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-study-room-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-study-room-2-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-study-room-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-study-room-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-terrace-2-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-terrace-2-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-terrace-2-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-travel-1-r2-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-travel-1-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-travel-1-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/ac1-actor-card-yoga-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/ac1-actor-card-yoga-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-yoga-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/fx50-ai-actors-lola-beach-640.webp": {
+    "original": "/ai-image-generation/actors/fx50-ai-actors-lola-beach-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/fx50-ai-actors-lola-beach-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/actors/im08-ai-actors-kitchen-1-r1-640.webp": {
+    "original": "/ai-image-generation/actors/im08-ai-actors-kitchen-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/im08-ai-actors-kitchen-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/b2f7-video-hub-bf-r1-640.webp": {
+    "original": "/ai-image-generation/b2f7-video-hub-bf-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/b2f7-video-hub-bf-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/gen2guide-k6-templates-strip-deskset-640.webp": {
+    "original": "/ai-image-generation/gen2guide-k6-templates-strip-deskset-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/gen2guide-k6-templates-strip-deskset-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/gen2guide-white-background-canvas-tote-640.webp": {
+    "original": "/ai-image-generation/gen2guide-white-background-canvas-tote-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/gen2guide-white-background-canvas-tote-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-balm-r1-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-balm-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-bike-r2-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-bike-r2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-bike-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-cases-r2-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-cases-r2-640.webp",
+    "width": 640,
+    "height": 360,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-cases-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-finance-r1-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-finance-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-finance-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-laptop-r2-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-laptop-r2-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-laptop-r2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-scarf-r1-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-scarf-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-scarf-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im01-video-hub-sweater-r1-640.webp": {
+    "original": "/ai-image-generation/im01-video-hub-sweater-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im01-video-hub-sweater-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im03-home-picker-cardigan-r1-640.webp": {
+    "original": "/ai-image-generation/im03-home-picker-cardigan-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im03-home-picker-cardigan-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im03-home-picker-citrus-r1-640.webp": {
+    "original": "/ai-image-generation/im03-home-picker-citrus-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im03-home-picker-citrus-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im03-home-picker-kitchen-r1-640.webp": {
+    "original": "/ai-image-generation/im03-home-picker-kitchen-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im03-home-picker-kitchen-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im03-home-picker-steamer-r1-640.webp": {
+    "original": "/ai-image-generation/im03-home-picker-steamer-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im03-home-picker-steamer-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/im03-home-picker-trousers-r1-640.webp": {
+    "original": "/ai-image-generation/im03-home-picker-trousers-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/im03-home-picker-trousers-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img1-video-hub-hero-beauty-r1-640.webp": {
+    "original": "/ai-image-generation/img1-video-hub-hero-beauty-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img1-video-hub-hero-beauty-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-1-scene-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-1-scene-r1-640.webp",
+    "width": 640,
+    "height": 800,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-1-scene-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-1-white-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-1-white-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-1-white-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-2-scene-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-2-scene-r1-640.webp",
+    "width": 640,
+    "height": 800,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-2-scene-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-2-white-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-2-white-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-2-white-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-3-scene-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-3-scene-r1-640.webp",
+    "width": 640,
+    "height": 800,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-3-scene-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-3-white-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-3-white-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-3-white-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-4-scene-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-4-scene-r1-640.webp",
+    "width": 640,
+    "height": 800,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-4-scene-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-examples-4-white-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-examples-4-white-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-examples-4-white-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-hero-result-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-hero-result-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-hero-result-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img2-photo-hub-hero-source-r1-640.webp": {
+    "original": "/ai-image-generation/img2-photo-hub-hero-source-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img2-photo-hub-hero-source-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img3-home-earbuds-r1-640.webp": {
+    "original": "/ai-image-generation/img3-home-earbuds-r1-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img3-home-earbuds-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img3-video-earbud-box-r1-640.webp": {
+    "original": "/ai-image-generation/img3-video-earbud-box-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img3-video-earbud-box-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img3-video-fragrance-r1-640.webp": {
+    "original": "/ai-image-generation/img3-video-fragrance-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img3-video-fragrance-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img3-video-phone-case-compare-r1-640.webp": {
+    "original": "/ai-image-generation/img3-video-phone-case-compare-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img3-video-phone-case-compare-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/img3-video-supplement-creator-r1-640.webp": {
+    "original": "/ai-image-generation/img3-video-supplement-creator-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/img3-video-supplement-creator-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k1-product-videos-gallery-feature-action-t06-640.webp": {
+    "original": "/ai-image-generation/k1-product-videos-gallery-feature-action-t06-640.webp",
+    "width": 640,
+    "height": 360,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k1-product-videos-gallery-feature-action-t06-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k1-product-videos-template-citrus-drink-640.webp": {
+    "original": "/ai-image-generation/k1-product-videos-template-citrus-drink-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k1-product-videos-template-citrus-drink-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k1-unboxing-gallery-headphones-box-640.webp": {
+    "original": "/ai-image-generation/k1-unboxing-gallery-headphones-box-640.webp",
+    "width": 640,
+    "height": 360,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k1-unboxing-gallery-headphones-box-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k1-unboxing-picker-headphones-640.webp": {
+    "original": "/ai-image-generation/k1-unboxing-picker-headphones-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k1-unboxing-picker-headphones-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k2-url-strip-water-bottle-640.webp": {
+    "original": "/ai-image-generation/k2-url-strip-water-bottle-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k2-url-strip-water-bottle-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k3-social-example-hot-sauce-640.webp": {
+    "original": "/ai-image-generation/k3-social-example-hot-sauce-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k3-social-example-hot-sauce-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k5-change-background-picker-cards-1-image-640.webp": {
+    "original": "/ai-image-generation/k5-change-background-picker-cards-1-image-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k5-change-background-picker-cards-1-image-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k5-change-background-uses-1-image-640.webp": {
+    "original": "/ai-image-generation/k5-change-background-uses-1-image-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k5-change-background-uses-1-image-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k5-home-lipstick-vanity-640.webp": {
+    "original": "/ai-image-generation/k5-home-lipstick-vanity-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k5-home-lipstick-vanity-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4-640.webp": {
+    "original": "/ai-image-generation/k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/k7-ind-health-wellness-strip-3-n-gen2-tpl-beauty-c4-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-home-apps-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-home-apps-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-home-apps-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-home-clothing-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-home-clothing-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-home-clothing-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-home-e-commerce-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-home-e-commerce-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-home-e-commerce-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-home-e-commerce-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-home-e-commerce-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-home-e-commerce-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-home-explainer-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-home-explainer-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-home-explainer-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-apparel-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-apparel-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-apparel-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-clothing-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-clothing-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-clothing-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-clothing-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-clothing-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-clothing-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-financial-services-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-financial-services-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-financial-services-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-jewelry-accessories-3-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-jewelry-accessories-3-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-jewelry-accessories-3-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-kids-toy-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-kids-toy-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-kids-toy-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-kids-toy-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-kids-toy-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-kids-toy-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-pet-1-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-pet-1-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-pet-1-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/mx1w-video-hub-pet-2-r1-640.webp": {
+    "original": "/ai-image-generation/mx1w-video-hub-pet-2-r1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/mx1w-video-hub-pet-2-r1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-home-picker-hot-sauce-640.webp": {
+    "original": "/ai-image-generation/q1-home-picker-hot-sauce-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-home-picker-hot-sauce-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-home-picker-mask-640.webp": {
+    "original": "/ai-image-generation/q1-home-picker-mask-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-home-picker-mask-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-card-flashshoe-640.webp": {
+    "original": "/ai-image-generation/q1-video-card-flashshoe-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-card-flashshoe-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-card-stain-640.webp": {
+    "original": "/ai-image-generation/q1-video-card-stain-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-card-stain-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-ex-gym-protein-640.webp": {
+    "original": "/ai-image-generation/q1-video-ex-gym-protein-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-ex-gym-protein-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-ex-lunchbox-640.webp": {
+    "original": "/ai-image-generation/q1-video-ex-lunchbox-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-ex-lunchbox-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-ex-trailshoe-640.webp": {
+    "original": "/ai-image-generation/q1-video-ex-trailshoe-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-ex-trailshoe-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-hero-unbox-640.webp": {
+    "original": "/ai-image-generation/q1-video-hero-unbox-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-hero-unbox-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-picker-closet-v2-640.webp": {
+    "original": "/ai-image-generation/q1-video-picker-closet-v2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-picker-closet-v2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-picker-phone-v2-640.webp": {
+    "original": "/ai-image-generation/q1-video-picker-phone-v2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-picker-phone-v2-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q1-video-picker-workout-640.webp": {
+    "original": "/ai-image-generation/q1-video-picker-workout-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q1-video-picker-workout-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q14-industries-strip-drawer-640.webp": {
+    "original": "/ai-image-generation/q14-industries-strip-drawer-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q14-industries-strip-drawer-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q2-video-ads-after-640.webp": {
+    "original": "/ai-image-generation/q2-video-ads-after-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q2-video-ads-after-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/q9-head-phone-grip-demo-640.webp": {
+    "original": "/ai-image-generation/q9-head-phone-grip-demo-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/q9-head-phone-grip-demo-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/teams1-home-r1-ad-640.webp": {
+    "original": "/ai-image-generation/teams1-home-r1-ad-640.webp",
+    "width": 640,
+    "height": 960,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/teams1-home-r1-ad-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/teams1-home-r1-src-640.webp": {
+    "original": "/ai-image-generation/teams1-home-r1-src-640.webp",
+    "width": 640,
+    "height": 640,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/teams1-home-r1-src-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/tw1-wall-apps-1-640.webp": {
+    "original": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tw1-wall-apps-1-640--320.webp"
+      }
+    ]
+  },
+  "/ai-image-generation/tw1-wall-apps-2-640.webp": {
+    "original": "/ai-image-generation/tw1-wall-apps-2-640.webp",
+    "width": 640,
+    "height": 1138,
+    "variants": [
+      {
+        "width": 320,
+        "url": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tw1-wall-apps-2-640--320.webp"
+      }
+    ]
+  }
+}

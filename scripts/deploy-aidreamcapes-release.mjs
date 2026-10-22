@@ -46,6 +46,10 @@ const sourcePaths = ["package.json", "package-lock.json", "next.config.mjs", "ne
 const productionAssetPaths = [
   "public/assets/sites/site_aidreamcapes/workspace/actors/voices",
   "public/media/site_aidreamcapes/workspace/actors/library",
+  // Width variants for the first viewport and the hub card images. They are
+  // referenced by the committed responsive index, so a release that ships the
+  // index has to ship the files with it.
+  "public/assets/sites/site_aidreamcapes/v2-responsive",
 ];
 const archivePaths = [...sourcePaths, ...productionAssetPaths];
 const root = "/www/wwwroot/aidreamcapes.com";
