@@ -117,6 +117,11 @@ BASE=$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^Work
 OTHER_SERVICES=$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoots.service -p MainPID -p WorkingDirectory)
 test -d "$BASE/public"
 test -f "$BASE/.env.local"
+# A release restart must never expose the default nginx 502 page. Refuse to
+# touch the service unless the 503 maintenance page is installed and loaded.
+test -s /www/wwwroot/aidreamcapes.com/maintenance/maintenance.html || { echo 'Refusing to deploy: Aidreamcapes maintenance page file is missing.' >&2; exit 1; }
+nginx -T 2>/dev/null | grep -q 'location = /__maintenance' || { echo 'Refusing to deploy: nginx maintenance location is not loaded.' >&2; exit 1; }
+nginx -T 2>/dev/null | grep -q 'error_page 502 503 504 =503 /__maintenance' || { echo 'Refusing to deploy: nginx maintenance error_page is not loaded.' >&2; exit 1; }
 test ! -e "$RELEASE"
 mkdir -p "$RELEASE"
 tar -xf ${quote(remoteArchive)} -C "$RELEASE"

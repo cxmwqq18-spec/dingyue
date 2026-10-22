@@ -56,8 +56,10 @@ scp -P 11765 -i ~/.ssh/ai_project_198_200_50_8_ed25519 \
 
 scp -P 11765 -i ~/.ssh/ai_project_198_200_50_8_ed25519 \
   ops/deploy/aivideosugc-maintenance.nginx.conf \
-  root@204.77.130.125:/www/server/panel/vhost/nginx/aivideosugc-maintenance.conf
+  root@204.77.130.125:/www/server/nginx/conf/aivideosugc-maintenance.conf
 ```
+
+> 不要把 snippet 放到 `/www/server/panel/vhost/nginx/`。BT 面板会自动 include 该目录下所有 `*.conf`（http 级），而 `location` 不能出现在 http 级，`nginx -t` 会报 `"location" directive is not allowed here`。snippet 放在 `/www/server/nginx/conf/`，再由站点的 server 块显式 include。
 
 ### 3.2 在 Nginx 主配置中加一行 include
 
@@ -66,7 +68,7 @@ scp -P 11765 -i ~/.ssh/ai_project_198_200_50_8_ed25519 \
 只加在 **`server_name www.aivideosugc.com`** 的 443 server 块里，不要加到 apex（`server_name aivideosugc.com`）的 301 块里。用 `location /_protected-customer-assets/` 作为唯一锚点，插在它前面：
 
 ```nginx
-    include /www/server/panel/vhost/nginx/aivideosugc-maintenance.conf;
+    include /www/server/nginx/conf/aivideosugc-maintenance.conf;
 
     location /_protected-customer-assets/ {
         internal;
@@ -140,7 +142,7 @@ curl -sS -o /dev/null -w '%{http_code}\n' https://www.aivideosugc.com/
 
 如果需要在应用仍运行时做计划维护（例如不兼容的数据库变更），可以加一个文件开关：
 
-1. 新建 `/www/server/panel/vhost/nginx/aivideosugc-maintenance-location.conf`：
+1. 新建 `/www/server/nginx/conf/aivideosugc-maintenance-location.conf`：
 
 ```nginx
 if (-f /www/wwwroot/aidreamcapes.com/maintenance/ENABLED) {
@@ -151,7 +153,7 @@ if (-f /www/wwwroot/aidreamcapes.com/maintenance/ENABLED) {
 2. 在主配置的 `location / {` 内、`proxy_pass` 之前加：
 
 ```nginx
-    include /www/server/panel/vhost/nginx/aivideosugc-maintenance-location.conf;
+    include /www/server/nginx/conf/aivideosugc-maintenance-location.conf;
 ```
 
 3. `nginx -t && systemctl reload nginx`。
@@ -185,7 +187,15 @@ rm -f /www/wwwroot/aidreamcapes.com/maintenance/ENABLED
 5. `systemctl restart aidreamcapes.service`；
 6. 健康检查与 origin smoke。
 
-窗口只在第 5 步到第 6 步之间（通常几秒）。Nginx 的 `error_page 502 504` 自动覆盖，**不需要改发布脚本**。
+窗口只在第 5 步到第 6 步之间（通常几秒）。Nginx 的 `error_page 502 504` 自动覆盖。
+
+发布脚本已加 preflight：在切换 release、重启服务之前，先检查
+
+- `/www/wwwroot/aidreamcapes.com/maintenance/maintenance.html` 存在且非空；
+- 运行中的 Nginx 配置包含 `location = /__maintenance`；
+- 运行中的 Nginx 配置包含 `error_page 502 503 504 =503 /__maintenance`。
+
+任一项不满足，脚本会在停服务前直接失败，避免出现默认 Nginx 502 页。若 preflight 失败，先按本文第 3 节安装维护页，不要绕过检查。
 
 维护页放在 `/www/wwwroot/aidreamcapes.com/maintenance/`，不在 release 目录，所以每次部署都会保留。如果以后希望页面随仓库自动更新，可以在发布脚本远程命令里加一行复制；当前不需要。
 
@@ -218,6 +228,24 @@ curl -sS -o /dev/null -w '%{http_code}\n' https://www.aivideosugc.com/
 - [ ] 未修改 MyDreamShoots 的 Nginx 配置、数据或资产。
 - [ ] 如需手动开关，维护结束后 `ENABLED` 已删除。
 
-## 9. 后续选项
+## 9. 实测记录（2026-10-22）
+
+在生产上做了一次受控验证：
+
+1. `systemctl stop aidreamcapes.service`；
+2. `curl https://www.aivideosugc.com/`；
+3. `systemctl start aidreamcapes.service`；
+4. 轮询到首页恢复 `200`。
+
+结果：
+
+- `HTTP/1.1 503 Service Unavailable`
+- `retry-after: 120`
+- `cache-control: no-store, max-age=0`
+- `cf-cache-status: DYNAMIC`
+- 正文 4749 bytes，包含 `We're making a few updates`
+- 恢复后首页 `200`
+
+## 10. 后续选项
 
 如果希望发布完全零停机，下一步是把发布脚本改成蓝绿切换：candidate 在随机端口通过 smoke 后，把 Nginx upstream 切到 candidate，再停旧进程。当前脚本已经会启动 candidate 并跑 smoke，具备改造基础；维护页是这一改造完成前更稳妥的兜底。
