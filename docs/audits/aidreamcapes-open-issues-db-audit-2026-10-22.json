@@ -1,0 +1,456 @@
+{
+ "totalPages": 267,
+ "byType": {
+  "404": 1,
+  "home": 1,
+  "content": 135,
+  "account": 1,
+  "ai_tool": 74,
+  "collection": 1,
+  "standard-content": 12,
+  "ai_tool_directory": 2,
+  "album": 1,
+  "workspace": 1,
+  "job_detail": 1,
+  "job_progress": 1,
+  "blog": 1,
+  "article": 9,
+  "cart": 1,
+  "policy": 19,
+  "help": 2,
+  "login": 1,
+  "pricing": 1,
+  "search": 1,
+  "tools": 1
+ },
+ "redirectSourceRows": [
+  {
+   "slug": "/ai-image-generation/carousel-set",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-carousel-set",
+   "target": "/ai-image-generation/social-ad-photos",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T16:05:50.078Z"
+  },
+  {
+   "slug": "/ai-image-generation/comparison-chart",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-comparison-chart",
+   "target": "/ai-image-generation/colorway-variations",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.420Z"
+  },
+  {
+   "slug": "/ai-image-generation/creator-portrait",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-creator-portrait",
+   "target": "/ai-image-generation/professional-headshot",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.432Z"
+  },
+  {
+   "slug": "/ai-image-generation/enhance-upscale",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-enhance-upscale",
+   "target": "/ai-image-generation",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.447Z"
+  },
+  {
+   "slug": "/ai-image-generation/feature-infographic",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-feature-infographic",
+   "target": "/ai-image-generation",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.457Z"
+  },
+  {
+   "slug": "/ai-image-generation/ghost-mannequin",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-ghost-mannequin",
+   "target": "/ai-image-generation/white-background-photos",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T16:05:48.748Z"
+  },
+  {
+   "slug": "/ai-image-generation/hair-makeup-preview",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-hair-makeup-preview",
+   "target": "/industries/beauty-skincare",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T16:05:48.759Z"
+  },
+  {
+   "slug": "/ai-image-generation/lookbook-cover",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-lookbook-cover",
+   "target": "/ai-image-generation/model-photos",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.466Z"
+  },
+  {
+   "slug": "/ai-image-generation/old-photo-restore",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-old-photo-restore",
+   "target": "/ai-image-generation",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.474Z"
+  },
+  {
+   "slug": "/ai-image-generation/social-profile-photo",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-social-profile-photo",
+   "target": "/ai-image-generation/professional-headshot",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.483Z"
+  },
+  {
+   "slug": "/ai-image-generation/team-directory",
+   "pageType": "ai_tool",
+   "templateKey": "ai-image-theme-team-directory",
+   "target": "/ai-image-generation/professional-headshot",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.490Z"
+  },
+  {
+   "slug": "/ai-video-generation/app-saas-demo",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-promo-category-app-saas-demo",
+   "target": "/ai-video-generation",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.800Z"
+  },
+  {
+   "slug": "/ai-video-generation/carousel-storytelling",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-carousel-storytelling",
+   "target": "/ai-image-generation/social-ad-photos",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.820Z"
+  },
+  {
+   "slug": "/ai-video-generation/discount-free-shipping",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-promo-category-discount-free-shipping",
+   "target": "/ai-video-generation/promo-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.830Z"
+  },
+  {
+   "slug": "/ai-video-generation/duet-reaction",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-conversion-seeding-duet-reaction",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.838Z"
+  },
+  {
+   "slug": "/ai-video-generation/feature-callout",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-conversion-seeding-feature-callout",
+   "target": "/ai-video-generation/product-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.844Z"
+  },
+  {
+   "slug": "/ai-video-generation/founder-update",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-brand-creator-founder-update",
+   "target": "/ai-video-generation/spokesperson-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.862Z"
+  },
+  {
+   "slug": "/ai-video-generation/green-screen-speaking",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-conversion-seeding-green-screen-speaking",
+   "target": "/ai-video-generation/spokesperson-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.867Z"
+  },
+  {
+   "slug": "/ai-video-generation/hook-lab",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-hook-lab",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.884Z"
+  },
+  {
+   "slug": "/ai-video-generation/limited-drop-alert",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-promo-category-limited-drop-alert",
+   "target": "/ai-video-generation/promo-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.908Z"
+  },
+  {
+   "slug": "/ai-video-generation/local-service-ad",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-promo-category-local-service-ad",
+   "target": "/ai-video-generation",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.914Z"
+  },
+  {
+   "slug": "/ai-video-generation/multilingual-video",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-brand-creator-multilingual-video",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.919Z"
+  },
+  {
+   "slug": "/ai-video-generation/music-video",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-brand-creator-trending-audio-sync",
+   "target": "/ai-video-generation/cinematic-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.723Z"
+  },
+  {
+   "slug": "/ai-video-generation/native-spark-ads",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-native-spark-ads",
+   "target": "/platforms/tiktok-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.925Z"
+  },
+  {
+   "slug": "/ai-video-generation/pas-formula-ads",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-pas-formula-ads",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.930Z"
+  },
+  {
+   "slug": "/ai-video-generation/retargeting-urgency",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-retargeting-urgency",
+   "target": "/ai-video-generation/promo-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.949Z"
+  },
+  {
+   "slug": "/ai-video-generation/social-proof-animation",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-conversion-seeding-social-proof-animation",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.955Z"
+  },
+  {
+   "slug": "/ai-video-generation/supplement-highlight",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-promo-category-supplement-highlight",
+   "target": "/industries/health-wellness",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:28.993Z"
+  },
+  {
+   "slug": "/ai-video-generation/talking-photo-recs",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-talking-photo-recs",
+   "target": "/ai-video-generation/spokesperson-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.001Z"
+  },
+  {
+   "slug": "/ai-video-generation/testimonial-ads",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-testimonial-ads",
+   "target": "/ai-video-generation/video-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.007Z"
+  },
+  {
+   "slug": "/ai-video-generation/tiktok-reels-shorts",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-tiktok-reels-shorts",
+   "target": "/platforms/tiktok-ads",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.014Z"
+  },
+  {
+   "slug": "/ai-video-generation/url-to-ad",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-ads-testing-url-to-ad",
+   "target": "/ai-video-generation/url-to-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.021Z"
+  },
+  {
+   "slug": "/blog/ai-content-disclosure-safe-usage",
+   "pageType": "article",
+   "templateKey": "blog-detail",
+   "target": "/blog/ai-video-review-checklist",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.062Z"
+  },
+  {
+   "slug": "/blog/ai-talking-photo-video-guide",
+   "pageType": "article",
+   "templateKey": "blog-detail",
+   "target": "/blog/ai-ugc-video-ads-guide",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.066Z"
+  },
+  {
+   "slug": "/blog/ecommerce-product-image-workflow",
+   "pageType": "article",
+   "templateKey": "blog-detail",
+   "target": "/blog/ai-product-photography-guide",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T05:29:24.843Z"
+  },
+  {
+   "slug": "/blog/motion-generator-video-guide",
+   "pageType": "article",
+   "templateKey": "blog-detail",
+   "target": "/ai-video-generation/image-to-video",
+   "targetExists": true,
+   "updatedAt": "2026-10-22T07:07:29.079Z"
+  },
+  {
+   "slug": "/creators-circle",
+   "pageType": "content",
+   "templateKey": "creators-circle",
+   "target": "/contact-us",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T06:54:57.302Z"
+  },
+  {
+   "slug": "/marketing",
+   "pageType": "ai_tool_directory",
+   "templateKey": "aidreamcapes-marketing-directory",
+   "target": "/templates",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T16:05:49.714Z"
+  },
+  {
+   "slug": "/search",
+   "pageType": "search",
+   "templateKey": "search",
+   "target": "/templates",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T06:54:57.531Z"
+  },
+  {
+   "slug": "/tools",
+   "pageType": "tools",
+   "templateKey": "tools",
+   "target": "/ai-video-generation",
+   "targetExists": true,
+   "updatedAt": "2026-09-21T07:33:19.845Z"
+  },
+  {
+   "slug": "/workflow",
+   "pageType": "content",
+   "templateKey": "workflow",
+   "target": "/guides",
+   "targetExists": true,
+   "updatedAt": "2026-10-19T06:54:57.553Z"
+  }
+ ],
+ "redirectSourceRowCount": 41,
+ "missingTargets": [],
+ "saveTheDate": [
+  {
+   "slug": "/ai-save-the-date/christmas",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-19T06:54:56.794Z"
+  },
+  {
+   "slug": "/ai-save-the-date/engagement",
+   "pageType": "standard-content",
+   "templateKey": "save-the-date-editorial",
+   "updatedAt": "2026-10-19T06:54:56.801Z"
+  },
+  {
+   "slug": "/ai-save-the-date/fathers-day",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.499Z"
+  },
+  {
+   "slug": "/ai-save-the-date/halloween",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.511Z"
+  },
+  {
+   "slug": "/ai-save-the-date/mothers-day",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.521Z"
+  },
+  {
+   "slug": "/ai-save-the-date/new-year",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.531Z"
+  },
+  {
+   "slug": "/ai-save-the-date/proposal",
+   "pageType": "standard-content",
+   "templateKey": "save-the-date-editorial",
+   "updatedAt": "2026-10-19T06:54:56.833Z"
+  },
+  {
+   "slug": "/ai-save-the-date/save-the-date",
+   "pageType": "standard-content",
+   "templateKey": "save-the-date-editorial",
+   "updatedAt": "2026-10-19T06:54:56.842Z"
+  },
+  {
+   "slug": "/ai-save-the-date/thanksgiving",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.541Z"
+  },
+  {
+   "slug": "/ai-save-the-date/valentines-day",
+   "pageType": "standard-content",
+   "templateKey": "save-the-date",
+   "updatedAt": "2026-10-22T05:29:24.567Z"
+  },
+  {
+   "slug": "/ai-save-the-date/wedding-anniversary",
+   "pageType": "standard-content",
+   "templateKey": "save-the-date-editorial",
+   "updatedAt": "2026-10-22T05:29:24.579Z"
+  },
+  {
+   "slug": "/ai-save-the-date/wedding-ceremony",
+   "pageType": "standard-content",
+   "templateKey": "seasonal-editorial",
+   "updatedAt": "2026-10-22T05:29:24.588Z"
+  },
+  {
+   "slug": "/ai-video-generation/save-the-date",
+   "pageType": "ai_tool",
+   "templateKey": "tool-detail",
+   "updatedAt": "2026-10-19T06:54:57.124Z"
+  },
+  {
+   "slug": "/ai-video-generation/wedding-ceremony",
+   "pageType": "ai_tool",
+   "templateKey": "tool-detail",
+   "updatedAt": "2026-10-19T06:54:57.222Z"
+  },
+  {
+   "slug": "/ai-video-generation/wedding-invitation",
+   "pageType": "ai_tool",
+   "templateKey": "ai-video-topic-wedding-invitation",
+   "updatedAt": "2026-10-19T06:54:57.225Z"
+  },
+  {
+   "slug": "/best-save-the-date",
+   "pageType": "content",
+   "templateKey": "best-save-the-date",
+   "updatedAt": "2026-10-19T06:54:57.247Z"
+  }
+ ]
+}

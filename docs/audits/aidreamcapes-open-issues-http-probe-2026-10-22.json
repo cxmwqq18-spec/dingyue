@@ -1,0 +1,462 @@
+{
+ "redirectSourceRows": [
+  {
+   "path": "/ai-image-generation/carousel-set",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/social-ad-photos",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/comparison-chart",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/colorway-variations",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/creator-portrait",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/professional-headshot",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/enhance-upscale",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/feature-infographic",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/ghost-mannequin",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/white-background-photos",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/hair-makeup-preview",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/industries/beauty-skincare",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/lookbook-cover",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/model-photos",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/old-photo-restore",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/social-profile-photo",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/professional-headshot",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-image-generation/team-directory",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/professional-headshot",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/app-saas-demo",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/carousel-storytelling",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-image-generation/social-ad-photos",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/discount-free-shipping",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/duet-reaction",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/feature-callout",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/product-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/founder-update",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/spokesperson-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/green-screen-speaking",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/spokesperson-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/hook-lab",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/limited-drop-alert",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/local-service-ad",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/multilingual-video",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/music-video",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/cinematic-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/native-spark-ads",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/platforms/tiktok-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/pas-formula-ads",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/retargeting-urgency",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/social-proof-animation",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/supplement-highlight",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/industries/health-wellness",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/talking-photo-recs",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/spokesperson-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/testimonial-ads",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/video-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/tiktok-reels-shorts",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/platforms/tiktok-ads",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/url-to-ad",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/url-to-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/blog/ai-content-disclosure-safe-usage",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/blog/ai-video-review-checklist",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/blog/ai-talking-photo-video-guide",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/blog/ecommerce-product-image-workflow",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/blog/ai-product-photography-guide",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/blog/motion-generator-video-guide",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation/image-to-video",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/creators-circle",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/contact-us",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/marketing",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/templates",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/search",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/templates",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/tools",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/ai-video-generation",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/workflow",
+   "status": 301,
+   "location": "https://www.aivideosugc.com/guides",
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  }
+ ],
+ "saveTheDate": [
+  {
+   "path": "/ai-save-the-date/christmas",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/engagement",
+   "status": 410,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/fathers-day",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/halloween",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/mothers-day",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/new-year",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/proposal",
+   "status": 410,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/save-the-date",
+   "status": 410,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/thanksgiving",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/valentines-day",
+   "status": 410,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/wedding-anniversary",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-save-the-date/wedding-ceremony",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/save-the-date",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/wedding-ceremony",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/ai-video-generation/wedding-invitation",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  },
+  {
+   "path": "/best-save-the-date",
+   "status": 404,
+   "location": null,
+   "canonical": null,
+   "robots": "",
+   "bytes": 0
+  }
+ ]
+}
