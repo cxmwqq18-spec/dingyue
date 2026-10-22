@@ -294,14 +294,15 @@ HTTP: 41 条全部 301，无 200
 - 安全边界：源地址必须今天不返回 200（不在 sitemap、也不是库中存在但未进 sitemap 的页面）；目标必须是 sitemap 里的公开页；媒体卡地址与其别名一律排除，避免把活的详情页 301 走；只有 GET/HEAD 走近似跳转，表单 POST 不会被搬走。
 - 闸门：`scripts/smoke-aidreamcapes-seo-contract.mjs` 断言「源不是活页、目标是活页、每个公开地址的大小写变体不缺」，并逐个请求 525 条源地址，要求全部 301 到表里记录的目标。
 - 影响面：查找只发生在 `aidreamcapesV2Redirect()` 内部（非本店域名直接返回 `undefined`），MyDreamShoots 与 EU 站行为不变。
-- 本地验证（`5b9e5c977` 预构建，x-forwarded-host=www.aivideosugc.com）：525/525 全部 301；`/privacy`、`/templates/video`、`/about-us` 仍 200；`POST /platforms/instagram` 仍 404。
+- 上线验证（`32e29d9e0`）：候选实例与切换后实例各跑一次全量合同，`nearSlugRedirects: {entries:525, verified:525, failures:0}`；线上抽样 40 条全部 301 到目标；`/`、`/about-us`、`/privacy`、`/templates/video`、`/ai-video-generation`、`/ai-actors` 仍 200；`POST /platforms/instagram` 仍 404；sitemap 仍 178 条。
+- 发布维护页：本次切换期间 90 次探针得 78 次 200、11 次 503（均含维护页文案）、1 次连接重置（切换瞬间）、0 次默认 502。
 
 ### 私有路由与重复标题（2026-10-23 已上线）
 
 - **robots.txt 收口**：`/robots.txt` 对 `www.aivideosugc.com` 增加 `Disallow: /app/`、`Disallow: /api/`、`Disallow: /login`、`Disallow: /site/`，让私有工作台、接口、登录与路径模式预览不再消耗抓取预算；sitemap 行不变。判定基于 `storefrontSitemapUrlForHost()` 解析出的站点域名，其他站点走原分支，行为不变（本地对 MyDreamShoots host 的 robots 输出与改动前一致）。
 - **重复标题/描述归零**：审计脚本此前把私有页也算进重复统计——线上 7 个 `/app/create/*` 共用标题 `Workspace` 与平台默认描述，把真正争抢同一查询的页面盖住了。现在只比较能进索引的页面（`noindex` 的页不再计入）。线上复测（392 页，2026-10-23）：`duplicateTitles: 0`、`duplicateDescriptions: 0`，`brokenLinks: 0`、`orphans: 0`、`canonicalMismatch: 0`，392 页全部 200。
 - **平台描述外泄**：根布局的兜底描述原本是平台自述（"Multi-site AI subscription platform with store-style theme designer."），会出现在客户工作台的浏览器标签与分享卡上，属于内部信息。改为按 host 判定：Aidreamcapes 站点用门店文案（"Create AI UGC video ads and product photos from a product link, an image or a prompt."），其他站点保留原文，零影响。
-- 本地回读（`5b9e5c977` 预构建）：`/app/create/url-to-video` 描述已换为门店文案；`Workspace` 标题保留（私有工作台，`noindex, nofollow`）。
+- 线上回读（`32e29d9e0`）：`/robots.txt` 输出上述四条 Disallow 且 sitemap 行不变；`/app/create/url-to-video` 描述已换为门店文案，`Workspace` 标题保留（私有工作台，`noindex, nofollow`）。
 
 ## 7. 工具链与环境
 
