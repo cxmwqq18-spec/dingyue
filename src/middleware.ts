@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { normalizeAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter";
 import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
+import aidreamcapesSiteV2NearSlugs from "@/lib/aidreamcapes-site-v2-near-slugs.json";
 import { NextResponse } from "next/server";
 import { canonicalSpanishXbyCollectionSlug, isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
@@ -1000,6 +1001,11 @@ async function storefrontIconResponse(request: NextRequest): Promise<Response | 
 // Aidreamcapes.com v2: retired v1 URLs move permanently to their closest v2 page.
 // Only requests for the aidreamcapes.com host (or its /site/aidreamcapes path mode) match.
 const AIDREAMCAPES_V2_REDIRECTS = new Map<string, string>(aidreamcapesSiteV2Redirects as [string, string][]);
+// Addresses that are one step away from a public page: a different case, a
+// plural instead of a singular, a missing suffix. They answer 404 today, so
+// the table turns them into a permanent redirect to the page the visitor
+// meant. The table only holds addresses that do not answer today.
+const AIDREAMCAPES_V2_NEAR_SLUGS = new Map<string, string>(aidreamcapesSiteV2NearSlugs as [string, string][]);
 
 function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
@@ -1007,7 +1013,10 @@ function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
   const hostSlug = storefrontSlugForHost(request.headers.get("x-forwarded-host")) ?? storefrontSlugForHost(request.headers.get("host"));
   if (hostSlug ? hostSlug !== "aidreamcapes" : !pathMatch) return undefined;
   const publicPath = pathMatch ? pathMatch[1] || "/" : pathname;
-  const target = AIDREAMCAPES_V2_REDIRECTS.get(publicPath);
+  const target = AIDREAMCAPES_V2_REDIRECTS.get(publicPath)
+    // A near address is only redirected for a read. A form post must never
+    // be moved to another address by the storefront.
+    ?? (["GET", "HEAD"].includes(request.method) ? AIDREAMCAPES_V2_NEAR_SLUGS.get(publicPath) : undefined);
   if (!target) return undefined;
   const location = `${pathMatch && hostSlug !== "aidreamcapes" ? "/site/aidreamcapes" : ""}${target}${request.nextUrl.search}`;
   return NextResponse.redirect(publicRedirectUrlForRequest(request, location), 301);

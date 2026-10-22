@@ -383,7 +383,11 @@ const canonicalOutsideSitemap = htmlPages.filter((page) => page.canonical && !si
 
 const titleGroups = new Map();
 const descGroups = new Map();
-for (const page of htmlPages) {
+// Only the pages that can reach an index are compared. A private page may
+// repeat a title without costing the storefront an impression, and counting
+// those repeats hid the pages that actually compete for a query.
+const indexablePages = htmlPages.filter((page) => !/noindex/i.test(page.robots || "") && !/noindex/i.test(page.headers?.["x-robots-tag"] || ""));
+for (const page of indexablePages) {
   const t = page.title.toLowerCase();
   if (t) titleGroups.set(t, [...(titleGroups.get(t) || []), page.url]);
   const d = page.description.toLowerCase();

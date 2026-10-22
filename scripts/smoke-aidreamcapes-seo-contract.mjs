@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { load } from "cheerio";
 import { XMLParser, XMLValidator } from "fast-xml-parser";
 import { request } from "playwright";
+import { nearSlugCandidates } from "./lib/aidreamcapes-near-slug-rules.mjs";
 
 const BASE_URL = String(process.env.AIDREAMCAPES_SEO_ORIGIN || "http://127.0.0.1:3002").replace(/\/$/, "");
 const MEDIA_BASE_URL = String(process.env.AIDREAMCAPES_SEO_MEDIA_ORIGIN || BASE_URL).replace(/\/$/, "");
@@ -18,6 +19,7 @@ const SITE_HEADERS = {
 };
 // Aidreamcapes.com v2 retires v1 URLs with 301 redirects (applied by the middleware).
 const SITE_V2_REDIRECTS = JSON.parse(readFileSync(new URL("../src/lib/aidreamcapes-site-v2-redirects.json", import.meta.url), "utf8"));
+const SITE_V2_NEAR_SLUGS = JSON.parse(readFileSync(new URL("../src/lib/aidreamcapes-site-v2-near-slugs.json", import.meta.url), "utf8"));
 const SITE_V2_REDIRECT_SOURCES = new Set(SITE_V2_REDIRECTS.map(([from]) => from));
 const SITE_V2_REDIRECT_TARGETS = new Set(SITE_V2_REDIRECTS.map(([, to]) => to));
 const SITE_V2_TARGET_PATHS = [
@@ -376,6 +378,24 @@ assert(!pageUrls.some((url) => /\/login(?:[/?]|$)|\/404(?:[/?]|$)/i.test(url)), 
 assert(!sitemapXml.includes("engagement-photo image"), "stale sitemap image title");
 assert(!sitemapXml.includes("An intimate engagement announcement"), "stale sitemap image caption");
 
+// The near slug table sends a visitor who typed one address away to the page
+// they meant. A source that answers today must never be redirected, and a
+// target that does not answer would only move the problem.
+const nearSlugTable = new Map(SITE_V2_NEAR_SLUGS);
+const nearSlugLivePaths = new Set(entriesForReadback.map((entry) => new URL(entry.loc).pathname.replace(/\/+$/, "") || "/"));
+for (const [from, to] of SITE_V2_NEAR_SLUGS) {
+  assert(!nearSlugLivePaths.has(from), `near slug source must not be a live page: ${from}`);
+  assert(nearSlugLivePaths.has(to), `near slug target must be a live page: ${from} -> ${to}`);
+}
+const missingNearSlugs = [];
+for (const path of nearSlugLivePaths) {
+  for (const candidate of nearSlugCandidates(path)) {
+    if (candidate === path || nearSlugLivePaths.has(candidate)) continue;
+    if (!nearSlugTable.has(candidate)) missingNearSlugs.push(`${candidate} -> ${path}`);
+  }
+}
+assert.equal(missingNearSlugs.length, 0, `near slug table misses ${missingNearSlugs.length} address(es): ${JSON.stringify(missingNearSlugs.slice(0, 20))}`);
+
 const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   const url = entry.loc;
   assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
@@ -581,10 +601,11 @@ console.log(JSON.stringify({
     redirectingTargets: redirectLinkViolations.length
   },
   targetMetadataPages: metadataResults.length,
+  nearSlugRedirects: SITE_V2_NEAR_SLUGS.length,
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,
   uniqueSitemapImages: imageStatus.length,
-  checks: ["metadata", "jsonld", "site-v2-redirects", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts", "internal-link-redirect-targets"]
+  checks: ["metadata", "jsonld", "site-v2-redirects", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts", "internal-link-redirect-targets", "near-slug-redirects"]
 }));
 // A public page that links to an address that answers 301 or 308 sends the
 // visitor and the crawler through a jump before the real page. The redirect
