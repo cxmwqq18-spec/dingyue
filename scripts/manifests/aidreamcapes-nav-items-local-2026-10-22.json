@@ -10,7 +10,7 @@
     "title": "Make AI UGC Ads in a Few Minutes",
     "pageType": "home",
     "templateKey": "index",
-    "baseHash": "3ae362e3bd5495eab31d301f80b4a3e5bebdecd119fe24020e756fc578dc02fe"
+    "baseHash": "4c444bcce6c08ed5793ff02a6ece224f8f6f09cd4396c3ce304b3cd6146ac5e3"
   },
   "removals": [
     {
@@ -19,8 +19,29 @@
       "label": "Templates",
       "href": "/templates",
       "reason": "The header already carries a dedicated Templates menu and the footer keeps the templates link, so the Resources dropdown does not need a second templates row.",
-      "state": "removed",
-      "index": 0
+      "state": "already removed"
+    }
+  ],
+  "additions": [
+    {
+      "menu": "Resources",
+      "group": "Learn and get help",
+      "label": "Video Review Checklist",
+      "href": "/blog/ai-video-review-checklist",
+      "description": "Check every clip against the script, the reference image and the asset library, so a scene never ships with the wrong wardrobe or props.",
+      "reason": "Customers ask how a delivered video is checked against the brief; the review checklist answers that.",
+      "state": "added",
+      "index": 6
+    },
+    {
+      "menu": "Resources",
+      "group": "Learn and get help",
+      "label": "Delivery Checks",
+      "href": "/digital-delivery",
+      "description": "Five checks run before a file is delivered: release readiness, pre-shoot checks, a delivery pass, a second delivery pass, and a brand-visual cross-check against the template.",
+      "reason": "The delivery policy explains the checkpoints that run before a file is handed over.",
+      "state": "added",
+      "index": 7
     }
   ],
   "before": {
@@ -453,10 +474,6 @@
         "groups": [
           {
             "items": [
-              {
-                "href": "/templates",
-                "label": "Templates"
-              },
               {
                 "href": "/inspiration",
                 "label": "Inspiration"
@@ -1256,6 +1273,14 @@
               {
                 "href": "/contact-us",
                 "label": "Contact"
+              },
+              {
+                "label": "Video Review Checklist",
+                "href": "/blog/ai-video-review-checklist"
+              },
+              {
+                "label": "Delivery Checks",
+                "href": "/digital-delivery"
               }
             ],
             "label": "Learn and get help"
@@ -1579,7 +1604,7 @@
     },
     "version": 2
   },
-  "generatedAt": "2026-10-22T08:34:18.786Z",
+  "generatedAt": "2026-10-22T08:49:37.836Z",
   "owner": "LivePage.contentJson.siteNavigation",
   "rules": {
     "scope": "the header navigation only; the footer and every page body stay untouched",
@@ -1588,8 +1613,9 @@
   "summary": {
     "livePageRowsScanned": 1,
     "removals": 1,
-    "menuRowsBefore": 75,
-    "menuRowsAfter": 74
+    "additions": 2,
+    "menuRowsBefore": 74,
+    "menuRowsAfter": 76
   },
-  "planHash": "091f70174d443c6969cfea3dcbe8831c990f7e0a61bdf6c2ea457b1e1ae04f4c"
+  "planHash": "7ff5ba868634c28820750f0ef01a45c24494a6de8098d7666fd9b1b8d3d5d7d9"
 }

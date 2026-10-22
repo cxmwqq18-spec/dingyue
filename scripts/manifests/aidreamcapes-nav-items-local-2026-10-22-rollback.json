@@ -3,8 +3,8 @@
   "contract": "aidreamcapes-nav-item-2026-10-22-v1",
   "siteId": "site_aidreamcapes",
   "target": "local",
-  "generatedAt": "2026-10-22T08:35:49.947Z",
-  "sourcePlanHash": "091f70174d443c6969cfea3dcbe8831c990f7e0a61bdf6c2ea457b1e1ae04f4c",
+  "generatedAt": "2026-10-22T08:49:38.009Z",
+  "sourcePlanHash": "7ff5ba868634c28820750f0ef01a45c24494a6de8098d7666fd9b1b8d3d5d7d9",
   "page": {
     "id": "site_aidreamcapes_home",
     "slug": "/",
@@ -466,6 +466,14 @@
               {
                 "href": "/contact-us",
                 "label": "Contact"
+              },
+              {
+                "label": "Video Review Checklist",
+                "href": "/blog/ai-video-review-checklist"
+              },
+              {
+                "label": "Delivery Checks",
+                "href": "/digital-delivery"
               }
             ],
             "label": "Learn and get help"
@@ -1220,10 +1228,6 @@
           {
             "items": [
               {
-                "href": "/templates",
-                "label": "Templates"
-              },
-              {
                 "href": "/inspiration",
                 "label": "Inspiration"
               },
@@ -1576,8 +1580,7 @@
       "label": "Templates",
       "href": "/templates",
       "reason": "restore Templates",
-      "state": "removed",
-      "index": 0
+      "state": "already removed"
     }
   ]
 }

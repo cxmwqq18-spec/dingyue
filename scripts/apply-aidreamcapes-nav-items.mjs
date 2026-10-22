@@ -87,6 +87,7 @@ assert.equal(
     target: manifest.target,
     page: manifest.page,
     removals: manifest.removals,
+    additions: manifest.additions,
     before: manifest.before,
     after: manifest.after
   }),
@@ -137,7 +138,8 @@ try {
     target,
     planHash: manifest.planHash,
     state,
-    removals: manifest.removals
+    removals: manifest.removals,
+    additions: manifest.additions ?? []
   };
   if (state === "conflict") {
     console.log(JSON.stringify({

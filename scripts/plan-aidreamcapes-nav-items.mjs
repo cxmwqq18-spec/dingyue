@@ -39,6 +39,34 @@ const REMOVALS = [
   }
 ];
 
+/**
+ * Reviewed additions. Each entry is one customer-facing row that is appended
+ * to the end of a menu group.
+ *
+ * The row copy is written for a customer: it says what the check does and
+ * which public page answers the question. Production notes (script codes,
+ * internal asset registries, delivery package state) stay in the internal
+ * release documents and never reach the public menu.
+ */
+const ADDITIONS = [
+  {
+    menu: "Resources",
+    group: "Learn and get help",
+    label: "Video Review Checklist",
+    href: "/blog/ai-video-review-checklist",
+    description: "Check every clip against the script, the reference image and the asset library, so a scene never ships with the wrong wardrobe or props.",
+    reason: "Customers ask how a delivered video is checked against the brief; the review checklist answers that."
+  },
+  {
+    menu: "Resources",
+    group: "Learn and get help",
+    label: "Delivery Checks",
+    href: "/digital-delivery",
+    description: "Five checks run before a file is delivered: release readiness, pre-shoot checks, a delivery pass, a second delivery pass, and a brand-visual cross-check against the template.",
+    reason: "The delivery policy explains the checkpoints that run before a file is handed over."
+  }
+];
+
 function stable(value) {
   if (value === undefined) return '"<undefined>"';
   if (value instanceof Date) return JSON.stringify(value.toISOString());
@@ -90,6 +118,7 @@ try {
   const before = structuredClone(navigation);
   const after = structuredClone(navigation);
   const removed = [];
+  const added = [];
   for (const removal of REMOVALS) {
     const menu = (after.menus ?? []).find((entry) => entry?.label === removal.menu);
     assert(menu, `Menu ${removal.menu} is missing from the root navigation.`);
@@ -113,6 +142,37 @@ try {
     removed.push({ ...removal, state: "removed", index });
   }
 
+  for (const addition of ADDITIONS) {
+    const menu = (after.menus ?? []).find((entry) => entry?.label === addition.menu);
+    assert(menu, `Menu ${addition.menu} is missing from the root navigation.`);
+    const group = (menu.groups ?? []).find((entry) => entry?.label === addition.group);
+    assert(group, `Group ${addition.group} is missing from ${addition.menu}.`);
+    const items = Array.isArray(group.items) ? group.items : [];
+    const existingIndex = items.findIndex((item) => item?.href === addition.href);
+    if (existingIndex >= 0) {
+      const existing = items[existingIndex];
+      if (existing?.label === addition.label && Object.keys(existing).length === 2) {
+        added.push({ ...addition, state: "already present" });
+        continue;
+      }
+      // The row exists but carries a reviewed shape change, for example a
+      // description that would render it as a rich card. Replace it in place.
+      group.items = items.map((item, itemIndex) => (itemIndex === existingIndex
+        ? { label: addition.label, href: addition.href }
+        : item));
+      added.push({ ...addition, state: "updated", index: existingIndex });
+      continue;
+    }
+    assert(
+      !items.some((item) => item?.label === addition.label),
+      `A row named ${addition.label} already exists in ${addition.menu} / ${addition.group}.`
+    );
+    // No description: a row with a description renders as a rich card, and the
+    // Resources dropdown lists every other row as a plain link.
+    group.items = [...items, { label: addition.label, href: addition.href }];
+    added.push({ ...addition, state: "added", index: group.items.length - 1 });
+  }
+
   const body = {
     contract: CONTRACT,
     siteId: SITE_ID,
@@ -126,6 +186,7 @@ try {
       baseHash: pageHash(row)
     },
     removals: removed,
+    additions: added,
     before,
     after
   };
@@ -142,6 +203,7 @@ try {
     summary: {
       livePageRowsScanned: 1,
       removals: removed.length,
+      additions: added.length,
       menuRowsBefore: (before.menus ?? []).reduce((total, menu) => total + (menu?.groups ?? []).reduce((sum, group) => sum + (group?.items ?? []).length, 0), 0),
       menuRowsAfter: (after.menus ?? []).reduce((total, menu) => total + (menu?.groups ?? []).reduce((sum, group) => sum + (group?.items ?? []).length, 0), 0)
     },
@@ -159,7 +221,8 @@ try {
     planHash: manifest.planHash,
     outPath: writeManifest ? outPath : null,
     summary: manifest.summary,
-    removals: removed
+    removals: removed,
+    additions: added
   }, null, 2));
 } finally {
   await db.$disconnect();

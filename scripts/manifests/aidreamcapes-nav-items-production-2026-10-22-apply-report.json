@@ -4,10 +4,10 @@
   "contract": "aidreamcapes-nav-item-2026-10-22-v1",
   "siteId": "site_aidreamcapes",
   "target": "production",
-  "planHash": "d619a56fa51dba1a57c506b941724b4c803bb4f339bcad02c57995faec0b26b0",
+  "planHash": "28cf4d5ad51667e7fe278021a5fdebb826aa208c702dfff2f46903bf35262776",
   "page": "/",
-  "revisionBefore": "277",
-  "revisionAfter": "278",
+  "revisionBefore": "279",
+  "revisionAfter": "280",
   "revisionDelta": "1",
   "removals": [
     {
@@ -16,8 +16,7 @@
       "label": "Templates",
       "href": "/templates",
       "reason": "The header already carries a dedicated Templates menu and the footer keeps the templates link, so the Resources dropdown does not need a second templates row.",
-      "state": "removed",
-      "index": 0
+      "state": "already removed"
     }
   ]
 }

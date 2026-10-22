@@ -3,8 +3,8 @@
   "contract": "aidreamcapes-nav-item-2026-10-22-v1",
   "siteId": "site_aidreamcapes",
   "target": "production",
-  "generatedAt": "2026-10-22T08:34:55.376Z",
-  "sourcePlanHash": "d619a56fa51dba1a57c506b941724b4c803bb4f339bcad02c57995faec0b26b0",
+  "generatedAt": "2026-10-22T08:49:10.279Z",
+  "sourcePlanHash": "28cf4d5ad51667e7fe278021a5fdebb826aa208c702dfff2f46903bf35262776",
   "page": {
     "id": "site_aidreamcapes_home",
     "slug": "/",
@@ -466,6 +466,14 @@
               {
                 "href": "/contact-us",
                 "label": "Contact"
+              },
+              {
+                "label": "Video Review Checklist",
+                "href": "/blog/ai-video-review-checklist"
+              },
+              {
+                "label": "Delivery Checks",
+                "href": "/digital-delivery"
               }
             ],
             "label": "Learn and get help"
@@ -1220,10 +1228,6 @@
           {
             "items": [
               {
-                "href": "/templates",
-                "label": "Templates"
-              },
-              {
                 "href": "/inspiration",
                 "label": "Inspiration"
               },
@@ -1246,6 +1250,16 @@
               {
                 "href": "/contact-us",
                 "label": "Contact"
+              },
+              {
+                "href": "/blog/ai-video-review-checklist",
+                "label": "Video Review Checklist",
+                "description": "Check every clip against the script, the reference image and the asset library, so a scene never ships with the wrong wardrobe or props."
+              },
+              {
+                "href": "/digital-delivery",
+                "label": "Delivery Checks",
+                "description": "Five checks run before a file is delivered: release readiness, pre-shoot checks, a delivery pass, a second delivery pass, and a brand-visual cross-check against the template."
               }
             ],
             "label": "Learn and get help"
@@ -1576,8 +1590,7 @@
       "label": "Templates",
       "href": "/templates",
       "reason": "restore Templates",
-      "state": "removed",
-      "index": 0
+      "state": "already removed"
     }
   ]
 }
