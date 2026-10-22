@@ -43,12 +43,16 @@ function normalizePath(value) {
   }
 }
 
-async function readPage(pathname) {
+async function readPage(pathname, follow = false) {
   const response = await fetch(`${baseUrl}${pathname}`, {
-    redirect: "manual",
+    redirect: follow ? "follow" : "manual",
     signal: AbortSignal.timeout(20000)
   });
-  return { status: response.status, html: await response.text() };
+  const finalUrl = new URL(response.url);
+  const origin = new URL(baseUrl), loopback = new Set(["localhost", "127.0.0.1", "[::1]"]);
+  assert(finalUrl.origin === origin.origin || loopback.has(finalUrl.hostname) && loopback.has(origin.hostname)
+    && finalUrl.port === origin.port && finalUrl.protocol === origin.protocol, "Detail redirects must stay on this storefront");
+  return { status: response.status, html: await response.text(), finalPath: normalizePath(finalUrl.href) };
 }
 
 function mediaOf(scope, $) {
@@ -118,12 +122,14 @@ for (const item of manifest.items) {
   const slugs = [item.canonicalPublicSlug, ...(aliases.length ? [aliases[0]] : [])];
   for (const slug of slugs) {
     const pathname = root + slug;
-    const { status, html } = await readPage(pathname);
+    const { status, html, finalPath } = await readPage(pathname, true);
     if (status !== 200) {
       failures.push(`detail ${pathname}: expected 200, received ${status}`);
       continue;
     }
     const $ = cheerio.load(html);
+    const allowed = new Set([item.canonicalPublicSlug, ...(item.publicSlugs ?? [])].map((value) => root + value));
+    if (!allowed.has(finalPath)) failures.push(`detail ${pathname}: redirected outside its reviewed resource group (${finalPath}).`);
     const chips = $(".v-detail-categories a").map((index, element) => ({
       text: $(element).text().trim(),
       href: $(element).attr("href")
