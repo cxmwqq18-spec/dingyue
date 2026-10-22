@@ -12,7 +12,7 @@
  */
 import "./load-runtime-env.mjs";
 import { PrismaClient } from "../node_modules/@prisma/client/index.js";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 const SITE = "site_aidreamcapes";
@@ -261,6 +261,7 @@ async function run() {
         ? "docs/audits/aidreamcapes-plural-s-rename-manifest-2026-10-22.json"
         : "docs/audits/aidreamcapes-plural-s-rename-dry-run.json")
   );
+  mkdirSync(path.dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`manifest: ${out}`);
 

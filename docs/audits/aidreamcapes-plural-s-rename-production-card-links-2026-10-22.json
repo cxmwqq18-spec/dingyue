@@ -1,0 +1,376 @@
+{
+  "ok": true,
+  "origin": "http://127.0.0.1:3013",
+  "pathMode": true,
+  "database": {
+    "cardOwnerPages": 33,
+    "distinctMediaRoutes": 987,
+    "actors": 53
+  },
+  "pages": [
+    {
+      "page": "/ai-image-generation/social-ad-photos",
+      "anchors": 16,
+      "pickerCards": 16,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 16,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/",
+      "anchors": 20,
+      "pickerCards": 20,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 20,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/change-background",
+      "anchors": 0,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation",
+      "anchors": 4,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 4,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/lifestyle-photos",
+      "anchors": 8,
+      "pickerCards": 8,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 8,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/white-background-photos",
+      "anchors": 0,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "anchors": 0,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/professional-headshot",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/black-friday-countdown",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "anchors": 0,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/cinematic-video",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/occasions/black-friday",
+      "anchors": 9,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 3,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/occasions/holidays",
+      "anchors": 9,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 3,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/occasions/sale-discount",
+      "anchors": 12,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 4,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/templates",
+      "anchors": 54,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 18,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation",
+      "anchors": 43,
+      "pickerCards": 38,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 43,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/model-photos",
+      "anchors": 9,
+      "pickerCards": 9,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 9,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "anchors": 1,
+      "pickerCards": 1,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 1,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "anchors": 0,
+      "pickerCards": 0,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/video-ads",
+      "anchors": 37,
+      "pickerCards": 37,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 37,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "anchors": 53,
+      "pickerCards": 53,
+      "actorCards": 0,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 53,
+      "workspaceCards": 0
+    },
+    {
+      "page": "/ai-actors",
+      "anchors": 53,
+      "pickerCards": 0,
+      "actorCards": 53,
+      "exampleCards": 0,
+      "exampleCardKinds": {},
+      "distinctDetailRoutes": 0,
+      "workspaceCards": 0
+    }
+  ],
+  "skippedPages": [
+    {
+      "page": "/ai-image-generation/change-background",
+      "reason": "page block order has no picker block; it renders its step UI instead of a card grid"
+    },
+    {
+      "page": "/ai-image-generation/white-background-photos",
+      "reason": "page block order has no picker block; it renders its step UI instead of a card grid"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "reason": "page block order has no picker block; it renders its step UI instead of a card grid"
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "reason": "page block order has no picker block; it renders its step UI instead of a card grid"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "reason": "page block order has no picker block; it renders its step UI instead of a card grid"
+    }
+  ],
+  "offenders": [],
+  "failures": []
+}
