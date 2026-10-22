@@ -129,6 +129,10 @@
 
 ## 3 仍待决策
 
+> 2026-10-22 更新：3.1、3.2、3.4 已通过一批字段级 CAS 写入整改完毕，详见
+> `docs/audits/aidreamcapes-detail-address-cleanup-2026-10-22.md`；本节保留
+> 当时的决策过程。
+
 ### 3.1 三个模板页名称冲突
 
 `beauty-routine`、`how-to-video`、`spark-ads-style-video` 的裸名称已经是
@@ -157,8 +161,10 @@
 - `/ai-video-generation/trousers-fold-demo-home`
 - `/ai-video-generation/tinted-balm-vanity-reel-home`
 
-它们与 hub 同名卡的图片不同，属于不同素材；规范短名已被 hub 卡占用。需要
-选择：保留为例外、修改可见名称，或为它们定义明确的去重标识。
+它们与 hub 同名卡的图片不同，属于不同素材；规范短名已被 hub 卡占用。已经
+选择第三种做法：保留两张独立卡片，给首页卡各自的可读名称与地址
+（`/ai-video-generation/folded-trousers-detail`、
+`/ai-video-generation/tinted-balm-detail`），旧地址 308 到新地址。
 
 ### 3.3 674 个 `workspaceCases`
 
@@ -173,7 +179,10 @@
 
 - 1 个 `workspaceCases` 撇号漂移：
   `court-gear-from-the-player-s-view` → `court-gear-from-the-players-view`；
-- 6 个“其他”slug（场景名而非卡片名）。
+  已整改：旧地址由规范卡的 `publicAliases` 承接，仍是一跳 308。
+- 6 个“其他”slug（场景名而非卡片名）：即 3.1 的三个模板双段 slug（每个两份
+  存储）与 3.2 的两个首页 `-home` slug，已随该两批整改清零，线上不再有
+  「slug 既不是卡片名、也不是卡片名 + 归属页」的卡片记录。
 
 ## 4 复现命令
 

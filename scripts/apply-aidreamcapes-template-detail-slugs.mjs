@@ -42,19 +42,24 @@ const SITE_ID = assertAllowedSite("site_aidreamcapes");
 const TEMPLATE_CONTRACT = "aidreamcapes-template-detail-slug-normalization-2026-10-22-v1";
 const HUB_EXAMPLE_CONTRACT = "aidreamcapes-hub-example-slug-normalization-2026-10-22-v1";
 const EXAMPLE_PREFIX_CONTRACT = "aidreamcapes-example-prefix-slug-normalization-2026-10-22-v1";
-const SUPPORTED_CONTRACTS = new Set([TEMPLATE_CONTRACT, HUB_EXAMPLE_CONTRACT, EXAMPLE_PREFIX_CONTRACT]);
+const CARD_RENAME_CONTRACT = "aidreamcapes-card-rename-2026-10-22-v1";
+const SUPPORTED_CONTRACTS = new Set([TEMPLATE_CONTRACT, HUB_EXAMPLE_CONTRACT, EXAMPLE_PREFIX_CONTRACT, CARD_RENAME_CONTRACT]);
 const REPORT_SLUGS = new Map([
   [TEMPLATE_CONTRACT, "template-detail-slugs"],
   [HUB_EXAMPLE_CONTRACT, "hub-example-slugs"],
-  [EXAMPLE_PREFIX_CONTRACT, "example-prefix-slugs"]
+  [EXAMPLE_PREFIX_CONTRACT, "example-prefix-slugs"],
+  [CARD_RENAME_CONTRACT, "card-renames"]
+]);
+const CONFIRMATION_SLUGS = new Map([
+  [TEMPLATE_CONTRACT, "site_aidreamcapes-template-detail-slugs"],
+  [HUB_EXAMPLE_CONTRACT, "site_aidreamcapes-template-detail-slugs"],
+  [EXAMPLE_PREFIX_CONTRACT, "site_aidreamcapes-template-detail-slugs"],
+  [CARD_RENAME_CONTRACT, "site_aidreamcapes-card-renames"]
 ]);
 const target = argumentValue("--target") || process.env.DATABASE_TARGET || "local";
 const confirmation = argumentValue("--confirm");
 const baseHash = argumentValue("--base-hash");
 const apply = hasArgument("--apply");
-const expectedConfirmation = target === "production"
-  ? "site_aidreamcapes-template-detail-slugs-production"
-  : "site_aidreamcapes-template-detail-slugs";
 const defaultManifestPath = path.resolve(
   process.cwd(),
   `scripts/manifests/aidreamcapes-template-detail-slugs-${target}-2026-10-22.json`
@@ -186,6 +191,10 @@ const recomputed = hash({
 });
 assert.equal(recomputed, manifest.planHash, "Manifest content does not match its plan hash.");
 
+const confirmationSlug = CONFIRMATION_SLUGS.get(contract);
+assert(confirmationSlug, `No confirmation phrase is registered for contract ${contract}.`);
+const expectedConfirmation = target === "production" ? `${confirmationSlug}-production` : confirmationSlug;
+
 assertDatabaseTarget({
   expectedTarget: target,
   requireProductionConfirmation: apply && target === "production",
@@ -311,8 +320,14 @@ try {
         continue;
       }
       const label = labelOf(value);
-      if (label !== card.label) {
-        aborted.push({ page: page.slug, card: card.jsonPath, reason: `card label changed from "${card.label}" to "${label}"` });
+      // A rename carries the reviewed before/after label. Every other contract
+      // only compares the fingerprint, so the label stays untouched there.
+      const expectedBeforeLabel = typeof card.beforeLabel === "string" ? card.beforeLabel : card.label;
+      const expectedAfterLabel = typeof card.afterLabel === "string" ? card.afterLabel : undefined;
+      const labelMatchesBefore = label === expectedBeforeLabel;
+      const labelMatchesAfter = expectedAfterLabel === undefined ? labelMatchesBefore : label === expectedAfterLabel;
+      if (!labelMatchesBefore && !labelMatchesAfter) {
+        aborted.push({ page: page.slug, card: card.jsonPath, reason: `card label changed from "${expectedBeforeLabel}" to "${label}"` });
         structurallyValid = false;
         continue;
       }
@@ -332,9 +347,9 @@ try {
       const existingAliases = aliasesOf(value);
       const beforeAliases = card.beforeAliases ?? [];
       const afterAliases = card.afterAliases ?? [];
-      const state = existing === card.afterSlug && JSON.stringify(existingAliases) === JSON.stringify(afterAliases)
+      const state = existing === card.afterSlug && JSON.stringify(existingAliases) === JSON.stringify(afterAliases) && labelMatchesAfter
         ? "after"
-        : existing === card.beforeSlug && JSON.stringify(existingAliases) === JSON.stringify(beforeAliases)
+        : existing === card.beforeSlug && JSON.stringify(existingAliases) === JSON.stringify(beforeAliases) && labelMatchesBefore
           ? "before"
           : "conflict";
       states.push({ card, state, existing, existingAliases });
@@ -424,7 +439,9 @@ try {
       const value = resolveCard(nextContentJson, card.jsonPath);
       assert(value, `Card ${card.jsonPath} disappeared while preparing ${page.slug}.`);
       value.publicSlug = card.afterSlug;
-      value.publicAliases = card.afterAliases;
+      if (card.afterAliases) value.publicAliases = card.afterAliases;
+      else delete value.publicAliases;
+      if (typeof card.afterLabel === "string") value.label = card.afterLabel;
       pageWrites.push({ card, value });
     }
     planned.push({ row, page, nextContentJson, pageWrites });
@@ -498,7 +515,10 @@ try {
           const value = resolveCard(readback.contentJson, card.jsonPath);
           assert(value, `Card ${card.jsonPath} is missing after the write on ${entry.page.slug}.`);
           assert.equal(value.publicSlug, card.afterSlug, `Card ${card.jsonPath} did not read back with the planned slug.`);
-          assert.deepEqual(aliasesOf(value), card.afterAliases, `Card ${card.jsonPath} did not read back with the planned aliases.`);
+          assert.deepEqual(aliasesOf(value), card.afterAliases ?? [], `Card ${card.jsonPath} did not read back with the planned aliases.`);
+          if (typeof card.afterLabel === "string") {
+            assert.equal(labelOf(value), card.afterLabel, `Card ${card.jsonPath} did not read back with the planned label.`);
+          }
         }
       }
       const revisionAfter = await readRevision();

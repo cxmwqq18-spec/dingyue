@@ -1,0 +1,346 @@
+{
+  "ok": true,
+  "mode": "plan",
+  "contract": "aidreamcapes-card-rename-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "approvedPages": [
+    "/",
+    "/ai-image-generation/colorway-variations",
+    "/ai-video-generation/beauty-routine",
+    "/ai-video-generation/how-to-video",
+    "/ai-video-generation/spark-ads-style-video",
+    "/ai-video-generation/video-ads"
+  ],
+  "excludedPages": [],
+  "pages": [
+    {
+      "id": "site_aidreamcapes_home",
+      "slug": "/",
+      "title": "Make AI UGC Ads in a Few Minutes",
+      "pageType": "home",
+      "templateKey": "index",
+      "baseHash": "2afcb50140be5c13ddefe4b5fb78e76728bf4f6de2e1c21a829adbf0a450bfb5",
+      "label": "Trousers Fold Demo",
+      "kind": "video",
+      "oldSlug": "trousers-fold-demo-home",
+      "targetSlug": "folded-trousers-detail",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[9]",
+          "kind": "video",
+          "label": "Trousers Fold Demo",
+          "beforeLabel": "Trousers Fold Demo",
+          "afterLabel": "Folded Trousers Detail",
+          "imageSrc": "/ai-image-generation/im03-home-picker-trousers-r1-640.webp",
+          "beforeSlug": "trousers-fold-demo-home",
+          "afterSlug": "folded-trousers-detail",
+          "beforeAliases": null,
+          "afterAliases": [
+            "trousers-fold-demo-home"
+          ],
+          "oldPath": "/ai-video-generation/trousers-fold-demo-home",
+          "newPath": "/ai-video-generation/folded-trousers-detail",
+          "reason": "The homepage card is a different scene from the hub card of the same name, so it carries its own name."
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[7]",
+          "kind": "video",
+          "label": "Tinted Balm Vanity Reel",
+          "beforeLabel": "Tinted Balm Vanity Reel",
+          "afterLabel": "Tinted Balm Detail",
+          "imageSrc": "/ai-image-generation/k5-home-lipstick-vanity-640.webp",
+          "beforeSlug": "tinted-balm-vanity-reel-home",
+          "afterSlug": "tinted-balm-detail",
+          "beforeAliases": null,
+          "afterAliases": [
+            "tinted-balm-vanity-reel-home"
+          ],
+          "oldPath": "/ai-video-generation/tinted-balm-vanity-reel-home",
+          "newPath": "/ai-video-generation/tinted-balm-detail",
+          "reason": "The homepage card is a different scene from the hub card of the same name, so it carries its own name."
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "slug": "/ai-image-generation/colorway-variations",
+      "title": "Create Product Color Variation Photos",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-colorway-variations",
+      "baseHash": "2da261dab126a41b7226ab4818eb0b8f89b89e6c49a725468c19f770e2d0350d",
+      "label": "Court Gear from the Player's View",
+      "kind": "video",
+      "oldSlug": "court-gear-from-the-player-s-view",
+      "targetSlug": "court-gear-from-the-players-view",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]",
+          "kind": "video",
+          "label": "Court Gear from the Player's View",
+          "beforeLabel": "Court Gear from the Player's View",
+          "afterLabel": "Court Gear from the Player's View",
+          "imageSrc": "/ai-image-generation/tw1-wall-explainer-1-640.webp",
+          "beforeSlug": "court-gear-from-the-player-s-view",
+          "afterSlug": "court-gear-from-the-players-view",
+          "beforeAliases": null,
+          "afterAliases": null,
+          "oldPath": "/ai-video-generation/court-gear-from-the-player-s-view",
+          "newPath": "/ai-video-generation/court-gear-from-the-players-view",
+          "reason": "The stored slug turned the apostrophe into a hyphen; the address now reads like the card name."
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_beauty_routine",
+      "slug": "/ai-video-generation/beauty-routine",
+      "title": "Beauty Video Templates You Can Recreate",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-beauty-routine",
+      "baseHash": "751a6ae307b107688602344492a2d5d0863a24905e1598ea9c0bd56b7728d7bd",
+      "label": "Beauty Routine",
+      "kind": "video",
+      "oldSlug": "beauty-routine-beauty-routine",
+      "targetSlug": "beauty-routine-video",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Beauty Routine",
+          "beforeLabel": "Beauty Routine",
+          "afterLabel": "Beauty Routine Video",
+          "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+          "beforeSlug": "beauty-routine-beauty-routine",
+          "afterSlug": "beauty-routine-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "beauty-routine-beauty-routine"
+          ],
+          "oldPath": "/ai-video-generation/beauty-routine-beauty-routine",
+          "newPath": "/ai-video-generation/beauty-routine-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Beauty Routine",
+          "beforeLabel": "Beauty Routine",
+          "afterLabel": "Beauty Routine Video",
+          "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+          "beforeSlug": "beauty-routine-beauty-routine",
+          "afterSlug": "beauty-routine-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "beauty-routine-beauty-routine"
+          ],
+          "oldPath": "/ai-video-generation/beauty-routine-beauty-routine",
+          "newPath": "/ai-video-generation/beauty-routine-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "slug": "/ai-video-generation/how-to-video",
+      "title": "How-To Video Templates for Product Demos",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-conversion-seeding-how-to-tutorial",
+      "baseHash": "1a65320342f88e7db05381b0383b6f485bdd3e4d5825cb7dfafa985dff0df786",
+      "label": "How-To Video",
+      "kind": "video",
+      "oldSlug": "how-to-video-how-to-video",
+      "targetSlug": "how-to-product-video",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "How-To Video",
+          "beforeLabel": "How-To Video",
+          "afterLabel": "How-To Product Video",
+          "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+          "beforeSlug": "how-to-video-how-to-video",
+          "afterSlug": "how-to-product-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "how-to-video-how-to-video"
+          ],
+          "oldPath": "/ai-video-generation/how-to-video-how-to-video",
+          "newPath": "/ai-video-generation/how-to-product-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "How-To Video",
+          "beforeLabel": "How-To Video",
+          "afterLabel": "How-To Product Video",
+          "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+          "beforeSlug": "how-to-video-how-to-video",
+          "afterSlug": "how-to-product-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "how-to-video-how-to-video"
+          ],
+          "oldPath": "/ai-video-generation/how-to-video-how-to-video",
+          "newPath": "/ai-video-generation/how-to-product-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "title": "TikTok Spark Ads You Can Make in Minutes",
+      "pageType": "ai_tool",
+      "templateKey": "tool-detail",
+      "baseHash": "dcdb496db938acc6ae600d2690de7b74c27e3bebfc61112fc66804ca3992be66",
+      "label": "Spark Ads Style Video",
+      "kind": "video",
+      "oldSlug": "spark-ads-style-video-spark-ads-style-video",
+      "targetSlug": "tiktok-spark-ad-video",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Spark Ads Style Video",
+          "beforeLabel": "Spark Ads Style Video",
+          "afterLabel": "TikTok Spark Ad Video",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+          "beforeSlug": "spark-ads-style-video-spark-ads-style-video",
+          "afterSlug": "tiktok-spark-ad-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "spark-ads-style-video-spark-ads-style-video"
+          ],
+          "oldPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+          "newPath": "/ai-video-generation/tiktok-spark-ad-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Spark Ads Style Video",
+          "beforeLabel": "Spark Ads Style Video",
+          "afterLabel": "TikTok Spark Ad Video",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+          "beforeSlug": "spark-ads-style-video-spark-ads-style-video",
+          "afterSlug": "tiktok-spark-ad-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "spark-ads-style-video-spark-ads-style-video"
+          ],
+          "oldPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+          "newPath": "/ai-video-generation/tiktok-spark-ad-video",
+          "reason": "The bare slug is the live template landing page path, so the visible card name carries the detail address."
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "slug": "/ai-video-generation/video-ads",
+      "title": "AI Video Ads Generator for Scroll-Stopping Ads",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-ugc-ad-video",
+      "baseHash": "50f0f22fb97cf6abd9830a8d897804df65290a730c3f7970067e1734651d6735",
+      "label": "First-Person Discovery: Court Gear",
+      "kind": "video",
+      "oldSlug": "court-gear-from-the-player-s-view",
+      "targetSlug": "first-person-discovery-court-gear",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[14]",
+          "kind": "video",
+          "label": "First-Person Discovery: Court Gear",
+          "imageSrc": "/ai-image-generation/tw1-wall-explainer-1-640.webp",
+          "beforeSlug": "first-person-discovery-court-gear",
+          "afterSlug": "first-person-discovery-court-gear",
+          "beforeAliases": null,
+          "afterAliases": [
+            "court-gear-from-the-player-s-view"
+          ],
+          "oldPath": "/ai-video-generation/court-gear-from-the-player-s-view",
+          "newPath": "/ai-video-generation/first-person-discovery-court-gear",
+          "reason": "The retired apostrophe address keeps one 308 hop to the canonical scene."
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "addresses": [
+    {
+      "oldPath": "/ai-video-generation/beauty-routine-beauty-routine",
+      "newPath": "/ai-video-generation/beauty-routine-video",
+      "page": "/ai-video-generation/beauty-routine",
+      "label": "Beauty Routine",
+      "kind": "video",
+      "source": "templateDefinition"
+    },
+    {
+      "oldPath": "/ai-video-generation/court-gear-from-the-player-s-view",
+      "newPath": "/ai-video-generation/first-person-discovery-court-gear",
+      "page": "/ai-video-generation/video-ads",
+      "label": "First-Person Discovery: Court Gear",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/how-to-video-how-to-video",
+      "newPath": "/ai-video-generation/how-to-product-video",
+      "page": "/ai-video-generation/how-to-video",
+      "label": "How-To Video",
+      "kind": "video",
+      "source": "templateDefinition"
+    },
+    {
+      "oldPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+      "newPath": "/ai-video-generation/tiktok-spark-ad-video",
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "label": "Spark Ads Style Video",
+      "kind": "video",
+      "source": "templateDefinition"
+    },
+    {
+      "oldPath": "/ai-video-generation/tinted-balm-vanity-reel-home",
+      "newPath": "/ai-video-generation/tinted-balm-detail",
+      "page": "/",
+      "label": "Tinted Balm Vanity Reel",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/trousers-fold-demo-home",
+      "newPath": "/ai-video-generation/folded-trousers-detail",
+      "page": "/",
+      "label": "Trousers Fold Demo",
+      "kind": "video",
+      "source": "picker"
+    }
+  ],
+  "generatedAt": "2026-10-22T07:58:56.762Z",
+  "owner": "LivePage.contentJson",
+  "rules": {
+    "labelRule": "the visible card name ends the detail address; the landing page keeps its own path",
+    "aliasRule": "the retired address becomes a publicAliases entry on the same card, so it answers 308 in one hop",
+    "apostropheRule": "an apostrophe in a card name is dropped in the address instead of becoming a hyphen",
+    "rollback": "the manifest is the field-level inverse: beforeSlug, beforeLabel and beforeAliases restore the retired address"
+  },
+  "summary": {
+    "livePageRowsScanned": 269,
+    "plannedPages": 6,
+    "plannedCards": 10,
+    "plannedAddresses": 6,
+    "problems": 0
+  },
+  "problems": [],
+  "planHash": "76a15b3a3876f54d349e7ef2e96e39d3f930777b7e0dd60afa63e696579f3fca"
+}

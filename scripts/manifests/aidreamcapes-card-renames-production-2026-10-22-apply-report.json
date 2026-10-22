@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-card-rename-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "16b60be041f191cff49398cc6561336445632ca4c9538aa15530b2cf2ad4d622",
+  "manifest": "../../../../../tmp/aidreamcapes-card-renames-production-2026-10-22.json",
+  "pagesPlanned": 6,
+  "cardsPlanned": 10,
+  "pagesAlreadyApplied": 0,
+  "aborted": [],
+  "skipped": [],
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "production",
+    "planHash": "16b60be041f191cff49398cc6561336445632ca4c9538aa15530b2cf2ad4d622",
+    "owner": "LivePage.contentJson",
+    "applied": [
+      {
+        "page": "/",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[9]",
+          "sections.v2_main.settings.data.visual.picker.cards[7]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/colorway-variations",
+        "cards": [
+          "sections.v2_main.settings.data.workspaceCases[14]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/beauty-routine",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/how-to-video",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/spark-ads-style-video",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/video-ads",
+        "cards": [
+          "sections.v2_main.settings.data.visual.picker.cards[14]"
+        ]
+      }
+    ],
+    "fieldsApplied": 20,
+    "revisionBefore": "271",
+    "revisionAfter": "277",
+    "revisionDelta": "6",
+    "protectedMyDreamShootsHashBefore": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "protectedMyDreamShootsHashAfter": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

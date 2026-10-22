@@ -1,0 +1,189 @@
+{
+  "contract": "aidreamcapes-card-rename-2026-10-22-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "planHash": "76a15b3a3876f54d349e7ef2e96e39d3f930777b7e0dd60afa63e696579f3fca",
+  "generatedAt": "2026-10-22T07:59:14.566Z",
+  "owner": "LivePage.contentJson",
+  "note": "Field-level inverse of this apply. Each operation restores the retired publicSlug and publicAliases of one card.",
+  "operations": [
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "site_aidreamcapes_home",
+      "ownerPath": "/",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[9]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Trousers Fold Demo",
+      "imageSrc": "/ai-image-generation/im03-home-picker-trousers-r1-640.webp",
+      "beforeSlug": "trousers-fold-demo-home",
+      "beforeAliases": null,
+      "afterSlug": "folded-trousers-detail",
+      "afterAliases": [
+        "trousers-fold-demo-home"
+      ],
+      "oldPath": "/ai-video-generation/trousers-fold-demo-home",
+      "newPath": "/ai-video-generation/folded-trousers-detail"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "site_aidreamcapes_home",
+      "ownerPath": "/",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[7]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Tinted Balm Vanity Reel",
+      "imageSrc": "/ai-image-generation/k5-home-lipstick-vanity-640.webp",
+      "beforeSlug": "tinted-balm-vanity-reel-home",
+      "beforeAliases": null,
+      "afterSlug": "tinted-balm-detail",
+      "afterAliases": [
+        "tinted-balm-vanity-reel-home"
+      ],
+      "oldPath": "/ai-video-generation/tinted-balm-vanity-reel-home",
+      "newPath": "/ai-video-generation/tinted-balm-detail"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "ownerPath": "/ai-image-generation/colorway-variations",
+      "cardPath": "sections.v2_main.settings.data.workspaceCases[14]",
+      "source": "workspaceCases",
+      "kind": "video",
+      "label": "Court Gear from the Player's View",
+      "imageSrc": "/ai-image-generation/tw1-wall-explainer-1-640.webp",
+      "beforeSlug": "court-gear-from-the-player-s-view",
+      "beforeAliases": null,
+      "afterSlug": "court-gear-from-the-players-view",
+      "afterAliases": null,
+      "oldPath": "/ai-video-generation/court-gear-from-the-player-s-view",
+      "newPath": "/ai-video-generation/court-gear-from-the-players-view"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_beauty_routine",
+      "ownerPath": "/ai-video-generation/beauty-routine",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Beauty Routine",
+      "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+      "beforeSlug": "beauty-routine-beauty-routine",
+      "beforeAliases": null,
+      "afterSlug": "beauty-routine-video",
+      "afterAliases": [
+        "beauty-routine-beauty-routine"
+      ],
+      "oldPath": "/ai-video-generation/beauty-routine-beauty-routine",
+      "newPath": "/ai-video-generation/beauty-routine-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_beauty_routine",
+      "ownerPath": "/ai-video-generation/beauty-routine",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Beauty Routine",
+      "imageSrc": "/ai-image-generation/rc5-tpl-beauty-result-r1-640.webp",
+      "beforeSlug": "beauty-routine-beauty-routine",
+      "beforeAliases": null,
+      "afterSlug": "beauty-routine-video",
+      "afterAliases": [
+        "beauty-routine-beauty-routine"
+      ],
+      "oldPath": "/ai-video-generation/beauty-routine-beauty-routine",
+      "newPath": "/ai-video-generation/beauty-routine-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "ownerPath": "/ai-video-generation/how-to-video",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "How-To Video",
+      "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+      "beforeSlug": "how-to-video-how-to-video",
+      "beforeAliases": null,
+      "afterSlug": "how-to-product-video",
+      "afterAliases": [
+        "how-to-video-how-to-video"
+      ],
+      "oldPath": "/ai-video-generation/how-to-video-how-to-video",
+      "newPath": "/ai-video-generation/how-to-product-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_efb8110df7c5b0e3",
+      "ownerPath": "/ai-video-generation/how-to-video",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "How-To Video",
+      "imageSrc": "/ai-image-generation/c1-tpl-howto-m2-result-video-916-640.webp",
+      "beforeSlug": "how-to-video-how-to-video",
+      "beforeAliases": null,
+      "afterSlug": "how-to-product-video",
+      "afterAliases": [
+        "how-to-video-how-to-video"
+      ],
+      "oldPath": "/ai-video-generation/how-to-video-how-to-video",
+      "newPath": "/ai-video-generation/how-to-product-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "ownerPath": "/ai-video-generation/spark-ads-style-video",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Spark Ads Style Video",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+      "beforeSlug": "spark-ads-style-video-spark-ads-style-video",
+      "beforeAliases": null,
+      "afterSlug": "tiktok-spark-ad-video",
+      "afterAliases": [
+        "spark-ads-style-video-spark-ads-style-video"
+      ],
+      "oldPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+      "newPath": "/ai-video-generation/tiktok-spark-ad-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_v2_tpl_spark_ads_style_video",
+      "ownerPath": "/ai-video-generation/spark-ads-style-video",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Spark Ads Style Video",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-spark-ads-style-video-actor-r1-640.webp",
+      "beforeSlug": "spark-ads-style-video-spark-ads-style-video",
+      "beforeAliases": null,
+      "afterSlug": "tiktok-spark-ad-video",
+      "afterAliases": [
+        "spark-ads-style-video-spark-ads-style-video"
+      ],
+      "oldPath": "/ai-video-generation/spark-ads-style-video-spark-ads-style-video",
+      "newPath": "/ai-video-generation/tiktok-spark-ad-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_738da1c3aeee6bfa",
+      "ownerPath": "/ai-video-generation/video-ads",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[14]",
+      "source": "picker",
+      "kind": "video",
+      "label": "First-Person Discovery: Court Gear",
+      "imageSrc": "/ai-image-generation/tw1-wall-explainer-1-640.webp",
+      "beforeSlug": "first-person-discovery-court-gear",
+      "beforeAliases": null,
+      "afterSlug": "first-person-discovery-court-gear",
+      "afterAliases": [
+        "court-gear-from-the-player-s-view"
+      ],
+      "oldPath": "/ai-video-generation/court-gear-from-the-player-s-view",
+      "newPath": "/ai-video-generation/first-person-discovery-court-gear"
+    }
+  ]
+}

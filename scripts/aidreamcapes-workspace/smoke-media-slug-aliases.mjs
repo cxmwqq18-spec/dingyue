@@ -33,7 +33,9 @@ const MANIFESTS = [
   'scripts/manifests/aidreamcapes-hub-example-slugs-local-2026-10-22.json',
   'scripts/manifests/aidreamcapes-hub-example-slugs-production-2026-10-22.json',
   'scripts/manifests/aidreamcapes-example-prefix-slugs-local-2026-10-22.json',
-  'scripts/manifests/aidreamcapes-example-prefix-slugs-production-2026-10-22.json'
+  'scripts/manifests/aidreamcapes-example-prefix-slugs-production-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-card-renames-local-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-card-renames-production-2026-10-22.json'
 ];
 const entries = [];
 for (const file of MANIFESTS) {
