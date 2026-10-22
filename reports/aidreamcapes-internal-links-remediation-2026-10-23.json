@@ -1,0 +1,101 @@
+{
+  "ok": true,
+  "siteId": "site_aidreamcapes",
+  "origin": "https://www.aivideosugc.com",
+  "generatedAt": "2026-10-22T12:16:57.771Z",
+  "owner": "aidreamcapes-content-agent",
+  "auditRuns": {
+    "before": {
+      "releaseHostFile": "/tmp/ac-tech-seo-2026-10-23.json",
+      "crawled": 402,
+      "html200": 402,
+      "sitemapUrls": 178,
+      "brokenLinks": 125
+    },
+    "after": {
+      "releaseHostFile": "/tmp/ac-tech-seo-2026-10-23-post2.json",
+      "crawled": 394,
+      "html200": 394,
+      "sitemapUrls": 178,
+      "brokenLinks": 84,
+      "failures": 0
+    }
+  },
+  "classification": {
+    "before": {
+      "contentJsonSourced": 41,
+      "codeSourced": 84,
+      "contentJsonSourcePages": 13
+    },
+    "after": {
+      "contentJsonSourced": 0,
+      "codeSourced": 84,
+      "codeSourcePages": 42
+    }
+  },
+  "remainingCodeOwnedRedirects": [
+    {
+      "target": "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation",
+      "status": 308,
+      "final": "/ai-video-generation/lifestyle-app-recommendation",
+      "links": 42,
+      "source": "storefront code (media detail path + video hub picker card href)",
+      "codeOwners": [
+        "src/components/storefront/aidreamcapes-v2/visual.tsx",
+        "src/components/storefront/aidreamcapes-v2/media-detail.tsx",
+        "src/lib/aidreamcapes-workspace/media-detail.ts"
+      ],
+      "note": "Owned by another agent. Not changed by this content manifest."
+    },
+    {
+      "target": "/ai-video-generation/streamer-reaction-app-ai-video-generation",
+      "status": 308,
+      "final": "/ai-video-generation/streamer-reaction-app",
+      "links": 42,
+      "source": "storefront code (media detail path + video hub picker card href)",
+      "codeOwners": [
+        "src/components/storefront/aidreamcapes-v2/visual.tsx",
+        "src/components/storefront/aidreamcapes-v2/media-detail.tsx",
+        "src/lib/aidreamcapes-workspace/media-detail.ts"
+      ],
+      "note": "Owned by another agent. Not changed by this content manifest."
+    }
+  ],
+  "redirectBehaviorUnchanged": [
+    { "path": "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation", "status": 308, "location": "https://www.aivideosugc.com/ai-video-generation/lifestyle-app-recommendation" },
+    { "path": "/ai-video-generation/streamer-reaction-app-ai-video-generation", "status": 308, "location": "https://www.aivideosugc.com/ai-video-generation/streamer-reaction-app" },
+    { "path": "/ai-video-generation/ai-actors", "status": 301, "location": "https://www.aivideosugc.com/ai-actors" },
+    { "path": "/ai-image-generation/lifestyle-scene", "status": 301, "location": "https://www.aivideosugc.com/ai-image-generation/lifestyle-photos" },
+    { "path": "/ai-video-generation/ugc-ad-video", "status": 301, "location": "https://www.aivideosugc.com/ai-video-generation/video-ads" },
+    { "path": "/ai-image-generation/background-remove-replace", "status": 301, "location": "https://www.aivideosugc.com/ai-image-generation/change-background" },
+    { "path": "/ai-image-generation/on-model-generation", "status": 301, "location": "https://www.aivideosugc.com/ai-image-generation/model-photos" },
+    { "path": "/ai-image-generation/ecommerce-main-image", "status": 301, "location": "https://www.aivideosugc.com/ai-image-generation/white-background-photos" },
+    { "path": "/ai-image-generation/feed-ad-still", "status": 301, "location": "https://www.aivideosugc.com/ai-image-generation/social-ad-photos" },
+    { "path": "/ai-video-generation/ai-actor-product-ads", "status": 301, "location": "https://www.aivideosugc.com/ai-video-generation/spokesperson-video" }
+  ],
+  "apply": {
+    "manifest": "scripts/manifests/aidreamcapes-internal-links-production-2026-10-23.json",
+    "planHash": "568ee8409501871211a9447782a5212bde22027bd2defd0e5f08b5524d037f88",
+    "dryRunConflicts": 0,
+    "pages": 20,
+    "fields": 43,
+    "linkTargetFields": 40,
+    "homeDescriptionFields": 3,
+    "revisionBefore": "280",
+    "revisionAfter": "300",
+    "myDreamShootsUnchanged": true,
+    "myDreamShootsHash": "bd325b584bd9d7cca6ff08bbd6defccab447afc537baf5c39c0ad15e4c0cd934",
+    "applyReport": "scripts/manifests/aidreamcapes-internal-links-production-2026-10-23-apply-report.json",
+    "rollback": "scripts/manifests/aidreamcapes-internal-links-production-2026-10-23-rollback.json",
+    "rollbackPlanHash": "efb13ae453b8527d839aa987fc6509ff6b33854de6122d0f63d59fa1f40d15f0"
+  },
+  "homepageDescription": {
+    "before": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates.",
+    "after": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with AI video agent and AI actors, ready-to-use video templates.",
+    "fields": [
+      "/seo/description",
+      "/seo/twitterDescription",
+      "/seo/jsonLd/@graph/2/description"
+    ]
+  }
+}
