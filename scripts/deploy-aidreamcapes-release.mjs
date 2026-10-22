@@ -214,6 +214,14 @@ cat .navigation-path-migration.json
 DINGYUE_ENV=production DATABASE_TARGET=production node scripts/repair-aidreamcapes-static-create-links.mjs --target=production --apply --confirm=site_aidreamcapes-static-create-links > .static-create-links-migration.json
 cat .static-create-links-migration.json
 MIGRATION_APPLIED=1`}
+if node scripts/purge-aidreamcapes-public-cache.mjs --apply > .edge-purge.json; then
+  cat .edge-purge.json
+else
+  cat .edge-purge.json
+  echo 'Edge cache purge failed; the new release stays active for forward repair.' >&2
+  MIGRATION_APPLIED=1
+  exit 1
+fi
 AIDREAMCAPES_ROUTE_SMOKE_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_ROUTE_SMOKE_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/smoke-aidreamcapes-release-routes.mjs > .origin-routes.json
 AIDREAMCAPES_AUDIT_ORIGIN=http://127.0.0.1:3013 node scripts/aidreamcapes-workspace/smoke-media-slug-aliases.mjs > .origin-seo-paths.json
 cat .origin-seo-paths.json

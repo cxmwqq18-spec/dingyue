@@ -1,92 +1,33 @@
 #!/usr/bin/env node
+// Manage the Aidreamcapes public edge cache.
+//
+// The live storefront is served from www.aivideosugc.com, which is a
+// different Cloudflare zone than the retired aidreamcapes.com brand domain.
+// The cache rule and the purge set are both derived from the live sitemap so
+// that every release can drop exactly what the rule caches.
 
 import assert from "node:assert/strict";
-import "./load-runtime-env.mjs";
+import {
+  PUBLIC_HOST,
+  buildPublicSurface,
+  cacheRule,
+  chunk,
+  parseSitemapPaths,
+  PURGE_FILE_BATCH,
+  PURGE_PREFIX_BATCH
+} from "./lib/aidreamcapes-public-cache-surface.mjs";
 
-const zoneId = process.env.AIDREAMCAPES_CLOUDFLARE_ZONE_ID?.trim() || "";
-const hostnames = ["aidreamcapes.com", "www.aidreamcapes.com"];
-const token = process.env.CLOUDFLARE_API_TOKEN?.trim() || "";
+const zoneId = (process.env.AIDREAMCAPES_PUBLIC_ZONE_ID || "").trim();
+const token = (process.env.CLOUDFLARE_API_TOKEN || "").trim();
 const apply = process.argv.includes("--apply");
 const purgeOnly = process.argv.includes("--purge-only");
 const confirmation = process.argv.find((arg) => arg.startsWith("--confirm="))?.slice("--confirm=".length);
 const purge = !process.argv.includes("--no-purge");
-
-const publicExactPaths = [
-  "/",
-  "/pricing",
-  "/workflow",
-  "/privacy",
-  "/terms",
-  "/cookies",
-  "/refunds",
-  "/content",
-  "/digital-delivery",
-  "/shipping",
-  "/children-privacy",
-  "/state-privacy",
-  "/faq",
-  "/about-us",
-  "/contact-us",
-  "/best-packages",
-  "/best-ai-image",
-  "/best-ai-video",
-  "/ai-image-generation",
-  "/ai-video-generation",
-  "/marketing",
-  "/collections",
-  "/tools",
-  "/blog",
-  "/watch",
-  "/help",
-  "/about-us",
-  "/contact-us",
-  "/faq",
-  "/creators-circle",
-  "/partner-registration"
-];
-const publicPrefixes = [
-  "/watch/",
-  "/ai-image-generation/",
-  "/ai-video-generation/",
-  "/collections/",
-  "/tools/",
-  "/blog/",
-  "/policies/"
-];
-// These routes were previously public and may still exist in an edge cache.
-// Purge them after deployment, but do not include them in the new cache rule.
-const retiredAidreamcapesPaths = [
-  "/best-save-the-date",
-  "/ai-save-the-date",
-  "/holidays-events"
-];
-const cacheRulesetPath = zoneId ? `/zones/${zoneId}/rulesets/phases/http_request_cache_settings/entrypoint` : "";
-const cacheRuleRef = "aidreamcapes_public_html_cache";
-const publicCacheControl = "public, max-age=60, s-maxage=300, stale-while-revalidate=1800";
-const publicCdnCacheControl = "public, s-maxage=300, stale-while-revalidate=1800";
-
-function pathExpression() {
-  const exact = publicExactPaths.map((path) => `http.request.uri.path eq "${path}"`);
-  const prefixes = publicPrefixes.map((prefix) => `starts_with(http.request.uri.path, "${prefix}")`);
-  return `(${[...exact, ...prefixes].join(" or ")})`;
-}
-
-function cacheRule() {
-  return {
-    ref: cacheRuleRef,
-    description: "Cache public Aidreamcapes HTML while leaving private and internal routes uncached.",
-    expression: `(http.host in {"${hostnames.join('" "')}"} and http.request.method in {"GET" "HEAD"} and ${pathExpression()})`,
-    action: "set_cache_settings",
-    action_parameters: {
-      cache: true,
-      browser_ttl: { mode: "respect_origin" },
-      edge_ttl: { mode: "respect_origin" }
-    }
-  };
-}
+const origin = (process.argv.find((arg) => arg.startsWith("--origin="))?.slice("--origin=".length) || `https://${PUBLIC_HOST}`).replace(/\/$/, "");
+const cacheRulesetPath = (id) => `/zones/${id}/rulesets/phases/http_request_cache_settings/entrypoint`;
+const cacheRuleRef = cacheRule().ref;
 
 async function cloudflareFetch(apiPath, init = {}) {
-  assert(zoneId, "AIDREAMCAPES_CLOUDFLARE_ZONE_ID is required for Cloudflare changes");
   assert(token, "CLOUDFLARE_API_TOKEN is required for Cloudflare changes");
   const response = await fetch(`https://api.cloudflare.com/client/v4${apiPath}`, {
     ...init,
@@ -98,88 +39,102 @@ async function cloudflareFetch(apiPath, init = {}) {
   });
   const body = await response.json().catch(() => ({}));
   if (!response.ok || body.success === false) {
-    const detail = body.errors?.map((error) => `${error.code ?? "?"}: ${error.message ?? "request failed"}`).join("; ");
+    const detail = (body.errors ?? []).map((error) => `${error.code ?? "?"}: ${error.message ?? "request failed"}`).join("; ");
     const error = new Error(detail || `Cloudflare API returned ${response.status}`);
     error.status = response.status;
     error.cloudflareErrors = body.errors ?? [];
     throw error;
   }
-  return { status: response.status, body };
+  return body.result;
+}
+
+async function resolveZone() {
+  if (zoneId) {
+    const zone = await cloudflareFetch(`/zones/${zoneId}`);
+    assert.equal(zone.name, PUBLIC_HOST.replace(/^www\./, ""), `Configured zone ${zone.name} does not serve ${PUBLIC_HOST}`);
+    return zone.id;
+  }
+  const zones = await cloudflareFetch(`/zones?name=${encodeURIComponent(PUBLIC_HOST.replace(/^www\./, ""))}&per_page=5`);
+  const zone = (zones ?? []).find((item) => item.name === PUBLIC_HOST.replace(/^www\./, ""));
+  assert(zone, `No Cloudflare zone serves ${PUBLIC_HOST}`);
+  return zone.id;
+}
+
+async function publicSurface() {
+  const response = await fetch(`${origin}/sitemap.xml`, { headers: { accept: "application/xml,text/xml" } });
+  assert(response.ok, `Sitemap request failed with ${response.status}`);
+  return buildPublicSurface(parseSitemapPaths(await response.text()));
 }
 
 function summarizeRule(rule) {
   return { id: rule.id, ref: rule.ref, action: rule.action, expression: rule.expression, action_parameters: rule.action_parameters };
 }
 
-async function ensureCacheRule() {
-  if (!apply) return { status: "would_create_or_verify", rule: cacheRule() };
+async function ensureCacheRule(zone) {
+  const rule = cacheRule();
+  if (!apply) return { status: "would_create_or_verify", rule };
   let response;
   try {
-    response = await cloudflareFetch(cacheRulesetPath);
+    response = await cloudflareFetch(cacheRulesetPath(zone));
   } catch (error) {
     const missingEntrypoint =
       error?.status === 404 ||
       error?.cloudflareErrors?.some((item) => item.code === 10003) ||
       /could not find entrypoint ruleset/i.test(error?.message ?? "");
     if (!missingEntrypoint) throw error;
-    response = { body: { result: null } };
+    response = { result: null };
   }
-  const existing = response.body.result;
+  const existing = response.result;
   if (!existing) {
-    const created = await cloudflareFetch(`/zones/${zoneId}/rulesets`, {
+    const created = await cloudflareFetch(`/zones/${zone}/rulesets`, {
       method: "POST",
       body: JSON.stringify({
         name: "Aidreamcapes public HTML cache",
-        description: "Cache public Aidreamcapes HTML using origin freshness headers; private routes remain outside this expression.",
+        description: "Cache public Aidreamcapes HTML using origin freshness headers; private, internal and authenticated routes stay uncached.",
         kind: "zone",
         phase: "http_request_cache_settings",
-        rules: [cacheRule()]
+        rules: [rule]
       })
     });
-    return { status: "created", rule: summarizeRule(created.body.result?.rules?.[0] ?? cacheRule()), rulesetId: created.body.result?.id };
+    return { status: "created", rule: summarizeRule(created.rules?.[0] ?? rule), rulesetId: created.id };
   }
-
-  const current = existing.rules?.find((rule) => rule.ref === cacheRuleRef);
+  const current = existing.rules?.find((item) => item.ref === cacheRuleRef);
   if (!current) throw new Error(`Cloudflare cache ruleset ${existing.id} exists without ${cacheRuleRef}; refusing an implicit overwrite.`);
   assert.equal(current.action, "set_cache_settings", `${cacheRuleRef} must keep set_cache_settings`);
-  assert.equal(current.expression, cacheRule().expression, `${cacheRuleRef} expression drifted; refusing an implicit overwrite`);
+  assert.equal(current.expression, rule.expression, `${cacheRuleRef} expression drifted; refusing an implicit overwrite`);
   return { status: "unchanged", rule: summarizeRule(current), rulesetId: existing.id };
 }
 
-function purgeUrls() {
-  const paths = [
-    ...publicExactPaths,
-    ...publicPrefixes.map((prefix) => `${prefix}*`),
-    ...retiredAidreamcapesPaths,
-    ...retiredAidreamcapesPaths.map((path) => `${path}/*`),
-    "/sitemap.xml",
-    "/robots.txt"
-  ];
-  return hostnames.flatMap((hostname) => [...new Set(paths)].map((path) => `https://${hostname}${path}`));
-}
-
-async function purgePublicUrls() {
-  const files = purgeUrls();
-  if (!apply || !purge) return { status: "skipped", count: files.length, files };
-  const response = await cloudflareFetch(`/zones/${zoneId}/purge_cache`, {
-    method: "POST",
-    body: JSON.stringify({ files })
-  });
-  return { status: response.body.result?.id ? "purged" : "requested", count: files.length, id: response.body.result?.id };
+async function purgePublicUrls(zone, surface) {
+  const requests = [];
+  if (!apply || !purge) {
+    return { status: "skipped", files: surface.files.length, prefixes: surface.prefixes.length, requests };
+  }
+  for (const batch of chunk(surface.files, PURGE_FILE_BATCH)) {
+    requests.push(await cloudflareFetch(`/zones/${zone}/purge_cache`, {
+      method: "POST",
+      body: JSON.stringify({ files: batch.map((path) => `https://${PUBLIC_HOST}${path}`) })
+    }));
+  }
+  for (const batch of chunk(surface.prefixes, PURGE_PREFIX_BATCH)) {
+    requests.push(await cloudflareFetch(`/zones/${zone}/purge_cache`, {
+      method: "POST",
+      body: JSON.stringify({ prefixes: batch.map((prefix) => `${PUBLIC_HOST}${prefix}`) })
+    }));
+  }
+  return { status: "purged", files: surface.files.length, prefixes: surface.prefixes.length, requests: requests.length };
 }
 
 if (apply && confirmation !== "aidreamcapes-edge") {
   throw new Error("Production edge changes require --apply --confirm=aidreamcapes-edge.");
 }
 
+const zone = await resolveZone();
+const surface = await publicSurface();
 const result = {
-  ok: true,
-  mode: apply ? "apply" : "dry-run",
-  purgeOnly,
-  zoneId: zoneId || "unset",
-  hostnames,
-  targetHeaders: { cacheControl: publicCacheControl, cdnCacheControl: publicCdnCacheControl },
-  cacheRule: purgeOnly ? { status: "skipped" } : await ensureCacheRule(),
-  purge: purgeOnly || purge ? await purgePublicUrls() : { status: "skipped" }
+  host: PUBLIC_HOST,
+  zoneId: zone,
+  cacheRule: purgeOnly ? { status: "skipped" } : await ensureCacheRule(zone),
+  purge: purgeOnly || purge ? await purgePublicUrls(zone, surface) : { status: "skipped" }
 };
 console.log(JSON.stringify(result, null, 2));
