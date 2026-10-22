@@ -26,11 +26,16 @@ export function caseVariants(path) {
   const variants = new Set();
   const lower = path.toLowerCase();
   if (lower !== path) variants.add(lower);
-  const title = path
-    .split("/")
-    .map((segment) => (segment ? segment[0].toUpperCase() + segment.slice(1).toLowerCase() : segment))
-    .join("/");
+  const capitalize = (segment) => (segment ? segment[0].toUpperCase() + segment.slice(1).toLowerCase() : segment);
+  const title = path.split("/").map(capitalize).join("/");
   if (title !== path) variants.add(title);
+  // A person who types an address by hand capitalises every word, so
+  // /About-Us has to answer the same way as /ABOUT-US.
+  const wordTitle = path
+    .split("/")
+    .map((segment) => segment.split("-").map(capitalize).join("-"))
+    .join("/");
+  if (wordTitle !== path) variants.add(wordTitle);
   const upper = path.toUpperCase();
   if (upper !== path) variants.add(upper);
   return [...variants];

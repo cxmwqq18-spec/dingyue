@@ -4,11 +4,15 @@
   "target": "local",
   "publicPathCount": 178,
   "mediaCardAddressCount": 1134,
-  "entries": 367,
-  "planHash": "b3a3f72a85678e6aab11a47a7748190da36aa04c0dfd603b428051f4fae858de",
+  "entries": 525,
+  "planHash": "1539ff3c087475aa7f2c09df293f2b52ff4587fac428bc2dfa278aa9fa9f5de8",
   "table": [
     [
       "/About-us",
+      "/about-us"
+    ],
+    [
+      "/About-Us",
       "/about-us"
     ],
     [
@@ -20,11 +24,19 @@
       "/ai-actors"
     ],
     [
+      "/Ai-Actors",
+      "/ai-actors"
+    ],
+    [
       "/AI-ACTORS",
       "/ai-actors"
     ],
     [
       "/Ai-actors/Adrian",
+      "/ai-actors/adrian"
+    ],
+    [
+      "/Ai-Actors/Adrian",
       "/ai-actors/adrian"
     ],
     [
@@ -36,11 +48,19 @@
       "/ai-actors/age-range"
     ],
     [
+      "/Ai-Actors/Age-Range",
+      "/ai-actors/age-range"
+    ],
+    [
       "/AI-ACTORS/AGE-RANGE",
       "/ai-actors/age-range"
     ],
     [
       "/Ai-actors/Age-range/20s",
+      "/ai-actors/age-range/20s"
+    ],
+    [
+      "/Ai-Actors/Age-Range/20s",
       "/ai-actors/age-range/20s"
     ],
     [
@@ -52,11 +72,19 @@
       "/ai-actors/age-range/30s"
     ],
     [
+      "/Ai-Actors/Age-Range/30s",
+      "/ai-actors/age-range/30s"
+    ],
+    [
       "/AI-ACTORS/AGE-RANGE/30S",
       "/ai-actors/age-range/30s"
     ],
     [
       "/Ai-actors/Age-range/40s",
+      "/ai-actors/age-range/40s"
+    ],
+    [
+      "/Ai-Actors/Age-Range/40s",
       "/ai-actors/age-range/40s"
     ],
     [
@@ -68,11 +96,19 @@
       "/ai-actors/age-range/50s"
     ],
     [
+      "/Ai-Actors/Age-Range/50s",
+      "/ai-actors/age-range/50s"
+    ],
+    [
       "/AI-ACTORS/AGE-RANGE/50S",
       "/ai-actors/age-range/50s"
     ],
     [
       "/Ai-actors/Age-range/60s-plus",
+      "/ai-actors/age-range/60s-plus"
+    ],
+    [
+      "/Ai-Actors/Age-Range/60s-Plus",
       "/ai-actors/age-range/60s-plus"
     ],
     [
@@ -84,11 +120,19 @@
       "/ai-actors/akio"
     ],
     [
+      "/Ai-Actors/Akio",
+      "/ai-actors/akio"
+    ],
+    [
       "/AI-ACTORS/AKIO",
       "/ai-actors/akio"
     ],
     [
       "/Ai-actors/Amara",
+      "/ai-actors/amara"
+    ],
+    [
+      "/Ai-Actors/Amara",
       "/ai-actors/amara"
     ],
     [
@@ -100,11 +144,19 @@
       "/ai-actors/anika"
     ],
     [
+      "/Ai-Actors/Anika",
+      "/ai-actors/anika"
+    ],
+    [
       "/AI-ACTORS/ANIKA",
       "/ai-actors/anika"
     ],
     [
       "/Ai-actors/Anjali",
+      "/ai-actors/anjali"
+    ],
+    [
+      "/Ai-Actors/Anjali",
       "/ai-actors/anjali"
     ],
     [
@@ -116,11 +168,19 @@
       "/ai-actors/ari"
     ],
     [
+      "/Ai-Actors/Ari",
+      "/ai-actors/ari"
+    ],
+    [
       "/AI-ACTORS/ARI",
       "/ai-actors/ari"
     ],
     [
       "/Ai-actors/Asha",
+      "/ai-actors/asha"
+    ],
+    [
+      "/Ai-Actors/Asha",
       "/ai-actors/asha"
     ],
     [
@@ -132,11 +192,19 @@
       "/ai-actors/avery"
     ],
     [
+      "/Ai-Actors/Avery",
+      "/ai-actors/avery"
+    ],
+    [
       "/AI-ACTORS/AVERY",
       "/ai-actors/avery"
     ],
     [
       "/Ai-actors/Bria",
+      "/ai-actors/bria"
+    ],
+    [
+      "/Ai-Actors/Bria",
       "/ai-actors/bria"
     ],
     [
@@ -148,11 +216,19 @@
       "/ai-actors/caleb"
     ],
     [
+      "/Ai-Actors/Caleb",
+      "/ai-actors/caleb"
+    ],
+    [
       "/AI-ACTORS/CALEB",
       "/ai-actors/caleb"
     ],
     [
       "/Ai-actors/Casey",
+      "/ai-actors/casey"
+    ],
+    [
+      "/Ai-Actors/Casey",
       "/ai-actors/casey"
     ],
     [
@@ -164,11 +240,19 @@
       "/ai-actors/celine"
     ],
     [
+      "/Ai-Actors/Celine",
+      "/ai-actors/celine"
+    ],
+    [
       "/AI-ACTORS/CELINE",
       "/ai-actors/celine"
     ],
     [
       "/Ai-actors/Claire",
+      "/ai-actors/claire"
+    ],
+    [
+      "/Ai-Actors/Claire",
       "/ai-actors/claire"
     ],
     [
@@ -180,11 +264,19 @@
       "/ai-actors/dalia"
     ],
     [
+      "/Ai-Actors/Dalia",
+      "/ai-actors/dalia"
+    ],
+    [
       "/AI-ACTORS/DALIA",
       "/ai-actors/dalia"
     ],
     [
       "/Ai-actors/Damon",
+      "/ai-actors/damon"
+    ],
+    [
+      "/Ai-Actors/Damon",
       "/ai-actors/damon"
     ],
     [
@@ -196,11 +288,19 @@
       "/ai-actors/dev"
     ],
     [
+      "/Ai-Actors/Dev",
+      "/ai-actors/dev"
+    ],
+    [
       "/AI-ACTORS/DEV",
       "/ai-actors/dev"
     ],
     [
       "/Ai-actors/Elena",
+      "/ai-actors/elena"
+    ],
+    [
+      "/Ai-Actors/Elena",
       "/ai-actors/elena"
     ],
     [
@@ -212,11 +312,19 @@
       "/ai-actors/elise"
     ],
     [
+      "/Ai-Actors/Elise",
+      "/ai-actors/elise"
+    ],
+    [
       "/AI-ACTORS/ELISE",
       "/ai-actors/elise"
     ],
     [
       "/Ai-actors/Evan",
+      "/ai-actors/evan"
+    ],
+    [
+      "/Ai-Actors/Evan",
       "/ai-actors/evan"
     ],
     [
@@ -228,11 +336,19 @@
       "/ai-actors/gianna"
     ],
     [
+      "/Ai-Actors/Gianna",
+      "/ai-actors/gianna"
+    ],
+    [
       "/AI-ACTORS/GIANNA",
       "/ai-actors/gianna"
     ],
     [
       "/Ai-actors/Gordon",
+      "/ai-actors/gordon"
+    ],
+    [
+      "/Ai-Actors/Gordon",
       "/ai-actors/gordon"
     ],
     [
@@ -244,11 +360,19 @@
       "/ai-actors/iris"
     ],
     [
+      "/Ai-Actors/Iris",
+      "/ai-actors/iris"
+    ],
+    [
       "/AI-ACTORS/IRIS",
       "/ai-actors/iris"
     ],
     [
       "/Ai-actors/Jade",
+      "/ai-actors/jade"
+    ],
+    [
+      "/Ai-Actors/Jade",
       "/ai-actors/jade"
     ],
     [
@@ -260,11 +384,19 @@
       "/ai-actors/jon"
     ],
     [
+      "/Ai-Actors/Jon",
+      "/ai-actors/jon"
+    ],
+    [
       "/AI-ACTORS/JON",
       "/ai-actors/jon"
     ],
     [
       "/Ai-actors/Ken",
+      "/ai-actors/ken"
+    ],
+    [
+      "/Ai-Actors/Ken",
       "/ai-actors/ken"
     ],
     [
@@ -276,11 +408,19 @@
       "/ai-actors/lana"
     ],
     [
+      "/Ai-Actors/Lana",
+      "/ai-actors/lana"
+    ],
+    [
       "/AI-ACTORS/LANA",
       "/ai-actors/lana"
     ],
     [
       "/Ai-actors/Lena",
+      "/ai-actors/lena"
+    ],
+    [
+      "/Ai-Actors/Lena",
       "/ai-actors/lena"
     ],
     [
@@ -292,11 +432,19 @@
       "/ai-actors/leonie"
     ],
     [
+      "/Ai-Actors/Leonie",
+      "/ai-actors/leonie"
+    ],
+    [
       "/AI-ACTORS/LEONIE",
       "/ai-actors/leonie"
     ],
     [
       "/Ai-actors/Lila",
+      "/ai-actors/lila"
+    ],
+    [
+      "/Ai-Actors/Lila",
       "/ai-actors/lila"
     ],
     [
@@ -308,11 +456,19 @@
       "/ai-actors/lola"
     ],
     [
+      "/Ai-Actors/Lola",
+      "/ai-actors/lola"
+    ],
+    [
       "/AI-ACTORS/LOLA",
       "/ai-actors/lola"
     ],
     [
       "/Ai-actors/Luis",
+      "/ai-actors/luis"
+    ],
+    [
+      "/Ai-Actors/Luis",
       "/ai-actors/luis"
     ],
     [
@@ -324,11 +480,19 @@
       "/ai-actors/mara"
     ],
     [
+      "/Ai-Actors/Mara",
+      "/ai-actors/mara"
+    ],
+    [
       "/AI-ACTORS/MARA",
       "/ai-actors/mara"
     ],
     [
       "/Ai-actors/Mateo",
+      "/ai-actors/mateo"
+    ],
+    [
+      "/Ai-Actors/Mateo",
       "/ai-actors/mateo"
     ],
     [
@@ -340,11 +504,19 @@
       "/ai-actors/maxwell"
     ],
     [
+      "/Ai-Actors/Maxwell",
+      "/ai-actors/maxwell"
+    ],
+    [
       "/AI-ACTORS/MAXWELL",
       "/ai-actors/maxwell"
     ],
     [
       "/Ai-actors/Men",
+      "/ai-actors/men"
+    ],
+    [
+      "/Ai-Actors/Men",
       "/ai-actors/men"
     ],
     [
@@ -356,11 +528,19 @@
       "/ai-actors/mila"
     ],
     [
+      "/Ai-Actors/Mila",
+      "/ai-actors/mila"
+    ],
+    [
       "/AI-ACTORS/MILA",
       "/ai-actors/mila"
     ],
     [
       "/Ai-actors/Mireya",
+      "/ai-actors/mireya"
+    ],
+    [
+      "/Ai-Actors/Mireya",
       "/ai-actors/mireya"
     ],
     [
@@ -372,11 +552,19 @@
       "/ai-actors/nia"
     ],
     [
+      "/Ai-Actors/Nia",
+      "/ai-actors/nia"
+    ],
+    [
       "/AI-ACTORS/NIA",
       "/ai-actors/nia"
     ],
     [
       "/Ai-actors/Nisha",
+      "/ai-actors/nisha"
+    ],
+    [
+      "/Ai-Actors/Nisha",
       "/ai-actors/nisha"
     ],
     [
@@ -388,11 +576,19 @@
       "/ai-actors/noah"
     ],
     [
+      "/Ai-Actors/Noah",
+      "/ai-actors/noah"
+    ],
+    [
       "/AI-ACTORS/NOAH",
       "/ai-actors/noah"
     ],
     [
       "/Ai-actors/Nora",
+      "/ai-actors/nora"
+    ],
+    [
+      "/Ai-Actors/Nora",
       "/ai-actors/nora"
     ],
     [
@@ -404,11 +600,19 @@
       "/ai-actors/omar"
     ],
     [
+      "/Ai-Actors/Omar",
+      "/ai-actors/omar"
+    ],
+    [
       "/AI-ACTORS/OMAR",
       "/ai-actors/omar"
     ],
     [
       "/Ai-actors/Priyanka",
+      "/ai-actors/priyanka"
+    ],
+    [
+      "/Ai-Actors/Priyanka",
       "/ai-actors/priyanka"
     ],
     [
@@ -420,11 +624,19 @@
       "/ai-actors/ravi"
     ],
     [
+      "/Ai-Actors/Ravi",
+      "/ai-actors/ravi"
+    ],
+    [
       "/AI-ACTORS/RAVI",
       "/ai-actors/ravi"
     ],
     [
       "/Ai-actors/Rhea",
+      "/ai-actors/rhea"
+    ],
+    [
+      "/Ai-Actors/Rhea",
       "/ai-actors/rhea"
     ],
     [
@@ -436,11 +648,19 @@
       "/ai-actors/rina"
     ],
     [
+      "/Ai-Actors/Rina",
+      "/ai-actors/rina"
+    ],
+    [
       "/AI-ACTORS/RINA",
       "/ai-actors/rina"
     ],
     [
       "/Ai-actors/Sana",
+      "/ai-actors/sana"
+    ],
+    [
+      "/Ai-Actors/Sana",
       "/ai-actors/sana"
     ],
     [
@@ -452,11 +672,19 @@
       "/ai-actors/scene"
     ],
     [
+      "/Ai-Actors/Scene",
+      "/ai-actors/scene"
+    ],
+    [
       "/AI-ACTORS/SCENE",
       "/ai-actors/scene"
     ],
     [
       "/Ai-actors/Scene/Balcony",
+      "/ai-actors/scene/balcony"
+    ],
+    [
+      "/Ai-Actors/Scene/Balcony",
       "/ai-actors/scene/balcony"
     ],
     [
@@ -468,11 +696,19 @@
       "/ai-actors/scene/bathroom"
     ],
     [
+      "/Ai-Actors/Scene/Bathroom",
+      "/ai-actors/scene/bathroom"
+    ],
+    [
       "/AI-ACTORS/SCENE/BATHROOM",
       "/ai-actors/scene/bathroom"
     ],
     [
       "/Ai-actors/Scene/Beach",
+      "/ai-actors/scene/beach"
+    ],
+    [
+      "/Ai-Actors/Scene/Beach",
       "/ai-actors/scene/beach"
     ],
     [
@@ -484,11 +720,19 @@
       "/ai-actors/scene/bedroom"
     ],
     [
+      "/Ai-Actors/Scene/Bedroom",
+      "/ai-actors/scene/bedroom"
+    ],
+    [
       "/AI-ACTORS/SCENE/BEDROOM",
       "/ai-actors/scene/bedroom"
     ],
     [
       "/Ai-actors/Scene/Cafe",
+      "/ai-actors/scene/cafe"
+    ],
+    [
+      "/Ai-Actors/Scene/Cafe",
       "/ai-actors/scene/cafe"
     ],
     [
@@ -500,11 +744,19 @@
       "/ai-actors/scene/car"
     ],
     [
+      "/Ai-Actors/Scene/Car",
+      "/ai-actors/scene/car"
+    ],
+    [
       "/AI-ACTORS/SCENE/CAR",
       "/ai-actors/scene/car"
     ],
     [
       "/Ai-actors/Scene/Classroom",
+      "/ai-actors/scene/classroom"
+    ],
+    [
+      "/Ai-Actors/Scene/Classroom",
       "/ai-actors/scene/classroom"
     ],
     [
@@ -516,11 +768,19 @@
       "/ai-actors/scene/exercise"
     ],
     [
+      "/Ai-Actors/Scene/Exercise",
+      "/ai-actors/scene/exercise"
+    ],
+    [
       "/AI-ACTORS/SCENE/EXERCISE",
       "/ai-actors/scene/exercise"
     ],
     [
       "/Ai-actors/Scene/Fitness",
+      "/ai-actors/scene/fitness"
+    ],
+    [
+      "/Ai-Actors/Scene/Fitness",
       "/ai-actors/scene/fitness"
     ],
     [
@@ -532,11 +792,19 @@
       "/ai-actors/scene/garage"
     ],
     [
+      "/Ai-Actors/Scene/Garage",
+      "/ai-actors/scene/garage"
+    ],
+    [
       "/AI-ACTORS/SCENE/GARAGE",
       "/ai-actors/scene/garage"
     ],
     [
       "/Ai-actors/Scene/Garden",
+      "/ai-actors/scene/garden"
+    ],
+    [
+      "/Ai-Actors/Scene/Garden",
       "/ai-actors/scene/garden"
     ],
     [
@@ -548,11 +816,19 @@
       "/ai-actors/scene/gym"
     ],
     [
+      "/Ai-Actors/Scene/Gym",
+      "/ai-actors/scene/gym"
+    ],
+    [
       "/AI-ACTORS/SCENE/GYM",
       "/ai-actors/scene/gym"
     ],
     [
       "/Ai-actors/Scene/Home",
+      "/ai-actors/scene/home"
+    ],
+    [
+      "/Ai-Actors/Scene/Home",
       "/ai-actors/scene/home"
     ],
     [
@@ -564,11 +840,19 @@
       "/ai-actors/scene/hospital"
     ],
     [
+      "/Ai-Actors/Scene/Hospital",
+      "/ai-actors/scene/hospital"
+    ],
+    [
       "/AI-ACTORS/SCENE/HOSPITAL",
       "/ai-actors/scene/hospital"
     ],
     [
       "/Ai-actors/Scene/Indoor",
+      "/ai-actors/scene/indoor"
+    ],
+    [
+      "/Ai-Actors/Scene/Indoor",
       "/ai-actors/scene/indoor"
     ],
     [
@@ -580,11 +864,19 @@
       "/ai-actors/scene/interview"
     ],
     [
+      "/Ai-Actors/Scene/Interview",
+      "/ai-actors/scene/interview"
+    ],
+    [
       "/AI-ACTORS/SCENE/INTERVIEW",
       "/ai-actors/scene/interview"
     ],
     [
       "/Ai-actors/Scene/Kitchen",
+      "/ai-actors/scene/kitchen"
+    ],
+    [
+      "/Ai-Actors/Scene/Kitchen",
       "/ai-actors/scene/kitchen"
     ],
     [
@@ -596,11 +888,19 @@
       "/ai-actors/scene/living-room"
     ],
     [
+      "/Ai-Actors/Scene/Living-Room",
+      "/ai-actors/scene/living-room"
+    ],
+    [
       "/AI-ACTORS/SCENE/LIVING-ROOM",
       "/ai-actors/scene/living-room"
     ],
     [
       "/Ai-actors/Scene/Office",
+      "/ai-actors/scene/office"
+    ],
+    [
+      "/Ai-Actors/Scene/Office",
       "/ai-actors/scene/office"
     ],
     [
@@ -612,11 +912,19 @@
       "/ai-actors/scene/outdoor"
     ],
     [
+      "/Ai-Actors/Scene/Outdoor",
+      "/ai-actors/scene/outdoor"
+    ],
+    [
       "/AI-ACTORS/SCENE/OUTDOOR",
       "/ai-actors/scene/outdoor"
     ],
     [
       "/Ai-actors/Scene/Pet",
+      "/ai-actors/scene/pet"
+    ],
+    [
+      "/Ai-Actors/Scene/Pet",
       "/ai-actors/scene/pet"
     ],
     [
@@ -628,11 +936,19 @@
       "/ai-actors/scene/podcast"
     ],
     [
+      "/Ai-Actors/Scene/Podcast",
+      "/ai-actors/scene/podcast"
+    ],
+    [
       "/AI-ACTORS/SCENE/PODCAST",
       "/ai-actors/scene/podcast"
     ],
     [
       "/Ai-actors/Scene/Pool",
+      "/ai-actors/scene/pool"
+    ],
+    [
+      "/Ai-Actors/Scene/Pool",
       "/ai-actors/scene/pool"
     ],
     [
@@ -644,11 +960,19 @@
       "/ai-actors/scene/reporting"
     ],
     [
+      "/Ai-Actors/Scene/Reporting",
+      "/ai-actors/scene/reporting"
+    ],
+    [
       "/AI-ACTORS/SCENE/REPORTING",
       "/ai-actors/scene/reporting"
     ],
     [
       "/Ai-actors/Scene/Shopping",
+      "/ai-actors/scene/shopping"
+    ],
+    [
+      "/Ai-Actors/Scene/Shopping",
       "/ai-actors/scene/shopping"
     ],
     [
@@ -660,11 +984,19 @@
       "/ai-actors/scene/sports"
     ],
     [
+      "/Ai-Actors/Scene/Sports",
+      "/ai-actors/scene/sports"
+    ],
+    [
       "/AI-ACTORS/SCENE/SPORTS",
       "/ai-actors/scene/sports"
     ],
     [
       "/Ai-actors/Scene/Studio",
+      "/ai-actors/scene/studio"
+    ],
+    [
+      "/Ai-Actors/Scene/Studio",
       "/ai-actors/scene/studio"
     ],
     [
@@ -676,11 +1008,19 @@
       "/ai-actors/scene/study-room"
     ],
     [
+      "/Ai-Actors/Scene/Study-Room",
+      "/ai-actors/scene/study-room"
+    ],
+    [
       "/AI-ACTORS/SCENE/STUDY-ROOM",
       "/ai-actors/scene/study-room"
     ],
     [
       "/Ai-actors/Scene/Terrace",
+      "/ai-actors/scene/terrace"
+    ],
+    [
+      "/Ai-Actors/Scene/Terrace",
       "/ai-actors/scene/terrace"
     ],
     [
@@ -692,11 +1032,19 @@
       "/ai-actors/scene/travel"
     ],
     [
+      "/Ai-Actors/Scene/Travel",
+      "/ai-actors/scene/travel"
+    ],
+    [
       "/AI-ACTORS/SCENE/TRAVEL",
       "/ai-actors/scene/travel"
     ],
     [
       "/Ai-actors/Scene/Yoga",
+      "/ai-actors/scene/yoga"
+    ],
+    [
+      "/Ai-Actors/Scene/Yoga",
       "/ai-actors/scene/yoga"
     ],
     [
@@ -708,11 +1056,19 @@
       "/ai-actors/sofia"
     ],
     [
+      "/Ai-Actors/Sofia",
+      "/ai-actors/sofia"
+    ],
+    [
       "/AI-ACTORS/SOFIA",
       "/ai-actors/sofia"
     ],
     [
       "/Ai-actors/Sora",
+      "/ai-actors/sora"
+    ],
+    [
+      "/Ai-Actors/Sora",
       "/ai-actors/sora"
     ],
     [
@@ -724,11 +1080,19 @@
       "/ai-actors/tara"
     ],
     [
+      "/Ai-Actors/Tara",
+      "/ai-actors/tara"
+    ],
+    [
       "/AI-ACTORS/TARA",
       "/ai-actors/tara"
     ],
     [
       "/Ai-actors/Tess",
+      "/ai-actors/tess"
+    ],
+    [
+      "/Ai-Actors/Tess",
       "/ai-actors/tess"
     ],
     [
@@ -740,11 +1104,19 @@
       "/ai-actors/tessa"
     ],
     [
+      "/Ai-Actors/Tessa",
+      "/ai-actors/tessa"
+    ],
+    [
       "/AI-ACTORS/TESSA",
       "/ai-actors/tessa"
     ],
     [
       "/Ai-actors/Vera",
+      "/ai-actors/vera"
+    ],
+    [
+      "/Ai-Actors/Vera",
       "/ai-actors/vera"
     ],
     [
@@ -756,11 +1128,19 @@
       "/ai-actors/women"
     ],
     [
+      "/Ai-Actors/Women",
+      "/ai-actors/women"
+    ],
+    [
       "/AI-ACTORS/WOMEN",
       "/ai-actors/women"
     ],
     [
       "/Ai-actors/Yara",
+      "/ai-actors/yara"
+    ],
+    [
+      "/Ai-Actors/Yara",
       "/ai-actors/yara"
     ],
     [
@@ -772,11 +1152,19 @@
       "/ai-image-generation"
     ],
     [
+      "/Ai-Image-Generation",
+      "/ai-image-generation"
+    ],
+    [
       "/AI-IMAGE-GENERATION",
       "/ai-image-generation"
     ],
     [
       "/Ai-image-generation/Change-background",
+      "/ai-image-generation/change-background"
+    ],
+    [
+      "/Ai-Image-Generation/Change-Background",
       "/ai-image-generation/change-background"
     ],
     [
@@ -788,11 +1176,19 @@
       "/ai-image-generation/colorway-variations"
     ],
     [
+      "/Ai-Image-Generation/Colorway-Variations",
+      "/ai-image-generation/colorway-variations"
+    ],
+    [
       "/AI-IMAGE-GENERATION/COLORWAY-VARIATIONS",
       "/ai-image-generation/colorway-variations"
     ],
     [
       "/Ai-image-generation/Jewelry-positioning",
+      "/ai-image-generation/jewelry-positioning"
+    ],
+    [
+      "/Ai-Image-Generation/Jewelry-Positioning",
       "/ai-image-generation/jewelry-positioning"
     ],
     [
@@ -804,11 +1200,19 @@
       "/ai-image-generation/lifestyle-photos"
     ],
     [
+      "/Ai-Image-Generation/Lifestyle-Photos",
+      "/ai-image-generation/lifestyle-photos"
+    ],
+    [
       "/AI-IMAGE-GENERATION/LIFESTYLE-PHOTOS",
       "/ai-image-generation/lifestyle-photos"
     ],
     [
       "/Ai-image-generation/Model-photos",
+      "/ai-image-generation/model-photos"
+    ],
+    [
+      "/Ai-Image-Generation/Model-Photos",
       "/ai-image-generation/model-photos"
     ],
     [
@@ -820,11 +1224,19 @@
       "/ai-image-generation/packaging-mockup"
     ],
     [
+      "/Ai-Image-Generation/Packaging-Mockup",
+      "/ai-image-generation/packaging-mockup"
+    ],
+    [
       "/AI-IMAGE-GENERATION/PACKAGING-MOCKUP",
       "/ai-image-generation/packaging-mockup"
     ],
     [
       "/Ai-image-generation/Packshot-multi-angle",
+      "/ai-image-generation/packshot-multi-angle"
+    ],
+    [
+      "/Ai-Image-Generation/Packshot-Multi-Angle",
       "/ai-image-generation/packshot-multi-angle"
     ],
     [
@@ -836,11 +1248,19 @@
       "/ai-image-generation/professional-headshot"
     ],
     [
+      "/Ai-Image-Generation/Professional-Headshot",
+      "/ai-image-generation/professional-headshot"
+    ],
+    [
       "/AI-IMAGE-GENERATION/PROFESSIONAL-HEADSHOT",
       "/ai-image-generation/professional-headshot"
     ],
     [
       "/Ai-image-generation/Sale-campaign-key-visual",
+      "/ai-image-generation/sale-campaign-key-visual"
+    ],
+    [
+      "/Ai-Image-Generation/Sale-Campaign-Key-Visual",
       "/ai-image-generation/sale-campaign-key-visual"
     ],
     [
@@ -852,11 +1272,19 @@
       "/ai-image-generation/social-ad-photos"
     ],
     [
+      "/Ai-Image-Generation/Social-Ad-Photos",
+      "/ai-image-generation/social-ad-photos"
+    ],
+    [
       "/AI-IMAGE-GENERATION/SOCIAL-AD-PHOTOS",
       "/ai-image-generation/social-ad-photos"
     ],
     [
       "/Ai-image-generation/Story-ad-vertical",
+      "/ai-image-generation/story-ad-vertical"
+    ],
+    [
+      "/Ai-Image-Generation/Story-Ad-Vertical",
       "/ai-image-generation/story-ad-vertical"
     ],
     [
@@ -868,11 +1296,19 @@
       "/ai-image-generation/ugc-still-ad"
     ],
     [
+      "/Ai-Image-Generation/Ugc-Still-Ad",
+      "/ai-image-generation/ugc-still-ad"
+    ],
+    [
       "/AI-IMAGE-GENERATION/UGC-STILL-AD",
       "/ai-image-generation/ugc-still-ad"
     ],
     [
       "/Ai-image-generation/Virtual-try-on",
+      "/ai-image-generation/virtual-try-on"
+    ],
+    [
+      "/Ai-Image-Generation/Virtual-Try-On",
       "/ai-image-generation/virtual-try-on"
     ],
     [
@@ -884,11 +1320,19 @@
       "/ai-image-generation/white-background-photos"
     ],
     [
+      "/Ai-Image-Generation/White-Background-Photos",
+      "/ai-image-generation/white-background-photos"
+    ],
+    [
       "/AI-IMAGE-GENERATION/WHITE-BACKGROUND-PHOTOS",
       "/ai-image-generation/white-background-photos"
     ],
     [
       "/Ai-info",
+      "/ai-info"
+    ],
+    [
+      "/Ai-Info",
       "/ai-info"
     ],
     [
@@ -900,11 +1344,19 @@
       "/ai-video-generation"
     ],
     [
+      "/Ai-Video-Generation",
+      "/ai-video-generation"
+    ],
+    [
       "/AI-VIDEO-GENERATION",
       "/ai-video-generation"
     ],
     [
       "/Ai-video-generation/Ai-twin",
+      "/ai-video-generation/ai-twin"
+    ],
+    [
+      "/Ai-Video-Generation/Ai-Twin",
       "/ai-video-generation/ai-twin"
     ],
     [
@@ -916,11 +1368,19 @@
       "/ai-video-generation/beauty-routine"
     ],
     [
+      "/Ai-Video-Generation/Beauty-Routine",
+      "/ai-video-generation/beauty-routine"
+    ],
+    [
       "/AI-VIDEO-GENERATION/BEAUTY-ROUTINE",
       "/ai-video-generation/beauty-routine"
     ],
     [
       "/Ai-video-generation/Before-after-video",
+      "/ai-video-generation/before-after-video"
+    ],
+    [
+      "/Ai-Video-Generation/Before-After-Video",
       "/ai-video-generation/before-after-video"
     ],
     [
@@ -932,11 +1392,19 @@
       "/ai-video-generation/black-friday-countdown"
     ],
     [
+      "/Ai-Video-Generation/Black-Friday-Countdown",
+      "/ai-video-generation/black-friday-countdown"
+    ],
+    [
       "/AI-VIDEO-GENERATION/BLACK-FRIDAY-COUNTDOWN",
       "/ai-video-generation/black-friday-countdown"
     ],
     [
       "/Ai-video-generation/Cinematic-video",
+      "/ai-video-generation/cinematic-video"
+    ],
+    [
+      "/Ai-Video-Generation/Cinematic-Video",
       "/ai-video-generation/cinematic-video"
     ],
     [
@@ -948,11 +1416,19 @@
       "/ai-video-generation/fashion-try-on-reel"
     ],
     [
+      "/Ai-Video-Generation/Fashion-Try-On-Reel",
+      "/ai-video-generation/fashion-try-on-reel"
+    ],
+    [
       "/AI-VIDEO-GENERATION/FASHION-TRY-ON-REEL",
       "/ai-video-generation/fashion-try-on-reel"
     ],
     [
       "/Ai-video-generation/Food-video",
+      "/ai-video-generation/food-video"
+    ],
+    [
+      "/Ai-Video-Generation/Food-Video",
       "/ai-video-generation/food-video"
     ],
     [
@@ -964,11 +1440,19 @@
       "/ai-video-generation/home-organization"
     ],
     [
+      "/Ai-Video-Generation/Home-Organization",
+      "/ai-video-generation/home-organization"
+    ],
+    [
       "/AI-VIDEO-GENERATION/HOME-ORGANIZATION",
       "/ai-video-generation/home-organization"
     ],
     [
       "/Ai-video-generation/How-to-video",
+      "/ai-video-generation/how-to-video"
+    ],
+    [
+      "/Ai-Video-Generation/How-To-Video",
       "/ai-video-generation/how-to-video"
     ],
     [
@@ -980,11 +1464,19 @@
       "/ai-video-generation/image-to-video"
     ],
     [
+      "/Ai-Video-Generation/Image-To-Video",
+      "/ai-video-generation/image-to-video"
+    ],
+    [
       "/AI-VIDEO-GENERATION/IMAGE-TO-VIDEO",
       "/ai-video-generation/image-to-video"
     ],
     [
       "/Ai-video-generation/Product-video",
+      "/ai-video-generation/product-video"
+    ],
+    [
+      "/Ai-Video-Generation/Product-Video",
       "/ai-video-generation/product-video"
     ],
     [
@@ -996,11 +1488,19 @@
       "/ai-video-generation/promo-video"
     ],
     [
+      "/Ai-Video-Generation/Promo-Video",
+      "/ai-video-generation/promo-video"
+    ],
+    [
       "/AI-VIDEO-GENERATION/PROMO-VIDEO",
       "/ai-video-generation/promo-video"
     ],
     [
       "/Ai-video-generation/Spark-ads-style-video",
+      "/ai-video-generation/spark-ads-style-video"
+    ],
+    [
+      "/Ai-Video-Generation/Spark-Ads-Style-Video",
       "/ai-video-generation/spark-ads-style-video"
     ],
     [
@@ -1012,11 +1512,19 @@
       "/ai-video-generation/spokesperson-video"
     ],
     [
+      "/Ai-Video-Generation/Spokesperson-Video",
+      "/ai-video-generation/spokesperson-video"
+    ],
+    [
       "/AI-VIDEO-GENERATION/SPOKESPERSON-VIDEO",
       "/ai-video-generation/spokesperson-video"
     ],
     [
       "/Ai-video-generation/Text-to-video",
+      "/ai-video-generation/text-to-video"
+    ],
+    [
+      "/Ai-Video-Generation/Text-To-Video",
       "/ai-video-generation/text-to-video"
     ],
     [
@@ -1028,11 +1536,19 @@
       "/ai-video-generation/url-to-video"
     ],
     [
+      "/Ai-Video-Generation/Url-To-Video",
+      "/ai-video-generation/url-to-video"
+    ],
+    [
       "/AI-VIDEO-GENERATION/URL-TO-VIDEO",
       "/ai-video-generation/url-to-video"
     ],
     [
       "/Ai-video-generation/Video-ads",
+      "/ai-video-generation/video-ads"
+    ],
+    [
+      "/Ai-Video-Generation/Video-Ads",
       "/ai-video-generation/video-ads"
     ],
     [
@@ -1052,11 +1568,19 @@
       "/blog/ai-product-photography-guide"
     ],
     [
+      "/Blog/Ai-Product-Photography-Guide",
+      "/blog/ai-product-photography-guide"
+    ],
+    [
       "/BLOG/AI-PRODUCT-PHOTOGRAPHY-GUIDE",
       "/blog/ai-product-photography-guide"
     ],
     [
       "/Blog/Ai-ugc-video-ads-guide",
+      "/blog/ai-ugc-video-ads-guide"
+    ],
+    [
+      "/Blog/Ai-Ugc-Video-Ads-Guide",
       "/blog/ai-ugc-video-ads-guide"
     ],
     [
@@ -1068,11 +1592,19 @@
       "/blog/ai-video-review-checklist"
     ],
     [
+      "/Blog/Ai-Video-Review-Checklist",
+      "/blog/ai-video-review-checklist"
+    ],
+    [
       "/BLOG/AI-VIDEO-REVIEW-CHECKLIST",
       "/blog/ai-video-review-checklist"
     ],
     [
       "/Blog/Model-photos-without-a-photoshoot",
+      "/blog/model-photos-without-a-photoshoot"
+    ],
+    [
+      "/Blog/Model-Photos-Without-A-Photoshoot",
       "/blog/model-photos-without-a-photoshoot"
     ],
     [
@@ -1084,6 +1616,10 @@
       "/blog/unboxing-videos-for-launches"
     ],
     [
+      "/Blog/Unboxing-Videos-For-Launches",
+      "/blog/unboxing-videos-for-launches"
+    ],
+    [
       "/BLOG/UNBOXING-VIDEOS-FOR-LAUNCHES",
       "/blog/unboxing-videos-for-launches"
     ],
@@ -1092,11 +1628,19 @@
       "/children-privacy"
     ],
     [
+      "/Children-Privacy",
+      "/children-privacy"
+    ],
+    [
       "/CHILDREN-PRIVACY",
       "/children-privacy"
     ],
     [
       "/Contact-us",
+      "/contact-us"
+    ],
+    [
+      "/Contact-Us",
       "/contact-us"
     ],
     [
@@ -1121,6 +1665,10 @@
     ],
     [
       "/Digital-delivery",
+      "/digital-delivery"
+    ],
+    [
+      "/Digital-Delivery",
       "/digital-delivery"
     ],
     [
@@ -1156,11 +1704,19 @@
       "/guides/ad-sizes-by-platform"
     ],
     [
+      "/Guides/Ad-Sizes-By-Platform",
+      "/guides/ad-sizes-by-platform"
+    ],
+    [
       "/GUIDES/AD-SIZES-BY-PLATFORM",
       "/guides/ad-sizes-by-platform"
     ],
     [
       "/Guides/First-tiktok-video-ad",
+      "/guides/first-tiktok-video-ad"
+    ],
+    [
+      "/Guides/First-Tiktok-Video-Ad",
       "/guides/first-tiktok-video-ad"
     ],
     [
@@ -1172,6 +1728,10 @@
       "/guides/product-photo-tips"
     ],
     [
+      "/Guides/Product-Photo-Tips",
+      "/guides/product-photo-tips"
+    ],
+    [
       "/GUIDES/PRODUCT-PHOTO-TIPS",
       "/guides/product-photo-tips"
     ],
@@ -1180,11 +1740,19 @@
       "/guides/testing-ad-versions"
     ],
     [
+      "/Guides/Testing-Ad-Versions",
+      "/guides/testing-ad-versions"
+    ],
+    [
       "/GUIDES/TESTING-AD-VERSIONS",
       "/guides/testing-ad-versions"
     ],
     [
       "/Guides/White-background-amazon",
+      "/guides/white-background-amazon"
+    ],
+    [
+      "/Guides/White-Background-Amazon",
       "/guides/white-background-amazon"
     ],
     [
@@ -1201,6 +1769,10 @@
     ],
     [
       "/Industries/Beauty-skincare",
+      "/industries/beauty-skincare"
+    ],
+    [
+      "/Industries/Beauty-Skincare",
       "/industries/beauty-skincare"
     ],
     [
@@ -1224,11 +1796,19 @@
       "/industries/fashion-clothing"
     ],
     [
+      "/Industries/Fashion-Clothing",
+      "/industries/fashion-clothing"
+    ],
+    [
       "/INDUSTRIES/FASHION-CLOTHING",
       "/industries/fashion-clothing"
     ],
     [
       "/Industries/Food-drinks",
+      "/industries/food-drinks"
+    ],
+    [
+      "/Industries/Food-Drinks",
       "/industries/food-drinks"
     ],
     [
@@ -1240,6 +1820,10 @@
       "/industries/health-wellness"
     ],
     [
+      "/Industries/Health-Wellness",
+      "/industries/health-wellness"
+    ],
+    [
       "/INDUSTRIES/HEALTH-WELLNESS",
       "/industries/health-wellness"
     ],
@@ -1248,11 +1832,19 @@
       "/industries/home-living"
     ],
     [
+      "/Industries/Home-Living",
+      "/industries/home-living"
+    ],
+    [
       "/INDUSTRIES/HOME-LIVING",
       "/industries/home-living"
     ],
     [
       "/Industries/Jewelry-accessories",
+      "/industries/jewelry-accessories"
+    ],
+    [
+      "/Industries/Jewelry-Accessories",
       "/industries/jewelry-accessories"
     ],
     [
@@ -1284,6 +1876,10 @@
       "/occasions/black-friday"
     ],
     [
+      "/Occasions/Black-Friday",
+      "/occasions/black-friday"
+    ],
+    [
       "/OCCASIONS/BLACK-FRIDAY",
       "/occasions/black-friday"
     ],
@@ -1301,6 +1897,10 @@
     ],
     [
       "/Occasions/Sale-discount",
+      "/occasions/sale-discount"
+    ],
+    [
+      "/Occasions/Sale-Discount",
       "/occasions/sale-discount"
     ],
     [
@@ -1328,6 +1928,10 @@
       "/platforms/amazon-product-photos"
     ],
     [
+      "/Platforms/Amazon-Product-Photos",
+      "/platforms/amazon-product-photos"
+    ],
+    [
       "/PLATFORMS/AMAZON-PRODUCT-PHOTOS",
       "/platforms/amazon-product-photos"
     ],
@@ -1340,6 +1944,10 @@
       "/platforms/facebook-ads"
     ],
     [
+      "/Platforms/Facebook-Ads",
+      "/platforms/facebook-ads"
+    ],
+    [
       "/PLATFORMS/FACEBOOK-ADS",
       "/platforms/facebook-ads"
     ],
@@ -1349,6 +1957,10 @@
     ],
     [
       "/Platforms/Instagram-ads",
+      "/platforms/instagram-ads"
+    ],
+    [
+      "/Platforms/Instagram-Ads",
       "/platforms/instagram-ads"
     ],
     [
@@ -1368,6 +1980,10 @@
       "/platforms/shopify-product-photos"
     ],
     [
+      "/Platforms/Shopify-Product-Photos",
+      "/platforms/shopify-product-photos"
+    ],
+    [
       "/PLATFORMS/SHOPIFY-PRODUCT-PHOTOS",
       "/platforms/shopify-product-photos"
     ],
@@ -1380,6 +1996,10 @@
       "/platforms/tiktok-ads"
     ],
     [
+      "/Platforms/Tiktok-Ads",
+      "/platforms/tiktok-ads"
+    ],
+    [
       "/PLATFORMS/TIKTOK-ADS",
       "/platforms/tiktok-ads"
     ],
@@ -1389,6 +2009,10 @@
     ],
     [
       "/Platforms/Youtube-shorts-ads",
+      "/platforms/youtube-shorts-ads"
+    ],
+    [
+      "/Platforms/Youtube-Shorts-Ads",
       "/platforms/youtube-shorts-ads"
     ],
     [
@@ -1421,6 +2045,10 @@
     ],
     [
       "/State-privacy",
+      "/state-privacy"
+    ],
+    [
+      "/State-Privacy",
       "/state-privacy"
     ],
     [
@@ -1472,11 +2100,15 @@
       "/trust-and-safety"
     ],
     [
+      "/Trust-And-Safety",
+      "/trust-and-safety"
+    ],
+    [
       "/TRUST-AND-SAFETY",
       "/trust-and-safety"
     ]
   ],
   "skipped": [],
   "skippedCount": 0,
-  "generatedAt": "2026-10-22T15:10:11.620Z"
+  "generatedAt": "2026-10-22T15:44:14.084Z"
 }
