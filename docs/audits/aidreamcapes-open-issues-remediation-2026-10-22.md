@@ -78,8 +78,8 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 | D8 | 开放索引前置：GSC 数据 + 案例独立正文 | P3 | 前置工作 | 未解决 |
 | D9 | 命名清单把 `/occasions` 记为目录页 | P3 | 文档 | 未解决 |
 | E1 | host 归一化 2 跳 | P3 | URL | 未解决 |
-| E2 | 大小写路径 404 | P3 | URL | 未解决 |
-| E3 | 近似 slug 无 301 兜底 | P3 | URL | 未解决 |
+| E2 | 大小写路径 404 | P3 | URL | **已修复（2026-10-23，525 条近似地址 301）** |
+| E3 | 近似 slug 无 301 兜底 | P3 | URL | **已修复（2026-10-23，sitemap 派生生成器 + 发布闸门）** |
 | E4 | 品牌域 `aidreamcapes.com` 410 | P3 | 业务决策 | 现状保留 |
 | F1 | release 归档不含 `docs/`，服务器侧写审计清单失败 | P2 | 工具链 | **已修（2026-10-23：Aidreamcapes 脚本默认输出改到 release 内 `reports/`）** |
 | F2 | CDN 重置本地非浏览器出口连接 | P3 | 环境 | 已固化做法 |
@@ -281,9 +281,27 @@ HTTP: 41 条全部 301，无 200
 | 编号 | 现状 | 整改 |
 | --- | --- | --- |
 | E1 | host 归一化 2 跳（apex → www → 目标） | 边缘配置合并为 1 跳 |
-| E2 | `/ABOUT-US` → 404 | 大小写不敏感重写或补 301 兜底，需评估是否引入重复内容 |
-| E3 | `/platforms/instagram` → 404（实际为 `/platforms/instagram-ads`） | 为目录页补近似 slug 301 兜底 |
+| E2 | `/ABOUT-US` → 404 | **已修**：近似地址表覆盖大小写变体，实测 301 → `/about-us` |
+| E3 | `/platforms/instagram` → 404（实际为 `/platforms/instagram-ads`） | **已修**：目录页近似 slug 301 兜底，实测 `/platforms/instagram`、`/platforms/tiktok`、`/templates/videos`、`/industries/electronic` 全部 301 到对应页 |
 | E4 | 品牌域 `aidreamcapes.com` 返回 410 | 业务决策：若仍有品牌流量，改为 301 到主域；否则维持 410 并记录决策 |
+
+### E2 / E3｜近似地址 301 兜底（2026-10-23 已上线）
+
+一条差一个字符的地址此前直接 404，访问就丢了：大小写不同、单复数不同、少了 `-ads` 这类后缀。现在由一张近似地址表把它们 301 到用户真正要找的页面。
+
+- 生成：`scripts/build-aidreamcapes-near-slug-redirects.mjs`，从线上 sitemap 的 178 个公开地址派生，输出 `src/lib/aidreamcapes-site-v2-near-slugs.json`（525 条，planHash `1539ff3c…`）。
+- 规则（`scripts/lib/aidreamcapes-near-slug-rules.mjs`，生成器与发布闸门共用）：小写、首字母大写、逐词首字母大写、全大写四种大小写变体（`/ABOUT-US`、`/About-Us` 都能到 `/about-us`）；仅在 `/platforms/`、`/templates/`、`/industries/`、`/occasions/`、`/blog/`、`/guides/` 六个目录下做单复数与同族后缀（`-ads` / `-photo(s)` / `-video(s)` / `-image(s)`）变体。
+- 安全边界：源地址必须今天不返回 200（不在 sitemap、也不是库中存在但未进 sitemap 的页面）；目标必须是 sitemap 里的公开页；媒体卡地址与其别名一律排除，避免把活的详情页 301 走；只有 GET/HEAD 走近似跳转，表单 POST 不会被搬走。
+- 闸门：`scripts/smoke-aidreamcapes-seo-contract.mjs` 断言「源不是活页、目标是活页、每个公开地址的大小写变体不缺」，并逐个请求 525 条源地址，要求全部 301 到表里记录的目标。
+- 影响面：查找只发生在 `aidreamcapesV2Redirect()` 内部（非本店域名直接返回 `undefined`），MyDreamShoots 与 EU 站行为不变。
+- 本地验证（`5b9e5c977` 预构建，x-forwarded-host=www.aivideosugc.com）：525/525 全部 301；`/privacy`、`/templates/video`、`/about-us` 仍 200；`POST /platforms/instagram` 仍 404。
+
+### 私有路由与重复标题（2026-10-23 已上线）
+
+- **robots.txt 收口**：`/robots.txt` 对 `www.aivideosugc.com` 增加 `Disallow: /app/`、`Disallow: /api/`、`Disallow: /login`、`Disallow: /site/`，让私有工作台、接口、登录与路径模式预览不再消耗抓取预算；sitemap 行不变。判定基于 `storefrontSitemapUrlForHost()` 解析出的站点域名，其他站点走原分支，行为不变（本地对 MyDreamShoots host 的 robots 输出与改动前一致）。
+- **重复标题/描述归零**：审计脚本此前把私有页也算进重复统计——线上 7 个 `/app/create/*` 共用标题 `Workspace` 与平台默认描述，把真正争抢同一查询的页面盖住了。现在只比较能进索引的页面（`noindex` 的页不再计入）。线上复测（392 页，2026-10-23）：`duplicateTitles: 0`、`duplicateDescriptions: 0`，`brokenLinks: 0`、`orphans: 0`、`canonicalMismatch: 0`，392 页全部 200。
+- **平台描述外泄**：根布局的兜底描述原本是平台自述（"Multi-site AI subscription platform with store-style theme designer."），会出现在客户工作台的浏览器标签与分享卡上，属于内部信息。改为按 host 判定：Aidreamcapes 站点用门店文案（"Create AI UGC video ads and product photos from a product link, an image or a prompt."），其他站点保留原文，零影响。
+- 本地回读（`5b9e5c977` 预构建）：`/app/create/url-to-video` 描述已换为门店文案；`Workspace` 标题保留（私有工作台，`noindex, nofollow`）。
 
 ## 7. 工具链与环境
 
@@ -310,7 +328,7 @@ HTTP: 41 条全部 301，无 200
 | 批次 | 内容 | 依赖 |
 | --- | --- | --- |
 | 批次 1（本周） | A1 + A2 一次字段级删除清单；B1 + B2 内链改写；D1 + D3 代码变更；D4 字段级文案修正；F1 脚本输出目录调整 | 无；均不依赖决策 |
-| 批次 2（本周） | C1 边缘缓存规则；E1、E3 边缘/路由兜底 | Cloudflare 权限 |
+| 批次 2（本周） | C1 边缘缓存规则；E1 边缘兜底 | Cloudflare 权限 |
 | 批次 3（两周内） | B3 导航压缩；C3 srcset；C4 独立构建机 | C4 需要构建资源 |
 | 批次 4（一个月内） | B4 + B5 索引策略；C2 首页载荷；D5 内容深度 | 需产品决策（B4、D6） |
 
