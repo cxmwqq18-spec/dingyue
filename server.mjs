@@ -20,6 +20,17 @@ function shouldInterceptHtmlPath(pathname) {
   );
 }
 
+// The middleware serves storefront HTML through an internal same-process fetch
+// and marks that request with `x-storefront-head-seo-reorder-skip`, because it
+// applies its own head rewrite to the upstream body. Reordering here as well
+// would buffer the page twice and leak the inner stage's timing header. Honour
+// the marker for the Aidreamcapes public host only: MyDreamShoots and the other
+// storefronts keep their current transport path until they are reviewed.
+function skipsInternalHtmlIntercept(request, requestHost, forwardedHost) {
+  if (request.headers["x-storefront-head-seo-reorder-skip"] !== "1") return false;
+  return isAidreamcapesComHost(forwardedHost || requestHost);
+}
+
 function isAidreamcapesComHost(host) {
   return /^(?:www\.)?(?:aidreamcapes|aivideosugc)\.com$/i.test(host);
 }
@@ -202,7 +213,7 @@ createServer(async (request, response) => {
     const isAidreamcapesEuRequest =
       /^\/site\/aidreamcapes-eu(?:\/|$)/i.test(requestUrl.pathname) ||
       /^(?:www\.)?aidreamcapes\.eu$/i.test(requestHost);
-    if (shouldInterceptHtmlPath(requestUrl.pathname)) {
+    if (shouldInterceptHtmlPath(requestUrl.pathname) && !skipsInternalHtmlIntercept(request, requestHost, forwardedHost)) {
       interceptHtmlResponse(response, { reorderHead: !isAidreamcapesEuRequest, startedAt });
     }
     await handle(request, response);

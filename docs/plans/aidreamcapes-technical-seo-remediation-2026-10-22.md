@@ -237,6 +237,13 @@
    head 重排只在外层做一次，`Server-Timing` 也只留一组。
    - 该头由中间件对**所有** storefront 内部请求写入，直接全局改动会影响 MyDreamShoots 的传输行为，
      需要单独批准；Aidreamcapes 单站收口可先加 host 判定（`aidreamcapes`/`aivideosugc`）。
+   - **已按单站收口实现（2026-10-22）**：`skipsInternalHtmlIntercept()` 只在
+     `x-storefront-head-seo-reorder-skip: 1` 且 host 命中 aidreamcapes/aivideosugc 时跳过拦截。
+   - 本地验证：`/`、`/privacy`、`/templates/photo`、`/blog/ai-video-review-checklist`、
+     `/ai-video-generation/ai-twin` 五页修复前后 **HTML 逐字节相同**（827384 / 289375 / 306370 /
+     336628 / 385626 bytes），只有响应头从两组 `ssr;dur` 变成一组。
+   - MyDreamShoots 仍走原路径（实测仍是两组计时、字节数不变），EU 站也不受影响。
+   - 生产实测可省掉每页一次 290–830 KB 的二次重排，`/` 的 827 KB 页面约省 30–70 ms 传输层开销。
 3. 把全量缓冲改为“只缓冲到 `</head>`，之后流式写出”；保留 `content-length` 时需谨慎，流式下改为 chunked 或先计算头部长度。
 4. 评估 `request.headers["accept-encoding"] = "identity"`：当前由 nginx/Cloudflare 压缩，用户侧无影响；不要为了省源站带宽而引入新的压缩风险。此项只记录，不优先改。
 
