@@ -1,0 +1,1881 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-workspace-case-alias-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-22T07:00:46.297Z",
+  "sourcePlanHash": "43ee9e7aabac464fd1c6e2d3d96290d2a911d0a2df47e75cc451f58b352fee14",
+  "summary": {
+    "pages": 20,
+    "cards": 32,
+    "operations": 40
+  },
+  "pages": [
+    {
+      "slug": "/ai-video-generation/video-ads",
+      "pageHash": "79232d1b7858ed0ab4479eea631e2463dcdb2fca3f1f5b6b7a23f2a2524bb37f",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-f389f2ad62ea",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite",
+            "detailAliasOf": null,
+            "publicAliases": [
+              "street-interview-snack-bite-ai-video-generation-ugc-ad-video"
+            ]
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping food and expression together in one frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-f389f2ad62ea",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite",
+            "detailAliasOf": null,
+            "publicAliases": [
+              "street-interview-snack-bite-ai-video-generation-ugc-ad-video"
+            ]
+          },
+          "beforeHash": "d68c65005552fe90b6fd5d08b0c8a77bc7bb071fb461c01f4f515136b28a0dcb",
+          "afterHash": "493628d37faba2a2bbca062111996880707ae65f68604aa0aaa38d20a9446375",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping food and expression together in one frame."
+            }
+          ]
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "label": "Quiet Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-unboxing-makeup-tools",
+          "before": {
+            "label": "Quiet Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "quiet-unboxing-makeup-tools-9ce41ce807d0",
+            "sceneId": "texture_closeup",
+            "publicSlug": "quiet-unboxing-makeup-tools",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "quiet-unboxing-makeup-tools-9ce41ce807d0",
+            "sceneId": null,
+            "publicSlug": "quiet-unboxing-makeup-tools",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "322a69c65518b5e0f2453d1f7d0e4f7645dc03036d03afcc8f801e3bcb633f6e",
+          "afterHash": "2a0625982304b7b3f0425218cbdcb4715e9cb91152b644e3ea8b484b0a097f60",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "texture_closeup",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "pageHash": "cabf1efcdfe49f8240c79d0d711f6301293b1c185fa0e8501f0ede8de2bb88bb",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-colorway-variations",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-f4f2d8d5f8cb",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-colorway-variations",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-f4f2d8d5f8cb",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-colorway-variations",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "b8cb0d258eeec645eebd696e68340d44d9bb0ece4e0ac1f950fc51a2edb5faae",
+          "afterHash": "20c759de7f8d44934e1803a7ba5636bfe9fadf2157c77132f9f2e0b7c1f1a155",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "51fcf30e79f1dc74c52420cc8afde56d02e7969c8ec3a9f26bda02de5f7b5ace",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-jewelry-positioning",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-d019677e3c67",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-jewelry-positioning",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-d019677e3c67",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-jewelry-positioning",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "242997d402e15d2984a0fa0daa026223a7ea5db4089dcff3f96ef83788129b87",
+          "afterHash": "c984fce91ad2b095e6e38e6db611ab8c60572ca30407efce39a0e990b391704e",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame."
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "pageHash": "43669ca996672874a3f8d2a1288dedd659434841296fbc0c0ba396a0eb68edc6",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-packaging-mockup",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-44b64e296026",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-44b64e296026",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "61e38065066d95dc498a8830d0b49d4671e4aea8a42a426e1e595947b19e185d",
+          "afterHash": "82321ec1aa62a6a5e0525aa6d5eb7343175e06f59f6611fbe09d05b1836375f6",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: Makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+          "before": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-cc7d601f2cc6",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-cc7d601f2cc6",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "fa0da596fe33610af5d0a695b0d6dd06ae6dc246c2355be2476db2a793090749",
+          "afterHash": "b58175762d6a44ed8afeb5f179acfd209d3581da2eda11909f3c3329dae713e0",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "pageHash": "0d6e22936bcbe4ec582147a5fb97a52597c0b5cf7c3b9000b0f4a9f20dbc3a58",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-packshot-multi-angle",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-97450a91b1e3",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-packshot-multi-angle",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-97450a91b1e3",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-packshot-multi-angle",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "22782968f16cfe8e9d1efb4ed2e05b5d669341ac011f4d28205d3e8827515175",
+          "afterHash": "95908f81bb75ec345f5cc84b12feae9ca3b60e68cf6d77495b33bad026c533ee",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/professional-headshot",
+      "pageHash": "a2522c46f937536f586d9622addfaa9d7832ac51318acd0578b023e3954f3852",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-professional-headshot",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-32e86f43f5ec",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-professional-headshot",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-32e86f43f5ec",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-professional-headshot",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "dad6a27d04e647c1d753c70e44d297d75c7c65ba15e5383814a831b2d093f9c1",
+          "afterHash": "dff3b993b74f41440c871d263a9162b988365af84610e8e2f3b632aec891fc78",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "7686a71d11133e575e6cee0454c50d469b90f6a7d61f493e102afe74130821ad",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-sale-campaign-key-visual",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-765bf0815bd4",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-sale-campaign-key-visual",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-765bf0815bd4",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-sale-campaign-key-visual",
+            "detailAliasOf": "street-interview-snack-bite-ai-image-generation-jewelry-positioning",
+            "publicAliases": []
+          },
+          "beforeHash": "63a8eb7eae01e49c28f995845174e64e661fb09da92abd9a061143ab79ccdd6f",
+          "afterHash": "54b63a1a2e2530ae4b8244969f5e1e8145f5e7d5774343d32fbccc4e6b16dab0",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in one frame."
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-image-generation-jewelry-positioning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "bd165691387e2398762907922e392462cce7310df91138ed71136527e6877696",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-story-ad-vertical",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-ffd7db0783db",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-ffd7db0783db",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "6a50293cd24c8515a78431e0bc396cf7fa683253e2ef58c7b125da8bd55d9838",
+          "afterHash": "a2c4073e6971691dd722b99ebefedab439e397bc203cb502e53720bbdd07eedd",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-57d64650a8c8",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-57d64650a8c8",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "9f096e63777b33191762f9de9606919469aa82c1f8e9a106005fda354d02157c",
+          "afterHash": "adb8005672964f6720791d581297da635a8158d923e4900a699e4682db59af16",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "601440702346d4929c8129455f29dca1da02ed105ae9adef11b06f30c11a7f20",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-ugc-still-ad",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-cd675e6f95a8",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in one frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-cd675e6f95a8",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "4abc89161b8f526532957b870ed7ec62874226d95da035ba3c4a6f29c149722e",
+          "afterHash": "52a32cd6167c4e8572d8dc354b8c2e2aeefd32408a26b17651fc05c63814311a",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in one frame."
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": null
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+          "before": {
+            "label": "Close-up unboxing: makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-bfea5e45e80d",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-bfea5e45e80d",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "a7264959ee002efa4c41935dcb936a9e4811dabf87d72442df581dec81c5dc89",
+          "afterHash": "5e428915f6f443e1907dba40e1cb046c1e8a6330132c6c876c12d7f018a78eb4",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/virtual-try-on",
+      "pageHash": "a74a1f6eb228e3bd4a3297568084a7c467a7a3555034d005870a60d354152f28",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-image-generation-virtual-try-on",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-99479c06d93c",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-virtual-try-on",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the snack and expression together in one view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-99479c06d93c",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-image-generation-virtual-try-on",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "0237ad57ba33765f8b7f1c982d5936c8783e970e356d93cb1037f57bf2453226",
+          "afterHash": "683dd684686d8d3893df7968188e114c77d6ef1179910d64dbc601dd49c35f69",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping the snack and expression together in one view."
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": null
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-a92e8db8916c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-a92e8db8916c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "be37680a5ffe3d864d334d0aba0b3a3d81f81b5efc6b819c4c2526ef7cacf589",
+          "afterHash": "7fcfd33bee0114ead806ac7cee87c579eea620e990fda60584b1d35dad0be8d2",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/food-video",
+      "pageHash": "05caa806d46cc1acb8c546162c4e6180f0c9d3f253058f120f479d920f5d451a",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-food-video",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/product-videos/drink#step-video",
+            "sceneSlug": "street-interview-snack-bite-d4af48b6bf2e",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-food-video",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/product-videos/drink#step-video",
+            "sceneSlug": "street-interview-snack-bite-d4af48b6bf2e",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-food-video",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "4c7ceac61b90c455b8b413bcb31b6d79955871ae59c61b1428a7015d47bc95bc",
+          "afterHash": "5b665e9ee6c1a95717d4cdbfa6d970bfa3c701e5cff4dbc5cfd8d88a06bfee4d",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/promo-video",
+      "pageHash": "58ad971f148d98d6d1b19fe28dc93ca6ebe76dd70b6bdfca01d4857255dde52f",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-promo-video",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "street-interview-snack-bite-32c053be36a2",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-promo-video",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in view.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "street-interview-snack-bite-32c053be36a2",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-promo-video",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "32a90c0ec2615ce2166844e51d8db1bed93d3f89f7771bba4641672cceca7cfc",
+          "afterHash": "9d80f0a416120f3f38c21cf8dc4236920a72321e7cfa8fa14dcf177888b8fb2b",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression together in view."
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": null
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+          "before": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-86231b3ca928",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-86231b3ca928",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "9ca8814b2d6cd6caa2280dff4304d678c68792fbc20e9b591533841deca54d2d",
+          "afterHash": "b76f96b0553d33b1a3ec52fe2557135365b458c6e0d50807144894c05853a184",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/cinematic-video",
+      "pageHash": "c2c294dc9aaac76293e09fbcc92b52e0a28ac9f61b1e981b8d5cff4bd9d7709d",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-cinematic-video",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/image-to-video/film#step-video",
+            "sceneSlug": "street-interview-snack-bite-c1c77b604f9b",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-cinematic-video",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/image-to-video/film#step-video",
+            "sceneSlug": "street-interview-snack-bite-c1c77b604f9b",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-cinematic-video",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "ddb41d558ff530db6f8e3543edca80d066ad5dbd8e606947c41ef194c7d69118",
+          "afterHash": "c4f7a50f7b43fd2e016740dd6e2860653f8319ad0212296f36f21f222d85917f",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/how-to-video",
+      "pageHash": "023dadab0bbe0d2406c33560de40c1c0dc18c805c098ff7361c1771aae13590a",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-how-to-video",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/product-videos/howto#step-video",
+            "sceneSlug": "street-interview-snack-bite-728134d35eb6",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-how-to-video",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/product-videos/howto#step-video",
+            "sceneSlug": "street-interview-snack-bite-728134d35eb6",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-how-to-video",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "052382d707f1f6a48b96e5a886484ee0a38b76c1d4400fd86a082f04be303408",
+          "afterHash": "f23cb1a4a3d25ceb82ada4b690b9b97f573e1b7c7b4971c6656bfc8a3b7b8df9",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+          "before": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/product-videos/howto#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-49acd5770e5d",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/product-videos/howto#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-49acd5770e5d",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "6c9681ce6c294c2fce6db5c1d1ee13250c07ef856ca5538e017a19f5114b67d0",
+          "afterHash": "0ecd80bbeedce93c7539a1d1f73a56f66701383453e34109e025c86027b50713",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/beauty-routine",
+      "pageHash": "0b6c347ed79649022bb574e85a53c830159e793e3dddcb0e579b995fd9e0483c",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-beauty-routine",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/beauty#step-video",
+            "sceneSlug": "street-interview-snack-bite-ed782c5151c2",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-beauty-routine",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/beauty#step-video",
+            "sceneSlug": "street-interview-snack-bite-ed782c5151c2",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-beauty-routine",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "2ce4951579499b8ae924c3735e1b28ae5f5e7e46debbb10253a70286165c2e3b",
+          "afterHash": "8eea4f0bd79f022ecf390c656d24e3554d7469949f4b71477f6f50bf62c9b75e",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "pageHash": "691cc8573ad2738dd157f6d062de759fdedf539813cb246e16d09dc5b05fc0a9",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-black-friday-countdown",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/bf#step-video",
+            "sceneSlug": "street-interview-snack-bite-72d1eec20171",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-black-friday-countdown",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/bf#step-video",
+            "sceneSlug": "street-interview-snack-bite-72d1eec20171",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-black-friday-countdown",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "ee8129df33ade8d85c0b2735e57fc6b53e381c903dfc22395386743e8630f035",
+          "afterHash": "073cdb6b248c26bb53072e554f27ad36a87b7acabbed8b812b51090ff2fd0890",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "0a13286ece28b34958c135e13f54180c3762f3ba1b06b4832976d291d0319880",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-fashion-try-on-reel",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "street-interview-snack-bite-6a21fb9f655d",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "street-interview-snack-bite-6a21fb9f655d",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "a9dcf4927778037489661968afdee37a2a9d50fd1467cec31a52ae92430b1068",
+          "afterHash": "686be09c115bd64771e7f11164f9747f0ddcbb68ef536306993e33f1ca416792",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: Makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+          "before": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-35c2ed3cf555",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Man with short black hair, shown from the waist up, speaks to the camera in a plain beige zip jacket.",
+              "src": "/ai-image-generation/img2-tpl-outfit-picker-front-1-r1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-35c2ed3cf555",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "64ef7c08129f7cfe2eb51fccfe0aba8261747d8fbeb1d7501bde69e77209e8a5",
+          "afterHash": "ffeea7a398b55eff41c343fe3b2d1af5e8c1097ba6eb0265f09102af8abd5bc0",
+          "operations": [
+            {
+              "field": "image",
+              "from": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+                "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+                "kind": "video"
+              },
+              "to": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Man with short black hair, shown from the waist up, speaks to the camera in a plain beige zip jacket.",
+                "src": "/ai-image-generation/img2-tpl-outfit-picker-front-1-r1-640.webp",
+                "kind": "video"
+              }
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": null
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[1]",
+          "label": "Cinematic Watch Detail",
+          "kind": "video",
+          "publicSlug": "cinematic-watch-detail-ai-video-generation-fashion-try-on-reel",
+          "before": {
+            "label": "Cinematic Watch Detail",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Plain round wristwatch resting on a stone ledge at golden hour with a softly blurred city behind it.",
+              "src": "/ai-image-generation/tw1-wall-accessories-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A cinematic close-up can hold your watch in warm light while the camera glides across its face and strap.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "cinematic-watch-detail-eb7cfdb5067b",
+            "sceneId": null,
+            "publicSlug": "cinematic-watch-detail-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "cinematic-watch-detail",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Cinematic Watch Detail",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Woman with her hair in a bun, shown from the waist up, speaks to the camera in a plain denim overshirt.",
+              "src": "/ai-image-generation/img2-tpl-outfit-picker-front-2-r1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A cinematic close-up can hold your watch in warm light while the camera glides across its face and strap.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "cinematic-watch-detail-eb7cfdb5067b",
+            "sceneId": null,
+            "publicSlug": "cinematic-watch-detail-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "423ebf6601a756f223ac1702bc3267e344ae456c888ecf753e99fb1c2bb66947",
+          "afterHash": "3f4be7b25da0f226de92b13aa69a4ac9012aa9ed1785f728419eddd51f780840",
+          "operations": [
+            {
+              "field": "image",
+              "from": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Plain round wristwatch resting on a stone ledge at golden hour with a softly blurred city behind it.",
+                "src": "/ai-image-generation/tw1-wall-accessories-2-640.webp",
+                "kind": "video"
+              },
+              "to": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Woman with her hair in a bun, shown from the waist up, speaks to the camera in a plain denim overshirt.",
+                "src": "/ai-image-generation/img2-tpl-outfit-picker-front-2-r1-640.webp",
+                "kind": "video"
+              }
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "cinematic-watch-detail",
+              "to": null
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[4]",
+          "label": "Daily-Life App Recommendation",
+          "kind": "video",
+          "publicSlug": "daily-life-app-recommendation-ai-video-generation-fashion-try-on-reel",
+          "before": {
+            "label": "Daily-Life App Recommendation",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short silver pixie haircut recommends a generic phone app with a softly blurred abstract interface at a kitchen table.",
+              "src": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "daily-life-app-recommendation-0b4d89803159",
+            "sceneId": null,
+            "publicSlug": "daily-life-app-recommendation-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "lifestyle-app-recommendation",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Daily-Life App Recommendation",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Woman with a short crop, shown from the waist up, speaks to the camera in a plain charcoal blazer.",
+              "src": "/ai-image-generation/img2-tpl-outfit-picker-front-3-r1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A creator can recommend your app from a real kitchen table while tapping through a clean, abstract interface on a phone.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "daily-life-app-recommendation-0b4d89803159",
+            "sceneId": null,
+            "publicSlug": "daily-life-app-recommendation-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "7584898a13b6b37a5a424690b5aa71e058009981c003cb2461bc2de40f219216",
+          "afterHash": "aa357983089605e09e8a085b6a374b038dc9f6ebaf94265c3ef79cd36db79abb",
+          "operations": [
+            {
+              "field": "image",
+              "from": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Adult South Asian woman with a short silver pixie haircut recommends a generic phone app with a softly blurred abstract interface at a kitchen table.",
+                "src": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+                "kind": "video"
+              },
+              "to": {
+                "h": 1138,
+                "w": 640,
+                "alt": "Woman with a short crop, shown from the waist up, speaks to the camera in a plain charcoal blazer.",
+                "src": "/ai-image-generation/img2-tpl-outfit-picker-front-3-r1-640.webp",
+                "kind": "video"
+              }
+            },
+            {
+              "field": "detailAliasOf",
+              "from": "lifestyle-app-recommendation",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/home-organization",
+      "pageHash": "0c21e1e0df370cf79d688c0ae12c6e04a7b92052b13893c02b8cf8d4d7e602ee",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-home-organization",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/before-after-videos/home#step-video",
+            "sceneSlug": "street-interview-snack-bite-df58617c9c93",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-home-organization",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/before-after-videos/home#step-video",
+            "sceneSlug": "street-interview-snack-bite-df58617c9c93",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-home-organization",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "ff0b6c898da12ad01f68e046ae8c6b2e44b8fe11cf4fffd497c85b516ef98125",
+          "afterHash": "7ad79b753ce00980ca04db3f369e6972cd69b2667eb62a906e832a89c31ea92b",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/templates",
+      "pageHash": "31ca3f768ab550cc785d70b1654f46785ec2cd40cee217c3dfc9fbfb44d5811d",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-templates",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-78a4673d108e",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-templates",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping food and expression together in one frame.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "street-interview-snack-bite-78a4673d108e",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-templates",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "beforeHash": "099dd9ecfd6748b4879d738c1cc233dc335cbcfe15cacced3e78f3014b3ba6e5",
+          "afterHash": "b4ba9462b11eefce2d39915e1da7c3ac8e07e6488309cb711b9ae70ee6571722",
+          "operations": [
+            {
+              "field": "prompt",
+              "from": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+              "to": "Ask for a real first-bite reaction to your snack on a busy street, keeping food and expression together in one frame."
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-templates",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-00c8d6d3e82c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-templates",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-00c8d6d3e82c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-templates",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "cee8949ca658f0bba34a248d690de5f9beb68e643316d2af13277bff87dc5110",
+          "afterHash": "6f6925990da6688f2672819696a3023c6b491c86c756b7a339526d526fc8a9c5",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "498f0521130d48c31821f74347fe4f6707e5ea7a70d5e0a03119324bb2ad65d4",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]",
+          "label": "Street Interview: Snack Bite",
+          "kind": "video",
+          "publicSlug": "street-interview-snack-bite-ai-video-generation-spark-ads-style-video",
+          "before": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "street-interview-snack-bite-ff61b87af289",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "street-interview-snack-bite",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Street Interview: Snack Bite",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult South Asian woman with a short black bob takes a first bite of a plain oat cracker during a sunny street interview.",
+              "src": "/ai-image-generation/tw1-wall-food-beverage-2-640.webp",
+              "kind": "video"
+            },
+            "prompt": "Ask for a real first-bite reaction to your snack on a busy street, keeping the food and expression in the same frame.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "street-interview-snack-bite-ff61b87af289",
+            "sceneId": null,
+            "publicSlug": "street-interview-snack-bite-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "street-interview-snack-bite-ai-video-generation-food-video",
+            "publicAliases": []
+          },
+          "beforeHash": "d7c56a62f51f7c33f51e06bb203b6b2b3265f337361b5737c39f04f83c6de68a",
+          "afterHash": "f3739af557184f1a4efe44c2624b69f911fcc3d08be9caf850823e72ed89e089",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "street-interview-snack-bite",
+              "to": "street-interview-snack-bite-ai-video-generation-food-video"
+            }
+          ]
+        },
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-2c2b68ca57bb",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-2c2b68ca57bb",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "close-up-unboxing-makeup-tools-templates",
+            "publicAliases": []
+          },
+          "beforeHash": "c76a86640f9e141e797113f19f56542575ebcf03140b0322d067feee63be6468",
+          "afterHash": "dd55dfeb3fe7027f7eaed221488ab81a3bbf5761738cccf5e622b37cee8dba5c",
+          "operations": [
+            {
+              "field": "detailAliasOf",
+              "from": "quiet-unboxing-makeup-tools",
+              "to": "close-up-unboxing-makeup-tools-templates"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "operations": [],
+  "addresses": []
+}

@@ -1,0 +1,250 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-workspace-case-alias-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "43ee9e7aabac464fd1c6e2d3d96290d2a911d0a2df47e75cc451f58b352fee14",
+  "revisionBefore": "94",
+  "revisionAfter": "114",
+  "revisionDelta": "20",
+  "pagesApplied": 20,
+  "cardsApplied": 32,
+  "operationsApplied": 40,
+  "applied": [
+    {
+      "page": "/ai-video-generation/video-ads",
+      "cards": [
+        "sections.v2_main.settings.data.visual.picker.cards[19]",
+        "sections.v2_main.settings.data.visual.picker.cards[0]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/professional-headshot",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 3
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 3
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 3
+    },
+    {
+      "page": "/ai-video-generation/cinematic-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/black-friday-countdown",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[4]"
+      ],
+      "operations": 7
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/templates",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 2
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[19]",
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 2
+    }
+  ],
+  "readback": [
+    {
+      "page": "/ai-video-generation/video-ads",
+      "pageHash": "79232d1b7858ed0ab4479eea631e2463dcdb2fca3f1f5b6b7a23f2a2524bb37f"
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "pageHash": "cabf1efcdfe49f8240c79d0d711f6301293b1c185fa0e8501f0ede8de2bb88bb"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "51fcf30e79f1dc74c52420cc8afde56d02e7969c8ec3a9f26bda02de5f7b5ace"
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "pageHash": "43669ca996672874a3f8d2a1288dedd659434841296fbc0c0ba396a0eb68edc6"
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "pageHash": "0d6e22936bcbe4ec582147a5fb97a52597c0b5cf7c3b9000b0f4a9f20dbc3a58"
+    },
+    {
+      "page": "/ai-image-generation/professional-headshot",
+      "pageHash": "a2522c46f937536f586d9622addfaa9d7832ac51318acd0578b023e3954f3852"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "7686a71d11133e575e6cee0454c50d469b90f6a7d61f493e102afe74130821ad"
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "bd165691387e2398762907922e392462cce7310df91138ed71136527e6877696"
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "601440702346d4929c8129455f29dca1da02ed105ae9adef11b06f30c11a7f20"
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "pageHash": "a74a1f6eb228e3bd4a3297568084a7c467a7a3555034d005870a60d354152f28"
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "pageHash": "05caa806d46cc1acb8c546162c4e6180f0c9d3f253058f120f479d920f5d451a"
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "pageHash": "58ad971f148d98d6d1b19fe28dc93ca6ebe76dd70b6bdfca01d4857255dde52f"
+    },
+    {
+      "page": "/ai-video-generation/cinematic-video",
+      "pageHash": "c2c294dc9aaac76293e09fbcc92b52e0a28ac9f61b1e981b8d5cff4bd9d7709d"
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "pageHash": "023dadab0bbe0d2406c33560de40c1c0dc18c805c098ff7361c1771aae13590a"
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "pageHash": "0b6c347ed79649022bb574e85a53c830159e793e3dddcb0e579b995fd9e0483c"
+    },
+    {
+      "page": "/ai-video-generation/black-friday-countdown",
+      "pageHash": "691cc8573ad2738dd157f6d062de759fdedf539813cb246e16d09dc5b05fc0a9"
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "0a13286ece28b34958c135e13f54180c3762f3ba1b06b4832976d291d0319880"
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "pageHash": "0c21e1e0df370cf79d688c0ae12c6e04a7b92052b13893c02b8cf8d4d7e602ee"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "31ca3f768ab550cc785d70b1654f46785ec2cd40cee217c3dfc9fbfb44d5811d"
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "498f0521130d48c31821f74347fe4f6707e5ea7a70d5e0a03119324bb2ad65d4"
+    }
+  ]
+}

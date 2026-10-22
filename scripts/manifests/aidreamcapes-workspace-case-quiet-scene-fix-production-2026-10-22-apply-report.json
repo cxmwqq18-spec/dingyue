@@ -1,0 +1,128 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-workspace-case-alias-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "23ad6945df49576e1b12ecbfc00cf89241a3609d61a7c7fbd27566a2d90ac119",
+  "revisionBefore": "261",
+  "revisionAfter": "271",
+  "revisionDelta": "10",
+  "pagesApplied": 10,
+  "cardsApplied": 10,
+  "operationsApplied": 10,
+  "applied": [
+    {
+      "page": "/ai-video-generation/video-ads",
+      "cards": [
+        "sections.v2_main.settings.data.visual.picker.cards[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/templates",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]"
+      ],
+      "operations": 1
+    }
+  ],
+  "readback": [
+    {
+      "page": "/ai-video-generation/video-ads",
+      "pageHash": "a20813c88bd4ae54bcef85238be14ec746d0e93be103d838a495abb4f5daf98d"
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "pageHash": "059711bd1b51ec08d460921cd0bb854067fdf38b1309ebd8d95990042a504482"
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "92c06ab3d75d7ff7d214c28cd17a905be84a6ba33191d4d50664a3a517eccb2f"
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "6e47489515bb1a05aa463623871e44f11ef5d327ed26a798e73aaa4f0c45c4b1"
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "pageHash": "8a548116cff9dadd5b5b498a96f8f3c61730fc4881f5d1fd6f8314990ac2ba7d"
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "pageHash": "4d48ebb1abaa01899bbce9cbf13c8334c2c27d9815c88a370eb502088fd6cb8b"
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "pageHash": "d8897743a4ecc7b60d8669b56d08f1fbb21dad25476a3db5045b45c91fc4d109"
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "26ad1bf55b00eda086663c0cf2207f0191131d4b7de7407fc1efe1b70af9adf7"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "d620cf6dea2fa3ade22f8e9c50f5b3446f97d2d7fde39c1b91f27dac2e8a2bdf"
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "e95acc697521f5f2071f5eeb990bfbe73c4a17d5ce12c51e24d786a13615e47e"
+    }
+  ]
+}

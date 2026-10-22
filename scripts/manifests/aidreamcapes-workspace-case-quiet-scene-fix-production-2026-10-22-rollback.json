@@ -1,0 +1,597 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-workspace-case-alias-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-22T07:15:05.734Z",
+  "sourcePlanHash": "23ad6945df49576e1b12ecbfc00cf89241a3609d61a7c7fbd27566a2d90ac119",
+  "summary": {
+    "pages": 10,
+    "cards": 10,
+    "operations": 10
+  },
+  "pages": [
+    {
+      "slug": "/ai-video-generation/video-ads",
+      "pageHash": "a20813c88bd4ae54bcef85238be14ec746d0e93be103d838a495abb4f5daf98d",
+      "cards": [
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "label": "Quiet Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-unboxing-makeup-tools",
+          "before": {
+            "label": "Quiet Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "quiet-unboxing-makeup-tools-9ce41ce807d0",
+            "sceneId": null,
+            "publicSlug": "quiet-unboxing-makeup-tools",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "quiet-unboxing-makeup-tools-9ce41ce807d0",
+            "sceneId": "texture_closeup",
+            "publicSlug": "quiet-unboxing-makeup-tools",
+            "detailAliasOf": null,
+            "publicAliases": []
+          },
+          "beforeHash": "2a0625982304b7b3f0425218cbdcb4715e9cb91152b644e3ea8b484b0a097f60",
+          "afterHash": "322a69c65518b5e0f2453d1f7d0e4f7645dc03036d03afcc8f801e3bcb633f6e",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": null,
+              "to": "texture_closeup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "pageHash": "059711bd1b51ec08d460921cd0bb854067fdf38b1309ebd8d95990042a504482",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: Makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+          "before": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-cc7d601f2cc6",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-cc7d601f2cc6",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-packaging-mockup",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "0e7367eb57b6513e476cd14c3c200b58242f4e122a500d6bd00067b413f4ddd0",
+          "afterHash": "fa0da596fe33610af5d0a695b0d6dd06ae6dc246c2355be2476db2a793090749",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "92c06ab3d75d7ff7d214c28cd17a905be84a6ba33191d4d50664a3a517eccb2f",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-57d64650a8c8",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-57d64650a8c8",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-story-ad-vertical",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "19e864d04070e99bba2c8c3ac77ff11875fec30b33f79f4ab2e27b06738f83ce",
+          "afterHash": "9f096e63777b33191762f9de9606919469aa82c1f8e9a106005fda354d02157c",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "6e47489515bb1a05aa463623871e44f11ef5d327ed26a798e73aaa4f0c45c4b1",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+          "before": {
+            "label": "Close-up unboxing: makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-bfea5e45e80d",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-bfea5e45e80d",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-ugc-still-ad",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "da969c6673d152708f2dea0b564c1dede3830318fe1906cc05efc8d6ce593a0a",
+          "afterHash": "a7264959ee002efa4c41935dcb936a9e4811dabf87d72442df581dec81c5dc89",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/virtual-try-on",
+      "pageHash": "8a548116cff9dadd5b5b498a96f8f3c61730fc4881f5d1fd6f8314990ac2ba7d",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-a92e8db8916c",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-a92e8db8916c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-image-generation-virtual-try-on",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "7268edf16fc837727a6f5696799348bc9cb7ccd8d62cb36b3c338c46aa6d8df3",
+          "afterHash": "be37680a5ffe3d864d334d0aba0b3a3d81f81b5efc6b819c4c2526ef7cacf589",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/promo-video",
+      "pageHash": "4d48ebb1abaa01899bbce9cbf13c8334c2c27d9815c88a370eb502088fd6cb8b",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+          "before": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-86231b3ca928",
+            "sceneId": "process_demo",
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/launch#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-86231b3ca928",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-promo-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "9456bb91b7afd0919b8e378072833a46fa511394c5c39de79834719ac5bed3fb",
+          "afterHash": "9ca8814b2d6cd6caa2280dff4304d678c68792fbc20e9b591533841deca54d2d",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/how-to-video",
+      "pageHash": "d8897743a4ecc7b60d8669b56d08f1fbb21dad25476a3db5045b45c91fc4d109",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Quiet Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+          "before": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/product-video/howto#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-49acd5770e5d",
+            "sceneId": "process_demo",
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Quiet Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/product-video/howto#step-video",
+            "sceneSlug": "quiet-close-up-unboxing-makeup-tools-49acd5770e5d",
+            "sceneId": null,
+            "publicSlug": "quiet-close-up-unboxing-makeup-tools-ai-video-generation-how-to-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "6a8e7308ec874dde4a4a47e16a79269015a1455adce3017c23d67e396b605a8b",
+          "afterHash": "4f1f4f759a391c6e53b61f806e0f84d1c427992bcb381751c1c3a92afb0d4198",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "26ad1bf55b00eda086663c0cf2207f0191131d4b7de7407fc1efe1b70af9adf7",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-up unboxing: Makeup tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+          "before": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-35c2ed3cf555",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-up unboxing: Makeup tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/outfit#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-35c2ed3cf555",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-fashion-try-on-reel",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "63fa69dd3315b0dca8f6c4b8a479e2a547a0257ada808f1461b806fdff3e90a0",
+          "afterHash": "64ef7c08129f7cfe2eb51fccfe0aba8261747d8fbeb1d7501bde69e77209e8a5",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/templates",
+      "pageHash": "d620cf6dea2fa3ade22f8e9c50f5b3446f97d2d7fde39c1b91f27dac2e8a2bdf",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-templates",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-00c8d6d3e82c",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-templates",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-00c8d6d3e82c",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-templates",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "99efbfedb0503c8bf1ec0caacbc12db8d668acc3e0ea8098950d92d12d8613b8",
+          "afterHash": "cee8949ca658f0bba34a248d690de5f9beb68e643316d2af13277bff87dc5110",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "e95acc697521f5f2071f5eeb990bfbe73c4a17d5ce12c51e24d786a13615e47e",
+      "cards": [
+        {
+          "source": "workspaceCases",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]",
+          "label": "Close-Up Unboxing: Makeup Tools",
+          "kind": "video",
+          "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+          "before": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-2c2b68ca57bb",
+            "sceneId": "process_demo",
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "after": {
+            "label": "Close-Up Unboxing: Makeup Tools",
+            "kind": "video",
+            "image": {
+              "h": 1138,
+              "w": 640,
+              "alt": "Adult hands lift a plain coral makeup brush roll and two unbranded brushes from a kraft mailer at a bright bedroom vanity.",
+              "src": "/ai-image-generation/tw1-wall-accessories-1-640.webp",
+              "kind": "video"
+            },
+            "prompt": "A seller can open with a close unboxing that lifts your makeup tools from tissue paper and puts the brush set in clear view.",
+            "href": "/app/create/tool/video-ads/spark-ads-style-video#step-video",
+            "sceneSlug": "close-up-unboxing-makeup-tools-2c2b68ca57bb",
+            "sceneId": null,
+            "publicSlug": "close-up-unboxing-makeup-tools-ai-video-generation-spark-ads-style-video",
+            "detailAliasOf": "quiet-unboxing-makeup-tools",
+            "publicAliases": []
+          },
+          "beforeHash": "0611ba31f2b8d8d2df95fc53876f37a156b2361252ef098f70a82c963f7f64f3",
+          "afterHash": "c76a86640f9e141e797113f19f56542575ebcf03140b0322d067feee63be6468",
+          "operations": [
+            {
+              "field": "sceneId",
+              "from": "process_demo",
+              "to": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "operations": [],
+  "addresses": []
+}

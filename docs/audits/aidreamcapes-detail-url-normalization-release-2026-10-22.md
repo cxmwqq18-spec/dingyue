@@ -163,8 +163,11 @@
 ### 3.3 674 个 `workspaceCases`
 
 仍使用 `<label>-<full owner path>`。其中 639 个在 18 个工具/目录页，35 个在
-`/templates`，51 个可能出现在详情页相关列表。属于独立的大批量项目，未在本轮
-写入。
+`/templates`，51 个可能出现在详情页相关列表。
+
+已于 2026-10-22 作为独立项目完成：两批字段级 CAS 写入后，674 个旧地址全部
+`308` 到 37 个短规范详情页，旧地址不再有 `200`，`publicSlug` 未变。详见
+`docs/audits/aidreamcapes-workspace-cases-inventory-2026-10-22.md`。
 
 ### 3.4 其他
 
