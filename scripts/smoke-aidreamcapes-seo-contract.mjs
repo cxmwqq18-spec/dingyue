@@ -428,7 +428,21 @@ for (const listing of ["/ai-video-generation", "/ai-image-generation"]) {
 assert(mediaDetailPaths.size > 0, "no media detail route was discovered on the public listings");
 
 const mediaDetailResults = await mapLimit([...mediaDetailPaths], 4, async (path) => {
-  const response = await get(path);
+  let canonicalPath = path;
+  let response = await get(canonicalPath);
+  const visited = new Set([path]);
+  // Reviewed equivalent cards now share one detail. Follow only permanent,
+  // same-kind detail redirects; generic tool/root redirects still fail below.
+  for (let hop = 0; [301, 308].includes(response.status()) && hop < 3; hop++) {
+    const target = new URL(response.headers().location || "", "https://www.aivideosugc.com");
+    assert.equal(target.origin, "https://www.aivideosugc.com", `${path}: redirect left this storefront`);
+    assert.equal(target.search + target.hash, "", `${path}: detail redirect carries state`);
+    assert.match(target.pathname, new RegExp(`^/${path.split("/")[1]}/[a-z0-9][a-z0-9-]*$`), `${path}: redirect left the detail namespace`);
+    assert(!visited.has(target.pathname), `${path}: detail redirect cycle`);
+    visited.add(target.pathname);
+    canonicalPath = target.pathname;
+    response = await get(canonicalPath);
+  }
   assert.equal(response.status(), 200, `${path}: detail page status ${response.status()}`);
   const html = await response.text();
   assert.doesNotMatch(htmlTitle(html), /workspace/i, `${path}: detail page renders the workspace shell`);
@@ -436,9 +450,10 @@ const mediaDetailResults = await mapLimit([...mediaDetailPaths], 4, async (path)
   assert.match(robots, /noindex/i, `${path}: robots is not noindex (${robots || "missing"})`);
   assert.match(robots, /follow/i, `${path}: robots is not follow (${robots || "missing"})`);
   assert.doesNotMatch(robots, /nofollow/i, `${path}: robots is nofollow (${robots})`);
-  assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${path}`, `${path}: canonical`);
+  assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${canonicalPath}`, `${path}: canonical`);
   assert(!sitemapPathSet.has(path), `${path}: derived detail page must stay out of the sitemap`);
-  return path;
+  assert(!sitemapPathSet.has(canonicalPath), `${canonicalPath}: derived detail page must stay out of the sitemap`);
+  return canonicalPath;
 });
 
 const actorRedirectResults = await mapLimit(flatActorUrls, 3, async (path) => {

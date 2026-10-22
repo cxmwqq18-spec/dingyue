@@ -23,6 +23,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
+import { aidreamcapesAuditLoader } from "./lib/aidreamcapes-typescript-audit-loader.mjs";
 import {
   argumentValue,
   assertAllowedSite,
@@ -179,10 +180,12 @@ function normalizedLabel(label) {
 }
 
 const db = new PrismaClient({ errorFormat: "minimal" });
+const loadRuntime = aidreamcapesAuditLoader({ "@/lib/prisma": { prisma: db } });
+const { presetFromCard, presetGenerationIdentity } = loadRuntime("src/lib/aidreamcapes-workspace/presets.server.ts");
 try {
   const pages = await db.livePage.findMany({
     where: { siteId: SITE_ID },
-    select: { slug: true, title: true, contentJson: true }
+    select: { slug: true, title: true, contentJson: true, updatedAt: true }
   });
   const cards = [];
   let extractedCards = 0;
@@ -213,11 +216,32 @@ try {
         kind,
         publicSlug,
         label,
+        detailAliasOf: text(card.detailAliasOf),
+        generationIdentity: presetGenerationIdentity(presetFromCard(page, page.slug, card)),
         media,
         chips: list(card.chips),
         placement: list(card.placement).filter((value) => PLACEMENT_PATTERN.test(value)),
         rawPlacement: Array.isArray(card.placement) ? card.placement : []
       });
+    }
+  }
+
+  // Retained locators are not independent active details. Validate reference
+  // intent against today's effective generation options before counting it.
+  const cardsBySlug = new Map();
+  for (const card of cards) {
+    const key = `${card.kind}/${card.publicSlug}`, entries = cardsBySlug.get(key) ?? [];
+    entries.push(card); cardsBySlug.set(key, entries);
+  }
+  for (const card of cards) {
+    card.effectivePublicSlug = card.publicSlug;
+    if (!card.detailAliasOf) continue;
+    const targets = cardsBySlug.get(`${card.kind}/${card.detailAliasOf}`) ?? [];
+    const targetCard = targets[0];
+    if (targetCard && new Set(targets.map((target) => target.page)).size === 1 && !targetCard.detailAliasOf
+      && card.generationIdentity && card.generationIdentity === targetCard.generationIdentity
+      && card.media.type === targetCard.media.type && card.media.src === targetCard.media.src) {
+      card.effectivePublicSlug = targetCard.publicSlug;
     }
   }
 
@@ -261,6 +285,11 @@ try {
       mediaSrc: group.mediaSrc,
       cardCount: group.cards.length,
       uniquePublicSlugs: uniqueSlugs.length,
+      activeDetailSlugsByData: new Set(group.cards.map((card) => card.effectivePublicSlug)).size,
+      equivalentAliasReferences: group.cards.filter((card) => card.effectivePublicSlug !== card.publicSlug).length,
+      unmergedEquivalentVariants: [...new Set(group.cards.map((card) => card.generationIdentity).filter(Boolean))]
+        .filter((identity) => new Set(group.cards.filter((card) => card.generationIdentity === identity)
+          .map((card) => card.effectivePublicSlug)).size > 1).length,
       uniquePages: uniquePages.length,
       uniqueLabels: variants.length,
       normalizedLabelVariants: normalizedVariants,
@@ -306,6 +335,10 @@ try {
       extractedCards,
       validProductCards: cards.length,
       uniquePublicSlugs: new Set(cards.map((card) => card.publicSlug)).size,
+      activeDetailSlugsByData: new Set(cards.map((card) => `${card.kind}/${card.effectivePublicSlug}`)).size,
+      equivalentAliasReferences: cards.filter((card) => card.effectivePublicSlug !== card.publicSlug).length,
+      staleAliasReferences: cards.filter((card) => card.detailAliasOf && card.effectivePublicSlug === card.publicSlug).length,
+      unmergedEquivalentGroups: products.filter((product) => product.unmergedEquivalentVariants > 0).length,
       productGroups: products.length,
       cardsInMultiCardGroups,
       duplicateSlugGroups: duplicateSlugGroups.length,
@@ -353,6 +386,7 @@ try {
     },
     notes: [
       "Read-only: no LivePage, publication, snapshot, or SiteContentRevision was written.",
+      "Raw publicSlug/duplicate counts include retained compatibility locators. Active detail counts validate current generation equivalence; HTTP gates verify routing separately.",
       details || write ? "All product groups are included in the audit result." : `Only the first ${limit} product groups are included; pass --details or --write for the full list.`,
       ...(write ? [`Full report written to ${reportPath}.`] : [])
     ]
