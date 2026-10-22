@@ -1,8 +1,22 @@
 import { isWorkspaceView, type WorkspaceView } from "./navigation";
+import { canonicalWorkspaceTool } from "./tool-aliases";
 import type { SceneId, TaskInput } from "./types";
 
 type SearchParamsLike = { get(name: string): string | null };
 export type WorkspaceLibraryFilter = "all" | "draft" | "completed";
+
+export type WorkspaceTool =
+  | "custom"
+  | "change-background"
+  | "white-background"
+  | "model-photos"
+  | "lifestyle-photos"
+  | "video-ads"
+  | "spokesperson-video"
+  | "product-video"
+  | "before-after-video"
+  | "unboxing-videos"
+  | "url-to-video";
 
 /** Form values only: links cannot supply private assets, actor IDs, tasks, or operations. */
 export type WorkspaceHandoff = {
@@ -11,7 +25,7 @@ export type WorkspaceHandoff = {
   aspect?: TaskInput["options"]["aspect"];
   duration?: TaskInput["options"]["duration"];
   scene?: SceneId;
-  tool?: "custom" | "change-background" | "white-background" | "model-photos" | "lifestyle-photos" | "video-ads" | "spokesperson-videos" | "product-videos" | "before-after-videos" | "unboxing-videos" | "url-to-video";
+  tool?: WorkspaceTool;
   templates?: boolean;
   category?: string;
   kind?: "photo" | "video";
@@ -21,7 +35,24 @@ export type WorkspaceHandoff = {
 const aspects = ["9:16", "1:1", "16:9"] as const;
 const durations = [15, 30] as const;
 const scenes = ["presenter_showcase", "process_demo", "texture_closeup"] as const;
-const tools = ["custom", "change-background", "white-background", "model-photos", "lifestyle-photos", "video-ads", "spokesperson-videos", "product-videos", "before-after-videos", "unboxing-videos", "url-to-video"] as const;
+const tools = [
+  "custom",
+  "change-background",
+  "white-background",
+  "model-photos",
+  "lifestyle-photos",
+  "video-ads",
+  "spokesperson-video",
+  "product-video",
+  "before-after-video",
+  "unboxing-videos",
+  "url-to-video",
+  // Legacy plural names stay accepted so old links keep working; the lookup
+  // below normalizes them to the canonical singular tool id.
+  "spokesperson-videos",
+  "product-videos",
+  "before-after-videos"
+] as const;
 
 export function workspaceHandoffFromSearchParams(params: SearchParamsLike): WorkspaceHandoff {
   const view = params.get("view");
@@ -29,7 +60,8 @@ export function workspaceHandoffFromSearchParams(params: SearchParamsLike): Work
   const aspect = aspects.find((value) => value === (params.get("aspect") ?? params.get("size")));
   const duration = durations.find((value) => String(value) === (params.get("duration") ?? params.get("length")));
   const scene = scenes.find((value) => value === params.get("scene"));
-  const tool = tools.find((value) => value === params.get("tool"));
+  const requestedTool = tools.find((value) => value === params.get("tool"));
+  const tool = requestedTool ? canonicalWorkspaceTool(requestedTool) as WorkspaceTool : undefined;
   const filter = params.get("filter");
   const kind = params.get("kind");
   const category = params.get("category");

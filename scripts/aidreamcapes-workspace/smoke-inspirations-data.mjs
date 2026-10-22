@@ -16,7 +16,7 @@ const page = (slug, cards) => ({ slug, title: "Product examples", contentJson: {
   } } },
 } });
 const original = { ref, label: "Current product look", prompt: "Generation instructions stay out of visible copy.", image: { src: "/media/site_aidreamcapes/current-look.webp", alt: "Current product reference" }, publicSlug: "current-product-look" };
-let rows = [page("/ai-video-generation/product-videos", [original])];
+let rows = [page("/ai-video-generation/product-video", [original])];
 let reads = 0;
 const compiled = { exports: {} };
 const code = ts.transpileModule(fs.readFileSync(path.join(root, "src/lib/aidreamcapes-inspirations.ts"), "utf8"), {
@@ -42,7 +42,7 @@ assert.equal(first[0].imageAlt, original.image.alt);
 assert.equal(first[0].description, "Explore product looks.");
 assert.equal(first[0].kind, "video");
 assert.equal(first[0].publicSlug, original.publicSlug);
-rows = [page("/ai-video-generation/product-videos", [{ ...original, image: { src: "/media/site_aidreamcapes/edited-now.webp", alt: "Edited now" } }])];
+rows = [page("/ai-video-generation/product-video", [{ ...original, image: { src: "/media/site_aidreamcapes/edited-now.webp", alt: "Edited now" } }])];
 const updated = await getAidreamcapesInspirationCards();
 assert.equal(updated[0].imageSrc, "/media/site_aidreamcapes/edited-now.webp", "The next request sees a committed current image without publication/cache refresh");
 assert.equal(reads, 2);
@@ -52,6 +52,6 @@ rows = [];
 assert.deepEqual(await getAidreamcapesInspirationCards(), [], "Missing current rows stay empty");
 rows = [page("/ai-image-generation/product-photos", [{ ...original, kind: "video" }])];
 assert.equal((await getAidreamcapesInspirationCards())[0].kind, "video", "A current video example reused on a photo page keeps its own media kind and creation route");
-rows = [page("/ai-video-generation/product-videos", [{ ...original, kind: "photo" }])];
+rows = [page("/ai-video-generation/product-video", [{ ...original, kind: "photo" }])];
 assert.equal((await getAidreamcapesInspirationCards())[0].kind, "photo", "A current photo example reused on a video page keeps its own media kind");
 console.log("PASS: independent gallery reads only site_aidreamcapes LivePage rows; current images override catalog references and update on the next read.");

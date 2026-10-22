@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { parseWorkspaceSceneRouteSlug, pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
 import { AIVIDEOSUGC_SITE_ID, type SceneId, type TaskInput } from "./types";
 import { parseStaticCreateSegments } from "./static-routes";
+import { canonicalWorkspaceTool } from "./tool-aliases";
 
 type RecordValue = Record<string, unknown>;
 const SCENES = new Set<SceneId>(["presenter_showcase", "process_demo", "texture_closeup"]);
@@ -252,6 +253,7 @@ export async function resolveWorkspaceScenePreset(siteId: string, routeSlug: str
 
 /** Compatibility for published tool/template links, using the current detail owner. */
 export async function resolveWorkspaceLegacyTemplatePreset(tool: string, template: string): Promise<WorkspacePreset | undefined> {
+  const canonicalTool = canonicalWorkspaceTool(tool);
   const pages = await prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; updatedAt: Date }>>`
     SELECT "slug", "contentJson", "updatedAt" FROM "LivePage"
     WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
@@ -265,7 +267,7 @@ export async function resolveWorkspaceLegacyTemplatePreset(tool: string, templat
       if (typeof card?.href !== "string") continue;
       const path = new URL(card.href, "https://www.aivideosugc.com").pathname;
       const target = parseStaticCreateSegments(path.slice("/app/create/".length).split("/"));
-      if (target?.kind === "tool" && target.tool === tool && target.template === template) return presetFromCard(page, page.slug, card);
+      if (target?.kind === "tool" && target.tool === canonicalTool && target.template === template) return presetFromCard(page, page.slug, card);
     }
   }
   return undefined;

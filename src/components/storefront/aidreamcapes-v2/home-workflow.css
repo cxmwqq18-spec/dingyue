@@ -1,6 +1,9 @@
 .adc2 .adc-workflow{background:#f1ede7;color:#241f2d;padding:76px 24px 64px}
 .adc2 .adc-workflow-wrap{max-width:1380px;margin:0 auto}
 .adc2 .adc-workflow-heading{text-align:center;max-width:1000px;margin:0 auto 32px}
+/* The shared `.home-v4 .hx-feature h2` rule forces left alignment with !important.
+   The workflow heading is centered by design, so this targeted rule must win. */
+.adc2 .adc-workflow.hx-feature .adc-workflow-heading h2{text-align:center!important}
 .adc2 .adc-workflow-heading .hx-tag{justify-content:center;color:#8050b2;font-size:12px;letter-spacing:.14em;margin-bottom:14px}
 .adc2 .adc-workflow-heading .hx-tag::before{display:none}
 .adc2 .adc-workflow-heading h2{font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal}

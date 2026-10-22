@@ -8,16 +8,16 @@ export const aidreamcapesZipVideoGroups: AidreamcapesNavGroup[] = [
     { label: "Hook Lab (First 3s)", href: "/ai-video-generation/hook-lab" },
     { label: "PAS Formula Ads", href: "/ai-video-generation/pas-formula-ads" },
     { label: "Testimonial Ads", href: "/ai-video-generation/testimonial-ads" },
-    { label: "Before & After Videos", href: "/ai-video-generation/before-after-videos" },
+    { label: "Before & After Video", href: "/ai-video-generation/before-after-video" },
     { label: "Talking Photo Recs", href: "/ai-video-generation/talking-photo-recs" },
-    { label: "Spokesperson Videos", href: "/ai-video-generation/spokesperson-videos" },
+    { label: "Spokesperson Video", href: "/ai-video-generation/spokesperson-video" },
     { label: "TikTok / Reels / Shorts", href: "/ai-video-generation/tiktok-reels-shorts" },
     { label: "Native Spark Ads", href: "/ai-video-generation/native-spark-ads" },
     { label: "Carousel Storytelling", href: "/ai-video-generation/carousel-storytelling" },
     { label: "Retargeting / Urgency", href: "/ai-video-generation/retargeting-urgency" }
   ] },
   { label: "Conversion / Seeding", items: [
-    { label: "Product Videos", href: "/ai-video-generation/product-videos" },
+    { label: "Product Video", href: "/ai-video-generation/product-video" },
     { label: "Unboxing Experience", href: "/ai-video-generation/unboxing-experience" },
     { label: "How-to Tutorial", href: "/ai-video-generation/how-to-video" },
     { label: "Feature Callout", href: "/ai-video-generation/feature-callout" },
@@ -57,10 +57,10 @@ export const AIDREAMCAPES_PUBLIC_AI_VIDEO_GENERATION_SLUGS = [
   "image-to-video",
   "url-to-video",
   "video-ads",
-  "product-videos",
+  "product-video",
   "unboxing-experience",
-  "before-after-videos",
-  "spokesperson-videos",
+  "before-after-video",
+  "spokesperson-video",
   "text-to-video",
   "ai-twin",
   "ai-actors",
@@ -133,11 +133,11 @@ export const aidreamcapesZipMarketingGroups: AidreamcapesNavGroup[] = [
     { label: "URL to Video", href: "/ai-video-generation/url-to-video" },
     { label: "Hook Lab", href: "/ai-video-generation/hook-lab" },
     { label: "Testimonial Ads", href: "/ai-video-generation/testimonial-ads" },
-    { label: "Before & After Videos", href: "/ai-video-generation/before-after-videos" },
-    { label: "Spokesperson Videos", href: "/ai-video-generation/spokesperson-videos" }
+    { label: "Before & After Video", href: "/ai-video-generation/before-after-video" },
+    { label: "Spokesperson Video", href: "/ai-video-generation/spokesperson-video" }
   ] },
-  { label: "Product Videos", items: [
-    { label: "Product Videos", href: "/ai-video-generation/product-videos" },
+  { label: "Product Video", items: [
+    { label: "Product Video", href: "/ai-video-generation/product-video" },
     { label: "Unboxing", href: "/ai-video-generation/unboxing-experience" },
     { label: "How-to Guide", href: "/ai-video-generation/how-to-video" }
   ] },

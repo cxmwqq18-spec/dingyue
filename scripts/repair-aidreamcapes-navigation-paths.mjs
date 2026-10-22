@@ -18,9 +18,12 @@ const apply = hasArgument("--apply");
 
 const PATH_RENAMES = [
   { id: "aidreamcapes_mirror_page_738da1c3aeee6bfa", from: "/ai-video-generation/ugc-ad-video", to: "/ai-video-generation/video-ads" },
-  { id: "aidreamcapes_mirror_page_bf80d4528b76f1ef", from: "/ai-video-generation/product-video", to: "/ai-video-generation/product-videos" },
-  { id: "aidreamcapes_ads_testing_before_after_showcases", from: "/ai-video-generation/before-after-showcases", to: "/ai-video-generation/before-after-videos" },
-  { id: "aidreamcapes_ads_testing_ai_actor_product_ads", from: "/ai-video-generation/ai-actor-product-ads", to: "/ai-video-generation/spokesperson-videos" },
+  // 2026-10-22: the public tool names dropped the plural "s". These entries now
+  // point at the singular canonical so rerunning this historical repair cannot
+  // silently revert the newer route names.
+  { id: "aidreamcapes_mirror_page_bf80d4528b76f1ef", from: "/ai-video-generation/product-videos", to: "/ai-video-generation/product-video" },
+  { id: "aidreamcapes_ads_testing_before_after_showcases", from: "/ai-video-generation/before-after-showcases", to: "/ai-video-generation/before-after-video" },
+  { id: "aidreamcapes_ads_testing_ai_actor_product_ads", from: "/ai-video-generation/ai-actor-product-ads", to: "/ai-video-generation/spokesperson-video" },
   { id: "site_aidreamcapes_text_to_video", from: "/text-to-video", to: "/ai-video-generation/text-to-video" },
   { id: "site_aidreamcapes_ai_twin", from: "/ai-twin", to: "/ai-video-generation/ai-twin" },
   { id: "aidreamcapes_image_theme_ecommerce_main_image", from: "/ai-image-generation/ecommerce-main-image", to: "/ai-image-generation/white-background-photos" },

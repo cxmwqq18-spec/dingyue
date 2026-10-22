@@ -46,7 +46,7 @@ try {
     return require(id);
   }, inspirationModule, inspirationModule.exports);
   for (const [kind, family] of [["video", "ai-video-generation"], ["photo", "ai-image-generation"]]) {
-    const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-videos", prompt: "A product scene." };
+    const card = { kind, publicSlug: "readable-product-scene", sceneSlug: "internal-scene-12345678", pageSlug: "/examples", toolSlug: "product-video", prompt: "A product scene." };
     assert.equal(inspirationModule.exports.inspirationCreateHref(card), `/${family}/readable-product-scene`);
     assert.equal(inspirationModule.exports.inspirationCreateHref(card, "/site/aidreamcapes"), `/site/aidreamcapes/${family}/readable-product-scene`);
   }
@@ -73,12 +73,12 @@ try {
     return livePageRow;
   } }, async $queryRaw(strings, ...values) {
     publicRouteCalls.push({ sql: strings.join("?"), values });
-    const [siteId, publicSlug, kind] = values;
+    const [siteId, publicSlug] = values;
     if (siteId !== "site_aidreamcapes" || !livePageRow) return [];
     const cards = Object.values(livePageRow.contentJson.sections ?? {}).flatMap((section) =>
       section?.type === "aidreamcapes_v2_page" && Array.isArray(section?.settings?.data?.visual?.picker?.cards)
         ? section.settings.data.visual.picker.cards : []);
-    return cards.some((card) => card.publicSlug === publicSlug && card.kind === kind)
+    return cards.some((card) => card.publicSlug === publicSlug)
       ? [{ slug: "/templates", ...livePageRow }]
       : [];
   } };
@@ -87,6 +87,7 @@ try {
     if (id === "@/lib/prisma") return { prisma: prismaMock };
     if (id === "./preset-contract") return presetContract;
     if (id === "./static-routes") return navigationRequire("./static-routes");
+    if (id === "./tool-aliases") return navigationRequire("./tool-aliases");
     if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
     return require(id);
   };
@@ -145,13 +146,15 @@ try {
   assert.equal(publicVideoPreset?.title, staticVideoCard.label, "Readable video routes resolve against the current LivePage card");
   assert.equal(publicVideoPreset?.publicSlug, "creator-product-demo");
   assert.equal(presetContract.pickerPresetHref(staticVideoCard, "/templates"), "/ai-video-generation/creator-product-demo", "Picker links use the prefixed readable video path");
-  assert.deepEqual(publicRouteCalls.at(-1)?.values, ["site_aidreamcapes", "creator-product-demo", "video", "creator-product-demo", "video"], "Static route lookup is explicitly scoped to Aidreamcapes and media kind");
+  const publicRouteCall = publicRouteCalls.at(-1);
+  assert.equal(publicRouteCall?.values[0], "site_aidreamcapes", "Static route lookup is explicitly scoped to Aidreamcapes");
+  assert.ok(publicRouteCall?.values.slice(1).every((value) => value === "creator-product-demo"), "Static route lookup binds the requested public slug");
   const staticPhotoCard = makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background", kind: "photo", publicSlug: "clean-product-image", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } });
   livePageRow = makePage(staticPhotoCard);
   assert.equal((await resolveWorkspacePublicScenePreset("site_aidreamcapes", "photo", "clean-product-image"))?.kind, "photo", "Readable image routes resolve with the correct media kind");
   assert.equal(presetContract.pickerPresetHref(staticPhotoCard, "/templates"), "/ai-image-generation/clean-product-image", "Picker links use the prefixed readable image path");
 
-  for (const [kind, tool] of [["video", "spokesperson-videos"], ["photo", "white-background"]]) {
+  for (const [kind, tool] of [["video", "spokesperson-video"], ["photo", "white-background"]]) {
     const migratedCard = makeCard({ kind, tool: undefined, label: "Balcony update", prompt: "A person speaks beside a plant.", publicSlug: "migrated-scene", href: `/app/create/tool/${tool}#step-video` });
     livePageRow = makePage(migratedCard);
     const migrated = await resolveWorkspacePublicScenePreset("site_aidreamcapes", kind, "migrated-scene");

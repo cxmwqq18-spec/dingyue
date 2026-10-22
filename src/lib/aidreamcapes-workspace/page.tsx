@@ -15,6 +15,7 @@ import { presetRequestFromQuery, type WorkspacePreset, type WorkspacePresetReque
 import { getWorkspaceTemplateGallery, resolveWorkspacePreset, resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset } from "./presets.server";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
+import { canonicalWorkspaceTool } from "./tool-aliases";
 import { getWorkspaceInspirationPage } from "./inspirations-page.server";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
@@ -142,12 +143,12 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
   const requestedScene: SceneId | undefined = scene === "presenter_showcase" || scene === "process_demo" || scene === "texture_closeup" ? scene : undefined;
   const sceneByTool: Record<string, SceneId> = {
     "video-ads": "presenter_showcase",
-    "spokesperson-videos": "presenter_showcase",
-    "product-videos": "process_demo",
-    "before-after-videos": "process_demo",
+    "spokesperson-video": "presenter_showcase",
+    "product-video": "process_demo",
+    "before-after-video": "process_demo",
     "unboxing-videos": "process_demo",
   };
-  const sceneId = requestedScene ?? (createIntent?.kind === "video" ? sceneByTool[createIntent.tool] : undefined);
+  const sceneId = requestedScene ?? (createIntent?.kind === "video" ? sceneByTool[canonicalWorkspaceTool(createIntent.tool)] : undefined);
   const intentView: WorkspaceView | undefined = createIntent?.kind === "video" ? createIntent.tool === "url-to-video" ? "product" : "video" : undefined;
   const requestedView = isWorkspaceView(queryView)
     ? queryView === "home" && (handoff.prompt || tool || handoff.scene) ? "agent" : queryView

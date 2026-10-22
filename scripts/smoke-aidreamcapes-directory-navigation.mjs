@@ -11,9 +11,9 @@ const videoItems = video.groups.flatMap((group) => group.items);
 const imageItems = image.groups.flatMap((group) => group.items);
 for (const [items, label, href] of [
   [videoItems, "Video Ads", "/ai-video-generation/video-ads"],
-  [videoItems, "Product Videos", "/ai-video-generation/product-videos"],
-  [videoItems, "Before & After Videos", "/ai-video-generation/before-after-videos"],
-  [videoItems, "Spokesperson Videos", "/ai-video-generation/spokesperson-videos"],
+  [videoItems, "Product Video", "/ai-video-generation/product-video"],
+  [videoItems, "Before & After Video", "/ai-video-generation/before-after-video"],
+  [videoItems, "Spokesperson Video", "/ai-video-generation/spokesperson-video"],
   [imageItems, "White Background Photos", "/ai-image-generation/white-background-photos"],
   [imageItems, "Lifestyle Photos", "/ai-image-generation/lifestyle-photos"],
   [imageItems, "Model Photos", "/ai-image-generation/model-photos"],

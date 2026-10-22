@@ -7,6 +7,7 @@
 // Free-form customer input (typed prompts, product URLs, post-login task
 // continuation) is not part of this scheme and never appears in public links.
 import { isWorkspaceView, WORKSPACE_VIEWS, workspaceViewSegment, WORKSPACE_VIEW_SEGMENTS, type WorkspaceView } from "./navigation";
+import { canonicalWorkspaceTool } from "./tool-aliases";
 
 export type StaticCreateTarget =
   | { kind: "view"; view: WorkspaceView }
@@ -24,12 +25,13 @@ const DEMO_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
 
 // Individual tools use /app/create/<tool>. Group membership validates old
 // prefixed links before redirecting them to the short canonical path.
-const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "url-to-video", "video-ads", "product-videos", "before-after-videos", "spokesperson-videos", "unboxing-videos"]);
+const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "url-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "unboxing-videos"]);
 const IMAGE_GROUP_TOOLS = new Set(["custom", "photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"]);
 
 export function workspaceToolGroup(tool: string): "video" | "image" | undefined {
-  if (VIDEO_GROUP_TOOLS.has(tool)) return "video";
-  if (IMAGE_GROUP_TOOLS.has(tool)) return "image";
+  const canonical = canonicalWorkspaceTool(tool);
+  if (VIDEO_GROUP_TOOLS.has(canonical)) return "video";
+  if (IMAGE_GROUP_TOOLS.has(canonical)) return "image";
   return undefined;
 }
 
@@ -172,20 +174,20 @@ export function parseStaticCreateSegments(segments: string[]): StaticCreateTarge
     if (second === "text-to-video" && segments.length === 2 && groupView === "video") return { kind: "view", view: "agent" };
     // Tool routes filed under their public directory: the tool must belong to it.
     if (!TOOL_SEGMENT_RE.test(second) || workspaceToolGroup(second) !== (groupView === "images" ? "image" : "video")) return undefined;
-    if (segments.length === 2) return { kind: "tool", tool: second };
-    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: second, template: third };
+    if (segments.length === 2) return { kind: "tool", tool: canonicalWorkspaceTool(second) };
+    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: canonicalWorkspaceTool(second), template: third };
     return undefined;
   }
   if (workspaceToolGroup(first) && segments.length <= 2 && (!second || TEMPLATE_SEGMENT_RE.test(second))) {
-    return { kind: "tool", tool: first, ...(second ? { template: second } : {}) };
+    return { kind: "tool", tool: canonicalWorkspaceTool(first), ...(second ? { template: second } : {}) };
   }
   if (segments.length === 1) {
     if (groupView) return { kind: "view", view: groupView };
     return isWorkspaceView(first) ? { kind: "view", view: first } : undefined;
   }
   if (first === "tool" && segments.length >= 2 && TOOL_SEGMENT_RE.test(second)) {
-    if (segments.length === 2) return { kind: "tool", tool: second };
-    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: second, template: third };
+    if (segments.length === 2) return { kind: "tool", tool: canonicalWorkspaceTool(second) };
+    if (TEMPLATE_SEGMENT_RE.test(third)) return { kind: "tool", tool: canonicalWorkspaceTool(second), template: third };
     return undefined;
   }
   if (first === "demo" && segments.length === 2 && DEMO_SLUG_RE.test(second) && demoBySlug.has(second)) {
@@ -218,8 +220,9 @@ export function staticCreateQuery(target: StaticCreateTarget): Record<string, st
   if (target.kind === "library") return { view: "library", filter: target.filter };
   // Tool routes: image tools carry tool_id; video tools open the video panel.
   const imageTools = new Set(["custom", "change-background", "white-background", "model-photos", "lifestyle-photos", "photo-hub", "social-ad-photos"]);
-  const query: Record<string, string> = { tool: target.tool };
-  if (imageTools.has(target.tool)) query.tool_id = "image_generator";
+  const tool = canonicalWorkspaceTool(target.tool);
+  const query: Record<string, string> = { tool };
+  if (imageTools.has(tool)) query.tool_id = "image_generator";
   if (target.template) query.template = target.template;
   return query;
 }
@@ -229,11 +232,12 @@ export function staticViewHref(basePath: string, view: WorkspaceView): string {
 }
 
 export function staticToolHref(basePath: string, tool: string, template?: string): string | undefined {
-  if (!TOOL_SEGMENT_RE.test(tool)) return undefined;
+  const canonical = canonicalWorkspaceTool(tool);
+  if (!TOOL_SEGMENT_RE.test(canonical)) return undefined;
   if (template && !TEMPLATE_SEGMENT_RE.test(template)) return undefined;
-  const group = workspaceToolGroup(tool);
+  const group = workspaceToolGroup(canonical);
   if (!group) return undefined;
-  return `${basePath}/app/create/${tool}${template ? `/${template}` : ""}`;
+  return `${basePath}/app/create/${canonical}${template ? `/${template}` : ""}`;
 }
 
 /**
@@ -296,8 +300,9 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
   if (!keys.length) return "/app/create";
   const kept = new Set(["view", "tool", "tool_id", "template", "prompt", "scene", "aspect", "duration", "plan", "nextHash", "templates", "category", "filter", "videoMode", "size", "length"]);
   if (keys.some((key) => !kept.has(key))) return undefined;
-  // Legacy video modes renamed before the static route work.
-  const legacyVideoMode: Record<string, string> = { "ugc-ad": "video-ads", "product-video": "product-videos" };
+  // Legacy video modes renamed before the static route work. `product-video`
+  // is also the canonical tool id now, so it maps to itself.
+  const legacyVideoMode: Record<string, string> = { "ugc-ad": "video-ads", "product-video": "product-video" };
   if (params.get("videoMode")) {
     if (keys.length !== 1) return undefined;
     const tool = legacyVideoMode[params.get("videoMode") ?? ""];

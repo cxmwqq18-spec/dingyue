@@ -38,7 +38,7 @@ try {
       const key = `${req.method()} ${url.pathname}`; calls.push(key);
       let body = {}; try { body = req.postDataJSON() ?? {}; } catch {}
       if (url.pathname === `${api}/actors`) return json(route, { actors });
-      if (url.pathname === `${api}/inspirations`) return json(route, { cards: [{ id: 'navigation-inspiration', label: 'Navigation example', imageSrc: reference, imageAlt: 'Navigation example', pageTitle: 'Navigation examples', kind: 'video', description: 'A navigation fixture example.', category: 'All', createHref: '/site/aidreamcapes/ai-video-generation/navigation-example', workspaceHref: '/site/aidreamcapes/app/create/ai-video-generation', entry: { view: 'video', query: { tool: 'product-videos' }, expires: 0 } }] });
+      if (url.pathname === `${api}/inspirations`) return json(route, { cards: [{ id: 'navigation-inspiration', label: 'Navigation example', imageSrc: reference, imageAlt: 'Navigation example', pageTitle: 'Navigation examples', kind: 'video', description: 'A navigation fixture example.', category: 'All', createHref: '/site/aidreamcapes/ai-video-generation/navigation-example', workspaceHref: '/site/aidreamcapes/app/create/ai-video-generation', entry: { view: 'video', query: { tool: 'product-video' }, expires: 0 } }] });
       if (url.pathname === `${api}/clones`) return json(route, { productionReady: false, mockAvailable: true, analysisBeforeTask: true, voiceTwin: { available: false, state: 'mock_only' }, adReference: { available: false, state: 'mock_only' }, components: { database: { available: true } } });
       if (url.pathname === `${api}/clones/jobs`) return json(route, { jobs: [] });
       if (url.pathname === `${api}/clones/consents`) return json(route, { consents: [] });

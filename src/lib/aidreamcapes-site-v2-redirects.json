@@ -21,7 +21,7 @@
  ],
  [
   "/ai-video-generation/talking-photo-recs",
-  "/ai-video-generation/spokesperson-videos"
+  "/ai-video-generation/spokesperson-video"
  ],
  [
   "/ai-video-generation/tiktok-reels-shorts",
@@ -41,7 +41,7 @@
  ],
  [
   "/ai-video-generation/feature-callout",
-  "/ai-video-generation/product-videos"
+  "/ai-video-generation/product-video"
  ],
  [
   "/ai-video-generation/social-proof-animation",
@@ -53,11 +53,11 @@
  ],
  [
   "/ai-video-generation/green-screen-speaking",
-  "/ai-video-generation/spokesperson-videos"
+  "/ai-video-generation/spokesperson-video"
  ],
  [
   "/ai-video-generation/founder-update",
-  "/ai-video-generation/spokesperson-videos"
+  "/ai-video-generation/spokesperson-video"
  ],
  [
   "/ai-video-generation/multilingual-video",
@@ -169,7 +169,7 @@
  ],
  [
   "/occasions/product-launch",
-  "/ai-video-generation/product-videos"
+  "/ai-video-generation/product-video"
  ],
  [
   "/ai-image-generation/bundle-sets",
@@ -181,7 +181,7 @@
  ],
  [
   "/ai-video-generation/product-comparison-video",
-  "/ai-video-generation/product-videos"
+  "/ai-video-generation/product-video"
  ],
  [
   "/ai-image-generation/macro-details",
@@ -201,7 +201,7 @@
  ],
  [
   "/ai-video-generation/product-feature-callout-video",
-  "/ai-video-generation/product-videos"
+  "/ai-video-generation/product-video"
  ],
  [
   "/ai-video-generation/retargeting-video-ad",
@@ -213,23 +213,19 @@
  ],
  [
   "/ai-video-generation/unboxing-experience",
-  "/ai-video-generation/product-videos"
+  "/ai-video-generation/product-video"
  ],
   [
     "/ai-video-generation/ugc-ad-video",
     "/ai-video-generation/video-ads"
   ],
   [
-    "/ai-video-generation/product-video",
-    "/ai-video-generation/product-videos"
-  ],
-  [
     "/ai-video-generation/before-after-showcases",
-    "/ai-video-generation/before-after-videos"
+    "/ai-video-generation/before-after-video"
   ],
   [
     "/ai-video-generation/ai-actor-product-ads",
-    "/ai-video-generation/spokesperson-videos"
+    "/ai-video-generation/spokesperson-video"
   ],
   [
     "/text-to-video",
@@ -258,5 +254,17 @@
   [
     "/ai-image-generation/feed-ad-still",
     "/ai-image-generation/social-ad-photos"
+  ],
+  [
+    "/ai-video-generation/product-videos",
+    "/ai-video-generation/product-video"
+  ],
+  [
+    "/ai-video-generation/before-after-videos",
+    "/ai-video-generation/before-after-video"
+  ],
+  [
+    "/ai-video-generation/spokesperson-videos",
+    "/ai-video-generation/spokesperson-video"
   ]
 ]

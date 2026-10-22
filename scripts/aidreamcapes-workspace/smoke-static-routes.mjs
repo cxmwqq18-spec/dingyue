@@ -18,6 +18,7 @@ const compile = (name, localRequire = require) => {
 };
 const localRequireShim = (id) => {
   if (id === "./navigation") return compile("navigation", localRequireShim);
+  if (id === "./tool-aliases") return compile("tool-aliases", localRequireShim);
   if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
   return require(id);
 };
@@ -27,14 +28,14 @@ const routes = compile("static-routes", localRequireShim);
 const cases = [
   ["/app/create?tool_id=image_generator&tool=photo-hub&template=color", "/app/create/photo-hub/color"],
   ["/app/create?tool=video-ads&template=creator", "/app/create/video-ads/creator"],
-  ["/app/create?tool=spokesperson-videos", "/app/create/spokesperson-videos"],
+  ["/app/create?tool=spokesperson-videos", "/app/create/spokesperson-video"],
   ["/app/create?tool=unboxing-videos", "/app/create/unboxing-videos"],
   ["/app/create?tool_id=image_generator&tool=white-background", "/app/create/white-background"],
   ["/app/create?tool_id=image_generator", "/app/create/ai-image-generation"],
   ["/app/create?tool=image-to-video&size=9:16&length=10", "/app/create/image-to-video?size=9%3A16&length=10"],
   ["/app/create?plan=pro", "/app/create"],
   ["/app/create?", "/app/create"],
-  ["/app/create?videoMode=product-video", "/app/create/product-videos"],
+  ["/app/create?videoMode=product-video", "/app/create/product-video"],
   ["/app/create?view=video", "/app/create/ai-video-generation"],
   ["/app/create?view=images", "/app/create/ai-image-generation"],
   ["/app/create?view=actors", "/app/create/ai-actors"],
@@ -97,6 +98,12 @@ assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "white-bac
 assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "white-background", "white"])?.template, "white");
 assert.equal(routes.parseStaticCreateSegments(["url-to-video"])?.tool, "url-to-video");
 assert.equal(routes.parseStaticCreateSegments(["photo-hub", "color"])?.tool, "photo-hub");
+// Legacy plural tool links keep working and normalize to the singular id.
+assert.equal(routes.parseStaticCreateSegments(["product-videos"])?.tool, "product-video");
+assert.equal(routes.parseStaticCreateSegments(["tool", "spokesperson-videos"])?.tool, "spokesperson-video");
+assert.equal(routes.parseStaticCreateSegments(["ai-video-generation", "before-after-videos", "demo"])?.tool, "before-after-video");
+assert.equal(routes.staticToolHref("", "product-videos"), "/app/create/product-video");
+assert.equal(routes.staticCreateSearchFromPath("/app/create/spokesperson-videos")?.get("tool"), "spokesperson-video");
 assert.equal(routes.parseStaticCreateSegments(["text-to-video"])?.view, "agent");
 // A tool filed under the wrong directory does not parse.
 assert.equal(routes.parseStaticCreateSegments(["ai-image-generation", "video-ads"])?.kind ?? undefined, undefined);
