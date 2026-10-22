@@ -58,6 +58,7 @@ try {
     select: { slug: true, contentJson: true }
   });
   const publicPaths = await publicPathSet();
+  const allPageSlugs = new Set(rows.map((row) => row.slug));
 
   // Media cards answer under their own slug even though they are not public
   // pages. Their addresses must never become a redirect source.
@@ -81,6 +82,12 @@ try {
       if (candidate.path === path) continue;
       if (publicPaths.has(candidate.path)) {
         skipped.push({ source: candidate.path, reason: "already-public" });
+        continue;
+      }
+      // A page outside the sitemap still answers. The table must never take
+      // an address away from a page that exists.
+      if (allPageSlugs.has(candidate.path)) {
+        skipped.push({ source: candidate.path, reason: "existing-page" });
         continue;
       }
       const last = candidate.path.split("/").pop() ?? "";

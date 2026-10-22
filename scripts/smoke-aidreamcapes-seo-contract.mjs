@@ -396,6 +396,27 @@ for (const path of nearSlugLivePaths) {
 }
 assert.equal(missingNearSlugs.length, 0, `near slug table misses ${missingNearSlugs.length} address(es): ${JSON.stringify(missingNearSlugs.slice(0, 20))}`);
 
+const nearSlugBehavior = await mapLimit(SITE_V2_NEAR_SLUGS, 6, async ([from, to]) => {
+  const response = await get(from, { headers: SITE_HEADERS });
+  const status = response.status();
+  const location = response.headers().location || "";
+  await response.dispose();
+  return { from, to, status, location };
+});
+const nearSlugFailures = nearSlugBehavior.filter(({ to, status, location }) => {
+  if (status !== 301) return true;
+  try {
+    return (new URL(location, BASE_URL).pathname.replace(/\/+$/, "") || "/") !== to;
+  } catch {
+    return true;
+  }
+});
+assert.equal(
+  nearSlugFailures.length,
+  0,
+  `${nearSlugFailures.length} near slug address(es) do not answer 301 at the page they meant: ${JSON.stringify(nearSlugFailures.slice(0, 10))}`
+);
+
 const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   const url = entry.loc;
   assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
@@ -601,7 +622,7 @@ console.log(JSON.stringify({
     redirectingTargets: redirectLinkViolations.length
   },
   targetMetadataPages: metadataResults.length,
-  nearSlugRedirects: SITE_V2_NEAR_SLUGS.length,
+  nearSlugRedirects: { entries: SITE_V2_NEAR_SLUGS.length, verified: nearSlugBehavior.length, failures: nearSlugFailures.length },
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,
   uniqueSitemapImages: imageStatus.length,
