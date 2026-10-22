@@ -1,0 +1,101 @@
+{
+  "contract": "aidreamcapes-hub-example-slug-normalization-2026-10-22-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "dd07a996d8f3a6b8666fb4263eb5120fae7df5d3b4c4d26d81cc3731205e0d25",
+  "generatedAt": "2026-10-22T05:52:22.132Z",
+  "owner": "LivePage.contentJson",
+  "note": "Field-level inverse of this apply. Each operation restores the retired publicSlug and publicAliases of one card.",
+  "operations": [
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+      "source": "examples",
+      "kind": "video",
+      "label": "Bottle Ad With a Person",
+      "imageSrc": "/ai-image-generation/gen2video-hub-g1-640.webp",
+      "beforeSlug": "a-spoken-ad-with-a-person-on-camera",
+      "beforeAliases": null,
+      "afterSlug": "bottle-ad-with-a-person",
+      "afterAliases": [
+        "a-spoken-ad-with-a-person-on-camera"
+      ],
+      "oldPath": "/ai-video-generation/a-spoken-ad-with-a-person-on-camera",
+      "newPath": "/ai-video-generation/bottle-ad-with-a-person"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+      "source": "examples",
+      "kind": "video",
+      "label": "Bento Box Walkthrough",
+      "imageSrc": "/ai-image-generation/im01-video-hub-bento-r1-640.webp",
+      "beforeSlug": "the-same-product-walkthrough",
+      "beforeAliases": null,
+      "afterSlug": "bento-box-walkthrough",
+      "afterAliases": [
+        "the-same-product-walkthrough"
+      ],
+      "oldPath": "/ai-video-generation/the-same-product-walkthrough",
+      "newPath": "/ai-video-generation/bento-box-walkthrough"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.examples.groups[2].items[0]",
+      "source": "examples",
+      "kind": "video",
+      "label": "Perfume Bottle in a Room",
+      "imageSrc": "/ai-image-generation/gen2video-hub-g7-640.webp",
+      "beforeSlug": "a-showcase-in-a-real-room",
+      "beforeAliases": null,
+      "afterSlug": "perfume-bottle-in-a-room",
+      "afterAliases": [
+        "a-showcase-in-a-real-room"
+      ],
+      "oldPath": "/ai-video-generation/a-showcase-in-a-real-room",
+      "newPath": "/ai-video-generation/perfume-bottle-in-a-room"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.examples.groups[3].items[0]",
+      "source": "examples",
+      "kind": "video",
+      "label": "An Avatar Holds the Shaker",
+      "imageSrc": "/ai-image-generation/gen2spokesperson-videos-c3-640.webp",
+      "beforeSlug": "an-actor-matched-to-the-buyer",
+      "beforeAliases": null,
+      "afterSlug": "an-avatar-holds-the-shaker",
+      "afterAliases": [
+        "an-actor-matched-to-the-buyer"
+      ],
+      "oldPath": "/ai-video-generation/an-actor-matched-to-the-buyer",
+      "newPath": "/ai-video-generation/an-avatar-holds-the-shaker"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "ownerPath": "/ai-video-generation",
+      "cardPath": "sections.v2_main.settings.data.examples.groups[4].items[0]",
+      "source": "examples",
+      "kind": "video",
+      "label": "Sneaker Photo for the Feed",
+      "imageSrc": "/ai-image-generation/gen2video-hub-g3-640.webp",
+      "beforeSlug": "a-clip-sized-for-the-feed",
+      "beforeAliases": null,
+      "afterSlug": "sneaker-photo-for-the-feed",
+      "afterAliases": [
+        "a-clip-sized-for-the-feed"
+      ],
+      "oldPath": "/ai-video-generation/a-clip-sized-for-the-feed",
+      "newPath": "/ai-video-generation/sneaker-photo-for-the-feed"
+    }
+  ]
+}

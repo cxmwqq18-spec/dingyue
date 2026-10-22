@@ -1,0 +1,857 @@
+{
+  "ok": true,
+  "mode": "plan",
+  "contract": "aidreamcapes-template-detail-slug-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-22T05:41:31.475Z",
+  "owner": "LivePage.contentJson",
+  "rules": {
+    "slugRule": "slugify(templateDefinition.card.label)",
+    "aliasRule": "the retired <page-leaf>-<label> slug becomes a publicAliases entry on both the template card and its picker copy",
+    "pairRule": "both cards keep the same publicSlug and the old address resolves to one page with a 308",
+    "excludedRule": "beauty-routine, how-to-video, and spark-ads-style-video are excluded because the bare slug is already a LivePage path",
+    "rollback": "the manifest is the field-level inverse: beforeSlug and beforeAliases restore the retired address"
+  },
+  "summary": {
+    "livePageRowsScanned": 267,
+    "approvedPages": 15,
+    "excludedPages": 3,
+    "plannedPages": 15,
+    "plannedCards": 30,
+    "plannedAddresses": 15,
+    "skipped": 3,
+    "problems": 0
+  },
+  "problems": [],
+  "approvedPages": [
+    "/ai-image-generation/ugc-still-ad",
+    "/ai-video-generation/black-friday-countdown",
+    "/ai-video-generation/fashion-try-on-reel",
+    "/ai-image-generation/packshot-multi-angle",
+    "/ai-image-generation/sale-campaign-key-visual",
+    "/ai-image-generation/virtual-try-on",
+    "/ai-image-generation/professional-headshot",
+    "/ai-image-generation/story-ad-vertical",
+    "/ai-image-generation/colorway-variations",
+    "/ai-image-generation/packaging-mockup",
+    "/ai-video-generation/home-organization",
+    "/ai-video-generation/promo-video",
+    "/ai-video-generation/food-video",
+    "/ai-video-generation/cinematic-video",
+    "/ai-image-generation/jewelry-positioning"
+  ],
+  "excludedPages": [
+    "/ai-video-generation/beauty-routine",
+    "/ai-video-generation/how-to-video",
+    "/ai-video-generation/spark-ads-style-video"
+  ],
+  "pages": [
+    {
+      "id": "aidreamcapes_image_theme_colorway_variations",
+      "slug": "/ai-image-generation/colorway-variations",
+      "title": "Create Product Color Variation Photos",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-colorway-variations",
+      "baseHash": "6ce6aecda72635be999ae498975367fd1f2d4e07240528f486a74b5bdb5a584f",
+      "label": "Color Variants",
+      "kind": "photo",
+      "oldSlug": "colorway-variations-color-variants",
+      "targetSlug": "color-variants",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Color Variants",
+          "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+          "beforeSlug": "colorway-variations-color-variants",
+          "afterSlug": "color-variants",
+          "beforeAliases": null,
+          "afterAliases": [
+            "colorway-variations-color-variants"
+          ],
+          "oldPath": "/ai-image-generation/colorway-variations-color-variants",
+          "newPath": "/ai-image-generation/color-variants"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Color Variants",
+          "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+          "beforeSlug": "colorway-variations-color-variants",
+          "afterSlug": "color-variants",
+          "beforeAliases": null,
+          "afterAliases": [
+            "colorway-variations-color-variants"
+          ],
+          "oldPath": "/ai-image-generation/colorway-variations-color-variants",
+          "newPath": "/ai-image-generation/color-variants"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_jewelry_positioning",
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "title": "AI Jewelry Product Photography That Stays True",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-jewelry-positioning",
+      "baseHash": "7f1e30335203a901787f5003f2cb79211746ecbf240d3d931035b2bee9e64c5c",
+      "label": "Jewelry On Model",
+      "kind": "photo",
+      "oldSlug": "jewelry-positioning-jewelry-on-model",
+      "targetSlug": "jewelry-on-model",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Jewelry On Model",
+          "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+          "beforeSlug": "jewelry-positioning-jewelry-on-model",
+          "afterSlug": "jewelry-on-model",
+          "beforeAliases": null,
+          "afterAliases": [
+            "jewelry-positioning-jewelry-on-model"
+          ],
+          "oldPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+          "newPath": "/ai-image-generation/jewelry-on-model"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Jewelry On Model",
+          "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+          "beforeSlug": "jewelry-positioning-jewelry-on-model",
+          "afterSlug": "jewelry-on-model",
+          "beforeAliases": null,
+          "afterAliases": [
+            "jewelry-positioning-jewelry-on-model"
+          ],
+          "oldPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+          "newPath": "/ai-image-generation/jewelry-on-model"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_packaging_mockup",
+      "slug": "/ai-image-generation/packaging-mockup",
+      "title": "AI Packaging Design Generator",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-packaging-mockup",
+      "baseHash": "e58d505a9f42c464c149892029e28f80540356bbf0ca72824d86b245ac214915",
+      "label": "Packaging Preview",
+      "kind": "photo",
+      "oldSlug": "packaging-mockup-packaging-preview",
+      "targetSlug": "packaging-preview",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Packaging Preview",
+          "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+          "beforeSlug": "packaging-mockup-packaging-preview",
+          "afterSlug": "packaging-preview",
+          "beforeAliases": null,
+          "afterAliases": [
+            "packaging-mockup-packaging-preview"
+          ],
+          "oldPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+          "newPath": "/ai-image-generation/packaging-preview"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Packaging Preview",
+          "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+          "beforeSlug": "packaging-mockup-packaging-preview",
+          "afterSlug": "packaging-preview",
+          "beforeAliases": null,
+          "afterAliases": [
+            "packaging-mockup-packaging-preview"
+          ],
+          "oldPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+          "newPath": "/ai-image-generation/packaging-preview"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_packshot_multi_angle",
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "title": "Multi-Angle Product Packshot Photos",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-packshot-multi-angle",
+      "baseHash": "2ecc57e51ba6f4a18af72fff145eec197b8c6ad6c584b76cbdf05e7ebd42fdb1",
+      "label": "Every Angle",
+      "kind": "photo",
+      "oldSlug": "packshot-multi-angle-every-angle",
+      "targetSlug": "every-angle",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Every Angle",
+          "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+          "beforeSlug": "packshot-multi-angle-every-angle",
+          "afterSlug": "every-angle",
+          "beforeAliases": null,
+          "afterAliases": [
+            "packshot-multi-angle-every-angle"
+          ],
+          "oldPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+          "newPath": "/ai-image-generation/every-angle"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Every Angle",
+          "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+          "beforeSlug": "packshot-multi-angle-every-angle",
+          "afterSlug": "every-angle",
+          "beforeAliases": null,
+          "afterAliases": [
+            "packshot-multi-angle-every-angle"
+          ],
+          "oldPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+          "newPath": "/ai-image-generation/every-angle"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_professional_headshot",
+      "slug": "/ai-image-generation/professional-headshot",
+      "title": "AI Professional Headshots for Your Team",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-professional-headshot",
+      "baseHash": "65dfceb41ad693e7096f9656b99aa38d95c0b169b42e83f153bd6715e5262241",
+      "label": "Team Headshots",
+      "kind": "photo",
+      "oldSlug": "professional-headshot-team-headshots",
+      "targetSlug": "team-headshots",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Team Headshots",
+          "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+          "beforeSlug": "professional-headshot-team-headshots",
+          "afterSlug": "team-headshots",
+          "beforeAliases": null,
+          "afterAliases": [
+            "professional-headshot-team-headshots"
+          ],
+          "oldPath": "/ai-image-generation/professional-headshot-team-headshots",
+          "newPath": "/ai-image-generation/team-headshots"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Team Headshots",
+          "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+          "beforeSlug": "professional-headshot-team-headshots",
+          "afterSlug": "team-headshots",
+          "beforeAliases": null,
+          "afterAliases": [
+            "professional-headshot-team-headshots"
+          ],
+          "oldPath": "/ai-image-generation/professional-headshot-team-headshots",
+          "newPath": "/ai-image-generation/team-headshots"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "title": "Instagram Sales Post for Your Next Offer",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-sale-campaign-key-visual",
+      "baseHash": "4a51a28a75b8b91000e01c0517735d06602a69208b3d4537c8d411c7c9a7a8d2",
+      "label": "Sale Banner",
+      "kind": "photo",
+      "oldSlug": "sale-campaign-key-visual-sale-banner",
+      "targetSlug": "sale-banner",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Sale Banner",
+          "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-sale-banner",
+          "afterSlug": "sale-banner",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-sale-banner"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+          "newPath": "/ai-image-generation/sale-banner"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Sale Banner",
+          "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-sale-banner",
+          "afterSlug": "sale-banner",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-sale-banner"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+          "newPath": "/ai-image-generation/sale-banner"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_story_ad_vertical",
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "title": "Make a Vertical Instagram Story Image",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-story-ad-vertical",
+      "baseHash": "82cb6ed5fcbec6aa29d94cfb870f83db0714068d47a7bfd07afe5292b471ec64",
+      "label": "Story Ad",
+      "kind": "photo",
+      "oldSlug": "story-ad-vertical-story-ad",
+      "targetSlug": "story-ad",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Story Ad",
+          "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+          "beforeSlug": "story-ad-vertical-story-ad",
+          "afterSlug": "story-ad",
+          "beforeAliases": null,
+          "afterAliases": [
+            "story-ad-vertical-story-ad"
+          ],
+          "oldPath": "/ai-image-generation/story-ad-vertical-story-ad",
+          "newPath": "/ai-image-generation/story-ad"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Story Ad",
+          "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+          "beforeSlug": "story-ad-vertical-story-ad",
+          "afterSlug": "story-ad",
+          "beforeAliases": null,
+          "afterAliases": [
+            "story-ad-vertical-story-ad"
+          ],
+          "oldPath": "/ai-image-generation/story-ad-vertical-story-ad",
+          "newPath": "/ai-image-generation/story-ad"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_ugc_still_ad",
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "title": "Make UGC Style Product Photos for Ads",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-ugc-still-ad",
+      "baseHash": "926b5f586ddd2f9fa50c85df7b3e239893a9ec2fe5a8f04fb367d24256facc4b",
+      "label": "Creator-Style Photo",
+      "kind": "photo",
+      "oldSlug": "ugc-still-ad-creator-style-photo",
+      "targetSlug": "creator-style-photo",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Creator-Style Photo",
+          "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+          "beforeSlug": "ugc-still-ad-creator-style-photo",
+          "afterSlug": "creator-style-photo",
+          "beforeAliases": null,
+          "afterAliases": [
+            "ugc-still-ad-creator-style-photo"
+          ],
+          "oldPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+          "newPath": "/ai-image-generation/creator-style-photo"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Creator-Style Photo",
+          "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+          "beforeSlug": "ugc-still-ad-creator-style-photo",
+          "afterSlug": "creator-style-photo",
+          "beforeAliases": null,
+          "afterAliases": [
+            "ugc-still-ad-creator-style-photo"
+          ],
+          "oldPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+          "newPath": "/ai-image-generation/creator-style-photo"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_image_theme_virtual_try_on",
+      "slug": "/ai-image-generation/virtual-try-on",
+      "title": "AI Virtual Try-On Photos for Clothing",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-virtual-try-on",
+      "baseHash": "fb5b64d1f706192f013d29792a771b930e674e46ed9e184c959737c8fab50bca",
+      "label": "Clothing Try-On",
+      "kind": "photo",
+      "oldSlug": "virtual-try-on-clothing-try-on",
+      "targetSlug": "clothing-try-on",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "photo",
+          "label": "Clothing Try-On",
+          "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+          "beforeSlug": "virtual-try-on-clothing-try-on",
+          "afterSlug": "clothing-try-on",
+          "beforeAliases": null,
+          "afterAliases": [
+            "virtual-try-on-clothing-try-on"
+          ],
+          "oldPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+          "newPath": "/ai-image-generation/clothing-try-on"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "photo",
+          "label": "Clothing Try-On",
+          "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+          "beforeSlug": "virtual-try-on-clothing-try-on",
+          "afterSlug": "clothing-try-on",
+          "beforeAliases": null,
+          "afterAliases": [
+            "virtual-try-on-clothing-try-on"
+          ],
+          "oldPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+          "newPath": "/ai-image-generation/clothing-try-on"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_black_friday_countdown",
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "title": "Black Friday Templates for a Clear Promotion",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-black-friday-countdown",
+      "baseHash": "36d38702317431486efb48f076ea102a0dc21773966341e6f00d3550d11ccf21",
+      "label": "Black Friday Video",
+      "kind": "video",
+      "oldSlug": "black-friday-countdown-black-friday-video",
+      "targetSlug": "black-friday-video",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Black Friday Video",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+          "beforeSlug": "black-friday-countdown-black-friday-video",
+          "afterSlug": "black-friday-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "black-friday-countdown-black-friday-video"
+          ],
+          "oldPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+          "newPath": "/ai-video-generation/black-friday-video"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Black Friday Video",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+          "beforeSlug": "black-friday-countdown-black-friday-video",
+          "afterSlug": "black-friday-video",
+          "beforeAliases": null,
+          "afterAliases": [
+            "black-friday-countdown-black-friday-video"
+          ],
+          "oldPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+          "newPath": "/ai-video-generation/black-friday-video"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "slug": "/ai-video-generation/cinematic-video",
+      "title": "Cinematic Ads With Studio-Style Motion",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-brand-creator-cinematic-product-film",
+      "baseHash": "308ed76d07f68d2ca78e8b2f1a3f560ee3faad15c6f000a68d6305397aac543a",
+      "label": "Brand Film",
+      "kind": "video",
+      "oldSlug": "cinematic-video-brand-film",
+      "targetSlug": "brand-film",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Brand Film",
+          "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+          "beforeSlug": "cinematic-video-brand-film",
+          "afterSlug": "brand-film",
+          "beforeAliases": null,
+          "afterAliases": [
+            "cinematic-video-brand-film"
+          ],
+          "oldPath": "/ai-video-generation/cinematic-video-brand-film",
+          "newPath": "/ai-video-generation/brand-film"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Brand Film",
+          "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+          "beforeSlug": "cinematic-video-brand-film",
+          "afterSlug": "brand-film",
+          "beforeAliases": null,
+          "afterAliases": [
+            "cinematic-video-brand-film"
+          ],
+          "oldPath": "/ai-video-generation/cinematic-video-brand-film",
+          "newPath": "/ai-video-generation/brand-film"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "slug": "/ai-video-generation/fashion-try-on-reel",
+      "title": "Clothing Video Ad Templates for Brands",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-fashion-try-on-reel",
+      "baseHash": "577b2284b116391400cfcfc857b668408c44b2e388fb89721d7a8875fd266617",
+      "label": "Outfit Reel",
+      "kind": "video",
+      "oldSlug": "fashion-try-on-reel-outfit-reel",
+      "targetSlug": "outfit-reel",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Outfit Reel",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+          "beforeSlug": "fashion-try-on-reel-outfit-reel",
+          "afterSlug": "outfit-reel",
+          "beforeAliases": null,
+          "afterAliases": [
+            "fashion-try-on-reel-outfit-reel"
+          ],
+          "oldPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+          "newPath": "/ai-video-generation/outfit-reel"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Outfit Reel",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+          "beforeSlug": "fashion-try-on-reel-outfit-reel",
+          "afterSlug": "outfit-reel",
+          "beforeAliases": null,
+          "afterAliases": [
+            "fashion-try-on-reel-outfit-reel"
+          ],
+          "oldPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+          "newPath": "/ai-video-generation/outfit-reel"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "slug": "/ai-video-generation/food-video",
+      "title": "Food and Beverage Video Templates You Can Recreate",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-food-video",
+      "baseHash": "9d8e515a971a6273ef46a629530601913903a7005cb6983c69bb1eec852abbe5",
+      "label": "Drink Pour",
+      "kind": "video",
+      "oldSlug": "food-video-drink-pour",
+      "targetSlug": "drink-pour",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Drink Pour",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+          "beforeSlug": "food-video-drink-pour",
+          "afterSlug": "drink-pour",
+          "beforeAliases": null,
+          "afterAliases": [
+            "food-video-drink-pour"
+          ],
+          "oldPath": "/ai-video-generation/food-video-drink-pour",
+          "newPath": "/ai-video-generation/drink-pour"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Drink Pour",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+          "beforeSlug": "food-video-drink-pour",
+          "afterSlug": "drink-pour",
+          "beforeAliases": null,
+          "afterAliases": [
+            "food-video-drink-pour"
+          ],
+          "oldPath": "/ai-video-generation/food-video-drink-pour",
+          "newPath": "/ai-video-generation/drink-pour"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_promo_category_home_organization",
+      "slug": "/ai-video-generation/home-organization",
+      "title": "Home Organization Video Templates for Product Ads",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-home-organization",
+      "baseHash": "950f52f41088f6b2653f2ff7aad81989c80fb62a2f79799f5c88d57fc9de6230",
+      "label": "Home Organizing",
+      "kind": "video",
+      "oldSlug": "home-organization-home-organizing",
+      "targetSlug": "home-organizing",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Home Organizing",
+          "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+          "beforeSlug": "home-organization-home-organizing",
+          "afterSlug": "home-organizing",
+          "beforeAliases": null,
+          "afterAliases": [
+            "home-organization-home-organizing"
+          ],
+          "oldPath": "/ai-video-generation/home-organization-home-organizing",
+          "newPath": "/ai-video-generation/home-organizing"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Home Organizing",
+          "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+          "beforeSlug": "home-organization-home-organizing",
+          "afterSlug": "home-organizing",
+          "beforeAliases": null,
+          "afterAliases": [
+            "home-organization-home-organizing"
+          ],
+          "oldPath": "/ai-video-generation/home-organization-home-organizing",
+          "newPath": "/ai-video-generation/home-organizing"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_mirror_page_1401be87d175029e",
+      "slug": "/ai-video-generation/promo-video",
+      "title": "Generate a Promo Video Faster With AI",
+      "pageType": "ai_tool",
+      "templateKey": "ai-video-topic-promo-category-promo-video",
+      "baseHash": "23adb625318537ba4f4b53d2ab61f8281ae74cdc072fcaf5502f264b62b4e2d3",
+      "label": "Launch Promo",
+      "kind": "video",
+      "oldSlug": "promo-video-launch-promo",
+      "targetSlug": "launch-promo",
+      "cards": [
+        {
+          "source": "templateDefinition",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card",
+          "kind": "video",
+          "label": "Launch Promo",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+          "beforeSlug": "promo-video-launch-promo",
+          "afterSlug": "launch-promo",
+          "beforeAliases": null,
+          "afterAliases": [
+            "promo-video-launch-promo"
+          ],
+          "oldPath": "/ai-video-generation/promo-video-launch-promo",
+          "newPath": "/ai-video-generation/launch-promo"
+        },
+        {
+          "source": "picker",
+          "jsonPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+          "kind": "video",
+          "label": "Launch Promo",
+          "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+          "beforeSlug": "promo-video-launch-promo",
+          "afterSlug": "launch-promo",
+          "beforeAliases": null,
+          "afterAliases": [
+            "promo-video-launch-promo"
+          ],
+          "oldPath": "/ai-video-generation/promo-video-launch-promo",
+          "newPath": "/ai-video-generation/launch-promo"
+        }
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "label": "Beauty Routine",
+      "currentSlug": "beauty-routine-beauty-routine",
+      "targetSlug": "beauty-routine",
+      "reason": "bare slug beauty-routine is already the live template page path"
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "label": "How-To Video",
+      "currentSlug": "how-to-video-how-to-video",
+      "targetSlug": "how-to-video",
+      "reason": "bare slug how-to-video is already the live template page path"
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "label": "Spark Ads Style Video",
+      "currentSlug": "spark-ads-style-video-spark-ads-style-video",
+      "targetSlug": "spark-ads-style-video",
+      "reason": "bare slug spark-ads-style-video is already the live template page path"
+    }
+  ],
+  "addresses": [
+    {
+      "oldPath": "/ai-image-generation/colorway-variations-color-variants",
+      "newPath": "/ai-image-generation/color-variants",
+      "page": "/ai-image-generation/colorway-variations",
+      "label": "Color Variants",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+      "newPath": "/ai-image-generation/jewelry-on-model",
+      "page": "/ai-image-generation/jewelry-positioning",
+      "label": "Jewelry On Model",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+      "newPath": "/ai-image-generation/packaging-preview",
+      "page": "/ai-image-generation/packaging-mockup",
+      "label": "Packaging Preview",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+      "newPath": "/ai-image-generation/every-angle",
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "label": "Every Angle",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/professional-headshot-team-headshots",
+      "newPath": "/ai-image-generation/team-headshots",
+      "page": "/ai-image-generation/professional-headshot",
+      "label": "Team Headshots",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+      "newPath": "/ai-image-generation/sale-banner",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Sale Banner",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/story-ad-vertical-story-ad",
+      "newPath": "/ai-image-generation/story-ad",
+      "page": "/ai-image-generation/story-ad-vertical",
+      "label": "Story Ad",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+      "newPath": "/ai-image-generation/creator-style-photo",
+      "page": "/ai-image-generation/ugc-still-ad",
+      "label": "Creator-Style Photo",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+      "newPath": "/ai-image-generation/clothing-try-on",
+      "page": "/ai-image-generation/virtual-try-on",
+      "label": "Clothing Try-On",
+      "kind": "photo",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+      "newPath": "/ai-video-generation/black-friday-video",
+      "page": "/ai-video-generation/black-friday-countdown",
+      "label": "Black Friday Video",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/cinematic-video-brand-film",
+      "newPath": "/ai-video-generation/brand-film",
+      "page": "/ai-video-generation/cinematic-video",
+      "label": "Brand Film",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+      "newPath": "/ai-video-generation/outfit-reel",
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "label": "Outfit Reel",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/food-video-drink-pour",
+      "newPath": "/ai-video-generation/drink-pour",
+      "page": "/ai-video-generation/food-video",
+      "label": "Drink Pour",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/home-organization-home-organizing",
+      "newPath": "/ai-video-generation/home-organizing",
+      "page": "/ai-video-generation/home-organization",
+      "label": "Home Organizing",
+      "kind": "video",
+      "source": "picker"
+    },
+    {
+      "oldPath": "/ai-video-generation/promo-video-launch-promo",
+      "newPath": "/ai-video-generation/launch-promo",
+      "page": "/ai-video-generation/promo-video",
+      "label": "Launch Promo",
+      "kind": "video",
+      "source": "picker"
+    }
+  ],
+  "planHash": "5fd44d7781378cd1ca396aa2f2c8c9bd1aad67d1cb3a9dddac14445543ca4e0a"
+}

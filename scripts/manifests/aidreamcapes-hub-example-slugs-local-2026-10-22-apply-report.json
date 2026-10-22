@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-hub-example-slug-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "planHash": "4edcbbf31c1d7be852aac6353ae47a7c272e6879b3a1b46ea741bbbec592c2f3",
+  "manifest": "scripts/manifests/aidreamcapes-hub-example-slugs-local-2026-10-22.json",
+  "pagesPlanned": 1,
+  "cardsPlanned": 5,
+  "pagesAlreadyApplied": 0,
+  "aborted": [],
+  "skipped": [],
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "local",
+    "planHash": "4edcbbf31c1d7be852aac6353ae47a7c272e6879b3a1b46ea741bbbec592c2f3",
+    "owner": "LivePage.contentJson",
+    "applied": [
+      {
+        "page": "/ai-video-generation",
+        "cards": [
+          "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "sections.v2_main.settings.data.examples.groups[2].items[0]",
+          "sections.v2_main.settings.data.examples.groups[3].items[0]",
+          "sections.v2_main.settings.data.examples.groups[4].items[0]"
+        ]
+      }
+    ],
+    "fieldsApplied": 10,
+    "revisionBefore": "167",
+    "revisionAfter": "168",
+    "revisionDelta": "1",
+    "protectedMyDreamShootsHashBefore": "ea0816f41e8b6bff8c67173b79a723d9ba12d5003ba8c2f871710779c6c6fba0",
+    "protectedMyDreamShootsHashAfter": "ea0816f41e8b6bff8c67173b79a723d9ba12d5003ba8c2f871710779c6c6fba0",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

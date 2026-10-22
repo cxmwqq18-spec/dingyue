@@ -1,0 +1,138 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-template-detail-slug-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "5fd44d7781378cd1ca396aa2f2c8c9bd1aad67d1cb3a9dddac14445543ca4e0a",
+  "manifest": "../../../../../tmp/aidreamcapes-template-detail-slugs-production-2026-10-22.json",
+  "pagesPlanned": 15,
+  "cardsPlanned": 30,
+  "pagesAlreadyApplied": 0,
+  "aborted": [],
+  "skipped": [],
+  "report": {
+    "ok": true,
+    "siteId": "site_aidreamcapes",
+    "target": "production",
+    "planHash": "5fd44d7781378cd1ca396aa2f2c8c9bd1aad67d1cb3a9dddac14445543ca4e0a",
+    "owner": "LivePage.contentJson",
+    "applied": [
+      {
+        "page": "/ai-image-generation/colorway-variations",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/jewelry-positioning",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/packaging-mockup",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/packshot-multi-angle",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/professional-headshot",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/sale-campaign-key-visual",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/story-ad-vertical",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/ugc-still-ad",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-image-generation/virtual-try-on",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/black-friday-countdown",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/cinematic-video",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/fashion-try-on-reel",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/food-video",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/home-organization",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      },
+      {
+        "page": "/ai-video-generation/promo-video",
+        "cards": [
+          "sections.v2_main.settings.data.templateDefinition.card",
+          "sections.v2_main.settings.data.visual.picker.cards[0]"
+        ]
+      }
+    ],
+    "fieldsApplied": 60,
+    "revisionBefore": "74",
+    "revisionAfter": "89",
+    "revisionDelta": "15",
+    "protectedMyDreamShootsHashBefore": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "protectedMyDreamShootsHashAfter": "6b61c49039b2a2351e8bfb55f80f54595b6c7cf0741f74eec1a1bb934d54c851",
+    "myDreamShootsChanged": false,
+    "derivedStateReadOnly": null,
+    "snapshotOrPublicationWritten": false,
+    "historicalStateActivated": false
+  }
+}

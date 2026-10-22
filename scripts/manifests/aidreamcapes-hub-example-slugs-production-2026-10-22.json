@@ -1,0 +1,164 @@
+{
+  "ok": true,
+  "mode": "plan",
+  "contract": "aidreamcapes-hub-example-slug-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-22T05:51:50.103Z",
+  "owner": "LivePage.contentJson",
+  "rules": {
+    "slugRule": "slugify(examples item title)",
+    "aliasRule": "the retired scene address becomes a publicAliases entry on the same card",
+    "scopeRule": "only the five visible hub examples on /ai-video-generation",
+    "rollback": "the manifest is the field-level inverse: beforeSlug and beforeAliases restore the scene address"
+  },
+  "summary": {
+    "livePageRowsScanned": 267,
+    "approvedPages": 1,
+    "plannedPages": 1,
+    "plannedCards": 5,
+    "plannedAddresses": 5,
+    "skipped": 0,
+    "problems": 0
+  },
+  "problems": [],
+  "approvedPages": [
+    "/ai-video-generation"
+  ],
+  "excludedPages": [],
+  "pages": [
+    {
+      "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+      "slug": "/ai-video-generation",
+      "title": "AI Video Generator for Brands, Agencies, and Creators",
+      "pageType": "ai_tool_directory",
+      "templateKey": "aidreamcapes-video-directory",
+      "baseHash": "92046e04379fcb5e0bfefde378fa24720ea9072be1de17ec1e99e977da8f9eb0",
+      "label": "Hub examples",
+      "kind": "video",
+      "oldSlug": null,
+      "targetSlug": null,
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "video",
+          "label": "Bottle Ad With a Person",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g1-640.webp",
+          "beforeSlug": "a-spoken-ad-with-a-person-on-camera",
+          "afterSlug": "bottle-ad-with-a-person",
+          "beforeAliases": null,
+          "afterAliases": [
+            "a-spoken-ad-with-a-person-on-camera"
+          ],
+          "oldPath": "/ai-video-generation/a-spoken-ad-with-a-person-on-camera",
+          "newPath": "/ai-video-generation/bottle-ad-with-a-person"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "video",
+          "label": "Bento Box Walkthrough",
+          "imageSrc": "/ai-image-generation/im01-video-hub-bento-r1-640.webp",
+          "beforeSlug": "the-same-product-walkthrough",
+          "afterSlug": "bento-box-walkthrough",
+          "beforeAliases": null,
+          "afterAliases": [
+            "the-same-product-walkthrough"
+          ],
+          "oldPath": "/ai-video-generation/the-same-product-walkthrough",
+          "newPath": "/ai-video-generation/bento-box-walkthrough"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[2].items[0]",
+          "kind": "video",
+          "label": "Perfume Bottle in a Room",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g7-640.webp",
+          "beforeSlug": "a-showcase-in-a-real-room",
+          "afterSlug": "perfume-bottle-in-a-room",
+          "beforeAliases": null,
+          "afterAliases": [
+            "a-showcase-in-a-real-room"
+          ],
+          "oldPath": "/ai-video-generation/a-showcase-in-a-real-room",
+          "newPath": "/ai-video-generation/perfume-bottle-in-a-room"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[0]",
+          "kind": "video",
+          "label": "An Avatar Holds the Shaker",
+          "imageSrc": "/ai-image-generation/gen2spokesperson-videos-c3-640.webp",
+          "beforeSlug": "an-actor-matched-to-the-buyer",
+          "afterSlug": "an-avatar-holds-the-shaker",
+          "beforeAliases": null,
+          "afterAliases": [
+            "an-actor-matched-to-the-buyer"
+          ],
+          "oldPath": "/ai-video-generation/an-actor-matched-to-the-buyer",
+          "newPath": "/ai-video-generation/an-avatar-holds-the-shaker"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[4].items[0]",
+          "kind": "video",
+          "label": "Sneaker Photo for the Feed",
+          "imageSrc": "/ai-image-generation/gen2video-hub-g3-640.webp",
+          "beforeSlug": "a-clip-sized-for-the-feed",
+          "afterSlug": "sneaker-photo-for-the-feed",
+          "beforeAliases": null,
+          "afterAliases": [
+            "a-clip-sized-for-the-feed"
+          ],
+          "oldPath": "/ai-video-generation/a-clip-sized-for-the-feed",
+          "newPath": "/ai-video-generation/sneaker-photo-for-the-feed"
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "addresses": [
+    {
+      "oldPath": "/ai-video-generation/a-spoken-ad-with-a-person-on-camera",
+      "newPath": "/ai-video-generation/bottle-ad-with-a-person",
+      "page": "/ai-video-generation",
+      "label": "Bottle Ad With a Person",
+      "kind": "video",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-video-generation/the-same-product-walkthrough",
+      "newPath": "/ai-video-generation/bento-box-walkthrough",
+      "page": "/ai-video-generation",
+      "label": "Bento Box Walkthrough",
+      "kind": "video",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-video-generation/a-showcase-in-a-real-room",
+      "newPath": "/ai-video-generation/perfume-bottle-in-a-room",
+      "page": "/ai-video-generation",
+      "label": "Perfume Bottle in a Room",
+      "kind": "video",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-video-generation/an-actor-matched-to-the-buyer",
+      "newPath": "/ai-video-generation/an-avatar-holds-the-shaker",
+      "page": "/ai-video-generation",
+      "label": "An Avatar Holds the Shaker",
+      "kind": "video",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-video-generation/a-clip-sized-for-the-feed",
+      "newPath": "/ai-video-generation/sneaker-photo-for-the-feed",
+      "page": "/ai-video-generation",
+      "label": "Sneaker Photo for the Feed",
+      "kind": "video",
+      "source": "examples"
+    }
+  ],
+  "planHash": "dd07a996d8f3a6b8666fb4263eb5120fae7df5d3b4c4d26d81cc3731205e0d25"
+}

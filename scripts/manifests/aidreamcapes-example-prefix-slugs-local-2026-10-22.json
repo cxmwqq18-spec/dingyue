@@ -1,0 +1,485 @@
+{
+  "ok": true,
+  "mode": "plan",
+  "contract": "aidreamcapes-example-prefix-slug-normalization-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-22T05:57:24.225Z",
+  "owner": "LivePage.contentJson",
+  "rules": {
+    "slugRule": "slugify(examples item title); remove the owner-page leaf prefix",
+    "aliasRule": "the retired <page-leaf>-<title> address becomes a publicAliases entry on the same card",
+    "scopeRule": "the four sale/occasion pages only; no visible anchor changes",
+    "rollback": "the manifest is the field-level inverse: beforeSlug and beforeAliases restore the retired address"
+  },
+  "summary": {
+    "livePageRowsScanned": 269,
+    "approvedPages": 4,
+    "plannedPages": 4,
+    "plannedCards": 17,
+    "plannedAddresses": 17,
+    "skipped": 0,
+    "problems": 0
+  },
+  "problems": [],
+  "approvedPages": [
+    "/ai-image-generation/sale-campaign-key-visual",
+    "/occasions/black-friday",
+    "/occasions/holidays",
+    "/occasions/sale-discount"
+  ],
+  "excludedPages": [],
+  "pages": [
+    {
+      "id": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "title": "Instagram Sales Post for Your Next Offer",
+      "pageType": "ai_tool",
+      "templateKey": "ai-image-theme-sale-campaign-key-visual",
+      "baseHash": "257741910992ebb3a10072fcf52b224496f9a49244d2d3bbdb8d78bd354895cc",
+      "label": "Sale and occasion examples",
+      "kind": null,
+      "oldSlug": null,
+      "targetSlug": null,
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Suitcase With Room for the Offer",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-1-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-suitcase-with-room-for-the-offer",
+          "afterSlug": "suitcase-with-room-for-the-offer",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-suitcase-with-room-for-the-offer"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-suitcase-with-room-for-the-offer",
+          "newPath": "/ai-image-generation/suitcase-with-room-for-the-offer"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Sandals Tried On at the Market",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-2-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-sandals-tried-on-at-the-market",
+          "afterSlug": "sandals-tried-on-at-the-market",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-sandals-tried-on-at-the-market"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-sandals-tried-on-at-the-market",
+          "newPath": "/ai-image-generation/sandals-tried-on-at-the-market"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]",
+          "kind": "photo",
+          "label": "Running Shoes Before the Jog",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-3-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-running-shoes-before-the-jog",
+          "afterSlug": "running-shoes-before-the-jog",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-running-shoes-before-the-jog"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-running-shoes-before-the-jog",
+          "newPath": "/ai-image-generation/running-shoes-before-the-jog"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[3]",
+          "kind": "photo",
+          "label": "Tote With Space for the Offer",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-4-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-tote-with-space-for-the-offer",
+          "afterSlug": "tote-with-space-for-the-offer",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-tote-with-space-for-the-offer"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-tote-with-space-for-the-offer",
+          "newPath": "/ai-image-generation/tote-with-space-for-the-offer"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[4]",
+          "kind": "photo",
+          "label": "Cardigan Ready for Season End",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-5-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-cardigan-ready-for-season-end",
+          "afterSlug": "cardigan-ready-for-season-end",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-cardigan-ready-for-season-end"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-cardigan-ready-for-season-end",
+          "newPath": "/ai-image-generation/cardigan-ready-for-season-end"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[5]",
+          "kind": "photo",
+          "label": "Wallet Unboxing With Offer Space",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-6-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-wallet-unboxing-with-offer-space",
+          "afterSlug": "wallet-unboxing-with-offer-space",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-wallet-unboxing-with-offer-space"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-wallet-unboxing-with-offer-space",
+          "newPath": "/ai-image-generation/wallet-unboxing-with-offer-space"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[6]",
+          "kind": "photo",
+          "label": "Lunch Box on the Last Day",
+          "imageSrc": "/ai-image-generation/img2-tpl-sale-wall-7-r1-640.webp",
+          "beforeSlug": "sale-campaign-key-visual-lunch-box-on-the-last-day",
+          "afterSlug": "lunch-box-on-the-last-day",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-campaign-key-visual-lunch-box-on-the-last-day"
+          ],
+          "oldPath": "/ai-image-generation/sale-campaign-key-visual-lunch-box-on-the-last-day",
+          "newPath": "/ai-image-generation/lunch-box-on-the-last-day"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_black_friday",
+      "slug": "/occasions/black-friday",
+      "title": "Create Black Friday Ad Creatives Fast",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "baseHash": "ebddf6c93e1a7c4b81e75538616b58bc45ab965d9ddc0e0149a98c6d40294f15",
+      "label": "Sale and occasion examples",
+      "kind": null,
+      "oldSlug": null,
+      "targetSlug": null,
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Gift box ready for a Black Friday offer",
+          "imageSrc": "/ai-image-generation/gen2occ-black-friday-g1-640.webp",
+          "beforeSlug": "black-friday-gift-box-ready-for-a-black-friday-offer",
+          "afterSlug": "gift-box-ready-for-a-black-friday-offer",
+          "beforeAliases": null,
+          "afterAliases": [
+            "black-friday-gift-box-ready-for-a-black-friday-offer"
+          ],
+          "oldPath": "/ai-image-generation/black-friday-gift-box-ready-for-a-black-friday-offer",
+          "newPath": "/ai-image-generation/gift-box-ready-for-a-black-friday-offer"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Lunch bag packed for a Black Friday deal",
+          "imageSrc": "/ai-image-generation/f13-occ-black-friday-card-10-640.webp",
+          "beforeSlug": "black-friday-lunch-bag-packed-for-a-black-friday-deal",
+          "afterSlug": "lunch-bag-packed-for-a-black-friday-deal",
+          "beforeAliases": null,
+          "afterAliases": [
+            "black-friday-lunch-bag-packed-for-a-black-friday-deal"
+          ],
+          "oldPath": "/ai-image-generation/black-friday-lunch-bag-packed-for-a-black-friday-deal",
+          "newPath": "/ai-image-generation/lunch-bag-packed-for-a-black-friday-deal"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "Gaming monitor framed for a Black Friday post",
+          "imageSrc": "/ai-image-generation/q20-occ-bf-output-01-r2-640.webp",
+          "beforeSlug": "black-friday-gaming-monitor-framed-for-a-black-friday-post",
+          "afterSlug": "gaming-monitor-framed-for-a-black-friday-post",
+          "beforeAliases": null,
+          "afterAliases": [
+            "black-friday-gaming-monitor-framed-for-a-black-friday-post"
+          ],
+          "oldPath": "/ai-image-generation/black-friday-gaming-monitor-framed-for-a-black-friday-post",
+          "newPath": "/ai-image-generation/gaming-monitor-framed-for-a-black-friday-post"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_holidays",
+      "slug": "/occasions/holidays",
+      "title": "Make a Festive Holiday Video From a Link",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "baseHash": "e0287c23be832aa59ec07d91ce6b4b3e7b7e038b0d67f7d376e75f89f100593d",
+      "label": "Sale and occasion examples",
+      "kind": null,
+      "oldSlug": null,
+      "targetSlug": null,
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Skincare Gift Set Lifted From Tissue",
+          "imageSrc": "/ai-image-generation/f13-occ-holidays-rework-card-15-640.webp",
+          "beforeSlug": "holidays-skincare-gift-set-lifted-from-tissue",
+          "afterSlug": "skincare-gift-set-lifted-from-tissue",
+          "beforeAliases": null,
+          "afterAliases": [
+            "holidays-skincare-gift-set-lifted-from-tissue"
+          ],
+          "oldPath": "/ai-image-generation/holidays-skincare-gift-set-lifted-from-tissue",
+          "newPath": "/ai-image-generation/skincare-gift-set-lifted-from-tissue"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Gift Bottle Held in Both Hands",
+          "imageSrc": "/ai-image-generation/fx02-occ-holidays-g2-640.webp",
+          "beforeSlug": "holidays-gift-bottle-held-in-both-hands",
+          "afterSlug": "gift-bottle-held-in-both-hands",
+          "beforeAliases": null,
+          "afterAliases": [
+            "holidays-gift-bottle-held-in-both-hands"
+          ],
+          "oldPath": "/ai-image-generation/holidays-gift-bottle-held-in-both-hands",
+          "newPath": "/ai-image-generation/gift-bottle-held-in-both-hands"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]",
+          "kind": "photo",
+          "label": "Winter Jacket Revealed From a Gift Box",
+          "imageSrc": "/ai-image-generation/q20-occ-holiday-example-03-640.webp",
+          "beforeSlug": "holidays-winter-jacket-revealed-from-a-gift-box",
+          "afterSlug": "winter-jacket-revealed-from-a-gift-box",
+          "beforeAliases": null,
+          "afterAliases": [
+            "holidays-winter-jacket-revealed-from-a-gift-box"
+          ],
+          "oldPath": "/ai-image-generation/holidays-winter-jacket-revealed-from-a-gift-box",
+          "newPath": "/ai-image-generation/winter-jacket-revealed-from-a-gift-box"
+        }
+      ]
+    },
+    {
+      "id": "aidreamcapes_v2_occ_sale_discount",
+      "slug": "/occasions/sale-discount",
+      "title": "Create Your Countdown Sale Video With AI",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "baseHash": "9201ca4655e00e1c2cea5661c50f43fd0dd67cd6873772524d5ee1268593d05c",
+      "label": "Sale and occasion examples",
+      "kind": null,
+      "oldSlug": null,
+      "targetSlug": null,
+      "cards": [
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]",
+          "kind": "photo",
+          "label": "Hand Applies Balm From a Plain Jar",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-discount-card-08-640.webp",
+          "beforeSlug": "sale-discount-hand-applies-balm-from-a-plain-jar",
+          "afterSlug": "hand-applies-balm-from-a-plain-jar",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-discount-hand-applies-balm-from-a-plain-jar"
+          ],
+          "oldPath": "/ai-image-generation/sale-discount-hand-applies-balm-from-a-plain-jar",
+          "newPath": "/ai-image-generation/hand-applies-balm-from-a-plain-jar"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]",
+          "kind": "photo",
+          "label": "Quilted Jacket Lifted From a Gift Box",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-gallery-01-640.webp",
+          "beforeSlug": "sale-discount-quilted-jacket-lifted-from-a-gift-box",
+          "afterSlug": "quilted-jacket-lifted-from-a-gift-box",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-discount-quilted-jacket-lifted-from-a-gift-box"
+          ],
+          "oldPath": "/ai-image-generation/sale-discount-quilted-jacket-lifted-from-a-gift-box",
+          "newPath": "/ai-image-generation/quilted-jacket-lifted-from-a-gift-box"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]",
+          "kind": "photo",
+          "label": "Running Jacket Checked in a Mirror",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-example-04-640.webp",
+          "beforeSlug": "sale-discount-running-jacket-checked-in-a-mirror",
+          "afterSlug": "running-jacket-checked-in-a-mirror",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-discount-running-jacket-checked-in-a-mirror"
+          ],
+          "oldPath": "/ai-image-generation/sale-discount-running-jacket-checked-in-a-mirror",
+          "newPath": "/ai-image-generation/running-jacket-checked-in-a-mirror"
+        },
+        {
+          "source": "examples",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[1]",
+          "kind": "photo",
+          "label": "Gold Necklace Revealed From Tissue",
+          "imageSrc": "/ai-image-generation/q20-occ-sale-example-05-640.webp",
+          "beforeSlug": "sale-discount-gold-necklace-revealed-from-tissue",
+          "afterSlug": "gold-necklace-revealed-from-tissue",
+          "beforeAliases": null,
+          "afterAliases": [
+            "sale-discount-gold-necklace-revealed-from-tissue"
+          ],
+          "oldPath": "/ai-image-generation/sale-discount-gold-necklace-revealed-from-tissue",
+          "newPath": "/ai-image-generation/gold-necklace-revealed-from-tissue"
+        }
+      ]
+    }
+  ],
+  "skipped": [],
+  "addresses": [
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-suitcase-with-room-for-the-offer",
+      "newPath": "/ai-image-generation/suitcase-with-room-for-the-offer",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Suitcase With Room for the Offer",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-sandals-tried-on-at-the-market",
+      "newPath": "/ai-image-generation/sandals-tried-on-at-the-market",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Sandals Tried On at the Market",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-running-shoes-before-the-jog",
+      "newPath": "/ai-image-generation/running-shoes-before-the-jog",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Running Shoes Before the Jog",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-tote-with-space-for-the-offer",
+      "newPath": "/ai-image-generation/tote-with-space-for-the-offer",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Tote With Space for the Offer",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-cardigan-ready-for-season-end",
+      "newPath": "/ai-image-generation/cardigan-ready-for-season-end",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Cardigan Ready for Season End",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-wallet-unboxing-with-offer-space",
+      "newPath": "/ai-image-generation/wallet-unboxing-with-offer-space",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Wallet Unboxing With Offer Space",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-lunch-box-on-the-last-day",
+      "newPath": "/ai-image-generation/lunch-box-on-the-last-day",
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "label": "Lunch Box on the Last Day",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/black-friday-gift-box-ready-for-a-black-friday-offer",
+      "newPath": "/ai-image-generation/gift-box-ready-for-a-black-friday-offer",
+      "page": "/occasions/black-friday",
+      "label": "Gift box ready for a Black Friday offer",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/black-friday-lunch-bag-packed-for-a-black-friday-deal",
+      "newPath": "/ai-image-generation/lunch-bag-packed-for-a-black-friday-deal",
+      "page": "/occasions/black-friday",
+      "label": "Lunch bag packed for a Black Friday deal",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/black-friday-gaming-monitor-framed-for-a-black-friday-post",
+      "newPath": "/ai-image-generation/gaming-monitor-framed-for-a-black-friday-post",
+      "page": "/occasions/black-friday",
+      "label": "Gaming monitor framed for a Black Friday post",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/holidays-skincare-gift-set-lifted-from-tissue",
+      "newPath": "/ai-image-generation/skincare-gift-set-lifted-from-tissue",
+      "page": "/occasions/holidays",
+      "label": "Skincare Gift Set Lifted From Tissue",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/holidays-gift-bottle-held-in-both-hands",
+      "newPath": "/ai-image-generation/gift-bottle-held-in-both-hands",
+      "page": "/occasions/holidays",
+      "label": "Gift Bottle Held in Both Hands",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/holidays-winter-jacket-revealed-from-a-gift-box",
+      "newPath": "/ai-image-generation/winter-jacket-revealed-from-a-gift-box",
+      "page": "/occasions/holidays",
+      "label": "Winter Jacket Revealed From a Gift Box",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-discount-hand-applies-balm-from-a-plain-jar",
+      "newPath": "/ai-image-generation/hand-applies-balm-from-a-plain-jar",
+      "page": "/occasions/sale-discount",
+      "label": "Hand Applies Balm From a Plain Jar",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-discount-quilted-jacket-lifted-from-a-gift-box",
+      "newPath": "/ai-image-generation/quilted-jacket-lifted-from-a-gift-box",
+      "page": "/occasions/sale-discount",
+      "label": "Quilted Jacket Lifted From a Gift Box",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-discount-running-jacket-checked-in-a-mirror",
+      "newPath": "/ai-image-generation/running-jacket-checked-in-a-mirror",
+      "page": "/occasions/sale-discount",
+      "label": "Running Jacket Checked in a Mirror",
+      "kind": "photo",
+      "source": "examples"
+    },
+    {
+      "oldPath": "/ai-image-generation/sale-discount-gold-necklace-revealed-from-tissue",
+      "newPath": "/ai-image-generation/gold-necklace-revealed-from-tissue",
+      "page": "/occasions/sale-discount",
+      "label": "Gold Necklace Revealed From Tissue",
+      "kind": "photo",
+      "source": "examples"
+    }
+  ],
+  "planHash": "20f122729766c6d0aa032f38148a653932e47d880d2aebf4d603fd731309e83f"
+}

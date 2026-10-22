@@ -1,0 +1,551 @@
+{
+  "contract": "aidreamcapes-template-detail-slug-normalization-2026-10-22-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "5fd44d7781378cd1ca396aa2f2c8c9bd1aad67d1cb3a9dddac14445543ca4e0a",
+  "generatedAt": "2026-10-22T05:42:59.988Z",
+  "owner": "LivePage.contentJson",
+  "note": "Field-level inverse of this apply. Each operation restores the retired publicSlug and publicAliases of one card.",
+  "operations": [
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "ownerPath": "/ai-image-generation/colorway-variations",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Color Variants",
+      "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+      "beforeSlug": "colorway-variations-color-variants",
+      "beforeAliases": null,
+      "afterSlug": "color-variants",
+      "afterAliases": [
+        "colorway-variations-color-variants"
+      ],
+      "oldPath": "/ai-image-generation/colorway-variations-color-variants",
+      "newPath": "/ai-image-generation/color-variants"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_colorway_variations",
+      "ownerPath": "/ai-image-generation/colorway-variations",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Color Variants",
+      "imageSrc": "/ai-image-generation/q7-color-steps-result-640.webp",
+      "beforeSlug": "colorway-variations-color-variants",
+      "beforeAliases": null,
+      "afterSlug": "color-variants",
+      "afterAliases": [
+        "colorway-variations-color-variants"
+      ],
+      "oldPath": "/ai-image-generation/colorway-variations-color-variants",
+      "newPath": "/ai-image-generation/color-variants"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_jewelry_positioning",
+      "ownerPath": "/ai-image-generation/jewelry-positioning",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Jewelry On Model",
+      "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+      "beforeSlug": "jewelry-positioning-jewelry-on-model",
+      "beforeAliases": null,
+      "afterSlug": "jewelry-on-model",
+      "afterAliases": [
+        "jewelry-positioning-jewelry-on-model"
+      ],
+      "oldPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+      "newPath": "/ai-image-generation/jewelry-on-model"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_jewelry_positioning",
+      "ownerPath": "/ai-image-generation/jewelry-positioning",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Jewelry On Model",
+      "imageSrc": "/ai-image-generation/img2-tpl-jewel-hero-1-r1-640.webp",
+      "beforeSlug": "jewelry-positioning-jewelry-on-model",
+      "beforeAliases": null,
+      "afterSlug": "jewelry-on-model",
+      "afterAliases": [
+        "jewelry-positioning-jewelry-on-model"
+      ],
+      "oldPath": "/ai-image-generation/jewelry-positioning-jewelry-on-model",
+      "newPath": "/ai-image-generation/jewelry-on-model"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_packaging_mockup",
+      "ownerPath": "/ai-image-generation/packaging-mockup",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Packaging Preview",
+      "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+      "beforeSlug": "packaging-mockup-packaging-preview",
+      "beforeAliases": null,
+      "afterSlug": "packaging-preview",
+      "afterAliases": [
+        "packaging-mockup-packaging-preview"
+      ],
+      "oldPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+      "newPath": "/ai-image-generation/packaging-preview"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_packaging_mockup",
+      "ownerPath": "/ai-image-generation/packaging-mockup",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Packaging Preview",
+      "imageSrc": "/ai-image-generation/f15-r10-tpl-pack-steps-open-r1-640.webp",
+      "beforeSlug": "packaging-mockup-packaging-preview",
+      "beforeAliases": null,
+      "afterSlug": "packaging-preview",
+      "afterAliases": [
+        "packaging-mockup-packaging-preview"
+      ],
+      "oldPath": "/ai-image-generation/packaging-mockup-packaging-preview",
+      "newPath": "/ai-image-generation/packaging-preview"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_packshot_multi_angle",
+      "ownerPath": "/ai-image-generation/packshot-multi-angle",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Every Angle",
+      "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+      "beforeSlug": "packshot-multi-angle-every-angle",
+      "beforeAliases": null,
+      "afterSlug": "every-angle",
+      "afterAliases": [
+        "packshot-multi-angle-every-angle"
+      ],
+      "oldPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+      "newPath": "/ai-image-generation/every-angle"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_packshot_multi_angle",
+      "ownerPath": "/ai-image-generation/packshot-multi-angle",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Every Angle",
+      "imageSrc": "/ai-image-generation/b2f11-tpl-angle-steps-result-r1-640.webp",
+      "beforeSlug": "packshot-multi-angle-every-angle",
+      "beforeAliases": null,
+      "afterSlug": "every-angle",
+      "afterAliases": [
+        "packshot-multi-angle-every-angle"
+      ],
+      "oldPath": "/ai-image-generation/packshot-multi-angle-every-angle",
+      "newPath": "/ai-image-generation/every-angle"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_professional_headshot",
+      "ownerPath": "/ai-image-generation/professional-headshot",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Team Headshots",
+      "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+      "beforeSlug": "professional-headshot-team-headshots",
+      "beforeAliases": null,
+      "afterSlug": "team-headshots",
+      "afterAliases": [
+        "professional-headshot-team-headshots"
+      ],
+      "oldPath": "/ai-image-generation/professional-headshot-team-headshots",
+      "newPath": "/ai-image-generation/team-headshots"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_professional_headshot",
+      "ownerPath": "/ai-image-generation/professional-headshot",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Team Headshots",
+      "imageSrc": "/ai-image-generation/rc3-head-step-result-r1-640.webp",
+      "beforeSlug": "professional-headshot-team-headshots",
+      "beforeAliases": null,
+      "afterSlug": "team-headshots",
+      "afterAliases": [
+        "professional-headshot-team-headshots"
+      ],
+      "oldPath": "/ai-image-generation/professional-headshot-team-headshots",
+      "newPath": "/ai-image-generation/team-headshots"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "ownerPath": "/ai-image-generation/sale-campaign-key-visual",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Sale Banner",
+      "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+      "beforeSlug": "sale-campaign-key-visual-sale-banner",
+      "beforeAliases": null,
+      "afterSlug": "sale-banner",
+      "afterAliases": [
+        "sale-campaign-key-visual-sale-banner"
+      ],
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+      "newPath": "/ai-image-generation/sale-banner"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_sale_campaign_key_visual",
+      "ownerPath": "/ai-image-generation/sale-campaign-key-visual",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Sale Banner",
+      "imageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+      "beforeSlug": "sale-campaign-key-visual-sale-banner",
+      "beforeAliases": null,
+      "afterSlug": "sale-banner",
+      "afterAliases": [
+        "sale-campaign-key-visual-sale-banner"
+      ],
+      "oldPath": "/ai-image-generation/sale-campaign-key-visual-sale-banner",
+      "newPath": "/ai-image-generation/sale-banner"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_story_ad_vertical",
+      "ownerPath": "/ai-image-generation/story-ad-vertical",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Story Ad",
+      "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+      "beforeSlug": "story-ad-vertical-story-ad",
+      "beforeAliases": null,
+      "afterSlug": "story-ad",
+      "afterAliases": [
+        "story-ad-vertical-story-ad"
+      ],
+      "oldPath": "/ai-image-generation/story-ad-vertical-story-ad",
+      "newPath": "/ai-image-generation/story-ad"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_story_ad_vertical",
+      "ownerPath": "/ai-image-generation/story-ad-vertical",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Story Ad",
+      "imageSrc": "/ai-image-generation/c1-tpl-story-m2-result-square-640.webp",
+      "beforeSlug": "story-ad-vertical-story-ad",
+      "beforeAliases": null,
+      "afterSlug": "story-ad",
+      "afterAliases": [
+        "story-ad-vertical-story-ad"
+      ],
+      "oldPath": "/ai-image-generation/story-ad-vertical-story-ad",
+      "newPath": "/ai-image-generation/story-ad"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_ugc_still_ad",
+      "ownerPath": "/ai-image-generation/ugc-still-ad",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Creator-Style Photo",
+      "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+      "beforeSlug": "ugc-still-ad-creator-style-photo",
+      "beforeAliases": null,
+      "afterSlug": "creator-style-photo",
+      "afterAliases": [
+        "ugc-still-ad-creator-style-photo"
+      ],
+      "oldPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+      "newPath": "/ai-image-generation/creator-style-photo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_ugc_still_ad",
+      "ownerPath": "/ai-image-generation/ugc-still-ad",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Creator-Style Photo",
+      "imageSrc": "/ai-image-generation/gen2guide-k6-tpl-ugc-step-result-640.webp",
+      "beforeSlug": "ugc-still-ad-creator-style-photo",
+      "beforeAliases": null,
+      "afterSlug": "creator-style-photo",
+      "afterAliases": [
+        "ugc-still-ad-creator-style-photo"
+      ],
+      "oldPath": "/ai-image-generation/ugc-still-ad-creator-style-photo",
+      "newPath": "/ai-image-generation/creator-style-photo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_virtual_try_on",
+      "ownerPath": "/ai-image-generation/virtual-try-on",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "photo",
+      "label": "Clothing Try-On",
+      "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+      "beforeSlug": "virtual-try-on-clothing-try-on",
+      "beforeAliases": null,
+      "afterSlug": "clothing-try-on",
+      "afterAliases": [
+        "virtual-try-on-clothing-try-on"
+      ],
+      "oldPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+      "newPath": "/ai-image-generation/clothing-try-on"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_image_theme_virtual_try_on",
+      "ownerPath": "/ai-image-generation/virtual-try-on",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "photo",
+      "label": "Clothing Try-On",
+      "imageSrc": "/ai-image-generation/gen2guide-tpl-tryon-c3-m2-result-640.webp",
+      "beforeSlug": "virtual-try-on-clothing-try-on",
+      "beforeAliases": null,
+      "afterSlug": "clothing-try-on",
+      "afterAliases": [
+        "virtual-try-on-clothing-try-on"
+      ],
+      "oldPath": "/ai-image-generation/virtual-try-on-clothing-try-on",
+      "newPath": "/ai-image-generation/clothing-try-on"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_black_friday_countdown",
+      "ownerPath": "/ai-video-generation/black-friday-countdown",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Black Friday Video",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+      "beforeSlug": "black-friday-countdown-black-friday-video",
+      "beforeAliases": null,
+      "afterSlug": "black-friday-video",
+      "afterAliases": [
+        "black-friday-countdown-black-friday-video"
+      ],
+      "oldPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+      "newPath": "/ai-video-generation/black-friday-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_black_friday_countdown",
+      "ownerPath": "/ai-video-generation/black-friday-countdown",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Black Friday Video",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-bf-actor-r1-640.webp",
+      "beforeSlug": "black-friday-countdown-black-friday-video",
+      "beforeAliases": null,
+      "afterSlug": "black-friday-video",
+      "afterAliases": [
+        "black-friday-countdown-black-friday-video"
+      ],
+      "oldPath": "/ai-video-generation/black-friday-countdown-black-friday-video",
+      "newPath": "/ai-video-generation/black-friday-video"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "ownerPath": "/ai-video-generation/cinematic-video",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Brand Film",
+      "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+      "beforeSlug": "cinematic-video-brand-film",
+      "beforeAliases": null,
+      "afterSlug": "brand-film",
+      "afterAliases": [
+        "cinematic-video-brand-film"
+      ],
+      "oldPath": "/ai-video-generation/cinematic-video-brand-film",
+      "newPath": "/ai-video-generation/brand-film"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_e8ac6b19a0213b0d",
+      "ownerPath": "/ai-video-generation/cinematic-video",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Brand Film",
+      "imageSrc": "/ai-image-generation/f14-film-steps-result-r2-640.webp",
+      "beforeSlug": "cinematic-video-brand-film",
+      "beforeAliases": null,
+      "afterSlug": "brand-film",
+      "afterAliases": [
+        "cinematic-video-brand-film"
+      ],
+      "oldPath": "/ai-video-generation/cinematic-video-brand-film",
+      "newPath": "/ai-video-generation/brand-film"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "ownerPath": "/ai-video-generation/fashion-try-on-reel",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Outfit Reel",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+      "beforeSlug": "fashion-try-on-reel-outfit-reel",
+      "beforeAliases": null,
+      "afterSlug": "outfit-reel",
+      "afterAliases": [
+        "fashion-try-on-reel-outfit-reel"
+      ],
+      "oldPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+      "newPath": "/ai-video-generation/outfit-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_fashion_try_on_reel",
+      "ownerPath": "/ai-video-generation/fashion-try-on-reel",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Outfit Reel",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-outfit-actor-r1-640.webp",
+      "beforeSlug": "fashion-try-on-reel-outfit-reel",
+      "beforeAliases": null,
+      "afterSlug": "outfit-reel",
+      "afterAliases": [
+        "fashion-try-on-reel-outfit-reel"
+      ],
+      "oldPath": "/ai-video-generation/fashion-try-on-reel-outfit-reel",
+      "newPath": "/ai-video-generation/outfit-reel"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "ownerPath": "/ai-video-generation/food-video",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Drink Pour",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+      "beforeSlug": "food-video-drink-pour",
+      "beforeAliases": null,
+      "afterSlug": "drink-pour",
+      "afterAliases": [
+        "food-video-drink-pour"
+      ],
+      "oldPath": "/ai-video-generation/food-video-drink-pour",
+      "newPath": "/ai-video-generation/drink-pour"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_10138ed3e374b09c",
+      "ownerPath": "/ai-video-generation/food-video",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Drink Pour",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-drink-actor-r1-640.webp",
+      "beforeSlug": "food-video-drink-pour",
+      "beforeAliases": null,
+      "afterSlug": "drink-pour",
+      "afterAliases": [
+        "food-video-drink-pour"
+      ],
+      "oldPath": "/ai-video-generation/food-video-drink-pour",
+      "newPath": "/ai-video-generation/drink-pour"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_home_organization",
+      "ownerPath": "/ai-video-generation/home-organization",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Home Organizing",
+      "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+      "beforeSlug": "home-organization-home-organizing",
+      "beforeAliases": null,
+      "afterSlug": "home-organizing",
+      "afterAliases": [
+        "home-organization-home-organizing"
+      ],
+      "oldPath": "/ai-video-generation/home-organization-home-organizing",
+      "newPath": "/ai-video-generation/home-organizing"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_promo_category_home_organization",
+      "ownerPath": "/ai-video-generation/home-organization",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Home Organizing",
+      "imageSrc": "/ai-image-generation/tpl-home-r4-m2-640.webp",
+      "beforeSlug": "home-organization-home-organizing",
+      "beforeAliases": null,
+      "afterSlug": "home-organizing",
+      "afterAliases": [
+        "home-organization-home-organizing"
+      ],
+      "oldPath": "/ai-video-generation/home-organization-home-organizing",
+      "newPath": "/ai-video-generation/home-organizing"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_1401be87d175029e",
+      "ownerPath": "/ai-video-generation/promo-video",
+      "cardPath": "sections.v2_main.settings.data.templateDefinition.card",
+      "source": "templateDefinition",
+      "kind": "video",
+      "label": "Launch Promo",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+      "beforeSlug": "promo-video-launch-promo",
+      "beforeAliases": null,
+      "afterSlug": "launch-promo",
+      "afterAliases": [
+        "promo-video-launch-promo"
+      ],
+      "oldPath": "/ai-video-generation/promo-video-launch-promo",
+      "newPath": "/ai-video-generation/launch-promo"
+    },
+    {
+      "siteId": "site_aidreamcapes",
+      "pageId": "aidreamcapes_mirror_page_1401be87d175029e",
+      "ownerPath": "/ai-video-generation/promo-video",
+      "cardPath": "sections.v2_main.settings.data.visual.picker.cards[0]",
+      "source": "picker",
+      "kind": "video",
+      "label": "Launch Promo",
+      "imageSrc": "/ai-image-generation/actors/steps2-tpl-launch-actor-r1-640.webp",
+      "beforeSlug": "promo-video-launch-promo",
+      "beforeAliases": null,
+      "afterSlug": "launch-promo",
+      "afterAliases": [
+        "promo-video-launch-promo"
+      ],
+      "oldPath": "/ai-video-generation/promo-video-launch-promo",
+      "newPath": "/ai-video-generation/launch-promo"
+    }
+  ]
+}

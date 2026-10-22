@@ -7,7 +7,9 @@
 // must not list a retired address.
 //
 // The retired addresses are read from the reviewed manifests in
-// scripts/manifests, so the gate covers every migrated address.
+// scripts/manifests, so the gate covers every migrated address: wall cards,
+// template-detail pairs, hub example cards, and the data-only sale/occasion
+// example cards.
 //
 // Usage:
 //   AIDREAMCAPES_AUDIT_ORIGIN=http://127.0.0.1:3013 \
@@ -25,7 +27,13 @@ const report = { ok: true, origin, checks: [], errors: [], writes: false, aliase
 const MANIFESTS = [
   'scripts/manifests/aidreamcapes-seo-media-alias-local-2026-10-21.json',
   'scripts/manifests/aidreamcapes-media-slug-alias-local-2026-10-22.json',
-  'scripts/manifests/aidreamcapes-media-slug-alias-production-2026-10-22.json'
+  'scripts/manifests/aidreamcapes-media-slug-alias-production-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-template-detail-slugs-local-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-template-detail-slugs-production-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-hub-example-slugs-local-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-hub-example-slugs-production-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-example-prefix-slugs-local-2026-10-22.json',
+  'scripts/manifests/aidreamcapes-example-prefix-slugs-production-2026-10-22.json'
 ];
 const entries = [];
 for (const file of MANIFESTS) {
@@ -87,7 +95,8 @@ for (const mode of ['path', 'host']) {
   await check(`${mode}: sitemap excludes every retired address`, async () => {
     const { html } = await get('/sitemap.xml', mode);
     for (const alias of aliases) {
-      assert(!html.includes(`<loc>https://www.aivideosugc.com${alias.oldPath}</loc>`), `sitemap lists ${alias.oldPath}`);
+      assert(!html.includes(`<loc>https://www.aivideosugc.com${alias.oldPath}</loc>`), `sitemap lists retired ${alias.oldPath}`);
+      assert(!html.includes(`<loc>https://www.aivideosugc.com${alias.newPath}</loc>`), `sitemap lists detail ${alias.newPath}`);
     }
   });
 }
