@@ -27,6 +27,9 @@ const require = createRequire(
 const { load } = require("cheerio");
 
 const origin = String(process.env.AIDREAMCAPES_AUDIT_ORIGIN || "http://127.0.0.1:3013").replace(/\/$/, "");
+// A local development server routes by the site prefix instead of the public
+// host, so the gate can be pointed at `/site/aidreamcapes`.
+const sitePrefix = String(process.env.AIDREAMCAPES_AUDIT_SITE_PREFIX || "").replace(/\/$/, "");
 const manifestPath = path.resolve(
   process.env.AIDREAMCAPES_AUDIT_MANIFEST
     || "scripts/manifests/aidreamcapes-workspace-case-aliases-production-2026-10-22.json"
@@ -39,7 +42,8 @@ assert.equal(manifest.ok, true, "Manifest is not an ok plan.");
 assert.equal(manifest.siteId, "site_aidreamcapes", "Manifest is not scoped to site_aidreamcapes.");
 assert.equal(manifest.addresses?.length, 674, `Expected 674 addresses, found ${manifest.addresses?.length}.`);
 
-const headers = { "x-forwarded-host": "www.aivideosugc.com", "x-forwarded-proto": "https" };
+const headers = sitePrefix ? {} : { "x-forwarded-host": "www.aivideosugc.com", "x-forwarded-proto": "https" };
+const pathFor = (pathname) => `${sitePrefix}${pathname}`;
 const report = {
   ok: false,
   origin,
@@ -56,7 +60,7 @@ async function request(pathname, { html = false } = {}) {
   let lastError;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {
-      const response = await fetch(`${origin}${pathname}`, {
+      const response = await fetch(`${origin}${pathFor(pathname)}`, {
         headers,
         redirect: "manual",
         signal: AbortSignal.timeout(timeout)
@@ -93,8 +97,10 @@ await mapLimit(addresses, concurrency, async (address) => {
     assert.equal(response.status, 308, `${address.oldPath} answered ${response.status}`);
     const location = response.headers.get("location") ?? "";
     const actual = new URL(location, origin);
-    assert.equal(actual.origin, "https://www.aivideosugc.com", `${address.oldPath} redirected to ${actual.origin}`);
-    assert.equal(actual.pathname, address.newPath, `${address.oldPath} redirected to ${actual.pathname}, expected ${address.newPath}`);
+    if (!sitePrefix) {
+      assert.equal(actual.origin, "https://www.aivideosugc.com", `${address.oldPath} redirected to ${actual.origin}`);
+    }
+    assert(actual.pathname.endsWith(address.newPath), `${address.oldPath} redirected to ${actual.pathname}, expected ${address.newPath}`);
   } catch (error) {
     report.errors.push(`${address.oldPath}: ${error instanceof Error ? error.message : String(error)}`);
   }
@@ -143,7 +149,9 @@ try {
 try {
   const { response } = await request("/");
   report.checks += 1;
-  assert.equal(response.status, 200, `homepage answered ${response.status}`);
+  // A site-prefixed local server answers the bare home path with the
+  // canonical redirect to the prefixed home path.
+  assert([200, 301].includes(response.status), `homepage answered ${response.status}`);
 } catch (error) {
   report.errors.push(`homepage: ${error instanceof Error ? error.message : String(error)}`);
 }

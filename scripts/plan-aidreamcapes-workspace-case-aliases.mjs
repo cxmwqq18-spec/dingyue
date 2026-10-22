@@ -510,6 +510,10 @@ try {
     }
   }
 
+  if (aborted.length) {
+    console.error(`Plan aborted with ${aborted.length} unreviewed card(s):`);
+    for (const entry of aborted) console.error(`  ${entry.page} ${entry.card} ${entry.label} - ${entry.reason}`);
+  }
   assert.equal(aborted.length, 0, `Plan aborted with ${aborted.length} unreviewed cards.`);
 
   // Build the complete retired-address map from the planned/current state.

@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "origin": "http://127.0.0.1:3002",
+  "manifest": "scripts/manifests/aidreamcapes-workspace-case-aliases-production-2026-10-22.json",
+  "planHash": "43ee9e7aabac464fd1c6e2d3d96290d2a911d0a2df47e75cc451f58b352fee14",
+  "aliases": 674,
+  "canonicalTargets": 37,
+  "checks": 713,
+  "errors": [],
+  "writes": false
+}

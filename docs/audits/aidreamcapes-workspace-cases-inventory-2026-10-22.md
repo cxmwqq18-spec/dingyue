@@ -185,7 +185,38 @@ when a reviewed page had changed.
 - MyDreamShoots rows were not written; the protected hash assertion inside both
   apply transactions passed.
 
-### Reproduction
+### Local database parity
+
+The 674-address batch was first applied to production only, so the local
+development database kept serving the retired long addresses. Local is now
+synced from the live source of truth:
+
+- `scripts/export-aidreamcapes-content.mjs` exports the current
+  `LivePage.contentJson` of one site.
+- `scripts/sync-aidreamcapes-content.mjs` copies that export into the local
+  database with a compare-and-set plan: it updates the pages that differ,
+  creates the pages the local database is missing, retires the pages the live
+  site has dropped, verifies the MyDreamShoots public content hash, advances
+  `SiteContentRevision` once per written row, and writes a field-level
+  rollback file.
+- The sync manifest and rollback live in `releases/manifests/` (not in git), and
+  the sync is safe to re-run: it only touches rows that still differ from the
+  reviewed before state.
+
+Local gates after the sync (local server on the site prefix):
+
+- `scripts/aidreamcapes-workspace/smoke-workspace-case-aliases.mjs` - 674
+  retired addresses, 37 canonical targets, 713 checks, no errors.
+  Report: `scripts/manifests/aidreamcapes-workspace-case-aliases-local-smoke-2026-10-22.json`.
+- `scripts/aidreamcapes-workspace/smoke-media-slug-aliases.mjs` - 80 retired
+  addresses, 162 checks, no errors.
+  Report: `scripts/manifests/aidreamcapes-detail-slug-alias-local-smoke-2026-10-22-rerun2.json`.
+
+The local database is also written by other release work in this workspace, so
+it can drift again. Re-run the export and the sync (or the equivalent release
+content pipeline) whenever the live content changes.
+
+## Reproduction
 
 ```bash
 # read-only plan
