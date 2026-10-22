@@ -261,8 +261,9 @@ for (const page of pages) {
     if (derivedDetail && !WORKSPACE_VIEWS.includes(cta.entry.view)) fail(detail.path, `CTA carries an unknown view "${cta.entry.view}"`);
     if (derivedDetail && (!cta.entry.query || typeof cta.entry.query !== "object")) fail(detail.path, "CTA carries no query payload");
     if (derivedDetail && detail.kind) {
-      if (cta.entry.media?.kind !== detail.kind || cta.entry.media?.slug !== detail.slug) {
-        fail(detail.path, `CTA media payload is ${JSON.stringify(cta.entry.media)} but the page is ${detail.kind}/${detail.slug}`);
+      const finalDetail = pathOf(detailPage.url)?.pathname.match(DETAIL_PATH_RE);
+      if (!finalDetail || cta.entry.media?.kind !== detail.kind || cta.entry.media?.slug !== finalDetail[2]) {
+        fail(detail.path, `CTA media payload is ${JSON.stringify(cta.entry.media)} but final detail is ${finalDetail?.[0]}`);
       }
       const expected = VIEW_SEGMENTS[cta.entry.view];
       if (expected && pathOf(cta.href)?.pathname !== `/app/create/${expected}`) {
@@ -276,7 +277,7 @@ for (const page of pages) {
     const transfer = await verifyTransfer(detail.path, {
       entry: cta.entry,
       href: cta.href,
-      title: detail.title || cta.title,
+      title: derivedDetail ? $$("h1").first().text().trim() : detail.title || cta.title,
       image: detail.image
     });
     details.push({

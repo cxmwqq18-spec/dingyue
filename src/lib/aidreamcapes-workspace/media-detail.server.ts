@@ -20,6 +20,7 @@ import {
 } from "./media-detail";
 import { cardsFromContent, templateDefinitionFrom, toDetailCard, type OwnerTemplate } from "./media-cards.server";
 import { mediaAliasTarget } from "./media-alias.server";
+import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 
 // Server-side resolution for public media detail pages. Every field is read
 // from the current LivePage row; nothing is cached, generated, or persisted.
@@ -53,8 +54,8 @@ async function pagesOwningSlug(slug: string) {
   // Slugs are unique per site, so the query matches the slug across every card
   // shape and the caller filters by media kind. This keeps one slug source for
   // template cards, picker cards, workspace cases, and legacy example galleries.
-  return prisma.$queryRaw<Array<{ slug: string; contentJson: unknown }>>`
-    SELECT "slug", "contentJson"
+  return prisma.$queryRaw<Array<{ slug: string; contentJson: unknown; updatedAt: Date }>>`
+    SELECT "slug", "contentJson", "updatedAt"
     FROM "LivePage"
     WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
       AND (jsonb_path_exists(
@@ -103,9 +104,10 @@ export type MediaDetail = {
  * Returns undefined when the slug is not a public card, so callers can fall
  * through to published content pages and their own 404 handling.
  */
-export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, followAlias = true): Promise<MediaDetail | undefined> {
+export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, followAlias = true,
+  owners?: Awaited<ReturnType<typeof pagesOwningSlug>>): Promise<MediaDetail | undefined> {
   if (!MEDIA_DETAIL_SLUG_PATTERN.test(slug)) return undefined;
-  const pages = await pagesOwningSlug(slug);
+  const pages = owners ?? await pagesOwningSlug(slug);
   if (pages.length !== 1) return undefined;
   const owner = pages[0];
   const cards = cardsFromContent(owner.contentJson);
@@ -118,6 +120,26 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
       if (target) return resolveMediaDetail(kind, target, false);
     }
     return undefined;
+  }
+  // Only a reviewed, persisted reference can merge details. Matching pictures
+  // alone never choose a canonical. Recheck current generation options so a
+  // later online edit cannot silently inherit another scene's preset.
+  const rawCard = cards.find((card) => card.publicSlug === slug && toDetailCard(card)?.kind === kind);
+  const aliasOf = str(rawCard?.detailAliasOf);
+  if (followAlias && aliasOf && aliasOf !== slug && MEDIA_DETAIL_SLUG_PATTERN.test(aliasOf)) {
+    const targetPages = await pagesOwningSlug(aliasOf);
+    const targetPage = targetPages.length === 1 ? targetPages[0] : undefined;
+    if (targetPage) {
+      const currentIdentity = presetGenerationIdentity(presetFromCard(owner, owner.slug, rawCard));
+      const targetCard = cardsFromContent(targetPage.contentJson)
+        .find((card) => card.publicSlug === aliasOf && toDetailCard(card)?.kind === kind);
+      const targetIdentity = presetGenerationIdentity(presetFromCard(targetPage, targetPage.slug, targetCard));
+      // Chains/cycles fail closed to the original detail. Single-hop refs only.
+      if (currentIdentity && currentIdentity === targetIdentity && !str(targetCard?.detailAliasOf)
+        && ownerCard.video?.src === (targetCard && toDetailCard(targetCard)?.video?.src)) {
+        return resolveMediaDetail(kind, aliasOf, false, targetPages);
+      }
+    }
   }
   const path = mediaDetailPath(kind, slug);
   if (!path) return undefined;

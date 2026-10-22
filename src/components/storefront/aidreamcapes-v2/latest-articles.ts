@@ -1,3 +1,8 @@
+import aidreamcapesRedirects from "@/lib/aidreamcapes-site-v2-redirects.json";
+
+// The middleware applies this map before SSR, even if an audit row remains.
+const redirectSources = new Set((aidreamcapesRedirects as [string, string][]).map(([source]) => source));
+
 export type AidreamcapesFooterArticle = {
   href: string;
   title: string;
@@ -50,13 +55,16 @@ function updatedTimestamp(value: Date | string | undefined): number {
  * ThemePage JSON and snapshots are deliberately not used as fallback sources.
  */
 export function latestAidreamcapesArticles(pages: readonly CurrentLivePage[]): AidreamcapesFooterArticle[] {
+  const seen = new Set<string>();
   return pages.flatMap((page) => {
-    if (!page.slug.startsWith("/blog/")) return [];
+    if (!page.slug.startsWith("/blog/") || redirectSources.has(page.slug) || seen.has(page.slug)) return [];
     const data = articleData(page);
-    if (page.pageType !== "article" && !data) return [];
+    // An article pageType alone does not prove there is renderable public copy.
+    if (!data) return [];
 
-    const title = string(data?.h1) ?? string(data?.label) ?? string(data?.id) ?? page.title.trim();
+    const title = string(data.h1) ?? string(data.label) ?? page.title.trim();
     if (!title) return [];
+    seen.add(page.slug);
 
     return [{ href: page.slug, title, updatedAt: updatedTimestamp(page.updatedAt) }];
   })

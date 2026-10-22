@@ -65,6 +65,7 @@ const CARD_SELECTOR = "a.v-pick-card, article.case-card a[href], article.tc a[hr
 const failures = [];
 const details = [];
 const skipped = [];
+const currentMedia = new Map();
 
 function fail(scope, message) {
   failures.push(`${scope}: ${message}`);
@@ -115,6 +116,7 @@ function mediaOf(card) {
   return {
     kind,
     slug,
+    aliasOf: typeof card.detailAliasOf === "string" ? card.detailAliasOf : undefined,
     label: typeof card.label === "string" ? card.label : "",
     image: typeof image?.src === "string" ? image.src : ""
   };
@@ -212,6 +214,12 @@ async function auditOne(item) {
     return { path, status: page.status };
   }
   const $ = load(page.html);
+  const expectedSlug = page.redirected ? item.aliasOf : item.slug;
+  const expected = currentMedia.get(`${item.kind}/${expectedSlug}`);
+  if (!expected || page.finalPath !== `${base}${detailPath(item.kind, expectedSlug)}`) {
+    fail(scope, `unexpected redirect target ${page.finalPath}`);
+    return { path, status: page.status };
+  }
   const title = $("title").first().text().trim();
   if (/workspace/i.test(title)) fail(scope, `<title> still renders the workspace shell (${title})`);
   if (/^workspace\b/i.test($("h1").first().text().trim())) fail(scope, "h1 still renders the workspace shell");
@@ -222,9 +230,9 @@ async function auditOne(item) {
   if (robots.includes("nofollow")) fail(scope, `robots is nofollow (${robots.join(",")})`);
   if (robots.includes("index")) fail(scope, `robots allows indexing (${robots.join(",")})`);
 
-  if (item.label) {
-    const needle = item.label.slice(0, 100);
-    if (!$("h1").text().includes(needle)) fail(scope, `card label is missing from the page (${item.label.slice(0, 60)})`);
+  if (expected.label) {
+    const needle = expected.label.slice(0, 100);
+    if (!$("h1").text().includes(needle)) fail(scope, `card label is missing from the page (${expected.label.slice(0, 60)})`);
   }
   if (item.image) {
     const file = basename(item.image);
@@ -276,8 +284,8 @@ async function auditOne(item) {
     }
     const media = record(ctaPayload.media);
     if (!media) fail(scope, "workspace CTA carries no media payload");
-    else if (media.kind !== item.kind || media.slug !== item.slug) {
-      fail(scope, `workspace CTA media is ${media.kind}/${media.slug}, expected ${item.kind}/${item.slug}`);
+    else if (media.kind !== item.kind || media.slug !== expectedSlug) {
+      fail(scope, `workspace CTA media is ${media.kind}/${media.slug}, expected ${item.kind}/${expectedSlug}`);
     }
   }
 
@@ -297,7 +305,7 @@ const prisma = new PrismaClient({ errorFormat: "minimal" });
 
 try {
   const rows = await prisma.livePage.findMany({ where: { siteId }, select: { slug: true, contentJson: true } });
-  const inventory = new Map();
+  const inventory = currentMedia;
   for (const row of rows) {
     for (const card of pageCards(row.contentJson)) {
       const media = mediaOf(card);

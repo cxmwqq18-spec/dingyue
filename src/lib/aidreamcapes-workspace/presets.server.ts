@@ -95,7 +95,7 @@ function presetKind(value: unknown): "photo" | "video" | undefined {
   return undefined;
 }
 
-function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: unknown): WorkspacePreset | undefined {
+export function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: unknown): WorkspacePreset | undefined {
   const card = record(value);
   const image = record(card?.image);
   if (!card || !image || typeof image.src !== "string") return undefined;
@@ -132,6 +132,13 @@ function presetFromCard(page: { updatedAt: Date }, sourcePage: string, value: un
     imageTool,
     sourceUpdatedAt: page.updatedAt.toISOString(),
   };
+}
+
+/** Compare effective generation options, never page-local locator IDs. */
+export function presetGenerationIdentity(preset: WorkspacePreset | undefined): string | undefined {
+  if (!preset) return undefined;
+  return JSON.stringify([preset.kind, preset.prompt, preset.previewUrl, preset.sceneId,
+    preset.aspect, preset.duration, preset.imageTool]);
 }
 
 /** Resolve a clean image/video route against current Aidreamcapes LivePage data. */
