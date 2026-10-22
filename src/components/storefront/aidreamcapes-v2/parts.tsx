@@ -1,8 +1,11 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
 import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
+import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
 import "./thematic-links.css";
+import { AIDREAMCAPES_V2_COLLAGE_SIZES, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
 import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ReviewItem, V2TeamIcon, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
 import { copyLabel } from "./types";
@@ -27,7 +30,29 @@ function resolveSrcSet(srcSet: string, r: V2Resolvers): string {
     .join(", ");
 }
 
-export function Img({ image, r, className, eager, style }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean; style?: CSSProperties }) {
+// A generated candidate list adds to the candidates the page already publishes.
+// Both lists stay: the stored one may name a wider file than the generated set.
+function mergeSrcSets(stored: string | undefined, generated: string | undefined): string | undefined {
+  if (!stored) return generated;
+  if (!generated) return stored;
+  const seen = new Set<string>();
+  const parts: string[] = [];
+  for (const list of [stored, generated]) {
+    for (const part of list.split(",")) {
+      const candidate = part.trim();
+      if (!candidate || seen.has(candidate)) continue;
+      seen.add(candidate);
+      parts.push(candidate);
+    }
+  }
+  return parts.join(", ");
+}
+
+// `srcSet`/`sizes` are optional. A page that has no generated variant set for an
+// image keeps its single source and renders exactly the attributes it rendered before.
+export function Img({ image, r, className, eager, style, srcSet, sizes }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean; style?: CSSProperties; srcSet?: string; sizes?: string }) {
+  const resolvedSrcSet = mergeSrcSets(image.srcSet ? resolveSrcSet(image.srcSet, r) : undefined, srcSet);
+  const resolvedSizes = sizes ?? (image.srcSet ? image.sizes : undefined);
   return (
     <img
       alt={image.alt}
@@ -37,9 +62,9 @@ export function Img({ image, r, className, eager, style }: { image: V2Image; r: 
       height={image.height}
       loading={eager ? "eager" : "lazy"}
       style={style}
-      sizes={image.srcSet ? image.sizes : undefined}
+      sizes={resolvedSrcSet ? resolvedSizes : undefined}
       src={r.asset(image.src)}
-      srcSet={image.srcSet ? resolveSrcSet(image.srcSet, r) : undefined}
+      srcSet={resolvedSrcSet}
       width={image.width}
     />
   );
@@ -544,7 +569,7 @@ export function Faq({ items, title = "Questions", r }: { items: V2Faq[]; title?:
 
 export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   if (card.cardType === "case") return <CaseCard card={card} r={r} filterIndexes={filterIndexes} />;
-  const href = mediaCardHref(card.kind, card.publicSlug, card.href);
+  const href = mediaCardHref(card.kind, mediaCardCanonicalSlug(card), card.href);
   return (
     <article className={`tc${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.filterTags && card.filterTags.length ? card.filterTags.join(" ") : card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
@@ -562,13 +587,13 @@ export function TemplateCard({ card, r, filterIndexes = [] }: { card: V2Card; r:
 /** A page-specific example. Case cards keep the result, format and next action together. */
 export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2Resolvers; filterIndexes?: number[] }) {
   const video = card.video;
-  const href = mediaCardHref(card.kind, card.publicSlug, card.href);
+  const href = mediaCardHref(card.kind, mediaCardCanonicalSlug(card), card.href);
   return (
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         {video ? (
           <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" src={r.asset(video.src)} width={video.width} />
-        ) : <Img image={card.image} r={r} />}
+        ) : <Img image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
       </div>
       <div className="tb">
         <h3>{card.name}<SoonLabel soon={card.soon} /></h3>
@@ -809,7 +834,7 @@ export function Collage({ cards, r }: { cards: V2Card[]; r: V2Resolvers }) {
     <div className="collage">
       {cards.slice(0, 3).map((card, index) => (
         <figure key={card.key}>
-          <Img eager={index === 0} image={card.image} r={r} />
+          <Img eager={index === 0} image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_COLLAGE_SIZES)} />
           <figcaption>{card.name}</figcaption>
         </figure>
       ))}

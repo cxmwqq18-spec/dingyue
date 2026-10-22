@@ -19,6 +19,7 @@ import {
   type MediaDetailKind
 } from "./media-detail";
 import { cardsFromContent, templateDefinitionFrom, toDetailCard, type OwnerTemplate } from "./media-cards.server";
+import { mediaCardCanonicalSlug } from "./media-card-canonical";
 import { mediaAliasTarget } from "./media-alias.server";
 import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 
@@ -146,11 +147,19 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
   const ownerTemplate = templateDefinitionFrom(owner.contentJson, owner.slug);
 
   const related = cards
-    .map(toDetailCard)
-    .filter((card): card is MediaDetailCard => Boolean(card) && card!.kind === kind && Boolean(card!.publicSlug) && card!.publicSlug !== slug)
+    .map((raw) => ({ raw, card: toDetailCard(raw) }))
+    .filter((entry) => Boolean(entry.card) && entry.card!.kind === kind && Boolean(entry.card!.publicSlug) && entry.card!.publicSlug !== slug)
     .slice(0, 6)
-    .flatMap((card) => {
-      const href = mediaDetailPath(kind, card.publicSlug);
+    .flatMap(({ raw, card }) => {
+      if (!card) return [];
+      // A shortcut card keeps its own slug so old inbound links keep
+      // resolving. Link to the card it stands for, so a visitor does not pay
+      // for a redirect.
+      const href = mediaDetailPath(kind, mediaCardCanonicalSlug({
+        publicSlug: card.publicSlug,
+        detailAliasOf: str((raw as { detailAliasOf?: unknown } | undefined)?.detailAliasOf),
+        sceneSlug: str((raw as { sceneSlug?: unknown } | undefined)?.sceneSlug)
+      }));
       if (!href) return [];
       return [{
         slug: card.publicSlug!,

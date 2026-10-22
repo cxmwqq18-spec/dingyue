@@ -506,6 +506,63 @@ const actorRedirectResults = await mapLimit(flatActorUrls, 3, async (path) => {
   return path;
 });
 
+// ---- Internal links must not point at a redirecting address ----
+//
+// The storefront answers a permanent redirect for retired and renamed paths.
+// A public page that still links to one of those addresses asks the visitor
+// and the crawler to jump before the real page, so the link graph has to be
+// free of them. The redirect sources are not a single list: they come from the
+// runtime redirect table, from the LivePage rows and from the detail routes,
+// so the gate asks the running storefront which addresses answer with 301 or
+// 308 instead of reading a stored list.
+const REDIRECT_LINK_HUB_PATHS = ["/ai-video-generation", "/ai-image-generation", "/ai-actors"];
+const REDIRECT_LINK_DETAIL_SAMPLE = 6;
+
+function internalLinkPaths(html) {
+  const dom = load(html);
+  const paths = new Set();
+  dom("a[href]").each((_, node) => {
+    const href = dom(node).attr("href") || "";
+    if (!href.startsWith("/")) return;
+    const path = href.split("#")[0].split("?")[0];
+    if (path) paths.add(path);
+  });
+  return paths;
+}
+
+const redirectLinkSample = [{ path: "/", html: homepageHtml }];
+for (const path of REDIRECT_LINK_HUB_PATHS) {
+  const response = await get(path);
+  assert.equal(response.status(), 200, `${path}: status ${response.status()}`);
+  redirectLinkSample.push({ path, html: await response.text() });
+}
+// The detail pages publish their own related links, so they are part of the sample.
+const redirectLinkDetailSample = [...mediaDetailPaths].filter((_, index) => index % 8 === 0).slice(0, REDIRECT_LINK_DETAIL_SAMPLE);
+for (const path of redirectLinkDetailSample) {
+  const response = await get(path);
+  assert.equal(response.status(), 200, `${path}: status ${response.status()}`);
+  redirectLinkSample.push({ path, html: await response.text() });
+}
+
+const redirectLinkTargets = new Map();
+for (const sample of redirectLinkSample) {
+  for (const target of internalLinkPaths(sample.html)) {
+    if (!redirectLinkTargets.has(target)) redirectLinkTargets.set(target, new Set());
+    redirectLinkTargets.get(target).add(sample.path);
+  }
+}
+
+const redirectLinkViolations = [];
+await mapLimit([...redirectLinkTargets.keys()], 4, async (target) => {
+  const response = await get(target, { maxRedirects: 0 });
+  const status = response.status();
+  const location = response.headers().location || null;
+  await response.dispose();
+  if (status !== 301 && status !== 308) return;
+  redirectLinkViolations.push({ target, status, location, from: [...redirectLinkTargets.get(target)].sort() });
+});
+redirectLinkViolations.sort((left, right) => left.target.localeCompare(right.target));
+
 console.log(JSON.stringify({
   ok: true,
   origin: BASE_URL,
@@ -518,10 +575,24 @@ console.log(JSON.stringify({
     flatActorUrls: actorRedirectResults.length,
     nestedActorUrls: nestedActorUrls.length
   },
+  internalLinkTargets: {
+    sampledPages: redirectLinkSample.length,
+    uniqueTargets: redirectLinkTargets.size,
+    redirectingTargets: redirectLinkViolations.length
+  },
   targetMetadataPages: metadataResults.length,
   sitemapPages: pageStatus.length,
   sitemapImageRecords: imageUrls.length,
   uniqueSitemapImages: imageStatus.length,
-  checks: ["metadata", "jsonld", "site-v2-redirects", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts"]
+  checks: ["metadata", "jsonld", "site-v2-redirects", "canonical", "robots", "sitemap-xml", "image-page-membership", "image-status", "random-404", "retired-410", "https-www-redirects", "security-headers", "hsts", "internal-link-redirect-targets"]
 }));
+// A public page that links to an address that answers 301 or 308 sends the
+// visitor and the crawler through a jump before the real page. The redirect
+// sources live in code and in the database, so the gate asks the running
+// storefront which addresses answer with a permanent redirect.
+assert.equal(
+  redirectLinkViolations.length,
+  0,
+  `public pages must not link to a redirecting address: ${JSON.stringify(redirectLinkViolations.slice(0, 25), null, 2)}`
+);
 await http.dispose();

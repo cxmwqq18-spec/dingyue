@@ -38,7 +38,10 @@ assertDatabaseTarget({ expectedTarget: target });
 const details = hasArgument("--details");
 const write = hasArgument("--write");
 const limit = Math.max(1, Math.trunc(Number(argumentValue("--limit") ?? "10") || 10));
-const reportPath = argumentValue("--out") || "docs/audits/aidreamcapes-media-product-groups-2026-10-21.json";
+// The report is written inside the release tree. `docs/` is not part of the
+// release archive, so a report path under `docs/audits/` fails with ENOENT on
+// the release host. `reports/` is created on demand and `--out` still wins.
+const reportPath = argumentValue("--out") || "reports/aidreamcapes-media-product-groups-2026-10-21.json";
 const PLACEMENT_PATTERN = /^\/(industries|platforms|occasions)\/[a-z0-9][a-z0-9-]*$/;
 const SOURCE_RANK = { definition: 0, picker: 1, example: 2, workspaceCase: 3 };
 

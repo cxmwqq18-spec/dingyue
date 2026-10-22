@@ -2,6 +2,7 @@ import { TemplateDirectory, templateDetailResolvers } from "./template-directory
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
 import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/lib/aidreamcapes-workspace/media-detail";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
@@ -26,6 +27,7 @@ import { HomeComposer, type HomeComposerData } from "./home-composer";
 import { HomeComposerBehavior } from "./home-composer-behavior";
 import { HomeBrandTools } from "./home-brand-tools";
 import type { HomeBrandTool, HomeBrandToolsDemo } from "./home-brand-tools-types";
+import { AIDREAMCAPES_V2_ACTOR_CARD_SIZES } from "./image-sizes";
 import { AidreamcapesDirectoryLanding } from "./directory-landings";
 
 export const AIDREAMCAPES_V2_SECTION_TYPE = "aidreamcapes_v2_page";
@@ -797,7 +799,8 @@ function ActorDirectoryPage({ data, r }: Props) {
                   <h2>{scene}</h2>
                   <div className="actor-grid">
                     {group.map((actor, actorIndex) => <article className="actor-card" data-age={actor.age} data-gender={actor.gender} data-scene={actor.scene} data-use={actor.use} key={actor.id}>
-                      <Img className="actor-card-image" eager={index === 0 && actorIndex < 2} image={actor.image} r={r} />
+                      {/* Only the first card of the first scene group is the page's LCP candidate, so it is the one image that asks for priority. */}
+                      <Img className="actor-card-image" eager={index === 0 && actorIndex === 0} image={actor.image} r={r} {...aidreamcapesV2ResponsiveImageProps(actor.image.src, AIDREAMCAPES_V2_ACTOR_CARD_SIZES)} />
                       <div className="actor-card-copy">
                         <h3>{actor.name}</h3>
                         <p className="actor-style">{actor.style}</p>

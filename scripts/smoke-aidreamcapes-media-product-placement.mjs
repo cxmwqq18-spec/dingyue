@@ -20,7 +20,12 @@ import { argumentValue, hasArgument } from "./lib/database-target.mjs";
 
 const DEFAULT_BASE_URL = "http://127.0.0.1:3002/site/aidreamcapes";
 const DEFAULT_MANIFEST = "scripts/manifests/aidreamcapes-media-product-placement-local-2026-10-21.json";
-const DEFAULT_AUDIT = "docs/audits/aidreamcapes-media-product-groups-2026-10-21.json";
+// The audit report is generated into the release tree because `docs/` is not
+// part of the release archive. The reviewed copy under `docs/audits/` stays the
+// fallback so the smoke still runs on a checkout without a generated report.
+const GENERATED_AUDIT = "reports/aidreamcapes-media-product-groups-2026-10-21.json";
+const REVIEWED_AUDIT = "docs/audits/aidreamcapes-media-product-groups-2026-10-21.json";
+const DEFAULT_AUDIT = fs.existsSync(GENERATED_AUDIT) ? GENERATED_AUDIT : REVIEWED_AUDIT;
 const baseUrl = (argumentValue("--base-url") || DEFAULT_BASE_URL).replace(/\/+$/, "");
 const basePath = new URL(baseUrl).pathname.replace(/\/+$/, "");
 const manifestPath = argumentValue("--manifest") || DEFAULT_MANIFEST;

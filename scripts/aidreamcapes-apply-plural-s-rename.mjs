@@ -255,11 +255,14 @@ async function run() {
   console.log(`workspace query replacements: ${workspaceQueryHits}`);
   console.log(`footer: ${manifest.footer?.skipped ? "already present" : manifest.footer ? "Content added at index 0" : "home page missing"}`);
 
+  // The manifest is written inside the release tree. `docs/` is not part of the
+  // release archive, so a manifest path under `docs/audits/` fails with
+  // ENOENT on the release host. `reports/` is created on demand.
   const out = path.resolve(
     OUT ??
       (APPLY
-        ? "docs/audits/aidreamcapes-plural-s-rename-manifest-2026-10-22.json"
-        : "docs/audits/aidreamcapes-plural-s-rename-dry-run.json")
+        ? "reports/aidreamcapes-plural-s-rename-manifest-2026-10-22.json"
+        : "reports/aidreamcapes-plural-s-rename-dry-run.json")
   );
   mkdirSync(path.dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(manifest, null, 2)}\n`);

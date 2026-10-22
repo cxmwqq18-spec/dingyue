@@ -1,8 +1,11 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { ReactNode } from "react";
 import { copyLabel } from "./types";
 import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
+import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
+import { AIDREAMCAPES_V2_FRESH_MEDIA_SIZES, AIDREAMCAPES_V2_PICKER_CARD_SIZES } from "./image-sizes";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
@@ -32,8 +35,8 @@ const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:no
 .adc2 .v-directory-related a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:720px){.adc2 .v-directory-related ul{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
 
-function VisualImage({ image, r, className }: { image: V2VisualImage; r: V2Resolvers; className?: string }) {
-  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} />;
+function VisualImage({ image, r, className, sizes }: { image: V2VisualImage; r: V2Resolvers; className?: string; sizes?: string }) {
+  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} {...(sizes ? aidreamcapesV2ResponsiveImageProps(image.src, sizes) : {})} />;
 }
 
 function visualRatio(image: V2VisualImage): string {
@@ -202,7 +205,7 @@ export function VisualFreshLook({ heading, lead, items, button, href, r }: {
         <div className="wrap">
           <div className="v-fresh-grid">
             <div className="v-fresh-media">
-              {items.map((item, index) => <figure key={`${item.image.src}-${index}`}><Img image={item.image} r={r} /><figcaption>{item.label}</figcaption></figure>)}
+              {items.map((item, index) => <figure key={`${item.image.src}-${index}`}><Img image={item.image} r={r} {...aidreamcapesV2ResponsiveImageProps(item.image.src, AIDREAMCAPES_V2_FRESH_MEDIA_SIZES)} /><figcaption>{item.label}</figcaption></figure>)}
             </div>
             <div className="v-fresh-copy">
               {heading ? <h2>{heading}</h2> : null}
@@ -270,8 +273,8 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         </div>
         <div className="v-picker-grid">
           {cards.map((card, index) => (
-            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, card.publicSlug, pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
-              <VisualImage image={card.image} r={r} />
+            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
+              <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />
               <span>{card.label}</span>
             </a>
           ))}

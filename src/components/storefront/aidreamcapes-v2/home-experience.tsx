@@ -1,6 +1,8 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { ReactNode } from "react";
 import { Img } from "./parts";
+import { AIDREAMCAPES_V2_HOME_PHONE_SIZES, AIDREAMCAPES_V2_HOME_PRODUCT_SIZES } from "./image-sizes";
 import type { V2Image, V2Resolvers } from "./types";
 import type { HomeCampaignSections, HomeExperienceData, HomeExperienceKind } from "./home-experience-types";
 import "./home-campaign.css";
@@ -55,8 +57,8 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
               <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t009}</WorkspaceEntryLink>
             </div>
             <div className="hx-story">
-              <button type="button" className="hx-source" data-home-local="source" data-hx-dialog={previewId("source")}><div className="hx-photo"><Img image={m.m01} r={r} /></div><span>{c.t010}</span></button>
-              <button type="button" className="hx-phone" data-home-local="result" data-hx-dialog={previewId("result")}><Img image={m.m02} r={r} /><span className="hx-play">{c.t011}</span><span className="hx-caption">{c.t012}<br />{c.t013}</span></button>
+              <button type="button" className="hx-source" data-home-local="source" data-hx-dialog={previewId("source")}><div className="hx-photo"><Img image={m.m01} r={r} {...aidreamcapesV2ResponsiveImageProps(m.m01.src, AIDREAMCAPES_V2_HOME_PRODUCT_SIZES)} /></div><span>{c.t010}</span></button>
+              <button type="button" className="hx-phone" data-home-local="result" data-hx-dialog={previewId("result")}><Img eager image={m.m02} r={r} {...aidreamcapesV2ResponsiveImageProps(m.m02.src, AIDREAMCAPES_V2_HOME_PHONE_SIZES)} /><span className="hx-play">{c.t011}</span><span className="hx-caption">{c.t012}<br />{c.t013}</span></button>
               <div className="hx-sticker">{c.t014}</div>
               <button type="button" className="hx-mini-version" data-home-local="versions" data-hx-dialog={previewId("versions")}><strong>{c.t015}</strong><p>{c.t016}<br />{c.t017}</p><span aria-hidden="true" className="hx-bars"><i /><i /><i /></span></button>
             </div>
