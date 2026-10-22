@@ -34,27 +34,28 @@
 |---|---|---|
 | `/platforms` 页面生产发布 | 已完成 | 178 个 sitemap URL，页面 200，店铺隔离通过 |
 | 页脚 4 条旧博客链接 | **已修复，待全站复核** | `b0b68c1a` 首页已 0 条 `/blog/motion-generator-video-guide` 等旧链接；`4cec901ff` 已包含 footer 过滤逻辑 |
-| 构建堆上限 | 已完成 | `edb086696`，默认 8192 MB，服务器 8 GB 堆构建成功 |
+| 构建堆上限 | 已完成 | `edb086696`，默认 8192 MB；**源站实际不可用于构建**，改走本地预构建上传（见审计文档第 7 节） |
 | 生产缓存开关 | 已启用 | `STOREFRONT_SNAPSHOT_CACHE_SITES=site_aidreamcapes` |
-| 缓存容量 | **仍不足** | `STOREFRONT_SNAPSHOT_CACHE_MAX=8`，`TTL=300000` |
-| 缓存失效覆盖 | **有 3 个缺口** | `StripeConnectAccount`、`AiApp`、`VideoThemeExample` 无触发器，已补迁移 |
+| 缓存容量 | **已调整到 512** | 2026-10-22 18:19 上线 `f21a03ae4`；`MemoryCurrent` 2.46–2.70 GB / 6 GB |
+| 缓存失效覆盖 | **已补齐 18/18** | 迁移 `20261022160000` 已在生产应用，门禁 `ok: true`、`uncovered: []` |
+| P0-2 重复 `ssr` 计时 | **已修复上线** | 线上单组 `Server-Timing`；HTML 逐字节不变 |
 | 复数→单数 URL 改名 | **未上线** | 线上 `/product-video` 仍 301 到 `/product-videos`；`/spokesperson-video`、`/before-after-video` 仍 404 |
 
 ### 1.2 当前仍存在的问题（按影响）
 
 | ID | 问题 | 当前证据 | 影响 |
 |---|---|---|---|
-| P0-1 | 缓存容量过小，爬虫/多页浏览时持续冷读 | 同一页面冷读 1.6–1.7 s，热读 0.53 s；MAX=8，页面 178 个 | TTFB、抓取预算、源站并发 |
-| P0-2 | 传输层重复处理，页面体积偏大 | 每个 HTML 响应两组 `ssr` 计时；首页 HTML 829 KB，热读仍 0.95–1.3 s | TTFB、内存、LCP |
+| P0-1 | ~~缓存容量过小~~ **已关闭（18:19 上线）** | `MAX=512` + 18/18 触发器；生产门禁 `ok: true` | — |
+| P0-2 | ~~传输层重复处理~~ **已关闭（18:19 上线）** | 线上单组 `ssr` 计时；HTML 字节不变 | — |
 | P0-3 | 图片无 `srcset`、无 LCP 优先级 | 首页 177 张图，0 个 `srcset`，0 个 `fetchpriority` | LCP、移动端流量 |
 | P0-4 | 全局内链过平 + noindex 链接过多 | 审计时每页 113 条全局链接、166 条内链；663 条指向 214 个 noindex 页 | 链接权重、抓取效率 |
 | P1-1 | `/platforms` hub 过薄 | 正文 86 词 | 目录页无聚合价值 |
 | P1-2 | 演员/场景页占索引面 53% | 94 页，正文中位 280 词 | 内容质量、索引价值密度 |
 | P1-3 | 薄 hub | industries 490 词、templates 362 词、occasions 475 词 | 商业落地页竞争力 |
-| P1-4 | 结构化数据/元数据缺口 | JSON-LD 相对图片、5 页缺面包屑、9 页缺 `max-image-preview`、首页 description 标点 | 富结果、元数据完整性 |
+| P1-4 | 结构化数据/元数据缺口 | 生产探针已 0 缺口（178/178）；首页 description 标点待改 | 富结果、元数据完整性 |
 | P2-1 | 媒体索引策略未定 | 214 个 noindex 页；sitemap 0 个 video 条目 | 与 placement batch 3 耦合 |
 | P2-2 | URL 边界 | host 2 跳、大小写 404、品牌域 410、`/platforms/instagram` 404 | 少量流量与体验 |
-| P2-3 | 缺少持续门禁 | 现有 smoke 未覆盖内链 301、JSON-LD 绝对 URL、体积预算 | 回归风险 |
+| P2-3 | 缺少持续门禁 | 已有缓存失效覆盖门禁 + 元数据探针 + SEO smoke 新断言；内链 301、体积预算尚未纳入 | 回归风险 |
 
 ### 1.3 新增技术发现
 
@@ -200,6 +201,21 @@
   - 已实测：`MAX=512` 堆占用 ≈1.09 GB，在限值内。
 - **缓存扩容到其他站点**：`bump_site_content_revision()` 的守卫写死 `site_aidreamcapes`，门禁脚本会因其它站点缺触发器而失败。扩容前需另开迁移放宽守卫。
 
+**生产落地（2026-10-22 18:19，`f21a03ae4`）**
+
+| 检查项 | 结果 |
+|---|---|
+| 迁移 | `20261022160000_close_site_content_revision_gaps` 已应用 |
+| 覆盖门禁 | `ok: true`、18/18、`uncovered: []`、`revision=280` |
+| 缓存配置 | `MAX=512`、`TTL=300000` |
+| 内存 | `MemoryCurrent` 2.46–2.70 GB（cgroup 6 GB）、health `rssMb≈2575` |
+| 维护页 | 停服 6–14 s 期间 3 次采样为 `503` + 维护文案，18:19:30 恢复 200 |
+| 源站两遍爬取 | 178/178 全 200 |
+
+**构建约束**：源站（15 GB，另有 4 个站点常驻）无法完成 webpack 构建——8 GB 堆在第 874 s
+OOM，10 GB 堆把机器压到 0 可用内存。改用**本地干净 worktree 预构建 + `--prebuilt-build`**，
+与线上上一版 `38faa0861…` 的产物形态一致（同样带 `.build-commit` 和本机路径）。
+
 ### P0-2 传输层去重与流式化
 
 **问题**
@@ -252,6 +268,10 @@
 - 首页 `ssr` 降低 ≥20 ms；不引入可见内容差异（按标题、canonical、JSON-LD、robots、正文链接逐项对比，而不是按字节数对比）。
 - title/canonical/JSON-LD/robots 的顺序和内容不变；SEO smoke 全绿。
 - 大页面（首页、`/ai-actors`、`/ai-video-generation`）无截断。
+
+**生产验证（2026-10-22 18:19，`f21a03ae4`）**：`/privacy` 响应头只剩一组
+`server-timing: ssr;dur=…, html;dur=…`；HTML 字节数与修复前一致；MyDreamShoots
+与 EU 站仍为两组，未受影响。
 
 **回滚**
 回退 `server.mjs` 到上一版本；这是纯代码发布，不涉及内容。
@@ -451,6 +471,18 @@ node scripts/audit-aidreamcapes-metadata-gaps.mjs \
 - Breadcrumb 覆盖率 178/178（首页按约定例外需记录）。
 - `max-image-preview` 覆盖 178/178 可索引页。
 - 首页 description 无标点错误；OG/Twitter 同步。
+
+**生产验证（2026-10-22 18:19，`f21a03ae4` 上线后，178 个 URL）**
+
+| 指标 | 结果 |
+|---|---|
+| 缺 `max-image-preview` | 0 |
+| 缺 BreadcrumbList | 0（首页记为约定例外） |
+| JSON-LD 相对图片页 | 0 |
+| JSON-LD 无法解析 | 0 |
+| HTTP 状态 | 178/178 = 200 |
+
+仍待内容侧处理：首页 description 标点、SearchAction 与站点实际搜索路径一致性。
 
 ### P2-1 媒体索引与 video sitemap（与 batch 3 联动）
 

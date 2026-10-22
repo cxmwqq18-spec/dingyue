@@ -255,9 +255,12 @@ function instantDraftPreviewEnabled(): boolean {
 
 ---
 
-## 7. 生产变更单（待审批）
+## 7. 生产变更记录（2026-10-22 18:19 已执行）
 
-目标 `.env.local`（当前 release 根目录，部署脚本会复制到新 release）：
+发布 `f21a03ae4094ca191069c2ff8c4a92b49dc617c7`（预构建产物上传，
+服务器只做 `npm ci` + 静态迁移，不在源站跑 webpack——见下文“构建约束”）。
+
+目标 `.env.local`（release 根目录，部署脚本会从 `$BASE/.env.local` 复制）：
 
 ```
 STOREFRONT_SNAPSHOT_CACHE_SITES=site_aidreamcapes
@@ -265,17 +268,30 @@ STOREFRONT_SNAPSHOT_CACHE_MAX=512
 STOREFRONT_SNAPSHOT_CACHE_TTL_MS=300000
 ```
 
-执行步骤：
+执行结果：
 
-1. 部署新迁移（`prisma migrate deploy` 已在发布脚本内执行），
-   确认生产 `SiteContentRevision` 触发器数量由 15 增至 18。
-2. 写 `.env.local`，`systemctl restart aidreamcapes.service`。
-   重启期间 Nginx 会返回 503 维护页（`error_page 502 503 504 =503 /__maintenance`）。
-3. 顺序爬取 178 个 sitemap URL 两遍，记录 TTFB p50/p90、`MemoryCurrent`。
-4. `systemctl show aidreamcapes.service -p MemoryCurrent` 应 < 2.5 GB。
+| 检查项 | 结果 |
+|---|---|
+| `prisma migrate deploy` | `20261022160000_close_site_content_revision_gaps` 已应用 |
+| 失效覆盖门禁（生产） | `ok: true`，18/18 表有触发器，`uncovered: []` |
+| `STOREFRONT_SNAPSHOT_CACHE_MAX` | 512（`TTL=300000` 不变） |
+| 维护页 | 18:19:20–18:19:24 三次采样 `503` + `We'll be back shortly`；18:19:30 恢复 200 |
+| `Server-Timing` | 单组 `ssr;dur=…`（修复前为两组） |
+| `MemoryCurrent` | 2.46–2.70 GB（限值 6 GB） |
+| `health` | `commit=f21a03ae4…`、`revision=280`、`rssMb≈2575` |
+| 源站 178 页两遍 | 全 200；TTFB p50 567→639 ms（受源站 CPU 竞争影响，缓存主要降低回源次数） |
 
-回滚：把 `STOREFRONT_SNAPSHOT_CACHE_MAX` 改回 `8`、`TTL` 改回 `300000`，
-重启即可，不涉及数据变更。
+回滚：把 `STOREFRONT_SNAPSHOT_CACHE_MAX` 改回 `8`，重启即可，不涉及数据变更。
+
+### 构建约束（重要）
+
+源站（15 GB 内存，另有 4 个站点常驻 Node 进程）**无法完成 webpack 构建**：8 GB 堆在
+第 874 秒 OOM（heap 8.1 GB live），10 GB 堆在 10.8 GB RSS 时把机器压到 0 可用内存。
+现行且已验证可行的方法是**本地预构建 + `--prebuilt-build` 上传**：
+线上上一个 release（`38faa0861…`）的 `.next-build` 里同样带
+`/Users/a1/orca/workspaces/dingyue/main-2/...` 路径和 `.build-commit` 标记，
+说明这是既有流程。预构建必须在**干净 worktree** 里按 release commit 构建，
+避免把同一工作区里其他 agent 未提交的改动打进产物。
 
 ---
 
@@ -296,13 +312,12 @@ node scripts/benchmark-aidreamcapes-cache.mjs \
 
 ## 9. 尚未解决
 
-- 生产 `MAX=512` 变更需要停服务窗口，待审批。
 - `SiteContentRevision` 触发器守卫仍写死 `site_aidreamcapes`；缓存扩容到其他
   站点前需要另开迁移放宽守卫。
 - `VideoThemeExample` 缺口今天不产生可见错误（该站点当前不投影 video themes），
   迁移属于前瞻性修复。
-- P0-2（传输层重复 `ssr` 计时）已完成根因定位：不是两次渲染，而是中间件用同进程内部
-  `fetch` 访问 `/site/aidreamcapes/...`，内层已经过 `server.mjs` 拦截并重排一次，
-  外层又重排一次并继承了内层的 `Server-Timing`。细节与修复方案见
-  [整改计划 P0-2](../plans/aidreamcapes-technical-seo-remediation-2026-10-22.md#p0-2-传输层去重与流式化)。
-  修复需要改共享 `server.mjs`，待批准后按 Aidreamcapes 单站收口。
+- P0-2（传输层重复 `ssr` 计时）**已修复并上线**：根因不是两次渲染，而是中间件用
+  同进程内部 `fetch` 访问 `/site/aidreamcapes/...`，内层已经过 `server.mjs`
+  拦截并重排一次，外层又重排一次并继承了内层的 `Server-Timing`。
+  按 Aidreamcapes 单站收口（`x-storefront-head-seo-reorder-skip` + host 判定），
+  HTML 逐字节不变，线上响应头已从两组 `ssr;dur` 降为一组。
