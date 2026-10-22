@@ -1,0 +1,1583 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-nav-item-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-22T08:34:55.376Z",
+  "sourcePlanHash": "d619a56fa51dba1a57c506b941724b4c803bb4f339bcad02c57995faec0b26b0",
+  "page": {
+    "id": "site_aidreamcapes_home",
+    "slug": "/",
+    "title": "Make AI UGC Ads in a Few Minutes",
+    "pageType": "home",
+    "templateKey": "index",
+    "baseHash": null
+  },
+  "before": {
+    "links": [
+      {
+        "href": "/pricing",
+        "label": "Pricing"
+      }
+    ],
+    "menus": [
+      {
+        "label": "Video",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-video-generation/image-to-video",
+                "image": "/ai-image-generation/example-07-640.webp",
+                "label": "Image to Video",
+                "description": "Animate one product photo into a short clip"
+              },
+              {
+                "href": "/ai-video-generation/url-to-video",
+                "image": "/ai-image-generation/url-to-video-concept-640.webp",
+                "label": "URL to Video",
+                "description": "Paste a product link, get a video"
+              },
+              {
+                "href": "/ai-video-generation/video-ads",
+                "image": "/ai-image-generation/v-creator-ad-r2.webp",
+                "label": "Video Ads",
+                "description": "Short ads for TikTok, Reels and Shorts"
+              },
+              {
+                "href": "/ai-video-generation/product-video",
+                "image": "/ai-image-generation/v-demo.webp",
+                "label": "Product Video",
+                "description": "Demo how your product works, one action per clip"
+              },
+              {
+                "href": "/ai-video-generation/before-after-video",
+                "image": "/ai-image-generation/v-ba.webp",
+                "label": "Before & After Video",
+                "description": "Show the difference your product makes"
+              },
+              {
+                "href": "/ai-video-generation/spokesperson-video",
+                "image": "/ai-image-generation/actors/presenter-r2.webp",
+                "label": "Spokesperson Video",
+                "description": "A presenter shows your product on camera"
+              },
+              {
+                "href": "/ai-video-generation/text-to-video",
+                "image": "/ai-image-generation/im01-video-hub-og-r1.webp",
+                "label": "Text to Video",
+                "description": "Turn a written product brief into an editable video plan."
+              },
+              {
+                "href": "/ai-video-generation/ai-twin",
+                "image": "/ai-image-generation/img1-video-hub-hero-beauty-r1-640.webp",
+                "label": "AI Twin",
+                "description": "Explore a consistent presenter style for your product stories."
+              }
+            ],
+            "label": "Make a video"
+          }
+        ],
+        "hubLink": {
+          "href": "/ai-video-generation",
+          "label": "All video tools →"
+        },
+        "popular": [
+          {
+            "href": "/ai-video-generation/beauty-routine",
+            "image": "/ai-image-generation/v-beauty-r1.webp",
+            "label": "Beauty Routine"
+          },
+          {
+            "href": "/ai-video-generation/black-friday-countdown",
+            "image": "/ai-image-generation/v-bf-rc4.webp",
+            "label": "Black Friday Video"
+          },
+          {
+            "href": "/ai-video-generation/promo-video",
+            "image": "/ai-image-generation/v-launch.webp",
+            "label": "Launch Promo"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates/video",
+          "label": "Browse all video templates →"
+        }
+      },
+      {
+        "label": "Image",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-image-generation/white-background-photos",
+                "image": "/ai-image-generation/p-white.webp",
+                "label": "White Background Photos",
+                "description": "Ready for Amazon and Shopify"
+              },
+              {
+                "href": "/ai-image-generation/lifestyle-photos",
+                "image": "/ai-image-generation/p-life.webp",
+                "label": "Lifestyle Photos",
+                "description": "Your product in a real-life scene"
+              },
+              {
+                "href": "/ai-image-generation/model-photos",
+                "image": "/ai-image-generation/p-model.webp",
+                "label": "Model Photos",
+                "description": "Your clothes and accessories on a model"
+              },
+              {
+                "href": "/ai-image-generation/change-background",
+                "image": "/ai-image-generation/p-bg.webp",
+                "label": "Change Background",
+                "description": "New background, same product"
+              },
+              {
+                "href": "/ai-image-generation/social-ad-photos",
+                "image": "/ai-image-generation/p-feed.webp",
+                "label": "Social Ad Photos",
+                "description": "Images for Facebook and Instagram ads"
+              }
+            ],
+            "label": "Make photos"
+          }
+        ],
+        "hubLink": {
+          "href": "/ai-image-generation",
+          "label": "All image tools →"
+        },
+        "popular": [
+          {
+            "href": "/ai-image-generation/colorway-variations",
+            "image": "/ai-image-generation/rc1-tpl-color-cover.webp",
+            "label": "Color Variants"
+          },
+          {
+            "href": "/ai-image-generation/packshot-multi-angle",
+            "image": "/ai-image-generation/p-angle.webp",
+            "label": "Every Angle"
+          },
+          {
+            "href": "/ai-image-generation/packaging-mockup",
+            "image": "/ai-image-generation/p-pack-r1.webp",
+            "label": "Packaging Preview"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates/photo",
+          "label": "Browse all image templates →"
+        }
+      },
+      {
+        "label": "Templates",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/industries/beauty-skincare",
+                "label": "Beauty & Personal Care"
+              },
+              {
+                "href": "/industries/fashion-clothing",
+                "label": "Clothing"
+              },
+              {
+                "href": "/industries/shoes",
+                "label": "Footwear"
+              },
+              {
+                "href": "/industries/jewelry-accessories",
+                "label": "Jewelry & Accessories"
+              },
+              {
+                "href": "/industries/electronics",
+                "label": "Tech & Electronics"
+              },
+              {
+                "href": "/industries/health-wellness",
+                "label": "Health & Fitness"
+              },
+              {
+                "href": "/industries/food-drinks",
+                "label": "Food & Beverage"
+              },
+              {
+                "href": "/industries/home-living",
+                "label": "Home & Living"
+              }
+            ],
+            "label": "By industry"
+          },
+          {
+            "items": [
+              {
+                "href": "/platforms/tiktok-ads",
+                "label": "TikTok"
+              },
+              {
+                "href": "/platforms/instagram-ads",
+                "label": "Instagram"
+              },
+              {
+                "href": "/platforms/facebook-ads",
+                "label": "Facebook"
+              },
+              {
+                "href": "/platforms/youtube-shorts-ads",
+                "label": "YouTube Shorts"
+              },
+              {
+                "href": "/platforms/amazon-product-photos",
+                "label": "Amazon"
+              },
+              {
+                "href": "/platforms/shopify-product-photos",
+                "label": "Shopify"
+              }
+            ],
+            "label": "By platform"
+          },
+          {
+            "items": [
+              {
+                "href": "/occasions/sale-discount",
+                "label": "Sale & Discount"
+              },
+              {
+                "href": "/occasions/black-friday",
+                "label": "Black Friday"
+              },
+              {
+                "href": "/occasions/holidays",
+                "label": "Holidays"
+              }
+            ],
+            "label": "By occasion"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates",
+          "label": "See all 18 templates →"
+        }
+      },
+      {
+        "label": "AI Actors",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-actors/scene/indoor",
+                "label": "Indoor"
+              },
+              {
+                "href": "/ai-actors/scene/home",
+                "label": "Home"
+              },
+              {
+                "href": "/ai-actors/scene/outdoor",
+                "label": "Outdoor"
+              },
+              {
+                "href": "/ai-actors/scene/living-room",
+                "label": "Living Room"
+              },
+              {
+                "href": "/ai-actors/scene/studio",
+                "label": "Studio"
+              },
+              {
+                "href": "/ai-actors/scene/office",
+                "label": "Office"
+              },
+              {
+                "href": "/ai-actors/scene/garden",
+                "label": "Garden"
+              },
+              {
+                "href": "/ai-actors/scene/gym",
+                "label": "Gym"
+              },
+              {
+                "href": "/ai-actors/scene/cafe",
+                "label": "Cafe"
+              },
+              {
+                "href": "/ai-actors/scene/kitchen",
+                "label": "Kitchen"
+              },
+              {
+                "href": "/ai-actors/scene/podcast",
+                "label": "Podcast"
+              },
+              {
+                "href": "/ai-actors/scene/fitness",
+                "label": "Fitness"
+              },
+              {
+                "href": "/ai-actors/scene/beach",
+                "label": "Beach"
+              },
+              {
+                "href": "/ai-actors/scene/car",
+                "label": "Car"
+              },
+              {
+                "href": "/ai-actors/scene/hospital",
+                "label": "Hospital"
+              },
+              {
+                "href": "/ai-actors/scene/balcony",
+                "label": "Balcony"
+              },
+              {
+                "href": "/ai-actors/scene/pet",
+                "label": "Pet"
+              },
+              {
+                "href": "/ai-actors/scene/shopping",
+                "label": "Shopping"
+              },
+              {
+                "href": "/ai-actors/scene/sports",
+                "label": "Sports"
+              },
+              {
+                "href": "/ai-actors/scene/study-room",
+                "label": "Study Room"
+              },
+              {
+                "href": "/ai-actors/scene/classroom",
+                "label": "Classroom"
+              },
+              {
+                "href": "/ai-actors/scene/terrace",
+                "label": "Terrace"
+              },
+              {
+                "href": "/ai-actors/scene/bathroom",
+                "label": "Bathroom"
+              },
+              {
+                "href": "/ai-actors/scene/exercise",
+                "label": "Exercise"
+              },
+              {
+                "href": "/ai-actors/scene/bedroom",
+                "label": "Bedroom"
+              },
+              {
+                "href": "/ai-actors/scene/garage",
+                "label": "Garage"
+              },
+              {
+                "href": "/ai-actors/scene/interview",
+                "label": "Interview"
+              },
+              {
+                "href": "/ai-actors/scene/pool",
+                "label": "Pool"
+              },
+              {
+                "href": "/ai-actors/scene/reporting",
+                "label": "Reporting"
+              },
+              {
+                "href": "/ai-actors/scene/travel",
+                "label": "Travel"
+              },
+              {
+                "href": "/ai-actors/scene/yoga",
+                "label": "Yoga"
+              }
+            ],
+            "label": "Browse by scene",
+            "columns": "2"
+          },
+          {
+            "items": [
+              {
+                "href": "/ai-actors/women",
+                "label": "Women"
+              },
+              {
+                "href": "/ai-actors/men",
+                "label": "Men"
+              }
+            ],
+            "label": "Browse by gender"
+          },
+          {
+            "items": [
+              {
+                "href": "/ai-actors/age-range/20s",
+                "label": "20s"
+              },
+              {
+                "href": "/ai-actors/age-range/30s",
+                "label": "30s"
+              },
+              {
+                "href": "/ai-actors/age-range/40s",
+                "label": "40s"
+              },
+              {
+                "href": "/ai-actors/age-range/50s",
+                "label": "50s"
+              },
+              {
+                "href": "/ai-actors/age-range/60s-plus",
+                "label": "60s+"
+              }
+            ],
+            "label": "Browse by age range"
+          }
+        ],
+        "footerLink": {
+          "href": "/ai-actors",
+          "label": "View all 53 AI actors →"
+        }
+      },
+      {
+        "label": "Resources",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/inspiration",
+                "label": "Inspiration"
+              },
+              {
+                "href": "/guides",
+                "label": "How-to Guides"
+              },
+              {
+                "href": "/blog",
+                "label": "Blog"
+              },
+              {
+                "href": "/faq",
+                "label": "FAQ"
+              },
+              {
+                "href": "/glossary",
+                "label": "Glossary"
+              },
+              {
+                "href": "/contact-us",
+                "label": "Contact"
+              }
+            ],
+            "label": "Learn and get help"
+          }
+        ]
+      }
+    ],
+    "footer": {
+      "legal": [
+        {
+          "href": "/content",
+          "label": "Content"
+        },
+        {
+          "href": "/privacy",
+          "label": "Privacy"
+        },
+        {
+          "href": "/terms",
+          "label": "Terms"
+        },
+        {
+          "href": "/refunds",
+          "label": "Refunds"
+        },
+        {
+          "href": "/cookies",
+          "label": "Cookies"
+        }
+      ],
+      "groups": [
+        {
+          "items": [
+            {
+              "href": "/ai-actors",
+              "label": "AI Actors"
+            },
+            {
+              "href": "/ai-video-generation/image-to-video",
+              "label": "Image to Video"
+            },
+            {
+              "href": "/ai-video-generation/url-to-video",
+              "label": "URL to Video"
+            },
+            {
+              "href": "/ai-video-generation/video-ads",
+              "label": "Video Ads"
+            },
+            {
+              "href": "/ai-video-generation/product-video",
+              "label": "Product Video"
+            },
+            {
+              "href": "/ai-video-generation/before-after-video",
+              "label": "Before & After Video"
+            },
+            {
+              "href": "/ai-video-generation/spokesperson-video",
+              "label": "Spokesperson Video"
+            },
+            {
+              "href": "/ai-video-generation/text-to-video",
+              "label": "Text to Video"
+            },
+            {
+              "href": "/ai-video-generation/ai-twin",
+              "label": "AI Twin"
+            },
+            {
+              "href": "/ai-video-generation",
+              "label": "All Video Tools"
+            }
+          ],
+          "label": "Video"
+        },
+        {
+          "items": [
+            {
+              "href": "/ai-image-generation/white-background-photos",
+              "label": "White Background Photos"
+            },
+            {
+              "href": "/ai-image-generation/lifestyle-photos",
+              "label": "Lifestyle Photos"
+            },
+            {
+              "href": "/ai-image-generation/model-photos",
+              "label": "Model Photos"
+            },
+            {
+              "href": "/ai-image-generation/change-background",
+              "label": "Change Background"
+            },
+            {
+              "href": "/ai-image-generation/social-ad-photos",
+              "label": "Social Ad Photos"
+            },
+            {
+              "href": "/ai-image-generation",
+              "label": "All Image Tools"
+            }
+          ],
+          "label": "Image"
+        },
+        {
+          "items": [
+            {
+              "href": "/ai-video-generation/spark-ads-style-video",
+              "label": "Spark Ads Style Video"
+            },
+            {
+              "href": "/ai-video-generation/beauty-routine",
+              "label": "Beauty Routine"
+            },
+            {
+              "href": "/ai-image-generation/colorway-variations",
+              "label": "Color Variants"
+            },
+            {
+              "href": "/ai-image-generation/packshot-multi-angle",
+              "label": "Every Angle"
+            },
+            {
+              "href": "/ai-image-generation/packaging-mockup",
+              "label": "Packaging Preview"
+            },
+            {
+              "href": "/ai-image-generation/virtual-try-on",
+              "label": "Clothing Try-On"
+            },
+            {
+              "href": "/ai-image-generation/jewelry-positioning",
+              "label": "Jewelry On Model"
+            },
+            {
+              "href": "/ai-image-generation/ugc-still-ad",
+              "label": "Creator-Style Photo"
+            },
+            {
+              "href": "/ai-image-generation/story-ad-vertical",
+              "label": "Story Ad"
+            },
+            {
+              "href": "/ai-image-generation/sale-campaign-key-visual",
+              "label": "Sale Banner"
+            },
+            {
+              "href": "/templates",
+              "label": "All Templates"
+            }
+          ],
+          "label": "Templates"
+        },
+        {
+          "items": [
+            {
+              "href": "/industries/beauty-skincare",
+              "label": "Beauty & Personal Care"
+            },
+            {
+              "href": "/industries/fashion-clothing",
+              "label": "Clothing"
+            },
+            {
+              "href": "/industries/shoes",
+              "label": "Footwear"
+            },
+            {
+              "href": "/industries/jewelry-accessories",
+              "label": "Jewelry & Accessories"
+            },
+            {
+              "href": "/industries/electronics",
+              "label": "Tech & Electronics"
+            },
+            {
+              "href": "/industries/health-wellness",
+              "label": "Health & Fitness"
+            },
+            {
+              "href": "/industries/food-drinks",
+              "label": "Food & Beverage"
+            },
+            {
+              "href": "/industries/home-living",
+              "label": "Home & Living"
+            },
+            {
+              "href": "/industries",
+              "label": "All Industries"
+            }
+          ],
+          "label": "Industries"
+        },
+        {
+          "items": [
+            {
+              "href": "/platforms/tiktok-ads",
+              "label": "TikTok"
+            },
+            {
+              "href": "/platforms/instagram-ads",
+              "label": "Instagram"
+            },
+            {
+              "href": "/platforms/facebook-ads",
+              "label": "Facebook"
+            },
+            {
+              "href": "/platforms/youtube-shorts-ads",
+              "label": "YouTube Shorts"
+            },
+            {
+              "href": "/platforms/amazon-product-photos",
+              "label": "Amazon"
+            },
+            {
+              "href": "/platforms/shopify-product-photos",
+              "label": "Shopify"
+            },
+            {
+              "href": "/pricing",
+              "label": "Pricing"
+            },
+            {
+              "href": "/faq",
+              "label": "FAQ"
+            },
+            {
+              "href": "/glossary",
+              "label": "Glossary"
+            },
+            {
+              "href": "/contact-us",
+              "label": "Contact"
+            },
+            {
+              "href": "/about-us",
+              "label": "About"
+            },
+            {
+              "href": "/trust-and-safety",
+              "label": "Trust & Safety"
+            },
+            {
+              "href": "/ai-info",
+              "label": "Company Facts"
+            },
+            {
+              "href": "/blog",
+              "label": "Blog"
+            },
+            {
+              "href": "/guides",
+              "label": "How-to Guides"
+            }
+          ],
+          "label": "Platforms & help"
+        }
+      ],
+      "tagline": "AI video ads and product photos for DTC brands, SaaS and agencies.",
+      "copyright": "© 2026 AIVideosUGC. All rights reserved.",
+      "socialLinks": [
+        {
+          "key": "facebook",
+          "href": "https://www.facebook.com/AiVideosUGC/",
+          "label": "Facebook"
+        },
+        {
+          "key": "instagram",
+          "href": "https://www.instagram.com/aivideosugc/",
+          "label": "Instagram"
+        },
+        {
+          "key": "pinterest",
+          "href": "https://www.pinterest.com/AiVideosUGC/",
+          "label": "Pinterest"
+        },
+        {
+          "key": "x",
+          "href": "https://x.com/AiVideosUGC",
+          "label": "X"
+        },
+        {
+          "key": "youtube",
+          "href": "https://www.youtube.com/@AiVideosUGC",
+          "label": "YouTube"
+        },
+        {
+          "key": "tiktok",
+          "href": "https://www.tiktok.com/@aivideosugc",
+          "label": "TikTok"
+        },
+        {
+          "key": "reddit",
+          "href": "https://www.reddit.com/user/AiVideosUGC/",
+          "label": "Reddit"
+        },
+        {
+          "key": "whatsapp",
+          "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36",
+          "label": "WhatsApp"
+        },
+        {
+          "key": "discord",
+          "href": "https://discord.gg/F52827j3Nm",
+          "label": "Discord"
+        }
+      ]
+    },
+    "actions": {
+      "login": {
+        "href": "/login",
+        "label": "Log in"
+      },
+      "getStarted": {
+        "href": "/app/create",
+        "label": "Get started"
+      }
+    },
+    "version": 2
+  },
+  "after": {
+    "links": [
+      {
+        "href": "/pricing",
+        "label": "Pricing"
+      }
+    ],
+    "menus": [
+      {
+        "label": "Video",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-video-generation/image-to-video",
+                "image": "/ai-image-generation/example-07-640.webp",
+                "label": "Image to Video",
+                "description": "Animate one product photo into a short clip"
+              },
+              {
+                "href": "/ai-video-generation/url-to-video",
+                "image": "/ai-image-generation/url-to-video-concept-640.webp",
+                "label": "URL to Video",
+                "description": "Paste a product link, get a video"
+              },
+              {
+                "href": "/ai-video-generation/video-ads",
+                "image": "/ai-image-generation/v-creator-ad-r2.webp",
+                "label": "Video Ads",
+                "description": "Short ads for TikTok, Reels and Shorts"
+              },
+              {
+                "href": "/ai-video-generation/product-video",
+                "image": "/ai-image-generation/v-demo.webp",
+                "label": "Product Video",
+                "description": "Demo how your product works, one action per clip"
+              },
+              {
+                "href": "/ai-video-generation/before-after-video",
+                "image": "/ai-image-generation/v-ba.webp",
+                "label": "Before & After Video",
+                "description": "Show the difference your product makes"
+              },
+              {
+                "href": "/ai-video-generation/spokesperson-video",
+                "image": "/ai-image-generation/actors/presenter-r2.webp",
+                "label": "Spokesperson Video",
+                "description": "A presenter shows your product on camera"
+              },
+              {
+                "href": "/ai-video-generation/text-to-video",
+                "image": "/ai-image-generation/im01-video-hub-og-r1.webp",
+                "label": "Text to Video",
+                "description": "Turn a written product brief into an editable video plan."
+              },
+              {
+                "href": "/ai-video-generation/ai-twin",
+                "image": "/ai-image-generation/img1-video-hub-hero-beauty-r1-640.webp",
+                "label": "AI Twin",
+                "description": "Explore a consistent presenter style for your product stories."
+              }
+            ],
+            "label": "Make a video"
+          }
+        ],
+        "hubLink": {
+          "href": "/ai-video-generation",
+          "label": "All video tools →"
+        },
+        "popular": [
+          {
+            "href": "/ai-video-generation/beauty-routine",
+            "image": "/ai-image-generation/v-beauty-r1.webp",
+            "label": "Beauty Routine"
+          },
+          {
+            "href": "/ai-video-generation/black-friday-countdown",
+            "image": "/ai-image-generation/v-bf-rc4.webp",
+            "label": "Black Friday Video"
+          },
+          {
+            "href": "/ai-video-generation/promo-video",
+            "image": "/ai-image-generation/v-launch.webp",
+            "label": "Launch Promo"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates/video",
+          "label": "Browse all video templates →"
+        }
+      },
+      {
+        "label": "Image",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-image-generation/white-background-photos",
+                "image": "/ai-image-generation/p-white.webp",
+                "label": "White Background Photos",
+                "description": "Ready for Amazon and Shopify"
+              },
+              {
+                "href": "/ai-image-generation/lifestyle-photos",
+                "image": "/ai-image-generation/p-life.webp",
+                "label": "Lifestyle Photos",
+                "description": "Your product in a real-life scene"
+              },
+              {
+                "href": "/ai-image-generation/model-photos",
+                "image": "/ai-image-generation/p-model.webp",
+                "label": "Model Photos",
+                "description": "Your clothes and accessories on a model"
+              },
+              {
+                "href": "/ai-image-generation/change-background",
+                "image": "/ai-image-generation/p-bg.webp",
+                "label": "Change Background",
+                "description": "New background, same product"
+              },
+              {
+                "href": "/ai-image-generation/social-ad-photos",
+                "image": "/ai-image-generation/p-feed.webp",
+                "label": "Social Ad Photos",
+                "description": "Images for Facebook and Instagram ads"
+              }
+            ],
+            "label": "Make photos"
+          }
+        ],
+        "hubLink": {
+          "href": "/ai-image-generation",
+          "label": "All image tools →"
+        },
+        "popular": [
+          {
+            "href": "/ai-image-generation/colorway-variations",
+            "image": "/ai-image-generation/rc1-tpl-color-cover.webp",
+            "label": "Color Variants"
+          },
+          {
+            "href": "/ai-image-generation/packshot-multi-angle",
+            "image": "/ai-image-generation/p-angle.webp",
+            "label": "Every Angle"
+          },
+          {
+            "href": "/ai-image-generation/packaging-mockup",
+            "image": "/ai-image-generation/p-pack-r1.webp",
+            "label": "Packaging Preview"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates/photo",
+          "label": "Browse all image templates →"
+        }
+      },
+      {
+        "label": "Templates",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/industries/beauty-skincare",
+                "label": "Beauty & Personal Care"
+              },
+              {
+                "href": "/industries/fashion-clothing",
+                "label": "Clothing"
+              },
+              {
+                "href": "/industries/shoes",
+                "label": "Footwear"
+              },
+              {
+                "href": "/industries/jewelry-accessories",
+                "label": "Jewelry & Accessories"
+              },
+              {
+                "href": "/industries/electronics",
+                "label": "Tech & Electronics"
+              },
+              {
+                "href": "/industries/health-wellness",
+                "label": "Health & Fitness"
+              },
+              {
+                "href": "/industries/food-drinks",
+                "label": "Food & Beverage"
+              },
+              {
+                "href": "/industries/home-living",
+                "label": "Home & Living"
+              }
+            ],
+            "label": "By industry"
+          },
+          {
+            "items": [
+              {
+                "href": "/platforms/tiktok-ads",
+                "label": "TikTok"
+              },
+              {
+                "href": "/platforms/instagram-ads",
+                "label": "Instagram"
+              },
+              {
+                "href": "/platforms/facebook-ads",
+                "label": "Facebook"
+              },
+              {
+                "href": "/platforms/youtube-shorts-ads",
+                "label": "YouTube Shorts"
+              },
+              {
+                "href": "/platforms/amazon-product-photos",
+                "label": "Amazon"
+              },
+              {
+                "href": "/platforms/shopify-product-photos",
+                "label": "Shopify"
+              }
+            ],
+            "label": "By platform"
+          },
+          {
+            "items": [
+              {
+                "href": "/occasions/sale-discount",
+                "label": "Sale & Discount"
+              },
+              {
+                "href": "/occasions/black-friday",
+                "label": "Black Friday"
+              },
+              {
+                "href": "/occasions/holidays",
+                "label": "Holidays"
+              }
+            ],
+            "label": "By occasion"
+          }
+        ],
+        "footerLink": {
+          "href": "/templates",
+          "label": "See all 18 templates →"
+        }
+      },
+      {
+        "label": "AI Actors",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/ai-actors/scene/indoor",
+                "label": "Indoor"
+              },
+              {
+                "href": "/ai-actors/scene/home",
+                "label": "Home"
+              },
+              {
+                "href": "/ai-actors/scene/outdoor",
+                "label": "Outdoor"
+              },
+              {
+                "href": "/ai-actors/scene/living-room",
+                "label": "Living Room"
+              },
+              {
+                "href": "/ai-actors/scene/studio",
+                "label": "Studio"
+              },
+              {
+                "href": "/ai-actors/scene/office",
+                "label": "Office"
+              },
+              {
+                "href": "/ai-actors/scene/garden",
+                "label": "Garden"
+              },
+              {
+                "href": "/ai-actors/scene/gym",
+                "label": "Gym"
+              },
+              {
+                "href": "/ai-actors/scene/cafe",
+                "label": "Cafe"
+              },
+              {
+                "href": "/ai-actors/scene/kitchen",
+                "label": "Kitchen"
+              },
+              {
+                "href": "/ai-actors/scene/podcast",
+                "label": "Podcast"
+              },
+              {
+                "href": "/ai-actors/scene/fitness",
+                "label": "Fitness"
+              },
+              {
+                "href": "/ai-actors/scene/beach",
+                "label": "Beach"
+              },
+              {
+                "href": "/ai-actors/scene/car",
+                "label": "Car"
+              },
+              {
+                "href": "/ai-actors/scene/hospital",
+                "label": "Hospital"
+              },
+              {
+                "href": "/ai-actors/scene/balcony",
+                "label": "Balcony"
+              },
+              {
+                "href": "/ai-actors/scene/pet",
+                "label": "Pet"
+              },
+              {
+                "href": "/ai-actors/scene/shopping",
+                "label": "Shopping"
+              },
+              {
+                "href": "/ai-actors/scene/sports",
+                "label": "Sports"
+              },
+              {
+                "href": "/ai-actors/scene/study-room",
+                "label": "Study Room"
+              },
+              {
+                "href": "/ai-actors/scene/classroom",
+                "label": "Classroom"
+              },
+              {
+                "href": "/ai-actors/scene/terrace",
+                "label": "Terrace"
+              },
+              {
+                "href": "/ai-actors/scene/bathroom",
+                "label": "Bathroom"
+              },
+              {
+                "href": "/ai-actors/scene/exercise",
+                "label": "Exercise"
+              },
+              {
+                "href": "/ai-actors/scene/bedroom",
+                "label": "Bedroom"
+              },
+              {
+                "href": "/ai-actors/scene/garage",
+                "label": "Garage"
+              },
+              {
+                "href": "/ai-actors/scene/interview",
+                "label": "Interview"
+              },
+              {
+                "href": "/ai-actors/scene/pool",
+                "label": "Pool"
+              },
+              {
+                "href": "/ai-actors/scene/reporting",
+                "label": "Reporting"
+              },
+              {
+                "href": "/ai-actors/scene/travel",
+                "label": "Travel"
+              },
+              {
+                "href": "/ai-actors/scene/yoga",
+                "label": "Yoga"
+              }
+            ],
+            "label": "Browse by scene",
+            "columns": "2"
+          },
+          {
+            "items": [
+              {
+                "href": "/ai-actors/women",
+                "label": "Women"
+              },
+              {
+                "href": "/ai-actors/men",
+                "label": "Men"
+              }
+            ],
+            "label": "Browse by gender"
+          },
+          {
+            "items": [
+              {
+                "href": "/ai-actors/age-range/20s",
+                "label": "20s"
+              },
+              {
+                "href": "/ai-actors/age-range/30s",
+                "label": "30s"
+              },
+              {
+                "href": "/ai-actors/age-range/40s",
+                "label": "40s"
+              },
+              {
+                "href": "/ai-actors/age-range/50s",
+                "label": "50s"
+              },
+              {
+                "href": "/ai-actors/age-range/60s-plus",
+                "label": "60s+"
+              }
+            ],
+            "label": "Browse by age range"
+          }
+        ],
+        "footerLink": {
+          "href": "/ai-actors",
+          "label": "View all 53 AI actors →"
+        }
+      },
+      {
+        "label": "Resources",
+        "groups": [
+          {
+            "items": [
+              {
+                "href": "/templates",
+                "label": "Templates"
+              },
+              {
+                "href": "/inspiration",
+                "label": "Inspiration"
+              },
+              {
+                "href": "/guides",
+                "label": "How-to Guides"
+              },
+              {
+                "href": "/blog",
+                "label": "Blog"
+              },
+              {
+                "href": "/faq",
+                "label": "FAQ"
+              },
+              {
+                "href": "/glossary",
+                "label": "Glossary"
+              },
+              {
+                "href": "/contact-us",
+                "label": "Contact"
+              }
+            ],
+            "label": "Learn and get help"
+          }
+        ]
+      }
+    ],
+    "footer": {
+      "legal": [
+        {
+          "href": "/content",
+          "label": "Content"
+        },
+        {
+          "href": "/privacy",
+          "label": "Privacy"
+        },
+        {
+          "href": "/terms",
+          "label": "Terms"
+        },
+        {
+          "href": "/refunds",
+          "label": "Refunds"
+        },
+        {
+          "href": "/cookies",
+          "label": "Cookies"
+        }
+      ],
+      "groups": [
+        {
+          "items": [
+            {
+              "href": "/ai-actors",
+              "label": "AI Actors"
+            },
+            {
+              "href": "/ai-video-generation/image-to-video",
+              "label": "Image to Video"
+            },
+            {
+              "href": "/ai-video-generation/url-to-video",
+              "label": "URL to Video"
+            },
+            {
+              "href": "/ai-video-generation/video-ads",
+              "label": "Video Ads"
+            },
+            {
+              "href": "/ai-video-generation/product-video",
+              "label": "Product Video"
+            },
+            {
+              "href": "/ai-video-generation/before-after-video",
+              "label": "Before & After Video"
+            },
+            {
+              "href": "/ai-video-generation/spokesperson-video",
+              "label": "Spokesperson Video"
+            },
+            {
+              "href": "/ai-video-generation/text-to-video",
+              "label": "Text to Video"
+            },
+            {
+              "href": "/ai-video-generation/ai-twin",
+              "label": "AI Twin"
+            },
+            {
+              "href": "/ai-video-generation",
+              "label": "All Video Tools"
+            }
+          ],
+          "label": "Video"
+        },
+        {
+          "items": [
+            {
+              "href": "/ai-image-generation/white-background-photos",
+              "label": "White Background Photos"
+            },
+            {
+              "href": "/ai-image-generation/lifestyle-photos",
+              "label": "Lifestyle Photos"
+            },
+            {
+              "href": "/ai-image-generation/model-photos",
+              "label": "Model Photos"
+            },
+            {
+              "href": "/ai-image-generation/change-background",
+              "label": "Change Background"
+            },
+            {
+              "href": "/ai-image-generation/social-ad-photos",
+              "label": "Social Ad Photos"
+            },
+            {
+              "href": "/ai-image-generation",
+              "label": "All Image Tools"
+            }
+          ],
+          "label": "Image"
+        },
+        {
+          "items": [
+            {
+              "href": "/ai-video-generation/spark-ads-style-video",
+              "label": "Spark Ads Style Video"
+            },
+            {
+              "href": "/ai-video-generation/beauty-routine",
+              "label": "Beauty Routine"
+            },
+            {
+              "href": "/ai-image-generation/colorway-variations",
+              "label": "Color Variants"
+            },
+            {
+              "href": "/ai-image-generation/packshot-multi-angle",
+              "label": "Every Angle"
+            },
+            {
+              "href": "/ai-image-generation/packaging-mockup",
+              "label": "Packaging Preview"
+            },
+            {
+              "href": "/ai-image-generation/virtual-try-on",
+              "label": "Clothing Try-On"
+            },
+            {
+              "href": "/ai-image-generation/jewelry-positioning",
+              "label": "Jewelry On Model"
+            },
+            {
+              "href": "/ai-image-generation/ugc-still-ad",
+              "label": "Creator-Style Photo"
+            },
+            {
+              "href": "/ai-image-generation/story-ad-vertical",
+              "label": "Story Ad"
+            },
+            {
+              "href": "/ai-image-generation/sale-campaign-key-visual",
+              "label": "Sale Banner"
+            },
+            {
+              "href": "/templates",
+              "label": "All Templates"
+            }
+          ],
+          "label": "Templates"
+        },
+        {
+          "items": [
+            {
+              "href": "/industries/beauty-skincare",
+              "label": "Beauty & Personal Care"
+            },
+            {
+              "href": "/industries/fashion-clothing",
+              "label": "Clothing"
+            },
+            {
+              "href": "/industries/shoes",
+              "label": "Footwear"
+            },
+            {
+              "href": "/industries/jewelry-accessories",
+              "label": "Jewelry & Accessories"
+            },
+            {
+              "href": "/industries/electronics",
+              "label": "Tech & Electronics"
+            },
+            {
+              "href": "/industries/health-wellness",
+              "label": "Health & Fitness"
+            },
+            {
+              "href": "/industries/food-drinks",
+              "label": "Food & Beverage"
+            },
+            {
+              "href": "/industries/home-living",
+              "label": "Home & Living"
+            },
+            {
+              "href": "/industries",
+              "label": "All Industries"
+            }
+          ],
+          "label": "Industries"
+        },
+        {
+          "items": [
+            {
+              "href": "/platforms/tiktok-ads",
+              "label": "TikTok"
+            },
+            {
+              "href": "/platforms/instagram-ads",
+              "label": "Instagram"
+            },
+            {
+              "href": "/platforms/facebook-ads",
+              "label": "Facebook"
+            },
+            {
+              "href": "/platforms/youtube-shorts-ads",
+              "label": "YouTube Shorts"
+            },
+            {
+              "href": "/platforms/amazon-product-photos",
+              "label": "Amazon"
+            },
+            {
+              "href": "/platforms/shopify-product-photos",
+              "label": "Shopify"
+            },
+            {
+              "href": "/pricing",
+              "label": "Pricing"
+            },
+            {
+              "href": "/faq",
+              "label": "FAQ"
+            },
+            {
+              "href": "/glossary",
+              "label": "Glossary"
+            },
+            {
+              "href": "/contact-us",
+              "label": "Contact"
+            },
+            {
+              "href": "/about-us",
+              "label": "About"
+            },
+            {
+              "href": "/trust-and-safety",
+              "label": "Trust & Safety"
+            },
+            {
+              "href": "/ai-info",
+              "label": "Company Facts"
+            },
+            {
+              "href": "/blog",
+              "label": "Blog"
+            },
+            {
+              "href": "/guides",
+              "label": "How-to Guides"
+            }
+          ],
+          "label": "Platforms & help"
+        }
+      ],
+      "tagline": "AI video ads and product photos for DTC brands, SaaS and agencies.",
+      "copyright": "© 2026 AIVideosUGC. All rights reserved.",
+      "socialLinks": [
+        {
+          "key": "facebook",
+          "href": "https://www.facebook.com/AiVideosUGC/",
+          "label": "Facebook"
+        },
+        {
+          "key": "instagram",
+          "href": "https://www.instagram.com/aivideosugc/",
+          "label": "Instagram"
+        },
+        {
+          "key": "pinterest",
+          "href": "https://www.pinterest.com/AiVideosUGC/",
+          "label": "Pinterest"
+        },
+        {
+          "key": "x",
+          "href": "https://x.com/AiVideosUGC",
+          "label": "X"
+        },
+        {
+          "key": "youtube",
+          "href": "https://www.youtube.com/@AiVideosUGC",
+          "label": "YouTube"
+        },
+        {
+          "key": "tiktok",
+          "href": "https://www.tiktok.com/@aivideosugc",
+          "label": "TikTok"
+        },
+        {
+          "key": "reddit",
+          "href": "https://www.reddit.com/user/AiVideosUGC/",
+          "label": "Reddit"
+        },
+        {
+          "key": "whatsapp",
+          "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36",
+          "label": "WhatsApp"
+        },
+        {
+          "key": "discord",
+          "href": "https://discord.gg/F52827j3Nm",
+          "label": "Discord"
+        }
+      ]
+    },
+    "actions": {
+      "login": {
+        "href": "/login",
+        "label": "Log in"
+      },
+      "getStarted": {
+        "href": "/app/create",
+        "label": "Get started"
+      }
+    },
+    "version": 2
+  },
+  "removals": [
+    {
+      "menu": "Resources",
+      "group": "Learn and get help",
+      "label": "Templates",
+      "href": "/templates",
+      "reason": "restore Templates",
+      "state": "removed",
+      "index": 0
+    }
+  ]
+}
