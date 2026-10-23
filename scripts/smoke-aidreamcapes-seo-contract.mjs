@@ -421,6 +421,7 @@ assert.equal(
   `${nearSlugFailures.length} near slug address(es) do not answer 301 at the page they meant: ${JSON.stringify(nearSlugFailures.slice(0, 10))}`
 );
 
+const ACTOR_HUB_PATHS = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-actors/scene", "/ai-actors/age-range"]);
 const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   const url = entry.loc;
   assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
@@ -439,7 +440,7 @@ const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
     const nodes = jsonLdBlocks.flatMap(flattenJsonLd);
     const types = new Set(nodes.flatMap((node) => (Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]])).filter(Boolean));
     const path = new URL(url).pathname;
-    const isActorDetail = /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path);
+    const isActorDetail = /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path) && !ACTOR_HUB_PATHS.has(path);
     const isDirectory = ["/ai-actors", "/ai-video-generation", "/ai-image-generation"].includes(path)
       || (path.startsWith("/ai-actors/") && !isActorDetail);
     const isToolDetail = /^\/ai-(?:video|image)-generation\/[a-z0-9][a-z0-9-]*$/.test(path);
@@ -486,7 +487,6 @@ const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
 const sitemapPathSet = new Set(pageUrls.map((url) => new URL(url).pathname));
 const nestedActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/(?:men|women)\//.test(path));
 assert.equal(nestedActorUrls.length, 0, `sitemap submits ${nestedActorUrls.length} nested actor URL(s)`);
-const ACTOR_HUB_PATHS = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-actors/scene", "/ai-actors/age-range"]);
 const FLAT_ACTOR_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]*)$/i;
 const flatActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path) && !ACTOR_HUB_PATHS.has(path));
 assert(flatActorUrls.length > 0, "sitemap submits no flat actor URL");
