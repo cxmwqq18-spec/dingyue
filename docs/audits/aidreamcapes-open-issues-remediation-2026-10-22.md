@@ -53,9 +53,9 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 
 ---
 
-## 0.2 当前状态快照（2026-10-23，线上 `32e29d9e0`）
+## 0.2 当前状态快照（2026-10-23，线上 `049fe32b7`）
 
-代码位置：本地 `main` = `origin/main` = `8bb244bf4`（已推送到 GitHub）。线上 release = `32e29d9e0`，与 `HEAD` 的差异只有 2 个文档文件（`git diff --stat 32e29d9e0..HEAD`），运行时代码完全一致。
+代码位置：本地 `main` = `origin/main` = `049fe32b7`（已推送到 GitHub），与线上 release 完全一致。
 
 ### 已上线（代码已合并 + 已部署 + 已回读）
 
@@ -75,6 +75,7 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 | 爬取面收口 | `/robots.txt` 对 `www.aivideosugc.com` 输出 4 条 Disallow；审计只比较可索引页，`duplicateTitles/Descriptions: 0` |
 | 平台描述外泄 | 根布局兜底描述按 host 分支，工作台显示门店文案 |
 | 发布流程 | 本地干净 worktree 预构建 + `--prebuilt-build`；nginx 维护页预检 + `error_page 502 503 504 =503` |
+| 结构化数据与 sitemap 清理（B0） | sitemap 0 条 `changefreq`/`priority`（178 URL、694 图片不变）；`WebSite` 仅首页、`SearchAction` 0；工具页 `SoftwareApplication` 13→32；演员详情 `ProfilePage`+`Person` 53/53；`CollectionPage` 120→68；契约与并发闸门 `ok: true` |
 
 ### 未上线 / 未实现
 

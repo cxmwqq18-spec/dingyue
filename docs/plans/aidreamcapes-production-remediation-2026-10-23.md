@@ -26,6 +26,8 @@
 
 回滚：本批没有内容写入，回滚 = 重新部署上一个 release commit。
 
+**执行结果（2026-10-23，release `049fe32b7`）**：候选实例与切换后实例两次契约均 `ok: true`（178 页、694 条图片、525 条近似地址），并发探针 `failures: []`，缓存清理 30 路径 + 9 前缀成功。线上回读：sitemap 0 条 `changefreq`/`priority`；`WebSite` 仅 `/`；`/privacy` 无 `WebSite`；两个 hub 为 `CollectionPage` 且无 `SoftwareApplication`；`/ai-video-generation/text-to-video`、`/ai-twin`、`/ai-image-generation/colorway-variations` 各 1 个 `SoftwareApplication`；`/ai-actors/adrian` 为 `ProfilePage`+`Person`，facet 页仍为 `CollectionPage`。MyDreamShoots sitemap 仍输出 117 条 `changefreq`，`/privacy` 仍带 `WebSite`，隔离成立。
+
 ## 2. 第 1 批：性能与抓取（不需要内容决策）
 
 | 项 | 现状 | 目标 | 依赖 |

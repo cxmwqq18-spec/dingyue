@@ -189,4 +189,21 @@ TTFB 实测（发布机，顺序与并发探针，`/ai-video-generation`）：
 | 第 3 批（需产品决策） | S1 演员区收敛、S2 视频结构化数据 + video sitemap、S3 商业页 Offer | 内容与索引策略 |
 | 第 4 批 | S5 首页载荷瘦身 | 依赖 S1 的卡片数量决策 |
 
-本轮只做评估与口径修正，未改动线上数据、路由或页面内容。
+本轮评估阶段的改动只有审计口径修正，未改动线上数据、路由或页面内容。
+
+### 9.1 第 1 批发布回读（2026-10-23，release `049fe32b7`）
+
+代码发布（`--prebuilt-build`，停服期维护页配置预检通过，`--full-seo-contract` + `--verify-load` 均 `ok: true`，178 页契约、694 条图片、525 条近似地址全部通过）：
+
+| 项 | 发布前 | 发布后 | 方式 |
+| --- | --- | --- | --- |
+| sitemap `changefreq` / `priority` | 178/178 条都输出 | 0 / 0 | 按 host 剥离，其他站点字节不变 |
+| `WebSite` 出现页数 | 9 | 1（仅 `/`） | 渲染期只保留首页 |
+| `SearchAction` | 8 | 0 | 无公开搜索端点，删除 |
+| `SoftwareApplication` | 13（含首页） | 32 | 20 个工具详情页补齐 |
+| `CollectionPage` | 120 | 68 | 53 个演员详情改为 ProfilePage，图片目录补 1 |
+| `ProfilePage` / `Person` | 0 / 0 | 53 / 53 | 演员详情由页面自身 `kind/actor` 数据生成 |
+
+同类回归（392 页抓取）：`brokenLinks: 0`、`duplicateTitles: 0`、`duplicateDescriptions: 0`、`imgMissingAlt: 0`、`orphans: 0`、`non200: 0`。MyDreamShoots sitemap 仍输出 117 条 `changefreq`、`/privacy` 仍带 `WebSite`，隔离成立。
+
+仍未做：S7 `/platforms` 正文（内容改动，需字段级 manifest）。
