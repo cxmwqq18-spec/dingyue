@@ -44,7 +44,7 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 ### 部分完成
 
 - **C1 边缘 HTML 缓存**：线上站点 `www.aivideosugc.com` 是**独立 zone**，而既有边缘脚本配的是 `aidreamcapes.com` zone，这就是 HTML 长期 `cf-cache-status: DYNAMIC` 的根因。已改为按站点名解析 zone，缓存规则与 purge 集合同源于线上 sitemap（`scripts/lib/aidreamcapes-public-cache-surface.mjs`），发布脚本在重启后自动 purge（`scripts/purge-aidreamcapes-public-cache.mjs`，实测 30 个精确路径 + 9 个目录前缀 = 2 次请求）。**尚未开启缓存规则**：当前 `CLOUDFLARE_API_TOKEN` 无 rulesets 写权限（API 返回 `10405`），开启需要具备「Zone → Cache Rules → Edit」的凭据；purge 权限已验证可用。
-- **C3 图片**：首页首屏图改为 `fetchpriority="high"` + `eager`，并由渲染器自动产出 1 条 `preload`；`/ai-actors` 由 2 张高优先级收敛为 1 张；其余 176 张保持 lazy。`Img` 组件已支持 `srcSet`/`sizes`（缺省不输出，行为与之前逐字节一致），受控生成脚本可产出 126 张 320w 变体（DPR=1 时该批图片字节减少 76%）；**索引提交态为空**，需在 release 目录、构建之前生成变体才能启用，否则 srcset 指向不存在的文件。
+- **C3 图片**：首屏图 `fetchPriority="high"` + `eager`，渲染器自动产出 `preload`；`/ai-actors` 由 2 张高优先级收敛为 1 张，其余保持 lazy。`srcSet`/`sizes` 已随 `3a4254557` 上线：索引 126 条（`src/lib/aidreamcapes-v2-responsive-image-manifest.json`），变体文件随 release 发布，`sizes` 取自 CSS 实测宽度，最宽候选仍是原图，渲染尺寸不变。**线上实测（`32e29d9e0`）**：`/` 40 张、`/ai-video-generation` 46 张、`/ai-image-generation` 15 张、`/ai-actors` 65 张带 `srcSet`；`/templates` 0 张（模板卡图片未纳入索引）。剩余工作是把索引扩到全站其余图片。
 
 ### 本轮未改动
 
@@ -52,6 +52,52 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 - MyDreamShoots、Aidreamcapes EU、Aidreamshoots EU 的数据、路由、资产、SEO、导航与部署记录零改动（哈希断言）。
 
 ---
+
+## 0.2 当前状态快照（2026-10-23，线上 `32e29d9e0`）
+
+代码位置：本地 `main` = `origin/main` = `8bb244bf4`（已推送到 GitHub）。线上 release = `32e29d9e0`，与 `HEAD` 的差异只有 2 个文档文件（`git diff --stat 32e29d9e0..HEAD`），运行时代码完全一致。
+
+### 已上线（代码已合并 + 已部署 + 已回读）
+
+| 工作项 | 线上证据 |
+| --- | --- |
+| 缓存失效覆盖 + MAX=512 | 18/18 revision 触发；生产闸门 `ok: true`；`MemoryCurrent` 1.8–2.7 GB / 6 GB |
+| 元数据完整性（D1/D2/D3） | 178/178 页 `max-image-preview` 无缺、BreadcrumbList 无缺、JSON-LD 图片 0 相对路径、0 无法解析 |
+| 传输与渲染（P0-2） | 生产每页单组 `server-timing`；内部同进程 fetch，无重复 SSR |
+| 内链修复（B1/B2） | 41 条内容链字段级改写 + 84 条代码链直连规范地址；复爬 `brokenLinks: 0`、`redirectingTargets: 0` |
+| 退役行清理（A1–A4） | 69 行 CAS 删除（`revision 300→369`，行数 267→198）；69 个地址逐一复核 0 mismatch；sitemap 仍 178 |
+| 首页 description（D4） | 3 个渲染 pointer 同步，线上三处 meta 一致 |
+| 图片性能（C3） | 首屏 `fetchPriority=high`+`preload`；srcSet：`/` 40、视频 hub 46、图片 hub 15、演员页 65 张 |
+| 边缘提交即 purge（C1 的一半） | 每次发布后 2 次请求（30 路径 + 9 前缀），已实测 |
+| 导航菜单（Resources） | 去掉重复 templates 行，补 2 条质检入口 |
+| 地址规范化 | 视频工具改单数、详情地址规范化、674 个工作台地址退役，308/301 矩阵通过 |
+| 近似地址 301（E2/E3） | 525 条，候选实例与切换后实例各验一次 `verified:525, failures:0`；线上抽样 40 条全 301 |
+| 爬取面收口 | `/robots.txt` 对 `www.aivideosugc.com` 输出 4 条 Disallow；审计只比较可索引页，`duplicateTitles/Descriptions: 0` |
+| 平台描述外泄 | 根布局兜底描述按 host 分支，工作台显示门店文案 |
+| 发布流程 | 本地干净 worktree 预构建 + `--prebuilt-build`；nginx 维护页预检 + `error_page 502 503 504 =503` |
+
+### 未上线 / 未实现
+
+| 工作项 | 状态 | 阻塞点 |
+| --- | --- | --- |
+| C1 Cloudflare HTML 缓存规则 | purge 已上，规则未开 | token 缺 Zone → Cache Rules → Edit（`10405`） |
+| C2 首页 HTML 体积（838 KB） | 未做 | 需产品决策（首页卡片数量 / RSC 载荷瘦身） |
+| C3 srcset 全站覆盖 | 部分 | `/templates` 等模板卡图片未纳入索引 |
+| B3 导航 + 页脚链接压缩 | 未做 | 需信息架构决策 |
+| B4 216 个 noindex 媒体页内链策略 | 待决策 | 媒体详情索引策略 |
+| B5 sitemap video 条目 | 未做 | 依赖 B4 的媒体视频策略 |
+| D5 94 个演员/场景页正文深度 | 未做 | 内容生产决策（不批量生成） |
+| D6 / D7 / D9 | 待产品与内容确认 | — |
+| D8 GSC 数据 + 案例正文 | 前置工作 | — |
+| E1 host 归一化 2 跳 | 未做 | 边缘规则（同 Cloudflare 权限） |
+| E4 品牌域 410 | 现状保留 | 业务决策 |
+| 产品/URL 决策 6 项 | 待决策 | 演员页合并、媒体索引、模板 facet、987 模板详情、Photos 单复数、品牌域 |
+
+### 工作区未提交（不属于本轮，未部署）
+
+- AI provider 参考图上限：`next.config.mjs`、`prisma/schema.prisma`、`prisma/migrations/20261022170000_add_ai_provider_reference_limits/`、platform store/panel、`scripts/smoke-ai-provider-video-options.mjs` 等。
+- 媒体详情 prompt 文案：`src/components/storefront/aidreamcapes-v2/media-detail*.tsx|ts`、`scripts/aidreamcapes-video-prompts/`、`scripts/manifests/aidreamcapes-video-detail-prompts-*`、`docs/standards/aidreamcapes-video-detail-prompt-spec.md`。
+- `releases/`：本地构建产物（约 418 MB），不提交。
 
 ## 1. 总览
 
@@ -66,7 +112,7 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 | B5 | sitemap 无 video 条目 | P3 | 索引面 | 未解决 |
 | C1 | Cloudflare 不缓存 HTML | P1 | 性能 / 边缘 | **部分完成（2026-10-23：zone 纠正 + 提交即 purge 已上线；开规则缺 token 权限）** |
 | C2 | HTML 体积过大（首页 827 KB） | P1 | 性能 | 未解决 |
-| C3 | 全站 0 srcset、0 LCP fetchpriority | P2 | 性能 | **部分完成（2026-10-23：首屏 LCP 图已提权 + preload；srcset 代码路径就绪，变体待生成）** |
+| C3 | 全站 0 srcset、0 LCP fetchpriority | P2 | 性能 | **首屏与 hub 已上线（2026-10-23）：首页 40 / 视频 hub 46 / 图片 hub 15 / 演员页 65 张图带 srcSet，LCP 图 `fetchPriority=high`+preload；剩余：扩到全站其余图片** |
 | C4 | 发布机 fresh build 堆上限 OOM | P1 | 运维 | **已绕过（2026-10-23：本地干净 worktree 预构建 + `--prebuilt-build`）** |
 | D1 | 9 个可索引页缺 `max-image-preview:large` | P2 | 元数据 | **已修复并上线（2026-10-22）** |
 | D2 | 5 页缺 BreadcrumbList | P3 | 结构化数据 | **已修复并上线（2026-10-22）** |
