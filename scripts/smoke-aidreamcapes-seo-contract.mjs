@@ -377,6 +377,10 @@ assert.equal(new Set(pageUrls).size, pageUrls.length, "sitemap page URLs unique"
 assert(!pageUrls.some((url) => /\/login(?:[/?]|$)|\/404(?:[/?]|$)/i.test(url)), "private/404 URL in sitemap");
 assert(!sitemapXml.includes("engagement-photo image"), "stale sitemap image title");
 assert(!sitemapXml.includes("An intimate engagement announcement"), "stale sitemap image caption");
+// Google ignores changefreq and priority, and both were guesses rather than
+// measured signals, so the sitemap no longer publishes them.
+assert.doesNotMatch(sitemapXml, /<changefreq\b/i, "sitemap must not publish changefreq");
+assert.doesNotMatch(sitemapXml, /<priority\b/i, "sitemap must not publish priority");
 
 // The near slug table sends a visitor who typed one address away to the page
 // they meant. A source that answers today must never be redirected, and a
@@ -429,6 +433,30 @@ const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   if (siteV2) {
     assert(jsonLdBlocks.length > 0, `${url}: JSON-LD missing`);
     assert(jsonLdBlocks.every((block) => block["@context"] === "https://schema.org"), `${url}: JSON-LD @context`);
+    // The node type must follow what the route is, not the month its stored
+    // graph happened to be written. Directories list pages, tool pages describe
+    // an application, and an actor page profiles one person.
+    const nodes = jsonLdBlocks.flatMap(flattenJsonLd);
+    const types = new Set(nodes.flatMap((node) => (Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]])).filter(Boolean));
+    const path = new URL(url).pathname;
+    const isActorDetail = /^\/ai-actors\/[a-z0-9][a-z0-9-]*$/.test(path);
+    const isDirectory = ["/ai-actors", "/ai-video-generation", "/ai-image-generation"].includes(path)
+      || (path.startsWith("/ai-actors/") && !isActorDetail);
+    const isToolDetail = /^\/ai-(?:video|image)-generation\/[a-z0-9][a-z0-9-]*$/.test(path);
+    if (isActorDetail) {
+      assert(types.has("ProfilePage"), `${url}: actor detail must be a ProfilePage`);
+      assert(types.has("Person"), `${url}: actor detail must describe a Person`);
+      assert(!types.has("CollectionPage"), `${url}: actor detail is not a collection`);
+    }
+    if (isDirectory) {
+      assert(types.has("CollectionPage"), `${url}: directory must be a CollectionPage`);
+      assert(!types.has("SoftwareApplication"), `${url}: directory must not publish a SoftwareApplication`);
+    }
+    if (isToolDetail) {
+      assert(types.has("SoftwareApplication"), `${url}: tool page must publish a SoftwareApplication`);
+    }
+    assert.equal(types.has("WebSite"), path === "/", `${url}: the WebSite node belongs on the home page only`);
+    assert(!types.has("SearchAction"), `${url}: no SearchAction without a search endpoint`);
   }
   const actualImages = pageImageKeys(html, url);
   for (const image of entry["image:image"] || []) {

@@ -1690,19 +1690,21 @@ function websiteSchema(site: Site, routeMode: "host" | "path"): JsonLdNode {
     "@id": `${baseUrl}#website`,
     name: siteBrandName(site),
     url: baseUrl,
-    ...(site.id === "site_aidreamcapes"
-      ? {
-          potentialAction: {
-            "@type": "SearchAction",
-            target: `${baseUrl}search?q={search_term_string}`,
-            "query-input": "required name=search_term_string"
-          }
-        }
-      : {}),
+    // No SearchAction: Aidreamcapes has no public search endpoint (/search
+    // permanently redirects to /templates), so a SearchAction target would point
+    // at a redirect instead of a searchable URL.
     ...(site.id === "site_aidreamcapes_xby"
       ? { inLanguage: "fr-FR" }
       : isAidreamshootsStorefrontSite(site) ? { inLanguage: "es-ES" } : {})
   };
+}
+
+// A WebSite node describes the site itself, so Aidreamcapes publishes it once,
+// on the home page. Policy and other root pages reference it by @id instead of
+// repeating the node on every document.
+function websiteSchemaNodesForRoute(site: Site, routeMode: "host" | "path", pagePath: string): JsonLdNode[] {
+  if (site.id === "site_aidreamcapes" && pagePath !== "/") return [];
+  return [websiteSchema(site, routeMode)];
 }
 
 function storefrontApplicationSchema(input: JsonLdInput, title: string, description: string): JsonLdNode | undefined {
@@ -1794,6 +1796,144 @@ function withAidreamcapesAbsoluteSchemaUrls<T>(value: T, site: Site, routeMode: 
   return value;
 }
 
+// Aidreamcapes v2 pages store their JSON-LD graph together with the page copy.
+// Those graphs were written over several months, so the same page shape does not
+// always carry the same nodes: some tool pages publish a SoftwareApplication and
+// some do not, every actor detail page is typed as a CollectionPage, and a few
+// directory pages repeat the site level WebSite node. Normalize the graph while
+// rendering so the public document is consistent without rewriting stored copy.
+const AIDREAMCAPES_V2_HUB_PATHS = new Set(["/ai-actors", "/ai-video-generation", "/ai-image-generation"]);
+const AIDREAMCAPES_V2_DIRECTORY_KINDS = new Set([
+  "ai-actors-scene-hub",
+  "ai-actors-age-hub",
+  "ai-actors-scene",
+  "ai-actors-gender",
+  "ai-actors-age"
+]);
+
+function jsonLdNodeType(node: JsonLdNode): string {
+  const type = node["@type"];
+  return Array.isArray(type) ? type.map(String).join("|") : String(type ?? "");
+}
+
+function jsonLdNodeHasType(node: JsonLdNode, type: string): boolean {
+  return jsonLdNodeType(node).split("|").includes(type);
+}
+
+function aidreamcapesV2PageData(pageJson: ThemePageJson | undefined): Record<string, unknown> | undefined {
+  const section = sectionOfType(pageJson, "aidreamcapes_v2_page");
+  const data = (section?.settings as { data?: unknown } | undefined)?.data;
+  return data && typeof data === "object" && !Array.isArray(data) ? data as Record<string, unknown> : undefined;
+}
+
+function aidreamcapesV2ActorImage(value: unknown): { src: string; alt: string } | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+  const src = cleanText((value as Record<string, unknown>).src);
+  return src ? { src, alt: cleanText((value as Record<string, unknown>).alt) } : undefined;
+}
+
+function normalizeAidreamcapesV2StoredGraph(
+  input: JsonLdInput,
+  storedGraph: JsonLdNode[],
+  pagePath: string,
+  title: string,
+  description: string
+): JsonLdNode[] {
+  const publicPath = aidreamcapesPublicActorUrl(pagePath).split(/[?#]/)[0] || "/";
+  const url = absoluteUrl(input.site, input.routeMode, publicPath);
+  const baseUrl = storefrontBaseUrl(input.site, input.routeMode);
+  const data = aidreamcapesV2PageData(input.pageJson);
+  const kind = cleanText(data?.kind);
+  const isActorDetail = kind === "ai-actors-detail";
+  const isDirectory = !isActorDetail && (
+    AIDREAMCAPES_V2_HUB_PATHS.has(publicPath)
+    || AIDREAMCAPES_V2_DIRECTORY_KINDS.has(kind)
+    || publicPath.startsWith("/ai-actors/")
+  );
+  const isToolDetail = !isDirectory && /^\/ai-(?:video|image)-generation\/[a-z0-9][a-z0-9-]*$/.test(publicPath);
+  // The site level Organization and WebSite nodes are published by the renderer,
+  // so a stored copy would only duplicate them.
+  const nodes = storedGraph.filter((node) => (
+    !jsonLdNodeHasType(node, "Organization") && !jsonLdNodeHasType(node, "WebSite")
+  ));
+
+  if (isActorDetail) {
+    const actor = data?.actor && typeof data.actor === "object" && !Array.isArray(data.actor)
+      ? data.actor as Record<string, unknown>
+      : {};
+    const image = aidreamcapesV2ActorImage(actor.image);
+    const person: JsonLdNode = {
+      "@type": "Person",
+      "@id": `${url}#person`,
+      name: cleanText(actor.name) || cleanText(data?.label) || title,
+      description,
+      url,
+      ...(image
+        ? {
+            image: {
+              "@type": "ImageObject",
+              url: absoluteUrl(input.site, input.routeMode, image.src),
+              ...(image.alt ? { caption: image.alt } : {})
+            }
+          }
+        : {}),
+      jobTitle: "AI actor",
+      ...(cleanText(actor.scene) ? { knowsAbout: cleanText(actor.scene) } : {})
+    };
+    // An actor page is the profile of one person, not a collection.
+    return [
+      {
+        "@type": "ProfilePage",
+        "@id": `${url}#webpage`,
+        name: title,
+        description,
+        url,
+        inLanguage: "en",
+        mainEntity: { "@id": `${url}#person` },
+        isPartOf: { "@id": `${baseUrl}#website` },
+        publisher: { "@id": `${baseUrl}#organization` }
+      },
+      person,
+      ...nodes.filter((node) => !jsonLdNodeHasType(node, "CollectionPage"))
+    ];
+  }
+
+  if (isDirectory) {
+    // Directories list pages. A SoftwareApplication node belongs on the tool
+    // page it describes, not on the index that links to it.
+    const next = nodes.filter((node) => !jsonLdNodeHasType(node, "SoftwareApplication"));
+    if (!next.some((node) => jsonLdNodeHasType(node, "CollectionPage"))) {
+      next.push({
+        "@type": "CollectionPage",
+        "@id": `${url}#webpage`,
+        name: title,
+        description,
+        url,
+        inLanguage: "en",
+        isPartOf: { "@id": `${baseUrl}#website` },
+        publisher: { "@id": `${baseUrl}#organization` }
+      });
+    }
+    return next;
+  }
+
+  if (isToolDetail && !nodes.some((node) => jsonLdNodeHasType(node, "SoftwareApplication"))) {
+    const label = cleanText(data?.label);
+    nodes.push({
+      "@type": "SoftwareApplication",
+      "@id": `${url}#application`,
+      name: label ? `${siteBrandName(input.site)} ${label}` : title,
+      description,
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web",
+      url,
+      inLanguage: "en",
+      publisher: { "@id": `${baseUrl}#organization` }
+    });
+  }
+  return nodes;
+}
+
 function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): JsonLdNode[] {
   const seo = input.pageJson?.seo as { title?: unknown; description?: unknown } | undefined;
   const title = cleanText(seo?.title) || pageTitle(input.site, input.page, input.context);
@@ -1803,18 +1943,17 @@ function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): Js
   // from the live route instead of editing stored content: nested pages get
   // Home > page, and the home page stays without a one-item breadcrumb.
   const pagePath = input.context?.seo.canonicalPath ?? input.pagePath;
-  const hasStoredBreadcrumb = storedGraph.some((node) => {
-    const type = node?.["@type"];
-    return Array.isArray(type) ? type.includes("BreadcrumbList") : type === "BreadcrumbList";
-  });
+  const publicPath = aidreamcapesPublicActorUrl(pagePath).split(/[?#]/)[0] || "/";
+  const hasStoredBreadcrumb = storedGraph.some((node) => jsonLdNodeHasType(node, "BreadcrumbList"));
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(input.site, input.routeMode, input.context, input.pagePath),
+    publicPath === "/" ? websiteSchema(input.site, input.routeMode) : undefined,
     storefrontApplicationSchema(input, title, description),
-    ...(hasStoredBreadcrumb || pagePath.split("/").filter(Boolean).length === 0
+    ...(hasStoredBreadcrumb || publicPath.split("/").filter(Boolean).length === 0
       ? []
       : [breadcrumbs(input.site, input.routeMode, pagePath, title, input.publishedRoutePaths)]),
     ...withAidreamcapesAbsoluteSchemaUrls(
-      withAidreamcapesOrigin(storedGraph.filter((node) => node["@type"] !== "Organization")),
+      withAidreamcapesOrigin(normalizeAidreamcapesV2StoredGraph(input, storedGraph, pagePath, title, description)),
       input.site,
       input.routeMode
     )
@@ -1841,7 +1980,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const description = euRouteSeo?.description || seoQualityOverride?.description || pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
     organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath),
-    websiteSchema(resolvedInput.site, resolvedInput.routeMode),
+    ...websiteSchemaNodesForRoute(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath),
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),
     publishedStandardPageSchema(resolvedInput, title, description),
@@ -1969,7 +2108,7 @@ export function buildToolDirectoryJsonLd({
   };
   const graph: JsonLdNode[] = [
     organizationSchema(site, routeMode, context, pagePath),
-    websiteSchema(site, routeMode),
+    ...websiteSchemaNodesForRoute(site, routeMode, pagePath),
     ...(isAidreamshootsStorefrontSite(site)
       ? [spanishStorefrontWebPageSchema({ site, page: context.page, pageJson, pagePath, routeMode, context }, title, description)].filter((node): node is JsonLdNode => Boolean(node))
       : []),
@@ -2052,7 +2191,7 @@ export function buildCollectionDirectoryJsonLd({
       "@context": "https://schema.org",
       "@graph": [
         organizationSchema(site, routeMode, context, pagePath),
-        websiteSchema(site, routeMode),
+        ...websiteSchemaNodesForRoute(site, routeMode, pagePath),
         breadcrumbs(site, routeMode, pagePath, content.label),
         {
           "@type": "WebPage",
