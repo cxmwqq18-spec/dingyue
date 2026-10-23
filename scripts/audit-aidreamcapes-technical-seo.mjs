@@ -156,6 +156,12 @@ function parsePage(html, url) {
   const h3 = [...html.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>/gi)].map((match) => textOnly(match[1])).filter(Boolean);
   const text = textOnly(html);
   const words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  // The whole page includes the site wide navigation and footer, which every
+  // page repeats. The main column is what a visitor came for and what a search
+  // engine reads as this page's own copy, so it is measured separately.
+  const mainHtml = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] || "";
+  const mainText = mainHtml ? textOnly(mainHtml) : "";
+  const mainWords = mainText ? mainText.split(/\s+/).filter(Boolean).length : 0;
   const lang = attr(html.match(/<html\b[^>]*>/i)?.[0] || "", "lang");
   const viewport = metaContent(html, "viewport");
 
@@ -180,7 +186,10 @@ function parsePage(html, url) {
   const jsonLdTypes = [...new Set(jsonLd.flatMap((block) => block.nodes || []).flatMap((node) => (Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]]).filter(Boolean).map(String)))].sort();
 
   const images = [...html.matchAll(/<img\b[^>]*>/gi)].map((match) => match[0]);
-  const imgMissingAlt = images.filter((tag) => !/\balt\s*=/.test(tag) || attr(tag, "alt") === "").length;
+  // An empty alt is the correct markup for a decorative picture, so only a
+  // picture with no alt attribute at all is missing one.
+  const imgMissingAlt = images.filter((tag) => !/\balt\s*=/.test(tag)).length;
+  const imgDecorativeAlt = images.filter((tag) => /\balt\s*=\s*["']\s*["']/.test(tag)).length;
   const imgLazy = images.filter((tag) => /loading\s*=\s*["']lazy/i.test(tag)).length;
   const imgNextGen = images.filter((tag) => /\.(webp|avif)(\?|$|["'])/i.test(attr(tag, "src") || attr(tag, "srcset"))).length;
 
@@ -218,6 +227,7 @@ function parsePage(html, url) {
     h2Count: h2.length,
     h3Count: h3.length,
     words,
+    mainWords,
     textHtmlRatio: html.length ? Math.round((text.length / html.length) * 1000) / 10 : 0,
     jsonLdTypes,
     jsonLdErrors: jsonLd.filter((block) => !block.ok),
@@ -228,6 +238,7 @@ function parsePage(html, url) {
     twitterCard: metaContent(html, "twitter:card"),
     images: images.length,
     imgMissingAlt,
+    imgDecorativeAlt,
     imgLazy,
     imgNextGen,
     linkCount: anchors.length,
@@ -442,6 +453,7 @@ for (const page of htmlPages) {
 }
 
 const thinPages = htmlPages.filter((page) => page.words < 300).map((page) => ({ url: page.url, words: page.words }));
+const thinMainPages = htmlPages.filter((page) => page.mainWords > 0 && page.mainWords < 300).map((page) => ({ url: page.url, mainWords: page.mainWords, words: page.words }));
 const longTitles = htmlPages.filter((page) => page.titleLength > 60).map((page) => ({ url: page.url, length: page.titleLength, title: page.title }));
 const shortTitles = htmlPages.filter((page) => page.titleLength > 0 && page.titleLength < 30).map((page) => ({ url: page.url, length: page.titleLength, title: page.title }));
 const longDescriptions = htmlPages.filter((page) => page.descriptionLength > 160).map((page) => ({ url: page.url, length: page.descriptionLength }));
@@ -474,6 +486,9 @@ const report = {
     duplicateTitles: duplicateTitles.length,
     duplicateDescriptions: duplicateDescriptions.length,
     thinPages: thinPages.length,
+    thinMainPages: thinMainPages.length,
+    imgMissingAlt: htmlPages.reduce((sum, page) => sum + page.imgMissingAlt, 0),
+    imgDecorativeAlt: htmlPages.reduce((sum, page) => sum + page.imgDecorativeAlt, 0),
     orphans: orphans.length,
     unreachableFromHome: unreachable.length,
     brokenLinks: brokenLinks.length,
@@ -495,6 +510,7 @@ const report = {
     duplicateTitles,
     duplicateDescriptions,
     thinPages,
+    thinMainPages,
     orphans,
     unreachableFromHome: unreachable,
     depthHistogram,
@@ -531,6 +547,7 @@ const report = {
     h2Count: page.h2Count,
     h3Count: page.h3Count,
     words: page.words,
+    mainWords: page.mainWords,
     textHtmlRatio: page.textHtmlRatio,
     jsonLdTypes: page.jsonLdTypes,
     jsonLdErrors: page.jsonLdErrors,
@@ -540,6 +557,7 @@ const report = {
     twitterCard: page.twitterCard,
     images: page.images,
     imgMissingAlt: page.imgMissingAlt,
+    imgDecorativeAlt: page.imgDecorativeAlt,
     imgLazy: page.imgLazy,
     imgNextGen: page.imgNextGen,
     internalLinkCount: page.internalLinkCount,
