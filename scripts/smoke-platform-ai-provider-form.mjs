@@ -42,6 +42,18 @@ vm.runInNewContext(compiled, {
       IMAGE_PROVIDER_QUALITIES: ["auto", "low", "medium", "high"], IMAGE_PROVIDER_RESOLUTIONS: ["1K", "2K"]
     };
     if (name === "@/lib/video-provider-family") return {};
+    if (name === "@/lib/ai-provider-video-options") return {
+      AI_PROVIDER_REFERENCE_LIMIT_MAX: 20,
+      AI_PROVIDER_VIDEO_ASPECT_OPTIONS: ["9:16", "16:9", "1:1", "4:3", "3:4", "3:2", "2:3", "21:9"],
+      AI_PROVIDER_VIDEO_DURATION_OPTIONS: [5, 6, 10, 15, 30],
+      AI_PROVIDER_VIDEO_RESOLUTION_DEFAULTS: ["480p", "720p", "1080p"],
+      AI_PROVIDER_VIDEO_RESOLUTION_OPTIONS: ["480p", "720p", "1080p"]
+    };
+    if (name === "@/lib/ai-provider-pricing") return {
+      resolveAiProviderPrice: (input) => ({
+        credits: input.priceEnabled ? 0 : null, baseCredits: 0, appliedDimension: "base", inputSurcharge: 0, unitCredits: 0, outputCount: 1
+      })
+    };
     throw new Error(`Unexpected dependency: ${name}`);
   }
 }, { filename: sourcePath });
@@ -64,7 +76,7 @@ assert.match(formValidator, /action === "test" && !form\.apiKey\.trim\(\) && !fo
 
 const imageHtml = renderEditor("image");
 assert.match(imageHtml, /图片能力/);
-assert.match(imageHtml, /platform-ai-provider-models/);
+assert.match(imageHtml, /自定义模型 ID/);
 assert.match(imageHtml, /placeholder="https:\/\/api\.example\.com\/v1"/);
 assert.match(imageHtml, /API Key/);
 assert.doesNotMatch(imageHtml, /视频模型能力|音频供应商配置|文本模型能力/);
@@ -73,6 +85,8 @@ assert.match(videoHtml, /视频模型能力/);
 assert.match(videoHtml, /value="huitu-openapi"/);
 assert.match(videoHtml, /支持时长/);
 assert.match(videoHtml, /支持画幅/);
+assert.match(videoHtml, /支持分辨率/);
+assert.match(videoHtml, /参考图[\s\S]*参考视频[\s\S]*参考音频/);
 const textHtml = renderEditor("text");
 assert.match(textHtml, /文本模型能力/);
 assert.doesNotMatch(textHtml, /视频模型能力|图片能力|音频供应商配置/);

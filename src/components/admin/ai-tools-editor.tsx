@@ -119,6 +119,25 @@ function providerFor(app: SiteAiApp): AiProviderConfig {
   );
 }
 
+/** 参考视频/音频数量写入 assetRules.typeLimits；空值清除限制，0 表示不允许。 */
+function typeLimitsFor(
+  rules: AiWorkflowStep["assetRules"] | undefined,
+  pattern: string,
+  rawValue: string,
+): Record<string, { min?: number; max?: number }> {
+  const limits: Record<string, { min?: number; max?: number }> = {
+    ...(rules?.typeLimits ?? {}),
+  };
+  const current = limits[pattern] ?? {};
+  if (rawValue.trim() === "") {
+    delete limits[pattern];
+    return limits;
+  }
+  const parsed = Math.max(0, Math.min(20, Math.trunc(Number(rawValue) || 0)));
+  limits[pattern] = { ...current, max: parsed };
+  return limits;
+}
+
 function assetStep(config: AiWorkflowConfig): AiWorkflowStep {
   return (
     config.steps.find((step) => step.kind === "asset_select") ?? config.steps[0]
@@ -428,6 +447,8 @@ export function AiToolsEditor({
           const uploadStep = assetStep(workflow);
           const minAssets = uploadStep.assetRules?.min ?? 1;
           const maxAssets = uploadStep.assetRules?.max ?? 4;
+          const videoLimit = uploadStep.assetRules?.typeLimits?.["video/*"]?.max;
+          const audioLimit = uploadStep.assetRules?.typeLimits?.["audio/*"]?.max;
           return (
             <div
               className="rounded-[8px] border border-[var(--admin-border-soft)] bg-white p-4"
@@ -536,6 +557,62 @@ export function AiToolsEditor({
                       }
                       type="number"
                       value={maxAssets}
+                    />
+                  </label>
+                  <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                    参考视频数量
+                    <input
+                      className="inputtext"
+                      min={0}
+                      max={20}
+                      onChange={(event) =>
+                        updateWorkflow(app.id, (config) => ({
+                          ...config,
+                          steps: config.steps.map((step) =>
+                            step.kind === "asset_select"
+                              ? {
+                                  ...step,
+                                  assetRules: {
+                                    ...(step.assetRules ?? {}),
+                                    typeLimits: typeLimitsFor(step.assetRules, "video/*", event.target.value),
+                                  },
+                                }
+                              : step,
+                          ),
+                        }))
+                      }
+                      placeholder="不限制"
+                      title="顾客单次可上传的参考视频条数；0 表示不允许，留空表示不限制"
+                      type="number"
+                      value={videoLimit ?? ""}
+                    />
+                  </label>
+                  <label className="grid gap-1 text-[12px] font-medium text-[#475467]">
+                    参考音频数量
+                    <input
+                      className="inputtext"
+                      min={0}
+                      max={20}
+                      onChange={(event) =>
+                        updateWorkflow(app.id, (config) => ({
+                          ...config,
+                          steps: config.steps.map((step) =>
+                            step.kind === "asset_select"
+                              ? {
+                                  ...step,
+                                  assetRules: {
+                                    ...(step.assetRules ?? {}),
+                                    typeLimits: typeLimitsFor(step.assetRules, "audio/*", event.target.value),
+                                  },
+                                }
+                              : step,
+                          ),
+                        }))
+                      }
+                      placeholder="不限制"
+                      title="顾客单次可上传的参考音频条数；0 表示不允许，留空表示不限制"
+                      type="number"
+                      value={audioLimit ?? ""}
                     />
                   </label>
                 </div>

@@ -1452,6 +1452,16 @@ async function createGenerationJobInTx(tx: Tx, params: {
         throw new StoreError("unsupported_video_frame_type", 400);
       }
     }
+    // 站点后台按工具维护的参考素材数量上限（参考视频 / 参考音频）。
+    const workflowConfig = jsonObject<AiWorkflowConfig>(siteAiApp.workflowConfig) ?? defaultWorkflowConfig(siteAiApp);
+    const typeLimits = assetRules(workflowConfig).typeLimits;
+    for (const [pattern, limit] of Object.entries(typeLimits ?? {})) {
+      if (!limit) continue;
+      const prefix = pattern.replace(/\/\*$/, "/");
+      const count = validAssets.filter((asset) => asset.mimeType.startsWith(prefix)).length;
+      if (limit.max !== undefined && count > limit.max) throw new StoreError("too_many_reference_assets", 400);
+      if (limit.min !== undefined && count < limit.min) throw new StoreError("not_enough_reference_assets", 400);
+    }
   }
   const resolvedFields = videoTheme
     ? {

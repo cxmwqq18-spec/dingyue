@@ -34,6 +34,14 @@ import {
   type ImageProviderResolution
 } from "@/lib/tokengo-image";
 import type { AiProviderProtocolSetting } from "@/lib/video-provider-family";
+import {
+  AI_PROVIDER_REFERENCE_LIMIT_MAX,
+  AI_PROVIDER_VIDEO_ASPECT_OPTIONS,
+  AI_PROVIDER_VIDEO_DURATION_OPTIONS,
+  AI_PROVIDER_VIDEO_RESOLUTION_DEFAULTS,
+  AI_PROVIDER_VIDEO_RESOLUTION_OPTIONS
+} from "@/lib/ai-provider-video-options";
+import { resolveAiProviderPrice } from "@/lib/ai-provider-pricing";
 
 type AiProviderRow = {
   id: string;
@@ -51,6 +59,8 @@ type AiProviderRow = {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  maxVideoInputs?: number;
+  maxAudioInputs?: number;
   imageAspectRatio: ImageProviderAspectRatio;
   imageResolution: ImageProviderResolution;
   imageQuality: ImageProviderQuality;
@@ -59,6 +69,7 @@ type AiProviderRow = {
   videoModelFamily?: "auto" | "grok" | "gemini";
   videoDurations?: number[];
   videoAspectRatios?: string[];
+  videoResolutions?: string[];
   videoNativeSpeech?: boolean | null;
   priceEnabled?: boolean;
   priceCredits?: number;
@@ -125,6 +136,7 @@ type ProviderFormState = {
   videoModelFamily: "auto" | "grok" | "gemini";
   videoDurations: number[];
   videoAspectRatios: string[];
+  videoResolutions: string[];
   videoNativeSpeech: boolean | null;
   priority: number;
   makeCurrent: boolean;
@@ -132,6 +144,8 @@ type ProviderFormState = {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  maxVideoInputs: number;
+  maxAudioInputs: number;
   imageAspectRatio: ImageProviderAspectRatio;
   imageResolution: ImageProviderResolution;
   imageQuality: ImageProviderQuality;
@@ -159,11 +173,11 @@ const videoProtocolOptions: Array<[AiProviderProtocolSetting, string]> = [
   ["tokengo-media", "TokenGo Media"]
 ];
 
-/** 视频可选档位：平台支持范围内，允许运营按上游能力增减。 */
-const durationOptions = [5, 6, 10, 15, 30];
-const aspectOptions = ["9:16", "16:9", "1:1", "4:3", "3:4", "3:2", "2:3", "21:9"];
+/** 视频可选档位：与 API 校验、存储归一化共用同一份选项。 */
+const durationOptions: number[] = [...AI_PROVIDER_VIDEO_DURATION_OPTIONS];
+const aspectOptions: string[] = [...AI_PROVIDER_VIDEO_ASPECT_OPTIONS];
 /** 视频分辨率档位（独立于图片分辨率）。 */
-const videoResolutionOptions = ["480p", "720p", "1080p"];
+const videoResolutionOptions: string[] = [...AI_PROVIDER_VIDEO_RESOLUTION_OPTIONS];
 /** 图片画质档位。 */
 const imageQualityOptions = ["auto", "low", "medium", "high"] as const;
 
@@ -171,9 +185,10 @@ function emptyProviderForm(providerType: PlatformAiProviderType, priority = 0): 
   return {
     id: "", label: "", aiUrl: "", apiKey: "", modelType: "", providerType,
     apiProtocol: "auto", videoModelFamily: "auto", videoDurations: [6, 10, 15],
-    videoAspectRatios: ["9:16", "1:1", "16:9"], videoNativeSpeech: null, priority,
+    videoAspectRatios: ["9:16", "1:1", "16:9"], videoResolutions: [...AI_PROVIDER_VIDEO_RESOLUTION_DEFAULTS], videoNativeSpeech: null, priority,
     makeCurrent: true, enabled: true, supportsGenerationN: false,
     supportsEditN: providerType === "image", maxImagesPerRequest: providerType === "image" ? 8 : 1,
+    maxVideoInputs: 1, maxAudioInputs: 1,
     imageAspectRatio: "auto", imageResolution: "1K", imageQuality: "low", imageOutputFormat: "png",
     priceEnabled: false, priceCredits: 0,
     priceVideoDurations: {}, priceVideoResolutions: {}, priceImageQualities: {}, priceImageResolutions: {},
@@ -192,12 +207,15 @@ function providerForm(provider: AiProviderRow): ProviderFormState {
     videoModelFamily: provider.videoModelFamily ?? "auto",
     videoDurations: provider.videoDurations?.length ? provider.videoDurations : [6, 10, 15],
     videoAspectRatios: provider.videoAspectRatios?.length ? provider.videoAspectRatios : ["9:16", "1:1", "16:9"],
+    videoResolutions: provider.videoResolutions?.length ? provider.videoResolutions : [...AI_PROVIDER_VIDEO_RESOLUTION_DEFAULTS],
     videoNativeSpeech: provider.videoNativeSpeech ?? null,
     makeCurrent: provider.isCurrent,
     enabled: provider.enabled,
     supportsGenerationN: provider.supportsGenerationN,
     supportsEditN: provider.supportsEditN,
     maxImagesPerRequest: provider.maxImagesPerRequest || 1,
+    maxVideoInputs: provider.maxVideoInputs ?? 1,
+    maxAudioInputs: provider.maxAudioInputs ?? 1,
     imageAspectRatio: provider.imageAspectRatio ?? "auto",
     imageResolution: provider.imageResolution ?? "1K",
     imageQuality: provider.imageQuality ?? "low",
@@ -229,6 +247,10 @@ function errorLabel(code?: string): string {
     missing_ai_provider_api_key: "请输入 API Key，或编辑已有供应商时保留原密钥。",
     missing_ai_provider_model_type: "请输入模型 ID。",
     invalid_ai_provider_priority: "调用优先级必须是 0 或更大的整数。",
+    invalid_ai_provider_video_durations: "视频时长必须是 1–120 秒之间的整数，至少保留一个。",
+    invalid_ai_provider_video_aspects: "视频画幅格式不正确，请使用「宽:高」格式，例如 9:16。",
+    invalid_ai_provider_video_resolutions: "视频分辨率格式不正确，请使用 720p 这类档位，至少保留一个。",
+    invalid_ai_provider_reference_limit: `参考素材上限必须是 0–${AI_PROVIDER_REFERENCE_LIMIT_MAX} 的整数（0 表示不支持）。`,
     missing_ai_provider: "请选择 AI 供应商。",
     ai_provider_not_found: "AI 供应商不存在。",
     ai_provider_delete_last: "至少需要保留一个 AI 供应商。",
@@ -244,7 +266,8 @@ function normalizeProviderPriority(value: unknown, fallback = 0) {
 function providerCapabilityText(provider: AiProviderRow) {
   if (provider.providerType === "video") {
     const speech = provider.videoNativeSpeech === null || provider.videoNativeSpeech === undefined ? "音频自动识别" : provider.videoNativeSpeech ? "原生音频" : "无原生音频";
-    return `${(provider.videoDurations ?? [6, 10, 15]).join("/")}s · ${(provider.videoAspectRatios ?? ["9:16", "1:1", "16:9"]).join("/")} · ${speech}`;
+    const references = `参考素材 图${provider.maxImagesPerRequest}/视频${provider.maxVideoInputs ?? 1}/音频${provider.maxAudioInputs ?? 1}`;
+    return `${(provider.videoDurations ?? [6, 10, 15]).join("/")}s · ${(provider.videoAspectRatios ?? ["9:16", "1:1", "16:9"]).join("/")} · ${(provider.videoResolutions ?? [...AI_PROVIDER_VIDEO_RESOLUTION_DEFAULTS]).join("/")} · ${speech} · ${references}`;
   }
   if (provider.providerType === "image") {
     const mode = provider.supportsEditN ? "支持图生图" : "纯文生图";
@@ -300,6 +323,204 @@ function currentProviderIdsFromProviders(providers: AiProviderRow[]): Record<Pla
   })) as Record<PlatformAiProviderType, string>;
 }
 
+/** 能力多选：与时长/画幅一致的轻量按钮组，避免复选框换行后高度参差。 */
+function CapabilityOptionGroup<T extends string | number>({
+  label,
+  options,
+  selected,
+  format = (value) => String(value),
+  onToggle,
+  addPlaceholder,
+  onAdd
+}: {
+  label: string;
+  options: readonly T[];
+  selected: readonly T[];
+  format?: (value: T) => string;
+  onToggle: (value: T) => void;
+  addPlaceholder?: string;
+  /** 返回错误文案表示添加失败；返回 null 表示已写入表单。 */
+  onAdd?: (rawValue: string) => string | null;
+}) {
+  const [draft, setDraft] = useState("");
+  const [draftError, setDraftError] = useState("");
+  // 供应商可能已保存自定义档位；把它们追加进选项，保证能显示也能取消勾选。
+  const extras = selected.filter((value) => !options.includes(value));
+  const effectiveOptions = [...options, ...extras];
+  const submitDraft = () => {
+    if (!onAdd) return;
+    const failure = onAdd(draft);
+    if (failure) {
+      setDraftError(failure);
+      return;
+    }
+    setDraft("");
+    setDraftError("");
+  };
+  return (
+    <div className="flex flex-col rounded-lg border border-[#e5eaf1] bg-[#fbfcfe] p-3">
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <span className="text-[12px] font-medium text-[#475467]">{label}</span>
+        <span className="font-mono text-[10px] text-[#98a2b3]">已选 {selected.length}</span>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {effectiveOptions.map((option) => {
+          const active = selected.includes(option);
+          const custom = !options.includes(option);
+          return (
+            <button
+              aria-pressed={active}
+              className={`inline-flex h-7 items-center rounded-md border px-2.5 text-[12px] font-medium transition ${active ? "border-[#245bd3] bg-[#eef4ff] text-[#245bd3]" : "border-[#e2e8f0] bg-white text-[#667085] hover:border-[#c7d2e4] hover:text-[#344054]"} ${custom ? "border-dashed" : ""}`}
+              key={String(option)}
+              onClick={() => onToggle(option)}
+              title={custom ? "自定义档位，再次点击取消勾选" : undefined}
+              type="button"
+            >
+              {format(option)}
+            </button>
+          );
+        })}
+      </div>
+      {onAdd ? (
+        <div className="mt-2 border-t border-dashed border-[#e5eaf1] pt-2">
+          <div className="flex gap-1.5">
+            <input
+              aria-label={`${label}自定义档位`}
+              className="erp-input h-7 min-w-0 flex-1 text-[12px]"
+              onChange={(event) => { setDraft(event.target.value); setDraftError(""); }}
+              onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitDraft(); } }}
+              placeholder={addPlaceholder}
+              type="text"
+              value={draft}
+            />
+            <button className="inline-flex h-7 shrink-0 items-center rounded-md border border-[#c7d2e4] bg-white px-2 text-[12px] font-medium text-[#344054] hover:border-[#245bd3] hover:text-[#245bd3]" onClick={submitDraft} type="button">+ 添加</button>
+          </div>
+          <p className={`mt-1 min-h-[14px] text-[10px] leading-[14px] ${draftError ? "text-[#b42318]" : "text-[#98a2b3]"}`}>{draftError || "可添加供应商支持的任意档位，格式不合法会提示"}</p>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** 档位价表：固定两列，输入框右对齐，留空即回落到基础价。 */
+function PriceTierTable({
+  title,
+  caption,
+  rows,
+  matrix,
+  onChange
+}: {
+  title: string;
+  caption: string;
+  rows: Array<{ key: string; label: string }>;
+  matrix: Record<string, number>;
+  onChange: (key: string, rawValue: string) => void;
+}) {
+  return (
+    <div className="overflow-hidden rounded-lg border border-[#e5eaf1]">
+      <div className="flex items-baseline justify-between gap-2 border-b border-[#e5eaf1] bg-[#f8fafc] px-3 py-2">
+        <span className="text-[12px] font-semibold text-[#344054]">{title}</span>
+        <span className="text-[10px] leading-4 text-[#98a2b3]">{caption}</span>
+      </div>
+      <table className="w-full table-fixed">
+        <colgroup><col /><col className="w-[104px]" /></colgroup>
+        <tbody>
+          {rows.map((row) => (
+            <tr className="border-t border-[#edf1f6] first:border-t-0" key={row.key}>
+              <td className="px-3 py-1.5 text-[12px] text-[#475467]">{row.label}</td>
+              <td className="px-2 py-1.5">
+                <input
+                  aria-label={`${title}：${row.label}`}
+                  className="erp-input text-right"
+                  min={0}
+                  onChange={(event) => onChange(row.key, event.target.value)}
+                  placeholder="基础价"
+                  type="number"
+                  value={matrix[row.key] ?? ""}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/** 基础积分/附加费输入：统一高度与单位位置，避免同一行控件高低不一。 */
+function PriceField({
+  label,
+  unit,
+  hint,
+  value,
+  onChange
+}: {
+  label: string;
+  unit: string;
+  hint: string;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <label className="grid gap-1.5 rounded-lg border border-[#e5eaf1] bg-white px-3 py-2">
+      <span className="flex items-baseline justify-between gap-2">
+        <span className="text-[12px] font-medium text-[#475467]">{label}</span>
+        <span className="shrink-0 text-[10px] text-[#98a2b3]">{unit}</span>
+      </span>
+      <input className="erp-input text-right" min={0} onChange={(event) => onChange(Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={value} />
+      <span className="text-[10px] leading-4 text-[#98a2b3]">{hint}</span>
+    </label>
+  );
+}
+
+/** 用与扣费完全相同的纯函数试算，避免说明与实际价格不一致。 */
+function pricePreviewText(form: ProviderFormState): { headline: string; detail: string } {
+  if (!form.priceEnabled) {
+    return { headline: "未启用模型级计价", detail: "当前沿用主题价与应用价，下方档位不会生效。" };
+  }
+  const capabilityType = form.providerType;
+  const durationSeconds = form.providerType === "video"
+    ? [...form.videoDurations].sort((left, right) => left - right)[0] ?? 6
+    : null;
+  const resolution = form.providerType === "video"
+    ? form.videoResolutions[0] ?? null
+    : form.providerType === "image"
+      ? form.imageResolution
+      : null;
+  const quality = form.providerType === "image" ? form.imageQuality : null;
+  const breakdown = resolveAiProviderPrice({
+    ...form,
+    capabilityType,
+    durationSeconds,
+    resolution,
+    quality,
+    imageInputCount: 0,
+    videoInputCount: 0,
+    videoInputSeconds: 0,
+    audioInputCount: 0,
+    audioInputSeconds: 0,
+    outputCount: 1
+  });
+  if (breakdown.credits === null) return { headline: "未启用模型级计价", detail: "当前沿用主题价与应用价，下方档位不会生效。" };
+  const example = form.providerType === "video"
+    ? `${durationSeconds} 秒 · ${resolution ?? "默认分辨率"}`
+    : form.providerType === "image"
+      ? `${resolution ?? "默认分辨率"} · ${form.imageQuality}`
+      : "单次生成";
+  const source = ({ base: "基础价", duration: "时长档位价", resolution: "分辨率档位价", quality: "画质档位价", image_resolution: "分辨率档位价" } as Record<string, string>)[breakdown.appliedDimension] ?? "基础价";
+  const surcharges = [
+    form.priceImageInput > 0 ? `参考图 +${form.priceImageInput}/张` : "",
+    form.priceVideoInput > 0 ? `参考视频 +${form.priceVideoInput}/条` : "",
+    form.priceVideoInputPerSecond > 0 ? `参考视频 +${form.priceVideoInputPerSecond}/秒` : "",
+    form.priceAudioInput > 0 ? `参考音频 +${form.priceAudioInput}/条` : "",
+    form.priceAudioInputPerSecond > 0 ? `参考音频 +${form.priceAudioInputPerSecond}/秒` : ""
+  ].filter(Boolean);
+  return {
+    headline: `示例：${example} = ${breakdown.credits} 积分`,
+    detail: `命中${source}${surcharges.length ? `；参考素材另计：${surcharges.join("、")}` : "；参考素材不额外计费"}。`
+  };
+}
+
 function ProviderEditor({
   mode,
   form,
@@ -338,13 +559,35 @@ function ProviderEditor({
   const update = <K extends keyof ProviderFormState>(key: K, value: ProviderFormState[K]) => {
     setForm((current) => current ? { ...current, [key]: value } : current);
   };
-  const toggleNumber = (key: "videoDurations" | "videoAspectRatios", value: number | string) => {
+  const toggleNumber = (key: "videoDurations" | "videoAspectRatios" | "videoResolutions", value: number | string) => {
     setForm((current) => {
       if (!current) return current;
       const list = current[key] as Array<number | string>;
       const next = list.includes(value) ? list.filter((entry) => entry !== value) : [...list, value];
       return { ...current, [key]: next } as ProviderFormState;
     });
+  };
+  // 自定义档位与接口校验共用同一套规则，避免“后台能加、保存被拒”。
+  const addCustomNumber = (key: "videoDurations", rawValue: string): string | null => {
+    const parsed = Math.trunc(Number(rawValue.trim()));
+    if (!Number.isSafeInteger(parsed) || parsed < 1 || parsed > 120) return "时长需为 1–120 之间的整数秒，例如 8";
+    if ((form.videoDurations as number[]).includes(parsed)) return `${parsed} 秒已在列表中`;
+    setForm((current) => current ? { ...current, videoDurations: [...current.videoDurations, parsed] } : current);
+    return null;
+  };
+  const addCustomAspect = (rawValue: string): string | null => {
+    const value = rawValue.trim();
+    if (!/^\d{1,2}:\d{1,2}$/.test(value)) return "画幅需为「宽:高」格式，例如 4:5";
+    if (form.videoAspectRatios.includes(value)) return `${value} 已在列表中`;
+    setForm((current) => current ? { ...current, videoAspectRatios: [...current.videoAspectRatios, value] } : current);
+    return null;
+  };
+  const addCustomResolution = (rawValue: string): string | null => {
+    const value = rawValue.trim().toLowerCase();
+    if (!/^\d{3,4}p$/.test(value)) return "分辨率需为 720p / 1440p 这类档位";
+    if (form.videoResolutions.includes(value)) return `${value} 已在列表中`;
+    setForm((current) => current ? { ...current, videoResolutions: [...current.videoResolutions, value] } : current);
+    return null;
   };
   const updatePriceMatrix = (key: "priceVideoDurations" | "priceVideoResolutions" | "priceImageQualities" | "priceImageResolutions", priceKey: string, rawValue: string) => {
     setForm((current) => {
@@ -364,6 +607,7 @@ function ProviderEditor({
     : form.providerType === "image"
       ? [["auto", "自动识别旧通道"], ["tokengo-image", "TokenGo Images"], ["openai-compatible", "OpenAI 兼容"]] as Array<[AiProviderProtocolSetting, string]>
       : [["auto", "自动识别旧通道"], ["openai-compatible", "OpenAI 兼容"]] as Array<[AiProviderProtocolSetting, string]>;
+  const pricePreview = pricePreviewText(form);
 
   return (
     <div className="fixed inset-0 z-[1200] flex justify-end bg-slate-950/45 backdrop-blur-[2px]" onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) onClose(); }}>
@@ -386,9 +630,9 @@ function ProviderEditor({
                 <ErpField label="模型 ID" hint="优先从已同步的中转模型中选择，也可直接填写供应商要求的 model 值。"><ErpSelect onChange={(event) => update("modelType", event.target.value)} value={modelTypes.includes(form.modelType) ? form.modelType : "__custom__"}>{modelTypes.map((model) => <option key={model} value={model}>{model}</option>)}<option value="__custom__">其他模型（手动填写）</option></ErpSelect></ErpField>
                 {modelTypes.includes(form.modelType) ? null : <ErpField label="自定义模型 ID" hint="填写供应商 API 要求的 model 值，例如 grok-imagine-video-1.5。"><ErpInput autoComplete="off" onChange={(event) => update("modelType", event.target.value)} placeholder={form.providerType === "video" ? "例如：grok-imagine-video-1.5" : form.providerType === "image" ? "例如：gpt-image-2" : form.providerType === "audio" ? "填写供应商音频模型 ID" : "例如：gpt-5.5"} value={form.modelType} /></ErpField>}
                 <ErpField label="接口协议" hint="自动模式保留旧通道的域名与模型识别规则。"><ErpSelect onChange={(event) => update("apiProtocol", event.target.value as AiProviderProtocolSetting)} value={form.apiProtocol}>{protocolOptions.map(([protocol, label]) => <option key={protocol} value={protocol}>{label}</option>)}</ErpSelect></ErpField>
-                <ErpField label="API Base URL" hint="填写供应商的 API 根地址；适配器会负责拼接任务端点。" span="full"><ErpInput autoComplete="url" className="font-mono" onChange={(event) => update("aiUrl", event.target.value)} placeholder="https://api.example.com/v1" value={form.aiUrl} /></ErpField>
+                <ErpField label="API Base URL" hint="填写供应商的 API 根地址；适配器会负责拼接任务端点。" span="full"><ErpInput autoComplete="url" className="erp-input font-mono" onChange={(event) => update("aiUrl", event.target.value)} placeholder="https://api.example.com/v1" value={form.aiUrl} /></ErpField>
                 <ErpField label="API Key" hint={mode === "edit" ? "留空保留已保存的密钥；可通过显示按钮读取当前密钥。" : "密钥仅保存于服务端，列表只显示掩码。"} span="full">
-                  <div className="flex gap-2"><ErpInput autoComplete="new-password" className="min-w-0 flex-1 font-mono" onChange={(event) => update("apiKey", event.target.value)} placeholder={mode === "edit" ? "留空保留当前 key" : "粘贴供应商 API Key"} type={keyVisible ? "text" : "password"} value={form.apiKey} /><button aria-label={keyVisible ? "隐藏 API Key" : "显示 API Key"} className="admin_btn inline-flex h-[38px] shrink-0 items-center gap-1 px-3" disabled={revealingKey || saving} onClick={onReveal} type="button">{keyVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}{revealingKey ? "读取中" : keyVisible ? "隐藏" : "显示"}</button></div>
+                  <div className="flex gap-2"><ErpInput autoComplete="new-password" className="erp-input min-w-0 flex-1 font-mono" onChange={(event) => update("apiKey", event.target.value)} placeholder={mode === "edit" ? "留空保留当前 key" : "粘贴供应商 API Key"} type={keyVisible ? "text" : "password"} value={form.apiKey} /><button aria-label={keyVisible ? "隐藏 API Key" : "显示 API Key"} className="admin_btn inline-flex h-[38px] shrink-0 items-center gap-1 px-3" disabled={revealingKey || saving} onClick={onReveal} type="button">{keyVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}{revealingKey ? "读取中" : keyVisible ? "隐藏" : "显示"}</button></div>
                 </ErpField>
               </ErpFormGrid>
             </section>
@@ -400,13 +644,24 @@ function ProviderEditor({
                 <ErpFormGrid>
                   <ErpField label="模型系列" hint="影响 Grok / Gemini 的模型家族分派与计价。"><ErpSelect onChange={(event) => update("videoModelFamily", event.target.value as ProviderFormState["videoModelFamily"])} value={form.videoModelFamily}><option value="auto">按模型 ID 自动识别</option><option value="grok">Grok 系列</option><option value="gemini">Gemini / Veo 系列</option></ErpSelect></ErpField>
                   <ErpField label="原生语音" hint="角色口播场景只会开放给确认支持原生音频的模型。"><ErpSelect onChange={(event) => update("videoNativeSpeech", event.target.value === "auto" ? null : event.target.value === "yes")} value={form.videoNativeSpeech === null || form.videoNativeSpeech === undefined ? "auto" : form.videoNativeSpeech ? "yes" : "no"}><option value="auto">自动识别（兼容旧模型）</option><option value="yes">支持原生语音</option><option value="no">不支持原生语音</option></ErpSelect></ErpField>
-                  <ErpField label="单次参考图上限" hint="用于视频生成可用性检查与任务派发。"><ErpInput min={1} max={20} onChange={(event) => update("maxImagesPerRequest", Math.max(1, Math.min(20, Math.trunc(Number(event.target.value) || 1))))} type="number" value={form.maxImagesPerRequest} /></ErpField>
                 </ErpFormGrid>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div><p className="mb-2 text-[12px] font-medium text-[#475467]">支持时长</p><div className="flex flex-wrap gap-2">{durationOptions.map((duration) => <ErpCheckboxRow key={duration} checked={form.videoDurations.includes(duration)} label={`${duration} 秒`} onChange={() => toggleNumber("videoDurations", duration)} />)}</div></div>
-                  <div><p className="mb-2 text-[12px] font-medium text-[#475467]">支持画幅</p><div className="flex flex-wrap gap-2">{aspectOptions.map((aspect) => <ErpCheckboxRow key={aspect} checked={form.videoAspectRatios.includes(aspect)} label={aspect} onChange={() => toggleNumber("videoAspectRatios", aspect)} />)}</div></div>
+                <div className="mt-4 rounded-lg border border-[#e5eaf1] bg-white">
+                  <div className="border-b border-[#edf1f6] px-3 py-2">
+                    <span className="text-[12px] font-semibold text-[#344054]">单次参考素材上限</span>
+                    <span className="ml-2 text-[10px] leading-4 text-[#98a2b3]">0 表示该通道不支持这类参考素材</span>
+                  </div>
+                  <div className="grid gap-3 p-3 sm:grid-cols-3">
+                    <label className="grid gap-1.5"><span className="text-[12px] text-[#475467]">参考图</span><input className="erp-input" max={20} min={1} onChange={(event) => update("maxImagesPerRequest", Math.max(1, Math.min(20, Math.trunc(Number(event.target.value) || 1))))} type="number" value={form.maxImagesPerRequest} /><span className="text-[10px] leading-4 text-[#98a2b3]">张 / 次</span></label>
+                    <label className="grid gap-1.5"><span className="text-[12px] text-[#475467]">参考视频</span><input className="erp-input" max={AI_PROVIDER_REFERENCE_LIMIT_MAX} min={0} onChange={(event) => update("maxVideoInputs", Math.max(0, Math.min(AI_PROVIDER_REFERENCE_LIMIT_MAX, Math.trunc(Number(event.target.value) || 0))))} type="number" value={form.maxVideoInputs} /><span className="text-[10px] leading-4 text-[#98a2b3]">条 / 次</span></label>
+                    <label className="grid gap-1.5"><span className="text-[12px] text-[#475467]">参考音频</span><input className="erp-input" max={AI_PROVIDER_REFERENCE_LIMIT_MAX} min={0} onChange={(event) => update("maxAudioInputs", Math.max(0, Math.min(AI_PROVIDER_REFERENCE_LIMIT_MAX, Math.trunc(Number(event.target.value) || 0))))} type="number" value={form.maxAudioInputs} /><span className="text-[10px] leading-4 text-[#98a2b3]">条 / 次</span></label>
+                  </div>
                 </div>
-                <p className="mt-3 rounded-md border border-amber-100 bg-amber-50 px-3 py-2 text-[11px] leading-5 text-amber-900">参考音频克隆和首尾帧传输尚未接入这些旧通道，保存能力声明不会启用这两项。</p>
+                <div className="mt-3 grid gap-3 lg:grid-cols-3">
+                  <CapabilityOptionGroup addPlaceholder="如 8，回车添加" format={(duration) => `${duration} 秒`} label="支持时长" onAdd={(raw) => addCustomNumber("videoDurations", raw)} onToggle={(duration) => toggleNumber("videoDurations", duration)} options={durationOptions} selected={form.videoDurations} />
+                  <CapabilityOptionGroup addPlaceholder="如 4:5，回车添加" label="支持画幅" onAdd={addCustomAspect} onToggle={(aspect) => toggleNumber("videoAspectRatios", aspect)} options={aspectOptions} selected={form.videoAspectRatios} />
+                  <CapabilityOptionGroup addPlaceholder="如 1440p，回车添加" label="支持分辨率" onAdd={addCustomResolution} onToggle={(resolution) => toggleNumber("videoResolutions", resolution)} options={videoResolutionOptions} selected={form.videoResolutions} />
+                </div>
+                <p className="mt-3 rounded-md border border-amber-100 bg-amber-50 px-3 py-2 text-[11px] leading-5 text-amber-900">时长 / 画幅 / 分辨率都可添加自定义档位（如 8 秒、4:5、1440p），保存后工作台目录会展示这些档位。参考音频克隆和首尾帧传输尚未接入这些旧通道；参考素材上限用于能力展示与任务派发校验。</p>
               </section>
             ) : null}
 
@@ -430,61 +685,62 @@ function ProviderEditor({
 
             <section className="border-t border-[#edf1f6] pt-5">
               <div className="mb-1 flex items-center gap-2"><span className="grid h-6 w-6 place-items-center rounded-md bg-amber-50 text-[11px] font-semibold text-amber-700">03</span><h3 className="text-[14px] font-semibold text-[#1d2939]">价格与计费</h3></div>
-              <p className="mb-4 pl-8 text-[11px] leading-5 text-[#667085]">模型价格在此维护。关闭时沿用主题价与应用价；开启后本模型按下方档位计费，报价与扣费使用同一份配置。</p>
-              <div className="mb-4"><ErpCheckboxRow checked={form.priceEnabled} label="启用模型级计价（本模型价格覆盖主题价）" onChange={(value) => update("priceEnabled", value)} /></div>
-              <ErpFormGrid>
-                <ErpField label="基础积分" hint="每次生成的基础价格；时长/分辨率/画质档位会覆盖它。"><ErpInput min={0} onChange={(event) => update("priceCredits", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceCredits} /></ErpField>
-                <ErpField label="每张图片输入" hint="客户上传的每张参考图额外收取的积分。"><ErpInput min={0} onChange={(event) => update("priceImageInput", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceImageInput} /></ErpField>
-                <ErpField label="每条视频输入" hint="客户上传的每条参考视频额外收取的积分。"><ErpInput min={0} onChange={(event) => update("priceVideoInput", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceVideoInput} /></ErpField>
-                <ErpField label="视频输入每秒" hint="按参考视频时长计费的积分，叠加在每条视频输入之上。"><ErpInput min={0} onChange={(event) => update("priceVideoInputPerSecond", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceVideoInputPerSecond} /></ErpField>
-                <ErpField label="每条音频输入" hint="客户上传的每条参考音频额外收取的积分。"><ErpInput min={0} onChange={(event) => update("priceAudioInput", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceAudioInput} /></ErpField>
-                <ErpField label="音频输入每秒" hint="按参考音频时长计费的积分，叠加在每条音频输入之上。"><ErpInput min={0} onChange={(event) => update("priceAudioInputPerSecond", Math.max(0, Math.trunc(Number(event.target.value) || 0)))} type="number" value={form.priceAudioInputPerSecond} /></ErpField>
-              </ErpFormGrid>
-              {form.providerType === "video" ? (
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="mb-4 ml-8 grid gap-1 text-[11px] leading-5 text-[#667085]">
+                <p>1. 填「基础价」：每次生成固定收取的积分，工作台直接展示这个数。</p>
+                <p>2. 需要差异价再填「档位价」：例如 15 秒比 6 秒贵、1080p 比 720p 贵；留空的档位按基础价收，分辨率档位优先于时长档位。</p>
+                <p>3. 「参考素材附加费」可选：客户上传参考图 / 视频 / 音频时按条或按秒加收，不填就不加收。</p>
+                <p className="text-[#98a2b3]">关闭开关则全部沿用主题价与应用价；关闭不会清除已保存的价格。</p>
+              </div>
+              <div className="rounded-xl border border-[#e5eaf1] bg-[#fbfcfe]">
+                <div className="flex flex-col gap-2 border-b border-[#e5eaf1] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="mb-2 text-[12px] font-medium text-[#475467]">时长价格</p>
-                    <div className="grid gap-2">{durationOptions.map((duration) => (
-                      <div className="flex items-center justify-between gap-2" key={duration}>
-                        <span className="text-[12px] text-[#667085]">{duration} 秒</span>
-                        <ErpInput className="w-24 text-right" min={0} onChange={(event) => updatePriceMatrix("priceVideoDurations", String(duration), event.target.value)} placeholder="用基础价" type="number" value={form.priceVideoDurations[String(duration)] ?? ""} />
-                      </div>
-                    ))}</div>
+                    <p className="text-[13px] font-semibold text-[#1d2939]">模型级计价</p>
+                    <p className="mt-0.5 text-[11px] leading-5 text-[#667085]">{form.priceEnabled ? "本模型价格覆盖主题价，工作台会直接展示下面的积分。" : "当前沿用主题价与应用价，下面的档位价不会生效。"}</p>
                   </div>
-                  <div>
-                    <p className="mb-2 text-[12px] font-medium text-[#475467]">分辨率价格</p>
-                    <div className="grid gap-2">{videoResolutionOptions.map((resolution) => (
-                      <div className="flex items-center justify-between gap-2" key={resolution}>
-                        <span className="text-[12px] text-[#667085]">{resolution}</span>
-                        <ErpInput className="w-24 text-right" min={0} onChange={(event) => updatePriceMatrix("priceVideoResolutions", resolution, event.target.value)} placeholder="用基础价" type="number" value={form.priceVideoResolutions[resolution] ?? ""} />
-                      </div>
-                    ))}</div>
-                  </div>
+                  <button aria-checked={form.priceEnabled} className={`inline-flex h-9 shrink-0 items-center gap-2 self-start rounded-full border px-3 text-[12px] font-medium transition sm:self-auto ${form.priceEnabled ? "border-[#245bd3] bg-[#eef4ff] text-[#245bd3]" : "border-[#e2e8f0] bg-white text-[#667085]"}`} onClick={() => update("priceEnabled", !form.priceEnabled)} role="switch" type="button">
+                    <span aria-hidden="true" className={`flex h-4 w-7 items-center rounded-full p-0.5 transition ${form.priceEnabled ? "justify-end bg-[#245bd3]" : "justify-start bg-[#cbd5e1]"}`}><span className="h-3 w-3 rounded-full bg-white" /></span>
+                    {form.priceEnabled ? "已启用" : "已关闭"}
+                  </button>
                 </div>
-              ) : null}
-              {form.providerType === "image" ? (
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <p className="mb-2 text-[12px] font-medium text-[#475467]">画质价格</p>
-                    <div className="grid gap-2">{imageQualityOptions.map((quality) => (
-                      <div className="flex items-center justify-between gap-2" key={quality}>
-                        <span className="text-[12px] text-[#667085]">{({ auto: "自动", low: "低", medium: "中", high: "高" } as Record<string, string>)[quality]}</span>
-                        <ErpInput className="w-24 text-right" min={0} onChange={(event) => updatePriceMatrix("priceImageQualities", quality, event.target.value)} placeholder="用基础价" type="number" value={form.priceImageQualities[quality] ?? ""} />
+                {form.priceEnabled ? (
+                  <div className="grid gap-5 p-4">
+                    <div className="grid gap-3">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <p className="text-[12px] font-semibold text-[#344054]">基础价与参考素材附加费</p>
+                        <p className="text-[10px] text-[#98a2b3]">单位：积分</p>
                       </div>
-                    ))}</div>
-                  </div>
-                  <div>
-                    <p className="mb-2 text-[12px] font-medium text-[#475467]">分辨率价格</p>
-                    <div className="grid gap-2">{IMAGE_PROVIDER_RESOLUTIONS.map((resolution) => (
-                      <div className="flex items-center justify-between gap-2" key={resolution}>
-                        <span className="text-[12px] text-[#667085]">{resolution}</span>
-                        <ErpInput className="w-24 text-right" min={0} onChange={(event) => updatePriceMatrix("priceImageResolutions", resolution, event.target.value)} placeholder="用基础价" type="number" value={form.priceImageResolutions[resolution] ?? ""} />
+                      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                        <PriceField hint="每次生成的基础积分；档位价会覆盖它。" label="基础价" onChange={(value) => update("priceCredits", value)} unit="积分 / 次" value={form.priceCredits} />
+                        <PriceField hint="客户上传的每张参考图。" label="参考图" onChange={(value) => update("priceImageInput", value)} unit="积分 / 张" value={form.priceImageInput} />
+                        <PriceField hint="客户上传的每条参考视频。" label="参考视频" onChange={(value) => update("priceVideoInput", value)} unit="积分 / 条" value={form.priceVideoInput} />
+                        <PriceField hint="按参考视频总秒数叠加。" label="参考视频时长" onChange={(value) => update("priceVideoInputPerSecond", value)} unit="积分 / 秒" value={form.priceVideoInputPerSecond} />
+                        <PriceField hint="客户上传的每条参考音频。" label="参考音频" onChange={(value) => update("priceAudioInput", value)} unit="积分 / 条" value={form.priceAudioInput} />
+                        <PriceField hint="按参考音频总秒数叠加。" label="参考音频时长" onChange={(value) => update("priceAudioInputPerSecond", value)} unit="积分 / 秒" value={form.priceAudioInputPerSecond} />
                       </div>
-                    ))}</div>
+                      <p className="text-[10px] leading-4 text-[#98a2b3]">附加费只在客户上传对应素材时收取；全部保持 0 表示不额外收费。</p>
+                    </div>
+                    {form.providerType === "video" ? (
+                      <div className="grid gap-3 lg:grid-cols-2">
+                        <PriceTierTable caption="留空 = 基础价" matrix={form.priceVideoDurations} onChange={(key, rawValue) => updatePriceMatrix("priceVideoDurations", key, rawValue)} rows={[...form.videoDurations].sort((left, right) => left - right).map((duration) => ({ key: String(duration), label: `${duration} 秒` }))} title="时长档位价" />
+                        <PriceTierTable caption="留空 = 基础价" matrix={form.priceVideoResolutions} onChange={(key, rawValue) => updatePriceMatrix("priceVideoResolutions", key, rawValue)} rows={form.videoResolutions.map((resolution) => ({ key: resolution, label: resolution }))} title="分辨率档位价" />
+                      </div>
+                    ) : null}
+                    {form.providerType === "image" ? (
+                      <div className="grid gap-3 lg:grid-cols-2">
+                        <PriceTierTable caption="留空 = 基础价" matrix={form.priceImageQualities} onChange={(key, rawValue) => updatePriceMatrix("priceImageQualities", key, rawValue)} rows={imageQualityOptions.map((quality) => ({ key: quality, label: ({ auto: "自动", low: "低", medium: "中", high: "高" } as Record<string, string>)[quality] }))} title="画质档位价" />
+                        <PriceTierTable caption="留空 = 基础价" matrix={form.priceImageResolutions} onChange={(key, rawValue) => updatePriceMatrix("priceImageResolutions", key, rawValue)} rows={IMAGE_PROVIDER_RESOLUTIONS.map((resolution) => ({ key: resolution, label: resolution }))} title="分辨率档位价" />
+                      </div>
+                    ) : null}
+                    <div className="rounded-lg border border-[#dbe7ff] bg-[#f4f8ff] px-3 py-2">
+                      <p className="text-[12px] font-semibold text-[#1d3f8f]">{pricePreview.headline}</p>
+                      <p className="mt-0.5 text-[11px] leading-5 text-[#4b6aa8]">{pricePreview.detail}</p>
+                    </div>
+                    <p className="text-[10px] leading-4 text-[#98a2b3]">档位价互相覆盖：同时命中时长与分辨率时，分辨率价优先；未填写的档位回落到基础价。</p>
                   </div>
-                </div>
-              ) : null}
-              <p className="mt-4 rounded-md border border-[#e2e8f0] bg-[#f8fafc] px-3 py-2 text-[11px] leading-5 text-[#667085]">留空表示沿用基础积分。输入类价格是附加项：图片按张、视频与音频按条计费，并可再叠加按秒计费。</p>
+                ) : (
+                  <p className="px-4 py-4 text-[12px] leading-5 text-[#98a2b3]">开启后可维护基础价、档位价与参考素材附加费；关闭不会清除已保存的价格。</p>
+                )}
+              </div>
             </section>
 
             <section className="border-t border-[#edf1f6] pt-5">
@@ -556,8 +812,17 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
     setEditorMode("create"); setEditorForm(emptyProviderForm(providerType, priority)); setEditorMessage(providerType === "audio" ? "可保存独立音频供应商配置；音频生成尚未接入。" : "新供应商默认为启用；先测试接口，再保存并加入对应能力队列。"); setKeyVisible(false);
   }
 
-  function edit(provider: AiProviderRow) {
-    setEditorMode("edit"); setEditorForm(providerForm(provider)); setEditorMessage("修改协议或能力配置会影响后续新任务；正在运行的任务保持原有 provider ID。"); setKeyVisible(false); setRevealingKey(false);
+  async function edit(provider: AiProviderRow) {
+    // 每次都从服务端读取最新一行再回填表单：页面初始数据可能早于最近一次同步/保存，
+    // 用旧快照回填后再保存会把已维护的档位、参考素材上限和价格覆盖回旧值。
+    let source = provider;
+    try {
+      const fresh = await request("/api/platform/ai-providers", {});
+      source = fresh.providers?.find((row) => row.id === provider.id) ?? provider;
+    } catch {
+      // 读取失败时仍允许编辑当前快照。
+    }
+    setEditorMode("edit"); setEditorForm(providerForm(source)); setEditorMessage("修改协议或能力配置会影响后续新任务；正在运行的任务保持原有 provider ID。"); setKeyVisible(false); setRevealingKey(false);
   }
 
   function validateForm(form: ProviderFormState, action: "save" | "test") {
@@ -568,7 +833,8 @@ export function PlatformAiProviderPanel({ initialStatus }: { initialStatus: AiPr
     try { const parsed = new URL(form.aiUrl.trim()); if (!["https:", "http:"].includes(parsed.protocol)) throw new Error(); } catch { return "请输入有效的 http/https AI URL。"; }
     if (action === "save" && !form.apiKey.trim() && !form.id) return "请输入 API Key。";
     if (action === "test" && !form.apiKey.trim() && !form.id) return "请先填写 API Key 后再测试连接。";
-    if (form.providerType === "video" && (!form.videoDurations.length || !form.videoAspectRatios.length)) return "至少选择一个视频时长和画幅。";
+    if (form.providerType === "video" && (!form.videoDurations.length || !form.videoAspectRatios.length || !form.videoResolutions.length)) return "视频至少选择一个时长、一个画幅和一个分辨率。";
+    if (form.providerType === "video" && [form.maxVideoInputs, form.maxAudioInputs].some((value) => !Number.isInteger(value) || value < 0 || value > AI_PROVIDER_REFERENCE_LIMIT_MAX)) return `参考视频/音频上限必须是 0–${AI_PROVIDER_REFERENCE_LIMIT_MAX} 的整数。`;
     return "";
   }
 
