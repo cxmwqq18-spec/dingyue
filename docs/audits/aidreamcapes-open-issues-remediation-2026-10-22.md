@@ -70,6 +70,7 @@ node scripts/audit-aidreamcapes-technical-seo.mjs \
 | 图片性能（C3） | 首屏 `fetchPriority=high`+`preload`；srcSet：`/` 40、视频 hub 46、图片 hub 15、演员页 65 张 |
 | 边缘提交即 purge（C1 的一半） | 每次发布后 2 次请求（30 路径 + 9 前缀），已实测 |
 | 导航菜单（Resources） | 去掉重复 templates 行，补 2 条质检入口 |
+| 导航菜单（Resources）清理 | 移除指向 `/blog/ai-video-review-checklist` 的 “Video Review Checklist” 行；保留 “Delivery Checks” → `/digital-delivery`；`/trust-and-safety` 与 `/ai-info` 继续由页脚 “Trust & Safety”“Company Facts” 承载；字段级 CAS `revision 369→370`，线上回读头部 0 条该链接、页脚正文 1 条 |
 | 地址规范化 | 视频工具改单数、详情地址规范化、674 个工作台地址退役，308/301 矩阵通过 |
 | 近似地址 301（E2/E3） | 525 条，候选实例与切换后实例各验一次 `verified:525, failures:0`；线上抽样 40 条全 301 |
 | 爬取面收口 | `/robots.txt` 对 `www.aivideosugc.com` 输出 4 条 Disallow；审计只比较可索引页，`duplicateTitles/Descriptions: 0` |

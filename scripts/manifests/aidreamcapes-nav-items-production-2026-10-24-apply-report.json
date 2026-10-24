@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-nav-item-2026-10-22-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "76820bda7f4dcf6dd56e36c3473006e799bb64d2cc2c0228ef1d925be8f17e0a",
+  "page": "/",
+  "revisionBefore": "369",
+  "revisionAfter": "370",
+  "revisionDelta": "1",
+  "removals": [
+    {
+      "menu": "Resources",
+      "group": "Learn and get help",
+      "label": "Templates",
+      "href": "/templates",
+      "reason": "The header already carries a dedicated Templates menu and the footer keeps the templates link, so the Resources dropdown does not need a second templates row.",
+      "state": "already removed"
+    },
+    {
+      "menu": "Resources",
+      "group": "Learn and get help",
+      "label": "Video Review Checklist",
+      "href": "/blog/ai-video-review-checklist",
+      "reason": "The reviewed menu should not send customers from the header to a blog post. Trust and Safety (/trust-and-safety) and Company Facts (/ai-info) already answer the policy questions from the footer, and the delivery check policy (/digital-delivery) stays in the menu, so this row is removed.",
+      "state": "removed",
+      "index": 6
+    }
+  ]
+}

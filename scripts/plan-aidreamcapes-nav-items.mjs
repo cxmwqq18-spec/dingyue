@@ -36,6 +36,13 @@ const REMOVALS = [
     label: "Templates",
     href: "/templates",
     reason: "The header already carries a dedicated Templates menu and the footer keeps the templates link, so the Resources dropdown does not need a second templates row."
+  },
+  {
+    menu: "Resources",
+    group: "Learn and get help",
+    label: "Video Review Checklist",
+    href: "/blog/ai-video-review-checklist",
+    reason: "The reviewed menu should not send customers from the header to a blog post. Trust and Safety (/trust-and-safety) and Company Facts (/ai-info) already answer the policy questions from the footer, and the delivery check policy (/digital-delivery) stays in the menu, so this row is removed."
   }
 ];
 
@@ -49,14 +56,6 @@ const REMOVALS = [
  * release documents and never reach the public menu.
  */
 const ADDITIONS = [
-  {
-    menu: "Resources",
-    group: "Learn and get help",
-    label: "Video Review Checklist",
-    href: "/blog/ai-video-review-checklist",
-    description: "Check every clip against the script, the reference image and the asset library, so a scene never ships with the wrong wardrobe or props.",
-    reason: "Customers ask how a delivered video is checked against the brief; the review checklist answers that."
-  },
   {
     menu: "Resources",
     group: "Learn and get help",

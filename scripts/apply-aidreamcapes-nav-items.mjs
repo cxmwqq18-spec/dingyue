@@ -218,6 +218,11 @@ try {
         revisionDelta: (revisionAfter - revisionBefore).toString(),
         removals: manifest.removals
       };
+    }, {
+      // The production tunnel makes the protected MyDreamShoots readback slower
+      // than the 5 s default; the write is still one CAS update on one row.
+      maxWait: 15_000,
+      timeout: 120_000
     });
     const rollback = {
       ok: true,
