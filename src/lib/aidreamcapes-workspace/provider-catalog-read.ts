@@ -2,6 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/prisma";
 import { toPlatformAiProvider } from "@/lib/stores/prisma-mappers";
 import type { PlatformAiProviderType } from "@/lib/ai-provider-type";
+import { isValidAiProviderVideoAspectRatio, isValidAiProviderVideoDuration } from "@/lib/ai-provider-video-options";
 
 type ProviderRow = Parameters<typeof toPlatformAiProvider>[0];
 
@@ -16,8 +17,8 @@ export async function listWorkspaceProviderRows(params: { providerType?: Platfor
   return rows.map(({ data }) => {
     const provider = toPlatformAiProvider(data);
     // Explicit capability exclusions must survive the legacy row normalizer.
-    if (Array.isArray(data.videoDurations)) provider.videoDurations = data.videoDurations.filter((value) => Number.isSafeInteger(value) && value > 0);
-    if (Array.isArray(data.videoAspectRatios)) provider.videoAspectRatios = data.videoAspectRatios.filter((value) => ["9:16", "1:1", "16:9"].includes(value));
+    if (Array.isArray(data.videoDurations)) provider.videoDurations = data.videoDurations.filter((value) => isValidAiProviderVideoDuration(value));
+    if (Array.isArray(data.videoAspectRatios)) provider.videoAspectRatios = data.videoAspectRatios.filter((value) => isValidAiProviderVideoAspectRatio(value));
     // 模型级价格是较晚新增的可选列，旧库没有这些列时按"未定价"处理。
     if (data.priceEnabled === undefined) provider.priceEnabled = false;
     return provider;

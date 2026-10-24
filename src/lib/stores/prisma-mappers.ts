@@ -30,6 +30,12 @@ import type {
 import { StoreError } from "@/lib/server-store";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
+import {
+  normalizeAiProviderReferenceLimit,
+  normalizeAiProviderVideoAspectRatios,
+  normalizeAiProviderVideoDurations,
+  normalizeAiProviderVideoResolutions
+} from "@/lib/ai-provider-video-options";
 import { storefrontGalleryMediaPairs } from "@/lib/storefront-media-alt";
 import { normalizeVideoFrameLimit, normalizeVideoModelPricing } from "@/lib/video-frame-config";
 import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
@@ -1450,6 +1456,8 @@ export function toPlatformAiProvider(record: {
   supportsGenerationN?: boolean | null;
   supportsEditN?: boolean | null;
   maxImagesPerRequest?: number | null;
+  maxVideoInputs?: number | null;
+  maxAudioInputs?: number | null;
   imageAspectRatio?: string | null;
   imageResolution?: string | null;
   imageQuality?: string | null;
@@ -1458,6 +1466,7 @@ export function toPlatformAiProvider(record: {
   videoModelFamily?: string | null;
   videoDurations?: number[] | null;
   videoAspectRatios?: string[] | null;
+  videoResolutions?: string[] | null;
   videoNativeSpeech?: boolean | null;
   relayId?: string | null;
   upstreamModelId?: string | null;
@@ -1478,12 +1487,9 @@ export function toPlatformAiProvider(record: {
   updatedBy?: string | null;
 }): import("@/lib/types").PlatformAiProvider {
   const maxImagesPerRequest = Number(record.maxImagesPerRequest);
-  const videoDurations = Array.isArray(record.videoDurations)
-    ? [...new Set(record.videoDurations.map(Number).filter((value) => [6, 10, 15].includes(value)))].sort((a, b) => a - b)
-    : [6, 10, 15];
-  const videoAspectRatios = Array.isArray(record.videoAspectRatios)
-    ? [...new Set(record.videoAspectRatios.filter((value) => value === "9:16" || value === "1:1" || value === "16:9"))]
-    : ["9:16", "1:1", "16:9"];
+  const videoDurations = normalizeAiProviderVideoDurations(record.videoDurations);
+  const videoAspectRatios = normalizeAiProviderVideoAspectRatios(record.videoAspectRatios);
+  const videoResolutions = normalizeAiProviderVideoResolutions(record.videoResolutions);
   return {
     id: record.id,
     label: record.label,
@@ -1497,14 +1503,17 @@ export function toPlatformAiProvider(record: {
     supportsGenerationN: Boolean(record.supportsGenerationN),
     supportsEditN: Boolean(record.supportsEditN),
     maxImagesPerRequest: Number.isFinite(maxImagesPerRequest) ? Math.max(1, Math.min(Math.trunc(maxImagesPerRequest), 20)) : 1,
+    maxVideoInputs: normalizeAiProviderReferenceLimit(record.maxVideoInputs, 1),
+    maxAudioInputs: normalizeAiProviderReferenceLimit(record.maxAudioInputs, 1),
     imageAspectRatio: normalizeImageProviderAspectRatio(record.imageAspectRatio),
     imageResolution: normalizeImageProviderResolution(record.imageResolution),
     imageQuality: normalizeImageProviderQuality(record.imageQuality),
     imageOutputFormat: normalizeImageProviderOutputFormat(record.imageOutputFormat),
     apiProtocol: normalizeAiProviderProtocol(record.apiProtocol),
     videoModelFamily: record.videoModelFamily === "grok" || record.videoModelFamily === "gemini" ? record.videoModelFamily : "auto",
-    videoDurations: videoDurations.length ? videoDurations : [6, 10, 15],
-    videoAspectRatios: videoAspectRatios.length ? videoAspectRatios : ["9:16", "1:1", "16:9"],
+    videoDurations,
+    videoAspectRatios,
+    videoResolutions,
     videoNativeSpeech: record.videoNativeSpeech ?? null,
     relayId: record.relayId ?? undefined,
     upstreamModelId: record.upstreamModelId ?? undefined,

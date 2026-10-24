@@ -18,7 +18,7 @@ import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
 import type { VideoModelFamily } from "@/lib/video-frame-config";
 import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, assertWorkspaceSite, sceneSchema } from "./catalogs";
 import { compileShot, compileStoryboard, referencePool, resolveShotReferences, validateTaskInput } from "./pipeline";
-import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type WorkspaceCatalog, type WorkspaceTask } from "./types";
+import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type VideoAspect, type VideoDuration, type WorkspaceCatalog, type WorkspaceTask } from "./types";
 import type { WorkspacePreset } from "./preset-contract";
 import { isKnownWorkspaceLanguage, modelSupportsWorkspaceDuration, toWorkspaceModelCapability, workspaceCapabilityError, workspaceOutputOptions } from "./capabilities";
 import { assertWorkspaceExternalOperation, isWorkspaceStabilityMockMode, mockStructuredDecision } from "./stability";
@@ -89,12 +89,16 @@ function workspaceShotCredits(params: {
   modelFamily: VideoModelFamily;
   resolution: string;
   imageInputCount: number;
+  videoInputCount?: number;
+  audioInputCount?: number;
 }): number {
   const modelPrice = providerCreditsForRequest(params.provider, {
     capabilityType: "video",
     durationSeconds: params.durationSeconds,
     resolution: params.resolution,
     imageInputCount: params.imageInputCount,
+    videoInputCount: params.videoInputCount ?? 0,
+    audioInputCount: params.audioInputCount ?? 0,
     outputCount: 1
   });
   if (modelPrice) return modelPrice.unitCredits;
@@ -134,7 +138,8 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
     return {
       scenes: structuredClone(SCENES), actors,
       models: [{ id: "aivideosugc-stability-mock", label: "Stability fixture", model: "mock", available: false, reason,
-        durations: [...WORKSPACE_VIDEO_DURATIONS], aspects: [...WORKSPACE_ASPECTS], nativeSpeech: false, audioReference: false, firstFrame: false, lastFrame: false, multiReference: false,
+        durations: [...WORKSPACE_VIDEO_DURATIONS], aspects: [...WORKSPACE_ASPECTS], resolutions: ["720p"], nativeSpeech: false, audioReference: false,
+        referenceImageMax: 0, videoReferenceMax: 0, audioReferenceMax: 0, firstFrame: false, lastFrame: false, multiReference: false,
         features: { output4k: false, videoExtension: false, actorReplacement: false, advancedShotTools: false } }],
       languages: structuredClone(WORKSPACE_LANGUAGES), aspects: [...WORKSPACE_ASPECTS],
       durations: WORKSPACE_VIDEO_DURATIONS.map((value) => ({ value, label: `${value}s`, credits: value === 15 ? 60 : 120, generationAvailable: false, reason })),
@@ -184,7 +189,9 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
       "Presenter videos require an actor-and-product composition made from your supplied images before clip generation.",
       "Language choices use this workspace's supported language list; connected video models do not report language-specific support.",
       "Spoken subtitles require verified timing from the generated audio; they are never timed from an estimated script.",
-      ...(available ? [] : ["The final-video prices and per-clip charges need to be confirmed before paid generation can start."])] };
+      ...(available ? [] : ["The final-video prices and per-clip charges need to be confirmed before paid generation can start."])],
+    // 生图参考图上限：取已连接图像通道里最大的 maxImagesPerRequest（服务端按所选通道强校验）。
+    imageReferenceMax: Math.min(8, Math.max(1, ...imageProviders.filter((provider) => provider.enabled && provider.apiKey && provider.aiUrl).map((provider) => provider.maxImagesPerRequest), 4)) };
 }
 function parseJsonObject(raw: string): Record<string, unknown> {
   const value = raw.replace(/^\s*```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
@@ -261,7 +268,7 @@ export async function generateStoryboard(args: { siteId: string; sceneId: SceneI
     return { shotId: old?.shotId ?? crypto.randomUUID(), start, end, duration: Number((end - start).toFixed(3)),
       environment: multiple ? occasions[index % 3] : occasions[0] || environment,
       visual: args.rewriteOnly && old ? old.visual : shot.visual.trim(), voiceover: schema.needsActor ? shot.voiceover.trim() : "",
-      locked: false, refKinds: schema.needsActor ? ["actor", "product", "composite"] : input.images.textureImages?.length && index === count - 1 ? ["product", "texture"] : ["product"], refImgs: {},
+      locked: false, refKinds: schema.needsActor ? ["actor", "product", "composite"] : !schema.refImagePolicy.length ? [] : input.images.textureImages?.length && index === count - 1 ? ["product", "texture"] : ["product"], refImgs: {},
       actorId: actor?.actorId,
       camera: "static", framing: index === 0 ? "medium" : "close", lighting: input.options.style, expression: schema.needsActor ? String(input.fields.tone ?? "natural") : "",
       genStatus: "pending", versions: old?.versions.map((version) => ({ ...structuredClone(version), origin: "before_reroll" as const })) ?? [], prompt: "" };
@@ -429,8 +436,51 @@ export async function refreshCompositeGeneration(args: { siteId: string; custome
   return { status: "done" as const, clipUrl: `/api/sites/${args.siteId}/customers/${args.customerId}/assets/${asset.id}/download?preview=1` };
 }
 
-export async function quoteWorkspaceAction(args: { siteId: string; action: "generate_shot" | "compose_shot" | "generate_image"; task?: WorkspaceTask; shotId?: string }): Promise<{ available: boolean; credits?: number; providerId?: string; priceBinding?: string; reason?: string }> {
+/**
+ * 工作台首页作曲家的无任务预估报价：按所选模型通道价（含清晰度档位）估算单镜头积分。
+ * 与 shot 级报价共用 workspaceShotCredits，保证展示价与实际扣费口径一致。
+ */
+export async function quoteComposerGeneration(args: {
+  siteId: string;
+  modelId?: string;
+  duration: number;
+  aspect: string;
+  resolution?: string;
+  imageInputCount: number;
+  videoInputCount?: number;
+  audioInputCount?: number;
+}): Promise<{ available: boolean; credits?: number; providerId?: string; reason?: string }> {
   assertWorkspaceSite(args.siteId);
+  if (isWorkspaceStabilityMockMode()) return { available: true, credits: args.duration * 4, providerId: "aivideosugc-stability-mock" };
+  const providers = await listPlatformAiProvidersRelational({ providerType: "video" });
+  const models = providers.map(modelCapability);
+  const planned = args.duration / Math.ceil(args.duration / 15);
+  const capability = args.modelId
+    ? models.find((model) => model.id === args.modelId)
+    : models.find((model) => model.available && model.aspects.includes(args.aspect as VideoAspect) && modelSupportsWorkspaceDuration(model, args.duration as VideoDuration));
+  if (!capability || !capability.available) return { available: false, reason: "workspace_video_provider_unavailable" };
+  const provider = providers.find((candidate) => candidate.id === capability.id);
+  if (!provider) return { available: false, reason: "workspace_video_provider_unavailable" };
+  const themeId = process.env.AIVIDEOSUGC_VIDEO_THEME_ID?.trim();
+  const theme = themeId
+    ? await prisma.videoTheme.findFirst({ where: { id: themeId, siteId: args.siteId, status: "active" }, select: { id: true, creditCost: true, modelPricing: true } })
+    : undefined;
+  if (!theme) return { available: false, reason: "workspace_video_theme_binding_required" };
+  const duration = capability.durations.find((candidate) => candidate >= planned) ?? args.duration;
+  const credits = workspaceShotCredits({
+    provider,
+    theme,
+    durationSeconds: duration,
+    modelFamily: videoProviderModelFamilyForProvider(provider),
+    resolution: args.resolution ?? "720p",
+    imageInputCount: args.imageInputCount,
+    videoInputCount: args.videoInputCount ?? 0,
+    audioInputCount: args.audioInputCount ?? 0
+  });
+  return { available: true, credits, providerId: provider.id };
+}
+
+export async function quoteWorkspaceAction(args: { siteId: string; action: "generate_shot" | "compose_shot" | "generate_image"; task?: WorkspaceTask; shotId?: string }): Promise<{ available: boolean; credits?: number; providerId?: string; priceBinding?: string; reason?: string }> {  assertWorkspaceSite(args.siteId);
   if (isWorkspaceStabilityMockMode()) {
     if (args.action === "generate_shot") {
       const shot = args.task?.storyboard?.shots.find((candidate) => candidate.shotId === args.shotId);
@@ -484,7 +534,7 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     theme,
     durationSeconds: duration,
     modelFamily: family,
-    resolution: "720p",
+    resolution: args.task.input.options.resolution ?? "720p",
     imageInputCount: shot.refKinds.length
   });
   if (!provider.priceEnabled && credits !== plannedDuration * 4) return { available: false, reason: "workspace_pricing_configuration_mismatch" };

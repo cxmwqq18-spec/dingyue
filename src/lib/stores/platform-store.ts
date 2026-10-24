@@ -15,6 +15,12 @@ import {
 import type { AiGatewayGroup, AuditLogEntry, Order, PlatformAiProvider, PlatformCloudflareAccount, PlatformEmailConfig, PlatformEmailSettings, PlatformEmailTestResult, PublicSiteAdmin, Site, SiteDomain, SiteEmailConfigAssignment, Subscription } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
+import {
+  normalizeAiProviderReferenceLimit,
+  normalizeAiProviderVideoAspectRatios,
+  normalizeAiProviderVideoDurations,
+  normalizeAiProviderVideoResolutions
+} from "@/lib/ai-provider-video-options";
 import { normalizePlatformEmailConfig, normalizeResendApiKey } from "@/lib/resend-email";
 import { normalizeImageProviderAspectRatio, normalizeImageProviderOutputFormat, normalizeImageProviderQuality, normalizeImageProviderResolution } from "@/lib/tokengo-image";
 import { shouldFallbackRelationalRead, warnRelationalFallback } from "@/lib/stores/relational-fallback";
@@ -1602,7 +1608,7 @@ export async function deletePlatformCloudflareAccountRelational(params: {
   return toPlatformCloudflareAccount(account);
 }
 
-export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat" | "apiProtocol" | "videoModelFamily" | "videoDurations" | "videoAspectRatios" | "videoNativeSpeech">>;
+export type PlatformAiProviderFallbackQueue = Array<Pick<PlatformAiProvider, "id" | "label" | "aiUrl" | "modelType" | "providerType" | "priority" | "preferred" | "enabled" | "supportsGenerationN" | "supportsEditN" | "maxImagesPerRequest" | "maxVideoInputs" | "maxAudioInputs" | "imageAspectRatio" | "imageResolution" | "imageQuality" | "imageOutputFormat" | "apiProtocol" | "videoModelFamily" | "videoDurations" | "videoAspectRatios" | "videoResolutions" | "videoNativeSpeech">>;
 
 function normalizeProviderMaxImagesPerRequest(value: unknown) {
   const numeric = Number(value);
@@ -1610,15 +1616,11 @@ function normalizeProviderMaxImagesPerRequest(value: unknown) {
 }
 
 function normalizeProviderVideoDurations(value: unknown) {
-  if (!Array.isArray(value)) return [6, 10, 15];
-  const normalized = [...new Set(value.map(Number).filter((duration) => [6, 10, 15].includes(duration)))].sort((a, b) => a - b);
-  return normalized.length ? normalized : [6, 10, 15];
+  return normalizeAiProviderVideoDurations(value);
 }
 
 function normalizeProviderVideoAspectRatios(value: unknown) {
-  if (!Array.isArray(value)) return ["9:16", "1:1", "16:9"];
-  const normalized = [...new Set(value.filter((aspect) => aspect === "9:16" || aspect === "1:1" || aspect === "16:9"))];
-  return normalized.length ? normalized : ["9:16", "1:1", "16:9"];
+  return normalizeAiProviderVideoAspectRatios(value);
 }
 
 const platformAiProviderOrderBy: Prisma.PlatformAiProviderOrderByWithRelationInput[] = [
@@ -1696,7 +1698,7 @@ export async function getPlatformAiProviderRelational(providerId?: string): Prom
 
 export async function getPlatformAiProviderFallbackQueueRelational(providerType?: PlatformAiProviderType): Promise<PlatformAiProviderFallbackQueue> {
   const providers = await listPlatformAiProvidersRelational({ providerType });
-  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat, apiProtocol, videoModelFamily, videoDurations, videoAspectRatios, videoNativeSpeech }) => ({
+  return providers.filter((provider) => aiProviderStatus(provider).runnable).map(({ id, label, aiUrl, modelType, providerType: type, priority, preferred, enabled, supportsGenerationN, supportsEditN, maxImagesPerRequest, maxVideoInputs, maxAudioInputs, imageAspectRatio, imageResolution, imageQuality, imageOutputFormat, apiProtocol, videoModelFamily, videoDurations, videoAspectRatios, videoResolutions, videoNativeSpeech }) => ({
     id,
     label,
     aiUrl,
@@ -1708,6 +1710,8 @@ export async function getPlatformAiProviderFallbackQueueRelational(providerType?
     supportsGenerationN,
     supportsEditN,
     maxImagesPerRequest,
+    maxVideoInputs,
+    maxAudioInputs,
     imageAspectRatio,
     imageResolution,
     imageQuality,
@@ -1716,6 +1720,7 @@ export async function getPlatformAiProviderFallbackQueueRelational(providerType?
     videoModelFamily,
     videoDurations,
     videoAspectRatios,
+    videoResolutions,
     videoNativeSpeech
   }));
 }
@@ -1768,6 +1773,8 @@ export async function upsertPlatformAiProviderRelational(params: {
   supportsGenerationN?: boolean;
   supportsEditN?: boolean;
   maxImagesPerRequest?: number;
+  maxVideoInputs?: number;
+  maxAudioInputs?: number;
   imageAspectRatio?: string;
   imageResolution?: string;
   imageQuality?: string;
@@ -1776,6 +1783,7 @@ export async function upsertPlatformAiProviderRelational(params: {
   videoModelFamily?: string;
   videoDurations?: number[];
   videoAspectRatios?: string[];
+  videoResolutions?: string[];
   videoNativeSpeech?: boolean | null;
   priceEnabled?: boolean;
   priceCredits?: number;
@@ -1828,6 +1836,8 @@ export async function upsertPlatformAiProviderRelational(params: {
             supportsGenerationN: params.supportsGenerationN ?? existing.supportsGenerationN,
             supportsEditN: params.supportsEditN ?? existing.supportsEditN,
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest ?? existing.maxImagesPerRequest),
+            maxVideoInputs: normalizeAiProviderReferenceLimit(params.maxVideoInputs ?? existing.maxVideoInputs, existing.maxVideoInputs),
+            maxAudioInputs: normalizeAiProviderReferenceLimit(params.maxAudioInputs ?? existing.maxAudioInputs, existing.maxAudioInputs),
             imageAspectRatio: normalizeImageProviderAspectRatio(params.imageAspectRatio ?? existing.imageAspectRatio),
             imageResolution: normalizeImageProviderResolution(params.imageResolution ?? existing.imageResolution),
             imageQuality: normalizeImageProviderQuality(params.imageQuality ?? existing.imageQuality),
@@ -1836,6 +1846,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             videoModelFamily: params.videoModelFamily === "grok" || params.videoModelFamily === "gemini" ? params.videoModelFamily : params.videoModelFamily === "auto" ? "auto" : existing.videoModelFamily,
             videoDurations: normalizeProviderVideoDurations(params.videoDurations ?? existing.videoDurations),
             videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios ?? existing.videoAspectRatios),
+            videoResolutions: normalizeAiProviderVideoResolutions(params.videoResolutions ?? existing.videoResolutions),
             videoNativeSpeech: params.videoNativeSpeech !== undefined ? params.videoNativeSpeech : existing.videoNativeSpeech,
             priceEnabled: params.priceEnabled ?? existing.priceEnabled ?? false,
             priceCredits: normalizePriceCredits(params.priceCredits ?? existing.priceCredits),
@@ -1865,6 +1876,8 @@ export async function upsertPlatformAiProviderRelational(params: {
             supportsGenerationN: Boolean(params.supportsGenerationN),
             supportsEditN: Boolean(params.supportsEditN),
             maxImagesPerRequest: normalizeProviderMaxImagesPerRequest(params.maxImagesPerRequest),
+            maxVideoInputs: normalizeAiProviderReferenceLimit(params.maxVideoInputs, 1),
+            maxAudioInputs: normalizeAiProviderReferenceLimit(params.maxAudioInputs, 1),
             imageAspectRatio: normalizeImageProviderAspectRatio(params.imageAspectRatio),
             imageResolution: normalizeImageProviderResolution(params.imageResolution),
             imageQuality: normalizeImageProviderQuality(params.imageQuality),
@@ -1873,6 +1886,7 @@ export async function upsertPlatformAiProviderRelational(params: {
             videoModelFamily: params.videoModelFamily === "grok" || params.videoModelFamily === "gemini" ? params.videoModelFamily : "auto",
             videoDurations: normalizeProviderVideoDurations(params.videoDurations),
             videoAspectRatios: normalizeProviderVideoAspectRatios(params.videoAspectRatios),
+            videoResolutions: normalizeAiProviderVideoResolutions(params.videoResolutions),
             videoNativeSpeech: params.videoNativeSpeech ?? null,
             priceEnabled: params.priceEnabled ?? false,
             priceCredits: normalizePriceCredits(params.priceCredits),

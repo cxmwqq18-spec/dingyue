@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown, ImageIcon, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowRight, ChevronDown, ImageIcon, Monitor, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
@@ -11,7 +11,7 @@ export type HomeComposerTab = "AI Video Agent" | "AI Video" | "AI Image";
 type Aspect = TaskInput["options"]["aspect"];
 type Duration = TaskInput["options"]["duration"];
 export type HomeComposerImageInput = { prompt: string; assetUrls: string[]; aspect: Aspect; toolId: WorkspaceImageTool };
-export type HomeComposerVideoSelection = { modelId?: string; aspect: Aspect; duration: Duration };
+export type HomeComposerVideoSelection = { modelId?: string; aspect: Aspect; duration: Duration; resolution?: string };
 
 export interface HomeComposerProps {
   tab: string;
@@ -26,6 +26,8 @@ export interface HomeComposerProps {
   onAspectChange: (aspect: Aspect) => void;
   duration: Duration;
   onDurationChange: (duration: Duration) => void;
+  resolution?: string;
+  onResolutionChange?: (resolution: string) => void;
   products: { previewUrl: string; label?: string }[];
   onOpenProduct: () => void;
   onOpenAvatar: () => void;
@@ -33,6 +35,12 @@ export interface HomeComposerProps {
   videoReferenceUrls: string[];
   onVideoReferenceUpload: (file: File) => void;
   onVideoReferenceRemove: (index: number) => void;
+  videoReferenceFiles?: string[];
+  onVideoFileUpload?: (file: File) => void;
+  onVideoFileRemove?: (index: number) => void;
+  audioReferenceFiles?: string[];
+  onAudioFileUpload?: (file: File) => void;
+  onAudioFileRemove?: (index: number) => void;
   imageInput: HomeComposerImageInput;
   onImageInputChange: (input: HomeComposerImageInput) => void;
   onImageReferenceUpload: (file: File) => void;
@@ -41,6 +49,8 @@ export interface HomeComposerProps {
   imageGenerateDisabled?: boolean;
   imageGenerateLabel?: string;
   onContinue: (tab: HomeComposerTab, video: HomeComposerVideoSelection) => void;
+  /** 当前模型+参数组合的积分预估文案（由父组件请求报价接口后传入）。 */
+  creditsNote?: string;
   onLogin?: () => void;
   disabled?: boolean;
   canUpload?: boolean;
@@ -57,29 +67,32 @@ const imageStyles: { id: WorkspaceImageTool; label: string }[] = [
 ];
 
 /** Keep displayed settings and submitted settings inside the selected model's capabilities. */
-export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, modelId: string, aspect: Aspect, duration: Duration) {
+export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, modelId: string, aspect: Aspect, duration: Duration, resolution?: string) {
   const model = catalog?.models.find((item) => item.id === modelId) ?? catalog?.models.find((item) => item.available) ?? catalog?.models[0];
   const aspects = catalog?.aspects.filter((item) => !model || model.aspects.includes(item)) ?? [];
   const durations = catalog?.durations.filter((item) => !model || model.durations.includes(item.value)) ?? [];
+  const resolutions = model?.resolutions ?? [];
   const selectedAspect = aspects.includes(aspect) ? aspect : aspects[0];
   const selectedDuration = durations.some((item) => item.value === duration) ? duration : durations[0]?.value;
-  return { model, aspects, durations, selectedAspect, selectedDuration };
+  const selectedResolution = resolution && resolutions.includes(resolution) ? resolution : resolutions[0];
+  return { model, aspects, durations, resolutions, selectedAspect, selectedDuration, selectedResolution };
 }
 
-function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind }: {
+function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind, accept = "image/*", addLabel = "Add photo", limitLabel = "Photo limit", countNoun = "photos" }: {
   urls: string[]; max: number; disabled: boolean; canUpload: boolean;
   onUpload: (file: File) => void; onRemove: (index: number) => void; kind: "video" | "image";
+  accept?: string; addLabel?: string; limitLabel?: string; countNoun?: string;
 }) {
   return <div className={`${styles.references} ${kind === "image" ? styles.imageReferences : ""}`}>
     <div className={styles.referenceStrip}>
       <div className={styles.referenceUploadColumn}>
         {urls.length < max ? <label className={`${styles.upload} ${!canUpload || disabled ? styles.uploadDisabled : ""}`}>
-          <Upload size={19} aria-hidden="true" /><span>Add photo</span>
-          <input type="file" accept="image/*" aria-label={`Upload ${kind} reference photo`} disabled={disabled || !canUpload} onChange={(event) => {
+          <Upload size={19} aria-hidden="true" /><span>{addLabel}</span>
+          <input type="file" accept={accept} aria-label={`Upload ${addLabel.toLowerCase()} reference`} disabled={disabled || !canUpload} onChange={(event) => {
             const file = event.target.files?.[0]; event.target.value = ""; if (file) onUpload(file);
           }} />
-        </label> : <div className={`${styles.upload} ${styles.uploadFull}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
-        <span className={styles.referenceCount} aria-label={`${kind === "video" ? "Video" : "Image"} reference photos: ${urls.length} of ${max}`}>{`${urls.length} / ${max} photos`}</span>
+        </label> : <div className={`${styles.upload} ${styles.uploadFull}`} aria-hidden="true"><ImageIcon size={19} /><span>{limitLabel}</span></div>}
+        <span className={styles.referenceCount} aria-label={`${kind === "video" ? "Video" : "Image"} references: ${urls.length} of ${max}`}>{`${urls.length} / ${max} ${countNoun}`}</span>
       </div>
       {urls.map((url, index) => <div key={`${url}-${index}`} className={styles.thumbnail}>
         {/* Customer assets may use private authenticated URLs. */}
@@ -91,16 +104,17 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind }
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
   const draftMode = activeTab === "AI Video Agent";
-  const { model, aspects, durations, selectedAspect, selectedDuration } = homeComposerVideoOptions(catalog, modelId, aspect, duration);
-  const referenceLimit = model?.multiReference ? 4 : 1;
+  const { model, aspects, durations, resolutions, selectedAspect, selectedDuration, selectedResolution } = homeComposerVideoOptions(catalog, modelId, aspect, duration, resolution);
+  const referenceLimit = model?.referenceImageMax ?? (model?.multiReference ? 4 : 1);
   const validVideo = Boolean(model?.available && selectedAspect && selectedDuration);
   const tooManyReferences = videoMode && videoReferenceUrls.length > referenceLimit;
-  const canContinue = !disabled && !(imageMode && onImageGenerate && imageGenerateDisabled) && (imageMode || draftMode || validVideo) && !tooManyReferences;
+  const missingReference = videoMode && !videoReferenceUrls.length;
+  const canContinue = !disabled && !(imageMode && onImageGenerate && imageGenerateDisabled) && (imageMode || draftMode || validVideo) && !tooManyReferences && !missingReference;
   const promptValue = imageMode ? imageInput.prompt : prompt;
   const imageAspects = WORKSPACE_ASPECTS;
   const imageStyleOptions = imageStyles.map((style) => ({ value: style.id, label: style.label }));
@@ -127,20 +141,24 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
     </div>}
     <div id={showTabs ? "home-composer-panel" : undefined} role={showTabs ? "tabpanel" : undefined} aria-labelledby={showTabs ? `home-tab-${tabs.findIndex((item) => item.id === activeTab)}` : undefined}>
       <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""}`}>
-        {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} />}
-        {imageMode && <References kind="image" urls={imageInput.assetUrls} max={4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} />}
+        <div className={styles.referenceRow}>
+          {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} />}
+          {videoMode && (model?.videoReferenceMax ?? 0) > 0 && onVideoFileUpload && onVideoFileRemove && <References kind="video" urls={videoReferenceFiles} max={model!.videoReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onVideoFileUpload} onRemove={onVideoFileRemove} accept="video/mp4,video/quicktime,video/webm" addLabel="Add video" limitLabel="Video limit" countNoun="videos" />}
+          {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="video" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
+          {imageMode && <References kind="image" urls={imageInput.assetUrls} max={catalog?.imageReferenceMax ?? 4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} />}
+        </div>
         <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={imageMode ? 4000 : 2000} />
         <span className={styles.characterCount}>{`${promptValue.length} / ${imageMode ? "4000" : "2000"}`}</span>
       </div>
       <div className={styles.footer}>
         <div className={styles.controls}>
-          {draftMode && <>
+          {draftMode && <button type="button" className={styles.controlButton} disabled={disabled} onClick={onOpenAvatar}><UserRound size={16} aria-hidden="true" /><span>{avatarName || "Avatar"}</span><ChevronDown size={13} aria-hidden="true" /></button>}
+          {videoMode && <>
             <button type="button" className={styles.controlButton} title={products[0]?.label ? `Selected product: ${products[0].label}` : "Add or import a product"} disabled={disabled} onClick={onOpenProduct}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               {products[0]?.previewUrl ? <img className={styles.controlThumbnail} src={products[0].previewUrl} alt={products[0].label ? `Product: ${products[0].label}` : "Selected product"} /> : <Plus size={16} aria-hidden="true" />}
               <span>Product{products.length ? ` · ${products.length} added` : ""}</span><ChevronDown size={13} aria-hidden="true" />
             </button>
-            <button type="button" className={styles.controlButton} disabled={disabled} onClick={onOpenAvatar}><UserRound size={16} aria-hidden="true" /><span>{avatarName || "Avatar"}</span><ChevronDown size={13} aria-hidden="true" /></button>
           </>}
         {imageMode ? <>
           <div className={styles.setting}><ImageIcon size={15} aria-hidden="true" /><span>Style</span><WorkspaceSelect
@@ -192,17 +210,29 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             buttonClassName={styles.settingSelect}
             placeholder="Unavailable"
           /></div>
+          {onResolutionChange && resolutions.length > 0 && <div className={styles.setting}><Monitor size={15} aria-hidden="true" /><WorkspaceSelect
+            ariaLabel="Video resolution"
+            disabled={disabled || !resolutions.length}
+            value={selectedResolution ?? ""}
+            options={resolutions.map((value) => ({ value, label: value }))}
+            onChange={(value) => onResolutionChange(value)}
+            bare
+            buttonClassName={styles.settingSelect}
+            placeholder="Unavailable"
+          /></div>}
         </>}
         </div>
         <div className={styles.footerActions}>
           {tooManyReferences && <span className={styles.footerNote} role="status">{`Remove photos to fit this model's ${referenceLimit}-photo limit.`}</span>}
+          {videoMode && missingReference && <span className={styles.footerNote} role="status">Add a reference photo to start.</span>}
           {videoMode && !validVideo && <span className={styles.footerNote} role="status">Choose an available model.</span>}
+          {!imageMode && creditsNote && <span className={styles.footerNote} role="status">{creditsNote}</span>}
           {!canUpload && (videoMode || imageMode) && loginHref && <a className={styles.loginLink} href={loginHref} onClick={(event) => {
             if (!onLogin || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             event.preventDefault();
             onLogin();
           }}>Log in to add photos</a>}
-          <button type="button" className={`${styles.continue} ${imageMode && onImageGenerate ? styles.continueWithLabel : ""}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration })}>{imageMode && onImageGenerate && <span>{imageGenerateLabel}</span>}<ArrowRight size={18} aria-hidden="true" /></button>
+          <button type="button" className={`${styles.continue} ${styles.continueWithLabel}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration, ...(selectedResolution ? { resolution: selectedResolution } : {}) })}><span>{imageMode && onImageGenerate ? imageGenerateLabel : draftMode ? "Generate video" : "Generate"}</span><ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>
     </div>

@@ -72,6 +72,18 @@ export function validateTaskInput(sceneId: SceneId, input: TaskInput, actors: Ac
   if (!(WORKSPACE_DURATIONS as readonly number[]).includes(input.options.duration)) throw new WorkspaceError("workspace_duration_invalid");
   if (input.options.subtitleStyle !== undefined && !["classic", "bold", "minimal"].includes(input.options.subtitleStyle)) throw new WorkspaceError("workspace_subtitle_style_invalid");
   if (!(WORKSPACE_ASPECTS as readonly string[]).includes(input.options.aspect)) throw new WorkspaceError("workspace_aspect_invalid");
+  if (input.options.resolution !== undefined && !/^\d{3,4}p$/.test(input.options.resolution)) throw new WorkspaceError("workspace_resolution_invalid");
+  if (input.options.resolution && modelCapabilities) {
+    const selected = input.modelId ? modelCapabilities.find((model) => model.id === input.modelId) : undefined;
+    if (selected && selected.resolutions.length && !selected.resolutions.includes(input.options.resolution)) throw new WorkspaceError("workspace_resolution_unsupported");
+  }
+  if (modelCapabilities && (input.referenceVideos?.length || input.referenceAudios?.length)) {
+    const selected = input.modelId ? modelCapabilities.find((model) => model.id === input.modelId) : modelCapabilities.find((model) => model.available);
+    if (selected) {
+      if ((input.referenceVideos?.length ?? 0) > selected.videoReferenceMax) throw new WorkspaceError("workspace_video_reference_unsupported");
+      if ((input.referenceAudios?.length ?? 0) > selected.audioReferenceMax) throw new WorkspaceError("workspace_audio_reference_unsupported");
+    }
+  }
   if (!WORKSPACE_LANGUAGES.some((language) => language.value === input.options.language)) throw new WorkspaceError("workspace_language_invalid");
   if (modelCapabilities) assertWorkspaceCapabilitySupport({ sceneId, input, models: modelCapabilities });
   if (!schema.styleOptions.some((style) => style.value === input.options.style)) throw new WorkspaceError("workspace_style_invalid");

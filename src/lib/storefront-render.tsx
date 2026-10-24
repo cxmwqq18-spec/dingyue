@@ -2976,7 +2976,8 @@ function renderThemePage({
   storefrontContext,
   publishedPaths,
   publishedIndexablePaths,
-  lightweightChrome = false
+  lightweightChrome = false,
+  headerAccount
 }: {
   currentSite: Site;
   page: ThemePageJson;
@@ -3000,6 +3001,7 @@ function renderThemePage({
   publishedIndexablePaths?: string[];
   videoWatchPages?: readonly MyDreamShootsVideoWatchPage[];
   lightweightChrome?: boolean;
+  headerAccount?: { href: string; label: string };
 }) {
   const jsonLdNodes = currentSite.id === "site_aidreamcapes" ? aidreamcapesFilterJsonLd(jsonLd, pagePath, query) : jsonLd;
   const navigationPagePaths = new Set(currentSite.pages.flatMap((publishedPage) => [
@@ -3134,6 +3136,7 @@ function renderThemePage({
         videoThemes={isolatedRenderData.videoThemes}
         homepageShowcases={isolatedRenderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
+        headerAccount={headerAccount}
         publishedIndexablePaths={publishedIndexablePaths}
         storefrontContext={storefrontContext}
       />
@@ -3449,6 +3452,11 @@ export async function renderStorefrontPage({
     ...(shouldDeferCustomerRuntime ? { clientBootstrapCustomer: true } : {}),
     ...(slug === "/login" ? { auth: getDefaultCustomerAuth(state, currentSite.id, typeof query.error === "string" ? query.error : undefined) } : {})
   };
+  // Storefront header uses the SSR session state: signed-in customers get an
+  // account-center entry instead of the static "Log in" label from navigation.
+  const headerAccount = currentSite.id === "site_aidreamcapes" && runtimeWithAuth.customer
+    ? { href: routeMode === "host" ? "/account" : `/site/${publicSiteSlug(currentSite.slug)}/account`, label: "My account" }
+    : undefined;
   const renderedPage = { ...page, publishedJson: pageJson };
   const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
   const publishedIndexablePaths = indexableSeoPageEntriesForSite(state, currentSite, publishedSnapshot)
@@ -3473,6 +3481,7 @@ export async function renderStorefrontPage({
     renderData: pageRenderData,
     routeMode,
     runtime: runtimeWithAuth,
+    headerAccount,
     settings,
     storefrontContext,
     publishedPaths: publishedSnapshot.publishedPaths,

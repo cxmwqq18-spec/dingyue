@@ -35,7 +35,7 @@ function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   return <WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>;
 }
 
-export function AidreamcapesV2Header({ navigation, r }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers }) {
+export function AidreamcapesV2Header({ navigation, r, headerAccount }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; headerAccount?: { href: string; label: string } }) {
   return (
     <header className="site">
       <div className="wrap hbar">
@@ -99,7 +99,7 @@ export function AidreamcapesV2Header({ navigation, r }: { navigation: Aidreamcap
           ))}
         </nav>
         <div className="hright">
-          <WorkspaceEntryLink className="login" href={r.href(navigation.actions.login.href)}>{navigation.actions.login.label}</WorkspaceEntryLink>
+          <WorkspaceEntryLink className="login" href={headerAccount ? headerAccount.href : r.href(navigation.actions.login.href)}>{headerAccount ? headerAccount.label : navigation.actions.login.label}</WorkspaceEntryLink>
           <WorkspaceEntryLink className="btn btn-primary" href={withStartLinks(r).href(navigation.actions.getStarted.href)}>{navigation.actions.getStarted.label}</WorkspaceEntryLink>
           <button aria-controls="adc2-main-nav" aria-expanded="false" aria-label={copyLabel(r, "Open menu")} className="menu-toggle" id="adc2-menu-toggle" type="button">
             <svg fill="none" height="20" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 20 20" width="20">
@@ -174,7 +174,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
 // `legacyPublicPage` keeps the existing Aidreamcapes page styles (scoped to
 // main[data-aidreamcapes-public-page]) for pages that still render their own sections,
 // such as login, search, cart and the album page.
-export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company, articles = [], articlesTitle }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company; articles?: AidreamcapesFooterArticle[]; articlesTitle?: string }) {
+export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-content", legacyPublicPage = false, company, articles = [], articlesTitle, headerAccount }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; children: ReactNode; mainId?: string; legacyPublicPage?: boolean; company?: V2Company; articles?: AidreamcapesFooterArticle[]; articlesTitle?: string; headerAccount?: { href: string; label: string } }) {
   // The shell's page element already carries the current LivePage section. Use
   // its presentation labels only for this homepage, leaving other routes alone.
   const pageSection = isValidElement<{ section?: SectionInstance }>(children) ? children.props.section : undefined;
@@ -188,7 +188,7 @@ export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-co
   return (
     <div className={`adc2${homeExperience?.language === "zh-CN" ? " adc-home-locale" : ""}`} lang={homeExperience?.language}>
       <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS + AIDREAMCAPES_V2_VISUAL_CSS + AIDREAMCAPES_V2_VISUAL_CSS_POLISH }} />
-      <AidreamcapesV2Header navigation={navigation} r={r} />
+      <AidreamcapesV2Header headerAccount={headerAccount} navigation={navigation} r={r} />
       <main
         className={legacyPublicPage ? "bg-[#06070b] text-white" : undefined}
         data-aidreamcapes-public-page={legacyPublicPage ? "true" : undefined}

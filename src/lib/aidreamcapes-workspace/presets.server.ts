@@ -6,7 +6,7 @@ import { parseStaticCreateSegments } from "./static-routes";
 import { canonicalWorkspaceTool } from "./tool-aliases";
 
 type RecordValue = Record<string, unknown>;
-const SCENES = new Set<SceneId>(["presenter_showcase", "process_demo", "texture_closeup"]);
+const SCENES = new Set<SceneId>(["presenter_showcase", "process_demo", "texture_closeup", "text_to_video"]);
 const ASPECTS = new Set<TaskInput["options"]["aspect"]>(["9:16", "1:1", "16:9"]);
 const DURATIONS = new Set<TaskInput["options"]["duration"]>([6, 10, 15, 30]);
 const IMAGE_TOOLS = new Set(["custom", "white-background", "change-background", "lifestyle-photos", "model-photos"]);

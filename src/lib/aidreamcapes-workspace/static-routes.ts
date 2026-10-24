@@ -44,7 +44,7 @@ export type StaticDemo = {
   slug: string;
   view: WorkspaceView;
   prompt: string;
-  scene?: "presenter_showcase" | "process_demo" | "texture_closeup";
+  scene?: "presenter_showcase" | "process_demo" | "texture_closeup" | "text_to_video";
   aspect?: "9:16" | "1:1" | "16:9";
   duration?: 6 | 10 | 15 | 30;
   tool?: string;

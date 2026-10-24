@@ -76,7 +76,7 @@ export function parseInput(value: unknown): TaskInput {
   if (!raw.images || typeof raw.images !== "object" || Array.isArray(raw.images) || !raw.fields || typeof raw.fields !== "object" || Array.isArray(raw.fields) || !raw.options || typeof raw.options !== "object") throw new WorkspaceError("invalid_input");
   const images: Record<string, string[]> = {};
   for (const [key, urls] of Object.entries(raw.images)) {
-    if (!Array.isArray(urls) || urls.length > 8 || urls.some(url => typeof url !== "string" || url.length > 2048)) throw new WorkspaceError("invalid_images");
+    if (!Array.isArray(urls) || urls.length > 12 || urls.some(url => typeof url !== "string" || url.length > 2048)) throw new WorkspaceError("invalid_images");
     images[key] = urls;
   }
   const fields: TaskInput["fields"] = {};
@@ -87,7 +87,15 @@ export function parseInput(value: unknown): TaskInput {
   }
   const opt = raw.options as TaskInput["options"];
   if (![6, 10, 15, 30].includes(opt.duration) || !["9:16", "1:1", "16:9"].includes(opt.aspect) || !["zh", "en", "es", "pt", "ja", "ko", "th", "vi", "id"].includes(opt.language) || typeof opt.style !== "string" || typeof opt.subtitle !== "boolean" || (opt.subtitleStyle !== undefined && !["classic", "bold", "minimal"].includes(opt.subtitleStyle))) throw new WorkspaceError("invalid_options");
-  const input: TaskInput = { images, fields, options: { duration: opt.duration, aspect: opt.aspect, style: opt.style, language: opt.language, subtitle: opt.subtitle, subtitleStyle: opt.subtitleStyle ?? "classic" } };
+  if (opt.resolution !== undefined && (typeof opt.resolution !== "string" || !/^\d{3,4}p$/.test(opt.resolution))) throw new WorkspaceError("invalid_options");
+  const referenceList = (value: unknown, limit: number): string[] | undefined => {
+    if (value === undefined) return undefined;
+    if (!Array.isArray(value) || value.length > limit || value.some(url => typeof url !== "string" || url.length > 2048)) throw new WorkspaceError("invalid_images");
+    return value;
+  };
+  const referenceVideos = referenceList(raw.referenceVideos, 8);
+  const referenceAudios = referenceList(raw.referenceAudios, 8);
+  const input: TaskInput = { images, fields, options: { duration: opt.duration, aspect: opt.aspect, ...(opt.resolution ? { resolution: opt.resolution } : {}), style: opt.style, language: opt.language, subtitle: opt.subtitle, subtitleStyle: opt.subtitleStyle ?? "classic" }, ...(referenceVideos?.length ? { referenceVideos } : {}), ...(referenceAudios?.length ? { referenceAudios } : {}) };
   if (raw.creativeDirection !== undefined) {
     if (typeof raw.creativeDirection !== "string" || raw.creativeDirection.length > 4000) throw new WorkspaceError("invalid_creative_direction");
     input.creativeDirection = raw.creativeDirection.trim();

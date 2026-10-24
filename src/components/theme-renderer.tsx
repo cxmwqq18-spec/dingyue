@@ -257,6 +257,7 @@ function ThemeRendererBody({
   previewSelection,
   previewEmptyState,
   publishedIndexablePaths,
+  headerAccount,
   storefrontContext
 }: {
   site: Site;
@@ -290,6 +291,7 @@ function ThemeRendererBody({
   };
   previewEmptyState?: ReactNode;
   publishedIndexablePaths?: string[];
+  headerAccount?: { href: string; label: string };
   storefrontContext?: StorefrontContext;
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
@@ -361,7 +363,7 @@ function ThemeRendererBody({
     const v2Company = aidreamcapesV2Company(storefrontContext?.profile?.identity, settings.globalSections?.footer?.settings as Record<string, unknown> | undefined);
     return (
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
-        <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+        <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} headerAccount={headerAccount} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
           {v2Entry ? (
             <AidreamcapesV2Page query={query} company={v2Company} homeKeywords={aidreamcapesHomeKeywords} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (

@@ -42,7 +42,7 @@ export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 type View = WorkspaceView;
 type WorkspaceTask = BaseWorkspaceTask & { operation?: { action: string; state: "pending" | "run" | "done" | "fail" | "cancelled"; error?: string } };
 type ComposerProduct = ImportedProductAsset & { confirmedBrief?: ConfirmedProductBrief };
-type ComposerPreset = { title?: string; aspect?: TaskInput["options"]["aspect"]; duration?: TaskInput["options"]["duration"]; modelId?: string; referenceUrls?: string[] };
+type ComposerPreset = { title?: string; aspect?: TaskInput["options"]["aspect"]; duration?: TaskInput["options"]["duration"]; resolution?: string; modelId?: string; referenceUrls?: string[]; referenceVideos?: string[]; referenceAudios?: string[] };
 type Step = "input" | "storyboard" | "render" | "delivery";
 type Action = "storyboard" | "reroll" | "rewrite" | "generate_shot" | "restore_version" | "render" | "resume" | "compose_shot";
 type ActionQuote = { available: boolean; credits: number | null; currency: "credits"; quoteToken?: string; expiresAt?: string; revision?: number; reason?: string };
@@ -156,6 +156,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [composerDuration, setComposerDuration] = useState<TaskInput["options"]["duration"]>(initialPreset?.duration ?? initialHandoff?.duration ?? 15);
   const [composerAspect, setComposerAspect] = useState<TaskInput["options"]["aspect"]>(initialPreset?.aspect ?? initialHandoff?.aspect ?? "9:16");
   const [composerModel, setComposerModel] = useState("");
+  const [composerResolution, setComposerResolution] = useState("");
+  const [composerQuote, setComposerQuote] = useState<{ available: boolean; credits?: number } | null>(null);
+  const [pendingGenerate, setPendingGenerate] = useState<{ scene: SceneSchema; input: TaskInput; title: string } | null>(null);
+  const [messageAction, setMessageAction] = useState(false);
+  const [detailTaskId, setDetailTaskId] = useState<string | null>(null);
+  const detailTask = detailTaskId ? tasks.find((item) => item.taskId === detailTaskId) : undefined;
+  const composerCreditsNote = composerQuote?.available && composerQuote.credits != null ? `Estimated cost: ${composerQuote.credits} credits` : undefined;
   const [composerActorId, setComposerActorId] = useState("");
   const [composerProducts, setComposerProducts] = useState<ComposerProduct[]>([]);
   const [confirmedProductBriefs, setConfirmedProductBriefs] = useState<ConfirmedProductBrief[]>([]);
@@ -187,6 +194,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [balance, setBalance] = useState(customer?.balance);
   const [tagDrafts, setTagDrafts] = useState<Record<string, string>>({});
   const [videoReferenceUrls, setVideoReferenceUrls] = useState<string[]>([]);
+  const [videoReferenceFiles, setVideoReferenceFiles] = useState<string[]>([]);
+  const [audioReferenceFiles, setAudioReferenceFiles] = useState<string[]>([]);
+  useEffect(() => {
+    if (composerTab === "AI Image") { setComposerQuote(null); return; }
+    let cancelled = false;
+    const timer = setTimeout(() => {
+      request<{ quote: { available: boolean; credits?: number } }>("/generation-quote", {
+        method: "POST",
+        body: JSON.stringify({ modelId: composerModel || undefined, duration: composerDuration, aspect: composerAspect, resolution: composerResolution || undefined, imageInputCount: composerTab === "AI Video" ? videoReferenceUrls.length : composerProducts.length, videoInputCount: composerTab === "AI Video" ? videoReferenceFiles.length : 0, audioInputCount: composerTab === "AI Video" ? audioReferenceFiles.length : 0 })
+      }).then((result) => { if (!cancelled) setComposerQuote(result.quote); }).catch(() => { if (!cancelled) setComposerQuote(null); });
+    }, 400);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [composerTab, composerModel, composerDuration, composerAspect, composerResolution, videoReferenceUrls.length, videoReferenceFiles.length, audioReferenceFiles.length, composerProducts.length]);
   const [presetSceneId, setPresetSceneId] = useState(initialPreset?.sceneId);
   const currentRef = useRef<WorkspaceTask | null>(null);
   const savedRef = useRef<WorkspaceTask | null>(null);
@@ -564,6 +584,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const input = defaultInput(selected);
     if (selected.needsActor && composerActorId) input.actorId = composerActorId;
     input.options.duration = preset?.duration ?? composerDuration; input.options.aspect = preset?.aspect ?? composerAspect;
+    const resolution = preset?.resolution ?? composerResolution;
+    if (resolution) input.options.resolution = resolution;
+    if (preset?.referenceVideos?.length) input.referenceVideos = preset.referenceVideos;
+    if (preset?.referenceAudios?.length) input.referenceAudios = preset.referenceAudios;
     input.options.subtitle = selected.needsActor && Boolean(catalog?.subtitles?.available);
     const modelId = preset?.modelId ?? composerModel;
     if (modelId) input.modelId = modelId;
@@ -813,17 +837,114 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
+  /** 参考视频/音频走工作台专用上传接口（顾客资产同一存储链路）。 */
+  async function uploadReferenceFile(file: File, kind: "video" | "audio") {
+    setBusy(true); setMessage("");
+    try {
+      const body = new FormData(); body.append("file", file);
+      const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/aivideosugc/reference-upload`, { method: "POST", credentials: "same-origin", headers: { ...csrfHeader(`customer_csrf_${siteId}`), ...(csrfToken ? { "x-csrf-token": csrfToken } : {}) }, body });
+      const result = await response.json();
+      if (!response.ok || !result.asset?.url) throw new Error(result.message || humanError(result.error) || "Your file could not be uploaded.");
+      (kind === "video" ? setVideoReferenceFiles : setAudioReferenceFiles)((current) => [...current, result.asset.url].slice(0, 4));
+    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  /** 把任务的提交表单回填到首页作曲家门，用户可再编辑；重新提交会创建一个新视频。 */
+  function prefillFromTask(item: WorkspaceTask) {
+    setDetailTaskId(null);
+    setComposerTab(item.sceneId === "text_to_video" ? "AI Video Agent" : "AI Video");
+    setPrompt(String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? ""));
+    if (item.input.modelId) setComposerModel(item.input.modelId);
+    setComposerAspect(item.input.options.aspect);
+    setComposerDuration(item.input.options.duration);
+    setComposerResolution(item.input.options.resolution ?? "");
+    setVideoReferenceUrls(Object.values(item.input.images).flat());
+    setVideoReferenceFiles(item.input.referenceVideos ?? []);
+    setAudioReferenceFiles(item.input.referenceAudios ?? []);
+    setComposerTitle("");
+    setMessageAction(false);
+    setMessage("Your previous settings are loaded. Adjust anything, then generate to create a new video.");
+    void navigate("home");
+  }
+
   function continueHomeComposer(tab: HomeComposerTab, selection: HomeComposerVideoSelection) {
+    // 一切生成入口都要求已登录：未登录时先把当前表单存为游客草稿，再跳转登录。
+    if (!customer) { continueToLoginWithDraft(); return; }
     if (tab === "AI Image") { void navigate("images"); return; }
     setComposerModel(selection.modelId ?? ""); setComposerAspect(selection.aspect); setComposerDuration(selection.duration);
-    if (tab === "AI Video") {
-      const selected = catalog?.scenes.find((item) => item.id === (activePreset?.kind === "video" ? presetSceneId : quickStartSceneId || "process_demo")) ?? catalog?.scenes.find((item) => !item.needsActor);
-      if (selected) selectScene(selected, { ...selection, referenceUrls: videoReferenceUrls });
-      return;
+    if (selection.resolution) setComposerResolution(selection.resolution);
+    void openGenerateConfirm(tab, selection);
+  }
+
+  /** 组建生成入参并弹出二次确认（展示预计积分），确认后才真正创建任务。 */
+  async function openGenerateConfirm(tab: HomeComposerTab, selection: HomeComposerVideoSelection) {
+    const sceneId = tab === "AI Video" ? (activePreset?.kind === "video" ? presetSceneId : quickStartSceneId || "process_demo") : "text_to_video";
+    const selected = catalog?.scenes.find((item) => item.id === sceneId);
+    if (!selected) return;
+    const referenceUrls = tab === "AI Video" ? videoReferenceUrls : [];
+    const referenceVideos = tab === "AI Video" ? videoReferenceFiles : [];
+    const referenceAudios = tab === "AI Video" ? audioReferenceFiles : [];
+    if (!customer) { continueToLoginWithDraft(); return; }
+    setBusy(true); setMessage("");
+    try {
+      const input = composerInput(selected, { ...selection, referenceUrls, referenceVideos, referenceAudios });
+      if (selected.id === "text_to_video") input.fields.description = prompt.trim();
+      const requiredText = selected.sections.flatMap((section) => section.fields).find((field) => field.required && (field.type === "text" || field.type === "textarea"));
+      if (requiredText && selected.id !== "text_to_video" && !String(input.fields[requiredText.id] ?? "").trim() && prompt.trim()) input.fields[requiredText.id] = prompt.trim();
+      setPendingGenerate({ scene: selected, input, title: composerTitle.trim() || selected.name });
+    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  /** 确认后：建稿并自动规划分镜、逐镜生成、合成成片，全程停留在当前页。 */
+  async function runConfirmedGeneration() {
+    const pending = pendingGenerate;
+    if (!pending || !customer) return;
+    setPendingGenerate(null); setBusy(true); setMessage("");
+    try {
+      const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: pending.scene.id, input: pending.input, title: pending.title }) });
+      setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
+      setPrompt(""); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]); setComposerTitle("");
+      setMessage(`Draft saved. Generating “${result.task.title}” — you can keep working here; progress is in your Library.`);
+      setMessageAction(true);
+      await autoRunVideoTask(result.task.taskId);
+    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  async function pollTaskUntil(taskId: string, ready: (task: WorkspaceTask) => boolean, timeoutMs = 600000): Promise<WorkspaceTask> {
+    const deadline = Date.now() + timeoutMs;
+    for (;;) {
+      const { task } = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
+      if (ready(task)) return task;
+      if (task.error) throw new Error(humanError(task.error) || task.error);
+      if (Date.now() > deadline) throw new Error("Generation is taking longer than expected. Follow progress in your Library.");
+      await sleep(3000);
     }
-    const sceneId = activePreset?.kind === "video" ? presetSceneId : quickStartSceneId || "process_demo";
-    const selected = catalog?.scenes.find((item) => item.id === sceneId) ?? catalog?.scenes.find((item) => !item.needsActor) ?? catalog?.scenes[0];
-    if (selected) selectScene(selected, { ...selection, referenceUrls: composerProducts.map((asset) => asset.previewUrl) });
+  }
+
+  async function autoRunVideoTask(taskId: string) {
+    try {
+      let current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
+      if (!current.storyboard?.shots.length) {
+        await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: current.revision, action: "storyboard" }) });
+        setMessage("Planning your storyboard…");
+        current = await pollTaskUntil(taskId, (task) => Boolean(task.storyboard?.shots.length));
+      }
+      for (const shot of current.storyboard!.shots) {
+        const quote = await request<ActionQuote>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
+        if (!quote.available) throw new Error(humanError(quote.reason) || "Generation isn't available with these settings.");
+        const dispatched = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }) });
+        setMessage(`Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
+        current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", 420000);
+        if (current.operation?.state === "fail") throw new Error(current.operation.error ? humanError(current.operation.error) : "A shot failed to generate. Open the video in your Library to retry.");
+      }
+      const fresh = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
+      await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: fresh.task.revision, action: "render" }) });
+      setMessage("Stitching your final video…");
+      const finalTask = await pollTaskUntil(taskId, (task) => Boolean(task.video?.finalUrl) || task.video?.status === "fail", 600000);
+      setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
+    } catch (error) { setMessage((error as Error).message); }
   }
 
   function fillQuickStart(item: NonNullable<WorkspaceCatalog["quickStarts"]>[number]) {
@@ -993,7 +1114,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         <div className={styles.navdivider} /><div className={styles.navlabel}>CREATE</div>{navGroup("create")}
         <div className={styles.navdivider} /><div className={styles.navlabel}>EXPLORE</div>{navGroup("explore")}
       </div>
-      <div className={styles.navfooter}><button className={styles.navitem} onClick={() => setModal("support")}><Headphones size={22} strokeWidth={1.8} /><span>Support</span></button></div>
+      <div className={styles.navfooter}>{customer && <a className={styles.navitem} href={accountHref}><UserRound size={22} strokeWidth={1.8} /><span>My account</span></a>}<button className={styles.navitem} onClick={() => setModal("support")}><Headphones size={22} strokeWidth={1.8} /><span>Support</span></button></div>
     </aside>
     <div className={styles.body}>
       <header className={styles.toolbar}>
@@ -1006,7 +1127,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         }}>Log In</a>}</div>
       </header>
       <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""}`}>
-        {message && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{message}</span>{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => setMessage("")} aria-label="Dismiss message"><X size={15} /></button></div>}
+        {message && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{message}</span>{messageAction && <button className={styles.linkButton} onClick={() => { setMessageAction(false); void navigate("library"); }}><span>View in Library </span><ArrowRight size={14} /></button>}{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => { setMessage(""); setMessageAction(false); }} aria-label="Dismiss message"><X size={15} /></button></div>}
         {batchNotice && <div className={styles.notice} role="status"><span>{batchNotice}</span><button className={styles.iconButton} onClick={() => setBatchNotice("")} aria-label="Dismiss batch result"><X size={15} /></button></div>}
         {((view === "home" || view === "video" || view === "images" || view === "agent") && (task ? task.sourceTemplate : activePreset)) && renderTemplate((task ? task.sourceTemplate : activePreset)!)}
         {view === "home" && <>
@@ -1015,8 +1136,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             tab={composerTab} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
+            resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
@@ -1039,8 +1163,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             tab="AI Video" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
+            resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
@@ -1056,8 +1183,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             tab="AI Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
+            resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
@@ -1207,8 +1337,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             tab="AI Image" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
+            resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
@@ -1257,6 +1390,79 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     </div>
     {(modal === "guide" || modal === "support") && <WorkspaceHelpDialog kind={modal} onClose={closeModal} supportHref={supportPath ?? `${basePath}/contact-us`} accountHref={customer ? accountHref : undefined} />}
     {modal === "templates" && renderTemplatePickerDialog()}
+    {detailTask && (() => {
+      const images = Object.values(detailTask.input.images).flat();
+      const description = String(detailTask.input.fields.description ?? detailTask.input.creativeDirection ?? Object.values(detailTask.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim();
+      const model = catalog?.models.find((entry) => entry.id === detailTask.input.modelId)?.label;
+      const running = detailTask.operation?.state === "pending" || detailTask.operation?.state === "run";
+      const failed = detailTask.status === "failed" || detailTask.operation?.state === "fail";
+      const completed = detailTask.status === "completed" && detailTask.video?.finalUrl;
+      const statusWord = running ? (detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : statusLabels[detailTask.status] ?? detailTask.status;
+      const statusClass = failed ? styles.detailStatusIconFail : running ? styles.detailStatusIconRun : completed ? styles.detailStatusIconDone : styles.detailStatusIconDraft;
+      const finalUrl = detailTask.video?.finalUrl;
+      return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setDetailTaskId(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Generation details" style={{ maxWidth: 780 }}>
+        <div className={styles.detailHead}>
+          <span className={`${styles.detailStatusIcon} ${statusClass}`} aria-hidden="true">{failed ? <X size={19} /> : running ? <Loader2 className={styles.spin} size={19} /> : completed ? <Check size={19} /> : <FileVideo size={18} />}</span>
+          <div style={{ flex: 1 }}>
+            <h2 style={{ margin: 0, display: "flex", alignItems: "center", gap: 10 }}>{detailTask.title}<span style={{ fontSize: 13, fontWeight: 500, color: failed ? "#dc2626" : running ? "#7c3aed" : completed ? "#16a34a" : "#6b7280" }}>{statusWord}{running ? "…" : ""}</span></h2>
+            <p className={styles.detailSubtitle}>{failed && detailTask.error ? humanError(detailTask.error) : "View the full details of this generation."}</p>
+          </div>
+          <button className={styles.iconButton} onClick={() => setDetailTaskId(null)} aria-label="Close dialog"><X size={23} /></button>
+        </div>
+        <div className={styles.detailGrid}>
+          <div style={{ display: "grid", gap: 14, alignContent: "start" }}>
+            <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Result</p>
+              {finalUrl ? <video controls preload="metadata" src={finalUrl} className={styles.detailVideo} /> : <div className={styles.detailPlaceholder}>{running ? <><Loader2 className={styles.spin} size={22} /><span>Generation in progress…</span></> : failed ? <><X size={22} /><span>Generation failed</span></> : <><FileVideo size={22} /><span>No video yet</span></>}</div>}
+              {finalUrl && <a className={styles.button} style={{ marginTop: 10 }} href={finalUrl} download><Download size={15} /><span>Download</span></a>}
+            </div>
+            {description && <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Your description</p>
+              <p className={styles.detailPrompt}>{description}</p>
+            </div>}
+            {images.length > 0 && <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference images</p>
+              <div className={styles.detailImages}>{images.map((url, index) => <img key={`${url}-${index}`} loading="lazy" decoding="async" src={url} alt={`Reference ${index + 1}`} />)}</div>
+            </div>}
+          </div>
+          <div style={{ display: "grid", gap: 14, alignContent: "start" }}>
+            <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Basic info</p>
+              <dl className={styles.detailKv}>
+                <dt>Type</dt><dd>Video</dd>
+                <dt>Created</dt><dd>{new Date(detailTask.createdAt).toLocaleString()}</dd>
+                <dt>Model</dt><dd>{model ?? "—"}</dd>
+                <dt>Status</dt><dd>{statusWord}</dd>
+              </dl>
+            </div>
+            <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Submitted parameters</p>
+              <div className={styles.detailChips}>
+                <span className={styles.detailChip}>Duration<strong>{detailTask.input.options.duration}s</strong></span>
+                <span className={styles.detailChip}>Aspect<strong>{detailTask.input.options.aspect}</strong></span>
+                {detailTask.input.options.resolution && <span className={styles.detailChip}>Resolution<strong>{detailTask.input.options.resolution}</strong></span>}
+                <span className={styles.detailChip}>Reference photos<strong>{detailTask.input.images.productImages?.length ?? 0}</strong></span>
+                {(detailTask.input.referenceVideos?.length ?? 0) > 0 && <span className={styles.detailChip}>Reference videos<strong>{detailTask.input.referenceVideos!.length}</strong></span>}
+                {(detailTask.input.referenceAudios?.length ?? 0) > 0 && <span className={styles.detailChip}>Reference audio<strong>{detailTask.input.referenceAudios!.length}</strong></span>}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.detailFooter}>
+          <button type="button" className={`${styles.button} ${styles.primary}`} disabled={running} title={running ? "This video is being generated. Wait for it to finish before regenerating." : undefined} onClick={() => prefillFromTask(detailTask)}><RotateCcw size={15} /><span>{running ? "Generating…" : "Regenerate"}</span></button>
+        </div>
+      </section></div>;
+    })()}
+    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
+      <div className={styles.modalHeader}><h2>Confirm generation</h2><button className={styles.iconButton} onClick={() => setPendingGenerate(null)} aria-label="Close dialog"><X size={23} /></button></div>
+      <p className={styles.help} style={{ marginTop: 0 }}>{pendingGenerate.scene.name}</p>
+      <p className={styles.help}>{options || "\u00a0"}</p>
+      <p className={styles.help} style={{ fontWeight: 600, color: "var(--ink)" }}>{credits != null ? `Estimated cost: ${credits} credits` : "Credits will be confirmed at checkout."}{balance != null ? ` · Balance: ${balance} credits` : ""}</p>
+      <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
+        <button type="button" className={styles.button} onClick={() => setPendingGenerate(null)}>Cancel</button>
+        <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || (credits != null && balance != null && balance < credits)} onClick={() => void runConfirmedGeneration()}>Generate now</button>
+      </div>
+    </section></div>; })()}
     {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
     {batchScene && <BatchDraftDialog open={batchOpen} initialSceneId={batchScene.id} initialInput={composerInput(batchScene)} scenes={catalog?.scenes.map((item) => ({ id: item.id, label: item.name })) ?? []} disabled={busy} onClose={() => setBatchOpen(false)} onSubmit={(items) => void createBatch(items)} />}
@@ -1365,7 +1571,14 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   function renderTaskCards(items: WorkspaceTask[]) {
     return <div className={styles.taskGrid}>{items.map((item) => {
       const image = Object.values(item.input.images).flat()[0];
-      return <article key={item.taskId} className={styles.taskCard}><div className={styles.taskCover}>{image ? <img loading="lazy" decoding="async" src={image} alt="Product reference" /> : <FileVideo size={38} />}</div><div className={styles.taskContent}><h3>{item.title}</h3><span className={styles.badge}>{item.operation?.state === "pending" || item.operation?.state === "run" ? item.operation.action === "render" ? "Rendering" : "Working" : statusLabels[item.status]}</span><p><span>{catalog?.scenes.find((entry) => entry.id === item.sceneId)?.name}</span><span> · </span><span>{item.input.options.duration}</span><span>s · </span><span>{item.input.options.aspect}</span></p><p><span>Updated </span><span>{new Date(item.updatedAt).toLocaleDateString()}</span></p><div className={styles.taskActions}><button className={styles.linkButton} disabled={working} onClick={() => void openTask(item)}><span>{item.status === "completed" ? "View video" : "Continue"}</span><ArrowRight size={15} /></button><button className={styles.iconButton} disabled={working} onClick={() => void removeTask(item)} aria-label={`Delete ${item.title}`}><Trash2 size={16} /></button></div></div></article>;
+      const model = catalog?.models.find((entry) => entry.id === item.input.modelId)?.label;
+      const description = String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim().slice(0, 180);
+      const references = [
+        item.input.images.productImages?.length ? `${item.input.images.productImages.length} photos` : "",
+        ...(item.input.referenceVideos?.length ? [`${item.input.referenceVideos.length} videos`] : []),
+        ...(item.input.referenceAudios?.length ? [`${item.input.referenceAudios.length} audio`] : [])
+      ].filter(Boolean).join(" · ");
+      return <article key={item.taskId} className={styles.taskCard}><div className={styles.taskCover}>{item.video?.finalUrl ? <video controls preload="metadata" src={item.video.finalUrl} /> : image ? <img loading="lazy" decoding="async" src={image} alt="Reference" /> : <FileVideo size={38} />}</div><div className={styles.taskContent}><h3>{item.title}</h3><span className={styles.badge}>{item.operation?.state === "pending" || item.operation?.state === "run" ? item.operation.action === "render" ? "Rendering" : "Working" : statusLabels[item.status]}</span>{description && <p className={styles.help}>{description}</p>}<p><span>{catalog?.scenes.find((entry) => entry.id === item.sceneId)?.name}</span><span> · </span><span>{item.input.options.duration}s · {item.input.options.aspect}{item.input.options.resolution ? ` · ${item.input.options.resolution}` : ""}</span>{model && <span> · {model}</span>}</p>{references && <p className={styles.help}>References: {references}</p>}<div className={styles.taskActions}><button className={styles.linkButton} disabled={working} onClick={() => setDetailTaskId(item.taskId)}><span>View details</span><ArrowRight size={15} /></button><button className={styles.iconButton} disabled={working} onClick={() => void removeTask(item)} aria-label={`Delete ${item.title}`}><Trash2 size={16} /></button></div></div></article>;
     })}</div>;
   }
 

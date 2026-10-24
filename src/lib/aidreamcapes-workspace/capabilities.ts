@@ -3,7 +3,7 @@ import { WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, WORKSPACE_
 import { WorkspaceError, type ModelCapability, type SceneId, type TaskInput, type VideoAspect, type VideoDuration, type VideoLanguage } from "./types";
 
 export type ProviderVideoCapabilitySource = Pick<PlatformAiProvider,
-  "id" | "label" | "modelType" | "maxImagesPerRequest" | "videoDurations" | "videoAspectRatios" | "videoNativeSpeech">;
+  "id" | "label" | "modelType" | "maxImagesPerRequest" | "maxVideoInputs" | "maxAudioInputs" | "videoDurations" | "videoAspectRatios" | "videoResolutions" | "videoNativeSpeech">;
 
 const LEGACY_VIDEO_DURATIONS = [15, 30] as const;
 
@@ -22,6 +22,9 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
   // it can produce a shot of the planned shot length for that tier.
   const durations = WORKSPACE_VIDEO_DURATIONS.filter((tier) => supported.some((value) => value >= plannedShotDuration(tier)));
   const aspects = WORKSPACE_ASPECTS.filter((aspect) => configuredAspects.includes(aspect));
+  // 清晰度档位来自平台后台维护的 videoResolutions；未配置的旧通道回落到 720p 单档。
+  const configuredResolutions = provider.videoResolutions == null ? ["720p"] : provider.videoResolutions;
+  const resolutions = [...new Set(configuredResolutions.filter((value) => /^\d{3,4}p$/i.test(value)).map((value) => value.toLowerCase()))];
   return {
     id: provider.id,
     label: provider.label,
@@ -30,6 +33,11 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
     reason: availabilityReason,
     durations,
     aspects: [...aspects],
+    resolutions: resolutions.length ? resolutions : ["720p"],
+    // 参考素材上限直接来自平台后台维护值；0 表示该通道不接受这类参考。
+    referenceImageMax: Math.max(0, Math.min(12, provider.maxImagesPerRequest ?? 4)),
+    videoReferenceMax: Math.max(0, Math.min(8, provider.maxVideoInputs ?? 0)),
+    audioReferenceMax: Math.max(0, Math.min(8, provider.maxAudioInputs ?? 0)),
     nativeSpeech: provider.videoNativeSpeech ?? legacyNativeSpeech,
     audioReference: false,
     firstFrame: false,

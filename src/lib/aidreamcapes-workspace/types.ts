@@ -1,6 +1,6 @@
 import type { WorkspacePreset } from "./preset-contract";
 export const AIVIDEOSUGC_SITE_ID = "site_aidreamcapes" as const;
-export type SceneId = "presenter_showcase" | "process_demo" | "texture_closeup";
+export type SceneId = "presenter_showcase" | "process_demo" | "texture_closeup" | "text_to_video";
 export type VideoDuration = 6 | 10 | 15 | 30;
 export type SubtitleStyle = "classic" | "bold" | "minimal";
 export type VideoAspect = "9:16" | "1:1" | "16:9";
@@ -21,7 +21,9 @@ export interface SceneSchema {
 export interface TaskInput {
   images: Record<string, string[]>; fields: Record<string, string | string[]>;
   creativeDirection?: string;
-  options: { duration: VideoDuration; aspect: VideoAspect; style: string; language: VideoLanguage; subtitle: boolean; subtitleStyle?: SubtitleStyle };
+  options: { duration: VideoDuration; aspect: VideoAspect; resolution?: string; style: string; language: VideoLanguage; subtitle: boolean; subtitleStyle?: SubtitleStyle };
+  referenceVideos?: string[];
+  referenceAudios?: string[];
   actorId?: string;
   musicUrl?: string;
   modelId?: string;
@@ -150,7 +152,8 @@ export interface WorkspaceFeatureJob {
 }
 export interface ModelCapability {
   id: string; label: string; model: string; available: boolean; reason?: string;
-  durations: number[]; aspects: VideoAspect[]; nativeSpeech: boolean; audioReference: boolean;
+  durations: number[]; aspects: VideoAspect[]; resolutions: string[]; nativeSpeech: boolean; audioReference: boolean;
+  referenceImageMax: number; videoReferenceMax: number; audioReferenceMax: number;
   firstFrame: boolean; lastFrame: boolean; multiReference: boolean;
   features: WorkspaceFeatureCapabilities;
 }
@@ -163,6 +166,7 @@ export interface WorkspaceCatalog {
   composition?: { available: boolean; credits: number | null; reason?: string };
   subtitles?: { available: boolean; reason?: string };
   quickStarts?: { label: string; sceneId: SceneId; aspect?: VideoAspect; duration?: VideoDuration }[];
+  imageReferenceMax?: number;
 }
 export class WorkspaceError extends Error {
   constructor(public code: string, public status = 400, public details?: unknown) { super(code); this.name = "WorkspaceError"; }

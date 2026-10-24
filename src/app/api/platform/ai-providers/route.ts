@@ -15,6 +15,12 @@ import {
 import type { PlatformAiProvider } from "@/lib/types";
 import { inferPlatformAiProviderType, normalizePlatformAiProviderType, platformAiProviderTypes, type PlatformAiProviderType } from "@/lib/ai-provider-type";
 import { normalizeAiProviderProtocol } from "@/lib/video-provider-family";
+import {
+  isValidAiProviderReferenceLimit,
+  isValidAiProviderVideoAspectRatio,
+  isValidAiProviderVideoDuration,
+  isValidAiProviderVideoResolution
+} from "@/lib/ai-provider-video-options";
 
 const defaultModelTypes = [
   "gpt-image-2",
@@ -81,6 +87,8 @@ async function payload(extra: Record<string, unknown> = {}) {
       supportsGenerationN: provider.supportsGenerationN,
       supportsEditN: provider.supportsEditN,
       maxImagesPerRequest: provider.maxImagesPerRequest,
+      maxVideoInputs: provider.maxVideoInputs ?? 1,
+      maxAudioInputs: provider.maxAudioInputs ?? 1,
       imageAspectRatio: provider.imageAspectRatio,
       imageResolution: provider.imageResolution,
       imageQuality: provider.imageQuality,
@@ -89,6 +97,7 @@ async function payload(extra: Record<string, unknown> = {}) {
       videoModelFamily: provider.videoModelFamily,
       videoDurations: provider.videoDurations,
       videoAspectRatios: provider.videoAspectRatios,
+      videoResolutions: provider.videoResolutions ?? ["480p", "720p", "1080p"],
       videoNativeSpeech: provider.videoNativeSpeech,
       priceEnabled: provider.priceEnabled,
       priceCredits: provider.priceCredits,
@@ -153,6 +162,8 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN?: boolean;
     supportsEditN?: boolean;
     maxImagesPerRequest?: number;
+    maxVideoInputs?: number;
+    maxAudioInputs?: number;
     imageAspectRatio?: string;
     imageResolution?: string;
     imageQuality?: string;
@@ -161,6 +172,7 @@ export async function PUT(request: NextRequest) {
     videoModelFamily?: string;
     videoDurations?: number[];
     videoAspectRatios?: string[];
+    videoResolutions?: string[];
     videoNativeSpeech?: boolean | null;
     priceEnabled?: boolean;
     priceCredits?: number;
@@ -188,8 +200,11 @@ export async function PUT(request: NextRequest) {
       : ["auto", "openai-compatible"];
   if (body.apiProtocol !== undefined && !allowedProtocols.includes(body.apiProtocol)) return NextResponse.json({ error: "invalid_ai_provider_protocol_for_type" }, { status: 400 });
   if (body.videoModelFamily !== undefined && !["auto", "grok", "gemini"].includes(body.videoModelFamily)) return NextResponse.json({ error: "invalid_ai_provider_model_family" }, { status: 400 });
-  if (body.videoDurations !== undefined && (!Array.isArray(body.videoDurations) || !body.videoDurations.length || body.videoDurations.some((value) => ![6, 10, 15].includes(Number(value))))) return NextResponse.json({ error: "invalid_ai_provider_video_durations" }, { status: 400 });
-  if (body.videoAspectRatios !== undefined && (!Array.isArray(body.videoAspectRatios) || !body.videoAspectRatios.length || body.videoAspectRatios.some((value) => !["9:16", "1:1", "16:9"].includes(value)))) return NextResponse.json({ error: "invalid_ai_provider_video_aspects" }, { status: 400 });
+  if (body.videoDurations !== undefined && (!Array.isArray(body.videoDurations) || !body.videoDurations.length || body.videoDurations.some((value) => !isValidAiProviderVideoDuration(value)))) return NextResponse.json({ error: "invalid_ai_provider_video_durations" }, { status: 400 });
+  if (body.videoAspectRatios !== undefined && (!Array.isArray(body.videoAspectRatios) || !body.videoAspectRatios.length || body.videoAspectRatios.some((value) => !isValidAiProviderVideoAspectRatio(value)))) return NextResponse.json({ error: "invalid_ai_provider_video_aspects" }, { status: 400 });
+  if (body.videoResolutions !== undefined && (!Array.isArray(body.videoResolutions) || !body.videoResolutions.length || body.videoResolutions.some((value) => !isValidAiProviderVideoResolution(value)))) return NextResponse.json({ error: "invalid_ai_provider_video_resolutions" }, { status: 400 });
+  if (body.maxVideoInputs !== undefined && !isValidAiProviderReferenceLimit(body.maxVideoInputs)) return NextResponse.json({ error: "invalid_ai_provider_reference_limit" }, { status: 400 });
+  if (body.maxAudioInputs !== undefined && !isValidAiProviderReferenceLimit(body.maxAudioInputs)) return NextResponse.json({ error: "invalid_ai_provider_reference_limit" }, { status: 400 });
   if (body.videoNativeSpeech !== undefined && body.videoNativeSpeech !== null && typeof body.videoNativeSpeech !== "boolean") return NextResponse.json({ error: "invalid_ai_provider_native_speech" }, { status: 400 });
   if (body.priority !== undefined) {
     const priority = Number(body.priority);
@@ -217,6 +232,8 @@ export async function PUT(request: NextRequest) {
     supportsGenerationN: Boolean(body.supportsGenerationN),
     supportsEditN: Boolean(body.supportsEditN),
     maxImagesPerRequest: body.maxImagesPerRequest,
+    maxVideoInputs: body.maxVideoInputs,
+    maxAudioInputs: body.maxAudioInputs,
     imageAspectRatio: body.imageAspectRatio,
     imageResolution: body.imageResolution,
     imageQuality: body.imageQuality,
@@ -225,6 +242,7 @@ export async function PUT(request: NextRequest) {
     videoModelFamily: body.videoModelFamily,
     videoDurations: body.videoDurations,
     videoAspectRatios: body.videoAspectRatios,
+    videoResolutions: body.videoResolutions,
     videoNativeSpeech: body.videoNativeSpeech,
     priceEnabled: body.priceEnabled,
     priceCredits: body.priceCredits,

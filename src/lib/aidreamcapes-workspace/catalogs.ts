@@ -37,6 +37,15 @@ export const SCENES: SceneSchema[] = [
     ] }]
   },
   {
+    id: "text_to_video", name: "Text to video", summary: "Describe any idea and turn it into a video.", tags: ["Text to video"],
+    needsActor: false, structureField: "description", productNoun: "idea", styleDefault: "natural",
+    styleOptions: [{ value: "natural", label: "Natural daylight" }, { value: "clean", label: "Clean & calming" }, { value: "cool", label: "Cool & premium" }],
+    refImagePolicy: [], cover: "product", version: "1",
+    sections: [{ id: "idea", label: "Your idea", fields: [
+      { id: "description", label: "Describe your video", hint: "Describe what happens in your video, shot by shot or in one line.", type: "textarea", required: true }
+    ] }]
+  },
+  {
     id: "texture_closeup", name: "Product close-up", summary: "Highlight your product with detailed close-ups and a pace you choose.", tags: ["Close-up", "Product details"],
     needsActor: false, structureField: "pace", productNoun: "product", styleDefault: "natural",
     styleOptions: [{ value: "warm", label: "Warm & inviting" }, { value: "cool", label: "Cool & premium" }, { value: "natural", label: "Natural daylight" }],

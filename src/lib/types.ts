@@ -690,6 +690,8 @@ export interface AiWorkflowStep {
     roles?: string[];
     accept?: string[];
     required?: boolean;
+    /** 按素材类型的独立数量上限；键为 MIME 通配，如 "video/*"、"audio/*"。 */
+    typeLimits?: Record<string, { min?: number; max?: number }>;
   };
 }
 
@@ -807,6 +809,10 @@ export interface PlatformAiProvider {
   supportsGenerationN: boolean;
   supportsEditN: boolean;
   maxImagesPerRequest: number;
+  /** 单次请求可携带的参考视频数量上限；0 表示不支持参考视频。 */
+  maxVideoInputs?: number;
+  /** 单次请求可携带的参考音频数量上限；0 表示不支持参考音频。 */
+  maxAudioInputs?: number;
   imageAspectRatio: ImageProviderAspectRatio;
   imageResolution: ImageProviderResolution;
   imageQuality: ImageProviderQuality;
@@ -815,6 +821,8 @@ export interface PlatformAiProvider {
   videoModelFamily?: "auto" | "grok" | "gemini";
   videoDurations?: number[];
   videoAspectRatios?: string[];
+  /** 该通道支持的视频分辨率档位，例如 480p / 720p / 1080p。 */
+  videoResolutions?: string[];
   videoNativeSpeech?: boolean | null;
   relayId?: string;
   upstreamModelId?: string;
