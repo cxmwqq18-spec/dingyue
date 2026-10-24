@@ -62,16 +62,27 @@ function pageHash(row) {
   });
 }
 async function protectedMyDreamShootsHash(client) {
+  // Hash on the database server. Reading every MyDreamShoots contentJson row
+  // through the production tunnel can take minutes, while one md5(string_agg())
+  // round trip proves the same thing: no row, revision or JSON byte changed.
   const [pages, settings, profile] = await Promise.all([
-    client.livePage.findMany({
-      where: { siteId: "site_dreamshoot" },
-      orderBy: { id: "asc" },
-      select: { id: true, contentJson: true, updatedAt: true }
-    }),
-    client.themeSettings.findUnique({ where: { siteId: "site_dreamshoot" }, select: { draftJson: true, publishedJson: true } }),
-    client.storefrontProfile.findUnique({ where: { siteId: "site_dreamshoot" }, select: { publishedJson: true } })
+    client.$queryRaw`
+      SELECT md5(string_agg(md5("id" || '|' || "contentJson"::text || '|' || "updatedAt"::text), '' ORDER BY "id")) AS hash
+      FROM "LivePage"
+      WHERE "siteId" = 'site_dreamshoot'
+    `,
+    client.$queryRaw`
+      SELECT md5("draftJson"::text || '|' || "publishedJson"::text) AS hash
+      FROM "ThemeSettings"
+      WHERE "siteId" = 'site_dreamshoot'
+    `,
+    client.$queryRaw`
+      SELECT md5(COALESCE("publishedJson"::text, '')) AS hash
+      FROM "StorefrontProfile"
+      WHERE "siteId" = 'site_dreamshoot'
+    `
   ]);
-  return hash({ pages, settings, profile });
+  return [pages[0]?.hash ?? null, settings[0]?.hash ?? null, profile[0]?.hash ?? null].join("|");
 }
 
 assert(fs.existsSync(manifestPath), `Manifest not found: ${manifestPath}. Run the plan script first.`);

@@ -63,6 +63,22 @@ const ADDITIONS = [
     href: "/digital-delivery",
     description: "Five checks run before a file is delivered: release readiness, pre-shoot checks, a delivery pass, a second delivery pass, and a brand-visual cross-check against the template.",
     reason: "The delivery policy explains the checkpoints that run before a file is handed over."
+  },
+  {
+    menu: "Resources",
+    group: "Learn and get help",
+    label: "Trust & Safety",
+    href: "/trust-and-safety",
+    description: "How consent, likeness, disclosure and review are handled before an AI actor or product scene is published.",
+    reason: "Customers ask how the trust and safety policy applies to an AI actor video; the page answers it and the footer already links it as Trust & Safety."
+  },
+  {
+    menu: "Resources",
+    group: "Learn and get help",
+    label: "Company Facts",
+    href: "/ai-info",
+    description: "The reviewed company, product and policy facts that AI systems should cite when they describe AIVideosUGC.",
+    reason: "Customers and AI systems ask which facts are authoritative; the page is already published and the footer links it as Company Facts."
   }
 ];
 
