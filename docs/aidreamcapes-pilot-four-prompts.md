@@ -13,13 +13,14 @@
 - **拒绝渲染感**：not CGI / not 3D render / no illustration look，禁止塑料感、过度平滑、假光影；
 - **产品一致**：道具图的形状、颜色、材质必须与产品正面图自洽，供视频提示词跨镜引用。
 
-## 图片引用规范（@Image 附件顺序）
+## 图片引用规范（@Image 附件顺序，通用标准）
 
 模型**只识别附件上传顺序，不识别文件名**，因此引用一律按挂载位置编号：
 
-- 视频提示词开头的【Reference Order】块逐一定义 `@Image 1 / @Image 2 / …`：类别「内容」（基准性质）：控制的属性范围；
-- 正文与防穿模规则全部用 `@Image N` 指代，例如：角色（@Image 2）不得沾染场景（@Image 1）或产品（@Image 3）的属性；
-- 每个案例给出**附件挂载清单**（第几张 → 哪个文件），操作者按顺序挂载，顺序不能错。未覆盖细节一律回退到产品正面图。
+- 【Reference Order】块是**固定通用标准**：只定义每张图的角色与职责（场景=空间光位基准、角色=人物身份基准、产品=唯一道具基准、背面/特写=道具补充、手部=手部基准），**不写死具体场景内容**——场景图是基准参考，镜头在场景内自由适配，不锁死布局；
+- 换模板时只换挂载的文件，规范措辞不变，可直接推广到全部模板；
+- 块末尾用自然语言写清每张图管什么、防什么混用；未覆盖细节一律回退到产品正面图；
+- 每个案例给出**附件挂载清单**（第几张 → 哪个文件），操作者按顺序挂载，顺序不能错。
 
 统一生成规格：9:16 竖幅 640×1138 WebP；提示词为英文（模型按英文消费）。
 
@@ -52,14 +53,19 @@
 ```
 A 30-second vertical 9:16 e-commerce product display film for a full-size bicycle beside a train platform.
 
-【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. Each image controls only its own attribute, and no image blends into another:
-@Image 1 — Scene「empty train platform with a stationary train and one open doorway」(space topology and light-position baseline, empty set): controls the place, the light mood and the set dressing, and nothing else.
-@Image 2 — Character「Jon, an adult Latino man in his thirties」(identity and default-look baseline, actor asset): controls the face, hair, build and presence of the person, and nothing else.
-@Image 3 — Product「the uploaded product photo of the full-size commuter bicycle」(single source of truth for shape, proportions, colour, material and finish): controls the product in every beat. Reproduce it exactly and never show a second one or a changed part.
-@Image 4 — Prop「the full-size commuter bicycle, rear view」(same physical item, rear form baseline): extends @Image 3 for the rear and the far side in the turning beat only.
-@Image 5 — Prop「the full-size commuter bicycle, material macro」(surface micro-texture baseline): controls the surface micro-texture in the close-up beat only.
-@Image 6 — Hands「adult hands, short clean nails」(hand anatomy and nail baseline): controls hand anatomy and nails in the close hand beats only.
-Keep every image independent so nothing blends: the character (@Image 2) never takes on attributes from the scene (@Image 1) or the product (@Image 3), the scene (@Image 1) never grows product parts, the product (@Image 3, @Image 4) never changes with the camera, and the hands (@Image 6) never pick up clothing or product texture. Any product detail not covered by an image follows @Image 3 and stays consistent with it.
+【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. This block is a fixed standard: only the attached files change from template to template, the wording stays the same.
+@Image 1 — Scene「the attached empty-scene photo」(space, light and mood baseline): the place comes from this image; keep its space and light as the real location and adapt the framing freely to the action.
+@Image 2 — Character「the attached actor portrait」(identity and default-look baseline): the person's face, hair, build and presence come from this image and never change.
+@Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
+@Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
+@Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
+@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
+What each image is for, in plain terms:
+- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
+- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
+- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
+- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
+- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The full-size bicycle keeps the same shape, colour, material, finish and details in every frame, including two large wheels; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -77,7 +83,7 @@ Keep every image independent so nothing blends: the character (@Image 2) never t
 
 ### 需生成的资产图提示词（真人实质感规范已内置）
 
-**1）产品背面**（挂载为产品正面后的第 1 张道具） → `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp`
+**1）产品背面** → `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the full-size commuter bicycle with two large wheels, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography. True-to-life material realism: real surface micro-texture with visible material grain and honest finish, natural optical falloff, not CGI, not 3D render, no illustration look.
@@ -120,13 +126,17 @@ Vertical 9:16 scene reference photo of an empty train platform beside a stationa
 ```
 A 30-second vertical 9:16 e-commerce product display film for a round matte sage-green charging case in stemless bean-shaped earbuds from a kraft box.
 
-【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. Each image controls only its own attribute, and no image blends into another:
-@Image 1 — Scene「wooden table with an open kraft box and cream tissue paper」(space topology and light-position baseline, empty set): controls the place, the light mood and the set dressing, and nothing else.
-@Image 2 — Product「the uploaded product photo of the sage-green earbud charging case」(single source of truth for shape, proportions, colour, material and finish): controls the product in every beat. Reproduce it exactly and never show a second one or a changed part.
-@Image 3 — Prop「the sage-green earbud charging case, rear view」(same physical item, rear form baseline): extends @Image 2 for the rear and the far side in the turning beat only.
-@Image 4 — Prop「the sage-green earbud charging case, material macro」(surface micro-texture baseline): controls the surface micro-texture in the close-up beat only.
-@Image 5 — Hands「adult hands, short clean nails」(hand anatomy and nail baseline): controls hand anatomy and nails in the close hand beats only.
-Keep every image independent so nothing blends: the scene (@Image 1) never grows product parts, the product (@Image 2) never changes with the camera, and the hands (@Image 5) never pick up product texture or scene materials. Any product detail not covered by an image follows @Image 2 and stays consistent with it.
+【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. This block is a fixed standard: only the attached files change from template to template, the wording stays the same.
+@Image 1 — Scene「the attached empty-scene photo」(space, light and mood baseline): the place comes from this image; keep its space and light as the real location and adapt the framing freely to the action.
+@Image 2 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
+@Image 3 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 2 for the rear and the far side in the turning beat only.
+@Image 4 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
+@Image 5 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
+What each image is for, in plain terms:
+- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
+- The product comes from @Image 2, is seen from behind in @Image 3, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
+- The hands come from @Image 5 and look the same in every shot, carrying no texture of their own.
+- Anything the images do not show about the product follows @Image 2 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The round matte sage-green charging case keeps the same shape, colour, material, finish and details in every frame, including the round case centered; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -144,7 +154,7 @@ Keep every image independent so nothing blends: the scene (@Image 1) never grows
 
 ### 需生成的资产图提示词（真人实质感规范已内置）
 
-**1）产品背面**（挂载为产品正面后的第 1 张道具） → `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp`
+**1）产品背面** → `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the sage-green earbud charging case with earbuds inside, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography. True-to-life material realism: real surface micro-texture with visible material grain and honest finish, natural optical falloff, not CGI, not 3D render, no illustration look.
@@ -190,14 +200,19 @@ Vertical 9:16 scene reference photo of a warm wooden table with an open kraft sh
 ```
 A 30-second vertical 9:16 e-commerce product display film for an olive overshirt in a real room.
 
-【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. Each image controls only its own attribute, and no image blends into another:
-@Image 1 — Scene「calm real-life room corner with a wooden bench and window light」(space topology and light-position baseline, empty set): controls the place, the light mood and the set dressing, and nothing else.
-@Image 2 — Character「Dev, an adult South Asian man in his thirties」(identity and default-look baseline, actor asset): controls the face, hair, build and presence of the person, and nothing else.
-@Image 3 — Product「the uploaded product photo of the olive-green cotton overshirt」(single source of truth for shape, proportions, colour, material and finish): controls the product in every beat. Reproduce it exactly and never show a second one or a changed part.
-@Image 4 — Prop「the olive-green cotton overshirt, rear view」(same physical item, rear form baseline): extends @Image 3 for the rear and the far side in the turning beat only.
-@Image 5 — Prop「the olive-green cotton overshirt, material macro」(surface micro-texture baseline): controls the surface micro-texture in the close-up beat only.
-@Image 6 — Hands「adult hands, short clean nails」(hand anatomy and nail baseline): controls hand anatomy and nails in the close hand beats only.
-Keep every image independent so nothing blends: the character (@Image 2) never takes on attributes from the scene (@Image 1) or the product (@Image 3), the scene (@Image 1) never grows product parts, the product (@Image 3, @Image 4) never changes with the camera, and the hands (@Image 6) never pick up clothing or product texture. Any product detail not covered by an image follows @Image 3 and stays consistent with it.
+【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. This block is a fixed standard: only the attached files change from template to template, the wording stays the same.
+@Image 1 — Scene「the attached empty-scene photo」(space, light and mood baseline): the place comes from this image; keep its space and light as the real location and adapt the framing freely to the action.
+@Image 2 — Character「the attached actor portrait」(identity and default-look baseline): the person's face, hair, build and presence come from this image and never change.
+@Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
+@Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
+@Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
+@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
+What each image is for, in plain terms:
+- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
+- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
+- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
+- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
+- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The olive overshirt keeps the same shape, colour, material, finish and details in every frame, including the full front; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -215,7 +230,7 @@ Keep every image independent so nothing blends: the character (@Image 2) never t
 
 ### 需生成的资产图提示词（真人实质感规范已内置）
 
-**1）产品背面**（挂载为产品正面后的第 1 张道具） → `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`
+**1）产品背面** → `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the olive-green cotton overshirt, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography. True-to-life material realism: real surface micro-texture with visible material grain and honest finish, natural optical falloff, not CGI, not 3D render, no illustration look.
@@ -261,14 +276,19 @@ Vertical 9:16 scene reference photo of a calm real-life room corner with a neutr
 ```
 A 30-second vertical 9:16 e-commerce product display film for a cream knit sweater in a mirror.
 
-【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. Each image controls only its own attribute, and no image blends into another:
-@Image 1 — Scene「bright bedroom corner with a full-length mirror and neutral bedding」(space topology and light-position baseline, empty set): controls the place, the light mood and the set dressing, and nothing else.
-@Image 2 — Character「Elise, an adult Latina woman in her thirties with a straight chin-length copper-red bob」(identity and default-look baseline, actor asset): controls the face, hair, build and presence of the person, and nothing else.
-@Image 3 — Product「the uploaded product photo of the cream knit sweater」(single source of truth for shape, proportions, colour, material and finish): controls the product in every beat. Reproduce it exactly and never show a second one or a changed part.
-@Image 4 — Prop「the cream knit sweater, rear view」(same physical item, rear form baseline): extends @Image 3 for the rear and the far side in the turning beat only.
-@Image 5 — Prop「the cream knit sweater, material macro」(surface micro-texture baseline): controls the surface micro-texture in the close-up beat only.
-@Image 6 — Hands「adult hands, short clean nails」(hand anatomy and nail baseline): controls hand anatomy and nails in the close hand beats only.
-Keep every image independent so nothing blends: the character (@Image 2) never takes on attributes from the scene (@Image 1) or the product (@Image 3), the scene (@Image 1) never grows product parts, the product (@Image 3, @Image 4) never changes with the camera, and the hands (@Image 6) never pick up clothing or product texture. Any product detail not covered by an image follows @Image 3 and stays consistent with it.
+【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. This block is a fixed standard: only the attached files change from template to template, the wording stays the same.
+@Image 1 — Scene「the attached empty-scene photo」(space, light and mood baseline): the place comes from this image; keep its space and light as the real location and adapt the framing freely to the action.
+@Image 2 — Character「the attached actor portrait」(identity and default-look baseline): the person's face, hair, build and presence come from this image and never change.
+@Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
+@Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
+@Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
+@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
+What each image is for, in plain terms:
+- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
+- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
+- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
+- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
+- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The cream knit sweater keeps the same shape, colour, material, finish and details in every frame, including the full garment visible; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -286,7 +306,7 @@ Keep every image independent so nothing blends: the character (@Image 2) never t
 
 ### 需生成的资产图提示词（真人实质感规范已内置）
 
-**1）产品背面**（挂载为产品正面后的第 1 张道具） → `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp`
+**1）产品背面** → `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the cream knit sweater, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography. True-to-life material realism: real surface micro-texture with visible material grain and honest finish, natural optical falloff, not CGI, not 3D render, no illustration look.
