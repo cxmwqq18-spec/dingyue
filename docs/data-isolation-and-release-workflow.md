@@ -44,6 +44,42 @@ This project no longer supports SQL snapshot promotion, `platform-state.json`,
 full-table manifests, or historical publication activation. Use only the
 field-level workflow in [`no-snapshot-incremental-release.md`](no-snapshot-incremental-release.md).
 
+## Keeping Local Content Current With Production
+
+Production → local is the only automatic direction. After a field-level content
+apply lands in production, bring the same field into the local database instead
+of leaving local behind:
+
+```sh
+# 1. Read-only drift report (pages, theme settings, storefront profile)
+npm run db:sync:aidreamcapes
+
+# 2. Copy one reviewed field on one page
+npm run db:sync:aidreamcapes -- --apply \
+  --confirm=site_aidreamcapes-local-sync --scope=livePage \
+  --field=siteNavigation --slug=/
+
+# 3. Copy the admin theme settings row
+npm run db:sync:aidreamcapes -- --apply \
+  --confirm=site_aidreamcapes-local-sync --scope=themeSettings
+```
+
+Rules:
+
+- Production is read-only in this flow. The script refuses to run unless
+  `DATABASE_URL` is `127.0.0.1:15433/dingyue_local`, `DINGYUE_ENV=local`, and
+  `DATABASE_TARGET=local`; the production source must be the read-only tunnel on
+  `127.0.0.1:15432`.
+- Pages are copied field by field, not row by row. Local development can hold
+  work that production has not shipped yet (for example an unpublished prompt
+  rewrite), and a whole-row copy would silently discard it. The drift report
+  names the differing fields so the operator picks the reviewed ones.
+- Every write is compare-and-set on the local `updatedAt`, reads the row back,
+  and asserts `SiteContentRevision` advanced by exactly one.
+- The apply writes a report and an inverse manifest under `scripts/manifests/`,
+  so the local copy can be reversed without touching production.
+- The script never creates or deletes rows and never writes production.
+
 ## Release Manifest Flow
 
 The old `release:content-*` commands remain only as blocked compatibility

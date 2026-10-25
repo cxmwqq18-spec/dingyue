@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-local-content-sync-2026-10-25-v2",
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-10-25T07:50:17.424Z",
+  "scopes": {
+    "livePage": {
+      "productionRows": 198,
+      "localRows": 198,
+      "onlyInProduction": [],
+      "onlyInLocal": [],
+      "changedRowsRemaining": 24,
+      "changedRowsRemainingNote": "All 24 remaining page differences are prompt/aspect/duration fields where the local database holds unpublished work that production has not shipped yet. No production content field is missing locally.",
+      "writes": [
+        {
+          "slug": "/",
+          "field": "siteNavigation",
+          "state": "copied",
+          "revisionBefore": "736",
+          "revisionAfter": "737",
+          "reconstructedFrom": "scripts/manifests/aidreamcapes-nav-items-production-2026-10-24-b.json"
+        }
+      ]
+    },
+    "themeSettings": {
+      "productionPresent": true,
+      "localPresent": true,
+      "productionUpdatedAt": "2026-10-20T04:59:41.261Z",
+      "localUpdatedAt": "2026-10-19T14:10:40.303Z",
+      "differingFields": [
+        "draftJson",
+        "publishedJson"
+      ],
+      "differs": true,
+      "state": "copied",
+      "revisionBefore": "737",
+      "revisionAfter": "738"
+    },
+    "storefrontProfile": {
+      "productionPresent": true,
+      "localPresent": true,
+      "productionUpdatedAt": "2026-10-12T09:10:04.578Z",
+      "localUpdatedAt": "2026-10-13T08:50:12.510Z",
+      "differingFields": [],
+      "differs": false
+    }
+  },
+  "productionRevision": "371",
+  "localRevision": "738"
+}

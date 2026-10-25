@@ -374,6 +374,7 @@
     "prisma:push": "node scripts/prisma-push-local.mjs",
     "prisma:migrate:deploy": "node scripts/prisma-migrate-deploy.mjs",
     "db:target": "node scripts/assert-database-target.mjs",
+    "db:sync:aidreamcapes": "node scripts/sync-aidreamcapes-content-from-production.mjs",
     "db:tunnel": "node scripts/start-remote-db-tunnel.mjs",
     "db:tunnel:watch": "node scripts/watch-remote-db-tunnel.mjs",
     "snapshot:mydreamshoots-production": "node scripts/export-mydreamshoots-production-snapshot.mjs",
