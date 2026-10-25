@@ -2,7 +2,7 @@
 
 内部工作文档（非页面文案）。所有电商商品展示提示词均指定人物出镜展示操作（站内 AI 演员），手部动作由角色资产带出，不再单独生成手部特写图。每案例挂载 5 张参考图 + 1 条演员音色参考音频。三类资产严格分开：
 
-1. **演员（人物资产）**：直接指定站内 AI 演员，头像与音色参考音频均从演员库取用，不生成；
+1. **演员（人物资产）**：直接指定站内 AI 演员；头像取自**线上演员库（LivePage `/ai-actors`，与创建流程「选择一位主持人」弹窗同源）**，音色参考音频从演员库取用，均不生成；
 2. **道具图（纯产品，无人物）**：产品背面、材质特写，按提示词生成；
 3. **场景图（无人物、无产品）**：现有展示图都含人物，不引用；按提示词生成空场景图。
 
@@ -46,13 +46,13 @@
 | 橄榄绿衬衫搭配合身 | Dev（home-1） | Low & grounded | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
 | 针织毛衣镜 | Elise（terrace-1） | Bright & lively | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
 
-共需生成 12 张资产图（每案例 3 张：背面、材质特写、空场景）；音色音频随演员直接取用。
+共需生成 12 张资产图（每案例 3 张：背面、材质特写、空场景）；头像与音色音频随演员直接取用。
 
 ## 1. 折叠自行车通勤（Folding Bike Commute）
 
 **演员（人物资产，直接取用）**：Jon（`outdoor-2` · Men · 30s）— an adult Latino man in his thirties
 
-![Jon](https://www.aivideosugc.com/ai-image-generation/actors/outdoor-2.webp)
+![Jon](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp)
 
 **音频（角色音色参考，@Audio 1）**：Warm & grounded — A warm male voice in a relaxed mid register, with natural phrasing and clear articulation.。文件 `/ai-actors/outdoor-2.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/outdoor-2.mp3
 
@@ -61,7 +61,7 @@
 | 附件顺序 | 句柄 | 素材文件 | 说明 |
 |---:|---|---|---|
 | 1 | @Image 1 场景 | `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/outdoor-2.webp` | 演员 Jon，人物身份基准 |
+| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp` | 演员 Jon，人物身份基准（与创建流程头像库一致） |
 | 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 4 | @Image 4 产品背面 | `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 5 | @Image 5 材质特写 | `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp` | 表面微纹理基准 |
@@ -118,7 +118,7 @@ Vertical 9:16 scene reference photo of an empty train platform beside a stationa
 
 **演员（人物资产，直接取用）**：Mila（`indoor-2` · Women · 30s）— an adult white woman in her thirties
 
-![Mila](https://www.aivideosugc.com/ai-image-generation/actors/indoor-2.webp)
+![Mila](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp)
 
 **音频（角色音色参考，@Audio 1）**：Calm & clear — A calm, thoughtful female voice with a slower pace and clear articulation.。文件 `/ai-actors/indoor-2.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/indoor-2.mp3
 
@@ -127,7 +127,7 @@ Vertical 9:16 scene reference photo of an empty train platform beside a stationa
 | 附件顺序 | 句柄 | 素材文件 | 说明 |
 |---:|---|---|---|
 | 1 | @Image 1 场景 | `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/indoor-2.webp` | 演员 Mila，人物身份基准 |
+| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp` | 演员 Mila，人物身份基准（与创建流程头像库一致） |
 | 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 4 | @Image 4 产品背面 | `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 5 | @Image 5 材质特写 | `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp` | 表面微纹理基准 |
@@ -184,7 +184,7 @@ Vertical 9:16 scene reference photo of a warm wooden table with an open kraft sh
 
 **演员（人物资产，直接取用）**：Dev（`home-1` · Men · 30s）— an adult South Asian man in his thirties
 
-![Dev](https://www.aivideosugc.com/ai-image-generation/actors/home-1.webp)
+![Dev](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp)
 
 **音频（角色音色参考，@Audio 1）**：Low & grounded — An adult male voice with a natural, trustworthy tone, a medium-low register, measured pacing and clear articulation.。文件 `/ai-actors/home-1.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/home-1.mp3
 
@@ -193,7 +193,7 @@ Vertical 9:16 scene reference photo of a warm wooden table with an open kraft sh
 | 附件顺序 | 句柄 | 素材文件 | 说明 |
 |---:|---|---|---|
 | 1 | @Image 1 场景 | `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/home-1.webp` | 演员 Dev，人物身份基准 |
+| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp` | 演员 Dev，人物身份基准（与创建流程头像库一致） |
 | 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 4 | @Image 4 产品背面 | `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 5 | @Image 5 材质特写 | `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp` | 表面微纹理基准 |
@@ -250,7 +250,7 @@ Vertical 9:16 scene reference photo of a calm real-life room corner with a neutr
 
 **演员（人物资产，直接取用）**：Elise（`terrace-1` · Women · 30s）— an adult Latina woman in her thirties with a straight chin-length copper-red bob
 
-![Elise](https://www.aivideosugc.com/ai-image-generation/actors/terrace-1.webp)
+![Elise](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp)
 
 **音频（角色音色参考，@Audio 1）**：Bright & lively — A bright, lively female voice with a medium-fast pace and expressive intonation.。文件 `/ai-actors/terrace-1.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/terrace-1.mp3
 
@@ -259,7 +259,7 @@ Vertical 9:16 scene reference photo of a calm real-life room corner with a neutr
 | 附件顺序 | 句柄 | 素材文件 | 说明 |
 |---:|---|---|---|
 | 1 | @Image 1 场景 | `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/terrace-1.webp` | 演员 Elise，人物身份基准 |
+| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp` | 演员 Elise，人物身份基准（与创建流程头像库一致） |
 | 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 4 | @Image 4 产品背面 | `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 5 | @Image 5 材质特写 | `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp` | 表面微纹理基准 |
