@@ -541,7 +541,11 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     resolution: args.task.input.options.resolution ?? "720p",
     imageInputCount: shot.refKinds.length
   });
-  if (!provider.priceEnabled && credits !== plannedDuration * 4) return { available: false, reason: "workspace_pricing_configuration_mismatch" };
+  // The approved per-shot price is 4 credits per second at 720p; higher
+  // resolutions carry the same multiplier the composer already quotes, so the
+  // guard has to compare against the resolution-adjusted amount.
+  const approvedCredits = videoResolutionCreditCost(plannedDuration * 4, args.task.input.options.resolution ?? "720p");
+  if (!provider.priceEnabled && credits !== approvedCredits) return { available: false, reason: "workspace_pricing_configuration_mismatch" };
   return { available: true, credits, providerId: provider.id, priceBinding: crypto.createHash("sha256").update(JSON.stringify({ theme: theme.id, pricing: theme.modelPricing, duration, credits, providerId: provider.id, model: provider.modelType, scene: args.task.sceneId, input: args.task.input, shot })).digest("hex") };
 }
 export async function refreshShotGeneration(args: { siteId: string; customerId: string; generationJobId: string }) {

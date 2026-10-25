@@ -89,8 +89,16 @@ const nextConfig = {
       source: "/assets/sites/site_aidreamcapes_eu/mirror/aidreamcapes/dreamshoot/:path*",
       destination: "/assets/dreamshoot/:path*"
     };
+    // Production nginx serves /ai-actors/*.mp3 from the shared media root.
+    // Local development has no such location, so map the same readable URL
+    // onto the checked-in actor voice samples. A real filesystem match still
+    // wins in production, and this keeps local actor previews audible.
+    const aidreamcapesActorVoiceFallback = {
+      source: "/ai-actors/:file([^/]+\\.mp3)",
+      destination: "/assets/sites/site_aidreamcapes/workspace/actors/voices/:file"
+    };
     if (process.env.NODE_ENV !== "development" || process.env.STOREFRONT_ASSET_REMOTE_FALLBACK === "0") {
-      return { afterFiles: [...aidreamcapesEuLegacyImageRewrites, localEuMirrorAssetFallback] };
+      return { afterFiles: [aidreamcapesActorVoiceFallback, ...aidreamcapesEuLegacyImageRewrites, localEuMirrorAssetFallback] };
     }
 
     const origins = {
@@ -102,6 +110,7 @@ const nextConfig = {
 
     return {
       afterFiles: [
+        aidreamcapesActorVoiceFallback,
         ...aidreamcapesEuLegacyImageRewrites,
         localEuMirrorAssetFallback,
         {
