@@ -57,16 +57,18 @@ const root = "/www/wwwroot/aidreamcapes.com";
 // configurable so a release can be given the room it needs instead of
 // failing with a heap limit on the release host.
 //
-// The default is deliberately smaller than the host's RAM. A measured build of
-// this storefront peaks at about 5.5GB of resident memory, but the release host
-// shares 15.9GB with five live storefront services. When the heap limit is
-// larger than what the host can actually hand out, V8 responds to allocation
-// latency by growing the heap instead of collecting, the build page-faults
-// through swap and dies with "Reached heap limit" even though the live set
-// never needed that much. An 8GB cap keeps the working set inside the host's
-// free memory, so the same build finishes in a few minutes. Raise it only on a
-// host that can back the limit with real memory.
-const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "8192";
+// Measured on the release host: the build peaks at about 3.7GB of resident
+// memory and finishes in roughly five minutes when the heap is capped at
+// 5120MB. The cap matters more than the machine size: with a cap larger than
+// the host can actually back (8GB or 12GB), V8 grows the heap instead of
+// collecting, the build page-faults through swap and dies with "Reached heap
+// limit" even though the live set never needed that much. Raise this only on a
+// host with enough spare memory, and let the prebuilt path in
+// scripts/build-aidreamcapes-prebuilt.mjs cover a host that cannot build.
+const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "5120";
+// Measured build peak is about 3.7GB of resident memory; below this the host
+// is already swapping and the build would thrash instead of finishing.
+const buildMinAvailableMb = process.env.AIDREAMCAPES_BUILD_MIN_AVAILABLE_MB || "4608";
 if (reuseBuildCommit) {
   assert(/^[a-f0-9]{40}$/.test(reuseBuildCommit), "Reuse requires an exact --reuse-build=<40-character SHA>");
   const buildInputs = (sha) => git("ls-tree", "-r", sha, "--", ...sourcePaths)
@@ -126,7 +128,7 @@ test -f "$BASE/.env.local"
 test -s /www/wwwroot/aidreamcapes.com/maintenance/maintenance.html || { echo 'Refusing to deploy: Aidreamcapes maintenance page file is missing.' >&2; exit 1; }
 nginx -T 2>/dev/null | grep -q 'location = /__maintenance' || { echo 'Refusing to deploy: nginx maintenance location is not loaded.' >&2; exit 1; }
 nginx -T 2>/dev/null | grep -q 'error_page 502 503 504 =503 /__maintenance' || { echo 'Refusing to deploy: nginx maintenance error_page is not loaded.' >&2; exit 1; }
-test ! -e "$RELEASE"
+test ! -e "$RELEASE" || { echo "Refusing to deploy: $RELEASE already exists, probably from an earlier failed attempt. Remove that directory, then run the deploy again." >&2; exit 1; }
 mkdir -p "$RELEASE"
 tar -xf ${quote(remoteArchive)} -C "$RELEASE"
 rm -f ${quote(remoteArchive)}
@@ -152,7 +154,13 @@ test -f .next-build/BUILD_ID
 test "$(cat .next-build/.build-commit)" = ${quote(commit)}` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
 test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
 test -f "$REUSE/.next-build/BUILD_ID"
-cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : "nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=" + buildHeapMb + " node scripts/build-production.mjs"}
+cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : `AVAILABLE_MB=$(awk '/^MemAvailable:/ {print int($2/1024)}' /proc/meminfo)
+if [ "${process.env.AIDREAMCAPES_BUILD_ALLOW_LOW_MEMORY === "1" ? "1" : "0"}" != "1" ] && [ "$AVAILABLE_MB" -lt ${buildMinAvailableMb} ]; then
+  echo "Refusing to build on this host: ${buildMinAvailableMb}MB of free memory is required and only \${AVAILABLE_MB}MB is available." >&2
+  echo "Build locally with scripts/build-aidreamcapes-prebuilt.mjs and deploy with --prebuilt-build, or set AIDREAMCAPES_BUILD_ALLOW_LOW_MEMORY=1 to try anyway." >&2
+  exit 1
+fi
+nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=${buildHeapMb} node scripts/build-production.mjs`}
 printf '%s\n' "$COMMIT" > .deployed-commit
 CANDIDATE_PORT=$(node -e 'const server=require("node:net").createServer(); server.listen(0,"127.0.0.1",()=>{process.stdout.write(String(server.address().port));server.close();});')
 HOSTNAME=127.0.0.1 PORT="$CANDIDATE_PORT" NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
@@ -245,6 +253,11 @@ test "$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoo
 trap - EXIT
 printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes.service'
 `;
+  if (args.includes("--print-remote-command")) {
+    fs.rmSync(temp, { recursive: true, force: true });
+    console.log(command);
+    process.exit(0);
+  }
   run("ssh", ["-p", port, ...connection, host, command]);
   // Each release is about 10GB. Keep the directory bounded as part of the
   // release instead of waiting for the disk to fill up: the running release,
