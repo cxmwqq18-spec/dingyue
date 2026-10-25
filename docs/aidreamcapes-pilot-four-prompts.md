@@ -1,27 +1,27 @@
 # 试点：四个模板的视频提示词与资产清单
 
-内部工作文档（非页面文案）。每个案例包含：指定演员（直接使用站内 AI 演员资产，无需生成人物图）、场景图（线上已有）、需生成的道具参考图及其提示词、对齐演员后的完整视频提示词。
+内部工作文档（非页面文案）。三类资产严格分开：
 
-视频提示词已按 Wan3.0 标准编写（参考锁定 / 风格 / 产品锁 / 动作逻辑 / 时间轴分镜 / 镜头 / 音效 / 连续性 / 负面清单），完整覆盖 0–30 秒；其中人物描述已改为指定演员的真实外貌。图片均可点开查看（演员头像与场景图为线上素材，直接取用）。
+1. **演员（人物资产）**：直接指定站内 AI 演员，用现有头像，不生成；
+2. **道具图（纯产品，无人物）**：产品背面、材质特写、手部特写，按提示词生成；
+3. **场景图（无人物、无产品）**：现有展示图都含人物，不引用；按提示词生成空场景图。
 
-统一生成规格：9:16 竖幅 640×1138 WebP，浅灰无缝背景，无文字无水印。
+视频提示词按 Wan3.0 标准编写（参考锁定 / 风格 / 产品锁 / 动作逻辑 / 时间轴分镜 / 镜头 / 音效 / 连续性 / 负面清单），覆盖 0–30 秒；人物描述已对齐指定演员。提示词为英文（模型按英文消费）。
 
-| 案例 | 指定演员 | 场景图 | 需生成道具图 |
+统一生成规格：9:16 竖幅 640×1138 WebP，浅灰无缝背景（场景图按各自环境），无文字无水印。
+
+| 案例 | 指定演员 | 需生成道具图 | 需生成场景图 |
 |---|---|---|---|
-| 折叠自行车通勤 | Jon（outdoor-2） | 已有 | 背面 / 特写 / 手部 共 3 张 |
-| 耳机盒揭秘 | —（仅手部出镜） | 已有 | 背面 / 特写 / 手部 共 3 张 |
-| 橄榄绿衬衫搭配合身 | Dev（home-1） | 已有 | 背面 / 特写 / 手部 共 3 张 |
-| 针织毛衣镜 | Elise（terrace-1） | 已有 | 背面 / 特写 / 手部 共 3 张 |
+| 折叠自行车通勤 | Jon（outdoor-2） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 |
+| 耳机盒揭秘 | —（仅手部出镜） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 |
+| 橄榄绿衬衫搭配合身 | Dev（home-1） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 |
+| 针织毛衣镜 | Elise（terrace-1） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 |
 
 ## 1. 折叠自行车通勤（Folding Bike Commute）
 
-**指定演员：Jon**（`outdoor-2` · Men · 30s）— an adult Latino man in his thirties
+**演员（人物资产，直接取用）**：Jon（`outdoor-2` · Men · 30s）— an adult Latino man in his thirties
 
 ![Jon](https://www.aivideosugc.com/ai-image-generation/actors/outdoor-2.webp)
-
-**场景图（线上已有，即展示图基调）**
-
-![场景图](https://www.aivideosugc.com/ai-image-generation/im01-video-hub-bike-r2-640.webp)
 
 ### 视频提示词（人物描述已对齐指定演员）
 
@@ -44,33 +44,35 @@ A 30-second vertical 9:16 e-commerce product display film for a full-size bicycl
 【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.
 ```
 
-### 需生成的道具参考图
+### 需生成的资产图提示词
 
-**1）产品背面** → `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp`
+**1）产品背面**（纯产品） → `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the full-size commuter bicycle with two large wheels, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography.
 ```
 
-**2）材质特写** → `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp`
+**2）材质特写**（纯产品） → `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp`
 
 ```
 Vertical 9:16 macro detail photo of the full-size commuter bicycle with two large wheels, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography.
 ```
 
-**3）手部特写** → `/ai-image-generation/folding-bike-commute-h1-hands-r1-640.webp`
+**3）手部特写**（仅手部） → `/ai-image-generation/folding-bike-commute-h1-hands-r1-640.webp`
 
 ```
-Vertical 9:16 reference photo of adult hands, short clean nails and natural skin texture, one hand relaxed and open as if about to grip a handlebar, the other hand holding a slim tube, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand relaxed and open as if about to grip a handlebar, the other hand holding a slim tube, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+```
+
+**4）场景图**（无人物、无产品） → `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp`
+
+```
+Vertical 9:16 scene reference photo of an empty train platform beside a stationary train with one open doorway, yellow safety line on the ground, warm daylight, clean and uncluttered composition, no people, no product, no text, no logos, no watermark, photorealistic commercial photography.
 ```
 
 ## 2. 耳机盒揭秘（Earbud Box Reveal）
 
-**指定演员：无**（全片仅手部与产品出镜，手部用生成的参考图锁定）
-
-**场景图（线上已有，即展示图基调）**
-
-![场景图](https://www.aivideosugc.com/ai-image-generation/img3-video-earbud-box-r1-640.webp)
+**演员**：无（全片仅手部与产品出镜，手部用生成的参考图锁定）
 
 ### 视频提示词（人物描述已对齐指定演员）
 
@@ -93,35 +95,37 @@ A 30-second vertical 9:16 e-commerce product display film for a round matte sage
 【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.
 ```
 
-### 需生成的道具参考图
+### 需生成的资产图提示词
 
-**1）产品背面** → `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp`
+**1）产品背面**（纯产品） → `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the sage-green earbud charging case with earbuds inside, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography.
 ```
 
-**2）材质特写** → `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp`
+**2）材质特写**（纯产品） → `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp`
 
 ```
 Vertical 9:16 macro detail photo of the sage-green earbud charging case with earbuds inside, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography.
 ```
 
-**3）手部特写** → `/ai-image-generation/earbud-box-reveal-h1-hands-r1-640.webp`
+**3）手部特写**（仅手部） → `/ai-image-generation/earbud-box-reveal-h1-hands-r1-640.webp`
 
 ```
-Vertical 9:16 reference photo of adult hands, short clean nails and natural skin texture, one hand pinching the edge of a tissue sheet as if lifting it from a box, the other hand cupped open below, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand pinching the edge of a tissue sheet as if lifting it from a box, the other hand cupped open below, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+```
+
+**4）场景图**（无人物、无产品） → `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp`
+
+```
+Vertical 9:16 scene reference photo of a warm wooden table with an open kraft shipping box and soft cream tissue paper spilling over the edge, gentle window light, calm home tabletop mood, no people, no product, no text, no logos, no watermark, photorealistic commercial photography.
 ```
 
 ## 3. 橄榄绿衬衫搭配合身（Olive Overshirt Fit Reel）
 
-**指定演员：Dev**（`home-1` · Men · 30s）— an adult South Asian man in his thirties
+**演员（人物资产，直接取用）**：Dev（`home-1` · Men · 30s）— an adult South Asian man in his thirties
 
 ![Dev](https://www.aivideosugc.com/ai-image-generation/actors/home-1.webp)
-
-**场景图（线上已有，即展示图基调）**
-
-![场景图](https://www.aivideosugc.com/ai-image-generation/mx1w-video-hub-apparel-1-r1-640.webp)
 
 ### 视频提示词（人物描述已对齐指定演员）
 
@@ -144,35 +148,37 @@ A 30-second vertical 9:16 e-commerce product display film for an olive overshirt
 【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.
 ```
 
-### 需生成的道具参考图
+### 需生成的资产图提示词
 
-**1）产品背面** → `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`
+**1）产品背面**（纯产品） → `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the olive-green cotton overshirt, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography.
 ```
 
-**2）材质特写** → `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp`
+**2）材质特写**（纯产品） → `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp`
 
 ```
 Vertical 9:16 macro detail photo of the olive-green cotton overshirt, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography.
 ```
 
-**3）手部特写** → `/ai-image-generation/olive-overshirt-fit-reel-h1-hands-r1-640.webp`
+**3）手部特写**（仅手部） → `/ai-image-generation/olive-overshirt-fit-reel-h1-hands-r1-640.webp`
 
 ```
-Vertical 9:16 reference photo of adult hands, short clean nails and natural skin texture, one hand pinching a soft cotton fabric edge between thumb and fingers, the other hand flat and open, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand pinching a soft cotton fabric edge between thumb and fingers, the other hand flat and open, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+```
+
+**4）场景图**（无人物、无产品） → `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp`
+
+```
+Vertical 9:16 scene reference photo of a calm real-life room corner with a neutral wall, a wooden bench and soft window light, everyday home mood, clean and uncluttered, no people, no garments, no text, no logos, no watermark, photorealistic commercial photography.
 ```
 
 ## 4. 针织毛衣镜（Knit Sweater Mirror）
 
-**指定演员：Elise**（`terrace-1` · Women · 30s）— an adult Latina woman in her thirties with a straight chin-length copper-red bob
+**演员（人物资产，直接取用）**：Elise（`terrace-1` · Women · 30s）— an adult Latina woman in her thirties with a straight chin-length copper-red bob
 
 ![Elise](https://www.aivideosugc.com/ai-image-generation/actors/terrace-1.webp)
-
-**场景图（线上已有，即展示图基调）**
-
-![场景图](https://www.aivideosugc.com/ai-image-generation/im01-video-hub-sweater-r1-640.webp)
 
 ### 视频提示词（人物描述已对齐指定演员）
 
@@ -195,22 +201,28 @@ A 30-second vertical 9:16 e-commerce product display film for a cream knit sweat
 【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.
 ```
 
-### 需生成的道具参考图
+### 需生成的资产图提示词
 
-**1）产品背面** → `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp`
+**1）产品背面**（纯产品） → `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp`
 
 ```
 Vertical 9:16 studio product reference photo of the cream knit sweater, back and side view, the whole item visible and centred, plain seamless light grey background, soft even light with one gentle shadow, sharp focus, no text, no logo, no watermark, no props, photorealistic commercial product photography.
 ```
 
-**2）材质特写** → `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp`
+**2）材质特写**（纯产品） → `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp`
 
 ```
 Vertical 9:16 macro detail photo of the cream knit sweater, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography.
 ```
 
-**3）手部特写** → `/ai-image-generation/knit-sweater-mirror-h1-hands-r1-640.webp`
+**3）手部特写**（仅手部） → `/ai-image-generation/knit-sweater-mirror-h1-hands-r1-640.webp`
 
 ```
-Vertical 9:16 reference photo of adult hands, short clean nails and natural skin texture, fingers gently holding a soft knitted fabric edge, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, fingers gently holding a soft knitted fabric edge, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark, photorealistic commercial photography.
+```
+
+**4）场景图**（无人物、无产品） → `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp`
+
+```
+Vertical 9:16 scene reference photo of a bright bedroom corner with a full-length mirror and a bed with neutral linen bedding, soft window light, calm morning mood, clean and uncluttered, no people, no garments, no text, no logos, no watermark, photorealistic commercial photography.
 ```
