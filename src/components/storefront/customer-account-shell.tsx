@@ -43,6 +43,12 @@ const accountNavItems: AccountNavItem[] = [
   { id: "models", hash: "account-models", icon: ShieldCheck, label: "Models", description: "Private profiles" }
 ];
 
+const accountRailGroups: Array<{ label: string; items: AccountSection[] }> = [
+  { label: "Account", items: ["overview", "profile", "security"] },
+  { label: "Billing", items: ["subscription", "credits", "purchases"] },
+  { label: "Studio", items: ["generation", "downloads", "albums", "models"] }
+];
+
 const legacySectionAliases: Record<string, AccountSection> = {
   "account-plan": "subscription",
   plan: "subscription",
@@ -117,19 +123,7 @@ function accountInitials(name: string, email: string) {
   return email.slice(0, 2).toUpperCase();
 }
 
-export function CustomerAccountShell({
-  site,
-  aidreamcapesZipNavigation,
-  customer,
-  initialRuntime,
-  creativePackCategories = [],
-  creativePacks = [],
-  toolMenuItems = [],
-  videoThemeCategories = [],
-  publishedVideoGenerationTopics,
-  publishedSaveTheDateGroups,
-  publishedSaveTheDateMenuLabel = "Save the Date"
-}: {
+type CustomerAccountShellProps = {
   site: CustomerAccountSite;
   aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
   customer: PublicCustomer;
@@ -141,7 +135,28 @@ export function CustomerAccountShell({
   publishedVideoGenerationTopics?: PublishedVideoNavigationProjection[];
   publishedSaveTheDateGroups?: PublishedSaveTheDateGroup[];
   publishedSaveTheDateMenuLabel?: string;
-}) {
+};
+
+export function CustomerAccountShell(props: CustomerAccountShellProps) {
+  // AIVideosUGC uses the statement layout. Other storefronts keep the existing
+  // account surface unchanged.
+  if (props.site.id === "site_aidreamcapes") return <StatementAccountCenter {...props} />;
+  return <ClassicAccountCenter {...props} />;
+}
+
+function ClassicAccountCenter({
+  site,
+  aidreamcapesZipNavigation,
+  customer,
+  initialRuntime,
+  creativePackCategories = [],
+  creativePacks = [],
+  toolMenuItems = [],
+  videoThemeCategories = [],
+  publishedVideoGenerationTopics,
+  publishedSaveTheDateGroups,
+  publishedSaveTheDateMenuLabel = "Save the Date"
+}: CustomerAccountShellProps) {
   const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/account`, `${basePath}/app/create`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
   const runtimeCustomer = initialRuntime?.customer ?? customer;
@@ -233,9 +248,161 @@ export function CustomerAccountShell({
           </section>
 
           <CustomerAccountDataIsland activeSection={activeSection} basePath={basePath} customer={runtimeCustomer} initialRuntime={initialRuntime} siteId={site.id} siteSlug={site.slug} />
-
-          <p className="ac-classic-prototype-note"><b>Data contract unchanged.</b> Account queries, pagination, permissions, and mutations continue to use the existing data layer.</p>
         </main>
+      </div>
+    </div>
+  );
+}
+
+const ACCOUNT_THEME_KEY = "aidreamcapes-account-theme";
+
+function StatementAccountCenter({
+  site,
+  aidreamcapesZipNavigation,
+  customer,
+  initialRuntime,
+  creativePackCategories = [],
+  creativePacks = [],
+  toolMenuItems = [],
+  videoThemeCategories = [],
+  publishedVideoGenerationTopics,
+  publishedSaveTheDateGroups,
+  publishedSaveTheDateMenuLabel = "Save the Date"
+}: CustomerAccountShellProps) {
+  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
+  const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/account`, `${basePath}/app/create`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
+  const runtimeCustomer = initialRuntime?.customer ?? customer;
+  const displayName = runtimeCustomer.name?.trim() || runtimeCustomer.email.split("@")[0] || "Your account";
+  const activeSubscription = initialRuntime?.subscriptions?.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? initialRuntime?.subscriptions?.[0];
+  const planLabel = activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan";
+  const available = runtimeCustomer.balance.available ?? 0;
+  const reserved = runtimeCustomer.balance.reserved ?? 0;
+  const initials = accountInitials(displayName, runtimeCustomer.email);
+  const [activeSection, setActiveSection] = useState<AccountSection>("overview");
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  const activeCopy = accountSectionCopy[activeSection];
+  const activeItem = accountNavItems.find((item) => item.id === activeSection) ?? accountNavItems[0];
+
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    setActiveSection(accountSectionFromHash(window.location.hash));
+    const stored = window.localStorage.getItem(ACCOUNT_THEME_KEY);
+    if (stored === "dark" || stored === "light") setMode(stored);
+    else if (window.matchMedia?.("(prefers-color-scheme: dark)").matches) setMode("dark");
+    const handleHashChange = () => setActiveSection(accountSectionFromHash(window.location.hash));
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  function selectMode(next: "light" | "dark") {
+    setMode(next);
+    try {
+      window.localStorage.setItem(ACCOUNT_THEME_KEY, next);
+    } catch {
+      // Browsers can block storage; the toggle still works for this visit.
+    }
+  }
+
+  function selectSection(section: AccountSection, hash: string) {
+    setActiveSection(section);
+    if (typeof window !== "undefined") window.history.replaceState(null, "", `#${hash}`);
+  }
+
+  return (
+    <div className="ac-account-shell ac-classic-account-shell ac-center" data-aidreamcapes-account-shell="true" data-cc-theme={mode}>
+      <CustomerRoutePrefetch paths={prefetchPaths} />
+      <StorefrontNavigationFeedback />
+      <CustomerShellHeader aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
+
+      <div className="cc-page">
+        <div className="cc-topline">
+          <span className="cc-overline">Account / {activeItem.label}</span>
+          <div className="cc-theme" role="group" aria-label="Display mode">
+            <button aria-pressed={mode === "light"} onClick={() => selectMode("light")} type="button">Light</button>
+            <button aria-pressed={mode === "dark"} onClick={() => selectMode("dark")} type="button">Dark</button>
+          </div>
+        </div>
+
+        <header className="cc-head">
+          <div className="cc-identity">
+            <span className="cc-avatar">
+              {runtimeCustomer.profile?.avatarUrl ? <img src={runtimeCustomer.profile.avatarUrl} alt="" /> : initials}
+            </span>
+            <div className="cc-identity-text">
+              <h1>{displayName}</h1>
+              <div className="cc-chips">
+                <span className="cc-chip is-accent">{planLabel}</span>
+                <span className="cc-chip">{runtimeCustomer.email}</span>
+                {reserved > 0 ? <span className="cc-chip">{reserved} credits reserved</span> : null}
+              </div>
+            </div>
+          </div>
+          <div className="cc-actions">
+            <StorefrontInstantLink className="cc-btn" href={`${basePath}/app/create`}>Open workspace <span aria-hidden="true">↗</span></StorefrontInstantLink>
+            <StorefrontInstantLink className="cc-btn is-primary" href={`${basePath}/pricing`}>Buy credits</StorefrontInstantLink>
+          </div>
+        </header>
+
+        <section className="cc-stats" aria-label="Account summary">
+          <div className="cc-stat">
+            <span>Available credits</span>
+            <strong className="is-num">{available}</strong>
+            <small>{available > 0 ? "Ready for your next generation" : "Add credits to start generating"}</small>
+          </div>
+          <div className="cc-stat">
+            <span>Reserved</span>
+            <strong className="is-num">{reserved}</strong>
+            <small>Held only while a request runs</small>
+          </div>
+          <div className="cc-stat">
+            <span>Plan</span>
+            <strong>{planLabel}</strong>
+            <small>{activeSubscription ? `Renews ${new Date(activeSubscription.currentPeriodEnd).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}` : "Upgrade for monthly credits"}</small>
+          </div>
+          <div className="cc-stat">
+            <span>Account status</span>
+            <strong>{runtimeCustomer.status === "active" ? "Active" : runtimeCustomer.status === "past_due" ? "Past due" : "Blocked"}</strong>
+            <small>{runtimeCustomer.status === "active" ? "Profile, credits, and downloads are available" : "Contact support to restore access"}</small>
+          </div>
+        </section>
+
+        <div className="cc-grid">
+          <nav className="cc-rail" aria-label="Account sections">
+            {accountRailGroups.map((group) => (
+              <div className="cc-rail-group" key={group.label}>
+                <span className="cc-rail-label">{group.label}</span>
+                {group.items.map((id) => {
+                  const item = accountNavItems.find((entry) => entry.id === id);
+                  if (!item) return null;
+                  const Icon = item.icon;
+                  const isActive = activeSection === item.id;
+                  return (
+                    <button
+                      aria-current={isActive ? "page" : undefined}
+                      className="cc-rail-item"
+                      key={item.id}
+                      onClick={() => selectSection(item.id, item.hash)}
+                      type="button"
+                    >
+                      <Icon aria-hidden="true" strokeWidth={1.7} />
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </nav>
+
+          <main className="cc-panel" aria-live="polite">
+            <div className="cc-panel-head">
+              <div>
+                <h2>{activeSection === "overview" ? `Welcome back, ${displayName.split(" ")[0]}` : activeCopy.title}</h2>
+                <p>{activeCopy.description}</p>
+              </div>
+            </div>
+            <CustomerAccountDataIsland activeSection={activeSection} basePath={basePath} customer={runtimeCustomer} initialRuntime={initialRuntime} siteId={site.id} siteSlug={site.slug} variant="statement" />
+          </main>
+        </div>
       </div>
     </div>
   );

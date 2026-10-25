@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Account center design — light / dark</title>
+<style>
+  :root {
+    --sans: "Avenir Next", "Segoe UI", "PingFang SC", -apple-system, system-ui, sans-serif;
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", Georgia, serif;
+    --mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+
+  html[data-theme="light"] {
+    --page: #f4f1ec;
+    --page-2: #ece8e1;
+    --panel: #fffefb;
+    --ink: #14131a;
+    --ink-2: #3d3a46;
+    --muted: #6f6a78;
+    --subtle: #948e9f;
+    --line: #e2dcd3;
+    --line-strong: #cbc3b7;
+    --accent: #5b3df5;
+    --accent-soft: #efeaff;
+    --accent-ink: #3b23c9;
+    --good: #0d7a52;
+    --good-soft: #e3f4ec;
+    --bad: #b23a2c;
+    --bad-soft: #fbe9e6;
+    --warn: #8a5a12;
+    --warn-soft: #f8eede;
+    --header: #07080d;
+    --header-line: #23242c;
+    --shadow: 0 24px 60px -42px rgba(28, 20, 60, 0.55);
+  }
+
+  html[data-theme="dark"] {
+    --page: #0b0b10;
+    --page-2: #101017;
+    --panel: #14141c;
+    --ink: #f2f0f7;
+    --ink-2: #d7d3e0;
+    --muted: #a29dae;
+    --subtle: #7c7788;
+    --line: #26252f;
+    --line-strong: #3a3845;
+    --accent: #9a8bff;
+    --accent-soft: #221d3c;
+    --accent-ink: #c9c0ff;
+    --good: #58dfa6;
+    --good-soft: #14281f;
+    --bad: #ff8f80;
+    --bad-soft: #2c1614;
+    --warn: #f0c27a;
+    --warn-soft: #2a2113;
+    --header: #05060a;
+    --header-line: #1d1e26;
+    --shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.9);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; }
+  svg { display: block; }
+
+  /* ---------------------------------------------------------------- header */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--header);
+    border-bottom: 1px solid var(--header-line);
+    color: #fff;
+  }
+  .topbar-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    height: 68px; display: flex; align-items: center; gap: 32px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.4px; }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+    background: linear-gradient(140deg, #6b46ff, #b95cff 55%, #ff7ac3);
+    color: #fff; font-family: var(--display); font-size: 17px;
+  }
+  .topnav { display: flex; gap: 26px; font-size: 14px; color: rgba(255,255,255,.72); }
+  .topnav span[data-active] { color: #fff; }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+
+  /* avatar menu */
+  .menu-wrap { position: relative; }
+  .avatar-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #fff; border-radius: 999px; padding: 4px 10px 4px 4px;
+    transition: background .16s ease, border-color .16s ease;
+  }
+  .avatar-btn:hover { background: rgba(255,255,255,.12); }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center;
+    background: linear-gradient(150deg, #7d5cff, #f26ab4);
+    color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .02em;
+  }
+  .menu-panel {
+    position: absolute; right: 0; top: calc(100% + 10px); width: 268px;
+    background: var(--panel); color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 10px; box-shadow: var(--shadow);
+    overflow: hidden; opacity: 0; transform: translateY(-6px); pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease;
+  }
+  .menu-wrap[data-open="true"] .menu-panel { opacity: 1; transform: none; pointer-events: auto; }
+  .menu-head { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .menu-head strong { display: block; font-size: 14px; }
+  .menu-head span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; }
+  .menu-item {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    padding: 11px 16px; background: none; border: 0; color: var(--ink);
+    font-size: 14px; text-align: left;
+  }
+  .menu-item:hover { background: var(--page-2); }
+  .menu-item svg { color: var(--muted); }
+  .menu-item.is-danger { color: var(--bad); border-top: 1px solid var(--line); }
+  .menu-item.is-danger svg { color: var(--bad); }
+  .menu-kbd { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--subtle); }
+
+  /* ---------------------------------------------------------------- layout */
+  .shell { max-width: 1280px; margin: 0 auto; padding: 30px 32px 96px; }
+
+  .page-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; padding-bottom: 20px;
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--subtle);
+  }
+  .identity { display: flex; align-items: center; gap: 18px; margin-top: 14px; }
+  .identity-avatar {
+    width: 62px; height: 62px; border-radius: 999px; display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent-ink);
+    font-family: var(--display); font-size: 22px; letter-spacing: .02em;
+  }
+  .identity h1 {
+    margin: 0; font-family: var(--display); font-weight: 400;
+    font-size: 38px; line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .identity-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 3px 10px; font-size: 12px; color: var(--muted);
+    background: transparent;
+  }
+  .chip.accent { border-color: transparent; background: var(--accent-soft); color: var(--accent-ink); }
+  .head-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 6px; padding: 10px 16px; font-size: 14px; font-weight: 600;
+    border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink);
+    transition: transform .14s ease, border-color .14s ease, background .14s ease;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  html[data-theme="dark"] .btn.primary { color: #14131a; }
+  .btn.ghost { background: transparent; }
+
+  .theme-switch {
+    display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 3px; background: var(--panel);
+  }
+  .theme-switch button {
+    border: 0; background: transparent; color: var(--muted);
+    font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+  }
+  .theme-switch button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+
+  /* ------------------------------------------------------------- stat band */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .stat { padding: 20px 22px 22px; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .stat label {
+    display: block; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--subtle);
+  }
+  .stat .value {
+    margin-top: 10px; font-family: var(--mono); font-size: 34px; line-height: 1;
+    letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
+  }
+  .stat .value small { font-size: 13px; letter-spacing: 0; color: var(--muted); margin-left: 4px; }
+  .stat .note { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .stat .note.good { color: var(--good); }
+
+  /* -------------------------------------------------------------- 2 columns */
+  .body-grid {
+    display: grid; grid-template-columns: 248px minmax(0, 1fr);
+    gap: 40px; margin-top: 34px; align-items: start;
+  }
+
+  .rail { position: sticky; top: 96px; }
+  .rail-group + .rail-group { margin-top: 22px; }
+  .rail-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--subtle); padding: 0 12px 8px;
+  }
+  .rail-item {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    padding: 9px 12px; border: 0; border-left: 2px solid transparent;
+    background: transparent; color: var(--ink-2); font-size: 14px; text-align: left;
+    border-radius: 0 6px 6px 0;
+  }
+  .rail-item:hover { background: var(--page-2); color: var(--ink); }
+  .rail-item[aria-current="page"] {
+    border-left-color: var(--accent); background: var(--accent-soft);
+    color: var(--accent-ink); font-weight: 600;
+  }
+  .rail-item svg { color: currentColor; opacity: .78; }
+
+  .panel { min-width: 0; }
+  .panel-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line-strong);
+  }
+  .panel-head h2 {
+    margin: 0; font-family: var(--display); font-weight: 400;
+    font-size: 26px; letter-spacing: -0.02em;
+  }
+  .panel-head a { font-size: 13px; color: var(--accent-ink); font-weight: 600; }
+
+  .ledger { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  .ledger th {
+    text-align: left; font-family: var(--mono); font-size: 10px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--subtle);
+    font-weight: 400; padding: 12px 8px; border-bottom: 1px solid var(--line);
+  }
+  .ledger td { padding: 14px 8px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+  .ledger th:first-child, .ledger td:first-child { padding-left: 0; }
+  .ledger th:last-child, .ledger td:last-child { padding-right: 0; text-align: right; }
+  .ledger .when { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .ledger .what strong { display: block; font-weight: 600; }
+  .ledger .what span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .ledger .amount { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .ledger .amount.pos { color: var(--good); }
+  .ledger .amount.neg { color: var(--bad); }
+  .ledger .balance { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+    padding: 3px 9px; font-size: 11.5px; font-weight: 600; white-space: nowrap;
+  }
+  .pill.good { background: var(--good-soft); color: var(--good); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.bad  { background: var(--bad-soft); color: var(--bad); }
+  .pill.neutral { background: var(--page-2); color: var(--muted); }
+
+  .block { margin-top: 34px; }
+  .block:first-child { margin-top: 0; }
+  .block-title {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    margin-bottom: 4px;
+  }
+  .block-title h3 {
+    margin: 0; font-family: var(--display); font-weight: 400; font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .block-note { font-size: 13px; color: var(--muted); margin: 4px 0 14px; }
+
+  .job {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px;
+    align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line);
+  }
+  .job:last-child { border-bottom: 0; }
+  .job strong { font-weight: 600; font-size: 14px; }
+  .job span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  .quick-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .quick-link {
+    display: block; padding: 16px; border: 1px solid var(--line);
+    border-radius: 8px; background: var(--panel); transition: border-color .15s ease, transform .15s ease;
+  }
+  .quick-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .quick-link strong { display: block; font-size: 14px; }
+  .quick-link span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+
+  .foot-note {
+    margin-top: 24px; font-size: 12.5px; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .credits-summary {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 26px;
+  }
+  .credits-summary > div { padding: 18px 20px; border-right: 1px solid var(--line); }
+  .credits-summary > div:last-child { border-right: 0; }
+  .credits-summary label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--subtle);
+  }
+  .credits-summary .value {
+    font-family: var(--mono); font-size: 26px; margin-top: 8px;
+    letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  }
+
+  .pager { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .pager div { display: flex; gap: 8px; }
+  .pager button { border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); border-radius: 6px; padding: 6px 12px; font-size: 13px; }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 1080px) {
+    .body-grid { grid-template-columns: 1fr; gap: 26px; }
+    .rail { position: static; display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; }
+    .rail-group { display: contents; }
+    .rail-label { display: none; }
+    .rail-item {
+      border-left: 0; border: 1px solid var(--line); border-radius: 999px;
+      white-space: nowrap; padding: 8px 14px;
+    }
+    .rail-item[aria-current="page"] { border-color: var(--accent); }
+  }
+
+  @media (max-width: 860px) {
+    .shell { padding: 22px 18px 72px; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat { border-bottom: 1px solid var(--line); }
+    .stat:nth-child(2n) { border-right: 0; }
+    .stat:nth-last-child(-n+2) { border-bottom: 0; }
+    .page-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .identity { flex-wrap: wrap; align-items: flex-start; gap: 12px; }
+    .identity-avatar { width: 50px; height: 50px; font-size: 17px; }
+    .identity h1 { font-size: 28px; }
+    .quick-links { grid-template-columns: 1fr; }
+    .topnav { display: none; }
+    .ledger th:nth-child(4), .ledger td:nth-child(4) { display: none; }
+    .ledger th, .ledger td { padding-left: 4px; padding-right: 4px; }
+    .credits-summary { grid-template-columns: 1fr; }
+    .credits-summary > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .credits-summary > div:last-child { border-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand"><span class="brand-mark">A</span> AIVIDEOSUGC</span>
+    <nav class="topnav" aria-label="Primary">
+      <span>Video</span><span>Images</span><span>Templates</span><span>AI Actors</span><span>Pricing</span>
+    </nav>
+    <div class="topbar-right">
+      <div class="menu-wrap" data-menu data-open="false">
+        <button class="avatar-btn" data-menu-trigger aria-haspopup="menu" aria-expanded="false" aria-label="Account menu">
+          <span class="avatar">NW</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu-panel" role="menu" aria-label="Account menu">
+          <div class="menu-head">
+            <strong>Nora Whitman</strong>
+            <span>nora@studio.example</span>
+          </div>
+          <a class="menu-item" role="menuitem" href="#account-overview">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+            My account
+          </a>
+          <a class="menu-item" role="menuitem" href="#account-credits">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+            Credits &amp; billing
+            <span class="menu-kbd">201</span>
+          </a>
+          <a class="menu-item" role="menuitem" href="#account-purchases">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2h12l1 5H5l1-5Z"/><path d="M5 7v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7"/><path d="M9 12h6"/></svg>
+            Receipts
+          </a>
+          <button class="menu-item is-danger" role="menuitem" data-signout>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Account / Statement</div>
+      <div class="identity">
+        <span class="identity-avatar">NW</span>
+        <div>
+          <h1>Nora Whitman</h1>
+          <div class="identity-meta">
+            <span class="chip accent">Free plan</span>
+            <span class="chip">Member since Aug 2026</span>
+            <span class="chip">nora@studio.example</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="head-actions">
+      <div class="theme-switch" aria-label="Display mode">
+        <button data-theme-btn="light" aria-pressed="true">Light</button>
+        <button data-theme-btn="dark" aria-pressed="false">Dark</button>
+      </div>
+      <a class="btn ghost" href="#">Open workspace ↗</a>
+      <a class="btn primary" href="#">Buy credits</a>
+    </div>
+  </div>
+
+  <section class="stats" aria-label="Account summary">
+    <div class="stat">
+      <label>Available credits</label>
+      <div class="value">201</div>
+      <div class="note good">Ready for your next generation</div>
+    </div>
+    <div class="stat">
+      <label>Reserved</label>
+      <div class="value">0</div>
+      <div class="note">Held only while a request runs</div>
+    </div>
+    <div class="stat">
+      <label>Plan</label>
+      <div class="value">Free</div>
+      <div class="note">Upgrade for monthly credits</div>
+    </div>
+    <div class="stat">
+      <label>Last 30 days</label>
+      <div class="value">−34<small>credits</small></div>
+      <div class="note">2 generations completed</div>
+    </div>
+  </section>
+
+  <div class="body-grid">
+    <nav class="rail" aria-label="Account sections">
+      <div class="rail-group">
+        <div class="rail-label">Account</div>
+        <button class="rail-item" data-section="overview" aria-current="page">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          Overview
+        </button>
+        <button class="rail-item" data-section="profile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          Profile
+        </button>
+        <button class="rail-item" data-section="security">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg>
+          Security
+        </button>
+      </div>
+      <div class="rail-group">
+        <div class="rail-label">Billing</div>
+        <button class="rail-item" data-section="subscription">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16v12H4z"/><path d="M4 3h16v4H4z"/><path d="M9 12h6"/></svg>
+          Subscription
+        </button>
+        <button class="rail-item" data-section="credits">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+          Credits
+        </button>
+        <button class="rail-item" data-section="purchases">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2h12l1 5H5l1-5Z"/><path d="M5 7v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7"/><path d="M9 12h6"/></svg>
+          Purchases
+        </button>
+      </div>
+      <div class="rail-group">
+        <div class="rail-label">Studio</div>
+        <button class="rail-item" data-section="generation">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/></svg>
+          Generation
+        </button>
+        <button class="rail-item" data-section="downloads">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/></svg>
+          Downloads
+        </button>
+        <button class="rail-item" data-section="albums">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>
+          Albums
+        </button>
+        <button class="rail-item" data-section="models">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14a4 4 0 0 0 8 0"/><path d="M9 9h.01M15 9h.01"/></svg>
+          Models
+        </button>
+      </div>
+    </nav>
+
+    <main class="panel">
+      <!-- Overview -->
+      <section data-panel="overview">
+        <div class="panel-head">
+          <h2>Recent activity</h2>
+          <a href="#account-credits">All credits →</a>
+        </div>
+        <table class="ledger">
+          <thead>
+            <tr><th>Date</th><th>Activity</th><th>Credits</th><th>Balance</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="when">Aug 4</td>
+              <td class="what"><strong>Credits purchased</strong><span>Starter pack · checkout paid</span></td>
+              <td class="amount pos">+200</td>
+              <td class="balance">201</td>
+            </tr>
+            <tr>
+              <td class="when">Aug 4</td>
+              <td class="what"><strong>Photo profile accepted</strong><span>Profile request · 33 credits used</span></td>
+              <td class="amount neg">−33</td>
+              <td class="balance">1</td>
+            </tr>
+            <tr>
+              <td class="when">Aug 3</td>
+              <td class="what"><strong>Generation returned</strong><span>Request failed before output · credits released</span></td>
+              <td class="amount pos">+33</td>
+              <td class="balance">34</td>
+            </tr>
+            <tr>
+              <td class="when">Aug 2</td>
+              <td class="what"><strong>Welcome credits</strong><span>New account allowance</span></td>
+              <td class="amount pos">+1</td>
+              <td class="balance">1</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="block">
+          <div class="block-title"><h3>In progress</h3><span class="pill neutral">1 request</span></div>
+          <p class="block-note">Credits stay reserved while a request is running and return automatically if it fails.</p>
+          <div class="job">
+            <div>
+              <strong>Photo profile request</strong>
+              <span>Submitted Aug 4 · 0 of 1 output delivered</span>
+            </div>
+            <span class="pill warn">Queued</span>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-title"><h3>Continue in the studio</h3></div>
+          <div class="quick-links">
+            <a class="quick-link" href="#"><strong>Create a video</strong><span>Start from a prompt or product photo</span></a>
+            <a class="quick-link" href="#"><strong>Browse templates</strong><span>Reuse a scene that already works</span></a>
+            <a class="quick-link" href="#"><strong>View plans</strong><span>Compare monthly and annual credits</span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Credits -->
+      <section data-panel="credits" hidden>
+        <div class="panel-head">
+          <h2>Credit ledger</h2>
+          <a href="#">Download statement</a>
+        </div>
+        <p class="block-note" style="margin-top:10px">Every credit added, held, used, released, or adjusted on this account appears here.</p>
+
+        <div class="credits-summary">
+          <div><label>Available</label><div class="value">201</div></div>
+          <div><label>Reserved</label><div class="value">0</div></div>
+          <div><label>Used this month</label><div class="value">33</div></div>
+        </div>
+
+        <table class="ledger">
+          <thead>
+            <tr><th>Date</th><th>Entry</th><th>Credits</th><th>Balance</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="when">Aug 4, 09:12</td><td class="what"><strong>Purchase</strong><span>Starter pack</span></td><td class="amount pos">+200</td><td class="balance">201</td></tr>
+            <tr><td class="when">Aug 4, 09:04</td><td class="what"><strong>Generation hold</strong><span>Photo profile request</span></td><td class="amount neg">−33</td><td class="balance">1</td></tr>
+            <tr><td class="when">Aug 3, 18:41</td><td class="what"><strong>Hold released</strong><span>Request failed before output</span></td><td class="amount pos">+33</td><td class="balance">34</td></tr>
+            <tr><td class="when">Aug 2, 11:20</td><td class="what"><strong>Welcome credits</strong><span>New account allowance</span></td><td class="amount pos">+1</td><td class="balance">1</td></tr>
+          </tbody>
+        </table>
+        <div class="pager">
+          <span>4 entries · page 1 of 1</span>
+          <div><button disabled>Previous</button><button disabled>Next</button></div>
+        </div>
+      </section>
+
+      <!-- Placeholder panels for the remaining sections -->
+      <section data-panel="profile" hidden><div class="panel-head"><h2>Profile</h2></div><p class="block-note" style="margin-top:14px">Name, email, and avatar connected to this studio account.</p></section>
+      <section data-panel="security" hidden><div class="panel-head"><h2>Security</h2></div><p class="block-note" style="margin-top:14px">Password and active sessions.</p></section>
+      <section data-panel="subscription" hidden><div class="panel-head"><h2>Subscription</h2></div><p class="block-note" style="margin-top:14px">Plan tier, billing state, and renewal date.</p></section>
+      <section data-panel="purchases" hidden><div class="panel-head"><h2>Purchases</h2></div><p class="block-note" style="margin-top:14px">Recharge history and receipts.</p></section>
+      <section data-panel="generation" hidden><div class="panel-head"><h2>Generation</h2></div><p class="block-note" style="margin-top:14px">Every request from upload to delivery.</p></section>
+      <section data-panel="downloads" hidden><div class="panel-head"><h2>Downloads</h2></div><p class="block-note" style="margin-top:14px">Files downloaded from this account.</p></section>
+      <section data-panel="albums" hidden><div class="panel-head"><h2>Albums</h2></div><p class="block-note" style="margin-top:14px">Private photo sets and their outputs.</p></section>
+      <section data-panel="models" hidden><div class="panel-head"><h2>Models</h2></div><p class="block-note" style="margin-top:14px">Trained or collecting private models.</p></section>
+
+      <p class="foot-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>
+        Failed generations return their credits automatically. Refunds and manual adjustments appear in the ledger.
+      </p>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Theme toggle
+  const root = document.documentElement;
+  document.querySelectorAll("[data-theme-btn]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const next = button.dataset.themeBtn;
+      root.dataset.theme = next;
+      document.querySelectorAll("[data-theme-btn]").forEach((item) => {
+        item.setAttribute("aria-pressed", String(item.dataset.themeBtn === next));
+      });
+    });
+  });
+
+  // Avatar menu
+  const wrap = document.querySelector("[data-menu]");
+  const trigger = wrap.querySelector("[data-menu-trigger]");
+  const setOpen = (open) => {
+    wrap.dataset.open = String(open);
+    trigger.setAttribute("aria-expanded", String(open));
+  };
+  trigger.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setOpen(wrap.dataset.open !== "true");
+  });
+  document.addEventListener("click", (event) => {
+    if (!wrap.contains(event.target)) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setOpen(false);
+  });
+
+  // Section switching
+  const railItems = [...document.querySelectorAll("[data-section]")];
+  const panels = [...document.querySelectorAll("[data-panel]")];
+  function selectSection(name) {
+    railItems.forEach((item) => {
+      if (item.dataset.section === name) item.setAttribute("aria-current", "page");
+      else item.removeAttribute("aria-current");
+    });
+    panels.forEach((panel) => { panel.hidden = panel.dataset.panel !== name; });
+  }
+  railItems.forEach((item) => item.addEventListener("click", () => selectSection(item.dataset.section)));
+  document.querySelectorAll('a[href^="#account-"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const name = link.getAttribute("href").replace("#account-", "");
+      setOpen(false);
+      selectSection(name);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+</script>
+</body>
+</html>

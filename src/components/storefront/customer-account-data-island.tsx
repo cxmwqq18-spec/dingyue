@@ -624,6 +624,94 @@ function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: strin
   );
 }
 
+function OverviewStatement({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
+  const jobs = runtime.jobs ?? [];
+  const orders = runtime.orders ?? [];
+  const downloads = runtime.downloads ?? [];
+  const activity = [
+    ...orders.map((order) => ({
+      key: `order-${order.id}`,
+      sortAt: new Date(order.createdAt).getTime(),
+      when: dateLabel(order.createdAt),
+      title: `Purchase ${money(order.amountCents, order.currency)}`,
+      detail: `${order.credits} credits · ${statusLabel(order.status)}`,
+      amount: order.credits > 0 ? `+${order.credits}` : undefined,
+      tone: "pos" as const
+    })),
+    ...jobs.map((job) => ({
+      key: `job-${job.id}`,
+      sortAt: new Date(job.updatedAt).getTime(),
+      when: dateLabel(job.updatedAt),
+      title: requestTitle(job.id, 0),
+      detail: jobStatusLabel(job.status),
+      amount: job.creditsReserved > 0 ? `−${job.creditsReserved}` : undefined,
+      tone: "neg" as const
+    })),
+    ...downloads.map((entry) => ({
+      key: `download-${entry.id}`,
+      sortAt: new Date(entry.createdAt).getTime(),
+      when: dateLabel(entry.createdAt),
+      title: entry.label,
+      detail: "Downloaded",
+      amount: undefined,
+      tone: undefined
+    }))
+  ]
+    .sort((left, right) => right.sortAt - left.sortAt)
+    .slice(0, 6);
+  const inProgress = jobs.filter((job) => job.status !== "succeeded" && job.status !== "failed").slice(0, 3);
+
+  return (
+    <div className="cc-statement">
+      <div className="cc-block">
+        <div className="cc-block-head">
+          <h3>Recent activity</h3>
+          <a href="#account-credits">All credits →</a>
+        </div>
+        {activity.length ? (
+          <table className="cc-ledger">
+            <thead><tr><th>Date</th><th>Activity</th><th>Credits</th></tr></thead>
+            <tbody>
+              {activity.map((row) => (
+                <tr key={row.key}>
+                  <td className="cc-when">{row.when}</td>
+                  <td className="cc-what"><strong>{row.title}</strong><span>{row.detail}</span></td>
+                  <td className={`cc-amount ${row.tone === "pos" ? "is-pos" : row.tone === "neg" ? "is-neg" : ""}`}>{row.amount ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : <p className="cc-empty">Activity appears here after your first purchase or generation.</p>}
+      </div>
+
+      <div className="cc-block">
+        <div className="cc-block-head">
+          <h3>In progress</h3>
+          <span className="cc-count">{inProgress.length ? `${inProgress.length} running` : "Nothing running"}</span>
+        </div>
+        {inProgress.length ? inProgress.map((job, index) => (
+          <div className="cc-job" key={job.id}>
+            <div>
+              <strong>{requestTitle(job.id, index)}</strong>
+              <span>{job.creditsReserved} credits held · updated {dateLabel(job.updatedAt)}</span>
+            </div>
+            <span className="cc-pill is-warn">{jobStatusLabel(job.status)}</span>
+          </div>
+        )) : <p className="cc-empty">No request is running right now. Start one from the workspace whenever you are ready.</p>}
+      </div>
+
+      <div className="cc-block">
+        <div className="cc-block-head"><h3>Continue in the studio</h3></div>
+        <div className="cc-links">
+          <StorefrontInstantLink href={`${basePath}/app/create`}><strong>Create a video</strong><span>Start from a prompt or product photo</span></StorefrontInstantLink>
+          <StorefrontInstantLink href={`${basePath}/templates`}><strong>Browse templates</strong><span>Reuse a scene that already works</span></StorefrontInstantLink>
+          <StorefrontInstantLink href={`${basePath}/pricing`}><strong>View plans</strong><span>Compare monthly and annual credits</span></StorefrontInstantLink>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProfileAvatar({ customer, size = "large" }: { customer: PublicCustomer; size?: "large" | "small" }) {
   const className = size === "large"
     ? "h-20 w-20 rounded-[8px]"
@@ -886,9 +974,40 @@ function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: Th
   );
 }
 
-function CreditsCard({ fallbackCustomer, runtime }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; variant?: "classic" | "statement" }) {
   const customer = accountCustomer(runtime, fallbackCustomer);
   const ledger = runtime.ledger ?? [];
+  if (variant === "statement") {
+    return (
+      <div className="cc-statement">
+        <div className="cc-credits-summary">
+          <div><span>Available</span><strong>{customer.balance.available ?? 0}</strong></div>
+          <div><span>Reserved</span><strong>{customer.balance.reserved ?? 0}</strong></div>
+          <div><span>Entries</span><strong>{ledger.length}</strong></div>
+        </div>
+        <div className="cc-block">
+          <div className="cc-block-head">
+            <h3>Ledger</h3>
+            <span className="cc-count">{ledger.length} {ledger.length === 1 ? "entry" : "entries"}</span>
+          </div>
+          {ledger.length ? (
+            <table className="cc-ledger">
+              <thead><tr><th>Date</th><th>Entry</th><th>Credits</th></tr></thead>
+              <tbody>
+                {ledger.map((entry) => (
+                  <tr key={entry.id}>
+                    <td className="cc-when">{dateLabel(entry.createdAt)}</td>
+                    <td className="cc-what"><strong>{ledgerLabel(entry.type)}</strong><span>{entry.sourceLabel ?? entry.sourceId ?? "Account activity"}</span></td>
+                    <td className={`cc-amount ${entry.amount >= 0 ? "is-pos" : "is-neg"}`}>{entry.amount >= 0 ? "+" : ""}{entry.amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : <p className="cc-empty">Credit activity will appear here after checkout or generation.</p>}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="grid gap-5">
       <SectionHeader icon={CreditCard} kicker="Credits" title="Credit balance and activity" subtitle="Track credits added, held for generation, consumed, released, or adjusted by support." />
@@ -1074,7 +1193,8 @@ export function CustomerAccountDataIsland({
   customer,
   initialRuntime,
   siteId,
-  siteSlug
+  siteSlug,
+  variant = "classic"
 }: {
   activeSection: AccountSection;
   basePath: string;
@@ -1082,6 +1202,7 @@ export function CustomerAccountDataIsland({
   initialRuntime?: ThemeRuntimeData;
   siteId: string;
   siteSlug: string;
+  variant?: "classic" | "statement";
 }) {
   const [checkoutNotice, setCheckoutNotice] = useState<{ success: boolean; order: string }>({ success: false, order: "" });
   const [pages, setPages] = useState<Record<string, PageState>>({});
@@ -1164,7 +1285,7 @@ export function CustomerAccountDataIsland({
       ) : null}
       {activeSection === "overview" ? (
         <AccountCard customerId={customer.id} id="account-overview" initialRuntime={initialRuntime} loadingTitle="Overview" section="overview" siteId={siteId}>
-          {(runtime) => <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} />}
+          {(runtime) => variant === "statement" ? <OverviewStatement basePath={basePath} runtime={runtime} /> : <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} />}
         </AccountCard>
       ) : null}
       {activeSection === "profile" ? (
@@ -1211,7 +1332,7 @@ export function CustomerAccountDataIsland({
           section="credits"
           siteId={siteId}
         >
-          {(runtime) => <CreditsCard fallbackCustomer={customer} runtime={runtime} />}
+          {(runtime) => <CreditsCard fallbackCustomer={customer} runtime={runtime} variant={variant} />}
         </AccountCard>
       ) : null}
       {activeSection === "purchases" ? (

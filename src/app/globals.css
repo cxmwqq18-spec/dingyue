@@ -6150,3 +6150,743 @@ textarea {
 @media (prefers-reduced-motion: reduce) {
   .insp-page *, .insp-page *::before, .insp-page *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* AIVideosUGC account statement layout.
+ * Scoped to `ac-center`, which only the Aidreamcapes account shell renders, so
+ * other storefronts keep the classic account surface unchanged. */
+.ac-account-shell.ac-classic-account-shell.ac-center {
+  --cc-sans: "Source Sans 3", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --cc-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", Georgia, serif;
+  --cc-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --cc-page: #f4f1ec;
+  --cc-page-2: #ece8e1;
+  --cc-panel: #fffefb;
+  --cc-ink: #14131a;
+  --cc-ink-2: #3d3a46;
+  --cc-muted: #6f6a78;
+  --cc-subtle: #948e9f;
+  --cc-line: #e2dcd3;
+  --cc-line-strong: #cbc3b7;
+  --cc-accent: #5b3df5;
+  --cc-accent-soft: #efeaff;
+  --cc-accent-ink: #3b23c9;
+  --cc-good: #0d7a52;
+  --cc-bad: #b23a2c;
+  --cc-warn: #8a5a12;
+  --cc-warn-soft: #f8eede;
+  --classic-page: var(--cc-page);
+  --classic-card: var(--cc-panel);
+  --classic-soft: var(--cc-page-2);
+  --classic-line: var(--cc-line);
+  --classic-ink: var(--cc-ink);
+  --classic-muted: var(--cc-muted);
+  --classic-faint: var(--cc-subtle);
+  --classic-blue: var(--cc-accent);
+  --classic-blue-dark: var(--cc-accent-ink);
+  --classic-blue-soft: var(--cc-accent-soft);
+  --account-border-strong: var(--cc-line-strong);
+  --account-subtle: var(--cc-subtle);
+  --account-success-bg: #e3f4ec;
+  --account-success-border: #b7ddcb;
+  --account-success-text: var(--cc-good);
+  --account-warn-bg: var(--cc-warn-soft);
+  --account-warn-border: #ecd6b4;
+  --account-warn-text: var(--cc-warn);
+  --account-danger-bg: #fbe9e6;
+  --account-danger-border: #efc7c1;
+  --account-danger-text: var(--cc-bad);
+  --account-shadow: none;
+  min-height: 100vh;
+  color: var(--cc-ink);
+  background: var(--cc-page) !important;
+  font-family: var(--cc-sans);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] {
+  --cc-page: #0b0b10;
+  --cc-page-2: #101017;
+  --cc-panel: #14141c;
+  --cc-ink: #f2f0f7;
+  --cc-ink-2: #d7d3e0;
+  --cc-muted: #a29dae;
+  --cc-subtle: #7c7788;
+  --cc-line: #26252f;
+  --cc-line-strong: #3a3845;
+  --cc-accent: #9a8bff;
+  --cc-accent-soft: #221d3c;
+  --cc-accent-ink: #c9c0ff;
+  --cc-good: #58dfa6;
+  --cc-bad: #ff8f80;
+  --cc-warn: #f0c27a;
+  --cc-warn-soft: #2a2113;
+  --account-success-bg: #14281f;
+  --account-success-border: #2b5040;
+  --account-success-text: var(--cc-good);
+  --account-warn-bg: var(--cc-warn-soft);
+  --account-warn-border: #4a3b1f;
+  --account-warn-text: var(--cc-warn);
+  --account-danger-bg: #2c1614;
+  --account-danger-border: #4d2a25;
+  --account-danger-text: var(--cc-bad);
+  background: var(--cc-page) !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-page {
+  width: min(1280px, calc(100vw - 64px));
+  margin: 0 auto;
+  padding: 30px 0 96px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-overline {
+  font-family: var(--cc-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cc-subtle);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-theme {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--cc-line-strong);
+  border-radius: 999px;
+  background: var(--cc-panel);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-theme button {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cc-muted);
+  font-family: var(--cc-sans);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-theme button[aria-pressed="true"] {
+  background: var(--cc-ink);
+  color: var(--cc-panel);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-identity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 62px;
+  height: 62px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cc-accent-soft);
+  color: var(--cc-accent-ink);
+  font-family: var(--cc-display);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-identity-text h1 {
+  margin: 0;
+  color: var(--cc-ink);
+  font-family: var(--cc-display);
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--cc-line-strong);
+  border-radius: 999px;
+  color: var(--cc-muted);
+  font-size: 12px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-chip.is-accent {
+  border-color: transparent;
+  background: var(--cc-accent-soft);
+  color: var(--cc-accent-ink);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--cc-line-strong);
+  border-radius: 6px;
+  background: var(--cc-panel);
+  color: var(--cc-ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-btn:hover {
+  border-color: var(--cc-accent);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-btn.is-primary {
+  border-color: var(--cc-accent);
+  background: var(--cc-accent);
+  color: #ffffff;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] .cc-btn.is-primary {
+  color: #14131a;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--cc-line-strong);
+  border-bottom: 1px solid var(--cc-line-strong);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat {
+  padding: 20px 22px 22px;
+  border-right: 1px solid var(--cc-line);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat:last-child {
+  border-right: 0;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat > span {
+  display: block;
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--cc-ink);
+  font-family: var(--cc-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat strong.is-num {
+  font-family: var(--cc-mono);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-stat small {
+  display: block;
+  margin-top: 8px;
+  color: var(--cc-muted);
+  font-size: 12px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-grid {
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  gap: 40px;
+  margin-top: 34px;
+  align-items: start;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail {
+  position: sticky;
+  top: 96px;
+  display: block;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-group + .cc-rail-group {
+  margin-top: 22px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-label {
+  display: block;
+  padding: 0 12px 8px;
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 0 6px 6px 0;
+  background: transparent;
+  color: var(--cc-ink-2);
+  font-family: var(--cc-sans);
+  font-size: 14px;
+  text-align: left;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item:hover {
+  background: var(--cc-page-2);
+  color: var(--cc-ink);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item[aria-current="page"] {
+  border-left-color: var(--cc-accent);
+  background: var(--cc-accent-soft);
+  color: var(--cc-accent-ink);
+  font-weight: 600;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.78;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-panel {
+  min-width: 0;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--cc-line-strong);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-panel-head h2 {
+  margin: 0;
+  color: var(--cc-ink);
+  font-family: var(--cc-display);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-panel-head p {
+  margin: 6px 0 0;
+  max-width: 62ch;
+  color: var(--cc-muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-account-data-island {
+  gap: 0 !important;
+  margin-top: 6px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-account-module-card,
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-account-module-card.ac-classic-module-card-panel,
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-account-module-card.ac-classic-overview-card {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-classic-section-header {
+  display: none !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-statement {
+  display: grid;
+  gap: 34px;
+  padding-top: 18px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-block-head h3 {
+  margin: 0;
+  color: var(--cc-ink);
+  font-family: var(--cc-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-block-head a {
+  color: var(--cc-accent-ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-count {
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger th {
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--cc-line);
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger td {
+  padding: 14px 8px;
+  border-bottom: 1px solid var(--cc-line);
+  color: var(--cc-ink);
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger th:first-child,
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger td:first-child {
+  padding-left: 0;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger th:last-child,
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger td:last-child {
+  padding-right: 0;
+  text-align: right;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-when {
+  color: var(--cc-muted);
+  font-family: var(--cc-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-what strong {
+  display: block;
+  color: var(--cc-ink);
+  font-weight: 600;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-what span {
+  display: block;
+  margin-top: 2px;
+  color: var(--cc-muted);
+  font-size: 12.5px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-amount {
+  font-family: var(--cc-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-amount.is-pos {
+  color: var(--cc-good);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-amount.is-neg {
+  color: var(--cc-bad);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-job {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-job strong {
+  display: block;
+  color: var(--cc-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-job span {
+  display: block;
+  margin-top: 2px;
+  color: var(--cc-muted);
+  font-size: 12.5px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--cc-page-2);
+  color: var(--cc-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-pill.is-warn {
+  background: var(--cc-warn-soft);
+  color: var(--cc-warn);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-links a {
+  display: block;
+  padding: 16px;
+  border: 1px solid var(--cc-line);
+  border-radius: 8px;
+  background: var(--cc-panel);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-links a:hover {
+  border-color: var(--cc-accent);
+  transform: translateY(-1px);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-links strong {
+  display: block;
+  color: var(--cc-ink);
+  font-size: 14px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-links span {
+  display: block;
+  margin-top: 3px;
+  color: var(--cc-muted);
+  font-size: 12.5px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--cc-line);
+  border-radius: 10px;
+  background: var(--cc-panel);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary > div {
+  padding: 18px 20px;
+  border-right: 1px solid var(--cc-line);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary > div:last-child {
+  border-right: 0;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary span {
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--cc-ink);
+  font-family: var(--cc-mono);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-empty {
+  margin: 10px 0 0;
+  color: var(--cc-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1080px) {
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-rail {
+    position: static;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-group {
+    display: contents;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-label {
+    display: none;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item {
+    width: auto;
+    padding: 8px 14px;
+    border: 1px solid var(--cc-line);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-rail-item[aria-current="page"] {
+    border-color: var(--cc-accent);
+  }
+}
+
+@media (max-width: 520px) {
+  /* Keep the account header inside the viewport: the ZIP brand block reserves
+   * 14rem by default, which overflows once the avatar menu sits beside it. */
+  .ac-account-shell.ac-classic-account-shell.ac-center header[data-storefront-global-header] > div > div > a:first-child {
+    min-width: 0 !important;
+    max-width: 11rem !important;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center header[data-storefront-global-header] > div > div > a:first-child > span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 860px) {
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-page {
+    width: calc(100vw - 36px);
+    padding: 22px 0 72px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-identity {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 17px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-identity-text h1 {
+    font-size: 28px;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-stat {
+    border-bottom: 1px solid var(--cc-line);
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-stat:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-stat:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-links {
+    grid-template-columns: 1fr;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary > div {
+    border-right: 0;
+    border-bottom: 1px solid var(--cc-line);
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-credits-summary > div:last-child {
+    border-bottom: 0;
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger th:nth-child(3),
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-ledger td:nth-child(3) {
+    padding-left: 4px;
+  }
+}

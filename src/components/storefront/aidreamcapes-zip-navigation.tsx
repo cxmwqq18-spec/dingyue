@@ -11,6 +11,7 @@ type AidreamcapesZipNavigationProps = {
   mobileLabel?: string;
   navigation?: AidreamcapesZipNavigation;
   resolveHref: (href: string) => string;
+  signedIn?: boolean;
 };
 
 const desktopLinkClass =
@@ -90,6 +91,7 @@ function MobileGroup({
 export function AidreamcapesZipDesktopNavigation({
   navigation,
   resolveHref,
+  signedIn = false,
 }: AidreamcapesZipNavigationProps) {
   if (!navigation) return null;
   return (
@@ -133,9 +135,11 @@ export function AidreamcapesZipDesktopNavigation({
       <a className={desktopLinkClass} href={resolveHref(navigation.actions.pricing.href)}>
         {navigation.actions.pricing.label}
       </a>
-      <a className={desktopLinkClass} href={resolveHref(navigation.actions.login.href)}>
-        {navigation.actions.login.label}
-      </a>
+      {signedIn ? null : (
+        <a className={desktopLinkClass} href={resolveHref(navigation.actions.login.href)}>
+          {navigation.actions.login.label}
+        </a>
+      )}
     </nav>
   );
 }
@@ -144,6 +148,7 @@ export function AidreamcapesZipMobileNavigation({
   mobileLabel,
   navigation,
   resolveHref,
+  signedIn = false,
 }: AidreamcapesZipNavigationProps) {
   if (!navigation) return null;
   const groups = [
@@ -176,12 +181,14 @@ export function AidreamcapesZipMobileNavigation({
         >
           {navigation.actions.pricing.label}
         </a>
-        <a
-          className="rounded-[16px] px-4 py-3 text-sm font-semibold text-white/76 transition hover:bg-white/[0.08] hover:text-white"
-          href={resolveHref(navigation.actions.login.href)}
-        >
-          {navigation.actions.login.label}
-        </a>
+        {signedIn ? null : (
+          <a
+            className="rounded-[16px] px-4 py-3 text-sm font-semibold text-white/76 transition hover:bg-white/[0.08] hover:text-white"
+            href={resolveHref(navigation.actions.login.href)}
+          >
+            {navigation.actions.login.label}
+          </a>
+        )}
         <a
           className="rounded-[16px] bg-white px-4 py-3 text-center text-sm font-semibold text-[#101114] transition hover:bg-white/90"
           href={resolveHref(navigation.actions.getStarted.href)}

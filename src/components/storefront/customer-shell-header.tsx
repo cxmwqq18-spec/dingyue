@@ -20,6 +20,7 @@ import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication"
 import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
+import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 
 type CustomerShellHeaderSite = Pick<Site, "id" | "slug" | "name" | "branding" | "primaryDomain"> & { themeSettings?: Site["themeSettings"] };
 type MenuGroupItem = { label: string; href: string };
@@ -306,7 +307,7 @@ export function CustomerShellHeader({
           </StorefrontInstantLink>
 
           {isAidreamcapesZipHeader ? (
-            <AidreamcapesZipDesktopNavigation navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} />
+            <AidreamcapesZipDesktopNavigation navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} />
           ) : <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
               buttonClassName={`rounded-[15px] border transition ${desktopNavClass}`}
@@ -377,7 +378,7 @@ export function CustomerShellHeader({
             ) : null}
           </nav>}
 
-          {isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
+          {isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
             <summary
               aria-label={isFrenchXby ? "Ouvrir la navigation" : isSpanishXby ? "Abrir navegacion" : "Open navigation"}
               className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}
@@ -398,6 +399,21 @@ export function CustomerShellHeader({
           </details>}
 
           <div className="order-3 ml-auto min-w-0 shrink-0 min-[1800px]:ml-0" data-storefront-header-controls="">
+            {isAivideosugc ? (
+              // AIVideosUGC uses one avatar button that opens the account menu, so
+              // the header stays compact and the account/sign-out actions sit
+              // together instead of competing with the primary call to action.
+              <CustomerAccountMenu
+                accountHref={accountHref}
+                creditsHref={`${accountHref}#account-credits`}
+                customer={{ balance: customer.balance, email: customer.email, name: customer.name, profile: customer.profile }}
+                logoutHref={`/api/sites/${site.id}/auth/logout`}
+                redirectHref={`${basePath}/login`}
+                siteId={site.id}
+                surface="storefront"
+                tone={tone}
+              />
+            ) : (
             <div className={signedInClassName}>
               <StorefrontInstantLink aria-label={isFrenchXby ? "Ouvrir le compte" : isSpanishXby ? "Abrir cuenta" : "Open account"} className="inline-flex min-w-0 items-center gap-2 rounded-full pr-1 transition hover:opacity-80 min-[1800px]:gap-3" href={accountHref} prefetch>
                 <span className={accountIconClassName}>
@@ -414,6 +430,7 @@ export function CustomerShellHeader({
               </StorefrontInstantLink>
               <CustomerSignOutButton className={signOutClassName} label={isFrenchXby ? "Se déconnecter" : isSpanishXby ? "Cerrar sesion" : "Sign out"} logoutHref={`/api/sites/${site.id}/auth/logout`} pendingLabel={isFrenchXby ? "Déconnexion..." : isSpanishXby ? "Cerrando sesion..." : "Signing out..."} redirectHref={`${basePath}/login`} siteId={site.id} />
             </div>
+            )}
           </div>
         </div>
       </div>
