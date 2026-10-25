@@ -246,6 +246,20 @@ trap - EXIT
 printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes.service'
 `;
   run("ssh", ["-p", port, ...connection, host, command]);
+  // Each release is about 10GB. Keep the directory bounded as part of the
+  // release instead of waiting for the disk to fill up: the running release,
+  // the previous ones and anything with a .keep marker survive.
+  if (!args.includes("--no-prune")) {
+    const prune = spawnSync(process.execPath, [
+      "scripts/prune-aidreamcapes-releases.mjs",
+      "--apply",
+      "--confirm=prune-aidreamcapes-releases",
+      `--keep=${process.env.AIDREAMCAPES_RELEASE_RETENTION || "3"}`
+    ], { stdio: "inherit" });
+    if (prune.status !== 0) {
+      console.error("warning: release retention prune failed; the deployed release stays active and the old releases were left in place");
+    }
+  }
 } finally {
   fs.rmSync(temp, { recursive: true, force: true });
 }
