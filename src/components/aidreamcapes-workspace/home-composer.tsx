@@ -3,6 +3,7 @@
 import { ArrowRight, ChevronDown, ImageIcon, Monitor, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
+import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { fileKind, reorderHandlers, takePasteFiles, useFileDropZone, type FileKind } from "./file-dnd";
@@ -186,8 +187,8 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
           if (!importEnabled || !files.length) return;
           event.preventDefault();
           importComposerFiles(files);
-        }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={imageMode ? 4000 : 2000} />
-        <span className={styles.characterCount}>{`${promptValue.length} / ${imageMode ? "4000" : "2000"}`}</span>
+        }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} />
+        <span className={styles.characterCount}>{`${promptValue.length} / ${WORKSPACE_PROMPT_MAX_LENGTH}`}</span>
       </div>
       <div className={styles.footer}>
         <div className={styles.controls}>

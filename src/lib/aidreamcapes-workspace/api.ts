@@ -1,7 +1,7 @@
 import "server-only";
 import { NextResponse } from "next/server";
 import { getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
-import { WorkspaceError, type TaskInput, type Storyboard, type ActorAsset, type SceneId } from "./types";
+import { WorkspaceError, WORKSPACE_PROMPT_MAX_LENGTH, type TaskInput, type Storyboard, type ActorAsset, type SceneId } from "./types";
 import { listActors, type StoredTask } from "./store";
 import { compileStoryboard } from "./pipeline";
 import { getWorkspaceActors, getWorkspaceCatalog } from "./provider";
@@ -29,7 +29,7 @@ export async function imageTask(customerId: string, body: Record<string, unknown
   };
   const toolId = body.toolId ?? "custom";
   if (typeof toolId !== "string" || !Object.hasOwn(tools, toolId)) throw new WorkspaceError("image_tool_invalid");
-  if (typeof body.prompt !== "string" || body.prompt.length > 4000 || (toolId === "custom" && !body.prompt.trim())) throw new WorkspaceError("image_prompt_required");
+  if (typeof body.prompt !== "string" || body.prompt.length > WORKSPACE_PROMPT_MAX_LENGTH || (toolId === "custom" && !body.prompt.trim())) throw new WorkspaceError("image_prompt_required");
   const urls = body.assetUrls === undefined ? [] : body.assetUrls;
   if (!Array.isArray(urls) || urls.length > 4 || urls.some(url => typeof url !== "string" || url.length > 2048)) throw new WorkspaceError("invalid_images");
   if (!urls.length) throw new WorkspaceError("image_reference_required");
@@ -81,7 +81,7 @@ export function parseInput(value: unknown): TaskInput {
   }
   const fields: TaskInput["fields"] = {};
   for (const [key, field] of Object.entries(raw.fields)) {
-    if (typeof field === "string" && field.length <= 4000) fields[key] = field;
+    if (typeof field === "string" && field.length <= WORKSPACE_PROMPT_MAX_LENGTH) fields[key] = field;
     else if (Array.isArray(field) && field.length <= 30 && field.every(v => typeof v === "string" && v.length <= 200)) fields[key] = field;
     else throw new WorkspaceError("invalid_field");
   }
@@ -97,7 +97,7 @@ export function parseInput(value: unknown): TaskInput {
   const referenceAudios = referenceList(raw.referenceAudios, 8);
   const input: TaskInput = { images, fields, options: { duration: opt.duration, aspect: opt.aspect, ...(opt.resolution ? { resolution: opt.resolution } : {}), style: opt.style, language: opt.language, subtitle: opt.subtitle, subtitleStyle: opt.subtitleStyle ?? "classic" }, ...(referenceVideos?.length ? { referenceVideos } : {}), ...(referenceAudios?.length ? { referenceAudios } : {}) };
   if (raw.creativeDirection !== undefined) {
-    if (typeof raw.creativeDirection !== "string" || raw.creativeDirection.length > 4000) throw new WorkspaceError("invalid_creative_direction");
+    if (typeof raw.creativeDirection !== "string" || raw.creativeDirection.length > WORKSPACE_PROMPT_MAX_LENGTH) throw new WorkspaceError("invalid_creative_direction");
     input.creativeDirection = raw.creativeDirection.trim();
   }
   for (const key of ["actorId", "modelId"] as const) if (raw[key] !== undefined) { if (typeof raw[key] !== "string" || raw[key].length > 2048) throw new WorkspaceError("invalid_input"); input[key] = raw[key]; }

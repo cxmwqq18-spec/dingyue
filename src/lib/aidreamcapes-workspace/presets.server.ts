@@ -1,7 +1,7 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
 import { parseWorkspaceSceneRouteSlug, pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
-import { AIVIDEOSUGC_SITE_ID, type SceneId, type TaskInput } from "./types";
+import { AIVIDEOSUGC_SITE_ID, WORKSPACE_PROMPT_MAX_LENGTH, type SceneId, type TaskInput } from "./types";
 import { parseStaticCreateSegments } from "./static-routes";
 import { canonicalWorkspaceTool } from "./tool-aliases";
 
@@ -128,7 +128,7 @@ export function presetFromCard(page: { updatedAt: Date }, sourcePage: string, va
   // Legacy example cards carry no prompt; the workspace then opens the tool
   // with the template preview and an empty prompt instead of guessing copy.
   const prompt = typeof card.prompt === "string" ? card.prompt.trim() : "";
-  if (!title || prompt.length > 4000 || !safePreviewPath(src)) return undefined;
+  if (!title || prompt.length > WORKSPACE_PROMPT_MAX_LENGTH || !safePreviewPath(src)) return undefined;
   const presetCard = { ...card, kind, label: title };
   let href: URL;
   try { href = new URL(typeof card.href === "string" ? card.href : "/app/create", "https://www.aivideosugc.com"); }

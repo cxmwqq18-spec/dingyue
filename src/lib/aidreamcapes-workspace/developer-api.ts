@@ -2,7 +2,7 @@ import "server-only";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import { getCustomerAssetsRelational, toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
-import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SceneId, type TaskInput } from "./types";
+import { AIVIDEOSUGC_SITE_ID, WorkspaceError, WORKSPACE_PROMPT_MAX_LENGTH, type SceneId, type TaskInput } from "./types";
 import { defaultTaskInput, sceneSchema } from "./catalogs";
 import { validateTaskInput } from "./pipeline";
 
@@ -87,7 +87,7 @@ export function parseDeveloperTaskInput(sceneId: SceneId, value: unknown): TaskI
   }
   const fields: TaskInput["fields"] = {};
   for (const [key, field] of Object.entries(raw.fields)) {
-    if (typeof field === "string" && field.length <= 4000) fields[key] = field;
+    if (typeof field === "string" && field.length <= WORKSPACE_PROMPT_MAX_LENGTH) fields[key] = field;
     else if (Array.isArray(field) && field.length <= 30 && field.every((item) => typeof item === "string" && item.length <= 200)) fields[key] = field as string[];
     else throw new WorkspaceError("invalid_field");
   }

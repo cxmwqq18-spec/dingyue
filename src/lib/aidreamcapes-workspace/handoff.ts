@@ -1,6 +1,6 @@
 import { isWorkspaceView, type WorkspaceView } from "./navigation";
 import { canonicalWorkspaceTool } from "./tool-aliases";
-import type { SceneId, TaskInput } from "./types";
+import { WORKSPACE_PROMPT_MAX_LENGTH, type SceneId, type TaskInput } from "./types";
 
 type SearchParamsLike = { get(name: string): string | null };
 export type WorkspaceLibraryFilter = "all" | "draft" | "completed";
@@ -56,7 +56,7 @@ const tools = [
 
 export function workspaceHandoffFromSearchParams(params: SearchParamsLike): WorkspaceHandoff {
   const view = params.get("view");
-  const prompt = params.get("prompt")?.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "").trim().slice(0, 2000);
+  const prompt = params.get("prompt")?.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "").trim().slice(0, WORKSPACE_PROMPT_MAX_LENGTH);
   const aspect = aspects.find((value) => value === (params.get("aspect") ?? params.get("size")));
   const duration = durations.find((value) => String(value) === (params.get("duration") ?? params.get("length")));
   const scene = scenes.find((value) => value === params.get("scene"));

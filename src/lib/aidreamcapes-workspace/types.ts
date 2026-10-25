@@ -1,5 +1,11 @@
 import type { WorkspacePreset } from "./preset-contract";
 export const AIVIDEOSUGC_SITE_ID = "site_aidreamcapes" as const;
+/**
+ * Longest brief a customer can write in one prompt field. Shared by the
+ * composer, the draft editor and every server validator so a prompt that the
+ * form accepts is always accepted by the pipeline.
+ */
+export const WORKSPACE_PROMPT_MAX_LENGTH = 10000;
 export type SceneId = "presenter_showcase" | "process_demo" | "texture_closeup" | "text_to_video";
 export type VideoDuration = 6 | 10 | 15 | 30;
 export type SubtitleStyle = "classic" | "bold" | "minimal";

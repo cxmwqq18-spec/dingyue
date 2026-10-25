@@ -88,7 +88,7 @@ try {
     if (id === "./preset-contract") return presetContract;
     if (id === "./static-routes") return navigationRequire("./static-routes");
     if (id === "./tool-aliases") return navigationRequire("./tool-aliases");
-    if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
+    if (id === "./types") return { AIVIDEOSUGC_SITE_ID: "site_aidreamcapes", WORKSPACE_PROMPT_MAX_LENGTH: 10000 };
     return require(id);
   };
   const { resolveWorkspacePreset, resolveWorkspacePublicScenePreset } = compileModule("presets.server", resolverRequire);
@@ -128,8 +128,8 @@ try {
   livePageRow = makePage(makeCard({ image: { src: "https://evil.example/preview.webp", w: 720, h: 1280 } }));
   const invalidMediaId = presetContract.pickerPresetId(makeCard({ image: { src: "https://evil.example/preview.webp", w: 720, h: 1280 } }));
   assert.equal(await resolveWorkspacePreset("site_aidreamcapes", { sourcePage: "/templates", presetId: invalidMediaId }), undefined, "foreign preview URL is rejected");
-  livePageRow = makePage(makeCard({ prompt: "x".repeat(4001) }));
-  const longPromptCard = makeCard({ prompt: "x".repeat(4001) });
+  livePageRow = makePage(makeCard({ prompt: "x".repeat(10001) }));
+  const longPromptCard = makeCard({ prompt: "x".repeat(10001) });
   assert.equal(await resolveWorkspacePreset("site_aidreamcapes", { sourcePage: "/templates", presetId: presetContract.pickerPresetId(longPromptCard) }), undefined, "oversized prompt is rejected");
   livePageRow = makePage(makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background&size=16:9&length=30", kind: "photo", tool: "white-background", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } }));
   const photoCard = makeCard({ label: "Clean product image", prompt: "Product on a clean neutral background.", href: "/app/create?tool=white-background&size=16:9&length=30", kind: "photo", tool: "white-background", image: { src: "/assets/sites/site_aidreamcapes/products/item.png", w: 1600, h: 900 } });
@@ -178,13 +178,13 @@ try {
     if (id === "./provider") return {};
     if (id === "./asset-contracts") return {};
     if (id === "./catalogs") return {};
-    if (id === "./types") return { WorkspaceError, AIVIDEOSUGC_SITE_ID: "site_aidreamcapes" };
+    if (id === "./types") return { WorkspaceError, AIVIDEOSUGC_SITE_ID: "site_aidreamcapes", WORKSPACE_PROMPT_MAX_LENGTH: 10000 };
     return require(id);
   };
   const apiContract = compileModule("api", apiContractRequire);
   const parsedCreativeInput = apiContract.parseInput(taskInput);
   assert.equal(parsedCreativeInput.creativeDirection, taskInput.creativeDirection, "API parsing preserves the editable creative field");
-  assert.throws(() => apiContract.parseInput({ ...taskInput, creativeDirection: "x".repeat(4001) }), /invalid_creative_direction/);
+  assert.throws(() => apiContract.parseInput({ ...taskInput, creativeDirection: "x".repeat(10001) }), /invalid_creative_direction/);
   const pipelineRequire = (id) => {
     if (id === "./catalogs") return {
       CAMERA_FRAGMENTS: {}, FRAMING_FRAGMENTS: {}, STYLE_FRAGMENTS: { professional: { lighting: "soft light", colorGrade: "neutral colors" } },
@@ -193,13 +193,13 @@ try {
         { id: "productImages", type: "images", required: true, max: 4, min: 1 }, { id: "steps", type: "textarea", required: true },
       ] }] }),
     };
-    if (id === "./types") return { WorkspaceError };
+    if (id === "./types") return { WorkspaceError, WORKSPACE_PROMPT_MAX_LENGTH: 10000 };
     if (id === "./capabilities") return { assertWorkspaceCapabilitySupport() {} };
     return require(id);
   };
   const pipeline = compileModule("pipeline", pipelineRequire);
   assert.equal(pipeline.validateTaskInput("process_demo", parsedCreativeInput, [], false).creativeDirection, taskInput.creativeDirection);
-  assert.throws(() => pipeline.validateTaskInput("process_demo", { ...parsedCreativeInput, creativeDirection: "x".repeat(4001) }, [], false), /workspace_creative_direction_invalid/);
+  assert.throws(() => pipeline.validateTaskInput("process_demo", { ...parsedCreativeInput, creativeDirection: "x".repeat(10001) }, [], false), /workspace_creative_direction_invalid/);
   const videoCard = makeCard();
   const videoPresetId = presetContract.pickerPresetId(videoCard);
   livePageRow = makePage(videoCard);

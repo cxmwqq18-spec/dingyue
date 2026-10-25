@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import type { HomeComposerImageInput } from "./home-composer";
+import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 
 export function useImageDraft(siteId: string, customerId: string | undefined, input: HomeComposerImageInput, setInput: Dispatch<SetStateAction<HomeComposerImageInput>>, hasEntryInput = false) {
   const key = `aidreamcapes:image-draft:${encodeURIComponent(siteId)}:${encodeURIComponent(customerId ?? "guest")}`;
@@ -24,7 +25,7 @@ export function useImageDraft(siteId: string, customerId: string | undefined, in
       const guestInput = guestRaw ? decode(guestRaw, true) : undefined;
       const value = guestInput ?? (raw && !explicitInput ? decode(raw, !customerId) : undefined);
       if (value) {
-        if (typeof value.prompt === "string" && value.prompt.length <= 4000 &&
+        if (typeof value.prompt === "string" && value.prompt.length <= WORKSPACE_PROMPT_MAX_LENGTH &&
             ["custom", "white-background", "change-background", "lifestyle-photos", "model-photos"].includes(value.toolId) &&
             ["1:1", "9:16", "16:9"].includes(value.aspect) && Array.isArray(value.assetUrls) && value.assetUrls.length <= 4 &&
             value.assetUrls.every((url) => typeof url === "string" && url.length <= 2048)) {

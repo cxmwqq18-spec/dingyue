@@ -1,5 +1,5 @@
 import { CAMERA_FRAGMENTS, FRAMING_FRAGMENTS, STYLE_FRAGMENTS, WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, sceneSchema } from "./catalogs";
-import { WorkspaceError, type ActorAsset, type ActorGender, type ActorVoiceSnapshot, type ModelCapability, type RefKind, type SceneId, type ShotSnapshot, type Storyboard, type StoryboardShot, type TaskInput, type VideoLanguage } from "./types";
+import { WorkspaceError, WORKSPACE_PROMPT_MAX_LENGTH, type ActorAsset, type ActorGender, type ActorVoiceSnapshot, type ModelCapability, type RefKind, type SceneId, type ShotSnapshot, type Storyboard, type StoryboardShot, type TaskInput, type VideoLanguage } from "./types";
 import { assertWorkspaceCapabilitySupport } from "./capabilities";
 
 const text = (value: unknown) => typeof value === "string" ? value.trim() : "";
@@ -68,7 +68,7 @@ export function buildMockVoiceProviderRequest(snapshot: ActorVoiceSnapshot, valu
 export function validateTaskInput(sceneId: SceneId, input: TaskInput, actors: ActorAsset[] = [], complete = true, modelCapabilities?: ModelCapability[]): TaskInput {
   const schema = sceneSchema(sceneId);
   if (!input || typeof input !== "object" || !input.options || !input.fields || !input.images) throw new WorkspaceError("workspace_input_invalid");
-  if (input.creativeDirection !== undefined && (typeof input.creativeDirection !== "string" || input.creativeDirection.length > 4000)) throw new WorkspaceError("workspace_creative_direction_invalid");
+  if (input.creativeDirection !== undefined && (typeof input.creativeDirection !== "string" || input.creativeDirection.length > WORKSPACE_PROMPT_MAX_LENGTH)) throw new WorkspaceError("workspace_creative_direction_invalid");
   if (!(WORKSPACE_DURATIONS as readonly number[]).includes(input.options.duration)) throw new WorkspaceError("workspace_duration_invalid");
   if (input.options.subtitleStyle !== undefined && !["classic", "bold", "minimal"].includes(input.options.subtitleStyle)) throw new WorkspaceError("workspace_subtitle_style_invalid");
   if (!(WORKSPACE_ASPECTS as readonly string[]).includes(input.options.aspect)) throw new WorkspaceError("workspace_aspect_invalid");
@@ -103,7 +103,7 @@ export function validateTaskInput(sceneId: SceneId, input: TaskInput, actors: Ac
   for (const [key, value] of Object.entries(input.fields)) {
     const field = fields.find((field) => field.id === key && field.type !== "images");
     if (!field || !(typeof value === "string" || (field.type === "tags" && Array.isArray(value) && value.every((item) => typeof item === "string")))) throw new WorkspaceError("workspace_field_invalid", 400, { field: key });
-    if (JSON.stringify(value).length > 6000) throw new WorkspaceError("workspace_field_too_long", 400, { field: key });
+    if ((typeof value === "string" ? value.length : JSON.stringify(value).length) > WORKSPACE_PROMPT_MAX_LENGTH) throw new WorkspaceError("workspace_field_too_long", 400, { field: key });
     if (field.type === "select" && value && !field.options?.some((option) => option.value === value)) throw new WorkspaceError("workspace_field_option_invalid", 400, { field: key });
   }
   if (complete) {
