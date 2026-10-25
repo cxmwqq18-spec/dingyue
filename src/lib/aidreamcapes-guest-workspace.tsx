@@ -9,6 +9,7 @@ import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset, resolve
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
 import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
 import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
@@ -109,15 +110,34 @@ export async function renderAidreamcapesMediaDetailPage({ kind, slug, basePath =
   basePath?: string;
   detail?: Awaited<ReturnType<typeof resolveMediaDetail>>;
 }) {
-  const [detail, chrome] = await Promise.all([provided ? Promise.resolve(provided) : resolveMediaDetail(kind, slug), loadAidreamcapesChrome()]);
+  const [detail, chrome, customer] = await Promise.all([
+    provided ? Promise.resolve(provided) : resolveMediaDetail(kind, slug),
+    loadAidreamcapesChrome(),
+    getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
+  ]);
   if (!detail || !chrome) notFound();
   if (detail.slug !== slug) permanentRedirect(`${basePath === "/" ? "" : basePath}${detail.path}`);
   const placements = await resolveMediaPlacements(detail);
+  // Signed-in visitors get the same header account menu as the homepage;
+  // signed-out visitors keep the static login and get-started actions.
+  const prefix = basePath === "/" ? "" : basePath;
+  const headerAccount = customer ? { href: `${prefix}/account`, label: "My account" } : undefined;
+  const headerCustomer = customer
+    ? {
+        balance: customer.customer.balance,
+        email: customer.customer.email,
+        name: customer.customer.name,
+        profile: customer.customer.profile
+      }
+    : undefined;
   return (
     <AidreamcapesMediaDetailPage
       detail={detail}
+      headerAccount={headerAccount}
+      headerCustomer={headerCustomer}
       navigation={chrome.navigation as AidreamcapesV2Navigation}
       r={publicResolvers(basePath)}
+      siteId={AIVIDEOSUGC_SITE_ID}
       company={aidreamcapesV2Company(chrome.identity)}
       articles={chrome.articles}
       articlesTitle={chrome.articlesTitle}

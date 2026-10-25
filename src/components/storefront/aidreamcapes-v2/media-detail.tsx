@@ -7,12 +7,15 @@ import type { MediaPlacementGroup } from "@/lib/aidreamcapes-workspace/media-pla
 import {
   MEDIA_DETAIL_PUBLIC_ORIGIN,
   mediaDetailCrumbs,
-  mediaDetailIntro
+  mediaDetailIntro,
+  mediaDetailPrompt,
+  type MediaDetailKind
 } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { V2Resolvers } from "./types";
 import type { V2Company } from "./company";
 import type { AidreamcapesFooterArticle } from "./latest-articles";
-import { AidreamcapesV2Shell } from "./shell";
+import { AidreamcapesV2Shell, type AidreamcapesHeaderCustomer } from "./shell";
+import { MediaDetailPromptCopy } from "./media-detail-prompt-copy";
 
 // Public media detail page. Complete server-rendered HTML: the card, its media,
 // the owning directory and the single workspace call to action. No client data
@@ -79,7 +82,22 @@ function RelatedGrid({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   );
 }
 
-export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, articles, articlesTitle, placements = [] }: {
+function PromptPanel({ prompt, kind }: { prompt: string; kind: MediaDetailKind }) {
+  return (
+    <section aria-labelledby="v-detail-prompt-title" className="v-detail-prompt" data-detail-prompt="true">
+      <div className="v-detail-prompt-head">
+        <h2 id="v-detail-prompt-title">Prompt</h2>
+        <MediaDetailPromptCopy copiedLabel="Copied" failedLabel="Copy failed" label="Copy prompt" />
+      </div>
+      <p className="v-detail-prompt-text" data-detail-prompt-text="true">{prompt}</p>
+      <p className="v-detail-prompt-note">{kind === "photo"
+        ? "The workspace opens with this prompt so you can change the shot, product and format before you generate."
+        : "The workspace opens with this prompt so you can change the shot, product, format and length before you generate."}</p>
+    </section>
+  );
+}
+
+export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, articles, articlesTitle, placements = [], headerAccount, headerCustomer, siteId }: {
   detail: MediaDetail;
   navigation: AidreamcapesV2Navigation;
   r: V2Resolvers;
@@ -87,9 +105,13 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
   articles?: AidreamcapesFooterArticle[];
   articlesTitle?: string;
   placements?: MediaPlacementGroup[];
+  headerAccount?: { href: string; label: string };
+  headerCustomer?: AidreamcapesHeaderCustomer;
+  siteId?: string;
 }) {
   const { card } = detail;
   const intro = mediaDetailIntro(card);
+  const prompt = mediaDetailPrompt(card);
   const crumbs = mediaDetailCrumbs(card);
   const graph = {
     "@context": "https://schema.org",
@@ -109,7 +131,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
   ].filter((item): item is { label: string; value: string } => Boolean(item));
 
   return (
-    <AidreamcapesV2Shell articles={articles} articlesTitle={articlesTitle} company={company} mainId="media-detail" navigation={navigation} r={r}>
+    <AidreamcapesV2Shell articles={articles} articlesTitle={articlesTitle} company={company} headerAccount={headerAccount} headerCustomer={headerCustomer} mainId="media-detail" navigation={navigation} r={r} siteId={siteId}>
       <WorkspaceEntryBehavior />
       <StorefrontJsonLd nodes={[graph]} preserveBodyMarker />
       <style dangerouslySetInnerHTML={{ __html: `
@@ -123,6 +145,13 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail-specs dd{margin:2px 0 0;font-weight:600}
 #media-detail .v-detail-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 #media-detail .v-detail-note{margin:14px 0 0;font-size:.86rem;opacity:.65}
+#media-detail .v-detail-prompt{margin:26px 0 0;padding:18px 20px 20px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+#media-detail .v-detail-prompt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#media-detail .v-detail-prompt-head h2{margin:0;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+#media-detail .v-detail-prompt-copy{flex:none;padding:6px 12px;border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--ink-2);font-size:12.5px;font-weight:600;line-height:1.2;cursor:pointer;transition:border-color .16s ease,color .16s ease}
+#media-detail .v-detail-prompt-copy:hover{border-color:rgba(255,255,255,.34);color:var(--ink)}
+#media-detail .v-detail-prompt-text{margin:0;white-space:pre-wrap;color:var(--ink-2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+#media-detail .v-detail-prompt-note{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px;line-height:1.55}
 #media-detail .v-detail-categories{margin:0 0 26px;padding-top:18px;border-top:1px solid var(--line)}
 #media-detail .v-detail-categories dl{display:grid;gap:10px;margin:10px 0 0}
 #media-detail .v-detail-categories dl>div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:start}
@@ -185,6 +214,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
             <p className="v-detail-note">{detail.kind === "photo"
               ? "Opens the workspace with this template already selected. You can change the product and format."
               : "Opens the workspace with this template already selected. You can change the product, format and length."}</p>
+            {prompt ? <PromptPanel kind={detail.kind} prompt={prompt} /> : null}
           </div>
         </div>
       </div>

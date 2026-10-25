@@ -95,6 +95,28 @@ export function mediaDetailIntro(card: Pick<MediaDetailCard, "line" | "prompt">)
   return trimmed(card.line, 240);
 }
 
+/**
+ * The generation prompt the workspace opens this template with. It is the same
+ * text the customer edits in the prompt field, so it is public copy. Cards
+ * without a prompt render no prompt block.
+ *
+ * Paragraph breaks are kept, because the prompt is written as labelled
+ * sections and the customer reads them one by one. The cap stays above the
+ * longest published prompt, so the copy button always hands over the complete
+ * instruction, including its closing negative block.
+ */
+export function mediaDetailPrompt(card: Pick<MediaDetailCard, "prompt">): string {
+  const paragraphs = String(card.prompt ?? "")
+    .split(/\n{2,}/)
+    // A paragraph keeps its single line breaks, because the prompt is written
+    // as labelled sections and a timed shot list.
+    .map((paragraph) => paragraph.replace(/[ \t]+/g, " ").replace(/[ \t]*\n[ \t]*/g, "\n").trim())
+    .filter(Boolean);
+  const text = paragraphs.join("\n\n");
+  if (!text) return "";
+  return text.length > 4000 ? `${text.slice(0, 3999).trimEnd()}…` : text;
+}
+
 export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "line" | "prompt">): string {
   const intro = mediaDetailIntro(card);
   const label = mediaDetailTitle(card);

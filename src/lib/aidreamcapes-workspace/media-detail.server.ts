@@ -168,7 +168,11 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
         image: { src: card.image.src, ...(card.image.alt ? { alt: card.image.alt } : {}) },
         href,
       }];
-    });
+    })
+    // One page can hold the same card twice, for example a template card and
+    // its alias copy. The related grid would then render two entries with the
+    // same address, so the duplicate is dropped here.
+    .filter((item, index, list) => list.findIndex((other) => other.href === item.href) === index);
 
   return {
     kind,
