@@ -3,7 +3,10 @@
 import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Menu as MenuIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
-import { AidreamcapesPublishedDesktopNavigation, AidreamcapesPublishedMobileNavigation, AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesV2Header } from "@/components/storefront/aidreamcapes-v2/shell";
+import { AidreamcapesV2MenuBehavior } from "@/components/storefront/aidreamcapes-v2/behavior";
+import { AIDREAMCAPES_V2_CSS } from "@/components/storefront/aidreamcapes-v2/styles";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
@@ -287,6 +290,26 @@ export function CustomerShellHeader({
     return basePath + "/" + href.replace(/^\/+/, "");
   };
 
+  // AIVideosUGC signed-in pages render the homepage's exact v2 header: the
+  // same markup, stylesheet, menu behavior, and avatar account menu as the
+  // public homepage, so the top navigation is identical on every page instead
+  // of a parallel header shell that drifts over time.
+  if (hasPublishedNavigation && aidreamcapesPublishedNavigation) {
+    return (
+      <div className="adc2" data-storefront-global-header="">
+        <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS }} />
+        <AidreamcapesV2Header
+          headerAccount={{ href: accountHref, label: isSpanishXby ? "Iniciar sesion" : "Log in" }}
+          headerCustomer={{ balance: customer.balance, email: customer.email, name: customer.name, profile: customer.profile }}
+          navigation={aidreamcapesPublishedNavigation}
+          r={{ asset: (value: string) => value, href: resolveZipHref }}
+          siteId={site.id}
+        />
+        <AidreamcapesV2MenuBehavior />
+      </div>
+    );
+  }
+
   return (
     <header data-storefront-global-header="" className={`${isAidreamcapesZipHeader ? "relative" : "sticky top-0"} z-50 border-b font-sans backdrop-blur ${dark ? "border-white/10 bg-[#05070E]/[0.94] text-white" : "border-[#eadfce] bg-[#fbf6ee]/[0.96] text-[#171514]"}`}>
       <div className={isAidreamcapesZipHeader ? "relative mx-auto flex h-20 max-w-[1400px] items-center justify-between gap-4 px-6" : "mx-auto grid min-w-0 max-w-[1680px] gap-2 px-5 py-2"}>
@@ -312,9 +335,7 @@ export function CustomerShellHeader({
             </span>
           </StorefrontInstantLink>
 
-          {hasPublishedNavigation ? (
-            <AidreamcapesPublishedDesktopNavigation navigation={aidreamcapesPublishedNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} />
-          ) : isAidreamcapesZipHeader ? (
+          {isAidreamcapesZipHeader ? (
             <AidreamcapesZipDesktopNavigation navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} />
           ) : <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
@@ -386,7 +407,7 @@ export function CustomerShellHeader({
             ) : null}
           </nav>}
 
-          {hasPublishedNavigation ? <AidreamcapesPublishedMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesPublishedNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
+          {isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
             <summary
               aria-label={isFrenchXby ? "Ouvrir la navigation" : isSpanishXby ? "Abrir navegacion" : "Open navigation"}
               className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}

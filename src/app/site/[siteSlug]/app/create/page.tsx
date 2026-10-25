@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { permanentRedirect } from "next/navigation";
 import { renderCustomerWorkspacePageBySlug } from "@/lib/storefront-render";
+import { renderAidreamcapesCreatePage } from "@/lib/aidreamcapes-guest-workspace";
 import { legacyCreateHrefToStatic } from "@/lib/aidreamcapes-workspace/static-routes";
 import { redirectPublicSitePathToCanonicalHost } from "@/lib/site-route-canonical";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
@@ -35,6 +36,13 @@ export default async function CustomerWorkspaceCreatePage({
   if ((publicSlug === "aidreamcapes" || publicSlug === "aivideosugc") && Object.keys(query).length) {
     const staticPath = legacyCreateHrefToStatic(`/app/create?${new URLSearchParams(Object.entries(query).flatMap(([k, v]) => Array.isArray(v) ? v.map((item) => [k, String(item)] as [string, string]) : [[k, String(v)]]))}`);
     if (staticPath) permanentRedirect(`/site/${siteSlug}${staticPath}`);
+  }
+  if (publicSlug === "aidreamcapes" || publicSlug === "aivideosugc") {
+    // Aidreamcapes uses one workspace for guests and signed-in customers, and
+    // a plain workspace entry opens the Home module like /app/create/home.
+    // Legacy query links above already redirected; remaining queries carry
+    // their own view, tool, or preset intent.
+    return renderAidreamcapesCreatePage({ query, siteSlug: publicSlug, defaultView: "home" });
   }
   return renderCustomerWorkspacePageBySlug({ siteSlug: publicSlug, slug: "/app/create", query, routeMode });
 }

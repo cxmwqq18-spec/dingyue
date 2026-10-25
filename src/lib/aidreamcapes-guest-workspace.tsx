@@ -38,9 +38,11 @@ function publicResolvers(basePath: string) {
 
 type GuestRouteQuery = Record<string, string | string[] | undefined>;
 
-export async function renderAidreamcapesCreatePage({ query = {}, siteSlug }: {
+export async function renderAidreamcapesCreatePage({ query = {}, siteSlug, defaultView = "agent" }: {
   query?: GuestRouteQuery;
   siteSlug: string;
+  // Plain workspace entries open the Home module; deep links keep their own view.
+  defaultView?: "home" | "agent";
 }) {
   const entry = aidreamcapesWorkspaceEntry(query);
   const resolvedPreset = !entry.taskId && !entry.presetRequest && typeof query.tool === "string" && typeof query.template === "string"
@@ -49,7 +51,7 @@ export async function renderAidreamcapesCreatePage({ query = {}, siteSlug }: {
     resolvedPreset,
     routeSlug: siteSlug === "aivideosugc" ? "aivideosugc" : "aidreamcapes",
     ...entry,
-    initialView: entry.initialView ?? "agent"
+    initialView: entry.initialView ?? defaultView
   });
 }
 

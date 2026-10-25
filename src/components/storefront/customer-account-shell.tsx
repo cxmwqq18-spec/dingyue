@@ -4,6 +4,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   CreditCard,
   Download,
@@ -191,7 +192,10 @@ function ClassicAccountCenter({
   publishedSaveTheDateGroups,
   publishedSaveTheDateMenuLabel = "Save the Date"
 }: CustomerAccountShellProps) {
-  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
+  // Path-mode previews (/site/<slug>/account) must keep workspace and catalog
+  // links on the same store; host-mode production resolves to the bare path.
+  const pathname = usePathname();
+  const basePath = (pathname?.match(/^\/site\/[^/]+/)?.[0] ?? hostAwareSitePath(site, "/")).replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/account`, `${basePath}/app/create`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
   const runtimeCustomer = initialRuntime?.customer ?? customer;
   const accountDisplayName = runtimeCustomer.name?.trim() || runtimeCustomer.email.split("@")[0] || "Your";
@@ -304,7 +308,10 @@ function StatementAccountCenter({
   publishedSaveTheDateGroups,
   publishedSaveTheDateMenuLabel = "Save the Date"
 }: CustomerAccountShellProps) {
-  const basePath = hostAwareSitePath(site, "/").replace(/\/$/, "");
+  // Path-mode previews (/site/<slug>/account) must keep workspace and catalog
+  // links on the same store; host-mode production resolves to the bare path.
+  const pathname = usePathname();
+  const basePath = (pathname?.match(/^\/site\/[^/]+/)?.[0] ?? hostAwareSitePath(site, "/")).replace(/\/$/, "");
   const prefetchPaths = useMemo(() => [basePath || "/", `${basePath}/account`, `${basePath}/app/create`, `${basePath}/pricing`, `${basePath}/tools`], [basePath]);
   const runtimeCustomer = initialRuntime?.customer ?? customer;
   const displayName = runtimeCustomer.name?.trim() || runtimeCustomer.email.split("@")[0] || "Your account";

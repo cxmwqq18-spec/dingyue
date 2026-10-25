@@ -867,9 +867,12 @@ export default async function HostStorefrontCatchAllPage({
     }
     if (hostSiteSlug === "aidreamcapes" && (slug === "/app/create" || aidreamcapesStaticCreate)) {
       // Authentication changes customer data, never the workspace implementation.
+      // Plain /app/create entries open the Home module; static segments keep
+      // the view encoded in the address.
       return renderAidreamcapesCreatePage({
         query: aidreamcapesStaticCreate ? { ...query, ...staticCreateQuery(aidreamcapesStaticCreate) } : query,
         siteSlug,
+        defaultView: "home"
       });
     }
     return renderCustomerWorkspacePageBySlug({ siteSlug, slug, query, routeMode: "host" });

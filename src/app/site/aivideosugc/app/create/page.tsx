@@ -15,5 +15,7 @@ export default async function AIVideosUGCCreatePage({ searchParams }: {
     if (staticPath) permanentRedirect(`/site/aivideosugc${staticPath}`);
   }
   const entry = aidreamcapesWorkspaceEntry(query);
-  return renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", ...entry, initialView: entry.initialView ?? "agent" });
+  // A plain workspace entry opens the Home module; views stay encoded in the
+  // address (or the redirected static path) for every deep link.
+  return renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", ...entry, initialView: entry.initialView ?? "home" });
 }
