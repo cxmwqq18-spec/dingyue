@@ -345,7 +345,7 @@ function ErrorBlock({ onRetry }: { onRetry: () => void }) {
 
 function SectionHeader({ icon: Icon, kicker, title, subtitle }: { icon: LucideIcon; kicker: string; title: string; subtitle: string }) {
   return (
-    <div className="flex items-start gap-3">
+    <div className="ac-island-section-head flex items-start gap-3">
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[8px] bg-[var(--account-accent-bg)] text-[var(--account-accent-strong)]">
         <Icon className="h-5 w-5" strokeWidth={1.9} />
       </span>
@@ -624,7 +624,8 @@ function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: strin
   );
 }
 
-function OverviewStatement({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
+function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+  const account = accountCustomer(runtime, fallbackCustomer);
   const jobs = runtime.jobs ?? [];
   const orders = runtime.orders ?? [];
   const downloads = runtime.downloads ?? [];
@@ -660,9 +661,24 @@ function OverviewStatement({ basePath, runtime }: { basePath: string; runtime: T
     .sort((left, right) => right.sortAt - left.sortAt)
     .slice(0, 6);
   const inProgress = jobs.filter((job) => job.status !== "succeeded" && job.status !== "failed").slice(0, 3);
+  const activeSubscription = runtime.subscriptions?.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? runtime.subscriptions?.[0];
+  const planLabel = activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan";
 
   return (
     <div className="cc-statement">
+      <div className="cc-block">
+        <div className="cc-block-head">
+          <h3>Account details</h3>
+          <a href="#account-profile">Edit profile →</a>
+        </div>
+        <dl className="cc-facts">
+          <div><dt>Name</dt><dd>{account.name}</dd></div>
+          <div><dt>Email</dt><dd className="cc-fact-break">{account.email}</dd></div>
+          <div><dt>Status</dt><dd>{statusLabel(account.status)}</dd></div>
+          <div><dt>Plan</dt><dd>{planLabel}</dd></div>
+        </dl>
+      </div>
+
       <div className="cc-block">
         <div className="cc-block-head">
           <h3>Recent activity</h3>
@@ -1272,7 +1288,7 @@ export function CustomerAccountDataIsland({
   }, [activeSection, customer.id, siteId]);
 
   return (
-    <div className="ac-account-data-island ac-classic-data-island grid min-w-0 gap-5">
+    <div className={`ac-account-data-island ac-classic-data-island grid min-w-0 gap-5${variant === "statement" ? " ac-data-island--statement" : ""}`}>
       {checkoutNotice.success ? (
         <div className="rounded-[8px] border border-[var(--account-success-border)] bg-[var(--account-success-bg)] p-4 text-sm text-[var(--account-success-text)]">
           <div className="flex items-start gap-3">
@@ -1285,7 +1301,7 @@ export function CustomerAccountDataIsland({
       ) : null}
       {activeSection === "overview" ? (
         <AccountCard customerId={customer.id} id="account-overview" initialRuntime={initialRuntime} loadingTitle="Overview" section="overview" siteId={siteId}>
-          {(runtime) => variant === "statement" ? <OverviewStatement basePath={basePath} runtime={runtime} /> : <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} />}
+          {(runtime) => variant === "statement" ? <OverviewStatement basePath={basePath} fallbackCustomer={customer} runtime={runtime} /> : <OverviewCard basePath={basePath} fallbackCustomer={customer} runtime={runtime} />}
         </AccountCard>
       ) : null}
       {activeSection === "profile" ? (

@@ -258,6 +258,7 @@ function ThemeRendererBody({
   previewEmptyState,
   publishedIndexablePaths,
   headerAccount,
+  headerCustomer,
   storefrontContext
 }: {
   site: Site;
@@ -292,6 +293,8 @@ function ThemeRendererBody({
   previewEmptyState?: ReactNode;
   publishedIndexablePaths?: string[];
   headerAccount?: { href: string; label: string };
+  /** SSR session projection for the signed-in public header menu. */
+  headerCustomer?: { name: string; email: string; balance?: { available?: number } | null; profile?: { avatarUrl?: string } | null };
   storefrontContext?: StorefrontContext;
 }) {
   const displaySite = mode === "published" ? storefrontPaidSiteCopy(site) : site;
@@ -363,7 +366,7 @@ function ThemeRendererBody({
     const v2Company = aidreamcapesV2Company(storefrontContext?.profile?.identity, settings.globalSections?.footer?.settings as Record<string, unknown> | undefined);
     return (
       <StorefrontLinkPrefetchProvider disabled={disableStorefrontPrefetch}>
-        <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} headerAccount={headerAccount} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers}>
+        <AidreamcapesV2Shell articles={aidreamcapesFooterArticles} articlesTitle={aidreamcapesFooterArticlesTitle} company={v2Company} headerAccount={headerAccount} headerCustomer={headerCustomer} legacyPublicPage={!v2Entry && !v2PolicyPage} mainId={mainContentId} navigation={aidreamcapesV2Navigation} r={v2Resolvers} siteId={displaySite.id}>
           {v2Entry ? (
             <AidreamcapesV2Page query={query} company={v2Company} homeKeywords={aidreamcapesHomeKeywords} r={v2Resolvers} section={v2Entry[1]} />
           ) : v2PolicyPage ? (

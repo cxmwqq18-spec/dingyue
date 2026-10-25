@@ -42,6 +42,7 @@ import type {
   AiProviderConfig,
   AiWorkflowConfig,
   AiWorkflowStep,
+  AidreamcapesV2Navigation,
   AidreamcapesZipNavigation,
   AuditLogEntry,
   CreativePack,
@@ -2902,6 +2903,12 @@ export async function getSiteIdBySlugRelational(slug: string): Promise<string | 
 export type CustomerWorkspaceBootstrapRelational = {
   site: Pick<Site, "id" | "name" | "slug" | "branding" | "primaryDomain">;
   aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
+  /**
+   * The homepage's published navigation (`LivePage` "/" contentJson
+   * `siteNavigation`). Account and workspace headers render this same payload
+   * so a page change can never swap in a different menu projection.
+   */
+  aidreamcapesPublishedNavigation?: AidreamcapesV2Navigation;
   siteAiApps: SiteAiApp[];
   creativePackCategories: CreativePackCategory[];
   creativePacks: CreativePack[];
@@ -3014,6 +3021,15 @@ export async function getCustomerWorkspaceSiteShellRelational(slug: string): Pro
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
 
+function publishedHomepageNavigation(
+  snapshot: { pages: Array<{ slug: string; publishedJson?: unknown }> } | undefined
+): AidreamcapesV2Navigation | undefined {
+  if (!snapshot) return undefined;
+  const home = snapshot.pages.find((page) => page.slug === "/");
+  const navigation = (home?.publishedJson as { siteNavigation?: AidreamcapesV2Navigation } | undefined)?.siteNavigation;
+  return navigation?.version === 2 ? navigation : undefined;
+}
+
 export async function getCustomerWorkspaceBootstrapRelational(slug: string): Promise<CustomerWorkspaceBootstrapRelational | undefined> {
   const canonicalSlug = canonicalSiteSlug(slug);
   return siteReadCache.get<CustomerWorkspaceBootstrapRelational | undefined>(`workspace-bootstrap:${canonicalSlug}`, async () => {
@@ -3061,6 +3077,9 @@ export async function getCustomerWorkspaceBootstrapRelational(slug: string): Pro
         branding: site.branding
       },
       aidreamcapesZipNavigation: liveSnapshot?.themeSettings?.aidreamcapesZipNavigation,
+      aidreamcapesPublishedNavigation: site.id === "site_aidreamcapes"
+        ? publishedHomepageNavigation(liveSnapshot)
+        : undefined,
       siteAiApps,
       creativePackCategories: navigationData.creativePackCategories.map((category) => watermarkedCreativePackCategoryForWorkspace(category) ?? category),
       creativePacks: navigationData.creativePacks.map(watermarkedCreativePackForWorkspace),

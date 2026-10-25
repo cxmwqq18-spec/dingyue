@@ -6158,17 +6158,20 @@ textarea {
   --cc-sans: "Source Sans 3", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --cc-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", Georgia, serif;
   --cc-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
-  --cc-page: #f4f1ec;
-  --cc-page-2: #ece8e1;
-  --cc-panel: #fffefb;
-  --cc-ink: #14131a;
-  --cc-ink-2: #3d3a46;
-  --cc-muted: #6f6a78;
-  --cc-subtle: #948e9f;
-  --cc-line: #e2dcd3;
-  --cc-line-strong: #cbc3b7;
+  /* AIVideosUGC: white surface in light mode. No cream or other tinted
+   * page backgrounds; the only chromatic accent is the brand violet used for
+   * primary actions and the active rail item. */
+  --cc-page: #ffffff;
+  --cc-page-2: #f5f5f7;
+  --cc-panel: #ffffff;
+  --cc-ink: #0b0b0e;
+  --cc-ink-2: #2c2c31;
+  --cc-muted: #626269;
+  --cc-subtle: #8b8b93;
+  --cc-line: #e6e6e9;
+  --cc-line-strong: #d3d3d8;
   --cc-accent: #5b3df5;
-  --cc-accent-soft: #efeaff;
+  --cc-accent-soft: #f2f2f5;
   --cc-accent-ink: #3b23c9;
   --cc-good: #0d7a52;
   --cc-bad: #b23a2c;
@@ -6203,18 +6206,20 @@ textarea {
 }
 
 .ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] {
-  --cc-page: #0b0b10;
-  --cc-page-2: #101017;
-  --cc-panel: #14141c;
-  --cc-ink: #f2f0f7;
-  --cc-ink-2: #d7d3e0;
-  --cc-muted: #a29dae;
-  --cc-subtle: #7c7788;
-  --cc-line: #26252f;
-  --cc-line-strong: #3a3845;
+  /* Starry black: near-black page with a faint star field, no blue-grey or
+   * cream tints. */
+  --cc-page: #050508;
+  --cc-page-2: #0c0c12;
+  --cc-panel: #0b0b11;
+  --cc-ink: #f4f4f7;
+  --cc-ink-2: #d5d5dc;
+  --cc-muted: #9a9aa3;
+  --cc-subtle: #74747d;
+  --cc-line: #1e1e26;
+  --cc-line-strong: #31313b;
   --cc-accent: #9a8bff;
-  --cc-accent-soft: #221d3c;
-  --cc-accent-ink: #c9c0ff;
+  --cc-accent-soft: #181722;
+  --cc-accent-ink: #cfc7ff;
   --cc-good: #58dfa6;
   --cc-bad: #ff8f80;
   --cc-warn: #f0c27a;
@@ -6228,7 +6233,71 @@ textarea {
   --account-danger-bg: #2c1614;
   --account-danger-border: #4d2a25;
   --account-danger-text: var(--cc-bad);
+  /* Primary buttons keep a saturated violet with white text in dark mode so
+   * form actions stay legible against the starry black page. */
+  --account-button-bg: #5b3df5;
+  --account-button-border: #5b3df5;
+  --account-button-hover: #4a2fe0;
   background: var(--cc-page) !important;
+}
+
+/* Module buttons are painted through the classic accent token; keep them a
+ * saturated violet with white text on the dark page instead of the light
+ * accent violet used for text links. */
+.ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] .ac-classic-module-card-panel button[class*="bg-[var(--account-button-bg)]"] {
+  border-color: #5b3df5 !important;
+  background: #5b3df5 !important;
+  color: #ffffff !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] .ac-classic-module-card-panel button[class*="bg-[var(--account-button-bg)]"]:hover {
+  border-color: #4a2fe0 !important;
+  background: #4a2fe0 !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center[data-cc-theme="dark"] {
+  background-color: #050508 !important;
+  background-image:
+    radial-gradient(1.2px 1.2px at 22px 28px, rgba(255, 255, 255, 0.6), transparent 100%),
+    radial-gradient(1px 1px at 148px 96px, rgba(255, 255, 255, 0.38), transparent 100%),
+    radial-gradient(1.5px 1.5px at 246px 168px, rgba(255, 255, 255, 0.5), transparent 100%),
+    radial-gradient(1px 1px at 86px 208px, rgba(255, 255, 255, 0.3), transparent 100%),
+    radial-gradient(1px 1px at 302px 62px, rgba(255, 255, 255, 0.24), transparent 100%),
+    radial-gradient(1px 1px at 196px 288px, rgba(255, 255, 255, 0.2), transparent 100%) !important;
+  background-size: 320px 320px !important;
+  background-repeat: repeat !important;
+}
+
+/* The account header renders the homepage's published navigation, so any
+ * hard-coded "first menu item is active" hint would point at the wrong page. */
+.ac-account-shell.ac-classic-account-shell.ac-center > header[data-storefront-global-header] nav[aria-label="Primary navigation"] > *:first-child {
+  color: inherit;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center > header[data-storefront-global-header] nav[aria-label="Primary navigation"] > *:first-child::after {
+  display: none;
+}
+
+/* Compact native file control: a full-width button-colored bar reads as a
+ * primary action and hides the chosen filename. */
+.ac-account-shell.ac-classic-account-shell.ac-center input[type="file"] {
+  padding: 5px !important;
+  border-color: var(--cc-line) !important;
+  background: var(--cc-page-2) !important;
+  color: var(--cc-muted) !important;
+  font-weight: 500 !important;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center input[type="file"]::file-selector-button {
+  margin-right: 10px;
+  border: 0;
+  border-radius: 4px;
+  padding: 7px 12px;
+  background: var(--cc-ink);
+  color: var(--cc-panel);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .ac-account-shell.ac-classic-account-shell.ac-center .cc-page {
@@ -6434,6 +6503,49 @@ textarea {
   margin-top: 8px;
   color: var(--cc-muted);
   font-size: 12px;
+}
+
+/* The statement panel already prints the section title and description in its
+ * header, so the island's duplicate heading block is redundant there. */
+.ac-account-shell.ac-classic-account-shell.ac-center .ac-data-island--statement .ac-island-section-head {
+  display: none;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--cc-line);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts > div {
+  min-width: 0;
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts dt {
+  color: var(--cc-subtle);
+  font-family: var(--cc-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts dd {
+  margin: 6px 0 0;
+  color: var(--cc-ink);
+  font-size: 14px;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts .cc-fact-break {
+  overflow-wrap: anywhere;
+}
+
+.ac-account-shell.ac-classic-account-shell.ac-center .cc-facts .cc-fact-mono {
+  font-family: var(--cc-mono);
+  font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .ac-account-shell.ac-classic-account-shell.ac-center .cc-grid {
@@ -6853,6 +6965,10 @@ textarea {
   }
 
   .ac-account-shell.ac-classic-account-shell.ac-center .cc-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ac-account-shell.ac-classic-account-shell.ac-center .cc-facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

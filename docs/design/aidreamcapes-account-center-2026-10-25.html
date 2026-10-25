@@ -12,17 +12,17 @@
   }
 
   html[data-theme="light"] {
-    --page: #f4f1ec;
-    --page-2: #ece8e1;
-    --panel: #fffefb;
-    --ink: #14131a;
-    --ink-2: #3d3a46;
-    --muted: #6f6a78;
-    --subtle: #948e9f;
-    --line: #e2dcd3;
-    --line-strong: #cbc3b7;
+    --page: #ffffff;
+    --page-2: #f5f5f7;
+    --panel: #ffffff;
+    --ink: #0b0b0e;
+    --ink-2: #2c2c31;
+    --muted: #626269;
+    --subtle: #8b8b93;
+    --line: #e6e6e9;
+    --line-strong: #d3d3d8;
     --accent: #5b3df5;
-    --accent-soft: #efeaff;
+    --accent-soft: #f2f2f5;
     --accent-ink: #3b23c9;
     --good: #0d7a52;
     --good-soft: #e3f4ec;
@@ -36,18 +36,18 @@
   }
 
   html[data-theme="dark"] {
-    --page: #0b0b10;
-    --page-2: #101017;
-    --panel: #14141c;
-    --ink: #f2f0f7;
-    --ink-2: #d7d3e0;
-    --muted: #a29dae;
-    --subtle: #7c7788;
-    --line: #26252f;
-    --line-strong: #3a3845;
+    --page: #050508;
+    --page-2: #0c0c12;
+    --panel: #0b0b11;
+    --ink: #f4f4f7;
+    --ink-2: #d5d5dc;
+    --muted: #9a9aa3;
+    --subtle: #74747d;
+    --line: #1e1e26;
+    --line-strong: #31313b;
     --accent: #9a8bff;
-    --accent-soft: #221d3c;
-    --accent-ink: #c9c0ff;
+    --accent-soft: #181722;
+    --accent-ink: #cfc7ff;
     --good: #58dfa6;
     --good-soft: #14281f;
     --bad: #ff8f80;
@@ -61,6 +61,18 @@
 
   * { box-sizing: border-box; }
   html, body { margin: 0; }
+  html[data-theme="dark"] body {
+    background-color: #050508;
+    background-image:
+      radial-gradient(1.2px 1.2px at 22px 28px, rgba(255, 255, 255, 0.6), transparent 100%),
+      radial-gradient(1px 1px at 148px 96px, rgba(255, 255, 255, 0.38), transparent 100%),
+      radial-gradient(1.5px 1.5px at 246px 168px, rgba(255, 255, 255, 0.5), transparent 100%),
+      radial-gradient(1px 1px at 86px 208px, rgba(255, 255, 255, 0.3), transparent 100%),
+      radial-gradient(1px 1px at 302px 62px, rgba(255, 255, 255, 0.24), transparent 100%),
+      radial-gradient(1px 1px at 196px 288px, rgba(255, 255, 255, 0.2), transparent 100%);
+    background-size: 320px 320px;
+    background-repeat: repeat;
+  }
   body {
     background: var(--page);
     color: var(--ink);
@@ -104,6 +116,8 @@
     transition: background .16s ease, border-color .16s ease;
   }
   .avatar-btn:hover { background: rgba(255,255,255,.12); }
+  .avatar-name { font-size: 13px; font-weight: 600; max-width: 144px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 640px) { .avatar-name { display: none; } }
   .avatar {
     width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center;
     background: linear-gradient(150deg, #7d5cff, #f26ab4);
@@ -320,6 +334,54 @@
   .pager div { display: flex; gap: 8px; }
   .pager button { border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); border-radius: 6px; padding: 6px 12px; font-size: 13px; }
 
+
+  /* ------------------------------------------------------- account modules */
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 8px; border-top: 1px solid var(--line); }
+  .facts > div { min-width: 0; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); }
+  .facts dt { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--subtle); }
+  .facts dd { margin: 6px 0 0; font-size: 14px; overflow-wrap: anywhere; }
+
+  .module { display: grid; gap: 18px; }
+  .module-title { display: flex; align-items: flex-start; gap: 12px; }
+  .module-icon {
+    display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 auto;
+    border-radius: 8px; background: var(--accent-soft); color: var(--accent-ink);
+  }
+  .module-title h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 22px; letter-spacing: -.01em; }
+  .module-title p { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+
+  .form-card { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 18px; display: grid; gap: 14px; }
+  .field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .field input {
+    border: 1px solid var(--line-strong); border-radius: 6px; background: var(--panel);
+    color: var(--ink); font: inherit; font-size: 14px; font-weight: 500; padding: 9px 11px;
+  }
+  .field input[readonly] { background: var(--page-2); color: var(--muted); border-color: var(--line); }
+  .field small { font-size: 12px; font-weight: 400; color: var(--muted); }
+  .row-2 { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; }
+  .avatar-row { display: flex; align-items: center; gap: 14px; }
+  .avatar-lg { width: 76px; height: 76px; border-radius: 8px; display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--panel); color: var(--muted); font-size: 24px; }
+  .file-line { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--page-2); padding: 5px; font-size: 12px; color: var(--muted); font-weight: 500; }
+  .file-line b { background: var(--ink); color: var(--panel); border-radius: 4px; padding: 6px 10px; font-size: 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn.small { padding: 8px 14px; font-size: 13px; }
+  .asset-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .asset { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--page-2); display: grid; place-items: center; font-family: var(--mono); font-size: 10px; color: var(--subtle); }
+  .tile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .tile { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 16px; }
+  .tile label { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--subtle); }
+  .tile strong { display: block; margin-top: 8px; font-size: 22px; font-weight: 600; letter-spacing: -.01em; }
+  .tile span { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+  .sub-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+  .sub-row strong { display: block; font-size: 14px; }
+  .sub-row span { display: block; margin-top: 3px; font-size: 12px; color: var(--muted); }
+  .note-line { margin: 0; font-size: 12.5px; color: var(--muted); }
+  @media (max-width: 860px) {
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .row-2 { grid-template-columns: 1fr; }
+    .tile-grid { grid-template-columns: 1fr; }
+  }
+
   [hidden] { display: none !important; }
 
   @media (max-width: 1080px) {
@@ -360,12 +422,13 @@
   <div class="topbar-inner">
     <span class="brand"><span class="brand-mark">A</span> AIVIDEOSUGC</span>
     <nav class="topnav" aria-label="Primary">
-      <span>Video</span><span>Images</span><span>Templates</span><span>AI Actors</span><span>Pricing</span>
+      <span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span>
     </nav>
     <div class="topbar-right">
       <div class="menu-wrap" data-menu data-open="false">
         <button class="avatar-btn" data-menu-trigger aria-haspopup="menu" aria-expanded="false" aria-label="Account menu">
           <span class="avatar">NW</span>
+          <span class="avatar-name">Nora Whitman</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
         </button>
         <div class="menu-panel" role="menu" aria-label="Account menu">
@@ -385,6 +448,10 @@
           <a class="menu-item" role="menuitem" href="#account-purchases">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 2h12l1 5H5l1-5Z"/><path d="M5 7v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7"/><path d="M9 12h6"/></svg>
             Receipts
+          </a>
+          <a class="menu-item" role="menuitem" href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8v8H8z"/></svg>
+            Open workspace
           </a>
           <button class="menu-item is-danger" role="menuitem" data-signout>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
@@ -406,7 +473,6 @@
           <h1>Nora Whitman</h1>
           <div class="identity-meta">
             <span class="chip accent">Free plan</span>
-            <span class="chip">Member since Aug 2026</span>
             <span class="chip">nora@studio.example</span>
           </div>
         </div>
@@ -439,9 +505,9 @@
       <div class="note">Upgrade for monthly credits</div>
     </div>
     <div class="stat">
-      <label>Last 30 days</label>
-      <div class="value">−34<small>credits</small></div>
-      <div class="note">2 generations completed</div>
+      <label>Account status</label>
+      <div class="value">Active</div>
+      <div class="note">Profile, credits, and downloads are available</div>
     </div>
   </section>
 
@@ -502,14 +568,26 @@
       <!-- Overview -->
       <section data-panel="overview">
         <div class="panel-head">
-          <h2>Recent activity</h2>
-          <a href="#account-credits">All credits →</a>
+          <h2>Account details</h2>
+          <a href="#account-profile" data-goto="profile">Edit profile →</a>
         </div>
-        <table class="ledger">
-          <thead>
-            <tr><th>Date</th><th>Activity</th><th>Credits</th><th>Balance</th></tr>
-          </thead>
-          <tbody>
+        <dl class="facts">
+          <div><dt>Name</dt><dd>Nora Whitman</dd></div>
+          <div><dt>Email</dt><dd>nora@studio.example</dd></div>
+          <div><dt>Status</dt><dd>Active</dd></div>
+          <div><dt>Plan</dt><dd>Free</dd></div>
+        </dl>
+
+        <div class="block" style="margin-top:26px">
+          <div class="block-title">
+            <h3>Recent activity</h3>
+            <a href="#account-credits" data-goto="credits" style="font-size:13px;font-weight:600">All credits →</a>
+          </div>
+          <table class="ledger">
+            <thead>
+              <tr><th>Date</th><th>Activity</th><th>Credits</th><th>Balance</th></tr>
+            </thead>
+            <tbody>
             <tr>
               <td class="when">Aug 4</td>
               <td class="what"><strong>Credits purchased</strong><span>Starter pack · checkout paid</span></td>
@@ -518,14 +596,14 @@
             </tr>
             <tr>
               <td class="when">Aug 4</td>
-              <td class="what"><strong>Photo profile accepted</strong><span>Profile request · 33 credits used</span></td>
-              <td class="amount neg">−33</td>
+              <td class="what"><strong>Product video delivered</strong><span>Spokesperson video · 39 credits used</span></td>
+              <td class="amount neg">−39</td>
               <td class="balance">1</td>
             </tr>
             <tr>
               <td class="when">Aug 3</td>
               <td class="what"><strong>Generation returned</strong><span>Request failed before output · credits released</span></td>
-              <td class="amount pos">+33</td>
+              <td class="amount pos">+39</td>
               <td class="balance">34</td>
             </tr>
             <tr>
@@ -535,15 +613,16 @@
               <td class="balance">1</td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
 
         <div class="block">
           <div class="block-title"><h3>In progress</h3><span class="pill neutral">1 request</span></div>
           <p class="block-note">Credits stay reserved while a request is running and return automatically if it fails.</p>
           <div class="job">
             <div>
-              <strong>Photo profile request</strong>
-              <span>Submitted Aug 4 · 0 of 1 output delivered</span>
+              <strong>Spokesperson video request</strong>
+              <span>Submitted Aug 4 · 0 of 1 clip delivered</span>
             </div>
             <span class="pill warn">Queued</span>
           </div>
@@ -579,8 +658,8 @@
           </thead>
           <tbody>
             <tr><td class="when">Aug 4, 09:12</td><td class="what"><strong>Purchase</strong><span>Starter pack</span></td><td class="amount pos">+200</td><td class="balance">201</td></tr>
-            <tr><td class="when">Aug 4, 09:04</td><td class="what"><strong>Generation hold</strong><span>Photo profile request</span></td><td class="amount neg">−33</td><td class="balance">1</td></tr>
-            <tr><td class="when">Aug 3, 18:41</td><td class="what"><strong>Hold released</strong><span>Request failed before output</span></td><td class="amount pos">+33</td><td class="balance">34</td></tr>
+            <tr><td class="when">Aug 4, 09:04</td><td class="what"><strong>Generation hold</strong><span>Spokesperson video request</span></td><td class="amount neg">−39</td><td class="balance">1</td></tr>
+            <tr><td class="when">Aug 3, 18:41</td><td class="what"><strong>Hold released</strong><span>Request failed before output</span></td><td class="amount pos">+39</td><td class="balance">40</td></tr>
             <tr><td class="when">Aug 2, 11:20</td><td class="what"><strong>Welcome credits</strong><span>New account allowance</span></td><td class="amount pos">+1</td><td class="balance">1</td></tr>
           </tbody>
         </table>
@@ -590,15 +669,172 @@
         </div>
       </section>
 
-      <!-- Placeholder panels for the remaining sections -->
-      <section data-panel="profile" hidden><div class="panel-head"><h2>Profile</h2></div><p class="block-note" style="margin-top:14px">Name, email, and avatar connected to this studio account.</p></section>
-      <section data-panel="security" hidden><div class="panel-head"><h2>Security</h2></div><p class="block-note" style="margin-top:14px">Password and active sessions.</p></section>
-      <section data-panel="subscription" hidden><div class="panel-head"><h2>Subscription</h2></div><p class="block-note" style="margin-top:14px">Plan tier, billing state, and renewal date.</p></section>
-      <section data-panel="purchases" hidden><div class="panel-head"><h2>Purchases</h2></div><p class="block-note" style="margin-top:14px">Recharge history and receipts.</p></section>
-      <section data-panel="generation" hidden><div class="panel-head"><h2>Generation</h2></div><p class="block-note" style="margin-top:14px">Every request from upload to delivery.</p></section>
-      <section data-panel="downloads" hidden><div class="panel-head"><h2>Downloads</h2></div><p class="block-note" style="margin-top:14px">Files downloaded from this account.</p></section>
-      <section data-panel="albums" hidden><div class="panel-head"><h2>Albums</h2></div><p class="block-note" style="margin-top:14px">Private photo sets and their outputs.</p></section>
-      <section data-panel="models" hidden><div class="panel-head"><h2>Models</h2></div><p class="block-note" style="margin-top:14px">Trained or collecting private models.</p></section>
+      <!-- Profile -->
+      <section data-panel="profile" hidden>
+        <div class="panel-head"><h2>Profile details</h2><a href="#">Save profile</a></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <div><h3>Basic account information</h3><p>Update the name and avatar shown across your private workspace. Email changes are read-only in this version.</p></div>
+          </div>
+          <div class="row-2">
+            <div class="form-card">
+              <div class="avatar-row">
+                <span class="avatar-lg">NW</span>
+                <div class="field" style="flex:1">Profile avatar<div class="file-line"><b>Choose file</b> nora-portrait.png</div></div>
+              </div>
+              <label class="field">Display name<input value="Nora Whitman" /></label>
+              <label class="field">Email address<input value="nora@studio.example" readonly /></label>
+              <div class="actions"><button class="btn primary small" type="button">Save profile</button><button class="btn small" type="button">Remove avatar</button></div>
+            </div>
+            <div class="form-card">
+              <div class="block-title" style="margin:0"><h3>Saved avatars</h3><span class="pill neutral">2 total</span></div>
+              <div class="asset-grid" style="margin-top:12px"><span class="asset">NW-01</span><span class="asset">NW-02</span><span class="asset">Upload</span><span class="asset">—</span></div>
+              <p class="note-line">Uploaded profile avatars appear here for quick reuse.</p>
+            </div>
+          </div>
+          <p class="note-line">Need to change your email? Contact support so ownership can be verified before the address is updated.</p>
+        </div>
+      </section>
+
+      <!-- Security -->
+      <section data-panel="security" hidden>
+        <div class="panel-head"><h2>Security controls</h2></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/></svg></span>
+            <div><h3>Password and session protection</h3><p>Change the password for nora@studio.example. For safety, all active sessions sign out after a password update.</p></div>
+          </div>
+          <div class="form-card" style="max-width:560px">
+            <label class="field">Current password<input type="password" value="••••••••" /></label>
+            <label class="field">New password<input type="password" value="" placeholder="At least 8 characters" /></label>
+            <label class="field">Confirm new password<input type="password" value="" /></label>
+            <div class="actions"><button class="btn primary small" type="button">Update password</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Subscription -->
+      <section data-panel="subscription" hidden>
+        <div class="panel-head"><h2>Plan and billing</h2><a href="#">Manage through pricing →</a></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16v12H4z"/><path d="M4 3h16v4H4z"/><path d="M9 12h6"/></svg></span>
+            <div><h3>Plan and billing status</h3><p>View the current subscription tier, renewal window, and credits granted by the plan.</p></div>
+          </div>
+          <div class="tile-grid">
+            <div class="tile"><label>Current plan</label><strong>Free</strong><span>No active subscription</span></div>
+            <div class="tile"><label>Credits per cycle</label><strong>0</strong><span>Subscription credits</span></div>
+            <div class="tile"><label>Period end</label><strong>—</strong><span>Choose a plan when ready</span></div>
+          </div>
+          <div class="sub-row">
+            <div><strong>Payment method</strong><span>Cards are handled through secure checkout. This account center does not store or edit card numbers.</span></div>
+            <a class="btn small" href="#">Manage through pricing →</a>
+          </div>
+          <div class="sub-row">
+            <div><strong>No subscription is connected</strong><span>Buy a credit pack or a monthly plan from the pricing page.</span></div>
+            <span class="pill neutral">Inactive</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Purchases -->
+      <section data-panel="purchases" hidden>
+        <div class="panel-head"><h2>Orders and receipts</h2><a href="#account-credits" data-goto="credits">Open ledger →</a></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2h12l1 5H5l1-5Z"/><path d="M5 7v13a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7"/><path d="M9 12h6"/></svg></span>
+            <div><h3>Recharge and checkout history</h3><p>Review top-ups, subscription checkout starts, credits purchased, and payment status.</p></div>
+          </div>
+          <table class="ledger">
+            <thead><tr><th>Date</th><th>Order</th><th>Status</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Starter pack</strong><span>200 credits · checkout completed</span></td><td><span class="pill good">Paid</span></td><td class="amount">$19.00</td></tr>
+              <tr><td class="when">Aug 3, 2026</td><td class="what"><strong>Starter pack</strong><span>200 credits · started, not completed</span></td><td><span class="pill warn">Checkout started</span></td><td class="amount">$19.00</td></tr>
+              <tr><td class="when">Aug 2, 2026</td><td class="what"><strong>Welcome credits</strong><span>New account allowance</span></td><td><span class="pill good">Granted</span></td><td class="amount">$0.00</td></tr>
+            </tbody>
+          </table>
+          <div class="pager"><span>3 orders · page 1 of 1</span><div><button disabled>Previous</button><button disabled>Next</button></div></div>
+        </div>
+      </section>
+
+      <!-- Generation -->
+      <section data-panel="generation" hidden>
+        <div class="panel-head"><h2>Request history</h2><a href="#">Open workspace →</a></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/></svg></span>
+            <div><h3>AI generation requests</h3><p>Follow queued, running, delivered, failed, and refunded generation work.</p></div>
+          </div>
+          <table class="ledger">
+            <thead><tr><th>Updated</th><th>Request</th><th>Credits held</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Request 2D5295</strong><span>Spokesperson video · 1 clip</span></td><td class="amount neg">−39</td><td><span class="pill warn">Needs review</span></td></tr>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Request 0D9731</strong><span>Product video · 1 clip</span></td><td class="amount neg">−39</td><td><span class="pill good">Delivered</span></td></tr>
+              <tr><td class="when">Aug 3, 2026</td><td class="what"><strong>Request 4F8408</strong><span>White background photos · 3 images</span></td><td class="amount neg">−24</td><td><span class="pill good">Delivered</span></td></tr>
+            </tbody>
+          </table>
+          <div class="pager"><span>20 requests · page 1 of 1</span><div><button disabled>Previous</button><button disabled>Next</button></div></div>
+        </div>
+      </section>
+
+      <!-- Downloads -->
+      <section data-panel="downloads" hidden>
+        <div class="panel-head"><h2>Delivered assets</h2></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/></svg></span>
+            <div><h3>Download history</h3><p>Files downloaded from this account, newest first.</p></div>
+          </div>
+          <table class="ledger">
+            <thead><tr><th>Downloaded</th><th>File</th><th>Type</th><th></th></tr></thead>
+            <tbody>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Spokesperson video · take 2</strong><span>Request 0D9731</span></td><td>MP4 · 1080×1920</td><td><a href="#" style="font-weight:600;font-size:13px">Download</a></td></tr>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>White background image · 01</strong><span>Request 4F8408</span></td><td>JPG · 2048×2048</td><td><a href="#" style="font-weight:600;font-size:13px">Download</a></td></tr>
+              <tr><td class="when">Aug 3, 2026</td><td class="what"><strong>Product video · final</strong><span>Request 4F8408</span></td><td>MP4 · 1080×1920</td><td><a href="#" style="font-weight:600;font-size:13px">Download</a></td></tr>
+            </tbody>
+          </table>
+          <div class="pager"><span>3 downloads · page 1 of 1</span><div><button disabled>Previous</button><button disabled>Next</button></div></div>
+        </div>
+      </section>
+
+      <!-- Albums -->
+      <section data-panel="albums" hidden>
+        <div class="panel-head"><h2>Private collections</h2></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg></span>
+            <div><h3>Albums and outputs</h3><p>Browse completed sets and their output counts.</p></div>
+          </div>
+          <table class="ledger">
+            <thead><tr><th>Updated</th><th>Album</th><th>Outputs</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Product launch set</strong><span>6 images · 2 videos</span></td><td>8</td><td><span class="pill good">Published</span></td></tr>
+              <tr><td class="when">Aug 3, 2026</td><td class="what"><strong>Spokesperson tests</strong><span>3 videos</span></td><td>3</td><td><span class="pill good">Published</span></td></tr>
+            </tbody>
+          </table>
+          <div class="pager"><span>2 albums · page 1 of 1</span><div><button disabled>Previous</button><button disabled>Next</button></div></div>
+        </div>
+      </section>
+
+      <!-- Models -->
+      <section data-panel="models" hidden>
+        <div class="panel-head"><h2>Private models</h2></div>
+        <div class="module" style="margin-top:18px">
+          <div class="module-title">
+            <span class="module-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14a4 4 0 0 0 8 0"/><path d="M9 9h.01M15 9h.01"/></svg></span>
+            <div><h3>AI models connected to this account</h3><p>Review trained or collecting models, their training state, and the source photos attached to each one.</p></div>
+          </div>
+          <table class="ledger">
+            <thead><tr><th>Updated</th><th>Model</th><th>Photos</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="when">Aug 4, 2026</td><td class="what"><strong>Nora · product presenter</strong><span>Indoor studio · consistent presenter</span></td><td>12 / 15</td><td><span class="pill warn">Collecting</span></td></tr>
+              <tr><td class="when">Aug 2, 2026</td><td class="what"><strong>Nora · lifestyle</strong><span>Outdoor lifestyle · consistent presenter</span></td><td>15 / 15</td><td><span class="pill good">Ready</span></td></tr>
+            </tbody>
+          </table>
+          <div class="pager"><span>2 models · page 1 of 1</span><div><button disabled>Previous</button><button disabled>Next</button></div></div>
+        </div>
+      </section>
 
       <p class="foot-note">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>

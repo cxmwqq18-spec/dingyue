@@ -4,7 +4,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useRef, useState } from "react";
-import { CreditCard, LogOut, ReceiptText, UserRound } from "lucide-react";
+import { CreditCard, LayoutDashboard, LogOut, ReceiptText, UserRound } from "lucide-react";
 import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 
 type MenuCustomer = {
@@ -37,10 +37,12 @@ export function CustomerAccountMenu({
   onSignOut,
   receiptsHref,
   redirectHref,
+  showName = false,
   siteId,
   surface = "storefront",
   tone = "dark",
-  align = "right"
+  align = "right",
+  workspaceHref
 }: {
   accountHref: string;
   creditsHref: string;
@@ -49,10 +51,13 @@ export function CustomerAccountMenu({
   onSignOut?: () => Promise<void> | void;
   receiptsHref?: string;
   redirectHref?: string;
+  /** Show the customer's name beside the avatar (public storefront header). */
+  showName?: boolean;
   siteId: string;
   surface?: "storefront" | "workspace";
   tone?: "light" | "dark";
   align?: "left" | "right";
+  workspaceHref?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -146,6 +151,11 @@ export function CustomerAccountMenu({
             initials
           )}
         </span>
+        {showName ? (
+          <span className="hidden max-w-[9rem] truncate pl-1.5 pr-0.5 text-[13px] font-semibold sm:block">
+            {customer.name || customer.email.split("@")[0]}
+          </span>
+        ) : null}
         <svg aria-hidden="true" className={`h-3.5 w-3.5 shrink-0 transition ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
           <path d="m6 9 6 6 6-6" />
         </svg>
@@ -171,6 +181,12 @@ export function CustomerAccountMenu({
             Credits &amp; billing
             <span className="ml-auto font-mono text-[11px] tabular-nums opacity-60">{customer.balance?.available ?? 0}</span>
           </a>
+          {workspaceHref ? (
+            <a className={itemClass} href={workspaceHref} onClick={() => setOpen(false)} role="menuitem" style={itemStyle}>
+              <LayoutDashboard aria-hidden="true" className="h-4 w-4 opacity-70" strokeWidth={1.8} />
+              Open workspace
+            </a>
+          ) : null}
           {receiptsHref ? (
             <a className={itemClass} href={receiptsHref} onClick={() => setOpen(false)} role="menuitem" style={itemStyle}>
               <ReceiptText aria-hidden="true" className="h-4 w-4 opacity-70" strokeWidth={1.8} />

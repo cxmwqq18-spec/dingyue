@@ -22,7 +22,7 @@ import { CustomerRoutePrefetch } from "@/components/storefront/customer-route-pr
 import { StorefrontNavigationFeedback } from "@/components/storefront/navigation-feedback";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
 import { hostAwareSitePath } from "@/lib/domain-routing";
-import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, ThemeRuntimeData, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesV2Navigation, AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, Site, ThemeRuntimeData, ToolMenuItem, VideoThemeCategory } from "@/lib/types";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
 import type { LucideIcon } from "lucide-react";
 
@@ -111,6 +111,38 @@ const accountSectionCopy: Record<AccountSection, { kicker: string; title: string
   }
 };
 
+// AIVideosUGC generates video and image ads; the shared account copy still
+// describes photo shoots. Only the statement surface (Aidreamcapes) uses these
+// overrides, so other storefronts keep their own wording.
+const statementSectionCopy: typeof accountSectionCopy = {
+  overview: accountSectionCopy.overview,
+  profile: {
+    kicker: "Profile",
+    title: "Profile details",
+    description: "Update the display name and avatar shown across your workspace. The account email is read-only here."
+  },
+  security: {
+    kicker: "Security",
+    title: "Security controls",
+    description: "Change the password for this account. Use a password you do not reuse on other sites."
+  },
+  subscription: accountSectionCopy.subscription,
+  credits: accountSectionCopy.credits,
+  purchases: accountSectionCopy.purchases,
+  generation: {
+    kicker: "Generation",
+    title: "Request history",
+    description: "Follow every AI generation request from brief to delivery."
+  },
+  downloads: accountSectionCopy.downloads,
+  albums: {
+    kicker: "Albums",
+    title: "Private collections",
+    description: "Browse completed sets, request outputs, and delivery counts."
+  },
+  models: accountSectionCopy.models
+};
+
 function accountSectionFromHash(hash: string): AccountSection {
   const normalized = hash.replace(/^#/, "");
   return legacySectionAliases[normalized] ?? accountNavItems.find((item) => item.hash === normalized || item.id === normalized)?.id ?? "overview";
@@ -126,6 +158,7 @@ function accountInitials(name: string, email: string) {
 type CustomerAccountShellProps = {
   site: CustomerAccountSite;
   aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
+  aidreamcapesPublishedNavigation?: AidreamcapesV2Navigation;
   customer: PublicCustomer;
   initialRuntime?: ThemeRuntimeData;
   creativePackCategories?: CreativePackCategory[];
@@ -147,6 +180,7 @@ export function CustomerAccountShell(props: CustomerAccountShellProps) {
 function ClassicAccountCenter({
   site,
   aidreamcapesZipNavigation,
+  aidreamcapesPublishedNavigation,
   customer,
   initialRuntime,
   creativePackCategories = [],
@@ -186,7 +220,7 @@ function ClassicAccountCenter({
     <div className={`ac-account-shell ac-classic-account-shell${displayMode === "dark" ? " is-classic-dark" : ""}`} data-aidreamcapes-account-shell="true">
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
+      <CustomerShellHeader aidreamcapesPublishedNavigation={aidreamcapesPublishedNavigation} aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
 
       <div className="ac-classic-layout">
         <aside className="ac-classic-left-column" aria-label="Account navigation">
@@ -259,6 +293,7 @@ const ACCOUNT_THEME_KEY = "aidreamcapes-account-theme";
 function StatementAccountCenter({
   site,
   aidreamcapesZipNavigation,
+  aidreamcapesPublishedNavigation,
   customer,
   initialRuntime,
   creativePackCategories = [],
@@ -280,7 +315,7 @@ function StatementAccountCenter({
   const initials = accountInitials(displayName, runtimeCustomer.email);
   const [activeSection, setActiveSection] = useState<AccountSection>("overview");
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const activeCopy = accountSectionCopy[activeSection];
+  const activeCopy = statementSectionCopy[activeSection];
   const activeItem = accountNavItems.find((item) => item.id === activeSection) ?? accountNavItems[0];
 
   useIsomorphicLayoutEffect(() => {
@@ -312,7 +347,7 @@ function StatementAccountCenter({
     <div className="ac-account-shell ac-classic-account-shell ac-center" data-aidreamcapes-account-shell="true" data-cc-theme={mode}>
       <CustomerRoutePrefetch paths={prefetchPaths} />
       <StorefrontNavigationFeedback />
-      <CustomerShellHeader aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
+      <CustomerShellHeader aidreamcapesPublishedNavigation={aidreamcapesPublishedNavigation} aidreamcapesZipNavigation={aidreamcapesZipNavigation} creativePackCategories={creativePackCategories} creativePacks={creativePacks} customer={runtimeCustomer} publishedSaveTheDateGroups={publishedSaveTheDateGroups} publishedSaveTheDateMenuLabel={publishedSaveTheDateMenuLabel} publishedVideoGenerationTopics={publishedVideoGenerationTopics} site={site} tone="dark" toolMenuItems={toolMenuItems} videoThemeCategories={videoThemeCategories} />
 
       <div className="cc-page">
         <div className="cc-topline">

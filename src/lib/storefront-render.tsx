@@ -2977,7 +2977,8 @@ function renderThemePage({
   publishedPaths,
   publishedIndexablePaths,
   lightweightChrome = false,
-  headerAccount
+  headerAccount,
+  headerCustomer
 }: {
   currentSite: Site;
   page: ThemePageJson;
@@ -3002,6 +3003,7 @@ function renderThemePage({
   videoWatchPages?: readonly MyDreamShootsVideoWatchPage[];
   lightweightChrome?: boolean;
   headerAccount?: { href: string; label: string };
+  headerCustomer?: { name: string; email: string; balance?: { available?: number } | null; profile?: { avatarUrl?: string } | null };
 }) {
   const jsonLdNodes = currentSite.id === "site_aidreamcapes" ? aidreamcapesFilterJsonLd(jsonLd, pagePath, query) : jsonLd;
   const navigationPagePaths = new Set(currentSite.pages.flatMap((publishedPage) => [
@@ -3137,6 +3139,7 @@ function renderThemePage({
         homepageShowcases={isolatedRenderData.homepageShowcases}
         lightweightChrome={lightweightChrome}
         headerAccount={headerAccount}
+        headerCustomer={headerCustomer}
         publishedIndexablePaths={publishedIndexablePaths}
         storefrontContext={storefrontContext}
       />
@@ -3457,6 +3460,14 @@ export async function renderStorefrontPage({
   const headerAccount = currentSite.id === "site_aidreamcapes" && runtimeWithAuth.customer
     ? { href: routeMode === "host" ? "/account" : `/site/${publicSiteSlug(currentSite.slug)}/account`, label: "My account" }
     : undefined;
+  const headerCustomer = headerAccount && runtimeWithAuth.customer
+    ? {
+        balance: runtimeWithAuth.customer.balance,
+        email: runtimeWithAuth.customer.email,
+        name: runtimeWithAuth.customer.name,
+        profile: runtimeWithAuth.customer.profile
+      }
+    : undefined;
   const renderedPage = { ...page, publishedJson: pageJson };
   const storefrontContext = resolvePublishedStorefrontContext(publishedSnapshot, renderedPage);
   const publishedIndexablePaths = indexableSeoPageEntriesForSite(state, currentSite, publishedSnapshot)
@@ -3482,6 +3493,7 @@ export async function renderStorefrontPage({
     routeMode,
     runtime: runtimeWithAuth,
     headerAccount,
+    headerCustomer,
     settings,
     storefrontContext,
     publishedPaths: publishedSnapshot.publishedPaths,
@@ -4039,6 +4051,7 @@ export async function renderCustomerWorkspacePage({
     ]);
     return (
       <CustomerAccountClientPage
+        initialAidreamcapesPublishedNavigation={bootstrap?.aidreamcapesPublishedNavigation}
         initialAidreamcapesZipNavigation={bootstrap?.aidreamcapesZipNavigation}
         initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
         initialCreativePacks={bootstrap?.creativePacks ?? []}
@@ -4127,6 +4140,7 @@ export async function renderCustomerWorkspacePageBySlug({
     const accountRuntime = await getCustomerAccountSummaryRuntimeRelational({ customer: current.customer, siteId });
     return (
       <CustomerAccountClientPage
+        initialAidreamcapesPublishedNavigation={bootstrap?.aidreamcapesPublishedNavigation}
         initialAidreamcapesZipNavigation={bootstrap?.aidreamcapesZipNavigation}
         initialCreativePackCategories={bootstrap?.creativePackCategories ?? []}
         initialCreativePacks={bootstrap?.creativePacks ?? []}

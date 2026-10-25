@@ -3,7 +3,7 @@
 import { Camera, Coffee, Heart, ImageIcon, Map as MapIcon, Menu as MenuIcon, Mountain, PlayCircle, Scissors, Sparkles, Sun, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
-import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
+import { AidreamcapesPublishedDesktopNavigation, AidreamcapesPublishedMobileNavigation, AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
@@ -17,7 +17,7 @@ import { canonicalSaveTheDatePath } from "@/lib/save-the-date-routes";
 import { isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite } from "@/lib/storefront-context/capabilities";
 import { storefrontOriginalLogoUrl } from "@/lib/storefront-brand-assets";
 import type { PublishedSaveTheDateGroup } from "@/lib/save-the-date-publication";
-import type { AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesV2Navigation, AidreamcapesZipNavigation, CreativePack, CreativePackCategory, PublicCustomer, PublishedVideoNavigationProjection, SaveTheDateNavigationGroup, Site, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 import type { LucideIcon } from "lucide-react";
 import { CustomerSignOutButton } from "@/components/storefront/customer-sign-out-button";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
@@ -163,6 +163,7 @@ export function CustomerShellHeader({
   site,
   customer,
   aidreamcapesZipNavigation,
+  aidreamcapesPublishedNavigation,
   tone = "dark",
   creativePackCategories = [],
   creativePacks = [],
@@ -176,6 +177,7 @@ export function CustomerShellHeader({
   site: CustomerShellHeaderSite;
   customer: PublicCustomer;
   aidreamcapesZipNavigation?: AidreamcapesZipNavigation;
+  aidreamcapesPublishedNavigation?: AidreamcapesV2Navigation;
   tone?: "light" | "dark";
   creativePackCategories?: CreativePackCategory[];
   creativePacks?: CreativePack[];
@@ -275,7 +277,11 @@ export function CustomerShellHeader({
     : `block truncate text-[1.18rem] font-semibold leading-none tracking-normal [font-family:var(--site-title-font)] min-[1440px]:text-[1.28rem] min-[1536px]:text-[1.4rem] min-[1800px]:text-[1.52rem] ${dark ? "text-white" : "text-[#171514]"}`;
   const accountHref = `${basePath}/account`;
   const accountAvatarUrl = customer.profile?.avatarUrl;
-  const isAidreamcapesZipHeader = isAidreamcapes && !isSpanishXby && Boolean(aidreamcapesZipNavigation);
+  // AIVideosUGC renders the homepage's published navigation (the same
+  // LivePage payload the public homepage uses). The legacy ZIP projection is
+  // only a fallback for stores whose homepage payload is unavailable.
+  const hasPublishedNavigation = isAidreamcapes && !isSpanishXby && Boolean(aidreamcapesPublishedNavigation);
+  const isAidreamcapesZipHeader = isAidreamcapes && !isSpanishXby && (hasPublishedNavigation || Boolean(aidreamcapesZipNavigation));
   const resolveZipHref = (href: string) => {
     if (/^(?:https?:)?\//.test(href)) return href.startsWith("/") ? basePath + href : href;
     return basePath + "/" + href.replace(/^\/+/, "");
@@ -306,7 +312,9 @@ export function CustomerShellHeader({
             </span>
           </StorefrontInstantLink>
 
-          {isAidreamcapesZipHeader ? (
+          {hasPublishedNavigation ? (
+            <AidreamcapesPublishedDesktopNavigation navigation={aidreamcapesPublishedNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} />
+          ) : isAidreamcapesZipHeader ? (
             <AidreamcapesZipDesktopNavigation navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} />
           ) : <nav className="order-2 hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-1 text-[0.78rem] font-semibold xl:flex min-[1440px]:gap-1.5 min-[1536px]:gap-2 min-[1800px]:gap-2.5">
             <ClickMegaMenu
@@ -378,7 +386,7 @@ export function CustomerShellHeader({
             ) : null}
           </nav>}
 
-          {isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
+          {hasPublishedNavigation ? <AidreamcapesPublishedMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesPublishedNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : isAidreamcapesZipHeader ? <AidreamcapesZipMobileNavigation mobileLabel="Open navigation" navigation={aidreamcapesZipNavigation} resolveHref={resolveZipHref} signedIn={Boolean(customer)} /> : <details className="group relative order-2 shrink-0 xl:hidden" data-storefront-mobile-menu="">
             <summary
               aria-label={isFrenchXby ? "Ouvrir la navigation" : isSpanishXby ? "Abrir navegacion" : "Open navigation"}
               className={`grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border transition [&::-webkit-details-marker]:hidden ${dark ? "border-white/18 text-white hover:bg-white/10" : "border-[#d8cbbb] text-[#171514] hover:bg-[#efe5d7]"}`}
@@ -408,10 +416,13 @@ export function CustomerShellHeader({
                 creditsHref={`${accountHref}#account-credits`}
                 customer={{ balance: customer.balance, email: customer.email, name: customer.name, profile: customer.profile }}
                 logoutHref={`/api/sites/${site.id}/auth/logout`}
+                receiptsHref={`${accountHref}#account-purchases`}
                 redirectHref={`${basePath}/login`}
+                showName
                 siteId={site.id}
                 surface="storefront"
                 tone={tone}
+                workspaceHref={`${basePath}/app/create`}
               />
             ) : (
             <div className={signedInClassName}>
