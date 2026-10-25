@@ -8,7 +8,9 @@ import {
   MEDIA_DETAIL_PUBLIC_ORIGIN,
   mediaDetailCrumbs,
   mediaDetailIntro,
+  mediaDetailParameters,
   mediaDetailPrompt,
+  mediaDetailReferences,
   type MediaDetailKind
 } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { V2Resolvers } from "./types";
@@ -53,6 +55,58 @@ function MediaFigure({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
         width={card.image.w}
       />
     </figure>
+  );
+}
+
+/**
+ * The assets and settings this result was generated from. Sits under the media
+ * so a visitor can see what the example was built with before opening the
+ * workspace. Server-rendered: no client data requests.
+ */
+function ReferenceAssets({ card, r }: { card: MediaDetail["card"]; r: V2Resolvers }) {
+  const references = mediaDetailReferences(card);
+  const parameters = mediaDetailParameters(card);
+  if (!references.images.length && !references.videos.length && !parameters.length) return null;
+  const imageCount = references.images.length;
+  return (
+    <section aria-labelledby="v-detail-refs-title" className="v-detail-refs" data-media-references="true">
+      <div className="v-detail-refs-head">
+        <h2 id="v-detail-refs-title">Reference assets</h2>
+        <span className="v-detail-refs-count">{`${imageCount} ${imageCount === 1 ? "image" : "images"}`}</span>
+      </div>
+      {references.images.length ? (
+        <ul className="v-detail-refs-images">
+          {references.images.map((image, index) => (
+            <li key={`${image.src}-${index}`}>
+              <img alt={image.alt || card.image.alt || card.label} decoding="async" loading="lazy" src={r.asset(image.src)} />
+              <span className="v-detail-refs-index">{index + 1}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {references.videos.length ? (
+        <ul className="v-detail-refs-videos">
+          {references.videos.map((video, index) => (
+            <li key={`${video.src}-${index}`}>
+              <video aria-label={`Reference clip ${index + 1}`} controls loop muted playsInline poster={video.poster ? r.asset(video.poster) : undefined} preload="metadata" src={r.asset(video.src)} />
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {parameters.length ? (
+        <dl className="v-detail-refs-params">
+          {parameters.map((parameter) => (
+            <div key={parameter.label}>
+              <dt>{parameter.label}</dt>
+              <dd>{parameter.value}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+      <p className="v-detail-refs-note">{card.kind === "photo"
+        ? "These are the assets and settings this result used. Open the workspace to build your own version."
+        : "These are the assets and settings this result used. The example video is the result, not an input."}</p>
+    </section>
   );
 }
 
@@ -138,6 +192,19 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;align-items:start;padding:24px 0 8px}
 #media-detail .v-detail-media{margin:0;border-radius:18px;overflow:hidden;background:#0d1220;box-shadow:0 18px 60px rgba(10,16,32,.18)}
 #media-detail .v-detail-media img,#media-detail .v-detail-media video{display:block;width:100%;height:auto}
+#media-detail .v-detail-media-col{display:grid;gap:18px;align-content:start;min-width:0}
+#media-detail .v-detail-refs{padding:16px 18px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+#media-detail .v-detail-refs-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+#media-detail .v-detail-refs-head h2{margin:0;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+#media-detail .v-detail-refs-count{font-size:12.5px;opacity:.6}
+#media-detail .v-detail-refs-images,#media-detail .v-detail-refs-videos{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px;padding:0;list-style:none}
+#media-detail .v-detail-refs-images li,#media-detail .v-detail-refs-videos li{position:relative;width:104px;height:104px;margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0d1220}
+#media-detail .v-detail-refs-images img,#media-detail .v-detail-refs-videos video{display:block;width:100%;height:100%;object-fit:cover}
+#media-detail .v-detail-refs-index{position:absolute;left:6px;bottom:6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:rgba(8,12,24,.72);color:#fff;font-size:11px;line-height:1}
+#media-detail .v-detail-refs-params{display:flex;flex-wrap:wrap;gap:8px 26px;margin:0}
+#media-detail .v-detail-refs-params dt{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+#media-detail .v-detail-refs-params dd{margin:2px 0 0;font-weight:600}
+#media-detail .v-detail-refs-note{margin:14px 0 0;color:var(--ink-3);font-size:12.5px;line-height:1.5}
 #media-detail .v-detail h1{font-size:clamp(1.7rem,2.6vw,2.5rem);line-height:1.15;margin:0 0 14px}
 #media-detail .v-detail-lead{font-size:1.03rem;line-height:1.6;margin:0 0 22px;opacity:.85}
 #media-detail .v-detail-specs{display:flex;flex-wrap:wrap;gap:10px 26px;margin:0 0 26px;padding:0;list-style:none}
@@ -173,7 +240,10 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
           ))}
         </nav>
         <div className="v-detail">
-          <MediaFigure detail={detail} r={r} />
+          <div className="v-detail-media-col">
+            <MediaFigure detail={detail} r={r} />
+            <ReferenceAssets card={card} r={r} />
+          </div>
           <div>
             <div className="eyebrow">{detail.ownerLabel || (detail.kind === "photo" ? "Photo template" : "Video template")}</div>
             <h1>{card.label}</h1>

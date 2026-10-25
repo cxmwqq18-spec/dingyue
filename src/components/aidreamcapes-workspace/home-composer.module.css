@@ -43,6 +43,9 @@
 .upload:focus-within { outline: 3px solid var(--composer-accent); outline-offset: 3px; }
 .uploadDisabled { opacity: .55; cursor: not-allowed; }
 .uploadDisabled input { cursor: not-allowed; }
+.stripActive { outline: 2px dashed var(--composer-accent); outline-offset: 4px; border-radius: 10px; }
+.thumbnail[draggable="true"] { cursor: grab; }
+.dropActive { background: color-mix(in srgb, var(--composer-accent) 7%, transparent); box-shadow: inset 0 0 0 2px var(--composer-accent); }
 
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line, #e3e6ec); padding: 10px 11px 10px 13px; background: color-mix(in srgb, var(--canvas, #f3f4f6) 34%, transparent); }
 .controls { display: flex; min-width: 0; flex: 1; align-items: center; flex-wrap: wrap; gap: 7px; }

@@ -13,6 +13,7 @@ import type { WorkspaceImageTool } from "./image-tool-picker";
 import { BatchDraftDialog, type BatchDraftItem } from "./batch-draft-dialog";
 import { startWorkspacePolling } from "./polling";
 import { HomeComposer, type HomeComposerTab, type HomeComposerVideoSelection } from "./home-composer";
+import { FileDropZone, fileKind, moveItem, reorderHandlers, takePasteFiles } from "./file-dnd";
 import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-create-intent";
 import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/aidreamcapes-workspace/handoff";
 import { type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -188,14 +189,14 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [creatingActor, setCreatingActor] = useState(false);
   const [actorDraft, setActorDraft] = useState({ name: "", gender: "female" as "female" | "male", ageRange: "25-30", imageUrl: "", languages: ["en"] as TaskInput["options"]["language"][] });
   const [quotes, setQuotes] = useState<Record<string, ActionQuote>>({});
-  const [imageInput, setImageInput] = useState<{ prompt: string; assetUrls: string[]; aspect: TaskInput["options"]["aspect"]; toolId: WorkspaceImageTool }>({ prompt: initialPreset?.kind === "photo" ? initialPreset.prompt : initialView === "images" ? initialHandoff?.prompt ?? "" : "", assetUrls: [], aspect: initialPreset?.kind === "photo" ? initialPreset.aspect : initialView === "images" ? initialHandoff?.aspect ?? "1:1" : "1:1", toolId: initialPreset?.kind === "photo" ? initialPreset.imageTool : initialImageTool });
+  const [imageInput, setImageInput] = useState<{ prompt: string; assetUrls: string[]; aspect: TaskInput["options"]["aspect"]; toolId: WorkspaceImageTool }>({ prompt: initialPreset?.kind === "photo" ? initialPreset.prompt : initialView === "images" ? initialHandoff?.prompt ?? "" : "", assetUrls: initialPreset?.kind === "photo" ? (initialPreset.referenceImageUrls ?? []).slice(0, 4) : [], aspect: initialPreset?.kind === "photo" ? initialPreset.aspect : initialView === "images" ? initialHandoff?.aspect ?? "1:1" : "1:1", toolId: initialPreset?.kind === "photo" ? initialPreset.imageTool : initialImageTool });
   useImageDraft(siteId, customer?.id, imageInput, setImageInput, initialPreset?.kind === "photo" || (initialView === "images" && Boolean(initialHandoff?.prompt)));
   const [imageQuote, setImageQuote] = useState<ActionQuote | null>(null);
   const [imageResults, setImageResults] = useState<ImageResult>({ jobs: [], assets: [] });
   const [balance, setBalance] = useState(customer?.balance);
   const [tagDrafts, setTagDrafts] = useState<Record<string, string>>({});
-  const [videoReferenceUrls, setVideoReferenceUrls] = useState<string[]>([]);
-  const [videoReferenceFiles, setVideoReferenceFiles] = useState<string[]>([]);
+  const [videoReferenceUrls, setVideoReferenceUrls] = useState<string[]>(initialPreset?.kind === "video" ? (initialPreset.referenceImageUrls ?? []).slice(0, 4) : []);
+  const [videoReferenceFiles, setVideoReferenceFiles] = useState<string[]>(initialPreset?.kind === "video" ? (initialPreset.referenceVideoUrls ?? []).slice(0, 4) : []);
   const [audioReferenceFiles, setAudioReferenceFiles] = useState<string[]>([]);
   useEffect(() => {
     if (composerTab === "AI Image") { setComposerQuote(null); return; }
@@ -656,7 +657,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
-  async function uploadDraftReferences(files: FileList | null) {
+  async function uploadDraftReferences(files: FileList | File[] | null) {
     if (!files?.length) return;
     if (!customer) { continueToLoginWithDraft(); return; }
     const imageField = selectedScene?.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required);
@@ -742,7 +743,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   async function upload(file: File): Promise<string> { return (await uploadAsset(file)).previewUrl; }
 
-  async function uploadField(field: SceneField, files: FileList | null) {
+  async function uploadField(field: SceneField, files: FileList | File[] | null) {
     if (!files?.length || !task) return;
     setBusy(true); setMessage("");
     try {
@@ -848,6 +849,33 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       if (!response.ok || !result.asset?.url) throw new Error(result.message || humanError(result.error) || "Your file could not be uploaded.");
       (kind === "video" ? setVideoReferenceFiles : setAudioReferenceFiles)((current) => [...current, result.asset.url].slice(0, 4));
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  /** 拖拽/粘贴导入：把图片文件加入草稿参考图（尊重场景上限）。 */
+  function importDraftReferenceFiles(files: File[]) {
+    void uploadDraftReferences(files.filter((file) => fileKind(file) === "image"));
+  }
+
+  function moveDraftReference(from: number, to: number) {
+    setDraftReferenceUrls((current) => moveItem(current, from, to));
+  }
+
+  /** 拖拽/粘贴导入：把图片文件加入演讲者工作台的产品参考图。 */
+  function importAvatarProductFiles(files: File[]) {
+    for (const file of files) {
+      if (fileKind(file) !== "image") continue;
+      if (avatarProductImages.length >= 4) break;
+      void uploadAvatarProduct(file);
+    }
+  }
+
+  function moveAvatarProductImage(from: number, to: number) {
+    setAvatarProductImages((current) => moveItem(current, from, to));
+  }
+
+  /** 拖拽/粘贴导入：把图片文件加入任务字段图片列表。 */
+  function importTaskFieldImages(field: SceneField, files: File[]) {
+    void uploadField(field, files.filter((file) => fileKind(file) === "image"));
   }
 
   /** 把任务的提交表单回填到首页作曲家门，用户可再编辑；重新提交会创建一个新视频。 */
@@ -1140,11 +1168,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
-            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
-            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))} onAudioFileMove={(from, to) => setAudioReferenceFiles((current) => moveItem(current, from, to))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
-            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
+            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {importedBriefNotice()}
@@ -1167,11 +1196,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
-            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
-            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))} onAudioFileMove={(from, to) => setAudioReferenceFiles((current) => moveItem(current, from, to))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
-            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
+            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {canBrowseTemplates && templatePickerCallout()}
@@ -1187,11 +1217,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
-            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
-            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))} onAudioFileMove={(from, to) => setAudioReferenceFiles((current) => moveItem(current, from, to))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
-            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
+            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
           />
           {importedBriefNotice()}
@@ -1206,16 +1237,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             <div className={styles.fields}>
               <div className={styles.field}>
                 <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
-                <div className={`${styles.imageStrip} ${styles.draftImageStrip}`}>
+                <FileDropZone className={`${styles.imageStrip} ${styles.draftImageStrip}`} activeClassName={styles.dropActive} disabled={working || !customer} onFiles={importDraftReferenceFiles}>
                   <div className={styles.draftReferenceColumn}>
                     {draftReferenceUrls.length < selectedSceneImageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
                     <span className={styles.draftReferenceCount} aria-label={`Product photos: ${draftReferenceUrls.length} of ${selectedSceneImageLimit}`}>{`${draftReferenceUrls.length} / ${selectedSceneImageLimit} photos`}</span>
                   </div>
-                  {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
-                </div>
+                  {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
+                </FileDropZone>
                 {!customer && <span className={styles.help}>Log in to upload photos and save this draft.</span>}
               </div>
-              <label className={styles.field}><span className={styles.fieldLabel}>Describe your video in one sentence</span><textarea className={styles.input} value={prompt} maxLength={2000} onChange={(event) => setPrompt(event.target.value)} placeholder="What should viewers notice about your product?" /><span className={styles.help}>{prompt.length} / 2000 characters</span></label>
+              <label className={styles.field}><span className={styles.fieldLabel}>Describe your video in one sentence</span><textarea className={styles.input} value={prompt} maxLength={2000} onPaste={(event) => {
+                const files = takePasteFiles(event);
+                if (!files.length || !customer) return;
+                event.preventDefault();
+                importDraftReferenceFiles(files);
+              }} onChange={(event) => setPrompt(event.target.value)} placeholder="What should viewers notice about your product?" /><span className={styles.help}>{prompt.length} / 2000 characters</span></label>
             </div>
             {selectedScene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
             {importedBriefNotice()}
@@ -1288,10 +1324,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             <section className={styles.creatorLeft} aria-label="Presenter and product">
               <div className={styles.creatorProduct}>
                 <div className={styles.creatorProductHeading}><div><span className={styles.creatorLabel}>PRODUCT REFERENCES</span><p>Add a clear photo of the product in your video.</p></div><span>{avatarProductImages.length} / 4</span></div>
-                <div className={styles.creatorProductGrid}>
+                <FileDropZone className={styles.creatorProductGrid} activeClassName={styles.dropActive} disabled={!customer || working} onFiles={importAvatarProductFiles}>
                   {avatarProductImages.length < 4 && <label className={`${styles.creatorUpload} ${!customer || working ? styles.creatorUploadDisabled : ""}`}><Upload size={21} /><strong>{busy ? "Uploading…" : "Add product photo"}</strong><span>PNG or JPG · up to 4 photos</span><input type="file" accept="image/*" disabled={working || !customer} aria-label="Upload product photo" onChange={(event) => { void uploadAvatarProduct(event.target.files?.[0]); event.target.value = ""; }} /></label>}
-                  {avatarProductImages.map((url, index) => <div className={styles.creatorProductImage} key={`${url}-${index}`}><img src={url} alt={`Product reference ${index + 1}`} /><button className={styles.removeImage} disabled={working} aria-label={`Remove product reference ${index + 1}`} onClick={() => setAvatarProductImages((current) => current.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
-                </div>
+                  {avatarProductImages.map((url, index) => <div className={styles.creatorProductImage} key={`${url}-${index}`} {...reorderHandlers(index, working, moveAvatarProductImage)}><img src={url} alt={`Product reference ${index + 1}`} /><button className={styles.removeImage} disabled={working} aria-label={`Remove product reference ${index + 1}`} onClick={() => setAvatarProductImages((current) => current.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
+                </FileDropZone>
                 {!customer && <a className={styles.creatorLogin} href={loginHref}>Log in to upload a product photo</a>}
               </div>
               <div className={styles.creatorPortrait}>
@@ -1309,7 +1345,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <div className={styles.creatorEditorHeader}><div><span className={styles.creatorLabel}>SCRIPT & TALKING POINTS</span><span className={styles.creatorHelp}><span>Edit the exact dialogue in your storyboard before generation.</span></span></div><span className={styles.creatorTab}><span className={styles.creatorTabDot} />Script</span></div>
               <label className={styles.creatorScriptField}>
                 <span className={styles.srOnly}>Script and key talking points</span>
-                <textarea value={avatarScript} maxLength={2000} disabled={working} onChange={(event) => setAvatarScript(event.target.value)} placeholder="Write a product script or list verified points for the presenter to cover…" />
+                <textarea value={avatarScript} maxLength={2000} disabled={working} onPaste={(event) => {
+                  const files = takePasteFiles(event);
+                  if (!files.length || !customer || working) return;
+                  event.preventDefault();
+                  importAvatarProductFiles(files);
+                }} onChange={(event) => setAvatarScript(event.target.value)} placeholder="Write a product script or list verified points for the presenter to cover…" />
               </label>
               <div className={styles.creatorScriptFooter}><span>Keep claims accurate and based on your product details.</span><span>{avatarScript.length} / 2000</span></div>
               {avatarModelUnavailable && <div className={`${styles.notice} ${styles.creatorModelNotice}`}>Presenter speech is not available with the currently connected video models.</div>}
@@ -1341,11 +1382,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
             products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
-            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))}
-            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))}
+            onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
+            videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
+            audioReferenceFiles={audioReferenceFiles} onAudioFileUpload={(file) => void uploadReferenceFile(file, "audio")} onAudioFileRemove={(index) => setAudioReferenceFiles((current) => current.filter((_, i) => i !== index))} onAudioFileMove={(from, to) => setAudioReferenceFiles((current) => moveItem(current, from, to))}
             onVideoReferenceRemove={(index) => setVideoReferenceUrls((current) => current.filter((_, position) => position !== index))}
             imageInput={imageInput} onImageInputChange={setImageInput} onImageReferenceUpload={(file) => void uploadImageReference(file)}
-            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))}
+            onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onImageGenerate={() => void generateImage()} imageGenerateDisabled={!customer || !imageQuote?.available}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={busy} canUpload={Boolean(customer)} loginHref={loginHref}
           />
@@ -1464,23 +1506,29 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || (credits != null && balance != null && balance < credits)} onClick={() => void runConfirmedGeneration()}>Generate now</button>
       </div>
     </section></div>; })()}
-    {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
+    {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><FileDropZone activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadProduct(image); }}><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></FileDropZone></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
     {batchScene && <BatchDraftDialog open={batchOpen} initialSceneId={batchScene.id} initialInput={composerInput(batchScene)} scenes={catalog?.scenes.map((item) => ({ id: item.id, label: item.name })) ?? []} disabled={busy} onClose={() => setBatchOpen(false)} onSubmit={(items) => void createBatch(items)} />}
 
   </div>;
 
   function selectTemplate(option: WorkspaceTemplateOption) {
+    // Every asset the template was built from opens in the composer's
+    // reference slots; its finished example video never does.
+    const referenceImages = (option.referenceImageUrls ?? []).slice(0, 4);
+    const referenceVideos = (option.referenceVideoUrls ?? []).slice(0, 4);
     if (option.kind === "video") {
       setView("video");
       setComposerTab("AI Video");
       setPrompt(option.prompt);
       setComposerAspect(option.aspect);
       setComposerDuration(option.duration);
+      setVideoReferenceUrls(referenceImages);
+      setVideoReferenceFiles(referenceVideos);
     } else {
       setView("images");
       setComposerTab("AI Image");
-      setImageInput((current) => ({ ...current, prompt: option.prompt, aspect: option.aspect, toolId: option.imageTool }));
+      setImageInput((current) => ({ ...current, prompt: option.prompt, aspect: option.aspect, toolId: option.imageTool, assetUrls: referenceImages }));
     }
     setPresets((current) => ({ ...current, [option.kind]: option }));
     setPresetSceneId(option.sceneId);
@@ -1607,7 +1655,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       <div className={styles.sectionHead} style={{ marginTop: 24 }}><h3>My avatars</h3>{customer ? <button className={styles.button} disabled={working} onClick={() => setCreatingActor(!creatingActor)}><Plus size={15} /><span>Use my own</span></button> : <a className={styles.button} href={loginHref}>Log in to add an avatar</a>}</div>
       {custom.length ? group(custom) : <p className={styles.help}>{actorSearch || actorGenderFilter !== "all" ? "No avatars match this search and gender." : "Add a clear portrait to use your own presenter."}</p>}
       {creatingActor && customer && <form className={styles.formSection} style={{ marginTop: 18 }} onSubmit={(event) => void createActor(event)}><h2>Create your avatar</h2><p>Add a clear face photo. Its voice profile will stay with this avatar.</p><div className={styles.fields}>
-        <div className={styles.field}><span className={styles.fieldLabel}>Portrait photo</span><div className={styles.imageStrip}><label className={styles.upload}><Upload size={20} /><span>{busy ? "Uploading…" : actorDraft.imageUrl ? "Replace portrait" : "Add portrait"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload avatar portrait" onChange={(event) => { void uploadActor(event.target.files?.[0]); event.target.value = ""; }} /></label>{actorDraft.imageUrl && <div className={styles.imageSlot}><img loading="lazy" decoding="async" src={actorDraft.imageUrl} alt="Your avatar portrait" /></div>}</div></div>
+        <div className={styles.field}><span className={styles.fieldLabel}>Portrait photo</span><FileDropZone className={styles.imageStrip} activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadActor(image); }}><label className={styles.upload}><Upload size={20} /><span>{busy ? "Uploading…" : actorDraft.imageUrl ? "Replace portrait" : "Add portrait"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload avatar portrait" onChange={(event) => { void uploadActor(event.target.files?.[0]); event.target.value = ""; }} /></label>{actorDraft.imageUrl && <div className={styles.imageSlot}><img loading="lazy" decoding="async" src={actorDraft.imageUrl} alt="Your avatar portrait" /></div>}</FileDropZone></div>
         <label className={styles.field}><span className={styles.fieldLabel}>Name</span><input className={styles.input} required maxLength={80} disabled={busy} value={actorDraft.name} onChange={(event) => setActorDraft((current) => ({ ...current, name: event.target.value }))} /></label>
         <div className={styles.parameterGrid}><label className={styles.field}><span className={styles.fieldLabel}>Gender</span><select className={styles.input} value={actorDraft.gender} disabled={busy} onChange={(event) => setActorDraft((current) => ({ ...current, gender: event.target.value as "female" | "male" }))}><option value="female">Female</option><option value="male">Male</option></select></label><label className={styles.field}><span className={styles.fieldLabel}>Age range</span><select className={styles.input} disabled={busy} value={actorDraft.ageRange} onChange={(event) => setActorDraft((current) => ({ ...current, ageRange: event.target.value }))}>{["18-24", "25-30", "30-35", "35-45", "45-55", "55-65", "65-75"].map((value) => <option key={value}>{value}</option>)}</select></label></div>
         <div className={styles.field}><span className={styles.fieldLabel}>Languages</span><div className={styles.choices}>{catalog?.languages.map((language) => <button key={language.value} type="button" disabled={busy} className={`${styles.choice} ${actorDraft.languages.includes(language.value) ? styles.selected : ""}`} onClick={() => setActorDraft((current) => ({ ...current, languages: current.languages.includes(language.value) ? current.languages.filter((item) => item !== language.value) : [...current.languages, language.value] }))}>{language.label}</button>)}</div></div>
@@ -1620,7 +1668,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!task) return null;
     const value = task.input.fields[field.id] ?? "";
     const setValue = (next: string | string[]) => updateInput((input) => ({ ...input, fields: { ...input.fields, [field.id]: next } }));
-    return <div key={field.id} className={styles.field}><span className={styles.fieldLabel}><span>{field.label}</span>{field.required && <span className={styles.required}>*</span>}</span><p className={styles.help}>{field.hint}</p>{field.type === "images" ? <div className={styles.imageStrip}>{(task.input.images[field.id] ?? []).map((url, index) => <div key={`${url}-${index}`} className={styles.imageSlot}><img loading="lazy" decoding="async" src={url} alt={`${field.label} ${index + 1}`} /><span className={styles.badge}>{index + 1}</span><button className={styles.removeImage} disabled={working} aria-label={`Remove ${field.label} ${index + 1}`} onClick={() => updateInput((input) => ({ ...input, images: { ...input.images, [field.id]: input.images[field.id].filter((_, current) => current !== index) } }))}><X size={12} /></button><p>{field.refKind ? refLabels[field.refKind] : field.label}</p></div>)}{(task.input.images[field.id]?.length ?? 0) < (field.max ?? 4) && <label className={styles.upload}><Upload size={21} /><span>{busy ? "Uploading…" : "Add image"}</span><input aria-label={`Upload ${field.label}`} accept="image/*" type="file" multiple disabled={editingDisabled} onChange={(event) => { void uploadField(field, event.target.files); event.target.value = ""; }} /></label>}</div> : field.type === "textarea" ? <><textarea className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} maxLength={field.max ?? 2000} onChange={(event) => setValue(event.target.value)} /><span className={styles.help}><span>{String(value).length}</span><span>{field.max ? ` / ${field.max}` : ""}</span><span> characters</span></span></> : field.type === "select" ? <select className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} onChange={(event) => setValue(event.target.value)}><option value="">Choose an option</option>{field.options?.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select> : field.type === "tags" ? <><div className={styles.choices}>{field.options?.map((option) => { const selected = Array.isArray(value) && value.includes(option.value); return <button key={option.value} className={`${styles.choice} ${selected ? styles.selected : ""}`} disabled={editingDisabled} onClick={() => setValue(selected ? (value as string[]).filter((item) => item !== option.value) : [...(Array.isArray(value) ? value : []), option.value])}>{option.label}</button>; })}</div><input className={styles.input} aria-label={`${field.label} custom tags`} disabled={editingDisabled} value={tagDrafts[`${task.taskId}:${field.id}`] ?? (Array.isArray(value) ? value.filter((item) => !field.options?.some((option) => option.value === item)).join(", ") : "")} placeholder="Add your own, separated by commas" onChange={(event) => { setTagDrafts((current) => ({ ...current, [`${task.taskId}:${field.id}`]: event.target.value })); setValue([...(Array.isArray(value) ? value.filter((item) => field.options?.some((option) => option.value === item)) : []), ...event.target.value.split(/[,\n]/).map((item) => item.trim()).filter(Boolean)]); }} /></> : <input className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} maxLength={field.max ?? 2000} onChange={(event) => setValue(event.target.value)} />}</div>;
+    return <div key={field.id} className={styles.field}><span className={styles.fieldLabel}><span>{field.label}</span>{field.required && <span className={styles.required}>*</span>}</span><p className={styles.help}>{field.hint}</p>{field.type === "images" ? <FileDropZone className={styles.imageStrip} activeClassName={styles.dropActive} disabled={working || editingDisabled} onFiles={(files) => importTaskFieldImages(field, files)}>{(task.input.images[field.id] ?? []).map((url, index) => <div key={`${url}-${index}`} className={styles.imageSlot} {...reorderHandlers(index, working || editingDisabled, (from, to) => updateInput((input) => ({ ...input, images: { ...input.images, [field.id]: moveItem(input.images[field.id] ?? [], from, to) } })))}><img loading="lazy" decoding="async" src={url} alt={`${field.label} ${index + 1}`} /><span className={styles.badge}>{index + 1}</span><button className={styles.removeImage} disabled={working} aria-label={`Remove ${field.label} ${index + 1}`} onClick={() => updateInput((input) => ({ ...input, images: { ...input.images, [field.id]: input.images[field.id].filter((_, current) => current !== index) } }))}><X size={12} /></button><p>{field.refKind ? refLabels[field.refKind] : field.label}</p></div>)}{(task.input.images[field.id]?.length ?? 0) < (field.max ?? 4) && <label className={styles.upload}><Upload size={21} /><span>{busy ? "Uploading…" : "Add image"}</span><input aria-label={`Upload ${field.label}`} accept="image/*" type="file" multiple disabled={editingDisabled} onChange={(event) => { void uploadField(field, event.target.files); event.target.value = ""; }} /></label>}</FileDropZone> : field.type === "textarea" ? <><textarea className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} maxLength={field.max ?? 2000} onChange={(event) => setValue(event.target.value)} /><span className={styles.help}><span>{String(value).length}</span><span>{field.max ? ` / ${field.max}` : ""}</span><span> characters</span></span></> : field.type === "select" ? <select className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} onChange={(event) => setValue(event.target.value)}><option value="">Choose an option</option>{field.options?.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select> : field.type === "tags" ? <><div className={styles.choices}>{field.options?.map((option) => { const selected = Array.isArray(value) && value.includes(option.value); return <button key={option.value} className={`${styles.choice} ${selected ? styles.selected : ""}`} disabled={editingDisabled} onClick={() => setValue(selected ? (value as string[]).filter((item) => item !== option.value) : [...(Array.isArray(value) ? value : []), option.value])}>{option.label}</button>; })}</div><input className={styles.input} aria-label={`${field.label} custom tags`} disabled={editingDisabled} value={tagDrafts[`${task.taskId}:${field.id}`] ?? (Array.isArray(value) ? value.filter((item) => !field.options?.some((option) => option.value === item)).join(", ") : "")} placeholder="Add your own, separated by commas" onChange={(event) => { setTagDrafts((current) => ({ ...current, [`${task.taskId}:${field.id}`]: event.target.value })); setValue([...(Array.isArray(value) ? value.filter((item) => field.options?.some((option) => option.value === item)) : []), ...event.target.value.split(/[,\n]/).map((item) => item.trim()).filter(Boolean)]); }} /></> : <input className={styles.input} aria-label={field.label} disabled={editingDisabled} value={String(value)} maxLength={field.max ?? 2000} onChange={(event) => setValue(event.target.value)} />}</div>;
   }
 
   function renderShot(shot: StoryboardShot, index: number) {

@@ -25,6 +25,39 @@ function stringList(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string" && Boolean(item.trim())) : [];
 }
 
+/** Explicit reference assets a card may list; `video` (the result) is never read here. */
+function referenceImages(value: unknown): { src: string; alt?: string }[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  const images: { src: string; alt?: string }[] = [];
+  for (const item of value) {
+    const entry = record(item);
+    const src = typeof item === "string" ? str(item) : str(entry?.src);
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    const alt = typeof item === "string" ? undefined : str(entry?.alt);
+    images.push({ src, ...(alt ? { alt } : {}) });
+  }
+  return images;
+}
+
+function referenceVideos(value: unknown): { src: string; poster?: { src: string; alt?: string } }[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  const videos: { src: string; poster?: { src: string; alt?: string } }[] = [];
+  for (const item of value) {
+    const entry = record(item);
+    const src = typeof item === "string" ? str(item) : str(entry?.src);
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    const poster = record(entry?.poster);
+    const posterSrc = str(poster?.src);
+    const posterAlt = str(poster?.alt);
+    videos.push({ src, ...(posterSrc ? { poster: { src: posterSrc, ...(posterAlt ? { alt: posterAlt } : {}) } } : {}) });
+  }
+  return videos;
+}
+
 /**
  * Cards that can own a public detail page:
  * template definition cards, picker cards, workspace cases and legacy example
@@ -90,6 +123,8 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
   const posterAlt = str(poster?.alt);
   const videoWidth = num(video?.width);
   const videoHeight = num(video?.height);
+  const refImages = referenceImages(value.referenceImages ?? value.referenceImageUrls ?? value.referenceAssets);
+  const refVideos = referenceVideos(value.referenceVideos ?? value.referenceVideoUrls);
   return {
     kind,
     label,
@@ -117,7 +152,9 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
             ...(videoHeight ? { height: videoHeight } : {})
           }
         }
-      : {})
+      : {}),
+    ...(refImages.length ? { referenceImages: refImages } : {}),
+    ...(refVideos.length ? { referenceVideos: refVideos } : {})
   };
 }
 

@@ -1,9 +1,11 @@
 "use client";
 
 import { ArrowRight, ChevronDown, ImageIcon, Monitor, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
+import { fileKind, reorderHandlers, takePasteFiles, useFileDropZone, type FileKind } from "./file-dnd";
 import { WorkspaceSelect } from "./workspace-select";
 import styles from "./home-composer.module.css";
 
@@ -35,16 +37,20 @@ export interface HomeComposerProps {
   videoReferenceUrls: string[];
   onVideoReferenceUpload: (file: File) => void;
   onVideoReferenceRemove: (index: number) => void;
+  onVideoReferenceMove?: (from: number, to: number) => void;
   videoReferenceFiles?: string[];
   onVideoFileUpload?: (file: File) => void;
   onVideoFileRemove?: (index: number) => void;
+  onVideoFileMove?: (from: number, to: number) => void;
   audioReferenceFiles?: string[];
   onAudioFileUpload?: (file: File) => void;
   onAudioFileRemove?: (index: number) => void;
+  onAudioFileMove?: (from: number, to: number) => void;
   imageInput: HomeComposerImageInput;
   onImageInputChange: (input: HomeComposerImageInput) => void;
   onImageReferenceUpload: (file: File) => void;
   onImageReferenceRemove: (index: number) => void;
+  onImageReferenceMove?: (from: number, to: number) => void;
   onImageGenerate?: () => void;
   imageGenerateDisabled?: boolean;
   imageGenerateLabel?: string;
@@ -78,13 +84,20 @@ export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, 
   return { model, aspects, durations, resolutions, selectedAspect, selectedDuration, selectedResolution };
 }
 
-function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind, accept = "image/*", addLabel = "Add photo", limitLabel = "Photo limit", countNoun = "photos" }: {
+function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove, kind, accept = "image/*", addLabel = "Add photo", limitLabel = "Photo limit", countNoun = "photos" }: {
   urls: string[]; max: number; disabled: boolean; canUpload: boolean;
-  onUpload: (file: File) => void; onRemove: (index: number) => void; kind: "video" | "image";
+  onUpload: (file: File) => void; onRemove: (index: number) => void; onMove?: (from: number, to: number) => void; kind: "video" | "image";
   accept?: string; addLabel?: string; limitLabel?: string; countNoun?: string;
 }) {
+  const dropKind: FileKind = accept.startsWith("audio") ? "audio" : accept.startsWith("video") ? "video" : "image";
+  const { active: dropActive, dropProps } = useFileDropZone((files) => {
+    for (const file of files) {
+      if (urls.length >= max) break;
+      if (fileKind(file) === dropKind) onUpload(file);
+    }
+  }, disabled || !canUpload);
   return <div className={`${styles.references} ${kind === "image" ? styles.imageReferences : ""}`}>
-    <div className={styles.referenceStrip}>
+    <div className={`${styles.referenceStrip} ${dropActive ? styles.stripActive : ""}`} {...dropProps}>
       <div className={styles.referenceUploadColumn}>
         {urls.length < max ? <label className={`${styles.upload} ${!canUpload || disabled ? styles.uploadDisabled : ""}`}>
           <Upload size={19} aria-hidden="true" /><span>{addLabel}</span>
@@ -94,7 +107,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind, 
         </label> : <div className={`${styles.upload} ${styles.uploadFull}`} aria-hidden="true"><ImageIcon size={19} /><span>{limitLabel}</span></div>}
         <span className={styles.referenceCount} aria-label={`${kind === "video" ? "Video" : "Image"} references: ${urls.length} of ${max}`}>{`${urls.length} / ${max} ${countNoun}`}</span>
       </div>
-      {urls.map((url, index) => <div key={`${url}-${index}`} className={styles.thumbnail}>
+      {urls.map((url, index) => <div key={`${url}-${index}`} className={styles.thumbnail} {...(onMove && !disabled ? reorderHandlers(index, disabled, onMove) : {})}>
         {/* Customer assets may use private authenticated URLs. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={url} alt={`${kind === "video" ? "Video" : "Image"} reference ${index + 1}`} decoding="async" loading="lazy" />
@@ -104,7 +117,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, kind, 
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
@@ -127,6 +140,27 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
   }));
   const aspectOptions = aspects.map((value) => ({ value, label: value }));
   const durationOptions = durations.map((item) => ({ value: String(item.value), label: item.label }));
+  const videoFileMax = model?.videoReferenceMax ?? 0;
+  const audioFileMax = model?.audioReferenceMax ?? 0;
+  const imageRefMax = catalog?.imageReferenceMax ?? 4;
+  const importEnabled = !disabled && canUpload && (videoMode || imageMode);
+
+  /** Route dropped or pasted files to the matching reference slot (photo / video / audio). */
+  const importComposerFiles = useCallback((files: File[]) => {
+    if (!importEnabled) return;
+    for (const file of files) {
+      const kind = fileKind(file);
+      if (kind === "video") {
+        if (videoMode && videoFileMax > 0 && onVideoFileUpload && videoReferenceFiles.length < videoFileMax) onVideoFileUpload(file);
+      } else if (kind === "audio") {
+        if (videoMode && audioFileMax > 0 && onAudioFileUpload && audioReferenceFiles.length < audioFileMax) onAudioFileUpload(file);
+      } else if (kind === "image") {
+        if (imageMode) { if (imageInput.assetUrls.length < imageRefMax) onImageReferenceUpload(file); }
+        else if (videoMode && videoReferenceUrls.length < referenceLimit) onVideoReferenceUpload(file);
+      }
+    }
+  }, [importEnabled, imageMode, videoMode, videoFileMax, audioFileMax, imageRefMax, referenceLimit, onVideoReferenceUpload, onVideoFileUpload, onAudioFileUpload, onImageReferenceUpload, videoReferenceFiles.length, audioReferenceFiles.length, imageInput.assetUrls.length, videoReferenceUrls.length]);
+  const { active: promptDropActive, dropProps: promptDropProps } = useFileDropZone(importComposerFiles, !importEnabled);
 
   return <section className={styles.composer} aria-label="Create your next project">
     {showTabs && <div className={styles.tabs} role="tablist" aria-label="Creation tools">
@@ -140,14 +174,19 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
       }}><Icon size={17} aria-hidden="true" /><span>{tabs[index].label}</span></button>)}
     </div>}
     <div id={showTabs ? "home-composer-panel" : undefined} role={showTabs ? "tabpanel" : undefined} aria-labelledby={showTabs ? `home-tab-${tabs.findIndex((item) => item.id === activeTab)}` : undefined}>
-      <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""}`}>
+      <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""} ${promptDropActive ? styles.dropActive : ""}`} {...promptDropProps}>
         <div className={styles.referenceRow}>
-          {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} />}
-          {videoMode && (model?.videoReferenceMax ?? 0) > 0 && onVideoFileUpload && onVideoFileRemove && <References kind="video" urls={videoReferenceFiles} max={model!.videoReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onVideoFileUpload} onRemove={onVideoFileRemove} accept="video/mp4,video/quicktime,video/webm" addLabel="Add video" limitLabel="Video limit" countNoun="videos" />}
-          {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="video" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
-          {imageMode && <References kind="image" urls={imageInput.assetUrls} max={catalog?.imageReferenceMax ?? 4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} />}
+          {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} onMove={onVideoReferenceMove} />}
+          {videoMode && (model?.videoReferenceMax ?? 0) > 0 && onVideoFileUpload && onVideoFileRemove && <References kind="video" urls={videoReferenceFiles} max={model!.videoReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onVideoFileUpload} onRemove={onVideoFileRemove} onMove={onVideoFileMove} accept="video/mp4,video/quicktime,video/webm" addLabel="Add video" limitLabel="Video limit" countNoun="videos" />}
+          {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="video" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} onMove={onAudioFileMove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
+          {imageMode && <References kind="image" urls={imageInput.assetUrls} max={catalog?.imageReferenceMax ?? 4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} onMove={onImageReferenceMove} />}
         </div>
-        <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={imageMode ? 4000 : 2000} />
+        <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} onPaste={(event) => {
+          const files = takePasteFiles(event);
+          if (!importEnabled || !files.length) return;
+          event.preventDefault();
+          importComposerFiles(files);
+        }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={imageMode ? 4000 : 2000} />
         <span className={styles.characterCount}>{`${promptValue.length} / ${imageMode ? "4000" : "2000"}`}</span>
       </div>
       <div className={styles.footer}>

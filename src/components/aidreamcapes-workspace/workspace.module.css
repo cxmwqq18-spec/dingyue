@@ -132,6 +132,8 @@ textarea.input { resize: vertical; min-height: 100px; }
 .parameterGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .imageStrip { display: flex; gap: 9px; flex-wrap: wrap; }
 .imageStrip > .upload { order: -1; }
+.dropActive { outline: 2px dashed var(--purple, #6035ff); outline-offset: 3px; border-radius: 10px; }
+.imageSlot[draggable="true"], .creatorProductImage[draggable="true"] { cursor: grab; }
 .draftImageStrip { align-items: flex-start; gap: 9px; }
 .draftReferenceColumn { display: flex; width: 76px; flex: 0 0 76px; flex-direction: column; align-items: center; gap: 5px; }
 .draftReferenceCount { width: 100%; color: var(--muted); font-size: 10px; line-height: 1.25; text-align: center; white-space: nowrap; }

@@ -28,6 +28,26 @@ function safePreviewPath(value: string): boolean {
   } catch { return false; }
 }
 
+/**
+ * Public render assets a card was built from. A card may list them explicitly
+ * (`referenceImages`, `referenceVideos`); the card's own image is the visible
+ * asset every card carries. The finished example video is never a reference,
+ * so `card.video` is deliberately not read here.
+ */
+function cardReferenceUrls(card: RecordValue, keys: readonly string[]): string[] {
+  const urls: string[] = [];
+  for (const key of keys) {
+    const value = card[key];
+    if (!Array.isArray(value)) continue;
+    for (const item of value) {
+      const candidate = typeof item === "string" ? item : record(item)?.src;
+      const src = typeof candidate === "string" ? candidate.trim() : "";
+      if (src && safePreviewPath(src)) urls.push(src);
+    }
+  }
+  return urls;
+}
+
 function sceneFromCard(card: RecordValue, href: URL, prompt: string, label: string, tool: string): SceneId {
   if (typeof card.sceneId === "string" && SCENES.has(card.sceneId as SceneId)) return card.sceneId as SceneId;
   const explicitTool = [card.videoTool, card.tool, tool, href.searchParams.get("tool")].filter((value): value is string => typeof value === "string").join(" ").toLowerCase();
@@ -118,6 +138,10 @@ export function presetFromCard(page: { updatedAt: Date }, sourcePage: string, va
   if (!["https:", "http:"].includes(href.protocol) || href.username || href.password || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || (href.pathname !== "/app/create" && staticTarget?.kind !== "tool")) return undefined;
   const rawTool = typeof card.tool === "string" ? card.tool : staticTarget?.kind === "tool" ? staticTarget.tool : href.searchParams.get("tool") ?? "";
   const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
+  // The example's own image is the asset a visitor sees on the card; explicit
+  // reference lists extend it. `card.video` (the finished result) is excluded.
+  const referenceImageUrls = [...new Set([src, ...cardReferenceUrls(card, ["referenceImages", "referenceImageUrls", "referenceAssets"])])];
+  const referenceVideoUrls = [...new Set(cardReferenceUrls(card, ["referenceVideos", "referenceVideoUrls"]))];
   return {
     sourcePage,
     presetId: pickerPresetId(presetCard as unknown as PickerPresetCard),
@@ -132,6 +156,8 @@ export function presetFromCard(page: { updatedAt: Date }, sourcePage: string, va
     duration: cardDuration(href, card),
     imageTool,
     sourceUpdatedAt: page.updatedAt.toISOString(),
+    ...(referenceImageUrls.length ? { referenceImageUrls: referenceImageUrls.slice(0, 4) } : {}),
+    ...(referenceVideoUrls.length ? { referenceVideoUrls: referenceVideoUrls.slice(0, 4) } : {}),
   };
 }
 

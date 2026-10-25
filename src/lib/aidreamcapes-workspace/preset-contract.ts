@@ -26,6 +26,13 @@ export interface WorkspacePreset extends WorkspacePresetRequest {
   duration: TaskInput["options"]["duration"];
   imageTool: WorkspaceImageTool;
   sourceUpdatedAt: string;
+  /**
+   * Public render assets the example was built from. They open in the
+   * composer's reference slots so a customer continues from the same inputs.
+   * The example's finished video is never carried here.
+   */
+  referenceImageUrls?: string[];
+  referenceVideoUrls?: string[];
 }
 export interface WorkspaceTemplateOption extends WorkspacePreset {
   imageAlt: string;

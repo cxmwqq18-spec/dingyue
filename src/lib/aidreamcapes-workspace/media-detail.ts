@@ -46,7 +46,15 @@ export type MediaDetailCard = {
   placement?: string[];
   image: { src: string; alt?: string; w?: number; h?: number };
   video?: { src: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
+  /** Assets the example was built from, when the card lists them explicitly. */
+  referenceImages?: { src: string; alt?: string }[];
+  referenceVideos?: { src: string; poster?: { src: string; alt?: string } }[];
 };
+
+export type MediaDetailReferenceImage = { src: string; alt?: string };
+export type MediaDetailReferenceVideo = { src: string; poster?: string; alt?: string };
+export type MediaDetailParameter = { label: string; value: string };
+export type MediaDetailReferences = { images: MediaDetailReferenceImage[]; videos: MediaDetailReferenceVideo[] };
 
 export function mediaDetailPath(kind: MediaDetailKind, slug: string | undefined): string | undefined {
   if (!slug || !MEDIA_DETAIL_SLUG_PATTERN.test(slug)) return undefined;
@@ -121,6 +129,43 @@ export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "li
   const intro = mediaDetailIntro(card);
   const label = mediaDetailTitle(card);
   return (intro ? `${label}: ${intro}` : label).slice(0, 300);
+}
+
+/**
+ * The assets this result was generated from. The card's own image is the
+ * visible example asset; any explicitly listed references extend it. The
+ * finished example video (`card.video`) is the result, never a reference, so
+ * it is excluded here.
+ */
+export function mediaDetailReferences(card: MediaDetailCard): MediaDetailReferences {
+  const images: MediaDetailReferenceImage[] = [];
+  const seen = new Set<string>();
+  const addImage = (src: string | undefined, alt: string | undefined) => {
+    const value = (src ?? "").trim();
+    if (!value || seen.has(value)) return;
+    seen.add(value);
+    images.push({ src: value, ...(alt ? { alt } : {}) });
+  };
+  addImage(card.image.src, card.image.alt);
+  for (const image of card.referenceImages ?? []) addImage(image.src, image.alt);
+  const videos: MediaDetailReferenceVideo[] = [];
+  const seenVideos = new Set<string>();
+  for (const video of card.referenceVideos ?? []) {
+    const src = video.src.trim();
+    if (!src || seenVideos.has(src)) continue;
+    seenVideos.add(src);
+    videos.push({ src, ...(video.poster?.src ? { poster: video.poster.src } : {}), ...(video.poster?.alt ? { alt: video.poster.alt } : {}) });
+  }
+  return { images: images.slice(0, 4), videos: videos.slice(0, 4) };
+}
+
+/** The generation settings this result was produced with. */
+export function mediaDetailParameters(card: Pick<MediaDetailCard, "aspect" | "duration" | "tool">): MediaDetailParameter[] {
+  const parameters: MediaDetailParameter[] = [];
+  if (card.aspect) parameters.push({ label: "Format", value: card.aspect });
+  if (card.duration) parameters.push({ label: "Length", value: `${card.duration}s` });
+  if (card.tool) parameters.push({ label: "Tool", value: card.tool.replace(/-/g, " ") });
+  return parameters;
 }
 
 /** Breadcrumb trail for a detail page: home -> owning directory -> the card. */
