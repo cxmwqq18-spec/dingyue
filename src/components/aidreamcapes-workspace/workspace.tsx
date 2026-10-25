@@ -20,6 +20,8 @@ import { workspaceHandoffFromSearchParams, type WorkspaceHandoff } from "@/lib/a
 import { type WorkspacePreset, type WorkspaceTemplateGallery, type WorkspaceTemplateOption } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { staticCreateSearchFromPath, staticViewHref } from "@/lib/aidreamcapes-workspace/static-routes";
 import { WorkspaceEntryBehavior } from "./entry-behavior";
+import { LibraryTaskCard, type LibraryCardMedia } from "./library-task-card";
+import { LibraryReferenceReel, type LibraryReelItem } from "./library-reference-reel";
 import { WorkspaceSelect } from "./workspace-select";
 import { entryCookieName, readWorkspaceEntry } from "@/lib/aidreamcapes-workspace/entry-transfer";
 const EmbeddedInspirations = dynamic(() => import("./inspirations-embedded").then(module => module.EmbeddedInspirations), { loading: () => <p role="status">Loading inspirations…</p> });
@@ -113,6 +115,52 @@ function mediaFileName(url: string, fallback: string): string {
 }
 function imageEntries(task: WorkspaceTask, scene?: SceneSchema): { kind: RefKind; url: string; label: string }[] {
   return (scene?.sections.flatMap((section) => section.fields) ?? []).flatMap((field) => field.type === "images" && field.refKind ? (task.input.images[field.id] ?? []).map((url) => ({ kind: field.refKind!, url, label: field.label })) : []);
+}
+/**
+ * Every frame a library card can show: the finished video first, then one
+ * entry per reference image, in the order the task stored them.
+ */
+function taskMedia(task: WorkspaceTask, scene?: SceneSchema): LibraryCardMedia[] {
+  const refs = imageEntries(task, scene);
+  const fallback = refs.length ? [] : Object.entries(task.input.images).flatMap(([key, urls]) => urls.map((url) => ({ kind: "product" as RefKind, url, label: key })));
+  const seen = new Set<string>();
+  const media: LibraryCardMedia[] = [];
+  if (task.video?.finalUrl) {
+    media.push({ kind: "video", url: task.video.finalUrl, label: "Video" });
+    seen.add(task.video.finalUrl);
+  }
+  // Clips the provider already finished are the customer's video assets even
+  // before the final film is rendered, so the library has to show them.
+  for (const shot of task.storyboard?.shots ?? []) {
+    const version = shot.versions?.find((item) => item.vid === shot.curVer) ?? shot.versions?.at(-1);
+    if (!version?.clipUrl || version.status !== "done" || seen.has(version.clipUrl)) continue;
+    seen.add(version.clipUrl);
+    media.push({ kind: "video", url: version.clipUrl, label: `Shot ${media.filter((item) => item.kind === "video").length + 1}` });
+  }
+  for (const ref of [...refs, ...fallback]) {
+    if (!ref.url || seen.has(ref.url)) continue;
+    seen.add(ref.url);
+    media.push({ kind: "image", url: ref.url, label: refLabels[ref.kind] ?? ref.label });
+  }
+  return media;
+}
+/**
+ * Card copy comes from the customer's own brief, so it can carry block
+ * headings from a long brief. Keep the first readable sentence and drop the
+ * structural labels.
+ */
+function cardDescription(value: string): string {
+  const text = value.replace(/【[^】]*】/g, " ").replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  const firstSentence = text.match(/^.{40,}?[.!?](?=\s|$)/)?.[0] ?? text;
+  const trimmed = firstSentence.trim();
+  return trimmed.length > 170 ? `${trimmed.slice(0, 167).trimEnd()}…` : trimmed;
+}
+/** A date that renders the same on the server and in the browser. */
+function shortDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", timeZone: "UTC" }).format(date);
 }
 function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<WorkspaceTask["productBrief"]> {
   const field = <T,>(value: { value: T; sourceUrl: string; sourceLabel: string; confidence: "high" | "medium" | "low" } | null) => value ? {
@@ -507,6 +555,28 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       } catch (error) { if (!signal.aborted) setMessage((error as Error).message); }
     }, 5000, true);
   }, [customerId, request, view]);
+
+  // Keep the library live while a clip is still with the provider, so a
+  // finished or rejected shot leaves "Working" without a manual reload.
+  const libraryInFlight = view === "library" && tasks.some((item) =>
+    item.operation?.state === "pending" || item.operation?.state === "run" ||
+    (item.storyboard?.shots ?? []).some((shot) =>
+      Boolean(shot.compositeGenerationJobId) && (shot.compositeStatus === "run" || shot.compositeStatus === "pending") ||
+      (shot.versions ?? []).some((version) => Boolean(version.generationJobId) && (version.status === "run" || version.status === "pending"))
+    )
+  );
+  useEffect(() => {
+    if (!customerId || !libraryInFlight) return;
+    return startWorkspacePolling(async (signal) => {
+      try {
+        const result = await request<{ tasks: WorkspaceTask[] }>("/tasks", { signal });
+        if (!signal.aborted) setTasks((current) => result.tasks.map((item) => {
+          const saved = current.find((entry) => entry.taskId === item.taskId);
+          return saved && saved.revision > item.revision ? saved : item;
+        }));
+      } catch { /* Library refresh should not interrupt browsing. */ }
+    }, 4000);
+  }, [customerId, libraryInFlight, request]);
 
   useEffect(() => {
     if (!customerId) return;
@@ -1138,6 +1208,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
   }, [templateCategories, templateCategoryFilter]);
 
+  // The library list and the reference reel above it share one filtered set,
+  // so a reel frame always belongs to a card that is visible right below.
+  const libraryItems = tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed"));
+  const libraryMedia = new Map(libraryItems.map((item) => [item.taskId, taskMedia(item, catalog?.scenes.find((entry) => entry.id === item.sceneId))]));
+  const libraryReelItems: LibraryReelItem[] = libraryItems.flatMap((item) => {
+    const media = libraryMedia.get(item.taskId) ?? [];
+    const images = media.filter((entry) => entry.kind === "image");
+    return images.map((entry, index) => ({
+      id: `${item.taskId}:${index}:${entry.url}`,
+      taskId: item.taskId,
+      title: item.title,
+      url: entry.url,
+      label: entry.label,
+      count: images.length
+    }));
+  });
+
   // Keep text beside icons/conditional children in host elements: browser
   // translation replaces bare Text nodes that React would otherwise remove.
   return <div className={`${styles.workspace} ${collapsed ? styles.collapsed : ""} ${mobileOpen ? styles.mobileOpen : ""} ${dark ? styles.dark : ""}`} translate="yes">
@@ -1320,7 +1407,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
         {view === "developer" && (customer ? <DeveloperWorkbench siteId={siteId} customerId={customer.id} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Developer access</h1><p>Log in to manage API keys and webhook endpoints for your workspace.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "developer"))}`}>Log in</a></section>)}
 
-        {view === "library" && <><div className={styles.sectionHead}><div className={styles.pageTitle}><h1>Your Library</h1><p>Pick up where you left off or download a finished video.</p></div><button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("agent")}><Plus size={16} /><span>New video</span></button></div><div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "draft", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "draft" ? "In progress" : "Completed"}</button>)}</div>{!customer ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div> : loading ? <div className={styles.empty}><Loader2 className={styles.spin} size={25} /><span>Loading your videos…</span></div> : tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed")).length ? renderTaskCards(tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed"))) : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open Text to Video, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}</>}
+        {view === "library" && <>
+          <div className={styles.sectionHead}>
+            <div className={styles.pageTitle}><h1>Your Library</h1><p>Pick up where you left off or download a finished video.</p></div>
+            <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("agent")}><Plus size={16} /><span>New video</span></button>
+          </div>
+          {customer && !loading && libraryReelItems.length > 0 && <LibraryReferenceReel items={libraryReelItems} onOpen={setDetailTaskId} />}
+          <div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "draft", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "draft" ? "In progress" : "Completed"}</button>)}</div>
+          {!customer
+            ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div>
+            : loading
+              ? <div className={styles.empty}><Loader2 className={styles.spin} size={25} /><span>Loading your videos…</span></div>
+              : libraryItems.length
+                ? renderTaskCards(libraryItems)
+                : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open Text to Video, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}
+        </>}
 
         {view === "actors" && presenterStudioEnabled && <>
           <div className={styles.creatorHeading}>
@@ -1445,19 +1546,25 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const description = String(detailTask.input.fields.description ?? detailTask.input.creativeDirection ?? Object.values(detailTask.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim();
       const model = catalog?.models.find((entry) => entry.id === detailTask.input.modelId)?.label;
       const running = detailTask.operation?.state === "pending" || detailTask.operation?.state === "run";
-      const failed = detailTask.status === "failed" || detailTask.operation?.state === "fail";
+      const shotFailure = detailTask.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
+      const failureCode = detailTask.operation?.state === "fail" ? detailTask.operation?.error ?? detailTask.error : detailTask.status === "failed" ? detailTask.error ?? shotFailure : shotFailure;
+      const failed = Boolean(failureCode);
       const completed = detailTask.status === "completed" && detailTask.video?.finalUrl;
-      const statusWord = running ? (detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : statusLabels[detailTask.status] ?? detailTask.status;
+      const statusWord = running ? (detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : failed ? "Needs attention" : statusLabels[detailTask.status] ?? detailTask.status;
       const statusClass = failed ? styles.detailStatusIconFail : running ? styles.detailStatusIconRun : completed ? styles.detailStatusIconDone : styles.detailStatusIconDraft;
       const finalUrl = detailTask.video?.finalUrl;
       const referenceVideos = detailTask.input.referenceVideos ?? [];
       const referenceAudios = detailTask.input.referenceAudios ?? [];
+      const shotClips = (detailTask.storyboard?.shots ?? []).flatMap((shot, index) => {
+        const version = shot.versions?.find((item) => item.vid === shot.curVer) ?? shot.versions?.at(-1);
+        return version?.clipUrl && version.status === "done" ? [{ key: shot.shotId, label: `Shot ${index + 1}`, url: version.clipUrl }] : [];
+      });
       return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setDetailTaskId(null); }}><section className={`${styles.modal} ${styles.detailModal}`} role="dialog" aria-modal="true" aria-label="Generation details">
         <div className={styles.detailHead}>
           <span className={`${styles.detailStatusIcon} ${statusClass}`} aria-hidden="true">{failed ? <X size={19} /> : running ? <Loader2 className={styles.spin} size={19} /> : completed ? <Check size={19} /> : <FileVideo size={18} />}</span>
           <div style={{ flex: 1 }}>
             <h2 style={{ margin: 0, display: "flex", alignItems: "center", gap: 10 }}>{detailTask.title}<span style={{ fontSize: 13, fontWeight: 500, color: failed ? "#dc2626" : running ? "#7c3aed" : completed ? "#16a34a" : "#6b7280" }}>{statusWord}{running ? "…" : ""}</span></h2>
-            <p className={styles.detailSubtitle}>{failed && detailTask.error ? humanError(detailTask.error) : "View the full details of this generation."}</p>
+            <p className={styles.detailSubtitle}>{failed ? humanError(failureCode) : "View the full details of this generation."}</p>
           </div>
           <button className={styles.iconButton} onClick={() => setDetailTaskId(null)} aria-label="Close dialog"><X size={23} /></button>
         </div>
@@ -1465,9 +1572,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           <div style={{ display: "grid", gap: 14, alignContent: "start" }}>
             <div className={styles.detailSection}>
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Result</p>
-              {finalUrl ? <video controls preload="metadata" src={finalUrl} className={styles.detailVideo} /> : <div className={styles.detailPlaceholder}>{running ? <><Loader2 className={styles.spin} size={22} /><span>Generation in progress…</span></> : failed ? <><X size={22} /><span>Generation failed</span></> : <><FileVideo size={22} /><span>No video yet</span></>}</div>}
+              {finalUrl ? <video controls preload="metadata" src={finalUrl} className={styles.detailVideo} /> : <div className={`${styles.detailPlaceholder} ${failed ? styles.detailPlaceholderFail : ""}`}>{running ? <><Loader2 className={styles.spin} size={22} /><span>Generation in progress…</span></> : failed ? <><X size={22} /><span>Generation failed</span><span className={styles.detailFailReason}>{humanError(failureCode)}</span></> : <><FileVideo size={22} /><span>No video yet</span></>}</div>}
               {finalUrl && <a className={styles.button} style={{ marginTop: 10 }} href={finalUrl} download><Download size={15} /><span>Download</span></a>}
             </div>
+            {shotClips.length > 0 && <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Generated clips</p>
+              <div className={styles.detailMediaGrid}>{shotClips.map((clip) => <figure key={clip.key} className={styles.detailMediaItem}><video controls preload="metadata" playsInline src={clip.url} /><figcaption><span>{clip.label}</span><a href={clip.url} download><Download size={13} /><span>Download</span></a></figcaption></figure>)}</div>
+            </div>}
             {description && <div className={styles.detailSection}>
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Your description</p>
               <p className={styles.detailPrompt}>{description}</p>
@@ -1642,15 +1753,39 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   function languageLabel(language: string) { return catalog?.languages.find((item) => item.value === language)?.label ?? language; }
   function renderTaskCards(items: WorkspaceTask[]) {
     return <div className={styles.taskGrid}>{items.map((item) => {
-      const image = Object.values(item.input.images).flat()[0];
+      const scene = catalog?.scenes.find((entry) => entry.id === item.sceneId);
       const model = catalog?.models.find((entry) => entry.id === item.input.modelId)?.label;
-      const description = String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim().slice(0, 180);
+      const description = cardDescription(String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? ""));
       const references = [
         item.input.images.productImages?.length ? `${item.input.images.productImages.length} photos` : "",
         ...(item.input.referenceVideos?.length ? [`${item.input.referenceVideos.length} videos`] : []),
         ...(item.input.referenceAudios?.length ? [`${item.input.referenceAudios.length} audio`] : [])
       ].filter(Boolean).join(" · ");
-      return <article key={item.taskId} className={styles.taskCard}><div className={styles.taskCover}>{item.video?.finalUrl ? <video controls preload="metadata" src={item.video.finalUrl} /> : image ? <img loading="lazy" decoding="async" src={image} alt="Reference" /> : <FileVideo size={38} />}</div><div className={styles.taskContent}><h3>{item.title}</h3><span className={styles.badge}>{item.operation?.state === "pending" || item.operation?.state === "run" ? item.operation.action === "render" ? "Rendering" : "Working" : statusLabels[item.status]}</span>{description && <p className={styles.help}>{description}</p>}<p><span>{catalog?.scenes.find((entry) => entry.id === item.sceneId)?.name}</span><span> · </span><span>{item.input.options.duration}s · {item.input.options.aspect}{item.input.options.resolution ? ` · ${item.input.options.resolution}` : ""}</span>{model && <span> · {model}</span>}</p>{references && <p className={styles.help}>References: {references}</p>}<div className={styles.taskActions}><button className={styles.linkButton} disabled={working} onClick={() => setDetailTaskId(item.taskId)}><span>View details</span><ArrowRight size={15} /></button><button className={styles.iconButton} disabled={working} onClick={() => void removeTask(item)} aria-label={`Delete ${item.title}`}><Trash2 size={16} /></button></div></div></article>;
+      const itemRunning = item.operation?.state === "pending" || item.operation?.state === "run" || Boolean(item.storyboard?.shots.some((shot) => shot.genStatus === "run" || shot.compositeStatus === "run"));
+      const shotFailure = item.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
+      const failureCode = item.operation?.state === "fail" ? item.operation?.error ?? item.error : item.status === "failed" ? item.error ?? shotFailure : shotFailure;
+      const failureReason = failureCode ? humanError(failureCode) : "";
+      const badgeLabel = itemRunning ? (item.operation?.action === "render" ? "Rendering" : "Working") : failureReason ? "Needs attention" : statusLabels[item.status];
+      const statusTone = itemRunning ? "progress" as const : failureReason ? "error" as const : item.status === "completed" ? "done" as const : "idle" as const;
+      return <LibraryTaskCard
+        key={item.taskId}
+        title={item.title}
+        statusLabel={badgeLabel}
+        statusTone={statusTone}
+        failureReason={failureReason || undefined}
+        description={description || undefined}
+        sceneName={scene?.name}
+        modelLabel={model}
+        createdAtLabel={shortDate(item.createdAt)}
+        duration={item.input.options.duration}
+        aspect={item.input.options.aspect}
+        resolution={item.input.options.resolution}
+        referenceSummary={references || undefined}
+        media={libraryMedia.get(item.taskId) ?? taskMedia(item, scene)}
+        disabled={busy || itemRunning}
+        onOpen={() => setDetailTaskId(item.taskId)}
+        onDelete={() => void removeTask(item)}
+      />;
     })}</div>;
   }
 
@@ -1715,8 +1850,30 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 }
 
+function upstreamProviderMessage(code: string): string {
+  const start = code.indexOf("{");
+  if (start < 0) return "";
+  try {
+    const parsed = JSON.parse(code.slice(start)) as { error?: { message?: unknown }; message?: unknown };
+    const message = typeof parsed.error?.message === "string" ? parsed.error.message : typeof parsed.message === "string" ? parsed.message : "";
+    return message.replace(/\s+/g, " ").trim().slice(0, 180);
+  } catch { return ""; }
+}
 function humanError(code?: string) {
   if (!code) return "";
+  if (/ai_provider_[a-z_]*timeout/.test(code)) return "The video provider did not respond in time. Please retry this shot.";
+  if (code.startsWith("ai_provider_video_create_failed")) {
+    const detail = upstreamProviderMessage(code);
+    return detail ? `The video provider rejected this shot: ${detail}` : "The video provider rejected this shot. Please retry.";
+  }
+  if (code.startsWith("ai_provider_video_scene_image")) {
+    const detail = upstreamProviderMessage(code);
+    return detail ? `The reference image could not be prepared: ${detail}` : "The reference image could not be prepared for this shot.";
+  }
+  if (code.startsWith("ai_provider_video")) {
+    const detail = upstreamProviderMessage(code);
+    return detail ? `The video provider failed on this shot: ${detail}` : "The video provider failed on this shot. Please retry.";
+  }
   const messages: Record<string, string> = {
     workspace_clone_analysis_mock_only: "This draft uses a simulated reference analysis. You can edit and save it, but generation is unavailable.",
     workspace_template_changed: "This template changed after you opened it. Reopen the card to use its latest version.",
@@ -1740,6 +1897,16 @@ function humanError(code?: string) {
     actor_language_required: "Select at least one language for your avatar.",
     actor_in_use: "This avatar is used by a saved video. Remove those tasks before deleting it.",
     storyboard_provider_unavailable: "Script generation is not connected yet. Your details are saved.",
+    missing_required_prompt_input: "Generation was stopped before it reached the provider because a required field was missing. Retry the generation.",
+    worker_dispatch_failed: "The video request could not be sent to the generation service. Please retry.",
+    dispatch_outcome_unknown: "The generation service did not confirm the request. Check your Library before retrying.",
+    dispatch_finished: "This request was already sent to the generation service.",
+    provider_reference_limit: "Too many reference images for the selected model. Remove one or two and retry.",
+    actor_product_composite_stale: "Your source photos changed after the presenter reference was prepared. Prepare it again.",
+    video_theme_binding_required: "The video theme is not connected. Contact support before generating.",
+    video_theme_binding_invalid: "The video theme is unavailable. Contact support before generating.",
+    shot_duration_unsupported: "The selected model cannot generate a clip this long. Choose another model or duration.",
+    storyboard_response_empty: "Your storyboard came back empty. Please retry.",
     storyboard_provider_failed: "Your storyboard could not be generated. Your details are saved; please retry.",
     storyboard_response_invalid: "The generated storyboard needs another attempt. Please retry.",
     storyboard_unverified_claim: "The generated script contained claims beyond your supplied product facts. Please retry or clarify your details.",

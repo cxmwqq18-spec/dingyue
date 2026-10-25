@@ -1,0 +1,506 @@
+/* Library: reference reel + media first task card.
+ *
+ * The card follows the reference layout: a dark media stage on top, then a
+ * status chip row, the title, the description, a metadata table and an action
+ * row. The stage never letterboxes with grey bars, because a blurred copy of
+ * the active reference fills the frame behind the sharp one.
+ */
+
+/* ---------------------------------------------------------------- reel --- */
+.reel {
+  margin: 4px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 14px 16px 14px;
+}
+.reelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.reelTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+.reelTitle h2 {
+  font-size: 15px;
+  letter-spacing: -0.2px;
+  font-weight: 650;
+}
+.reelTitle span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.reelTools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.reelCount {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+.reelNav {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.reelNav:hover:not(:disabled) {
+  background: var(--canvas);
+  transform: translateY(-1px);
+}
+.reelTrack {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 2px 4px;
+}
+.reelTrack::-webkit-scrollbar {
+  display: none;
+}
+.reelItem {
+  position: relative;
+  flex: 0 0 auto;
+  width: 146px;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #100e18;
+  scroll-snap-align: start;
+  padding: 0;
+  isolation: isolate;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.reelItem:hover {
+  transform: translateY(-2px);
+  border-color: #cabaf7;
+  box-shadow: 0 10px 24px -14px rgba(35, 20, 80, 0.55);
+}
+.reelBackdrop {
+  position: absolute;
+  inset: -12%;
+  width: 124%;
+  height: 124%;
+  object-fit: cover;
+  filter: blur(20px) saturate(1.2) brightness(0.58);
+  z-index: 0;
+}
+.reelShot {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.reelItem:hover .reelShot {
+  transform: scale(1.03);
+}
+.reelMeta {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 10px 9px;
+  background: linear-gradient(transparent, rgba(9, 7, 16, 0.86));
+  color: #fff;
+  text-align: left;
+  display: grid;
+  gap: 2px;
+}
+.reelMeta strong {
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reelMeta span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reelBadge {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 8px;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: rgba(12, 10, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 3px 8px;
+  backdrop-filter: blur(6px);
+}
+.reelProgress {
+  margin-top: 10px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--canvas);
+  overflow: hidden;
+}
+.reelProgress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8a6bff, #6035ff);
+  transition: width 0.3s ease;
+}
+
+/* ---------------------------------------------------------------- card --- */
+.taskCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.taskCard:hover {
+  border-color: #d6cfee;
+  box-shadow: 0 14px 30px -24px rgba(28, 15, 70, 0.5);
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #0f0d16;
+  overflow: hidden;
+  isolation: isolate;
+}
+.stageEmpty {
+  display: grid;
+  place-items: center;
+  color: #8a7ab5;
+  background: linear-gradient(160deg, #1a1626, #121019);
+}
+.stageEmptyInner {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+.stageBackdrop {
+  position: absolute;
+  inset: -14%;
+  width: 128%;
+  height: 128%;
+  object-fit: cover;
+  filter: blur(28px) saturate(1.25) brightness(0.5);
+  z-index: 0;
+  pointer-events: none;
+}
+.layers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.36s ease, transform 0.52s ease;
+  pointer-events: none;
+}
+.layerActive {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.layer img,
+.layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.stageVideo {
+  background: #000;
+}
+
+.stageChips {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 6px;
+  max-width: calc(100% - 74px);
+}
+.stageChip {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #fff;
+  background: rgba(12, 10, 20, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 4px 9px;
+  backdrop-filter: blur(6px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stageCounter {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: 10px;
+  font-size: 11px;
+  color: #fff;
+  background: rgba(12, 10, 20, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  padding: 4px 9px;
+  backdrop-filter: blur(6px);
+  font-variant-numeric: tabular-nums;
+}
+
+.rail {
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  right: auto;
+  max-width: calc(100% - 20px);
+  bottom: 10px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 6px;
+  border-radius: 11px;
+  background: rgba(11, 9, 18, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  padding: 0;
+  background: #191527;
+  opacity: 0.66;
+  transition: opacity 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+.thumb:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.thumbActive {
+  opacity: 1;
+  border-color: #d3c6ff;
+  box-shadow: 0 0 0 2px rgba(176, 152, 255, 0.55);
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.thumbPlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(10, 8, 16, 0.45);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px 16px;
+  flex: 1;
+}
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pill {
+  font-size: 11px;
+  line-height: 1.5;
+  border-radius: 999px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.pillDone {
+  color: #0f7a4a;
+  background: #e9f8f0;
+  border-color: #c9ecd9;
+}
+.pillRun {
+  color: #6338d6;
+  background: #f1ecfd;
+  border-color: #ddd2fb;
+}
+.pillError {
+  color: #b42318;
+  background: #fdecec;
+  border-color: #f7d4d4;
+}
+.title {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.2px;
+  line-height: 1.35;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.fail {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b42318;
+}
+.description {
+  font-size: 12px;
+  line-height: 1.68;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.meta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 3px 12px;
+  font-size: 12px;
+  margin: 0;
+}
+.meta dt {
+  color: var(--muted);
+}
+.meta dd {
+  margin: 0;
+  color: var(--ink);
+  opacity: 0.78;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  color: #5b2be0;
+  /* Mixing the brand purple with the current ink keeps the link readable on
+     both the light and the dark workspace theme. */
+  color: color-mix(in srgb, #6035ff 74%, var(--ink));
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 2px;
+  border-radius: 8px;
+}
+.open:hover:not(:disabled) {
+  color: #4016bd;
+}
+.delete {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  flex: none;
+  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+.delete:hover:not(:disabled) {
+  color: #b42318;
+  border-color: #f2cfcf;
+  background: #fdf4f4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .reelShot,
+  .reelItem,
+  .thumb,
+  .reelProgress span {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .reelItem {
+    width: 124px;
+  }
+  .stage {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .reel {
+    padding: 12px 12px 10px;
+  }
+  .reelTitle span {
+    display: none;
+  }
+  .reelTitle h2 {
+    font-size: 14px;
+  }
+  .reelCount {
+    font-size: 11px;
+  }
+  .reelNav {
+    width: 28px;
+    height: 28px;
+  }
+}
