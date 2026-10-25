@@ -1,9 +1,9 @@
 # 试点：四个模板的视频提示词与资产清单
 
-内部工作文档（非页面文案）。三类资产严格分开：
+内部工作文档（非页面文案）。所有电商商品展示提示词均指定人物出镜展示操作（站内 AI 演员），手部动作由角色资产带出，不再单独生成手部特写图。三类资产严格分开：
 
 1. **演员（人物资产）**：直接指定站内 AI 演员，用现有头像，不生成；
-2. **道具图（纯产品，无人物）**：产品背面、材质特写、手部特写，按提示词生成；
+2. **道具图（纯产品，无人物）**：产品背面、材质特写，按提示词生成；
 3. **场景图（无人物、无产品）**：现有展示图都含人物，不引用；按提示词生成空场景图。
 
 ## 真人实质感规范（所有生成图必须遵守）
@@ -13,23 +13,39 @@
 - **拒绝渲染感**：not CGI / not 3D render / no illustration look，禁止塑料感、过度平滑、假光影；
 - **产品一致**：道具图的形状、颜色、材质必须与产品正面图自洽，供视频提示词跨镜引用。
 
+## 公共资产职责规范（按资产类别，不绑定图片编号）
+
+### 角色资产
+
+每张角色资产图展示同一个人的不同观察角度。仅参考面容、体型、服装和配饰，不继承白底、排版或图中身体投影的数量。保证人物唯一性：每个角色在世界空间中仅有一人。
+
+### 场景资产
+
+场景资产图定义地点。仅参考空间结构、光源方向与氛围，作为真实地点使用；镜头在场景内自由取景，不锁死构图。分镜引入产品或人物之前，场景保持空镜。
+
+### 道具资产
+
+所有道具资产图展示同一实物。仅参考形制、材质与颜色，不继承白底背景与排版。产品全程唯一：不增加、不减少、不换色、不变形。
+
 ## 图片引用规范（@Image 附件顺序，通用标准）
 
 模型**只识别附件上传顺序，不识别文件名**，因此引用一律按挂载位置编号：
 
-- 【Reference Order】块是**固定通用标准**：只定义每张图的角色与职责（场景=空间光位基准、角色=人物身份基准、产品=唯一道具基准、背面/特写=道具补充、手部=手部基准），**不写死具体场景内容**——场景图是基准参考，镜头在场景内自由适配，不锁死布局；
+- 视频提示词开头的【Reference Order】块是**固定通用标准**，逐行定义 `@Image 1–5` 的类别与职责（场景=空间光位基准、角色=人物身份基准、产品=唯一道具基准、背面/特写=道具补充）；
 - 换模板时只换挂载的文件，规范措辞不变，可直接推广到全部模板；
-- 块末尾用自然语言写清每张图管什么、防什么混用；未覆盖细节一律回退到产品正面图；
-- 每个案例给出**附件挂载清单**（第几张 → 哪个文件），操作者按顺序挂载，顺序不能错。
+- 各资产的通用职责与防混用规则见上方「公共资产职责规范」，不在提示词里重复；
+- 每个案例给出**附件挂载清单**（第几张 → 哪个文件），操作者按顺序挂载，顺序不能错；产品未覆盖细节一律回退到产品正面图（@Image 3）。
 
 统一生成规格：9:16 竖幅 640×1138 WebP；提示词为英文（模型按英文消费）。
 
 | 案例 | 指定演员 | 需生成道具图 | 需生成场景图 | 附件总数 |
 |---|---|---|---|---|
-| 折叠自行车通勤 | Jon（outdoor-2） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 | 6 张 |
-| 耳机盒揭秘 | —（仅手部出镜） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 | 5 张 |
-| 橄榄绿衬衫搭配合身 | Dev（home-1） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 | 6 张 |
-| 针织毛衣镜 | Elise（terrace-1） | 背面 / 特写 / 手部 共 3 张 | 空场景 1 张 | 6 张 |
+| 折叠自行车通勤 | Jon（outdoor-2） | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 张 |
+| 耳机盒揭秘 | Mila（indoor-2） | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 张 |
+| 橄榄绿衬衫搭配合身 | Dev（home-1） | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 张 |
+| 针织毛衣镜 | Elise（terrace-1） | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 张 |
+
+共需生成 12 张资产图（每案例 3 张：背面、材质特写、空场景）。
 
 ## 1. 折叠自行车通勤（Folding Bike Commute）
 
@@ -46,7 +62,6 @@
 | 第 3 张 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 第 4 张 | @Image 4 产品背面 | `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 第 5 张 | @Image 5 材质特写 | `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 第 6 张 | @Image 6 手部 | `/ai-image-generation/folding-bike-commute-h1-hands-r1-640.webp` | 手部解剖与指甲基准 |
 
 ### 视频提示词（@Image 附件顺序引用，人物已对齐演员）
 
@@ -59,13 +74,6 @@ A 30-second vertical 9:16 e-commerce product display film for a full-size bicycl
 @Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
 @Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
 @Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
-@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
-What each image is for, in plain terms:
-- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
-- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
-- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
-- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
-- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The full-size bicycle keeps the same shape, colour, material, finish and details in every frame, including two large wheels; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -95,13 +103,7 @@ Vertical 9:16 studio product reference photo of the full-size commuter bicycle w
 Vertical 9:16 macro detail photo of the full-size commuter bicycle with two large wheels, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography. True-to-life material realism: real surface micro-texture with visible material grain, weave or machining, natural optical falloff, not CGI, not 3D render, no illustration look.
 ```
 
-**3）手部特写** → `/ai-image-generation/folding-bike-commute-h1-hands-r1-640.webp`
-
-```
-Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand relaxed and open as if about to grip a handlebar, the other hand holding a slim tube, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark. True-to-life photographic realism: real skin with visible pores, fine knuckle wrinkles and subtle natural imperfections, shot on a full-frame camera with natural optical falloff, not CGI, not 3D render, no illustration look.
-```
-
-**4）场景图**（挂载为第 1 张附件） → `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp`
+**3）场景图**（挂载为第 1 张附件） → `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp`
 
 ```
 Vertical 9:16 scene reference photo of an empty train platform beside a stationary train with one open doorway, yellow safety line on the ground, warm daylight, clean and uncluttered composition, no people, no product, no text, no logos, no watermark. True-to-life photographic realism: real materials with visible surface grain, natural light falloff and believable shadows, shot on a full-frame camera with natural perspective, not CGI, not 3D render, no illustration look.
@@ -109,40 +111,37 @@ Vertical 9:16 scene reference photo of an empty train platform beside a stationa
 
 ## 2. 耳机盒揭秘（Earbud Box Reveal）
 
-**演员**：无（全片仅手部与产品出镜，手部用生成的参考图锁定）
+**演员（人物资产，直接取用）**：Mila（`indoor-2` · Women · 30s）— an adult white woman in her thirties
+
+![Mila](https://www.aivideosugc.com/ai-image-generation/actors/indoor-2.webp)
 
 **附件挂载清单（按上传顺序）**：
 
 | 附件顺序 | 句柄 | 素材文件 | 说明 |
 |---:|---|---|---|
 | 第 1 张 | @Image 1 场景 | `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 第 2 张 | @Image 2 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
-| 第 3 张 | @Image 3 产品背面 | `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
-| 第 4 张 | @Image 4 材质特写 | `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 第 5 张 | @Image 5 手部 | `/ai-image-generation/earbud-box-reveal-h1-hands-r1-640.webp` | 手部解剖与指甲基准 |
+| 第 2 张 | @Image 2 角色 | `/ai-image-generation/actors/indoor-2.webp` | 演员 Mila，人物身份基准 |
+| 第 3 张 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
+| 第 4 张 | @Image 4 产品背面 | `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
+| 第 5 张 | @Image 5 材质特写 | `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp` | 表面微纹理基准 |
 
 ### 视频提示词（@Image 附件顺序引用，人物已对齐演员）
 
 ```
-A 30-second vertical 9:16 e-commerce product display film for a round matte sage-green charging case in stemless bean-shaped earbuds from a kraft box.
+A 30-second vertical 9:16 e-commerce product display film in which the creator presents a round matte sage-green charging case in stemless bean-shaped earbuds from a kraft box.
 
 【Reference Order】The model only sees the upload position of each attached image, so every position is defined here once and referenced by its @Image number afterwards. This block is a fixed standard: only the attached files change from template to template, the wording stays the same.
 @Image 1 — Scene「the attached empty-scene photo」(space, light and mood baseline): the place comes from this image; keep its space and light as the real location and adapt the framing freely to the action.
-@Image 2 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
-@Image 3 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 2 for the rear and the far side in the turning beat only.
-@Image 4 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
-@Image 5 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
-What each image is for, in plain terms:
-- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
-- The product comes from @Image 2, is seen from behind in @Image 3, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
-- The hands come from @Image 5 and look the same in every shot, carrying no texture of their own.
-- Anything the images do not show about the product follows @Image 2 and stays consistent with it.
+@Image 2 — Character「the attached actor portrait」(identity and default-look baseline): the person's face, hair, build and presence come from this image and never change.
+@Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
+@Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
+@Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The round matte sage-green charging case keeps the same shape, colour, material, finish and details in every frame, including the round case centered; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
 【0.0-5.0s | Wide display】Wide shot at eye level: the round matte sage-green charging case is set in place in stemless bean-shaped earbuds from a kraft box, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.
 【5.0-11.0s | Front close-up】The front of the round matte sage-green charging case fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: the round case centered.
-【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the round matte sage-green charging case a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.
+【11.0-17.0s | Hand turns it】The creator, an adult white woman in her thirties, reaches in from the top and lifts the round matte sage-green charging case a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.
 【17.0-23.0s | The action】The creator holds the round matte sage-green charging case in stemless bean-shaped earbuds from a kraft box. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.
 【23.0-27.5s | Point held】The result of that action is held still in the frame: the same round matte sage-green charging case, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.
 【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.
@@ -166,13 +165,7 @@ Vertical 9:16 studio product reference photo of the sage-green earbud charging c
 Vertical 9:16 macro detail photo of the sage-green earbud charging case with earbuds inside, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography. True-to-life material realism: real surface micro-texture with visible material grain, weave or machining, natural optical falloff, not CGI, not 3D render, no illustration look.
 ```
 
-**3）手部特写** → `/ai-image-generation/earbud-box-reveal-h1-hands-r1-640.webp`
-
-```
-Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand pinching the edge of a tissue sheet as if lifting it from a box, the other hand cupped open below, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark. True-to-life photographic realism: real skin with visible pores, fine knuckle wrinkles and subtle natural imperfections, shot on a full-frame camera with natural optical falloff, not CGI, not 3D render, no illustration look.
-```
-
-**4）场景图**（挂载为第 1 张附件） → `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp`
+**3）场景图**（挂载为第 1 张附件） → `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp`
 
 ```
 Vertical 9:16 scene reference photo of a warm wooden table with an open kraft shipping box and soft cream tissue paper spilling over the edge, gentle window light, calm home tabletop mood, no people, no product, no text, no logos, no watermark. True-to-life photographic realism: real cardboard and paper fibre texture, natural light falloff and believable shadows, shot on a full-frame camera with natural perspective, not CGI, not 3D render, no illustration look.
@@ -193,7 +186,6 @@ Vertical 9:16 scene reference photo of a warm wooden table with an open kraft sh
 | 第 3 张 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 第 4 张 | @Image 4 产品背面 | `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 第 5 张 | @Image 5 材质特写 | `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 第 6 张 | @Image 6 手部 | `/ai-image-generation/olive-overshirt-fit-reel-h1-hands-r1-640.webp` | 手部解剖与指甲基准 |
 
 ### 视频提示词（@Image 附件顺序引用，人物已对齐演员）
 
@@ -206,13 +198,6 @@ A 30-second vertical 9:16 e-commerce product display film for an olive overshirt
 @Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
 @Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
 @Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
-@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
-What each image is for, in plain terms:
-- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
-- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
-- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
-- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
-- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The olive overshirt keeps the same shape, colour, material, finish and details in every frame, including the full front; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -242,13 +227,7 @@ Vertical 9:16 studio product reference photo of the olive-green cotton overshirt
 Vertical 9:16 macro detail photo of the olive-green cotton overshirt, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography. True-to-life material realism: real surface micro-texture with visible material grain, weave or machining, natural optical falloff, not CGI, not 3D render, no illustration look.
 ```
 
-**3）手部特写** → `/ai-image-generation/olive-overshirt-fit-reel-h1-hands-r1-640.webp`
-
-```
-Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, one hand pinching a soft cotton fabric edge between thumb and fingers, the other hand flat and open, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark. True-to-life photographic realism: real skin with visible pores, fine knuckle wrinkles and subtle natural imperfections, shot on a full-frame camera with natural optical falloff, not CGI, not 3D render, no illustration look.
-```
-
-**4）场景图**（挂载为第 1 张附件） → `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp`
+**3）场景图**（挂载为第 1 张附件） → `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp`
 
 ```
 Vertical 9:16 scene reference photo of a calm real-life room corner with a neutral wall, a wooden bench and soft window light, everyday home mood, clean and uncluttered, no people, no garments, no text, no logos, no watermark. True-to-life photographic realism: real wall plaster and wood grain texture, natural light falloff and believable shadows, shot on a full-frame camera with natural perspective, not CGI, not 3D render, no illustration look.
@@ -269,7 +248,6 @@ Vertical 9:16 scene reference photo of a calm real-life room corner with a neutr
 | 第 3 张 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
 | 第 4 张 | @Image 4 产品背面 | `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
 | 第 5 张 | @Image 5 材质特写 | `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 第 6 张 | @Image 6 手部 | `/ai-image-generation/knit-sweater-mirror-h1-hands-r1-640.webp` | 手部解剖与指甲基准 |
 
 ### 视频提示词（@Image 附件顺序引用，人物已对齐演员）
 
@@ -282,13 +260,6 @@ A 30-second vertical 9:16 e-commerce product display film for a cream knit sweat
 @Image 3 — Product「the uploaded product photo」(single source of truth for the product): its shape, proportions, colour, material and finish come from this image, reproduced exactly, never a second one and never a changed part.
 @Image 4 — Product back「the attached product rear view」(same physical item seen from behind): extends @Image 3 for the rear and the far side in the turning beat only.
 @Image 5 — Product macro「the attached material close-up」(surface micro-texture baseline): controls the surface texture in the close-up beat only.
-@Image 6 — Hands「the attached hands photo」(hand anatomy and nail baseline): the hands come from this image and never change.
-What each image is for, in plain terms:
-- The place comes from @Image 1. Treat it as the real location, keep its light and mood, and let the camera move naturally inside it. The scene stays empty until the shot list brings the product or the person in.
-- The person comes from @Image 2 and looks exactly the same in every shot. What they wear and do follows the shot list.
-- The product comes from @Image 3, is seen from behind in @Image 4, and its surface material is shown up close in the macro image. It is one single product for the whole film: the same shape, colour and details in every shot, nothing added, removed or recoloured.
-- The hands come from @Image 6 and look the same in every shot, carrying no texture of their own.
-- Anything the images do not show about the product follows @Image 3 and stays consistent with it.
 【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.
 【Product Lock】The cream knit sweater keeps the same shape, colour, material, finish and details in every frame, including the full garment visible; nothing is added, removed or recoloured and the quantity never changes.
 【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.
@@ -318,13 +289,7 @@ Vertical 9:16 studio product reference photo of the cream knit sweater, back and
 Vertical 9:16 macro detail photo of the cream knit sweater, close crop on the surface and construction, raking soft light describing the texture, shallow depth of field, plain background, no text, no logo, no watermark, photorealistic macro product photography. True-to-life material realism: real surface micro-texture with visible material grain, weave or machining, natural optical falloff, not CGI, not 3D render, no illustration look.
 ```
 
-**3）手部特写** → `/ai-image-generation/knit-sweater-mirror-h1-hands-r1-640.webp`
-
-```
-Vertical 9:16 reference photo of adult hands only, short clean nails and natural skin texture, fingers gently holding a soft knitted fabric edge, no face, no body, plain seamless light grey background, soft even light, sharp focus on skin and knuckles, no text, no logo, no watermark. True-to-life photographic realism: real skin with visible pores, fine knuckle wrinkles and subtle natural imperfections, shot on a full-frame camera with natural optical falloff, not CGI, not 3D render, no illustration look.
-```
-
-**4）场景图**（挂载为第 1 张附件） → `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp`
+**3）场景图**（挂载为第 1 张附件） → `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp`
 
 ```
 Vertical 9:16 scene reference photo of a bright bedroom corner with a full-length mirror and a bed with neutral linen bedding, soft window light, calm morning mood, clean and uncluttered, no people, no garments, no text, no logos, no watermark. True-to-life photographic realism: real fabric weave and wall texture, natural light falloff and believable shadows, shot on a full-frame camera with natural perspective, not CGI, not 3D render, no illustration look.
