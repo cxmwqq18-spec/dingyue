@@ -382,7 +382,7 @@ export async function submitShotGeneration(args: {
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
     skipWorkerDispatch: true, includeWorkerPayload: true,
-    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution: "720p", modelOverride: provider.modelType, videoModelFamily: modelFamily },
+    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution: "720p", modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
         expectedCredits: billedCredits } } });
   if (created.reused && created.job.status !== "queued") return created;

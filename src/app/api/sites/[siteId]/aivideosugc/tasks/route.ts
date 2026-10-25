@@ -2,6 +2,7 @@ import type { NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceResponse, workspaceFailure, jsonBody, parseInput, assertOwnedImages } from "@/lib/aidreamcapes-workspace/api";
 import { createTask, listTasks, publicTask } from "@/lib/aidreamcapes-workspace/store";
+import { refreshTask, taskHasPendingProviderWork } from "@/lib/aidreamcapes-workspace/runner";
 import { sceneSchema, defaultTaskInput } from "@/lib/aidreamcapes-workspace/catalogs";
 import { validateTaskInput } from "@/lib/aidreamcapes-workspace/pipeline";
 import { catalogForCustomer } from "@/lib/aidreamcapes-workspace/api";
@@ -12,7 +13,16 @@ import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
 export const dynamic = "force-dynamic";
 type Context = { params: Promise<{ siteId: string }> };
 export async function GET(request: NextRequest, { params }: Context) {
-  try { const { siteId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response; return workspaceResponse({ tasks: (await listTasks(siteId, auth.current.customer.id)).map(publicTask) }); }
+  try {
+    const { siteId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response;
+    // The library must reflect provider progress: a shot that the provider has
+    // already finished or rejected has to leave "Generating" without the
+    // customer opening the editor. Only tasks with in-flight work pay for the
+    // extra lookups.
+    const tasks = await listTasks(siteId, auth.current.customer.id);
+    const settled = await Promise.all(tasks.map((task) => taskHasPendingProviderWork(task) ? refreshTask(task).catch(() => task) : task));
+    return workspaceResponse({ tasks: settled.map(publicTask) });
+  }
   catch (error) { return workspaceFailure(error); }
 }
 export async function POST(request: NextRequest, { params }: Context) {

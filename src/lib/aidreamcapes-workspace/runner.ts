@@ -14,6 +14,20 @@ import { isWorkspaceStabilityMockMode } from "./stability";
 import { assertTaskMusicSelectionRights } from "./music-catalog";
 
 const ACTIONS = new Set(["storyboard", "reroll", "rewrite", "generate_shot", "compose_shot", "restore_version", "render"]);
+/**
+ * True when the task still has a provider job whose outcome is not yet attached.
+ * Read paths (the library list) use this to decide whether a task needs
+ * `refreshTask`, so finished or rejected clips never stay "Generating".
+ */
+export function taskHasPendingProviderWork(task: StoredTask): boolean {
+  if (task.operation?.state === "pending" || task.operation?.state === "run") return true;
+  const running = (status?: string) => status === "pending" || status === "run";
+  return (task.storyboard?.shots ?? []).some((shot) =>
+    running(shot.compositeStatus) ? Boolean(shot.compositeGenerationJobId) : false
+  ) || (task.storyboard?.shots ?? []).some((shot) =>
+    (shot.versions ?? []).some((version) => Boolean(version.generationJobId) && running(version.status))
+  );
+}
 export function shotSnapshot(shot: StoryboardShot): ShotSnapshot {
   const { visual, voiceover, refKinds, refImgs, firstFrame, lastFrame, actorId, voiceSnapshot, environment, start, end, duration, camera, framing, lighting, expression } = shot;
   return { visual, voiceover, refKinds: [...refKinds], refImgs: { ...refImgs }, firstFrame, lastFrame, actorId, voiceSnapshot: voiceSnapshot ? structuredClone(voiceSnapshot) : undefined,
