@@ -258,7 +258,11 @@ export async function generateStoryboard(args: { siteId: string; sceneId: SceneI
     const shot = value && typeof value === "object" ? value as Record<string, unknown> : {};
     if (typeof shot.visual !== "string" || typeof shot.voiceover !== "string" || !Array.isArray(shot.factSources) || shot.factSources.some((id) => typeof id !== "string" || !factIds.has(id))) throw new WorkspaceError("workspace_storyboard_facts_invalid", 502);
     const claims = `${shot.visual} ${shot.voiceover}`.match(/\d+(?:[.,]\d+)?(?:\s*(?:%|mg|kg|ml|cm|mm|hours?|days?|years?|秒|小时|天|元|克|毫升))?/gi) ?? [];
-    if (claims.some((claim) => !suppliedText.includes(claim.trim()) && !actor?.ageRange.includes(claim.trim()))) throw new WorkspaceError("workspace_storyboard_unverified_claim", 502);
+    const unverified = claims.find((claim) => !suppliedText.includes(claim.trim()) && !actor?.ageRange.includes(claim.trim()));
+    if (unverified) {
+      if (process.env.NODE_ENV !== "production") console.warn("[workspace-storyboard] unverified numeric claim", unverified, "in shot", index);
+      throw new WorkspaceError("workspace_storyboard_unverified_claim", 502, { claim: unverified });
+    }
     const old = args.existing?.shots[index];
     if (preserveLocked && old?.locked) return structuredClone(old);
     if (args.rewriteOnly && old) return { ...structuredClone(old), voiceover: schema.needsActor ? shot.voiceover.trim() : "", genStatus: "pending" as const,

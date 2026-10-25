@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown, ImageIcon, Monitor, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowRight, ChevronDown, ImageIcon, Monitor, Music, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
@@ -85,12 +85,20 @@ export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, 
   return { model, aspects, durations, resolutions, selectedAspect, selectedDuration, selectedResolution };
 }
 
+function referenceMediaName(url: string, fallback: string): string {
+  try {
+    const name = decodeURIComponent(url.split(/[?#]/)[0].split("/").pop() || "");
+    return /\.[a-z0-9]{2,4}$/i.test(name) ? name : fallback;
+  } catch { return fallback; }
+}
+
 function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove, kind, accept = "image/*", addLabel = "Add photo", limitLabel = "Photo limit", countNoun = "photos" }: {
   urls: string[]; max: number; disabled: boolean; canUpload: boolean;
-  onUpload: (file: File) => void; onRemove: (index: number) => void; onMove?: (from: number, to: number) => void; kind: "video" | "image";
+  onUpload: (file: File) => void; onRemove: (index: number) => void; onMove?: (from: number, to: number) => void; kind: "video" | "image" | "audio";
   accept?: string; addLabel?: string; limitLabel?: string; countNoun?: string;
 }) {
   const dropKind: FileKind = accept.startsWith("audio") ? "audio" : accept.startsWith("video") ? "video" : "image";
+  const kindLabel = kind === "video" ? "Video" : kind === "audio" ? "Audio" : "Image";
   const { active: dropActive, dropProps } = useFileDropZone((files) => {
     for (const file of files) {
       if (urls.length >= max) break;
@@ -106,12 +114,23 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove
             const file = event.target.files?.[0]; event.target.value = ""; if (file) onUpload(file);
           }} />
         </label> : <div className={`${styles.upload} ${styles.uploadFull}`} aria-hidden="true"><ImageIcon size={19} /><span>{limitLabel}</span></div>}
-        <span className={styles.referenceCount} aria-label={`${kind === "video" ? "Video" : "Image"} references: ${urls.length} of ${max}`}>{`${urls.length} / ${max} ${countNoun}`}</span>
+        <span className={styles.referenceCount} aria-label={`${kindLabel} references: ${urls.length} of ${max}`}>{`${urls.length} / ${max} ${countNoun}`}</span>
       </div>
-      {urls.map((url, index) => <div key={`${url}-${index}`} className={styles.thumbnail} {...(onMove && !disabled ? reorderHandlers(index, disabled, onMove) : {})}>
-        {/* Customer assets may use private authenticated URLs. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={url} alt={`${kind === "video" ? "Video" : "Image"} reference ${index + 1}`} decoding="async" loading="lazy" />
+      {urls.map((url, index) => <div key={`${url}-${index}`} className={`${styles.thumbnail} ${kind === "audio" ? styles.audioThumb : ""}`} {...(onMove && !disabled ? reorderHandlers(index, disabled, onMove) : {})}>
+        {kind === "audio" ? <div className={styles.audioBody}>
+          <span className={styles.audioName} title={referenceMediaName(url, `Audio ${index + 1}`)}><Music size={11} aria-hidden="true" /><span>{referenceMediaName(url, `Audio ${index + 1}`)}</span></span>
+          {/* Customer assets may use private authenticated URLs. */}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <audio controls preload="none" src={url} aria-label={`${kindLabel} reference ${index + 1}`} />
+        </div> : kind === "video" ? <>
+          {/* Customer assets may use private authenticated URLs. */}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video src={url} preload="metadata" muted playsInline tabIndex={-1} aria-label={`${kindLabel} reference ${index + 1}`} />
+        </> : <>
+          {/* Customer assets may use private authenticated URLs. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={url} alt={`${kindLabel} reference ${index + 1}`} decoding="async" loading="lazy" />
+        </>}
         <button type="button" className={styles.remove} disabled={disabled} onClick={() => onRemove(index)} aria-label={`Remove ${kind} reference ${index + 1}`}><X size={13} /></button>
       </div>)}
     </div>
@@ -177,9 +196,9 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
     <div id={showTabs ? "home-composer-panel" : undefined} role={showTabs ? "tabpanel" : undefined} aria-labelledby={showTabs ? `home-tab-${tabs.findIndex((item) => item.id === activeTab)}` : undefined}>
       <div className={`${styles.promptField} ${imageMode ? styles.imagePromptField : ""} ${promptDropActive ? styles.dropActive : ""}`} {...promptDropProps}>
         <div className={styles.referenceRow}>
-          {videoMode && <References kind="video" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} onMove={onVideoReferenceMove} />}
+          {videoMode && <References kind="image" urls={videoReferenceUrls} max={referenceLimit} disabled={disabled} canUpload={canUpload} onUpload={onVideoReferenceUpload} onRemove={onVideoReferenceRemove} onMove={onVideoReferenceMove} />}
           {videoMode && (model?.videoReferenceMax ?? 0) > 0 && onVideoFileUpload && onVideoFileRemove && <References kind="video" urls={videoReferenceFiles} max={model!.videoReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onVideoFileUpload} onRemove={onVideoFileRemove} onMove={onVideoFileMove} accept="video/mp4,video/quicktime,video/webm" addLabel="Add video" limitLabel="Video limit" countNoun="videos" />}
-          {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="video" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} onMove={onAudioFileMove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
+          {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="audio" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} onMove={onAudioFileMove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
           {imageMode && <References kind="image" urls={imageInput.assetUrls} max={catalog?.imageReferenceMax ?? 4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} onMove={onImageReferenceMove} />}
         </div>
         <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} onPaste={(event) => {

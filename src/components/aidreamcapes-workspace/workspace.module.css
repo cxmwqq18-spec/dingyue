@@ -180,6 +180,20 @@ textarea.input { resize: vertical; min-height: 100px; }
 .detailPlaceholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 10px; background: #f1ecfd; color: #7c3aed; aspect-ratio: 16 / 10; font-size: 13px; }
 .detailImages { display: flex; flex-wrap: wrap; gap: 8px; }
 .detailImages img { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
+.detailModal { width: min(1180px, 100%); max-width: 1180px; }
+.modal.detailModal { width: min(1180px, 100%); max-width: 1180px; }
+.detailGrid { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
+.detailModal .detailVideo, .detailModal .detailPlaceholder { aspect-ratio: 16 / 9; }
+.detailMediaGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.detailMediaItem { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #141414; }
+.detailMediaItem video { width: 100%; display: block; max-height: 260px; background: #141414; }
+.detailMediaItem figcaption { padding: 6px 9px; font-size: 11px; color: #d4d4d8; background: #1f1f22; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.detailAudioList { display: grid; gap: 9px; }
+.detailAudioItem { border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; display: grid; gap: 6px; background: #fafafa; }
+.detailAudioName { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); min-width: 0; }
+.detailAudioName span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.detailAudioItem audio { width: 100%; height: 30px; }
+@media (max-width: 860px) { .detailGrid { grid-template-columns: 1fr; } .detailModal { padding: 18px; } }
 .detailFooter { margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px; }
 .taskContent { padding: 16px; }
 .taskContent h3 { font-size: 15px; margin-bottom: 8px; }

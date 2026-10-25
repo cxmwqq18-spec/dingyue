@@ -105,6 +105,12 @@ function downloadText(filename: string, text: string, type = "text/plain") {
   const anchor = document.createElement("a"); anchor.href = url; anchor.download = filename; anchor.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+function mediaFileName(url: string, fallback: string): string {
+  try {
+    const name = decodeURIComponent(url.split(/[?#]/)[0].split("/").pop() || "");
+    return /\.[a-z0-9]{2,4}$/i.test(name) ? name : fallback;
+  } catch { return fallback; }
+}
 function imageEntries(task: WorkspaceTask, scene?: SceneSchema): { kind: RefKind; url: string; label: string }[] {
   return (scene?.sections.flatMap((section) => section.fields) ?? []).flatMap((field) => field.type === "images" && field.refKind ? (task.input.images[field.id] ?? []).map((url) => ({ kind: field.refKind!, url, label: field.label })) : []);
 }
@@ -1444,7 +1450,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const statusWord = running ? (detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : statusLabels[detailTask.status] ?? detailTask.status;
       const statusClass = failed ? styles.detailStatusIconFail : running ? styles.detailStatusIconRun : completed ? styles.detailStatusIconDone : styles.detailStatusIconDraft;
       const finalUrl = detailTask.video?.finalUrl;
-      return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setDetailTaskId(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Generation details" style={{ maxWidth: 780 }}>
+      const referenceVideos = detailTask.input.referenceVideos ?? [];
+      const referenceAudios = detailTask.input.referenceAudios ?? [];
+      return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setDetailTaskId(null); }}><section className={`${styles.modal} ${styles.detailModal}`} role="dialog" aria-modal="true" aria-label="Generation details">
         <div className={styles.detailHead}>
           <span className={`${styles.detailStatusIcon} ${statusClass}`} aria-hidden="true">{failed ? <X size={19} /> : running ? <Loader2 className={styles.spin} size={19} /> : completed ? <Check size={19} /> : <FileVideo size={18} />}</span>
           <div style={{ flex: 1 }}>
@@ -1468,6 +1476,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference images</p>
               <div className={styles.detailImages}>{images.map((url, index) => <img key={`${url}-${index}`} loading="lazy" decoding="async" src={url} alt={`Reference ${index + 1}`} />)}</div>
             </div>}
+            {referenceVideos.length > 0 && <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference videos</p>
+              <div className={styles.detailMediaGrid}>{referenceVideos.map((url, index) => <figure key={`${url}-${index}`} className={styles.detailMediaItem}>
+                <video controls preload="metadata" src={url} aria-label={`Reference video ${index + 1}`} />
+                <figcaption title={mediaFileName(url, `Video ${index + 1}`)}>{mediaFileName(url, `Video ${index + 1}`)}</figcaption>
+              </figure>)}</div>
+            </div>}
+            {referenceAudios.length > 0 && <div className={styles.detailSection}>
+              <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference audio</p>
+              <div className={styles.detailAudioList}>{referenceAudios.map((url, index) => <div key={`${url}-${index}`} className={styles.detailAudioItem}>
+                <span className={styles.detailAudioName} title={mediaFileName(url, `Audio ${index + 1}`)}><Headphones size={13} aria-hidden="true" /><span>{mediaFileName(url, `Audio ${index + 1}`)}</span></span>
+                <audio controls preload="none" src={url} aria-label={`Reference audio ${index + 1}`} />
+              </div>)}</div>
+            </div>}
           </div>
           <div style={{ display: "grid", gap: 14, alignContent: "start" }}>
             <div className={styles.detailSection}>
@@ -1486,8 +1508,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                 <span className={styles.detailChip}>Aspect<strong>{detailTask.input.options.aspect}</strong></span>
                 {detailTask.input.options.resolution && <span className={styles.detailChip}>Resolution<strong>{detailTask.input.options.resolution}</strong></span>}
                 <span className={styles.detailChip}>Reference photos<strong>{detailTask.input.images.productImages?.length ?? 0}</strong></span>
-                {(detailTask.input.referenceVideos?.length ?? 0) > 0 && <span className={styles.detailChip}>Reference videos<strong>{detailTask.input.referenceVideos!.length}</strong></span>}
-                {(detailTask.input.referenceAudios?.length ?? 0) > 0 && <span className={styles.detailChip}>Reference audio<strong>{detailTask.input.referenceAudios!.length}</strong></span>}
+                {referenceVideos.length > 0 && <span className={styles.detailChip}>Reference videos<strong>{referenceVideos.length}</strong></span>}
+                {referenceAudios.length > 0 && <span className={styles.detailChip}>Reference audio<strong>{referenceAudios.length}</strong></span>}
               </div>
             </div>
           </div>
