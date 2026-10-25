@@ -80,6 +80,17 @@ Rules:
   so the local copy can be reversed without touching production.
 - The script never creates or deletes rows and never writes production.
 
+If Prisma reports `Server has closed the connection` while `lsof -nP
+-iTCP:15432 -sTCP:LISTEN` still shows an `ssh` listener, the tunnel is
+half-closed: kill that `ssh` pid and reopen it with keepalives.
+
+```sh
+ssh -f -N -o ExitOnForwardFailure=yes -o ServerAliveInterval=15 \
+  -o ServerAliveCountMax=6 -o TCPKeepAlive=yes \
+  -L 127.0.0.1:15432:127.0.0.1:5432 -p 11765 \
+  -i /Users/a1/.ssh/ai_project_198_200_50_8_ed25519 root@204.77.130.125
+```
+
 ## Release Manifest Flow
 
 The old `release:content-*` commands remain only as blocked compatibility
