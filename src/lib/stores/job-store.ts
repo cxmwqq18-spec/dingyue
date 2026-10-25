@@ -249,6 +249,10 @@ function isThemeModeRequest(requestJson?: Record<string, unknown>): boolean {
   return requestJson?.mode === "theme" || typeof requestJson?.creativePackId === "string";
 }
 
+function isWorkspaceJobRequest(value: unknown): boolean {
+  return Boolean(jsonObject<Record<string, unknown>>(value as Prisma.JsonValue | null | undefined)?.workspace);
+}
+
 function isVideoModeRequest(requestJson?: Record<string, unknown>): boolean {
   const fields = fieldRecord(requestJson);
   return requestJson?.mode === "video" ||
@@ -1263,11 +1267,18 @@ async function createGenerationJobInTx(tx: Tx, params: {
     }
   }
   await releaseStaleActiveJobs(tx, { siteId: params.siteId, customerId: params.customerId });
-  const activeJob = await tx.generationJob.findFirst({
+  // The single active job guard protects the legacy storefront forms, where one
+  // request owns the composer. Aidreamcapes workspace jobs are independent
+  // library tasks with their own per-task operation lock, so a creator may send
+  // several drafts upstream at once; they still may never stack on a legacy job.
+  const activeJobs = await tx.generationJob.findMany({
     where: { siteId: params.siteId, customerId: params.customerId, status: { in: ["queued", "running"] } },
-    select: { id: true }
+    select: { id: true, requestJson: true },
+    take: 50
   });
-  if (activeJob) throw new StoreError("generation_job_already_running", 409);
+  const incomingWorkspaceJob = isWorkspaceJobRequest(params.requestJson);
+  const blockedActiveJob = activeJobs.find((job) => !(incomingWorkspaceJob && isWorkspaceJobRequest(job.requestJson)));
+  if (blockedActiveJob) throw new StoreError("generation_job_already_running", 409);
 
   const fields = fieldRecord(params.requestJson);
   const rawVideoThemeId = typeof params.requestJson?.videoThemeId === "string"
