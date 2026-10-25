@@ -57,14 +57,14 @@ const root = "/www/wwwroot/aidreamcapes.com";
 // configurable so a release can be given the room it needs instead of
 // failing with a heap limit on the release host.
 //
-// Measured on the release host: the build peaks at about 3.7GB of resident
-// memory and finishes in roughly five minutes when the heap is capped at
-// 5120MB. The cap matters more than the machine size: with a cap larger than
-// the host can actually back (8GB or 12GB), V8 grows the heap instead of
-// collecting, the build page-faults through swap and dies with "Reached heap
-// limit" even though the live set never needed that much. Raise this only on a
-// host with enough spare memory, and let the prebuilt path in
-// scripts/build-aidreamcapes-prebuilt.mjs cover a host that cannot build.
+// Measured on a 24GB workstation: the build peaks at about 3.7GB of resident
+// memory and finishes in about five minutes with a 16GB cap. On the shared
+// release host the same build is best effort: it has finished with a 5120MB
+// cap, and it has also died at 5120MB, 8GB and 12GB when the other storefront
+// services left less memory than the heap wanted. A cap larger than the host
+// can back makes it worse, because V8 grows the heap instead of collecting and
+// the build swaps until it aborts. When this host cannot finish the build, use
+// the prebuilt path in scripts/build-aidreamcapes-prebuilt.mjs.
 const buildHeapMb = process.env.AIDREAMCAPES_BUILD_HEAP_MB || "5120";
 // Measured build peak is about 3.7GB of resident memory; below this the host
 // is already swapping and the build would thrash instead of finishing.
@@ -258,7 +258,21 @@ printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes
     console.log(command);
     process.exit(0);
   }
-  run("ssh", ["-p", port, ...connection, host, command]);
+  try {
+    run("ssh", ["-p", port, ...connection, host, command]);
+  } catch (error) {
+    if (!prebuiltBuild && !reuseBuildCommit) {
+      console.error([
+        "",
+        "The release host did not finish this deploy. If the build ran out of memory, build here and upload the artifact:",
+        `  npm run deploy:aidreamcapes:prebuilt -- --commit=${commit}`,
+        `  node scripts/deploy-aidreamcapes-release.mjs --commit=${commit} --prebuilt-build=.next-build --apply --confirm=deploy-aidreamcapes`,
+        "",
+        `A failed attempt leaves ${release} behind; remove it before retrying.`
+      ].join("\n"));
+    }
+    throw error;
+  }
   // Each release is about 10GB. Keep the directory bounded as part of the
   // release instead of waiting for the disk to fill up: the running release,
   // the previous ones and anything with a .keep marker survive.
