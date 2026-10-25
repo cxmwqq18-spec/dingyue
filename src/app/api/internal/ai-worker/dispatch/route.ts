@@ -190,6 +190,8 @@ type VideoStatusResponse = {
   url?: string;
   result_type?: string;
   video?: { url?: string; duration?: number };
+  media?: Array<{ id?: string; kind?: string; role?: string; url?: string; src?: string; name?: string }>;
+  fail_reason?: unknown;
   result?: { url?: string; result_url?: string; video_url?: string; videos?: Array<{ url?: string; result_url?: string; video_url?: string }>; images?: Array<{ url?: string; result_url?: string }> };
   output?: { url?: string; result_url?: string; video_url?: string } | Array<{ url?: string; result_url?: string; video_url?: string }>;
   error?: unknown;
@@ -2518,14 +2520,33 @@ function videoTaskId(body: VideoGenerateResponse) {
   return typeof taskId === "number" || typeof taskId === "string" ? String(taskId) : "";
 }
 
+function videoProgressPercent(value: unknown) {
+  if (typeof value === "number") return Number.isFinite(value) ? value : undefined;
+  if (typeof value !== "string") return undefined;
+  const parsed = Number(value.replace("%", "").trim());
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
 function normalizeVideoStatusResponse(body: VideoStatusResponse): VideoStatusResponse {
   const data = recordValue(body.data);
   if (!data) return body;
-  return {
+  const merged = {
     ...body,
     ...data,
     error: body.error ?? data.error,
     message: body.message ?? (typeof data.message === "string" ? data.message : undefined)
+  } as VideoStatusResponse;
+  // Yingling/new-api returns upper-case states and percentage strings; normalise
+  // them once so every consumer sees a lower-case state and numeric progress.
+  const status = textValue(merged.status).trim().toLowerCase();
+  const state = textValue(merged.state).trim().toLowerCase();
+  return {
+    ...merged,
+    ...(status ? { status } : {}),
+    ...(state ? { state } : {}),
+    progress: videoProgressPercent(merged.progress),
+    // new-api reports the provider failure message in `fail_reason`.
+    error: textValue(merged.error) || textValue(recordValue(data)?.fail_reason) || body.error
   } as VideoStatusResponse;
 }
 
@@ -2539,6 +2560,10 @@ function videoStatusResultUrl(status: VideoStatusResponse) {
   const resultImages = Array.isArray(result?.images) ? result?.images : undefined;
   const firstResultVideo = resultVideos ? recordValue(resultVideos[0]) : undefined;
   const firstResultImage = resultImages ? recordValue(resultImages[0]) : undefined;
+  // Yingling/new-api nests the finished media list under `data.media`.
+  const nestedData = recordValue(status.data) ?? {};
+  const nestedMedia = Array.isArray(nestedData.media) ? nestedData.media.map((item) => recordValue(item) ?? {}) : [];
+  const nestedVideo = nestedMedia.find((item) => textValue(item.kind).toLowerCase() === "video" || textValue(item.type).toLowerCase() === "video");
   return textValue(status.result_url) ||
     textValue(status.video_url) ||
     textValue(status.videoUrl) ||
@@ -2554,7 +2579,12 @@ function videoStatusResultUrl(status: VideoStatusResponse) {
     textValue(firstResultImage?.result_url) ||
     textValue(output?.url) ||
     textValue(output?.result_url) ||
-    textValue(output?.video_url);
+    textValue(output?.video_url) ||
+    textValue(nestedVideo?.url) ||
+    textValue(nestedVideo?.src) ||
+    textValue(nestedData.url) ||
+    textValue(nestedData.video_url) ||
+    textValue(nestedData.result_url);
 }
 
 function normalizedVideoMimeType(value: string) {
@@ -2845,14 +2875,13 @@ async function createVideoTask(params: {
         smartPickLid: isSmartPickLidBaseUrl(params.baseUrl)
       })
     : undefined;
-  const yinglingDimensions = parseVideoPixelSize(params.videoParams.size) ??
-    parseVideoPixelSize(videoSizeForParams(params.videoParams.aspect_ratio, params.videoParams.resolution));
+  const yinglingSize = params.videoParams.aspect_ratio;
   const payload = yinglingApi
     ? {
         model: params.model,
         prompt: params.prompt,
         duration: Number(params.videoParams.duration),
-        ...(yinglingDimensions ? { width: yinglingDimensions.width, height: yinglingDimensions.height } : {}),
+        ...(yinglingSize ? { size: yinglingSize } : {}),
         ...(firstImageUrl ? { image: firstImageUrl } : {})
       }
     : params.protocol === "openai-videos"
@@ -3079,8 +3108,11 @@ async function pollVideoTask(params: {
         updatedAt: new Date().toISOString()
       }, { nonBlocking: true, progressWrite: true, ...(progressTiming ? { timing: progressTiming } : {}) });
       if (params.protocol === "openai-videos") {
-        if (body.status === "completed" || body.status === "succeeded" || body.status === "done") return body;
-        if (body.status === "failed" || body.status === "cancelled" || body.status === "canceled") {
+        if (body.status === "completed" || body.status === "succeeded" || body.status === "success" || body.status === "done") {
+          if (videoStatusResultUrl(body)) return body;
+          continue;
+        }
+        if (body.status === "failed" || body.status === "failure" || body.status === "cancelled" || body.status === "canceled") {
           const rawFailure = textValue(body.error) || textValue(body.message) || "no_result";
           throw attachVideoProviderFailure(
             new Error(`ai_provider_video_failed_failed_${rawFailure}`),

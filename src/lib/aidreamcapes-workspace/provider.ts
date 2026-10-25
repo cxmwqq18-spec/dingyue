@@ -12,7 +12,7 @@ import { settleGenerationJobRelational } from "@/lib/stores/job-store";
 import { type WorkerBaseUrls } from "@/lib/worker";
 import { videoProviderAvailabilityReason } from "@/lib/video-provider-availability";
 import type { PlatformAiProvider } from "@/lib/types";
-import { videoDurationCreditCost, videoResolutionCreditCost, normalizeVideoDurationSecondsForFrameCount } from "@/lib/video-frame-config";
+import { videoDurationCreditCost, videoResolutionCreditCost, normalizeVideoDurationSecondsForFrameCount, normalizeVideoResolution } from "@/lib/video-frame-config";
 import { videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
 import type { VideoModelFamily } from "@/lib/video-frame-config";
@@ -368,6 +368,8 @@ export async function submitShotGeneration(args: {
   if (!providerDuration) throw new WorkspaceError("workspace_shot_duration_unsupported", 422);
   const modelFamily = videoProviderModelFamilyForProvider(provider);
   const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, assetIds.length, 15, modelFamily);
+  // 分辨率必须与报价一致：任务里选的档位就是真正派发给上游的档位。
+  const resolution = normalizeVideoResolution(args.input.options.resolution);
   // 计价统一入口：优先用模型通道价格，未定价时回落到主题价。
   // 与 quoteWorkspaceAction 使用同一函数，避免报价与扣费不一致触发 409。
   const billedCredits = workspaceShotCredits({
@@ -375,14 +377,14 @@ export async function submitShotGeneration(args: {
     theme,
     durationSeconds: billedDuration,
     modelFamily,
-    resolution: "720p",
+    resolution,
     imageInputCount: assetIds.length
   });
   if (args.expectedCredits === undefined || args.expectedCredits !== billedCredits) throw new WorkspaceError("workspace_price_quote_changed", 409);
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
     skipWorkerDispatch: true, includeWorkerPayload: true,
-    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution: "720p", modelOverride: provider.modelType, videoModelFamily: modelFamily },
+    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
         expectedCredits: billedCredits } } });
   if (created.reused && created.job.status !== "queued") return created;
