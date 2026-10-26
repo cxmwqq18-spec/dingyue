@@ -106,6 +106,7 @@ assert(aidreamcapesWorkspace.includes("Estimated cost: ${composerQuote.credits}"
 assert(aidreamcapesProvider.includes("const planned = args.direct ? args.duration : args.duration / Math.ceil(args.duration / 15)"), "direct quotes should price the selected duration as one clip while legacy storyboards keep 15s tiers");
 assert(aidreamcapesRunner.includes("const shots = direct ? 1 : Math.ceil(task.input.options.duration / 15)"), "direct task holds should reserve one clip, not two 15s units");
 assert(aidreamcapesRunner.includes("ref: `terminal:${operationId}`"), "failed direct shots and failed final renders should release the remaining task hold");
+assert(aidreamcapesWorkspace.includes('directWaiting ? "Generation hasn\'t started for this video. Open it and tap Try again." : ""'), "library cards must explain direct tasks that stopped before the paid clip instead of a silent ready state");
 
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
 assert(videoWorkspace.includes("const toggleCategoryContent = () =>"), "video theme categories should centralize their expand/collapse behavior");

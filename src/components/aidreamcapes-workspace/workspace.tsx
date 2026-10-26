@@ -1856,6 +1856,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const shotFailure = item.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
       const failureCode = item.operation?.state === "fail" ? item.operation?.error ?? item.error : item.status === "failed" ? item.error ?? shotFailure : shotFailure;
       const failureReason = failureCode ? humanError(failureCode) : "";
+      // A direct task can stop between the storyboard and the paid clip when
+      // the browser leaves mid-flow. The server has no error in that case, so
+      // the card must still say why nothing is happening instead of showing a
+      // silent "Ready to render" state.
+      const directWaiting = item.input.direct && !itemRunning && !failureReason && !item.video?.finalUrl
+        && item.status !== "completed" && item.status !== "cancelled"
+        && (item.storyboard?.shots.length ?? 0) > 0
+        && item.storyboard!.shots.every((shot) => shot.genStatus === "pending");
+      const cardNotice = failureReason || (directWaiting ? "Generation hasn't started for this video. Open it and tap Try again." : "");
       const badgeLabel = itemRunning ? (item.operation?.action === "render" ? (item.input.direct ? "Finishing" : "Rendering") : item.input.direct ? "Generating" : "Working") : failureReason ? "Needs attention" : taskStatusLabel(item);
       const statusTone = itemRunning ? "progress" as const : failureReason ? "error" as const : item.status === "completed" ? "done" as const : "idle" as const;
       return <LibraryTaskCard
@@ -1863,7 +1872,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         title={item.title}
         statusLabel={badgeLabel}
         statusTone={statusTone}
-        failureReason={failureReason || undefined}
+        failureReason={cardNotice || undefined}
         description={description || undefined}
         sceneName={scene?.name}
         modelLabel={model}
