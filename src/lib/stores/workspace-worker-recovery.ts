@@ -22,6 +22,18 @@ const WORKSPACE_RECOVERY_MIN_AGE_MS = 2 * 60_000;
 // failed without touching the ledger is the honest terminal state — a second
 // release here would corrupt the balance instead.
 async function markOrphanFailedWithoutLedger(jobId: string): Promise<void> {
+  const job = await prisma.generationJob.findFirst({
+    where: {
+      id: jobId,
+      siteId: WORKSPACE_RECOVERY_SITE_ID,
+      status: { in: ["queued", "running"] }
+    },
+    select: { resultJson: true }
+  });
+  if (!job) throw new Error("orphan_job_state_changed_during_recovery");
+  const previousResult = job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson)
+    ? job.resultJson as Record<string, unknown>
+    : {};
   const updated = await prisma.generationJob.updateMany({
     where: {
       id: jobId,
@@ -30,7 +42,13 @@ async function markOrphanFailedWithoutLedger(jobId: string): Promise<void> {
     },
     data: {
       status: "failed",
-      resultJson: { error: WORKSPACE_RECOVERY_ERROR }
+      resultJson: {
+        ...previousResult,
+        error: WORKSPACE_RECOVERY_ERROR,
+        lastWorkerStatus: "failed",
+        lastWorkerStage: "local_worker_recovery_without_ledger",
+        requestId: `req_${jobId}`
+      }
     }
   });
   if (updated.count !== 1) throw new Error("orphan_job_state_changed_during_recovery");
