@@ -322,7 +322,7 @@ assert(customerWorkspaceShell.includes("workspaceJobProviderFailureBody"), "fail
 assert(!customerWorkspaceShell.includes("activeJob ?? videoRuntimeJobs[0]"), "video progress cards should not fall back to the latest succeeded video when no active or focused video job exists");
 assert(customerWorkspaceShell.includes('status === "failed" || status === "partial"'), "video progress cards should still surface failed video jobs that need attention");
 assert(
-  customerWorkspaceShell.includes('workspaceGenerationErrorText(slot.error ?? "", spanishXby, slotFailure, isVideoRuntimeJob(job))') &&
+  customerWorkspaceShell.includes('workspaceGenerationErrorText(slot.error ?? "", spanishXby === true, slotFailure, isVideoRuntimeJob(job))') &&
   customerWorkspaceShell.indexOf("isVideoRequest && isVideoProviderUpstreamUnavailableError(error)") >= 0 &&
   customerWorkspaceShell.indexOf("isVideoRequest && isVideoProviderUpstreamUnavailableError(error)") < customerWorkspaceShell.indexOf("const normalizedFailure = isVideoRequest ? providerFailure ?? normalizeVideoProviderFailure({ error }) : undefined"),
   "slot-level upstream provider outages should be typed before providerFailure reference-rejection copy"
@@ -455,6 +455,7 @@ assert(showcaseSyncScript.includes("CUSTOMER_VIDEO_FRAME_LIMIT = 7"), "homepage 
 assert(!showcaseSyncScript.includes("maxFrames: 1"), "homepage showcase sync should not downgrade video presets back to one frame");
 
 const videoProviderAvailability = read("src/lib/video-provider-availability.ts");
+const videoProviderFamily = read("src/lib/video-provider-family.ts");
 assert(videoProviderAvailability.includes("videoProviderAvailabilityReason"), "video provider availability should centralize preflight provider checks");
 assert(videoProviderAvailability.includes("ai_provider_video_content_unverified_smartpicklid"), "video provider availability should preserve the SmartPickLid content verification guard");
 assert(videoProviderAvailability.includes("ai_provider_video_content_unverified_magic666"), "video provider availability should preserve the Magic666 content verification guard");
@@ -462,8 +463,8 @@ assert(videoProviderAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID
 assert(videoProviderAvailability.includes('envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true'), "SmartPickLid reference video preflight should default to the enabled platform provider unless explicitly disabled");
 assert(videoProviderAvailability.includes("video_provider_temporarily_unavailable"), "video provider availability should expose a customer-safe unavailable error");
 assert(videoProviderAvailability.includes("ai_provider_video_first_frame_required_lk888_media"), "LK888 Grok video preflight should require a reference frame");
-assert(videoProviderAvailability.includes('"huitu-openapi"'), "Huitu video providers should be recognized as a dedicated protocol");
-assert(videoProviderAvailability.includes('"tokengo-media"'), "TokenGo/Buming media providers should be recognized as a dedicated protocol");
+assert(videoProviderFamily.includes('"huitu-openapi"'), "Huitu video providers should be recognized as a dedicated protocol");
+assert(videoProviderFamily.includes('"tokengo-media"'), "TokenGo/Buming media providers should be recognized as a dedicated protocol");
 assert(videoProviderAvailability.includes("ai_provider_video_reference_required_huitu"), "Huitu video preflight should require a reference frame");
 
 const workspaceShell = read("src/components/storefront/customer-workspace-shell.tsx");
@@ -530,7 +531,7 @@ assert(workspaceShell.includes("This video request did not include selected refe
 assert(workspaceShell.includes("URL.createObjectURL(file)"), "video frame uploads should use optimistic local previews");
 assert(workspaceShell.includes('params.asset.localStatus === "uploading" && params.asset.previewUrl'), "video frame uploads should render the local image preview while the file is still uploading");
 assert(workspaceShell.includes("prepareCustomerVideoFrameUploadFile(file)"), "video frame uploads should prepare a video-ready image before sending it to the server");
-assert(workspaceShell.includes("customerImageUploadErrorMessage(file.name, result.error, spanishXby)"), "video frame upload failures should surface server error details");
+assert(workspaceShell.includes("customerImageUploadErrorMessage(file.name, result.error, spanishXby === true)"), "video frame upload failures should surface server error details");
 assert(workspaceShell.includes("local:video:"), "video frame uploads should create local optimistic asset ids");
 assert(workspaceShell.includes("uploaded and selected"), "video frame uploads should auto-select successful uploads");
 assert(workspaceShell.includes("LOCALLY_CREATED_VIDEO_FRAME_KEEPALIVE_MS"), "video frame uploads should protect newly created remote ids from stale runtime refreshes");
@@ -651,7 +652,7 @@ assert(workspaceShell.includes("Video creation took too long to start"), "video 
 assert(workspaceShell.includes("Video creation stopped before it returned a result"), "expired video jobs should explain that creation stopped and credits were returned");
 assert(workspaceShell.includes("function workspaceJobEffectiveStatus"), "workspace job cards should derive an effective status from final job and slot states");
 assert(workspaceShell.includes('outputSlots.length > 0 && outputSlots.every((slot) => slot.status === "failed")'), "failed output slots should collapse a stale running job display to failed");
-assert(workspaceShell.includes("workspaceJobBody(job, spanishXby, slots)"), "workspace job failure body should use slot errors when final job error has not refreshed yet");
+assert(workspaceShell.includes("workspaceJobBody(job, spanishXby === true, slots)"), "workspace job failure body should use slot errors when final job error has not refreshed yet");
 assert(workspaceShell.includes('status === "failed" || status === "partial"'), "partial job states should count as needing attention");
 assert(workspaceShell.includes("function videoRetryDraftFromJob"), "workspace shell should rebuild a retry draft from saved video job request JSON");
 assert(workspaceShell.includes("setRetryVideoDraft({ ...draft, key:"), "retrying a failed video should pass a one-time draft into the video composer");
