@@ -1,0 +1,95 @@
+{
+  "siteId": "site_aidreamcapes",
+  "model": "Album",
+  "field": "status",
+  "generatedAt": "2026-10-26T07:27:14.107Z",
+  "targetStatus": "hidden",
+  "count": 12,
+  "digest": "e381a5f57ee67cb1bf7255770dd3dfcdab4d47a5fc51e11814510c2ccec31157",
+  "operations": [
+    {
+      "id": "album_aidreamcapes_aria_destination",
+      "title": "Route portrait album",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-06-27T00:00:00.000Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrirv0b5_video",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-13T05:19:11.000Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrjb1r9j_db128c",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-13T14:15:48.296Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrjduwm5_f454f3",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-13T15:34:27.488Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrjf1u5j_d4b61a",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-13T16:07:50.505Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrk4q85d_d15c68",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-14T04:06:38.786Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrk6quxc_d8366f",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-14T05:03:07.538Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrkne6jw_cf43ee",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-14T12:49:09.550Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrkuqt6a_65a859",
+      "title": "Generated album",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-14T16:14:56.052Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrlhnx7h_247662",
+      "title": "Generated album",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-15T02:56:32.478Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrlr0cjq_8dc799",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-15T07:18:08.776Z"
+    },
+    {
+      "id": "album_aidreamcapes_mrltsf92_7bd6ba",
+      "title": "Generated video",
+      "from": "ready",
+      "to": "hidden",
+      "recordedUpdatedAt": "2026-07-15T08:35:57.881Z"
+    }
+  ]
+}

@@ -73,7 +73,7 @@ export async function queueAction(task: StoredTask, body: Record<string, unknown
   catch (error) {
     if (mockPaidReservation) refundMockCredits({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, operationId });
     if (freshStoryboardHold) {
-      try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `queue:${operationId}` }); }
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `queue:${operationId}`, amount: freshStoryboardHold.added }); }
       catch { /* 释放失败留待终态钩子兜底，不影响保存错误本身。 */ }
     }
     throw error;
@@ -96,14 +96,16 @@ async function reserveFreshStoryboardTaskHold(task: StoredTask) {
   if (!quote.credits || quote.credits <= 0) return undefined;
   const shots = Math.ceil(task.input.options.duration / 15);
   const credits = quote.credits * Math.max(1, shots);
+  let added = 0;
   try {
-    await reserveWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, credits });
+    const hold = await reserveWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, credits });
+    added = hold.added;
   } catch (error) {
     // 余额不足时把冻结失败转成工作台错误码，让确认弹窗立刻给出明确反馈。
     if (error instanceof Error && error.message === "insufficient_credits") throw new WorkspaceError("insufficient_credits", 402);
     throw error;
   }
-  return { credits };
+  return { credits, added };
 }
 
 /** Cancel queued work, or in-flight work only while execution is strictly mock-only. */

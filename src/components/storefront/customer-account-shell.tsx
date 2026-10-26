@@ -322,8 +322,19 @@ function StatementAccountCenter({
   const initials = accountInitials(displayName, runtimeCustomer.email);
   const [activeSection, setActiveSection] = useState<AccountSection>("overview");
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const activeCopy = statementSectionCopy[activeSection];
-  const activeItem = accountNavItems.find((item) => item.id === activeSection) ?? accountNavItems[0];
+  // AIVideosUGC hides the legacy albums and private-model panels; other
+  // storefronts keep every account section.
+  const railGroups = useMemo(() => {
+    if (site.id !== "site_aidreamcapes") return accountRailGroups;
+    const hidden = new Set<AccountSection>(["albums", "models"]);
+    return accountRailGroups
+      .map((group) => ({ ...group, items: group.items.filter((id) => !hidden.has(id)) }))
+      .filter((group) => group.items.length > 0);
+  }, [site.id]);
+  const activeSectionVisible = railGroups.some((group) => group.items.includes(activeSection));
+  const effectiveSection: AccountSection = activeSectionVisible ? activeSection : "overview";
+  const activeCopy = statementSectionCopy[effectiveSection];
+  const activeItem = accountNavItems.find((item) => item.id === effectiveSection) ?? accountNavItems[0];
 
   useIsomorphicLayoutEffect(() => {
     if (typeof window === "undefined") return;
@@ -410,7 +421,7 @@ function StatementAccountCenter({
 
         <div className="cc-grid">
           <nav className="cc-rail" aria-label="Account sections">
-            {accountRailGroups.map((group) => (
+            {railGroups.map((group) => (
               <div className="cc-rail-group" key={group.label}>
                 <span className="cc-rail-label">{group.label}</span>
                 {group.items.map((id) => {
@@ -438,11 +449,11 @@ function StatementAccountCenter({
           <main className="cc-panel" aria-live="polite">
             <div className="cc-panel-head">
               <div>
-                <h2>{activeSection === "overview" ? `Welcome back, ${displayName.split(" ")[0]}` : activeCopy.title}</h2>
+                <h2>{effectiveSection === "overview" ? `Welcome back, ${displayName.split(" ")[0]}` : activeCopy.title}</h2>
                 <p>{activeCopy.description}</p>
               </div>
             </div>
-            <CustomerAccountDataIsland activeSection={activeSection} basePath={basePath} customer={runtimeCustomer} initialRuntime={initialRuntime} siteId={site.id} siteSlug={site.slug} variant="statement" />
+            <CustomerAccountDataIsland activeSection={effectiveSection} basePath={basePath} customer={runtimeCustomer} initialRuntime={initialRuntime} siteId={site.id} siteSlug={site.slug} variant="statement" />
           </main>
         </div>
       </div>

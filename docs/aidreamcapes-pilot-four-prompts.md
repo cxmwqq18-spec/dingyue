@@ -39,12 +39,12 @@
 
 统一生成规格：9:16 竖幅 640×1138 WebP；提示词为英文（模型按英文消费）。
 
-| 案例 | 指定演员 | 音色 | 需生成道具图 | 需生成场景图 | 挂载附件 |
-|---|---|---|---|---|---|
-| 折叠自行车通勤 | Jon（outdoor-2） | Warm & grounded | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
-| 耳机盒揭秘 | Mila（indoor-2） | Calm & clear | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
-| 橄榄绿衬衫搭配合身 | Dev（home-1） | Low & grounded | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
-| 针织毛衣镜 | Elise（terrace-1） | Bright & lively | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
+| 案例        | 指定演员             | 音色              | 需生成道具图        | 需生成场景图  | 挂载附件       |
+| --------- | ---------------- | --------------- | ------------- | ------- | ---------- |
+| 折叠自行车通勤   | Jon（outdoor-2）   | Warm & grounded | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
+| 耳机盒揭秘     | Mila（indoor-2）   | Calm & clear    | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
+| 橄榄绿衬衫搭配合身 | Dev（home-1）      | Low & grounded  | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
+| 针织毛衣镜     | Elise（terrace-1） | Bright & lively | 背面 / 特写 共 2 张 | 空场景 1 张 | 5 图 + 1 音频 |
 
 共需生成 12 张资产图（每案例 3 张：背面、材质特写、空场景）；头像与音色音频随演员直接取用。
 
@@ -54,18 +54,18 @@
 
 ![Jon](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp)
 
-**音频（角色音色参考，@Audio 1）**：Warm & grounded — A warm male voice in a relaxed mid register, with natural phrasing and clear articulation.。文件 `/ai-actors/outdoor-2.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/outdoor-2.mp3
+**音频（角色音色参考，@Audio 1）**：Warm & grounded — A warm male voice in a relaxed mid register, with natural phrasing and clear articulation.。文件 `/ai-actors/outdoor-2.mp3`，可直接打开试听：<https://www.aivideosugc.com/ai-actors/outdoor-2.mp3>
 
 **附件挂载清单（按上传顺序）**：
 
-| 附件顺序 | 句柄 | 素材文件 | 说明 |
-|---:|---|---|---|
-| 1 | @Image 1 场景 | `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp` | 演员 Jon，人物身份基准（与创建流程头像库一致） |
-| 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
-| 4 | @Image 4 产品背面 | `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
-| 5 | @Image 5 材质特写 | `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 音频 | @Audio 1 角色音色 | `/ai-actors/outdoor-2.mp3` | 演员 Jon 台词音色参考（Warm & grounded） |
+| 附件顺序 | 句柄            | 素材文件                                                               | 说明                             |
+| ---: | ------------- | ------------------------------------------------------------------ | ------------------------------ |
+|    1 | @Image 1 场景   | `/ai-image-generation/folding-bike-commute-s1-scene-r1-640.webp`   | 空镜全景，空间与光位基准                   |
+|    2 | @Image 2 角色   | `/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp` | 演员 Jon，人物身份基准（与创建流程头像库一致）      |
+|    3 | @Image 3 产品正面 | `客户上传的产品照片`                                                        | 道具一致性基准                        |
+|    4 | @Image 4 产品背面 | `/ai-image-generation/folding-bike-commute-a2-back-r1-640.webp`    | 同一实物形制基准（背面）                   |
+|    5 | @Image 5 材质特写 | `/ai-image-generation/folding-bike-commute-a3-macro-r1-640.webp`   | 表面微纹理基准                        |
+|   音频 | @Audio 1 角色音色 | `/ai-actors/outdoor-2.mp3`                                         | 演员 Jon 台词音色参考（Warm & grounded） |
 
 ### 视频提示词（@Image 附件顺序引用，人物与音色已对齐演员）
 
@@ -120,18 +120,19 @@ Vertical 9:16 scene reference photo of an empty train platform beside a stationa
 
 ![Mila](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp)
 
-**音频（角色音色参考，@Audio 1）**：Calm & clear — A calm, thoughtful female voice with a slower pace and clear articulation.。文件 `/ai-actors/indoor-2.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/indoor-2.mp3
+**音频（角色音色参考，@Audio 1）**：Calm & clear — A calm, thoughtful female voice with a slower pace and clear articulation.。文件 `/ai-actors/indoor-2.mp3`，可直接打开试听：<https://www.aivideosugc.com/ai-actors/indoor-2.mp3>
+
 
 **附件挂载清单（按上传顺序）**：
 
-| 附件顺序 | 句柄 | 素材文件 | 说明 |
-|---:|---|---|---|
-| 1 | @Image 1 场景 | `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp` | 演员 Mila，人物身份基准（与创建流程头像库一致） |
-| 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
-| 4 | @Image 4 产品背面 | `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
-| 5 | @Image 5 材质特写 | `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 音频 | @Audio 1 角色音色 | `/ai-actors/indoor-2.mp3` | 演员 Mila 台词音色参考（Calm & clear） |
+| 附件顺序 | 句柄            | 素材文件                                                              | 说明                           |
+| ---: | ------------- | ----------------------------------------------------------------- | ---------------------------- |
+|    1 | @Image 1 场景   | `/ai-image-generation/earbud-box-reveal-s1-scene-r1-640.webp`     | 空镜全景，空间与光位基准                 |
+|    2 | @Image 2 角色   | `/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp` | 演员 Mila，人物身份基准（与创建流程头像库一致）   |
+|    3 | @Image 3 产品正面 | `客户上传的产品照片`                                                       | 道具一致性基准                      |
+|    4 | @Image 4 产品背面 | `/ai-image-generation/earbud-box-reveal-a2-back-r1-640.webp`      | 同一实物形制基准（背面）                 |
+|    5 | @Image 5 材质特写 | `/ai-image-generation/earbud-box-reveal-a3-macro-r1-640.webp`     | 表面微纹理基准                      |
+|   音频 | @Audio 1 角色音色 | `/ai-actors/indoor-2.mp3`                                         | 演员 Mila 台词音色参考（Calm & clear） |
 
 ### 视频提示词（@Image 附件顺序引用，人物与音色已对齐演员）
 
@@ -186,18 +187,18 @@ Vertical 9:16 scene reference photo of a warm wooden table with an open kraft sh
 
 ![Dev](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp)
 
-**音频（角色音色参考，@Audio 1）**：Low & grounded — An adult male voice with a natural, trustworthy tone, a medium-low register, measured pacing and clear articulation.。文件 `/ai-actors/home-1.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/home-1.mp3
+**音频（角色音色参考，@Audio 1）**：Low & grounded — An adult male voice with a natural, trustworthy tone, a medium-low register, measured pacing and clear articulation.。文件 `/ai-actors/home-1.mp3`，可直接打开试听：<https://www.aivideosugc.com/ai-actors/home-1.mp3>
 
 **附件挂载清单（按上传顺序）**：
 
-| 附件顺序 | 句柄 | 素材文件 | 说明 |
-|---:|---|---|---|
-| 1 | @Image 1 场景 | `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp` | 演员 Dev，人物身份基准（与创建流程头像库一致） |
-| 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
-| 4 | @Image 4 产品背面 | `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
-| 5 | @Image 5 材质特写 | `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 音频 | @Audio 1 角色音色 | `/ai-actors/home-1.mp3` | 演员 Dev 台词音色参考（Low & grounded） |
+| 附件顺序 | 句柄            | 素材文件                                                                 | 说明                            |
+| ---: | ------------- | -------------------------------------------------------------------- | ----------------------------- |
+|    1 | @Image 1 场景   | `/ai-image-generation/olive-overshirt-fit-reel-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准                  |
+|    2 | @Image 2 角色   | `/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp`      | 演员 Dev，人物身份基准（与创建流程头像库一致）     |
+|    3 | @Image 3 产品正面 | `客户上传的产品照片`                                                          | 道具一致性基准                       |
+|    4 | @Image 4 产品背面 | `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`  | 同一实物形制基准（背面）                  |
+|    5 | @Image 5 材质特写 | `/ai-image-generation/olive-overshirt-fit-reel-a3-macro-r1-640.webp` | 表面微纹理基准                       |
+|   音频 | @Audio 1 角色音色 | `/ai-actors/home-1.mp3`                                              | 演员 Dev 台词音色参考（Low & grounded） |
 
 ### 视频提示词（@Image 附件顺序引用，人物与音色已对齐演员）
 
@@ -226,6 +227,7 @@ A 30-second vertical 9:16 e-commerce product display film for an olive overshirt
 【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.
 ```
 
+
 ### 需生成的资产图提示词（真人实质感规范已内置）
 
 **1）产品背面** → `/ai-image-generation/olive-overshirt-fit-reel-a2-back-r1-640.webp`
@@ -252,18 +254,18 @@ Vertical 9:16 scene reference photo of a calm real-life room corner with a neutr
 
 ![Elise](https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp)
 
-**音频（角色音色参考，@Audio 1）**：Bright & lively — A bright, lively female voice with a medium-fast pace and expressive intonation.。文件 `/ai-actors/terrace-1.mp3`，可直接打开试听：https://www.aivideosugc.com/ai-actors/terrace-1.mp3
+**音频（角色音色参考，@Audio 1）**：Bright & lively — A bright, lively female voice with a medium-fast pace and expressive intonation.。文件 `/ai-actors/terrace-1.mp3`，可直接打开试听：<https://www.aivideosugc.com/ai-actors/terrace-1.mp3>
 
 **附件挂载清单（按上传顺序）**：
 
-| 附件顺序 | 句柄 | 素材文件 | 说明 |
-|---:|---|---|---|
-| 1 | @Image 1 场景 | `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp` | 空镜全景，空间与光位基准 |
-| 2 | @Image 2 角色 | `/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp` | 演员 Elise，人物身份基准（与创建流程头像库一致） |
-| 3 | @Image 3 产品正面 | `客户上传的产品照片` | 道具一致性基准 |
-| 4 | @Image 4 产品背面 | `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp` | 同一实物形制基准（背面） |
-| 5 | @Image 5 材质特写 | `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp` | 表面微纹理基准 |
-| 音频 | @Audio 1 角色音色 | `/ai-actors/terrace-1.mp3` | 演员 Elise 台词音色参考（Bright & lively） |
+| 附件顺序 | 句柄            | 素材文件                                                               | 说明                               |
+| ---: | ------------- | ------------------------------------------------------------------ | -------------------------------- |
+|    1 | @Image 1 场景   | `/ai-image-generation/knit-sweater-mirror-s1-scene-r1-640.webp`    | 空镜全景，空间与光位基准                     |
+|    2 | @Image 2 角色   | `/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp` | 演员 Elise，人物身份基准（与创建流程头像库一致）      |
+|    3 | @Image 3 产品正面 | `客户上传的产品照片`                                                        | 道具一致性基准                          |
+|    4 | @Image 4 产品背面 | `/ai-image-generation/knit-sweater-mirror-a2-back-r1-640.webp`     | 同一实物形制基准（背面）                     |
+|    5 | @Image 5 材质特写 | `/ai-image-generation/knit-sweater-mirror-a3-macro-r1-640.webp`    | 表面微纹理基准                          |
+|   音频 | @Audio 1 角色音色 | `/ai-actors/terrace-1.mp3`                                         | 演员 Elise 台词音色参考（Bright & lively） |
 
 ### 视频提示词（@Image 附件顺序引用，人物与音色已对齐演员）
 

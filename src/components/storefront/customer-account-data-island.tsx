@@ -20,15 +20,16 @@ import {
   ReceiptText,
   ShieldCheck,
   Sparkles,
+  Trash2,
   Upload,
   UserRound,
   WalletCards
 } from "lucide-react";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimePagination } from "@/lib/types";
+import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimeDownloadEntry, ThemeRuntimePagination } from "@/lib/types";
 import { storefrontAccessibleMediaAlt, storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import type { LucideIcon } from "lucide-react";
@@ -85,6 +86,16 @@ const accountPrefetchTargets: Array<{ list?: AccountList; section: AccountSectio
   { section: "subscription", list: "subscriptions" }
 ];
 
+/**
+ * The AIVideosUGC account center (site_aidreamcapes) drops the legacy albums
+ * and private-model panels, records timestamps to the second, and can remove
+ * download history rows. Every other storefront keeps the account surface
+ * unchanged.
+ */
+const AIVIDEOSUGC_ACCOUNT_SITE_ID = "site_aidreamcapes";
+type AccountTimeMode = "date" | "precise-utc" | "precise-device";
+const AccountTimeModeContext = createContext<AccountTimeMode>("date");
+
 function readCachedSection(cacheKey: string): ThemeRuntimeData | undefined {
   const cached = sectionCache.get(cacheKey);
   if (!cached) return undefined;
@@ -100,6 +111,7 @@ function writeCachedSection(cacheKey: string, runtime: ThemeRuntimeData) {
 }
 
 function loadSectionRuntime(params: {
+  bust?: string;
   cacheKey: string;
   list?: AccountList;
   page: number;
@@ -109,7 +121,8 @@ function loadSectionRuntime(params: {
 }): Promise<ThemeRuntimeData> {
   const cached = readCachedSection(params.cacheKey);
   if (cached) return Promise.resolve(cached);
-  const inflight = sectionInflight.get(params.cacheKey);
+  const inflightKey = params.bust ? `${params.cacheKey}:${params.bust}` : params.cacheKey;
+  const inflight = sectionInflight.get(inflightKey);
   if (inflight) return inflight;
   const query = new URLSearchParams({
     profile: "account",
@@ -118,6 +131,13 @@ function loadSectionRuntime(params: {
     pageSize: String(params.pageSize)
   });
   if (params.list) query.set("list", params.list);
+  // After a mutation the runtime GET is requested with a unique URL so the
+  // browser does not answer it from its private 20s HTTP cache. The refresh
+  // parameter also bypasses the server-side runtime cache.
+  if (params.bust) {
+    query.set("ts", params.bust);
+    query.set("refresh", params.bust);
+  }
   const request = (async () => {
     let lastError: unknown = new Error("account_data_unavailable");
     for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -145,9 +165,9 @@ function loadSectionRuntime(params: {
     throw lastError instanceof Error ? lastError : new Error("account_data_unavailable");
   })()
     .finally(() => {
-      sectionInflight.delete(params.cacheKey);
+      sectionInflight.delete(inflightKey);
     });
-  sectionInflight.set(params.cacheKey, request);
+  sectionInflight.set(inflightKey, request);
   return request;
 }
 
@@ -160,11 +180,43 @@ function money(amountCents: number | undefined, currency: string | undefined) {
   }).format((amountCents ?? 0) / 100);
 }
 
-function dateLabel(value: string | undefined) {
+function dateLabel(value: string | undefined, mode: AccountTimeMode) {
   if (!value) return "Not started";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Not started";
+  // Server rendering always resolves in UTC so the same record prints the same
+  // time before and after hydration. The AIVideosUGC account center switches
+  // to the viewer's own timezone once the browser is mounted (see the island).
+  if (mode === "precise-device") {
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23"
+    });
+  }
+  if (mode === "precise-utc") {
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+      timeZone: "UTC"
+    });
+  }
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+/** Timestamp formatter scoped to the current account center render, never a module global. */
+function useAccountDateLabel() {
+  const mode = useContext(AccountTimeModeContext);
+  return (value: string | undefined) => dateLabel(value, mode);
 }
 
 function statusLabel(value: string | undefined) {
@@ -229,6 +281,7 @@ function useAccountSectionRuntime(params: {
   list?: AccountList;
   page: number;
   pageSize: number;
+  reloadNonce?: number;
   retryNonce: number;
   section: AccountSection;
   siteId: string;
@@ -254,6 +307,7 @@ function useAccountSectionRuntime(params: {
     let cancelled = false;
     setState({ status: "loading" });
     loadSectionRuntime({
+      bust: params.reloadNonce ? `${params.reloadNonce}-${Date.now()}` : undefined,
       cacheKey,
       list: params.list,
       page: params.page,
@@ -270,7 +324,7 @@ function useAccountSectionRuntime(params: {
     return () => {
       cancelled = true;
     };
-  }, [cacheKey, params.initialRuntime, params.list, params.page, params.pageSize, params.retryNonce, params.section, params.siteId]);
+  }, [cacheKey, params.initialRuntime, params.list, params.page, params.pageSize, params.reloadNonce, params.retryNonce, params.section, params.siteId]);
 
   return state;
 }
@@ -284,6 +338,7 @@ function AccountCard({
   loadingTitle,
   onPageChange,
   pageState,
+  reloadNonce = 0,
   section,
   siteId
 }: {
@@ -295,6 +350,8 @@ function AccountCard({
   loadingTitle: string;
   onPageChange?: (next: PageState) => void;
   pageState?: PageState;
+  /** Bumped by the island after a mutation so the section reloads fresh data. */
+  reloadNonce?: number;
   section: AccountSection;
   siteId: string;
 }) {
@@ -305,6 +362,7 @@ function AccountCard({
     list,
     page: pageState?.page ?? 1,
     pageSize: pageState?.pageSize ?? 20,
+    reloadNonce,
     retryNonce,
     section,
     siteId
@@ -546,6 +604,7 @@ function MediaThumb({
 }
 
 function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const account = accountCustomer(runtime, fallbackCustomer);
   const latestOrder = runtime.orders?.[0];
   const latestJob = runtime.jobs[0];
@@ -557,19 +616,19 @@ function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: strin
     {
       title: "Photo profile request",
       subtitle: latestJob ? `${jobStatusLabel(latestJob.status)} · request history is ready` : "No request submitted yet",
-      time: latestJob ? dateLabel(latestJob.updatedAt) : "—",
+      time: latestJob ? formatDate(latestJob.updatedAt) : "—",
       active: Boolean(latestJob)
     },
     {
       title: "Download center",
       subtitle: downloads.length ? `${downloads.length} delivered file${downloads.length === 1 ? "" : "s"} in history` : "No delivered assets yet",
-      time: downloads[0] ? dateLabel(downloads[0].createdAt) : "—",
+      time: downloads[0] ? formatDate(downloads[0].createdAt) : "—",
       active: false
     },
     {
       title: "Private album",
       subtitle: albums.length ? `${albums.length} album${albums.length === 1 ? "" : "s"} connected to this account` : "No published albums yet",
-      time: albums[0] ? dateLabel(albums[0].updatedAt) : "—",
+      time: albums[0] ? formatDate(albums[0].updatedAt) : "—",
       active: false
     }
   ];
@@ -585,7 +644,7 @@ function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: strin
       <div className="ac-classic-stat-grid">
         <article className="ac-classic-stat"><span>Available credits</span><strong>{account.balance.available ?? 0}</strong><small>Ready for your next request</small></article>
         <article className="ac-classic-stat"><span>Current plan</span><strong>{planLabel}</strong><small>{activeSubscription ? `Status: ${statusLabel(activeSubscription.status)}` : "Choose a package when ready"}</small></article>
-        <article className="ac-classic-stat"><span>Recent request</span><strong>{latestJob ? jobStatusLabel(latestJob.status) : "None yet"}</strong><small>{latestJob ? `Submitted ${dateLabel(latestJob.updatedAt)}` : "No request history yet"}</small></article>
+        <article className="ac-classic-stat"><span>Recent request</span><strong>{latestJob ? jobStatusLabel(latestJob.status) : "None yet"}</strong><small>{latestJob ? `Submitted ${formatDate(latestJob.updatedAt)}` : "No request history yet"}</small></article>
         <article className="ac-classic-stat"><span>Last checkout</span><strong>{latestOrder ? money(latestOrder.amountCents, latestOrder.currency) : "$0"}</strong><small>{latestOrder ? "Latest purchase recorded" : "No purchase history yet"}</small></article>
       </div>
       <div className="ac-classic-quick-actions">
@@ -625,6 +684,7 @@ function OverviewCard({ basePath, fallbackCustomer, runtime }: { basePath: strin
 }
 
 function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: string; fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const account = accountCustomer(runtime, fallbackCustomer);
   const jobs = runtime.jobs ?? [];
   const orders = runtime.orders ?? [];
@@ -633,7 +693,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
     ...orders.map((order) => ({
       key: `order-${order.id}`,
       sortAt: new Date(order.createdAt).getTime(),
-      when: dateLabel(order.createdAt),
+      when: formatDate(order.createdAt),
       title: `Purchase ${money(order.amountCents, order.currency)}`,
       detail: `${order.credits} credits · ${statusLabel(order.status)}`,
       amount: order.credits > 0 ? `+${order.credits}` : undefined,
@@ -642,7 +702,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
     ...jobs.map((job) => ({
       key: `job-${job.id}`,
       sortAt: new Date(job.updatedAt).getTime(),
-      when: dateLabel(job.updatedAt),
+      when: formatDate(job.updatedAt),
       title: requestTitle(job.id, 0),
       detail: jobStatusLabel(job.status),
       amount: job.creditsReserved > 0 ? `−${job.creditsReserved}` : undefined,
@@ -651,7 +711,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
     ...downloads.map((entry) => ({
       key: `download-${entry.id}`,
       sortAt: new Date(entry.createdAt).getTime(),
-      when: dateLabel(entry.createdAt),
+      when: formatDate(entry.createdAt),
       title: entry.label,
       detail: "Downloaded",
       amount: undefined,
@@ -709,7 +769,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
           <div className="cc-job" key={job.id}>
             <div>
               <strong>{requestTitle(job.id, index)}</strong>
-              <span>{job.creditsReserved} credits held · updated {dateLabel(job.updatedAt)}</span>
+              <span>{job.creditsReserved} credits held · updated {formatDate(job.updatedAt)}</span>
             </div>
             <span className="cc-pill is-warn">{jobStatusLabel(job.status)}</span>
           </div>
@@ -953,6 +1013,7 @@ function SecurityCard({ basePath, fallbackCustomer, runtime, siteId }: { basePat
 }
 
 function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const subscriptions = runtime.subscriptions ?? [];
   const activeSubscription = subscriptions.find((subscription) => subscription.status === "active" || subscription.status === "trialing") ?? subscriptions[0];
   return (
@@ -961,7 +1022,7 @@ function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: Th
       <div className="grid gap-3 sm:grid-cols-3">
         <StatTile label="Current plan" value={activeSubscription?.productName ?? activeSubscription?.priceLabel ?? "No plan"} hint={activeSubscription ? statusLabel(activeSubscription.status) : "No active subscription"} />
         <StatTile label="Credits per cycle" value={activeSubscription?.creditsPerCycle ?? 0} hint={activeSubscription?.interval ? `${statusLabel(activeSubscription.interval)} billing` : "Subscription credits"} />
-        <StatTile label="Period end" value={dateLabel(activeSubscription?.currentPeriodEnd)} hint={activeSubscription?.currentPeriodStart ? `Started ${dateLabel(activeSubscription.currentPeriodStart)}` : undefined} />
+        <StatTile label="Period end" value={formatDate(activeSubscription?.currentPeriodEnd)} hint={activeSubscription?.currentPeriodStart ? `Started ${formatDate(activeSubscription.currentPeriodStart)}` : undefined} />
       </div>
       <div className="rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel)] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -980,7 +1041,7 @@ function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: Th
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4" key={subscription.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{subscription.productName ?? subscription.priceLabel ?? "Subscription"}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{subscription.creditsPerCycle} credits - {money(subscription.amountCents, subscription.currency)} - renews {dateLabel(subscription.currentPeriodEnd)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{subscription.creditsPerCycle} credits - {money(subscription.amountCents, subscription.currency)} - renews {formatDate(subscription.currentPeriodEnd)}</p>
             </div>
             <StatusPill tone={subscription.status === "active" || subscription.status === "trialing" ? "good" : "neutral"}>{statusLabel(subscription.status)}</StatusPill>
           </div>
@@ -991,6 +1052,7 @@ function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: Th
 }
 
 function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; variant?: "classic" | "statement" }) {
+  const formatDate = useAccountDateLabel();
   const customer = accountCustomer(runtime, fallbackCustomer);
   const ledger = runtime.ledger ?? [];
   if (variant === "statement") {
@@ -1012,7 +1074,7 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
               <tbody>
                 {ledger.map((entry) => (
                   <tr key={entry.id}>
-                    <td className="cc-when">{dateLabel(entry.createdAt)}</td>
+                    <td className="cc-when">{formatDate(entry.createdAt)}</td>
                     <td className="cc-what"><strong>{ledgerLabel(entry.type)}</strong><span>{entry.sourceLabel ?? entry.sourceId ?? "Account activity"}</span></td>
                     <td className={`cc-amount ${entry.amount >= 0 ? "is-pos" : "is-neg"}`}>{entry.amount >= 0 ? "+" : ""}{entry.amount}</td>
                   </tr>
@@ -1036,7 +1098,7 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={entry.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{ledgerLabel(entry.type)}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{entry.sourceLabel ?? entry.sourceId ?? "Account activity"} - {dateLabel(entry.createdAt)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{entry.sourceLabel ?? entry.sourceId ?? "Account activity"} - {formatDate(entry.createdAt)}</p>
             </div>
             <span className={`font-mono text-sm font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
               {entry.amount >= 0 ? "+" : ""}{entry.amount}
@@ -1049,6 +1111,7 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
 }
 
 function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const orders = runtime.orders ?? [];
   return (
     <div className="grid gap-5">
@@ -1058,7 +1121,7 @@ function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
           <div className="grid gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={order.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{money(order.amountCents, order.currency)}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{order.credits} credits - {dateLabel(order.createdAt)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{order.credits} credits - {formatDate(order.createdAt)}</p>
               <p className="mt-1 truncate text-xs text-[var(--account-subtle)]">Source {order.sourceId}</p>
             </div>
             <StatusPill tone={order.status === "paid" || order.status === "fulfilled" ? "good" : order.status === "checkout_started" ? "warn" : "neutral"}>{statusLabel(order.status)}</StatusPill>
@@ -1070,6 +1133,7 @@ function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
 }
 
 function GenerationCard({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const jobs = runtime.jobs ?? [];
   return (
     <div className="grid gap-5">
@@ -1079,7 +1143,7 @@ function GenerationCard({ basePath, runtime }: { basePath: string; runtime: Them
           <StorefrontInstantLink className="grid gap-2 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" href={`${basePath}/app/jobs/${job.id}`} key={job.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{requestTitle(job.id, index)}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{job.creditsReserved} credits held - updated {dateLabel(job.updatedAt)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{job.creditsReserved} credits held - updated {formatDate(job.updatedAt)}</p>
             </div>
             <StatusPill tone={job.status === "succeeded" ? "good" : job.status === "failed" ? "warn" : "neutral"}>{jobStatusLabel(job.status)}</StatusPill>
           </StorefrontInstantLink>
@@ -1089,7 +1153,16 @@ function GenerationCard({ basePath, runtime }: { basePath: string; runtime: Them
   );
 }
 
-function DownloadsHistoryCard({ runtime }: { runtime: ThemeRuntimeData }) {
+function DownloadsHistoryCard({
+  onRemoveRecord,
+  removingRecordId,
+  runtime
+}: {
+  onRemoveRecord?: (entry: ThemeRuntimeDownloadEntry) => void;
+  removingRecordId?: string | null;
+  runtime: ThemeRuntimeData;
+}) {
+  const formatDate = useAccountDateLabel();
   const downloads = runtime.downloads ?? [];
   return (
     <div className="grid gap-5">
@@ -1103,10 +1176,33 @@ function DownloadsHistoryCard({ runtime }: { runtime: ThemeRuntimeData }) {
                 <MediaThumb alt="" className="h-14 w-14 rounded-[8px]" mimeType={entry.mimeType} previewStatus={entry.previewStatus} previewUrl={entry.previewUrl} />
                 <div className="min-w-0">
                   <p className="truncate font-semibold text-[var(--account-strong)]">{entry.label}</p>
-                  <p className="mt-1 text-xs text-[var(--account-muted)]">{dateLabel(entry.createdAt)} - {entry.mimeType ?? "asset"}</p>
+                  <p className="mt-1 text-xs text-[var(--account-muted)]">{formatDate(entry.createdAt)} - {entry.mimeType ?? "asset"}</p>
                 </div>
               </div>
-              {fileAvailable && entry.downloadUrl ? (
+              {onRemoveRecord ? (
+                <div className="flex items-center gap-2">
+                  {fileAvailable && entry.downloadUrl ? (
+                    <a className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-xs font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" download href={entry.downloadUrl}>
+                      Download
+                      <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center justify-center rounded-[8px] border border-[var(--account-border)] bg-[var(--account-panel-soft)] px-3 py-2 text-xs font-semibold text-[var(--account-subtle)]">
+                      File unavailable
+                    </span>
+                  )}
+                  <button
+                    aria-label={`Remove ${entry.label} from download history`}
+                    className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] px-3 py-2 text-xs font-semibold text-[var(--account-muted)] transition hover:border-[var(--account-border-strong)] hover:text-[var(--account-text)] disabled:opacity-60"
+                    disabled={removingRecordId === entry.id}
+                    onClick={() => onRemoveRecord(entry)}
+                    type="button"
+                  >
+                    <Trash2 aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    Remove
+                  </button>
+                </div>
+              ) : fileAvailable && entry.downloadUrl ? (
                 <a className="inline-flex items-center justify-center gap-2 rounded-[8px] border border-[var(--account-border-strong)] bg-[var(--account-field)] px-3 py-2 text-xs font-semibold text-[var(--account-text)] transition hover:bg-[var(--account-hover-bg)]" download href={entry.downloadUrl}>
                   Download
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.8} />
@@ -1124,7 +1220,17 @@ function DownloadsHistoryCard({ runtime }: { runtime: ThemeRuntimeData }) {
   );
 }
 
-function ReadyAssetsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; siteSlug: string }) {
+function ReadyAssetsCard({
+  onRemoveAsset,
+  removingAssetId,
+  runtime,
+  siteSlug
+}: {
+  onRemoveAsset?: (asset: ThemeRuntimeAsset) => void;
+  removingAssetId?: string | null;
+  runtime: ThemeRuntimeData;
+  siteSlug: string;
+}) {
   const downloadableAssets = runtime.assets.filter((asset) => asset.role === "output");
   return (
     <div className="grid gap-5">
@@ -1148,13 +1254,36 @@ function ReadyAssetsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; sit
               </div>
             </>
           );
-          return fileAvailable && asset.downloadUrl ? (
-            <a className="group overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)]" download href={asset.downloadUrl} key={asset.id}>
-              {content}
-            </a>
-          ) : (
-            <div className="overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] opacity-80" key={asset.id}>
-              {content}
+          if (!onRemoveAsset) {
+            return fileAvailable && asset.downloadUrl ? (
+              <a className="group overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)]" download href={asset.downloadUrl} key={asset.id}>
+                {content}
+              </a>
+            ) : (
+              <div className="overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] opacity-80" key={asset.id}>
+                {content}
+              </div>
+            );
+          }
+          return (
+            <div className="group relative overflow-hidden rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)]" key={asset.id}>
+              {fileAvailable && asset.downloadUrl ? (
+                <a className="block" download href={asset.downloadUrl}>
+                  {content}
+                </a>
+              ) : (
+                <div className="opacity-80">{content}</div>
+              )}
+              <button
+                aria-label={`Remove ${asset.label}`}
+                className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--account-border)] bg-[var(--account-surface-elevated)] text-[var(--account-muted)] transition hover:border-[var(--account-border-strong)] hover:text-[var(--account-text)] disabled:opacity-60"
+                disabled={removingAssetId === asset.id}
+                onClick={() => onRemoveAsset(asset)}
+                title="Remove this asset"
+                type="button"
+              >
+                <Trash2 aria-hidden="true" className="h-4 w-4" strokeWidth={1.8} />
+              </button>
             </div>
           );
         }) : <p className="rounded-[8px] border border-dashed border-[var(--account-border)] bg-[var(--account-panel)] p-4 text-sm leading-6 text-[var(--account-muted)] sm:col-span-2 xl:col-span-3">Delivered downloadable assets will appear here.</p>}
@@ -1164,6 +1293,7 @@ function ReadyAssetsCard({ runtime, siteSlug }: { runtime: ThemeRuntimeData; sit
 }
 
 function AlbumsCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const albums = runtime.albums ?? [];
   return (
     <div className="grid gap-5">
@@ -1173,7 +1303,7 @@ function AlbumsCard({ runtime }: { runtime: ThemeRuntimeData }) {
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={album.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{album.title}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{album.outputCount} outputs - updated {dateLabel(album.updatedAt)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{album.outputCount} outputs - updated {formatDate(album.updatedAt)}</p>
             </div>
             <StatusPill tone={album.status === "ready" ? "good" : "neutral"}>{albumStatusLabel(album.status)}</StatusPill>
           </div>
@@ -1184,6 +1314,7 @@ function AlbumsCard({ runtime }: { runtime: ThemeRuntimeData }) {
 }
 
 function ModelsCard({ runtime }: { runtime: ThemeRuntimeData }) {
+  const formatDate = useAccountDateLabel();
   const models = runtime.customerModels ?? [];
   return (
     <div className="grid gap-5">
@@ -1193,7 +1324,7 @@ function ModelsCard({ runtime }: { runtime: ThemeRuntimeData }) {
           <div className="grid gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={model.id}>
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{model.label}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{model.inputAssetCount}/{model.minInputAssets} inputs - updated {dateLabel(model.updatedAt)}</p>
+              <p className="mt-1 text-xs text-[var(--account-muted)]">{model.inputAssetCount}/{model.minInputAssets} inputs - updated {formatDate(model.updatedAt)}</p>
             </div>
             <StatusPill tone={model.status === "ready" ? "good" : model.status === "failed" ? "warn" : "neutral"}>{statusLabel(model.status)}</StatusPill>
           </div>
@@ -1222,6 +1353,29 @@ export function CustomerAccountDataIsland({
 }) {
   const [checkoutNotice, setCheckoutNotice] = useState<{ success: boolean; order: string }>({ success: false, order: "" });
   const [pages, setPages] = useState<Record<string, PageState>>({});
+  const [downloadsReload, setDownloadsReload] = useState(0);
+  const [removingRecordId, setRemovingRecordId] = useState<string | null>(null);
+  const [removingAssetId, setRemovingAssetId] = useState<string | null>(null);
+  const [removeNotice, setRemoveNotice] = useState<{ error?: string; removed: number } | null>(null);
+  // Timestamps render in UTC until the browser mounts, then reformat with the
+  // viewer's own timezone for the AIVideosUGC account center only.
+  const [deviceTimeReady, setDeviceTimeReady] = useState(false);
+  const aivideosUgcAccount = siteId === AIVIDEOSUGC_ACCOUNT_SITE_ID;
+  const hideStudioExtras = aivideosUgcAccount;
+  // Server HTML and the first client render both use UTC (to the second); the
+  // effect below then switches Aidreamcapes to the viewer's own timezone.
+  const accountTimeMode: AccountTimeMode = aivideosUgcAccount ? (deviceTimeReady ? "precise-device" : "precise-utc") : "date";
+
+  useEffect(() => {
+    if (!aivideosUgcAccount) return;
+    setDeviceTimeReady(true);
+  }, [aivideosUgcAccount]);
+
+  useEffect(() => {
+    setRemoveNotice(null);
+    setRemovingRecordId(null);
+    setRemovingAssetId(null);
+  }, [activeSection]);
 
   function pageState(section: AccountSection, list?: AccountList): PageState {
     return pages[listCacheKey(section, list)] ?? defaultPageState;
@@ -1252,7 +1406,8 @@ export function CustomerAccountDataIsland({
       requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
     };
     const canUseIdleCallback = typeof idleWindow.requestIdleCallback === "function";
-    const targets = accountPrefetchTargets.filter((target) => target.section !== activeSection);
+    const hiddenSections = hideStudioExtras ? new Set(["albums", "models"]) : new Set([]);
+    const targets = accountPrefetchTargets.filter((target) => target.section !== activeSection).filter((target) => !hiddenSections.has(target.section));
     const pump = () => {
       if (cancelled) return;
       while (activeLoads < 2 && targetIndex < targets.length) {
@@ -1285,9 +1440,62 @@ export function CustomerAccountDataIsland({
       if (canUseIdleCallback && idleWindow.cancelIdleCallback) idleWindow.cancelIdleCallback(handle);
       else window.clearTimeout(handle);
     };
-  }, [activeSection, customer.id, siteId]);
+  }, [activeSection, customer.id, hideStudioExtras, siteId]);
+
+  /** Forget cached section data so the next render refetches from the server. */
+  function purgeCachedSections(sections: AccountSection[]) {
+    const prefixes = sections.map((section) => `${siteId}:${customer.id}:${section}:`);
+    for (const key of Array.from(sectionCache.keys())) {
+      if (prefixes.some((prefix) => key.startsWith(prefix))) sectionCache.delete(key);
+    }
+  }
+
+  async function removeCustomerAsset(asset: ThemeRuntimeAsset) {
+    if (!window.confirm(`Remove “${asset.label}”? This permanently removes this file from your account.`)) return;
+    setRemovingAssetId(asset.id);
+    setRemoveNotice(null);
+    try {
+      const response = await fetch(`/api/sites/${siteId}/customers/${customer.id}/assets/${encodeURIComponent(asset.id)}`, {
+        credentials: "same-origin",
+        headers: customerJsonHeaders(siteId),
+        method: "DELETE"
+      });
+      const data = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!response.ok || !data.ok) throw new Error(data.error || "asset_delete_unavailable");
+      purgeCachedSections(["downloads", "overview"]);
+      setDownloadsReload((current) => current + 1);
+      setRemoveNotice({ removed: 1 });
+    } catch (error) {
+      setRemoveNotice({ error: error instanceof Error ? error.message : "asset_delete_unavailable", removed: 0 });
+    } finally {
+      setRemovingAssetId(null);
+    }
+  }
+
+  async function removeDownloadRecord(entryId: string, label: string) {
+    if (!window.confirm(`Remove “${label}” from your download history? Your files and account data are not affected.`)) return;
+    setRemovingRecordId(entryId);
+    setRemoveNotice(null);
+    try {
+      const response = await fetch(`/api/sites/${siteId}/customer/downloads/${encodeURIComponent(entryId)}`, {
+        credentials: "same-origin",
+        headers: customerJsonHeaders(siteId),
+        method: "DELETE"
+      });
+      const data = (await response.json().catch(() => ({}))) as { ok?: boolean; removed?: number; error?: string };
+      if (!response.ok || !data.ok) throw new Error(data.error || "download_record_unavailable");
+      purgeCachedSections(["downloads", "overview"]);
+      setDownloadsReload((current) => current + 1);
+      setRemoveNotice({ removed: 1 });
+    } catch (error) {
+      setRemoveNotice({ error: error instanceof Error ? error.message : "download_record_unavailable", removed: 0 });
+    } finally {
+      setRemovingRecordId(null);
+    }
+  }
 
   return (
+    <AccountTimeModeContext.Provider value={accountTimeMode}>
     <div className={`ac-account-data-island ac-classic-data-island grid min-w-0 gap-5${variant === "statement" ? " ac-data-island--statement" : ""}`}>
       {checkoutNotice.success ? (
         <div className="rounded-[8px] border border-[var(--account-success-border)] bg-[var(--account-success-bg)] p-4 text-sm text-[var(--account-success-text)]">
@@ -1297,6 +1505,16 @@ export function CustomerAccountDataIsland({
               Checkout is complete. Credits and subscriptions update after the payment webhook finishes{checkoutNotice.order ? ` for order ${checkoutNotice.order}` : ""}.
             </p>
           </div>
+        </div>
+      ) : null}
+      {removeNotice && removeNotice.error ? (
+        <div className="rounded-[8px] border border-[var(--account-warn-border,rgba(180,35,24,0.35))] bg-[var(--account-warn-bg,rgba(253,236,236,0.75))] p-4 text-sm text-[var(--account-warn-text,#b42318)]">
+          That item could not be removed. Please try again.
+        </div>
+      ) : null}
+      {removeNotice && !removeNotice.error && removeNotice.removed > 0 ? (
+        <div className="rounded-[8px] border border-[var(--account-success-border)] bg-[var(--account-success-bg)] p-4 text-sm text-[var(--account-success-text)]">
+          Item removed.
         </div>
       ) : null}
       {activeSection === "overview" ? (
@@ -1388,10 +1606,17 @@ export function CustomerAccountDataIsland({
             loadingTitle="Download history"
             onPageChange={(next) => updatePageState("downloads", "downloads", next)}
             pageState={pageState("downloads", "downloads")}
+            reloadNonce={downloadsReload}
             section="downloads"
             siteId={siteId}
           >
-            {(runtime) => <DownloadsHistoryCard runtime={runtime} />}
+            {(runtime) => (
+              <DownloadsHistoryCard
+                onRemoveRecord={aivideosUgcAccount ? (entry) => void removeDownloadRecord(entry.id, entry.label) : undefined}
+                removingRecordId={removingRecordId}
+                runtime={runtime}
+              />
+            )}
           </AccountCard>
           <AccountCard
             customerId={customer.id}
@@ -1400,14 +1625,22 @@ export function CustomerAccountDataIsland({
             loadingTitle="Ready assets"
             onPageChange={(next) => updatePageState("downloads", "assets", next)}
             pageState={pageState("downloads", "assets")}
+            reloadNonce={downloadsReload}
             section="downloads"
             siteId={siteId}
           >
-            {(runtime) => <ReadyAssetsCard runtime={runtime} siteSlug={siteSlug} />}
+            {(runtime) => (
+              <ReadyAssetsCard
+                onRemoveAsset={aivideosUgcAccount ? (asset) => void removeCustomerAsset(asset) : undefined}
+                removingAssetId={removingAssetId}
+                runtime={runtime}
+                siteSlug={siteSlug}
+              />
+            )}
           </AccountCard>
         </>
       ) : null}
-      {activeSection === "albums" ? (
+      {activeSection === "albums" && !hideStudioExtras ? (
         <AccountCard
           customerId={customer.id}
           id="account-albums"
@@ -1421,7 +1654,7 @@ export function CustomerAccountDataIsland({
           {(runtime) => <AlbumsCard runtime={runtime} />}
         </AccountCard>
       ) : null}
-      {activeSection === "models" ? (
+      {activeSection === "models" && !hideStudioExtras ? (
         <AccountCard
           customerId={customer.id}
           id="account-models"
@@ -1436,5 +1669,6 @@ export function CustomerAccountDataIsland({
         </AccountCard>
       ) : null}
     </div>
+    </AccountTimeModeContext.Provider>
   );
 }

@@ -227,8 +227,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [messageAction, setMessageAction] = useState(false);
   const [detailTaskId, setDetailTaskId] = useState<string | null>(null);
   const detailTask = detailTaskId ? tasks.find((item) => item.taskId === detailTaskId) : undefined;
-  const composerQuoteShots = composerQuote?.available && composerQuote.credits != null ? Math.max(1, Math.ceil(composerDuration / 15)) : undefined;
-  const composerCreditsNote = composerQuoteShots != null && composerQuote?.credits != null ? `Estimated cost: ${composerQuoteShots * composerQuote.credits} credits (${composerQuoteShots} ${composerQuoteShots === 1 ? "shot" : "shots"} × ${composerQuote.credits})` : undefined;
+  const composerQuoteUnits = composerQuote?.available && composerQuote.credits != null ? Math.max(1, Math.ceil(composerDuration / 15)) : undefined;
+  const composerCreditsNote = composerQuoteUnits != null && composerQuote?.credits != null ? `Estimated cost: ${composerQuoteUnits * composerQuote.credits} credits` : undefined;
   const [composerActorId, setComposerActorId] = useState("");
   const [composerProducts, setComposerProducts] = useState<ComposerProduct[]>([]);
   const [confirmedProductBriefs, setConfirmedProductBriefs] = useState<ConfirmedProductBrief[]>([]);
@@ -1710,12 +1710,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </div>
       </section></div>;
     })()}
-    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; const shots = credits != null ? Math.max(1, Math.ceil(pendingGenerate.input.options.duration / 15)) : undefined; const totalCredits = credits != null && shots != null ? credits * shots : undefined; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
+    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; const direct = Boolean(pendingGenerate.input.direct); const units = Math.max(1, Math.ceil(pendingGenerate.input.options.duration / 15)); const totalCredits = credits != null ? credits * units : undefined; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
       <div className={styles.modalHeader}><h2>Confirm generation</h2><button className={styles.iconButton} onClick={() => setPendingGenerate(null)} aria-label="Close dialog"><X size={23} /></button></div>
       <p className={styles.help} style={{ marginTop: 0 }}>{pendingGenerate.scene.name}</p>
       <p className={styles.help}>{options || "\u00a0"}</p>
-      <p className={styles.help} style={{ fontWeight: 600, color: "var(--ink)" }}>{totalCredits != null && credits != null ? `Estimated cost: ${totalCredits} credits (${shots} ${shots === 1 ? "shot" : "shots"} × ${credits} credits)` : "Credits will be confirmed at checkout."}{balance != null ? ` · Balance: ${balance} credits` : ""}</p>
-      {totalCredits != null && <p className={styles.help}>{shots != null && shots > 1 ? `This video is planned as ${shots} shots. ` : ""}Credits are held when you confirm and returned automatically if generation fails.</p>}
+      <p className={styles.help} style={{ fontWeight: 600, color: "var(--ink)" }}>{totalCredits != null ? `Estimated cost: ${totalCredits} credits` : "Credits will be confirmed at checkout."}{balance != null ? ` · Balance: ${balance} credits` : ""}</p>
+      {totalCredits != null && <p className={styles.help}>{direct ? `This ${pendingGenerate.input.options.duration}s video is generated as one clip. ` : ""}Credits are held when you confirm and returned automatically if generation fails.</p>}
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
         <button type="button" className={styles.button} onClick={() => setPendingGenerate(null)}>Cancel</button>
         <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || (totalCredits != null && balance != null && balance < totalCredits)} onClick={() => void runConfirmedGeneration()}>Generate now</button>

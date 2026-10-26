@@ -925,15 +925,16 @@ async function taskHoldRemainingTx(tx: Tx, params: { siteId: string; customerId:
  * 之后每个镜头派发时从该冻结额转入对应 job 的预留（见 createGenerationJobInTx），
  * 任务到达终态（完成/取消/删除）后释放剩余冻结额。失败路径的退款仍走 job 预留本身。
  * 幂等：同任务重复调用只在冻结额不足（含队列中止后被释放）时补足差额（top-up）。
- * 金额与占用在同一事务内，重复冻结会被 ledger 唯一索引 (siteId, customerId, type, sourceId) 回滚。
+ * 金额与占用在同一事务内，余额行锁保证并发重复调用串行化；冻结记录使用一次性
+ * sourceId，任务被释放后再次运行也能重新冻结，不会被旧记录的唯一索引挡住。
  */
 export async function reserveWorkspaceTaskHoldTx(tx: Tx, params: { siteId: string; customerId: string; taskId: string; credits: number }) {
   if (!Number.isSafeInteger(params.credits) || params.credits < 0) throw new StoreError("pricing_unconfigured", 422);
-  if (params.credits === 0) return { holdCredits: 0, remaining: await taskHoldRemainingTx(tx, params) };
+  if (params.credits === 0) return { holdCredits: 0, remaining: await taskHoldRemainingTx(tx, params), added: 0 };
   // 先取余额行锁再读台账，保证并发重复运行按客户串行化，读到最新的冻结剩余额。
   await lockCustomerCreditBalanceForUpdate(tx, params.siteId, params.customerId);
   const remaining = await taskHoldRemainingTx(tx, params);
-  if (remaining >= params.credits) return { holdCredits: remaining, remaining };
+  if (remaining >= params.credits) return { holdCredits: remaining, remaining, added: 0 };
   const topUp = params.credits - remaining;
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
   const available = customer.balance?.balance ?? 0;
@@ -950,14 +951,13 @@ export async function reserveWorkspaceTaskHoldTx(tx: Tx, params: { siteId: strin
       amount: -topUp,
       type: "reserve",
       sourceType: TASK_HOLD_SOURCE_TYPE,
-      // 首次冻结用 taskId 作为幂等键；补足差额用一次性 ref，避免唯一索引冲突。
-      sourceId: remaining > 0 ? `${params.taskId}:topup:${uid("led")}` : params.taskId
+      sourceId: `${params.taskId}:hold:${uid("led")}`
     }
   });
   // 并发安全：同客户的 CreditBalance FOR UPDATE 行锁先于写入获取（见
   // lockCustomerCreditBalanceForUpdate），余额读写与 ledger 插入按客户串行化，
   // 不会出现重复冻结；异常唯一冲突时整体事务回滚，余额保持不变。
-  return { holdCredits: remaining + topUp, remaining: remaining + topUp };
+  return { holdCredits: remaining + topUp, remaining: remaining + topUp, added: topUp };
 }
 
 /** 从任务冻结额中释放 amount（自动按剩余额截断，幂等键 ref），返回实际释放数。 */
@@ -995,13 +995,14 @@ export async function releaseWorkspaceTaskHoldTx(tx: Tx, params: { siteId: strin
   return amount;
 }
 
-/** 任务终态后释放剩余冻结额（幂等）；失败时调用方按 best-effort 记录日志。 */
-export async function releaseWorkspaceTaskHoldRelational(params: { siteId: string; customerId: string; taskId: string; ref: string }) {
+/** 任务终态后释放剩余冻结额（幂等）；失败时调用方按 best-effort 记录日志。可限制只释放本次新增的冻结额。 */
+export async function releaseWorkspaceTaskHoldRelational(params: { siteId: string; customerId: string; taskId: string; ref: string; amount?: number }) {
   return prisma.$transaction(async (tx) => {
     await lockCustomerCreditBalanceForUpdate(tx, params.siteId, params.customerId);
     const remaining = await taskHoldRemainingTx(tx, params);
-    if (remaining <= 0) return 0;
-    return releaseWorkspaceTaskHoldTx(tx, { ...params, amount: remaining });
+    const amount = Math.min(params.amount ?? remaining, remaining);
+    if (amount <= 0) return 0;
+    return releaseWorkspaceTaskHoldTx(tx, { siteId: params.siteId, customerId: params.customerId, taskId: params.taskId, ref: params.ref, amount });
   }, jobStoreTransactionOptions);
 }
 

@@ -41,7 +41,7 @@ import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
-import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontCustomerJobDetailStateForSite, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, loadPublishedSiteSnapshotBySiteId, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
@@ -4274,7 +4274,27 @@ export async function renderCustomerJobDetailPage({
   const current = await getCurrentCustomerSession(state, currentSite.id, sessionId);
   if (!current) redirect(routeMode === "host" ? "/login" : `/site/${currentSite.slug}/login`);
 
-  const job = state.jobs.find((item) => item.id === jobId && item.siteId === currentSite.id && item.customerId === current.customer.id);
+  const projectionJob = state.jobs.find((item) => item.id === jobId && item.siteId === currentSite.id && item.customerId === current.customer.id);
+  let job = projectionJob;
+  let jobState = state;
+  if (!job && sessionId && currentSite.id === "site_aidreamcapes") {
+    // Host-mode requests arrive with the published site projection, which
+    // carries no per-customer jobs, ledger rows or uploads. Reload the focused
+    // session-scoped job state so a request visible in the account center
+    // always opens its detail page.
+    const focused = await getStorefrontCustomerJobDetailStateForSite({ jobId, sessionId, siteId: currentSite.id });
+    const focusedJob = focused?.jobs.find((item) => item.id === jobId);
+    if (focused && focusedJob) {
+      job = focusedJob;
+      const assetIds = new Set(state.assetUploads.map((asset) => asset.id));
+      const ledgerIds = new Set(state.ledger.map((entry) => entry.id));
+      jobState = {
+        ...state,
+        assetUploads: [...state.assetUploads, ...focused.assetUploads.filter((asset) => !assetIds.has(asset.id))],
+        ledger: [...state.ledger, ...focused.ledger.filter((entry) => !ledgerIds.has(entry.id))]
+      };
+    }
+  }
   if (!job) notFound();
 
   const renderData = getSiteRenderData(state, currentSite.id);
@@ -4286,10 +4306,10 @@ export async function renderCustomerJobDetailPage({
     ...runtimeWithEmptyCollections({ customer: current.customer }),
     jobDetail: {
       job: toThemeRuntimeJob(job),
-      ledger: getCustomerLedgerFromState(state, currentSite.id, current.customer.id)
+      ledger: getCustomerLedgerFromState(jobState, currentSite.id, current.customer.id)
         .filter((entry) => entry.sourceId === job.id)
         .map(toThemeRuntimeLedgerEntry),
-      assets: getCustomerJobAssetsFromState(state, currentSite.id, current.customer.id, job.id).map((asset) => toThemeRuntimeAsset(state, asset))
+      assets: getCustomerJobAssetsFromState(jobState, currentSite.id, current.customer.id, job.id).map((asset) => toThemeRuntimeAsset(state, asset))
     }
   };
 
