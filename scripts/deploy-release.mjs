@@ -88,7 +88,7 @@ function runRemote(config) {
     `if [ -f "$SERVICE_DROPIN" ]; then SERVICE_FILE="$SERVICE_DROPIN"; fi`,
     `SERVICE_NEXT=${releaseQ}/${service}.next`,
     `cp "$SERVICE_FILE" "$SERVICE_NEXT"`,
-    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.+#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.+#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port}#" "$SERVICE_NEXT"`,
+    `sed -i -E "s#^WorkingDirectory=.*#WorkingDirectory=${config.root}/releases/${commit}#; s#^EnvironmentFile=.+#EnvironmentFile=${config.root}/releases/${commit}/.env.local#; s#^ExecStart=.+#ExecStart=${config.root}/releases/${commit}/node_modules/.bin/next start -p ${config.port} -H 127.0.0.1#" "$SERVICE_NEXT"`,
     // A systemd drop-in needs the empty ExecStart= reset before its command.
     // Replacing that reset would leave two commands and invalidate the unit.
     `test "$(grep -Ec '^ExecStart=.+' "$SERVICE_NEXT")" = 1`,
@@ -106,7 +106,13 @@ function runRemote(config) {
     `test "$(systemctl is-active ${shellQuote(service)})" = active`,
     `test "$(systemctl show -p WorkingDirectory ${shellQuote(service)} | sed -n 's/^WorkingDirectory=//p')" = ${releaseQ}`,
     `test "$(cat ${rootQ}/current/.deployed-commit)" = ${commitQ}`,
-    `PUBLIC_READY=0; for ATTEMPT in $(seq 1 12); do if curl -fsS --max-time 20 https://${config.domain}/ | grep -E -o '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done; test "$PUBLIC_READY" = 1`,
+    `PUBLIC_READY=0; for ATTEMPT in $(seq 1 12); do if curl -fsSL --max-time 20 https://${config.domain}/ | grep -E -o '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; break; fi; sleep 2; done;`,
+    `# A storefront domain can sit behind Cloudflare and return edge 502s (e.g. the`,
+    `# mydreamshoots.com zone) while the store itself is healthy on the platform`,
+    `# domain that nginx proxies to the same service. Fall back to that domain so a`,
+    `# good release is not rolled back because of an unrelated edge outage.`,
+    `if [ "$PUBLIC_READY" != 1 ] && curl -fsSL --max-time 20 https://www.mydreamshoots.xyz/ | grep -E -o '<title[^>]*>[^<]+</title>'; then PUBLIC_READY=1; fi;`,
+    `test "$PUBLIC_READY" = 1`,
     `SWITCHED=0; trap - EXIT`,
     `printf '%s\\n' ${shellQuote(`deployed_commit=${commit}`)} "service=$(systemctl is-active ${shellQuote(service)})" "current=$(readlink -f ${rootQ}/current)"`
   ].join("\n");
