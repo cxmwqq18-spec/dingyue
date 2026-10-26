@@ -96,10 +96,14 @@ export interface AidreamcapesWorkspaceProps {
 
 const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
 
+function taskNeedsAttention(task: WorkspaceTask): boolean {
+  return task.status === "failed" || task.operation?.state === "fail" || task.video?.status === "fail" || Boolean(task.storyboard?.shots.some((shot) => shot.genStatus === "fail"));
+}
+
 function taskStatusLabel(task: WorkspaceTask): string {
   if (!task.input.direct) return statusLabels[task.status];
   if (task.status === "cancelled") return "Cancelled";
-  if (task.status === "failed" || task.operation?.state === "fail" || task.video?.status === "fail" || task.storyboard?.shots.some((shot) => shot.genStatus === "fail")) return "Needs attention";
+  if (taskNeedsAttention(task)) return "Needs attention";
   if (task.video?.finalUrl || task.status === "completed") return "Completed";
   // A direct task whose storyboard is ready but whose clips have not started is
   // waiting for the creator to confirm the render, not generating anything.
@@ -1304,7 +1308,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   // The library list and the reference reel above it share one filtered set,
   // so a reel frame always belongs to a card that is visible right below.
-  const libraryItems = tasks.filter((item) => libraryFilter === "all" || (libraryFilter === "draft" ? item.status !== "completed" : item.status === "completed"));
+  // Buckets match what each card badge shows: failed cards surface their error
+  // notice, in-progress cards are actively generating, completed cards have a
+  // final video, and cancelled cards only appear under "All videos".
+  const libraryCardBucket = (item: WorkspaceTask): "active" | "failed" | "completed" | "cancelled" => {
+    if (item.status === "completed") return "completed";
+    if (item.status === "cancelled") return "cancelled";
+    if (taskNeedsAttention(item)) return "failed";
+    return "active";
+  };
+  const libraryItems = tasks.filter((item) => {
+    if (libraryFilter === "all") return true;
+    const bucket = libraryCardBucket(item);
+    return bucket === (libraryFilter === "draft" ? "active" : libraryFilter);
+  });
   const libraryMedia = new Map(libraryItems.map((item) => [item.taskId, taskMedia(item, catalog?.scenes.find((entry) => entry.id === item.sceneId))]));
   const libraryReelItems: LibraryReelItem[] = libraryItems.flatMap((item) => {
     const media = libraryMedia.get(item.taskId) ?? [];
@@ -1520,7 +1537,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("agent")}><Plus size={16} /><span>New video</span></button>
           </div>
           {customer && !loading && libraryReelItems.length > 0 && <LibraryReferenceReel items={libraryReelItems} onOpen={setDetailTaskId} />}
-          <div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "draft", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "draft" ? "In progress" : "Completed"}</button>)}</div>
+          <div className={styles.choices} style={{ marginBottom: 20 }}>{["all", "active", "failed", "completed"].map((filter) => <button key={filter} className={`${styles.choice} ${libraryFilter === filter ? styles.selected : ""}`} onClick={() => setLibraryFilter(filter)}>{filter === "all" ? "All videos" : filter === "active" ? "In progress" : filter === "failed" ? "Failed" : "Completed"}</button>)}</div>
           {!customer
             ? <div className={styles.empty}><Library size={30} /><h3>Your videos belong here</h3><p>Log in to see your private video library.</p><a href={loginHref} className={`${styles.button} ${styles.primary}`}>Log In</a></div>
             : loading
