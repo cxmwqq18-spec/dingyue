@@ -102,6 +102,7 @@ export function PlatformAiRelayPanel() {
   const [syncingId, setSyncingId] = useState<string | null>(null);
   const [plan, setPlan] = useState<RelayPlan | null>(null);
   const [keyVisible, setKeyVisible] = useState(false);
+  const [revealingKey, setRevealingKey] = useState(false);
 
   const load = useCallback(async () => {
     const response = await fetch("/api/platform/ai-relays", { credentials: "same-origin", cache: "no-store" });
@@ -116,7 +117,7 @@ export function PlatformAiRelayPanel() {
 
   async function request(endpoint: string, init: RequestInit) {
     const response = await fetch(endpoint, { ...init, credentials: "same-origin", headers: platformJsonHeaders(init.headers) });
-    const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; message?: string; plan?: RelayPlan };
+    const result = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: string; message?: string; plan?: RelayPlan; apiKey?: string; relay?: RelayRow };
     if (!response.ok) {
       if (response.status === 401 && result.error === "platform_login_required") router.push("/platform/login");
       throw new Error(relayErrorLabel(result.error, result.message));
@@ -146,13 +147,32 @@ export function PlatformAiRelayPanel() {
     setKeyVisible(false);
   }
 
+  async function revealApiKey() {
+    if (keyVisible) { setKeyVisible(false); return; }
+    if (form.apiKey.trim()) { setKeyVisible(true); return; }
+    if (!editing) { setMessage("新增时请直接粘贴 API Key。"); return; }
+    setRevealingKey(true);
+    setMessage("正在读取当前保存的 API Key…");
+    try {
+      const result = await request("/api/platform/ai-relays", { method: "POST", body: JSON.stringify({ action: "reveal", relayId: editing.id }) });
+      if (!result.apiKey) { setMessage("该中转平台尚未保存 API Key。"); return; }
+      setForm((current) => ({ ...current, apiKey: result.apiKey ?? "" }));
+      setKeyVisible(true);
+      setMessage("已显示当前保存的密钥；如需更换，把新的 key 完整粘贴进来再保存。");
+    } catch (error) {
+      setMessage(`读取失败：${error instanceof Error ? error.message : "unknown error"}`);
+    } finally {
+      setRevealingKey(false);
+    }
+  }
+
   async function save() {
     if (!form.label.trim()) { setMessage("请输入中转平台名称。"); return; }
     if (!form.baseUrl.trim()) { setMessage("请输入中转平台地址。"); return; }
     if (!editing && !form.apiKey.trim()) { setMessage("请输入中转平台 API Key。"); return; }
     setSaving(true);
     try {
-      await request("/api/platform/ai-relays", {
+      const result = await request("/api/platform/ai-relays", {
         method: "PUT",
         body: JSON.stringify({
           id: editing?.id,
@@ -162,7 +182,16 @@ export function PlatformAiRelayPanel() {
           enabled: form.enabled
         })
       });
-      setMessage(editing ? "中转平台配置已保存。" : "中转平台已创建，可读取模型目录。");
+      if (editing) {
+        const preview = result.relay?.apiKeyPreview || editing.apiKeyPreview;
+        setMessage(!form.apiKey.trim()
+          ? `中转平台配置已保存。API Key 未填写，保留原值 ${preview}。`
+          : preview === editing.apiKeyPreview
+            ? `中转平台配置已保存。注意：本次提交的 API Key 与原 key 相同（${preview}），不是新的 key。`
+            : `中转平台配置已保存。API Key 已更新为 ${preview}。`);
+      } else {
+        setMessage("中转平台已创建，可读取模型目录。");
+      }
       closeEditor();
       await load();
     } catch (error) {
@@ -252,10 +281,10 @@ export function PlatformAiRelayPanel() {
           <ErpFormGrid>
             <ErpField label="平台名称"><ErpInput autoComplete="off" onChange={(event) => setForm((current) => ({ ...current, label: event.target.value }))} placeholder="例如：影灵中转" value={form.label} /></ErpField>
             <ErpField label="平台地址" hint="填写中转平台根地址，模型目录按 /v1/models 读取。"><ErpInput autoComplete="url" className="font-mono" onChange={(event) => setForm((current) => ({ ...current, baseUrl: event.target.value }))} placeholder="https://yinglingapi.com" value={form.baseUrl} /></ErpField>
-            <ErpField label="API Key" hint={editing ? "留空保留已保存的密钥。" : "密钥仅保存于服务端。"} span="full">
+            <ErpField label="API Key" hint={editing ? "留空保留已保存的密钥；点「显示」可查看当前已保存的 key。" : "密钥仅保存于服务端。"} span="full">
               <div className="flex gap-2">
-                <ErpInput autoComplete="new-password" className="min-w-0 flex-1 font-mono" onChange={(event) => setForm((current) => ({ ...current, apiKey: event.target.value }))} placeholder={editing ? "留空保留当前 key" : "粘贴中转平台 API Key"} type={keyVisible ? "text" : "password"} value={form.apiKey} />
-                <button aria-label={keyVisible ? "隐藏 API Key" : "显示 API Key"} className="admin_btn inline-flex h-[38px] shrink-0 items-center gap-1 px-3" onClick={() => setKeyVisible((current) => !current)} type="button">{keyVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}{keyVisible ? "隐藏" : "显示"}</button>
+                <ErpInput autoComplete="new-password" className="min-w-0 flex-1 font-mono" onChange={(event) => setForm((current) => ({ ...current, apiKey: event.target.value }))} placeholder={editing ? "留空保留当前 key（点「显示」可查看）" : "粘贴中转平台 API Key"} type={keyVisible ? "text" : "password"} value={form.apiKey} />
+                <button aria-label={keyVisible ? "隐藏 API Key" : "显示 API Key"} className="admin_btn inline-flex h-[38px] shrink-0 items-center gap-1 px-3" disabled={revealingKey} onClick={() => void revealApiKey()} type="button">{keyVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}{revealingKey ? "读取中" : keyVisible ? "隐藏" : "显示"}</button>
               </div>
             </ErpField>
           </ErpFormGrid>
