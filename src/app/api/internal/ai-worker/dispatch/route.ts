@@ -2516,7 +2516,28 @@ async function postWorkerResult(
     console.warn("worker_result_callback_retry", { attempt, lastStatus: lastStatus || "network", error: lastError });
     await new Promise((resolve) => setTimeout(resolve, workerCallbackRetryDelayMs(attempt)));
   }
-  throw new Error(`worker_result_callback_failed_${lastStatus || "network"}${lastError ? `_${lastError}` : ""}`);
+  // The worker already finished. If its callback endpoint stays unavailable,
+  // settle from this process so a failed generation does not hold credits
+  // until the stale-job watchdog runs.
+  try {
+    const result = await settleGenerationJobRelational(resultBody);
+    clearWorkerProgressWrites(payload);
+    publishCustomerJobEventForJob("result", result.job, {
+      alreadyProcessed: result.alreadyProcessed,
+      eventKind: "final",
+      error: body.error,
+      timing: timingFromResultJson(result.job.resultJson, body.timing)
+    });
+    console.warn("worker_result_callback_fallback_settled", {
+      jobId: payload.jobId,
+      siteId: payload.siteId,
+      lastStatus: lastStatus || "network",
+      error: body.error
+    });
+    return;
+  } catch (fallbackError) {
+    throw new Error(`worker_result_callback_failed_${lastStatus || "network"}${lastError ? `_${lastError}` : ""}; fallback_settle_failed_${errorMessage(fallbackError)}`);
+  }
 }
 
 function videoTaskId(body: VideoGenerateResponse) {

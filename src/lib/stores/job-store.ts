@@ -510,63 +510,6 @@ function defaultVideoThemePrompt(videoTheme?: GenerationVideoTheme | null): stri
   return videoTheme?.prompt?.trim() ?? "";
 }
 
-function _videoFrameOrderInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
-  if (!requestedAssetIds.length) return "";
-  const fields = fieldRecord(requestJson);
-  const promptNote = typeof fields.promptNote === "string" && fields.promptNote.trim()
-    ? `User note: ${fields.promptNote.trim()}`
-    : "";
-  return [
-    "Video frame order requirement: use the selected source images as ordered frame references, not as interchangeable examples.",
-    ...requestedAssetIds.map((assetId, index) => `Frame ${index + 1}: assetId=${assetId}. ${index === 0 ? "This is the opening visual anchor." : "Preserve this frame as a later visual beat and keep its important subjects and scene cues represented."}`),
-    requestedAssetIds.length > 1
-      ? "When later frames show additional clear adult people, products, wardrobe, props, or background elements, represent them clearly in the final video instead of silently using only Frame 1."
-      : "Use the single frame as the first-frame anchor for the generated clip.",
-    requestedAssetIds.length > 1
-      ? "If the user asks for a couple, kiss, embrace, side-profile interaction, conversation, handoff, group shot, or other relationship/action scene, include the relevant selected people from the ordered frames in one coherent scene."
-      : "",
-    requestedAssetIds.length > 1
-      ? "Treat the ordered frames as the cast list: Frame 1 subject is Character A, Frame 2 subject is Character B, and additional frames provide additional cast or scene cues. Keep the same uploaded people; do not recast them as different-looking people."
-      : "",
-    "Keep the final result as one continuous realistic video clip, not a slideshow, collage, grid, or split panel.",
-    promptNote ? promptNote.replace("User note:", "Mandatory user direction:") : ""
-  ].filter(Boolean).join("\n");
-}
-
-function _videoReferenceContractInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
-  if (!requestedAssetIds.length) return "";
-  const fields = fieldRecord(requestJson);
-  const promptNote = typeof fields.promptNote === "string" && fields.promptNote.trim() ? fields.promptNote.trim() : "";
-  return [
-    "Video reference contract: treat the selected frame images as binding source resources, not loose inspiration or a generic theme hint.",
-    "Source images define who the visible people, products, wardrobe, props, and scene facts are.",
-    "User explicit direction wins over preset/theme wording for subject count, relationship, action, pose, camera transition, and story beat when it asks for a concrete scene.",
-    "Cast continuity is mandatory: every main person in the generated video must be the corresponding uploaded person from the selected frames, with the same broad face shape, hair color, hairstyle, skin tone, apparent age range, wardrobe color cues, and visual presence.",
-    "Preserve the visible subject count unless the user explicitly asks selected people to coexist in one scene, and preserve the main person or product, face shape, apparent age range, skin tone, hair color and hairstyle, wardrobe colors, props, background cues, lighting direction, and camera orientation from the selected frames.",
-    "Do not replace the source subject with a generic actor, do not change blonde hair to brunette or alter other defining visible traits, and do not move into an unrelated holiday, wedding, travel, studio, walking, or lifestyle template unless those resources are visible in the selected frames or explicitly requested by the user.",
-    "Theme direction may add only low-priority mood and camera texture after the frame resources and user direction are satisfied.",
-    promptNote ? `Mandatory user direction inside this source-resource boundary: ${promptNote}` : ""
-  ].filter(Boolean).join("\n");
-}
-
-function _videoSkillPackQualityInstruction(requestJson: Record<string, unknown> | undefined, requestedAssetIds: string[]): string {
-  const modelPreference = requestedVideoModelPreference(requestJson);
-  return [
-    "Store video quality rules powered by the latest installed AI video skill pack: treat the user's written prompt as editable direction, not as the whole production prompt.",
-    "Prompt upgrade requirements: preserve the user's intent while adding a clear first 0-3 second hook, a simple beginning-middle-end motion plan, one motivated camera move, and a clear final frame.",
-    "Beat quality requirements: every visible beat must advance action, prove a selling point, change emotion, or increase pressure, with concrete environmental pressure, physical micro-action, and sound or visual motif cues.",
-    requestedAssetIds.length
-      ? `Reference continuity requirements: use all ${requestedAssetIds.length} selected frame image${requestedAssetIds.length === 1 ? "" : "s"} in order as binding visual evidence.`
-      : "Text-to-video requirements: follow the customer's written direction as the source of truth and do not borrow unrelated preset travel, lifestyle, or stock-footage scenes.",
-    "Continuity requirements: lock identity, product shape, material state, scene geometry, lighting direction, object contact, and selected-frame order when references are present. Avoid extra people, warped hands, product drift, impossible physics, text overlays, watermarks, or generic stock-video polish.",
-    modelPreference === "grok"
-      ? "Grok supplier rule: final provider prompts should remain plain natural English with reference roles described in words, not Seedance @Image/@Video syntax."
-      : modelPreference === "gemini"
-        ? "Gemini supplier rule: keep references concise and policy-safe, with concrete visible action instead of real-person identity claims when unsupported."
-        : "Automatic supplier rule: keep the prompt plain, concise, reference-aware, and safe for either text-to-video or image-to-video adapters."
-  ].filter(Boolean).join("\n");
-}
-
 function videoPromptText(requestJson: Record<string, unknown> | undefined): string {
   const fields = fieldRecord(requestJson);
   const fieldPrompt = typeof fields.promptNote === "string" && fields.promptNote.trim()
@@ -905,6 +848,23 @@ async function normalizeProviderSelectionForAvailability(
   return params.provider;
 }
 
+async function lockGenerationJobForUpdate(tx: Tx, params: { jobId: string; siteId: string }) {
+  const rows = await tx.$queryRaw<Array<{ id: string }>>`
+    SELECT "id" FROM "GenerationJob"
+    WHERE "id" = ${params.jobId} AND "siteId" = ${params.siteId}
+    FOR UPDATE
+  `;
+  if (!rows[0]) throw new StoreError("job_not_found", 404);
+}
+
+async function lockCustomerCreditBalanceForUpdate(tx: Tx, siteId: string, customerId: string) {
+  await tx.$queryRaw<Array<{ id: string }>>`
+    SELECT "id" FROM "CreditBalance"
+    WHERE "siteId" = ${siteId} AND "customerId" = ${customerId}
+    FOR UPDATE
+  `;
+}
+
 async function readCustomerForUpdate(tx: Tx, siteId: string, customerId: string) {
   const customer = await tx.customer.findFirst({ where: { id: customerId, siteId }, include: { balance: true } });
   if (!customer) throw new StoreError("customer_not_found_for_site", 404);
@@ -953,7 +913,15 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
     }
   });
   const releasedJobIds: string[] = [];
-  for (const job of staleJobs) {
+  for (const candidate of staleJobs) {
+    // Serialize a stale release with settlement/progress updates for the same
+    // job. Without this lock a late result can consume or release the same
+    // reservation a second time.
+    await lockGenerationJobForUpdate(tx, { jobId: candidate.id, siteId: params.siteId });
+    const job = await tx.generationJob.findFirst({
+      where: { id: candidate.id, siteId: params.siteId, customerId: params.customerId }
+    });
+    if (!job || (job.status !== "queued" && job.status !== "running")) continue;
     const jobRequest = jsonObject<Record<string, unknown>>(job.requestJson) ?? {};
     const previousResult = jsonObject<Record<string, unknown>>(job.resultJson) ?? {};
     const staleMs = activeJobStaleMs(jobRequest, previousResult);
@@ -961,8 +929,28 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
     const isVideoRequestOrphan = !isVideoCreateOrphan && videoProviderRequestStartedWithoutTaskId(previousResult);
     const forceVideoTaskTimeout = params.forceVideoCreateTimeout === true && (isVideoCreateOrphan || isVideoRequestOrphan);
     if (!forceVideoTaskTimeout && job.updatedAt.getTime() > nowMs - staleMs) continue;
+    await lockCustomerCreditBalanceForUpdate(tx, job.siteId, job.customerId);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
-    const reserved = Math.max(0, Math.min(job.creditsReserved, customer.balance?.reserved ?? 0));
+    const reserveLedger = await tx.creditLedger.findFirst({
+      where: { siteId: job.siteId, customerId: job.customerId, type: "reserve", sourceId: job.id }
+    });
+    const jobReserved = reserveLedger
+      ? Math.max(0, -reserveLedger.amount)
+      : Math.max(0, job.creditsReserved);
+    const availableReserved = Math.max(0, customer.balance?.reserved ?? 0);
+    const reserved = Math.max(0, Math.min(jobReserved, availableReserved));
+    const reservedShortfall = Math.max(0, jobReserved - reserved);
+    if (reservedShortfall > 0) {
+      console.error("stale_generation_release_reserved_shortfall", {
+        siteId: job.siteId,
+        customerId: job.customerId,
+        jobId: job.id,
+        jobReserved,
+        availableReserved,
+        creditsReleased: reserved,
+        reservedShortfall
+      });
+    }
     const previousSlots = Array.isArray(previousResult.outputSlots)
       ? previousResult.outputSlots.filter((slot): slot is Record<string, unknown> => Boolean(slot) && typeof slot === "object" && !Array.isArray(slot))
       : [];
@@ -991,10 +979,11 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
     const requestedOutputs = Math.max(1, Math.trunc(Number(billing.outputCount) || failedSlots.length || 1));
     const unitCreditCost = Math.max(0, Math.trunc(Number(billing.unitCreditCost) || Math.ceil(job.creditsReserved / requestedOutputs)));
     if (reserved > 0) {
-      await tx.creditBalance.update({
-        where: { id: customer.balance!.id },
+      const updated = await tx.creditBalance.updateMany({
+        where: { id: customer.balance!.id, reserved: { gte: reserved } },
         data: { balance: { increment: reserved }, reserved: { decrement: reserved } }
       });
+      if (updated.count !== 1) throw new StoreError("reserved_credits_not_available", 409);
       await tx.creditLedger.create({
         data: {
           id: uid("led"),
@@ -1025,7 +1014,8 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
             unitCreditCost,
             creditsReserved: job.creditsReserved,
             creditsConsumed: 0,
-            creditsReleased: reserved
+            creditsReleased: reserved,
+            ...(reservedShortfall > 0 ? { creditsReleaseShortfall: reservedShortfall, reconciliationRequired: "reserved_credit_pool_shortfall" } : {})
           },
           settledAt: now
         })
@@ -1128,11 +1118,13 @@ export async function terminateGenerationJobRelational(params: {
   localWorkerAbort?: boolean;
 }): Promise<{ job: GenerationJob; ledger?: CreditLedgerEntry; customer: Customer }> {
   return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
+    await lockGenerationJobForUpdate(tx, { jobId: params.jobId, siteId: params.siteId });
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     if (job.status !== "queued" && job.status !== "running") {
       throw new StoreError("generation_job_not_active", 409);
     }
+    await lockCustomerCreditBalanceForUpdate(tx, job.siteId, job.customerId);
     const _customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const previousResult = jsonObject<Record<string, unknown>>(job.resultJson) ?? {};
     const requestJson = jsonObject<Record<string, unknown>>(job.requestJson) ?? {};
@@ -1714,6 +1706,7 @@ export async function updateGenerationJobStatusRelational(params: {
   timing?: Record<string, string>;
 }): Promise<{ job: GenerationJob; alreadyFinal: boolean }> {
   return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
+    await lockGenerationJobForUpdate(tx, { jobId: params.jobId, siteId: params.siteId });
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
     const alreadyFinal = job.status === "succeeded" || job.status === "failed" || job.status === "refunded";
@@ -1775,8 +1768,10 @@ export async function settleGenerationJobRelational(params: {
   recovery?: { source?: string; providerTaskId?: string; resultUrl?: string; recoveredAt?: string };
 }): Promise<{ job: GenerationJob; ledger?: CreditLedgerEntry; alreadyProcessed: boolean; customer: Customer }> {
   return runPrismaWriteWithReconnect(() => withJobStoreTimeout(prisma.$transaction(async (tx) => {
+    await lockGenerationJobForUpdate(tx, { jobId: params.jobId, siteId: params.siteId });
     const job = await tx.generationJob.findFirst({ where: { id: params.jobId, siteId: params.siteId } });
     if (!job) throw new StoreError("job_not_found", 404);
+    await lockCustomerCreditBalanceForUpdate(tx, job.siteId, job.customerId);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const previousResult = (job.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson) ? job.resultJson : {}) as Record<string, unknown>;
     const outputs = params.outputs ?? [];

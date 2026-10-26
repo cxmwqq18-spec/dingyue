@@ -59,8 +59,30 @@ export async function dispatchWorkspaceJob(input: {
   assertWorkspaceSite(input.siteId);
   if (input.job.siteId !== input.siteId || input.job.customerId !== input.customerId) throw new WorkspaceError("workspace_generation_not_found", 404);
   assertWorkspaceExternalOperation("worker");
-  const admission = await claimWorkspaceDispatch({ siteId: input.siteId, customerId: input.customerId, jobId: input.job.id,
-    requestId: `req_${input.job.id}`, requestJson: input.requestJson });
+  let admission: DispatchAdmission;
+  try {
+    admission = await claimWorkspaceDispatch({ siteId: input.siteId, customerId: input.customerId, jobId: input.job.id,
+      requestId: `req_${input.job.id}`, requestJson: input.requestJson });
+  } catch (error) {
+    // The claim is written before any provider call. If claiming throws, no
+    // worker was dispatched by this request, so release the reservation now
+    // instead of waiting for the stale-job watchdog.
+    await settleGenerationJobRelational({
+      siteId: input.siteId,
+      jobId: input.job.id,
+      requestId: `req_${input.job.id}`,
+      status: "failed",
+      error: input.failureCode
+    }).catch((settleError) => {
+      console.error("workspace_dispatch_claim_settle_failed", {
+        siteId: input.siteId,
+        jobId: input.job.id,
+        error: error instanceof Error ? error.message : String(error),
+        settleError: settleError instanceof Error ? settleError.message : String(settleError)
+      });
+    });
+    throw error;
+  }
   if (admission.state !== "claimed") {
     if (admission.state === "interrupted") throw new WorkspaceError("workspace_dispatch_outcome_unknown", 503);
     if (admission.state === "finished") throw new WorkspaceError("workspace_dispatch_finished", 409);

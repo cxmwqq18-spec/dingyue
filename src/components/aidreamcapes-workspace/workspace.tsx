@@ -95,6 +95,14 @@ export interface AidreamcapesWorkspaceProps {
 }
 
 const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
+
+function taskStatusLabel(task: WorkspaceTask): string {
+  if (!task.input.direct) return statusLabels[task.status];
+  if (task.status === "cancelled") return "Cancelled";
+  if (task.status === "failed" || task.operation?.state === "fail") return "Needs attention";
+  if (task.video?.finalUrl || task.status === "completed") return "Completed";
+  return "Generating";
+}
 const refLabels: Record<RefKind, string> = { actor: "Avatar", product: "Product", texture: "Detail", composite: "Avatar + product" };
 const steps: { id: Step; label: string }[] = [{ id: "input", label: "Details" }, { id: "storyboard", label: "Storyboard" }, { id: "render", label: "Render" }, { id: "delivery", label: "Delivery" }];
 const renderLabels = { confirm: "Confirm selected clips", concat: "Assemble your video", subtitles: "Add captions", audio: "Finish audio" };
@@ -135,7 +143,7 @@ function taskMedia(task: WorkspaceTask, scene?: SceneSchema): LibraryCardMedia[]
     const version = shot.versions?.find((item) => item.vid === shot.curVer) ?? shot.versions?.at(-1);
     if (!version?.clipUrl || version.status !== "done" || seen.has(version.clipUrl)) continue;
     seen.add(version.clipUrl);
-    media.push({ kind: "video", url: version.clipUrl, label: `Shot ${media.filter((item) => item.kind === "video").length + 1}` });
+    media.push({ kind: "video", url: version.clipUrl, label: task.input.direct ? "Video" : `Shot ${media.filter((item) => item.kind === "video").length + 1}` });
   }
   for (const ref of [...refs, ...fallback]) {
     if (!ref.url || seen.has(ref.url)) continue;
@@ -295,6 +303,17 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const selectedAvatarLanguage = avatarLanguageOptions.some((item) => item.value === avatarLanguage) ? avatarLanguage : avatarLanguageOptions[0]?.value ?? avatarSelection?.voice.language ?? "en";
   const operationActive = task?.operation?.state === "pending" || task?.operation?.state === "run";
   const clipsProcessing = task?.storyboard?.shots.some((shot) => shot.genStatus === "run" || shot.compositeStatus === "run");
+  const directTask = Boolean(task?.input.direct);
+  const directFinalUrl = directTask ? task?.video?.finalUrl : undefined;
+  const directShotFailure = directTask ? task?.storyboard?.shots.find((shot) => shot.genStatus === "fail") : undefined;
+  const directFailure = directTask && !directFinalUrl && !operationActive
+    ? task?.operation?.state === "fail"
+      ? task.operation.error ?? task.error
+      : task?.status === "failed"
+        ? task.error ?? directShotFailure?.error
+        : directShotFailure?.error
+    : undefined;
+  const directStalled = directTask && !directFinalUrl && !operationActive && !clipsProcessing && !directFailure;
   const editingDisabled = busy || Boolean(operationActive) || Boolean(clipsProcessing);
   const working = busy || Boolean(operationActive) || loading;
 
@@ -495,7 +514,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (customerId && taskId) {
       setLoading(true);
       loads.push(request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`, { signal: controller.signal }).then((result) => {
-        if (active()) { acceptTask(result.task); setView("agent"); setStep(steps.some((item) => item.id === params.get("step")) ? params.get("step") as Step : "input"); }
+        if (active()) {
+          acceptTask(result.task); setView("agent");
+          const requestedStep = steps.some((item) => item.id === params.get("step")) ? params.get("step") as Step : "input";
+          setStep(result.task.input.direct
+            ? result.task.video?.finalUrl ? "delivery" : "input"
+            : requestedStep);
+        }
       }));
     } else if (customerId && (entryView === "library" || entryView === "home")) {
       setLoading(true);
@@ -774,8 +799,44 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
   async function openTask(item: Pick<WorkspaceTask, "taskId">) {
     setBusy(true); setMessage("");
-    try { await persist(); const result = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(item.taskId)}`); acceptTask(result.task); setView("agent"); const nextStep = result.task.video?.finalUrl ? "delivery" : result.task.storyboard ? "storyboard" : "input"; setStep(nextStep); updateUrl(result.task, nextStep); }
+    try {
+      await persist();
+      const result = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(item.taskId)}`);
+      acceptTask(result.task); setView("agent");
+      const nextStep = result.task.input.direct
+        ? result.task.video?.finalUrl ? "delivery" : "input"
+        : result.task.video?.finalUrl ? "delivery" : result.task.storyboard ? "storyboard" : "input";
+      setStep(nextStep); updateUrl(result.task, nextStep);
+    }
     catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  async function startNewVideo() {
+    await persist().catch(() => {});
+    currentRef.current = null; savedRef.current = null; dirty.current = false;
+    visibleView.current = "agent";
+    setTask(null); setStep("input"); setView("agent"); setMessage(""); setMessageAction(false);
+    updateUrl(null, "input", "agent");
+  }
+
+  async function retryDirectTask() {
+    if (!task || busy) return;
+    setBusy(true); setMessage("");
+    try {
+      const current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(task.taskId)}`)).task;
+      const shot = current.storyboard?.shots[0];
+      const version = shot?.versions.find((item) => item.vid === shot.curVer) ?? shot?.versions.at(-1);
+      if (shot && version?.clipUrl && version.status === "done") {
+        await request(`/tasks/${encodeURIComponent(task.taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: current.revision, action: "render" }) });
+        setMessage("Finishing your video…");
+        const finalTask = await pollTaskUntil(task.taskId, (next) => Boolean(next.video?.finalUrl) || next.video?.status === "fail", 600000);
+        if (finalTask.video?.status === "fail") throw new Error(finalTask.video.error ? humanError(finalTask.video.error) : "The video could not be finished.");
+        setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
+        return;
+      }
+      await autoRunVideoTask(task.taskId);
+    } catch (error) { setMessage((error as Error).message); }
+    finally { setBusy(false); }
   }
 
   async function runAction(action: Action, extra: { shotId?: string; versionId?: string; language?: string } = {}) {
@@ -1305,7 +1366,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </>}
 
         {view === "agent" && !task && !selectedScene && <>
-          <div className={styles.pageTitle}><h1>Text to Video</h1><p>Turn a written idea and product details into an editable video storyboard. Review each shot, generate your video, and save it to your Library.</p></div>
+          <div className={styles.pageTitle}><h1>Text to Video</h1><p>Turn a written idea and product details into a finished video. Add your prompt and photos, and we'll generate the video and save it to your Library.</p></div>
           {loading && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Loading your workspace…</span></div>}
           <HomeComposer
             tab="AI Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
@@ -1327,10 +1388,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </>}
 
         {view === "agent" && !task && selectedScene && <>
-          <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to Text to Video</span></button><h1>{selectedScene.name}</h1><p>Add the product photos and a short brief for this scene. Saving opens the editable storyboard, where you can generate shots and render the video.</p></div>
+          <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to Text to Video</span></button><h1>{selectedScene.name}</h1><p>Add the product photos and a short brief for this scene. Saving creates the video task and starts generation.</p></div>
           <section className={`${styles.formSection} ${styles.videoDraftForm}`}>
             <h2>1. Add your product and idea</h2>
-            <p>Start with at least one clear product photo and a short description. You can refine the storyboard after saving.</p>
+            <p>Start with at least one clear product photo and a short description. You can adjust the prompt and photos before generating.</p>
             <div className={styles.fields}>
               <div className={styles.field}>
                 <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
@@ -1352,20 +1413,29 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             </div>
             {selectedScene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
             {importedBriefNotice()}
-            <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveNewDraft()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Save draft and open storyboard</span></button></div>
-            <p className={styles.help}>Saving adds the draft to your Library and opens the storyboard. No video is generated until you start that step.</p>
+            <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveNewDraft()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button></div>
+            <p className={styles.help}>We'll generate your video from this prompt and your photos, then save it to your Library.</p>
           </section>
           {canBrowseTemplates && templatePickerCallout()}
         </>}
 
         {view === "agent" && task && <>
-          <div className={styles.editorHeader}><button className={styles.iconButton} aria-label="Back to library" onClick={() => void navigate("library")}><ArrowLeft size={21} /></button><input className={styles.titleInput} aria-label="Video title" value={task.title} maxLength={120} disabled={editingDisabled} onChange={(event) => editTask((current) => ({ ...current, title: event.target.value }))} /><span className={styles.saveStatus} role="status">{saveStatus}</span><span className={styles.badge}>{statusLabels[task.status]}</span></div>
-          <div className={styles.steps}>{steps.map((item, index) => <button key={item.id} className={`${styles.step} ${step === item.id ? styles.selected : ""}`} disabled={item.id !== "input" && !task.storyboard} onClick={() => { setStep(item.id); updateUrl(task, item.id); }}><span className={styles.stepNumber}>{index + 1}</span><span>{item.label}</span></button>)}</div>
-          {clipsProcessing && !operationActive && <div className={styles.notice} role="status">Your clips are processing. You can return from Library when they are ready. Editing is paused to protect your selected inputs.</div>}
-          {operationActive && <div className={styles.notice} role="status"><Loader2 size={16} className={styles.spin} style={{ display: "inline", verticalAlign: "middle", marginRight: 8 }} /><span>{task.operation?.action === "render" ? "Rendering your video…" : task.operation?.action === "compose_shot" ? "Preparing your presenter reference…" : task.operation?.action === "generate_shot" ? "Submitting your clip generation…" : task.operation?.action === "restore_version" ? "Restoring your selected version…" : "Preparing your storyboard…"}</span><span> Your progress is saved. You can return from Library.</span></div>}
-          {(task.error || task.operation?.error) && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{humanError(task.operation?.error || task.error)}</span>{task.operation?.error === "operation_interrupted" && task.operation.state !== "fail" && <button className={styles.linkButton} disabled={busy} onClick={() => void runAction("resume")}>Resume saved action</button>}</div>}
+          <div className={styles.editorHeader}><button className={styles.iconButton} aria-label="Back to library" onClick={() => void navigate("library")}><ArrowLeft size={21} /></button><input className={styles.titleInput} aria-label="Video title" value={task.title} maxLength={120} disabled={editingDisabled} onChange={(event) => editTask((current) => ({ ...current, title: event.target.value }))} /><span className={styles.saveStatus} role="status">{saveStatus}</span><span className={styles.badge}>{taskStatusLabel(task)}</span></div>
+          {!directTask && <div className={styles.steps}>{steps.map((item, index) => <button key={item.id} className={`${styles.step} ${step === item.id ? styles.selected : ""}`} disabled={item.id !== "input" && !task.storyboard} onClick={() => { setStep(item.id); updateUrl(task, item.id); }}><span className={styles.stepNumber}>{index + 1}</span><span>{item.label}</span></button>)}</div>}
+          {clipsProcessing && !operationActive && <div className={styles.notice} role="status">{directTask ? "Your video is processing. You can return from Library when it is ready. Editing is paused to protect your selected inputs." : "Your clips are processing. You can return from Library when they are ready. Editing is paused to protect your selected inputs."}</div>}
+          {operationActive && <div className={styles.notice} role="status"><Loader2 size={16} className={styles.spin} style={{ display: "inline", verticalAlign: "middle", marginRight: 8 }} /><span>{task.operation?.action === "render" ? "Rendering your video…" : task.operation?.action === "compose_shot" ? "Preparing your presenter reference…" : task.operation?.action === "generate_shot" ? (directTask ? "Submitting your video…" : "Submitting your clip generation…") : task.operation?.action === "restore_version" ? "Restoring your selected version…" : (directTask ? "Preparing your video…" : "Preparing your storyboard…")}</span><span> Your progress is saved. You can return from Library.</span></div>}
+          {(task.error || task.operation?.error) && !directTask && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{humanError(task.operation?.error || task.error)}</span>{task.operation?.error === "operation_interrupted" && task.operation.state !== "fail" && <button className={styles.linkButton} disabled={busy} onClick={() => void runAction("resume")}>Resume saved action</button>}</div>}
           {task.sourceAnalysis && <section className={styles.notice} aria-label="Ad reference structure"><strong>Ad reference structure</strong><p>{task.sourceAnalysis.synthetic ? "This draft uses a simulated analysis. You can edit and save it; generation is unavailable." : "This draft uses your reviewed ad structure and your own product details."}</p><details><summary>View reference structure</summary><ul>{task.sourceAnalysis.segments.map((segment, index) => <li key={index}><span>{`${segment.start}–${segment.end}s · ${segment.role}: `}</span><span>{segment.visual}</span></li>)}</ul></details></section>}
-          {step === "input" && <>
+          {step === "input" && directTask && <section className={styles.panel}>
+            <div className={styles.sectionHead}><div><h2>{directFinalUrl ? "Your video is ready" : directFailure || directStalled ? "Let's try that again" : "Creating your video"}</h2><p className={styles.help}>{directFinalUrl ? "Download your video or create another one from a new prompt." : directFailure ? "The last attempt didn't finish. You can try again with the same prompt and photos." : directStalled ? "This video isn't generating right now. Try again to continue where it stopped." : "Your prompt and photos are with the video provider. You can leave this page and return from your Library."}</p></div>{!directFinalUrl && !directFailure && !directStalled && <span className={styles.badge}>{task.operation?.action === "render" ? "Finishing" : "Generating"}</span>}</div>
+            {directFinalUrl ? <><video className={styles.video} src={directFinalUrl} controls playsInline preload="metadata" aria-label="Finished video" /><div className={styles.row}><a className={`${styles.button} ${styles.primary}`} href={directFinalUrl} download><Download size={16} /><span>Download video</span></a><button className={styles.button} onClick={() => setStep("delivery")}><Play size={16} /><span>View video</span></button></div></> : directFailure || directStalled ? <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{humanError(directFailure || "Video generation stopped before completion.")}</span></div> : <div className={styles.notice} role="status"><Loader2 size={16} className={styles.spin} style={{ display: "inline", verticalAlign: "middle", marginRight: 8 }} /><span>{task.operation?.action === "render" ? "Finishing your video…" : "Generating your video…"}</span></div>}
+            <div className={styles.footerActions}>
+              {(directFailure || directStalled) && <button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void retryDirectTask()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <RotateCcw size={16} />}<span>Try again</span></button>}
+              {directFinalUrl && <button className={styles.button} onClick={() => void startNewVideo()}><Plus size={16} /><span>Create another video</span></button>}
+              <button className={styles.button} onClick={() => void navigate("library")}><Library size={16} /><span>Back to Library</span></button>
+            </div>
+          </section>}
+          {step === "input" && !directTask && <>
             {scene?.sections.map((section) => {
               const productField = section.fields.find((field) => field.type === "images" && field.required);
               const promptField = section.fields.find((field) => field.required && (field.type === "text" || field.type === "textarea"));
@@ -1388,7 +1458,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             <div className={styles.footerActions}>{task.storyboard && <button className={styles.button} disabled={editingDisabled} onClick={() => { setStep("storyboard"); updateUrl(task, "storyboard"); }}>View storyboard</button>}<button className={`${styles.button} ${styles.primary}`} disabled={editingDisabled || Boolean(task.sourceAnalysis?.synthetic)} onClick={() => void runAction(task.storyboard ? "reroll" : "storyboard")}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Sparkles size={16} />}<span>{task.storyboard ? "Refresh storyboard" : "Generate storyboard"}</span></button></div>
           </>}
 
-          {step === "storyboard" && <>
+          {step === "storyboard" && !directTask && <>
             <div className={styles.sectionHead}><div><h2>Your storyboard</h2><p className={styles.help}>Edit and generate each shot, then choose the versions you want to keep.</p></div><button className={styles.button} disabled={editingDisabled} onClick={() => void runAction("reroll")}><RotateCcw size={15} /><span>New draft</span></button></div>
             {task.storyboardStale && <div className={styles.notice}>Your details changed after this storyboard was created. Refresh the draft to apply them; locked shots stay in place.</div>}
             {task.storyboard?.lang !== task.input.options.language && <div className={styles.notice}><span>Your video language is now </span><span>{languageLabel(task.input.options.language)}</span><span>. Your dialogue has been kept as written.</span><button className={styles.linkButton} disabled={editingDisabled} onClick={() => void runAction("rewrite", { language: task.input.options.language })}>Rewrite dialogue</button></div>}
@@ -1397,12 +1467,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             {catalog?.billing && <div className={styles.notice}><span>Each shot generation uses </span><span>{catalog.billing.creditsPerShot}</span><span> credits. A new version is a separate generation.</span></div>}<div className={styles.footerActions}><button className={styles.button} onClick={() => setStep("input")}><ArrowLeft size={15} /><span>Edit details</span></button><button className={`${styles.button} ${styles.primary}`} disabled={working} onClick={() => { setStep("render"); updateUrl(task, "render"); }}><span>Review & render </span><ArrowRight size={15} /></button></div>
           </>}
 
-          {step === "render" && <section className={styles.panel}><h2>Render your video</h2><p className={styles.help}>Your selected shot versions will be assembled into one video.</p><div className={styles.sourceList}>{task.storyboard?.shots.map((shot, index) => { const version = shot.versions.find((item) => item.vid === shot.curVer); return <div key={shot.shotId} className={styles.sourceRow}><span><span>Shot </span><span>{index + 1}</span><span> · </span><span>{shot.duration}</span><span>s</span></span><span className={styles.badge}>{version?.status === "done" && version.clipUrl ? `Version ${shot.versions.findIndex((item) => item.vid === shot.curVer) + 1} ready` : "Generate this shot first"}</span></div>; })}</div><div className={styles.renderSteps}>{(task.video?.steps ?? [{ id: "confirm", status: "pending" }, { id: "concat", status: "pending" }, { id: "subtitles", status: "pending" }, { id: "audio", status: "pending" }]).map((item) => <div key={item.id} className={styles.renderStep}>{item.status === "done" ? <CheckCircle2 size={22} /> : item.status === "run" ? <Loader2 size={22} className={styles.spin} /> : <Clapperboard size={22} />}<div><h3>{renderLabels[item.id]}</h3><p>{(item.reason ? humanError(item.reason) : "") || (item.status === "run" ? "Working… You can leave and return from Library." : item.status === "done" ? "Complete" : item.status === "skipped" ? "Not required for this video" : item.status === "fail" ? "This step needs attention" : "Ready when your clips are confirmed")}</p></div></div>)}</div>{task.video?.error && <div className={`${styles.notice} ${styles.error}`}>{humanError(task.video.error)}</div>}<div className={styles.footerActions}><button className={styles.button} onClick={() => setStep("storyboard")}>Back to shots</button>{task.video?.finalUrl && <button className={styles.button} onClick={() => setStep("delivery")}>View video</button>}<button className={`${styles.button} ${styles.primary}`} disabled={working || Boolean(clipsProcessing) || task.status === "rendering"} onClick={() => void runAction("render")}>{task.status === "rendering" ? <Loader2 size={16} className={styles.spin} /> : <Clapperboard size={16} />}<span>{task.video?.status === "fail" ? "Retry render" : task.video?.finalUrl ? "Render updated video" : "Render video"}</span></button></div></section>}
+          {step === "render" && !directTask && <section className={styles.panel}><h2>Render your video</h2><p className={styles.help}>Your selected shot versions will be assembled into one video.</p><div className={styles.sourceList}>{task.storyboard?.shots.map((shot, index) => { const version = shot.versions.find((item) => item.vid === shot.curVer); return <div key={shot.shotId} className={styles.sourceRow}><span><span>Shot </span><span>{index + 1}</span><span> · </span><span>{shot.duration}</span><span>s</span></span><span className={styles.badge}>{version?.status === "done" && version.clipUrl ? `Version ${shot.versions.findIndex((item) => item.vid === shot.curVer) + 1} ready` : "Generate this shot first"}</span></div>; })}</div><div className={styles.renderSteps}>{(task.video?.steps ?? [{ id: "confirm", status: "pending" }, { id: "concat", status: "pending" }, { id: "subtitles", status: "pending" }, { id: "audio", status: "pending" }]).map((item) => <div key={item.id} className={styles.renderStep}>{item.status === "done" ? <CheckCircle2 size={22} /> : item.status === "run" ? <Loader2 size={22} className={styles.spin} /> : <Clapperboard size={22} />}<div><h3>{renderLabels[item.id]}</h3><p>{(item.reason ? humanError(item.reason) : "") || (item.status === "run" ? "Working… You can leave and return from Library." : item.status === "done" ? "Complete" : item.status === "skipped" ? "Not required for this video" : item.status === "fail" ? "This step needs attention" : "Ready when your clips are confirmed")}</p></div></div>)}</div>{task.video?.error && <div className={`${styles.notice} ${styles.error}`}>{humanError(task.video.error)}</div>}<div className={styles.footerActions}><button className={styles.button} onClick={() => setStep("storyboard")}>Back to shots</button>{task.video?.finalUrl && <button className={styles.button} onClick={() => setStep("delivery")}>View video</button>}<button className={`${styles.button} ${styles.primary}`} disabled={working || Boolean(clipsProcessing) || task.status === "rendering"} onClick={() => void runAction("render")}>{task.status === "rendering" ? <Loader2 size={16} className={styles.spin} /> : <Clapperboard size={16} />}<span>{task.video?.status === "fail" ? "Retry render" : task.video?.finalUrl ? "Render updated video" : "Render video"}</span></button></div></section>}
 
-          {step === "delivery" && <section className={styles.panel}><h2>Your finished video</h2>{task.video?.finalUrl ? <><video className={styles.video} src={task.video.finalUrl} controls playsInline preload="metadata" aria-label="Finished video" />{task.video.stale && <div className={styles.notice}>Your storyboard changed after this video was rendered. Render again to include your edits.</div>}<div className={styles.row}><a className={`${styles.button} ${styles.primary}`} href={task.video.finalUrl} download><Download size={16} /><span>Download video</span></a><button className={styles.button} onClick={() => setStep("storyboard")}>Edit storyboard</button></div><h3 style={{ marginTop: 25 }}>Shot sources</h3><div className={styles.sourceList}>{task.video.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((item) => item.shotId === clip.shotId && item.versions.some((version) => version.vid === clip.vid)); return <div key={clip.shotId} className={styles.sourceRow}><span><span>Shot </span><span>{index + 1}</span></span><span><span>Version </span><span>{(source?.versions.findIndex((item) => item.vid === clip.vid) ?? -1) + 1}</span></span><a className={styles.linkButton} href={clip.clipUrl} download><Download size={14} /><span>Clip</span></a></div>; })}</div><details><summary className={styles.help} style={{ cursor: "pointer" }}>Export script and captions</summary><div className={styles.row} style={{ marginTop: 15, flexWrap: "wrap" }}><button className={styles.button} onClick={() => downloadText(`${task.title}-script.txt`, task.video?.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return `Shot ${index + 1}\n${version?.visual ?? ""}\n${version?.voiceover ?? ""}`; }).join("\n\n") ?? "")}><Download size={15} /><span>Script</span></button><button className={styles.button} onClick={() => downloadText(`${task.title}-prompts.json`, JSON.stringify(task.video?.clips.map((clip) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return { shot: clip.shotId, prompt: version?.prompt, references: version?.refImgs }; }), null, 2), "application/json")}><Download size={15} /><span>Prompts</span></button>{task.video.subtitleUrl && <a className={styles.button} href={task.video.subtitleUrl} download><Download size={15} /><span>Captions</span></a>}</div></details></> : <div className={styles.empty}><Video size={32} /><h3>Your video isn't ready yet</h3><p>Generate your shots and render your video to see it here.</p><button className={styles.button} onClick={() => setStep("render")}>Go to render</button></div>}</section>}
+          {step === "delivery" && directTask && <section className={styles.panel}>
+            <div className={styles.sectionHead}><div><h2>Your video</h2><p className={styles.help}>{directFinalUrl ? "Your video is ready to download." : "Your video is still being prepared."}</p></div></div>
+            {directFinalUrl ? <><video className={styles.video} src={directFinalUrl} controls playsInline preload="metadata" aria-label="Finished video" /><div className={styles.row}><a className={`${styles.button} ${styles.primary}`} href={directFinalUrl} download><Download size={16} /><span>Download video</span></a><button className={styles.button} onClick={() => void startNewVideo()}><Plus size={16} /><span>Create another video</span></button><button className={styles.button} onClick={() => setStep("input")}><ArrowLeft size={16} /><span>Back to progress</span></button></div></> : <div className={styles.empty}><Video size={32} /><h3>Your video isn't ready yet</h3><p>{directFailure ? humanError(directFailure) : "Generation is still in progress."}</p><button className={styles.button} onClick={() => setStep("input")}><ArrowLeft size={16} /><span>Back to progress</span></button></div>}
+          </section>}
+          {step === "delivery" && !directTask && <section className={styles.panel}><h2>Your finished video</h2>{task.video?.finalUrl ? <><video className={styles.video} src={task.video.finalUrl} controls playsInline preload="metadata" aria-label="Finished video" />{task.video.stale && <div className={styles.notice}>Your storyboard changed after this video was rendered. Render again to include your edits.</div>}<div className={styles.row}><a className={`${styles.button} ${styles.primary}`} href={task.video.finalUrl} download><Download size={16} /><span>Download video</span></a><button className={styles.button} onClick={() => setStep("storyboard")}>Edit storyboard</button></div><h3 style={{ marginTop: 25 }}>Shot sources</h3><div className={styles.sourceList}>{task.video.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((item) => item.shotId === clip.shotId && item.versions.some((version) => version.vid === clip.vid)); return <div key={clip.shotId} className={styles.sourceRow}><span><span>Shot </span><span>{index + 1}</span></span><span><span>Version </span><span>{(source?.versions.findIndex((item) => item.vid === clip.vid) ?? -1) + 1}</span></span><a className={styles.linkButton} href={clip.clipUrl} download><Download size={14} /><span>Clip</span></a></div>; })}</div><details><summary className={styles.help} style={{ cursor: "pointer" }}>Export script and captions</summary><div className={styles.row} style={{ marginTop: 15, flexWrap: "wrap" }}><button className={styles.button} onClick={() => downloadText(`${task.title}-script.txt`, task.video?.clips.map((clip, index) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return `Shot ${index + 1}\n${version?.visual ?? ""}\n${version?.voiceover ?? ""}`; }).join("\n\n") ?? "")}><Download size={15} /><span>Script</span></button><button className={styles.button} onClick={() => downloadText(`${task.title}-prompts.json`, JSON.stringify(task.video?.clips.map((clip) => { const source = [task.storyboard, ...task.storyboardHistory].flatMap((board) => board?.shots ?? []).find((shot) => shot.shotId === clip.shotId && shot.versions.some((version) => version.vid === clip.vid)); const version = source?.versions.find((version) => version.vid === clip.vid); return { shot: clip.shotId, prompt: version?.prompt, references: version?.refImgs }; }), null, 2), "application/json")}><Download size={15} /><span>Prompts</span></button>{task.video.subtitleUrl && <a className={styles.button} href={task.video.subtitleUrl} download><Download size={15} /><span>Captions</span></a>}</div></details></> : <div className={styles.empty}><Video size={32} /><h3>Your video isn't ready yet</h3><p>Generate your shots and render your video to see it here.</p><button className={styles.button} onClick={() => setStep("render")}>Go to render</button></div>}</section>}
         </>}
 
-        {view === "agent" && step === "delivery" && customer && task?.video?.status === "done" && <VideoPostEditor siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
+        {view === "agent" && step === "delivery" && !directTask && customer && task?.video?.status === "done" && <VideoPostEditor siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
 
         {view === "analytics" && (customer ? <AnalyticsWorkbench siteId={siteId} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Performance</h1><p>Log in to import and compare your advertising results.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "analytics"))}`}>Log in</a></section>)}
 
@@ -1553,7 +1627,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const failureCode = detailTask.operation?.state === "fail" ? detailTask.operation?.error ?? detailTask.error : detailTask.status === "failed" ? detailTask.error ?? shotFailure : shotFailure;
       const failed = Boolean(failureCode);
       const completed = detailTask.status === "completed" && detailTask.video?.finalUrl;
-      const statusWord = running ? (detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : failed ? "Needs attention" : statusLabels[detailTask.status] ?? detailTask.status;
+      const statusWord = running ? (detailTask.input.direct ? "Generating" : detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : failed ? "Needs attention" : taskStatusLabel(detailTask);
       const statusClass = failed ? styles.detailStatusIconFail : running ? styles.detailStatusIconRun : completed ? styles.detailStatusIconDone : styles.detailStatusIconDraft;
       const finalUrl = detailTask.video?.finalUrl;
       const referenceVideos = detailTask.input.referenceVideos ?? [];
@@ -1578,7 +1652,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               {finalUrl ? <video controls preload="metadata" src={finalUrl} className={styles.detailVideo} /> : <div className={`${styles.detailPlaceholder} ${failed ? styles.detailPlaceholderFail : ""}`}>{running ? <><Loader2 className={styles.spin} size={22} /><span>Generation in progress…</span></> : failed ? <><X size={22} /><span>Generation failed</span><span className={styles.detailFailReason}>{humanError(failureCode)}</span></> : <><FileVideo size={22} /><span>No video yet</span></>}</div>}
               {finalUrl && <a className={styles.button} style={{ marginTop: 10 }} href={finalUrl} download><Download size={15} /><span>Download</span></a>}
             </div>
-            {shotClips.length > 0 && <div className={styles.detailSection}>
+            {!detailTask.input.direct && shotClips.length > 0 && <div className={styles.detailSection}>
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Generated clips</p>
               <div className={styles.detailMediaGrid}>{shotClips.map((clip) => <figure key={clip.key} className={styles.detailMediaItem}><video controls preload="metadata" playsInline src={clip.url} /><figcaption><span>{clip.label}</span><a href={clip.url} download><Download size={13} /><span>Download</span></a></figcaption></figure>)}</div>
             </div>}
@@ -1768,7 +1842,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const shotFailure = item.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
       const failureCode = item.operation?.state === "fail" ? item.operation?.error ?? item.error : item.status === "failed" ? item.error ?? shotFailure : shotFailure;
       const failureReason = failureCode ? humanError(failureCode) : "";
-      const badgeLabel = itemRunning ? (item.operation?.action === "render" ? "Rendering" : "Working") : failureReason ? "Needs attention" : statusLabels[item.status];
+      const badgeLabel = itemRunning ? (item.operation?.action === "render" ? (item.input.direct ? "Finishing" : "Rendering") : item.input.direct ? "Generating" : "Working") : failureReason ? "Needs attention" : taskStatusLabel(item);
       const statusTone = itemRunning ? "progress" as const : failureReason ? "error" as const : item.status === "completed" ? "done" as const : "idle" as const;
       return <LibraryTaskCard
         key={item.taskId}

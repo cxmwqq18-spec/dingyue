@@ -73,6 +73,34 @@ async function settleFailedDispatch(params: {
   });
 }
 
+async function settleJobPreparationFailure(params: {
+  siteId: string;
+  job: GenerationJob;
+  error: unknown;
+}) {
+  const message = params.error instanceof Error && params.error.message.trim()
+    ? params.error.message
+    : "worker_payload_failed";
+  try {
+    await settleGenerationJobRelational({
+      jobId: params.job.id,
+      siteId: params.siteId,
+      requestId: `prepare:${params.job.id}`,
+      status: "failed",
+      error: message
+    });
+  } catch (settleError) {
+    // Keep the original preparation error visible. The stale-active-job
+    // watchdog remains the final safety net if this settlement also fails.
+    console.error("generation_job_prepare_settle_failed", {
+      siteId: params.siteId,
+      jobId: params.job.id,
+      error: message,
+      settleError: settleError instanceof Error ? settleError.message : String(settleError)
+    });
+  }
+}
+
 export async function submitGenerationJob(input: GenerationSubmitInput): Promise<GenerationSubmitResult> {
   assertExternalRequestAllowed({ requestParams: input.params, authContext: input.authContext });
   const idempotencyKey = input.idempotencyKey?.trim() || undefined;
@@ -103,7 +131,13 @@ export async function submitGenerationJob(input: GenerationSubmitInput): Promise
     };
   }
 
-  const workerPayload = await buildWorkerPayload({ job: created.job, siteAiApp: created.siteAiApp, baseUrls: input.baseUrls });
+  let workerPayload: WorkerPayload;
+  try {
+    workerPayload = await buildWorkerPayload({ job: created.job, siteAiApp: created.siteAiApp, baseUrls: input.baseUrls });
+  } catch (error) {
+    await settleJobPreparationFailure({ siteId: input.siteId, job: created.job, error });
+    throw error;
+  }
   const workerDispatch = input.skipWorkerDispatch
     ? { status: "skipped" as const }
     : await dispatchWorkerPayload(workerPayload);
@@ -176,7 +210,13 @@ export async function submitRerunGenerationJob(input: {
       note: "Idempotent replay returned the existing rerun job."
     };
   }
-  const workerPayload = await buildWorkerPayload({ job: rerun.job, siteAiApp: rerun.siteAiApp, baseUrls: input.baseUrls });
+  let workerPayload: WorkerPayload;
+  try {
+    workerPayload = await buildWorkerPayload({ job: rerun.job, siteAiApp: rerun.siteAiApp, baseUrls: input.baseUrls });
+  } catch (error) {
+    await settleJobPreparationFailure({ siteId: input.siteId, job: rerun.job, error });
+    throw error;
+  }
   const workerDispatch = input.skipWorkerDispatch
     ? { status: "skipped" as const }
     : await dispatchWorkerPayload(workerPayload);

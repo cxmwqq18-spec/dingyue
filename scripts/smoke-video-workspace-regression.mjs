@@ -216,7 +216,7 @@ assert(customerAdminAccess.includes("getCurrentPlatformAdmin"), "customer admin 
 assert(customerAdminAccess.includes('source: "platform_admin_session"'), "platform admins should be marked as billing bypass admins");
 
 const jobStore = read("src/lib/stores/job-store.ts");
-const videoRenderedPromptBlock = jobStore.match(/const renderedPrompt = params\.videoTheme\s*\?\s*\[[\s\S]*?\]\.filter\(Boolean\)\.join\("\\n\\n"\)/)?.[0] ?? "";
+const videoRenderedPromptBlock = jobStore.match(/const renderedPrompt = params\.videoTheme\s*\?\s*directPromptJob\s*\?\s*videoUserPrompt\s*:\s*\[[\s\S]*?\]\.filter\(Boolean\)\.join\("\\n\\n"\)/)?.[0] ?? "";
 assert(jobStore.includes("lock_customer_generation"), "generation submit advisory lock should keep the lock statement out of the result set");
 assert(!jobStore.includes("await tx.$queryRaw`SELECT pg_advisory_xact_lock"), "generation submit advisory lock should not query a void-returning Postgres function directly");
 assert(jobStore.includes("generationOutputRunNumberForSettledJob"), "settled output labels should compute generation numbers without loading every customer job");
