@@ -89,6 +89,19 @@ export async function upsertPlatformAiRelayRelational(params: {
       updatedBy: params.actor
     }
   });
+  // 中转是凭据的权威来源：key 一旦变化立即传播到它名下的全部通道，
+  // 避免“网关已换新 key、通道仍发旧 key”导致的账号错配。中转没有 key 时
+  // 不回写，避免清空通道凭据（与 planPlatformAiRelaySyncRelational 的规则一致）。
+  let channelsSynced = 0;
+  const relayKey = record.apiKey?.trim() ?? "";
+  const keyChanged = Boolean(relayKey) && existing?.apiKey !== record.apiKey;
+  if (keyChanged) {
+    const synced = await prisma.platformAiProvider.updateMany({
+      where: { relayId: record.id },
+      data: { apiKey: relayKey, syncState: "synced", updatedBy: params.actor }
+    });
+    channelsSynced = synced.count;
+  }
   await addAuditLogRelational(prisma, {
     actorType: "platform_admin",
     actorId: params.actor ?? "platform",
@@ -99,7 +112,8 @@ export async function upsertPlatformAiRelayRelational(params: {
       label: record.label,
       baseUrl: record.baseUrl,
       enabled: record.enabled,
-      apiKeyUpdated: Boolean(params.apiKey?.trim())
+      apiKeyUpdated: Boolean(params.apiKey?.trim()),
+      channelsSynced
     }
   });
   clearPlatformReadCache();
