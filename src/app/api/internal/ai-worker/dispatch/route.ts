@@ -2765,9 +2765,9 @@ function shouldPreferOpenAiJsonVideoRequest(params: {
   if (params.protocol !== "openai-videos") return false;
   const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
   if (explicitMode === "multipart" || explicitMode === "form") return false;
-  // 影灵（New API 兼容）走原生 JSON 字段（image/media/ratio/resolution），
+  // 影灵（New API 兼容）走原生 JSON 字段（image/ratio/resolution），
   // 不套用 smartpicklid 的 JSON 参考图分支；参考图由 createVideoTask 的
-  // yingling 载荷按顺序写入 media。
+  // yingling 载荷按上传顺序写入 image。
   if (isYinglingApiBaseUrl(params.baseUrl)) return false;
   return isGrokImagineVideoModel(params.model) || isSmartPickLidBaseUrl(params.baseUrl);
 }
@@ -2891,27 +2891,26 @@ async function createVideoTask(params: {
       })
     : undefined;
   const yinglingSize = params.videoParams.aspect_ratio;
-  // The relay follows New API's video contract: one `image` shorthand or
-  // vendor-specific parameters under `metadata`. Wan 3.0 takes multiple
-  // references as `metadata.input.media` entries in upload order; a single
-  // upload stays the first-frame shorthand.
-  const yinglingMedia = params.imageUrls.map((url) => ({ type: "reference_image", url }));
+  // The relay's task plugin reads the upload list from `image`: a string for a
+  // single upload and an array for multiple uploads, kept in upload order. It
+  // does not forward `metadata.input.media` (the task is accepted and then runs
+  // as text-to-video), `images` trips its usage hook, and an image request that
+  // also carries `resolution` is rejected upstream. Send `ratio` only for image
+  // requests; the provider default (1080P) is the selected workspace
+  // resolution.
   const yinglingResolution = String(params.videoParams.resolution || "").toUpperCase();
   const yinglingParameters = {
-    ...(yinglingResolution ? { resolution: yinglingResolution } : {}),
+    ...(params.imageUrls.length === 0 && yinglingResolution ? { resolution: yinglingResolution } : {}),
     ...(yinglingSize ? { ratio: yinglingSize } : {})
   };
+  const yinglingImage = params.imageUrls.length > 1 ? params.imageUrls : firstImageUrl;
   const payload = yinglingApi
     ? {
         model: params.model,
         prompt: params.prompt,
         duration: Number(params.videoParams.duration),
-        ...(params.imageUrls.length > 1
-          ? { metadata: { parameters: yinglingParameters, input: { media: yinglingMedia } } }
-          : {
-              ...yinglingParameters,
-              ...(firstImageUrl ? { image: firstImageUrl } : {})
-            })
+        ...yinglingParameters,
+        ...(yinglingImage ? { image: yinglingImage } : {})
       }
     : params.protocol === "openai-videos"
     ? {
