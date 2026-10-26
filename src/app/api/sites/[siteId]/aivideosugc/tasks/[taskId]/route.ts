@@ -1,16 +1,29 @@
-import type { NextRequest } from "next/server";
+import { after, type NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceResponse, workspaceFailure, jsonBody, expectedRevision, parseInput, patchStoryboard, assertOwnedImages } from "@/lib/aidreamcapes-workspace/api";
 import { getTask, saveTask, deleteTask, publicTask } from "@/lib/aidreamcapes-workspace/store";
 import { assertActorVoiceSnapshot, createActorVoiceSnapshot, validateTaskInput } from "@/lib/aidreamcapes-workspace/pipeline";
 import { catalogForCustomer } from "@/lib/aidreamcapes-workspace/api";
-import { refreshTask } from "@/lib/aidreamcapes-workspace/runner";
+import { refreshTask, continueDirectTask, directTaskNeedsServerContinuation } from "@/lib/aidreamcapes-workspace/runner";
 import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
 import { normalizeConfirmedProductBrief } from "@/lib/aidreamcapes-workspace/product-brief-snapshot";
+import { publicUrlForRequest } from "@/lib/session";
+import { resolveWorkerBaseUrls } from "@/lib/worker";
 export const dynamic = "force-dynamic";
 type Context = { params: Promise<{ siteId: string; taskId: string }> };
 export async function GET(request: NextRequest, { params }: Context) {
-  try { const { siteId, taskId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response; return workspaceResponse({ task: publicTask(await refreshTask(await getTask(siteId, auth.current.customer.id, taskId))) }); }
+  try {
+    const { siteId, taskId } = await params; const auth = await workspaceAuth(request, siteId); if (!auth.ok) return auth.response;
+    const task = await refreshTask(await getTask(siteId, auth.current.customer.id, taskId));
+    // A direct task left mid-flow (for example the browser closed between
+    // steps) is advanced by the server on the next read instead of waiting for
+    // the customer to press retry.
+    if (directTaskNeedsServerContinuation(task)) {
+      const bases = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
+      after(async () => { try { await continueDirectTask(task, bases); } catch (error) { console.error("[aivideosugc-workspace] direct continuation", error); } });
+    }
+    return workspaceResponse({ task: publicTask(task) });
+  }
   catch (error) { return workspaceFailure(error); }
 }
 export async function PATCH(request: NextRequest, { params }: Context) {

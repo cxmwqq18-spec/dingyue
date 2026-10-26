@@ -2,7 +2,7 @@ import { after, type NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceResponse, workspaceFailure, jsonBody, expectedRevision } from "@/lib/aidreamcapes-workspace/api";
 import { getTask, publicTask } from "@/lib/aidreamcapes-workspace/store";
-import { queueAction, executeAction, refreshTask } from "@/lib/aidreamcapes-workspace/runner";
+import { queueAction, executeAction, refreshTask, continueDirectTask } from "@/lib/aidreamcapes-workspace/runner";
 import { publicUrlForRequest } from "@/lib/session";
 import { resolveWorkerBaseUrls } from "@/lib/worker";
 import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
@@ -23,7 +23,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     }
     const queued = task;
     after(async () => {
-      try { await executeAction(await getTask(siteId, auth.current.customer.id, taskId), bases); }
+      try {
+        const executed = await executeAction(await getTask(siteId, auth.current.customer.id, taskId), bases);
+        // Direct tasks keep going without the browser: once the confirmed
+        // storyboard (or a server-triggered step) finishes, the server advances
+        // to clip dispatch and stitching itself.
+        if (executed.input.direct) await continueDirectTask(executed, bases);
+      }
       catch (error) { console.error("[aivideosugc-workspace] durable operation", error); }
     });
     return workspaceResponse({ task: publicTask(queued) }, 202);

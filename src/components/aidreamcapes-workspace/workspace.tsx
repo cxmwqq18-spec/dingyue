@@ -1104,6 +1104,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
   }
 
+  // The server advances direct tasks on its own now (post-storyboard dispatch
+  // and post-settlement stitching). A 409 task_busy/shot_busy/revision_conflict
+  // usually means the server already started this step — recheck and keep
+  // polling instead of failing the run.
+  async function dispatchActionOrFollowServer(taskId: string, body: Record<string, unknown>, alreadyMoving: (task: WorkspaceTask) => boolean) {
+    try {
+      return await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify(body) });
+    } catch (error) {
+      const current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
+      if (alreadyMoving(current)) return { task: current };
+      throw error;
+    }
+  }
+
   async function autoRunVideoTask(taskId: string) {
     try {
       let current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
@@ -1117,13 +1131,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         // quote silently skipped dispatch for every direct task.
         const { quote } = await request<{ quote: ActionQuote }>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
         if (!quote.available) throw new Error(humanError(quote.reason) || "Generation isn't available with these settings.");
-        const dispatched = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }) });
+        await dispatchActionOrFollowServer(taskId, { revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }, (t) =>
+          Boolean(t.operation && ["pending", "run"].includes(t.operation.state)) ||
+          t.storyboard?.shots.some((s) => s.shotId === shot.shotId && s.genStatus === "run") || false);
         setMessage(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
         current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", current.input.direct ? 2_700_000 : 420_000);
         if (current.operation?.state === "fail") throw new Error(current.operation.error ? humanError(current.operation.error) : "A shot failed to generate. Open the video in your Library to retry.");
       }
       const fresh = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
-      await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: fresh.task.revision, action: "render" }) });
+      await dispatchActionOrFollowServer(taskId, { revision: fresh.task.revision, action: "render" }, (t) =>
+        t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || t.video.finalUrl)));
       setMessage(fresh.task.input.direct ? "Finishing your video…" : "Stitching your final video…");
       const finalTask = await pollTaskUntil(taskId, (task) => Boolean(task.video?.finalUrl) || task.video?.status === "fail", 600000);
       setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
@@ -2024,7 +2041,118 @@ function humanError(code?: string) {
     shot_not_ready: "Generate and confirm every shot before rendering.",
     shot_version_stale: "This shot was edited after its clip was generated. Choose a matching version or generate it again.",
     generation_app_missing: "Generation is not connected to this workspace yet.",
-    actor_required: "Choose an avatar before generating this storyboard.", scene_not_found: "This video scene is no longer available.", operation_interrupted: "Your last action was interrupted. Resume it to continue from your saved progress.", workspace_video_provider_unavailable: "No video provider is currently available for this workspace.", generation_unavailable: "This video format is not available for generation yet.", provider_unavailable: "No video model is connected for this request.", model_unavailable: "The selected video model is unavailable.", pricing_unconfigured: "Pricing for this duration has not been configured yet.", insufficient_credits: "You don't have enough credits for this generation.", credits_insufficient: "You don't have enough credits for this generation.", revision_conflict: "This task changed in another window. Reload it from Library.", clips_not_ready: "Generate and confirm every shot before rendering.", missing_required_field: "Complete the required details before generating.", storyboard_required: "Generate a storyboard before continuing.", native_audio_required: "This scene requires a video model that supports spoken audio.", speech_timing_unverified: "Caption timing is not available for these clips yet. Retry without captions or use a model with timed audio.", asset_not_owned: "Choose an image uploaded to your own account.", not_authenticated: "Log in to save and generate a video.", rendering_in_progress: "Your video is already rendering. You can return from Library.", first_frame_unsupported: "The selected model doesn't support a first-frame image.", last_frame_unsupported: "The selected model doesn't support a last-frame image."
+    actor_required: "Choose an avatar before generating this storyboard.", scene_not_found: "This video scene is no longer available.", operation_interrupted: "Your last action was interrupted. Resume it to continue from your saved progress.", workspace_video_provider_unavailable: "No video provider is currently available for this workspace.", generation_unavailable: "This video format is not available for generation yet.", provider_unavailable: "No video model is connected for this request.", model_unavailable: "The selected video model is unavailable.", pricing_unconfigured: "Pricing for this duration has not been configured yet.", insufficient_credits: "You don't have enough credits for this generation.", credits_insufficient: "You don't have enough credits for this generation.", revision_conflict: "This task changed in another window. Reload it from Library.", clips_not_ready: "Generate and confirm every shot before rendering.", missing_required_field: "Complete the required details before generating.", storyboard_required: "Generate a storyboard before continuing.", native_audio_required: "This scene requires a video model that supports spoken audio.", speech_timing_unverified: "Caption timing is not available for these clips yet. Retry without captions or use a model with timed audio.", asset_not_owned: "Choose an image uploaded to your own account.", not_authenticated: "Log in to save and generate a video.", rendering_in_progress: "Your video is already rendering. You can return from Library.", first_frame_unsupported: "The selected model doesn't support a first-frame image.", last_frame_unsupported: "The selected model doesn't support a last-frame image.",
+    invalid_action: "This action isn't available for the current state of your video. Refresh it from Library.",
+    invalid_title: "Give this video a name before saving.",
+    task_title_invalid: "Give this video a valid name.",
+    invalid_input: "Some details are missing or invalid. Review them and try again.",
+    input_invalid: "Some details are missing or invalid. Review them and try again.",
+    invalid_json: "The request could not be read. Refresh the page and try again.",
+    idempotency_conflict: "This request was already submitted. Refresh the video from Library to see its latest state.",
+    operation_not_cancellable: "This step can no longer be cancelled.",
+    operation_superseded: "A newer step replaced this one. Refresh the video from Library.",
+    shot_not_found: "This shot is no longer part of the storyboard. Refresh the video and try again.",
+    invalid_shot_id: "This shot is no longer part of the storyboard. Refresh the video and try again.",
+    version_not_found: "That clip version is no longer available.",
+    quote_invalid: "Your price quote is no longer valid. Refresh the price and try again.",
+    quote_changed: "Your details changed after the price was quoted. Review the updated price and try again.",
+    price_quote_changed: "The generation price changed. Review the updated price before continuing.",
+    render_failed: "Your video could not be stitched. Open it from your Library and try again.",
+    generation_not_found: "This generation is no longer available. Open the video in your Library and retry.",
+    video_processing_failed: "The generation service hit a problem while processing this video. Please retry.",
+    video_not_ready: "This video isn't finished yet. Wait for generation to complete.",
+    database_readonly: "Saving is temporarily unavailable. Please try again in a few minutes.",
+    site_not_found: "This video isn't available on your account.",
+    site_mismatch: "This video isn't available on your account.",
+    site_not_allowed: "This video isn't available on your account.",
+    customer_login_required: "Log in to continue.",
+    customer_site_mismatch: "This video isn't available on your account.",
+    scene_invalid: "This video scene is no longer available.",
+    scene_has_no_actor: "Choose an avatar for this scene before generating.",
+    scene_has_no_voiceover: "This scene needs dialogue for the selected model. Add a script or choose another model.",
+    voiceover_required: "Add dialogue for this scene or choose a model without spoken audio.",
+    actor_not_found: "This avatar is no longer available. Choose another one.",
+    actor_incomplete: "Complete the avatar profile before using it.",
+    actor_change_requires_storyboard: "Changing the avatar requires a fresh storyboard. Generate it again.",
+    actor_product_references_required: "Add your product photos before preparing the presenter reference.",
+    actor_voice_snapshot_missing: "Re-select the avatar so its voice is prepared, then generate again.",
+    actor_voice_snapshot_invalid: "The avatar's voice preparation is out of date. Re-select the avatar and generate again.",
+    actor_voice_snapshot_actor_mismatch: "The prepared voice doesn't match the selected avatar. Re-select the avatar and generate again.",
+    duration_invalid: "Choose a supported video length and try again.",
+    aspect_invalid: "Choose a supported video format and try again.",
+    resolution_invalid: "Choose a supported video quality and try again.",
+    resolution_unsupported: "The selected model doesn't support this video quality. Pick another one.",
+    creative_direction_required: "Describe your video idea before generating.",
+    creative_direction_invalid: "Adjust your video description and try again.",
+    language_invalid: "Choose a supported language and try again.",
+    language_input_mismatch: "The dialogue doesn't match the selected video language. Rewrite or edit it.",
+    images_invalid: "Re-check the photos you attached and try again.",
+    reference_missing: "Add the required photos before generating.",
+    reference_not_owned: "Choose images uploaded to your own account.",
+    reference_not_in_task: "One of the selected references isn't part of this video anymore. Re-select it and try again.",
+    reference_order_invalid: "Reorder your reference photos and try again.",
+    reference_file_invalid: "That file can't be used as a reference. Try another image or clip.",
+    reference_file_required: "Add the required reference file before generating.",
+    reference_file_too_large: "That file is too large. Use a smaller file.",
+    reference_file_type_unsupported: "That file type isn't supported. Try another image or clip.",
+    reference_kind_invalid: "That reference type isn't supported for this field.",
+    video_reference_unsupported: "The selected model doesn't support video references. Remove the reference clip or pick another model.",
+    audio_reference_unsupported: "The selected model doesn't support voice references. Remove the audio reference or pick another model.",
+    composite_generation_required: "Prepare the presenter reference before generating this shot.",
+    composition_provider_unavailable: "Presenter reference generation isn't available right now. Please try again.",
+    native_audio_missing: "The generated clip has no audible speech. Retry the shot.",
+    native_audio_silent: "The generated clip's speech is silent. Retry the shot.",
+    generated_speech_differs_from_script: "The spoken audio didn't match the script. Retry the shot.",
+    speech_timing_failed: "Caption timing failed for this clip. Render without captions or retry.",
+    speech_timing_invalid: "Caption timing isn't valid for this clip. Render without captions.",
+    caption_data_missing: "Caption data is missing. Render without captions or retry the shot.",
+    caption_line_invalid: "One caption line is invalid. Edit your captions and try again.",
+    caption_lines_invalid: "The caption text is invalid. Edit your captions and try again.",
+    caption_patch_invalid: "That caption edit isn't valid. Re-check it and try again.",
+    caption_timing_invalid: "Caption timings are invalid. Edit your captions and try again.",
+    caption_render_stale: "Your captions changed after the video was prepared. Render again.",
+    subtitle_invalid: "The subtitle text is invalid. Edit it and try again.",
+    subtitle_style_invalid: "That subtitle style isn't available. Pick another one.",
+    subtitle_timing_invalid: "Subtitle timings are invalid. Edit them and try again.",
+    subtitle_crosses_shot: "A subtitle crosses a shot boundary. Shorten it and try again.",
+    clip_not_owned: "A source clip is no longer available. Re-select it before rendering.",
+    clip_media_invalid: "A source clip can't be used anymore. Re-select it before rendering.",
+    clip_duration_too_short: "A source clip is too short for the timeline. Re-select it.",
+    final_duration_mismatch: "The stitched video doesn't match the planned length. Render again.",
+    timeline_discontinuous: "The timeline has a gap. Reorder your clips and try again.",
+    timeline_duration_mismatch: "The timeline doesn't match the planned length. Adjust your clips and try again.",
+    locked_timeline_duration_conflict: "The locked timeline length conflicts with your clips. Adjust them and try again.",
+    ffmpeg_unavailable: "Video stitching is temporarily unavailable. Please try again shortly.",
+    output_missing: "The finished file is temporarily unavailable. Please render again.",
+    output_unavailable: "The finished file is temporarily unavailable. Please render again.",
+    output_stale: "This render used outdated sources. Render again with the latest clips.",
+    output_not_found: "The finished file is no longer available. Render again.",
+    music_file_required: "Add a music file first.",
+    music_file_too_large: "That music file is too large. Use a smaller file.",
+    music_file_type_unsupported: "That music file type isn't supported. Try another audio file.",
+    music_file_invalid: "That music file can't be used. Try another file.",
+    music_not_owned: "Choose music uploaded to your own account.",
+    music_asset_not_owned: "Choose music uploaded to your own account.",
+    music_license_required: "Confirm the music license before using this track.",
+    music_license_changed: "The license for this track changed. Review it before using the track.",
+    music_ads_license_required: "Advertising use needs a confirmed license for this track.",
+    music_source_missing: "The selected music is no longer available. Choose another track.",
+    music_source_conflict: "Another change to the music is in progress. Refresh and try again.",
+    music_url_invalid: "That music link isn't valid. Check it and try again.",
+    music_track_not_found: "This track is no longer available. Choose another one.",
+    music_usage_invalid: "This track can't be used in this video. Choose another one.",
+    music_generation_not_configured: "Music generation isn't connected yet.",
+    music_generation_not_ready: "Your music is still being generated. Wait a moment and try again.",
+    music_generation_prompt_invalid: "Describe the music you want in a short prompt and try again.",
+    music_generation_duration_invalid: "Choose a supported music length and try again.",
+    music_generation_job_not_found: "This music request is no longer available. Start it again.",
+    music_generation_task_not_owned: "This music request isn't on your account.",
+    request_too_large: "That upload is too large. Use a smaller file.",
+    product_brief_confirmation_required: "Confirm the imported product details before generating.",
+    product_brief_invalid: "The imported product details are incomplete. Re-import the product page.",
+    storyboard_facts_invalid: "The generated script didn't pass fact checks against your product details. Retry or clarify your details.",
+    shot_count_invalid: "The storyboard came back with an unexpected structure. Please retry.",
+    quote_secret_required: "Generation pricing is temporarily unavailable. Please try again shortly."
   };
   return messages[code] ?? messages[code.replace(/^workspace_/, "")] ?? (code.includes("_") ? "This request couldn't be completed with the current settings. Review your details and try again." : code);
 }

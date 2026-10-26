@@ -1,11 +1,40 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { publishCustomerJobEventForJob } from "@/lib/customer-job-events";
 import { StoreError } from "@/lib/server-store";
 import { settleGenerationJobRelational } from "@/lib/stores/job-store";
-import { verifyWorkerCallbackSignature, type WorkerResultPayload } from "@/lib/worker";
+import { verifyWorkerCallbackSignature, resolveWorkerBaseUrls, type WorkerResultPayload } from "@/lib/worker";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+function recordValue(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+}
+
+/**
+ * When a workspace shot job settles successfully, the direct task can move to
+ * final stitching without any browser in the loop. Guarded to Aidreamcapes
+ * workspace jobs only; the continuation itself re-checks task state and is
+ * idempotent. Failed jobs stay terminal — the customer retries explicitly.
+ */
+function scheduleWorkspaceDirectContinuation(siteId: string, status: string, alreadyProcessed: boolean, job: { customerId?: string; requestJson?: unknown }) {
+  if (alreadyProcessed || status !== "succeeded") return;
+  if (siteId !== "site_aidreamcapes") return;
+  const workspace = recordValue((recordValue(job.requestJson) as Record<string, unknown>).workspace);
+  const taskId = typeof workspace.taskId === "string" ? workspace.taskId : undefined;
+  if (!taskId || !job.customerId) return;
+  const customerId = job.customerId;
+  after(async () => {
+    try {
+      const [{ getTask }, { refreshTask, continueDirectTask, directTaskNeedsServerContinuation }] = await Promise.all([
+        import("@/lib/aidreamcapes-workspace/store"),
+        import("@/lib/aidreamcapes-workspace/runner")
+      ]);
+      const task = await refreshTask(await getTask(siteId, customerId, taskId));
+      if (directTaskNeedsServerContinuation(task)) await continueDirectTask(task, resolveWorkerBaseUrls(""));
+    } catch (error) { console.error("[aivideosugc-workspace] post-settlement continuation", error); }
+  });
+}
 
 function recordTiming(value: unknown): Record<string, string> | undefined {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
@@ -47,6 +76,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ job
       error: body.error,
       timing: recordTiming(result.job.resultJson?.timing) ?? body.timing
     });
+    scheduleWorkspaceDirectContinuation(body.siteId, body.status, result.alreadyProcessed, result.job);
     return NextResponse.json({
       accepted: true,
       idempotencyKey: `${body.siteId}:${jobId}:${body.requestId}:result`,

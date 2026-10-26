@@ -8,7 +8,7 @@ import { assertActorVoiceSnapshot, compileStoryboard } from "./pipeline";
 import { sceneSchema } from "./catalogs";
 import { renderTaskVideo } from "./media-render";
 import { catalogForCustomer } from "./api";
-import { verifyQuote } from "./quote";
+import { createQuote, verifyQuote } from "./quote";
 import { releaseWorkspaceTaskHoldRelational, reserveWorkspaceTaskHoldRelational } from "@/lib/stores/job-store";
 import { cancelMockCredits, createMockShotClip, mockShotClipUrl, refundMockCredits, reserveMockCredits, settleMockCredits } from "./mock-runtime";
 import { isWorkspaceStabilityMockMode } from "./stability";
@@ -331,4 +331,60 @@ export async function refreshTask(task: StoredTask): Promise<StoredTask> {
   if (!changed) return task;
   try { return await saveTask(task, task.revision); }
   catch (error) { if (error instanceof WorkspaceError && error.code === "revision_conflict") return getTask(task.siteId, task.customerId, task.taskId); throw error; }
+}
+
+/**
+ * Whether a direct task is stalled in an intermediate state that the server can
+ * advance on its own. Read paths and settlement hooks use this cheap check to
+ * decide whether to run the paid continuation below.
+ *
+ * Explicit terminal states are excluded on purpose: a failed operation or a
+ * failed clip stays failed until the customer retries from the interface, so
+ * automatic continuation never re-dispatches paid work the customer has not
+ * asked for again.
+ */
+export function directTaskNeedsServerContinuation(task: StoredTask): boolean {
+  if (!task.input.direct || isWorkspaceStabilityMockMode()) return false;
+  if (["completed", "cancelled", "failed"].includes(task.status)) return false;
+  if (task.operation?.state === "pending" || task.operation?.state === "run") return false;
+  if (task.operation?.state === "fail") return false;
+  if (task.video?.finalUrl || task.video?.status === "fail") return false;
+  if (task.storyboardStale) return false;
+  const shots = task.storyboard?.shots ?? [];
+  if (!shots.length) return false;
+  return shots.some((shot) => {
+    if (shot.genStatus === "fail") return false;
+    if (shot.genStatus === "pending") return !(shot.versions ?? []).some((version) => ["pending", "run"].includes(version.status));
+    return true;
+  });
+}
+
+/**
+ * Server-side continuation for direct tasks (P0): storyboard dispatch, clip
+ * generation and final stitching no longer depend on the browser serializing
+ * the request chain. Triggers: after an action completes, task reads (detail
+ * and library list), and successful shot-job settlement. Every step is
+ * idempotent — queueAction's revision CAS plus task_busy/shot_busy guards mean
+ * concurrent triggers advance the task exactly once; a losing trigger fails
+ * with a 409 and is discarded by its caller.
+ */
+export async function continueDirectTask(requested: StoredTask, baseUrls: WorkerBaseUrls): Promise<StoredTask> {
+  if (!directTaskNeedsServerContinuation(requested)) return requested;
+  // Trigger callers may hold a stale snapshot; re-read before acting. The
+  // revision CAS in saveTask remains the concurrency backstop.
+  const task = await getTask(requested.siteId, requested.customerId, requested.taskId);
+  if (!directTaskNeedsServerContinuation(task)) return task;
+  const shots = task.storyboard!.shots;
+  const dispatchable = shots.find((shot) => shot.genStatus === "pending" && !(shot.versions ?? []).some((version) => ["pending", "run"].includes(version.status)));
+  if (!dispatchable) {
+    const currentVersionOf = (shot: StoryboardShot) => shot.versions.find((version) => version.vid === shot.curVer);
+    const allClipsDone = shots.every((shot) => shot.genStatus === "done" && Boolean(currentVersionOf(shot)?.clipUrl));
+    if (!allClipsDone) return task;
+    const queued = await queueAction(task, { action: "render" }, task.revision);
+    return executeAction(queued, baseUrls);
+  }
+  const quote = await createQuote(task, "generate_shot", dispatchable.shotId);
+  if (!quote.available) throw new WorkspaceError(quote.reason || "workspace_video_provider_unavailable", 503);
+  const queued = await queueAction(task, { action: "generate_shot", shotId: dispatchable.shotId, quoteToken: quote.quoteToken }, task.revision);
+  return executeAction(queued, baseUrls);
 }

@@ -107,6 +107,25 @@ assert(aidreamcapesProvider.includes("const planned = args.direct ? args.duratio
 assert(aidreamcapesRunner.includes("const shots = direct ? 1 : Math.ceil(task.input.options.duration / 15)"), "direct task holds should reserve one clip, not two 15s units");
 assert(aidreamcapesRunner.includes("ref: `terminal:${operationId}`"), "failed direct shots and failed final renders should release the remaining task hold");
 assert(aidreamcapesWorkspace.includes('directWaiting ? "Generation hasn\'t started for this video. Open it and tap Try again." : ""'), "library cards must explain direct tasks that stopped before the paid clip instead of a silent ready state");
+assert(aidreamcapesRunner.includes("export function directTaskNeedsServerContinuation") && aidreamcapesRunner.includes("export async function continueDirectTask"), "direct tasks should expose a server-side continuation that advances stalled intermediate states");
+assert(aidreamcapesRunner.includes('if (task.operation?.state === "fail") return false;'), "failed direct operations must stay terminal — automatic continuation must not re-dispatch paid work");
+assert(aidreamcapesRunner.includes('const quote = await createQuote(task, "generate_shot", dispatchable.shotId);'), "server-side continuation should price the paid clip with the same signed quote used by the browser flow");
+const aidreamcapesActionsRoute = read("src/app/api/sites/[siteId]/aivideosugc/tasks/[taskId]/actions/route.ts");
+const aidreamcapesTaskRoute = read("src/app/api/sites/[siteId]/aivideosugc/tasks/[taskId]/route.ts");
+const aidreamcapesTasksRoute = read("src/app/api/sites/[siteId]/aivideosugc/tasks/route.ts");
+const workerResultRoute = read("src/app/api/internal/ai-worker/jobs/[jobId]/result/route.ts");
+assert(aidreamcapesActionsRoute.includes("if (executed.input.direct) await continueDirectTask(executed, bases);"), "direct tasks should continue server-side after a durable action completes");
+assert(aidreamcapesTaskRoute.includes("directTaskNeedsServerContinuation(task)") && aidreamcapesTaskRoute.includes("continueDirectTask(task, bases)"), "task detail reads should advance stalled direct tasks server-side");
+assert(aidreamcapesTasksRoute.includes("settled.filter(directTaskNeedsServerContinuation)"), "library reads should advance stalled direct tasks server-side");
+assert(workerResultRoute.includes("scheduleWorkspaceDirectContinuation") && workerResultRoute.includes('siteId !== "site_aidreamcapes"'), "shot-job settlement should advance direct tasks without a browser, guarded to Aidreamcapes");
+assert(workerResultRoute.includes('status !== "succeeded"') && workerResultRoute.includes("alreadyProcessed || status !== \"succeeded\""), "settlement continuation must skip failed and duplicate worker results");
+assert(aidreamcapesWorkspace.includes("dispatchActionOrFollowServer"), "the browser flow should tolerate the server winning the dispatch race instead of failing the run");
+{
+  const humanErrorBlock = aidreamcapesWorkspace.match(/function humanError\(code\?: string\)[\s\S]*?\n}/)?.[0] ?? "";
+  for (const code of ["idempotency_conflict", "operation_superseded", "operation_not_cancellable", "render_failed", "generation_not_found", "quote_invalid", "quote_changed", "video_processing_failed", "database_readonly", "shot_not_found", "version_not_found", "invalid_title", "request_too_large", "customer_login_required", "scene_invalid", "duration_invalid", "aspect_invalid", "resolution_invalid", "creative_direction_required", "language_input_mismatch", "native_audio_missing", "generated_speech_differs_from_script", "speech_timing_failed", "clip_not_owned", "ffmpeg_unavailable", "output_missing", "music_license_required", "music_file_too_large", "product_brief_confirmation_required", "voiceover_required"]) {
+    assert(humanErrorBlock.includes(`${code}:`), `humanError should explain ${code} in customer language instead of the generic fallback`);
+  }
+}
 
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
 assert(videoWorkspace.includes("const toggleCategoryContent = () =>"), "video theme categories should centralize their expand/collapse behavior");
