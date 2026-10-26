@@ -82,6 +82,7 @@ if (process.env.SSH_CONFIG_PATH) connection.push("-F", process.env.SSH_CONFIG_PA
 if (process.env.AI_PROJECT_SSH_KEY_PATH) connection.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
 const port = process.env.AI_PROJECT_SSH_PORT || "11765";
 const host = `root@${process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"}`;
+const sshCommand = ["ssh", "-p", port, ...connection].map((arg) => quote(arg)).join(" ");
 function run(command, argv) {
   const result = spawnSync(command, argv, { stdio: "inherit" });
   assert.equal(result.status, 0, `${command} failed (${result.status})`);
@@ -107,14 +108,19 @@ if (/^[a-f0-9]{40}$/.test(liveCommit)) {
 }
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
 const archive = path.join(temp, "source.tar");
-const buildArchive = path.join(temp, "build.tar.gz");
 const remoteArchive = `/tmp/aidreamcapes-${commit}.tar`;
-const remoteBuildArchive = `/tmp/aidreamcapes-build-${commit}.tar.gz`;
+const buildStaging = `${root}/.build-staging`;
 try {
   execFileSync("git", ["archive", "--format=tar", `--output=${archive}`, commit, "--", ...archivePaths]);
-  if (prebuiltBuild) execFileSync("tar", ["-czf", buildArchive, "--exclude=./cache", "-C", path.resolve(prebuiltBuild), "."]);
+  if (prebuiltBuild) {
+    // 构建产物走 rsync 增量传输：与服务器暂存目录按内容校验比对，只发送
+    // 真正变化的块。首次部署为全量，之后未变的 chunk 通常不再上传。
+    // --delete 保证暂存目录与本地构建完全一致；cache/ 是本机构建缓存，
+    // 运行时无用，永不传输。暂存目录供远程 cp -al 硬链接进发布目录，
+    // 后续 rsync 更新只替换暂存侧文件，历史发布的硬链接不受影响。
+    run("rsync", ["-azc", "--delete", "--exclude=cache/", "-e", sshCommand, `${path.resolve(prebuiltBuild)}/`, `${host}:${buildStaging}/`]);
+  }
   run("scp", ["-P", port, ...connection, archive, `${host}:${remoteArchive}`]);
-  if (prebuiltBuild) run("scp", ["-P", port, ...connection, buildArchive, `${host}:${remoteBuildArchive}`]);
   const command = `set -eu
 ROOT=${quote(root)}
 RELEASE=${quote(release)}
@@ -147,11 +153,11 @@ cmp -s "$BASE/package-lock.json" "$RELEASE/package-lock.json"
 cp -al "$BASE/node_modules" "$RELEASE/node_modules"
 printf '%s\\n' ${quote(reuseDependenciesCommit)} > "$RELEASE/.dependency-source-commit"` : `npm ci --no-audit --no-fund
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate`}
-${prebuiltBuild ? `mkdir -p .next-build
-tar -xzf ${quote(remoteBuildArchive)} -C .next-build
-rm -f ${quote(remoteBuildArchive)}
-test -f .next-build/BUILD_ID
-test "$(cat .next-build/.build-commit)" = ${quote(commit)}` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
+${prebuiltBuild ? `test -f "$ROOT/.build-staging/BUILD_ID"
+test "$(cat "$ROOT/.build-staging/.build-commit")" = ${quote(commit)}
+mkdir -p .next-build
+cp -al "$ROOT/.build-staging/." .next-build/
+test -f .next-build/BUILD_ID` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
 test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
 test -f "$REUSE/.next-build/BUILD_ID"
 cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : `AVAILABLE_MB=$(awk '/^MemAvailable:/ {print int($2/1024)}' /proc/meminfo)
