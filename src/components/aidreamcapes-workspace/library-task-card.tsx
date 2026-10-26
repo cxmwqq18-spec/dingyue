@@ -26,6 +26,8 @@ export interface LibraryTaskCardProps {
   referenceSummary?: string;
   media: LibraryCardMedia[];
   disabled?: boolean;
+  /** 查看 详情 按钮独立禁用位：生成中仍允许查看进度，只有全局忙时禁用。 */
+  openDisabled?: boolean;
   onOpen: () => void;
   onDelete: () => void;
 }
@@ -54,6 +56,7 @@ export function LibraryTaskCard({
   referenceSummary,
   media,
   disabled,
+  openDisabled,
   onOpen,
   onDelete
 }: LibraryTaskCardProps) {
@@ -180,7 +183,7 @@ export function LibraryTaskCard({
           {createdAtLabel && <><dt>Created</dt><dd>{createdAtLabel}</dd></>}
         </dl>
         <div className={styles.actions}>
-          <button type="button" className={styles.open} disabled={disabled} onClick={onOpen}>
+          <button type="button" className={styles.open} disabled={openDisabled ?? disabled} onClick={onOpen}>
             <span>View details</span>
             <ArrowRight size={15} />
           </button>

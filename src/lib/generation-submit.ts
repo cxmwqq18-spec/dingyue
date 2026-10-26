@@ -22,6 +22,8 @@ export interface GenerationSubmitInput {
   subscriptionBypass?: { enabled: boolean; reason: "site_admin"; siteAdminId?: string };
   skipWorkerDispatch?: boolean;
   includeWorkerPayload?: boolean;
+  /** 工作台任务级积分冻结：派发镜头时从任务冻结额转出本镜头金额（同事务）。 */
+  reserveFromTaskHold?: { taskId: string };
 }
 
 export interface GenerationSubmitResult {
@@ -114,7 +116,8 @@ export async function submitGenerationJob(input: GenerationSubmitInput): Promise
     entryPoint: input.entryPoint,
     idempotencyKey,
     requestHash,
-    skipProviderAvailabilityCheck: input.skipWorkerDispatch === true
+    skipProviderAvailabilityCheck: input.skipWorkerDispatch === true,
+    reserveFromTaskHold: input.reserveFromTaskHold
   });
 
   if (created.reused) {

@@ -3,12 +3,13 @@ import { createHash, randomUUID } from "node:crypto";
 import type { WorkerBaseUrls } from "@/lib/worker";
 import { getTask, saveTask, type StoredTask } from "./store";
 import { WorkspaceError, type ShotSnapshot, type StoryboardShot, type VideoRender } from "./types";
-import { generateStoryboard, submitShotGeneration, refreshShotGeneration, submitActorProductComposite, refreshCompositeGeneration, getWorkspaceActors } from "./provider";
+import { generateStoryboard, submitShotGeneration, refreshShotGeneration, submitActorProductComposite, refreshCompositeGeneration, getWorkspaceActors, quoteComposerGeneration } from "./provider";
 import { assertActorVoiceSnapshot, compileStoryboard } from "./pipeline";
 import { sceneSchema } from "./catalogs";
 import { renderTaskVideo } from "./media-render";
 import { catalogForCustomer } from "./api";
 import { verifyQuote } from "./quote";
+import { releaseWorkspaceTaskHoldRelational, reserveWorkspaceTaskHoldRelational } from "@/lib/stores/job-store";
 import { cancelMockCredits, createMockShotClip, mockShotClipUrl, refundMockCredits, reserveMockCredits, settleMockCredits } from "./mock-runtime";
 import { isWorkspaceStabilityMockMode } from "./stability";
 import { assertTaskMusicSelectionRights } from "./music-catalog";
@@ -63,11 +64,46 @@ export async function queueAction(task: StoredTask, body: Record<string, unknown
   task.error = undefined;
   const mockPaidReservation = isWorkspaceStabilityMockMode() && expectedCredits !== undefined && ["generate_shot", "compose_shot"].includes(action);
   if (mockPaidReservation) reserveMockCredits({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, operationId, credits: expectedCredits! });
+  // 确认生成（任务首次运行分镜）即冻结整个任务的预计成本：派发镜头时逐笔转入
+  // 对应 job 预留，完成/取消/删除时释放剩余额，失败由 job 预留的正常退款兜底。
+  const freshStoryboardHold = !isWorkspaceStabilityMockMode() && action === "storyboard" && !task.storyboard
+    ? await reserveFreshStoryboardTaskHold(task)
+    : undefined;
   try { return await saveTask(task, revision); }
   catch (error) {
     if (mockPaidReservation) refundMockCredits({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, operationId });
+    if (freshStoryboardHold) {
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `queue:${operationId}` }); }
+      catch { /* 释放失败留待终态钩子兜底，不影响保存错误本身。 */ }
+    }
     throw error;
   }
+}
+
+/** 首次运行分镜前冻结整任务预计成本：与确认弹窗同一计价（每镜头价 × ceil(duration/15)）。 */
+async function reserveFreshStoryboardTaskHold(task: StoredTask) {
+  const quote = await quoteComposerGeneration({
+    siteId: task.siteId,
+    modelId: task.input.modelId || undefined,
+    duration: task.input.options.duration,
+    aspect: task.input.options.aspect,
+    resolution: task.input.options.resolution || undefined,
+    imageInputCount: task.input.images.productImages?.length ?? 0,
+    videoInputCount: task.input.referenceVideos?.length ?? 0,
+    audioInputCount: task.input.referenceAudios?.length ?? 0
+  });
+  if (!quote.available) throw new WorkspaceError(quote.reason ?? "workspace_video_provider_unavailable", 503);
+  if (!quote.credits || quote.credits <= 0) return undefined;
+  const shots = Math.ceil(task.input.options.duration / 15);
+  const credits = quote.credits * Math.max(1, shots);
+  try {
+    await reserveWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, credits });
+  } catch (error) {
+    // 余额不足时把冻结失败转成工作台错误码，让确认弹窗立刻给出明确反馈。
+    if (error instanceof Error && error.message === "insufficient_credits") throw new WorkspaceError("insufficient_credits", 402);
+    throw error;
+  }
+  return { credits };
 }
 
 /** Cancel queued work, or in-flight work only while execution is strictly mock-only. */
@@ -93,6 +129,10 @@ export async function cancelTaskOperation(task: StoredTask, expectedRevision: nu
   const saved = await saveTask(task, expectedRevision);
   if (mockMode && operation.expectedCredits !== undefined) {
     cancelMockCredits({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, operationId: operation.id });
+  }
+  if (!mockMode) {
+    try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `cancel:${operation.id}` }); }
+    catch (error) { console.error("[aivideosugc-workspace] task hold release", error); }
   }
   return saved;
 }
@@ -161,7 +201,7 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
         shot.curVer = versionId; shot.genStatus = "done"; shot.error = undefined;
       } else {
         const submission = await submitShotGeneration({ siteId: task.siteId, customerId: task.customerId, aiAppSlug: "video_generator", taskId: task.taskId,
-          sceneId: task.sceneId, shot, input: task.input, storyboard: task.storyboard, actors: catalog.actors, baseUrls, idempotencyKey: `ugc:${task.taskId}:${versionId}`, expectedCredits });
+          sceneId: task.sceneId, shot, input: task.input, storyboard: task.storyboard, actors: catalog.actors, baseUrls, idempotencyKey: `ugc:${task.taskId}:${versionId}`, expectedCredits, holdTaskId: task.taskId });
         const submittedPrompt = submission.job.requestJson.prompt as { rendered?: string } | undefined;
         const submittedWorkspace = submission.job.requestJson.workspace as { providerId?: string } | undefined;
         if (!shot.versions.some(v => v.vid === versionId)) shot.versions.push({ ...shotSnapshot(shot), inputSnapshot: structuredClone(task.input), vid: versionId, ts: new Date().toISOString(), prompt: submittedPrompt?.rendered || shot.prompt, origin: "manual",
@@ -204,6 +244,8 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
       if (video.status !== "done") throw new WorkspaceError(video.error || "workspace_render_failed", 502);
       task.captionEdits = undefined;
       task.status = "completed";
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `complete:${operationId}` }); }
+      catch (error) { console.error("[aivideosugc-workspace] task hold release", error); }
     }
     task.operation!.state = "done"; task.operation!.leaseUntil = undefined; task.revisions = task.revisions.slice(-100);
     const saved = await saveTask(task, task.revision);
@@ -217,6 +259,11 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
     const code = error instanceof WorkspaceError ? error.code : error instanceof Error ? error.message : "operation_failed";
     if (isWorkspaceStabilityMockMode() && current.operation.expectedCredits !== undefined) {
       try { refundMockCredits({ siteId: current.siteId, customerId: current.customerId, taskId: current.taskId, operationId: current.operation.id }); } catch { /* The operation may have been cancelled before execution. */ }
+    }
+    // 分镜计划失败时还没有任何镜头派发，剩余冻结额立即退回；重试会自动补足。
+    if (!isWorkspaceStabilityMockMode() && ["storyboard", "reroll", "rewrite"].includes(current.operation.action)) {
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: current.siteId, customerId: current.customerId, taskId: current.taskId, ref: `plan-fail:${operationId}` }); }
+      catch { /* 终态钩子与删除时仍会兜底释放。 */ }
     }
     current.operation.state = "fail"; current.operation.error = code; current.operation.leaseUntil = undefined; current.error = code;
     if (current.status === "rendering") { current.status = "failed"; if (current.video) { current.video.status = "fail"; current.video.error = code; } }

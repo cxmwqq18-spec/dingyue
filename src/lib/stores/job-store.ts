@@ -899,6 +899,117 @@ async function reserveCreditsForJob(tx: Tx, job: { id: string; siteId: string; c
   return ledger;
 }
 
+const TASK_HOLD_SOURCE_TYPE = "workspace_task_hold";
+
+/** 任务冻结台账全部条目（基础冻结 + top-up + 释放）；amount 正=释放，负=冻结。 */
+async function taskHoldLedgerTx(tx: Tx, params: { siteId: string; customerId: string; taskId: string }) {
+  return tx.creditLedger.findMany({
+    where: {
+      siteId: params.siteId,
+      customerId: params.customerId,
+      sourceType: TASK_HOLD_SOURCE_TYPE,
+      OR: [{ sourceId: params.taskId }, { sourceId: { startsWith: `${params.taskId}:` } }]
+    },
+    select: { amount: true, type: true }
+  });
+}
+
+async function taskHoldRemainingTx(tx: Tx, params: { siteId: string; customerId: string; taskId: string }) {
+  const rows = await taskHoldLedgerTx(tx, params);
+  const remaining = rows.reduce((sum, row) => sum - row.amount, 0);
+  return Math.max(0, remaining);
+}
+
+/**
+ * 任务级积分冻结：在工作台首次运行（确认生成）时一次性冻结整个任务的预计成本，
+ * 之后每个镜头派发时从该冻结额转入对应 job 的预留（见 createGenerationJobInTx），
+ * 任务到达终态（完成/取消/删除）后释放剩余冻结额。失败路径的退款仍走 job 预留本身。
+ * 幂等：同任务重复调用只在冻结额不足（含队列中止后被释放）时补足差额（top-up）。
+ * 金额与占用在同一事务内，重复冻结会被 ledger 唯一索引 (siteId, customerId, type, sourceId) 回滚。
+ */
+export async function reserveWorkspaceTaskHoldTx(tx: Tx, params: { siteId: string; customerId: string; taskId: string; credits: number }) {
+  if (!Number.isSafeInteger(params.credits) || params.credits < 0) throw new StoreError("pricing_unconfigured", 422);
+  if (params.credits === 0) return { holdCredits: 0, remaining: await taskHoldRemainingTx(tx, params) };
+  // 先取余额行锁再读台账，保证并发重复运行按客户串行化，读到最新的冻结剩余额。
+  await lockCustomerCreditBalanceForUpdate(tx, params.siteId, params.customerId);
+  const remaining = await taskHoldRemainingTx(tx, params);
+  if (remaining >= params.credits) return { holdCredits: remaining, remaining };
+  const topUp = params.credits - remaining;
+  const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
+  const available = customer.balance?.balance ?? 0;
+  if (available < topUp) throw new StoreError("insufficient_credits", 402);
+  await tx.creditBalance.update({
+    where: { id: customer.balance!.id },
+    data: { balance: { decrement: topUp }, reserved: { increment: topUp } }
+  });
+  await tx.creditLedger.create({
+    data: {
+      id: uid("led"),
+      siteId: params.siteId,
+      customerId: params.customerId,
+      amount: -topUp,
+      type: "reserve",
+      sourceType: TASK_HOLD_SOURCE_TYPE,
+      // 首次冻结用 taskId 作为幂等键；补足差额用一次性 ref，避免唯一索引冲突。
+      sourceId: remaining > 0 ? `${params.taskId}:topup:${uid("led")}` : params.taskId
+    }
+  });
+  // 并发安全：同客户的 CreditBalance FOR UPDATE 行锁先于写入获取（见
+  // lockCustomerCreditBalanceForUpdate），余额读写与 ledger 插入按客户串行化，
+  // 不会出现重复冻结；异常唯一冲突时整体事务回滚，余额保持不变。
+  return { holdCredits: remaining + topUp, remaining: remaining + topUp };
+}
+
+/** 从任务冻结额中释放 amount（自动按剩余额截断，幂等键 ref），返回实际释放数。 */
+export async function releaseWorkspaceTaskHoldTx(tx: Tx, params: { siteId: string; customerId: string; taskId: string; amount: number; ref: string }) {
+  if (!Number.isSafeInteger(params.amount) || params.amount <= 0) return 0;
+  // 先取余额行锁再判断幂等键与剩余额，防止并发释放读到过期剩余额造成双重释放。
+  await lockCustomerCreditBalanceForUpdate(tx, params.siteId, params.customerId);
+  const sourceId = `${params.taskId}:${params.ref}`;
+  const existing = await tx.creditLedger.findFirst({
+    where: { siteId: params.siteId, customerId: params.customerId, type: "release", sourceType: TASK_HOLD_SOURCE_TYPE, sourceId }
+  });
+  if (existing) return 0;
+  const remaining = await taskHoldRemainingTx(tx, params);
+  if (remaining <= 0) return 0;
+  const customer = await tx.customer.findFirst({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
+  const reserved = customer?.balance?.reserved ?? 0;
+  const amount = Math.max(0, Math.min(params.amount, remaining, reserved));
+  if (amount <= 0) return 0;
+  if (!customer?.balance) throw new StoreError("customer_not_found_for_site", 404);
+  await tx.creditBalance.update({
+    where: { id: customer.balance.id },
+    data: { balance: { increment: amount }, reserved: { decrement: amount } }
+  });
+  await tx.creditLedger.create({
+    data: {
+      id: uid("led"),
+      siteId: params.siteId,
+      customerId: params.customerId,
+      amount,
+      type: "release",
+      sourceType: TASK_HOLD_SOURCE_TYPE,
+      sourceId
+    }
+  });
+  return amount;
+}
+
+/** 任务终态后释放剩余冻结额（幂等）；失败时调用方按 best-effort 记录日志。 */
+export async function releaseWorkspaceTaskHoldRelational(params: { siteId: string; customerId: string; taskId: string; ref: string }) {
+  return prisma.$transaction(async (tx) => {
+    await lockCustomerCreditBalanceForUpdate(tx, params.siteId, params.customerId);
+    const remaining = await taskHoldRemainingTx(tx, params);
+    if (remaining <= 0) return 0;
+    return releaseWorkspaceTaskHoldTx(tx, { ...params, amount: remaining });
+  }, jobStoreTransactionOptions);
+}
+
+/** 确认生成时冻结整个任务的预计成本（幂等，不足时补足差额）。 */
+export async function reserveWorkspaceTaskHoldRelational(params: { siteId: string; customerId: string; taskId: string; credits: number }) {
+  return prisma.$transaction(async (tx) => reserveWorkspaceTaskHoldTx(tx, params), jobStoreTransactionOptions);
+}
+
 async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customerId: string; jobId?: string; forceVideoCreateTimeout?: boolean }) {
   const nowMs = Date.now();
   const staleBefore = new Date(nowMs - MIN_ACTIVE_JOB_STALE_MS);
@@ -1226,6 +1337,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   idempotencyKey?: string;
   requestHash?: string;
   skipProviderAvailabilityCheck?: boolean;
+  reserveFromTaskHold?: { taskId: string };
 }) {
   await lockCustomerGenerationSubmit(tx, { siteId: params.siteId, customerId: params.customerId });
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
@@ -1600,7 +1712,22 @@ async function createGenerationJobInTx(tx: Tx, params: {
       })
     }
   });
-  const ledger = creditsReserved > 0 ? await reserveCreditsForJob(tx, job) : undefined;
+  let ledger: Awaited<ReturnType<typeof reserveCreditsForJob>> | undefined;
+  if (creditsReserved > 0) {
+    // 工作台任务在“确认生成”时已整任务冻结积分（workspace_task_hold）。
+    // 派发镜头时在同事务内先把本镜头金额从任务冻结额转出，再走常规 job 预留，
+    // 净余额变动为零；冻结余额不足时按剩余额转出，差额由常规预留覆盖。
+    if (params.reserveFromTaskHold) {
+      await releaseWorkspaceTaskHoldTx(tx, {
+        siteId: params.siteId,
+        customerId: params.customerId,
+        taskId: params.reserveFromTaskHold.taskId,
+        amount: creditsReserved,
+        ref: job.id
+      });
+    }
+    ledger = await reserveCreditsForJob(tx, job);
+  }
   const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
   return { job, siteAiApp, ledger, customer: updatedCustomer, reused: false as const };
 }
@@ -1615,6 +1742,7 @@ export async function createGenerationJobRelational(params: {
   idempotencyKey?: string;
   requestHash?: string;
   skipProviderAvailabilityCheck?: boolean;
+  reserveFromTaskHold?: { taskId: string };
 }): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer; reused: boolean }> {
   try {
     await reconcileDeliveredVideoGenerationJobsRelational({

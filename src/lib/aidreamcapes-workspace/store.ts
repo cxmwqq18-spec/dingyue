@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import { prisma } from "@/lib/prisma";
+import { releaseWorkspaceTaskHoldRelational } from "@/lib/stores/job-store";
 import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type WorkspaceTask, type TaskInput, type SceneId, type ActorAsset, type ProductBriefSnapshot } from "./types";
 import { createActorVoiceSnapshot } from "./pipeline";
 import type { WorkspacePreset } from "./preset-contract";
@@ -74,6 +75,9 @@ export async function saveTask(task: StoredTask, expectedRevision: number): Prom
 export async function deleteTask(task: StoredTask, expectedRevision: number): Promise<void> {
   assertWritable();
   if (task.operation?.state === "run" || task.operation?.state === "pending" || task.storyboard?.shots.some(s => s.genStatus === "run" || s.compositeStatus === "run")) throw new WorkspaceError("task_busy", 409);
+  // 删除前释放任务剩余积分冻结额；释放成功但删除冲突时，后续终态钩子仍可释放，最多多退不少。
+  try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: "delete" }); }
+  catch (error) { console.error("[aivideosugc-workspace] task hold release", error); }
   const count = await prisma.$executeRaw`DELETE FROM "AidreamcapesVideoTask" WHERE "id" = ${task.taskId} AND "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${task.customerId} AND "revision" = ${expectedRevision}`;
   if (!count) throw new WorkspaceError("revision_conflict", 409);
 }

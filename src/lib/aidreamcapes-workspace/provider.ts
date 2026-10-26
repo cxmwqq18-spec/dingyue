@@ -360,6 +360,8 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
 export async function submitShotGeneration(args: {
   siteId: string; customerId: string; aiAppSlug: string; taskId: string; sceneId?: SceneId;
   shot: StoryboardShot; input: TaskInput; storyboard: Storyboard; actors: ActorAsset[]; baseUrls: WorkerBaseUrls; idempotencyKey: string; expectedCredits?: number;
+  /** 存在任务级积分冻结时，本镜头金额优先从冻结额转出（同 job 创建事务）。 */
+  holdTaskId?: string;
 }) {
   assertWorkspaceSite(args.siteId);
   assertWorkspaceExternalOperation("video");
@@ -413,7 +415,7 @@ export async function submitShotGeneration(args: {
   if (args.expectedCredits === undefined || args.expectedCredits !== billedCredits) throw new WorkspaceError("workspace_price_quote_changed", 409);
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
-    skipWorkerDispatch: true, includeWorkerPayload: true,
+    skipWorkerDispatch: true, includeWorkerPayload: true, reserveFromTaskHold: args.holdTaskId ? { taskId: args.holdTaskId } : undefined,
     params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
         direct: Boolean(args.input.direct), expectedCredits: billedCredits } } });
