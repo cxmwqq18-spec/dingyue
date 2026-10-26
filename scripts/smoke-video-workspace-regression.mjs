@@ -98,6 +98,15 @@ assert(videoProviderPolicy.includes("real_person_reference_unsupported"), "provi
 assert(videoProviderPolicy.includes("videoProviderFailureCustomerMessage"), "provider failure reasons should have customer-safe display copy");
 assert(videoProviderPolicy.includes("isVideoProviderUpstreamUnavailableError"), "upstream video provider outages should not be normalized as reference-image policy rejections");
 
+const aidreamcapesWorkspace = read("src/components/aidreamcapes-workspace/workspace.tsx");
+const aidreamcapesRunner = read("src/lib/aidreamcapes-workspace/runner.ts");
+const aidreamcapesProvider = read("src/lib/aidreamcapes-workspace/provider.ts");
+assert(aidreamcapesWorkspace.includes("const { quote } = await request<{ quote: ActionQuote }>"), "direct generation should unwrap the quote response before dispatching a paid shot");
+assert(aidreamcapesWorkspace.includes("Estimated cost: ${composerQuote.credits}"), "direct composer should show the full-duration quote once, not multiply it by 15s units");
+assert(aidreamcapesProvider.includes("const planned = args.direct ? args.duration : args.duration / Math.ceil(args.duration / 15)"), "direct quotes should price the selected duration as one clip while legacy storyboards keep 15s tiers");
+assert(aidreamcapesRunner.includes("const shots = direct ? 1 : Math.ceil(task.input.options.duration / 15)"), "direct task holds should reserve one clip, not two 15s units");
+assert(aidreamcapesRunner.includes("ref: `terminal:${operationId}`"), "failed direct shots and failed final renders should release the remaining task hold");
+
 const videoWorkspace = read("src/components/storefront/customer-video-workspace.tsx");
 assert(videoWorkspace.includes("const toggleCategoryContent = () =>"), "video theme categories should centralize their expand/collapse behavior");
 assert(videoWorkspace.includes("onClick={toggleCategoryContent}"), "the full video theme category row should toggle expanded content");

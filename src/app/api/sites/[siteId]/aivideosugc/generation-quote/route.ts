@@ -11,11 +11,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const { siteId } = await params;
     const auth = await workspaceAuth(request, siteId, true);
     if (!auth.ok) return auth.response;
-    const body = await jsonBody(request) as { modelId?: string; duration?: number; aspect?: string; resolution?: string; imageInputCount?: number; videoInputCount?: number; audioInputCount?: number };
+    const body = await jsonBody(request) as { direct?: boolean; modelId?: string; duration?: number; aspect?: string; resolution?: string; imageInputCount?: number; videoInputCount?: number; audioInputCount?: number };
     const duration = Number(body.duration);
     if (!Number.isSafeInteger(duration) || !(WORKSPACE_DURATIONS as readonly number[]).includes(duration)) throw new WorkspaceError("invalid_options");
     const quote = await quoteComposerGeneration({
       siteId,
+      direct: body.direct !== false,
       modelId: typeof body.modelId === "string" ? body.modelId : undefined,
       duration,
       aspect: typeof body.aspect === "string" ? body.aspect : "9:16",

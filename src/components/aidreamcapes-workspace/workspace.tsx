@@ -234,8 +234,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [messageAction, setMessageAction] = useState(false);
   const [detailTaskId, setDetailTaskId] = useState<string | null>(null);
   const detailTask = detailTaskId ? tasks.find((item) => item.taskId === detailTaskId) : undefined;
-  const composerQuoteUnits = composerQuote?.available && composerQuote.credits != null ? Math.max(1, Math.ceil(composerDuration / 15)) : undefined;
-  const composerCreditsNote = composerQuoteUnits != null && composerQuote?.credits != null ? `Estimated cost: ${composerQuoteUnits * composerQuote.credits} credits` : undefined;
+  // The home composer creates one direct clip. Its quote already covers the
+  // selected duration, so do not multiply a 30s quote by two 15s units.
+  const composerCreditsNote = composerQuote?.available && composerQuote.credits != null ? `Estimated cost: ${composerQuote.credits} credits` : undefined;
   const [composerActorId, setComposerActorId] = useState("");
   const [composerProducts, setComposerProducts] = useState<ComposerProduct[]>([]);
   const [confirmedProductBriefs, setConfirmedProductBriefs] = useState<ConfirmedProductBrief[]>([]);
@@ -275,7 +276,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     const timer = setTimeout(() => {
       request<{ quote: { available: boolean; credits?: number } }>("/generation-quote", {
         method: "POST",
-        body: JSON.stringify({ modelId: composerModel || undefined, duration: composerDuration, aspect: composerAspect, resolution: composerResolution || undefined, imageInputCount: composerTab === "AI Video" ? videoReferenceUrls.length : composerProducts.length, videoInputCount: composerTab === "AI Video" ? videoReferenceFiles.length : 0, audioInputCount: composerTab === "AI Video" ? audioReferenceFiles.length : 0 })
+        body: JSON.stringify({ direct: true, modelId: composerModel || undefined, duration: composerDuration, aspect: composerAspect, resolution: composerResolution || undefined, imageInputCount: composerTab === "AI Video" ? videoReferenceUrls.length : composerProducts.length, videoInputCount: composerTab === "AI Video" ? videoReferenceFiles.length : 0, audioInputCount: composerTab === "AI Video" ? audioReferenceFiles.length : 0 })
       }).then((result) => { if (!cancelled) setComposerQuote(result.quote); }).catch(() => { if (!cancelled) setComposerQuote(null); });
     }, 400);
     return () => { cancelled = true; clearTimeout(timer); };
@@ -1112,7 +1113,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         current = await pollTaskUntil(taskId, (task) => Boolean(task.storyboard?.shots.length));
       }
       for (const shot of current.storyboard!.shots) {
-        const quote = await request<ActionQuote>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
+        // The quote endpoint returns { quote }; treating the envelope as the
+        // quote silently skipped dispatch for every direct task.
+        const { quote } = await request<{ quote: ActionQuote }>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
         if (!quote.available) throw new Error(humanError(quote.reason) || "Generation isn't available with these settings.");
         const dispatched = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }) });
         setMessage(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
@@ -1717,7 +1720,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </div>
       </section></div>;
     })()}
-    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; const direct = Boolean(pendingGenerate.input.direct); const units = Math.max(1, Math.ceil(pendingGenerate.input.options.duration / 15)); const totalCredits = credits != null ? credits * units : undefined; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
+    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; const direct = Boolean(pendingGenerate.input.direct); const totalCredits = credits; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
       <div className={styles.modalHeader}><h2>Confirm generation</h2><button className={styles.iconButton} onClick={() => setPendingGenerate(null)} aria-label="Close dialog"><X size={23} /></button></div>
       <p className={styles.help} style={{ marginTop: 0 }}>{pendingGenerate.scene.name}</p>
       <p className={styles.help}>{options || "\u00a0"}</p>

@@ -480,6 +480,7 @@ export async function refreshCompositeGeneration(args: { siteId: string; custome
  */
 export async function quoteComposerGeneration(args: {
   siteId: string;
+  direct?: boolean;
   modelId?: string;
   duration: number;
   aspect: string;
@@ -492,7 +493,9 @@ export async function quoteComposerGeneration(args: {
   if (isWorkspaceStabilityMockMode()) return { available: true, credits: args.duration * 4, providerId: "aivideosugc-stability-mock" };
   const providers = await listPlatformAiProvidersRelational({ providerType: "video" });
   const models = providers.map(modelCapability);
-  const planned = args.duration / Math.ceil(args.duration / 15);
+  // A direct task renders the selected duration as one clip. Legacy storyboard
+  // quotes keep the per-15s tier because they still dispatch multiple shots.
+  const planned = args.direct ? args.duration : args.duration / Math.ceil(args.duration / 15);
   const capability = args.modelId
     ? models.find((model) => model.id === args.modelId)
     : models.find((model) => model.available && model.aspects.includes(args.aspect as VideoAspect) && modelSupportsWorkspaceDuration(model, args.duration as VideoDuration));
@@ -512,8 +515,11 @@ export async function quoteComposerGeneration(args: {
     modelFamily: videoProviderModelFamilyForProvider(provider),
     resolution: args.resolution ?? "720p",
     imageInputCount: args.imageInputCount,
-    videoInputCount: args.videoInputCount ?? 0,
-    audioInputCount: args.audioInputCount ?? 0
+    // Direct mode only sends the ordered image references to the relay; the
+    // actual shot charge does not price video/audio references. Keep the
+    // composer and the task hold on that same basis.
+    videoInputCount: args.direct ? 0 : args.videoInputCount ?? 0,
+    audioInputCount: args.direct ? 0 : args.audioInputCount ?? 0
   });
   return { available: true, credits, providerId: provider.id };
 }

@@ -82,8 +82,10 @@ export async function queueAction(task: StoredTask, body: Record<string, unknown
 
 /** 首次运行分镜前冻结整任务预计成本：与确认弹窗同一计价（每镜头价 × ceil(duration/15)）。 */
 async function reserveFreshStoryboardTaskHold(task: StoredTask) {
+  const direct = Boolean(task.input.direct);
   const quote = await quoteComposerGeneration({
     siteId: task.siteId,
+    direct,
     modelId: task.input.modelId || undefined,
     duration: task.input.options.duration,
     aspect: task.input.options.aspect,
@@ -94,7 +96,9 @@ async function reserveFreshStoryboardTaskHold(task: StoredTask) {
   });
   if (!quote.available) throw new WorkspaceError(quote.reason ?? "workspace_video_provider_unavailable", 503);
   if (!quote.credits || quote.credits <= 0) return undefined;
-  const shots = Math.ceil(task.input.options.duration / 15);
+  // Direct mode is one request and one job; do not hold two 15s units for a
+  // single 30s clip.
+  const shots = direct ? 1 : Math.ceil(task.input.options.duration / 15);
   const credits = quote.credits * Math.max(1, shots);
   let added = 0;
   try {
@@ -151,9 +155,16 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
   if (task.status === "cancelled" || !task.operation || ["done", "fail", "cancelled"].includes(task.operation.state)) return task;
   if (task.operation.state === "run" && Date.parse(task.operation.leaseUntil || "") > Date.now()) return task;
   if (task.operation.attempts >= 3) {
+    const interruptedAction = task.operation.action;
     task.operation.state = "fail"; task.operation.error = "operation_interrupted"; task.error = "operation_interrupted";
     if (isWorkspaceStabilityMockMode() && task.operation.expectedCredits !== undefined) {
       refundMockCredits({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, operationId: task.operation.id });
+    }
+    // A direct task has no later shot or render that could consume the hold.
+    // The interrupt is terminal, so return the unused reservation now.
+    if (!isWorkspaceStabilityMockMode() && (task.input.direct || interruptedAction === "render")) {
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: task.siteId, customerId: task.customerId, taskId: task.taskId, ref: `interrupted:${task.operation.id}` }); }
+      catch { /* The delete/cancel hooks remain the fallback. */ }
     }
     return saveTask(task, task.revision);
   }
@@ -266,6 +277,13 @@ export async function executeAction(task: StoredTask, baseUrls: WorkerBaseUrls):
     if (!isWorkspaceStabilityMockMode() && ["storyboard", "reroll", "rewrite"].includes(current.operation.action)) {
       try { await releaseWorkspaceTaskHoldRelational({ siteId: current.siteId, customerId: current.customerId, taskId: current.taskId, ref: `plan-fail:${operationId}` }); }
       catch { /* 终态钩子与删除时仍会兜底释放。 */ }
+    }
+    // A failed final render is terminal for every task. A failed direct shot is
+    // terminal as well: direct tasks only have one shot, so keeping the unused
+    // hold would leave the visible balance lower until the task is deleted.
+    if (!isWorkspaceStabilityMockMode() && (current.operation.action === "render" || (current.input.direct && ["generate_shot", "compose_shot"].includes(current.operation.action)))) {
+      try { await releaseWorkspaceTaskHoldRelational({ siteId: current.siteId, customerId: current.customerId, taskId: current.taskId, ref: `terminal:${operationId}` }); }
+      catch { /* The delete/cancel hooks remain the fallback. */ }
     }
     current.operation.state = "fail"; current.operation.error = code; current.operation.leaseUntil = undefined; current.error = code;
     if (current.status === "rendering") { current.status = "failed"; if (current.video) { current.video.status = "fail"; current.video.error = code; } }
