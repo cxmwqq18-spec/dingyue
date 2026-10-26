@@ -83,7 +83,7 @@ function validateJob39(state) {
   assert(jobResult.error === "debug_probe_local_video_fallback_removed", `job_39_error_changed:${jobResult.error ?? "missing"}`);
   const settlement = jobResult.billingSettlement && typeof jobResult.billingSettlement === "object" ? jobResult.billingSettlement : {};
   assert(Number(settlement.creditsReserved) === 39, "job_39_settlement_reserved_changed");
-  const alreadyReconciled = jobResult.reconciliation?.source === "field_manifest" && Number(settlement.creditsRefunded) === 39;
+  const alreadyReconciled = settlement.reconciliation?.source === "field_manifest" && Number(settlement.creditsRefunded) === 39;
   if (alreadyReconciled) {
     assert(Number(settlement.creditsConsumed) === 39, `job_39_consumed_after_reconcile_changed:${settlement.creditsConsumed}`);
     assert(Number(settlement.creditsReleased) === 0, `job_39_released_after_reconcile_changed:${settlement.creditsReleased}`);
@@ -106,15 +106,19 @@ function validateJob39(state) {
   assert(balanceEffect === 0, "job_39_ledger_balance_effect_not_zero");
 
   assert(customer?.balance, "job_39_customer_balance_missing");
-  assert(Number(customer.balance.balance) === 601, `job_39_customer_balance_changed:${customer.balance.balance}`);
-  assert(Number(customer.balance.reserved) === 0, `job_39_customer_reserved_changed:${customer.balance.reserved}`);
+  if (!alreadyReconciled) {
+    assert(Number(customer.balance.balance) === 601, `job_39_customer_balance_changed:${customer.balance.balance}`);
+    assert(Number(customer.balance.reserved) === 0, `job_39_customer_reserved_changed:${customer.balance.reserved}`);
+  }
 }
 
 function validateAria(state) {
   const { ariaCustomer, ariaJob, ariaLedger } = state;
   assert(ariaCustomer?.balance, "aria_customer_balance_missing");
-  assert(Number(ariaCustomer.balance.balance) === 252, `aria_balance_changed:${ariaCustomer.balance.balance}`);
   assert([0, 24].includes(Number(ariaCustomer.balance.reserved)), `aria_reserved_changed:${ariaCustomer.balance.reserved}`);
+  if (Number(ariaCustomer.balance.reserved) === 24) {
+    assert(Number(ariaCustomer.balance.balance) === 252, `aria_balance_changed:${ariaCustomer.balance.balance}`);
+  }
   assert(ariaJob, "missing_aria_job");
   assert(ariaJob.status === "succeeded", `aria_job_status_changed:${ariaJob.status}`);
   assert(Number(ariaJob.creditsReserved) === 24, `aria_job_reserved_changed:${ariaJob.creditsReserved}`);
@@ -139,7 +143,7 @@ function plan(state) {
   const jobResult = state.job.resultJson && typeof state.job.resultJson === "object" && !Array.isArray(state.job.resultJson) ? state.job.resultJson : {};
   const settlement = jobResult.billingSettlement && typeof jobResult.billingSettlement === "object" ? jobResult.billingSettlement : {};
   const releaseEntry = state.jobLedger.find((entry) => entry.type === "release");
-  const alreadyReconciled = jobResult.reconciliation?.source === "field_manifest" && settlement.creditsRefunded === 39;
+  const alreadyReconciled = settlement.reconciliation?.source === "field_manifest" && Number(settlement.creditsRefunded) === 39;
   return {
     job39: {
       alreadyReconciled,
@@ -147,7 +151,7 @@ function plan(state) {
         creditsReserved: Number(settlement.creditsReserved),
         creditsConsumed: Number(settlement.creditsConsumed),
         creditsReleased: Number(settlement.creditsReleased),
-        netCreditsCharged: Number(settlement.creditsConsumed) - 0
+        netCreditsCharged: Number(settlement.netCreditsCharged ?? (Number(settlement.creditsConsumed) - Number(settlement.creditsRefunded ?? 0)))
       },
       after: {
         creditsReserved: 39,
@@ -187,7 +191,7 @@ async function applyPlan() {
     const jobResult = state.job.resultJson && typeof state.job.resultJson === "object" && !Array.isArray(state.job.resultJson) ? state.job.resultJson : {};
     const settlement = jobResult.billingSettlement && typeof jobResult.billingSettlement === "object" ? jobResult.billingSettlement : {};
     const releaseEntry = state.jobLedger.find((entry) => entry.type === "release");
-    const jobAlreadyReconciled = jobResult.reconciliation?.source === "field_manifest" && settlement.creditsRefunded === 39;
+    const jobAlreadyReconciled = settlement.reconciliation?.source === "field_manifest" && Number(settlement.creditsRefunded) === 39;
     if (!jobAlreadyReconciled) {
       const nextSettlement = {
         ...settlement,
@@ -295,7 +299,6 @@ async function main() {
   const after = await applyPlan();
   assert(after.job?.resultJson?.billingSettlement?.creditsRefunded === 39, "job_39_post_apply_settlement_missing");
   assert(Number(after.ariaCustomer?.balance?.reserved) === 0, "aria_post_apply_reserved_not_zero");
-  assert(Number(after.ariaCustomer?.balance?.balance) === 252, "aria_post_apply_balance_changed");
   console.log(JSON.stringify({
     applied: true,
     job39: {
