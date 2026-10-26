@@ -95,7 +95,11 @@ export function workspaceCapabilityError(args: {
   }
 
   if (sceneSchema(args.sceneId).needsActor) {
-    candidates = candidates.filter((model) => model.nativeSpeech);
+    // Presenter scenes submit the actor portrait with product photos plus the
+    // voice reference audio, so the model must accept both image and audio
+    // input — a native-speech model without audio reference support is not
+    // usable here.
+    candidates = candidates.filter((model) => model.nativeSpeech && model.audioReference && model.referenceImageMax > 0);
     if (!candidates.length) return "workspace_native_speech_unsupported";
   }
   candidates = candidates.filter((model) => model.aspects.includes(args.input.options.aspect));

@@ -379,7 +379,7 @@ export async function submitShotGeneration(args: {
   validateTaskInput(sceneId, args.input, args.actors, false, modelCapabilities);
   const capability = args.input.modelId
     ? modelCapabilities.find((model) => model.id === args.input.modelId)!
-    : modelCapabilities.find((model) => model.available && (!sceneSchema(sceneId).needsActor || model.nativeSpeech) && model.aspects.includes(args.input.options.aspect) && modelSupportsWorkspaceDuration(model, args.input.options.duration, args.shot.duration))!;
+    : modelCapabilities.find((model) => model.available && (!sceneSchema(sceneId).needsActor || (model.nativeSpeech && model.audioReference && model.referenceImageMax > 0)) && model.aspects.includes(args.input.options.aspect) && modelSupportsWorkspaceDuration(model, args.input.options.duration, args.shot.duration))!;
   const provider = providers.find((candidate) => candidate.id === capability.id);
   if (!provider) throw new WorkspaceError("workspace_video_provider_unavailable", 503);
   if (sceneSchema(sceneId).needsActor && args.input.options.subtitle) await workspaceAsrProvider();
@@ -577,7 +577,7 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
   }
   const capability = args.task.input.modelId
     ? modelCapabilities.find((model) => model.id === args.task!.input.modelId)!
-    : modelCapabilities.find((model) => model.available && (!sceneSchema(args.task!.sceneId).needsActor || model.nativeSpeech) && model.aspects.includes(args.task!.input.options.aspect) && modelSupportsWorkspaceDuration(model, args.task!.input.options.duration, shot.duration))!;
+    : modelCapabilities.find((model) => model.available && (!sceneSchema(args.task!.sceneId).needsActor || (model.nativeSpeech && model.audioReference && model.referenceImageMax > 0)) && model.aspects.includes(args.task!.input.options.aspect) && modelSupportsWorkspaceDuration(model, args.task!.input.options.duration, shot.duration))!;
   const provider = providers.find((candidate) => candidate.id === capability.id);
   if (!provider) return { available: false, reason: "workspace_video_provider_unavailable" };
   const plannedDuration = args.task.input.direct ? shot.duration : capability.durations.find((duration) => duration >= shot.duration);

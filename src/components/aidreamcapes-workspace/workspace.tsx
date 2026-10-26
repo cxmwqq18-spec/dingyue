@@ -303,7 +303,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const selectedSceneImageLimit = selectedScene?.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required)?.max ?? 4;
   const actor = catalog?.actors.find((item) => item.actorId === task?.input.actorId);
   const avatarSelection = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
-  const avatarModels = catalog?.models.filter((item) => item.available && item.nativeSpeech) ?? [];
+  const avatarModels = catalog?.models.filter((item) => item.available && item.nativeSpeech && item.audioReference && item.referenceImageMax > 0) ?? [];
+  const avatarImageFieldMax = catalog?.scenes.find((item) => item.id === "presenter_showcase")?.sections.flatMap((section) => section.fields).find((field) => field.id === "productImages")?.max ?? 4;
+  const avatarUserImageMax = Math.max(0, avatarImageFieldMax - 1);
   const avatarModel = avatarModels.find((item) => item.id === avatarModelId) ?? avatarModels[0];
   const avatarModelUnavailable = Boolean(catalog?.models.some((item) => item.available) && !avatarModels.length);
   const avatarAspects = avatarModel?.aspects ?? [...WORKSPACE_ASPECTS];
@@ -940,7 +942,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
     const input = defaultInput(presenterScene);
     input.actorId = selectedActor.actorId;
-    input.images.productImages = avatarProductImages.slice(0, 4);
+    // The presenter portrait and voice sample ride with the customer's product
+    // photos: the portrait takes the first reference slot (scene field limit
+    // still applies to the combined list) and the voice becomes the single
+    // reference audio transported upstream.
+    input.images.productImages = [selectedActor.imageUrl, ...avatarProductImages].slice(0, avatarImageFieldMax);
+    if (selectedActor.voice.refAudio) input.referenceAudios = [selectedActor.voice.refAudio];
     input.fields.sellingPoints = avatarScript.trim();
     input.options.aspect = selectedAvatarAspect as TaskInput["options"]["aspect"];
     input.options.duration = selectedAvatarDuration as TaskInput["options"]["duration"];
@@ -1020,7 +1027,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   function importAvatarProductFiles(files: File[]) {
     for (const file of files) {
       if (fileKind(file) !== "image") continue;
-      if (avatarProductImages.length >= 4) break;
+      if (avatarProductImages.length >= avatarUserImageMax) break;
       void uploadAvatarProduct(file);
     }
   }
@@ -1555,9 +1562,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           <div className={styles.creatorStudio}>
             <section className={styles.creatorLeft} aria-label="Presenter and product">
               <div className={styles.creatorProduct}>
-                <div className={styles.creatorProductHeading}><div><span className={styles.creatorLabel}>PRODUCT REFERENCES</span><p>Add a clear photo of the product in your video.</p></div><span>{avatarProductImages.length} / 4</span></div>
+                <div className={styles.creatorProductHeading}><div><span className={styles.creatorLabel}>PRODUCT REFERENCES</span><p>Add a clear photo of the product in your video.</p></div><span>{avatarProductImages.length} / {avatarUserImageMax}</span></div>
                 <FileDropZone className={styles.creatorProductGrid} activeClassName={styles.dropActive} disabled={!customer || working} onFiles={importAvatarProductFiles}>
-                  {avatarProductImages.length < 4 && <label className={`${styles.creatorUpload} ${!customer || working ? styles.creatorUploadDisabled : ""}`}><Upload size={21} /><strong>{busy ? "Uploading…" : "Add product photo"}</strong><span>PNG or JPG · up to 4 photos</span><input type="file" accept="image/*" disabled={working || !customer} aria-label="Upload product photo" onChange={(event) => { void uploadAvatarProduct(event.target.files?.[0]); event.target.value = ""; }} /></label>}
+                  {avatarProductImages.length < avatarUserImageMax && <label className={`${styles.creatorUpload} ${!customer || working ? styles.creatorUploadDisabled : ""}`}><Upload size={21} /><strong>{busy ? "Uploading…" : "Add product photo"}</strong><span>{`PNG or JPG · up to ${avatarUserImageMax} photo${avatarUserImageMax === 1 ? "" : "s"}`}</span><input type="file" accept="image/*" disabled={working || !customer} aria-label="Upload product photo" onChange={(event) => { void uploadAvatarProduct(event.target.files?.[0]); event.target.value = ""; }} /></label>}
                   {avatarProductImages.map((url, index) => <div className={styles.creatorProductImage} key={`${url}-${index}`} {...reorderHandlers(index, working, moveAvatarProductImage)}><img src={url} alt={`Product reference ${index + 1}`} /><button className={styles.removeImage} disabled={working} aria-label={`Remove product reference ${index + 1}`} onClick={() => setAvatarProductImages((current) => current.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
                 </FileDropZone>
                 {!customer && <a className={styles.creatorLogin} href={loginHref}>Log in to upload a product photo</a>}
@@ -1577,15 +1584,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <div className={styles.creatorEditorHeader}><div><span className={styles.creatorLabel}>SCRIPT & TALKING POINTS</span><span className={styles.creatorHelp}><span>Edit the exact dialogue in your storyboard before generation.</span></span></div><span className={styles.creatorTab}><span className={styles.creatorTabDot} />Script</span></div>
               <label className={styles.creatorScriptField}>
                 <span className={styles.srOnly}>Script and key talking points</span>
-                <textarea value={avatarScript} maxLength={2000} disabled={working} onPaste={(event) => {
+                <textarea value={avatarScript} maxLength={5000} disabled={working} onPaste={(event) => {
                   const files = takePasteFiles(event);
                   if (!files.length || !customer || working) return;
                   event.preventDefault();
                   importAvatarProductFiles(files);
                 }} onChange={(event) => setAvatarScript(event.target.value)} placeholder="Write a product script or list verified points for the presenter to cover…" />
               </label>
-              <div className={styles.creatorScriptFooter}><span>Keep claims accurate and based on your product details.</span><span>{avatarScript.length} / 2000</span></div>
-              {avatarModelUnavailable && <div className={`${styles.notice} ${styles.creatorModelNotice}`}>Presenter speech is not available with the currently connected video models.</div>}
+              <div className={styles.creatorScriptFooter}><span>Keep claims accurate and based on your product details.</span><span>{avatarScript.length} / 5000</span></div>
+              {avatarModelUnavailable && <div className={`${styles.notice} ${styles.creatorModelNotice}`}>Presenter video needs a model that supports image references and audio input together. No connected model supports that yet.</div>}
               {!avatarModels.length && !avatarModelUnavailable && <div className={`${styles.notice} ${styles.creatorModelNotice}`}>No presenter-ready video model is available right now. You can save your setup as a draft and return later.</div>}
               <div className={styles.creatorSettings}>
                 <label className={styles.creatorSetting}><span>Video model</span><select className={styles.input} value={avatarModel?.id ?? ""} disabled={working || !avatarModels.length} onChange={(event) => setAvatarModelId(event.target.value)}>{!avatarModels.length && <option value="">Unavailable</option>}{avatarModels.map((model) => <option key={model.id} value={model.id}>{displayModel(model.model)}</option>)}</select></label>
