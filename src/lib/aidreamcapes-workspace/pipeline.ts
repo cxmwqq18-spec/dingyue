@@ -98,7 +98,10 @@ export function validateTaskInput(sceneId: SceneId, input: TaskInput, actors: Ac
   const fields = schema.sections.flatMap((section) => section.fields);
   for (const [key, value] of Object.entries(input.images)) {
     const field = fields.find((field) => field.id === key && field.type === "images");
-    if (!field || !Array.isArray(value) || value.some((url) => typeof url !== "string" || !url.trim() || url.length > 2048) || value.length > (field.max ?? 4)) throw new WorkspaceError("workspace_images_invalid", 400, { field: key });
+    // Direct mode has no per-scene storyboard limit; the provider capability
+    // already caps the upload control at eight references.
+    const imageLimit = input.direct ? 8 : (field?.max ?? 4);
+    if (!field || !Array.isArray(value) || value.some((url) => typeof url !== "string" || !url.trim() || url.length > 2048) || value.length > imageLimit) throw new WorkspaceError("workspace_images_invalid", 400, { field: key });
   }
   for (const [key, value] of Object.entries(input.fields)) {
     const field = fields.find((field) => field.id === key && field.type !== "images");

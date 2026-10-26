@@ -672,7 +672,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (modelId) input.modelId = modelId;
     const imageField = selected.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required);
     const referenceUrls = preset?.referenceUrls ?? composerProducts.map((asset) => asset.previewUrl);
-    if (imageField && referenceUrls.length) input.images[imageField.id] = referenceUrls.slice(0, imageField.max ?? 4);
+    // Direct mode sends every uploaded reference. The provider capability (not
+    // the scene's four-photo storyboard guideline) sets the ceiling here.
+    const imageLimit = catalog?.imageReferenceMax ?? imageField?.max ?? 4;
+    if (imageField && referenceUrls.length) input.images[imageField.id] = referenceUrls.slice(0, imageLimit);
     const requiredText = selected.sections.flatMap((section) => section.fields).find((field) => field.required && (field.type === "text" || field.type === "textarea"));
     if (prompt.trim() && requiredText) input.fields[requiredText.id] = prompt.trim();
     // Direct mode ignores scene fields for generation, so keeping the prompt in
