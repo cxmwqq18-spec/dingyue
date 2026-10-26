@@ -170,9 +170,14 @@ export async function planPlatformAiRelaySyncRelational(params: {
     seen.add(model.modelId);
     const matched = existingByModelId.get(model.modelId);
     if (matched) {
+      // 中转是凭据的权威来源：通道 key 与中转当前 key 不一致即视为需要更新，
+      // 保证换 key 后一次同步即可全线统一。中转没有 key 时不回写，避免清空通道凭据。
+      const relayKey = relay.apiKey?.trim() ?? "";
+      const credentialsChanged = Boolean(relayKey) && matched.apiKey !== relayKey;
       const changed = matched.providerType !== model.capability
         || normalizeAiProviderProtocol(matched.apiProtocol) !== normalizeAiProviderProtocol(model.protocol)
-        || (model.capability === "video" && matched.videoModelFamily !== model.modelFamily);
+        || (model.capability === "video" && matched.videoModelFamily !== model.modelFamily)
+        || credentialsChanged;
       entries.push({
         upstreamModelId: model.modelId,
         label: matched.label,
@@ -181,7 +186,7 @@ export async function planPlatformAiRelaySyncRelational(params: {
         videoModelFamily: model.modelFamily,
         action: changed ? "update" : "unchanged",
         needsReview: model.needsReview,
-        reason: model.reason,
+        reason: credentialsChanged ? `凭据已同步为当前中转 key；${model.reason}` : model.reason,
         providerId: matched.id
       });
       continue;
@@ -281,7 +286,7 @@ export async function syncPlatformAiRelayModelsRelational(params: {
             apiProtocol: entry.apiProtocol,
             videoModelFamily: entry.providerType === "video" ? entry.videoModelFamily : matched.videoModelFamily,
             aiUrl: relay.baseUrl,
-            apiKey: relay.apiKey ?? matched.apiKey,
+            apiKey: relay.apiKey?.trim() || matched.apiKey,
             syncState: "synced",
             updatedBy: params.actor
           }
@@ -295,7 +300,7 @@ export async function syncPlatformAiRelayModelsRelational(params: {
           id: relationalUid("aiprov"),
           label: entry.label,
           aiUrl: relay.baseUrl,
-          apiKey: relay.apiKey ?? undefined,
+          apiKey: relay.apiKey?.trim() || undefined,
           modelType: entry.upstreamModelId,
           providerType: entry.providerType,
           priority: 0,
