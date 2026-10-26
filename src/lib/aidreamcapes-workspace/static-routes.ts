@@ -17,7 +17,7 @@ export type StaticCreateTarget =
   | { kind: "library"; filter: string };
 
 export const TEMPLATE_CATEGORY_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
-export const LIBRARY_FILTERS = new Set(["all", "completed", "draft"]);
+export const LIBRARY_FILTERS = new Set(["all", "completed", "draft", "active", "failed"]);
 
 const TOOL_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,60}$/;
 const TEMPLATE_SEGMENT_RE = /^[a-z0-9][a-z0-9-]{0,40}$/;
