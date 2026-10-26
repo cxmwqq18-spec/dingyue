@@ -7,9 +7,8 @@ export const WORKSPACE_LANGUAGES: { value: VideoLanguage; label: string }[] = [
 ];
 export const WORKSPACE_ASPECTS = ["9:16", "1:1", "16:9"] as const;
 export const WORKSPACE_DURATIONS = [6, 10, 15, 30] as const;
-// The workspace sells two length tiers today. Longer videos are planned as
-// several 15 second shots, so a 30 second video is two clips of the same
-// length the 15 second tier uses.
+// The workspace sells two length tiers today. Each tier is one provider clip
+// when the channel declares that duration (the direct-prompt path).
 export const WORKSPACE_VIDEO_DURATIONS = [15, 30] as const;
 export const SCENES: SceneSchema[] = [
   {

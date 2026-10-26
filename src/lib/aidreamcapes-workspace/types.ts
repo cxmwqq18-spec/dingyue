@@ -27,6 +27,12 @@ export interface SceneSchema {
 export interface TaskInput {
   images: Record<string, string[]>; fields: Record<string, string | string[]>;
   creativeDirection?: string;
+  /**
+   * The composer's direct-video mode: the customer prompt is the complete
+   * generation prompt. No storyboard planner or prompt template may rewrite it,
+   * and the whole selected duration is sent as one clip.
+   */
+  direct?: boolean;
   options: { duration: VideoDuration; aspect: VideoAspect; resolution?: string; style: string; language: VideoLanguage; subtitle: boolean; subtitleStyle?: SubtitleStyle };
   referenceVideos?: string[];
   referenceAudios?: string[];

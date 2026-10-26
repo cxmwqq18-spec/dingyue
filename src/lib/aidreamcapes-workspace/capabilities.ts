@@ -1,5 +1,5 @@
 import type { PlatformAiProvider } from "@/lib/types";
-import { WORKSPACE_ASPECTS, WORKSPACE_DURATIONS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, sceneSchema } from "./catalogs";
+import { WORKSPACE_ASPECTS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, sceneSchema } from "./catalogs";
 import { WorkspaceError, type ModelCapability, type SceneId, type TaskInput, type VideoAspect, type VideoDuration, type VideoLanguage } from "./types";
 
 export type ProviderVideoCapabilitySource = Pick<PlatformAiProvider,
@@ -50,8 +50,9 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
 }
 
 function plannedShotDuration(duration: VideoDuration): number {
-  // The workspace planner creates clips no longer than 15 seconds.
-  return duration / Math.ceil(duration / 15);
+  // Direct prompt mode sends the selected duration as one clip. The provider
+  // capability list decides whether that duration is runnable.
+  return duration;
 }
 
 export function modelSupportsWorkspaceDuration(model: ModelCapability, duration: VideoDuration, shotDuration?: number): boolean {

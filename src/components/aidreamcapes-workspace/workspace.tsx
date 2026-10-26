@@ -675,11 +675,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (imageField && referenceUrls.length) input.images[imageField.id] = referenceUrls.slice(0, imageField.max ?? 4);
     const requiredText = selected.sections.flatMap((section) => section.fields).find((field) => field.required && (field.type === "text" || field.type === "textarea"));
     if (prompt.trim() && requiredText) input.fields[requiredText.id] = prompt.trim();
-    if (activePreset?.kind === "video") {
-      // Preset copy describes the example's appearance, never this customer's product facts.
-      if (requiredText) delete input.fields[requiredText.id];
-      input.creativeDirection = prompt.trim();
-    }
+    // Direct mode ignores scene fields for generation, so keeping the prompt in
+    // the required field only satisfies draft validation; it is never sent as
+    // product facts. The creative direction is the complete provider prompt.
+    input.direct = true;
+    input.creativeDirection = prompt.trim();
     return input;
   }
 
@@ -1034,20 +1034,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       let current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
       if (!current.storyboard?.shots.length) {
         await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: current.revision, action: "storyboard" }) });
-        setMessage("Planning your storyboard…");
+        setMessage(current.input.direct ? "Preparing your video…" : "Planning your storyboard…");
         current = await pollTaskUntil(taskId, (task) => Boolean(task.storyboard?.shots.length));
       }
       for (const shot of current.storyboard!.shots) {
         const quote = await request<ActionQuote>(`/tasks/${encodeURIComponent(taskId)}/quote?action=generate_shot&shotId=${encodeURIComponent(shot.shotId)}`);
         if (!quote.available) throw new Error(humanError(quote.reason) || "Generation isn't available with these settings.");
         const dispatched = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }) });
-        setMessage(`Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
-        current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", 420000);
+        setMessage(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
+        current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", current.input.direct ? 2_700_000 : 420_000);
         if (current.operation?.state === "fail") throw new Error(current.operation.error ? humanError(current.operation.error) : "A shot failed to generate. Open the video in your Library to retry.");
       }
       const fresh = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
       await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: fresh.task.revision, action: "render" }) });
-      setMessage("Stitching your final video…");
+      setMessage(fresh.task.input.direct ? "Finishing your video…" : "Stitching your final video…");
       const finalTask = await pollTaskUntil(taskId, (task) => Boolean(task.video?.finalUrl) || task.video?.status === "fail", 600000);
       setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
     } catch (error) { setMessage((error as Error).message); }

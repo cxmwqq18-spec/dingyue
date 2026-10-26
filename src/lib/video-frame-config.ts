@@ -26,7 +26,10 @@ export const VIDEO_DURATION_OPTIONS = [
 export const DEFAULT_VIDEO_DURATION_SECONDS = VIDEO_DURATION_OPTIONS[2].seconds;
 export const MAX_MULTI_REFERENCE_VIDEO_DURATION_SECONDS = MAX_VIDEO_DURATION_SECONDS;
 
-export type VideoDurationSeconds = typeof VIDEO_DURATION_OPTIONS[number]["seconds"];
+// 30 is a provider-declared tier used by the Aidreamcapes workspace and its
+// direct-prompt path. It is not part of the shared duration picker options, so
+// existing storefront and theme flows keep offering 6/10/15 only.
+export type VideoDurationSeconds = typeof VIDEO_DURATION_OPTIONS[number]["seconds"] | 30;
 export type VideoDurationOption = typeof VIDEO_DURATION_OPTIONS[number];
 export type VideoModelPricing = Partial<Record<VideoModelFamily, Partial<Record<VideoDurationSeconds, number>>>>;
 
@@ -115,8 +118,16 @@ export function normalizeVideoDurationSecondsForFrameCount(
   value: unknown,
   frameCount: unknown,
   fallback: unknown = DEFAULT_VIDEO_DURATION_SECONDS,
-  modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY
+  modelFamily: unknown = DEFAULT_VIDEO_MODEL_FAMILY,
+  allowSeconds?: readonly number[]
 ): VideoDurationSeconds {
+  // Callers that own a provider-declared tier list (e.g. the Aidreamcapes
+  // workspace, whose providers expose 15 and 30) pass it explicitly. Keeping
+  // this opt-in preserves the shared 6/10/15 behaviour everywhere else.
+  if (allowSeconds?.length) {
+    const parsed = typeof value === "number" || typeof value === "string" ? Number(value) : Number.NaN;
+    if (Number.isFinite(parsed) && allowSeconds.includes(Math.trunc(parsed))) return Math.trunc(parsed) as VideoDurationSeconds;
+  }
   const normalizedPreference = normalizeVideoModelPreference(modelFamily);
   const normalized = normalizeVideoDurationSeconds(value, fallback, normalizedPreference);
   const options = videoDurationOptionsForFrameCount(frameCount, normalizedPreference);
@@ -131,8 +142,9 @@ function normalizedBaseCreditCost(baseCreditCost: unknown): number {
 
 function fallbackDurationCreditCost(baseCreditCost: unknown, seconds: VideoDurationSeconds): number {
   const base = normalizedBaseCreditCost(baseCreditCost);
-  const option = VIDEO_DURATION_OPTIONS.find((item) => item.seconds === seconds) ?? VIDEO_DURATION_OPTIONS[0];
-  return Math.max(0, Math.ceil(base * option.creditMultiplier));
+  const option = VIDEO_DURATION_OPTIONS.find((item) => item.seconds === seconds);
+  const multiplier = option?.creditMultiplier ?? seconds / 6;
+  return Math.max(0, Math.ceil(base * multiplier));
 }
 
 function configuredDurationCreditCost(pricing: unknown, modelFamily: VideoModelFamily, seconds: VideoDurationSeconds): number | undefined {

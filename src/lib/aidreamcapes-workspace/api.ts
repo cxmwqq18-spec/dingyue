@@ -100,6 +100,10 @@ export function parseInput(value: unknown): TaskInput {
     if (typeof raw.creativeDirection !== "string" || raw.creativeDirection.length > WORKSPACE_PROMPT_MAX_LENGTH) throw new WorkspaceError("invalid_creative_direction");
     input.creativeDirection = raw.creativeDirection.trim();
   }
+  if (raw.direct !== undefined) {
+    if (typeof raw.direct !== "boolean") throw new WorkspaceError("invalid_input");
+    input.direct = raw.direct;
+  }
   for (const key of ["actorId", "modelId"] as const) if (raw[key] !== undefined) { if (typeof raw[key] !== "string" || raw[key].length > 2048) throw new WorkspaceError("invalid_input"); input[key] = raw[key]; }
   if (raw.musicUrl !== undefined) { if (typeof raw.musicUrl !== "string" || raw.musicUrl.length > 2048) throw new WorkspaceError("invalid_music_url"); input.musicUrl = raw.musicUrl; }
   return input;

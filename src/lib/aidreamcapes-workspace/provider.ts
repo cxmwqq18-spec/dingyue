@@ -18,7 +18,7 @@ import { providerCreditsForRequest } from "@/lib/ai-provider-billing";
 import type { VideoModelFamily } from "@/lib/video-frame-config";
 import { SCENES, WORKSPACE_ASPECTS, WORKSPACE_LANGUAGES, WORKSPACE_VIDEO_DURATIONS, assertWorkspaceSite, sceneSchema } from "./catalogs";
 import { compileShot, compileStoryboard, referencePool, resolveShotReferences, validateTaskInput } from "./pipeline";
-import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type VideoAspect, type VideoDuration, type WorkspaceCatalog, type WorkspaceTask } from "./types";
+import { WorkspaceError, type ActorAsset, type ModelCapability, type ProductBriefSnapshot, type RefKind, type SceneId, type Storyboard, type StoryboardShot, type TaskInput, type VideoAspect, type VideoDuration, type WorkspaceCatalog, type WorkspaceTask } from "./types";
 import type { WorkspacePreset } from "./preset-contract";
 import { isKnownWorkspaceLanguage, modelSupportsWorkspaceDuration, toWorkspaceModelCapability, workspaceCapabilityError, workspaceOutputOptions } from "./capabilities";
 import { assertWorkspaceExternalOperation, isWorkspaceStabilityMockMode, mockStructuredDecision } from "./stability";
@@ -102,8 +102,12 @@ function workspaceShotCredits(params: {
     outputCount: 1
   });
   if (modelPrice) return modelPrice.unitCredits;
+  // The shared theme pricing table covers 6/10/15 only. A direct 30s clip
+  // fallback is priced as two 15s units instead of silently using the 15s tier.
+  const durationUnits = params.durationSeconds === 30 ? 2 : 1;
+  const pricedSeconds = params.durationSeconds === 30 ? 15 : params.durationSeconds;
   return videoResolutionCreditCost(
-    videoDurationCreditCost(params.theme.creditCost, params.durationSeconds, params.modelFamily, params.theme.modelPricing),
+    videoDurationCreditCost(params.theme.creditCost, pricedSeconds, params.modelFamily, params.theme.modelPricing) * durationUnits,
     params.resolution
   );
 }
@@ -221,10 +225,34 @@ export async function generateStoryboard(args: { siteId: string; sceneId: SceneI
   assertWorkspaceSite(args.siteId);
   const input = validateTaskInput(args.sceneId, args.input, args.actors, true, args.modelCapabilities), schema = sceneSchema(args.sceneId);
   const actor = args.actors.find((actor) => actor.actorId === input.actorId);
+  // Direct composer mode: no storyboard planner, no fact extraction, no style
+  // LLM. One clip spans the full requested duration and the prompt is verbatim.
+  if (input.direct) {
+    const promptText = (input.creativeDirection ?? "").trim();
+    if (!promptText) throw new WorkspaceError("workspace_creative_direction_required");
+    const hasTexture = Boolean(input.images.textureImages?.length) && schema.refImagePolicy.includes("texture");
+    const refKinds: RefKind[] = schema.needsActor
+      ? ["actor", "product", "composite"]
+      : schema.refImagePolicy.includes("product")
+        ? hasTexture ? ["product", "texture"] : ["product"]
+        : [];
+    const shot: StoryboardShot = {
+      shotId: crypto.randomUUID(), start: 0, end: input.options.duration, duration: input.options.duration,
+      environment: "As described in the prompt.", visual: promptText, voiceover: "", locked: false,
+      refKinds, refImgs: {}, actorId: actor?.actorId,
+      camera: "static", framing: "medium", lighting: input.options.style,
+      expression: schema.needsActor ? String(input.fields.tone ?? "natural") : "",
+      genStatus: "pending", versions: [], prompt: ""
+    };
+    const storyboard: Storyboard = {
+      scenePlan: { strategy: "single", scenes: ["As described in the prompt"], mainScene: "the setting described in the prompt", reason: "Direct prompt" },
+      lang: input.options.language, source: "user_edited", shots: [shot],
+      colorGrade: input.options.style, musicGenre: "none", version: "1"
+    };
+    return compileStoryboard({ sceneId: args.sceneId, input, storyboard, actors: args.actors });
+  }
   const preserveLocked = !args.rewriteOnly && Boolean(args.existing?.shots.some((shot) => shot.locked));
   if (preserveLocked && Math.abs((args.existing?.shots.at(-1)?.end ?? 0) - input.options.duration) > 0.01) throw new WorkspaceError("workspace_locked_timeline_duration_conflict", 409);
-  // Native video providers cap a single clip at 15s. One clip preserves the
-  // published 6/10/15s price; 30s uses exactly two 15s clips (2 × 60 credits).
   const count = (args.rewriteOnly || preserveLocked) && args.existing
     ? args.existing.shots.length
     : Math.ceil(input.options.duration / 15);
@@ -364,10 +392,12 @@ export async function submitShotGeneration(args: {
   const orderedUrls = references.map((reference) => reference.url);
   const assetIds = await Promise.all(orderedUrls.map((url) => assetIdForReference({ ...args, url })));
   const prompt = compileShot({ sceneId, input: { ...args.input, options: { ...args.input.options, subtitle: false } }, shot: args.shot, storyboard: args.storyboard, actors: args.actors });
-  const providerDuration = capability.durations.find((duration) => duration >= args.shot.duration);
+  // Direct mode sends the selected duration as one clip; legacy mode keeps the
+  // previous per-shot provider tier.
+  const providerDuration = args.input.direct ? args.shot.duration : capability.durations.find((duration) => duration >= args.shot.duration);
   if (!providerDuration) throw new WorkspaceError("workspace_shot_duration_unsupported", 422);
   const modelFamily = videoProviderModelFamilyForProvider(provider);
-  const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, assetIds.length, 15, modelFamily);
+  const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, assetIds.length, 15, modelFamily, args.input.direct ? [15, 30] : undefined);
   // 分辨率必须与报价一致：任务里选的档位就是真正派发给上游的档位。
   const resolution = normalizeVideoResolution(args.input.options.resolution);
   // 计价统一入口：优先用模型通道价格，未定价时回落到主题价。
@@ -386,7 +416,7 @@ export async function submitShotGeneration(args: {
     skipWorkerDispatch: true, includeWorkerPayload: true,
     params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
-        expectedCredits: billedCredits } } });
+        direct: Boolean(args.input.direct), expectedCredits: billedCredits } } });
   if (created.reused && created.job.status !== "queued") return created;
   if (created.job.creditsReserved !== args.expectedCredits) {
     await settleGenerationJobRelational({ siteId: args.siteId, jobId: created.job.id, requestId: `req_${created.job.id}`, status: "failed", error: "workspace_price_quote_changed" });
@@ -491,7 +521,7 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     if (args.action === "generate_shot") {
       const shot = args.task?.storyboard?.shots.find((candidate) => candidate.shotId === args.shotId);
       if (!args.task || args.task.siteId !== args.siteId || !shot) return { available: false, reason: "workspace_shot_not_found" };
-      const duration = [6, 10, 15].find((candidate) => candidate >= shot.duration) ?? 15;
+      const duration = args.task.input.direct ? shot.duration : [6, 10, 15].find((candidate) => candidate >= shot.duration) ?? 15;
       const credits = duration * 4;
       return { available: true, credits, providerId: "aivideosugc-stability-mock", priceBinding: `aivideosugc-stability-v1:${args.action}:${credits}` };
     }
@@ -530,10 +560,10 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     : modelCapabilities.find((model) => model.available && (!sceneSchema(args.task!.sceneId).needsActor || model.nativeSpeech) && model.aspects.includes(args.task!.input.options.aspect) && modelSupportsWorkspaceDuration(model, args.task!.input.options.duration, shot.duration))!;
   const provider = providers.find((candidate) => candidate.id === capability.id);
   if (!provider) return { available: false, reason: "workspace_video_provider_unavailable" };
-  const plannedDuration = capability.durations.find((duration) => duration >= shot.duration);
+  const plannedDuration = args.task.input.direct ? shot.duration : capability.durations.find((duration) => duration >= shot.duration);
   if (!plannedDuration) return { available: false, reason: "workspace_shot_duration_unsupported" };
   const family = videoProviderModelFamilyForProvider(provider);
-  const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, shot.refKinds.length, 15, family);
+  const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, shot.refKinds.length, 15, family, args.task.input.direct ? [15, 30] : undefined);
   // 与 submitShotGeneration 使用同一计价函数，确保报价与实际扣费一致。
   const credits = workspaceShotCredits({
     provider,

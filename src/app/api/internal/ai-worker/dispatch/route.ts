@@ -981,11 +981,19 @@ function _buildOpeningPortraitVideoPrompt(userNote: string) {
   ].join("\n");
 }
 
+function isDirectWorkspaceVideo(payload: WorkerPayload) {
+  const params = recordValue(payload.params);
+  return recordValue(params?.workspace)?.direct === true;
+}
+
 function buildMinimalVideoProviderPrompt(
   payload: WorkerPayload,
   referenceAssets = videoFrameAssets(payload),
   videoParams?: { aspect_ratio?: string; duration?: string; resolution?: string }
 ) {
+  // A direct workspace job carries the customer's complete prompt. Do not add
+  // theme direction, reference instructions, format sentences or constraints.
+  if (isDirectWorkspaceVideo(payload)) return videoProviderUserPrompt(payload);
   return buildMinimalVideoProviderPromptText({
     aspectRatio: videoParams?.aspect_ratio,
     duration: videoParams?.duration,
@@ -1308,7 +1316,13 @@ function videoProviderParams(payload: WorkerPayload) {
   const resolution = videoResolutions.has(rawResolution as typeof VIDEO_RESOLUTIONS[number])
     ? rawResolution as typeof VIDEO_RESOLUTIONS[number]
     : normalizeVideoResolution(rawResolution);
-  const duration = String(normalizeVideoDurationSeconds(rawDuration, undefined, modelPreference));
+  // A direct workspace job may use a provider tier above the shared 15s cap
+  // (the Aidreamcapes provider declares 15 and 30). Pass that tier through.
+  const directWorkspaceJob = recordValue(payload.params.workspace)?.direct === true;
+  const requestedDuration = Number(rawDuration);
+  const duration = String(directWorkspaceJob && [15, 30].includes(requestedDuration)
+    ? requestedDuration
+    : normalizeVideoDurationSeconds(rawDuration, undefined, modelPreference));
   return { aspect_ratio, resolution, duration, size: videoSizeForParams(aspect_ratio, resolution) };
 }
 
@@ -2751,8 +2765,9 @@ function shouldPreferOpenAiJsonVideoRequest(params: {
   if (params.protocol !== "openai-videos") return false;
   const explicitMode = process.env.AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE?.trim().toLowerCase();
   if (explicitMode === "multipart" || explicitMode === "form") return false;
-  // 影灵（New API 兼容）只接受单数 image 字段，走普通 form/URL 提交流程；
-  // 若套用 smartpicklid 的 JSON 多图分支会把参考图整段丢掉。
+  // 影灵（New API 兼容）走原生 JSON 字段（image/media/ratio/resolution），
+  // 不套用 smartpicklid 的 JSON 参考图分支；参考图由 createVideoTask 的
+  // yingling 载荷按顺序写入 media。
   if (isYinglingApiBaseUrl(params.baseUrl)) return false;
   return isGrokImagineVideoModel(params.model) || isSmartPickLidBaseUrl(params.baseUrl);
 }
@@ -2876,13 +2891,27 @@ async function createVideoTask(params: {
       })
     : undefined;
   const yinglingSize = params.videoParams.aspect_ratio;
+  // The relay follows New API's video contract: one `image` shorthand or
+  // vendor-specific parameters under `metadata`. Wan 3.0 takes multiple
+  // references as `metadata.input.media` entries in upload order; a single
+  // upload stays the first-frame shorthand.
+  const yinglingMedia = params.imageUrls.map((url) => ({ type: "reference_image", url }));
+  const yinglingResolution = String(params.videoParams.resolution || "").toUpperCase();
+  const yinglingParameters = {
+    ...(yinglingResolution ? { resolution: yinglingResolution } : {}),
+    ...(yinglingSize ? { ratio: yinglingSize } : {})
+  };
   const payload = yinglingApi
     ? {
         model: params.model,
         prompt: params.prompt,
         duration: Number(params.videoParams.duration),
-        ...(yinglingSize ? { size: yinglingSize } : {}),
-        ...(firstImageUrl ? { image: firstImageUrl } : {})
+        ...(params.imageUrls.length > 1
+          ? { metadata: { parameters: yinglingParameters, input: { media: yinglingMedia } } }
+          : {
+              ...yinglingParameters,
+              ...(firstImageUrl ? { image: firstImageUrl } : {})
+            })
       }
     : params.protocol === "openai-videos"
     ? {
@@ -3326,7 +3355,7 @@ async function generateVideoWithProvider(params: {
   const providerPromptAuditTiming = {
     providerUserPromptLength: String(videoProviderUserPrompt(params.payload).length),
     providerPromptLength: String(prompt.length),
-    providerPromptSource: "user_prompt_plus_reference_fidelity_format_and_output_constraint"
+    providerPromptSource: isDirectWorkspaceVideo(params.payload) ? "workspace_direct_user_prompt" : "user_prompt_plus_reference_fidelity_format_and_output_constraint"
   };
   const referencePreparedAt = markTiming("referencePreparedAt");
   await postWorkerSlotStatus(params.payload, "running", "video_reference_format_ready", {

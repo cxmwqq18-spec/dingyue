@@ -714,14 +714,17 @@ function resolveGenerationRequest(params: {
       ].filter(Boolean).join("; ")
     : "";
   const imageCreativeDirection = params.videoTheme ? "" : imageCreativeDirectionInstruction(params.requestJson);
+  const directPromptJob = (params.requestJson?.workspace as { direct?: boolean } | undefined)?.direct === true;
   const renderedPrompt = params.videoTheme
-    ? [
-        videoUserPrompt,
-        videoFrameInstruction,
-        `Selected video theme: ${params.videoTheme.name}`,
-        params.videoTheme.category?.label ? `Video category: ${params.videoTheme.category.label}` : "",
-        videoFormatSummary
-      ].filter(Boolean).join("\n\n")
+    ? directPromptJob
+      ? videoUserPrompt
+      : [
+          videoUserPrompt,
+          videoFrameInstruction,
+          `Selected video theme: ${params.videoTheme.name}`,
+          params.videoTheme.category?.label ? `Video category: ${params.videoTheme.category.label}` : "",
+          videoFormatSummary
+        ].filter(Boolean).join("\n\n")
     : themePrompt
       ? `${basePrompt}\n\n${subjectInstruction}\n\n${imageCreativeDirection}\n\nSelected creative theme: ${params.creativePack?.name ?? "Creative theme"}\nTheme prompt: ${themePrompt}`
       : `${basePrompt}\n\n${subjectInstruction}\n\n${imageCreativeDirection}`;
@@ -1389,6 +1392,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
     : null;
   if (creativePackId && !creativePack) throw new StoreError("creative_pack_not_found_for_site", 404);
   if (creativePack && creativePack.aiAppSlug !== params.aiAppSlug) throw new StoreError("creative_pack_tool_mismatch", 400);
+  // Direct workspace jobs send the selected provider tier (15 or 30) as one
+  // clip. The shared duration list stays 6/10/15 for every other flow.
+  const directWorkspaceJob = Boolean((params.requestJson?.workspace as { direct?: boolean } | undefined)?.direct);
   const requestedVideoDurationSeconds = videoTheme
     ? normalizeVideoDurationSecondsForFrameCount(
         fields.durationSeconds ??
@@ -1401,7 +1407,8 @@ async function createGenerationJobInTx(tx: Tx, params: {
         params.requestJson?.videoDuration,
         requestedAssetIds.length,
         videoTheme.durationSeconds,
-        requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY
+        requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
+        directWorkspaceJob ? [15, 30] : undefined
       )
     : undefined;
   const requestedVideoResolution = videoTheme
@@ -1485,7 +1492,9 @@ async function createGenerationJobInTx(tx: Tx, params: {
         videoThemeName: videoTheme.name,
         videoThemeExampleName: videoThemeExample?.name,
         videoThemeCategoryLabel: videoTheme.category?.label,
-        videoThemePrompt: videoTheme.prompt,
+        // A direct workspace prompt is the whole prompt. Injecting the theme's
+        // sample script would contradict the customer's product and scene.
+        ...(directWorkspaceJob ? {} : { videoThemePrompt: videoTheme.prompt }),
         videoModelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
         modelFamily: requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY,
         frameAssetIds: requestedAssetIds,

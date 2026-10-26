@@ -133,16 +133,19 @@ export function referencePool(sceneId: SceneId, input: TaskInput, actors: ActorA
 }
 export function resolveShotReferences(args: { sceneId: SceneId; input: TaskInput; shot: ShotSnapshot; actors?: ActorAsset[] }): { kind: RefKind; url: string }[] {
   const schema = sceneSchema(args.sceneId), pool = referencePool(args.sceneId, args.input, args.actors);
-  if (!args.shot.refKinds.length || new Set(args.shot.refKinds).size !== args.shot.refKinds.length) throw new WorkspaceError("workspace_reference_order_invalid");
+  if (new Set(args.shot.refKinds).size !== args.shot.refKinds.length) throw new WorkspaceError("workspace_reference_order_invalid");
   if (schema.needsActor && (args.shot.refKinds[0] !== "actor" || !args.shot.refKinds.includes("product"))) throw new WorkspaceError("workspace_actor_product_references_required");
-  return args.shot.refKinds.map((kind) => {
+  return args.shot.refKinds.flatMap((kind) => {
     if (!schema.refImagePolicy.includes(kind)) throw new WorkspaceError("workspace_reference_kind_invalid");
     const override = args.shot.refImgs[kind];
     const available = pool[kind];
     // A composite must be supplied by the authenticated composition service, never substituted with text-to-image or another kind.
     if (!available?.length && !(kind === "composite" && override)) throw new WorkspaceError("workspace_reference_missing", 400, { kind });
     if (override && kind !== "composite" && !available?.includes(override)) throw new WorkspaceError("workspace_reference_not_in_task", 400, { kind });
-    return { kind, url: override ?? available![0] };
+    // Direct prompt mode ships every uploaded image of a reference kind in the
+    // order the customer uploaded it. Other modes keep one image per kind.
+    if (args.input.direct && kind !== "composite") return (available ?? []).map((url) => ({ kind, url }));
+    return [{ kind, url: override ?? available![0] }];
   });
 }
 export function snapshotShot(shot: ShotSnapshot): ShotSnapshot {
@@ -152,6 +155,9 @@ export function snapshotShot(shot: ShotSnapshot): ShotSnapshot {
 }
 export function compileShot(args: { sceneId: SceneId; input: TaskInput; shot: StoryboardShot; storyboard: Storyboard; actors?: ActorAsset[]; voiceSnapshot?: ActorVoiceSnapshot }): string {
   const { input, shot, storyboard } = args, schema = sceneSchema(args.sceneId);
+  // Direct composer mode sends the customer's prompt verbatim. No template,
+  // style fragment, reference label or language sentence is appended.
+  if (input.direct) return text(shot.visual);
   if (!text(shot.visual) || !text(shot.environment) || !Number.isFinite(shot.duration) || shot.duration <= 0 || Math.abs(shot.end - shot.start - shot.duration) > 0.01) throw new WorkspaceError("workspace_shot_invalid");
   if (storyboard.lang !== input.options.language) throw new WorkspaceError("workspace_language_rewrite_required");
   const style = STYLE_FRAGMENTS[input.options.style];
