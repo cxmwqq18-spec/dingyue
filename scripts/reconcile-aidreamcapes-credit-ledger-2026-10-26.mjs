@@ -97,7 +97,13 @@ function validateJob39(state) {
   assert(amounts.some(([type, amount]) => type === "reserve" && amount === -39), "job_39_reserve_ledger_mismatch");
   assert(amounts.some(([type, amount]) => type === "consume" && amount === -39), "job_39_consume_ledger_mismatch");
   assert(amounts.some(([type, amount]) => type === "release" && amount === 39), "job_39_release_ledger_mismatch");
-  assert(amounts.reduce((total, [, amount]) => total + amount, 0) === 0, "job_39_ledger_not_net_zero");
+  // reserve and release are the only balance-affecting entries. consume moves
+  // the already-reserved amount into consumed and does not change the available
+  // balance, so the balance effect of this job must be zero.
+  const balanceEffect = amounts
+    .filter(([type]) => type === "reserve" || type === "release")
+    .reduce((total, [, amount]) => total + amount, 0);
+  assert(balanceEffect === 0, "job_39_ledger_balance_effect_not_zero");
 
   assert(customer?.balance, "job_39_customer_balance_missing");
   assert(Number(customer.balance.balance) === 601, `job_39_customer_balance_changed:${customer.balance.balance}`);
