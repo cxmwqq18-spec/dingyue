@@ -1071,10 +1071,20 @@ function inputAssets(payload: WorkerPayload): ImageInputAsset[] {
   return payload.inputAssets.filter((asset) => asset.assetId !== "asset_demo" && asset.signedUrl.trim());
 }
 
+function isAudioReferenceAsset(asset: { mimeType?: string | null }): boolean {
+  return String(asset.mimeType ?? "").toLowerCase().startsWith("audio/");
+}
+
+// Audio references ride along with video jobs but must never enter the image
+// frame pipeline (frame limits, URI preparation, and resizing assume images).
+function videoAudioAssets(payload: WorkerPayload): ImageInputAsset[] {
+  return inputAssets(payload).filter((asset) => isAudioReferenceAsset(asset));
+}
+
 function videoFrameAssets(payload: WorkerPayload): ImageInputAsset[] {
   const fields = recordValue(payload.params.fields);
   const maxFrames = normalizeVideoFrameLimit(fields?.maxFrames ?? payload.params.maxFrames);
-  return inputAssets(payload).slice(0, maxFrames);
+  return inputAssets(payload).filter((asset) => !isAudioReferenceAsset(asset)).slice(0, maxFrames);
 }
 
 function providerReachableAssetUrl(asset: ImageInputAsset) {
@@ -2829,6 +2839,7 @@ async function createVideoTask(params: {
   model: string;
   prompt: string;
   imageUrls: string[];
+  audioUrls: string[];
   referenceAssets: ImageInputAsset[];
   videoParams: { aspect_ratio: string; resolution: string; duration: string; size: string };
   protocol: VideoProviderProtocol;
@@ -2931,7 +2942,11 @@ async function createVideoTask(params: {
         prompt: params.prompt,
         duration: Number(params.videoParams.duration),
         ...yinglingParameters,
-        ...(yinglingImage ? { image: yinglingImage } : {})
+        ...(yinglingImage ? { image: yinglingImage } : {}),
+        // The relay's wan task plugin reads `audio_url` as a reference audio
+        // (voice tone) for wan2.7/wan3.0-class models; older i2v mappings
+        // ignore it. Only the first audio is transported per request.
+        ...(params.audioUrls.length ? { audio_url: params.audioUrls[0] } : {})
       }
     : params.protocol === "openai-videos"
     ? {
@@ -3346,6 +3361,11 @@ async function generateVideoWithProvider(params: {
   });
   const providerReferenceLimit = directJsonReferences ? openAiJsonVideoReferenceLimit() : configuredProviderReferenceLimit;
   const referenceAssets = requestedReferenceAssets.slice(0, providerReferenceLimit);
+  // Reference audio (voice tone) travels to the provider alongside the frames;
+  // yingling-class relays consume it via the `audio_url` request field.
+  const audioAssetUrls = videoAudioAssets(params.payload)
+    .map((asset) => asset.signedUrl.trim())
+    .filter((url) => /^https?:\/\//i.test(url));
 
   const timeoutMs = videoProviderTimeoutMs();
   const videoParams = videoProviderParams(params.payload);
@@ -3417,6 +3437,7 @@ async function generateVideoWithProvider(params: {
           model: modelCandidate,
           prompt: taskPrompt,
           imageUrls: frameImageUrls,
+          audioUrls: audioAssetUrls,
           referenceAssets: taskReferenceAssets,
           videoParams,
           protocol,

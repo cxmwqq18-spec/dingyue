@@ -274,6 +274,9 @@ function requestedAssetIds(job: GenerationJob): string[] {
   const fields = recordValue(job.requestJson.fields);
   return Array.from(new Set([
     ...stringArray(job.requestJson.assetIds),
+    // Reference audio travels in a dedicated list (voice tone for video
+    // providers); it joins the input assets but never the image frame list.
+    ...stringArray(job.requestJson.audioAssetIds),
     ...(isVideoWorkerJob(job) ? stringArray(fields.frameAssetIds) : [])
   ]));
 }

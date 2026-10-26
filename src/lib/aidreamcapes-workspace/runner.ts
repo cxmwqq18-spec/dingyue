@@ -92,7 +92,7 @@ async function reserveFreshStoryboardTaskHold(task: StoredTask) {
     resolution: task.input.options.resolution || undefined,
     imageInputCount: task.input.images.productImages?.length ?? 0,
     videoInputCount: task.input.referenceVideos?.length ?? 0,
-    audioInputCount: task.input.referenceAudios?.length ?? 0
+    audioInputCount: Math.min(task.input.referenceAudios?.length ?? 0, 1)
   });
   if (!quote.available) throw new WorkspaceError(quote.reason ?? "workspace_video_provider_unavailable", 503);
   if (!quote.credits || quote.credits <= 0) return undefined;

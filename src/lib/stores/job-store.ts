@@ -721,6 +721,7 @@ async function resolveModelPricedCreditsForJob(
     requestJson?: Record<string, unknown>;
     siteAiApp: Prisma.SiteAiAppGetPayload<{ include: { aiApp: true } }>;
     requestedAssetIds: string[];
+    audioAssetIds: string[];
     videoTheme?: GenerationVideoTheme | null;
     durationSeconds?: number | null;
     resolution?: string | null;
@@ -785,9 +786,9 @@ async function resolveModelPricedCreditsForJob(
   let audioInputCount = 0;
   let audioInputSeconds = 0;
   const inputDurations = jsonObject<Record<string, unknown>>(params.requestJson?.inputDurations as Prisma.JsonValue | undefined);
-  if (params.requestedAssetIds.length) {
+  if (params.requestedAssetIds.length || params.audioAssetIds.length) {
     const assets = await tx.assetUpload.findMany({
-      where: { id: { in: params.requestedAssetIds }, siteId: params.siteAiApp.siteId, deletedAt: null },
+      where: { id: { in: [...params.requestedAssetIds, ...params.audioAssetIds] }, siteId: params.siteAiApp.siteId, deletedAt: null },
       select: { id: true, mimeType: true }
     });
     for (const asset of assets) {
@@ -1527,6 +1528,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
     requestJson: params.requestJson,
     siteAiApp,
     requestedAssetIds,
+    audioAssetIds: stringArray(params.requestJson?.audioAssetIds),
     videoTheme,
     durationSeconds: requestedVideoDurationSeconds,
     resolution: requestedVideoResolution,

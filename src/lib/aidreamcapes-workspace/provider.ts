@@ -320,7 +320,7 @@ export async function generateStoryboard(args: { siteId: string; sceneId: SceneI
   return compileStoryboard({ sceneId: args.sceneId, input, storyboard, actors: args.actors });
 }
 
-export async function assetIdForReference(args: { siteId: string; customerId: string; url: string }): Promise<string> {
+export async function assetIdForReference(args: { siteId: string; customerId: string; url: string; kind?: "image" | "audio" }): Promise<string> {
   assertWorkspaceSite(args.siteId);
   const owner = { siteId: args.siteId, customerId: args.customerId };
   const downloadId = customerAssetIdFromDownloadUrl(args.url, owner);
@@ -332,7 +332,7 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
     const asset = await prisma.assetUpload.findFirst({ where, select: { id: true, siteId: true, customerId: true, storageKey: true, mimeType: true, role: true, deletedAt: true } });
     if (!asset || (downloadId && asset.id !== downloadId) ||
         (localStorageKey && (asset.role !== "input" || !workspaceAssetStorageKeyMatches(asset.storageKey, localStorageKey))) ||
-        !workspaceAssetHasMedia(asset, { ...owner, kind: "image" })) throw new WorkspaceError("workspace_reference_not_owned", 403);
+        !workspaceAssetHasMedia(asset, { ...owner, kind: args.kind ?? "image" })) throw new WorkspaceError("workspace_reference_not_owned", 403);
     return asset.id;
   }
   const actors = await getWorkspaceActors(args.siteId);
@@ -392,14 +392,21 @@ export async function submitShotGeneration(args: {
   const references = resolveShotReferences({ sceneId, input: args.input, shot: args.shot, actors: args.actors });
   if (references.length > provider.maxImagesPerRequest) throw new WorkspaceError("workspace_provider_reference_limit", 422);
   const orderedUrls = references.map((reference) => reference.url);
-  const assetIds = await Promise.all(orderedUrls.map((url) => assetIdForReference({ ...args, url })));
+  const imageAssetIds = await Promise.all(orderedUrls.map((url) => assetIdForReference({ ...args, url })));
+  // The relay's wan task plugin consumes a single `audio_url` per request, so
+  // only the first reference audio is transported upstream. Pricing (here and
+  // in quoteComposerGeneration / quoteWorkspaceAction) must stay on the same
+  // basis or the quote/charge comparison below rejects the job.
+  const audioUrls = (args.input.referenceAudios ?? []).slice(0, 1);
+  if (audioUrls.length > capability.audioReferenceMax) throw new WorkspaceError("workspace_audio_reference_unsupported", 422);
+  const audioAssetIds = await Promise.all(audioUrls.map((url) => assetIdForReference({ ...args, url, kind: "audio" })));
   const prompt = compileShot({ sceneId, input: { ...args.input, options: { ...args.input.options, subtitle: false } }, shot: args.shot, storyboard: args.storyboard, actors: args.actors });
   // Direct mode sends the selected duration as one clip; legacy mode keeps the
   // previous per-shot provider tier.
   const providerDuration = args.input.direct ? args.shot.duration : capability.durations.find((duration) => duration >= args.shot.duration);
   if (!providerDuration) throw new WorkspaceError("workspace_shot_duration_unsupported", 422);
   const modelFamily = videoProviderModelFamilyForProvider(provider);
-  const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, assetIds.length, 15, modelFamily, args.input.direct ? [15, 30] : undefined);
+  const billedDuration = normalizeVideoDurationSecondsForFrameCount(providerDuration, imageAssetIds.length, 15, modelFamily, args.input.direct ? [15, 30] : undefined);
   // 分辨率必须与报价一致：任务里选的档位就是真正派发给上游的档位。
   const resolution = normalizeVideoResolution(args.input.options.resolution);
   // 计价统一入口：优先用模型通道价格，未定价时回落到主题价。
@@ -410,13 +417,18 @@ export async function submitShotGeneration(args: {
     durationSeconds: billedDuration,
     modelFamily,
     resolution,
-    imageInputCount: assetIds.length
+    imageInputCount: imageAssetIds.length,
+    audioInputCount: audioAssetIds.length
   });
   if (args.expectedCredits === undefined || args.expectedCredits !== billedCredits) throw new WorkspaceError("workspace_price_quote_changed", 409);
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: args.aiAppSlug,
     entryPoint: "customer_workspace", authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
     skipWorkerDispatch: true, includeWorkerPayload: true, reserveFromTaskHold: args.holdTaskId ? { taskId: args.holdTaskId } : undefined,
-    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds, fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
+    params: { mode: "video", outputType: "video", videoThemeId: theme.id, assetIds: imageAssetIds,
+      // Reference audio rides in a dedicated list so the shared frame pipeline
+      // (frame limits, duration normalization, image pricing counts) is untouched.
+      audioAssetIds,
+      fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
         direct: Boolean(args.input.direct), expectedCredits: billedCredits } } });
   if (created.reused && created.job.status !== "queued") return created;
@@ -515,11 +527,11 @@ export async function quoteComposerGeneration(args: {
     modelFamily: videoProviderModelFamilyForProvider(provider),
     resolution: args.resolution ?? "720p",
     imageInputCount: args.imageInputCount,
-    // Direct mode only sends the ordered image references to the relay; the
-    // actual shot charge does not price video/audio references. Keep the
-    // composer and the task hold on that same basis.
+    // Direct mode only sends the ordered image references plus the first
+    // reference audio to the relay; video references are not transported and
+    // stay unpriced. The composer and the task hold quote on that same basis.
     videoInputCount: args.direct ? 0 : args.videoInputCount ?? 0,
-    audioInputCount: args.direct ? 0 : args.audioInputCount ?? 0
+    audioInputCount: Math.min(args.audioInputCount ?? 0, 1)
   });
   return { available: true, credits, providerId: provider.id };
 }
@@ -579,7 +591,8 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
     durationSeconds: duration,
     modelFamily: family,
     resolution: args.task.input.options.resolution ?? "720p",
-    imageInputCount: shot.refKinds.length
+    imageInputCount: shot.refKinds.length,
+    audioInputCount: Math.min(args.task.input.referenceAudios?.length ?? 0, 1)
   });
   // The approved per-shot price is 4 credits per second at 720p; higher
   // resolutions carry the same multiplier the composer already quotes, so the
