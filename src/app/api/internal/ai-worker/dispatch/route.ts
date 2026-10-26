@@ -3410,6 +3410,7 @@ async function generateVideoWithProvider(params: {
     for (const modelCandidate of videoProviderModelCandidates(model, { protocol, referenceAssetCount: taskReferenceAssets.length, baseUrl })) {
       throwIfLocalWorkerAborted(params.signal);
       try {
+        if (params.payload.siteId === "site_aidreamcapes") console.warn("local_ai_worker_video_create_started", { jobId: params.payload.jobId, provider: provider.label || provider.id, model: modelCandidate, protocol });
         taskId = await createVideoTask({
           baseUrl,
           apiKey: providerApiKey,
@@ -3445,6 +3446,7 @@ async function generateVideoWithProvider(params: {
     }
     if (!taskId) throw createError instanceof Error ? createError : new Error("ai_provider_video_create_failed");
     const providerTaskCreatedAt = markTiming("providerTaskCreatedAt");
+    if (params.payload.siteId === "site_aidreamcapes") console.warn("local_ai_worker_video_task_created", { jobId: params.payload.jobId, provider: provider.label || provider.id, providerTaskId: taskId });
     await postWorkerSlotStatus(params.payload, "running", "video_task_created", {
       index: 1,
       status: "running",
@@ -3788,6 +3790,7 @@ async function runLocalVideoWorker(payload: WorkerPayload, signal?: AbortSignal)
 
   const started = await postWorkerStatus(payload, "running", "local_video_worker_started", { timing: workerTiming });
   if (started.alreadyFinal) return;
+  if (payload.siteId === "site_aidreamcapes") console.warn("local_ai_worker_video_started", { jobId: payload.jobId, requestId: payload.requestId, providers: providers.map((provider) => provider.label || provider.id) });
   const providerTrace: Array<{ provider: string; attempts: number }> = [];
   const providerErrors: Array<{ provider: string; error: string }> = [];
   let lastError = "";

@@ -101,6 +101,13 @@ function taskStatusLabel(task: WorkspaceTask): string {
   if (task.status === "cancelled") return "Cancelled";
   if (task.status === "failed" || task.operation?.state === "fail" || task.video?.status === "fail" || task.storyboard?.shots.some((shot) => shot.genStatus === "fail")) return "Needs attention";
   if (task.video?.finalUrl || task.status === "completed") return "Completed";
+  // A direct task whose storyboard is ready but whose clips have not started is
+  // waiting for the creator to confirm the render, not generating anything.
+  // Showing "Generating" here made finished storyboards look like in-flight
+  // generation and hid the missing confirmation step.
+  const shots = task.storyboard?.shots ?? [];
+  const allClipsPending = shots.length > 0 && shots.every((shot) => shot.genStatus === "pending");
+  if (allClipsPending && task.operation?.state !== "pending" && task.operation?.state !== "run") return "Ready to render";
   return "Generating";
 }
 const refLabels: Record<RefKind, string> = { actor: "Avatar", product: "Product", texture: "Detail", composite: "Avatar + product" };
@@ -1943,6 +1950,7 @@ function upstreamProviderMessage(code: string): string {
 }
 function humanError(code?: string) {
   if (!code) return "";
+  if (code.includes("local_worker_restarted") || code.includes("local_worker_recovered")) return "Generation was interrupted by a server restart. Please try again.";
   if (/ai_provider_[a-z_]*timeout/.test(code)) return "The video provider did not respond in time. Please retry this shot.";
   if (code.startsWith("ai_provider_video_create_failed")) {
     const detail = upstreamProviderMessage(code);
