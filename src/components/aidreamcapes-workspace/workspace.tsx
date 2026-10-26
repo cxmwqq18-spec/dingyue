@@ -772,7 +772,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       } : undefined;
       const source = activePreset?.kind === "video" ? { sourcePage: activePreset.sourcePage, presetId: activePreset.presetId, sourceUpdatedAt: activePreset.sourceUpdatedAt } : undefined;
       const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: selected.id, input, title: composerTitle.trim() || selected.name, ...(productBrief ? { productBrief } : {}), ...(source ? { preset: source } : {}) }) });
-      setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
+      setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
       acceptTask(result.task); setView("agent"); setStep("input"); updateUrl(result.task); setMobileOpen(false);
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
@@ -1848,7 +1848,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       </div>
       {!task && <button className={styles.iconButton} disabled={working} aria-label="Remove template" onClick={() => {
         setPresets((current) => ({ ...current, [preset.kind]: undefined })); setPresetSceneId(undefined); setComposerTitle(""); setPrompt("");
-        if (!video) setImageInput((current) => ({ ...current, prompt: "", toolId: "custom" }));
+        setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]);
+        if (!video) setImageInput((current) => ({ ...current, prompt: "", assetUrls: [], toolId: "custom" }));
         const url = new URL(window.location.href); url.pathname = staticViewHref(basePath, view);
         url.search = ""; url.hash = "";
         window.history.replaceState(window.history.state, "", url);
