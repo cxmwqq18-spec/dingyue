@@ -6,6 +6,7 @@ import { promisify } from "util";
 import { NextResponse } from "next/server";
 import ffmpegPath from "ffmpeg-static";
 import { publishCustomerJobEvent, publishCustomerJobEventForJob } from "@/lib/customer-job-events";
+import { prisma } from "@/lib/prisma";
 import {
   contentTypeForCustomerAssetPath,
   customerAssetStorageKey,
@@ -1085,6 +1086,24 @@ function videoFrameAssets(payload: WorkerPayload): ImageInputAsset[] {
   const fields = recordValue(payload.params.fields);
   const maxFrames = normalizeVideoFrameLimit(fields?.maxFrames ?? payload.params.maxFrames);
   return inputAssets(payload).filter((asset) => !isAudioReferenceAsset(asset)).slice(0, maxFrames);
+}
+
+// Reads the provider task persisted by a previous run of this job so a
+// re-dispatch (boot recovery after a release restart) can resume polling the
+// still-executing upstream task instead of paying for a second one.
+async function videoProviderTaskIdForResume(payload: WorkerPayload): Promise<string> {
+  const job = await prisma.generationJob.findUnique({ where: { id: payload.jobId }, select: { resultJson: true } });
+  const result = job?.resultJson && typeof job.resultJson === "object" && !Array.isArray(job.resultJson)
+    ? job.resultJson as Record<string, unknown>
+    : {};
+  if (typeof result.providerTaskId === "string" && result.providerTaskId.trim()) return result.providerTaskId.trim();
+  const slots = Array.isArray(result.outputSlots) ? result.outputSlots : [];
+  for (const slot of slots) {
+    if (!slot || typeof slot !== "object" || Array.isArray(slot)) continue;
+    const slotTaskId = (slot as Record<string, unknown>).providerTaskId;
+    if (typeof slotTaskId === "string" && slotTaskId.trim()) return slotTaskId.trim();
+  }
+  return "";
 }
 
 function providerReachableAssetUrl(asset: ImageInputAsset) {
@@ -3366,6 +3385,9 @@ async function generateVideoWithProvider(params: {
   const audioAssetUrls = videoAudioAssets(params.payload)
     .map((asset) => asset.signedUrl.trim())
     .filter((url) => /^https?:\/\//i.test(url));
+  if (params.payload.siteId === "site_aidreamcapes") {
+    console.warn("local_ai_worker_video_audio_attached", { jobId: params.payload.jobId, audioCount: audioAssetUrls.length });
+  }
 
   const timeoutMs = videoProviderTimeoutMs();
   const videoParams = videoProviderParams(params.payload);
@@ -3503,12 +3525,38 @@ async function generateVideoWithProvider(params: {
   let status: VideoStatusResponse | undefined;
   let taskId = "";
   let usedReferenceFrameCount = referenceAssets.length;
+  const resumedTaskId = await videoProviderTaskIdForResume(params.payload);
   try {
-    const result = await runVideoProviderTask(imageUrls);
-    status = result.status;
-    taskId = result.taskId;
-    usedReferenceFrameCount = result.referenceFrameCount;
+    if (resumedTaskId) {
+      taskId = resumedTaskId;
+      const providerResumedAt = markTiming("providerTaskResumedAt");
+      await postWorkerSlotStatus(params.payload, "running", "video_provider_task_resumed", {
+        index: 1,
+        status: "running",
+        stage: "video_provider_task_resumed",
+        providerTaskId: taskId,
+        error: "",
+        updatedAt: providerResumedAt
+      }, { forceWrite: true, timing: { providerResumedAt } });
+      status = await pollVideoTask({
+        payload: params.payload,
+        baseUrl,
+        apiKey: providerApiKey,
+        taskId,
+        protocol,
+        providerFamily: videoProviderModelFamilyForProvider(provider),
+        timing,
+        signal: params.signal,
+        timeoutMs
+      });
+    } else {
+      const result = await runVideoProviderTask(imageUrls);
+      status = result.status;
+      taskId = result.taskId;
+      usedReferenceFrameCount = result.referenceFrameCount;
+    }
   } catch (error) {
+    if (resumedTaskId) throw error;
     if (!shouldRetryVideoTaskWithDataUriFrames({ error, imageUrls, protocol })) throw error;
     await postWorkerSlotStatus(params.payload, "running", "video_provider_retry_data_uri_frames", {
       index: 1,
