@@ -99,7 +99,7 @@ const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", 
 function taskStatusLabel(task: WorkspaceTask): string {
   if (!task.input.direct) return statusLabels[task.status];
   if (task.status === "cancelled") return "Cancelled";
-  if (task.status === "failed" || task.operation?.state === "fail") return "Needs attention";
+  if (task.status === "failed" || task.operation?.state === "fail" || task.video?.status === "fail" || task.storyboard?.shots.some((shot) => shot.genStatus === "fail")) return "Needs attention";
   if (task.video?.finalUrl || task.status === "completed") return "Completed";
   return "Generating";
 }
@@ -311,7 +311,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       ? task.operation.error ?? task.error
       : task?.status === "failed"
         ? task.error ?? directShotFailure?.error
-        : directShotFailure?.error
+        : task?.video?.status === "fail"
+          ? task.video.error ?? directShotFailure?.error
+          : directShotFailure?.error
     : undefined;
   const directStalled = directTask && !directFinalUrl && !operationActive && !clipsProcessing && !directFailure;
   const editingDisabled = busy || Boolean(operationActive) || Boolean(clipsProcessing);
