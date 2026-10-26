@@ -107,12 +107,12 @@ if (/^[a-f0-9]{40}$/.test(liveCommit)) {
 }
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
 const archive = path.join(temp, "source.tar");
-const buildArchive = path.join(temp, "build.tar");
+const buildArchive = path.join(temp, "build.tar.gz");
 const remoteArchive = `/tmp/aidreamcapes-${commit}.tar`;
-const remoteBuildArchive = `/tmp/aidreamcapes-build-${commit}.tar`;
+const remoteBuildArchive = `/tmp/aidreamcapes-build-${commit}.tar.gz`;
 try {
   execFileSync("git", ["archive", "--format=tar", `--output=${archive}`, commit, "--", ...archivePaths]);
-  if (prebuiltBuild) execFileSync("tar", ["-cf", buildArchive, "--exclude=./cache", "-C", path.resolve(prebuiltBuild), "."]);
+  if (prebuiltBuild) execFileSync("tar", ["-czf", buildArchive, "--exclude=./cache", "-C", path.resolve(prebuiltBuild), "."]);
   run("scp", ["-P", port, ...connection, archive, `${host}:${remoteArchive}`]);
   if (prebuiltBuild) run("scp", ["-P", port, ...connection, buildArchive, `${host}:${remoteBuildArchive}`]);
   const command = `set -eu
@@ -148,7 +148,7 @@ cp -al "$BASE/node_modules" "$RELEASE/node_modules"
 printf '%s\\n' ${quote(reuseDependenciesCommit)} > "$RELEASE/.dependency-source-commit"` : `npm ci --no-audit --no-fund
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js generate`}
 ${prebuiltBuild ? `mkdir -p .next-build
-tar -xf ${quote(remoteBuildArchive)} -C .next-build
+tar -xzf ${quote(remoteBuildArchive)} -C .next-build
 rm -f ${quote(remoteBuildArchive)}
 test -f .next-build/BUILD_ID
 test "$(cat .next-build/.build-commit)" = ${quote(commit)}` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
