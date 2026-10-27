@@ -21,6 +21,20 @@ const Chevron = () => (
   </svg>
 );
 
+type PartnerBadge = { key: string; label: string; href: string; imageUrl: string; imageHeight: number };
+
+// Friend-link badges shown at the bottom of the public footer. The dark badge
+// variant matches the footer background (#050505).
+const partnerBadges: PartnerBadge[] = [
+  {
+    key: "acid-tools",
+    label: "Acid Tools",
+    href: "https://acidtools.com/ai/aivideosugc",
+    imageUrl: "https://acidtools.com/assets/images/badge-dark.png",
+    imageHeight: 40,
+  },
+];
+
 function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   if (link.image || link.description) {
     return (
@@ -194,6 +208,15 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
             ))}
           </span>
         </div>
+        {partnerBadges.length ? (
+          <div className="flinks">
+            {partnerBadges.map((badge) => (
+              <a aria-label={badge.label} data-partner-badge={badge.key} href={badge.href} key={badge.key} rel="noopener" target="_blank" title={badge.label}>
+                <img alt={badge.label} decoding="async" height={badge.imageHeight} loading="lazy" src={badge.imageUrl} />
+              </a>
+            ))}
+          </div>
+        ) : null}
       </div>
     </footer>
   );
