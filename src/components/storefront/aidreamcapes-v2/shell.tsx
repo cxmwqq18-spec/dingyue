@@ -23,16 +23,9 @@ const Chevron = () => (
 
 type PartnerBadge = { key: string; label: string; href: string; imageUrl: string; imageHeight: number };
 
-// Friend-link badges shown at the bottom of the public footer. The dark badge
-// variant matches the footer background (#050505).
+// Friend-link badges shown at the bottom of the public footer. Badge artwork is
+// hotlinked from the partner program.
 const partnerBadges: PartnerBadge[] = [
-  {
-    key: "acid-tools",
-    label: "Acid Tools",
-    href: "https://acidtools.com/ai/aivideosugc",
-    imageUrl: "https://acidtools.com/assets/images/badge-dark.png",
-    imageHeight: 40,
-  },
   {
     key: "semilaunch",
     label: "SemiLaunch",
