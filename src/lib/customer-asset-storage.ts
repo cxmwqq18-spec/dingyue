@@ -28,7 +28,16 @@ const assetMimeByExtension: Record<string, string> = {
   ".mov": "video/quicktime",
   ".mp4": "video/mp4",
   ".webm": "video/webm",
-  ".webp": "image/webp"
+  ".webp": "image/webp",
+  // Reference audio must be served with a real audio/* Content-Type: relay
+  // gateways (yingling wan adapters) reject audio uploads that arrive as
+  // application/octet-stream.
+  ".mp3": "audio/mpeg",
+  ".wav": "audio/wav",
+  ".m4a": "audio/mp4",
+  ".aac": "audio/aac",
+  ".ogg": "audio/ogg",
+  ".flac": "audio/flac"
 };
 
 export function customerAssetRoot(): string {

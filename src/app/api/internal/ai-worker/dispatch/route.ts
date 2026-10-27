@@ -388,19 +388,31 @@ function proxyOpenAiVideoBaseUrl(baseUrl: string) {
   return usesProxyOpenAiVideoEndpoint(trimmed) ? trimmed.replace(/\/v1$/, "") : trimmed;
 }
 
-function openAiVideoCreateEndpoint(baseUrl: string) {
+function openAiVideoCreateEndpoint(baseUrl: string, options?: { yinglingOpenAiVideos?: boolean }) {
   const endpointBaseUrl = proxyOpenAiVideoBaseUrl(baseUrl);
-  if (isYinglingApiBaseUrl(endpointBaseUrl)) return `${endpointBaseUrl}/v1/video/generations`;
+  if (isYinglingApiBaseUrl(endpointBaseUrl)) {
+    // Yingling's updated third-party API transports reference audio only on
+    // the OpenAI-compatible /v1/videos endpoint; the legacy
+    // /v1/video/generations task format silently drops audio fields.
+    return options?.yinglingOpenAiVideos ? `${endpointBaseUrl}/v1/videos` : `${endpointBaseUrl}/v1/video/generations`;
+  }
   return `${endpointBaseUrl}${usesProxyOpenAiVideoEndpoint(endpointBaseUrl) ? "/v1/videos" : "/v1/videos/generations"}`;
 }
 
-function openAiVideoStatusEndpoint(baseUrl: string, taskId: string) {
-  if (isYinglingApiBaseUrl(baseUrl)) return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/video/generations/${encodeURIComponent(taskId)}`;
+function openAiVideoStatusEndpoint(baseUrl: string, taskId: string, options?: { yinglingOpenAiVideos?: boolean }) {
+  if (isYinglingApiBaseUrl(baseUrl)) return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/${options?.yinglingOpenAiVideos ? "videos" : "video/generations"}/${encodeURIComponent(taskId)}`;
   return `${proxyOpenAiVideoBaseUrl(baseUrl)}/v1/videos/${encodeURIComponent(taskId)}`;
 }
 
-function openAiVideoContentEndpoint(baseUrl: string, taskId: string) {
-  return `${openAiVideoStatusEndpoint(baseUrl, taskId)}/content`;
+function openAiVideoContentEndpoint(baseUrl: string, taskId: string, options?: { yinglingOpenAiVideos?: boolean }) {
+  return `${openAiVideoStatusEndpoint(baseUrl, taskId, options)}/content`;
+}
+
+// Jobs that carry reference audio must run against yingling's OpenAI-compatible
+// /v1/videos endpoint (`audio_refs` JSON URL list); the legacy platform task
+// format accepts no audio fields at all.
+function yinglingJobUsesOpenAiVideos(baseUrl: string, audioUrlCount: number) {
+  return isYinglingApiBaseUrl(baseUrl) && audioUrlCount > 0;
 }
 
 function isGrokImagineVideoModel(model: string) {
@@ -2905,8 +2917,9 @@ async function createVideoTask(params: {
     return task.id;
   }
   const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
+  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, params.audioUrls.length);
   const endpoint = params.protocol === "openai-videos"
-    ? openAiVideoCreateEndpoint(params.baseUrl)
+    ? openAiVideoCreateEndpoint(params.baseUrl, { yinglingOpenAiVideos })
     : `${mediaBaseUrl}/v1/media/generate`;
   const useSmartPickLidJsonRequest = shouldUseSmartPickLidJsonVideoRequest({
     baseUrl: params.baseUrl,
@@ -2955,7 +2968,20 @@ async function createVideoTask(params: {
     ...(yinglingSize ? { ratio: yinglingSize } : {})
   };
   const yinglingImage = params.imageUrls.length > 1 ? params.imageUrls : firstImageUrl;
-  const payload = yinglingApi
+  const payload = yinglingOpenAiVideos
+    ? {
+        // Yingling /v1/videos (OpenAI-compatible): JSON URL reference lists.
+        // The gateway downloads each URL and re-uploads it as the adapter's
+        // input_reference/input_audio file; audio must answer with an audio/*
+        // Content-Type (served by the local-assets route).
+        model: params.model,
+        prompt: params.prompt,
+        seconds: Number(params.videoParams.duration),
+        ...(params.imageUrls.length ? { images: params.imageUrls } : {}),
+        ...(params.audioUrls.length ? { audio_refs: params.audioUrls } : {}),
+        ...(params.videoParams.aspect_ratio ? { ratio: params.videoParams.aspect_ratio } : {})
+      }
+    : yinglingApi
     ? {
         model: params.model,
         prompt: params.prompt,
@@ -3047,6 +3073,7 @@ async function pollVideoTask(params: {
   const startedAt = Date.now();
   let lastStatus = "";
   let firstPoll = true;
+  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, videoAudioAssets(params.payload).length);
   let providerFirstProgressAt = params.timing?.providerFirstProgressAt;
   const providerProgressTiming = (progress: unknown): Record<string, string> | undefined => {
     if (!Number.isFinite(Number(progress))) return undefined;
@@ -3161,7 +3188,7 @@ async function pollVideoTask(params: {
       }
       const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
       const urls = params.protocol === "openai-videos"
-          ? [new URL(openAiVideoStatusEndpoint(params.baseUrl, params.taskId))]
+          ? [new URL(openAiVideoStatusEndpoint(params.baseUrl, params.taskId, { yinglingOpenAiVideos }))]
           : lk888MediaStatusUrls(mediaBaseUrl, params.taskId);
       let response: Response | undefined;
       let body: VideoStatusResponse = {};
@@ -3192,7 +3219,9 @@ async function pollVideoTask(params: {
       }, { nonBlocking: true, progressWrite: true, ...(progressTiming ? { timing: progressTiming } : {}) });
       if (params.protocol === "openai-videos") {
         if (body.status === "completed" || body.status === "succeeded" || body.status === "success" || body.status === "done") {
-          if (videoStatusResultUrl(body)) return body;
+          // Yingling /v1/videos responses carry no inline result URL; the file
+          // is fetched from /v1/videos/{task_id}/content after completion.
+          if (videoStatusResultUrl(body) || yinglingOpenAiVideos) return body;
           continue;
         }
         if (body.status === "failed" || body.status === "failure" || body.status === "cancelled" || body.status === "canceled") {
@@ -3267,6 +3296,7 @@ async function downloadVideoResult(params: {
   apiKey?: string;
   taskId?: string;
   protocol: VideoProviderProtocol;
+  yinglingOpenAiVideos?: boolean;
   signal?: AbortSignal;
   timeoutMs: number;
 }) {
@@ -3291,7 +3321,7 @@ async function downloadVideoResult(params: {
     }, params.signal);
   }
   const rawResultUrl = params.protocol === "openai-videos"
-    ? params.resultUrl || (isYinglingApiBaseUrl(params.baseUrl ?? "") ? "" : openAiVideoContentEndpoint(params.baseUrl ?? "", params.taskId ?? ""))
+    ? params.resultUrl || (isYinglingApiBaseUrl(params.baseUrl ?? "") && !params.yinglingOpenAiVideos ? "" : openAiVideoContentEndpoint(params.baseUrl ?? "", params.taskId ?? "", { yinglingOpenAiVideos: params.yinglingOpenAiVideos }))
     : params.resultUrl;
   const resultUrl = params.protocol === "tokengo-media"
     ? resolveTokengoMediaResultUrl(params.baseUrl ?? "", rawResultUrl)
@@ -3307,7 +3337,7 @@ async function downloadVideoResult(params: {
       })()
     : false;
   const headers = params.apiKey && (
-    (params.protocol === "openai-videos" && (!isYinglingApiBaseUrl(params.baseUrl ?? "") || sameProviderOrigin)) ||
+    (params.protocol === "openai-videos" && (params.yinglingOpenAiVideos || !isYinglingApiBaseUrl(params.baseUrl ?? "") || sameProviderOrigin)) ||
     (params.protocol === "tokengo-media" && sameProviderOrigin)
   )
     ? { Authorization: `Bearer ${params.apiKey}` }
@@ -3585,6 +3615,7 @@ async function generateVideoWithProvider(params: {
     apiKey: providerApiKey,
     taskId,
     protocol,
+    yinglingOpenAiVideos: yinglingJobUsesOpenAiVideos(baseUrl, audioAssetUrls.length),
     signal: params.signal,
     timeoutMs
   });
