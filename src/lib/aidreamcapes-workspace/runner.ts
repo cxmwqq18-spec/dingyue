@@ -353,7 +353,7 @@ export function directTaskNeedsServerContinuation(task: StoredTask): boolean {
   const shots = task.storyboard?.shots ?? [];
   if (!shots.length) return false;
   return shots.some((shot) => {
-    if (shot.genStatus === "fail") return false;
+    if (shot.genStatus === "fail" || shot.genStatus === "expired") return false;
     if (shot.genStatus === "pending") return !(shot.versions ?? []).some((version) => ["pending", "run"].includes(version.status));
     return true;
   });

@@ -93,13 +93,13 @@ export interface CaptionEditDraft { renderId: string; lines: SubtitleCue[]; upda
 export interface ShotVersion extends ShotSnapshot {
   vid: string; ts: string; prompt: string; clipUrl?: string; generationJobId?: string;
   origin: "auto" | "manual" | "before_reroll" | "before_rewrite";
-  status: "pending" | "run" | "done" | "fail"; error?: string;
+  status: "pending" | "run" | "done" | "fail" | "expired"; error?: string;
   speechCues?: SubtitleCue[]; speechTimingVerified?: boolean;
   modelId?: string; nativeAudioVerified?: boolean;
   inputSnapshot?: TaskInput;
 }
 export interface StoryboardShot extends ShotSnapshot {
-  shotId: string; locked: boolean; genStatus: "pending" | "run" | "done" | "fail";
+  shotId: string; locked: boolean; genStatus: "pending" | "run" | "done" | "fail" | "expired";
   curVer?: string; versions: ShotVersion[]; prompt: string; error?: string;
   compositeGenerationJobId?: string; compositeStatus?: "pending" | "run" | "done" | "fail"; compositeError?: string; compositeInputHash?: string;
 }

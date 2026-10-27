@@ -8,5 +8,9 @@ export async function register() {
   if (process.env.NEXT_RUNTIME === "nodejs" && process.env.WORKSPACE_WORKER_RECOVERY === "1") {
     const { recoverInterruptedWorkspaceJobs } = await import("@/lib/stores/workspace-worker-recovery");
     await recoverInterruptedWorkspaceJobs();
+    // Same single-instance guard as the recovery scan: deployment candidates
+    // must never purge assets while the current service is serving them.
+    const { scheduleWorkspaceVideoRetentionSweeps } = await import("@/lib/aidreamcapes-workspace/retention");
+    scheduleWorkspaceVideoRetentionSweeps();
   }
 }
