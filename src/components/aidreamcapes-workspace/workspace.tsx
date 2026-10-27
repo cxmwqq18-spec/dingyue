@@ -24,6 +24,7 @@ import { LibraryTaskCard, type LibraryCardMedia } from "./library-task-card";
 import { LibraryReferenceReel, type LibraryReelItem } from "./library-reference-reel";
 import { WorkspaceSelect } from "./workspace-select";
 import { entryCookieName, readWorkspaceEntry } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { deriveTaskStatus, taskStatusInFlight, type DerivedTaskStatus } from "@/lib/aidreamcapes-workspace/task-status";
 const EmbeddedInspirations = dynamic(() => import("./inspirations-embedded").then(module => module.EmbeddedInspirations), { loading: () => <p role="status">Loading inspirations…</p> });
 const WorkspaceHelpDialog = dynamic(() => import("./help-dialog").then(module => module.WorkspaceHelpDialog));
 const ProductUrlImport = dynamic(() => import("./product-url-import").then(module => module.ProductUrlImport), { loading: () => <p role="status">Loading product import…</p> });
@@ -94,25 +95,13 @@ export interface AidreamcapesWorkspaceProps {
   initialInspirations?: import("@/lib/aidreamcapes-inspirations-types").InspirationPage;
 }
 
-const statusLabels: Record<WorkspaceTask["status"], string> = { draft: "Draft", storyboard_ready: "Storyboard ready", rendering: "Rendering", completed: "Completed", failed: "Needs attention", cancelled: "Cancelled" };
-
-function taskNeedsAttention(task: WorkspaceTask): boolean {
-  return task.status === "failed" || task.operation?.state === "fail" || task.video?.status === "fail" || Boolean(task.storyboard?.shots.some((shot) => shot.genStatus === "fail"));
-}
+const derivedStatusLabels: Record<DerivedTaskStatus, string> = { cancelled: "Cancelled", completed: "Completed", rendering: "Rendering", generating: "Generating", planning: "Planning", failed: "Needs attention", ready: "Ready to render", draft: "Draft" };
 
 function taskStatusLabel(task: WorkspaceTask): string {
-  if (!task.input.direct) return statusLabels[task.status];
-  if (task.status === "cancelled") return "Cancelled";
-  if (taskNeedsAttention(task)) return "Needs attention";
-  if (task.video?.finalUrl || task.status === "completed") return "Completed";
-  // A direct task whose storyboard is ready but whose clips have not started is
-  // waiting for the creator to confirm the render, not generating anything.
-  // Showing "Generating" here made finished storyboards look like in-flight
-  // generation and hid the missing confirmation step.
-  const shots = task.storyboard?.shots ?? [];
-  const allClipsPending = shots.length > 0 && shots.every((shot) => shot.genStatus === "pending");
-  if (allClipsPending && task.operation?.state !== "pending" && task.operation?.state !== "run") return "Ready to render";
-  return "Generating";
+  const view = deriveTaskStatus(task);
+  if (view.status === "rendering" && task.input.direct) return "Finishing";
+  if (view.status === "ready" && !task.input.direct) return "Storyboard ready";
+  return derivedStatusLabels[view.status];
 }
 const refLabels: Record<RefKind, string> = { actor: "Avatar", product: "Product", texture: "Detail", composite: "Avatar + product" };
 const steps: { id: Step; label: string }[] = [{ id: "input", label: "Details" }, { id: "storyboard", label: "Storyboard" }, { id: "render", label: "Render" }, { id: "delivery", label: "Delivery" }];
@@ -627,7 +616,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         const result = await request<{ customerBalance: { balance: number; reserved: number } | null }>("/balance", { signal });
         if (!signal.aborted && result.customerBalance) setBalance(result.customerBalance.balance - result.customerBalance.reserved);
       } catch { /* Balance refresh should not interrupt the current workflow. */ }
-    }, 15000, customer?.balance == null);
+    }, 4000, customer?.balance == null);
   }, [customerId, customer?.balance, request]);
 
   useEffect(() => {
@@ -834,6 +823,22 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     visibleView.current = "agent";
     setTask(null); setStep("input"); setView("agent"); setMessage(""); setMessageAction(false);
     updateUrl(null, "input", "agent");
+  }
+
+  async function retryTaskRender(taskId: string) {
+    if (busy) return;
+    setBusy(true); setMessage("");
+    try {
+      const current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
+      await dispatchActionOrFollowServer(taskId, { revision: current.revision, action: "render" }, (t) =>
+        t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || t.video.finalUrl)));
+      setMessage("Finishing your video…");
+      const finalTask = await pollTaskUntil(taskId, (next) => Boolean(next.video?.finalUrl) || next.video?.status === "fail", 600000);
+      void refreshBalanceSoon();
+      if (finalTask.video?.status === "fail") throw new Error(finalTask.video.error ? humanError(finalTask.video.error) : "The video could not be finished.");
+      setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
+    } catch (error) { setMessage((error as Error).message); }
+    finally { setBusy(false); }
   }
 
   async function retryDirectTask() {
@@ -1095,6 +1100,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     try {
       const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: pending.scene.id, input: pending.input, title: pending.title }) });
       setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
+      void refreshBalanceSoon();
       setPrompt(""); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]); setComposerTitle("");
       setMessage(`Draft saved. Generating “${result.task.title}” — you can keep working here; progress is in your Library.`);
       setMessageAction(true);
@@ -1103,6 +1109,14 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   }
 
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  /** 确认生成/任务终态后立刻拉一次余额，不等下一个轮询周期。 */
+  async function refreshBalanceSoon() {
+    try {
+      const result = await request<{ customerBalance: { balance: number; reserved: number } | null }>("/balance");
+      if (result.customerBalance) setBalance(result.customerBalance.balance - result.customerBalance.reserved);
+    } catch { /* The 4s balance poll will catch up. */ }
+  }
 
   async function pollTaskUntil(taskId: string, ready: (task: WorkspaceTask) => boolean, timeoutMs = 600000): Promise<WorkspaceTask> {
     const deadline = Date.now() + timeoutMs;
@@ -1147,6 +1161,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           t.storyboard?.shots.some((s) => s.shotId === shot.shotId && s.genStatus === "run") || false);
         setMessage(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
         current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", current.input.direct ? 2_700_000 : 420_000);
+        void refreshBalanceSoon();
         if (current.operation?.state === "fail") throw new Error(current.operation.error ? humanError(current.operation.error) : "A shot failed to generate. Open the video in your Library to retry.");
       }
       const fresh = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
@@ -1154,6 +1169,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || t.video.finalUrl)));
       setMessage(fresh.task.input.direct ? "Finishing your video…" : "Stitching your final video…");
       const finalTask = await pollTaskUntil(taskId, (task) => Boolean(task.video?.finalUrl) || task.video?.status === "fail", 600000);
+      void refreshBalanceSoon();
       setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
     } catch (error) { setMessage((error as Error).message); }
   }
@@ -1319,9 +1335,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   // notice, in-progress cards are actively generating, completed cards have a
   // final video, and cancelled cards only appear under "All videos".
   const libraryCardBucket = (item: WorkspaceTask): "active" | "failed" | "completed" | "cancelled" => {
-    if (item.status === "completed") return "completed";
-    if (item.status === "cancelled") return "cancelled";
-    if (taskNeedsAttention(item)) return "failed";
+    const view = deriveTaskStatus(item);
+    if (view.status === "completed") return "completed";
+    if (view.status === "cancelled") return "cancelled";
+    if (view.status === "failed") return "failed";
     return "active";
   };
   const libraryItems = tasks.filter((item) => {
@@ -1678,12 +1695,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const images = Object.values(detailTask.input.images).flat();
       const description = String(detailTask.input.fields.description ?? detailTask.input.creativeDirection ?? Object.values(detailTask.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim();
       const model = catalog?.models.find((entry) => entry.id === detailTask.input.modelId)?.label;
-      const running = detailTask.operation?.state === "pending" || detailTask.operation?.state === "run";
-      const shotFailure = detailTask.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
-      const failureCode = detailTask.operation?.state === "fail" ? detailTask.operation?.error ?? detailTask.error : detailTask.status === "failed" ? detailTask.error ?? shotFailure : shotFailure;
+      const detailView = deriveTaskStatus(detailTask);
+      const running = taskStatusInFlight(detailView);
+      const failureCode = detailView.status === "failed" ? detailView.failureCode : undefined;
       const failed = Boolean(failureCode);
-      const completed = detailTask.status === "completed" && detailTask.video?.finalUrl;
-      const statusWord = running ? (detailTask.input.direct ? "Generating" : detailTask.operation?.action === "storyboard" ? "Planning" : detailTask.operation?.action === "render" ? "Rendering" : "Generating") : failed ? "Needs attention" : taskStatusLabel(detailTask);
+      const completed = detailView.status === "completed";
+      const statusWord = taskStatusLabel(detailTask);
       const statusClass = failed ? styles.detailStatusIconFail : running ? styles.detailStatusIconRun : completed ? styles.detailStatusIconDone : styles.detailStatusIconDraft;
       const finalUrl = detailTask.video?.finalUrl;
       const referenceVideos = detailTask.input.referenceVideos ?? [];
@@ -1759,6 +1776,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           </div>
         </div>
         <div className={styles.detailFooter}>
+          {detailView.status === "failed" && detailView.failureStage === "render" && shotClips.length > 0 && <button type="button" className={styles.button} disabled={busy} onClick={() => void retryTaskRender(detailTask.taskId)}><Clapperboard size={15} /><span>Retry render</span></button>}
           <button type="button" className={`${styles.button} ${styles.primary}`} disabled={running} title={running ? "This video is being generated. Wait for it to finish before regenerating." : undefined} onClick={() => prefillFromTask(detailTask)}><RotateCcw size={15} /><span>{running ? "Generating…" : "Regenerate"}</span></button>
         </div>
       </section></div>;
@@ -1896,21 +1914,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         ...(item.input.referenceVideos?.length ? [`${item.input.referenceVideos.length} videos`] : []),
         ...(item.input.referenceAudios?.length ? [`${item.input.referenceAudios.length} audio`] : [])
       ].filter(Boolean).join(" · ");
-      const itemRunning = item.operation?.state === "pending" || item.operation?.state === "run" || Boolean(item.storyboard?.shots.some((shot) => shot.genStatus === "run" || shot.compositeStatus === "run"));
-      const shotFailure = item.storyboard?.shots.find((shot) => shot.genStatus === "fail" && shot.error)?.error;
-      const failureCode = item.operation?.state === "fail" ? item.operation?.error ?? item.error : item.status === "failed" ? item.error ?? shotFailure : shotFailure;
+      const statusView = deriveTaskStatus(item);
+      const itemRunning = taskStatusInFlight(statusView);
+      const failureCode = statusView.status === "failed" ? statusView.failureCode : undefined;
       const failureReason = failureCode ? humanError(failureCode) : "";
       // A direct task can stop between the storyboard and the paid clip when
       // the browser leaves mid-flow. The server has no error in that case, so
       // the card must still say why nothing is happening instead of showing a
       // silent "Ready to render" state.
-      const directWaiting = item.input.direct && !itemRunning && !failureReason && !item.video?.finalUrl
-        && item.status !== "completed" && item.status !== "cancelled"
+      const directWaiting = item.input.direct && statusView.status === "ready"
         && (item.storyboard?.shots.length ?? 0) > 0
         && item.storyboard!.shots.every((shot) => shot.genStatus === "pending");
       const cardNotice = failureReason || (directWaiting ? "Generation hasn't started for this video. Open it and tap Try again." : "");
-      const badgeLabel = itemRunning ? (item.operation?.action === "render" ? (item.input.direct ? "Finishing" : "Rendering") : item.input.direct ? "Generating" : "Working") : failureReason ? "Needs attention" : taskStatusLabel(item);
-      const statusTone = itemRunning ? "progress" as const : failureReason ? "error" as const : item.status === "completed" ? "done" as const : "idle" as const;
+      const badgeLabel = taskStatusLabel(item);
+      const statusTone = itemRunning ? "progress" as const : failureReason ? "error" as const : statusView.status === "completed" ? "done" as const : "idle" as const;
       return <LibraryTaskCard
         key={item.taskId}
         title={item.title}
@@ -2006,6 +2023,8 @@ function upstreamProviderMessage(code: string): string {
 }
 function humanError(code?: string) {
   if (!code) return "";
+  if (code === "workspace_ffprobe_unavailable") return "The final assembly step hit a temporary server issue. Your generated clips are saved and no credits were charged for the assembly — open the task and retry the render.";
+  if (code === "workspace_render_failed") return "The final assembly didn't finish. Your generated clips are saved — open the task and retry the render.";
   if (code.includes("local_worker_restarted") || code.includes("local_worker_recovered")) return "Generation was interrupted by a server restart. Please try again.";
   if (code === "workspace_clip_retention_expired") return "This clip was deleted after its 15-day retention period ended. Generate the shot again to create a new version.";
   if (/ai_provider_[a-z_]*timeout/.test(code)) return "The video provider did not respond in time. Please retry this shot.";
