@@ -81,6 +81,9 @@ export async function purgeExpiredWorkspaceVideoAssets(): Promise<{ purged: numb
   if (retentionDays === 0) return { purged: 0, dryRun, remainingDays: 0 };
   const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
   let purged = 0;
+  // Skipped rows (non-workspace assets, conflicts) never leave the due set, so
+  // each following batch must exclude them to keep advancing.
+  const skippedIds: string[] = [];
 
   for (let batch = 0; batch < MAX_BATCHES_PER_SWEEP; batch += 1) {
     const assets = await prisma.assetUpload.findMany({
@@ -89,7 +92,8 @@ export async function purgeExpiredWorkspaceVideoAssets(): Promise<{ purged: numb
         role: "output",
         mimeType: { startsWith: "video/" },
         deletedAt: null,
-        createdAt: { lt: cutoff }
+        createdAt: { lt: cutoff },
+        ...(skippedIds.length ? { id: { notIn: skippedIds } } : {})
       },
       orderBy: { createdAt: "asc" },
       take: BATCH_LIMIT
@@ -107,19 +111,29 @@ export async function purgeExpiredWorkspaceVideoAssets(): Promise<{ purged: numb
         }
         if (asset.jobId) {
           const taskId = await taskIdForJob(asset.jobId);
-          if (taskId) {
-            try {
-              await markTaskVersionsExpired({ customerId: asset.customerId, taskId, assetId: asset.id });
-            } catch (error) {
-              if (error instanceof WorkspaceError && error.code === "revision_conflict") {
-                // The customer is editing this task right now; keep the asset
-                // and the clip working, the next sweep retries them together.
-                console.warn("workspace_video_retention_task_conflict", { assetId: asset.id, taskId });
-                continue;
-              }
-              throw error;
-            }
+          if (!taskId) {
+            // Retention applies to workspace-generated shot clips only. Site
+            // content previews and non-workspace uploads stay untouched.
+            console.warn("workspace_video_retention_skipped_non_workspace_asset", { assetId: asset.id, jobId: asset.jobId });
+            skippedIds.push(asset.id);
+            continue;
           }
+          try {
+            await markTaskVersionsExpired({ customerId: asset.customerId, taskId, assetId: asset.id });
+          } catch (error) {
+            if (error instanceof WorkspaceError && error.code === "revision_conflict") {
+              // The customer is editing this task right now; keep the asset
+              // and the clip working, the next sweep retries them together.
+              console.warn("workspace_video_retention_task_conflict", { assetId: asset.id, taskId });
+              skippedIds.push(asset.id);
+              continue;
+            }
+            throw error;
+          }
+        } else {
+          console.warn("workspace_video_retention_skipped_non_workspace_asset", { assetId: asset.id });
+          skippedIds.push(asset.id);
+          continue;
         }
         const removed = await deleteCustomerAssetFileShared(asset.storageKey);
         const updated = await prisma.assetUpload.updateMany({
@@ -145,6 +159,7 @@ export async function purgeExpiredWorkspaceVideoAssets(): Promise<{ purged: numb
           assetId: asset.id, jobId: asset.jobId, fileDeleted: removed.deleted, storageKey: asset.storageKey
         });
       } catch (error) {
+        skippedIds.push(asset.id);
         console.error("workspace_video_retention_asset_failed", {
           assetId: asset.id,
           error: error instanceof Error ? error.message : String(error)
