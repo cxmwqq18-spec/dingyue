@@ -73,6 +73,9 @@ try {
   };
   Module._load = function (request, parent, isMain) {
     if (request === "server-only") return {};
+    if (request === "next/server") return { after: () => undefined };
+    if (request === "@/lib/session") return { publicUrlForRequest: () => "http://127.0.0.1:3002" };
+    if (request === "@/lib/worker") return { resolveWorkerBaseUrls: () => ({ publicBaseUrl: "http://127.0.0.1:3002" }) };
     if (request === "@/lib/aidreamcapes-workspace/auth") return { workspaceAuth: async (_request, siteId, write = false) => {
       if (siteId !== "site_aidreamcapes") return { ok: false, response: { status: 404, payload: { error: "workspace_site_not_found" } } };
       if (write) writeAuthObserved = true;
@@ -83,9 +86,10 @@ try {
     if (request === "@/lib/aidreamcapes-workspace/pipeline") return {
       assertActorVoiceSnapshot() {}, createActorVoiceSnapshot() { return undefined; }, validateTaskInput(_sceneId, input) { return input; },
     };
-    if (request === "@/lib/aidreamcapes-workspace/runner") return { refreshTask: async (task) => task };
+    if (request === "@/lib/aidreamcapes-workspace/runner") return { refreshTask: async (task) => task, continueDirectTask: async (task) => task, directTaskNeedsServerContinuation: () => false };
     if (request === "@/lib/aidreamcapes-workspace/types") return require("./types.js");
     if (request === "@/lib/aidreamcapes-workspace/product-brief-snapshot") return require("./product-brief-snapshot.js");
+    if (request === "@/lib/aidreamcapes-workspace/product-brief") return { previewProductBrief: async () => ({ sourceUrl: "https://shop.example/products/item", fetchedPageUrl: "https://shop.example/products/item?source=preview", draft: { title: null, description: null, detectedImages: [], possiblePrice: null, confirmed: false, reviewRequired: true } }) };
     return originalLoad.call(this, request, parent, isMain);
   };
 

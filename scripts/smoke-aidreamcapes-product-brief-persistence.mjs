@@ -51,6 +51,7 @@ try {
   Module._load = function (request, parent, isMain) {
     if (request === "server-only") return {};
     if (request === "@/lib/prisma") return { prisma: prismaMock };
+    if (request === "@/lib/stores/job-store") return { releaseWorkspaceTaskHoldRelational: () => undefined };
     if (request === "./pipeline") return { createActorVoiceSnapshot: () => undefined };
     return originalLoad.call(this, request, parent, isMain);
   };
