@@ -33,6 +33,13 @@ const partnerBadges: PartnerBadge[] = [
     imageUrl: "https://acidtools.com/assets/images/badge-dark.png",
     imageHeight: 40,
   },
+  {
+    key: "semilaunch",
+    label: "SemiLaunch",
+    href: "https://semilaunch.com",
+    imageUrl: "https://semilaunch.com/assets/badge.png",
+    imageHeight: 40,
+  },
 ];
 
 function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
