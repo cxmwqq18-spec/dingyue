@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronDown, ImageIcon, Monitor, Music, Plus, Ratio, Sparkles, Timer, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowRight, ImageIcon, Monitor, Music, Ratio, Sparkles, Timer, Upload, Video, WandSparkles, X } from "lucide-react";
 import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
@@ -31,10 +31,6 @@ export interface HomeComposerProps {
   onDurationChange: (duration: Duration) => void;
   resolution?: string;
   onResolutionChange?: (resolution: string) => void;
-  products: { previewUrl: string; label?: string }[];
-  onOpenProduct: () => void;
-  onOpenAvatar: () => void;
-  avatarName?: string;
   videoReferenceUrls: string[];
   onVideoReferenceUpload: (file: File) => void;
   onVideoReferenceRemove: (index: number) => void;
@@ -137,7 +133,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, products, onOpenProduct, onOpenAvatar, avatarName, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
@@ -211,14 +207,6 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
       </div>
       <div className={styles.footer}>
         <div className={styles.controls}>
-          {draftMode && <button type="button" className={styles.controlButton} disabled={disabled} onClick={onOpenAvatar}><UserRound size={16} aria-hidden="true" /><span>{avatarName || "Avatar"}</span><ChevronDown size={13} aria-hidden="true" /></button>}
-          {videoMode && <>
-            <button type="button" className={styles.controlButton} title={products[0]?.label ? `Selected product: ${products[0].label}` : "Add or import a product"} disabled={disabled} onClick={onOpenProduct}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              {products[0]?.previewUrl ? <img className={styles.controlThumbnail} src={products[0].previewUrl} alt={products[0].label ? `Product: ${products[0].label}` : "Selected product"} /> : <Plus size={16} aria-hidden="true" />}
-              <span>Product{products.length ? ` · ${products.length} added` : ""}</span><ChevronDown size={13} aria-hidden="true" />
-            </button>
-          </>}
         {imageMode ? <>
           <div className={styles.setting}><ImageIcon size={15} aria-hidden="true" /><span>Style</span><WorkspaceSelect
             ariaLabel="Image style"

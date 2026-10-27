@@ -195,7 +195,8 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
       "Spoken subtitles require verified timing from the generated audio; they are never timed from an estimated script.",
       ...(available ? [] : ["The final-video prices and per-clip charges need to be confirmed before paid generation can start."])],
     // 生图参考图上限：取已连接图像通道里最大的 maxImagesPerRequest（服务端按所选通道强校验）。
-    imageReferenceMax: Math.min(8, Math.max(1, ...imageProviders.filter((provider) => provider.enabled && provider.apiKey && provider.aiUrl).map((provider) => provider.maxImagesPerRequest), 4)) };
+    // 上限 12 只防手滑；展示值跟随后台通道配置（如 gpt-image-2 的 10）。
+    imageReferenceMax: Math.min(12, Math.max(1, ...imageProviders.filter((provider) => provider.enabled && provider.apiKey && provider.aiUrl).map((provider) => provider.maxImagesPerRequest), 4)) };
 }
 function parseJsonObject(raw: string): Record<string, unknown> {
   const value = raw.replace(/^\s*```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();

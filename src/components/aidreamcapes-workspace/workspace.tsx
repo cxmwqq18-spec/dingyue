@@ -250,6 +250,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [avatarModelId, setAvatarModelId] = useState("");
   const [avatarAspect, setAvatarAspect] = useState<TaskInput["options"]["aspect"]>("9:16");
   const [avatarDuration, setAvatarDuration] = useState<TaskInput["options"]["duration"]>(15);
+  const [avatarResolution, setAvatarResolution] = useState("");
   const [avatarLanguage, setAvatarLanguage] = useState<TaskInput["options"]["language"]>("en");
   const [creatingActor, setCreatingActor] = useState(false);
   const [actorDraft, setActorDraft] = useState({ name: "", gender: "female" as "female" | "male", ageRange: "25-30", imageUrl: "", languages: ["en"] as TaskInput["options"]["language"][] });
@@ -304,6 +305,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const avatarLanguageOptions = catalog?.languages.filter((language) => (avatarSelection?.voice.languages ?? [avatarSelection?.voice.language]).includes(language.value)) ?? [];
   const selectedAvatarAspect = avatarAspects.includes(avatarAspect) ? avatarAspect : avatarAspects[0] ?? "9:16";
   const selectedAvatarDuration = avatarDurations.includes(avatarDuration) ? avatarDuration : avatarDurations[0] ?? 15;
+  const avatarResolutions = avatarModel?.resolutions ?? [];
+  const selectedAvatarResolution = avatarResolutions.includes(avatarResolution) ? avatarResolution : avatarResolutions[0] ?? "";
   const selectedAvatarLanguage = avatarLanguageOptions.some((item) => item.value === avatarLanguage) ? avatarLanguage : avatarLanguageOptions[0]?.value ?? avatarSelection?.voice.language ?? "en";
   const operationActive = task?.operation?.state === "pending" || task?.operation?.state === "run";
   const clipsProcessing = task?.storyboard?.shots.some((shot) => shot.genStatus === "run" || shot.compositeStatus === "run");
@@ -956,6 +959,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     input.fields.sellingPoints = avatarScript.trim();
     input.options.aspect = selectedAvatarAspect as TaskInput["options"]["aspect"];
     input.options.duration = selectedAvatarDuration as TaskInput["options"]["duration"];
+    if (selectedAvatarResolution) input.options.resolution = selectedAvatarResolution;
     input.options.language = selectedAvatarLanguage;
     input.options.subtitle = Boolean(catalog?.subtitles?.available);
     if (avatarModel) input.modelId = avatarModel.id;
@@ -1395,7 +1399,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
-            products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
             onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
             videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
@@ -1423,7 +1426,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
-            products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
             onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
             videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
@@ -1444,7 +1446,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
-            products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
             onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
             videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}
@@ -1617,10 +1618,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                 <label className={styles.creatorSetting}><span>Video model</span><select className={styles.input} value={avatarModel?.id ?? ""} disabled={working || !avatarModels.length} onChange={(event) => setAvatarModelId(event.target.value)}>{!avatarModels.length && <option value="">Unavailable</option>}{avatarModels.map((model) => <option key={model.id} value={model.id}>{displayModel(model.model)}</option>)}</select></label>
                 <label className={styles.creatorSetting}><span>Format</span><select className={styles.input} value={selectedAvatarAspect} disabled={working || !avatarAspects.length} onChange={(event) => setAvatarAspect(event.target.value as TaskInput["options"]["aspect"])}>{avatarAspects.map((aspect) => <option key={aspect}>{aspect}</option>)}</select></label>
                 <label className={styles.creatorSetting}><span>Duration</span><select className={styles.input} value={selectedAvatarDuration} disabled={working || !avatarDurations.length} onChange={(event) => setAvatarDuration(Number(event.target.value) as TaskInput["options"]["duration"])}>{avatarDurations.map((duration) => <option key={duration} value={duration}>{duration} seconds</option>)}</select></label>
+                <label className={styles.creatorSetting}><span>Resolution</span><select className={styles.input} value={selectedAvatarResolution} disabled={working || !avatarResolutions.length} onChange={(event) => setAvatarResolution(event.target.value)}>{!avatarResolutions.length ? <option value="">Unavailable</option> : avatarResolutions.map((resolution) => <option key={resolution} value={resolution}>{resolution}</option>)}</select></label>
                 {avatarSelection && <label className={styles.creatorSetting}><span>Language</span><select className={styles.input} value={selectedAvatarLanguage} disabled={working || !avatarLanguageOptions.length} onChange={(event) => setAvatarLanguage(event.target.value as TaskInput["options"]["language"])}>{avatarLanguageOptions.map((language) => <option key={language.value} value={language.value}>{language.label}</option>)}</select></label>}
               </div>
               <div className={styles.creatorActions}>
-                <span>{avatarModel ? `${avatarModel.durations.join(" / ")}s · ${avatarModel.aspects.join(" / ")}` : "Save a draft now; generation depends on model availability"}</span>
+                <span>{avatarModel ? `${avatarModel.durations.join(" / ")}s · ${avatarModel.aspects.join(" / ")} · ${(avatarModel.resolutions[0] ?? "").toUpperCase() || "720p"}` : "Save a draft now; generation depends on model availability"}</span>
                 {customer ? <button className={`${styles.button} ${styles.primary}`} disabled={working || !avatarSelection || !avatarProductImages.length || !avatarScript.trim() || avatarModelUnavailable || Boolean(avatarModel && (!avatarAspects.length || !avatarDurations.length))} onClick={() => void createAvatarDraft()}><span>{busy ? "Saving draft…" : "Continue to editor"}</span>{busy ? <Loader2 size={16} className={styles.spin} /> : <ArrowRight size={16} />}</button> : <a className={`${styles.button} ${styles.primary}`} href={loginHref}><span>Log in to continue</span><ArrowRight size={16} /></a>}
               </div>
               <p className={styles.creatorSaveNote}>Continuing saves a draft. Generation and any credit use happen later from the video editor.</p>
@@ -1638,7 +1640,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
-            products={composerProducts} onOpenProduct={() => setModal("product")} onOpenAvatar={() => setModal("actors")}
             videoReferenceUrls={videoReferenceUrls} onVideoReferenceUpload={(file) => void uploadVideoReference(file)}
             onVideoReferenceMove={(from, to) => setVideoReferenceUrls((current) => moveItem(current, from, to))}
             videoReferenceFiles={videoReferenceFiles} onVideoFileUpload={(file) => void uploadReferenceFile(file, "video")} onVideoFileRemove={(index) => setVideoReferenceFiles((current) => current.filter((_, i) => i !== index))} onVideoFileMove={(from, to) => setVideoReferenceFiles((current) => moveItem(current, from, to))}

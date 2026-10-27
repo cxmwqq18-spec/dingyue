@@ -25,6 +25,8 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
   // 清晰度档位来自平台后台维护的 videoResolutions；未配置的旧通道回落到 720p 单档。
   const configuredResolutions = provider.videoResolutions == null ? ["720p"] : provider.videoResolutions;
   const resolutions = [...new Set(configuredResolutions.filter((value) => /^\d{3,4}p$/i.test(value)).map((value) => value.toLowerCase()))];
+  // 平台后台用 maxAudioInputs 维护"是否接受参考音频"；0 表示不接受。
+  const audioReferenceMax = Math.max(0, Math.min(8, provider.maxAudioInputs ?? 0));
   return {
     id: provider.id,
     label: provider.label,
@@ -37,9 +39,9 @@ export function toWorkspaceModelCapability(provider: ProviderVideoCapabilitySour
     // 参考素材上限直接来自平台后台维护值；0 表示该通道不接受这类参考。
     referenceImageMax: Math.max(0, Math.min(12, provider.maxImagesPerRequest ?? 4)),
     videoReferenceMax: Math.max(0, Math.min(8, provider.maxVideoInputs ?? 0)),
-    audioReferenceMax: Math.max(0, Math.min(8, provider.maxAudioInputs ?? 0)),
+    audioReferenceMax,
     nativeSpeech: provider.videoNativeSpeech ?? legacyNativeSpeech,
-    audioReference: false,
+    audioReference: audioReferenceMax > 0,
     firstFrame: false,
     lastFrame: false,
     multiReference: provider.maxImagesPerRequest >= 2,
