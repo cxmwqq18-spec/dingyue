@@ -668,7 +668,17 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     // Keep the editor refs until the queued save succeeds. The module can render
     // immediately while failed edits remain recoverable in the original editor.
     if (next !== "agent") { setTask(null); updateUrl(null, "input", next); }
-    else { setTask(currentRef.current); updateUrl(currentRef.current, step, next); }
+    else {
+      // Menu navigation to Text to Video must always land on the initial
+      // compact composer. The scene-guided stepped form is only for explicit
+      // scene entry (template picker, quick start, product import, deep links).
+      if (!currentRef.current) {
+        setSelectedSceneId("");
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("scene")) { url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }
+      }
+      setTask(currentRef.current); updateUrl(currentRef.current, step, next);
+    }
     const save = persist().then(() => {
       if (navigation === navigationSerial.current && next !== "agent") {
         currentRef.current = null; savedRef.current = null;
