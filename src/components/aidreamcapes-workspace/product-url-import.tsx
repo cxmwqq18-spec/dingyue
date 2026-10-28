@@ -154,10 +154,10 @@ function priceText(price: { amount: string; currency?: string }): string {
 
 function loginHrefForProduct(loginHref: string, sourceUrl: string): string {
   const login = new URL(loginHref, "https://workspace.invalid");
-  const next = new URL(login.searchParams.get("next") || "/app/create?view=product", "https://workspace.invalid");
+  const next = new URL(login.searchParams.get("next") || "/app/create?view=videoLink", "https://workspace.invalid");
   if (next.pathname.endsWith("/app")) next.pathname = `${next.pathname}/create`;
   for (const key of ["source", "preset", "task", "scene", "template", "tool_id", "prompt"]) next.searchParams.delete(key);
-  next.searchParams.set("view", "product");
+  next.searchParams.set("view", "videoLink");
   next.searchParams.set("tool", "url-to-video");
   try {
     const raw = sourceUrl.trim();

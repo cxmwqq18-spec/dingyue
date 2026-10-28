@@ -41,7 +41,7 @@ const MusicCatalogPicker = dynamic(() => import("./music-catalog-picker").then((
 import { WORKSPACE_MODULES, isWorkspaceView, workspaceViewHref, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { modelSupportsWorkspaceDuration } from "@/lib/aidreamcapes-workspace/capabilities";
-import { WorkspaceTools, ProductVideoPage, BatchDraftPage, workspaceModuleIcons, type ProductImportRecord, type ProductInlineRun } from "./module-pages";
+import { WorkspaceTools, ProductVideoPage, UrlToVideoPage, BatchDraftPage, workspaceModuleIcons, type ProductImportRecord, type ProductInlineRun } from "./module-pages";
 import { useImageDraft } from "./use-image-draft";
 export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 
@@ -767,7 +767,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (preset?.duration) setComposerDuration(preset.duration);
     if (preset?.aspect) setComposerAspect(preset.aspect);
     if (preset?.modelId) setComposerModel(preset.modelId);
-    setComposerTitle(preset?.title ?? activePreset?.title ?? (view === "product" && composerTitle ? composerTitle : selected.name));
+    setComposerTitle(preset?.title ?? activePreset?.title ?? ((view === "product" || view === "videoLink") && composerTitle ? composerTitle : selected.name));
     setMessage("");
     setTask(null);
     setStep("input");
@@ -1321,7 +1321,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setImageInput((current) => ({ ...current, assetUrls: [...current.assetUrls, asset.previewUrl].slice(0, 4) }));
     } else {
       setComposerProducts((items) => [...items, brief ? { ...asset, confirmedBrief: brief } : asset].slice(0, 4));
-      if (selectedSceneId || view === "product") setDraftReferenceUrls((items) => items.includes(asset.previewUrl) ? items : [...items, asset.previewUrl].slice(0, 4));
+      if (selectedSceneId || view === "product" || view === "videoLink") setDraftReferenceUrls((items) => items.includes(asset.previewUrl) ? items : [...items, asset.previewUrl].slice(0, 4));
       if (title) setComposerTitle(title.slice(0, 120));
     }
     setModal(null);
@@ -1560,6 +1560,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
         {view === "inspirations" && <EmbeddedInspirations initialPage={initialInspirations} endpoint={`${api}/inspirations`} basePath={basePath} />}
+        {view === "videoLink" && <UrlToVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
         {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} disabled={working} imports={productImports} importsLoading={productImportsLoading} onBackfill={backfillProductImport} onDeleteImport={(importId) => void deleteProductImport(importId)} createSlot={productCreateScene ? sceneCreateForm(productCreateScene, "product") : null} />}
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>

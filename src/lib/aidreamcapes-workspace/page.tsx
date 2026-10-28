@@ -149,7 +149,7 @@ export function aidreamcapesWorkspaceEntry(query: Record<string, string | string
     "unboxing-videos": "process_demo",
   };
   const sceneId = requestedScene ?? (createIntent?.kind === "video" ? sceneByTool[canonicalWorkspaceTool(createIntent.tool)] : undefined);
-  const intentView: WorkspaceView | undefined = createIntent?.kind === "video" ? createIntent.tool === "url-to-video" ? "product" : "video" : undefined;
+  const intentView: WorkspaceView | undefined = createIntent?.kind === "video" ? createIntent.tool === "url-to-video" ? "videoLink" : "video" : undefined;
   const requestedView = isWorkspaceView(queryView)
     ? queryView === "home" && (handoff.prompt || tool || handoff.scene) ? "agent" : queryView
     : undefined;

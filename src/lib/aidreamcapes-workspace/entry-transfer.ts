@@ -39,7 +39,7 @@ export function workspaceEntryTarget(href: string, mediaLink = false): { href: s
     if (pathname !== "/app/create" && !target) return { href };
     if (target) Object.assign(query, staticCreateQuery(target));
     const handoff = workspaceHandoffFromSearchParams(new URLSearchParams(query));
-    view = isWorkspaceView(query.view) ? query.view : query.tool_id === "image_generator" || workspaceToolGroup(query.tool) === "image" ? "images" : query.tool === "url-to-video" ? "product" : query.tool ? "video" : "agent";
+    view = isWorkspaceView(query.view) ? query.view : query.tool_id === "image_generator" || workspaceToolGroup(query.tool) === "image" ? "images" : query.tool === "url-to-video" ? "videoLink" : query.tool ? "video" : "agent";
     if (view === "home" && (handoff.prompt || query.tool || query.templates)) view = query.templates ? "video" : "agent";
   }
   if (!view) return { href };

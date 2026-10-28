@@ -25,7 +25,9 @@ const DEMO_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,80}$/;
 
 // Individual tools use /app/create/<tool>. Group membership validates old
 // prefixed links before redirecting them to the short canonical path.
-const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "url-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "unboxing-videos"]);
+// "url-to-video" is not listed: it is the fixed segment of the URL to Video
+// module view, so /app/create/url-to-video must resolve as a view, not a tool.
+const VIDEO_GROUP_TOOLS = new Set(["image-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "unboxing-videos"]);
 const IMAGE_GROUP_TOOLS = new Set(["custom", "photo-hub", "white-background", "lifestyle-photos", "model-photos", "change-background", "social-ad-photos"]);
 
 export function workspaceToolGroup(tool: string): "video" | "image" | undefined {
@@ -169,9 +171,10 @@ export function parseStaticCreateSegments(segments: string[]): StaticCreateTarge
   if (first === "scene" || first === "jobs") return undefined;
   const groupView = groupViewForSegment(first);
   if (groupView && segments.length >= 2) {
-    // The text-to-video storyboard is a module view, not a tool: it lives at
-    // ai-video-generation/text-to-video.
+    // The text-to-video storyboard and the URL to Video importer are module
+    // views, not tools: they live under ai-video-generation/.
     if (second === "text-to-video" && segments.length === 2 && groupView === "video") return { kind: "view", view: "agent" };
+    if (second === "url-to-video" && segments.length === 2 && groupView === "video") return { kind: "view", view: "videoLink" };
     // Tool routes filed under their public directory: the tool must belong to it.
     if (!TOOL_SEGMENT_RE.test(second) || workspaceToolGroup(second) !== (groupView === "images" ? "image" : "video")) return undefined;
     if (segments.length === 2) return { kind: "tool", tool: canonicalWorkspaceTool(second) };
@@ -316,7 +319,7 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
     const view = params.get("view");
     const targetView: WorkspaceView = params.get("tool_id") === "image_generator" || view === "images" ? "images"
       : view === "home" || view === "agent" || !params.get("tool") ? "agent"
-      : params.get("tool") === "url-to-video" ? "product" : "video";
+      : params.get("tool") === "url-to-video" ? "videoLink" : "video";
     const path = staticViewHref("", targetView);
     const extras = new URLSearchParams(params);
     extras.delete("view");
@@ -340,6 +343,7 @@ export function legacyCreateHrefToStatic(href: string): string | undefined {
     if (view && !isWorkspaceView(view)) return undefined;
     const target = staticToolHref("", tool ?? "", template ?? undefined)
       ?? (tool === "text-to-video" && !template ? `/app/create/${WORKSPACE_VIEW_SEGMENTS.agent}` : undefined)
+      ?? (tool === "url-to-video" && !template ? staticViewHref("", "videoLink") : undefined)
       ?? (toolId && !tool ? `/app/create/${WORKSPACE_VIEW_SEGMENTS.images}` : undefined);
     if (!target) return undefined;
     // Format preselection (size/length) stays in the query; the path carries
