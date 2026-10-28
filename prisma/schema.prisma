@@ -213,6 +213,8 @@ model Site {
   aidreamcapesProductImports  AidreamcapesProductImport[]
   aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
   aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
+  aiChatConversations         AiChatConversation[]
+  aiChatMessages              AiChatMessage[]
   aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
   aidreamcapesWebhookDeliveries AidreamcapesWebhookDelivery[]
   aidreamcapesPublishingJobs AidreamcapesPublishingJob[]
@@ -366,6 +368,8 @@ model Customer {
   aidreamcapesProductImports AidreamcapesProductImport[]
   aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
   aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
+  aiChatConversations AiChatConversation[]
+  aiChatMessages AiChatMessage[]
   aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
   aidreamcapesWebhookDeliveries AidreamcapesWebhookDelivery[]
   aidreamcapesPublishingJobs AidreamcapesPublishingJob[]
@@ -527,6 +531,39 @@ model AidreamcapesWorkspaceActor {
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([siteId, customerId, createdAt(sort: Desc)], map: "AidreamcapesWorkspaceActor_owner")
+}
+
+model AiChatConversation {
+  id         String   @id
+  siteId     String
+  customerId String
+  title      String
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @db.Timestamptz(6) @updatedAt
+  site       Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  messages   AiChatMessage[]
+
+  @@index([siteId, customerId, updatedAt(sort: Desc)], map: "AiChatConversation_owner")
+}
+
+model AiChatMessage {
+  id             String   @id
+  conversationId String
+  siteId         String
+  customerId     String
+  /// user | assistant
+  role           String
+  content        String
+  /// Audit: which gateway provider produced an assistant message.
+  providerId     String?
+  createdAt      DateTime @default(now()) @db.Timestamptz(6)
+  conversation   AiChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  site           Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt], map: "AiChatMessage_thread")
+  @@index([siteId, customerId], map: "AiChatMessage_owner")
 }
 
 model AidreamcapesDeveloperApiKey {

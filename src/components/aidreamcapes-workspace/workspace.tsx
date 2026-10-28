@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, CheckCircle2, Clapperboard, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Check, CheckCircle2, Clapperboard, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
@@ -33,6 +33,7 @@ const MusicTrackPicker = dynamic(() => import("./music-track-picker").then(modul
 const TwinWorkbench = dynamic(() => import("./twin-workbench").then((module) => module.TwinWorkbench), { loading: () => <p role="status">Loading personal profiles…</p> });
 const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((module) => module.AdCloneWorkbench), { loading: () => <p role="status">Loading ad references…</p> });
 const AnalyticsWorkbench = dynamic(() => import("./analytics-workbench").then((module) => module.AnalyticsWorkbench), { loading: () => <p role="status">Loading performance reports…</p> });
+const AgentChatWorkbench = dynamic(() => import("./agent-chat-workbench").then((module) => module.AgentChatWorkbench), { loading: () => <p role="status">Loading AI assistant…</p> });
 const TeamBrandWorkbench = dynamic(() => import("./team-brand-workbench").then((module) => module.TeamBrandWorkbench), { loading: () => <p role="status">Loading teams and brands…</p> });
 const DeveloperWorkbench = dynamic(() => import("./developer-workbench").then((module) => module.DeveloperWorkbench), { loading: () => <p role="status">Loading developer settings…</p> });
 const VideoPostEditor = dynamic(() => import("./video-post-editor").then((module) => module.VideoPostEditor), { loading: () => <p role="status">Loading video editor…</p> });
@@ -1409,7 +1410,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); setBusy(false); }
   }
 
-  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo };
+  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo, chat: MessageSquare };
   const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group).map((item) => {
     const Icon = moduleIcons[item.id as keyof typeof moduleIcons];
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
@@ -1665,6 +1666,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {view === "agent" && step === "delivery" && !directTask && customer && task?.video?.status === "done" && <VideoPostEditor siteId={siteId} task={task} csrfToken={csrfToken} disabled={editingDisabled || dirty.current} onTaskUpdated={(next) => { if (currentRef.current?.taskId === next.taskId) acceptTask(next); }} />}
 
         {view === "analytics" && (customer ? <AnalyticsWorkbench siteId={siteId} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Performance</h1><p>Log in to import and compare your advertising results.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "analytics"))}`}>Log in</a></section>)}
+        {view === "chat" && (customer ? <AgentChatWorkbench siteId={siteId} csrfToken={csrfToken} /> : <section className={styles.panel}><h1>AI Assistant</h1><p>Log in to chat with your AI assistant.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "chat"))}`}>Log in</a></section>)}
 
         {view === "teams" && <TeamBrandWorkbench siteId={siteId} customerId={customer?.id ?? ""} csrfToken={csrfToken} disabled={working} />}
 

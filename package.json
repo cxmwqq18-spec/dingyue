@@ -252,6 +252,7 @@
     "smoke:playwright-seasonal-occasion-blog": "BLOG_PRIORITY_SCOPE=seasonal-occasion node scripts/playwright-priority-blog-check.mjs",
     "smoke:playwright-mydreamshoots-audit-closure": "node scripts/playwright-mydreamshoots-audit-closure-check.mjs",
     "smoke:aidreamcapes-backend": "node scripts/smoke-aidreamcapes-backend-isolation.mjs",
+    "smoke:aidreamcapes-agent-chat": "node scripts/smoke-aidreamcapes-agent-chat.mjs",
     "smoke:site-admin-db-health": "node scripts/smoke-site-admin-db-health.mjs",
     "smoke:site-admin-nav-instant": "node scripts/smoke-site-admin-nav-instant.mjs",
     "smoke:site-admin-module-latency": "node scripts/smoke-site-admin-module-latency.mjs",

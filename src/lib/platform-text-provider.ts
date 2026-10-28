@@ -93,3 +93,64 @@ export async function generatePlatformText(params: PlatformTextGenerationParams)
   });
   return { text, providerId: provider.id, providerLabel: provider.label };
 }
+
+export type PlatformTextStreamEvent =
+  | { type: "delta"; text: string }
+  | { type: "done"; providerId: string; providerLabel: string };
+
+/**
+ * Streams an OpenAI-compatible chat completion (SSE) through the given text
+ * provider. Yields delta events as they arrive; the caller owns aggregation
+ * and persistence. Aborts cleanly when the caller's signal aborts.
+ */
+export async function* streamPlatformTextProvider(params: {
+  provider: PlatformAiProvider;
+  messages: PlatformTextMessage[];
+  temperature: number;
+  signal?: AbortSignal;
+}): AsyncGenerator<PlatformTextStreamEvent> {
+  const response = await fetch(platformTextChatCompletionsUrl(params.provider.aiUrl), {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${params.provider.apiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: params.provider.modelType,
+      temperature: params.temperature,
+      stream: true,
+      messages: params.messages
+    }),
+    cache: "no-store",
+    signal: params.signal
+  });
+  if (!response.ok || !response.body) throw new Error(`text_provider_http_${response.status}`);
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  while (true) {
+    let chunk: ReadableStreamReadResult<Uint8Array>;
+    try {
+      chunk = await reader.read();
+    } catch (error) {
+      if ((error as Error)?.name === "AbortError") return;
+      throw error;
+    }
+    if (chunk.done) break;
+    buffer += decoder.decode(chunk.value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith("data:")) continue;
+      const payload = trimmed.slice(5).trim();
+      if (!payload || payload === "[DONE]") continue;
+      try {
+        const parsed = JSON.parse(payload) as { choices?: Array<{ delta?: { content?: unknown } }> };
+        const delta = parsed.choices?.[0]?.delta?.content;
+        if (typeof delta === "string" && delta) yield { type: "delta", text: delta };
+      } catch { /* Ignore malformed keep-alive fragments. */ }
+    }
+  }
+  yield { type: "done", providerId: params.provider.id, providerLabel: params.provider.label };
+}
