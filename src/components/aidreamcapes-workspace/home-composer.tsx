@@ -101,7 +101,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove
       if (fileKind(file) === dropKind) onUpload(file);
     }
   }, disabled || !canUpload);
-  return <div className={`${styles.references} ${kind === "image" ? styles.imageReferences : ""}`}>
+  return <div className={styles.references}>
     <div className={`${styles.referenceStrip} ${dropActive ? styles.stripActive : ""}`} {...dropProps}>
       <div className={styles.referenceUploadColumn}>
         {urls.length < max ? <label className={`${styles.upload} ${!canUpload || disabled ? styles.uploadDisabled : ""}`}>
