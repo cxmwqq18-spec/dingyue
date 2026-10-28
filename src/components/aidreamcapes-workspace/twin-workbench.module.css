@@ -33,14 +33,15 @@
 .audioAsset { display: flex; flex-direction: column; justify-content: center; gap: 5px; font: inherit; font-size: 11px; }
 .audioAsset > svg { color: #795ac0; margin-bottom: 2px; }
 .audioAsset > small { color: #857b91; font-size: 9px; letter-spacing: .5px; }
-.mediaUpload { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 5px; border-style: dashed; border-color: #bba9eb; background: #faf8ff; color: #5d3eae; font-size: 11px; }
+.mediaUpload { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 5px; border-style: dashed; border-color: #bbc0cf; background: var(--surface, #fff); color: var(--muted, #73777d); font-size: 11px; }
 .mediaUpload strong { font-size: 11px; }
-.mediaUpload small { color: #786c8e; font-size: 9px; }
-.mediaUploadIcon { display: grid; place-items: center; width: 31px; height: 31px; margin-bottom: 1px; border-radius: 8px; background: #eee8ff; }
+.mediaUpload small { color: var(--muted, #73777d); font-size: 9px; }
+.mediaUploadIcon { display: grid; place-items: center; width: 31px; height: 31px; margin-bottom: 1px; border-radius: 8px; background: var(--canvas, #f4f4f6); }
 .mediaInput { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); border: 0; }
 .mediaUpload:focus-within { outline: 3px solid #a38add; outline-offset: 3px; }
-.mediaAsset:hover:not(:disabled), .audioAsset:hover:not(:disabled), .mediaUpload:hover { border-color: #9b85d3; background-color: #faf8ff; }
-.upload { display: flex; flex-direction: column; gap: 9px; border: 1px dashed #baaaeb; background: #faf8ff; padding: 14px; border-radius: 8px; margin-bottom: 18px; color: #5836aa; font-size: 12px; }
+.mediaAsset:hover:not(:disabled), .audioAsset:hover:not(:disabled) { border-color: #9b85d3; background-color: #faf8ff; }
+.mediaUpload:hover { border-color: #8f95a3; }
+.upload { display: flex; flex-direction: column; gap: 9px; border: 1px dashed #bbc0cf; background: var(--surface, #fff); padding: 14px; border-radius: 8px; margin-bottom: 18px; color: var(--muted, #73777d); font-size: 12px; }
 .upload input { width: 100%; min-width: 0; font-size: 11px; }
 .preview { display: flex; gap: 14px; align-items: center; border-top: 1px solid #eeeaf3; padding-top: 18px; margin: 16px 0; }
 .preview img, .cardHead img { object-fit: cover; border-radius: 9px; background: #f0ecf8; }

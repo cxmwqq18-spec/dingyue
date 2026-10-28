@@ -138,7 +138,7 @@ textarea.input { resize: vertical; min-height: 100px; }
 .draftReferenceColumn { display: flex; width: 76px; flex: 0 0 76px; flex-direction: column; align-items: center; gap: 5px; }
 .draftReferenceCount { width: 100%; color: var(--muted); font-size: 10px; line-height: 1.25; text-align: center; white-space: nowrap; }
 .draftPhotoUpload { width: 76px; min-width: 76px; min-height: 76px; padding: 8px; font-size: 10px; }
-.draftPhotoLimit { border-style: solid; background: color-mix(in srgb, var(--purple, #6035ff) 4%, var(--surface)); cursor: default; }
+.draftPhotoLimit { border-style: solid; background: var(--canvas, #f4f4f6); cursor: default; }
 .draftPhotoSlot { width: 76px; }
 .draftPhotoSlot img { width: 76px; height: 76px; object-fit: cover; }
 .imageSlot { width: 106px; position: relative; }
@@ -147,7 +147,7 @@ textarea.input { resize: vertical; min-height: 100px; }
 .removeImage { position: absolute; z-index: 2; right: 4px; top: 4px; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #666; border: 1px solid #ddd; padding: 0; cursor: pointer; pointer-events: auto; }
 .removeImage:disabled { cursor: wait; opacity: .55; }
 .imageSlot p { color: var(--muted); margin-top: 4px; font-size: 11px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-.upload { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #c6b8eb; border-radius: 9px; padding: 12px; min-height: 106px; min-width: 106px; background: #faf8ff; color: #7154aa; cursor: pointer; font-size: 12px; }
+.upload { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #bbc0cf; border-radius: 9px; padding: 12px; min-height: 106px; min-width: 106px; background: var(--surface, #fff); color: var(--muted, #73777d); cursor: pointer; font-size: 12px; }
 .upload input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .footerActions { display: flex; justify-content: flex-end; gap: 10px; margin: 22px 0; }
 .taskGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -416,7 +416,7 @@ textarea.input { resize: vertical; min-height: 100px; }
 .creatorProductImage { position: relative; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: var(--canvas); }
 .creatorProductImage img { width: 100%; height: 100%; object-fit: cover; }
 .creatorProductImage .removeImage { right: 5px; top: 5px; }
-.creatorUpload { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; aspect-ratio: 1; min-height: 0; padding: 6px; border: 1px dashed #c5b8e9; border-radius: 9px; color: #725cae; background: #faf8ff; text-align: center; cursor: pointer; }
+.creatorUpload { position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; aspect-ratio: 1; min-height: 0; padding: 6px; border: 1px dashed #bbc0cf; border-radius: 9px; color: var(--muted, #73777d); background: var(--surface, #fff); text-align: center; cursor: pointer; }
 .creatorUpload strong { color: var(--ink); font-size: 11px; }
 .creatorUpload span { color: var(--muted); font-size: 9px; }
 .creatorUpload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }

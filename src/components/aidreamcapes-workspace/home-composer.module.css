@@ -40,8 +40,8 @@
 .audioName span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .audioBody audio { width: 100%; height: 26px; }
 .imageReferences .thumbnail, .imageReferences .upload { width: 66px; height: 66px; }
-.imageReferences .upload { gap: 4px; border-color: #d5c9f2; background: color-mix(in srgb, var(--composer-accent) 4%, var(--surface, #fff)); color: var(--composer-accent); font-size: 10px; font-weight: 600; }
-.uploadFull { border-style: solid; background: color-mix(in srgb, var(--composer-accent) 4%, var(--surface, #fff)); color: var(--composer-accent); cursor: default; }
+.imageReferences .upload { gap: 4px; font-size: 10px; }
+.uploadFull { border-style: solid; background: var(--canvas, #f4f4f6); cursor: default; }
 .remove { position: absolute; top: 5px; right: 5px; width: 23px; height: 23px; border: 1px solid #ffffff90; border-radius: 50%; color: #2d3340; background: #ffffffed; display: grid; place-items: center; padding: 0; box-shadow: 0 1px 5px #0002; cursor: pointer; }
 .remove:disabled { cursor: wait; opacity: .55; }
 .upload { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 10px; background: var(--surface, #fff); border: 1px dashed #bbc0cf; cursor: pointer; color: var(--muted, #73777d); }

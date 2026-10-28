@@ -125,10 +125,10 @@
   gap: 8px;
   margin-top: 13px;
   padding: 0 12px;
-  border: 1px dashed #c8c2da;
+  border: 1px dashed #bbc0cf;
   border-radius: 8px;
-  color: #5639c4;
-  background: #faf9ff;
+  color: var(--muted, #73777d);
+  background: var(--surface, #fff);
   font-size: 13px !important;
   font-weight: 650;
   cursor: pointer;
