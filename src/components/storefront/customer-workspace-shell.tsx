@@ -3281,7 +3281,7 @@ export function CustomerWorkspaceShell({
       ...(intent.length ? { durationSeconds: intent.length } : {}),
       ...(intent.size ? { aspectRatio: intent.size } : {}),
       restoreMessage: intent.tool === "url-to-video"
-        ? "Paste a product link on the URL to Video page, or upload your product photo here."
+        ? "Upload your product photo here, or open Product Links to paste a product page link."
         : "Template applied. Add your product photo, check the description, then generate."
     };
     if (!intent.productUrl) {

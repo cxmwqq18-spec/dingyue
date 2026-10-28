@@ -32,6 +32,7 @@ Module._load = function (request, parent, isMain) {
   if (request === "react/jsx-runtime") return jsxStub;
   if (request === "next/image") return "img";
   if (request === "@/lib/client-csrf") return { customerJsonHeaders: () => ({ "content-type": "application/json", "x-csrf-token": "cookie-token" }) };
+  if (request.endsWith("shopify-badge")) return { ShopifyBadge: () => null };
   if (request.endsWith("product-url-import.module.css")) return new Proxy({}, { get: (_target, key) => String(key) });
   return originalLoad.call(this, request, parent, isMain);
 };
@@ -156,7 +157,9 @@ try {
   const confirmed = mount((...args) => imported.push(args));
   setFetch((url, _init, index) => index === 0
     ? response(200, { ok: true, preview })
-    : response(200, { ok: true, asset, product: { title: "Imported Item" } }));
+    : index === 1
+      ? response(200, { ok: true, asset, product: { title: "Imported Item" } })
+      : response(201, { ok: true, import: { id: "import-1", assetId: asset.id, previewUrl: asset.previewUrl, sourceUrl: preview.sourceUrl, title: "Imported Item", brief: {}, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } }));
   fields = formAndInput(confirmed);
   fields.input.props.onChange({ currentTarget: { value: preview.sourceUrl } });
   fields = formAndInput(confirmed);
@@ -166,11 +169,15 @@ try {
   previewTree = confirmed.render();
   const confirm = findButton(previewTree, "Confirm product photo");
   await confirm.props.onClick();
-  assert.equal(calls.length, 2);
+  assert.equal(calls.length, 3);
   assert.match(calls[0].url, /\/aivideosugc\/tasks\/product-brief$/);
   assert.match(calls[1].url, /\/customers\/customer-1\/assets\/import-url$/);
   assert.equal(JSON.parse(calls[1].init.body).url, preview.sourceUrl);
   assert.equal(calls[1].init.headers["x-csrf-token"], "session-token");
+  assert.match(calls[2].url, /\/customers\/customer-1\/product-imports$/);
+  assert.equal(calls[2].init.method, "POST");
+  assert.equal(JSON.parse(calls[2].init.body).assetId, asset.id);
+  assert.equal(JSON.parse(calls[2].init.body).brief.selectionConfirmed, true);
   assert.equal(imported.length, 1);
   assert.equal(imported[0][0].id, asset.id);
   assert.equal(imported[0][1], "Sample Item");

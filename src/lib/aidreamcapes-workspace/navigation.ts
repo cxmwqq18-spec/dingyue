@@ -13,7 +13,7 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
   { id: "agent", title: "Text to Video", summary: "Turn a written idea and product details into an editable video storyboard.", group: "create" },
   { id: "video", title: "AI Video", summary: "Start a video from your own description and reference photos.", group: "create" },
   { id: "images", title: "AI Image", summary: "Create product images from your description and reference photos.", group: "create" },
-  { id: "product", title: "URL to Video", summary: "Review a product page and use its confirmed details in a video draft.", group: "create" },
+  { id: "product", title: "Product Links", summary: "Import product pages into your product library, then create videos without leaving the page.", group: "create" },
   { id: "actors", title: "AI Avatar", summary: "Browse presenters, preview voices or add your own portrait.", group: "create" },
   { id: "inspirations", title: "Inspirations", summary: "Browse video and photo ideas, then use one in your own project.", group: "explore" },
   { id: "twin", title: "AI Twin", summary: "Save a presenter profile and try the simulated workflow. Voice training is not connected.", group: "explore", status: "simulation" },

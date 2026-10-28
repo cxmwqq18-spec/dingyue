@@ -9,7 +9,7 @@ import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import styles from "./workspace.module.css";
-import type { ConfirmedProductBrief, ImportedProductAsset } from "./product-url-import";
+import { confirmedBriefFromSnapshot, type ConfirmedProductBrief, type ImportedProductAsset, type ProductBriefSnapshotLike } from "./product-url-import";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { BatchDraftDialog, type BatchDraftItem } from "./batch-draft-dialog";
 import { startWorkspacePolling } from "./polling";
@@ -41,7 +41,7 @@ const MusicCatalogPicker = dynamic(() => import("./music-catalog-picker").then((
 import { WORKSPACE_MODULES, isWorkspaceView, workspaceViewHref, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { modelSupportsWorkspaceDuration } from "@/lib/aidreamcapes-workspace/capabilities";
-import { WorkspaceTools, ProductVideoPage, BatchDraftPage, workspaceModuleIcons } from "./module-pages";
+import { WorkspaceTools, ProductVideoPage, BatchDraftPage, workspaceModuleIcons, type ProductImportRecord, type ProductInlineRun } from "./module-pages";
 import { useImageDraft } from "./use-image-draft";
 export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 
@@ -52,6 +52,8 @@ type ComposerPreset = { title?: string; aspect?: TaskInput["options"]["aspect"];
 type Step = "input" | "storyboard" | "render" | "delivery";
 type Action = "storyboard" | "reroll" | "rewrite" | "generate_shot" | "restore_version" | "render" | "resume" | "compose_shot";
 type ActionQuote = { available: boolean; credits: number | null; currency: "credits"; quoteToken?: string; expiresAt?: string; revision?: number; reason?: string };
+/** 生成确认载荷里的商品资料：确认简报去掉 candidateImages 后的形状（服务端会再规范化）。 */
+type PendingProductBrief = Omit<ConfirmedProductBrief, "candidateImages">;
 type ImageResult = { jobs: { id: string; status: string; creditsReserved: number; createdAt?: string }[]; assets: { id: string; jobId?: string; label: string; previewUrl: string; downloadUrl?: string }[] };
 
 type GuestDraftHandoff = {
@@ -223,8 +225,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [composerModel, setComposerModel] = useState("");
   const [composerResolution, setComposerResolution] = useState("");
   const [composerQuote, setComposerQuote] = useState<{ available: boolean; credits?: number } | null>(null);
-  const [pendingGenerate, setPendingGenerate] = useState<{ scene: SceneSchema; input: TaskInput; title: string } | null>(null);
+  const [pendingGenerate, setPendingGenerate] = useState<{ scene: SceneSchema; input: TaskInput; title: string; productBrief?: PendingProductBrief; source?: { sourcePage: string; presetId: string; sourceUpdatedAt: string }; surface: "composer" | "agent" | "product"; quote?: ActionQuote } | null>(null);
   const [messageAction, setMessageAction] = useState(false);
+  // 生成流程的阶段播报用中性样式；默认 error 保持既有错误横幅外观不变。
+  const [messageKind, setMessageKind] = useState<"info" | "error">("error");
   const [detailTaskId, setDetailTaskId] = useState<string | null>(null);
   const detailTask = detailTaskId ? tasks.find((item) => item.taskId === detailTaskId) : undefined;
   // The home composer creates one direct clip. Its quote already covers the
@@ -233,6 +237,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [composerActorId, setComposerActorId] = useState("");
   const [composerProducts, setComposerProducts] = useState<ComposerProduct[]>([]);
   const [confirmedProductBriefs, setConfirmedProductBriefs] = useState<ConfirmedProductBrief[]>([]);
+  // Product Links: persisted import history plus the inline generation run
+  // started from this page (the page never hands off to another module).
+  const [productImports, setProductImports] = useState<ProductImportRecord[]>([]);
+  const [productImportsLoading, setProductImportsLoading] = useState(false);
+  const [inlineRun, setInlineRun] = useState<ProductInlineRun | null>(null);
   const [batchOpen, setBatchOpen] = useState(false);
   const [batchSceneId, setBatchSceneId] = useState(initialSceneId ?? "");
   const [composerTitle, setComposerTitle] = useState(initialPreset?.title ?? "");
@@ -290,7 +299,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   visibleView.current = view;
   const scene = catalog?.scenes.find((item) => item.id === task?.sceneId);
   const selectedScene = catalog?.scenes.find((item) => item.id === selectedSceneId);
-  const selectedSceneImageLimit = selectedScene?.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required)?.max ?? 4;
+  // Product Links page embeds the creation form for this scene; customers never
+  // leave the module to finish a video.
+  const productCreateScene = catalog?.scenes.find((item) => item.id === "process_demo") ?? catalog?.scenes[0];
   const actor = catalog?.actors.find((item) => item.actorId === task?.input.actorId);
   const avatarSelection = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
   const avatarModels = catalog?.models.filter((item) => item.available && item.nativeSpeech && item.audioReference && item.referenceImageMax > 0) ?? [];
@@ -336,6 +347,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
     return result as T;
   }, [api, csrfToken, siteId]);
+
+  const fetchProductImports = useCallback(async () => {
+    if (!customerId) return;
+    setProductImportsLoading(true);
+    try {
+      // product-imports is customer-scoped, not part of the workspace API.
+      const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/product-imports?limit=20`, { credentials: "same-origin", cache: "no-store", headers: customerJsonHeaders(siteId) });
+      if (response.ok) {
+        const parsed = await response.json().catch(() => null) as { ok?: boolean; imports?: ProductImportRecord[] } | null;
+        if (parsed?.ok && Array.isArray(parsed.imports)) setProductImports(parsed.imports);
+      }
+    } finally { setProductImportsLoading(false); }
+  }, [customerId, siteId]);
+
+  useEffect(() => {
+    if (customerId && view === "product") void fetchProductImports();
+  }, [customerId, view, fetchProductImports]);
 
   function continueToLoginWithDraft() {
     let saved = false;
@@ -749,9 +777,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     window.history.replaceState({ ...window.history.state, scene: selected.id }, "");
   }
 
-  async function saveNewDraft() {
-    const selected = catalog?.scenes.find((item) => item.id === selectedSceneId);
-    if (!selected) return;
+  /**
+   * 场景表单提交（文字转视频 / 产品链接共用）：校验 → 取生成预报价 → 弹出
+   * 确认框；确认后建稿并自动生成，全程停留在当前模块页，不再跳去编辑器。
+   */
+  async function saveSceneDraft(scene: SceneSchema, surface: "agent" | "product") {
+    const selected = scene;
     const input = composerInput(selected, { aspect: composerAspect, duration: composerDuration, modelId: composerModel, referenceUrls: draftReferenceUrls });
     const fields = selected.sections.flatMap((section) => section.fields);
     const requiredImage = fields.find((field) => field.type === "images" && field.required);
@@ -775,10 +806,48 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         customerConfirmedAt: selectedProductBrief.customerConfirmedAt,
       } : undefined;
       const source = activePreset?.kind === "video" ? { sourcePage: activePreset.sourcePage, presetId: activePreset.presetId, sourceUpdatedAt: activePreset.sourceUpdatedAt } : undefined;
-      const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: selected.id, input, title: composerTitle.trim() || selected.name, ...(productBrief ? { productBrief } : {}), ...(source ? { preset: source } : {}) }) });
-      setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
-      acceptTask(result.task); setView("agent"); setStep("input"); updateUrl(result.task); setMobileOpen(false);
+      const quoted = await request<{ quote: ActionQuote }>("/generation-quote", { method: "POST", body: JSON.stringify({ direct: true, modelId: input.modelId || undefined, duration: input.options.duration, aspect: input.options.aspect, resolution: input.options.resolution || undefined, imageInputCount: draftReferenceUrls.length }) });
+      setPendingGenerate({ scene: selected, input, title: composerTitle.trim() || selected.name, productBrief, source, surface, quote: quoted.quote });
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  /**
+   * 场景创建表单（文字转视频与产品链接页共用）：产品图片条 + 一句话描述 +
+   * Create video。agent 面带返回按钮整页渲染；product 面内嵌在产品链接页。
+   */
+  function sceneCreateForm(scene: SceneSchema, surface: "agent" | "product") {
+    const imageLimit = scene.sections.flatMap((section) => section.fields).find((field) => field.type === "images" && field.required)?.max ?? 4;
+    return <>
+      {surface === "agent" && <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to Text to Video</span></button><h1>{scene.name}</h1><p>Add the product photos and a short brief for this scene. Confirm to create the video task and start generation right here.</p></div>}
+      <section className={`${styles.formSection} ${styles.videoDraftForm}`}>
+        <h2>1. Add your product and idea</h2>
+        <p>Start with at least one clear product photo and a short description. You can adjust the prompt and photos before generating.</p>
+        <div className={styles.fields}>
+          <div className={styles.field}>
+            <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
+            <FileDropZone className={`${styles.imageStrip} ${styles.draftImageStrip}`} activeClassName={styles.dropActive} disabled={working || !customer} onFiles={importDraftReferenceFiles}>
+              <div className={styles.draftReferenceColumn}>
+                {draftReferenceUrls.length < imageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
+                <span className={styles.draftReferenceCount} aria-label={`Product photos: ${draftReferenceUrls.length} of ${imageLimit}`}>{`${draftReferenceUrls.length} / ${imageLimit} photos`}</span>
+              </div>
+              {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
+            </FileDropZone>
+            {!customer && <span className={styles.help}>Log in to upload photos and save this draft.</span>}
+          </div>
+          <label className={styles.field}><span className={styles.fieldLabel}>Describe your video in one sentence</span><textarea className={styles.input} value={prompt} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} onPaste={(event) => {
+            const files = takePasteFiles(event);
+            if (!files.length || !customer) return;
+            event.preventDefault();
+            importDraftReferenceFiles(files);
+          }} onChange={(event) => setPrompt(event.target.value)} placeholder="What should viewers notice about your product?" /><span className={styles.help}>{prompt.length} / {WORKSPACE_PROMPT_MAX_LENGTH} characters</span></label>
+        </div>
+        {scene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
+        {importedBriefNotice()}
+        <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveSceneDraft(scene, surface)}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button></div>
+        <p className={styles.help}>We'll generate your video from this prompt and your photos, then save it to your Library.</p>
+      </section>
+      {surface === "agent" && canBrowseTemplates && templatePickerCallout()}
+    </>;
   }
 
   async function uploadDraftReferences(files: FileList | File[] | null) {
@@ -1102,7 +1171,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       if (selected.id === "text_to_video") input.fields.description = prompt.trim();
       const requiredText = selected.sections.flatMap((section) => section.fields).find((field) => field.required && (field.type === "text" || field.type === "textarea"));
       if (requiredText && selected.id !== "text_to_video" && !String(input.fields[requiredText.id] ?? "").trim() && prompt.trim()) input.fields[requiredText.id] = prompt.trim();
-      setPendingGenerate({ scene: selected, input, title: composerTitle.trim() || selected.name });
+      setPendingGenerate({ scene: selected, input, title: composerTitle.trim() || selected.name, surface: "composer" });
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
@@ -1112,17 +1181,38 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!pending || !customer) return;
     setPendingGenerate(null); setBusy(true); setMessage("");
     try {
-      const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: pending.scene.id, input: pending.input, title: pending.title }) });
+      const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: pending.scene.id, input: pending.input, title: pending.title, ...(pending.productBrief ? { productBrief: pending.productBrief } : {}), ...(pending.source ? { preset: pending.source } : {}) }) });
       setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
       void refreshBalanceSoon();
-      setPrompt(""); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]); setComposerTitle("");
+      if (pending.surface === "composer") {
+        setPrompt(""); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]); setComposerTitle("");
+      } else {
+        // 场景表单提交（文字转视频/产品链接）：清空表单并停留在当前模块页。
+        setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("scene")) { url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }
+      }
+      if (pending.surface === "composer") setInlineRun(null);
+      if (pending.surface !== "composer") setInlineRun({ taskId: result.task.taskId, title: result.task.title, status: "Starting…", state: "running" });
       setMessage(`Draft saved. Generating “${result.task.title}” — you can keep working here; progress is in your Library.`);
+      setMessageKind("info");
       setMessageAction(true);
       await autoRunVideoTask(result.task.taskId);
-    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+    } catch (error) {
+      setMessage((error as Error).message);
+      setMessageKind("error");
+      setInlineRun((current) => current ? { ...current, state: "failed", status: (error as Error).message } : current);
+    } finally { setBusy(false); }
   }
 
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  /** 生成阶段播报：顶部横幅 + 本页内嵌进度卡同步更新。 */
+  function announceRun(text: string) {
+    setMessage(text);
+    setMessageKind("info");
+    setInlineRun((current) => current ? { ...current, status: text } : current);
+  }
 
   /** 确认生成/任务终态后立刻拉一次余额，不等下一个轮询周期。 */
   async function refreshBalanceSoon() {
@@ -1162,7 +1252,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       let current = (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task;
       if (!current.storyboard?.shots.length) {
         await request(`/tasks/${encodeURIComponent(taskId)}/actions`, { method: "POST", body: JSON.stringify({ revision: current.revision, action: "storyboard" }) });
-        setMessage(current.input.direct ? "Preparing your video…" : "Planning your storyboard…");
+        announceRun(current.input.direct ? "Preparing your video…" : "Planning your storyboard…");
         current = await pollTaskUntil(taskId, (task) => Boolean(task.storyboard?.shots.length));
       }
       for (const shot of current.storyboard!.shots) {
@@ -1173,7 +1263,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         await dispatchActionOrFollowServer(taskId, { revision: (await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`)).task.revision, action: "generate_shot", shotId: shot.shotId, quoteToken: quote.quoteToken }, (t) =>
           Boolean(t.operation && ["pending", "run"].includes(t.operation.state)) ||
           t.storyboard?.shots.some((s) => s.shotId === shot.shotId && s.genStatus === "run") || false);
-        setMessage(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
+        announceRun(current.input.direct ? "Generating your video…" : `Generating shot ${(current.storyboard!.shots.indexOf(shot) + 1)} / ${current.storyboard!.shots.length}…`);
         current = await pollTaskUntil(taskId, (task) => task.operation?.state === "done" || task.operation?.state === "fail", current.input.direct ? 2_700_000 : 420_000);
         void refreshBalanceSoon();
         if (current.operation?.state === "fail") throw new Error(current.operation.error ? humanError(current.operation.error) : "A shot failed to generate. Open the video in your Library to retry.");
@@ -1181,11 +1271,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const fresh = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
       await dispatchActionOrFollowServer(taskId, { revision: fresh.task.revision, action: "render" }, (t) =>
         t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || t.video.finalUrl)));
-      setMessage(fresh.task.input.direct ? "Finishing your video…" : "Stitching your final video…");
+      announceRun(fresh.task.input.direct ? "Finishing your video…" : "Stitching your final video…");
       const finalTask = await pollTaskUntil(taskId, (task) => Boolean(task.video?.finalUrl) || task.video?.status === "fail", 600000);
       void refreshBalanceSoon();
-      setMessage(`Your video “${finalTask.title}” is ready — find it in your Library.`);
-    } catch (error) { setMessage((error as Error).message); }
+      announceRun(`Your video “${finalTask.title}” is ready — find it in your Library.`);
+      setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "ready", status: `Your video “${finalTask.title}” is ready.`, videoUrl: finalTask.video?.finalUrl } : current);
+    } catch (error) {
+      setMessage((error as Error).message);
+      setMessageKind("error");
+      setInlineRun((current) => current ? { ...current, state: "failed", status: (error as Error).message } : current);
+    }
   }
 
   function fillQuickStart(item: NonNullable<WorkspaceCatalog["quickStarts"]>[number]) {
@@ -1226,10 +1321,39 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setImageInput((current) => ({ ...current, assetUrls: [...current.assetUrls, asset.previewUrl].slice(0, 4) }));
     } else {
       setComposerProducts((items) => [...items, brief ? { ...asset, confirmedBrief: brief } : asset].slice(0, 4));
-      if (selectedSceneId) setDraftReferenceUrls((items) => [...items, asset.previewUrl].slice(0, 4));
+      if (selectedSceneId || view === "product") setDraftReferenceUrls((items) => items.includes(asset.previewUrl) ? items : [...items, asset.previewUrl].slice(0, 4));
       if (title) setComposerTitle(title.slice(0, 120));
     }
     setModal(null);
+    if (customerId) void fetchProductImports();
+  }
+
+  /** 产品链接历史：点击一条记录，把它回填成当前创建表单的产品。 */
+  function backfillProductImport(record: ProductImportRecord) {
+    if (!record.previewUrl) { setMessage("This product's photo is no longer available. Import the link again."); return; }
+    let brief: ConfirmedProductBrief | undefined;
+    try { brief = confirmedBriefFromSnapshot(record.brief as ProductBriefSnapshotLike); } catch { brief = undefined; }
+    const restored: ComposerProduct = { id: record.assetId, previewUrl: record.previewUrl, ...(record.title ? { label: record.title } : {}), ...(brief ? { confirmedBrief: brief } : {}) };
+    setComposerProducts((items) => [...items.filter((item) => item.previewUrl !== record.previewUrl), restored].slice(-4));
+    setDraftReferenceUrls([record.previewUrl]);
+    if (record.title) setComposerTitle(record.title.slice(0, 120));
+    setMessage("");
+    window.requestAnimationFrame(() => document.querySelector("section[aria-label='Create your video']")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }
+
+  /** 产品链接历史：从库里移除一条记录（软删除）。 */
+  async function deleteProductImport(importId: string) {
+    if (!customerId) return;
+    try {
+      const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/product-imports/${encodeURIComponent(importId)}`, {
+        method: "DELETE",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { ...customerJsonHeaders(siteId), ...(csrfToken ? { "x-csrf-token": csrfToken } : {}) }
+      });
+      if (response.ok) setProductImports((items) => items.filter((item) => item.id !== importId));
+      else setMessage("Could not remove this product. Try again.");
+    } catch { setMessage("Could not remove this product. Try again."); }
   }
 
   function importedBriefNotice() {
@@ -1399,7 +1523,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         }}>Log In</a>}</div>
       </header>
       <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""}`}>
-        {message && <div className={`${styles.notice} ${styles.error}`} role="alert"><span>{message}</span>{messageAction && <button className={styles.linkButton} onClick={() => { setMessageAction(false); void navigate("library"); }}><span>View in Library </span><ArrowRight size={14} /></button>}{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => { setMessage(""); setMessageAction(false); }} aria-label="Dismiss message"><X size={15} /></button></div>}
+        {message && <div className={`${styles.notice} ${messageKind === "error" ? styles.error : ""}`} role="alert"><span>{message}</span>{messageAction && <button className={styles.linkButton} onClick={() => { setMessageAction(false); void navigate("library"); }}><span>View in Library </span><ArrowRight size={14} /></button>}{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => { setMessage(""); setMessageAction(false); }} aria-label="Dismiss message"><X size={15} /></button></div>}
+        {inlineRun && <section className={styles.panel} aria-live="polite">
+          <h2>{inlineRun.state === "ready" ? "Your video is ready" : inlineRun.state === "failed" ? "Generation stopped" : "Generating your video"}</h2>
+          <p className={styles.help} style={{ margin: "4px 0 0" }}>{inlineRun.title} · {inlineRun.status}</p>
+          <div className={styles.footerActions}>
+            {inlineRun.state === "ready" && inlineRun.videoUrl && <a className={`${styles.button} ${styles.primary}`} href={inlineRun.videoUrl} download><Download size={16} /><span>Download video</span></a>}
+            <button className={styles.linkButton} onClick={() => { setInlineRun(null); void navigate("library"); }}><span>Open Library </span><ArrowRight size={15} /></button>
+          </div>
+        </section>}
         {batchNotice && <div className={styles.notice} role="status"><span>{batchNotice}</span><button className={styles.iconButton} onClick={() => setBatchNotice("")} aria-label="Dismiss batch result"><X size={15} /></button></div>}
         {((view === "home" || view === "video" || view === "images" || view === "agent") && (task ? task.sourceTemplate : activePreset)) && renderTemplate((task ? task.sourceTemplate : activePreset)!)}
         {view === "home" && <>
@@ -1428,7 +1560,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
         {view === "inspirations" && <EmbeddedInspirations initialPage={initialInspirations} endpoint={`${api}/inspirations`} basePath={basePath} />}
-        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} products={composerProducts} disabled={working} onCreate={() => { const selected = catalog?.scenes.find((item) => item.id === "process_demo"); if (selected) selectScene(selected); }} />}
+        {view === "product" && <ProductVideoPage siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} initialUrl={entryProductUrl} onImported={importProduct} disabled={working} imports={productImports} importsLoading={productImportsLoading} onBackfill={backfillProductImport} onDeleteImport={(importId) => void deleteProductImport(importId)} createSlot={productCreateScene ? sceneCreateForm(productCreateScene, "product") : null} />}
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
           <HomeComposer
@@ -1469,37 +1601,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           {canBrowseTemplates && templatePickerCallout()}
         </>}
 
-        {view === "agent" && !task && selectedScene && <>
-          <div className={styles.pageTitle}><button className={styles.linkButton} onClick={() => { setSelectedSceneId(""); setDraftReferenceUrls([]); updateUrl(null, "input", "agent"); const url = new URL(window.location.href); url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }}><ArrowLeft size={15} /><span>Back to Text to Video</span></button><h1>{selectedScene.name}</h1><p>Add the product photos and a short brief for this scene. Saving creates the video task and starts generation.</p></div>
-          <section className={`${styles.formSection} ${styles.videoDraftForm}`}>
-            <h2>1. Add your product and idea</h2>
-            <p>Start with at least one clear product photo and a short description. You can adjust the prompt and photos before generating.</p>
-            <div className={styles.fields}>
-              <div className={styles.field}>
-                <div className={styles.sectionHead}><span className={styles.fieldLabel}>Product photos</span><button type="button" className={styles.linkButton} disabled={working} onClick={() => setModal("product")}>Import product details</button></div>
-                <FileDropZone className={`${styles.imageStrip} ${styles.draftImageStrip}`} activeClassName={styles.dropActive} disabled={working || !customer} onFiles={importDraftReferenceFiles}>
-                  <div className={styles.draftReferenceColumn}>
-                    {draftReferenceUrls.length < selectedSceneImageLimit ? <label className={`${styles.upload} ${styles.draftPhotoUpload}`}><Upload size={19} /><span>{busy ? "Uploading…" : "Add photo"}</span><input aria-label="Upload product photos" accept="image/*" type="file" multiple disabled={working || !customer} onChange={(event) => { void uploadDraftReferences(event.target.files); event.target.value = ""; }} /></label> : <div className={`${styles.upload} ${styles.draftPhotoUpload} ${styles.draftPhotoLimit}`} aria-hidden="true"><ImageIcon size={19} /><span>Photo limit</span></div>}
-                    <span className={styles.draftReferenceCount} aria-label={`Product photos: ${draftReferenceUrls.length} of ${selectedSceneImageLimit}`}>{`${draftReferenceUrls.length} / ${selectedSceneImageLimit} photos`}</span>
-                  </div>
-                  {draftReferenceUrls.map((url, index) => <div className={`${styles.imageSlot} ${styles.draftPhotoSlot}`} key={`${url}-${index}`} {...reorderHandlers(index, working, moveDraftReference)}><img loading="lazy" decoding="async" src={url} alt={`Product photo ${index + 1}`} /><button type="button" className={styles.removeImage} disabled={working} aria-label={`Remove product photo ${index + 1}`} onClick={() => setDraftReferenceUrls((items) => items.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
-                </FileDropZone>
-                {!customer && <span className={styles.help}>Log in to upload photos and save this draft.</span>}
-              </div>
-              <label className={styles.field}><span className={styles.fieldLabel}>Describe your video in one sentence</span><textarea className={styles.input} value={prompt} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} onPaste={(event) => {
-                const files = takePasteFiles(event);
-                if (!files.length || !customer) return;
-                event.preventDefault();
-                importDraftReferenceFiles(files);
-              }} onChange={(event) => setPrompt(event.target.value)} placeholder="What should viewers notice about your product?" /><span className={styles.help}>{prompt.length} / {WORKSPACE_PROMPT_MAX_LENGTH} characters</span></label>
-            </div>
-            {selectedScene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
-            {importedBriefNotice()}
-            <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveNewDraft()}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button></div>
-            <p className={styles.help}>We'll generate your video from this prompt and your photos, then save it to your Library.</p>
-          </section>
-          {canBrowseTemplates && templatePickerCallout()}
-        </>}
+        {view === "agent" && !task && selectedScene && sceneCreateForm(selectedScene, "agent")}
 
         {view === "agent" && task && <>
           <div className={styles.editorHeader}><button className={styles.iconButton} aria-label="Back to library" onClick={() => void navigate("library")}><ArrowLeft size={21} /></button><input className={styles.titleInput} aria-label="Video title" value={task.title} maxLength={120} disabled={editingDisabled} onChange={(event) => editTask((current) => ({ ...current, title: event.target.value }))} /><span className={styles.saveStatus} role="status">{saveStatus}</span><span className={styles.badge}>{taskStatusLabel(task)}</span></div>
@@ -1792,7 +1894,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         </div>
       </section></div>;
     })()}
-    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const credits = composerQuote?.available && composerQuote.credits != null ? composerQuote.credits : undefined; const direct = Boolean(pendingGenerate.input.direct); const totalCredits = credits; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
+    {pendingGenerate && (() => { const model = catalog?.models.find((item) => item.id === pendingGenerate.input.modelId); const options = [model?.label, `${pendingGenerate.input.options.duration}s`, pendingGenerate.input.options.aspect, pendingGenerate.input.options.resolution].filter(Boolean).join(" · "); const pendingQuote = pendingGenerate.quote ?? composerQuote; const credits = pendingQuote?.available && pendingQuote.credits != null ? pendingQuote.credits : undefined; const direct = Boolean(pendingGenerate.input.direct); const totalCredits = credits; return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingGenerate(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm generation" style={{ maxWidth: 470 }}>
       <div className={styles.modalHeader}><h2>Confirm generation</h2><button className={styles.iconButton} onClick={() => setPendingGenerate(null)} aria-label="Close dialog"><X size={23} /></button></div>
       <p className={styles.help} style={{ marginTop: 0 }}>{pendingGenerate.scene.name}</p>
       <p className={styles.help}>{options || "\u00a0"}</p>

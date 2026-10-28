@@ -210,6 +210,7 @@ model Site {
   adminSessions           SiteAdminSession[]
   customers               Customer[]
   aidreamcapesVideoTasks      AidreamcapesVideoTask[]
+  aidreamcapesProductImports  AidreamcapesProductImport[]
   aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
   aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
   aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
@@ -362,6 +363,7 @@ model Customer {
   models        CustomerModel[]
   albums                    Album[]
   aidreamcapesVideoTasks    AidreamcapesVideoTask[]
+  aidreamcapesProductImports AidreamcapesProductImport[]
   aidreamcapesWorkspaceActors AidreamcapesWorkspaceActor[]
   aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
   aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
@@ -403,6 +405,26 @@ model AidreamcapesVideoTask {
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([siteId, customerId, updatedAt(sort: Desc)], map: "AidreamcapesVideoTask_owner_updated")
+}
+
+model AidreamcapesProductImport {
+  id             String    @id
+  siteId         String
+  customerId     String
+  assetId        String
+  sourceUrl      String
+  fetchedPageUrl String?
+  title          String?
+  /// Confirmed product brief (sourced values with confidence and confirmation state).
+  brief          Json
+  deletedAt      DateTime? @db.Timestamptz(6)
+  createdAt      DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime  @default(now()) @db.Timestamptz(6)
+  site           Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, customerId, sourceUrl], map: "AidreamcapesProductImport_owner_source_unique")
+  @@index([siteId, customerId, updatedAt(sort: Desc)], map: "AidreamcapesProductImport_owner_updated")
 }
 
 model AidreamcapesPublishingJob {

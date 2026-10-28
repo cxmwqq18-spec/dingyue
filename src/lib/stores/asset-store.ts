@@ -80,7 +80,7 @@ function customerAssetDownloadUrl(asset: Pick<AssetUpload, "customerId" | "id" |
   return `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download`;
 }
 
-function customerAssetPreviewUrl(asset: Pick<AssetUpload, "customerId" | "id" | "mimeType" | "role" | "siteId" | "storageKey">): string {
+export function customerAssetPreviewUrl(asset: Pick<AssetUpload, "customerId" | "id" | "mimeType" | "role" | "siteId" | "storageKey">): string {
   if (asset.role === "output") {
     const previewUrl = `/api/sites/${asset.siteId}/customers/${asset.customerId}/assets/${asset.id}/download?preview=1`;
     return asset.mimeType.startsWith("video/") ? `${previewUrl}&poster=1` : previewUrl;

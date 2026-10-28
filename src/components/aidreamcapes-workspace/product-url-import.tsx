@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
+import { ShopifyBadge } from "./shopify-badge";
 import styles from "./product-url-import.module.css";
 
 export type ProductBriefConfidence = "high" | "medium" | "low";
@@ -44,6 +45,38 @@ export type ImportedProductAsset = {
   previewUrl: string;
   label?: string;
 };
+
+/** Compact task-side product snapshot (as persisted in product-import history). */
+export type ProductBriefSnapshotLike = {
+  sourceUrl: string;
+  fetchedPageUrl: string;
+  title: { value: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
+  description: { value: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
+  possiblePrice: { amount: string; currency?: string; sourceUrl: string; sourceLabel: string; confidence: ProductBriefConfidence } | null;
+  confirmedAt: string;
+};
+
+/** Rebuild a confirmable brief from a stored snapshot so a history item can backfill the form. */
+export function confirmedBriefFromSnapshot(snapshot: ProductBriefSnapshotLike): ConfirmedProductBrief {
+  return {
+    sourceUrl: snapshot.sourceUrl,
+    fetchedPageUrl: snapshot.fetchedPageUrl,
+    title: snapshot.title ? { ...snapshot.title, confirmed: false } : null,
+    description: snapshot.description ? { ...snapshot.description, confirmed: false } : null,
+    candidateImages: [],
+    possiblePrice: snapshot.possiblePrice ? {
+      value: { amount: snapshot.possiblePrice.amount, ...(snapshot.possiblePrice.currency ? { currency: snapshot.possiblePrice.currency } : {}) },
+      sourceUrl: snapshot.possiblePrice.sourceUrl,
+      sourceLabel: snapshot.possiblePrice.sourceLabel,
+      confidence: snapshot.possiblePrice.confidence,
+      confirmed: false,
+    } : null,
+    selectionConfirmed: true,
+    priceConfirmed: false,
+    reviewRequired: true,
+    customerConfirmedAt: snapshot.confirmedAt,
+  };
+}
 
 type PreviewResponse = {
   ok?: boolean;
@@ -240,6 +273,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         customerConfirmedAt: new Date().toISOString(),
       };
       const title = preview.draft.title?.value.trim() || result.product?.title?.trim() || undefined;
+      await recordImport(result.asset.id, brief, title);
       onImported({ ...result.asset, ...(title ? { label: title } : {}) }, title, brief);
       setStatus(title ? `Product photo and “${title}” added.` : "Product photo added.");
       setUrl("");
@@ -256,6 +290,46 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
     setPreview(null);
     setError("");
     setStatus("");
+  }
+
+  /** Persist the confirmed import into the customer's product library. */
+  async function recordImport(assetId: string, brief: ConfirmedProductBrief, title?: string) {
+    if (!customerId) return;
+    try {
+      const response = await fetch(
+        `/api/sites/${encodeURIComponent(siteId)}/customers/${encodeURIComponent(customerId)}/product-imports`,
+        {
+          method: "POST",
+          credentials: "same-origin",
+          cache: "no-store",
+          headers: {
+            ...customerJsonHeaders(siteId),
+            ...(csrfToken ? { "x-csrf-token": csrfToken } : {}),
+          },
+          body: JSON.stringify({
+            assetId,
+            sourceUrl: brief.sourceUrl,
+            fetchedPageUrl: brief.fetchedPageUrl,
+            title: title ?? null,
+            brief: {
+              sourceUrl: brief.sourceUrl,
+              fetchedPageUrl: brief.fetchedPageUrl,
+              title: brief.title,
+              description: brief.description,
+              candidateImages: brief.candidateImages,
+              possiblePrice: brief.possiblePrice,
+              selectionConfirmed: brief.selectionConfirmed,
+              priceConfirmed: brief.priceConfirmed,
+              reviewRequired: brief.reviewRequired,
+              customerConfirmedAt: brief.customerConfirmedAt
+            }
+          })
+        },
+      );
+      if (!response.ok) console.error("[aidreamcapes] product import history failed", response.status);
+    } catch {
+      // History is supplementary; the confirmed brief still rides on the task.
+    }
   }
 
   return (
@@ -291,7 +365,10 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
           </div>
         ) : (
           <form className={styles.form} onSubmit={submit}>
-            <label className={styles.label} htmlFor="product-page-url">Product page URL</label>
+            <div className={styles.labelRow}>
+              <label className={styles.label} htmlFor="product-page-url">Product page URL</label>
+              <ShopifyBadge />
+            </div>
             <div className={styles.controls}>
               <input
                 className={styles.input}
@@ -316,7 +393,10 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         )
       ) : (
         <div className={styles.loginPrompt}>
-          <label className={styles.label} htmlFor="product-page-url">Product page URL</label>
+          <div className={styles.labelRow}>
+            <label className={styles.label} htmlFor="product-page-url">Product page URL</label>
+            <ShopifyBadge />
+          </div>
           <input
             className={styles.input}
             id="product-page-url"

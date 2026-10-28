@@ -811,7 +811,7 @@ const directJsonPromptFunction = dispatchRoute.match(/function buildDirectJsonVi
 const minimalVideoPromptFunction = dispatchRoute.match(/function buildMinimalVideoProviderPrompt[\s\S]*?\n}\n\nfunction buildVideoPrompt/)?.[0] ?? "";
 const pollVideoTaskFunction = dispatchRoute.match(/async function pollVideoTask[\s\S]*?\n}\n\nfunction videoProviderReadRetryAttempts/)?.[0] ?? "";
 const videoProviderAttemptsFunction = dispatchRoute.match(/function videoProviderAttempts[\s\S]*?\n}\n\nfunction errorMessage/)?.[0] ?? "";
-assert(dispatchRoute.includes("return inputAssets(payload).slice(0, maxFrames);"), "video worker should use the normalized frame limit");
+assert(dispatchRoute.includes("inputAssets(payload).filter((asset) => !isAudioReferenceAsset(asset)).slice(0, maxFrames);"), "video worker should use the normalized frame limit");
 assert(!/function videoFrameAssets[\s\S]*?slice\(0,\s*4\)/.test(dispatchRoute), "video worker should not truncate frames to 4");
 assert(dispatchRoute.includes("shouldRejectLoopbackVideoFrameUrls"), "video worker should gate loopback rejection by environment");
 assert(dispatchRoute.includes("shouldRejectLoopbackVideoFrameUrls() && imageUrls.some(isLoopbackUrl)"), "local development should not reject loopback frame URLs");
@@ -901,7 +901,7 @@ assert(dispatchRoute.includes('message.includes("failed_502")'), "video worker s
 assert(dispatchRoute.includes("video_provider_poll_retry"), "video worker should retry transient status reads against the existing provider task");
 assert(pollVideoTaskFunction.includes("let firstPoll = true") && pollVideoTaskFunction.includes("if (!firstPoll)") && pollVideoTaskFunction.includes("firstPoll = false;"), "video worker should read provider status immediately after task creation before sleeping");
 assert(!pollVideoTaskFunction.includes("createVideoTask("), "video provider status polling should never create another provider task");
-assert(pollVideoTaskFunction.includes("fetchHuituOpenApiVideoTask") && pollVideoTaskFunction.includes("fetchTokengoMediaVideoTask") && pollVideoTaskFunction.includes("lk888MediaStatusUrls") && pollVideoTaskFunction.includes("openAiVideoStatusEndpoint(params.baseUrl, params.taskId)"), "video provider status polling should only use read-only status endpoints");
+assert(pollVideoTaskFunction.includes("fetchHuituOpenApiVideoTask") && pollVideoTaskFunction.includes("fetchTokengoMediaVideoTask") && pollVideoTaskFunction.includes("lk888MediaStatusUrls") && pollVideoTaskFunction.includes("openAiVideoStatusEndpoint(params.baseUrl, params.taskId, { yinglingOpenAiVideos })"), "video provider status polling should only use read-only status endpoints");
 assert(dispatchRoute.includes("withVideoProviderReadRetries"), "video worker should retry transient result downloads against the existing provider task");
 assert(dispatchRoute.includes("video_provider_download_retry"), "video worker should report transient result-download retries");
 assert(dispatchRoute.includes("workerProgressWriteState"), "video worker should track progress writes for throttling");
@@ -966,8 +966,8 @@ assert(dispatchRoute.includes("size: providerRequestSize"), "multipart OpenAI-co
 assert(dispatchRoute.includes("function openAiVideoCreateEndpoint("), "OpenAI-compatible video create endpoint should be selected per provider");
 assert(dispatchRoute.includes("function proxyOpenAiVideoBaseUrl("), "proxy OpenAI-compatible video endpoints should normalize provider base URLs");
 assert(dispatchRoute.includes('trimmed.replace(/\\/v1$/, "")'), "proxy video providers should not double-append /v1 when the configured base URL already includes it");
-assert(dispatchRoute.includes("openAiVideoStatusEndpoint(params.baseUrl, params.taskId)"), "proxy video status polling should use the normalized videos endpoint");
-assert(dispatchRoute.includes("openAiVideoContentEndpoint(params.baseUrl ?? \"\", params.taskId ?? \"\")"), "proxy video downloads should use the normalized content endpoint");
+assert(dispatchRoute.includes("openAiVideoStatusEndpoint(params.baseUrl, params.taskId, { yinglingOpenAiVideos })"), "proxy video status polling should use the normalized videos endpoint");
+assert(dispatchRoute.includes("openAiVideoContentEndpoint(params.baseUrl ?? \"\", params.taskId ?? \"\", { yinglingOpenAiVideos: params.yinglingOpenAiVideos })"), "proxy video downloads should use the normalized content endpoint");
 assert(dispatchRoute.includes("endpoint: new URL(endpoint).pathname"), "video create failures should report the actual create endpoint path");
 assert(dispatchRoute.includes('AI_WORKER_GROK_IMAGINE_VIDEO_REFERENCE_MODE'), "Grok Imagine Video should default to JSON data URI references with an explicit multipart escape hatch");
 assert(dispatchRoute.includes('if (explicitMode === "multipart" || explicitMode === "form") return false;'), "SmartPickLid JSON video requests should honor the multipart escape hatch");

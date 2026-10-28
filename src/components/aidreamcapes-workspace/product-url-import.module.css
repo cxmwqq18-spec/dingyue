@@ -60,3 +60,22 @@
   .productSummaryCopy h3 { font-size: 16px; }
   .importedProduct > img, .noProductImage { width: 84px; height: 84px; }
 }
+
+.labelRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.shopifyBadge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 7px; border: 1px solid #d5e8c4; border-radius: 999px; background: #f2f9ec; color: #3d6b23; font-size: 11px; line-height: 1.2; white-space: nowrap; }
+.shopifyIcon { width: 14px; height: 14px; color: #95bf47; flex: none; }
+.shopifyName { font-weight: 700; }
+.shopifyNote { color: #5f7d46; }
+.historyList { display: grid; gap: 10px; }
+.historyItem { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; padding: 10px 12px; border: 1px solid #e3e6ec; border-radius: 10px; background: #fff; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.historyItem:hover { border-color: #b9bffa; background: #fafaff; }
+.historyItem:focus-visible { outline: 3px solid #946dff; outline-offset: 2px; }
+.historyThumb { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; background: #f0eef8; }
+.historyCopy { min-width: 0; display: grid; gap: 3px; }
+.historyTitle { font-size: 13px; font-weight: 600; color: #101623; overflow-wrap: anywhere; }
+.historyMeta { font-size: 11px; color: #73777d; overflow-wrap: anywhere; }
+.historyDelete { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #e3e6ec; border-radius: 7px; background: #fff; color: #73777d; cursor: pointer; }
+.historyDelete:hover { color: #a52c38; border-color: #eec4c9; }
+.historyDelete:disabled { opacity: .55; cursor: not-allowed; }
+.historyEmpty { margin: 0; padding: 12px; border: 1px dashed #dce0e7; border-radius: 10px; color: #73777d; font-size: 12px; }
+.historyRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: stretch; }
