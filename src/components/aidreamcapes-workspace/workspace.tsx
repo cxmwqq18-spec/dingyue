@@ -136,17 +136,25 @@ function taskMedia(task: WorkspaceTask, scene?: SceneSchema): LibraryCardMedia[]
   const fallback = refs.length ? [] : Object.entries(task.input.images).flatMap(([key, urls]) => urls.map((url) => ({ kind: "product" as RefKind, url, label: key })));
   const seen = new Set<string>();
   const media: LibraryCardMedia[] = [];
-  if (task.video?.finalUrl) {
+  if (task.video?.finalUrl && !task.video.stale) {
+    // A fresh final render already contains every finished clip, so keep only
+    // the finished video instead of repeating each shot clip as a second entry.
     media.push({ kind: "video", url: task.video.finalUrl, label: "Video" });
     seen.add(task.video.finalUrl);
-  }
-  // Clips the provider already finished are the customer's video assets even
-  // before the final film is rendered, so the library has to show them.
-  for (const shot of task.storyboard?.shots ?? []) {
-    const version = shot.versions?.find((item) => item.vid === shot.curVer) ?? shot.versions?.at(-1);
-    if (!version?.clipUrl || version.status !== "done" || seen.has(version.clipUrl)) continue;
-    seen.add(version.clipUrl);
-    media.push({ kind: "video", url: version.clipUrl, label: task.input.direct ? "Video" : `Shot ${media.filter((item) => item.kind === "video").length + 1}` });
+  } else {
+    // Clips the provider already finished are the customer's video assets even
+    // before the final film is rendered, so the library has to show them.
+    for (const shot of task.storyboard?.shots ?? []) {
+      const version = shot.versions?.find((item) => item.vid === shot.curVer) ?? shot.versions?.at(-1);
+      if (!version?.clipUrl || version.status !== "done" || seen.has(version.clipUrl)) continue;
+      seen.add(version.clipUrl);
+      media.push({ kind: "video", url: version.clipUrl, label: task.input.direct ? "Video" : `Shot ${media.filter((item) => item.kind === "video").length + 1}` });
+    }
+    if (task.video?.finalUrl) {
+      // A stale final render predates the current clips, so both stay viewable.
+      media.push({ kind: "video", url: task.video.finalUrl, label: "Video" });
+      seen.add(task.video.finalUrl);
+    }
   }
   for (const ref of [...refs, ...fallback]) {
     if (!ref.url || seen.has(ref.url)) continue;

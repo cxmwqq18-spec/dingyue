@@ -10,6 +10,29 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 type Context = { params: Promise<{ siteId: string; taskId: string }> };
 
+/**
+ * Single-range byte-range parser. Video players must be able to seek, which
+ * requires 206 Partial Content responses over the local render files.
+ */
+function parseByteRange(header: string | null, size: number): { start: number; end: number } | "unsatisfiable" | undefined {
+  if (!header?.startsWith("bytes=") || size <= 0) return undefined;
+  const range = header.slice("bytes=".length).split(",")[0]?.trim();
+  if (!range || !range.includes("-")) return undefined;
+  const [startValue, endValue] = range.split("-", 2);
+  if (!startValue) {
+    const suffixLength = Number(endValue);
+    if (!Number.isFinite(suffixLength) || suffixLength <= 0) return "unsatisfiable";
+    return { start: Math.max(size - Math.trunc(suffixLength), 0), end: size - 1 };
+  }
+  const start = Number(startValue);
+  const end = endValue ? Number(endValue) : size - 1;
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return "unsatisfiable";
+  const normalizedStart = Math.trunc(start);
+  const normalizedEnd = Math.min(Math.trunc(end), size - 1);
+  if (normalizedStart < 0 || normalizedStart >= size || normalizedEnd < normalizedStart) return "unsatisfiable";
+  return { start: normalizedStart, end: normalizedEnd };
+}
+
 export async function GET(request: NextRequest, { params }: Context) {
   try {
     const { siteId, taskId } = await params;
@@ -34,12 +57,36 @@ export async function GET(request: NextRequest, { params }: Context) {
     }
 
     const output = await resolveWorkspaceOutput(task, kind, { allowMockDownload: true, shotId, versionId });
+    const disposition = `${kind === "video" ? "inline" : "attachment"}; filename="${output.filename}"`;
+    const range = parseByteRange(request.headers.get("range"), output.size);
+    if (range === "unsatisfiable") {
+      return new Response(null, {
+        status: 416,
+        headers: { "Accept-Ranges": "bytes", "Content-Range": `bytes */${output.size}`, "Cache-Control": "private, no-store" }
+      });
+    }
+    if (range) {
+      const stream = output.handle.createReadStream({ start: range.start, end: range.end, autoClose: true });
+      return new Response(Readable.toWeb(stream) as ReadableStream<Uint8Array>, {
+        status: 206,
+        headers: {
+          "Content-Type": output.contentType,
+          "Content-Disposition": disposition,
+          "Content-Range": `bytes ${range.start}-${range.end}/${output.size}`,
+          "Content-Length": String(range.end - range.start + 1),
+          "Accept-Ranges": "bytes",
+          "Cache-Control": "private, no-store",
+          "X-Content-Type-Options": "nosniff",
+        }
+      });
+    }
     const stream = output.handle.createReadStream({ autoClose: true });
     return new Response(Readable.toWeb(stream) as ReadableStream<Uint8Array>, {
       headers: {
         "Content-Type": output.contentType,
-        "Content-Disposition": `${kind === "video" ? "inline" : "attachment"}; filename="${output.filename}"`,
+        "Content-Disposition": disposition,
         "Content-Length": String(output.size),
+        "Accept-Ranges": "bytes",
         "Cache-Control": "private, no-store",
         "X-Content-Type-Options": "nosniff",
       },
