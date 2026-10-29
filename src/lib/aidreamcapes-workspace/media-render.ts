@@ -29,10 +29,11 @@ function renderDirectory(task: WorkspaceTask, renderId: string) {
   const root = process.env.AIVIDEOSUGC_RENDER_ROOT?.trim() || path.join(process.cwd(), "data", "aidreamcapes-workspace-render");
   return path.join(root, task.siteId, safeId(task.customerId), safeId(task.taskId), safeId(renderId));
 }
-export function resolveTaskRenderFile(task: WorkspaceTask, kind: "video" | "subtitles") {
-  if (!task.video?.renderId || task.video.status !== "done") throw new WorkspaceError("workspace_video_not_ready", 404);
-  if (kind === "subtitles" && !task.video.subtitleUrl) throw new WorkspaceError("workspace_subtitles_not_available", 404);
-  return { path: path.join(renderDirectory(task, task.video.renderId), kind === "video" ? "final.mp4" : "subtitles.srt"),
+export function resolveTaskRenderFile(task: WorkspaceTask, kind: "video" | "subtitles", renderId?: string) {
+  const targetRenderId = renderId ?? task.video?.renderId;
+  if (!targetRenderId || task.video?.status !== "done") throw new WorkspaceError("workspace_video_not_ready", 404);
+  if (kind === "subtitles" && !renderId && !task.video.subtitleUrl) throw new WorkspaceError("workspace_subtitles_not_available", 404);
+  return { path: path.join(renderDirectory(task, targetRenderId), kind === "video" ? "final.mp4" : "subtitles.srt"),
     contentType: kind === "video" ? "video/mp4" : "application/x-subrip; charset=utf-8", filename: `${task.taskId}.${kind === "video" ? "mp4" : "srt"}` };
 }
 export function storyboardRenderHash(task: WorkspaceTask): string {

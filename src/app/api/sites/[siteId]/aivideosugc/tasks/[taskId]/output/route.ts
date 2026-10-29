@@ -42,21 +42,23 @@ export async function GET(request: NextRequest, { params }: Context) {
 
     const rawKind = request.nextUrl.searchParams.get("kind");
     if (rawKind !== "video" && rawKind !== "subtitles" && rawKind !== "clip") throw new WorkspaceError("workspace_output_kind_invalid", 400);
-    const allowedQuery = rawKind === "clip" ? new Set(["kind", "shotId", "versionId"]) : new Set(["kind"]);
+    const allowedQuery = rawKind === "clip" ? new Set(["kind", "shotId", "versionId"]) : rawKind === "video" ? new Set(["kind", "renderId"]) : new Set(["kind"]);
     if (request.nextUrl.searchParams.getAll("kind").length !== 1 || [...request.nextUrl.searchParams.keys()].some((key) => !allowedQuery.has(key))) {
       throw new WorkspaceError("workspace_output_kind_invalid", 400);
     }
     const kind: WorkspaceOutputKind = rawKind;
     const shotId = request.nextUrl.searchParams.get("shotId") || undefined;
     const versionId = request.nextUrl.searchParams.get("versionId") || undefined;
+    const renderId = request.nextUrl.searchParams.get("renderId") || undefined;
     if ((kind === "clip" && (!shotId || !versionId || request.nextUrl.searchParams.getAll("shotId").length !== 1 || request.nextUrl.searchParams.getAll("versionId").length !== 1)) ||
-        (kind !== "clip" && (shotId !== undefined || versionId !== undefined))) throw new WorkspaceError("workspace_output_kind_invalid", 400);
+        (kind !== "clip" && (shotId !== undefined || versionId !== undefined)) ||
+        (renderId !== undefined && (!/^[a-zA-Z0-9_-]{1,180}$/.test(renderId) || request.nextUrl.searchParams.getAll("renderId").length !== 1 || kind !== "video"))) throw new WorkspaceError("workspace_output_kind_invalid", 400);
     const task = await getTask(siteId, auth.current.customer.id, taskId);
     if (task.siteId !== siteId || task.taskId !== taskId || task.customerId !== auth.current.customer.id) {
       throw new WorkspaceError("task_not_found", 404);
     }
 
-    const output = await resolveWorkspaceOutput(task, kind, { allowMockDownload: true, shotId, versionId });
+    const output = await resolveWorkspaceOutput(task, kind, { allowMockDownload: true, shotId, versionId, renderId });
     const disposition = `${kind === "video" ? "inline" : "attachment"}; filename="${output.filename}"`;
     const range = parseByteRange(request.headers.get("range"), output.size);
     if (range === "unsatisfiable") {

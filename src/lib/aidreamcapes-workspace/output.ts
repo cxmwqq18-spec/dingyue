@@ -12,8 +12,8 @@ function renderRoot() {
   return path.resolve(process.env.AIVIDEOSUGC_RENDER_ROOT?.trim() || path.join(process.cwd(), "data", "aidreamcapes-workspace-render"));
 }
 
-function outputUrl(task: WorkspaceTask, kind: Exclude<WorkspaceOutputKind, "clip">) {
-  return `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=${kind}`;
+function outputUrl(task: WorkspaceTask, kind: Exclude<WorkspaceOutputKind, "clip">, renderId?: string) {
+  return `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=${kind}${renderId ? `&renderId=${encodeURIComponent(renderId)}` : ""}`;
 }
 
 function mapFilesystemError(error: unknown): never {
@@ -26,13 +26,21 @@ function mapFilesystemError(error: unknown): never {
 export async function resolveWorkspaceOutput(
   task: WorkspaceTask,
   kind: WorkspaceOutputKind,
-  options: { allowMockDownload?: boolean; shotId?: string; versionId?: string } = {},
+  options: { allowMockDownload?: boolean; shotId?: string; versionId?: string; renderId?: string } = {},
 ) {
   const video = task.video;
   if (task.status !== "completed" || !video || video.status !== "done" || !video.renderId) {
     throw new WorkspaceError("workspace_video_not_ready", 404);
   }
-  if (video.stale || task.storyboardStale || !task.storyboard || video.storyboardHash !== storyboardRenderHash(task)) {
+  // An explicit renderId serves a kept version from the task's history; anything
+  // else is unknown and rejected before it can reach the filesystem. History
+  // files are immutable renders, so the storyboard-staleness guard only applies
+  // to current-version requests.
+  const targetRenderId = options.renderId ?? video.renderId;
+  if (options.renderId) {
+    const knownRenderIds = new Set([video.renderId, ...task.videoHistory.map((entry) => entry.renderId)]);
+    if (!knownRenderIds.has(options.renderId)) throw new WorkspaceError("workspace_video_not_ready", 404);
+  } else if (video.stale || task.storyboardStale || !task.storyboard || video.storyboardHash !== storyboardRenderHash(task)) {
     throw new WorkspaceError("workspace_output_stale", 409);
   }
 
@@ -50,13 +58,13 @@ export async function resolveWorkspaceOutput(
     expectedPath = path.resolve(renderRoot(), task.siteId, task.customerId, task.taskId, "mock-clips", options.shotId, `${options.versionId}.mp4`);
   } else {
     const expectedUrl = outputUrl(task, kind);
-    if (kind === "video" && video.finalUrl !== expectedUrl) throw new WorkspaceError("workspace_output_stale", 409);
-    if (kind === "subtitles") {
+    if (!options.renderId && kind === "video" && video.finalUrl !== expectedUrl) throw new WorkspaceError("workspace_output_stale", 409);
+    if (!options.renderId && kind === "subtitles") {
       if (!video.subtitleUrl) throw new WorkspaceError("workspace_subtitles_not_available", 404);
       if (video.subtitleUrl !== expectedUrl) throw new WorkspaceError("workspace_output_stale", 409);
     }
-    file = resolveTaskRenderFile(task, kind);
-    expectedPath = path.resolve(renderRoot(), task.siteId, task.customerId, task.taskId, video.renderId,
+    file = resolveTaskRenderFile(task, kind, targetRenderId);
+    expectedPath = path.resolve(renderRoot(), task.siteId, task.customerId, task.taskId, targetRenderId,
       kind === "video" ? "final.mp4" : "subtitles.srt");
   }
 

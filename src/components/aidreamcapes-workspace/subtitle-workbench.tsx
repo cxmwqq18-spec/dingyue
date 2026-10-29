@@ -78,10 +78,14 @@ interface SubtitleVersion {
 
 /** Every kept render of the task, newest last; the original stays playable and nothing is overwritten. */
 function taskVersions(task: WorkspaceTask): SubtitleVersion[] {
+  // finalUrl is task-scoped and always serves the current version, so history
+  // entries need the renderId-scoped output URL to play their own file.
+  const versionUrl = (renderId: string) =>
+    `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=video&renderId=${encodeURIComponent(renderId)}`;
   const versions: SubtitleVersion[] = [];
   task.videoHistory.forEach((entry, index) => {
     if (entry.status === "done" && entry.finalUrl && entry.renderId !== task.video?.renderId) {
-      versions.push({ renderId: entry.renderId, url: entry.finalUrl, number: index + 1, hasCaptions: Boolean(entry.captionLines?.length), isCurrent: false });
+      versions.push({ renderId: entry.renderId, url: versionUrl(entry.renderId), number: index + 1, hasCaptions: Boolean(entry.captionLines?.length), isCurrent: false });
     }
   });
   if (task.video?.status === "done" && task.video.finalUrl) {
