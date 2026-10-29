@@ -4,7 +4,7 @@ import { validateCaptionLines } from "./captions";
 import { compileVideoEdit, removeEditedRender, renderEditedVideo } from "./editor";
 import { structuredDecision } from "./provider";
 import { getTask, saveTask, type StoredTask } from "./store";
-import { isSubtitleOpId, type SubtitleOpId, type SubtitleOpPlan } from "./subtitle-ops";
+import { isSubtitleOpId, type SubtitleOpId, type SubtitleOpPlan, type SubtitleOpSettings } from "./subtitle-ops";
 import { WorkspaceError, type WorkspaceTask } from "./types";
 
 /**
@@ -115,55 +115,77 @@ export type SubtitleOpJobResult = {
  * text model plan → caption draft bound to the current render → FFmpeg burn-in
  * → new version committed to the task's video history.
  */
-export async function runSubtitleOp(args: { siteId: string; customerId: string; taskId: string; opId: SubtitleOpId }): Promise<SubtitleOpJobResult> {
+export async function runSubtitleOp(args: { siteId: string; customerId: string; taskId: string; opId: SubtitleOpId; settings?: SubtitleOpSettings }): Promise<SubtitleOpJobResult> {
   if (!isSubtitleOpId(args.opId)) throw new WorkspaceError("workspace_subtitle_op_invalid", 422);
-  const task = await getTask(args.siteId, args.customerId, args.taskId);
+  const settings = args.settings ?? {};
+  let task = await getTask(args.siteId, args.customerId, args.taskId);
   assertSubtitleOpTask(task, args);
-  const video = task.video!;
-  const duration = editedDuration(task);
-  const decision = await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, duration));
-  const plan = validateSubtitleOpPlan(decision, duration);
+  const decision = await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, editedDuration(task)));
+  let plan = validateSubtitleOpPlan(decision, editedDuration(task));
+  // Customer overrides win over the plan's style choice; unchosen dimensions stay automatic.
+  const style = settings.style ?? plan.style;
 
+  let saved: StoredTask | undefined;
+  let committed: Awaited<ReturnType<typeof renderEditedVideo>> | undefined;
   let uncommittedRenderId: string | undefined;
   try {
-    // Stage the plan as a caption draft bound to the current render so the
-    // edited render burns exactly these cues. Direct assignment mirrors
-    // updateCaptionLines but does not require pre-existing caption lines.
-    task.captionEdits = { renderId: video.renderId, lines: plan.lines, updatedAt: new Date().toISOString() };
-    const compiled = compileVideoEdit(task, { subtitleStyle: plan.style });
-    const rendered = await renderEditedVideo(task, compiled);
-    uncommittedRenderId = rendered.renderId;
+    // One conflict retry: another writer (an edit in another window) may bump
+    // the revision while the burn-in runs. The plan is re-staged against the
+    // fresh cut and the burn-in repeats once; two concurrent burns of the same
+    // task cannot happen because the route runs single-flight per task.
+    for (let attempt = 0; attempt < 2 && !saved; attempt++) {
+      if (attempt > 0) {
+        task = await getTask(args.siteId, args.customerId, args.taskId);
+        assertSubtitleOpTask(task, args);
+        plan = { style: plan.style, lines: validateCaptionLines(plan.lines, editedDuration(task)) };
+      }
+      // Stage the plan as a caption draft bound to the current render so the
+      // edited render burns exactly these cues. Direct assignment mirrors
+      // updateCaptionLines but does not require pre-existing caption lines.
+      task.captionEdits = { renderId: task.video!.renderId, lines: plan.lines, updatedAt: new Date().toISOString() };
+      const compiled = compileVideoEdit(task, { subtitleStyle: style, ...(settings.size ? { subtitleSize: settings.size } : {}), ...(settings.position ? { subtitlePosition: settings.position } : {}), ...(settings.color ? { subtitleColor: settings.color } : {}), ...(settings.backdrop ? { subtitleBackdrop: settings.backdrop } : {}) });
+      const rendered = await renderEditedVideo(task, compiled);
+      uncommittedRenderId = rendered.renderId;
 
-    const previous = task.video!;
-    if (!task.videoHistory.some((entry) => entry.renderId === previous.renderId)) {
-      task.videoHistory.push(structuredClone(previous));
+      const previous = task.video!;
+      if (!task.videoHistory.some((entry) => entry.renderId === previous.renderId)) {
+        task.videoHistory.push(structuredClone(previous));
+      }
+      task.video = rendered;
+      task.captionEdits = undefined;
+      task.status = "completed";
+      const at = new Date().toISOString();
+      task.subtitleCompletion = [...(task.subtitleCompletion ?? []), { at, opId: args.opId, renderId: rendered.renderId }].slice(-20);
+      task.revisions.push({
+        at,
+        field: `subtitleOp:${args.opId}`,
+        before: { renderId: previous.renderId, lines: previous.captionLines ?? [] },
+        after: { renderId: rendered.renderId, lines: rendered.captionLines ?? [] }
+      });
+      task.revisions = task.revisions.slice(-100);
+      try {
+        saved = await saveTask(task, task.revision);
+        committed = rendered;
+        uncommittedRenderId = undefined;
+      } catch (caught) {
+        await removeEditedRender(task, rendered.renderId).catch(() => undefined);
+        uncommittedRenderId = undefined;
+        const knownConflict = caught instanceof WorkspaceError && caught.code === "revision_conflict";
+        if (!knownConflict || attempt === 1) throw caught;
+      }
     }
-    task.video = rendered;
-    task.captionEdits = undefined;
-    task.status = "completed";
-    const at = new Date().toISOString();
-    task.subtitleCompletion = [...(task.subtitleCompletion ?? []), { at, opId: args.opId, renderId: rendered.renderId }].slice(-20);
-    task.revisions.push({
-      at,
-      field: `subtitleOp:${args.opId}`,
-      before: { renderId: previous.renderId, lines: previous.captionLines ?? [] },
-      after: { renderId: rendered.renderId, lines: rendered.captionLines ?? [] }
-    });
-    task.revisions = task.revisions.slice(-100);
-    const saved = await saveTask(task, task.revision);
-    uncommittedRenderId = undefined;
-    return {
-      taskId: task.taskId,
-      revision: saved.revision,
-      renderId: rendered.renderId,
-      finalUrl: rendered.finalUrl ?? "",
-      opId: args.opId,
-      style: plan.style,
-      linesCount: plan.lines.length,
-      priorRenderIds: saved.videoHistory.map((entry) => entry.renderId)
-    };
   } catch (error) {
     if (uncommittedRenderId) await removeEditedRender(task, uncommittedRenderId).catch(() => undefined);
     throw error;
   }
+  return {
+    taskId: task.taskId,
+    revision: saved!.revision,
+    renderId: committed!.renderId,
+    finalUrl: committed!.finalUrl ?? "",
+    opId: args.opId,
+    style,
+    linesCount: plan.lines.length,
+    priorRenderIds: saved!.videoHistory.map((entry) => entry.renderId)
+  };
 }

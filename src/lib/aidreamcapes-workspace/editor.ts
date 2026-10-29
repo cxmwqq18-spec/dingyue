@@ -9,7 +9,7 @@ import { readClip, readTaskMusic } from "./media-render";
 import { assertTaskMusicSelectionRights } from "./music-catalog";
 import { isWorkspaceStabilityMockMode } from "./stability";
 import { readMockShotClip } from "./mock-runtime";
-import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SubtitleCue, type SubtitleStyle, type VideoAspect, type VideoRender, type WorkspaceTask } from "./types";
+import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SubtitleBackdrop, type SubtitleCue, type SubtitleStyle, type SubtitleTextColor, type SubtitleTextPosition, type SubtitleTextSize, type VideoAspect, type VideoRender, type WorkspaceTask } from "./types";
 
 const run = promisify(execFile);
 const SAFE_ID = /^[a-zA-Z0-9_-]{1,180}$/;
@@ -35,6 +35,11 @@ export interface VideoEditSettings {
   clips: ClipEditSetting[];
   order: string[];
   subtitleStyle: SubtitleStyle;
+  /** Optional caption presentation overrides; absent fields keep the style default. */
+  subtitleSize?: SubtitleTextSize;
+  subtitlePosition?: SubtitleTextPosition;
+  subtitleColor?: SubtitleTextColor;
+  subtitleBackdrop?: SubtitleBackdrop;
   overlay: { text: string; cta: string };
   audio: { nativeGain: number; musicGain: number; mixMusic: boolean };
 }
@@ -147,7 +152,7 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   }
 
   const patch = value === undefined ? {} : plainObject(value, "workspace_edit_patch_invalid");
-  assertExactKeys(patch, ["clips", "order", "subtitleStyle", "overlay", "audio"], "workspace_edit_patch_invalid");
+  assertExactKeys(patch, ["clips", "order", "subtitleStyle", "subtitleSize", "subtitlePosition", "subtitleColor", "subtitleBackdrop", "overlay", "audio"], "workspace_edit_patch_invalid");
   if (patch.clips !== undefined) {
     if (!Array.isArray(patch.clips) || patch.clips.length > clipByShot.size) throw new WorkspaceError("workspace_edit_clips_invalid", 422);
     const seen = new Set<string>();
@@ -191,6 +196,22 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   if (subtitleStyle !== "classic" && subtitleStyle !== "bold" && subtitleStyle !== "minimal") {
     throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
   }
+  const subtitleSize = patch.subtitleSize === undefined ? prior?.subtitleSize : patch.subtitleSize;
+  if (subtitleSize !== undefined && subtitleSize !== "small" && subtitleSize !== "medium" && subtitleSize !== "large") {
+    throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
+  }
+  const subtitlePosition = patch.subtitlePosition === undefined ? prior?.subtitlePosition : patch.subtitlePosition;
+  if (subtitlePosition !== undefined && subtitlePosition !== "bottom" && subtitlePosition !== "middle" && subtitlePosition !== "top") {
+    throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
+  }
+  const subtitleColor = patch.subtitleColor === undefined ? prior?.subtitleColor : patch.subtitleColor;
+  if (subtitleColor !== undefined && subtitleColor !== "white" && subtitleColor !== "yellow" && subtitleColor !== "cyan" && subtitleColor !== "black") {
+    throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
+  }
+  const subtitleBackdrop = patch.subtitleBackdrop === undefined ? prior?.subtitleBackdrop : patch.subtitleBackdrop;
+  if (subtitleBackdrop !== undefined && subtitleBackdrop !== "none" && subtitleBackdrop !== "box" && subtitleBackdrop !== "outline") {
+    throw new WorkspaceError("workspace_edit_subtitle_style_invalid", 422);
+  }
   const overlayPatch = patch.overlay === undefined ? {} : plainObject(patch.overlay, "workspace_edit_overlay_invalid");
   assertExactKeys(overlayPatch, ["text", "cta"], "workspace_edit_overlay_invalid");
   const overlay = {
@@ -216,7 +237,7 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
   const [width, height] = aspect === "9:16" ? [720, 1280] : aspect === "1:1" ? [720, 720] : [1280, 720];
   return {
     sourceRenderId,
-    settings: { clips: clipsInSourceOrder.map(({ shotId, inPoint, outPoint, speed }) => ({ shotId, inPoint, outPoint, speed })), order, subtitleStyle, overlay, audio },
+    settings: { clips: clipsInSourceOrder.map(({ shotId, inPoint, outPoint, speed }) => ({ shotId, inPoint, outPoint, speed })), order, subtitleStyle, ...(subtitleSize ? { subtitleSize } : {}), ...(subtitlePosition ? { subtitlePosition } : {}), ...(subtitleColor ? { subtitleColor } : {}), ...(subtitleBackdrop ? { subtitleBackdrop } : {}), overlay, audio },
     clips: orderedClips.map(({ shotId, inPoint, outPoint, speed, vid, clipUrl, sourceDuration }) => ({ shotId, inPoint, outPoint, speed, vid, clipUrl, sourceDuration })),
     duration,
     aspect,
@@ -394,8 +415,34 @@ function taskStoryboardHash(task: WorkspaceTask) {
   return crypto.createHash("sha256").update(JSON.stringify({ input: task.input, musicSelection: task.musicSelection ?? null, storyboard: task.storyboard })).digest("hex");
 }
 
-function outputVideoFilter(dir: string, compiled: CompiledVideoEdit, cues: SubtitleCue[], style: string) {
-  const filters: string[] = [];
+/** Base caption font size per style, before the customer size override. */
+const SUBTITLE_BASE_FONT_SIZE = { classic: 22, bold: 26, minimal: 20 } as const;
+const SUBTITLE_SIZE_SCALE = { small: 0.8, medium: 1, large: 1.3 } as const;
+const SUBTITLE_ALIGNMENT = { bottom: 2, middle: 5, top: 8 } as const;
+/** ASS colours are &HAABBGGRR. */
+const SUBTITLE_PRIMARY_COLOURS = { white: "&H00FFFFFF", yellow: "&H0000FFFF", cyan: "&H00FFFF00", black: "&H00000000" } as const;
+
+/** libass force_style string for the style preset with the size, position, colour and backdrop overrides applied. */
+function subtitleAssStyle(settings: VideoEditSettings): string {
+  const fontSize = Math.round(SUBTITLE_BASE_FONT_SIZE[settings.subtitleStyle] * SUBTITLE_SIZE_SCALE[settings.subtitleSize ?? "medium"]);
+  const alignment = SUBTITLE_ALIGNMENT[settings.subtitlePosition ?? "bottom"];
+  const marginV = settings.subtitlePosition === undefined || settings.subtitlePosition === "bottom"
+    ? settings.subtitleStyle === "bold" ? 48 : settings.subtitleStyle === "minimal" ? 36 : 44
+    : 56;
+  const colour = settings.subtitleColor ?? "white";
+  const backdrop = settings.subtitleBackdrop ?? (settings.subtitleStyle === "bold" ? "box" : "outline");
+  // Black text stays readable by swapping the dark box for a translucent light one.
+  const boxColour = colour === "black" ? "&H80FFFFFF" : "&H80000000";
+  const outlineWidth = settings.subtitleBackdrop === undefined && settings.subtitleStyle === "minimal" ? 1 : 2;
+  const boxParams = backdrop === "box"
+    ? `BackColour=${boxColour},BorderStyle=3,Outline=0,Shadow=0`
+    : backdrop === "none"
+      ? "BorderStyle=1,Outline=0,Shadow=1"
+      : `BorderStyle=1,Outline=${outlineWidth},Shadow=${settings.subtitleBackdrop === undefined && settings.subtitleStyle === "minimal" ? 1 : 0}`;
+  return `FontName=Arial,FontSize=${fontSize},Bold=${settings.subtitleStyle === "bold" ? 1 : 0},PrimaryColour=${SUBTITLE_PRIMARY_COLOURS[colour]},OutlineColour=&H80000000,${boxParams},Alignment=${alignment},MarginV=${marginV}`;
+}
+
+function outputVideoFilter(dir: string, compiled: CompiledVideoEdit, cues: SubtitleCue[], style: string) {  const filters: string[] = [];
   if (cues.length) {
     const filename = escapeFilterPath(path.join(dir, "subtitles.srt"));
     filters.push(`subtitles=filename='${filename}':force_style='${style}'`);
@@ -471,11 +518,7 @@ export async function renderEditedVideo(task: WorkspaceTask, compiled: CompiledV
     if (compiled.settings.overlay.text) await fs.writeFile(path.join(dir, "overlay-text.txt"), compiled.settings.overlay.text, { mode: 0o600, flag: "wx" });
     if (compiled.settings.overlay.cta) await fs.writeFile(path.join(dir, "overlay-cta.txt"), compiled.settings.overlay.cta, { mode: 0o600, flag: "wx" });
 
-    const style = compiled.settings.subtitleStyle === "bold"
-      ? "FontName=Arial,FontSize=26,Bold=1,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BackColour=&H80000000,BorderStyle=3,Outline=0,Shadow=0,Alignment=2,MarginV=48"
-      : compiled.settings.subtitleStyle === "minimal"
-        ? "FontName=Arial,FontSize=20,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BorderStyle=1,Outline=1,Shadow=1,Alignment=2,MarginV=36"
-        : "FontName=Arial,FontSize=22,PrimaryColour=&H00FFFFFF,OutlineColour=&H80000000,BorderStyle=1,Outline=2,Shadow=0,Alignment=2,MarginV=44";
+    const style = subtitleAssStyle(compiled.settings);
     const videoFilter = outputVideoFilter(dir, compiled, cues, style);
     const finalPath = path.join(dir, "final.mp4");
     if (compiled.settings.audio.mixMusic) {

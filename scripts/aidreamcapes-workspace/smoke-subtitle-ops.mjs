@@ -28,13 +28,20 @@ const store = new Map();
 let storeWriteCount = 0;
 let removeEditedRenderCalls = 0;
 let failNextRender = false;
-let failNextSave = false;
+let failSaveTimes = 0;
 const renderCalls = [];
+const prismaQueries = [];
+const platformInflightRows = [];
 const decisionCalls = [];
 let decisionOverride;
 
 const clone = (value) => structuredClone(value);
-const error = (code, status = 400, details) => Object.assign(new Error(code), { code, status, details });
+// The retry logic identifies conflicts via `instanceof WorkspaceError`, so fixtures throw the real class.
+let WorkspaceErrorClass;
+const error = (code, status = 400, details) => {
+  if (!WorkspaceErrorClass) WorkspaceErrorClass = loadWorkspace("types").WorkspaceError;
+  return new WorkspaceErrorClass(code, status, details);
+};
 
 const persistentStore = {
   async getTask(siteId, customerId, taskId) {
@@ -46,8 +53,8 @@ const persistentStore = {
   async saveTask(task, expectedRevision) {
     const current = store.get(task.taskId);
     if (!current || current.customerId !== task.customerId || current.revision !== expectedRevision) throw error("revision_conflict", 409);
-    if (failNextSave) {
-      failNextSave = false;
+    if (failSaveTimes > 0) {
+      failSaveTimes--;
       throw error("revision_conflict", 409);
     }
     const saved = { ...clone(task), revision: expectedRevision + 1, updatedAt: new Date().toISOString() };
@@ -67,17 +74,18 @@ const providerStub = {
 
 const editorStub = {
   compileVideoEdit(task, patch) {
-    return { patch, sourceRenderId: task.video.renderId, settings: { subtitleStyle: patch.subtitleStyle } };
+    return { patch, sourceRenderId: task.video.renderId, settings: { ...patch } };
   },
   async renderEditedVideo(task, compiled) {
-    renderCalls.push({ taskId: task.taskId, style: compiled.settings.subtitleStyle, stagedDraft: Boolean(task.captionEdits), draftRenderId: task.captionEdits?.renderId });
+    const renderId = `edit-${renderCalls.length + 1}`;
+    renderCalls.push({ taskId: task.taskId, renderId, style: compiled.settings.subtitleStyle, patch: compiled.patch, stagedDraft: Boolean(task.captionEdits), draftRenderId: task.captionEdits?.renderId });
     if (failNextRender) {
       failNextRender = false;
       throw error("workspace_video_processing_failed", 502);
     }
     return {
       ...clone(task.video),
-      renderId: `edit-${renderCalls.length}`,
+      renderId,
       sourceRenderId: task.video.renderId,
       status: "done",
       finalUrl: "/output?kind=video",
@@ -129,6 +137,20 @@ const apiStub = {
   async jsonBody(request) { return JSON.parse(await request.text()); }
 };
 
+const prismaStub = {
+  prisma: {
+    platformAsyncJob: {
+      async findMany(query) {
+        prismaQueries.push(query);
+        return platformInflightRows.filter((row) =>
+          row.kind === query.where.kind
+          && row.actorId === query.where.actorId
+          && query.where.status.in.includes(row.status));
+      }
+    }
+  }
+};
+
 const transpileOptions = { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } };
 function loadWorkspace(name) {
   if (moduleCache.has(name)) return moduleCache.get(name).exports;
@@ -160,6 +182,7 @@ function loadRoute(filename, extraStubs = {}) {
     "@/lib/aidreamcapes-workspace/subtitle-ops.server": loadWorkspace("subtitle-ops.server"),
     "@/lib/aidreamcapes-workspace/types": loadWorkspace("types"),
     "@/lib/async-jobs": asyncJobsStub,
+    "@/lib/prisma": prismaStub,
     ...extraStubs
   };
   const scopedRequire = (id) => {
@@ -283,14 +306,50 @@ try {
   assert.equal(storeWriteCount, baselineWrites, "Invalid plans do not write");
   assert.equal(renderCalls.length, baselineRenders, "Invalid plans do not render");
 
-  // 3. A save failure after a successful render cleans the uncommitted render and leaves the task untouched.
-  failNextSave = true;
+  // 2b. Customer style overrides reach the render pipeline and win over the plan.
+  const styledRenders = renderCalls.length;
+  const styled = await subtitleOpsServer.runSubtitleOp({
+    siteId: task.siteId, customerId: owner, taskId: task.taskId, opId: "captions_polish",
+    settings: { style: "classic", size: "large", position: "top", color: "yellow", backdrop: "none" }
+  });
+  const styledCall = renderCalls[renderCalls.length - 1];
+  assert.equal(styled.style, "classic", "The customer style overrides the plan style");
+  assert.equal(styledCall.style, "classic");
+  assert.equal(styledCall.patch.subtitleSize, "large");
+  assert.equal(styledCall.patch.subtitlePosition, "top");
+  assert.equal(styledCall.patch.subtitleColor, "yellow");
+  assert.equal(styledCall.patch.subtitleBackdrop, "none");
+  assert.equal(renderCalls.length, styledRenders + 1);
+
+  // 2c. Settings parsing is a strict whitelist.
+  assert.deepEqual(subtitleOps.parseSubtitleOpSettings(undefined), {});
+  assert.deepEqual(subtitleOps.parseSubtitleOpSettings(null), {});
+  assert.deepEqual(subtitleOps.parseSubtitleOpSettings({ size: "large" }), { size: "large" });
+  for (const bad of [{ size: "huge" }, { style: "neon" }, { evil: 1 }, "nope", ["bottom"]]) {
+    assert.throws(() => subtitleOps.parseSubtitleOpSettings(bad), (caught) => caught.code === "workspace_subtitle_op_settings_invalid");
+  }
+
+  // 3. One save conflict retries against the fresh revision and succeeds; the superseded render is removed.
+  const retriesBaselineRenders = renderCalls.length;
+  failSaveTimes = 1;
+  const retried = await subtitleOpsServer.runSubtitleOp({ siteId: task.siteId, customerId: owner, taskId: task.taskId, opId: "captions_polish" });
+  assert.equal(retried.renderId.startsWith("edit-"), true);
+  assert.equal(renderCalls.length, retriesBaselineRenders + 2, "The burn-in repeats once after the conflict");
+  assert.equal(renderCalls[renderCalls.length - 2].renderId !== renderCalls[renderCalls.length - 1].renderId, true, "The retry renders a fresh cut");
+  assert.equal(store.get(task.taskId).video.renderId, retried.renderId);
+  assert.equal(removeEditedRenderCalls, 1, "The superseded render from the failed attempt is removed");
+
+  // 3b. Two consecutive conflicts still fail and leave every uncommitted render cleaned up.
+  const failedBaselineRenders = renderCalls.length;
+  const failedBaselineCleanup = removeEditedRenderCalls;
+  failSaveTimes = 2;
   await assert.rejects(
     () => subtitleOpsServer.runSubtitleOp({ siteId: task.siteId, customerId: owner, taskId: task.taskId, opId: "marketing_copy" }),
     (caught) => caught.code === "revision_conflict"
   );
-  assert.equal(removeEditedRenderCalls, 1, "Uncommitted renders are removed");
-  assert.equal(store.get(task.taskId).video.renderId, committed.renderId);
+  assert.equal(renderCalls.length, failedBaselineRenders + 2);
+  assert.equal(removeEditedRenderCalls, failedBaselineCleanup + 2, "Both uncommitted renders are removed");
+  assert.equal(store.get(task.taskId).video.renderId, retried.renderId, "The task keeps its committed version");
 
   // 4. Route guards.
   const postRoute = loadRoute(postRoutePath);
@@ -307,6 +366,13 @@ try {
   const foreign = await post(stranger, { opId: "promo_lines" }, { "idempotency-key": "key-foreign" });
   assert.equal(foreign.status, 404);
 
+  const badSettings = await post(owner, { opId: "promo_lines", settings: { size: "huge" } }, { "idempotency-key": "key-bad-settings" });
+  assert.equal(badSettings.status, 422);
+  assert.equal((await badSettings.json()).error, "workspace_subtitle_op_settings_invalid");
+
+  const unknownSetting = await post(owner, { opId: "promo_lines", settings: { evil: 1 } }, { "idempotency-key": "key-unknown-setting" });
+  assert.equal(unknownSetting.status, 422);
+
   store.set("task_subtitle_draft", clone(buildTask({ taskId: "task_subtitle_draft", status: "draft" })));
   const draft = await post(owner, { opId: "promo_lines" }, { "idempotency-key": "key-draft" }, "task_subtitle_draft");
   assert.equal(draft.status, 409);
@@ -318,12 +384,16 @@ try {
   assert.equal((await busy.json()).error, "task_busy");
 
   // 5. Successful POST commits the burned version; the same idempotency key replays it.
-  const accepted = await post(owner, { opId: "promo_lines" }, { "idempotency-key": "key-promo-1" });
+  const accepted = await post(owner, { opId: "promo_lines", settings: { size: "small", position: "middle" } }, { "idempotency-key": "key-promo-1" });
   assert.equal(accepted.status, 202);
   const acceptedBody = await accepted.json();
   assert.equal(acceptedBody.ok, true);
   assert.equal(acceptedBody.job.status, "succeeded");
   assert.equal(acceptedBody.job.result.opId, "promo_lines");
+  const acceptedCall = renderCalls[renderCalls.length - 1];
+  assert.equal(acceptedCall.patch.subtitleSize, "small", "Settings from the request body reach the render pipeline");
+  assert.equal(acceptedCall.patch.subtitlePosition, "middle");
+  assert.equal(acceptedCall.patch.subtitleStyle, "bold", "Unspecified dimensions stay on the AI plan");
   const promoTask = store.get(task.taskId);
   assert.equal(promoTask.video.renderId, acceptedBody.job.result.renderId);
   assert.equal(promoTask.videoHistory.some((entry) => entry.renderId === committed.renderId), true, "Each operation version is preserved");
@@ -336,6 +406,34 @@ try {
   const limited = await post(owner, { opId: "marketing_copy" }, { "idempotency-key": "key-copy-1" });
   assert.equal(limited.status, 429);
   assert.equal((await limited.json()).error, "workspace_subtitle_op_limit_reached");
+
+  // 6b. Single flight per task: a queued/running job for the same task is replayed
+  // instead of stacking a second conflicting burn-in, even past the rolling limit.
+  const now = new Date().toISOString();
+  platformInflightRows.push({
+    id: "job-inflight-1", kind: "aivideosugc_subtitle_op", actorId: owner, status: "running",
+    metadata: { taskId: task.taskId, customerId: owner, opId: "captions_polish" },
+    result: null, error: null, createdAt: now, updatedAt: now
+  });
+  const jobsBefore = jobStore.size;
+  const rendersBefore = renderCalls.length;
+  const replayedInflight = await post(owner, { opId: "captions_polish" }, { "idempotency-key": "key-inflight" });
+  assert.equal(replayedInflight.status, 202);
+  const inflightBody = await replayedInflight.json();
+  assert.equal(inflightBody.job.id, "job-inflight-1", "The inflight job is replayed");
+  assert.equal(jobStore.size, jobsBefore, "No new job is stacked on the inflight one");
+  assert.equal(renderCalls.length, rendersBefore, "No render is started for a replayed inflight job");
+  assert.equal(prismaQueries.at(-1).where.status.in.includes("running"), true, "The inflight lookup covers queued and running jobs");
+
+  // An inflight job on another task does not block a new operation.
+  store.set("task_subtitle_other", clone(buildTask({ taskId: "task_subtitle_other" })));
+  const otherTaskInflight = await post(owner, { opId: "marketing_copy" }, { "idempotency-key": "key-inflight-other" }, "task_subtitle_other");
+  assert.equal(otherTaskInflight.status, 429, "A different task still goes through the rolling limit");
+  assert.equal(jobStore.size, jobsBefore);
+
+  platformInflightRows.length = 0;
+  const afterInflightCleared = await post(owner, { opId: "marketing_copy" }, { "idempotency-key": "key-inflight-cleared" }, "task_subtitle_other");
+  assert.equal(afterInflightCleared.status, 429, "Without an inflight job the rolling limit applies again");
 
   // 7. Job status endpoint is owner-scoped.
   const jobRoute = loadRoute(jobRoutePath);

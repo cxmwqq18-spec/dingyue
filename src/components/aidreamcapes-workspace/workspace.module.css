@@ -261,6 +261,12 @@ textarea.input { resize: vertical; min-height: 100px; }
 .dark .pillButton, .dark .upload { background: #2a2439; color: #ddd3ee; }
 .spin { animation: turn 1.2s linear infinite; }
 @keyframes turn { to { transform: rotate(360deg); } }
+
+.subtitleJobPill { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; width: fit-content; max-width: 100%; border: 1px solid #d8ccff; border-radius: 999px; background: #f1edff; color: #4d2fd6; padding: 8px 15px; font-size: 12.5px; font-weight: 600; }
+.subtitleJobPill button { display: inline-flex; align-items: center; gap: 4px; border: none; background: none; padding: 0; font: inherit; font-weight: 700; color: #6035ff; cursor: pointer; }
+.subtitleJobPill button:hover { text-decoration: underline; }
+.dark .subtitleJobPill { background: #302843; border-color: #4d3f6e; color: #d1bbf9; }
+.dark .subtitleJobPill button { color: #d1bbf9; }
 @media (min-width: 1600px) {
   .workspace { grid-template-columns: 300px minmax(0, 1fr); font-size: 17px; }
   .toolbar, .brand { min-height: 64px; }

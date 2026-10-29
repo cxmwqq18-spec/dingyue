@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, Clapperboard, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
@@ -35,6 +35,8 @@ const AdCloneWorkbench = dynamic(() => import("./ad-clone-workbench").then((modu
 const AnalyticsWorkbench = dynamic(() => import("./analytics-workbench").then((module) => module.AnalyticsWorkbench), { loading: () => <p role="status">Loading performance reports…</p> });
 const AgentChatWorkbench = dynamic(() => import("./agent-chat-workbench").then((module) => module.AgentChatWorkbench), { loading: () => <p role="status">Loading AI assistant…</p> });
 const SubtitleWorkbench = dynamic(() => import("./subtitle-workbench").then((module) => module.SubtitleWorkbench), { loading: () => <p role="status">Loading subtitle studio…</p> });
+type SubtitleActiveJob = import("./subtitle-workbench").SubtitleActiveJob;
+const SUBTITLE_JOB_STORAGE_KEY = "aidreamcapes-subtitle-job";
 const TeamBrandWorkbench = dynamic(() => import("./team-brand-workbench").then((module) => module.TeamBrandWorkbench), { loading: () => <p role="status">Loading teams and brands…</p> });
 const DeveloperWorkbench = dynamic(() => import("./developer-workbench").then((module) => module.DeveloperWorkbench), { loading: () => <p role="status">Loading developer settings…</p> });
 const VideoPostEditor = dynamic(() => import("./video-post-editor").then((module) => module.VideoPostEditor), { loading: () => <p role="status">Loading video editor…</p> });
@@ -43,6 +45,7 @@ const MusicCatalogPicker = dynamic(() => import("./music-catalog-picker").then((
 import { WORKSPACE_MODULES, isWorkspaceView, workspaceViewHref, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { modelSupportsWorkspaceDuration } from "@/lib/aidreamcapes-workspace/capabilities";
+import { subtitleOpErrorText, subtitleOpLabel } from "@/lib/aidreamcapes-workspace/subtitle-ops";
 import { WorkspaceTools, ProductVideoPage, UrlToVideoPage, BatchDraftPage, workspaceModuleIcons, type ProductImportRecord, type ProductInlineRun } from "./module-pages";
 import { useImageDraft } from "./use-image-draft";
 export type { WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
@@ -212,6 +215,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [view, setView] = useState<View>(initialView);
   const [task, setTask] = useState<WorkspaceTask | null>(null);
   const [tasks, setTasks] = useState<WorkspaceTask[]>([]);
+  // Subtitle burn-in jobs are tracked here so polling and the progress pill
+  // survive view switches; a refresh resumes from sessionStorage for 30 minutes.
+  const [subtitleJob, setSubtitleJob] = useState<SubtitleActiveJob | null>(null);
+  const [subtitleNotice, setSubtitleNotice] = useState("");
+  const [subtitleElapsed, setSubtitleElapsed] = useState(0);
   // Library list paging: the first page loads eagerly, further pages append
   // while the customer scrolls towards the end of the grid.
   const [tasksHasMore, setTasksHasMore] = useState(false);
@@ -419,6 +427,82 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     setSaveStatus("All changes saved");
     setTasks((items) => [next, ...items.filter((item) => item.taskId !== next.taskId)]);
   }, []);
+
+  const onSubtitleJobStarted = useCallback((job: SubtitleActiveJob) => {
+    setSubtitleJob(job);
+    setSubtitleNotice("");
+    try { window.sessionStorage.setItem(SUBTITLE_JOB_STORAGE_KEY, JSON.stringify(job)); } catch { /* storage may be unavailable */ }
+  }, []);
+
+  // Merge a refreshed task into the library list without disturbing the agent view.
+  const mergeTask = useCallback((next: WorkspaceTask) => {
+    setTasks((items) => items.some((item) => item.taskId === next.taskId)
+      ? items.map((item) => (item.taskId === next.taskId ? next : item))
+      : items);
+    if (currentRef.current?.taskId === next.taskId) acceptTask(next, visibleView.current === "agent");
+  }, [acceptTask]);
+
+  // Resume a burn-in started earlier in this tab (page refresh keeps the pill running).
+  useEffect(() => {
+    if (!customerId) return;
+    try {
+      const raw = window.sessionStorage.getItem(SUBTITLE_JOB_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as SubtitleActiveJob;
+      if (parsed?.jobId && parsed?.taskId && Date.now() - parsed.startedAt < 30 * 60 * 1000) setSubtitleJob(parsed);
+      else window.sessionStorage.removeItem(SUBTITLE_JOB_STORAGE_KEY);
+    } catch { /* ignore malformed storage */ }
+  }, [customerId]);
+
+  // Poll the burn-in job wherever the customer is in the workspace; completion
+  // refreshes the library entry automatically.
+  useEffect(() => {
+    if (!subtitleJob || !customerId) return;
+    let cancelled = false;
+    let polling = false;
+    const poll = async () => {
+      if (cancelled || polling) return;
+      polling = true;
+      try {
+        const result = await request<{ job: { id: string; status: string; result: { linesCount?: number } | null; error: unknown } }>(`/subtitle-ops/${encodeURIComponent(subtitleJob.jobId)}`);
+        if (cancelled) return;
+        if (result.job.status === "succeeded") {
+          const finished = subtitleJob;
+          setSubtitleJob(null);
+          try { window.sessionStorage.removeItem(SUBTITLE_JOB_STORAGE_KEY); } catch { /* ignore */ }
+          const updated = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(finished.taskId)}`);
+          if (cancelled) return;
+          mergeTask(updated.task);
+          setSubtitleNotice(`“${finished.taskTitle}” now has a new version with ${result.job.result?.linesCount ?? "fresh"} subtitles. The original version is still there.`);
+        } else if (result.job.status === "failed") {
+          setSubtitleJob(null);
+          try { window.sessionStorage.removeItem(SUBTITLE_JOB_STORAGE_KEY); } catch { /* ignore */ }
+          setSubtitleNotice(subtitleOpErrorText(result.job.error));
+        }
+      } catch {
+        // Transient network failures keep polling until the job reports a terminal state.
+      } finally {
+        polling = false;
+      }
+    };
+    void poll();
+    const timer = window.setInterval(() => void poll(), 2500);
+    return () => { cancelled = true; window.clearInterval(timer); };
+  }, [subtitleJob, customerId, request, mergeTask]);
+
+  useEffect(() => {
+    if (!subtitleJob) { setSubtitleElapsed(0); return; }
+    const tick = () => setSubtitleElapsed(Math.round((Date.now() - subtitleJob.startedAt) / 1000));
+    tick();
+    const timer = window.setInterval(tick, 1000);
+    return () => window.clearInterval(timer);
+  }, [subtitleJob]);
+
+  const subtitleMediaByTask = useMemo(() => {
+    const map = new Map<string, LibraryCardMedia[]>();
+    for (const item of tasks) map.set(item.taskId, taskMedia(item, catalog?.scenes.find((scene) => scene.id === item.sceneId)));
+    return map;
+  }, [tasks, catalog]);
 
   const persist = useCallback(async () => {
     if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
@@ -1588,6 +1672,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           </div>
         </section>}
         {batchNotice && <div className={styles.notice} role="status"><span>{batchNotice}</span><button className={styles.iconButton} onClick={() => setBatchNotice("")} aria-label="Dismiss batch result"><X size={15} /></button></div>}
+        {subtitleJob && view !== "subtitles" && (
+          <div className={styles.subtitleJobPill} role="status">
+            <Loader2 size={14} className={styles.spin} aria-hidden />
+            <span>{subtitleOpLabel(subtitleJob.opId)} for “{subtitleJob.taskTitle}” · {subtitleElapsed}s — you can keep working meanwhile.</span>
+            <button type="button" onClick={() => void navigate("subtitles")}>Open Subtitle Studio <ArrowRight size={13} /></button>
+          </div>
+        )}
         {((view === "home" || view === "video" || view === "images" || view === "agent") && (task ? task.sourceTemplate : activePreset)) && renderTemplate((task ? task.sourceTemplate : activePreset)!)}
         {view === "home" && <>
           <div className={styles.greeting}><h1>{customer?.name ? `Hello, ${customer.name.split(" ")[0]}` : "Good Evening"}</h1><p><span>Let’s turn your ideas into video </span><Sparkles size={20} /></p></div>
@@ -1721,7 +1812,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
         {view === "analytics" && (customer ? <AnalyticsWorkbench siteId={siteId} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Performance</h1><p>Log in to import and compare your advertising results.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "analytics"))}`}>Log in</a></section>)}
         {view === "chat" && (customer ? <AgentChatWorkbench siteId={siteId} csrfToken={csrfToken} /> : <section className={styles.panel}><h1>AI Assistant</h1><p>Log in to chat with your AI assistant.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "chat"))}`}>Log in</a></section>)}
-        {view === "subtitles" && (customer ? <SubtitleWorkbench siteId={siteId} csrfToken={csrfToken} tasks={tasks} onTaskUpdated={(next) => acceptTask(next)} /> : <section className={styles.panel}><h1>Subtitle Studio</h1><p>Log in to add subtitles to your finished videos.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "subtitles"))}`}>Log in</a></section>)}
+        {view === "subtitles" && subtitleNotice && <div className={styles.notice} role="status"><span>{subtitleNotice}</span><button className={styles.iconButton} onClick={() => setSubtitleNotice("")} aria-label="Dismiss message"><X size={15} /></button></div>}
+        {view === "subtitles" && (customer ? <SubtitleWorkbench siteId={siteId} csrfToken={csrfToken} tasks={tasks} mediaByTask={subtitleMediaByTask} activeJob={subtitleJob} onJobStarted={onSubtitleJobStarted} /> : <section className={styles.panel}><h1>Subtitle Studio</h1><p>Log in to add subtitles to your finished videos.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "subtitles"))}`}>Log in</a></section>)}
 
         {view === "teams" && <TeamBrandWorkbench siteId={siteId} customerId={customer?.id ?? ""} csrfToken={csrfToken} disabled={working} />}
 
