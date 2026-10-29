@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { parseWorkspaceSceneRouteSlug, pickerPresetId, presetSourcePage, type PickerPresetCard, type WorkspacePreset, type WorkspacePresetRequest, type WorkspaceTemplateGallery } from "./preset-contract";
 import { AIVIDEOSUGC_SITE_ID, WORKSPACE_PROMPT_MAX_LENGTH, type SceneId, type TaskInput } from "./types";
 import { parseStaticCreateSegments } from "./static-routes";
+import { mediaDetailPath } from "./media-detail";
 import { canonicalWorkspaceTool } from "./tool-aliases";
 
 type RecordValue = Record<string, unknown>;
@@ -135,7 +136,11 @@ export function presetFromCard(page: { updatedAt: Date }, sourcePage: string, va
   catch { return undefined; }
   const staticTarget = href.pathname.startsWith("/app/create/")
     ? parseStaticCreateSegments(href.pathname.slice("/app/create/".length).split("/")) : undefined;
-  if (!["https:", "http:"].includes(href.protocol) || href.username || href.password || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || (href.pathname !== "/app/create" && staticTarget?.kind !== "tool")) return undefined;
+  // Detail-linking example cards hand off through their own public detail
+  // route; the workspace resolves the selection from the card itself, so the
+  // href only has to be that card's own canonical detail path.
+  const detailHref = mediaDetailPath(kind, typeof card.publicSlug === "string" ? card.publicSlug : undefined);
+  if (!["https:", "http:"].includes(href.protocol) || href.username || href.password || !["www.aivideosugc.com", "aivideosugc.com", "www.aidreamcapes.com", "aidreamcapes.com"].includes(href.hostname) || (href.pathname !== "/app/create" && staticTarget?.kind !== "tool" && href.pathname !== detailHref)) return undefined;
   const rawTool = typeof card.tool === "string" ? card.tool : staticTarget?.kind === "tool" ? staticTarget.tool : href.searchParams.get("tool") ?? "";
   const imageTool = IMAGE_TOOLS.has(rawTool) ? rawTool as WorkspacePreset["imageTool"] : IMAGE_TOOL_ALIASES[rawTool] ?? "custom";
   // The example's own image is the asset a visitor sees on the card; explicit
