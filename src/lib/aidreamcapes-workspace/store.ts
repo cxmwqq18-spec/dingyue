@@ -31,9 +31,11 @@ export function assertWorkspaceSite(siteId: string) {
 function assertWritable() {
   if ([process.env.DATABASE_TARGET, process.env.DINGYUE_ENV].some(value => value?.trim().toLowerCase() === "remote-readonly")) throw new WorkspaceError("workspace_database_readonly", 403);
 }
-export async function listTasks(siteId: string, customerId: string): Promise<StoredTask[]> {
+export async function listTasks(siteId: string, customerId: string, options: { limit?: number; offset?: number } = {}): Promise<StoredTask[]> {
   assertWorkspaceSite(siteId);
-  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ORDER BY "updatedAt" DESC LIMIT 100`;
+  const limit = Math.min(Math.max(Math.trunc(options.limit ?? 100), 1), 100);
+  const offset = Math.max(Math.trunc(options.offset ?? 0), 0);
+  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ORDER BY "updatedAt" DESC LIMIT ${limit} OFFSET ${offset}`;
   return rows.map(read);
 }
 export async function getTask(siteId: string, customerId: string, taskId: string): Promise<StoredTask> {

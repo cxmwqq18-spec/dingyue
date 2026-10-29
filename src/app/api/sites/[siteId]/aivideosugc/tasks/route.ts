@@ -20,8 +20,16 @@ export async function GET(request: NextRequest, { params }: Context) {
     // The library must reflect provider progress: a shot that the provider has
     // already finished or rejected has to leave "Generating" without the
     // customer opening the editor. Only tasks with in-flight work pay for the
-    // extra lookups.
-    const tasks = await listTasks(siteId, auth.current.customer.id);
+    // extra lookups. The list pages 20 at a time; the browser appends the
+    // next page while the customer scrolls.
+    const url = new URL(request.url);
+    const rawLimit = Number(url.searchParams.get("limit"));
+    const rawOffset = Number(url.searchParams.get("offset"));
+    const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(Math.trunc(rawLimit), 100) : 20;
+    const offset = Number.isFinite(rawOffset) && rawOffset > 0 ? Math.trunc(rawOffset) : 0;
+    const page = await listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset });
+    const hasMore = page.length > limit;
+    const tasks = page.slice(0, limit);
     const settled = await Promise.all(tasks.map((task) => taskHasPendingProviderWork(task) ? refreshTask(task).catch(() => task) : task));
     // Direct tasks stalled mid-flow are advanced server-side; the browser no
     // longer has to drive every step for generation to proceed.
@@ -35,7 +43,7 @@ export async function GET(request: NextRequest, { params }: Context) {
         }
       });
     }
-    return workspaceResponse({ tasks: settled.map(publicTask) });
+    return workspaceResponse({ tasks: settled.map(publicTask), hasMore });
   }
   catch (error) { return workspaceFailure(error); }
 }

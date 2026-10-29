@@ -211,6 +211,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [view, setView] = useState<View>(initialView);
   const [task, setTask] = useState<WorkspaceTask | null>(null);
   const [tasks, setTasks] = useState<WorkspaceTask[]>([]);
+  // Library list paging: the first page loads eagerly, further pages append
+  // while the customer scrolls towards the end of the grid.
+  const [tasksHasMore, setTasksHasMore] = useState(false);
+  const [tasksLoadingMore, setTasksLoadingMore] = useState(false);
+  const librarySentinelRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState<Step>("input");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(!initialCatalog || Boolean(customer && initialTaskId));
@@ -570,7 +575,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       }));
     } else if (customerId && (entryView === "library" || entryView === "home")) {
       setLoading(true);
-      loads.push(request<{ tasks: WorkspaceTask[] }>("/tasks", { signal: controller.signal }).then((result) => { if (active()) setTasks(result.tasks); }));
+      loads.push(request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>("/tasks?limit=20&offset=0", { signal: controller.signal }).then((result) => { if (active()) { setTasks(result.tasks); setTasksHasMore(Boolean(result.hasMore)); } }));
     }
     void Promise.allSettled(loads).then((results) => {
       if (!active()) return;
@@ -640,14 +645,49 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!customerId || !libraryInFlight) return;
     return startWorkspacePolling(async (signal) => {
       try {
+        // The poll refreshes the loaded head window; tasks from appended
+        // scroll pages are kept so paging and live updates compose.
         const result = await request<{ tasks: WorkspaceTask[] }>("/tasks", { signal });
-        if (!signal.aborted) setTasks((current) => result.tasks.map((item) => {
-          const saved = current.find((entry) => entry.taskId === item.taskId);
-          return saved && saved.revision > item.revision ? saved : item;
-        }));
+        if (!signal.aborted) setTasks((current) => {
+          const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
+          return [...result.tasks.map((item) => {
+            const saved = current.find((entry) => entry.taskId === item.taskId);
+            return saved && saved.revision > item.revision ? saved : item;
+          }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
+        });
       } catch { /* Library refresh should not interrupt browsing. */ }
     }, 4000);
   }, [customerId, libraryInFlight, request]);
+
+  const loadMoreTasks = useCallback(async () => {
+    if (!customerId || !tasksHasMore || tasksLoadingMore || loading) return;
+    setTasksLoadingMore(true);
+    try {
+      const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=20&offset=${tasks.length}`);
+      setTasks((current) => {
+        const known = new Set(current.map((entry) => entry.taskId));
+        return [...current, ...result.tasks.filter((item) => !known.has(item.taskId))];
+      });
+      setTasksHasMore(Boolean(result.hasMore));
+    } catch (error) {
+      setMessage((error as Error).message);
+    } finally {
+      setTasksLoadingMore(false);
+    }
+  }, [customerId, loading, request, tasks.length, tasksHasMore, tasksLoadingMore]);
+
+  // Infinite scroll: load the next page when the customer approaches the end
+  // of the library grid.
+  useEffect(() => {
+    if (view !== "library" || !tasksHasMore || tasksLoadingMore) return;
+    const sentinel = librarySentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) void loadMoreTasks();
+    }, { rootMargin: "600px 0px" });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [loadMoreTasks, tasksHasMore, tasksLoadingMore, view]);
 
   useEffect(() => {
     if (!customerId) return;
@@ -729,11 +769,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (next === "library" && customerId) {
       setLoading(true);
       try {
-        const result = await request<{ tasks: WorkspaceTask[] }>("/tasks");
-        if (navigation === navigationSerial.current) setTasks((current) => result.tasks.map((item) => {
-          const saved = current.find((entry) => entry.taskId === item.taskId);
-          return saved && saved.revision > item.revision ? saved : item;
-        }));
+        // Reload everything the customer has already paged through, so the
+        // accumulated list stays complete when they return.
+        const result = await request<{ tasks: WorkspaceTask[] }>(`/tasks?limit=${Math.max(tasks.length, 20)}&offset=0`);
+        if (navigation === navigationSerial.current) setTasks((current) => {
+          const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
+          return [...result.tasks.map((item) => {
+            const saved = current.find((entry) => entry.taskId === item.taskId);
+            return saved && saved.revision > item.revision ? saved : item;
+          }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
+        });
       } catch (error) { if (navigation === navigationSerial.current) setMessage((error as Error).message); }
       finally { if (navigation === navigationSerial.current) setLoading(false); }
     }
@@ -1695,6 +1740,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               : libraryItems.length
                 ? renderTaskCards(libraryItems)
                 : <div className={styles.empty}><FileVideo size={32} /><h3>No videos here yet</h3><p>Open Text to Video, add a product photo and a short description, then save a draft.</p><button className={styles.button} onClick={() => void navigate("agent")}>Create a video</button></div>}
+          {view === "library" && tasksHasMore && <div ref={librarySentinelRef} aria-hidden="true" className={styles.loadMoreSentinel} />}
+          {tasksLoadingMore && <div className={styles.empty} role="status"><Loader2 className={styles.spin} size={22} /><span>Loading more videos…</span></div>}
         </>}
 
         {view === "actors" && presenterStudioEnabled && <>

@@ -149,6 +149,7 @@ textarea.input { resize: vertical; min-height: 100px; }
 .removeImage { position: absolute; z-index: 2; right: 4px; top: 4px; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: #666; border: 1px solid #ddd; padding: 0; cursor: pointer; pointer-events: auto; }
 .removeImage:disabled { cursor: wait; opacity: .55; }
 .imageSlot p { color: var(--muted); margin-top: 4px; font-size: 11px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+.loadMoreSentinel { height: 2px; }
 .upload { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; border: 1px dashed #bbc0cf; border-radius: 9px; padding: 12px; min-height: 106px; min-width: 106px; background: var(--surface, #fff); color: var(--muted, #73777d); cursor: pointer; font-size: 12px; }
 .upload input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .footerActions { display: flex; justify-content: flex-end; gap: 10px; margin: 22px 0; }
