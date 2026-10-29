@@ -200,6 +200,21 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
           } catch { /* Ignore malformed fragments. */ }
         }
       }
+      // Proxies sometimes terminate a long SSE response early while the
+      // server keeps streaming and persists the complete reply, so reconcile
+      // against the conversation instead of showing a truncated bubble.
+      try {
+        const verify = await fetch(`${requestRoot}/conversations/${encodeURIComponent(conversationId)}`, { credentials: "same-origin", cache: "no-store", headers: headers() });
+        const verified = await verify.json().catch(() => ({}));
+        if (verify.ok) {
+          const persisted = ((verified.messages ?? []) as MessageView[]).filter((item) => item.role === "assistant");
+          const last = persisted[persisted.length - 1];
+          if (last && last.content.length > reply.length) {
+            liveTargetRef.current = last.content.length;
+            setMessages((current) => current.map((item) => item.id === replyId ? { ...item, content: last.content } : item));
+          }
+        }
+      } catch { /* keep the streamed reply when the check fails */ }
       if (failed) throw new Error(failed);
       if (!reply.trim()) throw new Error("agent_chat_provider_failed");
       // Refresh titles after the first exchange renames the conversation.

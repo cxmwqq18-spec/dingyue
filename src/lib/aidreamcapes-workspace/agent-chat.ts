@@ -180,9 +180,22 @@ export async function sendMessageStream(args: { customerId: string; conversation
   const customerId = args.customerId;
   const upstreamSignal = AbortSignal.any([args.signal, AbortSignal.timeout(120_000)]);
   let clientGone = false;
+  let pingTimer: ReturnType<typeof setInterval> | null = null;
 
   return new ReadableStream<Uint8Array>({
     async start(controller) {
+      // Keep intermediaries from idling out a quiet stream and notice a
+      // departed customer early: a failed ping marks the client as gone so
+      // continuations stop while the reply is still aggregated and saved.
+      pingTimer = setInterval(() => {
+        if (clientGone) return;
+        try {
+          controller.enqueue(encoder.encode(": ping\n\n"));
+        } catch {
+          clientGone = true;
+          if (pingTimer) clearInterval(pingTimer);
+        }
+      }, 15_000);
       const send = (payload: unknown) => {
         if (clientGone) return;
         try {
@@ -263,7 +276,12 @@ export async function sendMessageStream(args: { customerId: string; conversation
         console.error("[agent-chat] persist failed", error);
         send({ type: "error", code: "agent_chat_save_failed" });
       }
+      if (pingTimer) clearInterval(pingTimer);
       controller.close();
+    },
+    cancel() {
+      clientGone = true;
+      if (pingTimer) clearInterval(pingTimer);
     }
   });
 }
