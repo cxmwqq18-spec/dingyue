@@ -6,7 +6,8 @@ import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type ActorAsset, type SceneId, typ
 import type { StoredTask } from "./store";
 
 export const MAX_BATCH_ITEMS = 10;
-export const MAX_BATCH_CONCURRENCY = 3;
+/** Worker pool ceiling per batch run. Overridable for bulk dispatch windows; the default keeps the product guard. */
+export const MAX_BATCH_CONCURRENCY = Math.max(1, Number(process.env.AIVIDEOSUGC_BATCH_CONCURRENCY) || 3);
 export type BatchItemStatus = "draft" | "queued" | "running" | "completed" | "failed" | "cancelled";
 export interface BatchItemState {
   batchId: string; batchRevision: number; requestHash: string; index: number; total: number;
