@@ -32,16 +32,47 @@ function workerBaseUrls(): WorkerBaseUrls {
   return resolveWorkerBaseUrls("");
 }
 
+/**
+ * Batch bookkeeping (claimNext/finishItem) rewrites every row of the batch and
+ * bumps each task revision, so any task CAS the runner holds can lose to a
+ * sibling claim. Conflicts are benign: re-read and retry the step; the queue
+ * guards make re-dispatch idempotent.
+ */
+const RETRYABLE_CODES = ["revision_conflict", "task_busy", "shot_busy"];
+
+function retryable(error: unknown): boolean {
+  return error instanceof WorkspaceError && RETRYABLE_CODES.includes(error.code);
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function runLiveBatchItem(task: BatchTask): Promise<void> {
   const bases = workerBaseUrls();
-  let current = await getTask(task.siteId, task.customerId, task.taskId);
-  if (!current.storyboard?.shots.length) {
-    const queued = await queueAction(current, { action: "storyboard" }, current.revision);
-    current = await executeAction(queued, bases);
+  const taskId = task.taskId;
+  // Storyboard step: retry CAS conflicts against fresh state until the
+  // storyboard exists or the operation fails terminally.
+  let current = await getTask(task.siteId, task.customerId, taskId);
+  for (let attempt = 0; !current.storyboard?.shots.length; attempt++) {
+    if (attempt >= 8) throw new WorkspaceError("batch_item_failed", 500);
+    if (current.operation?.state === "fail") {
+      throw new WorkspaceError(current.operation.error || "batch_item_failed", 502);
+    }
+    if (current.operation?.state === "pending" || current.operation?.state === "run") {
+      await sleep(3_000);
+    } else {
+      try {
+        const queued = await queueAction(current, { action: "storyboard" }, current.revision);
+        current = await executeAction(queued, bases);
+      } catch (error) {
+        if (!retryable(error)) throw error;
+        await sleep(1_500);
+      }
+    }
+    current = await getTask(task.siteId, task.customerId, taskId);
   }
   const deadline = Date.now() + ITEM_TIMEOUT_MS;
   for (;;) {
-    current = await refreshTask(await getTask(task.siteId, task.customerId, task.taskId));
+    current = await refreshTask(await getTask(task.siteId, task.customerId, taskId));
     if (current.video?.finalUrl || current.status === "completed") return;
     if (current.status === "cancelled") throw new WorkspaceError("operation_cancelled", 409);
     if (current.status === "failed" || current.video?.status === "fail" ||
@@ -57,12 +88,11 @@ export async function runLiveBatchItem(task: BatchTask): Promise<void> {
       try {
         current = await continueDirectTask(current, bases);
       } catch (error) {
-        const code = error instanceof WorkspaceError ? error.code : "";
-        if (!["task_busy", "shot_busy", "revision_conflict"].includes(code)) throw error;
-        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        if (!retryable(error)) throw error;
+        await sleep(POLL_INTERVAL_MS);
       }
     } else {
-      await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+      await sleep(POLL_INTERVAL_MS);
     }
   }
 }
