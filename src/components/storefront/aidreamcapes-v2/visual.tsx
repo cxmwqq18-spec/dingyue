@@ -274,7 +274,9 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         <div className="v-picker-grid">
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
-              <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />
+              {card.video ? (
+                <video aria-label={card.video.name ?? card.label} autoPlay controls height={card.video.height} loop muted playsInline poster={r.asset(card.video.poster.src)} preload="none" src={r.asset(card.video.src)} width={card.video.width} />
+              ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>
           ))}

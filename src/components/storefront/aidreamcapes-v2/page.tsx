@@ -285,11 +285,18 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
   );
 }
 
-// Video types read best as one row: when every group holds a single example,
-// show them side by side with the group name as the card title.
+// Video types read best as one row: groups of single examples flatten side by
+// side with the group name as the card title, while multi-item groups (real
+// galleries, e.g. the TikTok case studies) keep their own labelled section.
 function oneRowWhenSingles(examples: V2Examples | undefined): V2Examples | undefined {
-  if (!examples?.groups.length || !examples.groups.every((group) => group.items?.length === 1)) return examples;
-  return { ...examples, groups: [{ label: "", items: examples.groups.map((group) => ({ ...group.items[0], title: group.label })) }] };
+  if (!examples?.groups.length) return examples;
+  if (examples.groups.every((group) => group.items?.length === 1)) {
+    return { ...examples, groups: [{ label: "", items: examples.groups.map((group) => ({ ...group.items[0], title: group.label })) }] };
+  }
+  const singles = examples.groups.filter((group) => group.items?.length === 1);
+  if (!singles.length) return examples;
+  const multis = examples.groups.filter((group) => (group.items?.length ?? 0) > 1);
+  return { ...examples, groups: [{ label: "", items: singles.map((group) => ({ ...group.items[0], title: group.label })) }, ...multis] };
 }
 
 function VideoHubPage({ data, r }: Props) {

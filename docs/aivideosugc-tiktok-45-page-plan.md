@@ -81,3 +81,28 @@
 **验证**：本地（dev:local + 本地库）与生产分别抽检 7 个归属页、多个详情页（200 + <video> + mp4 引用 + 提示词文案）、目录网格计数；脚本幂等重跑 0 ops；Cloudflare 边缘缓存已按部署同款 purge（30 文件 + 9 前缀）。`publicRuntimeCache` 以修订探针在下次请求自动生效。
 
 **审计工件**：`scripts/manifests/aidreamcapes-tiktok-case-cards-{source,local,production}-2026-10-28*.json` + plan/apply 脚本。
+
+## v3（2026-10-29）：视频卡进列表自动播放 + 45 条视频上视频总览页
+
+站长反馈两点并确认实施：
+
+1. **列表网格要直接播放视频**。数据层 45 条卡的 `video`/`referenceImages` 字段本就齐全，
+   但 `VisualPicker` 只渲染 `<img>`，忽略了 `card.video`。修复（Aidreamcapes 组件内）：
+   - `visual.tsx` `VisualPicker`：卡片带 `video` 时渲染 `<video autoPlay muted loop playsInline controls preload="none">`（与模板页画廊 `CaseCard` 行为一致），无 `video` 时照旧渲染参考图；
+   - `types.ts` `V2VisualPickerCard` 增加 `video?: V2Video`；
+   - `styles.ts` `.v-pick-card video` 复用图片的 1:1 cover 规则；
+   - `page.tsx` `oneRowWhenSingles`（仅视频总览页使用）：单项组压为一行展示的行为保留，多项目组（如 45 条案例组）作为独立命名组渲染，互不影响。
+2. **`/ai-video-generation` 视频总览页要能找到这批视频**。该页 `data.examples` 画廊此前只有
+   5 个旧单项示例。v3 manifest 以一个 `examplesEnsure` op 在该页追加命名组
+   "TikTok Shop case studies"（45 条视频 item，形状与 v2 模板页画廊完全一致，
+   `publicSlug` 不变、详情页归属不变）。
+
+- 计划脚本：`scripts/plan-aidreamcapes-tiktok-hub-examples.mjs`（只读库 + 产出可审阅 manifest）。
+- manifest：`scripts/manifests/aidreamcapes-tiktok-hub-examples-{local,production}-2026-10-29.json`，
+  复用 v2 apply 脚本（contract v2、updatedAt CAS、读回断言、幂等）。
+- 本地执行：apply 成功（1 op），examples 50 条（45 新 + 5 旧），dev:local 浏览器验证
+  hub 新组 45 视频卡渲染、product-video picker 23 卡（13 视频 + 10 图片）、
+  video-ads/before-after/image-to-video picker 视频 2/4/4、无页面错误。
+- 生产执行：apply 成功后经 Cloudflare 直连源站复验（见执行报告）。
+- 部署：代码随 release commit 上线（code-only），内容经 manifest 字段落库，
+  无快照/发布状态写入。
