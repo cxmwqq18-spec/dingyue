@@ -107,14 +107,13 @@ try {
 
   if (!apply) {
     console.log("Dry run only. Review the plan, then apply with --apply --confirm=site_aidreamcapes-spokesperson-card-covers --base-hash=" + baseHash);
-    return;
+  } else {
+    await db.livePage.update({
+      where: { siteId_slug: { siteId, slug: manifest.slug } },
+      data: { contentJson: next }
+    });
+    console.log("Applied. The storefront serves the updated page on the next request.");
   }
-
-  await db.livePage.update({
-    where: { siteId_slug: { siteId, slug: manifest.slug } },
-    data: { contentJson: next }
-  });
-  console.log("Applied. The storefront serves the updated page on the next request.");
 } finally {
   await db.$disconnect();
 }
