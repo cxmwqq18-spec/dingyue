@@ -197,7 +197,7 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
           {videoMode && (model?.audioReferenceMax ?? 0) > 0 && onAudioFileUpload && onAudioFileRemove && <References kind="audio" urls={audioReferenceFiles} max={model!.audioReferenceMax} disabled={disabled} canUpload={canUpload} onUpload={onAudioFileUpload} onRemove={onAudioFileRemove} onMove={onAudioFileMove} accept="audio/*" addLabel="Add audio" limitLabel="Audio limit" countNoun="audio files" />}
           {imageMode && <References kind="image" urls={imageInput.assetUrls} max={catalog?.imageReferenceMax ?? 4} disabled={disabled} canUpload={canUpload} onUpload={onImageReferenceUpload} onRemove={onImageReferenceRemove} onMove={onImageReferenceMove} />}
         </div>
-        <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value }); else onPromptChange(event.target.value); }} onPaste={(event) => {
+        <textarea value={promptValue} disabled={disabled} onChange={(event) => { if (imageMode) onImageInputChange({ ...imageInput, prompt: event.target.value.slice(0, WORKSPACE_PROMPT_MAX_LENGTH) }); else onPromptChange(event.target.value); }} onPaste={(event) => {
           const files = takePasteFiles(event);
           if (!importEnabled || !files.length) return;
           event.preventDefault();

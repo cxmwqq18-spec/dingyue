@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, Clapperboard, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
+import { WORKSPACE_THEME_STORAGE_KEY } from "@/lib/aidreamcapes-workspace/login";
 import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
@@ -234,10 +235,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
+  // Persist the theme per browser (anonymous visitors included). The read runs
+  // in useLayoutEffect so the stored choice applies before the first paint
+  // after hydration; writing happens on every change.
+  useLayoutEffect(() => {
+    try { if (window.localStorage.getItem(WORKSPACE_THEME_STORAGE_KEY) === "dark") setDark(true); } catch { /* storage may be unavailable */ }
+  }, []);
+  useEffect(() => {
+    try { window.localStorage.setItem(WORKSPACE_THEME_STORAGE_KEY, dark ? "dark" : "light"); } catch { /* storage may be unavailable */ }
+  }, [dark]);
   const [modal, setModal] = useState<"guide" | "support" | "actors" | "product" | "templates" | null>(null);
   const [templateCategoryFilter, setTemplateCategoryFilter] = useState(initialHandoff?.category && initialTemplateGallery?.categories.some((item) => item.id === initialHandoff.category) ? initialHandoff.category : "all");
   const [templateSearch, setTemplateSearch] = useState("");
   const closeModal = useCallback(() => setModal(null), []);
+  // Composer prompt entries all funnel through here so no code path — typing,
+  // templates, suggestions, restored handoffs — can exceed the limit even when
+  // the DOM maxLength is bypassed programmatically.
+  const handleComposerPrompt = useCallback((value: string) => setPrompt(value.slice(0, WORKSPACE_PROMPT_MAX_LENGTH)), []);
   const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : initialHandoff?.prompt ?? "");
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
   const [quickStartSceneId, setQuickStartSceneId] = useState<SceneSchema["id"] | "">(initialCatalog?.scenes.find((scene) => scene.id === initialSceneId)?.id ?? "");
@@ -541,6 +555,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     saveTimer.current = setTimeout(() => { void persist().catch(() => {}); }, 650);
   }, [persist]);
 
+  const entryEffectsDoneRef = useRef(false);
+
   useEffect(() => {
     const controller = new AbortController();
     const navigation = navigationSerial.current;
@@ -560,7 +576,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       ? initialView === "home" ? "agent" : initialView : requestedView;
     const entryView = initialPreset ? initialPreset.kind === "photo" ? "images" : "video" : handoffView;
     const taskId = initialTaskId ?? params.get("task");
-    if (!initialPreset && !resumingGuestDraft && !taskId) {
+    // Entry handoff (view, stored inputs, URL canonicalization) belongs to the
+    // page load that carried it. Re-runs of this effect — a customer signing
+    // in, catalog refreshes — must not drag the visitor back to the entry view
+    // or rewrite the URL of a view they navigated to since.
+    const runEntryEffects = !entryEffectsDoneRef.current;
+    if (runEntryEffects) entryEffectsDoneRef.current = true;
+    if (runEntryEffects && !initialPreset && !resumingGuestDraft && !taskId) {
       const entryPrompt = handoff.prompt ?? createIntent?.prompt;
       if (entryPrompt) setPrompt(entryPrompt);
       if (handoff.aspect) setComposerAspect(handoff.aspect);
@@ -575,9 +597,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         setImageInput((current) => ({ ...current, ...(entryPrompt ? { prompt: entryPrompt } : {}), ...(handoff.aspect ? { aspect: handoff.aspect } : {}) }));
       }
     }
-    if (entryView === "library" && handoff.filter) setLibraryFilter(handoff.filter);
-    setView(entryView);
-    if (!taskId && !resumingGuestDraft) {
+    if (runEntryEffects && entryView === "library" && handoff.filter) setLibraryFilter(handoff.filter);
+    if (runEntryEffects) setView(entryView);
+    if (runEntryEffects && !taskId && !resumingGuestDraft) {
       // Initial SSR consumed the bounded cookie. Long free-form inputs use
       // this tab's storage, never a URL parameter or a public data fetch.
       try {
@@ -599,7 +621,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       canonical.search = ""; canonical.hash = "";
       window.history.replaceState(window.history.state, "", canonical);
     }
-    if (customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
+    if (runEntryEffects && customerId && !taskId && params.get("resumeDraft") === "1" && initialCatalog) {
       params.delete("resumeDraft");
       const restoredUrl = `${window.location.pathname}${params.size ? `?${params.toString()}` : ""}${window.location.hash}`;
       window.history.replaceState(window.history.state, "", restoredUrl);
@@ -1677,7 +1699,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {view === "home" && <>
           <div className={styles.greeting}><h1>{customer?.name ? `Hello, ${customer.name.split(" ")[0]}` : "Good Evening"}</h1><p><span>Let’s turn your ideas into video </span><Sparkles size={20} /></p></div>
           <HomeComposer
-            tab={composerTab} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
+            tab={composerTab} onTabChange={setComposerTab} prompt={prompt} onPromptChange={handleComposerPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
@@ -1705,7 +1727,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {view === "batch" && <BatchDraftPage />}
         {view === "video" && <><div className={styles.pageTitle}><h1>AI Video</h1><p>Describe your video and add reference photos, then review the saved draft before generation.</p></div>
           <HomeComposer
-            tab="AI Video" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
+            tab="AI Video" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={handleComposerPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
@@ -1725,7 +1747,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           <div className={styles.pageTitle}><h1>Text to Video</h1><p>Turn a written idea and product details into a finished video. Add your prompt and photos, and we'll generate the video and save it to your Library.</p></div>
           {loading && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Loading your workspace…</span></div>}
           <HomeComposer
-            tab="AI Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
+            tab="AI Video Agent" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={handleComposerPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
@@ -1894,7 +1916,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             <p>Create product visuals from your own reference photos.</p>
           </div>
           <HomeComposer
-            tab="AI Image" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={setPrompt}
+            tab="AI Image" showTabs={false} onTabChange={setComposerTab} prompt={prompt} onPromptChange={handleComposerPrompt}
             catalog={catalog} modelId={composerModel} onModelChange={setComposerModel}
             aspect={composerAspect} onAspectChange={setComposerAspect} duration={composerDuration} onDurationChange={setComposerDuration}
             resolution={composerResolution} onResolutionChange={setComposerResolution} creditsNote={composerCreditsNote}
