@@ -1,7 +1,8 @@
 import "server-only";
-import { WorkspaceError } from "./types";
-import { getTask } from "./store";
+import { WorkspaceError, type StoryboardShot } from "./types";
+import { getTask, type StoredTask } from "./store";
 import { queueAction, executeAction, refreshTask, continueDirectTask, directTaskNeedsServerContinuation } from "./runner";
+import { createQuote } from "./quote";
 import { resolveWorkerBaseUrls, type WorkerBaseUrls } from "@/lib/worker";
 import type { BatchTask } from "./batch";
 import { isWorkspaceStabilityMockMode } from "./stability";
@@ -23,7 +24,7 @@ import { isWorkspaceStabilityMockMode } from "./stability";
  */
 
 /** Generous ceiling for one direct 30s clip (dispatch + provider render + stitch). */
-const ITEM_TIMEOUT_MS = 60 * 60_000;
+const ITEM_TIMEOUT_MS = 90 * 60_000;
 const POLL_INTERVAL_MS = 15_000;
 
 function workerBaseUrls(): WorkerBaseUrls {
@@ -33,10 +34,10 @@ function workerBaseUrls(): WorkerBaseUrls {
 }
 
 /**
- * Batch bookkeeping (claimNext/finishItem) rewrites every row of the batch and
- * bumps each task revision, so any task CAS the runner holds can lose to a
- * sibling claim. Conflicts are benign: re-read and retry the step; the queue
- * guards make re-dispatch idempotent.
+ * Batch bookkeeping (claimNext/finishItem) rewrites batch rows and bumps
+ * revisions, so any task CAS the runner holds can lose to a sibling claim.
+ * Conflicts are benign: re-read and retry the step; the queue guards make
+ * re-dispatch idempotent.
  */
 const RETRYABLE_CODES = ["revision_conflict", "task_busy", "shot_busy"];
 
@@ -45,6 +46,20 @@ function retryable(error: unknown): boolean {
 }
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * A shot the provider rejected (fail/expired) stays failed for interactive
+ * continuation on purpose — automatic retries must not re-bill work the
+ * customer has not asked for again. A batch run IS that mandate: the owner
+ * submitted the item for generation, so the executor re-dispatches a rejected
+ * shot with a fresh server-side quote, bounded per claim.
+ */
+function rejectedShot(task: StoredTask): StoryboardShot | undefined {
+  const shot = task.storyboard?.shots[0];
+  if (!shot || !["fail", "expired"].includes(shot.genStatus)) return undefined;
+  if ((shot.versions ?? []).some((version: { status?: string }) => ["pending", "run"].includes(version.status ?? ""))) return undefined;
+  return shot;
+}
 
 export async function runLiveBatchItem(task: BatchTask): Promise<void> {
   const bases = workerBaseUrls();
@@ -71,27 +86,39 @@ export async function runLiveBatchItem(task: BatchTask): Promise<void> {
     current = await getTask(task.siteId, task.customerId, taskId);
   }
   const deadline = Date.now() + ITEM_TIMEOUT_MS;
+  let redispatchLeft = 2;
   for (;;) {
     current = await refreshTask(await getTask(task.siteId, task.customerId, taskId));
     if (current.video?.finalUrl || current.status === "completed") return;
     if (current.status === "cancelled") throw new WorkspaceError("operation_cancelled", 409);
-    if (current.status === "failed" || current.video?.status === "fail" ||
-        current.operation?.state === "fail") {
-      throw new WorkspaceError(current.operation?.error || current.error || "batch_item_failed", 502);
+    if (current.status === "failed" || current.video?.status === "fail") {
+      throw new WorkspaceError(current.error || "batch_item_failed", 502);
     }
     if (Date.now() > deadline) throw new WorkspaceError("batch_item_timeout", 504);
-    if (directTaskNeedsServerContinuation(current)) {
-      // Advances exactly one step per call: paid shot dispatch (with a fresh
-      // server-side quote) or the final render once every clip is done.
-      // Library reads and settlement hooks run the same continuation; their
-      // losing races surface as 409 CAS guards — recheck and keep polling.
-      try {
+    const busy = current.operation?.state === "pending" || current.operation?.state === "run";
+    const rejected = busy ? undefined : rejectedShot(current);
+    try {
+      if (rejected && redispatchLeft > 0) {
+        redispatchLeft--;
+        const quote = await createQuote(current, "generate_shot", rejected.shotId);
+        if (!quote.available) throw new WorkspaceError(quote.reason || "workspace_video_provider_unavailable", 503);
+        const queued = await queueAction(current, { action: "generate_shot", shotId: rejected.shotId, quoteToken: quote.quoteToken }, current.revision);
+        current = await executeAction(queued, bases);
+      } else if (rejected) {
+        // Retry budget exhausted while the shot is still rejected: surface the
+        // provider refusal instead of polling a dead item to the timeout.
+        throw new WorkspaceError("batch_item_provider_rejected", 502);
+      } else if (directTaskNeedsServerContinuation(current)) {
+        // Advances exactly one step per call: paid shot dispatch (with a fresh
+        // server-side quote) or the final render once every clip is done.
+        // Library reads and settlement hooks run the same continuation; their
+        // losing races surface as 409 CAS guards — recheck and keep polling.
         current = await continueDirectTask(current, bases);
-      } catch (error) {
-        if (!retryable(error)) throw error;
+      } else {
         await sleep(POLL_INTERVAL_MS);
       }
-    } else {
+    } catch (error) {
+      if (!retryable(error)) throw error;
       await sleep(POLL_INTERVAL_MS);
     }
   }
