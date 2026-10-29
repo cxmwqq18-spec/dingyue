@@ -100,7 +100,17 @@ export interface AidreamcapesV2Navigation {
     groups: AidreamcapesZipNavigationGroup[];
     legal: ThemeNavLink[];
     copyright: string;
+    partnerBadges?: AidreamcapesPartnerBadge[];
   };
+}
+
+/** Friend-link badge shown at the bottom of the Aidreamcapes v2 footer (data-driven). */
+export interface AidreamcapesPartnerBadge {
+  key: string;
+  label: string;
+  href: string;
+  imageUrl: string;
+  imageHeight?: number;
 }
 
 export interface AidreamcapesZipNavigationGroup {

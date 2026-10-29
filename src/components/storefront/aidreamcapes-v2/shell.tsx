@@ -2,7 +2,7 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { CreditCard } from "lucide-react";
 import { isValidElement, type ReactNode } from "react";
-import type { AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
+import type { AidreamcapesPartnerBadge, AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
 import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
@@ -21,19 +21,8 @@ const Chevron = () => (
   </svg>
 );
 
-type PartnerBadge = { key: string; label: string; href: string; imageUrl: string; imageHeight: number };
-
-// Friend-link badges shown at the bottom of the public footer. Badge artwork is
-// hotlinked from the partner program.
-const partnerBadges: PartnerBadge[] = [
-  {
-    key: "semilaunch",
-    label: "SemiLaunch",
-    href: "https://semilaunch.com",
-    imageUrl: "https://semilaunch.com/assets/badge.png",
-    imageHeight: 40,
-  },
-];
+// Friend-link badges are data-driven: maintained in the admin workbench and
+// stored on the homepage LivePage under siteNavigation.footer.partnerBadges.
 
 function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   if (link.image || link.description) {
@@ -156,7 +145,8 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
 }
 
 export function AidreamcapesV2Footer({ navigation, r, company, articles = [], articlesTitle }: { navigation: AidreamcapesV2Navigation; r: V2Resolvers; company?: V2Company; articles?: AidreamcapesFooterArticle[]; articlesTitle?: string }) {
-  const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[] };
+  const footer = navigation.footer as typeof navigation.footer & { socialLinks?: AidreamcapesSocialLink[]; partnerBadges?: AidreamcapesPartnerBadge[] };
+  const partnerBadges = footer.partnerBadges ?? [];
   const footerCompany = company ? homePresentationValue(company, r.copy ?? {}) : undefined;
   return (
     <footer className="site">
@@ -212,7 +202,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
           <div className="flinks">
             {partnerBadges.map((badge) => (
               <a aria-label={badge.label} data-partner-badge={badge.key} href={badge.href} key={badge.key} rel="noopener" target="_blank" title={badge.label}>
-                <img alt={badge.label} decoding="async" height={badge.imageHeight} loading="lazy" src={badge.imageUrl} />
+                <img alt={badge.label} decoding="async" height={badge.imageHeight ?? 40} loading="lazy" src={badge.imageUrl} />
               </a>
             ))}
           </div>
