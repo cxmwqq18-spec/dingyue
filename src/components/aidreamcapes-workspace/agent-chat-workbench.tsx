@@ -50,7 +50,7 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
   const [liveChars, setLiveChars] = useState(0);
   const liveTargetRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
-  const streamEndRef = useRef<HTMLDivElement | null>(null);
+  const streamScrollRef = useRef<HTMLDivElement | null>(null);
 
   const headers = useCallback(() => ({ ...customerJsonHeaders(siteId), ...(csrfToken ? { "x-csrf-token": csrfToken } : {}) }), [siteId, csrfToken]);
 
@@ -92,7 +92,12 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => { streamEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, streaming, liveChars]);
+  // Keep the newest message in view by scrolling the message list itself —
+  // never the page: the conversation pane owns its own scroll position.
+  useEffect(() => {
+    const container = streamScrollRef.current;
+    if (container) container.scrollTop = container.scrollHeight;
+  }, [messages, streaming, liveChars]);
 
   useEffect(() => {
     if (!streaming) { setPhraseIndex(0); return; }
@@ -284,7 +289,7 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
         </div>
       </aside>
       <section className={styles.pane}>
-        <div className={styles.stream}>
+        <div className={styles.stream} ref={streamScrollRef}>
           {!messages.length && !loading && <div className={styles.welcome}>
             <h2>AI Assistant</h2>
             <p>Ask for video ideas, scripts, shot plans, or product marketing advice.</p>
@@ -309,7 +314,6 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
             <span key={phraseIndex} className={styles.hintPhrase}>{TYPING_PHRASES[phraseIndex]}</span>
             <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
           </div>}
-          <div ref={streamEndRef} />
         </div>
         {error && <div className={styles.error} role="alert"><span>{error}</span><button type="button" className={styles.errorClose} onClick={() => setError("")} aria-label="Dismiss message">×</button></div>}
         <div className={styles.composer}>

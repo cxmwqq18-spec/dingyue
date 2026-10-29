@@ -1,10 +1,10 @@
-.root { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.root { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 18px; align-items: stretch; height: calc(100dvh - 160px); min-height: 480px; }
 
-.sidebar { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 420px; }
+.sidebar { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
 .newButton { display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #dfe2eb; border-radius: 9px; background: #fff; padding: 9px 12px; font: inherit; font-size: 12px; font-weight: 600; color: #34394b; cursor: pointer; }
 .newButton:hover:not(:disabled) { border-color: #8f95a3; }
 .newButton:disabled { opacity: .55; cursor: not-allowed; }
-.list { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+.list { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; overscroll-behavior: contain; }
 .listItem { display: flex; align-items: center; gap: 4px; border-radius: 9px; padding: 2px; }
 .listItem:hover { background: #f4f4f6; }
 .listItemActive { background: #f1edff; }
@@ -14,8 +14,8 @@
 .removeButton { border: 0; background: transparent; color: #9aa0ad; padding: 6px; border-radius: 7px; cursor: pointer; }
 .removeButton:hover { color: #a03f4a; background: #fff2f2; }
 
-.pane { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); display: flex; flex-direction: column; min-height: 480px; }
-.stream { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.pane { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); display: flex; flex-direction: column; min-height: 0; }
+.stream { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .welcome { margin: auto; max-width: 520px; text-align: center; padding: 20px 0; }
 .welcome h2 { margin: 0 0 6px; font-size: 18px; }
 .welcome p { margin: 0 0 14px; color: #73777d; font-size: 13px; }
@@ -75,7 +75,8 @@
 .help { margin: 0; padding: 0 16px 10px; color: #9aa0ad; font-size: 10.5px; text-align: right; }
 
 @media (max-width: 860px) {
-  .root { grid-template-columns: 1fr; }
-  .sidebar { min-height: 0; }
+  .root { grid-template-columns: 1fr; height: auto; }
+  .list { flex: none; max-height: 220px; }
+  .stream { max-height: 65vh; }
   .bubble { max-width: 92%; }
 }
