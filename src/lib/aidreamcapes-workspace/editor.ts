@@ -10,6 +10,7 @@ import { assertTaskMusicSelectionRights } from "./music-catalog";
 import { isWorkspaceStabilityMockMode } from "./stability";
 import { readMockShotClip } from "./mock-runtime";
 import { AIVIDEOSUGC_SITE_ID, WorkspaceError, type SubtitleBackdrop, type SubtitleCue, type SubtitleStyle, type SubtitleTextColor, type SubtitleTextPosition, type SubtitleTextSize, type VideoAspect, type VideoRender, type WorkspaceTask } from "./types";
+import { SUBTITLE_ASS_BASE_FONT_SIZE, SUBTITLE_ASS_BOTTOM_MARGIN, SUBTITLE_ASS_FLOATING_MARGIN, SUBTITLE_ASS_SIZE_SCALE } from "./subtitle-ops";
 
 const run = promisify(execFile);
 const SAFE_ID = /^[a-zA-Z0-9_-]{1,180}$/;
@@ -416,27 +417,21 @@ function taskStoryboardHash(task: WorkspaceTask) {
 }
 
 /**
- * Base caption font size per style, expressed in libass script units.
- * The SRT provider renders at PlayResY=288 and libass scales text by
- * videoHeight/288, so these values are normalised as a fraction of the
- * video height: medium ≈ 4.5%, small ≈ 3.4%, large ≈ 6% on any aspect.
+ * Caption metrics live in the client-safe subtitle-ops module so the preview
+ * and the renderer share one source of truth. Sizes are fractions of the
+ * video height (libass SRT provider renders at PlayResY=288).
  */
-const SUBTITLE_BASE_FONT_SIZE = { classic: 13, bold: 15, minimal: 12 } as const;
-const SUBTITLE_SIZE_SCALE = { small: 0.75, medium: 1, large: 1.3 } as const;
 const SUBTITLE_ALIGNMENT = { bottom: 2, middle: 5, top: 8 } as const;
-/** MarginV shares the same PlayResY=288 scaling; 16 ≈ 5.5% of the video height. */
-const SUBTITLE_BOTTOM_MARGIN = { classic: 16, bold: 18, minimal: 14 } as const;
-const SUBTITLE_FLOATING_MARGIN = 22;
 /** ASS colours are &HAABBGGRR. */
 const SUBTITLE_PRIMARY_COLOURS = { white: "&H00FFFFFF", yellow: "&H0000FFFF", cyan: "&H00FFFF00", black: "&H00000000" } as const;
 
 /** libass force_style string for the style preset with the size, position, colour and backdrop overrides applied. */
 function subtitleAssStyle(settings: VideoEditSettings): string {
-  const fontSize = Math.round(SUBTITLE_BASE_FONT_SIZE[settings.subtitleStyle] * SUBTITLE_SIZE_SCALE[settings.subtitleSize ?? "medium"]);
+  const fontSize = Math.round(SUBTITLE_ASS_BASE_FONT_SIZE[settings.subtitleStyle] * SUBTITLE_ASS_SIZE_SCALE[settings.subtitleSize ?? "medium"]);
   const alignment = SUBTITLE_ALIGNMENT[settings.subtitlePosition ?? "bottom"];
   const marginV = settings.subtitlePosition === undefined || settings.subtitlePosition === "bottom"
-    ? SUBTITLE_BOTTOM_MARGIN[settings.subtitleStyle]
-    : SUBTITLE_FLOATING_MARGIN;
+    ? SUBTITLE_ASS_BOTTOM_MARGIN[settings.subtitleStyle]
+    : SUBTITLE_ASS_FLOATING_MARGIN;
   const colour = settings.subtitleColor ?? "white";
   const backdrop = settings.subtitleBackdrop ?? (settings.subtitleStyle === "bold" ? "box" : "outline");
   // Black text stays readable by swapping the dark box for a translucent light one.

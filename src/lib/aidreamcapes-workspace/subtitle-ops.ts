@@ -39,6 +39,20 @@ export const SUBTITLE_POSITIONS = ["bottom", "middle", "top"] as const;
 export const SUBTITLE_COLORS = ["white", "yellow", "cyan", "black"] as const;
 export const SUBTITLE_BACKDROPS = ["none", "box", "outline"] as const;
 
+/**
+ * Caption metrics shared by the renderer and the live preview, expressed in
+ * libass script units. The SRT provider renders at PlayResY=288 and libass
+ * scales everything by videoHeight/288, so these values are fractions of the
+ * video height: medium ≈ 4.5%, small ≈ 3.4%, large ≈ 6%. The preview divides
+ * them by 288 and multiplies by its own pixel height to reproduce the exact
+ * proportions of the burned-in video.
+ */
+export const SUBTITLE_ASS_PLAY_RES_Y = 288;
+export const SUBTITLE_ASS_BASE_FONT_SIZE = { classic: 13, bold: 15, minimal: 12 } as const;
+export const SUBTITLE_ASS_SIZE_SCALE = { small: 0.75, medium: 1, large: 1.3 } as const;
+export const SUBTITLE_ASS_BOTTOM_MARGIN = { classic: 16, bold: 18, minimal: 14 } as const;
+export const SUBTITLE_ASS_FLOATING_MARGIN = 22;
+
 const SUBTITLE_STYLE_VALUES = ["classic", "bold", "minimal"] as const;
 
 /** Whitelist validator for the style overrides in an operation request body. */

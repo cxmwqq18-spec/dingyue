@@ -6,6 +6,11 @@ import { customerJsonHeaders } from "@/lib/client-csrf";
 import { WORKSPACE_LANGUAGES } from "@/lib/aidreamcapes-workspace/catalogs";
 import { deriveTaskStatus } from "@/lib/aidreamcapes-workspace/task-status";
 import {
+  SUBTITLE_ASS_BASE_FONT_SIZE,
+  SUBTITLE_ASS_BOTTOM_MARGIN,
+  SUBTITLE_ASS_FLOATING_MARGIN,
+  SUBTITLE_ASS_PLAY_RES_Y,
+  SUBTITLE_ASS_SIZE_SCALE,
   SUBTITLE_OPS,
   subtitleOpErrorText,
   subtitleOpLabel,
@@ -170,7 +175,21 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
   const aspectRatio = selected?.input.options.aspect ? selected.input.options.aspect.replace(":", " / ") : "16 / 9";
 
   const chipClass = (active: boolean) => `${styles.chip} ${active ? styles.chipActive : ""}`;
-  const liveFontSize = sizeChoice === "small" ? 9 : sizeChoice === "large" ? 16 : 12;
+  // The preview stage is a scaled-down replica of the real video frame: the
+  // same aspect ratio, and font/margins converted from libass script units
+  // (PlayResY=288) with the same uniform scale, so size, position and line
+  // wrapping match the burned-in result.
+  const aspectValue = useMemo(() => {
+    const [w, h] = (selected?.input.options.aspect ?? "16:9").split(":").map(Number);
+    return Number.isFinite(w) && Number.isFinite(h) && w > 0 && h > 0 ? w / h : 16 / 9;
+  }, [selected?.input.options.aspect]);
+  const stageHeight = aspectValue < 1 ? 270 : 170;
+  const stageWidth = Math.round(stageHeight * aspectValue);
+  const previewStyleBase = styleChoice === "auto" ? "classic" : styleChoice;
+  const previewFontSize = (Math.round(SUBTITLE_ASS_BASE_FONT_SIZE[previewStyleBase] * SUBTITLE_ASS_SIZE_SCALE[sizeChoice]) / SUBTITLE_ASS_PLAY_RES_Y) * stageHeight;
+  const previewMargin = positionChoice === "middle"
+    ? 0
+    : ((positionChoice === "top" ? SUBTITLE_ASS_FLOATING_MARGIN : SUBTITLE_ASS_BOTTOM_MARGIN[previewStyleBase]) / SUBTITLE_ASS_PLAY_RES_Y) * stageHeight;
   const liveLineClass = [
     styles.liveLine,
     styleChoice !== "auto" ? styles[`live_${styleChoice}`] : "",
@@ -282,12 +301,23 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
                   ))}
                 </div>
               </div>
-              <div className={`${styles.liveStage} ${styles[`livePos_${positionChoice}`]}`} aria-hidden>
-                <span className={liveLineClass} style={{ fontSize: liveFontSize }}>
-                  Sample caption preview
-                </span>
+              <div className={styles.liveStageWrap}>
+                <div
+                  className={`${styles.liveStage} ${styles[`livePos_${positionChoice}`]}`}
+                  style={{
+                    width: stageWidth,
+                    height: stageHeight,
+                    ...(positionChoice === "top" ? { paddingTop: previewMargin } : {}),
+                    ...(positionChoice === "bottom" ? { paddingBottom: previewMargin } : {})
+                  }}
+                  aria-hidden
+                >
+                  <span className={liveLineClass} style={{ fontSize: previewFontSize }}>
+                    Sample caption preview
+                  </span>
+                </div>
               </div>
-              <p className={styles.settingNote}>Preview is approximate — the burned-in video shows the final look.</p>
+              <p className={styles.settingNote}>Same size and position as the burned-in video; glyph edges may differ slightly.{styleChoice === "auto" ? " Auto lets the AI pick the exact style." : ""}</p>
             </div>
             <div className={styles.ops}>
               {SUBTITLE_OPS.map((op) => (

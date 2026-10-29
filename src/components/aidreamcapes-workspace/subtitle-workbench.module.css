@@ -50,11 +50,12 @@
 .back_box { background: rgba(0, 0, 0, .72); }
 .back_outline { text-shadow: -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000; }
 
-.liveStage { position: relative; height: 132px; border-radius: 10px; display: flex; justify-content: center; padding: 10px 12px; background: linear-gradient(140deg, #39404f 0%, #6b7280 55%, #a8b0bf 100%); }
-.livePos_bottom { align-items: flex-end; padding-bottom: 10px; }
+.liveStageWrap { display: flex; justify-content: center; }
+.liveStage { position: relative; flex: none; display: flex; justify-content: center; margin: 0 auto; border-radius: 10px; background: linear-gradient(140deg, #39404f 0%, #6b7280 55%, #a8b0bf 100%); }
+.livePos_bottom { align-items: flex-end; }
 .livePos_middle { align-items: center; }
-.livePos_top { align-items: flex-start; padding-top: 10px; }
-.liveLine { max-width: 90%; font-family: Arial, sans-serif; line-height: 1.35; text-align: center; color: #fff; border-radius: 4px; padding: 1px 8px; }
+.livePos_top { align-items: flex-start; }
+.liveLine { max-width: 94%; font-family: Arial, sans-serif; line-height: 1.25; text-align: center; color: #fff; border-radius: 0.18em; padding: 0.06em 0.45em; }
 .live_classic { font-weight: 500; text-shadow: -1px -1px 0 rgba(0, 0, 0, .7), 1px -1px 0 rgba(0, 0, 0, .7), -1px 1px 0 rgba(0, 0, 0, .7), 1px 1px 0 rgba(0, 0, 0, .7); }
 .live_bold { font-weight: 700; background: rgba(0, 0, 0, .72); }
 .live_minimal { font-weight: 400; text-shadow: 0 0 4px rgba(0, 0, 0, .9); }
