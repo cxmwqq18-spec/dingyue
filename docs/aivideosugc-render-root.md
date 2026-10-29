@@ -46,3 +46,20 @@ AIVIDEOSUGC_RENDER_ROOT=/www/wwwroot/aidreamcapes.com/data/aidreamcapes-workspac
    scratch/derived artefacts. A missing render file surfaces as
    `workspace_output_missing` (404) and the workspace offers a re-render
    rather than pretending the task failed.
+
+## Related incident (2026-10-29): truncated deploy env template
+
+`/www/wwwroot/aidreamcapes.com/.env.local` is the **deploy template**: the
+release script copies it to both `.env.local` and `.env` of every new release,
+and `build-aidreamcapes-prebuilt.mjs` reads `current/.env.local` (asserting
+more than 10 keys). After the template was accidentally reduced to a single
+`AIVIDEOSUGC_FFPROBE_BIN` line, builds refused to run and — had a deploy
+succeeded — releases would have shipped without `DATABASE_URL` and the rest
+of the runtime config (the live service only kept working because Next loads
+the intact `.env` at runtime).
+
+Recovery applied: the full 70-key env was restored from the current release's
+intact `.env`, the two `AIVIDEOSUGC_*` overrides re-added, and the template
+copied back into the live release (both files). The template must always hold
+the complete production env; treat "template line count drops" as an incident,
+not a cleanup.
