@@ -183,15 +183,25 @@ export async function resumeBatch(args: {
   const runner = args.runner;
   const worker = async () => {
     while (true) {
-      const task = await repository.claimNext(args.siteId, args.customerId, args.batchId);
+      let task: BatchTask | undefined;
+      // With large pools, concurrent claim transactions can lose lock races;
+      // a claim error must back off and retry, not kill the worker.
+      try {
+        task = await repository.claimNext(args.siteId, args.customerId, args.batchId);
+      } catch {
+        await new Promise(resolve => setTimeout(resolve, 3_000));
+        continue;
+      }
       if (!task) return;
       const runToken = task.batch.runToken!;
       try {
         await runner(structuredClone(task));
         await repository.finishItem({ siteId: args.siteId, customerId: args.customerId, batchId: args.batchId, taskId: task.taskId, runToken });
       } catch (error) {
-        await repository.finishItem({ siteId: args.siteId, customerId: args.customerId, batchId: args.batchId,
-          taskId: task.taskId, runToken, error: itemFailureCode(error) });
+        try {
+          await repository.finishItem({ siteId: args.siteId, customerId: args.customerId, batchId: args.batchId,
+            taskId: task.taskId, runToken, error: itemFailureCode(error) });
+        } catch { /* lease expiry makes the item resumable; never kill the worker here. */ }
       }
     }
   };
@@ -294,29 +304,41 @@ const prismaBatchRepository: BatchRepository = {
   async claimNext(siteId, customerId, batchId) {
     let claimedId: string | undefined;
     let runToken: string | undefined;
-    await this.updateOwned({ siteId, customerId, batchId }, tasks => {
-      const ordered = assertBatch(tasks, batchId);
-      if (ordered[0].batch.cancelRequested || ordered.filter(task => task.batch.status === "running").length >= MAX_BATCH_CONCURRENCY) return ordered;
-      const next = ordered.find(task => task.batch.status === "queued");
-      if (!next) return ordered;
-      claimedId = next.taskId; runToken = randomUUID();
-      next.batch.status = "running"; next.batch.attempts++; next.batch.runToken = runToken;
-      next.batch.leaseUntil = new Date(Date.now() + 5 * 60_000).toISOString(); next.batch.updatedAt = new Date().toISOString();
-      return ordered;
+    // Claims only rewrite the claimed row. Rewriting every batch row per claim
+    // made high-concurrency pools serialize on hundreds of JSON row writes and
+    // starve the queue behind lock contention.
+    await prisma.$transaction(async tx => {
+      const rows = await selectBatchRows(tx, siteId, customerId, batchId, true);
+      const tasks = assertDbBatch(readRows(rows), batchId);
+      if (tasks[0].batch.cancelRequested) return;
+      if (tasks.filter(task => task.batch.status === "running").length >= MAX_BATCH_CONCURRENCY) return;
+      const next = tasks.find(task => task.batch.status === "queued");
+      if (!next) return;
+      const row = rows.find(item => item.id === next.taskId);
+      if (!row) return;
+      const leaseUntil = new Date(Date.now() + 5 * 60_000).toISOString();
+      const updated: BatchTask = { ...next,
+        batch: { ...next.batch, status: "running", attempts: next.batch.attempts + 1, runToken: randomUUID(), leaseUntil, updatedAt: new Date().toISOString() } };
+      const saved = await tx.$queryRaw<BatchRow[]>`UPDATE "AidreamcapesVideoTask" SET "data" = ${JSON.stringify({ ...updated, revision: row.revision + 1 })}::jsonb, "revision" = "revision" + 1, "updatedAt" = now() WHERE "id" = ${row.id} AND "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} AND "revision" = ${row.revision} RETURNING "id", "data", "revision", "createdAt", "updatedAt"`;
+      if (!saved[0]) return;
+      claimedId = updated.taskId; runToken = updated.batch.runToken;
     });
     if (!claimedId || !runToken) return undefined;
     const tasks = await this.listOwned(siteId, customerId, batchId);
     return tasks.find(task => task.taskId === claimedId && task.batch.runToken === runToken);
   },
   async finishItem(args) {
-    await this.updateOwned({ siteId: args.siteId, customerId: args.customerId, batchId: args.batchId }, tasks => {
-      const ordered = assertBatch(tasks, args.batchId);
-      const task = ordered.find(item => item.taskId === args.taskId);
-      if (!task || task.batch.status !== "running" || task.batch.runToken !== args.runToken) return ordered;
-      task.batch.status = ordered[0].batch.cancelRequested ? "cancelled" : args.error ? "failed" : "completed";
-      task.batch.error = task.batch.status === "failed" ? args.error : undefined;
-      task.batch.runToken = undefined; task.batch.leaseUntil = undefined; task.batch.updatedAt = new Date().toISOString();
-      return ordered;
+    // Single-row completion write; see claimNext.
+    await prisma.$transaction(async tx => {
+      const rows = await selectBatchRows(tx, args.siteId, args.customerId, args.batchId, true);
+      const tasks = assertDbBatch(readRows(rows), args.batchId);
+      const task = tasks.find(item => item.taskId === args.taskId);
+      const row = rows.find(item => item.id === args.taskId);
+      if (!task || !row || task.batch.status !== "running" || task.batch.runToken !== args.runToken) return;
+      const status = tasks[0].batch.cancelRequested ? "cancelled" : args.error ? "failed" : "completed";
+      const updated: BatchTask = { ...task,
+        batch: { ...task.batch, status, error: status === "failed" ? args.error : undefined, runToken: undefined, leaseUntil: undefined, updatedAt: new Date().toISOString() } };
+      await tx.$queryRaw`UPDATE "AidreamcapesVideoTask" SET "data" = ${JSON.stringify({ ...updated, revision: row.revision + 1 })}::jsonb, "revision" = "revision" + 1, "updatedAt" = now() WHERE "id" = ${row.id} AND "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${args.customerId} AND "revision" = ${row.revision}`;
     });
   }
 };
