@@ -105,11 +105,14 @@ export async function mockBatchRunner(_task: BatchTask): Promise<void> {
 export async function createBatchDrafts(args: {
   siteId: string; customerId: string; idempotencyKey: string; items: BatchInputItem[]; actors: ActorAsset[];
   repository?: BatchRepository;
+  /** Caller-declared item ceiling. Defaults to MAX_BATCH_ITEMS; batch-submit raises it for bulk runs. */
+  maxItems?: number;
 }): Promise<BatchSnapshot> {
   assertSite(args.siteId);
   assertWritable();
+  const maxItems = args.maxItems ?? MAX_BATCH_ITEMS;
   if (!args.customerId || !args.idempotencyKey || args.idempotencyKey.length > 200 || !Array.isArray(args.items) ||
-      args.items.length < 1 || args.items.length > MAX_BATCH_ITEMS) throw new WorkspaceError("batch_items_invalid");
+      args.items.length < 1 || args.items.length > maxItems) throw new WorkspaceError("batch_items_invalid");
   const repository = args.repository ?? prismaBatchRepository;
   const batchId = batchIdFor(args.siteId, args.customerId, args.idempotencyKey);
   const requestHash = hash(args.items.map(item => ({ sceneId: item.sceneId, input: item.input, title: item.title })));
