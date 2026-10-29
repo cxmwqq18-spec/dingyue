@@ -48,7 +48,12 @@ export async function callPlatformTextProvider(params: {
   temperature: number;
   idempotencyKey: string;
   fetcher?: typeof fetch;
+  /** Defaults to 30s; long-form generation needs a longer budget. */
+  timeoutMs?: number;
+  /** Combined with the timeout so callers can propagate client aborts. */
+  signal?: AbortSignal;
 }): Promise<string> {
+  const timedSignal = AbortSignal.any([AbortSignal.timeout(params.timeoutMs ?? 30_000), ...(params.signal ? [params.signal] : [])]);
   const response = await (params.fetcher ?? fetch)(platformTextChatCompletionsUrl(params.provider.aiUrl), {
     method: "POST",
     headers: {
@@ -62,7 +67,7 @@ export async function callPlatformTextProvider(params: {
       messages: params.messages
     }),
     cache: "no-store",
-    signal: AbortSignal.timeout(30_000)
+    signal: timedSignal
   });
   if (!response.ok) throw new Error(`text_provider_http_${response.status}`);
   const text = contentFromResponse(await response.json().catch(() => ({})));

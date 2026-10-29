@@ -2,7 +2,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import type { PlatformAiProvider } from "@/lib/types";
-import { generatePlatformText, streamPlatformTextProvider } from "@/lib/platform-text-provider";
+import { callPlatformTextProvider, generatePlatformText } from "@/lib/platform-text-provider";
 import { listPlatformAiProvidersRelational } from "@/lib/stores/platform-store";
 import { aiProviderStatus } from "@/lib/ai-provider-config";
 import { AIVIDEOSUGC_SITE_ID, WorkspaceError } from "./types";
@@ -178,7 +178,6 @@ export async function sendMessageStream(args: { customerId: string; conversation
   let aggregated = "";
   const conversationId = args.conversationId;
   const customerId = args.customerId;
-  const upstreamSignal = AbortSignal.any([args.signal, AbortSignal.timeout(120_000)]);
   let clientGone = false;
   let pingTimer: ReturnType<typeof setInterval> | null = null;
 
@@ -208,56 +207,31 @@ export async function sendMessageStream(args: { customerId: string; conversation
       };
       send({ type: "start" });
 
-      // One upstream pass. Returns whether the provider finished its reply
-      // cleanly; relays sometimes drop the stream mid-sentence.
-      const streamOnce = async (streamMessages: ChatMessageRow[]): Promise<boolean> => {
-        let complete = false;
-        for await (const event of streamPlatformTextProvider({ provider, messages: streamMessages, temperature: 0.7, signal: upstreamSignal })) {
-          if (event.type === "delta") {
-            aggregated += event.text;
-            send({ type: "delta", text: event.text });
-          } else {
-            complete = event.complete;
-          }
-        }
-        return complete;
-      };
-
       try {
         if (useMock) {
           const mockReply = "This is a mock assistant reply used by automated checks.";
           aggregated += mockReply;
           send({ type: "delta", text: mockReply });
         } else {
-          let complete = false;
-          try {
-            complete = await streamOnce(messages);
-          } catch (error) {
-            if ((error as Error)?.name === "AbortError") throw error;
-            console.warn("[agent-chat] upstream stream interrupted before any content", (error as Error)?.message);
-          }
-          // Relay networks occasionally cut the reply mid-sentence. Continue
-          // from where it stopped instead of delivering a silently truncated
-          // answer; two continuations cover the observed flakiness.
-          for (let continuation = 0; !complete && aggregated.trim() && continuation < 2 && !clientGone; continuation++) {
-            console.warn(`[agent-chat] upstream stream interrupted mid-reply, continuing (pass ${continuation + 1})`);
-            const continueMessages: ChatMessageRow[] = [
-              ...messages,
-              { role: "assistant", content: aggregated },
-              { role: "user", content: "Your reply above was cut off mid-sentence by a network error. Continue from exactly where it stopped. Do not repeat any text you already wrote, do not add a preamble, just continue and finish the reply." }
-            ];
-            try {
-              complete = await streamOnce(continueMessages);
-            } catch (error) {
-              if ((error as Error)?.name === "AbortError") throw error;
-              console.warn("[agent-chat] continuation interrupted", (error as Error)?.message);
-              break;
-            }
-          }
-          if (!complete && aggregated.trim()) {
-            console.warn("[agent-chat] reply still incomplete after continuations");
-            send({ type: "error", code: "agent_chat_provider_interrupted" });
-          }
+          // The upstream relay's SSE output is not dependable: it buffers the
+          // whole reply, delivers it in unpredictable bursts, and sometimes
+          // closes the stream after a single token (a customer-visible reply
+          // stuck at two characters). Stop trusting its streaming entirely:
+          // request one complete, non-streaming completion — the heartbeat
+          // above keeps intermediaries from cutting the quiet connection —
+          // and hand the finished text to the client as a single delta. The
+          // workspace UI reveals it at typing pace, so delivery is
+          // deterministic regardless of upstream behaviour.
+          const text = await callPlatformTextProvider({
+            provider,
+            messages,
+            temperature: 0.7,
+            idempotencyKey: `agent-chat:${customerId}:${conversationId}:${Date.now()}`,
+            timeoutMs: 120_000,
+            signal: args.signal
+          });
+          aggregated += text;
+          send({ type: "delta", text });
         }
         if (!aggregated.trim()) throw new Error("text_provider_empty_response");
       } catch (error) {
