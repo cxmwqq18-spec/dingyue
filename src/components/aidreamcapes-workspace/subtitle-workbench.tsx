@@ -170,7 +170,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
   const aspectRatio = selected?.input.options.aspect ? selected.input.options.aspect.replace(":", " / ") : "16 / 9";
 
   const chipClass = (active: boolean) => `${styles.chip} ${active ? styles.chipActive : ""}`;
-  const liveFontSize = sizeChoice === "small" ? 11 : sizeChoice === "large" ? 19 : 14;
+  const liveFontSize = sizeChoice === "small" ? 9 : sizeChoice === "large" ? 16 : 12;
   const liveLineClass = [
     styles.liveLine,
     styleChoice !== "auto" ? styles[`live_${styleChoice}`] : "",

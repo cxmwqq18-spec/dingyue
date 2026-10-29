@@ -415,10 +415,18 @@ function taskStoryboardHash(task: WorkspaceTask) {
   return crypto.createHash("sha256").update(JSON.stringify({ input: task.input, musicSelection: task.musicSelection ?? null, storyboard: task.storyboard })).digest("hex");
 }
 
-/** Base caption font size per style, before the customer size override. */
-const SUBTITLE_BASE_FONT_SIZE = { classic: 22, bold: 26, minimal: 20 } as const;
-const SUBTITLE_SIZE_SCALE = { small: 0.8, medium: 1, large: 1.3 } as const;
+/**
+ * Base caption font size per style, expressed in libass script units.
+ * The SRT provider renders at PlayResY=288 and libass scales text by
+ * videoHeight/288, so these values are normalised as a fraction of the
+ * video height: medium ≈ 4.5%, small ≈ 3.4%, large ≈ 6% on any aspect.
+ */
+const SUBTITLE_BASE_FONT_SIZE = { classic: 13, bold: 15, minimal: 12 } as const;
+const SUBTITLE_SIZE_SCALE = { small: 0.75, medium: 1, large: 1.3 } as const;
 const SUBTITLE_ALIGNMENT = { bottom: 2, middle: 5, top: 8 } as const;
+/** MarginV shares the same PlayResY=288 scaling; 16 ≈ 5.5% of the video height. */
+const SUBTITLE_BOTTOM_MARGIN = { classic: 16, bold: 18, minimal: 14 } as const;
+const SUBTITLE_FLOATING_MARGIN = 22;
 /** ASS colours are &HAABBGGRR. */
 const SUBTITLE_PRIMARY_COLOURS = { white: "&H00FFFFFF", yellow: "&H0000FFFF", cyan: "&H00FFFF00", black: "&H00000000" } as const;
 
@@ -427,18 +435,18 @@ function subtitleAssStyle(settings: VideoEditSettings): string {
   const fontSize = Math.round(SUBTITLE_BASE_FONT_SIZE[settings.subtitleStyle] * SUBTITLE_SIZE_SCALE[settings.subtitleSize ?? "medium"]);
   const alignment = SUBTITLE_ALIGNMENT[settings.subtitlePosition ?? "bottom"];
   const marginV = settings.subtitlePosition === undefined || settings.subtitlePosition === "bottom"
-    ? settings.subtitleStyle === "bold" ? 48 : settings.subtitleStyle === "minimal" ? 36 : 44
-    : 56;
+    ? SUBTITLE_BOTTOM_MARGIN[settings.subtitleStyle]
+    : SUBTITLE_FLOATING_MARGIN;
   const colour = settings.subtitleColor ?? "white";
   const backdrop = settings.subtitleBackdrop ?? (settings.subtitleStyle === "bold" ? "box" : "outline");
   // Black text stays readable by swapping the dark box for a translucent light one.
   const boxColour = colour === "black" ? "&H80FFFFFF" : "&H80000000";
-  const outlineWidth = settings.subtitleBackdrop === undefined && settings.subtitleStyle === "minimal" ? 1 : 2;
+  const minimalDefault = settings.subtitleBackdrop === undefined && settings.subtitleStyle === "minimal";
   const boxParams = backdrop === "box"
     ? `BackColour=${boxColour},BorderStyle=3,Outline=0,Shadow=0`
     : backdrop === "none"
       ? "BorderStyle=1,Outline=0,Shadow=1"
-      : `BorderStyle=1,Outline=${outlineWidth},Shadow=${settings.subtitleBackdrop === undefined && settings.subtitleStyle === "minimal" ? 1 : 0}`;
+      : `BorderStyle=1,Outline=1,Shadow=${minimalDefault ? 1 : 0}`;
   return `FontName=Arial,FontSize=${fontSize},Bold=${settings.subtitleStyle === "bold" ? 1 : 0},PrimaryColour=${SUBTITLE_PRIMARY_COLOURS[colour]},OutlineColour=&H80000000,${boxParams},Alignment=${alignment},MarginV=${marginV}`;
 }
 
