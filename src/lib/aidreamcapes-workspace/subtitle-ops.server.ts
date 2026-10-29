@@ -33,6 +33,34 @@ const SUBTITLE_OP_INTENT: Record<SubtitleOpId, string> = {
   marketing_copy: "Operation: product copy. Write on-screen copy built from the supplied product details: concrete feature phrases and one closing call to action."
 };
 
+/** Custom promo/copy text is burned verbatim, so it never reaches a text model. */
+const CUSTOM_TEXT_MAX_LINES = 12;
+const CUSTOM_TEXT_MAX_CHARS = 60;
+
+/**
+ * Turn customer-written promo/copy text into evenly timed caption lines: the
+ * customer's own sentences shown one after another across the whole video.
+ * Blank input is the caller's concern; this only shapes what is already there.
+ */
+function planLinesFromCustomText(text: string, duration: number): SubtitleCue[] {
+  const paragraphs = text.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const sentences = (paragraphs.length > 1 ? paragraphs : text.split(/(?<=[。！？!?；;.])\s*/))
+    .map((sentence) => sentence.trim()).filter(Boolean)
+    .flatMap((sentence) => {
+      const chunks: string[] = [];
+      for (let at = 0; at < sentence.length; at += CUSTOM_TEXT_MAX_CHARS) chunks.push(sentence.slice(at, at + CUSTOM_TEXT_MAX_CHARS).trim());
+      return chunks.filter(Boolean);
+    })
+    .slice(0, CUSTOM_TEXT_MAX_LINES);
+  if (!sentences.length) throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
+  const share = duration / sentences.length;
+  return sentences.map((line, index) => ({
+    start: round3(index * share),
+    end: round3(Math.min((index + 1) * share, duration)),
+    text: line
+  }));
+}
+
 function round3(value: number): number {
   return Math.round(value * 1000) / 1000;
 }
@@ -174,8 +202,14 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
   const settings = args.settings ?? {};
   let task = await getTask(args.siteId, args.customerId, args.taskId);
   assertSubtitleOpTask(task, args);
-  const decision = await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, editedDuration(task)));
-  let plan = validateSubtitleOpPlan(decision, editedDuration(task));
+  const decision = settings.text && args.opId !== "captions_polish"
+    ? null
+    : await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, editedDuration(task)));
+  // Customer-written promo/copy text replaces the text model entirely; caption
+  // dialogue still comes from the model so it can follow the actual speech.
+  let plan: SubtitleOpPlan = decision
+    ? validateSubtitleOpPlan(decision, editedDuration(task))
+    : { style: "classic", lines: planLinesFromCustomText(settings.text!.trim(), editedDuration(task)) };
   // Lip-sync guarantee: for dialogue captions, clamp the plan onto the measured
   // speech timings so lines appear and disappear with the actual voice track.
   const speechCues = args.opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;

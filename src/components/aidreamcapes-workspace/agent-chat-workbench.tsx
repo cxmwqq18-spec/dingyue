@@ -149,6 +149,41 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
     if (!content || streaming) return;
     setError(""); setInput("");
     let conversationId = activeId;
+    // A dead connection between the browser and the origin can leave the
+    // reader hanging forever without a `done` frame, so a read watchdog
+    // aborts the stream and the reconcile below recovers the persisted reply.
+    let stalled = false;
+    let reply = "";
+    let watchedId = "";
+    let replyId = "";
+    const lastActivity = { current: Date.now() };
+    let watchdog: number | undefined;
+    const reconcile = async (attempts: number): Promise<string> => {
+      for (let attempt = 0; attempt < attempts; attempt++) {
+        if (attempt > 0) await new Promise((resolve) => window.setTimeout(resolve, 3000));
+        if (!watchedId) break;
+        try {
+          const verify = await fetch(`${requestRoot}/conversations/${encodeURIComponent(watchedId)}`, { credentials: "same-origin", cache: "no-store", headers: headers() });
+          const verified = await verify.json().catch(() => ({}));
+          if (!verify.ok) continue;
+          const timeline = (verified.messages ?? []) as MessageView[];
+          const last = timeline[timeline.length - 1];
+          // Only accept the reply that directly follows our own message, so an
+          // older, longer reply can never be spliced into the wrong bubble.
+          const paired = timeline.length >= 2
+            && timeline[timeline.length - 2].role === "user"
+            && timeline[timeline.length - 2].content === content
+            && last?.role === "assistant";
+          if (paired && last.content.length > reply.length) {
+            reply = last.content;
+            liveTargetRef.current = reply.length;
+            setMessages((current) => current.map((item) => item.id === replyId ? { ...item, content: reply, pending: false } : item));
+            return reply;
+          }
+        } catch { /* retry or keep the streamed reply */ }
+      }
+      return "";
+    };
     try {
       if (!conversationId) {
         const response = await fetch(`${requestRoot}/conversations`, { method: "POST", credentials: "same-origin", headers: headers(), body: JSON.stringify({}) });
@@ -160,7 +195,8 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
         conversationId = conversation.id;
       }
       const placeholderId = `pending-${Date.now()}`;
-      const replyId = `${placeholderId}-a`;
+      replyId = `${placeholderId}-a`;
+      watchedId = conversationId;
       setMessages((current) => [...current, { id: placeholderId, role: "user", content, createdAt: new Date().toISOString() }, { id: replyId, role: "assistant", content: "", createdAt: new Date().toISOString(), pending: true }]);
       liveTargetRef.current = 0;
       setLiveChars(0);
@@ -168,7 +204,9 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
       setStreaming(true);
       const controller = new AbortController();
       abortRef.current = controller;
-      const response = await fetch(`${requestRoot}/conversations/${encodeURIComponent(conversationId)}/messages`, {
+      watchdog = window.setInterval(() => {
+        if (Date.now() - lastActivity.current > 20_000) { stalled = true; controller.abort(); }
+      }, 5_000);      const response = await fetch(`${requestRoot}/conversations/${encodeURIComponent(conversationId)}/messages`, {
         method: "POST", credentials: "same-origin", headers: headers(), body: JSON.stringify({ content }), signal: controller.signal
       });
       if (!response.ok || !response.body) {
@@ -178,11 +216,11 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
-      let reply = "";
       let failed = "";
       while (true) {
         const chunk = await reader.read();
         if (chunk.done) break;
+        lastActivity.current = Date.now();
         buffer += decoder.decode(chunk.value, { stream: true });
         const lines = buffer.split("\n");
         buffer = lines.pop() ?? "";
@@ -200,28 +238,25 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
           } catch { /* Ignore malformed fragments. */ }
         }
       }
+      window.clearInterval(watchdog);
       // Proxies sometimes terminate a long SSE response early while the
       // server keeps streaming and persists the complete reply, so reconcile
-      // against the conversation instead of showing a truncated bubble.
-      try {
-        const verify = await fetch(`${requestRoot}/conversations/${encodeURIComponent(conversationId)}`, { credentials: "same-origin", cache: "no-store", headers: headers() });
-        const verified = await verify.json().catch(() => ({}));
-        if (verify.ok) {
-          const persisted = ((verified.messages ?? []) as MessageView[]).filter((item) => item.role === "assistant");
-          const last = persisted[persisted.length - 1];
-          if (last && last.content.length > reply.length) {
-            liveTargetRef.current = last.content.length;
-            setMessages((current) => current.map((item) => item.id === replyId ? { ...item, content: last.content } : item));
-          }
-        }
-      } catch { /* keep the streamed reply when the check fails */ }
-      if (failed) throw new Error(failed);
+      // against the conversation instead of showing a truncated bubble. A
+      // stalled connection gets retries: the server may still be finishing.
+      await reconcile(stalled ? 4 : 1);
+      if (failed && !reply.trim()) throw new Error(failed);
       if (!reply.trim()) throw new Error("agent_chat_provider_failed");
       // Refresh titles after the first exchange renames the conversation.
       void loadConversations();
     } catch (caught) {
+      if (watchdog) window.clearInterval(watchdog);
       const err = caught as Error;
-      if (err.name !== "AbortError") setError(humanError(err.message));
+      if (err.name === "AbortError" && stalled) {
+        // The watchdog cut a dead connection; the server keeps writing the
+        // reply, so give the persisted version a chance to land.
+        await reconcile(4);
+        setError("");
+      } else if (err.name !== "AbortError") setError(humanError(err.message));
       else setError("");
       setMessages((current) => current.filter((item) => !(item.pending && item.role === "assistant" && !item.content)));
       void loadConversations();

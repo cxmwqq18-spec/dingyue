@@ -27,7 +27,9 @@ export async function GET(request: NextRequest, { params }: Context) {
     const rawOffset = Number(url.searchParams.get("offset"));
     const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(Math.trunc(rawLimit), 100) : 20;
     const offset = Number.isFinite(rawOffset) && rawOffset > 0 ? Math.trunc(rawOffset) : 0;
-    const page = await listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset });
+    const filter = url.searchParams.get("filter") === "subtitle_ready" ? "subtitle_ready" as const : undefined;
+    const query = url.searchParams.get("q")?.trim() || undefined;
+    const page = await listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query });
     const hasMore = page.length > limit;
     const tasks = page.slice(0, limit);
     const settled = await Promise.all(tasks.map((task) => taskHasPendingProviderWork(task) ? refreshTask(task).catch(() => task) : task));

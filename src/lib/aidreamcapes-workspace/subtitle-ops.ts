@@ -32,6 +32,8 @@ export interface SubtitleOpSettings {
   position?: SubtitleTextPosition;
   color?: SubtitleTextColor;
   backdrop?: SubtitleBackdrop;
+  /** Customer-written copy for the promo/marketing operations; captions always come from the video's speech. */
+  text?: string;
 }
 
 export const SUBTITLE_SIZES = ["small", "medium", "large"] as const;
@@ -60,7 +62,7 @@ export function parseSubtitleOpSettings(value: unknown): SubtitleOpSettings {
   if (value === undefined || value === null) return {};
   if (typeof value !== "object" || Array.isArray(value)) throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
   const raw = value as Record<string, unknown>;
-  if (Object.keys(raw).some((key) => !["style", "size", "position", "color", "backdrop"].includes(key))) {
+  if (Object.keys(raw).some((key) => !["style", "size", "position", "color", "backdrop", "text"].includes(key))) {
     throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
   }
   const pick = <T extends string>(candidate: unknown, allowed: readonly T[]): T => {
@@ -73,6 +75,12 @@ export function parseSubtitleOpSettings(value: unknown): SubtitleOpSettings {
   if (raw.position !== undefined) settings.position = pick(raw.position, SUBTITLE_POSITIONS);
   if (raw.color !== undefined) settings.color = pick(raw.color, SUBTITLE_COLORS);
   if (raw.backdrop !== undefined) settings.backdrop = pick(raw.backdrop, SUBTITLE_BACKDROPS);
+  if (raw.text !== undefined) {
+    if (typeof raw.text !== "string") throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
+    const text = raw.text.trim().replace(/\s*\n+\s*/g, "\n").slice(0, 800);
+    if (!text) throw new WorkspaceError("workspace_subtitle_op_settings_invalid", 422);
+    settings.text = text;
+  }
   return settings;
 }
 

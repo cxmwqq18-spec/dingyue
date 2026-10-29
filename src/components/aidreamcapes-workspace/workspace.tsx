@@ -498,12 +498,6 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     return () => window.clearInterval(timer);
   }, [subtitleJob]);
 
-  const subtitleMediaByTask = useMemo(() => {
-    const map = new Map<string, LibraryCardMedia[]>();
-    for (const item of tasks) map.set(item.taskId, taskMedia(item, catalog?.scenes.find((scene) => scene.id === item.sceneId)));
-    return map;
-  }, [tasks, catalog]);
-
   const persist = useCallback(async () => {
     if (saveTimer.current) { clearTimeout(saveTimer.current); saveTimer.current = null; }
     const execute = async () => {
@@ -1813,7 +1807,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {view === "analytics" && (customer ? <AnalyticsWorkbench siteId={siteId} csrfToken={csrfToken} disabled={working} /> : <section className={styles.panel}><h1>Performance</h1><p>Log in to import and compare your advertising results.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "analytics"))}`}>Log in</a></section>)}
         {view === "chat" && (customer ? <AgentChatWorkbench siteId={siteId} csrfToken={csrfToken} /> : <section className={styles.panel}><h1>AI Assistant</h1><p>Log in to chat with your AI assistant.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "chat"))}`}>Log in</a></section>)}
         {view === "subtitles" && subtitleNotice && <div className={styles.notice} role="status"><span>{subtitleNotice}</span><button className={styles.iconButton} onClick={() => setSubtitleNotice("")} aria-label="Dismiss message"><X size={15} /></button></div>}
-        {view === "subtitles" && (customer ? <SubtitleWorkbench siteId={siteId} csrfToken={csrfToken} tasks={tasks} mediaByTask={subtitleMediaByTask} activeJob={subtitleJob} onJobStarted={onSubtitleJobStarted} /> : <section className={styles.panel}><h1>Subtitle Studio</h1><p>Log in to add subtitles to your finished videos.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "subtitles"))}`}>Log in</a></section>)}
+        {view === "subtitles" && (customer ? <SubtitleWorkbench siteId={siteId} csrfToken={csrfToken} activeJob={subtitleJob} onJobStarted={onSubtitleJobStarted} /> : <section className={styles.panel}><h1>Subtitle Studio</h1><p>Log in to add subtitles to your finished videos.</p><a className={styles.button} href={`${basePath}/login?next=${encodeURIComponent(workspaceViewHref(basePath, "subtitles"))}`}>Log in</a></section>)}
 
         {view === "teams" && <TeamBrandWorkbench siteId={siteId} customerId={customer?.id ?? ""} csrfToken={csrfToken} disabled={working} />}
 
