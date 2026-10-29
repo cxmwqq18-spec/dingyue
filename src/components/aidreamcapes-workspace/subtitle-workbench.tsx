@@ -201,7 +201,8 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
                 </span>
                 <span className={styles.itemBody}>
                   <span className={styles.itemTitle}>{item.title}</span>
-                  <span className={styles.itemMeta}>{item.input.options.duration}s · {item.input.options.aspect} · {dayFormat.format(new Date(item.createdAt))}</span>
+                  <span className={styles.itemMeta}>{item.input.options.duration}s · {item.input.options.aspect}</span>
+                  <span className={styles.itemMeta}>{dayFormat.format(new Date(item.createdAt))}</span>
                   {activeJob?.taskId === item.taskId && (
                     <span className={styles.itemBusy}><Loader2 className={styles.spin} size={11} aria-hidden /> {subtitleOpLabel(activeJob.opId)}…</span>
                   )}
@@ -212,37 +213,13 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
         </div>
         {!completed.length && <p className={styles.empty}>No finished videos yet. Create a video first, then come back to add subtitles.</p>}
       </div>
-      <div className={styles.pane}>
-        {selected ? (
-          <>
+      {selected ? (
+        <>
+          <div className={styles.editor}>
             <header className={styles.paneHead}>
               <h2>{selected.title}</h2>
               <p>{[languageLabel, `${selected.input.options.duration}s`, selected.input.options.aspect].filter(Boolean).join(" · ")}</p>
             </header>
-            {activeVersion && (
-              <>
-                {versions.length > 1 && (
-                  <div className={styles.versions} role="tablist" aria-label="Video versions">
-                    {[...versions].reverse().map((version) => (
-                      <button key={version.renderId} type="button" role="tab"
-                        aria-selected={activeVersion.renderId === version.renderId}
-                        className={`${styles.versionChip} ${activeVersion.renderId === version.renderId ? styles.versionChipActive : ""}`}
-                        onClick={() => setVersionId(version.renderId)}>
-                        V{version.number} · {version.hasCaptions ? "With subtitles" : "Original"}{version.isCurrent ? " · Latest" : ""}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <video className={styles.preview} style={{ aspectRatio }} src={activeVersion.url} controls preload="metadata" />
-              </>
-            )}
-            {error && <p className={styles.error} role="alert">{error}</p>}
-            {selectedBusy && activeJob && (
-              <p className={styles.running} role="status">
-                <Loader2 className={styles.spin} size={14} aria-hidden />
-                Generating {subtitleOpLabel(activeJob.opId).toLowerCase()} — this keeps running when you leave the page, and the new version appears in your library automatically.
-              </p>
-            )}
             <div className={styles.settings} role="group" aria-label="Caption style">
               <div className={styles.settingRow}>
                 <span className={styles.settingName}>Style</span>
@@ -305,7 +282,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
                   ))}
                 </div>
               </div>
-              <div className={`${styles.liveStage} ${styles[`livePos_${positionChoice}`]}`} style={{ aspectRatio }} aria-hidden>
+              <div className={`${styles.liveStage} ${styles[`livePos_${positionChoice}`]}`} aria-hidden>
                 <span className={liveLineClass} style={{ fontSize: liveFontSize }}>
                   Sample caption preview
                 </span>
@@ -323,15 +300,37 @@ export function SubtitleWorkbench({ siteId, csrfToken, tasks, mediaByTask, activ
                 </button>
               ))}
             </div>
-            <p className={styles.hint}>Each action creates a new version of this video. Previous versions stay in your library history.</p>
-          </>
-        ) : (
-          <div className={styles.placeholder}>
-            <h2>Subtitle Studio</h2>
-            <p>Pick a finished video on the left, then choose an action.</p>
+            <p className={styles.hint}>Each action creates a new version. Previous versions stay in the tabs above the player.</p>
           </div>
-        )}
-      </div>
+          <div className={styles.previewPane}>
+            <div className={styles.versionTabs} role="tablist" aria-label="Video versions">
+              {[...versions].reverse().map((version) => (
+                <button key={version.renderId} type="button" role="tab"
+                  aria-selected={activeVersion?.renderId === version.renderId}
+                  className={`${styles.versionTab} ${activeVersion?.renderId === version.renderId ? styles.versionTabActive : ""}`}
+                  onClick={() => setVersionId(version.renderId)}>
+                  V{version.number} · {version.hasCaptions ? "With subtitles" : "Original"}
+                </button>
+              ))}
+            </div>
+            <div className={styles.previewStage}>
+              {activeVersion && <video className={styles.preview} style={{ aspectRatio }} src={activeVersion.url} controls preload="metadata" aria-label={`Preview of ${selected.title}`} />}
+            </div>
+            {error && <p className={styles.error} role="alert">{error}</p>}
+            {selectedBusy && activeJob && (
+              <p className={styles.running} role="status">
+                <Loader2 className={styles.spin} size={14} aria-hidden />
+                Generating {subtitleOpLabel(activeJob.opId).toLowerCase()} — this keeps running when you leave the page, and the new version appears in the tabs automatically.
+              </p>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className={styles.placeholder}>
+          <h2>Subtitle Studio</h2>
+          <p>Pick a finished video on the left, then choose an action.</p>
+        </div>
+      )}
     </section>
   );
 }
