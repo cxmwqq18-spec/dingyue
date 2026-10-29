@@ -19,11 +19,11 @@ export async function POST(request: NextRequest, { params }: Context) {
     // batch takes minutes to hours, so the HTTP response must not hold the
     // connection open (and a browser navigating away must not kill the run).
     const runner = productionBatchRunner() ?? mockBatchRunner;
-    const expectedRevision = expectedRevision(request, body);
+    const batchRevision = expectedRevision(request, body);
     const customerId = auth.current.customer.id;
     after(async () => {
       try {
-        await resumeBatch({ siteId, customerId, batchId, expectedRevision, runner });
+        await resumeBatch({ siteId, customerId, batchId, expectedRevision: batchRevision, runner });
       } catch (error) {
         console.error("[aivideosugc-workspace] batch resume execution", error);
       }
