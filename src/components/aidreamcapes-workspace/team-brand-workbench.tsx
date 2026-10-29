@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
+import { workspaceLoginHref } from "@/lib/aidreamcapes-workspace/login";
 import styles from "./team-brand-workbench.module.css";
 
 type TeamRole = "owner" | "admin" | "editor" | "viewer";
@@ -109,8 +110,6 @@ function errorMessage(error: unknown) {
   return "We couldn’t complete that change. Check the information and try again.";
 }
 
-const DEFAULT_LOGIN_HREF = `/site/aidreamcapes/login?next=${encodeURIComponent("/site/aidreamcapes/app/create?view=teams")}`;
-
 function dateText(value?: string | null) {
   if (!value) return "—";
   const date = new Date(value);
@@ -153,7 +152,7 @@ export function TeamBrandWorkbench({ siteId, customerId, csrfToken, disabled = f
   const [error, setError] = useState<{ message: string; auth: boolean } | null>(null);
   const [notice, setNotice] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
-  const [loginHref, setLoginHref] = useState(DEFAULT_LOGIN_HREF);
+  const loginHref = workspaceLoginHref("teams");
   const [workspaceIdCopied, setWorkspaceIdCopied] = useState(false);
   const root = useMemo(() => `/api/sites/${encodeURIComponent(siteId)}/aivideosugc`, [siteId]);
   const request = useMemo(() => async <T,>(path: string, options: { method?: string; body?: unknown; revision?: number; signal?: AbortSignal } = {}): Promise<T> => {
@@ -188,11 +187,6 @@ export function TeamBrandWorkbench({ siteId, customerId, csrfToken, disabled = f
   const canEditBrand = canWriteBrand(selectedBrand?.role);
   const allowedInviteRoles = inviteRoleOptions(selectedTeam?.role);
   const teamBrand = brands.find((brand) => brand.teamId === selectedTeamId);
-
-  useEffect(() => {
-    const routeRoot = window.location.pathname.replace(/\/app(?:\/create)?\/?$/, "");
-    setLoginHref(`/site/aidreamcapes/login?next=${encodeURIComponent(`${routeRoot}/app/create?view=teams`)}`);
-  }, []);
 
   useEffect(() => {
     if (!customerId) {

@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useMemo, useState } from "react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
+import { workspaceLoginHref } from "@/lib/aidreamcapes-workspace/login";
 import styles from "./analytics-workbench.module.css";
 
 type Provider = "meta_ads" | "tiktok_ads" | "google_ads" | "youtube_ads" | "pinterest_ads" | "snapchat_ads";
@@ -56,7 +57,6 @@ const IMPORT_ROOT_KEYS = new Set(["provider", "providerAccountId", "teamId", "re
 const RECORD_KEYS = new Set(["providerRecordId", "creativeId", "creativeName", "date", "currency", "spend", "impressions", "clicks", "conversions"]);
 const CSV_HEADERS = ["providerrecordid", "creativeid", "creativename", "date", "currency", "spend", "impressions", "clicks", "conversions"];
 const REQUIRED_CSV_HEADERS = CSV_HEADERS.filter((header) => header !== "creativename");
-const LOGIN_HREF = `/site/aidreamcapes/login?next=${encodeURIComponent("/site/aivideosugc/app/create?view=analytics")}`;
 
 function utcToday() {
   return new Date().toISOString().slice(0, 10);
@@ -209,7 +209,7 @@ export function AnalyticsWorkbench({ siteId, csrfToken, disabled = false }: Anal
   const inputId = useId();
   const [filters, setFilters] = useState<Filters>(() => defaultFilters());
   const [filterDraft, setFilterDraft] = useState<Filters>(filters);
-  const [loginHref, setLoginHref] = useState(LOGIN_HREF);
+  const loginHref = workspaceLoginHref("analytics");
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
   const [busy, setBusy] = useState<"loading" | "importing" | "" | null>("loading");
   const [error, setError] = useState<{ message: string; auth: boolean } | null>(null);
@@ -223,12 +223,6 @@ export function AnalyticsWorkbench({ siteId, csrfToken, disabled = false }: Anal
   const [fileError, setFileError] = useState("");
   const [manual, setManual] = useState<MetricRecord>(() => ({ providerRecordId: "", creativeId: "", creativeName: "", date: utcToday(), currency: "USD", spend: "", impressions: "", clicks: "", conversions: "" }));
   const requestRoot = useMemo(() => `/api/sites/${encodeURIComponent(siteId)}/aivideosugc/analytics`, [siteId]);
-
-  useEffect(() => {
-    const routeRoot = window.location.pathname.replace(/\/app(?:\/create)?\/?$/, "");
-    const next = `${routeRoot}/app/create?view=analytics`;
-    setLoginHref(`/site/aidreamcapes/login?next=${encodeURIComponent(next)}`);
-  }, []);
 
   useEffect(() => {
     if (siteId !== "site_aidreamcapes") {
