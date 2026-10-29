@@ -27,6 +27,7 @@ function humanError(code: string): string {
   if (code === "agent_chat_rate_limited") return "You're sending messages too quickly. Please wait a moment and try again.";
   if (code === "agent_chat_provider_unavailable") return "The AI assistant isn't available right now. Please try again later.";
   if (code === "agent_chat_provider_failed") return "The assistant couldn't finish this reply. Please try again.";
+  if (code === "agent_chat_provider_interrupted") return "The assistant's reply was interrupted before it finished. The partial reply was kept — send your message again to continue.";
   if (code === "agent_chat_save_failed") return "Your message was sent but the reply couldn't be saved. Please try again.";
   if (code === "agent_chat_conversation_not_found") return "This conversation no longer exists.";
   if (code === "agent_chat_message_too_long") return "This message is too long. Please shorten it and try again.";

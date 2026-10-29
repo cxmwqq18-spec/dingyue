@@ -96,7 +96,7 @@ export async function generatePlatformText(params: PlatformTextGenerationParams)
 
 export type PlatformTextStreamEvent =
   | { type: "delta"; text: string }
-  | { type: "done"; providerId: string; providerLabel: string };
+  | { type: "done"; providerId: string; providerLabel: string; complete: boolean };
 
 /**
  * Streams an OpenAI-compatible chat completion (SSE) through the given text
@@ -128,6 +128,9 @@ export async function* streamPlatformTextProvider(params: {
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  // A relay can drop the connection mid-reply, so a stream that ends without
+  // the upstream's own terminator is an interruption, not a finished answer.
+  let upstreamFinished = false;
   while (true) {
     let chunk: ReadableStreamReadResult<Uint8Array>;
     try {
@@ -144,13 +147,15 @@ export async function* streamPlatformTextProvider(params: {
       const trimmed = line.trim();
       if (!trimmed.startsWith("data:")) continue;
       const payload = trimmed.slice(5).trim();
-      if (!payload || payload === "[DONE]") continue;
+      if (!payload) continue;
+      if (payload === "[DONE]") { upstreamFinished = true; continue; }
       try {
-        const parsed = JSON.parse(payload) as { choices?: Array<{ delta?: { content?: unknown } }> };
+        const parsed = JSON.parse(payload) as { choices?: Array<{ delta?: { content?: unknown }; finish_reason?: unknown }> };
         const delta = parsed.choices?.[0]?.delta?.content;
         if (typeof delta === "string" && delta) yield { type: "delta", text: delta };
+        if (parsed.choices?.[0]?.finish_reason) upstreamFinished = true;
       } catch { /* Ignore malformed keep-alive fragments. */ }
     }
   }
-  yield { type: "done", providerId: params.provider.id, providerLabel: params.provider.label };
+  yield { type: "done", providerId: params.provider.id, providerLabel: params.provider.label, complete: upstreamFinished };
 }
