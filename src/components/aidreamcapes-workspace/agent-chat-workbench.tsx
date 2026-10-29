@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Loader2, MessageSquare, Plus, Send, Square, Trash2 } from "lucide-react";
+import { MessageSquare, Plus, Send, Sparkles, Square, Trash2 } from "lucide-react";
 import { customerJsonHeaders } from "@/lib/client-csrf";
 import styles from "./agent-chat-workbench.module.css";
 
@@ -13,6 +13,14 @@ const SUGGESTIONS = [
   "Give me three shot ideas that show my product's material and build quality.",
   "Turn my product's key features into a short UGC-style voiceover script.",
   "What should I show in the first 3 seconds to stop people from scrolling?"
+];
+
+const TYPING_PHRASES = [
+  "Thinking up something great…",
+  "Jotting down ideas…",
+  "Sprinkling in the magic…",
+  "Picking the best words…",
+  "Almost there…"
 ];
 
 function humanError(code: string): string {
@@ -36,6 +44,10 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [streaming, setStreaming] = useState(false);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [liveMessageId, setLiveMessageId] = useState("");
+  const [liveChars, setLiveChars] = useState(0);
+  const liveTargetRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
   const streamEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -79,7 +91,27 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => { streamEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, streaming]);
+  useEffect(() => { streamEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, streaming, liveChars]);
+
+  useEffect(() => {
+    if (!streaming) { setPhraseIndex(0); return; }
+    const timer = window.setInterval(() => setPhraseIndex((current) => (current + 1) % TYPING_PHRASES.length), 2600);
+    return () => window.clearInterval(timer);
+  }, [streaming]);
+
+  // Typewriter reveal: upstream providers may deliver the reply in bursts, so
+  // render received text at a natural typing pace until it is fully shown.
+  useEffect(() => {
+    if (!liveMessageId) return;
+    const timer = window.setInterval(() => {
+      setLiveChars((current) => {
+        const target = liveTargetRef.current;
+        if (current >= target) return current;
+        return Math.min(target, current + Math.max(2, Math.ceil((target - current) / 12)));
+      });
+    }, 40);
+    return () => window.clearInterval(timer);
+  }, [liveMessageId]);
 
   async function newConversation() {
     if (busy) return;
@@ -127,7 +159,11 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
         conversationId = conversation.id;
       }
       const placeholderId = `pending-${Date.now()}`;
-      setMessages((current) => [...current, { id: placeholderId, role: "user", content, createdAt: new Date().toISOString() }, { id: `${placeholderId}-a`, role: "assistant", content: "", createdAt: new Date().toISOString(), pending: true }]);
+      const replyId = `${placeholderId}-a`;
+      setMessages((current) => [...current, { id: placeholderId, role: "user", content, createdAt: new Date().toISOString() }, { id: replyId, role: "assistant", content: "", createdAt: new Date().toISOString(), pending: true }]);
+      liveTargetRef.current = 0;
+      setLiveChars(0);
+      setLiveMessageId(replyId);
       setStreaming(true);
       const controller = new AbortController();
       abortRef.current = controller;
@@ -155,7 +191,8 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
             const event = JSON.parse(line.slice(5).trim()) as { type: string; text?: string; code?: string };
             if (event.type === "delta" && event.text) {
               reply += event.text;
-              setMessages((current) => current.map((item) => item.id === `${placeholderId}-a` ? { ...item, content: reply, pending: false } : item));
+              liveTargetRef.current = reply.length;
+              setMessages((current) => current.map((item) => item.id === replyId ? { ...item, content: reply, pending: false } : item));
             } else if (event.type === "error" && event.code) {
               failed = event.code;
             }
@@ -176,6 +213,8 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
       setStreaming(false);
       abortRef.current = null;
       setMessages((current) => current.map((item) => ({ ...item, pending: false })));
+      // Let the typewriter reveal finish catching up before dropping live mode.
+      window.setTimeout(() => { setLiveMessageId(""); setLiveChars(0); }, 500);
     }
   }
 
@@ -200,12 +239,25 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
             <p>Ask for video ideas, scripts, shot plans, or product marketing advice.</p>
             <div className={styles.suggestions}>{SUGGESTIONS.map((item) => <button key={item} type="button" className={styles.suggestion} onClick={() => void send(item)}>{item}</button>)}</div>
           </div>}
-          {messages.map((message) => <div key={message.id} className={`${styles.row} ${message.role === "user" ? styles.rowUser : ""}`}>
-            <div className={`${styles.bubble} ${message.role === "user" ? styles.bubbleUser : styles.bubbleAssistant}`}>
-              {message.pending && !message.content ? <Loader2 size={15} className={styles.spin} /> : <span className={styles.text}>{message.content}</span>}
-            </div>
-          </div>)}
-          {streaming && <div className={styles.streamHint}><Loader2 size={13} className={styles.spin} /><span>The assistant is typing…</span></div>}
+          {messages.map((message) => {
+            const isLive = message.id === liveMessageId;
+            const revealedText = isLive && liveChars < message.content.length ? message.content.slice(0, liveChars) : message.content;
+            const showTyping = (message.pending && !message.content) || (isLive && message.content.length > 0 && liveChars === 0);
+            return (
+              <div key={message.id} className={`${styles.row} ${message.role === "user" ? styles.rowUser : ""}`}>
+                <div className={`${styles.bubble} ${message.role === "user" ? styles.bubbleUser : styles.bubbleAssistant}`}>
+                  {showTyping
+                    ? <span className={styles.typingRow}><span className={styles.miniAvatar} aria-hidden="true"><Sparkles size={11} /></span><span className={styles.dots} aria-hidden="true"><i /><i /><i /></span></span>
+                    : <span className={styles.text}>{revealedText}{isLive && liveChars < message.content.length ? <span className={styles.caret} aria-hidden="true" /> : null}</span>}
+                </div>
+              </div>
+            );
+          })}
+          {streaming && <div className={styles.streamHint} role="status">
+            <span className={styles.hintAvatar} aria-hidden="true"><Sparkles size={13} /></span>
+            <span key={phraseIndex} className={styles.hintPhrase}>{TYPING_PHRASES[phraseIndex]}</span>
+            <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
+          </div>}
           <div ref={streamEndRef} />
         </div>
         {error && <div className={styles.error} role="alert"><span>{error}</span><button type="button" className={styles.errorClose} onClick={() => setError("")} aria-label="Dismiss message">×</button></div>}
