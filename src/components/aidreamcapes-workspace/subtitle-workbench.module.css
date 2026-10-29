@@ -10,7 +10,7 @@
 .searchBox:focus-within { border-color: #6035ff; }
 .searchBox input { flex: 1; min-width: 0; border: none; outline: none; background: none; font: inherit; font-size: 12px; color: #34394b; }
 .searchBox input::placeholder { color: #b3b8c2; }
-.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-content: start; overflow-y: auto; flex: 1; min-height: 0; padding-bottom: 4px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-content: start; overflow-y: auto; overscroll-behavior: contain; flex: 1; min-height: 0; padding-bottom: 4px; }
 .card { display: flex; flex-direction: column; gap: 0; border: 1px solid #e6e8ef; border-radius: 10px; background: #fff; padding: 0; overflow: hidden; font: inherit; text-align: left; cursor: pointer; }
 .card:hover { border-color: #8f95a3; }
 .cardActive, .cardActive:hover { border-color: #6035ff; box-shadow: 0 0 0 1px #6035ff; }
@@ -26,7 +26,7 @@
 
 /* Middle: editor — settings and actions sit left of the preview. The pane keeps
    to the viewport height; on short screens its own content scrolls inside. */
-.editor { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0; min-height: 0; overflow-y: auto; }
+.editor { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .paneHead h2 { margin: 0 0 3px; font-size: 14.5px; color: #222638; overflow-wrap: anywhere; }
 .paneHead p { margin: 0; font-size: 11.5px; color: #9aa0ad; }
 

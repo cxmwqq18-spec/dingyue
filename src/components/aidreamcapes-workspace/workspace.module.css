@@ -395,8 +395,9 @@ textarea.input { resize: vertical; min-height: 100px; }
 .creatorMain { max-width: none; padding: 30px clamp(18px, 3.2vw, 54px) 48px; }
 /* The Subtitle Studio is a dense three-pane workbench: span the full width so
    the video list sits next to the navigation instead of floating in blank space,
-   and keep the whole bench inside one viewport so pane scrolling stays internal. */
-.studioMain { max-width: none; padding: 20px clamp(16px, 2vw, 32px) 24px; display: flex; flex-direction: column; height: calc(100vh - 64px); }
+   and keep the whole bench inside one viewport so pane scrolling stays internal.
+   overflow:hidden is the hard guarantee: no pane can push the page taller. */
+.studioMain { max-width: none; padding: 20px clamp(16px, 2vw, 32px) 24px; display: flex; flex-direction: column; height: calc(100vh - 64px); overflow: hidden; }
 .creatorHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin: 2px 0 24px; }
 .creatorHeading h1 { margin-top: 5px; font-size: clamp(25px, 2.2vw, 33px); line-height: 1.18; letter-spacing: -1.15px; }
 .creatorHeading p { margin-top: 8px; color: var(--muted); font-size: 14px; }
