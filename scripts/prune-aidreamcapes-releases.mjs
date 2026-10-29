@@ -71,7 +71,18 @@ printf ']}\n'
 function deleteScript(names) {
   const lines = names.map((name) => {
     assertSafeReleaseName(name);
-    return `test -d "$ROOT/releases/${name}" && rm -rf -- "$ROOT/releases/${name}" && echo "removed ${name}" || echo "skipped ${name}"`;
+    // Safety guard: releases are disposable, runtime customer data is not. If
+    // a customer render or asset storage root ever lands inside the release
+    // directory (storage-root misconfiguration), abort the prune instead of
+    // deleting finished videos with it. Static build data (saas-*.json) is
+    // fine to remove.
+    return `for RUNTIME_DIR in aidreamcapes-workspace-render customer-assets; do
+  if find "$ROOT/releases/${name}/data/$RUNTIME_DIR" -type f -print -quit 2>/dev/null | grep -q .; then
+    echo "REFUSING to delete $ROOT/releases/${name}: it still contains customer data under data/$RUNTIME_DIR. Migrate it (e.g. to $ROOT/data/$RUNTIME_DIR) before pruning." >&2
+    exit 1
+  fi
+done
+test -d "$ROOT/releases/${name}" && rm -rf -- "$ROOT/releases/${name}" && echo "removed ${name}" || echo "skipped ${name}"`;
   });
   return `set -eu
 ROOT=${JSON.stringify(root)}

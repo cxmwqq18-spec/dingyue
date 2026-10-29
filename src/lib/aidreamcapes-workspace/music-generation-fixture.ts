@@ -9,7 +9,16 @@ import { assertMusicGenerationMockEnabled, createDeterministicMusicWav, type Mus
 const SAFE_ID = /^[a-zA-Z0-9_-]{1,180}$/;
 
 function renderRoot() {
-  return path.resolve(process.env.AIDREAMCAPES_MUSIC_FIXTURE_ROOT?.trim() || path.join(process.cwd(), "data", "aidreamcapes-music-fixtures"));
+  const configured = process.env.AIDREAMCAPES_MUSIC_FIXTURE_ROOT?.trim();
+  if (configured) return path.resolve(configured);
+  // Never store fixtures inside a release directory: deploys delete releases,
+  // which would delete the fixtures with them. When the process runs from a
+  // release checkout, anchor the fixture root at the shared app data
+  // directory one level above the releases folder.
+  if (process.env.NODE_ENV === "production" && process.cwd().includes(`${path.sep}releases${path.sep}`)) {
+    return path.resolve(process.cwd(), "..", "..", "data", "aidreamcapes-music-fixtures");
+  }
+  return path.join(process.cwd(), "data", "aidreamcapes-music-fixtures");
 }
 
 function fixturePath(job: MusicGenerationJob, root = renderRoot()) {

@@ -248,7 +248,16 @@ export function compileVideoEdit(task: WorkspaceTask, value: unknown): CompiledV
 }
 
 function renderRoot() {
-  return path.resolve(process.env.AIVIDEOSUGC_RENDER_ROOT?.trim() || path.join(process.cwd(), "data", "aidreamcapes-workspace-render"));
+  const configured = process.env.AIVIDEOSUGC_RENDER_ROOT?.trim();
+  if (configured) return path.resolve(configured);
+  // Never store renders inside a release directory: deploys delete releases,
+  // which would delete every customer render with them. When the process runs
+  // from a release checkout, anchor the render root at the shared app data
+  // directory one level above the releases folder.
+  if (process.env.NODE_ENV === "production" && process.cwd().includes(`${path.sep}releases${path.sep}`)) {
+    return path.resolve(process.cwd(), "..", "..", "data", "aidreamcapes-workspace-render");
+  }
+  return path.join(process.cwd(), "data", "aidreamcapes-workspace-render");
 }
 
 export function editedRenderDirectory(task: Pick<WorkspaceTask, "siteId" | "customerId" | "taskId">, renderId: string) {
