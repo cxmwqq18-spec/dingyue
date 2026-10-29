@@ -10,6 +10,8 @@ import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
 import styles from "./workspace.module.css";
+
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 import { confirmedBriefFromSnapshot, type ConfirmedProductBrief, type ImportedProductAsset, type ProductBriefSnapshotLike } from "./product-url-import";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { BatchDraftDialog, type BatchDraftItem } from "./batch-draft-dialog";
@@ -236,9 +238,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [collapsed, setCollapsed] = useState(false);
   const [dark, setDark] = useState(false);
   // Persist the theme per browser (anonymous visitors included). The read runs
-  // in useLayoutEffect so the stored choice applies before the first paint
-  // after hydration; writing happens on every change.
-  useLayoutEffect(() => {
+  // in a layout effect so the stored choice applies before the first paint
+  // after hydration; writing happens on every change. The isomorphic variant
+  // keeps SSR quiet — during server render the read is a no-op anyway.
+  useIsomorphicLayoutEffect(() => {
     try { if (window.localStorage.getItem(WORKSPACE_THEME_STORAGE_KEY) === "dark") setDark(true); } catch { /* storage may be unavailable */ }
   }, []);
   useEffect(() => {
