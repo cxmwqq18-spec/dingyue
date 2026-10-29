@@ -295,7 +295,7 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
     const [w, h] = (selectedTask?.input.options.aspect ?? "16:9").split(":").map(Number);
     return Number.isFinite(w) && Number.isFinite(h) && w > 0 && h > 0 ? w / h : 16 / 9;
   }, [selectedTask?.input.options.aspect]);
-  const stageHeight = aspectValue < 1 ? 270 : 170;
+  const stageHeight = aspectValue < 1 ? 200 : 150;
   const stageWidth = Math.round(stageHeight * aspectValue);
   const previewStyleBase = styleChoice === "auto" ? "classic" : styleChoice;
   const previewFontSize = (Math.round(SUBTITLE_ASS_BASE_FONT_SIZE[previewStyleBase] * SUBTITLE_ASS_SIZE_SCALE[sizeChoice]) / SUBTITLE_ASS_PLAY_RES_Y) * stageHeight;
