@@ -1,0 +1,118 @@
+{
+ "ok": true,
+ "mode": "applied",
+ "target": "production",
+ "siteId": "site_aidreamcapes",
+ "contract": "aidreamcapes-tiktok-case-cards-2026-10-28-v2",
+ "liveDataOwner": "LivePage.contentJson",
+ "planHash": "398e22829f708458c502377acb55976d7bd09d9362611cbe13dd8d40c112c4d6",
+ "baseHash": "398e22829f708458c502377acb55976d7bd09d9362611cbe13dd8d40c112c4d6",
+ "pagesInManifest": 5,
+ "opsPlanned": 11,
+ "abortedReasons": [],
+ "derivedCache": "not written; public SSR reads the relational LivePage directly",
+ "pagesTouched": 5,
+ "opsWritten": 11,
+ "readback": [
+  {
+   "page": "/ai-video-generation/beauty-routine",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ],
+   "blockOrder": [
+    "hero",
+    "picker",
+    "examples",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 1,
+   "examplesItems": 7,
+   "updatedAt": "2026-10-29T09:09:22.055Z"
+  },
+  {
+   "page": "/ai-video-generation/fashion-try-on-reel",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ],
+   "blockOrder": [
+    "hero",
+    "picker",
+    "examples",
+    "steps",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 1,
+   "examplesItems": 11,
+   "updatedAt": "2026-10-29T09:09:22.128Z"
+  },
+  {
+   "page": "/ai-video-generation/food-video",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ],
+   "blockOrder": [
+    "hero",
+    "picker",
+    "examples",
+    "steps",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 1,
+   "examplesItems": 4,
+   "updatedAt": "2026-10-29T09:09:22.177Z"
+  },
+  {
+   "page": "/ai-video-generation/image-to-video",
+   "ops": [
+    "blockOrderInsert"
+   ],
+   "blockOrder": [
+    "hero",
+    "picker",
+    "reasons",
+    "steps",
+    "uses",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 4,
+   "examplesItems": 0,
+   "updatedAt": "2026-10-29T09:09:22.213Z"
+  },
+  {
+   "page": "/ai-video-generation/product-video",
+   "ops": [
+    "blockOrderInsert"
+   ],
+   "blockOrder": [
+    "hero",
+    "picker",
+    "reasons",
+    "compare",
+    "steps",
+    "benefits",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 23,
+   "examplesItems": 0,
+   "updatedAt": "2026-10-29T09:09:22.238Z"
+  }
+ ]
+}

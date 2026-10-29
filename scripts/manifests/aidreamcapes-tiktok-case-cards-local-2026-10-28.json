@@ -1,0 +1,1066 @@
+{
+ "contract": "aidreamcapes-tiktok-case-cards-2026-10-28-v2",
+ "siteId": "site_aidreamcapes",
+ "target": "local",
+ "createdAt": "2026-10-29T09:06:40.881Z",
+ "sourceFile": "aidreamcapes-tiktok-case-cards-source-2026-10-28.json",
+ "sourceHash": "9c26ceac9b313a4b8ea204531dd475372963cdbb4b03197d0bf8a793d3e3753b",
+ "planHash": "65e7e33b2b96a3d8a965ab0c1576c71a7ba6fbb18bde170d8983be8c3e2e1d80",
+ "summary": {
+  "/ai-video-generation/beauty-routine": {
+   "layout": "template",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ]
+  },
+  "/ai-video-generation/before-after-video": {
+   "layout": "tool",
+   "ops": []
+  },
+  "/ai-video-generation/fashion-try-on-reel": {
+   "layout": "template",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ]
+  },
+  "/ai-video-generation/food-video": {
+   "layout": "template",
+   "ops": [
+    "pickerRemoveSlugs",
+    "examplesEnsure",
+    "blockOrderInsert"
+   ]
+  },
+  "/ai-video-generation/image-to-video": {
+   "layout": "tool",
+   "ops": [
+    "blockOrderInsert"
+   ]
+  },
+  "/ai-video-generation/product-video": {
+   "layout": "tool",
+   "ops": [
+    "blockOrderInsert"
+   ]
+  },
+  "/ai-video-generation/video-ads": {
+   "layout": "tool",
+   "ops": []
+  }
+ },
+ "pages": [
+  {
+   "id": "aidreamcapes_promo_category_beauty_routine",
+   "slug": "/ai-video-generation/beauty-routine",
+   "layout": "template",
+   "baseHash": "469bb0f6dc6293ff1a66015ca7e4be57937442caae25e317a19819f762eff580",
+   "ops": [
+    {
+     "op": "pickerRemoveSlugs",
+     "slugs": [
+      "whitening-strips-black-friday-tease",
+      "skincare-gift-set-unbox-routine",
+      "pink-tint-stick-lip-and-cheek",
+      "jelly-mask-sunday-reset",
+      "green-cleanser-black-friday-deal",
+      "everyday-lipstick-vanity-check",
+      "green-clay-mask-sunday-reset"
+     ],
+     "remainingCount": 1
+    },
+    {
+     "op": "examplesEnsure",
+     "h2": "More Beauty Routine video examples",
+     "groupLabel": "",
+     "items": [
+      {
+       "key": "tiktok45-6",
+       "href": "/ai-video-generation/whitening-strips-black-friday-tease",
+       "kind": "clip",
+       "title": "Whitening Strips Black Friday Tease",
+       "image": {
+        "src": "/ai-image-generation/whitening-strips-black-friday-tease-640.webp",
+        "alt": "At her bathroom counter she holds up a whitening-strips kit and teases the Black Friday deal before showing the strips.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, hair pinned up, wearing light-gray loungewear, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a bright bathroom counter, she holds the box of whitening strips beside her face. Spoken line: “Black Friday is live, and this is what I'm stocking up on.” Shot 2 [3-9 sec] Medium shot: She tears open an individual packet and takes out a whitening strip. Spoken line: “These whitening strips are so easy to use.” Shot 3 [9-18 sec] Close-up: Facing the mirror, she applies the strip to her upper teeth and presses it into place. Spoken line: “They stick on, they stay put, and there's no weird taste.” Shot 4 [18-25 sec] Medium shot: She applies makeup while wearing the whitening strips. Spoken line: “I just wear them while I do my makeup.” Shot 5 [25-30 sec] She smiles at the camera. Spoken line: “The deal ends soon, so grab a few boxes. It's in the orange cart.” Audio: Natural spoken English dialogue, together with tearing open the packet and natural bathroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：06_ee3978b9c2ce485bba767356a5132567_参考图.png 07  /  TikTok 视频记录",
+       "line": "At her bathroom counter she holds up a whitening-strips kit and teases the Black Friday deal before showing the strips.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "whitening-strips-black-friday-tease",
+       "video": {
+        "src": "/ai-video-generation/whitening-strips-black-friday-tease.mp4",
+        "name": "At her bathroom counter she holds up a whitening-strips kit and teases the Black Friday deal before showing the strips.",
+        "poster": {
+         "src": "/ai-image-generation/whitening-strips-black-friday-tease-640.webp",
+         "alt": "At her bathroom counter she holds up a whitening-strips kit and teases the Black Friday deal before showing the strips."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/whitening-strips-black-friday-tease-640.webp",
+         "alt": "At her bathroom counter she holds up a whitening-strips kit and teases the Black Friday deal before showing the strips."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/occasions/black-friday",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-21",
+       "href": "/ai-video-generation/skincare-gift-set-unbox-routine",
+       "kind": "clip",
+       "title": "Skincare Gift Set Unbox Routine",
+       "image": {
+        "src": "/ai-image-generation/skincare-gift-set-unbox-routine-640.webp",
+        "alt": "She lifts a skincare gift set out at her vanity and walks through each piece in the box as a ready-made routine.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a female shop owner in her twenties, with short hair, wearing a beige sweater, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a worktable, she holds a skincare gift set up to the camera. Spoken line: “Pack this skincare set with me.” Shot 2 [3-9 sec] Medium shot: Three products are arranged on the worktable: cleanser, serum, and face cream. Spoken line: “This one has our gentle cleanser, the glow serum, and the barrier cream.” Shot 3 [9-18 sec] Hand close-up: She places the three products one by one into a gift box lined with white tissue paper, then adds a handwritten card. Spoken line: “Tissue paper, a little thank-you card, and it's all wrapped like a gift.” Shot 4 [18-25 sec] Medium shot: She closes the box, applies a seal, and smiles. Spoken line: “Every set gets packed by hand, like it's going to a friend.” Shot 5 [25-30 sec] She holds the sealed gift box up to the camera. Spoken line: “Want one at your door? Tap the orange cart.” Audio: Natural spoken English dialogue, together with tissue paper rustling, closing the box, and applying a seal sticker. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：21_8803b8e949854226b9bc3c8be69b0e7a_参考图.png 22  /  TikTok 视频记录",
+       "line": "She lifts a skincare gift set out at her vanity and walks through each piece in the box as a ready-made routine.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "skincare-gift-set-unbox-routine",
+       "video": {
+        "src": "/ai-video-generation/skincare-gift-set-unbox-routine.mp4",
+        "name": "She lifts a skincare gift set out at her vanity and walks through each piece in the box as a ready-made routine.",
+        "poster": {
+         "src": "/ai-image-generation/skincare-gift-set-unbox-routine-640.webp",
+         "alt": "She lifts a skincare gift set out at her vanity and walks through each piece in the box as a ready-made routine."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/skincare-gift-set-unbox-routine-640.webp",
+         "alt": "She lifts a skincare gift set out at her vanity and walks through each piece in the box as a ready-made routine."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/occasions/sale-discount",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-22",
+       "href": "/ai-video-generation/pink-tint-stick-lip-and-cheek",
+       "kind": "clip",
+       "title": "Pink Tint Stick Lip And Cheek",
+       "image": {
+        "src": "/ai-image-generation/pink-tint-stick-lip-and-cheek-640.webp",
+        "alt": "One pink stick does both: she swipes it on her lips for tint, then dots it on her cheeks for a fresh flush.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, hair pinned up, with no makeup, wearing a beige knit top, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: Seated at her vanity, she twists up the pink balm stick. Spoken line: “This one stick does like four jobs.” Shot 2 [3-9 sec] Lip close-up: She applies the stick directly to her lips and presses them together, leaving a subtle pink sheen. Spoken line: “On my lips for a little tint and shine.” Shot 3 [9-17 sec] Cheek close-up: She dots the balm twice on her cheekbone and blends it with her fingertips. Spoken line: “On my cheeks for a dewy glow. It melts right in.” Shot 4 [17-25 sec] Medium close-up: She swipes a little on the back of her hand and smiles at the camera. Spoken line: “And on any dry spots. Super moisturizing, not sticky at all.” Shot 5 [25-30 sec] She holds the balm stick up to the camera. Spoken line: “It lives in my bag now. Tap the orange cart.” Audio: Natural spoken English dialogue, together with twisting up the balm and softly pressing the lips together. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：22_6e7abfbae1504473b30f4935ad3860ab_参考图.png 23  /  TikTok 视频记录",
+       "line": "One pink stick does both: she swipes it on her lips for tint, then dots it on her cheeks for a fresh flush.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "pink-tint-stick-lip-and-cheek",
+       "video": {
+        "src": "/ai-video-generation/pink-tint-stick-lip-and-cheek.mp4",
+        "name": "One pink stick does both: she swipes it on her lips for tint, then dots it on her cheeks for a fresh flush.",
+        "poster": {
+         "src": "/ai-image-generation/pink-tint-stick-lip-and-cheek-640.webp",
+         "alt": "One pink stick does both: she swipes it on her lips for tint, then dots it on her cheeks for a fresh flush."
+        },
+        "width": 720,
+        "height": 1280
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/pink-tint-stick-lip-and-cheek-640.webp",
+         "alt": "One pink stick does both: she swipes it on her lips for tint, then dots it on her cheeks for a fresh flush."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-23",
+       "href": "/ai-video-generation/jelly-mask-sunday-reset",
+       "kind": "clip",
+       "title": "Jelly Mask Sunday Reset",
+       "image": {
+        "src": "/ai-image-generation/jelly-mask-sunday-reset-640.webp",
+        "alt": "On Sunday night she scoops a spoonful of clear jelly mask, spreads it on and lets it set before peeling it off.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, hair tied in a bun, wearing a white bathrobe, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At the bathroom counter at night, she scoops up some of the clear, jelly-textured mask with a small spatula. Spoken line: “Put this on before bed, and peel it off in the morning.” Shot 2 [3-10 sec] Medium shot: Facing the mirror, she spreads a thin layer of the sleeping mask over her face; her skin looks dewy. Spoken line: “It goes on like a jelly, and it dries into a clear film overnight.” Shot 3 [10-18 sec] Hard cut to morning, close-up: She pinches the clear film at the edge of her cheek and slowly peels it off in one piece. Spoken line: “Then in the morning... this is so satisfying.” Shot 4 [18-25 sec] Medium close-up: She touches her cheek and smiles at the camera, showing hydrated, glowing skin. Spoken line: “My skin looks so bouncy and glowy.” Shot 5 [25-30 sec] She holds the mask jar up to the camera. Spoken line: “My new night routine. Tap the orange cart.” Audio: Natural spoken English dialogue, together with scooping out the overnight gel mask and peeling off the dried mask film. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：23_751df84d8cb8462ab4e683e937d302e6_参考图.png 24  /  TikTok 视频记录",
+       "line": "On Sunday night she scoops a spoonful of clear jelly mask, spreads it on and lets it set before peeling it off.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "jelly-mask-sunday-reset",
+       "video": {
+        "src": "/ai-video-generation/jelly-mask-sunday-reset.mp4",
+        "name": "On Sunday night she scoops a spoonful of clear jelly mask, spreads it on and lets it set before peeling it off.",
+        "poster": {
+         "src": "/ai-image-generation/jelly-mask-sunday-reset-640.webp",
+         "alt": "On Sunday night she scoops a spoonful of clear jelly mask, spreads it on and lets it set before peeling it off."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/jelly-mask-sunday-reset-640.webp",
+         "alt": "On Sunday night she scoops a spoonful of clear jelly mask, spreads it on and lets it set before peeling it off."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-27",
+       "href": "/ai-video-generation/green-cleanser-black-friday-deal",
+       "kind": "clip",
+       "title": "Green Cleanser Black Friday Deal",
+       "image": {
+        "src": "/ai-image-generation/green-cleanser-black-friday-deal-640.webp",
+        "alt": "She holds up a green pump-bottle cleanser at the bathroom counter and teases the Black Friday price before her routine.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a woman in her twenties, hair pinned up, no jewelry, wearing light-gray loungewear. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a bright bathroom counter, she holds the green pump bottle beside her face. Spoken line: “Black Friday is live, and this is the one I'd grab.” Shot 2 [3-9 sec] Medium shot: She presses the pump, dispensing lotion into her palm. Spoken line: “It's my everyday body lotion, the one I actually finish.” Shot 3 [9-18 sec] Close-up: She rubs the lotion onto her forearm; it absorbs quickly and leaves her skin with a soft sheen. Spoken line: “Rich but not greasy, it sinks in fast, and it smells clean, not perfumey.” Shot 4 [18-25 sec] Medium shot: She places two bottles side by side on the counter. Spoken line: “This is the week to stock up. I'm getting two.” Shot 5 [25-30 sec] She smiles at the camera. Spoken line: “The deal ends soon, so don't wait. Link's below.” Audio: Natural spoken English dialogue, together with pressing the pump, rubbing hands together, and natural bathroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：27_c9269dd0761c4ffd8ba19eda7f5584a9_参考图.png 28  /  TikTok 视频记录",
+       "line": "She holds up a green pump-bottle cleanser at the bathroom counter and teases the Black Friday price before her routine.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "green-cleanser-black-friday-deal",
+       "video": {
+        "src": "/ai-video-generation/green-cleanser-black-friday-deal.mp4",
+        "name": "She holds up a green pump-bottle cleanser at the bathroom counter and teases the Black Friday price before her routine.",
+        "poster": {
+         "src": "/ai-image-generation/green-cleanser-black-friday-deal-640.webp",
+         "alt": "She holds up a green pump-bottle cleanser at the bathroom counter and teases the Black Friday price before her routine."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/green-cleanser-black-friday-deal-640.webp",
+         "alt": "She holds up a green pump-bottle cleanser at the bathroom counter and teases the Black Friday price before her routine."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/occasions/black-friday",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-42",
+       "href": "/ai-video-generation/everyday-lipstick-vanity-check",
+       "kind": "clip",
+       "title": "Everyday Lipstick Vanity Check",
+       "image": {
+        "src": "/ai-image-generation/everyday-lipstick-vanity-check-640.webp",
+        "alt": "At her vanity she opens a lipstick, swatches it on her hand and wears it as her everyday shade.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a woman in her twenties, hair pinned up, no jewelry, with no makeup. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: Seated at her vanity, she opens the lipstick and holds it beside her face. Spoken line: “The one thing I put on when I'm running late.” Shot 2 [3-9 sec] Medium shot: She faces the vanity mirror; a towel and small plant sit on the counter. Spoken line: “No full routine. Just this.” Shot 3 [9-18 sec] Lip close-up: She applies the lipstick and presses her lips together, leaving them glossy and moisturized with a sheer tint. Spoken line: “It's tinted, so it's sheer and really moisturizing, and the color builds if you want more.” Shot 4 [18-25 sec] Medium close-up: She smiles at the camera and lightly taps her cheek with a fingertip. Spoken line: “A little on the cheeks too, and I look awake.” Shot 5 [25-30 sec] She holds the lipstick up to the camera. Spoken line: “Honestly, my most-used thing. Link's below.” Audio: Natural spoken English dialogue, together with opening the cap and softly pressing the lips together. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：42_5e01f351585c4a3c9060565ce0757439_参考图.png 43  /  TikTok 视频记录",
+       "line": "At her vanity she opens a lipstick, swatches it on her hand and wears it as her everyday shade.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "everyday-lipstick-vanity-check",
+       "video": {
+        "src": "/ai-video-generation/everyday-lipstick-vanity-check.mp4",
+        "name": "At her vanity she opens a lipstick, swatches it on her hand and wears it as her everyday shade.",
+        "poster": {
+         "src": "/ai-image-generation/everyday-lipstick-vanity-check-640.webp",
+         "alt": "At her vanity she opens a lipstick, swatches it on her hand and wears it as her everyday shade."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/everyday-lipstick-vanity-check-640.webp",
+         "alt": "At her vanity she opens a lipstick, swatches it on her hand and wears it as her everyday shade."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-43",
+       "href": "/ai-video-generation/green-clay-mask-sunday-reset",
+       "kind": "clip",
+       "title": "Green Clay Mask Sunday Reset",
+       "image": {
+        "src": "/ai-image-generation/green-clay-mask-sunday-reset-640.webp",
+        "alt": "On a marble bathroom counter she opens a green clay-mask jar and paints it on for her Sunday reset.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a woman in her twenties, hair tied in a bun, no jewelry, wearing a white bathrobe. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At the bathroom marble counter, she holds the opened green clay-mask jar beside her face. Spoken line: “Sunday reset. Come do a mask with me.” Shot 2 [3-9 sec] Medium shot: Facing the bathroom mirror, she gathers her hair back; white tile and a towel are behind her. Spoken line: “My skin's been so dull this week.” Shot 3 [9-18 sec] Close-up: She scoops up a spoonful of thick green clay mask, shows its texture, then applies it to her cheek. Spoken line: “Look at this texture. It's thick and creamy, and it goes on so smooth.” Shot 4 [18-25 sec] Hard cut to a medium shot: Her face is now washed clean; she gently pats her cheeks with a towel, touches her skin, and smiles. Spoken line: “Rinsed off, and my skin feels so soft and so clean.” Shot 5 [25-30 sec] She holds the clay-mask jar up to the camera. Spoken line: “This is my once-a-week thing now. Link's below.” Audio: Natural spoken English dialogue, together with scooping the clay mask, running water, and a towel moving. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：43_2595f6df749843ea9aa4f985b011870b_参考图.png 44  /  TikTok 视频记录",
+       "line": "On a marble bathroom counter she opens a green clay-mask jar and paints it on for her Sunday reset.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "green-clay-mask-sunday-reset",
+       "video": {
+        "src": "/ai-video-generation/green-clay-mask-sunday-reset.mp4",
+        "name": "On a marble bathroom counter she opens a green clay-mask jar and paints it on for her Sunday reset.",
+        "poster": {
+         "src": "/ai-image-generation/green-clay-mask-sunday-reset-640.webp",
+         "alt": "On a marble bathroom counter she opens a green clay-mask jar and paints it on for her Sunday reset."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/green-clay-mask-sunday-reset-640.webp",
+         "alt": "On a marble bathroom counter she opens a green clay-mask jar and paints it on for her Sunday reset."
+        }
+       ],
+       "placement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      }
+     ]
+    },
+    {
+     "op": "blockOrderInsert",
+     "after": "picker",
+     "value": "examples"
+    }
+   ]
+  },
+  {
+   "id": "aidreamcapes_promo_category_fashion_try_on_reel",
+   "slug": "/ai-video-generation/fashion-try-on-reel",
+   "layout": "template",
+   "baseHash": "38d862809f99ef0cc8e33cb8b0156b9a3666fbb9f9c9768cbc1bb364a45d6b86",
+   "ops": [
+    {
+     "op": "pickerRemoveSlugs",
+     "slugs": [
+      "washed-graphic-tee-fit-check",
+      "wrinkled-shirt-steamer-rescue",
+      "canvas-tote-everyday-carry",
+      "wide-leg-work-pants-fit-check",
+      "cream-chunky-cardigan-two-ways",
+      "washed-graphic-tee-fabric-close-up",
+      "blue-shirt-steamer-second-take",
+      "canvas-tote-pack-with-me",
+      "black-dress-pants-fold-test",
+      "navy-cardigan-one-piece-two-looks",
+      "white-tee-wardrobe-basic-check"
+     ],
+     "remainingCount": 1
+    },
+    {
+     "op": "examplesEnsure",
+     "h2": "More Outfit Reel video examples",
+     "groupLabel": "",
+     "items": [
+      {
+       "key": "tiktok45-1",
+       "href": "/ai-video-generation/washed-graphic-tee-fit-check",
+       "kind": "clip",
+       "title": "Washed Graphic Tee Fit Check",
+       "image": {
+        "src": "/ai-image-generation/washed-graphic-tee-fit-check-640.webp",
+        "alt": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Medium shot: A phone on a tripod faces her as she holds up the washed graphic T-shirt with both hands in a bright bedroom. Spoken line: “Fit check. This is the tee everyone keeps asking about.” Shot 2 [3-9 sec] Medium shot: Wearing the T-shirt with jeans, she turns from side to side toward the camera, her hands relaxed at her sides. Spoken line: “It's that vintage washed look, oversized, and super soft.” Shot 3 [9-18 sec] Close-up: She pinches the fabric between her fingers and shows the faded sunset graphic on the chest. Spoken line: “The faded sunset print is so good, and the cotton already feels broken in.” Shot 4 [18-25 sec] Medium shot: She tucks the front hem into her jeans and turns around. Spoken line: “Tucked into jeans, or with shorts. So easy.” Shot 5 [25-30 sec] She walks closer to the camera and smiles at it. Spoken line: “I got it in two colors. Orange cart, below.” Audio: Natural spoken English dialogue, together with fabric rustling and natural bedroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, extra hands and arms, mirror-selfie shots, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：01_5ab15d9214554f1e985bdbce86cb0987_参考图.png 02  /  TikTok 视频记录",
+       "line": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "washed-graphic-tee-fit-check",
+       "video": {
+        "src": "/ai-video-generation/washed-graphic-tee-fit-check.mp4",
+        "name": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link.",
+        "poster": {
+         "src": "/ai-image-generation/washed-graphic-tee-fit-check-640.webp",
+         "alt": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/washed-graphic-tee-fit-check-640.webp",
+         "alt": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-15",
+       "href": "/ai-video-generation/wrinkled-shirt-steamer-rescue",
+       "kind": "clip",
+       "title": "Wrinkled Shirt Steamer Rescue",
+       "image": {
+        "src": "/ai-image-generation/wrinkled-shirt-steamer-rescue-640.webp",
+        "alt": "A wrinkled light-blue shirt goes from crumpled to crisp under a handheld steamer in his bedroom.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a man around 30, with short hair, wearing a navy T-shirt, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: In the bedroom, he holds up a wrinkled light-blue shirt. Spoken line: “Running late with a wrinkled shirt?” Shot 2 [3-9 sec] Medium shot: He hangs the shirt on a hanger and picks up the handheld garment steamer. Spoken line: “No ironing board, no time. Okay.” Shot 3 [9-19 sec] Close-up: The steamer releases vapor as he moves it down the shirt, and the wrinkles gradually smooth out. Spoken line: “It heats up fast, and you just glide it down. Look, the wrinkles just fall out.” Shot 4 [19-25 sec] Medium shot: Wearing the smooth shirt, he buttons it and checks himself in the mirror. Spoken line: “Smooth shirt, and I'm out the door.” Shot 5 [25-30 sec] He holds the folded garment steamer up to the camera. Spoken line: “It folds up for travel, too. Tap the orange cart.” Audio: Natural spoken English dialogue, together with the steamer hissing and the hanger moving naturally. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：15_1fe33ad939e8460d9a34d0b52ca6fc51_参考图.png 16  /  TikTok 视频记录",
+       "line": "A wrinkled light-blue shirt goes from crumpled to crisp under a handheld steamer in his bedroom.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "wrinkled-shirt-steamer-rescue",
+       "video": {
+        "src": "/ai-video-generation/wrinkled-shirt-steamer-rescue.mp4",
+        "name": "A wrinkled light-blue shirt goes from crumpled to crisp under a handheld steamer in his bedroom.",
+        "poster": {
+         "src": "/ai-image-generation/wrinkled-shirt-steamer-rescue-640.webp",
+         "alt": "A wrinkled light-blue shirt goes from crumpled to crisp under a handheld steamer in his bedroom."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/wrinkled-shirt-steamer-rescue-640.webp",
+         "alt": "A wrinkled light-blue shirt goes from crumpled to crisp under a handheld steamer in his bedroom."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-16",
+       "href": "/ai-video-generation/canvas-tote-everyday-carry",
+       "kind": "clip",
+       "title": "Canvas Tote Everyday Carry",
+       "image": {
+        "src": "/ai-image-generation/canvas-tote-everyday-carry-640.webp",
+        "alt": "At the entryway table she loads a canvas tote the way she actually packs it: laptop, bottle, pouch, keys.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, with short hair, wearing a striped shirt, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: By the entryway table, she holds the canvas tote bag up to the camera. Spoken line: “My messy bag problem? Solved.” Shot 2 [3-12 sec] Medium shot: She places a laptop, water bottle, and makeup pouch into separate compartments of the bag. Spoken line: “Laptop in here, water bottle in this pocket, makeup in the inside pocket.” Shot 3 [12-20 sec] Close-up: She zips the bag closed, then puts her phone and keys into the exterior pocket. Spoken line: “And it zips closed, with an outside pocket for my phone and keys.” Shot 4 [20-26 sec] Medium shot: She puts the bag over her shoulder and walks toward the door. Spoken line: “It holds everything and still looks clean.” Shot 5 [26-30 sec] She looks back and smiles at the camera. Spoken line: “Work bag, gym bag, everything bag. Orange cart.” Audio: Natural spoken English dialogue, together with items going into the bag, the zipper closing, and footsteps. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：16_685196e9849e4a0ba55d17911fa8a553_参考图.png 17  /  TikTok 视频记录",
+       "line": "At the entryway table she loads a canvas tote the way she actually packs it: laptop, bottle, pouch, keys.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "canvas-tote-everyday-carry",
+       "video": {
+        "src": "/ai-video-generation/canvas-tote-everyday-carry.mp4",
+        "name": "At the entryway table she loads a canvas tote the way she actually packs it: laptop, bottle, pouch, keys.",
+        "poster": {
+         "src": "/ai-image-generation/canvas-tote-everyday-carry-640.webp",
+         "alt": "At the entryway table she loads a canvas tote the way she actually packs it: laptop, bottle, pouch, keys."
+        },
+        "width": 720,
+        "height": 1280
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/canvas-tote-everyday-carry-640.webp",
+         "alt": "At the entryway table she loads a canvas tote the way she actually packs it: laptop, bottle, pouch, keys."
+        }
+       ],
+       "placement": [
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-17",
+       "href": "/ai-video-generation/wide-leg-work-pants-fit-check",
+       "kind": "clip",
+       "title": "Wide-Leg Work Pants Fit Check",
+       "image": {
+        "src": "/ai-image-generation/wide-leg-work-pants-fit-check-640.webp",
+        "alt": "She holds up grey-taupe wide-leg work pants, then shows the fit from desk chair to full-length mirror.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her thirties, with ear-length hair, wearing a white shirt, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: In the bedroom, she holds up the taupe wide-leg trousers. Spoken line: “The work pants I actually want to wear.” Shot 2 [3-10 sec] Close-up: She tugs the waistband to show its stretch. Spoken line: “High waist, and the waistband stretches, so they're comfy all day.” Shot 3 [10-19 sec] Close-up: She lifts a pant leg to show its drape, then slips a hand into the side pocket. Spoken line: “They drape so nicely, and look, real pockets.” Shot 4 [19-26 sec] Hard cut to a medium shot: Wearing the wide-leg trousers, she walks a few steps down an office hallway and turns around. Spoken line: “Wide leg, looks polished, feels like sweatpants.” Shot 5 [26-30 sec] Close-up: She smiles at the camera. Spoken line: “I got two colors already. Tap the orange cart.” Audio: Natural spoken English dialogue, together with fabric rustling and footsteps. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：17_b7b7842161354a86b635a09f7eb99a92_参考图.png 18  /  TikTok 视频记录",
+       "line": "She holds up grey-taupe wide-leg work pants, then shows the fit from desk chair to full-length mirror.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "wide-leg-work-pants-fit-check",
+       "video": {
+        "src": "/ai-video-generation/wide-leg-work-pants-fit-check.mp4",
+        "name": "She holds up grey-taupe wide-leg work pants, then shows the fit from desk chair to full-length mirror.",
+        "poster": {
+         "src": "/ai-image-generation/wide-leg-work-pants-fit-check-640.webp",
+         "alt": "She holds up grey-taupe wide-leg work pants, then shows the fit from desk chair to full-length mirror."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/wide-leg-work-pants-fit-check-640.webp",
+         "alt": "She holds up grey-taupe wide-leg work pants, then shows the fit from desk chair to full-length mirror."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-18",
+       "href": "/ai-video-generation/cream-chunky-cardigan-two-ways",
+       "kind": "clip",
+       "title": "Cream Chunky Cardigan Two Ways",
+       "image": {
+        "src": "/ai-image-generation/cream-chunky-cardigan-two-ways-640.webp",
+        "alt": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, with short blonde hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Medium shot in front of a full-length mirror: She holds up the ivory chunky-knit cardigan. Spoken line: “The cozy cardigan you need this fall.” Shot 2 [3-12 sec] Medium shot: She buttons the cardigan over jeans and slowly turns around. Spoken line: “Look one: buttoned up with jeans. Warm, and so cute.” Shot 3 [12-21 sec] Hard cut to a medium shot: She wears the cardigan open over a slip dress and turns around. Spoken line: “Look two: open over a slip dress. Done.” Shot 4 [21-26 sec] Close-up: Her hand feels the chunky knit texture and the wooden buttons. Spoken line: “Look at this chunky knit. Thick and soft, not itchy.” Shot 5 [26-30 sec] She smiles at the camera. Spoken line: “Run, don't walk. It's in the orange cart.” Audio: Natural spoken English dialogue, together with knit fabric rustling and natural bedroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：18_ace42efb306d4fafa5ea2dab029f39a1_参考图.png 19  /  TikTok 视频记录",
+       "line": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "cream-chunky-cardigan-two-ways",
+       "video": {
+        "src": "/ai-video-generation/cream-chunky-cardigan-two-ways.mp4",
+        "name": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted.",
+        "poster": {
+         "src": "/ai-image-generation/cream-chunky-cardigan-two-ways-640.webp",
+         "alt": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted."
+        },
+        "width": 720,
+        "height": 1280
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/cream-chunky-cardigan-two-ways-640.webp",
+         "alt": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-19",
+       "href": "/ai-video-generation/washed-graphic-tee-fabric-close-up",
+       "kind": "clip",
+       "title": "Washed Graphic Tee Fabric Close-Up",
+       "image": {
+        "src": "/ai-image-generation/washed-graphic-tee-fabric-close-up-640.webp",
+        "alt": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Medium shot in front of a full-length mirror: In a bright bedroom, she holds up the washed graphic T-shirt. Spoken line: “Fit check. This is the tee everyone keeps asking about.” Shot 2 [3-9 sec] Medium shot: Wearing the T-shirt with jeans, she turns from side to side in front of the mirror. Spoken line: “It's that vintage washed look, oversized, and super soft.” Shot 3 [9-18 sec] Close-up: She pinches the fabric between her fingers and shows the faded sunset graphic on the chest. Spoken line: “The faded sunset print is so good, and the cotton already feels broken in.” Shot 4 [18-25 sec] Medium shot: She tucks the front hem into her jeans and turns around. Spoken line: “Tucked into jeans, or with shorts. So easy.” Shot 5 [25-30 sec] She walks closer to the mirror and smiles at the camera. Spoken line: “I got it in two colors. Orange cart, below.” Audio: Natural spoken English dialogue, together with fabric rustling and natural bedroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：19_b41e6925973644b5bf2ff9875f5d4667_参考图.png 20  /  TikTok 视频记录",
+       "line": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "washed-graphic-tee-fabric-close-up",
+       "video": {
+        "src": "/ai-video-generation/washed-graphic-tee-fabric-close-up.mp4",
+        "name": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton.",
+        "poster": {
+         "src": "/ai-image-generation/washed-graphic-tee-fabric-close-up-640.webp",
+         "alt": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/washed-graphic-tee-fabric-close-up-640.webp",
+         "alt": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-35",
+       "href": "/ai-video-generation/blue-shirt-steamer-second-take",
+       "kind": "clip",
+       "title": "Blue Shirt Steamer Second Take",
+       "image": {
+        "src": "/ai-image-generation/blue-shirt-steamer-second-take-640.webp",
+        "alt": "A second take of the steamer rescue for the light-blue shirt, with a closer collar-and-cuff finish.",
+        "width": 640,
+        "height": 1138,
+        "w": 640,
+        "h": 1138
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows both the product and the person for this video. Match the product's appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: the man wearing a navy T-shirt shown in Image 1, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: In the bedroom, he holds up a wrinkled light-blue shirt. Spoken line: “Running late with a wrinkled shirt?” Shot 2 [3-9 sec] Medium shot: He hangs the shirt on a hanger, with a window and clothes rack behind him. Spoken line: “No ironing board, no time, and a call in ten minutes. Okay.” Shot 3 [9-19 sec] Close-up: The handheld garment steamer releases vapor as he moves it down the shirt, and the wrinkles gradually smooth out. Spoken line: “This heats up fast, and you just glide it down. Look, the wrinkles just fall out.” Shot 4 [19-25 sec] Medium shot: Wearing the smooth shirt, he buttons it and checks himself in the mirror. Spoken line: “Smooth shirt, and I'm out the door. Easy.” Shot 5 [25-30 sec] He holds the garment steamer up to the camera. Spoken line: “It lives by my closet now. Link's below.” Audio: Natural spoken English dialogue, together with the steamer hissing and the hanger moving naturally. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：35_3515dc55bc3740dc992c7c7056a44e1a_参考图.png 36  /  TikTok 视频记录",
+       "line": "A second take of the steamer rescue for the light-blue shirt, with a closer collar-and-cuff finish.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "blue-shirt-steamer-second-take",
+       "video": {
+        "src": "/ai-video-generation/blue-shirt-steamer-second-take.mp4",
+        "name": "A second take of the steamer rescue for the light-blue shirt, with a closer collar-and-cuff finish.",
+        "poster": {
+         "src": "/ai-image-generation/blue-shirt-steamer-second-take-640.webp",
+         "alt": "A second take of the steamer rescue for the light-blue shirt, with a closer collar-and-cuff finish."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/blue-shirt-steamer-second-take-640.webp",
+         "alt": "A second take of the steamer rescue for the light-blue shirt, with a closer collar-and-cuff finish."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-36",
+       "href": "/ai-video-generation/canvas-tote-pack-with-me",
+       "kind": "clip",
+       "title": "Canvas Tote Pack With Me",
+       "image": {
+        "src": "/ai-image-generation/canvas-tote-pack-with-me-640.webp",
+        "alt": "A pack-with-me take on the canvas tote: she narrates each pocket as she loads it at the entryway table.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a woman in her twenties, with short hair, no jewelry, wearing a striped shirt. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: By the entryway table, she holds the canvas tote bag up to the camera. Spoken line: “What actually fits in this tote? Watch.” Shot 2 [3-14 sec] Medium shot: She packs the bag one item at a time: a laptop, water bottle, sweater, and notebook. Spoken line: “Laptop. Water bottle. A sweater, because it's always cold somewhere. My notebook.” Shot 3 [14-21 sec] Close-up: She lifts the handles to show their thickness, the stitching, and the wide opening. Spoken line: “Still room. The handles are thick, and the stitching feels really solid.” Shot 4 [21-26 sec] Medium shot: She puts the bag over her shoulder and walks toward the door. Spoken line: “And it sits nicely on the shoulder, even full.” Shot 5 [26-30 sec] She looks back and smiles at the camera. Spoken line: “My everyday bag now. Link's below.” Audio: Natural spoken English dialogue, together with items going into the bag and the door opening. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：36_563fc5fd6e594ee89690d133a46b35c4_参考图.png 37  /  TikTok 视频记录",
+       "line": "A pack-with-me take on the canvas tote: she narrates each pocket as she loads it at the entryway table.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "canvas-tote-pack-with-me",
+       "video": {
+        "src": "/ai-video-generation/canvas-tote-pack-with-me.mp4",
+        "name": "A pack-with-me take on the canvas tote: she narrates each pocket as she loads it at the entryway table.",
+        "poster": {
+         "src": "/ai-image-generation/canvas-tote-pack-with-me-640.webp",
+         "alt": "A pack-with-me take on the canvas tote: she narrates each pocket as she loads it at the entryway table."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/canvas-tote-pack-with-me-640.webp",
+         "alt": "A pack-with-me take on the canvas tote: she narrates each pocket as she loads it at the entryway table."
+        }
+       ],
+       "placement": [
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-37",
+       "href": "/ai-video-generation/black-dress-pants-fold-test",
+       "kind": "clip",
+       "title": "Black Dress Pants Fold Test",
+       "image": {
+        "src": "/ai-image-generation/black-dress-pants-fold-test-640.webp",
+        "alt": "She holds up folded black dress pants at the edge of her bed, then shows the drape and the crease after a day.",
+        "width": 640,
+        "height": 1138,
+        "w": 640,
+        "h": 1138
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows both the product and the person for this video. Match the product's appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: the woman with short gray hair shown in Image 1, no jewelry, wearing a white sweater. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: Beside the bedroom bed, she holds up the folded black trousers. Spoken line: “Let me show you why I bought these in two colors.” Shot 2 [3-10 sec] Medium shot: She unfolds the trousers on the bed and points out the pressed crease and waistband. Spoken line: “There's a sharp pressed crease, and the waist has a little stretch, so they're comfortable all day.” Shot 3 [10-19 sec] Close-up: She lifts a pant leg to show its drape and slips a hand into the pocket. Spoken line: “The fabric drapes really nicely, and look, real pockets.” Shot 4 [19-26 sec] Hard cut to a medium shot: Wearing the trousers, she walks a few steps down the hallway and turns around. Spoken line: “Dressy enough for the office, easy enough for errands.” Shot 5 [26-30 sec] Close-up: She smiles at the camera. Spoken line: “Two pairs, no regrets. Link's below.” Audio: Natural spoken English dialogue, together with fabric unfolding and footsteps. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：37_6c3cc0f22a9f4cc7a536998d2982671a_参考图.png 38  /  TikTok 视频记录",
+       "line": "She holds up folded black dress pants at the edge of her bed, then shows the drape and the crease after a day.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "black-dress-pants-fold-test",
+       "video": {
+        "src": "/ai-video-generation/black-dress-pants-fold-test.mp4",
+        "name": "She holds up folded black dress pants at the edge of her bed, then shows the drape and the crease after a day.",
+        "poster": {
+         "src": "/ai-image-generation/black-dress-pants-fold-test-640.webp",
+         "alt": "She holds up folded black dress pants at the edge of her bed, then shows the drape and the crease after a day."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/black-dress-pants-fold-test-640.webp",
+         "alt": "She holds up folded black dress pants at the edge of her bed, then shows the drape and the crease after a day."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-38",
+       "href": "/ai-video-generation/navy-cardigan-one-piece-two-looks",
+       "kind": "clip",
+       "title": "Navy Cardigan One Piece Two Looks",
+       "image": {
+        "src": "/ai-image-generation/navy-cardigan-one-piece-two-looks-640.webp",
+        "alt": "She lifts a navy cardigan and restyles it twice in front of the mirror: layered over a knit, then over a shirt.",
+        "width": 640,
+        "height": 1138,
+        "w": 640,
+        "h": 1138
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows both the product and the person for this video. Match the product's appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: the woman with short blonde hair shown in Image 1, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Medium shot in front of a full-length mirror: She holds up the navy cardigan. Spoken line: “One cardigan, two looks.” Shot 2 [3-12 sec] Medium shot: She buttons the cardigan, tucks it into her jeans, and slowly turns to show the back. Spoken line: “Look one: buttoned up and tucked into jeans. Clean and simple for work.” Shot 3 [12-21 sec] Hard cut to a medium shot: She wears the cardigan open over a white T-shirt, pushes up the sleeves, and turns around. Spoken line: “Look two: open over a white tee, sleeves pushed up. Weekend, done.” Shot 4 [21-26 sec] Close-up: Her hand feels the knit texture and buttons. Spoken line: “The knit is really soft, not itchy at all.” Shot 5 [26-30 sec] She smiles at the camera. Spoken line: “Easiest piece in my closet. Link's below.” Audio: Natural spoken English dialogue, together with knit fabric rustling and natural bedroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：38_35e31d950ba44689a5c4e00e50b1022b_参考图.png 39  /  TikTok 视频记录",
+       "line": "She lifts a navy cardigan and restyles it twice in front of the mirror: layered over a knit, then over a shirt.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "navy-cardigan-one-piece-two-looks",
+       "video": {
+        "src": "/ai-video-generation/navy-cardigan-one-piece-two-looks.mp4",
+        "name": "She lifts a navy cardigan and restyles it twice in front of the mirror: layered over a knit, then over a shirt.",
+        "poster": {
+         "src": "/ai-image-generation/navy-cardigan-one-piece-two-looks-640.webp",
+         "alt": "She lifts a navy cardigan and restyles it twice in front of the mirror: layered over a knit, then over a shirt."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/navy-cardigan-one-piece-two-looks-640.webp",
+         "alt": "She lifts a navy cardigan and restyles it twice in front of the mirror: layered over a knit, then over a shirt."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-39",
+       "href": "/ai-video-generation/white-tee-wardrobe-basic-check",
+       "kind": "clip",
+       "title": "White Tee Wardrobe Basic Check",
+       "image": {
+        "src": "/ai-image-generation/white-tee-wardrobe-basic-check-640.webp",
+        "alt": "She holds up a plain white tee and shows the three outfits she builds around it in one bedroom mirror session.",
+        "width": 640,
+        "height": 1138,
+        "w": 640,
+        "h": 1138
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a woman in her twenties, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Medium shot in front of a full-length mirror: In a bright bedroom, she holds up the white T-shirt. Spoken line: “Fit check. This is the tee I keep reaching for.” Shot 2 [3-9 sec] Medium shot: Wearing the T-shirt with jeans, she turns from side to side in front of the mirror. Spoken line: “It's thick cotton, so it's not see-through, and it keeps its shape.” Shot 3 [9-18 sec] Close-up: She pinches the hem fabric between her fingers and shows the neckline. Spoken line: “Feel this. Soft, thick, and the neckline sits nice and flat.” Shot 4 [18-25 sec] Medium shot: She tucks the front hem into her jeans, puts on a jacket, and turns around. Spoken line: “Tucked in with jeans, or under a jacket. It just works.” Shot 5 [25-30 sec] She walks closer to the mirror and smiles at the camera. Spoken line: “I already ordered a second one. Link's below.” Audio: Natural spoken English dialogue, together with clothing rustling and natural bedroom ambience. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：39_8d54a12593174cb1a4ef9a22ed1d77ec_参考图.png 40  /  TikTok 视频记录",
+       "line": "She holds up a plain white tee and shows the three outfits she builds around it in one bedroom mirror session.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "white-tee-wardrobe-basic-check",
+       "video": {
+        "src": "/ai-video-generation/white-tee-wardrobe-basic-check.mp4",
+        "name": "She holds up a plain white tee and shows the three outfits she builds around it in one bedroom mirror session.",
+        "poster": {
+         "src": "/ai-image-generation/white-tee-wardrobe-basic-check-640.webp",
+         "alt": "She holds up a plain white tee and shows the three outfits she builds around it in one bedroom mirror session."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/white-tee-wardrobe-basic-check-640.webp",
+         "alt": "She holds up a plain white tee and shows the three outfits she builds around it in one bedroom mirror session."
+        }
+       ],
+       "placement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      }
+     ]
+    },
+    {
+     "op": "blockOrderInsert",
+     "after": "picker",
+     "value": "examples"
+    }
+   ]
+  },
+  {
+   "id": "aidreamcapes_mirror_page_10138ed3e374b09c",
+   "slug": "/ai-video-generation/food-video",
+   "layout": "template",
+   "baseHash": "1e0a66d99acd4160c3e0f3858e199ed908bf722afe79ab3b921dbebc0e52f111",
+   "ops": [
+    {
+     "op": "pickerRemoveSlugs",
+     "slugs": [
+      "chili-crisp-oil-rice-upgrade",
+      "orange-drink-mix-morning-ritual",
+      "squeeze-bottle-hot-sauce-tacos",
+      "iced-citrus-drink-mix-switch"
+     ],
+     "remainingCount": 1
+    },
+    {
+     "op": "examplesEnsure",
+     "h2": "More Drink Pour video examples",
+     "groupLabel": "",
+     "items": [
+      {
+       "key": "tiktok45-24",
+       "href": "/ai-video-generation/chili-crisp-oil-rice-upgrade",
+       "kind": "clip",
+       "title": "Chili Crisp Oil Rice Upgrade",
+       "image": {
+        "src": "/ai-image-generation/chili-crisp-oil-rice-upgrade-640.webp",
+        "alt": "He spoons crispy chili oil over a bowl of rice and lets the crunch and the sizzle do the selling.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a man around 30, with short hair, wearing a gray T-shirt, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At the kitchen counter, he holds the jar of chili crisp beside a bowl of rice. Spoken line: “This jar makes everything taste better. I'm serious.” Shot 2 [3-8 sec] Medium shot: A fried egg sits on top of a bowl of plain rice in front of him. Spoken line: “Plain rice, one fried egg. Kind of boring, right?” Shot 3 [8-17 sec] Close-up: He scoops up red oil packed with chili flakes and fried garlic and drizzles it over the fried egg. Spoken line: “One spoon of chili crisp. Look at that crunch. It's garlicky, a little spicy, and so savory.” Shot 4 [17-25 sec] Medium close-up: He takes a big bite, chews, raises his eyebrows, and nods. Spoken line: “Okay. Now it's a whole meal.” Shot 5 [25-30 sec] He holds the jar up to the camera. Spoken line: “Noodles, eggs, pizza, everything. It's in the orange cart.” Audio: Natural spoken English dialogue, together with a spoon scraping the jar, the crisp chili topping, and chewing. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：24_94a0713119634397b18806f82e45956d_参考图.png 25  /  TikTok 视频记录",
+       "line": "He spoons crispy chili oil over a bowl of rice and lets the crunch and the sizzle do the selling.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "chili-crisp-oil-rice-upgrade",
+       "video": {
+        "src": "/ai-video-generation/chili-crisp-oil-rice-upgrade.mp4",
+        "name": "He spoons crispy chili oil over a bowl of rice and lets the crunch and the sizzle do the selling.",
+        "poster": {
+         "src": "/ai-image-generation/chili-crisp-oil-rice-upgrade-640.webp",
+         "alt": "He spoons crispy chili oil over a bowl of rice and lets the crunch and the sizzle do the selling."
+        },
+        "width": 720,
+        "height": 1280
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/chili-crisp-oil-rice-upgrade-640.webp",
+         "alt": "He spoons crispy chili oil over a bowl of rice and lets the crunch and the sizzle do the selling."
+        }
+       ],
+       "placement": [
+        "/industries/food-drinks",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-25",
+       "href": "/ai-video-generation/orange-drink-mix-morning-ritual",
+       "kind": "clip",
+       "title": "Orange Drink Mix Morning Ritual",
+       "image": {
+        "src": "/ai-image-generation/orange-drink-mix-morning-ritual-640.webp",
+        "alt": "She tears an orange stick pack into her water bottle, watches it fizz and drinks her new morning ritual.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging. Character: a woman in her twenties, hair tied in a bun, wearing a white T-shirt, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a bright kitchen counter, she holds a stick packet and tears it open. Spoken line: “If plain water bores you, try this.” Shot 2 [3-9 sec] Medium shot: She pours the orange powder into a clear water bottle. Spoken line: “One stick in my water bottle, every single morning.” Shot 3 [9-18 sec] Close-up: She tightens the lid and shakes the bottle; the water turns pale orange, then she pours it into a glass with ice. Spoken line: “Shake it up, and it turns into this light citrus drink. Not too sweet at all.” Shot 4 [18-25 sec] Medium close-up: She takes a sip and nods with a smile. Spoken line: “Honestly, it's the only way I actually drink enough water.” Shot 5 [25-30 sec] She holds the full box of drink-mix packets up to the camera. Spoken line: “I keep a box at work too. Tap the orange cart to grab one.” Audio: Natural spoken English dialogue, together with tearing open a packet, pouring in the powder, shaking the water bottle, and ice clinking. No background music. Negative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：25_0377f1513d6741c3b18f3ef99f64e73d_参考图.png 26  /  TikTok 视频记录",
+       "line": "She tears an orange stick pack into her water bottle, watches it fizz and drinks her new morning ritual.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "orange-drink-mix-morning-ritual",
+       "video": {
+        "src": "/ai-video-generation/orange-drink-mix-morning-ritual.mp4",
+        "name": "She tears an orange stick pack into her water bottle, watches it fizz and drinks her new morning ritual.",
+        "poster": {
+         "src": "/ai-image-generation/orange-drink-mix-morning-ritual-640.webp",
+         "alt": "She tears an orange stick pack into her water bottle, watches it fizz and drinks her new morning ritual."
+        },
+        "width": 720,
+        "height": 1280
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/orange-drink-mix-morning-ritual-640.webp",
+         "alt": "She tears an orange stick pack into her water bottle, watches it fizz and drinks her new morning ritual."
+        }
+       ],
+       "placement": [
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-44",
+       "href": "/ai-video-generation/squeeze-bottle-hot-sauce-tacos",
+       "kind": "clip",
+       "title": "Squeeze Bottle Hot Sauce Tacos",
+       "image": {
+        "src": "/ai-image-generation/squeeze-bottle-hot-sauce-tacos-640.webp",
+        "alt": "He squirts a bright red hot sauce over a plate of tacos and takes the bite that proves the heat.",
+        "width": 640,
+        "height": 640,
+        "w": 640,
+        "h": 640
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: a man around 30, with short hair, no jewelry, wearing a gray T-shirt. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a bright kitchen counter, he holds the squeeze bottle of hot sauce beside a plate of tacos. Spoken line: “If your tacos taste boring, it's the sauce.” Shot 2 [3-8 sec] Medium shot: He sits at the counter facing the camera, with a cutting board, lime, and plate of tacos in front of him. Spoken line: “I used to just add more salt. Big mistake.” Shot 3 [8-17 sec] Close-up: He drizzles the orange hot sauce back and forth over the tacos in a thin stream. Spoken line: “This one's smoky, creamy, with a slow heat that builds instead of burning your mouth.” Shot 4 [17-25 sec] Medium close-up: He takes a bite of a taco, chews, raises his eyebrows, and nods. Spoken line: “Mm. Yeah. That's it. That's the taco.” Shot 5 [25-30 sec] He holds the hot-sauce bottle up to the camera. Spoken line: “It lives in my fridge door now. Grab one, link's below.” Audio: Natural spoken English dialogue, together with squeezing the sauce, biting into a crisp shell, and natural kitchen ambience. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：44_becba5bfa1824977a0a7d7700864a38d_参考图.png 45  /  TikTok 视频记录",
+       "line": "He squirts a bright red hot sauce over a plate of tacos and takes the bite that proves the heat.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "squeeze-bottle-hot-sauce-tacos",
+       "video": {
+        "src": "/ai-video-generation/squeeze-bottle-hot-sauce-tacos.mp4",
+        "name": "He squirts a bright red hot sauce over a plate of tacos and takes the bite that proves the heat.",
+        "poster": {
+         "src": "/ai-image-generation/squeeze-bottle-hot-sauce-tacos-640.webp",
+         "alt": "He squirts a bright red hot sauce over a plate of tacos and takes the bite that proves the heat."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/squeeze-bottle-hot-sauce-tacos-640.webp",
+         "alt": "He squirts a bright red hot sauce over a plate of tacos and takes the bite that proves the heat."
+        }
+       ],
+       "placement": [
+        "/industries/food-drinks",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+       ]
+      },
+      {
+       "key": "tiktok45-45",
+       "href": "/ai-video-generation/iced-citrus-drink-mix-switch",
+       "kind": "clip",
+       "title": "Iced Citrus Drink Mix Switch",
+       "image": {
+        "src": "/ai-image-generation/iced-citrus-drink-mix-switch-640.webp",
+        "alt": "He drops ice into a tall glass, pours a citrus drink mix over it and swaps his afternoon soda for good.",
+        "width": 640,
+        "height": 1138,
+        "w": 640,
+        "h": 1138
+       },
+       "prompt": "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows both the product and the person for this video. Match the product's appearance, color, and packaging exactly to Image 1; the product must have no legible brand text. Character: the man wearing a white linen shirt shown in Image 1, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if recommending something good to a friend. Keep the delivery at a moderate pace, without sounding like a presenter. Shot 1 [0-3 sec] Close-up: At a bright kitchen counter, he holds a glass of iced citrus drink up to the camera. Spoken line: “Okay, this is my new afternoon drink.” Shot 2 [3-9 sec] Medium shot: He adds ice to a tall glass, with a window and green plants behind him. Spoken line: “I was so over sugary soda, but plain water by three p.m.? Not happening.” Shot 3 [9-18 sec] Close-up: He pours yellow citrus drink from a glass pitcher over the ice; a lemon slice sits on the rim as bubbles rise. Spoken line: “It's bright, a little tart, lightly sweet, and it actually tastes like real citrus.” Shot 4 [18-25 sec] Medium close-up: He takes a sip, pauses, and nods with a smile. Spoken line: “See, that's the face. So refreshing.” Shot 5 [25-30 sec] He holds the glass and pitcher up to the camera. Spoken line: “I keep a pitcher in the fridge now. Link's below if you want to try it.” Audio: Natural spoken English dialogue, together with pouring the drink, ice clinking against the glass, and the natural fizz of bubbles. No background music. Negative prompt: background music, subtitles, on-screen text, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds, depth-of-field blur, out-of-focus backgrounds. 参考图：45_8b1905ea7e6d4b30ac741bddfd36577c_参考图.png 附录 A  /  待匹配视频清单 以下文件均已下载并保存在“视频/待核对”。网站批量下载使用随机文件名，当前无法仅凭文件名与任务 ID 建立可靠对应；点击文件名可打开本机视频。 附录 B  /  未匹配参考图 另有一张编号为 052 的参考图，无法从已出片的 45 条记录确认对应关系，单独保存在“参考图片/待核对”。 052_参考图_1.png Appendix C  /  Latest Captioned Video Files Latest captioned video folder (absolute path):/Users/a1/work/3000课程21个skill/生成输出/TikTok剩余36条英文字幕_2026-10-28/TikTok_45条底部居中英文字幕合集_2026-10-28/视频 Click a filename below to open its MP4. An asterisk marks prompts with duplicate or near-duplicate wording; the linked files are candidate matches.",
+       "line": "He drops ice into a tall glass, pours a citrus drink mix over it and swaps his afternoon soda for good.",
+       "aspect": "9:16",
+       "duration": 30,
+       "publicSlug": "iced-citrus-drink-mix-switch",
+       "video": {
+        "src": "/ai-video-generation/iced-citrus-drink-mix-switch.mp4",
+        "name": "He drops ice into a tall glass, pours a citrus drink mix over it and swaps his afternoon soda for good.",
+        "poster": {
+         "src": "/ai-image-generation/iced-citrus-drink-mix-switch-640.webp",
+         "alt": "He drops ice into a tall glass, pours a citrus drink mix over it and swaps his afternoon soda for good."
+        },
+        "width": 1080,
+        "height": 1920
+       },
+       "referenceImages": [
+        {
+         "src": "/ai-image-generation/iced-citrus-drink-mix-switch-640.webp",
+         "alt": "He drops ice into a tall glass, pours a citrus drink mix over it and swaps his afternoon soda for good."
+        }
+       ],
+       "placement": [
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+       ]
+      }
+     ]
+    },
+    {
+     "op": "blockOrderInsert",
+     "after": "picker",
+     "value": "examples"
+    }
+   ]
+  },
+  {
+   "id": "aidreamcapes_v2_image_to_video",
+   "slug": "/ai-video-generation/image-to-video",
+   "layout": "tool",
+   "baseHash": "e33e237b1bf666437e680a3c3f0604ed5b5e10fbb8df7be1627860a5ac960ad3",
+   "ops": [
+    {
+     "op": "blockOrderInsert",
+     "after": "hero",
+     "value": "picker"
+    }
+   ]
+  },
+  {
+   "id": "aidreamcapes_mirror_page_bf80d4528b76f1ef",
+   "slug": "/ai-video-generation/product-video",
+   "layout": "tool",
+   "baseHash": "fb28fb9ae9e73d03ade29d83e7d55bf7b84caca08ad8c50bf3599892b913695f",
+   "ops": [
+    {
+     "op": "blockOrderInsert",
+     "after": "hero",
+     "value": "picker"
+    }
+   ]
+  }
+ ]
+}
