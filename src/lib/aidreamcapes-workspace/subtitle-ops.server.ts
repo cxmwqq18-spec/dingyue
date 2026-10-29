@@ -5,7 +5,7 @@ import { compileVideoEdit, removeEditedRender, renderEditedVideo } from "./edito
 import { structuredDecision } from "./provider";
 import { getTask, saveTask, type StoredTask } from "./store";
 import { isSubtitleOpId, type SubtitleOpId, type SubtitleOpPlan, type SubtitleOpSettings } from "./subtitle-ops";
-import { WorkspaceError, type WorkspaceTask } from "./types";
+import { WorkspaceError, type SubtitleCue, type WorkspaceTask } from "./types";
 
 /**
  * Hardcoded instructions for the subtitle-completion operations. This file is
@@ -19,13 +19,16 @@ const SUBTITLE_OP_CONTRACT = [
   "- Write the caption text in the language given in the context.",
   "- Lines are sequential, never overlapping, and stay within durationSeconds.",
   "- Each line must be readable in 1-6 seconds and hold at most 60 characters.",
-  "- When spokenLines are supplied, follow their timing closely and fix obvious speech-to-text mistakes; do not copy filler words.",
-  "- When spokenLines are missing and shots are supplied, time the lines along the shot boundaries.",
-  "- Use the style supplied in the context when present; otherwise choose the style that fits the video."
+  "- Base the caption text on the actual spoken dialogue of the video — voiceover narration included — sentence by sentence; fix obvious speech-to-text mistakes and do not copy filler words.",
+  "- Sync with the speech is mandatory: a line may only be on screen while its speech is spoken, appearing exactly when the words start and disappearing when they end — never earlier.",
+  "- When measuredSpeechCues are supplied they are ground truth measured from the rendered audio: give each cue exactly one caption line and copy the cue's start and end verbatim. Split a cue into two consecutive lines only if its text exceeds 60 characters, dividing the cue's time window. Never show a line before its speech starts, never keep it on screen after the speech ends, and never place lines inside silent gaps.",
+  "- When measuredSpeechCues are missing and shots are supplied, time the lines along the shot boundaries.",
+  "- Use the style supplied in the context when present; otherwise choose the style that fits the video.",
+  "- The renderer always preserves the original audio track; never plan anything that replaces it."
 ].join("\n");
 
 const SUBTITLE_OP_INTENT: Record<SubtitleOpId, string> = {
-  captions_polish: "Operation: generate subtitles. Follow what is said or shown in the video and phrase it as readable on-screen captions.",
+  captions_polish: "Operation: generate subtitles. Caption the actual spoken dialogue sentence by sentence, synchronised with the speech so lines match the speaker's mouth. Follow the measured speech timings exactly when they are supplied.",
   promo_lines: "Operation: promo lines. Write short promotional lines (a hook, one or two benefits, and a closing call to action) that sell the product shown in the video.",
   marketing_copy: "Operation: product copy. Write on-screen copy built from the supplied product details: concrete feature phrases and one closing call to action."
 };
@@ -53,8 +56,61 @@ function editedDuration(task: WorkspaceTask): number {
   return duration;
 }
 
-function buildSubtitleOpContext(task: StoredTask, opId: SubtitleOpId, duration: number): Record<string, unknown> {
+/**
+ * Ground-truth speech timing on the video timeline, measured when the task was
+ * generated: the current render's caption cues first, otherwise the verified
+ * per-shot speech cues offset to the timeline. These drive lip-sync: captions
+ * must match when the words are actually spoken, not when a text model guesses.
+ */
+function subtitleSpeechCues(task: StoredTask): SubtitleCue[] | undefined {
   const video = task.video!;
+  if (Array.isArray(video.captionLines) && video.captionLines.length) {
+    return video.captionLines.map((cue) => ({ start: cue.start, end: cue.end, text: cue.text }));
+  }
+  const shotCues: SubtitleCue[] = [];
+  for (const shot of task.storyboard?.shots ?? []) {
+    const version = shot.versions.find((candidate) => candidate.vid === shot.curVer);
+    if (!version?.speechTimingVerified || !version.speechCues?.length) continue;
+    for (const cue of version.speechCues) {
+      shotCues.push({ start: round3(cue.start + shot.start), end: round3(Math.min(cue.end + shot.start, shot.end)), text: cue.text });
+    }
+  }
+  return shotCues.length ? shotCues : undefined;
+}
+
+/**
+ * Snap the model's caption lines onto the measured speech cues. The text model
+ * writes the wording but cannot hear the video, so its timings drift from the
+ * audio; clamping every line to the cue it overlaps makes lip-sync hold even
+ * when the model ignores the instruction. Lines outside any speech are dropped
+ * and speech without a matching line keeps its own measured text.
+ */
+function snapPlanLinesToSpeech(lines: SubtitleCue[], cues: SubtitleCue[]): SubtitleCue[] {
+  const ordered = [...cues].sort((a, b) => a.start - b.start);
+  const mapped = ordered.map((cue) => {
+    const overlapping = lines.filter((line) => Math.min(line.end, cue.end) - Math.max(line.start, cue.start) > 0.3);
+    if (!overlapping.length) return [cue];
+    const weight = overlapping.reduce((sum, line) => sum + Math.max(line.text.length, 1), 0);
+    const snapped: SubtitleCue[] = [];
+    let cursor = cue.start;
+    for (let lineIndex = 0; lineIndex < overlapping.length; lineIndex++) {
+      const line = overlapping[lineIndex];
+      const span = (cue.end - cue.start) * (Math.max(line.text.length, 1) / weight);
+      const end = lineIndex === overlapping.length - 1 ? cue.end : Math.min(cue.end, Math.max(cursor + 0.2, cursor + span));
+      if (end <= cursor) continue;
+      snapped.push({ start: round3(cursor), end: round3(end), text: line.text });
+      cursor = end;
+    }
+    return snapped;
+  }).flat();
+  // Keep cues sequential and non-overlapping after snapping.
+  for (let index = 1; index < mapped.length; index++) {
+    if (mapped[index].start < mapped[index - 1].end) mapped[index - 1].end = Math.max(mapped[index - 1].start + 0.2, mapped[index].start - 0.01);
+  }
+  return mapped;
+}
+
+function buildSubtitleOpContext(task: StoredTask, opId: SubtitleOpId, duration: number): Record<string, unknown> {
   const schema = sceneSchema(task.sceneId);
   const language = task.storyboard?.lang ?? task.input.options.language;
   const scriptParts: string[] = [];
@@ -69,9 +125,7 @@ function buildSubtitleOpContext(task: StoredTask, opId: SubtitleOpId, duration: 
     visual: shot.visual.slice(0, 400),
     voiceover: shot.voiceover.slice(0, 400)
   }));
-  const spokenLines = Array.isArray(video.captionLines) && video.captionLines.length
-    ? video.captionLines.map((cue) => ({ start: cue.start, end: cue.end, text: cue.text }))
-    : undefined;
+  const speechCues = opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;
   return {
     operation: opId,
     intent: SUBTITLE_OP_INTENT[opId],
@@ -84,7 +138,7 @@ function buildSubtitleOpContext(task: StoredTask, opId: SubtitleOpId, duration: 
     script: scriptParts,
     creativeDirection: task.input.creativeDirection?.trim().slice(0, 2000) || undefined,
     shots: shots.length ? shots : undefined,
-    spokenLines
+    ...(speechCues ? { measuredSpeechCues: speechCues, measuredSpeechCuesNote: "Timings measured from the rendered audio — ground truth for lip sync. Copy each cue's start and end verbatim." } : {})
   };
 }
 
@@ -122,6 +176,10 @@ export async function runSubtitleOp(args: { siteId: string; customerId: string; 
   assertSubtitleOpTask(task, args);
   const decision = await structuredDecision(`${SUBTITLE_OP_CONTRACT}\n\n${SUBTITLE_OP_INTENT[args.opId]}`, buildSubtitleOpContext(task, args.opId, editedDuration(task)));
   let plan = validateSubtitleOpPlan(decision, editedDuration(task));
+  // Lip-sync guarantee: for dialogue captions, clamp the plan onto the measured
+  // speech timings so lines appear and disappear with the actual voice track.
+  const speechCues = args.opId === "captions_polish" ? subtitleSpeechCues(task) : undefined;
+  if (speechCues?.length) plan = { style: plan.style, lines: snapPlanLinesToSpeech(plan.lines, speechCues) };
   // Customer overrides win over the plan's style choice; unchosen dimensions stay automatic.
   const style = settings.style ?? plan.style;
 
