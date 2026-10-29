@@ -1,13 +1,13 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { ArrowRight, ImageIcon, Link2, Package, Sparkles, UserRound, Video, X } from "lucide-react";
+import { ArrowRight, Captions, ImageIcon, Link2, MessageSquare, Package, Sparkles, UserRound, Video, X } from "lucide-react";
 import { WORKSPACE_MODULES, type WorkspaceView } from "@/lib/aidreamcapes-workspace/navigation";
 import { ProductUrlImport, type ConfirmedProductBrief, type ProductUrlImportProps } from "./product-url-import";
 import productStyles from "./product-url-import.module.css";
 import styles from "./workspace.module.css";
 
-export const workspaceModuleIcons = { agent: Sparkles, video: Video, images: ImageIcon, videoLink: Link2, product: Package, actors: UserRound };
+export const workspaceModuleIcons = { agent: Sparkles, video: Video, images: ImageIcon, videoLink: Link2, product: Package, actors: UserRound, chat: MessageSquare, subtitles: Captions };
 
 export type ProductImportRecord = {
   id: string;

@@ -44,6 +44,13 @@ export function mockStructuredDecision(system: string, data: unknown): Record<st
   if (system.includes("Choose camera and framing tags")) {
     return { shots: Array.from({ length: count }, () => ({ camera: "static", framing: "medium" })) };
   }
+  if (system.includes("subtitle completion planner")) {
+    // Deterministic subtitle plan for offline regression runs.
+    const rawDuration = Number(input.durationSeconds);
+    const duration = Number.isFinite(rawDuration) && rawDuration > 0 ? rawDuration : 10;
+    const code = typeof input.language === "string" && input.language in MOCK_TEXT.voiceovers ? input.language as keyof typeof MOCK_TEXT.voiceovers : "en";
+    return { style: "bold", lines: [{ start: 0, end: Math.round(duration * 1000) / 1000, text: MOCK_TEXT.voiceovers[code] }] };
+  }
   const language = typeof input.language === "string" ? MOCK_LANGUAGE_CODES[input.language] ?? "en" : "en";
   const voiceover = input.actor ? MOCK_TEXT.voiceovers[language] : "";
   return {

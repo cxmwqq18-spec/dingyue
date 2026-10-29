@@ -129,6 +129,7 @@ export interface WorkspaceTask {
   storyboardHistory: Storyboard[];
   revisions: { at: string; shotId?: string; field: string; before: unknown; after: unknown }[];
   video?: VideoRender; videoHistory: VideoRender[]; captionEdits?: CaptionEditDraft; error?: string;
+  subtitleCompletion?: { at: string; opId: string; renderId: string }[];
   operation?: { action: string; state: "pending" | "run" | "done" | "fail" | "cancelled"; error?: string };
   featureJobs?: WorkspaceFeatureJob[];
 }

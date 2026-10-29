@@ -57,6 +57,7 @@
     "smoke:aidreamcapes-concurrency": "node scripts/smoke-aidreamcapes-concurrency.mjs",
     "health:aidreamcapes": "node scripts/check-aidreamcapes-health.mjs",
     "smoke:aidreamcapes-workspace-entry": "node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs",
+    "smoke:aidreamcapes-subtitle-ops": "node scripts/aidreamcapes-workspace/smoke-subtitle-ops.mjs",
     "smoke:aidreamcapes-workspace-entry-browser": "node scripts/aidreamcapes-workspace/smoke-card-entry-browser.mjs",
     "smoke:storefront-public-routes": "node scripts/smoke-storefront-public-routes.mjs",
     "smoke:storefront-navigation-data": "node scripts/smoke-storefront-navigation-data-consistency.mjs",

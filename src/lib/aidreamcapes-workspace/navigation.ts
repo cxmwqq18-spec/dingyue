@@ -1,6 +1,6 @@
 import type { SceneId } from "./types";
 
-export const WORKSPACE_VIEWS = ["home", "tools", "agent", "video", "images", "chat", "product", "videoLink", "actors", "batch", "library", "twin", "clone", "inspirations", "analytics", "teams", "developer", "rewards"] as const;
+export const WORKSPACE_VIEWS = ["home", "tools", "agent", "video", "images", "chat", "subtitles", "product", "videoLink", "actors", "batch", "library", "twin", "clone", "inspirations", "analytics", "teams", "developer", "rewards"] as const;
 export type WorkspaceView = typeof WORKSPACE_VIEWS[number];
 export function isWorkspaceView(value: unknown): value is WorkspaceView {
   return typeof value === "string" && (WORKSPACE_VIEWS as readonly string[]).includes(value);
@@ -17,6 +17,7 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
   { id: "product", title: "Product Links", summary: "Import product pages into your product library, then create videos without leaving the page.", group: "create" },
   { id: "actors", title: "AI Avatar", summary: "Browse presenters, preview voices or add your own portrait.", group: "create" },
   { id: "chat", title: "AI Assistant", summary: "Chat with an assistant for video ideas, scripts, and product marketing advice.", group: "create" },
+  { id: "subtitles", title: "Subtitle Studio", summary: "Pick a finished video and burn in subtitles, promo lines, or product copy.", group: "create" },
   { id: "inspirations", title: "Inspirations", summary: "Browse video and photo ideas, then use one in your own project.", group: "explore" },
   { id: "twin", title: "AI Twin", summary: "Save a presenter profile and try the simulated workflow. Voice training is not connected.", group: "explore", status: "simulation" },
   { id: "clone", title: "Ad Clone", summary: "Edit a sample ad timeline in a simulation. Real video analysis is not connected.", group: "explore", status: "simulation" },

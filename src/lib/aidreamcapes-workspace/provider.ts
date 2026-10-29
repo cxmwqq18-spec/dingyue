@@ -205,7 +205,7 @@ function parseJsonObject(raw: string): Record<string, unknown> {
   if (!result || typeof result !== "object" || Array.isArray(result)) throw new WorkspaceError("workspace_storyboard_response_invalid", 502);
   return result as Record<string, unknown>;
 }
-async function structuredDecision(system: string, data: unknown): Promise<Record<string, unknown>> {
+export async function structuredDecision(system: string, data: unknown): Promise<Record<string, unknown>> {
   if (isWorkspaceStabilityMockMode()) return mockStructuredDecision(system, data);
   const providers = await listPlatformAiProvidersRelational({ providerType: "text" });
   const configuredId = process.env.AIVIDEOSUGC_TEXT_PROVIDER_ID?.trim();
