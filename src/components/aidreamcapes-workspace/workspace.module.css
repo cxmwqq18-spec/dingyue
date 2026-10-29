@@ -393,6 +393,9 @@ textarea.input { resize: vertical; min-height: 100px; }
 @media (max-width: 760px) { .tools { grid-template-columns: 1fr; } }
 
 .creatorMain { max-width: none; padding: 30px clamp(18px, 3.2vw, 54px) 48px; }
+/* The Subtitle Studio is a dense three-pane workbench: span the full width so
+   the video list sits next to the navigation instead of floating in blank space. */
+.studioMain { max-width: none; padding: 20px clamp(16px, 2vw, 32px) 40px; }
 .creatorHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin: 2px 0 24px; }
 .creatorHeading h1 { margin-top: 5px; font-size: clamp(25px, 2.2vw, 33px); line-height: 1.18; letter-spacing: -1.15px; }
 .creatorHeading p { margin-top: 8px; color: var(--muted); font-size: 14px; }
@@ -494,7 +497,7 @@ textarea.input { resize: vertical; min-height: 100px; }
   .creatorActions { align-items: flex-start; flex-direction: column; }
 }
 @media (max-width: 760px) {
-  .creatorMain { padding: 21px 14px 32px; }
+  .creatorMain, .studioMain { padding: 21px 14px 32px; }
   .creatorHeading { align-items: flex-start; flex-direction: column; margin-bottom: 17px; }
   .creatorHeading p { max-width: 40ch; }
   .creatorStudio { grid-template-columns: 1fr; gap: 12px; }

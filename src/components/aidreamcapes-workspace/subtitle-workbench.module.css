@@ -1,7 +1,8 @@
 .root { display: grid; grid-template-columns: minmax(320px, 380px) minmax(290px, 350px) minmax(0, 1fr); gap: 14px; align-items: stretch; }
 
-/* Left: searchable card grid of finished videos */
-.list { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 420px; }
+/* Left: searchable card grid of finished videos; the grid stretches to match
+   the editor column, and the card list scrolls inside that fixed height. */
+.list { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
 .listHead { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px; }
 .listHead h2 { margin: 0; font-size: 12.5px; color: #34394b; }
 .listHead span { font-size: 11px; color: #9aa0ad; }
@@ -13,7 +14,7 @@
 .card { display: flex; flex-direction: column; gap: 0; border: 1px solid #e6e8ef; border-radius: 10px; background: #fff; padding: 0; overflow: hidden; font: inherit; text-align: left; cursor: pointer; }
 .card:hover { border-color: #8f95a3; }
 .cardActive, .cardActive:hover { border-color: #6035ff; box-shadow: 0 0 0 1px #6035ff; }
-.cardMedia { display: block; width: 100%; aspect-ratio: 16 / 9; background: #101219; overflow: hidden; }
+.cardMedia { display: block; width: 100%; aspect-ratio: 4 / 3; background: #101219; overflow: hidden; }
 .cardMedia video, .cardMedia img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .cardBody { display: flex; flex-direction: column; gap: 2px; padding: 7px 9px 8px; min-width: 0; }
 .cardTitle { font-size: 12px; font-weight: 600; color: #34394b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -23,8 +24,9 @@
 .listEnd { grid-column: 1 / -1; margin: 2px 0 0; font-size: 10.5px; color: #b3b8c2; text-align: center; }
 .empty { grid-column: 1 / -1; margin: 4px; font-size: 12px; color: #73777d; line-height: 1.5; }
 
-/* Middle: editor — settings and actions sit left of the preview */
-.editor { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 14px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 780px; }
+/* Middle: editor — settings and actions sit left of the preview. The column
+   sizes to its content and defines the row height the other panes stretch to. */
+.editor { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .paneHead h2 { margin: 0 0 3px; font-size: 14.5px; color: #222638; overflow-wrap: anywhere; }
 .paneHead p { margin: 0; font-size: 11.5px; color: #9aa0ad; }
 
@@ -99,13 +101,13 @@
 .hint { margin: 0; font-size: 10.5px; color: #9aa0ad; }
 
 /* Right: preview with version tabs on top */
-.previewPane { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 10px; min-height: 420px; min-width: 0; }
+.previewPane { border: 1px solid #e6e8ef; border-radius: 14px; background: var(--surface, #fff); padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 10px; min-height: 0; min-width: 0; }
 .versionTabs { display: flex; flex-wrap: wrap; gap: 2px; border-bottom: 1px solid #eef0f5; }
 .versionTab { appearance: none; border: none; background: none; margin-bottom: -1px; padding: 7px 12px 8px; font: inherit; font-size: 12px; font-weight: 600; color: #73777d; cursor: pointer; border-bottom: 2px solid transparent; }
 .versionTab:hover { color: #34394b; }
 .versionTabActive, .versionTabActive:hover { color: #6035ff; border-bottom-color: #6035ff; }
 .previewStage { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
-.preview { display: block; max-width: 100%; max-height: min(72vh, 640px); width: auto; height: auto; border-radius: 10px; background: #000; }
+.preview { display: block; width: 100%; height: auto; max-height: min(76vh, 780px); object-fit: contain; border-radius: 10px; background: #000; }
 .previewOverlay { position: absolute; inset: 0; display: flex; justify-content: center; padding: 0 4%; pointer-events: none; }
 .previewOverlay .liveLine { font-size: clamp(13px, 2.2vw, 20px); }
 .error { margin: 0; border: 1px solid #f0d5d8; border-radius: 10px; background: #fff7f7; color: #a03f4a; padding: 9px 12px; font-size: 12px; }

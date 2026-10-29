@@ -1655,7 +1655,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           else window.location.assign(currentLoginHref());
         }}>Log In</a>}</div>
       </header>
-      <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""}`}>
+      <main className={`${styles.main} ${view === "actors" && presenterStudioEnabled ? styles.creatorMain : ""} ${view === "subtitles" ? styles.studioMain : ""}`}>
         {message && <div className={`${styles.notice} ${messageKind === "error" ? styles.error : ""}`} role="alert"><span>{message}</span>{messageAction && <button className={styles.linkButton} onClick={() => { setMessageAction(false); void navigate("library"); }}><span>View in Library </span><ArrowRight size={14} /></button>}{saveStatus.startsWith("Not saved") && <button className={styles.linkButton} onClick={() => void persist().catch(() => {})}>Retry saving</button>}<button className={styles.iconButton} onClick={() => { setMessage(""); setMessageAction(false); }} aria-label="Dismiss message"><X size={15} /></button></div>}
         {inlineRun && <section className={styles.panel} aria-live="polite">
           <h2>{inlineRun.state === "ready" ? "Your video is ready" : inlineRun.state === "failed" ? "Generation stopped" : "Generating your video"}</h2>
