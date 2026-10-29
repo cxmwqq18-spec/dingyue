@@ -8,6 +8,7 @@ export function isWorkspaceView(value: unknown): value is WorkspaceView {
 
 export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: string; group: "main" | "create" | "explore"; status?: "planned" | "simulation" }[] = [
   { id: "home", title: "Home", summary: "Start your next project.", group: "main" },
+  { id: "chat", title: "AI Assistant", summary: "Chat with an assistant for video ideas, scripts, and product marketing advice.", group: "main" },
   { id: "tools", title: "All Tools", summary: "Find a tool for your next project.", group: "main" },
   { id: "library", title: "Library", summary: "Resume saved videos and download your results.", group: "main" },
   { id: "agent", title: "Text to Video", summary: "Turn a written idea and product details into an editable video storyboard.", group: "create" },
@@ -16,7 +17,6 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
   { id: "videoLink", title: "URL to Video", summary: "Review a product page and use its confirmed details in a video draft.", group: "create" },
   { id: "product", title: "Product Links", summary: "Import product pages into your product library, then create videos without leaving the page.", group: "create" },
   { id: "actors", title: "AI Avatar", summary: "Browse presenters, preview voices or add your own portrait.", group: "create" },
-  { id: "chat", title: "AI Assistant", summary: "Chat with an assistant for video ideas, scripts, and product marketing advice.", group: "create" },
   { id: "subtitles", title: "Subtitle Studio", summary: "Pick a finished video and burn in subtitles, promo lines, or product copy.", group: "create" },
   { id: "inspirations", title: "Inspirations", summary: "Browse video and photo ideas, then use one in your own project.", group: "explore" },
   { id: "twin", title: "AI Twin", summary: "Save a presenter profile and try the simulated workflow. Voice training is not connected.", group: "explore", status: "simulation" },
