@@ -1,0 +1,39 @@
+{
+ "ok": true,
+ "mode": "applied",
+ "target": "production",
+ "siteId": "site_aidreamcapes",
+ "contract": "aidreamcapes-tiktok-case-cards-2026-10-28-v2",
+ "liveDataOwner": "LivePage.contentJson",
+ "planHash": "2a851f360caf946e20114322a9759ef1d48b0eaa6ce4ae360184a1a7816a188e",
+ "baseHash": "2a851f360caf946e20114322a9759ef1d48b0eaa6ce4ae360184a1a7816a188e",
+ "pagesInManifest": 1,
+ "opsPlanned": 1,
+ "abortedReasons": [],
+ "derivedCache": "not written; public SSR reads the relational LivePage directly",
+ "pagesTouched": 1,
+ "opsWritten": 1,
+ "readback": [
+  {
+   "page": "/ai-video-generation",
+   "ops": [
+    "examplesDetachPublicSlug"
+   ],
+   "blockOrder": [
+    "hero",
+    "definition",
+    "picker",
+    "reasons",
+    "steps",
+    "examples",
+    "related",
+    "reviews",
+    "faq",
+    "cta"
+   ],
+   "pickerCount": 38,
+   "examplesItems": 50,
+   "updatedAt": "2026-10-29T10:20:12.043Z"
+  }
+ ]
+}

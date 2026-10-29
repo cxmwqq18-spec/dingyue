@@ -100,6 +100,18 @@
 - 计划脚本：`scripts/plan-aidreamcapes-tiktok-hub-examples.mjs`（只读库 + 产出可审阅 manifest）。
 - manifest：`scripts/manifests/aidreamcapes-tiktok-hub-examples-{local,production}-2026-10-29.json`，
   复用 v2 apply 脚本（contract v2、updatedAt CAS、读回断言、幂等）。
+
+**⚠️ v3 事故与 v4 修复（2026-10-29）**：v3 的 hub 画廊 item 带 `publicSlug`，使 45 个 slug
+各出现两个 owner；`resolveMediaDetail` 要求 slug 全站恰好 1 个 owner（`pages.length !== 1`
+即 404），导致 45 个详情页短暂 404。v4 manifest 以新 op `examplesDetachPublicSlug`
+剥掉 hub item 的 `publicSlug`（保留 `href`，画廊链接照常跳详情页），详情归属恢复唯一，
+目录网格计数恢复基线。教训：**详情 owner 是全站唯一的；跨页引用画廊一律不得携带
+`publicSlug`**（v2 的 slug-owner 不变量只拦截了 count<1，未拦截引用性复制）。
+
+- v4 计划脚本：`scripts/plan-aidreamcapes-tiktok-hub-detail-ownership-fix.mjs`
+  （含 orphan 校验：剥离前每个 slug 必须在 hub 之外仍有唯一 owner）。
+- v4 manifest：`scripts/manifests/aidreamcapes-tiktok-hub-detail-ownership-fix-{local,production}-2026-10-29.json`。
+- 本地与生产均已应用（各 1 op，CAS + 读回断言）；生产复验：45 个详情页 200、hub 45 个 mp4。
 - 本地执行：apply 成功（1 op），examples 50 条（45 新 + 5 旧），dev:local 浏览器验证
   hub 新组 45 视频卡渲染、product-video picker 23 卡（13 视频 + 10 图片）、
   video-ads/before-after/image-to-video picker 视频 2/4/4、无页面错误。

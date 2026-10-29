@@ -12,6 +12,10 @@
 //     the page's own template card).
 //   * examplesEnsure    — create `data.examples` (or reuse an empty one) and
 //     append the planned example items to a single gallery group.
+//   * examplesDetachPublicSlug — strip `publicSlug` from example items so a
+//     reference gallery (e.g. the video hub case studies) stops owning the
+//     detail slugs. Every slug must keep exactly one owner elsewhere; the
+//     items keep their `href`, so gallery links still resolve.
 //
 // The script never writes `SitePublishedState`, a publication, a snapshot, or
 // another site.
@@ -202,6 +206,18 @@ try {
             plannedSlugs.add(item.publicSlug);
           }
           if (!examplesApplied(data, op)) pendingOps.push(op);
+        } else if (op.op === "examplesDetachPublicSlug") {
+          const examples = record(data.examples);
+          const items = (Array.isArray(examples?.groups) ? examples.groups : []).flatMap((group) => Array.isArray(group?.items) ? group.items : []);
+          const present = items.filter((item) => typeof item?.publicSlug === "string" && op.slugs.includes(item.publicSlug));
+          const alreadyDetached = present.length === 0;
+          if (alreadyDetached && items.length !== op.remainingCount) {
+            aborted.push({ page: scope, reason: "examples already detached but the gallery does not hold the expected item count" });
+          } else if (present.length && present.length !== op.slugs.length) {
+            aborted.push({ page: scope, reason: `examples hold ${present.length} of ${op.slugs.length} planned slugs; refusing a partial detach` });
+          } else if (present.length) {
+            pendingOps.push(op);
+          }
         } else {
           aborted.push({ page: scope, reason: `unknown operation ${op.op}` });
         }
@@ -297,6 +313,20 @@ try {
             if (!known.has(item.publicSlug)) group.items.push(structuredClone(item));
           }
           assert.equal(group.items.length, op.items.length, `LivePage ${page.slug}: examples group holds ${group.items.length} items, expected ${op.items.length}.`);
+        } else if (op.op === "examplesDetachPublicSlug") {
+          const examples = record(nextData.examples);
+          assert(examples && Array.isArray(examples.groups), `LivePage ${page.slug}: examples gallery is missing.`);
+          let stripped = 0;
+          for (const group of examples.groups) {
+            if (!Array.isArray(group?.items)) continue;
+            for (const item of group.items) {
+              if (typeof item?.publicSlug === "string" && op.slugs.includes(item.publicSlug)) {
+                delete item.publicSlug;
+                stripped += 1;
+              }
+            }
+          }
+          assert.equal(stripped, op.slugs.length, `LivePage ${page.slug}: detached ${stripped} slugs, expected ${op.slugs.length}.`);
         }
         opsApplied += 1;
       }

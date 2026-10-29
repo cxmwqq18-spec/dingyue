@@ -1,0 +1,78 @@
+{
+ "contract": "aidreamcapes-tiktok-case-cards-2026-10-28-v2",
+ "siteId": "site_aidreamcapes",
+ "target": "local",
+ "createdAt": "2026-10-29T10:19:33.453Z",
+ "sourceFile": "aidreamcapes-tiktok-case-cards-source-2026-10-28.json",
+ "sourceHash": "9c26ceac9b313a4b8ea204531dd475372963cdbb4b03197d0bf8a793d3e3753b",
+ "planHash": "4ea24ff5e602033067fbe0ad37e332fdf3ee0974d9e3661c501cdf9756abd42b",
+ "summary": {
+  "/ai-video-generation": {
+   "ops": [
+    "examplesDetachPublicSlug"
+   ],
+   "slugs": 45,
+   "ownedOnHub": 45
+  }
+ },
+ "pages": [
+  {
+   "id": "aidreamcapes_mirror_page_04ef54dc4085da57",
+   "slug": "/ai-video-generation",
+   "baseHash": "34be10f5de85f6a4883fc11ed65ea8168df37b8f7be3a61f63fbe2fd76159cfd",
+   "ops": [
+    {
+     "op": "examplesDetachPublicSlug",
+     "slugs": [
+      "washed-graphic-tee-fit-check",
+      "silver-magnetic-ring-desk-demo",
+      "open-ear-sports-earbuds-park-walk",
+      "mint-shower-speaker-bathroom-concert",
+      "thin-magnetic-power-bank-unboxing",
+      "whitening-strips-black-friday-tease",
+      "sunset-lamp-room-glow-before-after",
+      "pink-mini-printer-desk-demo",
+      "silver-magnetic-ring-snap-on-demo",
+      "open-ear-earbuds-run-and-call",
+      "mint-speaker-tile-steam-session",
+      "vegetable-chopper-kitchen-demo",
+      "black-milk-frother-morning-demo",
+      "cable-organizer-desk-before-after",
+      "wrinkled-shirt-steamer-rescue",
+      "canvas-tote-everyday-carry",
+      "wide-leg-work-pants-fit-check",
+      "cream-chunky-cardigan-two-ways",
+      "washed-graphic-tee-fabric-close-up",
+      "magnetic-power-bank-snap-on-unboxing",
+      "skincare-gift-set-unbox-routine",
+      "pink-tint-stick-lip-and-cheek",
+      "jelly-mask-sunday-reset",
+      "chili-crisp-oil-rice-upgrade",
+      "orange-drink-mix-morning-ritual",
+      "black-espresso-machine-counter-demo",
+      "green-cleanser-black-friday-deal",
+      "green-notebook-desk-ritual",
+      "notes-app-chaos-to-calm",
+      "phone-ring-grip-one-hand-demo",
+      "sage-earbuds-pocket-fit",
+      "black-speaker-balcony-soundtest",
+      "four-side-box-grater-demo",
+      "cable-organizer-white-setup",
+      "blue-shirt-steamer-second-take",
+      "canvas-tote-pack-with-me",
+      "black-dress-pants-fold-test",
+      "navy-cardigan-one-piece-two-looks",
+      "white-tee-wardrobe-basic-check",
+      "sealed-box-order-unboxing",
+      "night-serum-order-packing",
+      "everyday-lipstick-vanity-check",
+      "green-clay-mask-sunday-reset",
+      "squeeze-bottle-hot-sauce-tacos",
+      "iced-citrus-drink-mix-switch"
+     ],
+     "remainingCount": 50
+    }
+   ]
+  }
+ ]
+}
