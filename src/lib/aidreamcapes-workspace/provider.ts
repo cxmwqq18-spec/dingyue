@@ -387,9 +387,10 @@ export async function submitShotGeneration(args: {
   if (args.shot.firstFrame || args.shot.lastFrame) throw new WorkspaceError("workspace_keyframe_transport_unsupported", 422);
   // Direct presenter tasks ship the actor portrait and the product photos as
   // ordered reference images upstream (resolveShotReferences direct branch),
-  // so the fused composite is only required for storyboard-mode shots.
-  if (sceneSchema(sceneId).needsActor && !args.input.direct && !args.shot.refImgs.composite) throw new WorkspaceError("workspace_actor_product_composite_required", 422);
-  if (sceneSchema(sceneId).needsActor) {
+  // so the fused composite — and its freshness check — only applies to
+  // storyboard-mode shots.
+  if (sceneSchema(sceneId).needsActor && !args.input.direct) {
+    if (!args.shot.refImgs.composite) throw new WorkspaceError("workspace_actor_product_composite_required", 422);
     const compositeHash = crypto.createHash("sha256").update(JSON.stringify({ actorId: args.input.actorId, images: args.input.images, aspect: args.input.options.aspect, scene: args.storyboard.scenePlan.mainScene })).digest("hex");
     if (args.shot.compositeInputHash !== compositeHash || args.shot.compositeStatus !== "done") throw new WorkspaceError("workspace_actor_product_composite_stale", 409);
   }
