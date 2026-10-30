@@ -1,0 +1,3942 @@
+{
+  "type": "aidreamcapes-placement-tags-draft",
+  "generatedAt": "2026-10-30T10:20:17.326Z",
+  "planDoc": "docs/aivideosugc-tagging-examples-rectification-plan.md",
+  "vocabulary": {
+    "industryFacetsExisting": [
+      "/industries/fashion-clothing",
+      "/industries/shoes",
+      "/industries/health-wellness",
+      "/industries/jewelry-accessories",
+      "/industries/electronics",
+      "/industries/food-drinks",
+      "/industries/beauty-skincare",
+      "/industries/home-living"
+    ],
+    "industryFacetsNew": [
+      "/industries/pet",
+      "/industries/kids-toy",
+      "/industries/e-commerce",
+      "/industries/education",
+      "/industries/financial-services",
+      "/industries/sports-gym",
+      "/industries/apps",
+      "/industries/ugc",
+      "/industries/viral",
+      "/industries/explainer"
+    ],
+    "note": "New facet pages are created in phase 4; runtime drops placement values without an existing directory page, so writing them early is dead-link safe."
+  },
+  "summary": {
+    "slugs": 367,
+    "placementOps": 312,
+    "industryCoverage": "328/367",
+    "platformCoverage": "85/367",
+    "occasionCoverage": "34/367",
+    "noIndustrySlugs": [
+      "an-avatar-holds-the-shaker",
+      "balcony-railing-greeting",
+      "beach-boardwalk-update",
+      "beach-shoreline-greeting",
+      "black-friday-video",
+      "cafe-counter-introduction",
+      "cafe-window-seat-chat",
+      "car-driver-seat-selfie",
+      "car-passenger-seat-chat",
+      "clean-studio",
+      "deal-day-product-demo",
+      "gift-box-ready-for-a-black-friday-offer",
+      "gift-guide-product-pack",
+      "gift-reveal-product-bundle",
+      "home-table-explanation",
+      "hospital-corridor-briefing",
+      "hospital-staff-room-update",
+      "indoor-home-corner-chat",
+      "interview-street-interview-answer",
+      "offer-ready-product-view",
+      "office-workday-update",
+      "outdoor-park-greeting",
+      "outdoor-walkway-update",
+      "podcast-microphone-opener",
+      "podcast-podcast-intro",
+      "pool-poolside-greeting",
+      "product-in-use-sale-scene",
+      "reporting-sidewalk-report",
+      "seasonal-product-use",
+      "short-sale-clip-opening",
+      "studio-creator-intro",
+      "team-headshots",
+      "terrace-patio-chat",
+      "terrace-rooftop-greeting",
+      "tiktok-spark-ad-video",
+      "travel-airport-lounge-update",
+      "umbrella-opens-for-coverage",
+      "warm-wood-counter",
+      "yogurt-demo-spoonful-tasted"
+    ]
+  },
+  "chipsOps": [
+    {
+      "op": "card-chips-replace",
+      "scope": "all pages, all card shapes",
+      "replace": {
+        "apparel": "clothing",
+        "accessories": "jewelry-accessories",
+        "trending": "viral"
+      }
+    },
+    {
+      "op": "picker-chips-edit",
+      "pages": [
+        "/",
+        "/ai-video-generation",
+        "/ai-video-generation/video-ads",
+        "/templates",
+        "/templates/photo",
+        "/templates/video"
+      ],
+      "removeIds": [
+        "apparel",
+        "accessories"
+      ]
+    },
+    {
+      "op": "picker-chips-edit",
+      "pages": [
+        "/"
+      ],
+      "renameIds": {
+        "trending": "viral"
+      }
+    }
+  ],
+  "placementOps": [
+    {
+      "slug": "360-showcase-linen-shirt",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "app-reaction-clip",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/apps",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "chip:apps",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "app-screen-walkthrough-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/apps"
+      ],
+      "basis": [
+        "chip:apps"
+      ]
+    },
+    {
+      "slug": "asmr-unboxing-makeup-tools",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/jewelry-positioning",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:accessories",
+        "template-inherit:/ai-image-generation/jewelry-positioning"
+      ]
+    },
+    {
+      "slug": "bag-on-a-cafe-table",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "balcony-plant-side-update",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "basket-on-a-room-shelf",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "bathroom-review-moisturizer-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "bathroom-robe-mirror-selfie",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "bathroom-routine-with-moisturizer",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/industries/ugc",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:ugc",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "beauty-routine-video",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "beauty-routine-video",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "bedroom-mirror-check-with-the-product",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "bedroom-try-on-knitwear-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "bento-box-walkthrough",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/apps"
+      ],
+      "basis": [
+        "keyword:(app\\b|apps|software|saas|da"
+      ]
+    },
+    {
+      "slug": "berry-bowl-first-bite-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    },
+    {
+      "slug": "black-friday-video",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/black-friday-countdown",
+      "setPlacement": [
+        "/occasions/black-friday",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b"
+      ]
+    },
+    {
+      "slug": "black-friday-video",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/black-friday-countdown",
+      "setPlacement": [
+        "/occasions/black-friday",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b"
+      ]
+    },
+    {
+      "slug": "blue-denim-jacket-city-sidewalk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "bottle-ad-with-a-person",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "brand-film",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/cinematic-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/jewelry-accessories",
+        "/industries/shoes",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/cinematic-video"
+      ]
+    },
+    {
+      "slug": "brand-film",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/cinematic-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/jewelry-accessories",
+        "/industries/shoes",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/cinematic-video"
+      ]
+    },
+    {
+      "slug": "budget-desk-overview",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "budget-tool-desk-explainer",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "cable-organizer-before-after",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/explainer"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "cable-organizer-desk-before-after",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/before-after-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "cable-organizer-white-setup",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/before-after-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "camel-coat-on-a-city-walk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "camel-coat-on-a-sidewalk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "camel-weekender-on-a-car-seat",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "canvas-tote-everyday-carry",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/fashion-try-on-reel",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/fashion-try-on-reel"
+      ]
+    },
+    {
+      "slug": "canvas-tote-pack-with-me",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/fashion-try-on-reel",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/fashion-try-on-reel"
+      ]
+    },
+    {
+      "slug": "canvas-tote-sidewalk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "cardigan-ready-for-season-end",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "cardigan-turn-reel",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "charcoal-hiking-shoe-front-hall",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "keyword:(shoe|sneaker|boot|sandal|he"
+      ]
+    },
+    {
+      "slug": "charcoal-hiking-shoe-studio",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "keyword:(shoe|sneaker|boot|sandal|he"
+      ]
+    },
+    {
+      "slug": "charcoal-sweatshirt-plain-studio",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "chili-crisp-oil-rice-upgrade",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "citrus-drink-first-sip",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "chip:food-beverage"
+      ]
+    },
+    {
+      "slug": "citrus-drink-pour-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "chip:food-beverage"
+      ]
+    },
+    {
+      "slug": "classroom-lesson-introduction",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "keyword:(course|class|lesson|tutoria"
+      ]
+    },
+    {
+      "slug": "clay-mask-texture-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "close-shot-of-a-silver-ring",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/jewelry-accessories",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:jewelry-accessories",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "close-up-unboxing-makeup-tools-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:accessories"
+      ]
+    },
+    {
+      "slug": "closet-organizer-walkthrough",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/explainer"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "clothing-try-on",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/virtual-try-on",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/virtual-try-on"
+      ]
+    },
+    {
+      "slug": "clothing-try-on",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/virtual-try-on",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/virtual-try-on"
+      ]
+    },
+    {
+      "slug": "coffee-maker-how-to-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "color-block-unboxing-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "color-blocks-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "color-variants",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "color-variants",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "coral-lipstick-swatch",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "cotton-shirt-fit-check",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:clothing"
+      ]
+    },
+    {
+      "slug": "cream-blouse-in-a-studio",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "cream-bowl-sauce-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "cream-candle-jar",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "cream-lamp-desk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "cream-mug-desk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/food-drinks",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "creator-recommends-a-phone-app",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-video-generation/home-organization",
+      "setPlacement": [
+        "/industries/apps",
+        "/industries/home-living",
+        "/platforms/facebook-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "chip:apps",
+        "template-inherit:/ai-video-generation/home-organization"
+      ]
+    },
+    {
+      "slug": "creator-style-photo",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/ugc-still-ad",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/ugc-still-ad"
+      ]
+    },
+    {
+      "slug": "creator-style-photo",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/ugc-still-ad",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/ugc-still-ad"
+      ]
+    },
+    {
+      "slug": "crossbody-try-on-fabric-messenger-bag",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "cufflink-detail-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "deal-day-product-demo",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d"
+      ]
+    },
+    {
+      "slug": "denim-shirt-detail-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:clothing"
+      ]
+    },
+    {
+      "slug": "desk-chart-explainer",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "desk-dashboard-clip",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "desk-lamp-product-demo-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "desk-lamp-switches-on",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "desk-review-of-a-thin-keyboard",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:tech-electronics",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "dog-brush-care",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "dog-brush-care-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "dog-harness-fit-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "dog-harness-park-setup",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "dog-harness-park-setup-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "drawer-organizer-explainer",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/explainer"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "drawer-trays-slide-into-place",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "drink-demo-first-sip-reaction",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "drink-pour",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "drink-pour",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "earbud-box-reveal",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:accessories"
+      ]
+    },
+    {
+      "slug": "evening-demo-of-a-kitchen-appliance",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:tech-electronics",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "every-angle",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/packshot-multi-angle",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/packshot-multi-angle"
+      ]
+    },
+    {
+      "slug": "every-angle",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/packshot-multi-angle",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/packshot-multi-angle"
+      ]
+    },
+    {
+      "slug": "exercise-mat-recovery-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "exercise-warm-up-explanation",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "fabric-cleaner-lesson-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "felt-slippers-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "keyword:(shoe|sneaker|boot|sandal|he"
+      ]
+    },
+    {
+      "slug": "finance-hook-phone-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "first-bite-of-a-berry-bowl",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/health-wellness",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:health-fitness",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "first-person-discovery-court-gear",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/explainer",
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "first-sip-of-a-citrus-drink",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/food-drinks",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:food-beverage",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "fitness-recovery-tip",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:fitness"
+      ]
+    },
+    {
+      "slug": "fitness-routine-explanation",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:fitness"
+      ]
+    },
+    {
+      "slug": "folded-trousers-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:clothing"
+      ]
+    },
+    {
+      "slug": "folding-bike-commute",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:accessories"
+      ]
+    },
+    {
+      "slug": "folding-bike-hinge-opens",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "folding-phone-stand",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "fragrance-reveal-reaction",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "full-turn-of-a-linen-shirt",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:e-commerce",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "gaming-monitor-framed-for-a-black-friday-post",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/industries/electronics",
+        "/occasions/black-friday",
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds",
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b"
+      ]
+    },
+    {
+      "slug": "garage-storage-shelf-update",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "garden-garden-update",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "garden-greenhouse-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "gift-bottle-held-in-both-hands",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "gift-box-ready-for-a-black-friday-offer",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:(gift|holiday|christma",
+        "occasion:black\\s?friday\\b"
+      ]
+    },
+    {
+      "slug": "gift-guide-product-pack",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "gift-reveal-product-bundle",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "gold-necklace-revealed-from-tissue",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "keyword:(ring|necklace|earring|brace"
+      ]
+    },
+    {
+      "slug": "graphite-speaker-desk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "green-cleanser-black-friday-deal",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/occasions/black-friday",
+        "/occasions/sale-discount",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b",
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "green-notebook-desk-ritual",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/image-to-video",
+      "setPlacement": [
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "grwm-unboxing-knitwear",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/jewelry-positioning",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/fashion-clothing",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:clothing",
+        "template-inherit:/ai-image-generation/jewelry-positioning"
+      ]
+    },
+    {
+      "slug": "gym-bench-check-in",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "gym-pre-workout-greeting",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "gym-protein-scoop-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "hand-applies-balm-from-a-plain-jar",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "hand-cream-on-a-bathroom-counter",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/change-background",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "hand-demo-open-a-leather-wallet",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/change-background",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "handbag-on-a-marble-cafe-table",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "headphone-creator-review",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "headphone-product-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "home-app-walkthrough-opener",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/explainer",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:explainer",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "home-organizing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/home-organization",
+      "setPlacement": [
+        "/industries/home-living",
+        "/platforms/facebook-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/home-organization"
+      ]
+    },
+    {
+      "slug": "home-organizing",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/home-organization",
+      "setPlacement": [
+        "/industries/home-living",
+        "/platforms/facebook-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/home-organization"
+      ]
+    },
+    {
+      "slug": "home-sofa-welcome",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "hook-home-app-walkthrough",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/explainer"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "hot-sauce-pour",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "chip:food-beverage"
+      ]
+    },
+    {
+      "slug": "hot-sauce-taco-drizzle",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "chip:food-beverage"
+      ]
+    },
+    {
+      "slug": "how-to-product-video",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/how-to-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/health-wellness",
+        "/industries/home-living",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/how-to-video"
+      ]
+    },
+    {
+      "slug": "how-to-product-video",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/how-to-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/health-wellness",
+        "/industries/home-living",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/how-to-video"
+      ]
+    },
+    {
+      "slug": "iced-citrus-drink-mix-switch",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "indoor-entryway-greeting",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "jar-on-white-for-catalog-match",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "jewelry-on-model",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/jewelry-positioning",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/jewelry-positioning"
+      ]
+    },
+    {
+      "slug": "jewelry-on-model",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/jewelry-positioning",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/jewelry-positioning"
+      ]
+    },
+    {
+      "slug": "jewelry-try-on-layered-gold-necklaces",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "keyword:(ring|necklace|earring|brace"
+      ]
+    },
+    {
+      "slug": "kettlebell-powder-reveal-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/health-wellness",
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "kettlebell-powder-reveal-reel-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "kitchen-appliance-evening-demo-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "chip:tech-electronics"
+      ]
+    },
+    {
+      "slug": "kitchen-counter-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "kitchen-island-explanation",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "kitchen-tool-lesson-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "knit-sweater-mirror",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "kraft-coffee-pour",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "laptop-sleeve-opens-for-fit",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "launch-promo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/promo-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/food-drinks",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-video-generation/promo-video"
+      ]
+    },
+    {
+      "slug": "launch-promo",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/promo-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/food-drinks",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-video-generation/promo-video"
+      ]
+    },
+    {
+      "slug": "lifestyle-app-recommendation",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/apps"
+      ],
+      "basis": [
+        "chip:apps"
+      ]
+    },
+    {
+      "slug": "linen-suit-on-a-terrace",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "linen-tote-at-a-farmers-market",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "lipstick-gift-reveal",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "living-room-lounge-introduction",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "living-room-sofa-check-in",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "lunch-bag-packed-for-a-black-friday-deal",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/food-drinks",
+        "/occasions/black-friday",
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "keyword:(dress|gown|hoodie|sweater|k",
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b"
+      ]
+    },
+    {
+      "slug": "lunch-box-on-the-last-day",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "lunchbox-latch-clicks-shut",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "lunchbox-leak-tutorial",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "magnetic-power-bank-snap-on-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/financial-services",
+        "/occasions/sale-discount",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(bank|banking|finance|financ"
+      ]
+    },
+    {
+      "slug": "matcha-bowl-set-on-linen",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/change-background",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "mint-face-mist-hook",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "mint-face-mist-hook-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "mint-shower-speaker-bathroom-concert",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/image-to-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "mirror-selfie-denim-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:clothing"
+      ]
+    },
+    {
+      "slug": "moisturizer-lifted-from-a-carton",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "mug-color-reveal-hook",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "mug-on-white-for-store-page",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li",
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "night-serum-order-packing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/e-commerce",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "notes-app-chaos-to-calm",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/before-after-video",
+      "setPlacement": [
+        "/industries/apps",
+        "/industries/electronics",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(app\\b|apps|software|saas|da"
+      ]
+    },
+    {
+      "slug": "offer-ready-product-view",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d"
+      ]
+    },
+    {
+      "slug": "office-desk-explanation",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "olive-jacket-cuff",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "olive-overshirt-fit-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "olive-overshirt-sunset-terrace",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/model-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "open-ear-earbuds-run-and-call",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/sports-gym",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "open-ear-sports-earbuds-park-walk",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/sports-gym",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru",
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "opening-line-phone-demo",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "orange-drink-mix-morning-ritual",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/industries/health-wellness",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "organizer-review-scene",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "outfit-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/fashion-try-on-reel",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/fashion-try-on-reel"
+      ]
+    },
+    {
+      "slug": "outfit-reel",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/fashion-try-on-reel",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/fashion-try-on-reel"
+      ]
+    },
+    {
+      "slug": "over-ear-headphone-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "chip:tech-electronics"
+      ]
+    },
+    {
+      "slug": "package-reveal-unboxing-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "packaging-preview",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/packaging-mockup",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/food-drinks",
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/packaging-mockup"
+      ]
+    },
+    {
+      "slug": "packaging-preview",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/packaging-mockup",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/food-drinks",
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/packaging-mockup"
+      ]
+    },
+    {
+      "slug": "pendant-creator-try-on-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "perfume-bottle-in-a-room",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "pet-brush-living-room-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "pet-brush-living-room-demo-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "pet-cat-cuddle-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "pet-dog-cuddle-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "pet-grooming-kit-unboxing",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "chip:pet"
+      ]
+    },
+    {
+      "slug": "phone-case-compare",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "phone-first-sale-post",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/black-friday",
+      "setPlacement": [
+        "/industries/electronics",
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds",
+        "occasion:(black\\s?friday|sale|d"
+      ]
+    },
+    {
+      "slug": "phone-grip-app-demo-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/apps"
+      ],
+      "basis": [
+        "chip:apps"
+      ]
+    },
+    {
+      "slug": "phone-ring-grip-one-hand-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/jewelry-accessories",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds",
+        "keyword:(ring|necklace|earring|brace"
+      ]
+    },
+    {
+      "slug": "picnic-blanket-in-use",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "pink-mini-printer-desk-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "place-the-blue-bottle-underwater",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "post-workout-bottle-check-in",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/health-wellness",
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "post-workout-bottle-check-in-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "post-workout-shaker",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    },
+    {
+      "slug": "pov-discovery-court-gear",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/jewelry-positioning",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/explainer",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:explainer",
+        "template-inherit:/ai-image-generation/jewelry-positioning"
+      ]
+    },
+    {
+      "slug": "powder-burst-around-a-kettlebell",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/industries/sports-gym",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:sports-gym",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "product-in-use-sale-scene",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d"
+      ]
+    },
+    {
+      "slug": "product-listing-screen-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "protein-pouch-gym-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "pump-moisturizer-routine-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "quiet-unboxing-makeup-tools",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:accessories"
+      ]
+    },
+    {
+      "slug": "quilted-jacket-lifted-from-a-gift-box",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "realtor-walkthrough-home",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "realtor-walkthrough-home-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/financial-services"
+      ],
+      "basis": [
+        "chip:financial-services"
+      ]
+    },
+    {
+      "slug": "resistance-band-home-demo-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    },
+    {
+      "slug": "routine-demo-cream-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "running-jacket-checked-in-a-mirror",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k",
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "running-shoe-creator-showcase-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "chip:footwear"
+      ]
+    },
+    {
+      "slug": "running-shoes-before-the-jog",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "sage-bottle-desk-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "sage-bottle-front-hall",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "sage-overshirt-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "sage-overshirt-unboxing-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "sage-soap-dispenser-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "sale-banner",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "sale-banner",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "sandals-tried-on-at-the-market",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "sea-glass-kettle-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "sealed-box-order-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/home-living",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li"
+      ]
+    },
+    {
+      "slug": "seasonal-garden",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/change-background",
+      "setPlacement": [
+        "/industries/home-living",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "seasonal-product-use",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "set-the-sauce-bottle-with-tomatoes",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "sheet-mask-routine",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "shirt-steamer-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "shopping-clothing-rack-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "shopping-shop-aisle-update",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li"
+      ]
+    },
+    {
+      "slug": "short-sale-clip-opening",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/occasions/sale-discount"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d"
+      ]
+    },
+    {
+      "slug": "show-the-blue-bottle-on-white",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "show-the-canister-on-white",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "show-the-pump-bottle-on-white",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "show-the-sauce-bottle-on-white",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "silicone-case-compare-ad",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "silk-scarf-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "silver-bracelet-close-up",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "silver-magnetic-ring-desk-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/home-living",
+        "/industries/jewelry-accessories",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(ring|necklace|earring|brace"
+      ]
+    },
+    {
+      "slug": "silver-magnetic-ring-snap-on-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/jewelry-accessories",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(ring|necklace|earring|brace"
+      ]
+    },
+    {
+      "slug": "silver-ring-size-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "silver-signet-macro-reveal-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:jewelry-accessories"
+      ]
+    },
+    {
+      "slug": "single-camera-case-fit",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "chip:tech-electronics"
+      ]
+    },
+    {
+      "slug": "skincare-gift-set-lifted-from-tissue",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "skincare-gift-set-unbox-routine",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(gift|holiday|christma",
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "skincare-order-packing-reel",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "sneaker-photo-for-the-feed",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "keyword:(shoe|sneaker|boot|sandal|he"
+      ]
+    },
+    {
+      "slug": "speaker-feature-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "chip:tech-electronics"
+      ]
+    },
+    {
+      "slug": "speaker-feature-walkthrough",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/explainer"
+      ],
+      "basis": [
+        "chip:explainer"
+      ]
+    },
+    {
+      "slug": "splash-the-pump-bottle",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "spoken-lesson-about-skin-care",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-image-generation/colorway-variations",
+      "setPlacement": [
+        "/industries/education",
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/platforms/amazon-product-photos",
+        "/platforms/shopify-product-photos"
+      ],
+      "basis": [
+        "chip:education",
+        "template-inherit:/ai-image-generation/colorway-variations"
+      ]
+    },
+    {
+      "slug": "sports-ball-court-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "sports-racket-court-tip",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "squeeze-bottle-hot-sauce-tacos",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/food-video",
+      "setPlacement": [
+        "/industries/food-drinks",
+        "/platforms/facebook-ads",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-video-generation/food-video"
+      ]
+    },
+    {
+      "slug": "stadium-hydration-fan-moment",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/health-wellness",
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "stadium-hydration-fan-moment-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/viral"
+      ],
+      "basis": [
+        "chip:viral"
+      ]
+    },
+    {
+      "slug": "steam-the-ceramic-canister",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "keyword:(serum|cream|cleanser|moistu"
+      ]
+    },
+    {
+      "slug": "steel-bottle-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "stemless-earbud-desk-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "chip:tech-electronics"
+      ]
+    },
+    {
+      "slug": "stemless-earbud-product-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/jewelry-accessories"
+      ],
+      "basis": [
+        "chip:accessories"
+      ]
+    },
+    {
+      "slug": "story-ad",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/story-ad-vertical",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/health-wellness",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/story-ad-vertical"
+      ]
+    },
+    {
+      "slug": "story-ad",
+      "shape": "templateCard",
+      "ownerPage": "/ai-image-generation/story-ad-vertical",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/health-wellness",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "template-inherit:/ai-image-generation/story-ad-vertical"
+      ]
+    },
+    {
+      "slug": "streamer-reaction-app",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/apps"
+      ],
+      "basis": [
+        "chip:apps"
+      ]
+    },
+    {
+      "slug": "street-interview-fitness-gear",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "street-interview-fitness-gear-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/e-commerce"
+      ],
+      "basis": [
+        "chip:e-commerce"
+      ]
+    },
+    {
+      "slug": "street-interview-snack-bite-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "chip:food-beverage"
+      ]
+    },
+    {
+      "slug": "street-style-linen-set-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:apparel"
+      ]
+    },
+    {
+      "slug": "studio-speaking-to-camera",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "studio-style-watch-close-up",
+      "shape": "workspaceCase",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/industries/jewelry-accessories",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "chip:accessories",
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "study-room-desk-study-chat",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/education",
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|",
+        "keyword:(course|class|lesson|tutoria"
+      ]
+    },
+    {
+      "slug": "study-room-notebook-routine",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "keyword:(course|class|lesson|tutoria"
+      ]
+    },
+    {
+      "slug": "suitcase-with-room-for-the-offer",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "supplement-creator-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/ugc"
+      ],
+      "basis": [
+        "chip:ugc"
+      ]
+    },
+    {
+      "slug": "talking-head-skin-lesson",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "tea-bundle-unbox-scene",
+      "shape": "workspaceCase",
+      "ownerPage": "/occasions/sale-discount",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "teal-leash-dog",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/pet"
+      ],
+      "basis": [
+        "keyword:(dog|cat|puppy|kitten|pet|le"
+      ]
+    },
+    {
+      "slug": "terracotta-planter-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "thin-magnetic-power-bank-unboxing",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics",
+        "/industries/financial-services",
+        "/occasions/sale-discount",
+        "/platforms/tiktok-ads",
+        "/platforms/youtube-shorts-ads"
+      ],
+      "basis": [
+        "keyword:(bank|banking|finance|financ"
+      ]
+    },
+    {
+      "slug": "tiktok-spark-ad-video",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spark-ads-style-video",
+      "setPlacement": [
+        "/platforms/tiktok-ads"
+      ],
+      "basis": []
+    },
+    {
+      "slug": "tiktok-spark-ad-video",
+      "shape": "templateCard",
+      "ownerPage": "/ai-video-generation/spark-ads-style-video",
+      "setPlacement": [
+        "/platforms/tiktok-ads"
+      ],
+      "basis": []
+    },
+    {
+      "slug": "tinted-balm-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "tinted-balm-vanity-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/beauty-skincare"
+      ],
+      "basis": [
+        "chip:beauty-personal-care"
+      ]
+    },
+    {
+      "slug": "tote-at-a-farmers-market",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "tote-on-white-for-a-marketplace",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/e-commerce",
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "keyword:(cart|checkout|store|shop|li",
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "tote-with-space-for-the-offer",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "trail-belt-finish-reel",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "chip:sports-gym"
+      ]
+    },
+    {
+      "slug": "trail-bottle-detail",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    },
+    {
+      "slug": "trail-bottle-feature",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    },
+    {
+      "slug": "trail-shoe-lace-up-demo-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/shoes"
+      ],
+      "basis": [
+        "chip:footwear"
+      ]
+    },
+    {
+      "slug": "travel-charger-packs-away",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/electronics"
+      ],
+      "basis": [
+        "keyword:(phone|laptop|tablet|earbuds"
+      ]
+    },
+    {
+      "slug": "trousers-fold-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/fashion-clothing"
+      ],
+      "basis": [
+        "chip:clothing"
+      ]
+    },
+    {
+      "slug": "tutor-demo-study-tool",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "tutor-demo-study-tool-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/education"
+      ],
+      "basis": [
+        "chip:education"
+      ]
+    },
+    {
+      "slug": "unbranded-red-sauce-poured-over-tacos",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/lifestyle-photos",
+      "setPlacement": [
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda"
+      ]
+    },
+    {
+      "slug": "wallet-unboxing-with-offer-space",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-image-generation/sale-campaign-key-visual",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/shoes",
+        "/occasions/black-friday",
+        "/occasions/holidays",
+        "/occasions/sale-discount",
+        "/platforms/facebook-ads",
+        "/platforms/instagram-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "template-inherit:/ai-image-generation/sale-campaign-key-visual"
+      ]
+    },
+    {
+      "slug": "walnut-organizer-desk",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/social-ad-photos",
+      "setPlacement": [
+        "/industries/home-living"
+      ],
+      "basis": [
+        "keyword:(couch|sofa|chair|lamp|desk|"
+      ]
+    },
+    {
+      "slug": "water-bottle-demo-cap-twists-open",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/product-video",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/industries/food-drinks"
+      ],
+      "basis": [
+        "keyword:(coffee|tea|juice|drink|soda",
+        "keyword:(dress|gown|hoodie|sweater|k"
+      ]
+    },
+    {
+      "slug": "whitening-strips-black-friday-tease",
+      "shape": "exampleGallery",
+      "ownerPage": "/ai-video-generation/beauty-routine",
+      "setPlacement": [
+        "/industries/beauty-skincare",
+        "/occasions/black-friday",
+        "/occasions/sale-discount",
+        "/platforms/instagram-ads",
+        "/platforms/tiktok-ads"
+      ],
+      "basis": [
+        "occasion:(black\\s?friday|sale|d",
+        "occasion:black\\s?friday\\b",
+        "template-inherit:/ai-video-generation/beauty-routine"
+      ]
+    },
+    {
+      "slug": "winter-jacket-revealed-from-a-gift-box",
+      "shape": "exampleGallery",
+      "ownerPage": "/occasions/holidays",
+      "setPlacement": [
+        "/industries/fashion-clothing",
+        "/occasions/holidays"
+      ],
+      "basis": [
+        "keyword:(dress|gown|hoodie|sweater|k",
+        "occasion:(gift|holiday|christma"
+      ]
+    },
+    {
+      "slug": "wooden-stacker-play-demo",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "wooden-toy-parent-play",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/video-ads",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "wooden-toy-parent-play-templates",
+      "shape": "workspaceCase",
+      "ownerPage": "/templates",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "wooden-toy-train-on-white",
+      "shape": "picker",
+      "ownerPage": "/ai-image-generation/white-background-photos",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "keyword:(toy|lego|puzzle|doll|stuffe"
+      ]
+    },
+    {
+      "slug": "wooden-train-play-demo",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation",
+      "setPlacement": [
+        "/industries/kids-toy"
+      ],
+      "basis": [
+        "chip:kids-toy"
+      ]
+    },
+    {
+      "slug": "yoga-breathing-introduction",
+      "shape": "picker",
+      "ownerPage": "/ai-video-generation/spokesperson-video",
+      "setPlacement": [
+        "/industries/sports-gym"
+      ],
+      "basis": [
+        "keyword:(gym|workout|fitness|yoga|ru"
+      ]
+    },
+    {
+      "slug": "yoga-mat-stretch-ugc",
+      "shape": "picker",
+      "ownerPage": "/",
+      "setPlacement": [
+        "/industries/health-wellness"
+      ],
+      "basis": [
+        "chip:health-fitness"
+      ]
+    }
+  ]
+}
