@@ -1177,7 +1177,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
-  async function createAvatarDraft() {
+  /** 确认后直接提交上游生成：direct 单镜头直出，任务即时进入生成状态。 */
+  async function createAvatarGeneration() {
     if (!customer) { window.location.assign(currentLoginHref()); return; }
     const selectedActor = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
     const presenterScene = catalog?.scenes.find((item) => item.id === "presenter_showcase");
@@ -1188,14 +1189,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
     const input = defaultInput(presenterScene);
     input.actorId = selectedActor.actorId;
-    // The presenter portrait rides through input.actorId (the storyboard's
-    // actor reference slot) and the voice sample through referenceAudios,
-    // exactly like the classic presenter flow. Product references stay
-    // customer-owned uploads only: the ownership check rejects site catalog
-    // URLs inside the image list.
+    // Direct mode submits one clip straight to the upstream video model: the
+    // script is the verbatim prompt. The actor portrait rides through
+    // input.actorId (first reference slot upstream) and the voice sample
+    // through referenceAudios. Product references stay customer-owned uploads
+    // only: the ownership check rejects site catalog URLs inside the list.
     input.images.productImages = avatarProductImages.slice(0, avatarImageFieldMax);
     if (selectedActor.voice.refAudio) input.referenceAudios = [selectedActor.voice.refAudio];
     input.fields.sellingPoints = avatarScript.trim();
+    input.creativeDirection = avatarScript.trim();
+    input.direct = true;
     input.options.aspect = selectedAvatarAspect as TaskInput["options"]["aspect"];
     input.options.duration = selectedAvatarDuration as TaskInput["options"]["duration"];
     if (selectedAvatarResolution) input.options.resolution = selectedAvatarResolution;
@@ -1210,12 +1213,16 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         headers: { "Idempotency-Key": crypto.randomUUID() },
         body: JSON.stringify({ sceneId: presenterScene.id, input, title: `${selectedActor.name} video` }),
       });
-      acceptTask(result.task);
-      setView("agent"); setStep("input"); setMobileOpen(false);
+      setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
+      void refreshBalanceSoon();
       setAvatarScript(""); setAvatarProductImages([]);
-      updateUrl(result.task, "input", "agent");
+      setInlineRun({ taskId: result.task.taskId, title: result.task.title, status: "Preparing your video…", state: "running" });
+      setMessage(`Generating “${result.task.title}” — progress is shown below and in your Library.`);
+      setMessageKind("info");
+      setMessageAction(true);
       window.scrollTo({ top: 0 });
-    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+      await autoRunVideoTask(result.task.taskId);
+    } catch (error) { setMessage((error as Error).message); setMessageKind("error"); } finally { setBusy(false); }
   }
 
   /** 提交前弹出费用确认：报价口径与图生视频一致（direct 直出 + 参考图/音频计数）。 */
@@ -1334,6 +1341,25 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   /** 把任务的提交表单回填到首页作曲家门，用户可再编辑；重新提交会创建一个新视频。 */
   function prefillFromTask(item: WorkspaceTask) {
     setDetailTaskId(null);
+    // Presenter tasks go back to the AI actor studio with every previous
+    // setting restored, so regenerating is one click away.
+    const presenterActor = item.sceneId === "presenter_showcase" && item.input.actorId && presenterStudioEnabled
+      ? catalog?.actors.find((entry) => entry.actorId === item.input.actorId)
+      : undefined;
+    if (presenterActor) {
+      setAvatarSelectionId(presenterActor.actorId);
+      setAvatarProductImages((item.input.images.productImages ?? []).filter((url) => url !== presenterActor.imageUrl));
+      setAvatarScript(String(item.input.creativeDirection ?? (typeof item.input.fields.sellingPoints === "string" ? item.input.fields.sellingPoints : "")).trim());
+      if (item.input.modelId) setAvatarModelId(item.input.modelId);
+      setAvatarAspect(item.input.options.aspect);
+      setAvatarDuration(item.input.options.duration);
+      setAvatarResolution(item.input.options.resolution ?? "");
+      setAvatarLanguage(item.input.options.language);
+      setMessageAction(false);
+      setMessage(`Your previous ${presenterActor.name} video settings are loaded. Adjust anything, then generate.`);
+      void navigate("actors");
+      return;
+    }
     setComposerTab(item.sceneId === "text_to_video" ? "AI Video Agent" : "AI Video");
     setPrompt(String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? ""));
     if (item.input.modelId) setComposerModel(item.input.modelId);
@@ -1950,9 +1976,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               </div>
               <div className={styles.creatorActions}>
                 <span>{avatarModel ? `${avatarModel.durations.join(" / ")}s · ${avatarModel.aspects.join(" / ")} · ${(avatarModel.resolutions[0] ?? "").toUpperCase() || "720p"}` : "Save a draft now; generation depends on model availability"}</span>
-                {customer ? <button className={`${styles.button} ${styles.primary}`} disabled={working || !avatarSelection || !avatarProductImages.length || !avatarScript.trim() || avatarModelUnavailable || Boolean(avatarModel && (!avatarAspects.length || !avatarDurations.length))} onClick={() => void openAvatarSubmitConfirm()}><span>{busy ? "Checking cost…" : "Continue to editor"}</span>{busy ? <Loader2 size={16} className={styles.spin} /> : <ArrowRight size={16} />}</button> : <a className={`${styles.button} ${styles.primary}`} href={loginHref}><span>Log in to continue</span><ArrowRight size={16} /></a>}
+                {customer ? <button className={`${styles.button} ${styles.primary}`} disabled={working || !avatarSelection || !avatarProductImages.length || !avatarScript.trim() || avatarModelUnavailable || Boolean(avatarModel && (!avatarAspects.length || !avatarDurations.length))} onClick={() => void openAvatarSubmitConfirm()}><span>{busy ? "Checking cost…" : "Generate video"}</span>{busy ? <Loader2 size={16} className={styles.spin} /> : <ArrowRight size={16} />}</button> : <a className={`${styles.button} ${styles.primary}`} href={loginHref}><span>Log in to continue</span><ArrowRight size={16} /></a>}
               </div>
-              <p className={styles.creatorSaveNote}>Continuing saves a draft. Generation and any credit use happen later from the video editor.</p>
+              <p className={styles.creatorSaveNote}>Confirming submits the video for generation right away — you will see the estimated cost first, and progress appears below and in your Library.</p>
             </section>
           </div>
         </>}
@@ -2020,7 +2046,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     {(modal === "guide" || modal === "support") && <WorkspaceHelpDialog kind={modal} onClose={closeModal} supportHref={supportPath ?? `${basePath}/contact-us`} accountHref={customer ? accountHref : undefined} />}
     {modal === "templates" && renderTemplatePickerDialog()}
     {detailTask && (() => {
-      const images = Object.values(detailTask.input.images).flat();
+      // Actor tasks list the presenter portrait first as the model reference,
+      // then the product photos; other image kinds keep generic captions.
+      const detailActor = detailTask.input.actorId ? catalog?.actors.find((entry) => entry.actorId === detailTask.input.actorId) : undefined;
+      const productRefs = detailTask.input.images.productImages ?? [];
+      const referenceImageList = [
+        ...(detailActor?.imageUrl && !productRefs.includes(detailActor.imageUrl) ? [{ url: detailActor.imageUrl, label: "Model reference" }] : []),
+        ...productRefs.map((url, index) => ({ url, label: detailActor ? `Product reference ${index + 1}` : `Reference ${index + 1}` })),
+        ...Object.entries(detailTask.input.images).filter(([field]) => field !== "productImages").flatMap(([, urls]) => (urls as string[]).map((url) => ({ url, label: "Reference" })))
+      ];
       const description = String(detailTask.input.fields.description ?? detailTask.input.creativeDirection ?? Object.values(detailTask.input.fields).find((value) => typeof value === "string" && value.trim()) ?? "").trim();
       const model = catalog?.models.find((entry) => entry.id === detailTask.input.modelId)?.label;
       const detailView = deriveTaskStatus(detailTask);
@@ -2061,9 +2095,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Your description</p>
               <p className={styles.detailPrompt}>{description}</p>
             </div>}
-            {images.length > 0 && <div className={styles.detailSection}>
+            {referenceImageList.length > 0 && <div className={styles.detailSection}>
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference images</p>
-              <div className={styles.detailImages}>{images.map((url, index) => <img key={`${url}-${index}`} loading="lazy" decoding="async" src={url} alt={`Reference ${index + 1}`} />)}</div>
+              <div className={styles.detailImages}>{referenceImageList.map((entry, index) => <figure key={`${entry.url}-${index}`} className={styles.detailRefItem}><img loading="lazy" decoding="async" src={entry.url} alt={entry.label} /><figcaption>{entry.label}</figcaption></figure>)}</div>
             </div>}
             {referenceVideos.length > 0 && <div className={styles.detailSection}>
               <p className={styles.detailSectionLabel}><span className={styles.detailBar} />Reference videos</p>
@@ -2096,7 +2130,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
                 <span className={styles.detailChip}>Duration<strong>{detailTask.input.options.duration}s</strong></span>
                 <span className={styles.detailChip}>Aspect<strong>{detailTask.input.options.aspect}</strong></span>
                 {detailTask.input.options.resolution && <span className={styles.detailChip}>Resolution<strong>{detailTask.input.options.resolution}</strong></span>}
-                <span className={styles.detailChip}>Reference photos<strong>{detailTask.input.images.productImages?.length ?? 0}</strong></span>
+                <span className={styles.detailChip}>Reference images<strong>{referenceImageList.length}</strong></span>
                 {referenceVideos.length > 0 && <span className={styles.detailChip}>Reference videos<strong>{referenceVideos.length}</strong></span>}
                 {referenceAudios.length > 0 && <span className={styles.detailChip}>Reference audio<strong>{referenceAudios.length}</strong></span>}
               </div>
@@ -2133,7 +2167,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {quote.available && credits != null && <p className={styles.help}>Priced the same as image-to-video for now. Credits are held when a shot generates and returned automatically if generation fails.</p>}
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
           <button type="button" className={styles.button} onClick={() => setPendingAvatarSubmit(null)}>Cancel</button>
-          <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || !quote.available || (credits != null && balance != null && balance < credits)} onClick={() => { setPendingAvatarSubmit(null); void createAvatarDraft(); }}>Continue to editor</button>
+          <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || !quote.available || (credits != null && balance != null && balance < credits)} onClick={() => { setPendingAvatarSubmit(null); void createAvatarGeneration(); }}>Generate now</button>
         </div>
       </section></div>;
     })()}

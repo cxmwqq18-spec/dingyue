@@ -90,7 +90,7 @@ async function reserveFreshStoryboardTaskHold(task: StoredTask) {
     duration: task.input.options.duration,
     aspect: task.input.options.aspect,
     resolution: task.input.options.resolution || undefined,
-    imageInputCount: task.input.images.productImages?.length ?? 0,
+    imageInputCount: (task.input.images.productImages?.length ?? 0) + (task.input.actorId ? 1 : 0),
     videoInputCount: task.input.referenceVideos?.length ?? 0,
     audioInputCount: Math.min(task.input.referenceAudios?.length ?? 0, 1)
   });

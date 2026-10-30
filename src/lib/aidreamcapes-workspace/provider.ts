@@ -385,7 +385,10 @@ export async function submitShotGeneration(args: {
   if (!provider) throw new WorkspaceError("workspace_video_provider_unavailable", 503);
   if (sceneSchema(sceneId).needsActor && args.input.options.subtitle) await workspaceAsrProvider();
   if (args.shot.firstFrame || args.shot.lastFrame) throw new WorkspaceError("workspace_keyframe_transport_unsupported", 422);
-  if (sceneSchema(sceneId).needsActor && !args.shot.refImgs.composite) throw new WorkspaceError("workspace_actor_product_composite_required", 422);
+  // Direct presenter tasks ship the actor portrait and the product photos as
+  // ordered reference images upstream (resolveShotReferences direct branch),
+  // so the fused composite is only required for storyboard-mode shots.
+  if (sceneSchema(sceneId).needsActor && !args.input.direct && !args.shot.refImgs.composite) throw new WorkspaceError("workspace_actor_product_composite_required", 422);
   if (sceneSchema(sceneId).needsActor) {
     const compositeHash = crypto.createHash("sha256").update(JSON.stringify({ actorId: args.input.actorId, images: args.input.images, aspect: args.input.options.aspect, scene: args.storyboard.scenePlan.mainScene })).digest("hex");
     if (args.shot.compositeInputHash !== compositeHash || args.shot.compositeStatus !== "done") throw new WorkspaceError("workspace_actor_product_composite_stale", 409);
@@ -584,15 +587,25 @@ export async function quoteWorkspaceAction(args: { siteId: string; action: "gene
   const plannedDuration = args.task.input.direct ? shot.duration : capability.durations.find((duration) => duration >= shot.duration);
   if (!plannedDuration) return { available: false, reason: "workspace_shot_duration_unsupported" };
   const family = videoProviderModelFamilyForProvider(provider);
-  const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, shot.refKinds.length, 15, family, args.task.input.direct ? [15, 30] : undefined);
   // 与 submitShotGeneration 使用同一计价函数，确保报价与实际扣费一致。
+  // Direct 模式实际按序直传的图片数与 refKinds 不同：portrait 计 1 张、
+  // product 计全部上传图、composite 不直传（跳过合成），必须与派发侧
+  // imageAssetIds.length 完全一致，否则报价/扣费比对会 409。
+  const directTaskImages = args.task!.input.images;
+  const quotedImageCount = args.task.input.direct
+    ? shot.refKinds.reduce((count, kind) => count + (kind === "composite" ? 0
+      : kind === "product" ? (directTaskImages.productImages?.length ?? 0)
+      : kind === "texture" ? (directTaskImages.textureImages?.length ?? 0)
+      : 1), 0)
+    : shot.refKinds.length;
+  const duration = normalizeVideoDurationSecondsForFrameCount(plannedDuration, quotedImageCount, 15, family, args.task.input.direct ? [15, 30] : undefined);
   const credits = workspaceShotCredits({
     provider,
     theme,
     durationSeconds: duration,
     modelFamily: family,
     resolution: args.task.input.options.resolution ?? "720p",
-    imageInputCount: shot.refKinds.length,
+    imageInputCount: quotedImageCount,
     audioInputCount: Math.min(args.task.input.referenceAudios?.length ?? 0, 1)
   });
   // The approved per-shot price is 4 credits per second at 720p; higher

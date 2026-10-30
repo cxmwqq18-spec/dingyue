@@ -190,6 +190,9 @@ textarea.input { resize: vertical; min-height: 100px; }
 .failReason { margin: 8px 0 0; font-size: 12px; line-height: 1.6; color: #b42318; }
 .detailImages { display: flex; flex-wrap: wrap; gap: 8px; }
 .detailImages img { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
+.detailRefItem { margin: 0; width: 96px; }
+.detailRefItem img { width: 96px; height: 96px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); display: block; }
+.detailRefItem figcaption { margin-top: 4px; font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .detailModal { width: min(1180px, 100%); max-width: 1180px; }
 .modal.detailModal { width: min(1180px, 100%); max-width: 1180px; }
 .detailGrid { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
