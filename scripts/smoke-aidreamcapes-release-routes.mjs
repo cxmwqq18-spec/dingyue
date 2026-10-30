@@ -75,7 +75,7 @@ async function expectRedirect(path, location) {
 //   /ai-actors/<name> (flat). The card link is a plain path: no query string,
 // no fragment and no inert `data-workspace-entry` payload. The workspace is
 // reached from the detail page CTA, which carries the card identity. Derived
-// detail pages are `noindex, follow` and stay out of the sitemap.
+// detail pages are `index, follow` and submit themselves to the sitemap.
 const MEDIA_DETAIL_RE = /^\/(ai-image-generation|ai-video-generation)\/([a-z0-9][a-z0-9-]{0,119})$/i;
 const FLAT_ACTOR_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]{0,79})$/i;
 const NESTED_ACTOR_RE = /^\/ai-actors\/(?:men|women)\/[a-z0-9][a-z0-9-]{0,79}$/i;
@@ -296,8 +296,6 @@ if (legacyQueryLinks || nextHashLinks) {
 const { response: sitemap, html: sitemapXml } = await getText("/sitemap.xml");
 assert.equal(sitemap.status, 200, `sitemap: status ${sitemap.status}`);
 assert.match(sitemapXml, /<urlset[\s>]/i, "sitemap: urlset");
-// The sitemap submits canonical public pages only: the nested actor rows are
-// permanent redirects and the derived media detail pages stay out of the index.
 const sitemapPaths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) => {
   try {
     return new URL(match[1].trim()).pathname;
@@ -305,12 +303,23 @@ const sitemapPaths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((matc
     return "";
   }
 }).filter(Boolean);
+// The sitemap submits canonical public pages: the nested actor rows are
+// permanent redirects and must never submit. Media detail pages answer 200,
+// submit themselves to the sitemap, and their alias addresses redirect
+// permanently without submitting.
 const nestedActorUrls = sitemapPaths.filter((path) => NESTED_ACTOR_RE.test(path));
 assert.equal(nestedActorUrls.length, 0, `sitemap: ${nestedActorUrls.length} nested actor URL(s)`);
 for (const sample of detailSamples) {
-  assert.ok(!sitemapPaths.includes(sample.path), `sitemap: derived detail page must stay out of the index (${sample.path})`);
+  const direct = await get(sample.path, { redirect: "manual" });
+  const redirects = [301, 308].includes(direct.status);
+  await direct.dispose?.();
+  if (redirects) {
+    assert.ok(!sitemapPaths.includes(sample.path), `sitemap: redirecting detail alias must not submit (${sample.path})`);
+  } else {
+    assert.ok(sitemapPaths.includes(sample.path), `sitemap: detail page must submit itself to the sitemap (${sample.path})`);
+  }
 }
-checks.push(`sitemap: ${sitemapPaths.length} URL(s), no nested actor URL, no derived media detail page`);
+checks.push(`sitemap: ${sitemapPaths.length} URL(s), no nested actor URL, canonical media detail pages submit`);
 const robots = await get("/robots.txt");
 assert.equal(robots.status, 200, `robots: status ${robots.status}`);
 // The origin is reached over plain HTTP on loopback, so the robots route also
