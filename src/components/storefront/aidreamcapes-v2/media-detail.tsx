@@ -7,6 +7,7 @@ import type { MediaPlacementGroup } from "@/lib/aidreamcapes-workspace/media-pla
 import {
   MEDIA_DETAIL_PUBLIC_ORIGIN,
   mediaDetailCrumbs,
+  mediaDetailDescription,
   mediaDetailIntro,
   mediaDetailParameters,
   mediaDetailPrompt,
@@ -176,6 +177,16 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
       })) },
       { "@type": "ImageObject", name: card.label, contentUrl: new URL(card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
         url: `${MEDIA_DETAIL_PUBLIC_ORIGIN}${detail.path}` },
+      ...(card.video ? [{
+        "@type": "VideoObject",
+        name: card.label,
+        description: mediaDetailDescription(card),
+        thumbnailUrl: new URL(card.video.poster?.src ?? card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
+        uploadDate: detail.ownerUpdatedAt,
+        contentUrl: new URL(card.video.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
+        ...(card.duration ? { duration: `PT${Math.round(Number(card.duration))}S` } : {}),
+        isFamilyFriendly: true,
+      }] : []),
     ],
   };
   const specs = [

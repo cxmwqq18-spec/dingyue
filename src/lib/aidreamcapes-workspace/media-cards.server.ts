@@ -1,6 +1,9 @@
 import "server-only";
 
+import { prisma } from "@/lib/prisma";
+import { AIVIDEOSUGC_SITE_ID } from "./types";
 import type { MediaDetailCard, MediaDetailKind } from "./media-detail";
+import { mediaDetailDescription } from "./media-detail";
 import { placementValues } from "./media-placement";
 
 // Every public media card shape is stored in LivePage.contentJson. The detail
@@ -189,4 +192,69 @@ export function templateDefinitionFrom(contentJson: unknown, ownerPath: string):
     };
   }
   return undefined;
+}
+
+export type MediaDetailSitemapEntry = {
+  kind: MediaDetailKind;
+  slug: string;
+  label: string;
+  description: string;
+  imagePath: string;
+  imageAlt?: string;
+  videoPath?: string;
+  durationSeconds?: number;
+  updatedAt: Date;
+};
+
+/**
+ * Enumerate every public media detail card for the AIVideosUGC storefront.
+ *
+ * Detail pages are rendering projections of card data, so the sitemap has to
+ * read the same relational rows the detail resolver reads. A card is listed
+ * only when exactly one LivePage row owns it — the same single-owner rule the
+ * detail resolver applies — and alias cards (detailAliasOf) are skipped
+ * because their canonical detail page is the alias target's. Future videos
+ * added to any card are picked up automatically.
+ */
+export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
+  const rows = await prisma.livePage.findMany({
+    where: { siteId: AIVIDEOSUGC_SITE_ID },
+    select: { slug: true, contentJson: true, updatedAt: true }
+  });
+  type Candidate = MediaDetailSitemapEntry & { owners: Set<string> };
+  const byKey = new Map<string, Candidate>();
+  for (const row of rows) {
+    const cards = cardsFromContent(row.contentJson);
+    const claimedKeys = new Set<string>();
+    const rowEntries: Array<[string, MediaDetailSitemapEntry]> = [];
+    for (const raw of cards) {
+      const card = toDetailCard(raw);
+      if (!card || !card.publicSlug || str(raw.detailAliasOf)) continue;
+      const key = `${card.kind}:${card.publicSlug}`;
+      claimedKeys.add(key);
+      const description = mediaDetailDescription(card);
+      rowEntries.push([key, {
+        kind: card.kind,
+        slug: card.publicSlug,
+        label: card.label,
+        description,
+        imagePath: card.image.src,
+        ...(card.image.alt ? { imageAlt: card.image.alt } : {}),
+        ...(card.video?.src ? { videoPath: card.video.src } : {}),
+        ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
+        updatedAt: row.updatedAt
+      }]);
+    }
+    for (const [key, entry] of rowEntries) {
+      const existing = byKey.get(key);
+      if (existing) {
+        existing.owners.add(row.slug);
+      } else {
+        byKey.set(key, { ...entry, owners: new Set([row.slug]) });
+      }
+    }
+  }
+  return [...byKey.values()]
+    .filter((candidate) => candidate.owners.size === 1)
+    .map(({ owners: _owners, ...entry }) => entry);
 }

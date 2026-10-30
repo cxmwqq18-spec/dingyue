@@ -1,4 +1,6 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
+import { listAidreamcapesMediaDetailEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import { mediaDetailPath } from "@/lib/aidreamcapes-workspace/media-detail";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
 import nodePath from "node:path";
@@ -2071,6 +2073,35 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
   const entries = isLocalHostRequest
     ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
     : site ? sitemapEntriesForSite(runtime.state, site) : [];
+  if (site?.id === AIDREAMCAPES_SITE_ID) {
+    // Media detail pages are rendering projections of card data (no LivePage
+    // row of their own), so the card enumeration owns their sitemap entries.
+    // Video cards additionally emit a <video:video> entry for Google video
+    // indexing; cards added later are picked up automatically.
+    for (const media of await listAidreamcapesMediaDetailEntries()) {
+      const detailPath = mediaDetailPath(media.kind, media.slug);
+      if (!detailPath) continue;
+      const loc = `${AIDREAMCAPES_ORIGIN}${detailPath}`;
+      if (entries.some((entry) => entry.loc === loc)) continue;
+      const lastmod = media.updatedAt.toISOString();
+      const thumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.imagePath}`;
+      entries.push({
+        loc,
+        images: [{ loc: thumbnailLoc, ...(media.imageAlt ? { title: media.imageAlt } : {}) }],
+        ...(media.videoPath ? {
+          video: {
+            thumbnailLoc,
+            title: media.label,
+            description: media.description,
+            contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
+            publicationDate: lastmod,
+            ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
+          }
+        } : {}),
+        lastmod
+      });
+    }
+  }
   if (!site) return { entries, resolved: false };
   const live = createPublishedSiteSnapshot(runtime.state, site, { source: "postgres" });
   const revisions = live.snapshotRevisions;

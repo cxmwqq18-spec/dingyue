@@ -92,6 +92,8 @@ export type MediaDetail = {
   /** Present when the owner page is a reusable template page. */
   ownerTemplate?: OwnerTemplate;
   card: MediaDetailCard;
+  /** Last relational update of the owning LivePage row; drives video uploadDate. */
+  ownerUpdatedAt: string;
   /** Canonical in-site path of the card itself. */
   canonicalPath: string;
   /** Workspace CTA target plus the inert entry transfer. */
@@ -179,6 +181,7 @@ export async function resolveMediaDetail(kind: MediaDetailKind, slug: string, fo
     slug,
     path,
     ownerPath: owner.slug,
+    ownerUpdatedAt: owner.updatedAt.toISOString(),
     ...(pageLabel(owner.contentJson) ? { ownerLabel: pageLabel(owner.contentJson) } : {}),
     ...(ownerTemplate ? { ownerTemplate } : {}),
     card: ownerCard,

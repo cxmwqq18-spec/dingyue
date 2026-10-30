@@ -160,7 +160,7 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
     title: `${title} | AIVideosUGC`,
     description: mediaDetailDescription(detail.card),
     alternates: { canonical },
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
     openGraph: {
       type: detail.kind === "video" ? "video.other" : "website",
       title,
