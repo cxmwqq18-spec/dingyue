@@ -1,0 +1,775 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-facet-example-first-2026-10-30-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-30T15:55:46.301Z",
+  "sourcePlanHash": "3ec094c7e11be800f6329ea9ddca413a3891906e616934035f95b2bed39530ce",
+  "note": "Inverse of the apply: set templateDirectory.hideTemplates back to the before value (delete the field when null) and restore the stored jsonLd ItemList nodes; each before contentHash is recorded per row.",
+  "operations": [
+    {
+      "slug": "/industries/explainer",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "5c74a7aadee16f79f03126c88b1d2f3a43ab89e6a0aab59e4e461062103e3de8"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/other",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "5a2053511f8843c37939d3aaaf02554ae8aaf78f5d6629323a228744dc629abb"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/sports-gym",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "167ed816cc2d79f876cb49b31cf4cca46ad109a7ac945ce98575d6dabef2f1f6"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/pet",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "ea737a639fd1fdad752add698afe0859e42bd876f586f152711bfdfb64bd5685"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/kids-toy",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "b650f5ded951fe9e11c33a15f3755a2062df2f9b1f85ef96e5aaaf0408739c4f"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/e-commerce",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "dd86548660250afc253c0110e1ec34d2ed9f34e7e530acfade85c90f190967fb"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/education",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "80c1b0e6baefad5f22c33e748314f7046d0d7404c1216a8cc71ce6f4ea7dbaf4"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/financial-services",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "6deec1b1e1ee10d001a7e7fd6f0c69c67a9a53b2b3d5ce9b41976fd8b75e7e81"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/apps",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "64f8b9f20d0bf793bd72840fd6a74028532c6ed97f976c743eb212fe9ce346d2"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/ugc",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "1d9662ab8c64f8f0e6ab2b1cc47538bc71636d4a1469b8487d31d9c9e889e55c"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/viral",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "d5a9ad9ea2743ac10cae97cf5561ccec282a27ac4cf9d3f85cc4e164c08b9834"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/occasions/black-friday",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "f10ef81072768bb9b621ade22f8c5f69b28a25e2057f3fc96a02ca127bf65829"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 3,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/black-friday-countdown",
+                "name": "Black Friday Video",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual",
+                "name": "Sale Banner",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 3
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/occasions/holidays",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "6a1a637b95d1a3b60b43baa423cb2bae3704456f4494b6d748651355a82502e1"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 3,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual",
+                "name": "Sale Banner",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+                "name": "Launch Promo",
+                "@type": "ListItem",
+                "position": 3
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/occasions/sale-discount",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "76b967cb0f8c2fc5b1e623f2caf7bd71eec954e523a60635fb95ffa6ddbfb276"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 4,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual",
+                "name": "Sale Banner",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/black-friday-countdown",
+                "name": "Black Friday Video",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+                "name": "Launch Promo",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 4
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/jewelry-accessories",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "7e5a4ee6bdd8013e6e3412328212fe5c2b898f3a1e03d33b24268aa6046f2a6e"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 1,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/jewelry-positioning",
+                "name": "Jewelry On Model",
+                "@type": "ListItem",
+                "position": 1
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/home-living",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "a0c9830526134ab47a4a35d7a08a55220ea2b2aa64204ea69253eb466f60946a"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 1,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/home-organization",
+                "name": "Home Organizing",
+                "@type": "ListItem",
+                "position": 1
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/facebook-ads",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "852fcea8b22a6fd37bedec8cc6bf5166394b674185b60d5a9e657218853f875d"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 5,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+                "name": "Launch Promo",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/black-friday-countdown",
+                "name": "Black Friday Video",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual",
+                "name": "Sale Banner",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 4
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/home-organization",
+                "name": "Home Organizing",
+                "@type": "ListItem",
+                "position": 5
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/instagram-ads",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "9d2d2b623b3b889fdc3096216931f3b71bef083e66cbc766cc95a43a37257516"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 6,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/beauty-routine",
+                "name": "Beauty Routine",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/fashion-try-on-reel",
+                "name": "Outfit Reel",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/ugc-still-ad",
+                "name": "Creator-Style Photo",
+                "@type": "ListItem",
+                "position": 4
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/sale-campaign-key-visual",
+                "name": "Sale Banner",
+                "@type": "ListItem",
+                "position": 5
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/jewelry-positioning",
+                "name": "Jewelry On Model",
+                "@type": "ListItem",
+                "position": 6
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/beauty-skincare",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "12c7ed210ecd72998c6126e6255f6b9706506852a5c633b82448322bc2c4e898"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 2,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/beauty-routine",
+                "name": "Beauty Routine",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/black-friday-countdown",
+                "name": "Black Friday Video",
+                "@type": "ListItem",
+                "position": 2
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/fashion-clothing",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "b45d7fe77ba07407104882be42ee275e765cd6df6fa1ed44651e6f941223e136"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 4,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/virtual-try-on",
+                "name": "Clothing Try-On",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/fashion-try-on-reel",
+                "name": "Outfit Reel",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/how-to-video",
+                "name": "How-To Video",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+                "name": "Launch Promo",
+                "@type": "ListItem",
+                "position": 4
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/electronics",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "94795d84b37c11f6dd587a2450ab19cf745c5466189d82775e5b0fbfdf751abf"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 2,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packshot-multi-angle",
+                "name": "Every Angle",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/cinematic-video",
+                "name": "Brand Film",
+                "@type": "ListItem",
+                "position": 2
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/food-drinks",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "8223e6364537154bfaa682a5e90e0d439609b56feec9fcfd355d74d5008c839f"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 3,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packaging-mockup",
+                "name": "Packaging Preview",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/story-ad-vertical",
+                "name": "Story Ad",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/food-video",
+                "name": "Drink Pour",
+                "@type": "ListItem",
+                "position": 3
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/amazon-product-photos",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "069709102fc0fcf36cddd85790965993ff49b335d22ee61ccdbe80fdbba4c736"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 3,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packshot-multi-angle",
+                "name": "Every Angle",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/colorway-variations",
+                "name": "Color Variants",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packaging-mockup",
+                "name": "Packaging Preview",
+                "@type": "ListItem",
+                "position": 3
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/shoes",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 0,
+        "pageHash": "479f7ab605a1ed478a7fcc030d9df1c59d409835b196ef525a7eb52b3766cd30"
+      },
+      "removedItemList": [],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/industries/health-wellness",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "49c10a37e9af6763391b2678e49876a95d5f99bc9f2d11cbdc8fee7429dacf0e"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 1,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/ugc-still-ad",
+                "name": "Creator-Style Photo",
+                "@type": "ListItem",
+                "position": 1
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/shopify-product-photos",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "35cb4eaca18f0fa3b39b9d4725842adfe8186ac973e7fe15743244c1dcc7730a"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 6,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packshot-multi-angle",
+                "name": "Every Angle",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/colorway-variations",
+                "name": "Color Variants",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/packaging-mockup",
+                "name": "Packaging Preview",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/virtual-try-on",
+                "name": "Clothing Try-On",
+                "@type": "ListItem",
+                "position": 4
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/jewelry-positioning",
+                "name": "Jewelry On Model",
+                "@type": "ListItem",
+                "position": 5
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-image-generation/ugc-still-ad",
+                "name": "Creator-Style Photo",
+                "@type": "ListItem",
+                "position": 6
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/tiktok-ads",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "caa6ef12d09fd4a598b3238508d26c084f6332144e35ce86391a1d0e69f412bd"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 6,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/beauty-routine",
+                "name": "Beauty Routine",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/fashion-try-on-reel",
+                "name": "Outfit Reel",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/food-video",
+                "name": "Drink Pour",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/promo-video",
+                "name": "Launch Promo",
+                "@type": "ListItem",
+                "position": 4
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/black-friday-countdown",
+                "name": "Black Friday Video",
+                "@type": "ListItem",
+                "position": 5
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/spark-ads-style-video",
+                "name": "Spark Ads Style Video",
+                "@type": "ListItem",
+                "position": 6
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    },
+    {
+      "slug": "/platforms/youtube-shorts-ads",
+      "before": {
+        "hideTemplates": null,
+        "itemListNodes": 1,
+        "pageHash": "d0273c9143ef3f3f3b430aaaca1fc0f39794b9b1b47b49ee8eab8906a9067557"
+      },
+      "removedItemList": [
+        {
+          "node": {
+            "@type": "ItemList",
+            "numberOfItems": 4,
+            "itemListElement": [
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/how-to-video",
+                "name": "How-To Video",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/cinematic-video",
+                "name": "Brand Film",
+                "@type": "ListItem",
+                "position": 2
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/food-video",
+                "name": "Drink Pour",
+                "@type": "ListItem",
+                "position": 3
+              },
+              {
+                "url": "https://www.aivideosugc.com/ai-video-generation/home-organization",
+                "name": "Home Organizing",
+                "@type": "ListItem",
+                "position": 4
+              }
+            ]
+          },
+          "index": 3
+        }
+      ],
+      "note": "Inverse: delete templateDirectory.hideTemplates (was null before) and re-insert removedItemList nodes at their recorded @graph indices; before.pageHash is the pre-apply CAS hash."
+    }
+  ]
+}

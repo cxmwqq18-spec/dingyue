@@ -91,8 +91,10 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const kind = typeof data.kind === "string" ? data.kind : "";
       const isFacet = kind === "industry" || kind === "platform" || kind === "occasion";
       const filterState = props.pagePath ? await resolveAidreamcapesTemplateFilter(props.pagePath, props.query ?? {}) : undefined;
+      // Example-first facet pages keep the template registry (paths) in the
+      // row but render no template grid, so their template list is not read.
       const [all, directoryMedia] = await Promise.all([
-        readTemplates(directory.paths),
+        directory.hideTemplates ? Promise.resolve([] as Template[]) : readTemplates(directory.paths),
         isFacet && props.pagePath ? resolveDirectoryMedia(props.pagePath) : Promise.resolve([])
       ]);
       // Catalog pages (/templates, /templates/photo, /templates/video) present

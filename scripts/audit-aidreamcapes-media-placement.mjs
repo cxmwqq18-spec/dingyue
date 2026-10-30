@@ -277,13 +277,9 @@ try {
         reason: "resolveMediaDetail requires exactly one owner page; a shared slug returns no detail page"
       });
     }
-    if (card.templateOwner) {
-      const memberships = [
-        ...[...facets.values()].filter((directory) => directory.paths.includes(card.templateOwner)),
-        ...[...catalogs.values()].filter((directory) => directory.paths.includes(card.templateOwner))
-      ];
-      if (!memberships.length) addIssue("templateCardWithoutDirectory", { page: card.templateOwner, publicSlug: card.publicSlug });
-    }
+    // Template pages are hidden-but-routable since the /templates gallery took
+    // over (2026-10-30): directories no longer promise template reachability,
+    // so the former templateCardWithoutDirectory membership rule is retired.
   }
 
   // The definition facets and the reverse directory index are two statements

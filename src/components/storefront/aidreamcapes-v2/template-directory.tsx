@@ -5,7 +5,7 @@ import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
 import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
-export type Directory = { paths: string[]; links: { label: string; href: string }[] };
+export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
 export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
 export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number } };
@@ -45,11 +45,34 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
   if (!all) return null;
   const state = data.directoryFilterState as TemplateFilterState | undefined;
   const value = (key: string) => state ? state.filters[key as keyof typeof state.filters] ?? "" : typeof query[key] === "string" ? query[key] as string : "";
-  const templates = state?.invalid ? [] : all.filter(t => templateMatchesFilters(t, state?.filters ?? Object.fromEntries(["kind", "industries", "platforms", "occasions"].map(key => [key, value(key)]))));
   const media = state?.invalid ? [] : ((data.directoryMedia as DirectoryMediaCard[] | undefined) ?? []).filter(card => !value("kind") || card.kind === value("kind"));
   const labels = data.directoryLabels as Record<string, string>;
   const label = (path: string) => labels[path] ?? path;
   const mediaHeading = String(data.label ?? "").trim() || "category";
+  if (directory.hideTemplates) {
+    // The directory is example-first: the template registry (paths) stays in
+    // the row data, but the page presents the placed media grid only.
+    return <>
+      <section className="sec"><div className={`wrap ${styles.directory}`}>
+        <Crumbs items={data.breadcrumbs} r={r} />
+        <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
+        <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
+        {media.length ? <section aria-labelledby="category-media-heading" className={styles.mediaSection} data-directory-media="true">
+          <div className="sec-head">
+            <div className="eyebrow">Examples</div>
+            <h2 id="category-media-heading">{data.mediaHeading ? String(data.mediaHeading) : `${mediaHeading} examples`}</h2>
+            {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
+          </div>
+          <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
+            <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+            <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
+          </article>)}</div>
+        </section> : null}
+      </div></section>
+      {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
+    </>;
+  }
+  const templates = state?.invalid ? [] : all.filter(t => templateMatchesFilters(t, state?.filters ?? Object.fromEntries(["kind", "industries", "platforms", "occasions"].map(key => [key, value(key)]))));
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
