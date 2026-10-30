@@ -83,12 +83,14 @@ try {
     if (
       typeof value.publicSlug === "string"
       && /^[a-z0-9][a-z0-9-]*$/.test(value.publicSlug)
-      && (value.kind === "video" || value.kind === "photo")
+      && (value.kind === "photo" || value.kind === "video" || value.kind === "clip" || value.kind === "scene")
       && !value.detailAliasOf
       && value.image && typeof value.image.src === "string" && value.image.src
       && (typeof value.label === "string" ? value.label : typeof value.title === "string" ? value.title : "")
     ) {
-      detailCards.set(value.publicSlug, value.kind);
+      // Mirrors mediaKindOf: photo stays photo; video, clip and scene are all
+      // video detail pages.
+      detailCards.set(value.publicSlug, value.kind === "photo" ? "photo" : "video");
     }
     for (const child of Object.values(value)) collectCards(child);
   };

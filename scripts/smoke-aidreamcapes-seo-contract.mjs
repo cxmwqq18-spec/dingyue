@@ -471,7 +471,15 @@ const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
       assert(!types.has("SoftwareApplication"), `${url}: directory must not publish a SoftwareApplication`);
     }
     if (isToolDetail) {
-      assert(types.has("SoftwareApplication"), `${url}: tool page must publish a SoftwareApplication`);
+      // Media detail pages are content pages, not tool pages: they publish
+      // VideoObject for finished videos and ImageObject for stills. Any other
+      // page under the tool roots is a real tool page and must describe the
+      // application.
+      if (types.has("VideoObject") || types.has("ImageObject")) {
+        assert(!types.has("SoftwareApplication"), `${url}: media detail must not claim SoftwareApplication`);
+      } else {
+        assert(types.has("SoftwareApplication"), `${url}: tool page must publish a SoftwareApplication`);
+      }
     }
     assert.equal(types.has("WebSite"), path === "/", `${url}: the WebSite node belongs on the home page only`);
     assert(!types.has("SearchAction"), `${url}: no SearchAction without a search endpoint`);
