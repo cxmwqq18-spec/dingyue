@@ -1,5 +1,5 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
-import { listAidreamcapesMediaDetailEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import { listAidreamcapesMediaDetailEntries, cardsFromContent, toDetailCard } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { mediaDetailPath } from "@/lib/aidreamcapes-workspace/media-detail";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
@@ -704,9 +704,43 @@ function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEnt
   };
 }
 
+/**
+ * Media listing pages render one tile per card: video tiles show the video
+ * with its poster, photo tiles show the card image. Neither renders the
+ * cards' reference image sets, so the sitemap must list exactly the display
+ * images — the manifest-based collector would submit reference images the
+ * page never shows.
+ */
+function aidreamcapesListingSitemapImages(site: Site, page: ThemePage): SitemapImageEntry[] | undefined {
+  if (site.id !== AIDREAMCAPES_SITE_ID) return undefined;
+  const slug = normalizePath(page.slug);
+  if (slug !== "/ai-video-generation" && slug !== "/ai-video-generation/video-ads" && slug !== "/ai-image-generation") return undefined;
+  const entries: SitemapImageEntry[] = [];
+  const seen = new Set<string>();
+  for (const raw of cardsFromContent(page.publishedJson)) {
+    const card = toDetailCard(raw);
+    if (!card) continue;
+    // A video tile renders the poster only; a photo tile renders the image.
+    // A video card without a poster shows no still image at all.
+    const poster = card.kind === "video" ? card.video?.poster : undefined;
+    const displaySrc = poster?.src ?? (card.kind === "video" ? undefined : card.image.src);
+    if (!displaySrc) continue;
+    const displayAlt = poster?.alt ?? card.image.alt;
+    const loc = imageSitemapUrl(site, displaySrc);
+    if (!loc || seen.has(loc)) continue;
+    seen.add(loc);
+    const text = displayAlt ?? card.label;
+    entries.push({ loc, title: text, caption: text });
+  }
+  return entries;
+}
+
 function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
   const templateMedia = aidreamcapesTemplateSitemapMedia(site, page);
   if (templateMedia !== undefined) return templateMedia.map(image => ({ loc: imageSitemapUrl(site, image.src), title: image.alt, caption: image.alt })).filter(image => image.loc);
+
+  const listingImages = aidreamcapesListingSitemapImages(site, page);
+  if (listingImages) return listingImages;
 
   const themeManifest = (site.id === AIDREAMCAPES_SITE_ID && normalizePath(page.slug) !== "/") || isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
     ? page.publishedJson.mediaManifest
