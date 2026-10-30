@@ -1,4 +1,4 @@
-import { TemplateDirectory, templateDetailResolvers } from "./template-directory";
+import { ExampleDirectory, TemplateDirectory, templateDetailResolvers } from "./template-directory";
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
@@ -1172,6 +1172,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (!data) return null;
   const r = templateDetailResolvers(data, withStartLinks(baseResolvers));
   if (layout === "platform-directory") return <PlatformDirectory data={data} r={r} />;
+  if (data.exampleDirectory) return <ExampleDirectory data={data} r={r} />;
   if (data.templateDirectory) return <TemplateDirectory data={data} r={r} query={query} />;
   if (layout === "home") return <>{homeKeywords ? <meta content={homeKeywords} name="keywords" /> : null}<HomePage data={data} r={r} /></>;
   if (layout === "video-hub") return <VideoHubPage data={data} r={r} />;

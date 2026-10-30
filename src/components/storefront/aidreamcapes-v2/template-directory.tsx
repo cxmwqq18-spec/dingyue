@@ -7,6 +7,37 @@ import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamc
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[] };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
+export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
+export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number } };
+export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; pageSize: number; totalPages: number; kind?: "photo" | "video" };
+
+/** The /templates example gallery: every public example, newest first, SSR-cumulative pagination. */
+export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) {
+  const directory = data.exampleDirectory as ExampleDirectoryConfig;
+  const gallery = data.exampleGallery as ExampleGalleryState | undefined;
+  if (!gallery) return null;
+  const loadMoreHref = (() => {
+    if (gallery.page >= gallery.totalPages) return undefined;
+    const params = new URLSearchParams();
+    params.set("page", String(gallery.page + 1));
+    if (gallery.kind) params.set("kind", gallery.kind);
+    return `/templates?${params.toString()}`;
+  })();
+  return <>
+    <section className="sec"><div className={`wrap ${styles.directory}`}>
+      <Crumbs items={data.breadcrumbs} r={r} />
+      <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
+      <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
+      <p className="meta-line">{gallery.total} examples</p>
+      <div className="tgrid" data-example-gallery="true">{gallery.items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
+        <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+        <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
+      </article>)}</div>
+      {loadMoreHref ? <p style={{ marginTop: 28 }}><a className="btn btn-ghost" href={r.href(loadMoreHref)} rel="next">Load more examples</a></p> : null}
+    </div></section>
+    {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
+  </>;
+}
 
 export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2Resolvers; query?: Record<string, string | string[] | undefined> }) {
   const directory = data.templateDirectory as Directory;

@@ -1,9 +1,11 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { prisma } from "@/lib/prisma";
 import { AIVIDEOSUGC_SITE_ID } from "./types";
 import type { MediaDetailCard, MediaDetailKind } from "./media-detail";
-import { mediaDetailDescription } from "./media-detail";
+import { mediaDetailDescription, mediaDetailPath } from "./media-detail";
 import { placementValues } from "./media-placement";
 
 // Every public media card shape is stored in LivePage.contentJson. The detail
@@ -206,17 +208,33 @@ export type MediaDetailSitemapEntry = {
   updatedAt: Date;
 };
 
+/** One public example for the /templates gallery. */
+export type MediaGalleryEntry = {
+  kind: MediaDetailKind;
+  slug: string;
+  label: string;
+  href: string;
+  image: { src: string; alt?: string; w?: number; h?: number };
+  updatedAt: Date;
+};
+
+type EnumeratedDetailCard = {
+  kind: MediaDetailKind;
+  slug: string;
+  card: MediaDetailCard;
+  updatedAt: Date;
+};
+
 /**
- * Enumerate every public media detail card for the AIVideosUGC storefront.
- *
- * Detail pages are rendering projections of card data, so the sitemap has to
- * read the same relational rows the detail resolver reads. A card is listed
- * only when exactly one LivePage row owns it — the same single-owner rule the
- * detail resolver applies — and alias cards (detailAliasOf) are skipped
- * because their canonical detail page is the alias target's. Future videos
- * added to any card are picked up automatically.
+ * Enumerate every public media detail card with its owning row's timestamp.
+ * Detail pages are rendering projections of card data, so the sitemap, the
+ * /templates gallery and the detail resolver all read the same relational
+ * rows. A card is listed only when exactly one LivePage row owns it — the
+ * same single-owner rule the detail resolver applies — and alias cards
+ * (detailAliasOf) are skipped because their canonical detail page is the
+ * alias target's.
  */
-export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
+async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]> {
   const rows = await prisma.livePage.findMany({
     where: { siteId: AIVIDEOSUGC_SITE_ID },
     select: { slug: true, contentJson: true, updatedAt: true }
@@ -237,30 +255,18 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
       }
     }
   }
-  type Candidate = MediaDetailSitemapEntry & { owners: Set<string> };
+  type Candidate = EnumeratedDetailCard & { owners: Set<string> };
   const byKey = new Map<string, Candidate>();
   for (const { row, cards } of rowCards) {
     for (const raw of cards) {
       const card = toDetailCard(raw);
       if (!card || !card.publicSlug || str(raw.detailAliasOf) || aliasClaims.has(card.publicSlug)) continue;
       const key = `${card.kind}:${card.publicSlug}`;
-      const description = mediaDetailDescription(card);
-      const entry: MediaDetailSitemapEntry = {
-        kind: card.kind,
-        slug: card.publicSlug,
-        label: card.label,
-        description,
-        imagePath: card.image.src,
-        ...(card.image.alt ? { imageAlt: card.image.alt } : {}),
-        ...(card.video?.src ? { videoPath: card.video.src } : {}),
-        ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
-        updatedAt: row.updatedAt
-      };
       const existing = byKey.get(key);
       if (existing) {
         existing.owners.add(row.slug);
       } else {
-        byKey.set(key, { ...entry, owners: new Set([row.slug]) });
+        byKey.set(key, { kind: card.kind, slug: card.publicSlug, card, updatedAt: row.updatedAt, owners: new Set([row.slug]) });
       }
     }
   }
@@ -268,3 +274,41 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     .filter((candidate) => candidate.owners.size === 1 && !aliasClaims.has(candidate.slug))
     .map(({ owners: _owners, ...entry }) => entry);
 }
+
+/**
+ * Enumerate every public media detail card for the AIVideosUGC storefront.
+ * Future videos added to any card are picked up automatically.
+ */
+export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
+  const cards = await enumerateSingleOwnerDetailCards();
+  return cards.map(({ card, slug, kind, updatedAt }) => ({
+    kind,
+    slug,
+    label: card.label,
+    description: mediaDetailDescription(card),
+    imagePath: card.image.src,
+    ...(card.image.alt ? { imageAlt: card.image.alt } : {}),
+    ...(card.video?.src ? { videoPath: card.video.src } : {}),
+    ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
+    updatedAt
+  }));
+}
+
+/**
+ * Every public example for the /templates gallery, newest first (the owning
+ * row's updatedAt, slug as the stable tiebreak). Same ownership rules as the
+ * sitemap: exactly one owner row, no aliases.
+ */
+export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<MediaGalleryEntry[]> => {
+  const cards = await enumerateSingleOwnerDetailCards();
+  return cards
+    .map(({ card, slug, kind, updatedAt }) => ({
+      kind,
+      slug,
+      label: card.label,
+      href: mediaDetailPath(kind, slug) ?? `/ai-${kind === "photo" ? "image" : "video"}-generation/${slug}`,
+      image: card.image,
+      updatedAt
+    }))
+    .sort((left, right) => (right.updatedAt.getTime() - left.updatedAt.getTime()) || left.slug.localeCompare(right.slug));
+});

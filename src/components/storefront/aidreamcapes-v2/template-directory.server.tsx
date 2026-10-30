@@ -8,6 +8,8 @@ import type { V2Data } from "./types";
 import type { Directory, Template } from "./template-directory";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
+import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import type { ExampleDirectoryConfig, ExampleGalleryState, GalleryItem } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
   const pages = await prisma.$queryRaw<Array<{ slug: string; definition: Template | null }>>`
@@ -66,7 +68,25 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
     const data = settings.data as V2Data;
     if (!data) continue;
     let resolved: V2Data;
-    if (data.templateDirectory) {
+    if (data.exampleDirectory) {
+      // The /templates example gallery: every public detail card, newest
+      // first, SSR-cumulative pagination (?page=N shows the first N pages).
+      // The browser fetches no data; "load more" is a plain link.
+      const directory = data.exampleDirectory as ExampleDirectoryConfig;
+      const pageSize = Math.max(1, Math.min(50, Math.floor(Number(directory.pageSize)) || 20));
+      const kind = props.query?.kind === "video" || props.query?.kind === "photo" ? props.query.kind : undefined;
+      const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => !kind || entry.kind === kind);
+      const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
+      const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
+      const items: GalleryItem[] = all.slice(0, page * pageSize).map(entry => ({
+        kind: entry.kind,
+        slug: entry.slug,
+        label: entry.label,
+        href: entry.href,
+        image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h }
+      }));
+      resolved = { ...data, exampleGallery: { items, total: all.length, page, pageSize, totalPages, ...(kind ? { kind } : {}) } };
+    } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
       const kind = typeof data.kind === "string" ? data.kind : "";
       const isFacet = kind === "industry" || kind === "platform" || kind === "occasion";
