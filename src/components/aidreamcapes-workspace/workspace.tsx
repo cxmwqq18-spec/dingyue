@@ -1215,7 +1215,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       });
       setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
       void refreshBalanceSoon();
-      setAvatarScript(""); setAvatarProductImages([]);
+      setAvatarScript(""); setAvatarProductImages([]); setAvatarSelectionId("");
       setInlineRun({ taskId: result.task.taskId, title: result.task.title, status: "Preparing your video…", state: "running" });
       setMessage(`Generating “${result.task.title}” — progress is shown below and in your Library.`);
       setMessageKind("info");
