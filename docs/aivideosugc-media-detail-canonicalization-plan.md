@@ -1,7 +1,10 @@
 # AIVIDEOSUGC 素材详情页收敛去重计划（canonical 化）
 
-> 2026-10-30 起草，**尚未执行**。所有数字来自生产 `LivePage.contentJson` 只读读回（当日）。
-> 决策待站长确认后按第 5 节步骤实施。
+> 2026-10-30 整理，**已于当日执行完成**（manifest planHash `a132b8a8…`，
+> apply report + inverse rollback manifest 见 `scripts/manifests/`，生产
+> SiteContentRevision 推进至 3101）。执行后生产实测：详情页 1032 → **459**
+> （video 365 / photo 94），0 多归属；规范页 200、被摘 slug 404、CTA 进
+> 工作台正常。模板级 facet 数据来自生产 `LivePage.contentJson` 只读读回。
 
 ## 1. 目标模型（站长的产品规划）
 
