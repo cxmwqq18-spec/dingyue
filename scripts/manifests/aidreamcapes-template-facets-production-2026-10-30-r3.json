@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-template-facets-2026-10-30-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-30T12:01:52.463Z",
+  "rule": "template industry tag = the industry its demo card demonstrates; facet template grids re-derived from the rectified ownership",
+  "summary": {
+    "pages": 2,
+    "industriesOps": 0,
+    "pathsOps": 2
+  },
+  "pages": [
+    {
+      "slug": "/industries/home-living",
+      "baseHash": "9717c597dca089565d71f509d770ddd32f65f58f50a4afaaa0ef07f835038873",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-video-generation/home-organization"
+          ],
+          "after": [
+            "/ai-video-generation/home-organization",
+            "/ai-image-generation/colorway-variations"
+          ],
+          "beforeHash": "2566313f3646ef3f3b937774e012a4a97705e383dab28fda8eaf3473fc023d04",
+          "afterHash": "48520e33a2c12bc0f5138984ff38a5b1d99a2e561450a469b9ad81624e25abd8"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/sports-gym",
+      "baseHash": "df6a8b521fae594dab39de37370009025affc5b90179098e473a5f769fe655a1",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [],
+          "after": [
+            "/ai-video-generation/spark-ads-style-video",
+            "/ai-image-generation/ugc-still-ad"
+          ],
+          "beforeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "afterHash": "a7cd08abf179520e0394c3e171fdd62a790cd8900d7d8791d7787c80a8583f6a"
+        }
+      ]
+    }
+  ],
+  "operations": [],
+  "addresses": [],
+  "planHash": "ca7947590f47bf363976a0827c530b03e21c95f7fe83065ffefa77f4a3df9782"
+}

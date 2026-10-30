@@ -104,7 +104,10 @@ const PATHS_SET = [
   { path: "/industries/electronics", after: ["/ai-image-generation/packshot-multi-angle", "/ai-video-generation/cinematic-video"] },
   { path: "/industries/health-wellness", after: ["/ai-image-generation/ugc-still-ad"] },
   { path: "/industries/food-drinks", after: ["/ai-image-generation/packaging-mockup", "/ai-image-generation/story-ad-vertical", "/ai-video-generation/food-video"] },
-  { path: "/industries/home-living", after: ["/ai-video-generation/home-organization"] }
+  { path: "/industries/home-living", after: ["/ai-video-generation/home-organization", "/ai-image-generation/colorway-variations"] },
+  // Round-3 additions (2026-10-30): the audit's facet/definition drift check
+  // requires every facet a template declares to list that template.
+  { path: "/industries/sports-gym", after: ["/ai-video-generation/spark-ads-style-video", "/ai-image-generation/ugc-still-ad"] }
 ];
 
 const db = new PrismaClient({ errorFormat: "minimal" });

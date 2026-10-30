@@ -75,7 +75,12 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         readTemplates(directory.paths),
         isFacet && props.pagePath ? resolveDirectoryMedia(props.pagePath) : Promise.resolve([])
       ]);
-      const paths = [...new Set(all.flatMap(t => [...t.industries, ...t.platforms, ...t.occasions]))];
+      // Catalog pages (/templates, /templates/photo, /templates/video) present
+      // their templates in a fixed order — the video group first, then by
+      // slug — instead of the arbitrary stored order. Facet pages keep their
+      // reviewed curation order.
+      const orderedTemplates = isFacet ? all : [...all].sort((left, right) => ((left.kind === "video" ? 0 : 1) - (right.kind === "video" ? 0 : 1)) || left.path.localeCompare(right.path));
+      const paths = [...new Set(orderedTemplates.flatMap(t => [...t.industries, ...t.platforms, ...t.occasions]))];
       const facets = paths.length ? await prisma.$queryRaw<Array<{ slug: string; title: string; label: string | null }>>`
         SELECT "slug", "title", jsonb_path_query_first("contentJson", '$.sections.*.settings.data.label') #>> '{}' AS label
         FROM "LivePage" WHERE "siteId" = 'site_aidreamcapes' AND "slug" IN (${Prisma.join(paths)})
@@ -83,7 +88,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const selectedFacets = Object.values(filterState?.filters ?? {}).filter(value => value.startsWith("/"));
       const intersections = await Promise.all(selectedFacets.filter(value => value !== props.pagePath).map(resolveDirectoryMedia));
       const filteredMedia = directoryMedia.filter(card => intersections.every(cards => cards.some(other => other.kind === card.kind && other.slug === card.slug)));
-      resolved = { ...data, directoryFilterState: filterState, directoryTemplates: all, directoryMedia: filteredMedia, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
+      resolved = { ...data, directoryFilterState: filterState, directoryTemplates: orderedTemplates, directoryMedia: filteredMedia, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
     } else resolved = await resolveTemplateCardLinks(data);
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
   }

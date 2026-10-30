@@ -102,10 +102,15 @@ function templateDefinitionFrom(contentJson, ownerPath) {
     const definition = record(data?.templateDefinition);
     if (!definition) continue;
     const card = record(definition.card);
+    const image = record(card?.image);
     return {
       path: ownerPath,
       name: text(definition.name) ?? text(card?.label) ?? ownerPath,
       cardSlug: text(card?.publicSlug),
+      description: text(definition.description),
+      kind: text(definition.kind),
+      cardImageSrc: text(image?.src),
+      cardImageAlt: text(image?.alt),
       facets: [...new Set([
         ...list(definition.industries),
         ...list(definition.platforms),
@@ -298,6 +303,19 @@ try {
     const notDeclared = [...indexed].filter((slug) => !declared.has(slug)).sort();
     if (notIndexed.length) addIssue("templateFacetNotInDirectory", { page: definition.path, publicSlug: definition.cardSlug, facets: notIndexed });
     if (notDeclared.length) addIssue("directoryPathNotInTemplateFacets", { page: definition.path, publicSlug: definition.cardSlug, facets: notDeclared });
+  }
+
+  // Template card consistency: a directory card is public copy and must be
+  // complete. A missing image, alt text, description, or kind breaks the
+  // directory grids, the filter pickers, and the accessibility contract.
+  for (const definition of definitions) {
+    if (definition.cardSlug) {
+      if (!definition.cardImageSrc) addIssue("templateCardWithoutImage", { page: definition.path, name: definition.name });
+      else if (!/\.(webp|png|jpe?g)$/i.test(definition.cardImageSrc)) addIssue("templateCardImageNotMedia", { page: definition.path, src: definition.cardImageSrc });
+      if (!definition.cardImageAlt) addIssue("templateCardWithoutImageAlt", { page: definition.path, name: definition.name });
+    }
+    if (!definition.description) addIssue("templateDefinitionWithoutDescription", { page: definition.path, name: definition.name });
+    if (definition.kind !== "photo" && definition.kind !== "video") addIssue("templateDefinitionWithoutKind", { page: definition.path, name: definition.name, kind: definition.kind ?? null });
   }
 
   const templateCards = cards.filter((card) => card.templateOwner);
