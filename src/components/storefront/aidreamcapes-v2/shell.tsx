@@ -67,7 +67,7 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
                   {menu.label}
                   <Chevron />
                 </button>
-                <div className={rich && menu.popular?.length ? "panel two" : wideDirectory ? "panel directory-wide" : "panel"}>
+                <div className={rich && menu.popular?.length ? "panel two" : wideDirectory ? "panel directory-wide" : !rich && menu.groups.length >= 2 ? "panel trio" : "panel"}>
                   {rich ? (
                     <div>
                       <div className="ph">{menu.groups[0].label}</div>
