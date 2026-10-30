@@ -21,6 +21,12 @@ const fullSeoContract = args.includes("--full-seo-contract") || process.env.AIDR
 assert(/^[a-f0-9]{40}$/.test(commit || ""), "Supply the exact pushed --commit=<40-character SHA>");
 const prebuiltBuild = value("--prebuilt-build");
 const reuseBuildCommit = value("--reuse-build");
+// Build window: stop the two EU storefronts (aidreamcapes.eu, aidreamshoots.eu)
+// for the duration of the server-side build so the host has enough free memory,
+// and answer their domains with the 503 maintenance page meanwhile. The build
+// runs locally for prebuilt releases, so no window is needed there.
+const buildWindow = args.includes("--build-window");
+assert(!(buildWindow && (prebuiltBuild || reuseBuildCommit)), "--build-window applies to server-side builds only; a prebuilt or reused build needs no window");
 const reusePublicCommit = value("--reuse-public-from-commit");
 const reuseDependenciesCommit = value("--reuse-dependencies-from-commit");
 if (reusePublicCommit) {
@@ -126,7 +132,10 @@ ROOT=${quote(root)}
 RELEASE=${quote(release)}
 COMMIT=${quote(commit)}
 BASE=$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')
-OTHER_SERVICES=$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoots.service -p MainPID -p WorkingDirectory)
+OTHER_SERVICES=$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirectory)
+EU_SERVICE_PIDS=$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)
+EU_SERVICE_DIRS=$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p WorkingDirectory)
+${buildWindow ? `restore_build_window() { systemctl start aidreamcapes-eu.service aidreamshoots.service 2>/dev/null || true; }` : `restore_build_window() { :; }`}
 test -d "$BASE/public"
 test -f "$BASE/.env.local"
 # A release restart must never expose the default nginx 502 page. Refuse to
@@ -134,6 +143,10 @@ test -f "$BASE/.env.local"
 test -s /www/wwwroot/aidreamcapes.com/maintenance/maintenance.html || { echo 'Refusing to deploy: Aidreamcapes maintenance page file is missing.' >&2; exit 1; }
 nginx -T 2>/dev/null | grep -q 'location = /__maintenance' || { echo 'Refusing to deploy: nginx maintenance location is not loaded.' >&2; exit 1; }
 nginx -T 2>/dev/null | grep -q 'error_page 502 503 504 =503 /__maintenance' || { echo 'Refusing to deploy: nginx maintenance error_page is not loaded.' >&2; exit 1; }
+${buildWindow ? `test -s /www/wwwroot/aidreamcapes.eu/maintenance/maintenance.html || { echo 'Refusing to deploy: aidreamcapes.eu maintenance page file is missing.' >&2; exit 1; }
+test -s /www/wwwroot/aidreamshoots.eu/maintenance/maintenance.html || { echo 'Refusing to deploy: aidreamshoots.eu maintenance page file is missing.' >&2; exit 1; }
+nginx -T 2>/dev/null | grep -q '/www/wwwroot/aidreamcapes.eu/maintenance' || { echo 'Refusing to deploy: aidreamcapes.eu maintenance location is not loaded.' >&2; exit 1; }
+nginx -T 2>/dev/null | grep -q '/www/wwwroot/aidreamshoots.eu/maintenance' || { echo 'Refusing to deploy: aidreamshoots.eu maintenance location is not loaded.' >&2; exit 1; }` : ""}
 test ! -e "$RELEASE" || { echo "Refusing to deploy: $RELEASE already exists, probably from an earlier failed attempt. Remove that directory, then run the deploy again." >&2; exit 1; }
 mkdir -p "$RELEASE"
 tar -xf ${quote(remoteArchive)} -C "$RELEASE"
@@ -160,10 +173,32 @@ cp -al "$ROOT/.build-staging/." .next-build/
 test -f .next-build/BUILD_ID` : reuseBuildCommit ? `REUSE=${quote(`${root}/releases/${reuseBuildCommit}-seo`)}
 test "$(cat "$REUSE/.deployed-commit")" = ${quote(reuseBuildCommit)}
 test -f "$REUSE/.next-build/BUILD_ID"
-cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : `AVAILABLE_MB=$(awk '/^MemAvailable:/ {print int($2/1024)}' /proc/meminfo)
+cp -a --reflink=auto "$REUSE/.next-build" "$RELEASE/.next-build"` : `${buildWindow ? `# Build window: the build needs the memory the two EU storefronts hold.
+# Stop them first so the free-memory check below sees the freed memory, verify
+# their domains answer the 503 maintenance page directly at the origin, and arm
+# a restore that runs on every exit path.
+BUILD_WINDOW_SERVICES="aidreamcapes-eu.service aidreamshoots.service"
+systemctl stop $BUILD_WINDOW_SERVICES
+sleep 1
+BUILD_WINDOW_OK=1
+for BUILD_WINDOW_DOMAIN in aidreamcapes.eu aidreamshoots.eu; do
+  BUILD_WINDOW_CODE=$(curl -sk -o /dev/null -w '%{http_code}' --resolve "$BUILD_WINDOW_DOMAIN:443:127.0.0.1" "https://$BUILD_WINDOW_DOMAIN/")
+  if [ "$BUILD_WINDOW_CODE" != "503" ]; then
+    echo "Refusing to build: $BUILD_WINDOW_DOMAIN answered $BUILD_WINDOW_CODE instead of the 503 maintenance page." >&2
+    BUILD_WINDOW_OK=0
+  fi
+done
+if [ "$BUILD_WINDOW_OK" != "1" ]; then
+  restore_build_window
+  exit 1
+fi
+echo 'build window: aidreamcapes-eu.service and aidreamshoots.service stopped, maintenance pages verified'
+trap 'restore_build_window' EXIT` : ""}
+AVAILABLE_MB=$(awk '/^MemAvailable:/ {print int($2/1024)}' /proc/meminfo)
 if [ "${process.env.AIDREAMCAPES_BUILD_ALLOW_LOW_MEMORY === "1" ? "1" : "0"}" != "1" ] && [ "$AVAILABLE_MB" -lt ${buildMinAvailableMb} ]; then
   echo "Refusing to build on this host: ${buildMinAvailableMb}MB of free memory is required and only \${AVAILABLE_MB}MB is available." >&2
   echo "Build locally with scripts/build-aidreamcapes-prebuilt.mjs and deploy with --prebuilt-build, or set AIDREAMCAPES_BUILD_ALLOW_LOW_MEMORY=1 to try anyway." >&2
+  restore_build_window
   exit 1
 fi
 nice -n 10 env DINGYUE_ENV=production DATABASE_TARGET=production DINGYUE_BUILD_MAX_OLD_SPACE_SIZE=${buildHeapMb} node scripts/build-production.mjs`}
@@ -171,7 +206,7 @@ printf '%s\n' "$COMMIT" > .deployed-commit
 CANDIDATE_PORT=$(node -e 'const server=require("node:net").createServer(); server.listen(0,"127.0.0.1",()=>{process.stdout.write(String(server.address().port));server.close();});')
 HOSTNAME=127.0.0.1 PORT="$CANDIDATE_PORT" NODE_ENV=production NEXT_DIST_DIR=.next-build DINGYUE_ENV=production DATABASE_TARGET=production node server.mjs > .candidate.log 2>&1 &
 CANDIDATE=$!
-trap 'kill "$CANDIDATE" 2>/dev/null || true' EXIT
+trap 'restore_build_window; kill "$CANDIDATE" 2>/dev/null || true' EXIT
 READY=0
 for ATTEMPT in $(seq 1 60); do
   if ! kill -0 "$CANDIDATE" 2>/dev/null; then cat .candidate.log; exit 1; fi
@@ -194,6 +229,9 @@ ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN="http://127.0.0.1:$CAND
 ${verifyMediaDetails ? 'AIDREAMCAPES_AUDIT_ORIGIN="http://127.0.0.1:$CANDIDATE_PORT" AIDREAMCAPES_AUDIT_CONCURRENCY=2 node scripts/aidreamcapes-workspace/verify-media-detail-remediation.mjs > .candidate-media-details.json\ncat .candidate-media-details.json' : ""}
 kill "$CANDIDATE"; wait "$CANDIDATE" 2>/dev/null || true
 trap - EXIT
+${buildWindow ? `# The switch phase has its own rollback trap; keep the window restore armed
+# until the release finishes so a failure here cannot leave the EU sites down.
+trap 'restore_build_window' EXIT` : ""}
 # Apply the exact release's forward-only schema migrations after the built
 # candidate passes its SSR contract and before it receives production traffic.
 DINGYUE_ENV=production DATABASE_TARGET=production node ./node_modules/prisma/build/index.js migrate deploy
@@ -211,6 +249,7 @@ rollback() {
   cp "$RELEASE/.previous-release.conf" "$DROPIN"
   ln -sfn "$OLD_CURRENT" "$ROOT/current"
   systemctl daemon-reload
+  restore_build_window
   systemctl restart aidreamcapes.service || true
   exit "$STATUS"
 }
@@ -255,7 +294,12 @@ cat .origin-contract.json` : ""}
 ${verifyInspirations ? 'AIDREAMCAPES_INSPIRATIONS_ORIGIN=http://127.0.0.1:3013 AIDREAMCAPES_INSPIRATIONS_MEDIA_ORIGIN=https://www.aivideosugc.com node scripts/aidreamcapes-workspace/smoke-inspirations-release.mjs > .origin-inspirations.json\ncat .origin-inspirations.json' : ""}
 test "$(cat "$ROOT/current/.deployed-commit")" = "$COMMIT"
 test "$(systemctl show aidreamcapes.service -p WorkingDirectory | sed -n 's/^WorkingDirectory=//p')" = "$RELEASE"
-test "$(systemctl show mydreamshoots.service aidreamcapes-eu.service aidreamshoots.service -p MainPID -p WorkingDirectory)" = "$OTHER_SERVICES"
+test "$(systemctl show mydreamshoots.service -p MainPID -p WorkingDirectory)" = "$OTHER_SERVICES"
+test "$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p WorkingDirectory)" = "$EU_SERVICE_DIRS"
+${buildWindow ? `restore_build_window
+test "$(systemctl is-active aidreamcapes-eu.service)" = active
+test "$(systemctl is-active aidreamshoots.service)" = active
+echo 'build window closed: aidreamcapes-eu.service and aidreamshoots.service active again'` : `test "$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)" = "$EU_SERVICE_PIDS"`}
 trap - EXIT
 printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes.service'
 `;
