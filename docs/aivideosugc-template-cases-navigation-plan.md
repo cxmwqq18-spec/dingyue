@@ -75,3 +75,14 @@ v1 方案（模板案例聚合页 / cases 路由）已废弃：用户拍板 18 �
 - mega menu：三组标题可点、href 正确、hover 样式；footerLink 文案更新；其他菜单组零变化。
 - 详情页：目录 chips 无「视频模板/照片模板」残留；Made with 组不回归。
 - SSR-only 双 guard（静态 + no-JS）；sitemap 增 1（/occasions）减 2；no-snapshot 合同合规。
+
+## 5. 实施记录（2026-10-30）
+
+四步全部实施并上线，最终 release `228a450c279f34b40869cfb4f52250ccd702f5ca`。
+
+- **Step 1（/occasions hub）**：`aidreamcapes_v2_occasions` LivePage 行（layout=platform-directory，3 张 occasion 卡）；plan/apply `scripts/{plan,apply}-aidreamcapes-occasions-hub.mjs`。revision 3198→3199。
+- **Step 2（mega menu 组标题可点）**：`AidreamcapesZipNavigationGroup.hubHref` 字段 + `shell.tsx` `.ph-link` 渲染 + 样式；home 行三组 hubHref manifest `scripts/{plan,apply}-aidreamcapes-nav-hub-hrefs.mjs`。revision 3199→3200。release `4715c9687`。
+- **Step 3（/templates 案例画廊）**：`ExampleDirectory` 渲染分支 + `listAidreamcapesExampleGalleryEntries`（单属主枚举复用，updatedAt desc / slug asc）；`/templates` 行重写（exampleDirectory，4 chips，pageSize 20，删 stored ItemList/FAQPage）；28 行 facet links 统一为 All examples/By industry/By platform/By occasion；home 三菜单 footerLink 更新；删除 `/templates/photo`、`/templates/video` 行（middleware normalize + `redirectLegacyAidreamcapesTemplateDirectory` 308 回 `/templates?kind=`）。manifest `scripts/{plan,apply}-aidreamcapes-template-gallery.mjs`，revision 3200→3232。releases `e3d80ebb0`、`0bf49021d`（永久重定向 + routeMode basePath）、`7ce11cd90`（kind 规范化到 `?kind=`）。
+- **Step 4（facet example-first）**：`templateDirectory.hideTemplates` 标记（paths 保留为词表/注册源）+ 渲染器纯媒体分支（无模板网格/筛选表单）+ 存储ItemList 移除（详情 URL 由 sitemap 覆盖）+ audit `templateCardWithoutDirectory` 规则退休。manifest `scripts/{plan,apply}-aidreamcapes-facet-example-first.mjs`，28 行。release `228a450c2`。
+- **实际案例总量**：328 条（video 234 / photo 94），单一属主 + 无别名口径与 sitemap 完全同源。
+- audit 既有已知项维持：45 placementOnUnroutableCard（example-gallery 无 publicSlug 卡）+ 36 templateCardPlacementIgnored。
