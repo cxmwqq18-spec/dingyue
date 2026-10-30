@@ -1,0 +1,49 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-industry-facets-2026-10-30-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-30T11:03:09.791Z",
+  "sourcePlanHash": "bc9ee6eac72bc0b063888036defd7035d8bf49b36181ae4339ff48b9f556783c",
+  "summary": {
+    "deleteIds": [
+      "aidreamcapes_v2_ind_pet",
+      "aidreamcapes_v2_ind_kids_toy",
+      "aidreamcapes_v2_ind_e_commerce",
+      "aidreamcapes_v2_ind_education",
+      "aidreamcapes_v2_ind_financial_services",
+      "aidreamcapes_v2_ind_sports_gym",
+      "aidreamcapes_v2_ind_apps",
+      "aidreamcapes_v2_ind_ugc",
+      "aidreamcapes_v2_ind_viral",
+      "aidreamcapes_v2_ind_explainer",
+      "aidreamcapes_v2_ind_other"
+    ],
+    "navItemsBefore": 8,
+    "hubItemsBefore": 8
+  },
+  "deleteIds": [
+    "aidreamcapes_v2_ind_pet",
+    "aidreamcapes_v2_ind_kids_toy",
+    "aidreamcapes_v2_ind_e_commerce",
+    "aidreamcapes_v2_ind_education",
+    "aidreamcapes_v2_ind_financial_services",
+    "aidreamcapes_v2_ind_sports_gym",
+    "aidreamcapes_v2_ind_apps",
+    "aidreamcapes_v2_ind_ugc",
+    "aidreamcapes_v2_ind_viral",
+    "aidreamcapes_v2_ind_explainer",
+    "aidreamcapes_v2_ind_other"
+  ],
+  "homepage": {
+    "id": "site_aidreamcapes_home",
+    "jsonPath": "siteNavigation.menus[Templates].groups[By industry].items",
+    "beforeCount": 8
+  },
+  "hub": {
+    "id": "aidreamcapes_v2_industries",
+    "jsonPath": "sections.v2_main.settings.data.items",
+    "beforeCount": 8
+  },
+  "note": "Rollback = delete the created LivePage rows and truncate the two reviewed lists back to their before counts. Historical/audit only; never run without the site owner's explicit approval."
+}

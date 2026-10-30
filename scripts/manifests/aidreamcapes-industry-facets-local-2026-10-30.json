@@ -1,0 +1,2378 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-industry-facets-2026-10-30-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-30T11:02:02.894Z",
+  "rule": "create 11 industry facet LivePage rows (placement vocabulary v2 targets); extend the homepage siteNavigation By industry group 8 -> 19 and the /industries hub items 8 -> 19",
+  "pages": [
+    {
+      "id": "aidreamcapes_v2_ind_pet",
+      "slug": "/industries/pet",
+      "title": "AI UGC Ads for Pet Products",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI UGC Ads for Pet Products | AIVideosUGC",
+          "description": "Turn one pet product photo into short UGC-style clips and clean listing photos. Show the harness on a walk, the brush in use, or the bowl at feeding time without a studio day.",
+          "canonical": "https://www.aivideosugc.com/industries/pet",
+          "canonicalPath": "/industries/pet",
+          "keywords": "pet product video ads, AI pet product photos, pet UGC video, dog product ads, pet listing photos",
+          "primaryKeyword": "pet product video ads",
+          "ogImage": "/ai-image-generation/im03-home-picker-dog-r1-640.webp",
+          "ogImageAlt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+          "twitterDescription": "Turn one pet product photo into short UGC-style clips and clean listing photos. Show the harness on a walk, the brush in use, or the bowl at feeding time without a studio day.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Pet Products",
+                    "item": "https://www.aivideosugc.com/industries/pet"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/pet#webpage",
+                "url": "https://www.aivideosugc.com/industries/pet",
+                "name": "AI UGC Ads for Pet Products | AIVideosUGC",
+                "description": "Turn one pet product photo into short UGC-style clips and clean listing photos. Show the harness on a walk, the brush in use, or the bowl at feeding time without a studio day.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear photo of the product. The scenes place it in everyday pet moments, so the clip or photo set matches how owners actually use it."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings and storefront pages."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can the scenes include a dog or cat?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Scenes place the product in use or next to a pet, so the footage reads naturally without booking a real animal shoot."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-pet",
+                "kind": "industry",
+                "label": "Pet",
+                "h1": "Pet Product Ads From One Photo",
+                "lead": "Turn one pet product photo into short UGC-style clips and clean listing photos. Show the harness on a walk, the brush in use, or the bowl at feeding time without a studio day.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear photo of the product. The scenes place it in everyday pet moments, so the clip or photo set matches how owners actually use it."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings and storefront pages."
+                  },
+                  {
+                    "q": "Can the scenes include a dog or cat?",
+                    "a": "Yes. Scenes place the product in use or next to a pet, so the footage reads naturally without booking a real animal shoot."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/pet",
+                    "label": "Pet Products"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_kids_toy",
+      "slug": "/industries/kids-toy",
+      "title": "AI UGC Ads for Kids & Toy Products",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI UGC Ads for Kids & Toy Products | AIVideosUGC",
+          "description": "One toy photo becomes play demos, unboxings, and shelf-ready listing photos. Show how the toy works before the parent reaches the store page.",
+          "canonical": "https://www.aivideosugc.com/industries/kids-toy",
+          "canonicalPath": "/industries/kids-toy",
+          "keywords": "kids toy video ads, toy unboxing video, AI toy product photos, toy UGC ads, toy listing photos",
+          "primaryKeyword": "kids toy video ads",
+          "ogImage": "/ai-image-generation/mx1w-home-kids-toy-2-r1-640.webp",
+          "ogImageAlt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+          "twitterDescription": "One toy photo becomes play demos, unboxings, and shelf-ready listing photos. Show how the toy works before the parent reaches the store page.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Kids & Toys",
+                    "item": "https://www.aivideosugc.com/industries/kids-toy"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/kids-toy#webpage",
+                "url": "https://www.aivideosugc.com/industries/kids-toy",
+                "name": "AI UGC Ads for Kids & Toy Products | AIVideosUGC",
+                "description": "One toy photo becomes play demos, unboxings, and shelf-ready listing photos. Show how the toy works before the parent reaches the store page.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear photo of the toy, ideally with the full shape visible. The scenes build play moments around it, from unboxing to floor-time demos."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I show hands playing with the toy?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Hands-on play demos are the core format, so parents can see how the pieces move and fit before buying."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for the feeds and square or wide photos for marketplaces and your own store."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-kids-toy",
+                "kind": "industry",
+                "label": "Kids & Toy",
+                "h1": "Toy Ads Parents Actually Watch",
+                "lead": "One toy photo becomes play demos, unboxings, and shelf-ready listing photos. Show how the toy works before the parent reaches the store page.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear photo of the toy, ideally with the full shape visible. The scenes build play moments around it, from unboxing to floor-time demos."
+                  },
+                  {
+                    "q": "Can I show hands playing with the toy?",
+                    "a": "Yes. Hands-on play demos are the core format, so parents can see how the pieces move and fit before buying."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for the feeds and square or wide photos for marketplaces and your own store."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/kids-toy",
+                    "label": "Kids & Toys"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_e_commerce",
+      "slug": "/industries/e-commerce",
+      "title": "AI Product Photos and Video Ads for E-Commerce",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Product Photos and Video Ads for E-Commerce | AIVideosUGC",
+          "description": "Feed your catalog with listing photos and short product videos that match. One upload covers the product page, the feed ad, and the seasonal refresh.",
+          "canonical": "https://www.aivideosugc.com/industries/e-commerce",
+          "canonicalPath": "/industries/e-commerce",
+          "keywords": "e-commerce product photos, catalog product video, AI listing photos, store product ads, white background product photos",
+          "primaryKeyword": "e-commerce product photos and video ads",
+          "ogImage": "/ai-image-generation/fx14-white-card-catalog-r1-640.webp",
+          "ogImageAlt": "Pale blue glass storage jar with a plain lid centered on pure white.",
+          "twitterDescription": "Feed your catalog with listing photos and short product videos that match. One upload covers the product page, the feed ad, and the seasonal refresh.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "E-Commerce",
+                    "item": "https://www.aivideosugc.com/industries/e-commerce"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/e-commerce#webpage",
+                "url": "https://www.aivideosugc.com/industries/e-commerce",
+                "name": "AI Product Photos and Video Ads for E-Commerce | AIVideosUGC",
+                "description": "Feed your catalog with listing photos and short product videos that match. One upload covers the product page, the feed ad, and the seasonal refresh.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "Do the photos work for marketplace listings?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Clean white-background and catalog shots are core formats, alongside the lifestyle scenes you can use on the product page."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I keep every channel consistent?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "The listing photos and the video ads come from the same upload, so colors and proportions stay consistent across the catalog."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How many products can I run?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "As many as your plan's credits cover. Each job shows its credit cost before it runs, and failed jobs return the credits."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Square and wide photos for listings, vertical video for TikTok, Instagram, and Shorts, and wide cuts for your store."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-e-commerce",
+                "kind": "industry",
+                "label": "E-Commerce",
+                "h1": "Store-Ready Media From One Product Photo",
+                "lead": "Feed your catalog with listing photos and short product videos that match. One upload covers the product page, the feed ad, and the seasonal refresh.",
+                "faq": [
+                  {
+                    "q": "Do the photos work for marketplace listings?",
+                    "a": "Yes. Clean white-background and catalog shots are core formats, alongside the lifestyle scenes you can use on the product page."
+                  },
+                  {
+                    "q": "Can I keep every channel consistent?",
+                    "a": "The listing photos and the video ads come from the same upload, so colors and proportions stay consistent across the catalog."
+                  },
+                  {
+                    "q": "How many products can I run?",
+                    "a": "As many as your plan's credits cover. Each job shows its credit cost before it runs, and failed jobs return the credits."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Square and wide photos for listings, vertical video for TikTok, Instagram, and Shorts, and wide cuts for your store."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/e-commerce",
+                    "label": "E-Commerce"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_education",
+      "slug": "/industries/education",
+      "title": "AI Explainer and Course Promo Videos",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Explainer and Course Promo Videos | AIVideosUGC",
+          "description": "Explain a course, a lesson, or a study tool with short presenter videos and clean visuals. One upload gives you the promo cut and the thumbnail set.",
+          "canonical": "https://www.aivideosugc.com/industries/education",
+          "canonicalPath": "/industries/education",
+          "keywords": "course promo video, education explainer video, AI lesson video, online course ads, study tool demo",
+          "primaryKeyword": "course promo video maker",
+          "ogImage": "/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640.webp",
+          "ogImageAlt": "An adult white man in his twenties in a classroom setting speaks to camera with empty hands.",
+          "twitterDescription": "Explain a course, a lesson, or a study tool with short presenter videos and clean visuals. One upload gives you the promo cut and the thumbnail set.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Education",
+                    "item": "https://www.aivideosugc.com/industries/education"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/education#webpage",
+                "url": "https://www.aivideosugc.com/industries/education",
+                "name": "AI Explainer and Course Promo Videos | AIVideosUGC",
+                "description": "Explain a course, a lesson, or a study tool with short presenter videos and clean visuals. One upload gives you the promo cut and the thumbnail set.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "A photo of the product, the cover, or the workspace. The presenter explains the offer in a classroom or desk scene that fits it."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can the presenter speak my script?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. You write the message, and the presenter delivers it with voice and captions in the clip."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for the feeds, wide cuts for course pages, and still frames you can use as thumbnails."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-education",
+                "kind": "industry",
+                "label": "Education",
+                "h1": "Course and Lesson Promos Without a Film Crew",
+                "lead": "Explain a course, a lesson, or a study tool with short presenter videos and clean visuals. One upload gives you the promo cut and the thumbnail set.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "A photo of the product, the cover, or the workspace. The presenter explains the offer in a classroom or desk scene that fits it."
+                  },
+                  {
+                    "q": "Can the presenter speak my script?",
+                    "a": "Yes. You write the message, and the presenter delivers it with voice and captions in the clip."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for the feeds, wide cuts for course pages, and still frames you can use as thumbnails."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/education",
+                    "label": "Education"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_financial_services",
+      "slug": "/industries/financial-services",
+      "title": "AI Explainer Videos for Fintech and Finance",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Explainer Videos for Fintech and Finance | AIVideosUGC",
+          "description": "Walk through an app, a dashboard, or a money tool with short presenter videos. The scenes keep the focus on the product, not on stock footage.",
+          "canonical": "https://www.aivideosugc.com/industries/financial-services",
+          "canonicalPath": "/industries/financial-services",
+          "keywords": "fintech explainer video, finance app demo video, AI banking ads, dashboard walkthrough video, insurance explainer",
+          "primaryKeyword": "fintech explainer video maker",
+          "ogImage": "/ai-image-generation/gen2guide-k6-templates-strip-deskset-640.webp",
+          "ogImageAlt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+          "twitterDescription": "Walk through an app, a dashboard, or a money tool with short presenter videos. The scenes keep the focus on the product, not on stock footage.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Financial Services",
+                    "item": "https://www.aivideosugc.com/industries/financial-services"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/financial-services#webpage",
+                "url": "https://www.aivideosugc.com/industries/financial-services",
+                "name": "AI Explainer Videos for Fintech and Finance | AIVideosUGC",
+                "description": "Walk through an app, a dashboard, or a money tool with short presenter videos. The scenes keep the focus on the product, not on stock footage.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "A photo of the workspace, the card, or the brand material. The presenter walks through the offer from a desk scene that reads professional."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I explain a dashboard or an app flow?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Desk and screen scenes are built for step-by-step walkthroughs, so the viewer can follow the flow."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for the feeds and wide cuts for landing pages and decks."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-financial-services",
+                "kind": "industry",
+                "label": "Financial Services",
+                "h1": "Finance Explainers That Stay On Brand",
+                "lead": "Walk through an app, a dashboard, or a money tool with short presenter videos. The scenes keep the focus on the product, not on stock footage.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "A photo of the workspace, the card, or the brand material. The presenter walks through the offer from a desk scene that reads professional."
+                  },
+                  {
+                    "q": "Can I explain a dashboard or an app flow?",
+                    "a": "Yes. Desk and screen scenes are built for step-by-step walkthroughs, so the viewer can follow the flow."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for the feeds and wide cuts for landing pages and decks."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/financial-services",
+                    "label": "Financial Services"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_sports_gym",
+      "slug": "/industries/sports-gym",
+      "title": "AI UGC Ads for Sports and Gym Products",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI UGC Ads for Sports and Gym Products | AIVideosUGC",
+          "description": "Show the mat rolling out, the bands stretching, or the bike folding. One photo covers workout clips, checkout shots, and listing photos.",
+          "canonical": "https://www.aivideosugc.com/industries/sports-gym",
+          "canonicalPath": "/industries/sports-gym",
+          "keywords": "gym product video ads, fitness UGC video, AI sports product photos, workout gear ads, gym equipment demos",
+          "primaryKeyword": "sports and gym product video ads",
+          "ogImage": "/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640.webp",
+          "ogImageAlt": "An adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+          "twitterDescription": "Show the mat rolling out, the bands stretching, or the bike folding. One photo covers workout clips, checkout shots, and listing photos.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Sports & Gym",
+                    "item": "https://www.aivideosugc.com/industries/sports-gym"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/sports-gym#webpage",
+                "url": "https://www.aivideosugc.com/industries/sports-gym",
+                "name": "AI UGC Ads for Sports and Gym Products | AIVideosUGC",
+                "description": "Show the mat rolling out, the bands stretching, or the bike folding. One photo covers workout clips, checkout shots, and listing photos.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear photo of the gear or apparel. The scenes place it in workout and recovery moments that match how it is used."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can the scenes show the product in use?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Stretching, lifting, and recovery scenes are core formats, so the clip shows the product doing its job."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-sports-gym",
+                "kind": "industry",
+                "label": "Sports & Gym",
+                "h1": "Gym and Sports Ads From One Product Photo",
+                "lead": "Show the mat rolling out, the bands stretching, or the bike folding. One photo covers workout clips, checkout shots, and listing photos.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear photo of the gear or apparel. The scenes place it in workout and recovery moments that match how it is used."
+                  },
+                  {
+                    "q": "Can the scenes show the product in use?",
+                    "a": "Yes. Stretching, lifting, and recovery scenes are core formats, so the clip shows the product doing its job."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/sports-gym",
+                    "label": "Sports & Gym"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_apps",
+      "slug": "/industries/apps",
+      "title": "AI App Promo and Walkthrough Videos",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI App Promo and Walkthrough Videos | AIVideosUGC",
+          "description": "Turn a device photo or a screenshot into walkthrough clips, reaction videos, and store-ready stills. Show the screen flow before the download button.",
+          "canonical": "https://www.aivideosugc.com/industries/apps",
+          "canonicalPath": "/industries/apps",
+          "keywords": "app promo video, app walkthrough video, AI app ads, app store screenshots, app demo clips",
+          "primaryKeyword": "app promo video maker",
+          "ogImage": "/ai-image-generation/tw1-wall-apps-2-640.webp",
+          "ogImageAlt": "Adult white man with short tight curls reacts beside a generic tablet showing only soft abstract color blocks in a dark streaming room.",
+          "twitterDescription": "Turn a device photo or a screenshot into walkthrough clips, reaction videos, and store-ready stills. Show the screen flow before the download button.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Apps",
+                    "item": "https://www.aivideosugc.com/industries/apps"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/apps#webpage",
+                "url": "https://www.aivideosugc.com/industries/apps",
+                "name": "AI App Promo and Walkthrough Videos | AIVideosUGC",
+                "description": "Turn a device photo or a screenshot into walkthrough clips, reaction videos, and store-ready stills. Show the screen flow before the download button.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "A photo of the device or the app in use. The scenes build walkthroughs and reaction moments around the screen."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I show the actual interface?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Upload the screen you want featured and the scenes keep it in focus, so the walkthrough shows your real flow."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for TikTok, Instagram, and Shorts, plus stills you can use for store listings."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-apps",
+                "kind": "industry",
+                "label": "Apps",
+                "h1": "App Promos and Walkthroughs From One Photo",
+                "lead": "Turn a device photo or a screenshot into walkthrough clips, reaction videos, and store-ready stills. Show the screen flow before the download button.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "A photo of the device or the app in use. The scenes build walkthroughs and reaction moments around the screen."
+                  },
+                  {
+                    "q": "Can I show the actual interface?",
+                    "a": "Upload the screen you want featured and the scenes keep it in focus, so the walkthrough shows your real flow."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for TikTok, Instagram, and Shorts, plus stills you can use for store listings."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/apps",
+                    "label": "Apps"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_ugc",
+      "slug": "/industries/ugc",
+      "title": "AI UGC Video Ads From One Product Photo",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI UGC Video Ads From One Product Photo | AIVideosUGC",
+          "description": "One product photo becomes review-style clips that hold the feed. Pick the presenter, the scene, and the format; the clip is ready in minutes.",
+          "canonical": "https://www.aivideosugc.com/industries/ugc",
+          "canonicalPath": "/industries/ugc",
+          "keywords": "AI UGC video ads, UGC creator video, product review video, UGC style ads, AI creator clips",
+          "primaryKeyword": "AI UGC video ads",
+          "ogImage": "/ai-image-generation/tw2-wall-ugc-1-r1-640.webp",
+          "ogImageAlt": "Adult Black man with short salt-and-pepper curls applies plain coral pump moisturizer to his cheek in a bright bathroom.",
+          "twitterDescription": "One product photo becomes review-style clips that hold the feed. Pick the presenter, the scene, and the format; the clip is ready in minutes.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "UGC",
+                    "item": "https://www.aivideosugc.com/industries/ugc"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/ugc#webpage",
+                "url": "https://www.aivideosugc.com/industries/ugc",
+                "name": "AI UGC Video Ads From One Product Photo | AIVideosUGC",
+                "description": "One product photo becomes review-style clips that hold the feed. Pick the presenter, the scene, and the format; the clip is ready in minutes.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear product photo. The presenter handles, uses, and reacts to the product in scenes that read like creator content."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I pick the presenter?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Choose the presenter and the setting, and the same photo can produce several review-style cuts."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Does the clip include voice and captions?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. You write the message, and the clip ships with the spoken line and captions."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-ugc",
+                "kind": "industry",
+                "label": "UGC",
+                "h1": "Creator-Style Ads Without the Creator Wait",
+                "lead": "One product photo becomes review-style clips that hold the feed. Pick the presenter, the scene, and the format; the clip is ready in minutes.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear product photo. The presenter handles, uses, and reacts to the product in scenes that read like creator content."
+                  },
+                  {
+                    "q": "Can I pick the presenter?",
+                    "a": "Yes. Choose the presenter and the setting, and the same photo can produce several review-style cuts."
+                  },
+                  {
+                    "q": "Does the clip include voice and captions?",
+                    "a": "Yes. You write the message, and the clip ships with the spoken line and captions."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/ugc",
+                    "label": "UGC"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_viral",
+      "slug": "/industries/viral",
+      "title": "AI Viral Ad Styles for Product Clips",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Viral Ad Styles for Product Clips | AIVideosUGC",
+          "description": "Reaction reveals, comparisons, and mist-spray hooks — the formats that stop the scroll, made from one product photo.",
+          "canonical": "https://www.aivideosugc.com/industries/viral",
+          "canonicalPath": "/industries/viral",
+          "keywords": "viral video ads, hook video ads, product reveal video, TikTok viral ads, scroll stopping ads",
+          "primaryKeyword": "viral product video ads",
+          "ogImage": "/ai-image-generation/tw2-wall-viral-1-640.webp",
+          "ogImageAlt": "Adult white woman with a short light-blonde pixie holds a plain mint pump face mist beside her cheek.",
+          "twitterDescription": "Reaction reveals, comparisons, and mist-spray hooks — the formats that stop the scroll, made from one product photo.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Viral",
+                    "item": "https://www.aivideosugc.com/industries/viral"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/viral#webpage",
+                "url": "https://www.aivideosugc.com/industries/viral",
+                "name": "AI Viral Ad Styles for Product Clips | AIVideosUGC",
+                "description": "Reaction reveals, comparisons, and mist-spray hooks — the formats that stop the scroll, made from one product photo.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What makes these clips different?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "They open on the hook — the reveal, the comparison, or the reaction — in the first second, which is what keeps the feed watching."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear product photo. The scenes stage the reveal or the side-by-side around it."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video sized for TikTok, Instagram, and Shorts, ready to post as-is."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-viral",
+                "kind": "industry",
+                "label": "Viral",
+                "h1": "Hook-First Ads Built for the Feed",
+                "lead": "Reaction reveals, comparisons, and mist-spray hooks — the formats that stop the scroll, made from one product photo.",
+                "faq": [
+                  {
+                    "q": "What makes these clips different?",
+                    "a": "They open on the hook — the reveal, the comparison, or the reaction — in the first second, which is what keeps the feed watching."
+                  },
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear product photo. The scenes stage the reveal or the side-by-side around it."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video sized for TikTok, Instagram, and Shorts, ready to post as-is."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/viral",
+                    "label": "Viral"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_explainer",
+      "slug": "/industries/explainer",
+      "title": "AI Product Explainer Videos From One Photo",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Product Explainer Videos From One Photo | AIVideosUGC",
+          "description": "Before-and-after demos, walkthroughs, and feature explanations from a single product photo. Answer the buyer's question before they ask it.",
+          "canonical": "https://www.aivideosugc.com/industries/explainer",
+          "canonicalPath": "/industries/explainer",
+          "keywords": "product explainer video, before and after video, AI demo video, feature walkthrough, product how-to video",
+          "primaryKeyword": "product explainer video maker",
+          "ogImage": "/ai-image-generation/mx1w-home-explainer-1-r1-640.webp",
+          "ogImageAlt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+          "twitterDescription": "Before-and-after demos, walkthroughs, and feature explanations from a single product photo. Answer the buyer's question before they ask it.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Explainer",
+                    "item": "https://www.aivideosugc.com/industries/explainer"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/explainer#webpage",
+                "url": "https://www.aivideosugc.com/industries/explainer",
+                "name": "AI Product Explainer Videos From One Photo | AIVideosUGC",
+                "description": "Before-and-after demos, walkthroughs, and feature explanations from a single product photo. Answer the buyer's question before they ask it.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear photo of the product. The scenes stage the before-and-after or the step-by-step around it."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can the clip show a problem and the fix?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. Before-and-after demos are the core format, so the viewer sees the problem solved on screen."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Does the clip include voice and captions?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. You write the message, and the clip ships with the spoken line and captions."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-explainer",
+                "kind": "industry",
+                "label": "Explainer",
+                "h1": "Explain the Product in One Short Clip",
+                "lead": "Before-and-after demos, walkthroughs, and feature explanations from a single product photo. Answer the buyer's question before they ask it.",
+                "faq": [
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear photo of the product. The scenes stage the before-and-after or the step-by-step around it."
+                  },
+                  {
+                    "q": "Can the clip show a problem and the fix?",
+                    "a": "Yes. Before-and-after demos are the core format, so the viewer sees the problem solved on screen."
+                  },
+                  {
+                    "q": "Does the clip include voice and captions?",
+                    "a": "Yes. You write the message, and the clip ships with the spoken line and captions."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/explainer",
+                    "label": "Explainer"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "aidreamcapes_v2_ind_other",
+      "slug": "/industries/other",
+      "title": "AI Product Videos for Every Niche",
+      "pageType": "content",
+      "templateKey": "aidreamcapes-v2",
+      "contentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Product Videos for Every Niche | AIVideosUGC",
+          "description": "Scene openers, presenter clips, and product moments that don't fit one shelf. Start from a photo and shape the story you need.",
+          "canonical": "https://www.aivideosugc.com/industries/other",
+          "canonicalPath": "/industries/other",
+          "keywords": "AI product video, any product ads, presenter video, scene opener clips, niche product ads",
+          "primaryKeyword": "AI product videos for any niche",
+          "ogImage": "/ai-image-generation/gen2spokesperson-videos-c3-640.webp",
+          "ogImageAlt": "Adult holding a protein shaker bottle in a gym after a workout, lips closed.",
+          "twitterDescription": "Scene openers, presenter clips, and product moments that don't fit one shelf. Start from a photo and shape the story you need.",
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "jsonLd": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://www.aivideosugc.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Industries",
+                    "item": "https://www.aivideosugc.com/industries"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "More Categories",
+                    "item": "https://www.aivideosugc.com/industries/other"
+                  }
+                ]
+              },
+              {
+                "@type": "CollectionPage",
+                "@id": "https://www.aivideosugc.com/industries/other#webpage",
+                "url": "https://www.aivideosugc.com/industries/other",
+                "name": "AI Product Videos for Every Niche | AIVideosUGC",
+                "description": "Scene openers, presenter clips, and product moments that don't fit one shelf. Start from a photo and shape the story you need.",
+                "inLanguage": "en",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "My product is unusual. Does this still work?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes. These formats cover scene openers and presenter clips that work for any product you can photograph."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What do I upload?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "One clear photo of the product. The presenter or the scene does the rest."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which formats come out?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How much does it cost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "version": 2,
+        "pageType": "content",
+        "mediaManifest": [],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "placement-tags-13be17f3744e7f9f"
+        },
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "settings": {
+              "layout": "collection",
+              "data": {
+                "id": "ind-other",
+                "kind": "industry",
+                "label": "Other",
+                "h1": "One Photo, Any Product Category",
+                "lead": "Scene openers, presenter clips, and product moments that don't fit one shelf. Start from a photo and shape the story you need.",
+                "faq": [
+                  {
+                    "q": "My product is unusual. Does this still work?",
+                    "a": "Yes. These formats cover scene openers and presenter clips that work for any product you can photograph."
+                  },
+                  {
+                    "q": "What do I upload?",
+                    "a": "One clear photo of the product. The presenter or the scene does the rest."
+                  },
+                  {
+                    "q": "Which formats come out?",
+                    "a": "Vertical video for TikTok, Instagram, and Shorts, plus square and wide photos for listings."
+                  },
+                  {
+                    "q": "How much does it cost?",
+                    "a": "Plans start at $24.50 a month, and every job shows its credit cost before it runs. Failed jobs return the credits."
+                  }
+                ],
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  },
+                  {
+                    "href": "/industries/other",
+                    "label": "More Categories"
+                  }
+                ],
+                "templateDirectory": {
+                  "paths": [],
+                  "links": [
+                    {
+                      "href": "/templates",
+                      "label": "All templates"
+                    },
+                    {
+                      "href": "/templates/photo",
+                      "label": "Photo templates"
+                    },
+                    {
+                      "href": "/templates/video",
+                      "label": "Video templates"
+                    },
+                    {
+                      "href": "/industries",
+                      "label": "By industry"
+                    },
+                    {
+                      "href": "/platforms",
+                      "label": "By platform"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "homepage": {
+    "id": "site_aidreamcapes_home",
+    "slug": "/",
+    "baseHash": "2940b5cbce37e18892d11b666f7cfe859a060f462eb6bfee9c72a5290eb6c8cc",
+    "jsonPath": "siteNavigation.menus[Templates].groups[By industry].items",
+    "beforeCount": 8,
+    "afterCount": 19,
+    "afterItems": [
+      {
+        "href": "/industries/beauty-skincare",
+        "label": "Beauty & Personal Care"
+      },
+      {
+        "href": "/industries/fashion-clothing",
+        "label": "Clothing"
+      },
+      {
+        "href": "/industries/shoes",
+        "label": "Footwear"
+      },
+      {
+        "href": "/industries/jewelry-accessories",
+        "label": "Jewelry & Accessories"
+      },
+      {
+        "href": "/industries/electronics",
+        "label": "Tech & Electronics"
+      },
+      {
+        "href": "/industries/health-wellness",
+        "label": "Health & Fitness"
+      },
+      {
+        "href": "/industries/food-drinks",
+        "label": "Food & Beverage"
+      },
+      {
+        "href": "/industries/home-living",
+        "label": "Home & Living"
+      },
+      {
+        "href": "/industries/pet",
+        "label": "Pet"
+      },
+      {
+        "href": "/industries/kids-toy",
+        "label": "Kids & Toy"
+      },
+      {
+        "href": "/industries/e-commerce",
+        "label": "E-Commerce"
+      },
+      {
+        "href": "/industries/education",
+        "label": "Education"
+      },
+      {
+        "href": "/industries/financial-services",
+        "label": "Financial Services"
+      },
+      {
+        "href": "/industries/sports-gym",
+        "label": "Sports & Gym"
+      },
+      {
+        "href": "/industries/apps",
+        "label": "Apps"
+      },
+      {
+        "href": "/industries/ugc",
+        "label": "UGC"
+      },
+      {
+        "href": "/industries/viral",
+        "label": "Viral"
+      },
+      {
+        "href": "/industries/explainer",
+        "label": "Explainer"
+      },
+      {
+        "href": "/industries/other",
+        "label": "Other"
+      }
+    ]
+  },
+  "hub": {
+    "id": "aidreamcapes_v2_industries",
+    "slug": "/industries",
+    "baseHash": "ea95f9e67fe7baf0c00244662674db4cf3a8336e43e6185fac8dd0a8e08fdf6b",
+    "jsonPath": "sections.v2_main.settings.data.items",
+    "beforeCount": 8,
+    "afterCount": 19,
+    "afterItems": [
+      {
+        "href": "/industries/beauty-skincare",
+        "text": "Routines, color samples, unboxings, and review-style clips from one beauty photo.",
+        "image": {
+          "alt": "Cream pumped onto the back of a hand beside a mirror and folded towel.",
+          "src": "/ai-image-generation/gen2rb1-industries-item-beauty-r1-640.webp",
+          "width": 640,
+          "height": 1138
+        }
+      },
+      {
+        "href": "/industries/fashion-clothing",
+        "text": "You get try-on clips, outfit photos, and review videos from one garment photo, so the fit is easy to see.",
+        "image": {
+          "alt": "Blue jeans laid flat with the waistband and cuffs visible.",
+          "src": "/ai-image-generation/gen2rb1-industries-item-fashion-r1-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/shoes",
+        "text": "Show a step, the fit, and the details that make each pair worth a closer look.",
+        "image": {
+          "alt": "Adult wearing plain brown trail boots on a rocky path.",
+          "src": "/ai-image-generation/q14-industry-shoes-fit-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/jewelry-accessories",
+        "text": "Put the details, the worn look, and the gift moment in one ad shoppers remember.",
+        "image": {
+          "alt": "Hands opening a plain box to reveal a gold ring.",
+          "src": "/ai-image-generation/q14-industry-jewelry-unbox-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/electronics",
+        "text": "Unboxings, setups, and daily-use scenes from one gadget photo.",
+        "image": {
+          "alt": "Adult commuter wearing dark navy over-ear headphones.",
+          "src": "/ai-image-generation/q14-industry-electronics-headphones-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/health-wellness",
+        "text": "Short routine clips for the teal mat, the breakfast bottle, and the bands.",
+        "image": {
+          "alt": "Adult stretching on a plain mat with a cork yoga block.",
+          "src": "/ai-image-generation/q14-industry-health-yoga-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/food-drinks",
+        "text": "Pours, plates, and package scenes from one food photo.",
+        "image": {
+          "alt": "Adult taking a first sip from a plain citrus water bottle.",
+          "src": "/ai-image-generation/q14-industry-food-first-sip-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/home-living",
+        "text": "Room scenes, cleaning demos, and organizing moments from one home product photo.",
+        "image": {
+          "alt": "Hand using a small scrubber to clean a marked kitchen counter.",
+          "src": "/ai-image-generation/q14-industry-home-clean-640.webp",
+          "width": 640,
+          "height": 640
+        }
+      },
+      {
+        "href": "/industries/pet",
+        "text": "Leashes, brushes, bowls, and harnesses shown in real daily-use scenes from one photo.",
+        "image": {
+          "alt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+          "src": "/ai-image-generation/im03-home-picker-dog-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/kids-toy",
+        "text": "Play demos and unboxings that show how the toy works before the store page.",
+        "image": {
+          "alt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+          "src": "/ai-image-generation/mx1w-home-kids-toy-2-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/e-commerce",
+        "text": "Listing photos and feed ads from the same product photo, ready for any catalog.",
+        "image": {
+          "alt": "Pale blue glass storage jar with a plain lid centered on pure white.",
+          "src": "/ai-image-generation/fx14-white-card-catalog-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/education",
+        "text": "Course promos and lesson explainers with a presenter, from one upload.",
+        "image": {
+          "alt": "An adult white man in his twenties in a classroom setting speaks to camera with empty hands.",
+          "src": "/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/financial-services",
+        "text": "App walkthroughs and dashboard explainers that keep finance products clear.",
+        "image": {
+          "alt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+          "src": "/ai-image-generation/gen2guide-k6-templates-strip-deskset-640.webp"
+        }
+      },
+      {
+        "href": "/industries/sports-gym",
+        "text": "Workout clips and gear demos shot in the gym, from one product photo.",
+        "image": {
+          "alt": "An adult East Asian woman with a straight black bob sits cross-legged on a park exercise mat with open hands.",
+          "src": "/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640.webp"
+        }
+      },
+      {
+        "href": "/industries/apps",
+        "text": "Screen walkthroughs and reaction clips that show the app before the download.",
+        "image": {
+          "alt": "Adult white man with short tight curls reacts beside a generic tablet showing only soft abstract color blocks in a dark streaming room.",
+          "src": "/ai-image-generation/tw1-wall-apps-2-640.webp"
+        }
+      },
+      {
+        "href": "/industries/ugc",
+        "text": "Creator-style review clips from one product photo, no creator wait.",
+        "image": {
+          "alt": "Adult Black man with short salt-and-pepper curls applies plain coral pump moisturizer to his cheek in a bright bathroom.",
+          "src": "/ai-image-generation/tw2-wall-ugc-1-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/viral",
+        "text": "Hook-first formats like reveals and comparisons that stop the scroll.",
+        "image": {
+          "alt": "Adult white woman with a short light-blonde pixie holds a plain mint pump face mist beside her cheek.",
+          "src": "/ai-image-generation/tw2-wall-viral-1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/explainer",
+        "text": "Before-and-after demos that answer the buyer's question in one clip.",
+        "image": {
+          "alt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+          "src": "/ai-image-generation/mx1w-home-explainer-1-r1-640.webp"
+        }
+      },
+      {
+        "href": "/industries/other",
+        "text": "Presenter clips and scene openers for products outside the usual shelves.",
+        "image": {
+          "alt": "Adult holding a protein shaker bottle in a gym after a workout, lips closed.",
+          "src": "/ai-image-generation/gen2spokesperson-videos-c3-640.webp"
+        }
+      }
+    ]
+  },
+  "operations": [],
+  "addresses": [],
+  "planHash": "7cdebaf7d7ea8d1b08b5945432bb2e2ed8b6dccc0c8e8366a6c77bdcd03fc587"
+}

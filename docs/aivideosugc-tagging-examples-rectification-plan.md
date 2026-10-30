@@ -185,16 +185,16 @@ placement 值分布（按去重 slug 数）：tiktok-ads 45、instagram-ads 28�
 
 ## 8. 实施步骤
 
-| Phase | 内容 | 产出 |
-|---|---|---|
-| **1** | 词表冻结：18 行业 facet（8 已有 + 10 新）、6+3 平台/场合、chip 同义词映射、工具页清单入文档 | 本文档 §2.2/§2.4 |
-| **2** | 生成打标 manifest：脚本全量推断 367 slug → placement[]，逐条带依据；含 chips 规范化操作清单 | `scripts/manifests/aidreamcapes-placement-<date>.json`（人审） |
-| **3** | apply：plan/apply 脚本对，CAS + 读回断言，服务器直跑 | 生产数据更新 + 报告 + 回滚文件 |
-| **4** | 新建 10 个行业 facet 页（SSR LivePage，复用现有 facet 结构）+ 主导航「按行业」组扩充 8→18 | manifest + apply + 代码 |
-| **5** | 详情页工具 chip 分组（渲染时推导，代码改动）+ 部署 | 代码 commit |
-| **6** | /templates 整理（§6）+ 回归：SSR-only 合同、no-JS 检查、audit 脚本、facet 页聚合验证 | 回归报告 |
+| Phase | 内容 | 产出 | 状态 |
+|---|---|---|---|
+| **1** | 词表冻结：18 行业 facet（8 已有 + 10 新）、6+3 平台/场合、chip 同义词映射、工具页清单入文档 | 本文档 §2.2/§2.4 | ✅ 2026-10-30（+`/industries/other` catch-all，行业 facet 19） |
+| **2** | 生成打标 manifest：脚本全量推断 367 slug → placement[]，逐条带依据；含 chips 规范化操作清单 | `scripts/manifests/aidreamcapes-placement-tags-draft-2026-10-30.json`（人审） | ✅ 2026-10-30 |
+| **3** | apply：plan/apply 脚本对，CAS + 读回断言，服务器直跑 | 生产数据更新 + 报告 + 回滚文件 | ✅ 2026-10-30：38 页 420 卡，revision 3117→3155，线上 chips 验证通过 |
+| **4** | 新建行业 facet 页（SSR LivePage）+ 主导航「按行业」组 8→19 + /industries hub 卡 8→19 | manifest + apply | ✅ 2026-10-30：11 页（10 新类目 + other），revision 3155→3168，sitemap 自动收录 19 |
+| **5** | 详情页工具 chip 分组（渲染时推导，代码改动）+ 部署 | 代码 commit | ⬜ |
+| **6** | /templates 整理（§6）+ 回归：SSR-only 合同、no-JS 检查、audit 脚本、facet 页聚合验证 | 回归报告 | ⬜ |
 
-Phase 2/3（数据）先行——placement 补齐即时生效于现有详情页 chips；新 facet 页（Phase 4）上线前，新行业 facet 的 chip 链接暂不渲染（placement 运行时按目录页存在性过滤，脏值不会成死链）。
+Phase 3/4 已上线——placement 全覆盖、chips 规范化生效、11 个新 facet 页 live（素材网格由 placement 聚合自动填充，无需代码部署）。
 
 ## 9. 不变量
 
