@@ -124,10 +124,14 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
   const [colorChoice, setColorChoice] = useState<SubtitleTextColor>("white");
   const [backdropChoice, setBackdropChoice] = useState<BackdropChoice>("auto");
   const aliveRef = useRef(true);
+  // Mirror of items for callbacks that must compare against the freshest list
+  // without becoming render dependencies.
+  const itemsRef = useRef<WorkspaceTask[]>([]);
   // Keeps the editor stable while a search hides the selected video's card.
   const selectedCacheRef = useRef<WorkspaceTask | null>(null);
 
   useEffect(() => () => { aliveRef.current = false; }, []);
+  useEffect(() => { itemsRef.current = items; }, [items]);
 
   const headers = useCallback(() => ({
     ...customerJsonHeaders(siteId),
@@ -144,8 +148,14 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
       if (!response.ok) throw new Error(String(payload.error || `http_${response.status}`));
       const tasks = (payload.tasks ?? []) as WorkspaceTask[];
       if (aliveRef.current) {
+        // Known task ids keep the pager honest: if a page repeats rows the
+        // server already sent (ordering races while jobs update timestamps),
+        // appending nothing must end the paging, or the sentinel stays in
+        // view and the list refetches forever, jittering at the bottom.
+        const known = new Set(itemsRef.current.map((item) => item.taskId));
+        const added = offset === 0 ? tasks.length : tasks.filter((task) => !known.has(task.taskId)).length;
         setItems((current) => offset === 0 ? tasks : [...current, ...tasks.filter((task) => !current.some((item) => item.taskId === task.taskId))]);
-        setHasMore(Boolean(payload.hasMore));
+        setHasMore(Boolean(payload.hasMore) && added > 0);
         setListError("");
       }
     } catch (caught) {

@@ -47,7 +47,7 @@ export async function listTasks(siteId: string, customerId: string, options: { l
   const search = rawQuery
     ? Prisma.sql`AND ("data"->>'title' ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`} OR ("data"->'input')::text ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`})`
     : Prisma.sql``;
-  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${ready} ${search} ORDER BY "updatedAt" DESC LIMIT ${limit} OFFSET ${offset}`;
+  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${ready} ${search} ORDER BY "updatedAt" DESC, "id" DESC LIMIT ${limit} OFFSET ${offset}`;
   return rows.map(read);
 }
 export async function getTask(siteId: string, customerId: string, taskId: string): Promise<StoredTask> {

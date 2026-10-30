@@ -417,8 +417,11 @@ function remapCaptions(task: EditedWorkspaceTask, compiled: CompiledVideoEdit, c
   return safe;
 }
 
-function subtitleFile(cues: SubtitleCue[]) {
-  return cues.map((cue, index) => `${index + 1}\n${srtTime(cue.start)} --> ${srtTime(cue.end)}\n${cue.text.replace(/[{}]/gu, "\\$&")}\n`).join("\n");
+function subtitleFile(cues: SubtitleCue[], alignment: number = SUBTITLE_ALIGNMENT.bottom) {
+  // The alignment tag rides inside each cue because this ffmpeg build
+  // misapplies the Alignment field of subtitles force_style (top renders
+  // centred); event-level \an tags are honoured correctly.
+  return cues.map((cue, index) => `${index + 1}\n${srtTime(cue.start)} --> ${srtTime(cue.end)}\n{\\an${alignment}}${cue.text.replace(/[{}]/gu, "\\$&")}\n`).join("\n");
 }
 
 function taskStoryboardHash(task: WorkspaceTask) {
@@ -436,8 +439,10 @@ const SUBTITLE_PRIMARY_COLOURS = { white: "&H00FFFFFF", yellow: "&H0000FFFF", cy
 
 /** libass force_style string for the style preset with the size, position, colour and backdrop overrides applied. */
 function subtitleAssStyle(settings: VideoEditSettings): string {
+  // Alignment is deliberately not part of force_style: this ffmpeg build
+  // misapplies it (top comes out centred), so the burn relies on the \an tag
+  // written into each cue by subtitleFile. MarginV still steers the offset.
   const fontSize = Math.round(SUBTITLE_ASS_BASE_FONT_SIZE[settings.subtitleStyle] * SUBTITLE_ASS_SIZE_SCALE[settings.subtitleSize ?? "medium"]);
-  const alignment = SUBTITLE_ALIGNMENT[settings.subtitlePosition ?? "bottom"];
   const marginV = settings.subtitlePosition === undefined || settings.subtitlePosition === "bottom"
     ? SUBTITLE_ASS_BOTTOM_MARGIN[settings.subtitleStyle]
     : SUBTITLE_ASS_FLOATING_MARGIN;
@@ -451,7 +456,7 @@ function subtitleAssStyle(settings: VideoEditSettings): string {
     : backdrop === "none"
       ? "BorderStyle=1,Outline=0,Shadow=1"
       : `BorderStyle=1,Outline=1,Shadow=${minimalDefault ? 1 : 0}`;
-  return `FontName=Arial,FontSize=${fontSize},Bold=${settings.subtitleStyle === "bold" ? 1 : 0},PrimaryColour=${SUBTITLE_PRIMARY_COLOURS[colour]},OutlineColour=&H80000000,${boxParams},Alignment=${alignment},MarginV=${marginV}`;
+  return `FontName=Arial,FontSize=${fontSize},Bold=${settings.subtitleStyle === "bold" ? 1 : 0},PrimaryColour=${SUBTITLE_PRIMARY_COLOURS[colour]},OutlineColour=&H80000000,${boxParams},MarginV=${marginV}`;
 }
 
 function outputVideoFilter(dir: string, compiled: CompiledVideoEdit, cues: SubtitleCue[], style: string) {  const filters: string[] = [];
@@ -526,7 +531,7 @@ export async function renderEditedVideo(task: WorkspaceTask, compiled: CompiledV
 
     const current = task.video as EditedVideoRender;
     const cues = remapCaptions(editedTask, compiled, current);
-    if (cues.length) await fs.writeFile(path.join(dir, "subtitles.srt"), subtitleFile(cues), { mode: 0o600, flag: "wx" });
+    if (cues.length) await fs.writeFile(path.join(dir, "subtitles.srt"), subtitleFile(cues, SUBTITLE_ALIGNMENT[compiled.settings.subtitlePosition ?? "bottom"]), { mode: 0o600, flag: "wx" });
     if (compiled.settings.overlay.text) await fs.writeFile(path.join(dir, "overlay-text.txt"), compiled.settings.overlay.text, { mode: 0o600, flag: "wx" });
     if (compiled.settings.overlay.cta) await fs.writeFile(path.join(dir, "overlay-cta.txt"), compiled.settings.overlay.cta, { mode: 0o600, flag: "wx" });
 
