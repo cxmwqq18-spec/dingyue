@@ -638,10 +638,11 @@ export default async function SiteCatchAllPage({
   const { siteSlug, path } = await params;
   const slug = `/${path.join("/")}`;
   const publicSlug = publicSiteSlug(siteSlug);
-  await redirectLegacyAidreamcapesTemplateDirectory(publicSlug, slug, `/site/${publicSlug}`);
-  await redirectAidreamcapesTemplateFilter(publicSlug, slug, searchParams ? await searchParams : {}, `/site/${publicSlug}`);
   const headerStore = await headers();
   const routeMode = storefrontRouteModeForHeaders(headerStore, publicSlug);
+  const routeBasePath = routeMode === "path" ? `/site/${publicSlug}` : "";
+  await redirectLegacyAidreamcapesTemplateDirectory(publicSlug, slug, routeBasePath);
+  await redirectAidreamcapesTemplateFilter(publicSlug, slug, searchParams ? await searchParams : {}, routeBasePath);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
