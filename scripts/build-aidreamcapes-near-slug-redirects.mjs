@@ -61,14 +61,38 @@ try {
   const allPageSlugs = new Set(rows.map((row) => row.slug));
 
   // Media cards answer under their own slug even though they are not public
-  // pages. Their addresses must never become a redirect source.
+  // pages. Their addresses must never become a redirect source. Every alias
+  // in a publicAliases array counts — a first-element-only capture used to
+  // leak the remaining aliases into this table as 301 sources, which took
+  // the address away from the detail resolver's permanent 308.
   const cardSlugs = new Set();
   const cardAliases = new Set();
-  for (const row of rows) {
-    const json = JSON.stringify(row.contentJson);
-    for (const match of json.matchAll(/"publicSlug"\s*:\s*"([a-z0-9-]+)"/g)) cardSlugs.add(match[1]);
-    for (const match of json.matchAll(/"publicAliases"\s*:\s*\[[^\]]*?"([a-z0-9-]+)"/g)) cardAliases.add(match[1]);
-  }
+  const detailCards = new Map();
+  const collectCards = (value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) collectCards(item);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if (typeof value.publicSlug === "string") cardSlugs.add(value.publicSlug);
+    if (Array.isArray(value.publicAliases)) {
+      for (const alias of value.publicAliases) {
+        if (typeof alias === "string") cardAliases.add(alias);
+      }
+    }
+    if (
+      typeof value.publicSlug === "string"
+      && /^[a-z0-9][a-z0-9-]*$/.test(value.publicSlug)
+      && (value.kind === "video" || value.kind === "photo")
+      && !value.detailAliasOf
+      && value.image && typeof value.image.src === "string" && value.image.src
+      && (typeof value.label === "string" ? value.label : typeof value.title === "string" ? value.title : "")
+    ) {
+      detailCards.set(value.publicSlug, value.kind);
+    }
+    for (const child of Object.values(value)) collectCards(child);
+  };
+  for (const row of rows) collectCards(row.contentJson);
   for (const match of fs.readFileSync("src/lib/aidreamcapes-site-v2-redirects.json", "utf8").matchAll(/\[\s*"([^"]+)"/g)) {
     // An address that already redirects is handled by the exact table.
     cardAliases.add(match[1].split("/").pop() ?? match[1]);
@@ -81,26 +105,6 @@ try {
   // sources. Alias slugs redirect permanently to their canonical detail page,
   // so they are targets for the exact redirect table, never near addresses.
   const DETAIL_ROOTS = { video: "/ai-video-generation/", photo: "/ai-image-generation/" };
-  const detailCards = new Map();
-  const collectDetailCards = (value) => {
-    if (Array.isArray(value)) {
-      for (const item of value) collectDetailCards(item);
-      return;
-    }
-    if (!value || typeof value !== "object") return;
-    if (
-      typeof value.publicSlug === "string"
-      && /^[a-z0-9][a-z0-9-]*$/.test(value.publicSlug)
-      && (value.kind === "video" || value.kind === "photo")
-      && !value.detailAliasOf
-      && value.image && typeof value.image.src === "string" && value.image.src
-      && (typeof value.label === "string" ? value.label : typeof value.title === "string" ? value.title : "")
-    ) {
-      detailCards.set(value.publicSlug, value.kind);
-    }
-    for (const child of Object.values(value)) collectDetailCards(child);
-  };
-  for (const row of rows) collectDetailCards(row.contentJson);
   for (const [slug, kind] of detailCards) {
     if (!cardAliases.has(slug)) publicPaths.add(`${DETAIL_ROOTS[kind]}${slug}`);
   }

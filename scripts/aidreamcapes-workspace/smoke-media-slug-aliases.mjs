@@ -3,7 +3,7 @@
 //
 // Every retired product address must answer 308 with the canonical address of
 // the same product, the canonical page must own its own canonical link, stay
-// `noindex, follow`, and expose exactly one workspace CTA, and the sitemap
+// `index, follow`, and expose exactly one workspace CTA, and the sitemap
 // must not list a retired address.
 //
 // The retired addresses are read from the reviewed manifests in
@@ -82,10 +82,10 @@ for (const mode of ['path', 'host']) {
         `https://www.aivideosugc.com${alias.newPath}`,
         'canonical link does not match the canonical address'
       );
-      assert(
-        (canonical.$('meta[name=robots]').attr('content') ?? '').includes('noindex'),
-        'canonical page is not noindex'
-      );
+      const robots = canonical.$('meta[name=robots]').attr('content') ?? '';
+      assert.doesNotMatch(robots, /noindex/i, 'canonical page is noindex');
+      assert.match(robots, /follow/i, 'canonical page is not follow');
+      assert.doesNotMatch(robots, /nofollow/i, 'canonical page is nofollow');
       assert.equal(
         canonical.$('a[data-workspace-entry]').filter((_, element) => (canonical.$(element).attr('href') ?? '').includes('/app/create/')).length,
         1,
@@ -98,7 +98,6 @@ for (const mode of ['path', 'host']) {
     const { html } = await get('/sitemap.xml', mode);
     for (const alias of aliases) {
       assert(!html.includes(`<loc>https://www.aivideosugc.com${alias.oldPath}</loc>`), `sitemap lists retired ${alias.oldPath}`);
-      assert(!html.includes(`<loc>https://www.aivideosugc.com${alias.newPath}</loc>`), `sitemap lists detail ${alias.newPath}`);
     }
   });
 }
