@@ -37,9 +37,12 @@ export function normalizeAidreamcapesTemplateFilter(path: string, query: Templat
     if (!new RegExp(`^/${key}/[a-z0-9]+(?:-[a-z0-9]+)*$`).test(value)) { invalid = true; badRequest = true; }
     filters[key] = value;
   }
-  const targetPath = catalog && effectiveKind && !invalid ? `/templates/${effectiveKind}` : path;
+  // The retired /templates/photo and /templates/video catalogs fold into the
+  // /templates gallery; the kind dimension lives in the ?kind= query there.
+  const retiredKindPath = Boolean(catalog && pathKind);
+  const targetPath = retiredKindPath && !invalid ? "/templates" : path;
   const params = new URLSearchParams();
-  if (!catalog && effectiveKind) params.set("kind", effectiveKind);
+  if (effectiveKind && (retiredKindPath || !catalog || kind)) params.set("kind", effectiveKind);
   for (const key of TEMPLATE_FACETS) if (filters[key]) params.set(key, filters[key]!);
   // Keep invalid inputs distinguishable from an unfiltered, indexable catalog.
   if (invalid) {
