@@ -1,0 +1,248 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-media-canonical-pass2-2026-10-30-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "7002e2bb4ff13a38840dcefa7f713362a51bb2c21fd6ed85d6ddb67261060ae6",
+  "revisionBefore": "3101",
+  "revisionAfter": "3116",
+  "revisionDelta": "15",
+  "pagesApplied": 15,
+  "cardsApplied": 92,
+  "invariants": {
+    "video_clusters_with_multiple_slugs": 0,
+    "slugs_with_multiple_owners": 0
+  },
+  "applied": [
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[16]",
+        "sections.v2_main.settings.data.workspaceCases[35]",
+        "sections.v2_main.settings.data.workspaceCases[5]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[16]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[10]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[16]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[35]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[5]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[18]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[2]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[10]",
+        "sections.v2_main.settings.data.workspaceCases[13]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[16]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[22]",
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[30]",
+        "sections.v2_main.settings.data.workspaceCases[31]",
+        "sections.v2_main.settings.data.workspaceCases[33]",
+        "sections.v2_main.settings.data.workspaceCases[35]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[31]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation",
+      "cards": [
+        "sections.v2_main.settings.data.visual.picker.cards[4]",
+        "sections.v2_main.settings.data.visual.picker.cards[5]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[32]",
+        "sections.v2_main.settings.data.workspaceCases[5]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[10]",
+        "sections.v2_main.settings.data.workspaceCases[13]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[16]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[22]",
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[30]",
+        "sections.v2_main.settings.data.workspaceCases[31]",
+        "sections.v2_main.settings.data.workspaceCases[33]",
+        "sections.v2_main.settings.data.workspaceCases[35]",
+        "sections.v2_main.settings.data.workspaceCases[4]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[13]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[30]"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[0]",
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[10]",
+        "sections.v2_main.settings.data.workspaceCases[13]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[22]",
+        "sections.v2_main.settings.data.workspaceCases[25]",
+        "sections.v2_main.settings.data.workspaceCases[30]",
+        "sections.v2_main.settings.data.workspaceCases[32]",
+        "sections.v2_main.settings.data.workspaceCases[33]",
+        "sections.v2_main.settings.data.workspaceCases[5]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    },
+    {
+      "page": "/templates",
+      "cards": [
+        "sections.v2_main.settings.data.workspaceCases[1]",
+        "sections.v2_main.settings.data.workspaceCases[10]",
+        "sections.v2_main.settings.data.workspaceCases[13]",
+        "sections.v2_main.settings.data.workspaceCases[14]",
+        "sections.v2_main.settings.data.workspaceCases[15]",
+        "sections.v2_main.settings.data.workspaceCases[18]",
+        "sections.v2_main.settings.data.workspaceCases[22]",
+        "sections.v2_main.settings.data.workspaceCases[31]",
+        "sections.v2_main.settings.data.workspaceCases[32]",
+        "sections.v2_main.settings.data.workspaceCases[33]",
+        "sections.v2_main.settings.data.workspaceCases[4]",
+        "sections.v2_main.settings.data.workspaceCases[5]",
+        "sections.v2_main.settings.data.workspaceCases[8]"
+      ]
+    }
+  ],
+  "readback": [
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "pageHash": "d35242a46350fee62925fbd785e8af4654b22de03441bc0fd7aa01cc5cb17fab"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "716f5dffa9751724a8b23e1bba9923e2b86940a807ffb5e2d002e8b88ff8f1fa"
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "pageHash": "fc04ec391b55678b11ce917ec8a474e857a1243fc6cba0d7513e4b064cd36520"
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "pageHash": "3becbf968f4e66a79c38f0df816f9d5577f41df3693c7ce0237d6b75a6b24f43"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "6c013d8f6d87bec985f6c5ea68e03d4b0c2e00021408b20f20a7fec08675ab4e"
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "1160b8135cea98eb9289cdd75bfd407df14a8024b3989a4fa153c5566a59bbeb"
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "33d127c0108d48ba7eac94148773c13861c4607349d815d15744ff28de648644"
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "pageHash": "bf3d4ca6e7a28b799dde34d836cc840edb8e208c4b6dd190fde30d3e2caffe63"
+    },
+    {
+      "page": "/ai-video-generation",
+      "pageHash": "0fbee739ff0ae156d3ffa02708084630727124f08b83eab2ee7d0b30213e6403"
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "pageHash": "96803db82284925ee1bae7a49ff08840c7804c979f61fae8d92d1102ba5e6785"
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "pageHash": "8f32bd108f1778c6427a7a030e78d008cff29872f68df2263d3c5233afb906fa"
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "pageHash": "15257ee532b2673d98ebd3472a676ddd0ed140d7ebcd95812e28b5ca26fd9b98"
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "pageHash": "087b24ee205b8b8ff0eae39d6aa482369a90d41dda1d381ff53da38f900b18db"
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "pageHash": "facd868b8bbeceb395d9c17efd971e71940e176229da0dab80a4a26e0dc649c8"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "326d6ebd773e032186afb4d81e9f4644779a2d62b3541c4396889671b415b8b4"
+    }
+  ]
+}

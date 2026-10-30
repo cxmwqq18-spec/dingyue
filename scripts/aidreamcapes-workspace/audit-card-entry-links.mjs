@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // Release gate for public media cards (AIVideosUGC / site_aidreamcapes).
 //
-// Contract (media detail remediation, 2026-10-21):
-//   * every media card links to THAT item's own detail page:
-//       /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug>,
-//       /ai-actors/<name> (flat);
+// Contract (media detail remediation, 2026-10-21; canonicalization, 2026-10-30):
+//   * every media card reaches a truthful detail page — its own
+//     `publicSlug` route, or its product's shared canonical detail page
+//     (`/ai-video-generation/<slug>`, `/ai-image-generation/<slug>`,
+//     `/ai-actors/<name>` (flat));
 //   * the card link is a plain path: no query string, no fragment, and no
 //     inert `data-workspace-entry` payload;
 //   * the workspace is reached only from the detail page CTA, never from a card.
@@ -268,17 +269,23 @@ try {
     }
   }
 
-  // Every public media card must own a detail route, so every stored card needs
-  // a `publicSlug`. A card without one cannot be linked to truthfully.
+  // Every media card must reach a truthful detail route: either it owns a
+  // `publicSlug`, or — under the media-canonicalization policy — it links
+  // straight at its product's shared canonical detail page through a plain
+  // detail-path href.
+  const detailHrefOf = (card) => {
+    const href = typeof card.href === "string" ? card.href.trim() : "";
+    return DETAIL_HREF_RE.test(href) ? href : undefined;
+  };
   let cardsWithoutSlug = { picker: 0, examples: 0 };
   for (const row of rows) {
     for (const entry of pageCards(row.contentJson)) {
-      if (entry.source === "picker" && !entry.card.publicSlug) cardsWithoutSlug.picker += 1;
+      if (entry.source === "picker" && !entry.card.publicSlug && !detailHrefOf(entry.card)) cardsWithoutSlug.picker += 1;
       if (entry.source === "examples" && !entry.card.publicSlug) cardsWithoutSlug.examples += 1;
     }
   }
   if (cardsWithoutSlug.picker > 0) {
-    failures.push(`${cardsWithoutSlug.picker} picker card(s) have no publicSlug; every media card must own a detail route`);
+    failures.push(`${cardsWithoutSlug.picker} picker card(s) have neither publicSlug nor a detail-path href; every media card must reach a detail route`);
   }
   if (cardsWithoutSlug.examples > 0) {
     failures.push(`${cardsWithoutSlug.examples} example-gallery card(s) have no publicSlug; every media card must own a detail route`);

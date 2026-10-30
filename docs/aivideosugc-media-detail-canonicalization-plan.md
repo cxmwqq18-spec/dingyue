@@ -98,3 +98,26 @@ slug 字典序）取第一条。也可改为"挂在题材最相关模板页的�
 - 规范页卡片补全 `placement[]`（tool/type/topic → facet 路径）；
 - 详情页渲染标签 chips 并链接到对应 facet 页；
 - facet 页「More examples」自然聚合规范页素材。
+
+## 7. 第二遍收敛：同图同提示词合并（2026-10-30 已执行）
+
+第一遍以「标题+图片」为产品键；复查发现视频详情页存在**同参考图+同提示词、
+仅标题不同**的簇（每个模板页给同一素材起了不同标题）。第二遍以
+「(参考图, 提示词)」为键重新聚类（prompt md5），合同
+`aidreamcapes-media-canonical-pass2-2026-10-30-v1`，manifest planHash
+`7002e2bb…`：
+
+- 23 个簇、摘除 92 条（90 条 workspaceCase 副本 + 2 条 picker 卡地址）、
+  15 个页面；`SiteContentRevision` 3101 → 3116；
+- 视频详情页 365 → **273**，全站 459 → **367**（视频 273 / 图片 94）；
+- 2 条 picker 卡（Lifestyle App Recommendation、Streamer Reaction: App 的
+  `-ai-video-generation` 地址）此前已由 `detailAliasOf` 别名机制合并到规范页
+  （卡片渲染链接与 URL 解析均指向规范页），本次摘除其 `publicSlug` 并把
+  `href` 固化为规范详情路径，旧地址按 2026-10-30 策略 404（无重定向），
+  `scripts/lib/aidreamcapes-internal-links.mjs` 的记录同步更新；
+- 判定为「非重复」的同标题不同素材页（35 组，提示词均不同）保留；
+- 回归口径同步更新：`audit-card-entry-links.mjs` 的 picker 卡规则改为
+  「有 `publicSlug` **或** href 指向规范详情路径」；
+- 生产实测：规范页 200、被摘地址 404、工具页两张卡渲染规范详情链接、
+  `/templates` 正常；审计与部署门禁口径与数据一致。
+

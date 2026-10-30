@@ -20,8 +20,11 @@ export const ORIGIN = "https://www.aivideosugc.com";
  *        touched by a content manifest.
  */
 export const REDIRECTS = [
-  { from: "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation", to: "/ai-video-generation/lifestyle-app-recommendation", status: 308, owner: "code" },
-  { from: "/ai-video-generation/streamer-reaction-app-ai-video-generation", to: "/ai-video-generation/streamer-reaction-app", status: 308, owner: "code" },
+  // Media canonicalization pass 2 (2026-10-30) removed the owning publicSlug
+  // of these two picker-card addresses, so they now answer 404 (noindex
+  // orphans, no redirects) instead of the alias-era 308 recorded earlier.
+  { from: "/ai-video-generation/lifestyle-app-recommendation-ai-video-generation", to: "/ai-video-generation/lifestyle-app-recommendation", status: 404, owner: "code" },
+  { from: "/ai-video-generation/streamer-reaction-app-ai-video-generation", to: "/ai-video-generation/streamer-reaction-app", status: 404, owner: "code" },
   { from: "/ai-video-generation/ai-actors", to: "/ai-actors", status: 301, owner: "content" },
   { from: "/ai-image-generation/lifestyle-scene", to: "/ai-image-generation/lifestyle-photos", status: 301, owner: "content" },
   { from: "/ai-video-generation/ugc-ad-video", to: "/ai-video-generation/video-ads", status: 301, owner: "content" },
