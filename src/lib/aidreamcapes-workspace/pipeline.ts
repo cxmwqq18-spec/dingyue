@@ -166,8 +166,15 @@ export function snapshotShot(shot: ShotSnapshot): ShotSnapshot {
 export function compileShot(args: { sceneId: SceneId; input: TaskInput; shot: StoryboardShot; storyboard: Storyboard; actors?: ActorAsset[]; voiceSnapshot?: ActorVoiceSnapshot }): string {
   const { input, shot, storyboard } = args, schema = sceneSchema(args.sceneId);
   // Direct composer mode sends the customer's prompt verbatim. No template,
-  // style fragment, reference label or language sentence is appended.
-  if (input.direct) return text(shot.visual);
+  // style fragment, reference label or language sentence is appended. The only
+  // backend-only addition is the voice-binding hard spec: when a voice
+  // reference audio rides with the task, the upstream model must be told to
+  // clone the presenter's voice from it. Never rendered in the frontend prompt.
+  if (input.direct) {
+    const prompt = text(shot.visual);
+    if (!(input.referenceAudios ?? []).some((url) => typeof url === "string" && url)) return prompt;
+    return `${prompt}\n\nVoice requirement: the on-camera presenter must speak with the exact voice from the supplied voice reference audio. Clone that speaker's timbre, pitch, accent, pace and speaking style, and deliver every spoken line with this single cloned voice. Do not add a narrator, background music, sound-effect vocals or any other voice.`;
+  }
   if (!text(shot.visual) || !text(shot.environment) || !Number.isFinite(shot.duration) || shot.duration <= 0 || Math.abs(shot.end - shot.start - shot.duration) > 0.01) throw new WorkspaceError("workspace_shot_invalid");
   if (storyboard.lang !== input.options.language) throw new WorkspaceError("workspace_language_rewrite_required");
   const style = STYLE_FRAGMENTS[input.options.style];
