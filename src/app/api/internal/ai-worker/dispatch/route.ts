@@ -3411,9 +3411,12 @@ async function generateVideoWithProvider(params: {
   const providerReferenceLimit = directJsonReferences ? openAiJsonVideoReferenceLimit() : configuredProviderReferenceLimit;
   const referenceAssets = requestedReferenceAssets.slice(0, providerReferenceLimit);
   // Reference audio (voice tone) travels to the provider alongside the frames;
-  // yingling-class relays consume it via the `audio_url` request field.
+  // yingling-class relays consume it via the `audio_url` request field. The
+  // provider downloads these URLs itself, so they must be publicly reachable:
+  // prefer the public origin over the loopback callback origin (relays reject
+  // non-standard ports such as the local :3013 callback).
   const audioAssetUrls = videoAudioAssets(params.payload)
-    .map((asset) => asset.signedUrl.trim())
+    .map((asset) => providerReachableAssetUrl(asset).trim())
     .filter((url) => /^https?:\/\//i.test(url));
   if (params.payload.siteId === "site_aidreamcapes") {
     console.warn("local_ai_worker_video_audio_attached", { jobId: params.payload.jobId, audioCount: audioAssetUrls.length });
