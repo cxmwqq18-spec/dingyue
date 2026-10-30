@@ -350,10 +350,17 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
     return existing.id;
   }
   const mimeType = reference.kind === "audio" ? "audio/mpeg" : "image/webp";
-  const sharedActorFile = path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", reference.kind === "audio" ? `${reference.actor.actorId}.mp3` : `${reference.actor.actorId}.webp`);
+  // Image source files are named by their catalog URL (e.g.
+  // ac1-actor-card-indoor-1-r1-640.webp), not by actorId — reading
+  // {actorId}.webp materializes an unrelated photo. Voice files stay
+  // actorId-named ({actorId}.mp3).
+  const imageFileName = args.url.slice(args.url.lastIndexOf("/") + 1);
+  const sharedActorFile = reference.kind === "audio"
+    ? path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", `${reference.actor.actorId}.mp3`)
+    : path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", imageFileName);
   const releaseActorFile = reference.kind === "audio"
     ? path.join(process.cwd(), "public", "assets/sites/site_aidreamcapes/workspace/actors/voices", `${reference.actor.actorId}.mp3`)
-    : path.join(process.cwd(), "public", "media/site_aidreamcapes/workspace/actors/library", `${reference.actor.actorId}.webp`);
+    : path.join(process.cwd(), "public", "ai-image-generation", "actors", imageFileName);
   let bytes: Buffer;
   try { bytes = await fs.readFile(sharedActorFile); }
   catch (error) {
