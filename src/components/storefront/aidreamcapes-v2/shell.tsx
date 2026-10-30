@@ -77,7 +77,10 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
                     </div>
                   ) : (
                     menu.groups.map((group, index) => (
-                      <div className={group.columns ? `pcol tlist cols3${index === sceneGroupIndex ? " scene-directory" : ""}` : "pcol tlist single-column"} key={group.label}>
+                      // A long flat list (the 19-facet By industry group) reads
+                      // better in two columns; the group title stays centered
+                      // above the grid. Other groups keep the single column.
+                      <div className={group.columns ? `pcol tlist cols3${index === sceneGroupIndex ? " scene-directory" : ""}` : group.items.length >= 12 ? "pcol tlist cols2" : "pcol tlist single-column"} key={group.label}>
                         <div className="ph">{group.label}</div>
                         {group.items.map((item) => <MenuLink key={item.href} link={item} r={r} />)}
                       </div>

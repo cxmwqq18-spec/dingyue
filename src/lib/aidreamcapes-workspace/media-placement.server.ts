@@ -83,6 +83,46 @@ type ProductPlacementEntry = {
 };
 
 /**
+ * Tool-owner reverse index: publicSlug -> the tool pages (hubs, tool routes,
+ * and template pages under /ai-video-generation and /ai-image-generation that
+ * carry a picker) whose cards reference that slug. This is the "Made with"
+ * tool dimension — a reference relation, derived at render time, never stored.
+ */
+export const loadToolOwnerIndex = cache(async () => {
+  const pages = await prisma.$queryRaw<Array<{ slug: string; title: string | null; contentJson: unknown }>>`
+    SELECT "slug", "title", "contentJson"
+    FROM "LivePage"
+    WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID}
+      AND "slug" ~ '^/ai-(video|image)-generation(/[a-z0-9][a-z0-9-]*)?$'
+      AND jsonb_path_exists("contentJson", '$.sections.*.settings.data.visual.picker')
+    ORDER BY "slug"
+  `;
+  const index = new Map<string, Map<string, { label: string; href: string }>>();
+  for (const page of pages) {
+    const data = (() => {
+      const sections = record(page.contentJson)?.sections;
+      for (const section of Object.values(sections ?? {})) {
+        if (record(section)?.type !== "aidreamcapes_v2_page") continue;
+        const sectionData = record(record(record(section)?.settings)?.data);
+        if (sectionData && record(record(sectionData.visual)?.picker)) return sectionData;
+      }
+      return undefined;
+    })();
+    if (!data) continue;
+    const label = str(data.label) ?? str(page.title) ?? page.slug;
+    const link = { label, href: page.slug };
+    for (const value of cardsFromContent(page.contentJson)) {
+      const card = toDetailCard(value);
+      if (!card?.publicSlug) continue;
+      const owners = index.get(card.publicSlug) ?? new Map<string, { label: string; href: string }>();
+      owners.set(page.slug, link);
+      index.set(card.publicSlug, owners);
+    }
+  }
+  return index;
+});
+
+/**
  * Product-level placement index. One media asset can be copied into many
  * page-local cards with different `publicSlug` values; tags written to any of
  * those cards belong to the asset, not to one page. The index is built from
@@ -111,7 +151,7 @@ export const loadProductPlacementIndex = cache(async () => {
   return index;
 });
 
-const GROUP_ORDER: Array<MediaPlacementGroup["kind"]> = ["industry", "platform", "occasion", "catalog"];
+const GROUP_ORDER: Array<MediaPlacementGroup["kind"]> = ["industry", "platform", "occasion", "catalog", "tool"];
 
 /**
  * Resolve the category links of one detail page.
@@ -131,16 +171,23 @@ export async function resolveMediaPlacements(detail: MediaDetail): Promise<Media
       const indexed = (await loadProductPlacementIndex()).get(identity.key);
       if (indexed) explicit = [...indexed.placements].sort();
     }
-    if (!explicit.length) return [];
   }
+  // "Made with": every tool page whose picker references this media asset.
+  // The relation is derived from current rows at render time; no field stores it.
+  const toolOwners = (await loadToolOwnerIndex()).get(detail.slug);
+  if (!isTemplateCard && !explicit.length && !toolOwners) return [];
 
   const registry = await loadPlacementRegistry();
   const links: Record<MediaPlacementGroup["kind"], { label: string; href: string }[]> = {
     industry: [],
     platform: [],
     occasion: [],
-    catalog: []
+    catalog: [],
+    tool: []
   };
+
+  // Relation already resolved above; merge the tool owners into the groups.
+  const toolOwnerLinks = toolOwners ? [...toolOwners.values()] : [];
 
   if (isTemplateCard) {
     for (const directory of registry.facets.values()) {
@@ -155,6 +202,7 @@ export async function resolveMediaPlacements(detail: MediaDetail): Promise<Media
       if (directory) links[directory.kind].push({ label: directory.label, href: directory.slug });
     }
   }
+  links.tool.push(...toolOwnerLinks);
 
   return GROUP_ORDER.flatMap((kind) => {
     const values = links[kind];

@@ -9,8 +9,8 @@
 export type PlacementKind = "industry" | "platform" | "occasion";
 
 export type MediaPlacementGroup = {
-  kind: PlacementKind | "catalog";
-  /** Public group label: Industry / Platform / Occasion / Catalog. */
+  kind: PlacementKind | "catalog" | "tool";
+  /** Public group label: Industry / Platform / Occasion / Catalog / Made with. */
   label: string;
   links: { label: string; href: string }[];
 };
@@ -45,11 +45,12 @@ export const PLACEMENT_PREFIX_KIND: Record<string, PlacementKind> = {
   occasions: "occasion"
 };
 
-export const PLACEMENT_GROUP_LABEL: Record<PlacementKind | "catalog", string> = {
+export const PLACEMENT_GROUP_LABEL: Record<PlacementKind | "catalog" | "tool", string> = {
   industry: "Industry",
   platform: "Platform",
   occasion: "Occasion",
-  catalog: "Catalog"
+  catalog: "Catalog",
+  tool: "Made with"
 };
 
 /** Canonical facet page slug: /industries/<slug>, /platforms/<slug>, /occasions/<slug>. */

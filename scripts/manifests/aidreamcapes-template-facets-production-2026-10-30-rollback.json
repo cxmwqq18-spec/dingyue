@@ -1,0 +1,413 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-template-facets-2026-10-30-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-10-30T11:18:28.469Z",
+  "sourcePlanHash": "59e6245458b16e24bdd6cc4861dad33142e4269cb7674cb98ce5012ef0fa3c2e",
+  "summary": {
+    "pages": 20,
+    "arrays": 20
+  },
+  "pages": [
+    {
+      "slug": "/ai-image-generation/colorway-variations",
+      "pageHash": "61ae99b464da8532115f67279f58c526dea062ca8de394d6184689b786169831",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/home-living"
+          ],
+          "after": [
+            "/industries/fashion-clothing",
+            "/industries/shoes"
+          ],
+          "beforeHash": "2564c0f225c30356ca820210dce4fce529732167f46b65b45274655bda78abb3",
+          "afterHash": "8c4977373d965429e95616ebf69f6abf757285e7c6d3ff301ddab50770061438"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "6f9ccd49b4316ee606563b865ff822cf6766a79f5c3464e5494b2738a657a54d",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/jewelry-accessories"
+          ],
+          "after": [
+            "/industries/beauty-skincare",
+            "/industries/jewelry-accessories"
+          ],
+          "beforeHash": "209f589ad8a08ba636fedaf24e9ad680e7fd83c9ee0a41866b2f3e92bf160f7d",
+          "afterHash": "51735cbc58ab04c414e77b7c7360c2329d33197fb69cad0efa43aab9d8280862"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packaging-mockup",
+      "pageHash": "2a59df146d7392507621641cc92d7cf96d1077c6f3d2f388a668463c6ba9c8ef",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/food-drinks"
+          ],
+          "after": [
+            "/industries/beauty-skincare",
+            "/industries/jewelry-accessories",
+            "/industries/food-drinks",
+            "/industries/home-living"
+          ],
+          "beforeHash": "c095bd72b02298532330971734eafcc93fa9f5def277cf34f9c74eb8608e63f9",
+          "afterHash": "ae278dd359a7f60505499de7ecac2c668bc2834e553ad8c9bbed6cbf5d95a722"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/packshot-multi-angle",
+      "pageHash": "a7fac311be70a528ba40e715fae5b951c748c696254a37748ef9756ca1594ce1",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/electronics"
+          ],
+          "after": [
+            "/industries/shoes",
+            "/industries/jewelry-accessories",
+            "/industries/electronics",
+            "/industries/home-living"
+          ],
+          "beforeHash": "672b36e1fba19ecce0b2b53c93df89c4dcdc8620992c5dec354d846be02f5063",
+          "afterHash": "2ff6bd2b7de990ab60b14559eb96863d684e75b689ad065d239d5e21ab6b86ea"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "dd3bddadd034b29c335e6a3e0532fe4ef2e532a7dd2d65075d177e9e66c95ed9",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [],
+          "after": [
+            "/industries/fashion-clothing",
+            "/industries/shoes"
+          ],
+          "beforeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "afterHash": "8c4977373d965429e95616ebf69f6abf757285e7c6d3ff301ddab50770061438"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "30004705a7e3d426133f09f98d510a1756dbe1ea4f1205bbfe4ebf3883c5f390",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/food-drinks"
+          ],
+          "after": [
+            "/industries/fashion-clothing",
+            "/industries/health-wellness"
+          ],
+          "beforeHash": "c095bd72b02298532330971734eafcc93fa9f5def277cf34f9c74eb8608e63f9",
+          "afterHash": "5c99912ac5cb3d56309353851c345992232ade6d34005e860ea054bf6146929c"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "dfd4aa5b8bf7988ee751db31537ca1f6123d6f8c9c9a05295715e0f8d1299cf1",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/health-wellness",
+            "/industries/sports-gym"
+          ],
+          "after": [
+            "/industries/beauty-skincare",
+            "/industries/health-wellness"
+          ],
+          "beforeHash": "1bb93729234dff87d2c44b1b22a8b1c1e53b4ea7d595d4c4c976cbe09d10473a",
+          "afterHash": "39404088f460dcf2e02535649e2b852ab7b3a2ce548a29a4ff0bac2e6197e508"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/black-friday-countdown",
+      "pageHash": "dcaef4a7685218decf9ec1875c91792e88a1e8e77f88c21eea03e2c4827bf8e2",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/beauty-skincare"
+          ],
+          "after": [],
+          "beforeHash": "9891ba30cd03d39e00c339e4ba923d7c76fbff28e345c577fdc99d05e8cc9a29",
+          "afterHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/cinematic-video",
+      "pageHash": "8a122e3e6e8977df8f2438992b6a922f4473b85e693e3d09a21c93e4764f1fc7",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/electronics"
+          ],
+          "after": [
+            "/industries/shoes",
+            "/industries/jewelry-accessories",
+            "/industries/electronics"
+          ],
+          "beforeHash": "672b36e1fba19ecce0b2b53c93df89c4dcdc8620992c5dec354d846be02f5063",
+          "afterHash": "7ea35688ceafdab60770401bbec7718646358ed45393e9890d2d415f99bd15c1"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/how-to-video",
+      "pageHash": "26599178fc60230553b440d5e4c2a36464920568415258c15cb26e4addc65d11",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/fashion-clothing"
+          ],
+          "after": [
+            "/industries/electronics",
+            "/industries/health-wellness",
+            "/industries/home-living"
+          ],
+          "beforeHash": "dd174f5669c3be118d606e67ae3e65dd01b1267dc3dc34b05f5346047248c5ad",
+          "afterHash": "45f7cc78614d376b96e1a105787cbb73c09aeeb219ce4d57ad80e7098a13c0b0"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/promo-video",
+      "pageHash": "de6f0edfd93cfd7fa34637a2545256c5bb8a4a4566031a129a19885968f8961a",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/fashion-clothing"
+          ],
+          "after": [
+            "/industries/electronics",
+            "/industries/food-drinks"
+          ],
+          "beforeHash": "dd174f5669c3be118d606e67ae3e65dd01b1267dc3dc34b05f5346047248c5ad",
+          "afterHash": "a3b3ac02b1e7681e939f43fc2f2e56181a06f78874a925bba399163487536d99"
+        }
+      ]
+    },
+    {
+      "slug": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "b81b32539f0e1c50c7e85be03177461e2c681bd4d0a33b89558291e39f471f91",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.industries",
+          "field": "industries",
+          "before": [
+            "/industries/sports-gym"
+          ],
+          "after": [],
+          "beforeHash": "5586915d442c2301bbbda6ba6f83e2737208b83f2fdc5d7a0dd441d0b3126233",
+          "afterHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/beauty-skincare",
+      "pageHash": "e06dcc9b3041048cf3c576e4253b5ec69880b395194eb654948e23f9f8e3a924",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-video-generation/beauty-routine",
+            "/ai-video-generation/black-friday-countdown"
+          ],
+          "after": [
+            "/ai-video-generation/beauty-routine",
+            "/ai-image-generation/jewelry-positioning",
+            "/ai-image-generation/ugc-still-ad",
+            "/ai-image-generation/packaging-mockup"
+          ],
+          "beforeHash": "19c2115f070fb0fb1fc02f14c351af67ad22af446cd36f2e920921714110f0a3",
+          "afterHash": "292617543fd00a7bfe509b43de0389a6bb11db019a94da17f1edca56f1f7ad23"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/electronics",
+      "pageHash": "421bb6a74803c53d31b9f84cdb22c5c07b933246011f3da7ed5d2fdcd276f13d",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-image-generation/packshot-multi-angle",
+            "/ai-video-generation/cinematic-video"
+          ],
+          "after": [
+            "/ai-image-generation/packshot-multi-angle",
+            "/ai-video-generation/how-to-video",
+            "/ai-video-generation/cinematic-video",
+            "/ai-video-generation/promo-video"
+          ],
+          "beforeHash": "d4f22cf812e87d86bc23795575c84057ec188d057a3c6a6e88d082bb031f6bb9",
+          "afterHash": "b5dda913889eb4ee638c024f3654bcd7aa162ced292c4675c6fa295cf2919964"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/fashion-clothing",
+      "pageHash": "b61a4ae5a1f82c4c8bcb52ad9f139ea0dc1a6c11173579f9fc4a754af0a0dbd4",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-image-generation/virtual-try-on",
+            "/ai-video-generation/fashion-try-on-reel",
+            "/ai-video-generation/how-to-video",
+            "/ai-video-generation/promo-video"
+          ],
+          "after": [
+            "/ai-image-generation/virtual-try-on",
+            "/ai-video-generation/fashion-try-on-reel",
+            "/ai-image-generation/colorway-variations",
+            "/ai-image-generation/sale-campaign-key-visual",
+            "/ai-image-generation/story-ad-vertical"
+          ],
+          "beforeHash": "f863b0e2914646bb5ab521d2d6f2b88a41f41061ff25119c859a0a73947a96af",
+          "afterHash": "feda5e3eccced98e8a3d886025c169cce1e899f784f19124623a4202b0700607"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/food-drinks",
+      "pageHash": "c085ebe9262c87fc5ec3675bc17142ed4685886cb49951c04435253ecb1651d5",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-image-generation/packaging-mockup",
+            "/ai-image-generation/story-ad-vertical",
+            "/ai-video-generation/food-video"
+          ],
+          "after": [
+            "/ai-video-generation/food-video",
+            "/ai-image-generation/packaging-mockup",
+            "/ai-video-generation/promo-video"
+          ],
+          "beforeHash": "3f43b39a12c4876eb4f66d671cd459311dea48089c763a353e0f4e2c4773647b",
+          "afterHash": "c3ee367a3a688c1f01277495f5e1da847923d2f1eaf31d173eb8eb30fe7a4e5f"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/health-wellness",
+      "pageHash": "fc72f77c3f6f3fc8f59321cf5d51e7320aadeb5cb591cf5f7f055546a5680d17",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-image-generation/ugc-still-ad"
+          ],
+          "after": [
+            "/ai-image-generation/ugc-still-ad",
+            "/ai-video-generation/how-to-video",
+            "/ai-image-generation/story-ad-vertical"
+          ],
+          "beforeHash": "84eda94188f8884e341a1091ae2fc78740c5ee7bf522b2630713e400852aadcb",
+          "afterHash": "be83a7586c6e1bd3db4f8d35a12fa4a8970193ea8f2104c25db2cb9cc6e8bbad"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/home-living",
+      "pageHash": "4e76ba27f55ed0f1246de7cbe83c5202983feb33590036f472a16cc6af15976f",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-video-generation/home-organization"
+          ],
+          "after": [
+            "/ai-video-generation/home-organization",
+            "/ai-image-generation/packshot-multi-angle",
+            "/ai-image-generation/packaging-mockup",
+            "/ai-video-generation/how-to-video"
+          ],
+          "beforeHash": "2566313f3646ef3f3b937774e012a4a97705e383dab28fda8eaf3473fc023d04",
+          "afterHash": "c6944287e41ecef8730f7a7b467db15b1d2f4895a5b8a452d91a7456d4078e16"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/jewelry-accessories",
+      "pageHash": "21de317ac581c677335166c42fa56c0407e56cd8ab27e7ade6d7db97818a47d0",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [
+            "/ai-image-generation/jewelry-positioning"
+          ],
+          "after": [
+            "/ai-image-generation/jewelry-positioning",
+            "/ai-image-generation/packshot-multi-angle",
+            "/ai-video-generation/cinematic-video",
+            "/ai-image-generation/packaging-mockup"
+          ],
+          "beforeHash": "accd8a361799a61563d7f9e93d15b87bb9b29fd6e44849ca8230664a7b8e0383",
+          "afterHash": "2f2c8d132787b4572855f2acba0adf4c1b80259fce2b3bd502191c6ecae99b9a"
+        }
+      ]
+    },
+    {
+      "slug": "/industries/shoes",
+      "pageHash": "4aca8d6ba33321f204edd2f79edc17bb957e53929c9654395ee2fe68c2a25fda",
+      "operations": [
+        {
+          "jsonPath": "sections.v2_main.settings.data.templateDirectory.paths",
+          "field": "paths",
+          "before": [],
+          "after": [
+            "/ai-image-generation/colorway-variations",
+            "/ai-image-generation/packshot-multi-angle",
+            "/ai-image-generation/sale-campaign-key-visual",
+            "/ai-video-generation/cinematic-video"
+          ],
+          "beforeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "afterHash": "df35dbc6b0b0b57fe7b1016e74a4675c129874b42f290ef8f4d6effe08dd27bc"
+        }
+      ]
+    }
+  ]
+}
