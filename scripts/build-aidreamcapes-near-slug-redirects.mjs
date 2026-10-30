@@ -127,8 +127,13 @@ try {
         skipped.push({ source: candidate.path, reason: "existing-page" });
         continue;
       }
-      const last = candidate.path.split("/").pop() ?? "";
-      if (cardSlugs.has(last) || cardAliases.has(last)) {
+      const segments = candidate.path.split("/");
+      const last = segments.pop() ?? "";
+      const root = segments.join("/");
+      // Only an address that answers today must stay a redirect source away:
+      // the card lookup is case-sensitive (the middleware matches exact
+      // paths), so a case variant of a card address is safe to redirect.
+      if ((root === "/ai-video-generation" || root === "/ai-image-generation") && (cardSlugs.has(last) || cardAliases.has(last))) {
         skipped.push({ source: candidate.path, reason: "media-card-address" });
         continue;
       }

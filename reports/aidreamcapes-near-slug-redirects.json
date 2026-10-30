@@ -3,9 +3,9 @@
   "siteId": "site_aidreamcapes",
   "target": "production",
   "publicPathCount": 506,
-  "mediaCardAddressCount": 1179,
-  "entries": 1508,
-  "planHash": "3b888f6fcf2c78865fc3e8285d1556b857730d4c93772d40f3b8e42047efe92a",
+  "mediaCardAddressCount": 606,
+  "entries": 1509,
+  "planHash": "590f0f7320b8d0916c51b70711752ce13c83fcf9c8e9134fa6f1c52bbf82fe11",
   "table": [
     [
       "/About-us",
@@ -2478,6 +2478,10 @@
     [
       "/AI-VIDEO-GENERATION",
       "/ai-video-generation"
+    ],
+    [
+      "/Ai-video-generation/360-showcase-linen-shirt",
+      "/ai-video-generation/360-showcase-linen-shirt"
     ],
     [
       "/Ai-Video-Generation/360-Showcase-Linen-Shirt",
@@ -6040,12 +6044,7 @@
       "/trust-and-safety"
     ]
   ],
-  "skipped": [
-    {
-      "source": "/Ai-video-generation/360-showcase-linen-shirt",
-      "reason": "media-card-address"
-    }
-  ],
-  "skippedCount": 1,
-  "generatedAt": "2026-10-30T07:37:46.617Z"
+  "skipped": [],
+  "skippedCount": 0,
+  "generatedAt": "2026-10-30T08:02:08.652Z"
 }
