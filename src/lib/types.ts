@@ -118,6 +118,8 @@ export interface AidreamcapesZipNavigationGroup {
   items: ThemeNavLink[];
   /** A long link column may split its items into a second sub-column ("2"). */
   columns?: string;
+  /** Hub directory page for this group; when present the group title links to it. */
+  hubHref?: string;
 }
 
 export interface AidreamcapesZipNavigationMenu {

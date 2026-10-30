@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-occasions-hub-2026-10-30-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-30T14:17:29.818Z",
+  "sourcePlanHash": "dc86f224e82b7946636c72a1281c94f6938d94ea63503f03b33ddd5ddfc86af2",
+  "operation": "delete-row",
+  "row": {
+    "id": "aidreamcapes_v2_occasions",
+    "slug": "/occasions",
+    "contentHash": "8d727aa0a16ff16e1f04f2d798cc7b72d42348c41dbd9e4439eea5436d3276d2"
+  },
+  "note": "Inverse of the insert: delete the LivePage row only when its contentHash still matches (CAS)."
+}

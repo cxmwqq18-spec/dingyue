@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-nav-hub-hrefs-2026-10-30-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-30T14:27:35.529Z",
+  "page": {
+    "slug": "/",
+    "baseHash": "92741e7530fd7fccc39be9d669399078ca853a0333103d44fe97e8bca2630e33"
+  },
+  "jsonPath": "siteNavigation.menus[label=Templates].groups[].hubHref",
+  "operations": [
+    {
+      "groupLabel": "By industry",
+      "hubHref": "/industries",
+      "before": null,
+      "beforeHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "afterHash": "8bdea308c7bdce4b5a6e8d6ca3eafdab842d61141514651826a37c7ccb6a9710"
+    },
+    {
+      "groupLabel": "By platform",
+      "hubHref": "/platforms",
+      "before": null,
+      "beforeHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "afterHash": "3fa091d59913572df351ee14926852060a0866a7dbc8926ee2f20d6fea17ada0"
+    },
+    {
+      "groupLabel": "By occasion",
+      "hubHref": "/occasions",
+      "before": null,
+      "beforeHash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "afterHash": "026afba8e231cc5d6e198a017ec03523e6cd56de04d99dbd491bf46969f29f5b"
+    }
+  ],
+  "planHash": "3732bda21e2ee9d128dd8c834385d4c4461773cabae659e507af1e53663b9f89"
+}

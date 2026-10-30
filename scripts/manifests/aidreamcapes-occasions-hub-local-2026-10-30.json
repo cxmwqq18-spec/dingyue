@@ -1,0 +1,158 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-occasions-hub-2026-10-30-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-10-30T14:17:10.928Z",
+  "operation": "insert-row",
+  "referencedFacets": [
+    "/occasions/black-friday",
+    "/occasions/holidays",
+    "/occasions/sale-discount"
+  ],
+  "row": {
+    "slug": "/occasions",
+    "id": "aidreamcapes_v2_occasions",
+    "siteId": "site_aidreamcapes",
+    "pageType": "content",
+    "templateKey": "aidreamcapes-v2",
+    "title": "Ideas for Your Next Sale or Season",
+    "contentJson": {
+      "seo": {
+        "index": true,
+        "title": "AI Sale and Holiday Campaign Ideas | AIVideosUGC",
+        "jsonLd": {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@id": "https://www.aivideosugc.com/occasions#webpage",
+              "url": "https://www.aivideosugc.com/occasions",
+              "name": "AI Sale and Holiday Campaign Ideas | AIVideosUGC",
+              "@type": "CollectionPage",
+              "inLanguage": "en",
+              "description": "Browse AI product video and photo ideas for Black Friday, the holidays and countdown sales."
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "item": "https://www.aivideosugc.com/",
+                  "name": "Home",
+                  "@type": "ListItem",
+                  "position": 1
+                },
+                {
+                  "item": "https://www.aivideosugc.com/occasions",
+                  "name": "Occasions",
+                  "@type": "ListItem",
+                  "position": 2
+                }
+              ]
+            },
+            {
+              "@type": "ItemList",
+              "itemListElement": [
+                {
+                  "url": "https://www.aivideosugc.com/occasions/black-friday",
+                  "name": "Black Friday",
+                  "@type": "ListItem",
+                  "position": 1
+                },
+                {
+                  "url": "https://www.aivideosugc.com/occasions/holidays",
+                  "name": "Holidays",
+                  "@type": "ListItem",
+                  "position": 2
+                },
+                {
+                  "url": "https://www.aivideosugc.com/occasions/sale-discount",
+                  "name": "Sale & Discount",
+                  "@type": "ListItem",
+                  "position": 3
+                }
+              ]
+            }
+          ]
+        },
+        "robots": {
+          "index": true,
+          "follow": true
+        },
+        "ogImage": "/ai-image-generation/t33-occ-black-friday-og-r2.webp",
+        "canonical": "https://www.aivideosugc.com/occasions",
+        "ogImageAlt": "Adult hands pack a charcoal travel duffel with a shirt and toiletry pouch.",
+        "description": "Browse AI product video and photo ideas for Black Friday, the holidays and countdown sales.",
+        "canonicalPath": "/occasions"
+      },
+      "version": 2,
+      "pageType": "content",
+      "sections": {
+        "v2_main": {
+          "type": "aidreamcapes_v2_page",
+          "blocks": [],
+          "settings": {
+            "layout": "platform-directory",
+            "data": {
+              "h1": "Ideas for Your Next Sale or Season",
+              "id": "occasions",
+              "faq": [],
+              "lead": "Pick an occasion to explore product video and photo ideas for your next campaign or promotion.",
+              "items": [
+                {
+                  "href": "/occasions/black-friday",
+                  "text": "Plan your Black Friday ad creatives before the rush starts.",
+                  "image": {
+                    "src": "/ai-image-generation/t33-occ-black-friday-og-r2.webp",
+                    "alt": "Adult hands pack a charcoal travel duffel with a shirt and toiletry pouch.",
+                    "width": 1280,
+                    "height": 672
+                  },
+                  "label": "Black Friday"
+                },
+                {
+                  "href": "/occasions/holidays",
+                  "text": "Make a festive holiday video that fits gift season shopping.",
+                  "image": {
+                    "src": "/ai-image-generation/t33-occ-holidays-og-r2.webp",
+                    "alt": "Adult lifts generic matte graphite over-ear headphones with round leather pads from a gift box.",
+                    "width": 1280,
+                    "height": 672
+                  },
+                  "label": "Holidays"
+                },
+                {
+                  "href": "/occasions/sale-discount",
+                  "text": "Build a countdown sale video that gives shoppers a reason to buy now.",
+                  "image": {
+                    "src": "/ai-image-generation/t33-occ-sale-discount-og-r2.webp",
+                    "alt": "Adult applies cream from a jar while two pastel skincare bottles remain visible.",
+                    "width": 1280,
+                    "height": 672
+                  },
+                  "label": "Sale & Discount"
+                }
+              ],
+              "label": "Occasions",
+              "eyebrow": "Browse by occasion",
+              "breadcrumbs": [
+                {
+                  "href": "/",
+                  "label": "Home"
+                },
+                {
+                  "href": "/occasions",
+                  "label": "Occasions"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "sectionsOrder": [
+        "v2_main"
+      ]
+    },
+    "contentHash": "8d727aa0a16ff16e1f04f2d798cc7b72d42348c41dbd9e4439eea5436d3276d2"
+  },
+  "planHash": "dc86f224e82b7946636c72a1281c94f6938d94ea63503f03b33ddd5ddfc86af2"
+}
