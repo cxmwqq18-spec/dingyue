@@ -125,6 +125,17 @@ export function assertDatabaseTarget({
   if (expectedTarget === "production" && requireProductionConfirmation && !productionConfirmed) {
     throw new Error("Production database operations require an explicit production confirmation.");
   }
+  if (expectedTarget === "production") {
+    const matchesLocalDatabase = parsed.host === LOCAL_DATABASE.host
+      && parsed.port === LOCAL_DATABASE.port
+      && parsed.database === LOCAL_DATABASE.database;
+    if (matchesLocalDatabase) {
+      throw new Error(
+        `Production target resolves to the local development database (${parsed.host}:${parsed.port}/${parsed.database}). ` +
+          "Point DATABASE_URL at the production database or use the SSH tunnel."
+      );
+    }
+  }
   return {
     environment: expectedTarget,
     target: expectedTarget,
