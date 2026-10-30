@@ -2085,9 +2085,10 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
       if (entries.some((entry) => entry.loc === loc)) continue;
       const lastmod = media.updatedAt.toISOString();
       const thumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.imagePath}`;
+      const imageText = media.imageAlt ?? media.label;
       entries.push({
         loc,
-        images: [{ loc: thumbnailLoc, ...(media.imageAlt ? { title: media.imageAlt } : {}) }],
+        images: [{ loc: thumbnailLoc, title: imageText, caption: imageText }],
         ...(media.videoPath ? {
           video: {
             thumbnailLoc,

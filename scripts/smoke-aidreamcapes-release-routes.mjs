@@ -137,8 +137,9 @@ function assertCardOpensDetailPage(scope, anchor) {
 }
 
 /**
- * A detail page answers 200, is not the workspace shell, stays out of the
- * index and owns exactly one workspace CTA that names this card.
+ * A detail page answers 200, is not the workspace shell, is indexable and
+ * owns exactly one workspace CTA that names this card. A page that renders a
+ * finished video must publish the matching VideoObject JSON-LD.
  */
 async function expectDetailPage(path, { kind, slug }) {
   const { response, html } = await getText(path);
@@ -146,9 +147,14 @@ async function expectDetailPage(path, { kind, slug }) {
   assert.match(html, /<html[\s>]/i, `${path}: HTML document`);
   assert.doesNotMatch(documentTitle(html), /workspace/i, `${path}: detail page renders the workspace shell`);
   const robots = robotsContent(html);
-  assert.match(robots, /noindex/, `${path}: robots must be noindex (${robots || "missing"})`);
+  assert.doesNotMatch(robots, /noindex/, `${path}: robots must be indexable (${robots || "missing"})`);
   assert.match(robots, /follow/, `${path}: robots must be follow (${robots || "missing"})`);
   assert.doesNotMatch(robots, /nofollow/, `${path}: robots must not be nofollow (${robots})`);
+  assert.equal(
+    /<video\b/i.test(html),
+    /"VideoObject"/.test(html),
+    `${path}: the video element and the VideoObject JSON-LD must agree`
+  );
   const ctas = [...html.matchAll(/<a\b[^>]*\bdata-workspace-entry=(["'])([\s\S]*?)\1[^>]*>/gi)];
   assert.equal(ctas.length, 1, `${path}: expected exactly one workspace CTA, found ${ctas.length}`);
   let payload;
@@ -159,7 +165,7 @@ async function expectDetailPage(path, { kind, slug }) {
   }
   assert.equal(payload?.media?.kind, kind, `${path}: workspace CTA media kind`);
   assert.equal(payload?.media?.slug, slug, `${path}: workspace CTA media slug`);
-  checks.push(`${path}: 200 detail page (noindex, follow, one workspace CTA for ${kind}/${slug})`);
+  checks.push(`${path}: 200 detail page (index, follow, one workspace CTA for ${kind}/${slug})`);
   return html;
 }
 

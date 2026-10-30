@@ -382,6 +382,23 @@ assert(!sitemapXml.includes("An intimate engagement announcement"), "stale sitem
 assert.doesNotMatch(sitemapXml, /<changefreq\b/i, "sitemap must not publish changefreq");
 assert.doesNotMatch(sitemapXml, /<priority\b/i, "sitemap must not publish priority");
 
+// Every video card submits a <video:video> entry so Google video search can
+// index the finished example video. Each entry must be complete: thumbnail,
+// title, description and an mp4 content address on this storefront.
+const videoEntries = entries.filter((entry) => entry["video:video"]);
+assert(videoEntries.length > 0, "sitemap submits no video:video entries");
+for (const { loc, "video:video": video } of videoEntries) {
+  const required = ["video:thumbnail_loc", "video:title", "video:description", "video:content_loc"];
+  for (const field of required) {
+    assert(video?.[field], `sitemap video entry ${loc} is missing ${field}`);
+  }
+  const contentPath = new URL(video["video:content_loc"]).pathname;
+  assert.equal(new URL(video["video:content_loc"]).origin, "https://www.aivideosugc.com", `video content origin: ${loc}`);
+  assert(/^\/ai-video-generation\/[a-z0-9][a-z0-9-]*\.mp4$/.test(contentPath), `video content must be an on-site mp4: ${loc} -> ${contentPath}`);
+  assert.equal(new URL(video["video:thumbnail_loc"]).origin, "https://www.aivideosugc.com", `video thumbnail origin: ${loc}`);
+}
+const videoThumbnailUrls = videoEntries.map(({ "video:video": video }) => video["video:thumbnail_loc"]);
+
 // The near slug table sends a visitor who typed one address away to the page
 // they meant. A source that answers today must never be redirected, and a
 // target that does not answer would only move the problem.
@@ -468,7 +485,7 @@ const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
 });
 assert.equal(new Set(pageStatus.map(({ title }) => title)).size, pageStatus.length, "all sitemap page titles must be unique");
 assert.equal(new Set(pageStatus.map(({ description }) => description)).size, pageStatus.length, "all sitemap page descriptions must be unique");
-const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
+const imageStatus = await mapLimit([...new Set([...imageUrls, ...videoThumbnailUrls])], 4, async (url) => {
   const imageUrl = new URL(url);
   const response = await getUrl(`${MEDIA_BASE_URL}${imageUrl.pathname}${imageUrl.search}`);
   assert.equal(response.status(), 200, `sitemap image status ${response.status()}: ${url}`);
@@ -482,7 +499,8 @@ const imageStatus = await mapLimit([...new Set(imageUrls)], 4, async (url) => {
 //   /ai-video-generation/<publicSlug>, /ai-image-generation/<publicSlug> and
 //   /ai-actors/<name> (flat). The card link is a plain path without a query
 // string, a fragment or an inert `data-workspace-entry` payload. Derived
-// detail pages are `noindex, follow` and stay out of the sitemap. The stored
+// detail pages are `index, follow`, submit themselves to the sitemap, and
+// video cards additionally carry a <video:video> entry. The stored
 // nested actor rows answer with a permanent redirect to the flat address.
 const sitemapPathSet = new Set(pageUrls.map((url) => new URL(url).pathname));
 const nestedActorUrls = [...sitemapPathSet].filter((path) => /^\/ai-actors\/(?:men|women)\//.test(path));
@@ -552,12 +570,16 @@ const mediaDetailResults = await mapLimit([...mediaDetailPaths], 4, async (path)
   const html = await response.text();
   assert.doesNotMatch(htmlTitle(html), /workspace/i, `${path}: detail page renders the workspace shell`);
   const robots = htmlMeta(html, "robots");
-  assert.match(robots, /noindex/i, `${path}: robots is not noindex (${robots || "missing"})`);
+  assert.doesNotMatch(robots, /noindex/i, `${path}: robots is noindex (${robots || "missing"})`);
   assert.match(robots, /follow/i, `${path}: robots is not follow (${robots || "missing"})`);
   assert.doesNotMatch(robots, /nofollow/i, `${path}: robots is nofollow (${robots})`);
   assert.equal(htmlCanonical(html), `https://www.aivideosugc.com${canonicalPath}`, `${path}: canonical`);
-  assert(!sitemapPathSet.has(path), `${path}: derived detail page must stay out of the sitemap`);
-  assert(!sitemapPathSet.has(canonicalPath), `${canonicalPath}: derived detail page must stay out of the sitemap`);
+  if (canonicalPath !== path) {
+    // Reviewed equivalent cards share one detail page; the alias address
+    // redirects permanently and must never submit itself to the sitemap.
+    assert(!sitemapPathSet.has(path), `${path}: redirecting detail alias must stay out of the sitemap`);
+  }
+  assert(sitemapPathSet.has(canonicalPath), `${canonicalPath}: detail page must submit itself to the sitemap`);
   return canonicalPath;
 });
 

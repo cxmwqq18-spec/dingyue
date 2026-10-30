@@ -74,6 +74,37 @@ try {
     cardAliases.add(match[1].split("/").pop() ?? match[1]);
   }
 
+  // Media detail pages are card projections: they answer 200 under
+  // /ai-video-generation/<slug> and /ai-image-generation/<slug> and submit to
+  // the sitemap even though they have no LivePage row of their own. Enumerate
+  // them from the same card data so their case variants become redirect
+  // sources. Alias slugs redirect permanently to their canonical detail page,
+  // so they are targets for the exact redirect table, never near addresses.
+  const DETAIL_ROOTS = { video: "/ai-video-generation/", photo: "/ai-image-generation/" };
+  const detailCards = new Map();
+  const collectDetailCards = (value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) collectDetailCards(item);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if (
+      typeof value.publicSlug === "string"
+      && /^[a-z0-9][a-z0-9-]*$/.test(value.publicSlug)
+      && (value.kind === "video" || value.kind === "photo")
+      && !value.detailAliasOf
+      && value.image && typeof value.image.src === "string" && value.image.src
+      && (typeof value.label === "string" ? value.label : typeof value.title === "string" ? value.title : "")
+    ) {
+      detailCards.set(value.publicSlug, value.kind);
+    }
+    for (const child of Object.values(value)) collectDetailCards(child);
+  };
+  for (const row of rows) collectDetailCards(row.contentJson);
+  for (const [slug, kind] of detailCards) {
+    if (!cardAliases.has(slug)) publicPaths.add(`${DETAIL_ROOTS[kind]}${slug}`);
+  }
+
   const claims = new Map();
   const skipped = [];
   for (const path of [...publicPaths].sort()) {

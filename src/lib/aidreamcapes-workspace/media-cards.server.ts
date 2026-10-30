@@ -221,19 +221,31 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     where: { siteId: AIVIDEOSUGC_SITE_ID },
     select: { slug: true, contentJson: true, updatedAt: true }
   });
+  const rowCards = rows.map((row) => ({ row, cards: cardsFromContent(row.contentJson) }));
+  // A slug is owned when a card publishes it as publicSlug, but a card on any
+  // other page can also claim it through publicAliases (the detail resolver
+  // treats both as ownership). A slug claimed as an alias anywhere therefore
+  // has more than one owner row and must stay out of the sitemap.
+  const aliasClaims = new Set<string>();
+  for (const { cards } of rowCards) {
+    for (const raw of cards) {
+      const aliases = raw.publicAliases;
+      if (!Array.isArray(aliases)) continue;
+      for (const alias of aliases) {
+        const aliasSlug = str(alias);
+        if (aliasSlug) aliasClaims.add(aliasSlug);
+      }
+    }
+  }
   type Candidate = MediaDetailSitemapEntry & { owners: Set<string> };
   const byKey = new Map<string, Candidate>();
-  for (const row of rows) {
-    const cards = cardsFromContent(row.contentJson);
-    const claimedKeys = new Set<string>();
-    const rowEntries: Array<[string, MediaDetailSitemapEntry]> = [];
+  for (const { row, cards } of rowCards) {
     for (const raw of cards) {
       const card = toDetailCard(raw);
-      if (!card || !card.publicSlug || str(raw.detailAliasOf)) continue;
+      if (!card || !card.publicSlug || str(raw.detailAliasOf) || aliasClaims.has(card.publicSlug)) continue;
       const key = `${card.kind}:${card.publicSlug}`;
-      claimedKeys.add(key);
       const description = mediaDetailDescription(card);
-      rowEntries.push([key, {
+      const entry: MediaDetailSitemapEntry = {
         kind: card.kind,
         slug: card.publicSlug,
         label: card.label,
@@ -243,9 +255,7 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
         ...(card.video?.src ? { videoPath: card.video.src } : {}),
         ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
         updatedAt: row.updatedAt
-      }]);
-    }
-    for (const [key, entry] of rowEntries) {
+      };
       const existing = byKey.get(key);
       if (existing) {
         existing.owners.add(row.slug);
@@ -255,6 +265,6 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     }
   }
   return [...byKey.values()]
-    .filter((candidate) => candidate.owners.size === 1)
+    .filter((candidate) => candidate.owners.size === 1 && !aliasClaims.has(candidate.slug))
     .map(({ owners: _owners, ...entry }) => entry);
 }
