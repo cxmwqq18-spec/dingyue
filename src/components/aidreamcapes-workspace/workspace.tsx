@@ -266,6 +266,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [composerResolution, setComposerResolution] = useState("");
   const [composerQuote, setComposerQuote] = useState<{ available: boolean; credits?: number } | null>(null);
   const [pendingGenerate, setPendingGenerate] = useState<{ scene: SceneSchema; input: TaskInput; title: string; productBrief?: PendingProductBrief; source?: { sourcePage: string; presetId: string; sourceUpdatedAt: string }; surface: "composer" | "agent" | "product"; quote?: ActionQuote } | null>(null);
+  const [pendingAvatarSubmit, setPendingAvatarSubmit] = useState<{ quote: { available: boolean; credits?: number; reason?: string } } | null>(null);
   const [messageAction, setMessageAction] = useState(false);
   // 生成流程的阶段播报用中性样式；默认 error 保持既有错误横幅外观不变。
   const [messageKind, setMessageKind] = useState<"info" | "error">("error");
@@ -1187,11 +1188,12 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
 
     const input = defaultInput(presenterScene);
     input.actorId = selectedActor.actorId;
-    // The presenter portrait and voice sample ride with the customer's product
-    // photos: the portrait takes the first reference slot (scene field limit
-    // still applies to the combined list) and the voice becomes the single
-    // reference audio transported upstream.
-    input.images.productImages = [selectedActor.imageUrl, ...avatarProductImages].slice(0, avatarImageFieldMax);
+    // The presenter portrait rides through input.actorId (the storyboard's
+    // actor reference slot) and the voice sample through referenceAudios,
+    // exactly like the classic presenter flow. Product references stay
+    // customer-owned uploads only: the ownership check rejects site catalog
+    // URLs inside the image list.
+    input.images.productImages = avatarProductImages.slice(0, avatarImageFieldMax);
     if (selectedActor.voice.refAudio) input.referenceAudios = [selectedActor.voice.refAudio];
     input.fields.sellingPoints = avatarScript.trim();
     input.options.aspect = selectedAvatarAspect as TaskInput["options"]["aspect"];
@@ -1213,6 +1215,32 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setAvatarScript(""); setAvatarProductImages([]);
       updateUrl(result.task, "input", "agent");
       window.scrollTo({ top: 0 });
+    } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
+  }
+
+  /** 提交前弹出费用确认：报价口径与图生视频一致（direct 直出 + 参考图/音频计数）。 */
+  async function openAvatarSubmitConfirm() {
+    if (!customer) { window.location.assign(currentLoginHref()); return; }
+    const selectedActor = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
+    if (!selectedActor) { setMessage("Choose a presenter before continuing."); return; }
+    if (!avatarProductImages.length) { setMessage("Add at least one product photo before continuing."); return; }
+    if (!avatarScript.trim()) { setMessage("Add a script or key talking points before continuing."); return; }
+    if (avatarModelUnavailable) { setMessage("No connected video model currently supports presenter speech."); return; }
+    setBusy(true); setMessage("");
+    try {
+      const result = await request<{ quote: { available: boolean; credits?: number; reason?: string } }>("/generation-quote", {
+        method: "POST",
+        body: JSON.stringify({
+          direct: true,
+          modelId: avatarModel?.id || undefined,
+          duration: selectedAvatarDuration,
+          aspect: selectedAvatarAspect,
+          resolution: selectedAvatarResolution || undefined,
+          imageInputCount: Math.min(avatarImageFieldMax, avatarProductImages.length + 1),
+          audioInputCount: selectedActor.voice.refAudio ? 1 : 0
+        })
+      });
+      setPendingAvatarSubmit({ quote: result.quote });
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
@@ -1277,6 +1305,22 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       void uploadAvatarProduct(file);
     }
   }
+
+  // 演讲者工作台整页接受图片粘贴（上传区复制 Ctrl+V 即贴入）。可编辑元素
+  // 保留原生粘贴；脚本框自己的 onPaste 已把图片转给上传器。
+  useEffect(() => {
+    if (view !== "actors" || !presenterStudioEnabled || !customer) return;
+    const onPaste = (event: ClipboardEvent) => {
+      const files = Array.from(event.clipboardData?.files ?? []).filter((file) => fileKind(file) === "image");
+      if (!files.length) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("input, textarea, [contenteditable='true']")) return;
+      event.preventDefault();
+      importAvatarProductFiles(files);
+    };
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  });
 
   function moveAvatarProductImage(from: number, to: number) {
     setAvatarProductImages((current) => moveItem(current, from, to));
@@ -1867,7 +1911,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               <div className={styles.creatorProduct}>
                 <div className={styles.creatorProductHeading}><div><span className={styles.creatorLabel}>PRODUCT REFERENCES</span><p>Add a clear photo of the product in your video.</p></div><span>{avatarProductImages.length} / {avatarUserImageMax}</span></div>
                 <FileDropZone className={styles.creatorProductGrid} activeClassName={styles.dropActive} disabled={!customer || working} onFiles={importAvatarProductFiles}>
-                  {avatarProductImages.length < avatarUserImageMax && <label className={`${styles.creatorUpload} ${!customer || working ? styles.creatorUploadDisabled : ""}`}><Upload size={21} /><strong>{busy ? "Uploading…" : "Add product photo"}</strong><span>{`PNG or JPG · up to ${avatarUserImageMax} photo${avatarUserImageMax === 1 ? "" : "s"}`}</span><input type="file" accept="image/*" disabled={working || !customer} aria-label="Upload product photo" onChange={(event) => { void uploadAvatarProduct(event.target.files?.[0]); event.target.value = ""; }} /></label>}
+                  {avatarProductImages.length < avatarUserImageMax && <label className={`${styles.creatorUpload} ${!customer || working ? styles.creatorUploadDisabled : ""}`}><Upload size={21} /><strong>{busy ? "Uploading…" : "Add product photo"}</strong><span>{`PNG or JPG · drag & drop or paste anywhere · up to ${avatarUserImageMax} photo${avatarUserImageMax === 1 ? "" : "s"}`}</span><input type="file" accept="image/*" disabled={working || !customer} aria-label="Upload product photo" onChange={(event) => { void uploadAvatarProduct(event.target.files?.[0]); event.target.value = ""; }} /></label>}
                   {avatarProductImages.map((url, index) => <div className={styles.creatorProductImage} key={`${url}-${index}`} {...reorderHandlers(index, working, moveAvatarProductImage)}><img src={url} alt={`Product reference ${index + 1}`} /><button className={styles.removeImage} disabled={working} aria-label={`Remove product reference ${index + 1}`} onClick={() => setAvatarProductImages((current) => current.filter((_, position) => position !== index))}><X size={12} /></button></div>)}
                 </FileDropZone>
                 {!customer && <a className={styles.creatorLogin} href={loginHref}>Log in to upload a product photo</a>}
@@ -1906,7 +1950,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
               </div>
               <div className={styles.creatorActions}>
                 <span>{avatarModel ? `${avatarModel.durations.join(" / ")}s · ${avatarModel.aspects.join(" / ")} · ${(avatarModel.resolutions[0] ?? "").toUpperCase() || "720p"}` : "Save a draft now; generation depends on model availability"}</span>
-                {customer ? <button className={`${styles.button} ${styles.primary}`} disabled={working || !avatarSelection || !avatarProductImages.length || !avatarScript.trim() || avatarModelUnavailable || Boolean(avatarModel && (!avatarAspects.length || !avatarDurations.length))} onClick={() => void createAvatarDraft()}><span>{busy ? "Saving draft…" : "Continue to editor"}</span>{busy ? <Loader2 size={16} className={styles.spin} /> : <ArrowRight size={16} />}</button> : <a className={`${styles.button} ${styles.primary}`} href={loginHref}><span>Log in to continue</span><ArrowRight size={16} /></a>}
+                {customer ? <button className={`${styles.button} ${styles.primary}`} disabled={working || !avatarSelection || !avatarProductImages.length || !avatarScript.trim() || avatarModelUnavailable || Boolean(avatarModel && (!avatarAspects.length || !avatarDurations.length))} onClick={() => void openAvatarSubmitConfirm()}><span>{busy ? "Checking cost…" : "Continue to editor"}</span>{busy ? <Loader2 size={16} className={styles.spin} /> : <ArrowRight size={16} />}</button> : <a className={`${styles.button} ${styles.primary}`} href={loginHref}><span>Log in to continue</span><ArrowRight size={16} /></a>}
               </div>
               <p className={styles.creatorSaveNote}>Continuing saves a draft. Generation and any credit use happen later from the video editor.</p>
             </section>
@@ -2076,6 +2120,23 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || (totalCredits != null && balance != null && balance < totalCredits)} onClick={() => void runConfirmedGeneration()}>Generate now</button>
       </div>
     </section></div>; })()}
+    {pendingAvatarSubmit && (() => {
+      const quote = pendingAvatarSubmit.quote;
+      const credits = quote.available && quote.credits != null ? quote.credits : undefined;
+      const options = [avatarModel?.label, `${selectedAvatarDuration}s`, selectedAvatarAspect, selectedAvatarResolution].filter(Boolean).join(" · ");
+      return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) setPendingAvatarSubmit(null); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Confirm video submission" style={{ maxWidth: 470 }}>
+        <div className={styles.modalHeader}><h2>Confirm video submission</h2><button className={styles.iconButton} onClick={() => setPendingAvatarSubmit(null)} aria-label="Close dialog"><X size={23} /></button></div>
+        <p className={styles.help} style={{ marginTop: 0 }}>{avatarSelection ? `${avatarSelection.name} · Presenter video` : "Presenter video"}</p>
+        <p className={styles.help}>{options || "\u00a0"}</p>
+        {!quote.available ? <p className={styles.help} style={{ fontWeight: 600, color: "#b91c1c" }}>{humanError(quote.reason) || "Generation isn't available with these settings."}</p>
+          : <p className={styles.help} style={{ fontWeight: 600, color: "var(--ink)" }}>{credits != null ? `Estimated cost: ${credits} credits` : "Credits will be confirmed at checkout."}{balance != null ? ` · Balance: ${balance} credits` : ""}</p>}
+        {quote.available && credits != null && <p className={styles.help}>Priced the same as image-to-video for now. Credits are held when a shot generates and returned automatically if generation fails.</p>}
+        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
+          <button type="button" className={styles.button} onClick={() => setPendingAvatarSubmit(null)}>Cancel</button>
+          <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || !quote.available || (credits != null && balance != null && balance < credits)} onClick={() => { setPendingAvatarSubmit(null); void createAvatarDraft(); }}>Continue to editor</button>
+        </div>
+      </section></div>;
+    })()}
     {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><FileDropZone activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadProduct(image); }}><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></FileDropZone></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
     {batchScene && <BatchDraftDialog open={batchOpen} initialSceneId={batchScene.id} initialInput={composerInput(batchScene)} scenes={catalog?.scenes.map((item) => ({ id: item.id, label: item.name })) ?? []} disabled={busy} onClose={() => setBatchOpen(false)} onSubmit={(items) => void createBatch(items)} />}
