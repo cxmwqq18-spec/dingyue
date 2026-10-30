@@ -173,7 +173,7 @@ export function compileShot(args: { sceneId: SceneId; input: TaskInput; shot: St
   if (input.direct) {
     const prompt = text(shot.visual);
     if (!(input.referenceAudios ?? []).some((url) => typeof url === "string" && url)) return prompt;
-    return `${prompt}\n\nVoice requirement: the on-camera presenter must speak with the exact voice from the supplied voice reference audio. Clone that speaker's timbre, pitch, accent, pace and speaking style, and deliver every spoken line with this single cloned voice. Do not add a narrator, background music, sound-effect vocals or any other voice.`;
+    return `${prompt}\n\nVoice requirement: the character shown in Image 1 is the on-camera presenter. That character must speak with the exact voice from the supplied voice reference audio — clone that speaker's timbre, pitch, accent, pace and speaking style, and deliver every spoken line with this single cloned voice. Do not add a narrator, background music, sound-effect vocals or any other voice.`;
   }
   if (!text(shot.visual) || !text(shot.environment) || !Number.isFinite(shot.duration) || shot.duration <= 0 || Math.abs(shot.end - shot.start - shot.duration) > 0.01) throw new WorkspaceError("workspace_shot_invalid");
   if (storyboard.lang !== input.options.language) throw new WorkspaceError("workspace_language_rewrite_required");
