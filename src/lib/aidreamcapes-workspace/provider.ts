@@ -337,26 +337,31 @@ export async function assetIdForReference(args: { siteId: string; customerId: st
     return asset.id;
   }
   const actors = await getWorkspaceActors(args.siteId);
-  const actor = actors.find((candidate) => candidate.imageUrl === args.url);
-  if (!actor || !isBuiltinActorCatalogReference(args.url, "image", actors)) throw new WorkspaceError("workspace_reference_not_owned", 403);
+  const imageActor = actors.find((candidate) => candidate.imageUrl === args.url);
+  const voiceActor = args.kind === "audio" ? actors.find((candidate) => candidate.voice?.refAudio === args.url) : undefined;
+  const reference = imageActor ? { actor: imageActor, kind: "image" as const } : voiceActor ? { actor: voiceActor, kind: "audio" as const } : undefined;
+  if (!reference || !isBuiltinActorCatalogReference(args.url, reference.kind, actors)) throw new WorkspaceError("workspace_reference_not_owned", 403);
   const extension = args.url.slice(args.url.lastIndexOf("."));
-  const label = `workspace-actor-${actor.actorId}${extension}`;
+  const label = reference.kind === "audio" ? `workspace-actor-voice-${reference.actor.actorId}${extension}` : `workspace-actor-${reference.actor.actorId}${extension}`;
   const actorKey = `sites/${args.siteId}/customers/${args.customerId}/assets/${label}`;
   const existing = await prisma.assetUpload.findFirst({ where: { siteId: args.siteId, customerId: args.customerId, storageKey: actorKey, role: "input", deletedAt: null }, select: { id: true, siteId: true, customerId: true, storageKey: true, mimeType: true, role: true, deletedAt: true } });
   if (existing) {
-    if (!workspaceAssetStorageKeyMatches(existing.storageKey, actorKey) || !workspaceAssetHasMedia(existing, { ...owner, kind: "image" })) throw new WorkspaceError("workspace_reference_not_owned", 403);
+    if (!workspaceAssetStorageKeyMatches(existing.storageKey, actorKey) || !workspaceAssetHasMedia(existing, { ...owner, kind: reference.kind })) throw new WorkspaceError("workspace_reference_not_owned", 403);
     return existing.id;
   }
-  const sharedActorFile = path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", `${actor.actorId}.webp`);
-  const releaseActorFile = path.join(process.cwd(), "public", "media/site_aidreamcapes/workspace/actors/library", `${actor.actorId}.webp`);
+  const mimeType = reference.kind === "audio" ? "audio/mpeg" : "image/webp";
+  const sharedActorFile = path.join("/www/wwwroot/aidreamcapes.com/shared/sites/public-media/actor", reference.kind === "audio" ? `${reference.actor.actorId}.mp3` : `${reference.actor.actorId}.webp`);
+  const releaseActorFile = reference.kind === "audio"
+    ? path.join(process.cwd(), "public", "assets/sites/site_aidreamcapes/workspace/actors/voices", `${reference.actor.actorId}.mp3`)
+    : path.join(process.cwd(), "public", "media/site_aidreamcapes/workspace/actors/library", `${reference.actor.actorId}.webp`);
   let bytes: Buffer;
   try { bytes = await fs.readFile(sharedActorFile); }
   catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     bytes = await fs.readFile(releaseActorFile);
   }
-  await writeCustomerAssetFileShared({ storageKey: actorKey, bytes, mimeType: "image/webp" });
-  return (await createAssetUploadRelational({ siteId: args.siteId, customerId: args.customerId, label, mimeType: "image/webp", storageKey: actorKey })).asset.id;
+  await writeCustomerAssetFileShared({ storageKey: actorKey, bytes, mimeType });
+  return (await createAssetUploadRelational({ siteId: args.siteId, customerId: args.customerId, label, mimeType, storageKey: actorKey })).asset.id;
 }
 export async function submitShotGeneration(args: {
   siteId: string; customerId: string; aiAppSlug: string; taskId: string; sceneId?: SceneId;
