@@ -140,14 +140,21 @@ export function resolveShotReferences(args: { sceneId: SceneId; input: TaskInput
   if (schema.needsActor && (args.shot.refKinds[0] !== "actor" || !args.shot.refKinds.includes("product"))) throw new WorkspaceError("workspace_actor_product_references_required");
   return args.shot.refKinds.flatMap((kind) => {
     if (!schema.refImagePolicy.includes(kind)) throw new WorkspaceError("workspace_reference_kind_invalid");
+    // Direct prompt mode ships every uploaded image of a reference kind in the
+    // order the customer uploaded it. The fused composite is never transported:
+    // the actor portrait and the product photos already cover both subjects
+    // upstream, so a missing composite is expected and simply skipped.
+    if (args.input.direct) {
+      if (kind === "composite") return [];
+      const available = pool[kind];
+      if (!available?.length) throw new WorkspaceError("workspace_reference_missing", 400, { kind });
+      return available.map((url) => ({ kind, url }));
+    }
     const override = args.shot.refImgs[kind];
     const available = pool[kind];
     // A composite must be supplied by the authenticated composition service, never substituted with text-to-image or another kind.
     if (!available?.length && !(kind === "composite" && override)) throw new WorkspaceError("workspace_reference_missing", 400, { kind });
     if (override && kind !== "composite" && !available?.includes(override)) throw new WorkspaceError("workspace_reference_not_in_task", 400, { kind });
-    // Direct prompt mode ships every uploaded image of a reference kind in the
-    // order the customer uploaded it. Other modes keep one image per kind.
-    if (args.input.direct && kind !== "composite") return (available ?? []).map((url) => ({ kind, url }));
     return [{ kind, url: override ?? available![0] }];
   });
 }
