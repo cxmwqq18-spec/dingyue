@@ -1,0 +1,1078 @@
+{
+ "siteId": "site_aidreamcapes",
+ "slug": "/",
+ "generated": "2026-11-01",
+ "kind": "isolate product demo cards (removed from homepage picker; restore from removed[])",
+ "removed": [
+  {
+   "section": "v2_main",
+   "slug": "canvas-tote-product-detail",
+   "label": "Canvas Tote Product Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "jewelry-accessories"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Natural canvas tote bag shown upright on seamless white.",
+     "src": "/ai-image-generation/gen2guide-white-background-canvas-tote-640.webp",
+     "kind": "video"
+    },
+    "label": "Canvas Tote Product Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a canvas Tote in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the canvas Tote exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The canvas Tote keeps the same shape, colour, material, finish and details in every frame, including the full shape; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The canvas Tote at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective. Visible here: the full shape.\n【12.0-15.0s | Hold】The canvas Tote returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The canvas Tote stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/jewelry-accessories"
+    ],
+    "sceneSlug": "canvas-tote-product-detail-55d189f7f3f9",
+    "publicSlug": "canvas-tote-product-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "stemless-earbud-product-detail",
+   "label": "Stemless Earbud Product Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "jewelry-accessories"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Two matte sage-green stemless bean-shaped earbuds rest separately on pure white with no charging case.",
+     "src": "/ai-image-generation/img3-home-earbuds-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Stemless Earbud Product Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a stemless Earbud in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the stemless Earbud exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The stemless Earbud keeps the same shape, colour, material, finish and details in every frame, including no charging case; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The stemless Earbud at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective. Visible here: no charging case.\n【12.0-15.0s | Hold】The stemless Earbud returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The stemless Earbud stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/jewelry-accessories"
+    ],
+    "sceneSlug": "stemless-earbud-product-detail-b01f9d8d75dc",
+    "publicSlug": "stemless-earbud-product-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "shirt-steamer-ugc",
+   "label": "Shirt Steamer UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "clothing"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult man with short brown hair uses a plain handheld steamer on a shirt, with a smooth panel beside remaining wrinkles.",
+     "src": "/ai-image-generation/im03-home-picker-steamer-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Shirt Steamer UGC",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 UGC creator demo for a handheld steamer on a shirt.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the handheld steamer exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Believable vertical UGC in a real room: handheld, slightly uneven window light, ordinary objects in the background, visible skin texture, one clumsy moment left in on purpose. Not a studio commercial, not a polished advert.\n【Product Lock】The handheld steamer keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-3.0s | Hook】Handheld close, half a face entering the frame on a shirt: the creator asks one short question to the lens before the handheld steamer is fully shown. The movement is already in progress when the shot starts.\n【3.0-8.0s | Demo】Adult man with short brown hair uses a handheld steamer on a shirt, with a smooth panel beside remaining wrinkles. One real, slightly imperfect motion, with one small clumsy detail left in on purpose; the camera follows the hands.\n【8.0-12.0s | Evidence】A close insert on the surface and on the result the motion produced: no claim, only what the frame shows.\n【12.0-15.0s | Close】The creator comes back to the lens with the handheld steamer still in frame and says one natural line. No slogan, no call to action, no price.\n【Camera】Handheld at 26mm and 35mm, about one arm's length, gentle breathing sway, one reframe and one short focus hunt that recovers. The camera follows the hands and never leaves the product for long. The six rules of the track: handheld distance, window light with an uneven side, a real room with clutter allowed, a performance that may stumble, skin you can see, and one or two jump cuts that feel hand-edited.\n【Sound】Voice: the creator's own voice, casual and close to the lens, one stumble allowed, five short lines across the film — \"Can a handheld steamer actually work on a shirt?\" / \"The hair uses it on a shirt\" / \"This is the clumsy part, every time\" / \"Look at the surface, not the sales line\" / \"That is how I use it now\". Effects: handling and fabric sounds close to the camera, the room tone of the place. BGM: none. The room tone and the voice carry the film.\n【Continuity】The handheld steamer stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no studio lighting, no perfect skin, no presenter tone, no transition effect.",
+    "duration": 15,
+    "placement": [
+     "/industries/fashion-clothing"
+    ],
+    "sceneSlug": "shirt-steamer-ugc-b57609433e1f",
+    "publicSlug": "shirt-steamer-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "cardigan-turn-reel",
+   "label": "Cardigan Turn Reel",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "clothing"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult woman with a short blonde bob wears a plain navy cardigan in four views, showing the sleeves, back and hem.",
+     "src": "/ai-image-generation/im03-home-picker-cardigan-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Cardigan Turn Reel",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a navy cardigan in four views.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the navy cardigan exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The navy cardigan keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The navy cardigan at rest in four views, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Adult woman with a short blonde bob wears a navy cardigan in four views, showing the sleeves, back and hem. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The navy cardigan returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The navy cardigan stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/fashion-clothing"
+    ],
+    "sceneSlug": "cardigan-turn-reel-a9ea5b6055d9",
+    "publicSlug": "cardigan-turn-reel"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "phone-grip-app-demo-ugc",
+   "label": "Phone Grip App Demo UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "apps"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Adult creator presenting a generic phone grip beside a plain phone.",
+     "src": "/ai-image-generation/q9-head-phone-grip-demo-640.webp",
+     "kind": "video"
+    },
+    "label": "Phone Grip App Demo UGC",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a phone grip beside a plain phone.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the phone grip exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The phone grip keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: an adult creator stands with the phone grip beside a plain phone, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the phone grip fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the phone grip a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Creator presents the phone grip beside a plain phone. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same phone grip, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A phone grip, beside a plain phone\" / \"The creator presents it beside a plain phone\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The phone grip stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/apps"
+    ],
+    "sceneSlug": "phone-grip-app-demo-ugc-7c211248701d",
+    "publicSlug": "phone-grip-app-demo-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "app-screen-walkthrough-ugc",
+   "label": "App Screen Walkthrough UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "apps"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "An adult man presents a generic smartphone and points to a softly blurred, text-free app interface, no logo.",
+     "src": "/ai-image-generation/mx1w-home-apps-2-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "App Screen Walkthrough UGC",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a smartphone in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the smartphone exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The smartphone keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: an adult man stands with the smartphone in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the smartphone fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the smartphone a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】An adult man presents a smartphone and points to a softly blurred, text-free app interface, no logo. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same smartphone, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A smartphone, in a real room\" / \"The man presents it in a real room\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The smartphone stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/apps"
+    ],
+    "sceneSlug": "app-screen-walkthrough-ugc-223cbcb6676e",
+    "publicSlug": "app-screen-walkthrough-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "clay-mask-texture-demo",
+   "label": "Clay Mask Texture Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "beauty-personal-care"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "A clean spatula lifts a smooth ribbon of pale green clay mask from an open plain jar, the textured cream held above the rim.",
+     "src": "/ai-image-generation/q1-home-picker-mask-640.webp",
+     "kind": "video"
+    },
+    "label": "Clay Mask Texture Demo",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a jar, the in held above the rim.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the jar, the exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The jar, the keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The jar, the at rest in held above the rim, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The jar, the returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The jar, the stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/beauty-skincare"
+    ],
+    "sceneSlug": "clay-mask-texture-demo-c98a061c02e6",
+    "publicSlug": "clay-mask-texture-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "tinted-balm-detail",
+   "label": "Tinted Balm Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "beauty-personal-care"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Coral lipstick on a softly lit vanity",
+     "src": "/ai-image-generation/k5-home-lipstick-vanity-640.webp",
+     "kind": "video"
+    },
+    "label": "Tinted Balm Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for the product in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the product exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The product keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The product at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The product returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The product stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/beauty-skincare"
+    ],
+    "sceneSlug": "tinted-balm-vanity-reel-22b7c1e93b27",
+    "publicSlug": "tinted-balm-detail",
+    "publicAliases": [
+     "tinted-balm-vanity-reel-home"
+    ]
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "cotton-shirt-fit-check",
+   "label": "Cotton Shirt Fit Check",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "clothing"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult hands hold a plain cotton shirt toward the camera with collar and seams visible.",
+     "src": "/ai-image-generation/mx1w-home-clothing-1-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Cotton Shirt Fit Check",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a cotton shirt in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the cotton shirt exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The cotton shirt keeps the same shape, colour, material, finish and details in every frame, including collar; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the cotton shirt is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the cotton shirt fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: collar.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the cotton shirt a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Adult hands hold a cotton shirt toward the camera with collar and seams visible. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same cotton shirt, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A cotton shirt, in a real room\" / \"This is the cotton shirt in one movement\" / \"The hands do the work, one movement at a time\" / \"Collar\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The cotton shirt stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/fashion-clothing"
+    ],
+    "sceneSlug": "cotton-shirt-fit-check-3ee4ab7353cf",
+    "publicSlug": "cotton-shirt-fit-check"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "folded-trousers-detail",
+   "label": "Folded Trousers Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "clothing"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult woman with short silver hair folds plain charcoal trousers on a bright bed.",
+     "src": "/ai-image-generation/im03-home-picker-trousers-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Folded Trousers Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a charcoal trousers on a bright bed.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the charcoal trousers exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The charcoal trousers keeps the same shape, colour, material, finish and details in every frame, including the full garment visible; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The charcoal trousers at rest on a bright bed, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Adult woman with short silver hair folds charcoal trousers on a bright bed. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective. Visible here: the full garment visible.\n【12.0-15.0s | Hold】The charcoal trousers returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The charcoal trousers stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/fashion-clothing"
+    ],
+    "sceneSlug": "trousers-fold-demo-d659a8224325",
+    "publicSlug": "folded-trousers-detail",
+    "publicAliases": [
+     "trousers-fold-demo-home"
+    ]
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "package-reveal-unboxing-ugc",
+   "label": "Package Reveal Unboxing UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "e-commerce"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult hands open a plain shipping carton to reveal an unbranded product pouch, no readable marks.",
+     "src": "/ai-image-generation/mx1w-home-e-commerce-1-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Package Reveal Unboxing UGC",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a shipping carton in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the shipping carton exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The shipping carton keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The shipping carton at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Adult hands open a shipping carton to reveal an unbranded product pouch, no readable marks. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The shipping carton returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The shipping carton stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/e-commerce"
+    ],
+    "sceneSlug": "package-reveal-unboxing-ugc-9ccc22b384a6",
+    "publicSlug": "package-reveal-unboxing-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "skincare-order-packing-reel",
+   "label": "Skincare Order Packing Reel",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "e-commerce"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "An adult packs a plain unbranded skincare carton into a kraft mailer on a clean table.",
+     "src": "/ai-image-generation/mx1w-home-e-commerce-2-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Skincare Order Packing Reel",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for an unbranded skincare carton in into a kraft mailer on a clean table.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the unbranded skincare carton exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The unbranded skincare carton keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: an adult stands with the unbranded skincare carton in into a kraft mailer on a clean table, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the unbranded skincare carton fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the unbranded skincare carton a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】An adult packs a unbranded skincare carton into a kraft mailer on a clean table. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same unbranded skincare carton, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement only: one slow push in, one gentle arc, one close follow and one locked hold, all keeping the same light direction and screen direction.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"An unbranded skincare carton, in into a kraft mailer on a clean table\" / \"It packs in into a kraft mailer on a clean table\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The unbranded skincare carton stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/e-commerce"
+    ],
+    "sceneSlug": "skincare-order-packing-reel-63d997207616",
+    "publicSlug": "skincare-order-packing-reel"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "kitchen-tool-lesson-demo",
+   "label": "Kitchen Tool Lesson Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "education"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult woman holds a plain box grater beside a bowl in a bright kitchen lesson.",
+     "src": "/ai-image-generation/im03-home-picker-kitchen-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Kitchen Tool Lesson Demo",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a box grater beside a bowl in a bright kitchen lesson.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the box grater exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The box grater keeps the same shape, colour, material, finish and details in every frame, including a clear kitchen demo; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: an adult woman stands with the box grater beside a bowl in a bright kitchen lesson, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the box grater fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: a clear kitchen demo.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the box grater a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Adult woman holds a box grater beside a bowl in a bright kitchen lesson. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same box grater, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A box grater, beside a bowl in a bright kitchen lesson\" / \"The woman holds it beside a bowl in a bright kitchen lesson\" / \"The hands do the work, one movement at a time\" / \"A clear kitchen demo\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The box grater stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/education"
+    ],
+    "sceneSlug": "kitchen-tool-lesson-demo-4c8568a6d4fd",
+    "publicSlug": "kitchen-tool-lesson-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "coffee-maker-how-to-demo",
+   "label": "Coffee Maker How-To Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "education"
+    ],
+    "image": {
+     "h": 360,
+     "w": 640,
+     "alt": "Compact countertop coffee maker pouring coffee into a white ceramic cup.",
+     "src": "/ai-image-generation/k1-product-videos-gallery-feature-action-t06-640.webp",
+     "kind": "video"
+    },
+    "label": "Coffee Maker How-To Demo",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a white ceramic cup in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the white ceramic cup exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The white ceramic cup keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the white ceramic cup is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the white ceramic cup fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the white ceramic cup a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Compact countertop coffee maker pouring coffee into a white ceramic cup. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same white ceramic cup, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A white ceramic cup, in a real room\" / \"This is the white ceramic cup in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The white ceramic cup stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/education"
+    ],
+    "sceneSlug": "coffee-maker-how-to-demo-94e238ad9eba",
+    "publicSlug": "coffee-maker-how-to-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "cable-organizer-before-after",
+   "label": "Cable Organizer Before After",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "explainer"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult hands show a plain cable organizer changing a desk from tangled cords to a tidy route.",
+     "src": "/ai-image-generation/mx1w-home-explainer-1-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Cable Organizer Before After",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a cable organizer changing a desk from tangled cords to a tidy route.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the cable organizer changing a desk exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The cable organizer changing a desk keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the cable organizer changing a desk is set in place from tangled cords to a tidy route, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the cable organizer changing a desk fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the cable organizer changing a desk a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Adult hands show a cable organizer changing a desk from tangled cords to a tidy route. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same cable organizer changing a desk, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement only: one slow push in, one gentle arc, one close follow and one locked hold, all keeping the same light direction and screen direction.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A cable organizer changing a desk, from tangled cords to a tidy route\" / \"This is the cable organizer changing a desk in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The cable organizer changing a desk stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/explainer"
+    ],
+    "sceneSlug": "cable-organizer-before-after-6046c4c484fa",
+    "publicSlug": "cable-organizer-before-after"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "speaker-feature-walkthrough",
+   "label": "Speaker Feature Walkthrough",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "explainer"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Compact rectangular Bluetooth speaker on a desk",
+     "src": "/ai-image-generation/k5-change-background-uses-1-image-640.webp",
+     "kind": "video"
+    },
+    "label": "Speaker Feature Walkthrough",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a speaker in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the speaker exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The speaker keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the speaker is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the speaker fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the speaker a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Compact rectangular Bluetooth speaker on a desk. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same speaker, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A speaker, in a real room\" / \"This is the speaker in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The speaker stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/explainer"
+    ],
+    "sceneSlug": "speaker-feature-walkthrough-e6ae39efc774",
+    "publicSlug": "speaker-feature-walkthrough"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "budget-desk-overview",
+   "label": "Budget Desk Overview",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "financial-services"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight.",
+     "src": "/ai-image-generation/gen2guide-k6-templates-strip-deskset-640.webp",
+     "kind": "video"
+    },
+    "label": "Budget Desk Overview",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for the product in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the product exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The product keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the product is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the product fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the product a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Notebook, pen, and wooden organizer tray arranged together on a tidy desk in soft daylight. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same , now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A , in a real room\" / \"This is the product in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The product stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/financial-services"
+    ],
+    "sceneSlug": "budget-desk-overview-7236e7aa625b",
+    "publicSlug": "budget-desk-overview"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "budget-tool-desk-explainer",
+   "label": "Budget Tool Desk Explainer",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "financial-services"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Mechanical keyboard with blank keycaps on a tidy desk.",
+     "src": "/ai-image-generation/k5-change-background-picker-cards-1-image-640.webp",
+     "kind": "video"
+    },
+    "label": "Budget Tool Desk Explainer",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a budget Tool in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the budget Tool exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The budget Tool keeps the same shape, colour, material, finish and details in every frame, including blank keycaps; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the budget Tool is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the budget Tool fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: blank keycaps.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the budget Tool a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Mechanical keyboard with blank keycaps on a tidy desk. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same budget Tool, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A budget Tool, in a real room\" / \"This is the budget Tool in one movement\" / \"The hands do the work, one movement at a time\" / \"Blank keycaps\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The budget Tool stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/financial-services"
+    ],
+    "sceneSlug": "budget-tool-desk-explainer-c71bd92923dc",
+    "publicSlug": "budget-tool-desk-explainer"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "hot-sauce-taco-drizzle",
+   "label": "Hot Sauce Taco Drizzle",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "food-beverage"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "A hand squeezes a thin ribbon of sauce from a plain bottle onto a fresh taco, with the bottle and food both clearly visible.",
+     "src": "/ai-image-generation/q1-home-picker-hot-sauce-640.webp",
+     "kind": "video"
+    },
+    "label": "Hot Sauce Taco Drizzle",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a bottle onto a fresh taco.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the bottle exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The bottle keeps the same shape, colour, material, finish and details in every frame, including the bottle; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the bottle is set in place onto a fresh taco, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the bottle fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: the bottle.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the bottle a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】A hand squeezes a thin ribbon of sauce from a bottle onto a fresh taco, with the bottle and food both clearly visible. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same bottle, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A bottle, onto a fresh taco\" / \"This is the bottle in one movement\" / \"The hands do the work, one movement at a time\" / \"The bottle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The bottle stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/food-drinks"
+    ],
+    "sceneSlug": "hot-sauce-taco-drizzle-0b1b9aa6385d",
+    "publicSlug": "hot-sauce-taco-drizzle"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "citrus-drink-pour-ugc",
+   "label": "Citrus Drink Pour UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "food-beverage"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult man pours a plain yellow citrus drink from a clear bottle into a glass of ice.",
+     "src": "/ai-image-generation/im03-home-picker-citrus-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Citrus Drink Pour UGC",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 UGC creator demo for a yellow citrus drink from a clear bottle into a glass of ice.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the yellow citrus drink exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Believable vertical UGC in a real room: handheld, slightly uneven window light, ordinary objects in the background, visible skin texture, one clumsy moment left in on purpose. Not a studio commercial, not a polished advert.\n【Product Lock】The yellow citrus drink keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-3.0s | Hook】Handheld close, half a face entering the frame from a clear bottle into a glass of ice: the creator asks one short question to the lens before the yellow citrus drink is fully shown. The movement is already in progress when the shot starts.\n【3.0-8.0s | Demo】Adult man pours a yellow citrus drink from a clear bottle into a glass of ice. One real, slightly imperfect motion, with one small clumsy detail left in on purpose; the camera follows the hands.\n【8.0-12.0s | Evidence】A close insert on the surface and on the result the motion produced: no claim, only what the frame shows.\n【12.0-15.0s | Close】The creator comes back to the lens with the yellow citrus drink still in frame and says one natural line. No slogan, no call to action, no price.\n【Camera】Handheld at 26mm and 35mm, about one arm's length, gentle breathing sway, one reframe and one short focus hunt that recovers. The camera follows the hands and never leaves the product for long. The six rules of the track: handheld distance, window light with an uneven side, a real room with clutter allowed, a performance that may stumble, skin you can see, and one or two jump cuts that feel hand-edited.\n【Sound】Voice: the creator's own voice, casual and close to the lens, one stumble allowed, five short lines across the film — \"Can a yellow citrus drink actually work from a clear bottle into a glass of ice?\" / \"The man pours it from a clear bottle into a glass of ice\" / \"This is the clumsy part, every time\" / \"Look at the surface, not the sales line\" / \"That is how I use it now\". Effects: handling and fabric sounds close to the camera, the room tone of the place. BGM: none. The room tone and the voice carry the film.\n【Continuity】The yellow citrus drink stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no studio lighting, no perfect skin, no presenter tone, no transition effect.",
+    "duration": 15,
+    "placement": [
+     "/industries/food-drinks"
+    ],
+    "sceneSlug": "citrus-drink-pour-ugc-a4a3e889675e",
+    "publicSlug": "citrus-drink-pour-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "trail-shoe-step-ad",
+   "label": "Trail Shoe Step Ad",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "footwear"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "An adult runner steps onto a city curb in a plain trail shoe, with the tread and side profile clearly visible.",
+     "src": "/ai-image-generation/q1-home-picker-runner-640.webp",
+     "kind": "video"
+    },
+    "label": "Trail Shoe Step Ad",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a trail shoe in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the trail shoe exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The trail shoe keeps the same shape, colour, material, finish and details in every frame, including the tread; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the trail shoe is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the trail shoe fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: the tread.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the trail shoe a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】An adult runner steps onto a city curb in a trail shoe, with the tread and side profile clearly visible. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same trail shoe, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A trail shoe, in a real room\" / \"This is the trail shoe in one movement\" / \"The hands do the work, one movement at a time\" / \"The tread\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The trail shoe stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/shoes"
+    ],
+    "sceneSlug": "trail-shoe-step-ad-e34de5963abc",
+    "publicSlug": "trail-shoe-step-ad"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "running-shoe-color-lineup",
+   "label": "Running Shoe Color Lineup",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "footwear"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Three unbranded running shoes in charcoal, teal and rust are lined up beside a doorway.",
+     "src": "/ai-image-generation/im03-home-picker-shoes-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Running Shoe Color Lineup",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a running Shoe in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the running Shoe exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The running Shoe keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the running Shoe is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the running Shoe fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the running Shoe a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Three unbranded running shoes in charcoal, teal and rust are lined up beside a doorway. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same running Shoe, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A running Shoe, in a real room\" / \"This is the running Shoe in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The running Shoe stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/shoes"
+    ],
+    "sceneSlug": "running-shoe-color-lineup-e10ed6d81e51",
+    "publicSlug": "running-shoe-color-lineup"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "yoga-mat-stretch-ugc",
+   "label": "Yoga Mat Stretch UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "health-fitness"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult stretches on a plain teal yoga mat beside a window.",
+     "src": "/ai-image-generation/mx1w-home-health-fitness-3-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Yoga Mat Stretch UGC",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a teal yoga mat beside a window.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the teal yoga mat exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The teal yoga mat keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: an adult stands with the teal yoga mat beside a window, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the teal yoga mat fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the teal yoga mat a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Adult stretches on a teal yoga mat beside a window. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same teal yoga mat, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A teal yoga mat, beside a window\" / \"It stretches beside a window\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The teal yoga mat stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/health-wellness"
+    ],
+    "sceneSlug": "yoga-mat-stretch-ugc-a37491ab8742",
+    "publicSlug": "yoga-mat-stretch-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "trail-bottle-detail",
+   "label": "Trail Bottle Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "health-fitness"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult man holds a plain sage-green insulated bottle at a quiet trail rest stop.",
+     "src": "/ai-image-generation/im03-home-picker-bottle-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Trail Bottle Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a sage-green at a quiet trail rest stop.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the sage-green exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The sage-green keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The sage-green at rest at a quiet trail rest stop, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Adult man holds a sage-green insulated bottle at a quiet trail rest stop. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The sage-green returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The sage-green stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/health-wellness"
+    ],
+    "sceneSlug": "trail-bottle-detail-284a54c84190",
+    "publicSlug": "trail-bottle-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "cufflink-detail-demo",
+   "label": "Cufflink Detail Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "jewelry-accessories"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Adult man fastens simple brushed silver cufflinks on a white shirt.",
+     "src": "/ai-image-generation/q9-jewel-cufflinks-demo-640.webp",
+     "kind": "video"
+    },
+    "label": "Cufflink Detail Demo",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a white shirt in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the white shirt exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The white shirt keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The white shirt at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Adult man fastens simple brushed silver cufflinks on a white shirt. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The white shirt returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The white shirt stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/jewelry-accessories"
+    ],
+    "sceneSlug": "cufflink-detail-demo-cb6f888e08ea",
+    "publicSlug": "cufflink-detail-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "silver-ring-size-detail",
+   "label": "Silver Ring Size Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "jewelry-accessories"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Close view of a silver solitaire ring and its setting.",
+     "src": "/ai-image-generation/q16-jewelry-ring-macro-640.webp",
+     "kind": "video"
+    },
+    "label": "Silver Ring Size Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a silver Ring in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the silver Ring exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The silver Ring keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The silver Ring at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The silver Ring returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The silver Ring stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/jewelry-accessories"
+    ],
+    "sceneSlug": "silver-ring-size-detail-42b773cd3085",
+    "publicSlug": "silver-ring-size-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "wooden-stacker-play-demo",
+   "label": "Wooden Stacker Play Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "kids-toy"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "A child plays with a plain wooden stacking toy while an adult hand demonstrates one piece.",
+     "src": "/ai-image-generation/mx1w-home-kids-toy-1-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Wooden Stacker Play Demo",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a wooden stacking toy in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the wooden stacking toy exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The wooden stacking toy keeps the same shape, colour, material, finish and details in every frame, including a plain wooden stacking toy; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the wooden stacking toy is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the wooden stacking toy fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: a plain wooden stacking toy.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the wooden stacking toy a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】A child plays with a wooden stacking toy while an adult hand demonstrates one piece. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same wooden stacking toy, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A wooden stacking toy, in a real room\" / \"This is the wooden stacking toy in one movement\" / \"The hands do the work, one movement at a time\" / \"A plain wooden stacking toy\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The wooden stacking toy stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/kids-toy"
+    ],
+    "sceneSlug": "wooden-stacker-play-demo-a23f0019fe6f",
+    "publicSlug": "wooden-stacker-play-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "color-block-unboxing-ugc",
+   "label": "Color Block Unboxing UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "kids-toy"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult hands open a plain box of colorful wooden building blocks with no letters or logos.",
+     "src": "/ai-image-generation/mx1w-home-kids-toy-2-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Color Block Unboxing UGC",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a box in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the box exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The box keeps the same shape, colour, material, finish and details in every frame, including no letters or logos; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the box is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the box fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: no letters or logos.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the box a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Adult hands open a box of colorful wooden building blocks with no letters or logos. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same box, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A box, in a real room\" / \"This is the box in one movement\" / \"The hands do the work, one movement at a time\" / \"No letters or logos\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The box stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/kids-toy"
+    ],
+    "sceneSlug": "color-block-unboxing-ugc-4bb7544286c8",
+    "publicSlug": "color-block-unboxing-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "pet-grooming-kit-unboxing",
+   "label": "Pet Grooming Kit Unboxing",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "pet"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Pet grooming kit with brush, folded towel and plain shampoo bottle revealed.",
+     "src": "/ai-image-generation/k1-unboxing-picker-pet-kit-640.webp",
+     "kind": "video"
+    },
+    "label": "Pet Grooming Kit Unboxing",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a shampoo bottle in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the shampoo bottle exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The shampoo bottle keeps the same shape, colour, material, finish and details in every frame, including brush; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the shampoo bottle is set in place in a real room, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the shampoo bottle fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently. Visible here: brush.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the shampoo bottle a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Pet grooming kit with brush, folded towel and shampoo bottle revealed. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same shampoo bottle, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A shampoo bottle, in a real room\" / \"This is the shampoo bottle in one movement\" / \"The hands do the work, one movement at a time\" / \"Brush\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The shampoo bottle stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/pet"
+    ],
+    "sceneSlug": "pet-grooming-kit-unboxing-d58c1f28b00d",
+    "publicSlug": "pet-grooming-kit-unboxing"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "dog-brush-care-demo",
+   "label": "Dog Brush Care Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "pet"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "Adult woman with short light-auburn hair brushes a calm golden retriever with a plain pet brush.",
+     "src": "/ai-image-generation/im03-home-picker-dog-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Dog Brush Care Demo",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 UGC creator demo for a pet brush in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the pet brush exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Believable vertical UGC in a real room: handheld, slightly uneven window light, ordinary objects in the background, visible skin texture, one clumsy moment left in on purpose. Not a studio commercial, not a polished advert.\n【Product Lock】The pet brush keeps the same shape, colour, material, finish and details in every frame, including a plain pet brush; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-3.0s | Hook】Handheld close, half a face entering the frame in a real room: the creator asks one short question to the lens before the pet brush is fully shown. The movement is already in progress when the shot starts.\n【3.0-8.0s | Demo】Adult woman with short light-auburn hair brushes a calm golden retriever with a pet brush. One real, slightly imperfect motion, with one small clumsy detail left in on purpose; the camera follows the hands.\n【8.0-12.0s | Evidence】A close insert on the surface and on the result the motion produced: no claim, only what the frame shows. Visible here: a plain pet brush.\n【12.0-15.0s | Close】The creator comes back to the lens with the pet brush still in frame and says one natural line. No slogan, no call to action, no price.\n【Camera】Handheld at 26mm and 35mm, about one arm's length, gentle breathing sway, one reframe and one short focus hunt that recovers. The camera follows the hands and never leaves the product for long. The six rules of the track: handheld distance, window light with an uneven side, a real room with clutter allowed, a performance that may stumble, skin you can see, and one or two jump cuts that feel hand-edited.\n【Sound】Voice: the creator's own voice, casual and close to the lens, one stumble allowed, five short lines across the film — \"Can a pet brush actually work in a real room?\" / \"This is the pet brush in one movement\" / \"This is the clumsy part, every time\" / \"A plain pet brush\" / \"That is how I use it now\". Effects: handling and fabric sounds close to the camera, the room tone of the place. BGM: none. The room tone and the voice carry the film.\n【Continuity】The pet brush stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no studio lighting, no perfect skin, no presenter tone, no transition effect.",
+    "duration": 15,
+    "placement": [
+     "/industries/pet"
+    ],
+    "sceneSlug": "dog-brush-care-demo-3380efd4d3fc",
+    "publicSlug": "dog-brush-care-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "protein-pouch-gym-detail",
+   "label": "Protein Pouch Gym Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "sports-gym"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Unbranded protein powder pouch with a completely blank label on a gym bench after a workout.",
+     "src": "/ai-image-generation/gen2guide-k6-video-hub-picker-protein-640.webp",
+     "kind": "video"
+    },
+    "label": "Protein Pouch Gym Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a protein Pouch in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the protein Pouch exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The protein Pouch keeps the same shape, colour, material, finish and details in every frame, including a completely blank label; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The protein Pouch at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective. Visible here: a completely blank label.\n【12.0-15.0s | Hold】The protein Pouch returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The protein Pouch stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/sports-gym"
+    ],
+    "sceneSlug": "protein-pouch-gym-detail-fa5787e6164e",
+    "publicSlug": "protein-pouch-gym-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "sage-bottle-desk-detail",
+   "label": "Sage Bottle Desk Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "sports-gym"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Sage-green insulated bottle on a bright work desk.",
+     "src": "/ai-image-generation/q14-spark-og-640.webp",
+     "kind": "video"
+    },
+    "label": "Sage Bottle Desk Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a sage Bottle in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the sage Bottle exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The sage Bottle keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The sage Bottle at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The sage Bottle returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The sage Bottle stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/sports-gym"
+    ],
+    "sceneSlug": "sage-bottle-desk-detail-308e7c9f87b7",
+    "publicSlug": "sage-bottle-desk-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "stemless-earbud-desk-demo",
+   "label": "Stemless Earbud Desk Demo",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "tech-electronics"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Two matte black stemless earbuds rest beside a closed laptop as an adult hand reaches toward one.",
+     "src": "/ai-image-generation/im03-home-picker-earbuds-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Stemless Earbud Desk Demo",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a stemless Earbud in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the stemless Earbud exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The stemless Earbud keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The stemless Earbud at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】Two matte black stemless earbuds rest beside a closed laptop as an adult hand reaches toward one. Camera moves with the hands, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The stemless Earbud returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The stemless Earbud stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/electronics"
+    ],
+    "sceneSlug": "stemless-earbud-desk-demo-9984dbf65504",
+    "publicSlug": "stemless-earbud-desk-demo"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "speaker-feature-detail",
+   "label": "Speaker Feature Detail",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "tech-electronics"
+    ],
+    "image": {
+     "h": 360,
+     "w": 640,
+     "alt": "Plain rectangular black speaker on a console beside a large window.",
+     "src": "/ai-image-generation/k1-unboxing-template-film-speaker-640.webp",
+     "kind": "video"
+    },
+    "label": "Speaker Feature Detail",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a rectangular black speaker on a console beside a large window.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the rectangular black speaker exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The rectangular black speaker keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The rectangular black speaker at rest on a console beside a large window, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The rectangular black speaker returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The rectangular black speaker stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/electronics"
+    ],
+    "sceneSlug": "speaker-feature-detail-7b18745a786a",
+    "publicSlug": "speaker-feature-detail"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "headphone-creator-review",
+   "label": "Headphone Creator Review",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "ugc"
+    ],
+    "image": {
+     "h": 1138,
+     "w": 640,
+     "alt": "An adult male creator in a tidy home office holds plain over-ear headphones and speaks to camera.",
+     "src": "/ai-image-generation/q1-video-card-headphones-640.webp",
+     "kind": "video"
+    },
+    "label": "Headphone Creator Review",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 UGC creator talk-to-camera for an over-ear headphones in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the over-ear headphones exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Believable vertical UGC talk-to-camera in a real room: handheld at about one arm's length, window light only, brightness uneven across the face, ordinary objects behind, visible skin texture, one short focus hunt that recovers. Not an advert, not a studio set.\n【Product Lock】The over-ear headphones keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-3.0s | Hook】Handheld close on the creator at about one arm's length, already talking, the over-ear headphones held in one hand in a real room.\n【3.0-8.0s | Show】The creator lifts the over-ear headphones closer to the lens and turns it a few degrees while still talking; one small push in.\n【8.0-12.0s | Evidence】The camera drops to a close insert on the surface while the voice continues over it, then rises back along the same path.\n【12.0-15.0s | Close】The same eyeline, the same light, the over-ear headphones still in frame; the creator finishes the line and the shot settles.\n【Camera】Handheld at 35mm and 85mm, about one arm's length, gentle sway, one short focus hunt that recovers, one small push in when the presenter leans forward. The presenter keeps the same eyeline and the same framing across the cuts.\n【Sound】Voice: the presenter's own voice, conversational pace, natural pauses and breaths, five short lines across the film — \"Quick one about this over-ear headphones\" / \"Here is what it does in a real room\" / \"Look at this part with me\" / \"Same product, same finish, every angle\" / \"That is the whole thing\". Effects: handling and fabric sounds close to the camera, the room tone of the place. BGM: none. The room tone and the voice carry the film.\n【Continuity】The over-ear headphones stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no studio lighting, no teleprompter delivery, no shouted sales line.",
+    "duration": 15,
+    "placement": [
+     "/industries/ugc"
+    ],
+    "sceneSlug": "headphone-creator-review-75ceb36d0dbd",
+    "publicSlug": "headphone-creator-review"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "desk-lamp-product-demo-ugc",
+   "label": "Desk Lamp Product Demo UGC",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "ugc"
+    ],
+    "image": {
+     "h": 360,
+     "w": 640,
+     "alt": "Plain white portable table lamp glows on a desk beside a closed laptop.",
+     "src": "/ai-image-generation/k1-product-videos-template-table-lamp-640.webp",
+     "kind": "video"
+    },
+    "label": "Desk Lamp Product Demo UGC",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a white portable table lamp glows on a desk beside a closed laptop.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the white portable table lamp glows exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The white portable table lamp glows keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the white portable table lamp glows is set in place on a desk beside a closed laptop, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the white portable table lamp glows fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the white portable table lamp glows a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】White portable table lamp glows on a desk beside a closed laptop. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same white portable table lamp glows, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement only: one slow push in, one gentle arc, one close follow and one locked hold, all keeping the same light direction and screen direction.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A white portable table lamp glows, on a desk beside a closed laptop\" / \"This is the white portable table lamp glows in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The white portable table lamp glows stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/ugc"
+    ],
+    "sceneSlug": "desk-lamp-product-demo-ugc-5de8645d5a53",
+    "publicSlug": "desk-lamp-product-demo-ugc"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "coral-lipstick-swatch",
+   "label": "Coral Lipstick Swatch",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "viral"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Coral-orange lipstick in a plain matte black tube stands beside a matching swatch.",
+     "src": "/ai-image-generation/im03-home-picker-lipstick-r1-640.webp",
+     "kind": "video"
+    },
+    "label": "Coral Lipstick Swatch",
+    "aspect": "9:16",
+    "prompt": "A 30-second vertical 9:16 e-commerce product display film for a matte black tube beside a matching swatch.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the matte black tube exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】E-commerce product display style, warm lifestyle tone, natural colour, the product clearly separated from the background. Information first: every beat adds a new angle or a new piece of the action. Soft product light from one large source at the left, one warm bounce from the right, a gentle shadow under the product, no hard strobe.\n【Product Lock】The matte black tube keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-5.0s | Wide display】Wide shot at eye level: the matte black tube is set in place beside a matching swatch, the whole shape readable against the background. Camera pushes in slowly from 35mm to 50mm, and the lines of the place keep their screen direction.\n【5.0-11.0s | Front close-up】The front of the matte black tube fills the frame, the whole silhouette readable, and the light rakes across the surface so the material reads instead of being described. Camera arcs gently.\n【11.0-17.0s | Hand turns it】A hand enters from the top, lifts the matte black tube a little and turns it so the back and the far side come into view, then turns it back to the front. The grip stays relaxed and anatomically correct, and the product never leaves the frame.\n【17.0-23.0s | The action】Coral-orange lipstick in a matte black tube stands beside a matching swatch. Camera follows the hands closely with one small reframe and no cut, so the action reads as one movement.\n【23.0-27.5s | Point held】The result of that action is held still in the frame: the same matte black tube, now in the state the action produced. The point is shown rather than claimed — no superimposed words, no price, no badge.\n【27.5-30.0s | Closing hold】The product returns to a full front view, centred and complete. Camera locks off, and the last frame matches the first frame.\n【Camera】Controlled movement that serves the information: one slow push in, one gentle arc, one close follow of the hands and one locked hold. Every beat keeps the same light direction and the same screen direction, so the cuts read as one continuous action, and no beat invents an angle the product photo does not support.\n【Sound】Voice: a calm adult voice, mid-range, neutral accent, unhurried pace, five short lines across the film — \"A matte black tube, beside a matching swatch\" / \"This is the matte black tube in one movement\" / \"The hands do the work, one movement at a time\" / \"The same product from every angle\" / \"One action, start to finish\". Effects: the handling sounds of the product, one surface rustle, the room tone. BGM: a light modern retail bed, low, instrumental, no vocals.\n【Continuity】The matte black tube stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no slow motion, no speed ramp, no lens flare.",
+    "duration": 30,
+    "placement": [
+     "/industries/beauty-skincare"
+    ],
+    "sceneSlug": "coral-lipstick-swatch-a1aceac4a168",
+    "publicSlug": "coral-lipstick-swatch"
+   }
+  },
+  {
+   "section": "v2_main",
+   "slug": "mug-color-reveal-hook",
+   "label": "Mug Color Reveal Hook",
+   "card": {
+    "href": "/app/create/tool/video-ads/creator#step-video",
+    "kind": "video",
+    "chips": [
+     "viral"
+    ],
+    "image": {
+     "h": 640,
+     "w": 640,
+     "alt": "Three simple ceramic mugs in distinct glaze colors",
+     "src": "/ai-image-generation/k5-home-card-color-640.webp",
+     "kind": "video"
+    },
+    "label": "Mug Color Reveal Hook",
+    "aspect": "9:16",
+    "prompt": "A 15-second vertical 9:16 premium product texture film for a mug in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the mug exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Premium product film, restrained palette taken from the product, quiet negative space, one controlled light source, no gloss exaggeration. One controlled key light raking across the surface, a cool rim separating the outline, deep shadow falling away from the product.\n【Product Lock】The mug keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-4.0s | Ambience】The mug at rest in a real room, the key light travelling across its surface. Camera drifts slowly.\n【4.0-8.0s | Use moment】The product turns slowly where it stands, the light crossing the surface as it moves. Camera moves with it, no cut.\n【8.0-12.0s | Material】A macro of the material where the light reacts with it: the surface described by what the light does, not by an adjective.\n【12.0-15.0s | Hold】The mug returns to the opening light, centred and complete. Camera pulls back and holds.\n【Camera】Slow drift at 50mm, one 85mm push in and one arc that ends on the same side, all on one axis. No handheld, no whip pan, no speed ramp.\n【Sound】Voice: no spoken dialogue in this film; the track carries the mood, not a claim. Effects: a quiet room tone and one soft handling sound. BGM: a minimal ambient bed, low, instrumental, no vocals.\n【Continuity】The mug stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no handheld shake, no fast cut, no lens flare, no invented surface.",
+    "duration": 15,
+    "placement": [
+     "/industries/food-drinks"
+    ],
+    "sceneSlug": "mug-color-reveal-hook-3824683ecf64",
+    "publicSlug": "mug-color-reveal-hook"
+   }
+  }
+ ]
+}

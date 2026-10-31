@@ -1,0 +1,600 @@
+{
+ "siteId": "site_aidreamcapes",
+ "slug": "/",
+ "generated": "2026-11-01",
+ "kind": "insert 20 spokesperson actor video cases into the homepage picker (slugless: href links to detail pages; no detail ownership)",
+ "inserted": [
+  {
+   "num": "01",
+   "slug_hint": "indoor-entryway-greeting",
+   "card": {
+    "kind": "video",
+    "label": "Indoor: Entryway Greeting",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/indoor-entryway-greeting",
+    "image": {
+     "src": "/ai-image-generation/actors/ari-640.webp",
+     "alt": "an adult East Asian woman in her twenties in an indoor setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/indoor-entryway-greeting.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/ari-640.webp",
+      "alt": "an adult East Asian woman in her twenties in an indoor setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "04",
+   "slug_hint": "home-table-explanation",
+   "card": {
+    "kind": "video",
+    "label": "Home: Table Explanation",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/home-table-explanation",
+    "image": {
+     "src": "/ai-image-generation/actors/elena-640.webp",
+     "alt": "an adult white woman in her forties in a home setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/home-table-explanation.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/elena-640.webp",
+      "alt": "an adult white woman in her forties in a home setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "06",
+   "slug_hint": "outdoor-walkway-update",
+   "card": {
+    "kind": "video",
+    "label": "Outdoor: Walkway Update",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/outdoor-walkway-update",
+    "image": {
+     "src": "/ai-image-generation/actors/jon-640.webp",
+     "alt": "an adult Latino man in his thirties in an outdoor setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/outdoor-walkway-update.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/jon-640.webp",
+      "alt": "an adult Latino man in his thirties in an outdoor setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "09",
+   "slug_hint": "studio-creator-intro",
+   "card": {
+    "kind": "video",
+    "label": "Studio: Creator Intro",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/studio-creator-intro",
+    "image": {
+     "src": "/ai-image-generation/actors/ravi-640.webp",
+     "alt": "an adult South Asian man in his thirties in a studio setting speaks to camera with plain black broadcast microphone.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/studio-creator-intro.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/ravi-640.webp",
+      "alt": "an adult South Asian man in his thirties in a studio setting speaks to camera with plain black broadcast microphone.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "12",
+   "slug_hint": "office-workday-update",
+   "card": {
+    "kind": "video",
+    "label": "Office: Workday Update",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/office-workday-update",
+    "image": {
+     "src": "/ai-image-generation/actors/nisha-640.webp",
+     "alt": "an adult South Asian woman in her thirties in an office setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/office-workday-update.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/nisha-640.webp",
+      "alt": "an adult South Asian woman in her thirties in an office setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "15",
+   "slug_hint": "gym-pre-workout-greeting",
+   "card": {
+    "kind": "video",
+    "label": "Gym: Pre-Workout Greeting",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "sports-gym"
+    ],
+    "href": "/ai-video-generation/gym-pre-workout-greeting",
+    "image": {
+     "src": "/ai-image-generation/actors/sofia-640.webp",
+     "alt": "an adult white woman in her thirties in a gym setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/gym-pre-workout-greeting.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/sofia-640.webp",
+      "alt": "an adult white woman in her thirties in a gym setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "17",
+   "slug_hint": "cafe-window-seat-chat",
+   "card": {
+    "kind": "video",
+    "label": "Cafe: Window-Seat Chat",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/cafe-window-seat-chat",
+    "image": {
+     "src": "/ai-image-generation/actors/tess-640.webp",
+     "alt": "an adult white woman in her twenties in a cafe setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/cafe-window-seat-chat.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/tess-640.webp",
+      "alt": "an adult white woman in her twenties in a cafe setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "20",
+   "slug_hint": "kitchen-counter-chat",
+   "card": {
+    "kind": "video",
+    "label": "Kitchen: Counter Chat",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/kitchen-counter-chat",
+    "image": {
+     "src": "/ai-image-generation/actors/mara-640.webp",
+     "alt": "an adult Latina woman in her thirties in a kitchen setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/kitchen-counter-chat.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/mara-640.webp",
+      "alt": "an adult Latina woman in her thirties in a kitchen setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "23",
+   "slug_hint": "fitness-recovery-tip",
+   "card": {
+    "kind": "video",
+    "label": "Fitness: Recovery Tip",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/fitness-recovery-tip",
+    "image": {
+     "src": "/ai-image-generation/actors/caleb-640.webp",
+     "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/fitness-recovery-tip.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/caleb-640.webp",
+      "alt": "an adult Black man in his thirties in a fitness setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "26",
+   "slug_hint": "beach-boardwalk-update",
+   "card": {
+    "kind": "video",
+    "label": "Beach: Boardwalk Update",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/beach-boardwalk-update",
+    "image": {
+     "src": "/ai-image-generation/actors/lola-640.webp",
+     "alt": "Adult white woman with a short sandy-blonde bob speaks to camera on open beach sand with the sea behind her.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/beach-boardwalk-update.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/lola-640.webp",
+      "alt": "Adult white woman with a short sandy-blonde bob speaks to camera on open beach sand with the sea behind her.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "28",
+   "slug_hint": "car-passenger-seat-chat",
+   "card": {
+    "kind": "video",
+    "label": "Car: Passenger-Seat Chat",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/car-passenger-seat-chat",
+    "image": {
+     "src": "/ai-image-generation/actors/jade-640.webp",
+     "alt": "an adult Black woman with a tight short natural haircut in a car speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/car-passenger-seat-chat.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/jade-640.webp",
+      "alt": "an adult Black woman with a tight short natural haircut in a car speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "31",
+   "slug_hint": "balcony-railing-greeting",
+   "card": {
+    "kind": "video",
+    "label": "Balcony: Railing Greeting",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/balcony-railing-greeting",
+    "image": {
+     "src": "/ai-image-generation/actors/tessa-640.webp",
+     "alt": "an adult Latina woman in her thirties in a balcony setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/balcony-railing-greeting.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/tessa-640.webp",
+      "alt": "an adult Latina woman in her thirties in a balcony setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "34",
+   "slug_hint": "pet-cat-cuddle-chat",
+   "card": {
+    "kind": "video",
+    "label": "Pet: Cat Cuddle Chat",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "pet"
+    ],
+    "href": "/ai-video-generation/pet-cat-cuddle-chat",
+    "image": {
+     "src": "/ai-image-generation/actors/anika-640.webp",
+     "alt": "An adult South Asian woman with dark hair in a tidy low bun cuddles a calm gray cat on a sofa.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/pet-cat-cuddle-chat.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/anika-640.webp",
+      "alt": "An adult South Asian woman with dark hair in a tidy low bun cuddles a calm gray cat on a sofa.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "37",
+   "slug_hint": "sports-racket-court-tip",
+   "card": {
+    "kind": "video",
+    "label": "Sports: Racket Court Tip",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "sports-gym"
+    ],
+    "href": "/ai-video-generation/sports-racket-court-tip",
+    "image": {
+     "src": "/ai-image-generation/actors/damon-640.webp",
+     "alt": "an adult Black man in his thirties in a sports setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/sports-racket-court-tip.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/damon-640.webp",
+      "alt": "an adult Black man in his thirties in a sports setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "39",
+   "slug_hint": "study-room-desk-study-chat",
+   "card": {
+    "kind": "video",
+    "label": "Study Room: Desk Study Chat",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "education"
+    ],
+    "href": "/ai-video-generation/study-room-desk-study-chat",
+    "image": {
+     "src": "/ai-image-generation/actors/maxwell-640.webp",
+     "alt": "an adult white man in his thirties in a study room setting speaks to camera with open laptop with abstract screen.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/study-room-desk-study-chat.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/maxwell-640.webp",
+      "alt": "an adult white man in his thirties in a study room setting speaks to camera with open laptop with abstract screen.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "42",
+   "slug_hint": "terrace-rooftop-greeting",
+   "card": {
+    "kind": "video",
+    "label": "Terrace: Rooftop Greeting",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/terrace-rooftop-greeting",
+    "image": {
+     "src": "/ai-image-generation/actors/elise-640.webp",
+     "alt": "An adult Latina woman with a straight copper-red bob speaks among planters on a sunny rooftop terrace.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/terrace-rooftop-greeting.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/elise-640.webp",
+      "alt": "An adult Latina woman with a straight copper-red bob speaks among planters on a sunny rooftop terrace.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "45",
+   "slug_hint": "exercise-warm-up-explanation",
+   "card": {
+    "kind": "video",
+    "label": "Exercise: Warm-Up Explanation",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "sports-gym"
+    ],
+    "href": "/ai-video-generation/exercise-warm-up-explanation",
+    "image": {
+     "src": "/ai-image-generation/actors/vera-640.webp",
+     "alt": "A middle-aged Black woman in a white sun visor and blue athletic tank speaks on a sunny waterfront trail while holding a plain clear water bottle.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/exercise-warm-up-explanation.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/vera-640.webp",
+      "alt": "A middle-aged Black woman in a white sun visor and blue athletic tank speaks on a sunny waterfront trail while holding a plain clear water bottle.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "48",
+   "slug_hint": "garage-storage-shelf-update",
+   "card": {
+    "kind": "video",
+    "label": "Garage: Storage Shelf Update",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/garage-storage-shelf-update",
+    "image": {
+     "src": "/ai-image-generation/actors/luis-640.webp",
+     "alt": "an adult Black man in his fifties in a garage setting speaks to camera with empty hands.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/garage-storage-shelf-update.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/luis-640.webp",
+      "alt": "an adult Black man in his fifties in a garage setting speaks to camera with empty hands.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "50",
+   "slug_hint": "pool-poolside-greeting",
+   "card": {
+    "kind": "video",
+    "label": "Pool: Poolside Greeting",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [],
+    "href": "/ai-video-generation/pool-poolside-greeting",
+    "image": {
+     "src": "/ai-image-generation/actors/tara-640.webp",
+     "alt": "a young white woman with a blonde high ponytail in a pink athletic tank top speaks beside a palm-lined pool.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/pool-poolside-greeting.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/tara-640.webp",
+      "alt": "a young white woman with a blonde high ponytail in a pink athletic tank top speaks beside a palm-lined pool.",
+      "kind": "video"
+     }
+    }
+   }
+  },
+  {
+   "num": "53",
+   "slug_hint": "yoga-breathing-introduction",
+   "card": {
+    "kind": "video",
+    "label": "Yoga: Breathing Introduction",
+    "aspect": "9:16",
+    "duration": 30,
+    "chips": [
+     "sports-gym"
+    ],
+    "href": "/ai-video-generation/yoga-breathing-introduction",
+    "image": {
+     "src": "/ai-image-generation/actors/anjali-640.webp",
+     "alt": "an adult South Asian woman in her thirties in a yoga setting speaks to camera with plain yoga mat.",
+     "w": 640,
+     "h": 1138
+    },
+    "video": {
+     "src": "/ai-video-generation/yoga-breathing-introduction.mp4",
+     "width": 720,
+     "height": 1280,
+     "duration": 30,
+     "poster": {
+      "src": "/ai-image-generation/actors/anjali-640.webp",
+      "alt": "an adult South Asian woman in her thirties in a yoga setting speaks to camera with plain yoga mat.",
+      "kind": "video"
+     }
+    }
+   }
+  }
+ ]
+}

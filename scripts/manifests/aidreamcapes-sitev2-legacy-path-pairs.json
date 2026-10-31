@@ -1,0 +1,48 @@
+{
+ "pairs": [
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-tiktok-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-tiktok-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-youtube-shorts-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-youtube-shorts-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-amazon-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-amazon-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-instagram-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-instagram-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-facebook-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-facebook-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/gen/t33-plat-shopify-og-r2.webp",
+   "to": "/ai-image-generation/t33-plat-shopify-og-r2.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/guide/im08-ai-actors-kitchen-1-r1--640.webp",
+   "to": "/ai-image-generation/actors/asha-640.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/guide/fx50-ai-actors-lola-beach--640.webp",
+   "to": "/ai-image-generation/actors/lola-640.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/guide/im08-ai-actors-kitchen-1-r1.webp",
+   "to": "/ai-image-generation/actors/asha-640.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/guide/fx50-ai-actors-lola-beach.webp",
+   "to": "/ai-image-generation/actors/lola-640.webp"
+  },
+  {
+   "from": "/assets/sites/site_aidreamcapes/site-v2/presenter-r2.webp",
+   "to": "/ai-image-generation/actors/presenter-r2.webp"
+  }
+ ]
+}

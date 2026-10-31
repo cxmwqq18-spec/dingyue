@@ -15,23 +15,35 @@ import { PrismaClient } from "@prisma/client";
 const apply = process.argv.includes("--apply");
 const pairsFile = process.argv[2];
 if (!pairsFile || !fs.existsSync(pairsFile)) {
-  console.error("usage: node apply-aivideosugc-actor-portrait-urls.mjs <pairs.json> [--apply]");
+  console.error("usage: node apply-aivideosugc-actor-portrait-urls.mjs <pairs.json> [--apply] [--match=<substring>]");
   process.exit(1);
 }
+// Candidate-row filter. Defaults to the actor catalog prefix; pass --match=
+// with a substring of the pairs' "from" values for other migrations.
+const matchArg = process.argv.find((arg) => arg.startsWith("--match="))?.slice("--match=".length);
 const SITE_ID = "site_aidreamcapes";
 const { pairs } = JSON.parse(fs.readFileSync(pairsFile, "utf8"));
 if (!pairs?.length) throw new Error("no pairs in the manifest");
 // The longest "from" first so no pair is shadowed by a prefix of another.
 const ordered = [...pairs].sort((left, right) => right.from.length - left.from.length);
+const rowFilter = matchArg ?? "/ai-image-generation/actors/ac1-actor-card-";
+if (!ordered.every((pair) => rowFilter === "" || pair.from.includes(rowFilter) || rowFilter === "/ai-image-generation/actors/ac1-actor-card-")) {
+  console.warn(`note: some pairs do not contain the match filter "${rowFilter}" — verify coverage afterwards`);
+}
 console.log(`url pairs: ${ordered.length}`);
 
 const prisma = new PrismaClient();
-const rows = await prisma.$queryRaw`
+const rows = rowFilter === ""
+  ? await prisma.$queryRaw`
   SELECT "id", "slug", "contentJson"::text AS json
   FROM "LivePage"
-  WHERE "siteId" = ${SITE_ID} AND "contentJson"::text LIKE '%/ai-image-generation/actors/ac1-actor-card-%'
+  WHERE "siteId" = ${SITE_ID}`
+  : await prisma.$queryRaw`
+  SELECT "id", "slug", "contentJson"::text AS json
+  FROM "LivePage"
+  WHERE "siteId" = ${SITE_ID} AND "contentJson"::text LIKE ${"%"+rowFilter+"%"}
 `;
-console.log(`rows still referencing the catalog filenames: ${rows.length}`);
+console.log(`candidate rows: ${rows.length}`);
 
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 const backupDir = path.join("backups", `actor-portrait-rename-${stamp}`);
