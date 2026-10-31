@@ -46,6 +46,7 @@ const stageLabels: Record<string, string> = {
   admin_terminated: "管理员已终止",
   generation_job_expired: "任务已过期释放",
   video_provider_create_timeout: "视频供应商创建超时",
+  video_provider_progress_stall: "视频供应商进度停滞",
   local_worker_started: "本地 worker 已启动",
   local_video_worker_started: "视频 worker 已启动",
   provider_request_started: "已请求供应商",

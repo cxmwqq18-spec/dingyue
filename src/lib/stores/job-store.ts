@@ -295,6 +295,32 @@ function videoProviderRequestStartedWithoutTaskId(jobResult?: Record<string, unk
   ]);
 }
 
+const VIDEO_PROVIDER_PROGRESS_STALL_MIN_MS = 5 * 60_000;
+
+function videoProviderProgressStallMs(): number {
+  const configured = Number(process.env.AI_VIDEO_PROVIDER_PROGRESS_STALL_MS ?? "");
+  if (Number.isFinite(configured) && configured > 0) return Math.max(VIDEO_PROVIDER_PROGRESS_STALL_MIN_MS, Math.trunc(configured));
+  return 15 * 60_000;
+}
+
+/**
+ * Newest progress heartbeat across running provider slots (ms since the last
+ * one), or 0 when no running slot reports a timestamp. The stale sweep uses
+ * this so a silent provider cannot hold a customer's reserved credits until
+ * the full worker timeout (24h by default) elapses.
+ */
+function videoProviderProgressSilentMs(jobResult?: Record<string, unknown>): number {
+  const slots = Array.isArray(jobResult?.outputSlots)
+    ? (jobResult.outputSlots as unknown[]).filter((slot): slot is Record<string, unknown> => Boolean(slot) && typeof slot === "object" && !Array.isArray(slot))
+    : [];
+  const runningUpdatedAt = slots
+    .filter((slot) => slot.status === "running" && typeof slot.updatedAt === "string")
+    .map((slot) => Date.parse(slot.updatedAt as string))
+    .filter((time) => Number.isFinite(time));
+  if (!runningUpdatedAt.length) return 0;
+  return Math.max(0, Date.now() - Math.max(...runningUpdatedAt));
+}
+
 function videoProviderCreateOrphanStaleMs(timeoutMs: number): number {
   const configured = Number(process.env.AI_VIDEO_PROVIDER_CREATE_STALE_MS ?? "");
   if (Number.isFinite(configured) && configured > 0) return Math.max(MIN_ACTIVE_JOB_STALE_MS, Math.trunc(configured));
@@ -1041,7 +1067,12 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
     const isVideoCreateOrphan = videoProviderCreateStartedWithoutTaskId(previousResult);
     const isVideoRequestOrphan = !isVideoCreateOrphan && videoProviderRequestStartedWithoutTaskId(previousResult);
     const forceVideoTaskTimeout = params.forceVideoCreateTimeout === true && (isVideoCreateOrphan || isVideoRequestOrphan);
-    if (!forceVideoTaskTimeout && job.updatedAt.getTime() > nowMs - staleMs) continue;
+    // A video job whose provider stopped sending progress is treated as expired even
+    // while the (much longer) worker timeout would still cover it; without this a
+    // silent provider holds the customer's reserved credits for up to 24h.
+    const progressSilentMs = videoProviderProgressSilentMs(previousResult);
+    const progressStalled = progressSilentMs >= videoProviderProgressStallMs();
+    if (!forceVideoTaskTimeout && !progressStalled && job.updatedAt.getTime() > nowMs - staleMs) continue;
     await lockCustomerCreditBalanceForUpdate(tx, job.siteId, job.customerId);
     const customer = await readCustomerForUpdate(tx, job.siteId, job.customerId);
     const reserveLedger = await tx.creditLedger.findFirst({
@@ -1072,11 +1103,15 @@ async function releaseStaleActiveJobs(tx: Tx, params: { siteId: string; customer
       ? "video_provider_create_timeout"
       : isVideoRequestOrphan
       ? "video_provider_request_timeout"
+      : progressStalled
+      ? "video_provider_progress_stall"
       : "generation_job_expired";
     const expirationError = isVideoCreateOrphan
       ? "ai_provider_video_create_timeout_watchdog"
       : isVideoRequestOrphan
       ? "ai_provider_video_request_timeout_watchdog"
+      : progressStalled
+      ? "ai_provider_video_progress_stall_watchdog"
       : "generation_job_expired";
     const failedSlots = (previousSlots.length ? previousSlots : [{ index: 1 }]).map((slot, index) => ({
       ...slot,
