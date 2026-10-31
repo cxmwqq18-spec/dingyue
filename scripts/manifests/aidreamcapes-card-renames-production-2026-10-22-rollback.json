@@ -23,7 +23,9 @@
         "trousers-fold-demo-home"
       ],
       "oldPath": "/ai-video-generation/trousers-fold-demo-home",
-      "newPath": "/ai-video-generation/folded-trousers-detail"
+      "newPath": "/ai-video-generation/trousers-fold-demo",
+      "supersededBy": "/ai-video-generation/trousers-fold-demo",
+      "supersededNote": "target slug renamed again by the 2026-11-01 homepage isolation migration; the 2026-10-22 target now 404s, so the alias claim points at the live canonical (restored 2026-11-01 via apply-aivideosugc-media-alias-restore)"
     },
     {
       "siteId": "site_aidreamcapes",
@@ -41,7 +43,9 @@
         "tinted-balm-vanity-reel-home"
       ],
       "oldPath": "/ai-video-generation/tinted-balm-vanity-reel-home",
-      "newPath": "/ai-video-generation/tinted-balm-detail"
+      "newPath": "/ai-video-generation/tinted-balm-vanity-reel",
+      "supersededBy": "/ai-video-generation/tinted-balm-vanity-reel",
+      "supersededNote": "target slug renamed again by the 2026-11-01 homepage isolation migration; the 2026-10-22 target now 404s, so the alias claim points at the live canonical (restored 2026-11-01 via apply-aivideosugc-media-alias-restore)"
     },
     {
       "siteId": "site_aidreamcapes",
