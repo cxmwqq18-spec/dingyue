@@ -2,9 +2,14 @@ import "server-only";
 
 import type { PlatformAiProvider } from "@/lib/types";
 
+export type PlatformTextContentPart =
+  | { type: "text"; text: string }
+  | { type: "image_url"; image_url: { url: string } };
+
 export type PlatformTextMessage = {
   role: "system" | "user" | "assistant";
-  content: string;
+  /** Plain text, or multimodal parts for vision-capable providers. */
+  content: string | PlatformTextContentPart[];
 };
 
 export type PlatformTextGenerationResult = {
@@ -18,6 +23,8 @@ type PlatformTextGenerationParams = {
   temperature: number;
   idempotencyKey: string;
   mockText: string;
+  /** Overrides the provider call's default 30s budget (long skill-driven generations need more). */
+  timeoutMs?: number;
 };
 
 export function platformTextChatCompletionsUrl(aiUrl: string): string {
@@ -94,7 +101,8 @@ export async function generatePlatformText(params: PlatformTextGenerationParams)
     provider,
     messages: params.messages,
     temperature: params.temperature,
-    idempotencyKey: params.idempotencyKey
+    idempotencyKey: params.idempotencyKey,
+    timeoutMs: params.timeoutMs
   });
   return { text, providerId: provider.id, providerLabel: provider.label };
 }

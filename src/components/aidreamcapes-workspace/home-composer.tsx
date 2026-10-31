@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowRight, ImageIcon, Monitor, Music, Ratio, Sparkles, Timer, Upload, Video, WandSparkles, X } from "lucide-react";
+import { ArrowRight, Film, ImageIcon, Loader2, Monitor, Music, Ratio, Sparkles, Timer, Upload, Video, WandSparkles, X } from "lucide-react";
 import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
+import { WAN30_VIDEO_TYPES } from "@/lib/wan30-video-prompt-types";
 import type { WorkspaceImageTool } from "./image-tool-picker";
 import { WORKSPACE_ASPECTS } from "@/lib/aidreamcapes-workspace/catalogs";
 import { fileKind, reorderHandlers, takePasteFiles, useFileDropZone, type FileKind } from "./file-dnd";
@@ -52,6 +53,12 @@ export interface HomeComposerProps {
   imageGenerateDisabled?: boolean;
   imageGenerateLabel?: string;
   onContinue: (tab: HomeComposerTab, video: HomeComposerVideoSelection) => void;
+  /** 视频类型（Wan3.0 优化器的工作类型），仅在视频作曲家显示。 */
+  videoTypeId?: string;
+  onVideoTypeChange?: (videoTypeId: string) => void;
+  /** 用 Wan3.0 skill 优化当前提示词；缺省时隐藏优化按钮。 */
+  onOptimizePrompt?: () => void;
+  promptOptimizing?: boolean;
   /** 当前模型+参数组合的积分预估文案（由父组件请求报价接口后传入）。 */
   creditsNote?: string;
   onLogin?: () => void;
@@ -133,7 +140,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, videoTypeId, onVideoTypeChange, onOptimizePrompt, promptOptimizing = false, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
@@ -227,6 +234,15 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             buttonClassName={styles.settingSelect}
           /></div>
         </> : <>
+          {onVideoTypeChange && <div className={styles.setting}><Film size={15} aria-hidden="true" /><span>Type</span><WorkspaceSelect
+            ariaLabel="Video type"
+            disabled={disabled}
+            value={videoTypeId ?? "general"}
+            options={WAN30_VIDEO_TYPES.map((type) => ({ value: type.id, label: type.label }))}
+            onChange={(value) => onVideoTypeChange(value)}
+            bare
+            buttonClassName={styles.settingSelect}
+          /></div>}
           <div className={`${styles.setting} ${styles.modelSetting}`}><Sparkles size={15} aria-hidden="true" /><WorkspaceSelect
             ariaLabel="Video model"
             disabled={disabled || !catalog?.models.length}
@@ -279,6 +295,10 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             event.preventDefault();
             onLogin();
           }}>Log in to add photos</a>}
+          {(videoMode || draftMode) && onOptimizePrompt && <button type="button" className={styles.controlButton} disabled={disabled || promptOptimizing || !promptValue.trim()} onClick={onOptimizePrompt} title="Optimize this prompt with the Wan3.0 e-commerce video skill" aria-label="Optimize prompt">
+            {promptOptimizing ? <Loader2 size={14} className={styles.spin} aria-hidden="true" /> : <WandSparkles size={14} aria-hidden="true" />}
+            <span>{promptOptimizing ? "Optimizing…" : "Optimize"}</span>
+          </button>}
           <button type="button" className={`${styles.continue} ${styles.continueWithLabel}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration, ...(selectedResolution ? { resolution: selectedResolution } : {}) })}><span>{imageMode && onImageGenerate ? imageGenerateLabel : draftMode ? "Generate video" : "Generate"}</span><ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>

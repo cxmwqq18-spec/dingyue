@@ -100,3 +100,6 @@
   .footerActions { justify-content: space-between; }
   .footerNote, .loginLink { max-width: none; }
 }
+
+.spin { animation: composerSpin 1s linear infinite; }
+@keyframes composerSpin { to { transform: rotate(360deg); } }
