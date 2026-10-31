@@ -189,7 +189,7 @@ export const AIDREAMCAPES_V2_VISUAL_CSS = `
 .adc2 .v-preview-box{position:relative;display:block;width:100%;height:100%;background:#000}
 .adc2 .v-pick-card .v-preview-box{aspect-ratio:1/1;height:auto}
 .adc2 .v-preview-dur{position:absolute;right:8px;bottom:8px;z-index:1;padding:3px 8px;border-radius:999px;background:rgba(5,5,5,.72);color:#fff;font-size:12px;font-weight:600;line-height:1.2;pointer-events:none}
-.adc2 .v-picker-more{display:flex;flex-direction:column;align-items:center}
+.adc2 .v-picker-more{grid-column:1/-1;display:flex;flex-direction:column;align-items:center}
 .adc2 .v-picker-sentinel{width:100%;height:2px}
 .adc2 .v-picker-more-btn{margin-top:22px}
 `;
