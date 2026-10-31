@@ -24,6 +24,8 @@ export interface LibraryTaskCardProps {
   aspect: string;
   resolution?: string;
   referenceSummary?: string;
+  /** Small portraits shown next to the reference row: the host portrait first, then the product photos. */
+  referenceThumbs?: { src: string; label: string }[];
   media: LibraryCardMedia[];
   disabled?: boolean;
   /** 查看 详情 按钮独立禁用位：生成中仍允许查看进度，只有全局忙时禁用。 */
@@ -54,6 +56,7 @@ export function LibraryTaskCard({
   aspect,
   resolution,
   referenceSummary,
+  referenceThumbs,
   media,
   disabled,
   openDisabled,
@@ -179,8 +182,13 @@ export function LibraryTaskCard({
         <dl className={styles.meta}>
           {sceneName && <><dt>Scene</dt><dd>{sceneName}</dd></>}
           {modelLabel && <><dt>Model</dt><dd>{modelLabel}</dd></>}
-          {referenceSummary && <><dt>References</dt><dd>{referenceSummary}</dd></>}
-          {createdAtLabel && <><dt>Created</dt><dd>{createdAtLabel}</dd></>}
+          {referenceSummary && <><dt>References</dt><dd className={styles.referenceRow}>
+            {referenceThumbs?.length ? <span className={styles.referenceThumbs}>
+              {referenceThumbs.map((thumb, index) => <img key={`${thumb.src}-${index}`} className={styles.referenceThumb} src={thumb.src} alt={thumb.label} title={thumb.label} loading="lazy" decoding="async" />)}
+            </span> : null}
+            {referenceSummary}
+          </dd></>}
+          {createdAtLabel && <><dt>Created</dt><dd suppressHydrationWarning>{createdAtLabel}</dd></>}
         </dl>
         <div className={styles.actions}>
           <button type="button" className={styles.open} disabled={openDisabled ?? disabled} onClick={onOpen}>

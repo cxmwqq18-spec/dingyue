@@ -1,7 +1,7 @@
 import { after, type NextRequest } from "next/server";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceResponse, workspaceFailure, jsonBody, parseInput, assertOwnedImages } from "@/lib/aidreamcapes-workspace/api";
-import { createTask, listTasks, publicTask } from "@/lib/aidreamcapes-workspace/store";
+import { createTask, listTasks, publicTask, publicTaskSummary } from "@/lib/aidreamcapes-workspace/store";
 import { refreshTask, taskHasPendingProviderWork, continueDirectTask, directTaskNeedsServerContinuation } from "@/lib/aidreamcapes-workspace/runner";
 import { sceneSchema, defaultTaskInput } from "@/lib/aidreamcapes-workspace/catalogs";
 import { validateTaskInput } from "@/lib/aidreamcapes-workspace/pipeline";
@@ -32,20 +32,31 @@ export async function GET(request: NextRequest, { params }: Context) {
     const page = await listTasks(siteId, auth.current.customer.id, { limit: limit + 1, offset, filter, query });
     const hasMore = page.length > limit;
     const tasks = page.slice(0, limit);
-    const settled = await Promise.all(tasks.map((task) => taskHasPendingProviderWork(task) ? refreshTask(task).catch(() => task) : task));
-    // Direct tasks stalled mid-flow are advanced server-side; the browser no
-    // longer has to drive every step for generation to proceed.
-    const continuing = settled.filter(directTaskNeedsServerContinuation);
-    if (continuing.length) {
+    // Provider progress used to be refreshed inline for every pending task,
+    // which put external I/O in the list's critical path. The browser re-polls
+    // in-flight tasks every few seconds and the drawer re-fetches on open, so
+    // the refreshes and direct continuations now run after the response.
+    const hasProviderWork = tasks.some((task) => taskHasPendingProviderWork(task) || directTaskNeedsServerContinuation(task));
+    if (hasProviderWork) {
       const bases = resolveWorkerBaseUrls(publicUrlForRequest(request, "/").origin);
       after(async () => {
-        for (const task of continuing) {
-          try { await continueDirectTask(task, bases); }
+        const refreshed = new Map<string, Awaited<ReturnType<typeof refreshTask>>>();
+        for (const task of tasks) {
+          if (!taskHasPendingProviderWork(task)) continue;
+          try {
+            const updated = await refreshTask(task).catch(() => task);
+            refreshed.set(task.taskId, updated);
+          } catch (error) { console.error("[aivideosugc-workspace] library refresh", error); }
+        }
+        for (const task of tasks) {
+          const current = refreshed.get(task.taskId) ?? task;
+          if (!directTaskNeedsServerContinuation(current)) continue;
+          try { await continueDirectTask(current, bases); }
           catch (error) { console.error("[aivideosugc-workspace] direct continuation", error); }
         }
       });
     }
-    return workspaceResponse({ tasks: settled.map(publicTask), hasMore });
+    return workspaceResponse({ tasks: tasks.map(publicTaskSummary), hasMore });
   }
   catch (error) { return workspaceFailure(error); }
 }

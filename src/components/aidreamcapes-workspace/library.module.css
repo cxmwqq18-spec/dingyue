@@ -421,6 +421,26 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.referenceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.referenceThumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+.referenceThumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #f4f4f5;
+}
 .actions {
   display: flex;
   align-items: center;

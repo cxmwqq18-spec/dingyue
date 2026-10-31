@@ -9,6 +9,7 @@ import {
   optimizeWan30VideoPrompt,
   WAN30_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH,
   WAN30_PROMPT_OPTIMIZATION_MAX_REFERENCES,
+  type Wan30PromptOptimizationInput,
   type Wan30PromptOptimizationResult
 } from "@/lib/wan30-video-prompt-optimizer";
 import { isWan30VideoTypeId } from "@/lib/wan30-video-prompt-types";
@@ -26,7 +27,41 @@ type RequestBody = {
   aspectRatio?: unknown;
   resolution?: unknown;
   referenceUrls?: unknown;
+  productBrief?: unknown;
 };
+
+/** 确认过的产品简介：标题/描述/价格/规格，作为优化器的事实锚点。 */
+function parseProductBrief(value: unknown): Wan30PromptOptimizationInput["productBrief"] {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value !== "object" || Array.isArray(value)) throw new WorkspaceError("wan30_prompt_optimization_product_brief_invalid", 400);
+  const record = value as Record<string, unknown>;
+  const text = (input: unknown, max: number, code: string): string | undefined => {
+    if (input === undefined || input === null) return undefined;
+    if (typeof input !== "string" || input.length > max) throw new WorkspaceError(code, 400);
+    return input.trim() || undefined;
+  };
+  let price: { amount: string; currency?: string } | undefined;
+  if (record.price !== undefined && record.price !== null) {
+    if (typeof record.price !== "object" || Array.isArray(record.price)) throw new WorkspaceError("wan30_prompt_optimization_product_brief_invalid", 400);
+    const raw = record.price as Record<string, unknown>;
+    if (typeof raw.amount !== "string" || !/^(?:0|[1-9]\d{0,8})(?:\.\d{1,4})?$/.test(raw.amount)) throw new WorkspaceError("wan30_prompt_optimization_product_brief_invalid", 400);
+    price = { amount: raw.amount, ...(typeof raw.currency === "string" && /^[A-Z]{3}$/.test(raw.currency) ? { currency: raw.currency } : {}) };
+  }
+  let variants: string[] | undefined;
+  if (record.variants !== undefined && record.variants !== null) {
+    if (!Array.isArray(record.variants) || record.variants.length > 24 || record.variants.some((entry) => typeof entry !== "string" || entry.length > 120)) {
+      throw new WorkspaceError("wan30_prompt_optimization_product_brief_invalid", 400);
+    }
+    variants = record.variants.map((entry) => (entry as string).trim()).filter(Boolean);
+  }
+  const brief: NonNullable<Wan30PromptOptimizationInput["productBrief"]> = {
+    ...(text(record.title, 200, "wan30_prompt_optimization_product_brief_invalid") ? { title: text(record.title, 200, "wan30_prompt_optimization_product_brief_invalid") } : {}),
+    ...(text(record.description, 800, "wan30_prompt_optimization_product_brief_invalid") ? { description: text(record.description, 800, "wan30_prompt_optimization_product_brief_invalid") } : {}),
+    ...(price ? { price } : {}),
+    ...(variants?.length ? { variants } : {})
+  };
+  return Object.keys(brief).length ? brief : undefined;
+}
 
 /** 工作台作曲家的参考图下载路径 → 校验归属并解析 assetId。 */
 function parseOwnedReferenceAssetIds(value: unknown, siteId: string, customerId: string): string[] {
@@ -80,6 +115,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const aspectRatio = typeof body.aspectRatio === "string" ? body.aspectRatio.trim() : "";
     const resolution = typeof body.resolution === "string" ? body.resolution.trim() : "";
     const referenceAssetIds = parseOwnedReferenceAssetIds(body.referenceUrls, siteId, customerId);
+    const productBrief = parseProductBrief(body.productBrief);
 
     const idempotencyKey = request.headers.get("idempotency-key")?.trim();
     if (!idempotencyKey) throw new WorkspaceError("idempotency_key_required", 400);
@@ -87,7 +123,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const promptHash = crypto.createHash("sha256").update(prompt).digest("hex");
     const requestFingerprint = crypto.createHash("sha256").update(JSON.stringify({
-      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, referenceAssetIds
+      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, referenceAssetIds, productBrief
     })).digest("hex");
     const scopedIdempotencyKey = `${siteId}:${customerId}:wan30-prompt:${idempotencyKey}`;
     const existingJob = await getAsyncJobByIdempotency({ kind: JOB_KIND, actorId: customerId, idempotencyKey: scopedIdempotencyKey });
@@ -126,7 +162,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           durationSeconds,
           aspectRatio,
           resolution,
-          referenceImages
+          referenceImages,
+          productBrief
         })
       });
       if (job.metadata.requestFingerprint !== requestFingerprint) {

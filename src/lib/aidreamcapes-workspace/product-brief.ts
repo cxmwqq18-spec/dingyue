@@ -32,6 +32,9 @@ export type ProductBriefDraft = {
   description: SourcedBriefValue<string> | null;
   detectedImages: Array<SourcedBriefValue<string> & { sourcePageUrl: string }>;
   possiblePrice: SourcedBriefValue<{ amount: string; currency?: string }> | null;
+  /** Variant axes the page declares (sizes, colors, materials) with their
+   * offer prices — everything the prompt optimizer can use as product facts. */
+  variants: SourcedBriefValue<{ label: string; price?: string; currency?: string }[]> | null;
   confirmed: false;
   reviewRequired: true;
 };
@@ -320,6 +323,43 @@ function explicitAmount(value: unknown): string | undefined {
   return /^(?:0|[1-9]\d{0,8})(?:\.\d{1,4})?$/.test(amount) ? amount : undefined;
 }
 
+/** Variant entries from JSON-LD: Product.hasVariant[].offers plus Offer lists.
+ * Each entry keeps a readable label (size / color / sku name) and its price
+ * when the page declares one. */
+function jsonLdVariants(products: Array<Record<string, unknown>>): { label: string; price?: string; currency?: string }[] {
+  const variants: { label: string; price?: string; currency?: string }[] = [];
+  const seen = new Set<string>();
+  const offerLabel = (offer: Record<string, unknown>): string =>
+    [offer.name, offer.sku, offer.size, offer.color]
+      .filter((value): value is string => typeof value === "string" && value.trim().length > 0 && value.trim().length <= 80)
+      .join(" · ").trim();
+  const pushOffer = (offer: Record<string, unknown>, extraLabel?: string) => {
+    const label = [extraLabel, offerLabel(offer)].filter(Boolean).join(" · ");
+    const price = explicitAmount(offer.price) ?? explicitAmount(offer.lowPrice);
+    if (!label && !price) return;
+    const key = `${label}|${price ?? ""}`;
+    if (seen.has(key) || variants.length >= 24) return;
+    seen.add(key);
+    const currency = typeof offer.priceCurrency === "string" && /^[A-Z]{3}$/.test(offer.priceCurrency.trim()) ? offer.priceCurrency.trim() : undefined;
+    variants.push({ ...(label ? { label } : {}), ...(price ? { price, ...(currency ? { currency } : {}) } : {}) } as { label: string; price?: string; currency?: string });
+  };
+  const offerNodes = (value: unknown): Array<Record<string, unknown>> => {
+    if (Array.isArray(value)) return value.flatMap(offerNodes);
+    if (!value || typeof value !== "object") return [];
+    const record = value as Record<string, unknown>;
+    return [record, ...offerNodes(record.offers), ...offerNodes(record.hasVariant), ...offerNodes(record.additionalProperty)];
+  };
+  for (const product of products) {
+    for (const raw of offerNodes(product.offers)) pushOffer(raw);
+    for (const raw of offerNodes(product.hasVariant)) {
+      const nested = offerNodes(raw.offers);
+      if (nested.length) nested.forEach((offer) => pushOffer(offer, offerLabel(raw)));
+      else pushOffer(raw, offerLabel(raw));
+    }
+  }
+  return variants;
+}
+
 function metaPrice(metas: MetaEntry[]): { amount: string; currency?: string; sourceLabel: string } | undefined {
   const explicitSources = [
     { key: "product:price:amount", currencyKeys: ["product:price:currency"], label: "Meta product:price:amount" },
@@ -411,8 +451,13 @@ export function parseProductBriefHtml(html: string, pageUrlInput: string | URL):
     : explicitMetaPrice
       ? sourced({ amount: explicitMetaPrice.amount, ...(explicitMetaPrice.currency ? { currency: explicitMetaPrice.currency } : {}) }, pageSourceUrl, explicitMetaPrice.sourceLabel, "medium")
       : null;
+  const detectedVariants = jsonLdVariants(products);
 
-  return { title, description, detectedImages, possiblePrice, confirmed: false, reviewRequired: true };
+  return {
+    title, description, detectedImages, possiblePrice,
+    variants: detectedVariants.length ? sourced(detectedVariants, pageSourceUrl, "JSON-LD offers/hasVariant", "high") : null,
+    confirmed: false, reviewRequired: true
+  };
 }
 
 /** Fetches a public HTTPS page and returns a review-only, sourced product brief. */

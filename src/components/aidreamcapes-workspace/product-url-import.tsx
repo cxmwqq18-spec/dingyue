@@ -22,6 +22,7 @@ export type ProductBriefPreview = {
     description: SourcedProductBriefValue<string> | null;
     detectedImages: Array<SourcedProductBriefValue<string> & { sourcePageUrl: string }>;
     possiblePrice: SourcedProductBriefValue<{ amount: string; currency?: string }> | null;
+    variants: SourcedProductBriefValue<{ label?: string; price?: string; currency?: string }[]> | null;
     confirmed: false;
     reviewRequired: true;
   };
@@ -34,6 +35,8 @@ export type ConfirmedProductBrief = {
   description: SourcedProductBriefValue<string> | null;
   candidateImages: Array<SourcedProductBriefValue<string> & { sourcePageUrl: string }>;
   possiblePrice: SourcedProductBriefValue<{ amount: string; currency?: string }> | null;
+  /** Variant facts from the page's JSON-LD; older snapshots predate this field. */
+  variants?: SourcedProductBriefValue<{ label?: string; price?: string; currency?: string }[]> | null;
   selectionConfirmed: true;
   priceConfirmed: false;
   reviewRequired: true;
@@ -132,7 +135,9 @@ function parsePreview(value: unknown): ProductBriefPreview | undefined {
     if (!isRecord(image) || !isHttpsUrl(image.sourcePageUrl)) return false;
     return isSourcedValue(image, (input): input is string => typeof input === "string" && isHttpsUrl(input));
   });
-  if (!titleOk || !descriptionOk || !priceOk || !imageOk || draft.confirmed !== false || draft.reviewRequired !== true) return;
+  const variantsOk = draft.variants === null || draft.variants === undefined || isSourcedValue(draft.variants, (input): input is { label?: string; price?: string; currency?: string }[] =>
+    Array.isArray(input) && input.length <= 24 && input.every((entry) => isRecord(entry) && (typeof entry.label === "string" || entry.label === undefined) && (entry.price === undefined || typeof entry.price === "string") && (entry.currency === undefined || typeof entry.currency === "string")));
+  if (!titleOk || !descriptionOk || !priceOk || !imageOk || !variantsOk || draft.confirmed !== false || draft.reviewRequired !== true) return;
   return value as unknown as ProductBriefPreview;
 }
 
@@ -267,6 +272,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
         description: preview.draft.description,
         candidateImages: preview.draft.detectedImages,
         possiblePrice: preview.draft.possiblePrice,
+        variants: preview.draft.variants,
         selectionConfirmed: true,
         priceConfirmed: false,
         reviewRequired: true,
@@ -318,6 +324,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
               description: brief.description,
               candidateImages: brief.candidateImages,
               possiblePrice: brief.possiblePrice,
+              variants: brief.variants,
               selectionConfirmed: brief.selectionConfirmed,
               priceConfirmed: brief.priceConfirmed,
               reviewRequired: brief.reviewRequired,
@@ -354,6 +361,7 @@ export function ProductUrlImport({ siteId, customerId, csrfToken, loginHref, ini
                 <h3>{preview.draft.title?.value || "Product name not found"}</h3>
                 <p>{preview.draft.description?.value || "No product description was found on this page."}</p>
                 {preview.draft.possiblePrice && <span className={styles.summaryPrice}>Possible price · unconfirmed: {priceText(preview.draft.possiblePrice.value)}</span>}
+                {preview.draft.variants?.value.length ? <span className={styles.summaryVariants}>Options found: {preview.draft.variants.value.slice(0, 6).map((variant) => [variant.label, variant.price ? `${variant.price}${variant.currency ? ` ${variant.currency}` : ""}` : ""].filter(Boolean).join(" · ")).filter(Boolean).join(" | ")}{preview.draft.variants.value.length > 6 ? " …" : ""}</span> : null}
                 <span className={styles.summaryImageCount}>{preview.draft.detectedImages.length ? `Main product photo · ${preview.draft.detectedImages.length} photo${preview.draft.detectedImages.length === 1 ? "" : "s"} found` : "No photo found"}</span>
               </div>
             </div>

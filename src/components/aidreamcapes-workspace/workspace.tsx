@@ -182,11 +182,13 @@ function cardDescription(value: string): string {
   const trimmed = firstSentence.trim();
   return trimmed.length > 170 ? `${trimmed.slice(0, 167).trimEnd()}…` : trimmed;
 }
-/** A date that renders the same on the server and in the browser. */
+/** Creation date+time in the visitor's clock. The server may format it in a
+ * different timezone, so the rendered dd carries suppressHydrationWarning and
+ * the browser settles it after hydration. */
 function shortDate(value: string): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "";
-  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", timeZone: "UTC" }).format(date);
+  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(date);
 }
 function taskProductBriefSnapshot(brief: ConfirmedProductBrief): NonNullable<WorkspaceTask["productBrief"]> {
   const field = <T,>(value: { value: T; sourceUrl: string; sourceLabel: string; confidence: "high" | "medium" | "low" } | null) => value ? {
@@ -227,6 +229,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   // while the customer scrolls towards the end of the grid.
   const [tasksHasMore, setTasksHasMore] = useState(false);
   const [tasksLoadingMore, setTasksLoadingMore] = useState(false);
+  // Rows already consumed from the server. The library polls merge refreshed
+  // head-window tasks into `tasks`, so the array length drifts — paging must
+  // advance on a stable cursor instead of the live list length, or a merge
+  // that reorders rows makes the same offset repeat and scrolling stalls.
+  const tasksOffsetRef = useRef(0);
   const librarySentinelRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState<Step>("input");
   const [busy, setBusy] = useState(false);
@@ -684,7 +691,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       }));
     } else if (customerId && (entryView === "library" || entryView === "home" || entryView === "subtitles")) {
       setLoading(true);
-      loads.push(request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>("/tasks?limit=20&offset=0", { signal: controller.signal }).then((result) => { if (active()) { setTasks(result.tasks); setTasksHasMore(Boolean(result.hasMore)); } }));
+      loads.push(request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>("/tasks?limit=20&offset=0", { signal: controller.signal }).then((result) => { if (active()) { setTasks(result.tasks); setTasksHasMore(Boolean(result.hasMore)); tasksOffsetRef.current = result.tasks.length; } }));
     }
     void Promise.allSettled(loads).then((results) => {
       if (!active()) return;
@@ -772,7 +779,9 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!customerId || !tasksHasMore || tasksLoadingMore || loading) return;
     setTasksLoadingMore(true);
     try {
-      const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=20&offset=${tasks.length}`);
+      const offset = tasksOffsetRef.current;
+      const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=20&offset=${offset}`);
+      tasksOffsetRef.current = offset + result.tasks.length;
       setTasks((current) => {
         const known = new Set(current.map((entry) => entry.taskId));
         return [...current, ...result.tasks.filter((item) => !known.has(item.taskId))];
@@ -783,17 +792,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } finally {
       setTasksLoadingMore(false);
     }
-  }, [customerId, loading, request, tasks.length, tasksHasMore, tasksLoadingMore]);
+  }, [customerId, loading, request, tasksHasMore, tasksLoadingMore]);
 
   // Infinite scroll: load the next page when the customer approaches the end
-  // of the library grid.
+  // of the library grid. The observer reconnects whenever a page settles
+  // (loading flag flips back), and the cursor keeps paging moving even when
+  // the 4-second poll reshuffles the head of the list.
   useEffect(() => {
     if (view !== "library" || !tasksHasMore || tasksLoadingMore) return;
     const sentinel = librarySentinelRef.current;
     if (!sentinel) return;
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) void loadMoreTasks();
-    }, { rootMargin: "600px 0px" });
+    }, { rootMargin: "800px 0px" });
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [loadMoreTasks, tasksHasMore, tasksLoadingMore, view]);
@@ -879,15 +890,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setLoading(true);
       try {
         // Reload everything the customer has already paged through, so the
-        // accumulated list stays complete when they return.
-        const result = await request<{ tasks: WorkspaceTask[] }>(`/tasks?limit=${Math.max(tasks.length, 20)}&offset=0`);
-        if (navigation === navigationSerial.current) setTasks((current) => {
-          const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
-          return [...result.tasks.map((item) => {
-            const saved = current.find((entry) => entry.taskId === item.taskId);
-            return saved && saved.revision > item.revision ? saved : item;
-          }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
-        });
+        // accumulated list stays complete when they return — and re-arm
+        // paging: without this, a client-side navigation used to leave
+        // tasksHasMore false and the sentinel never rendered again.
+        const result = await request<{ tasks: WorkspaceTask[]; hasMore?: boolean }>(`/tasks?limit=${Math.max(tasksOffsetRef.current, 20)}&offset=0`);
+        if (navigation === navigationSerial.current) {
+          setTasks((current) => {
+            const refreshedIds = new Set(result.tasks.map((item) => item.taskId));
+            return [...result.tasks.map((item) => {
+              const saved = current.find((entry) => entry.taskId === item.taskId);
+              return saved && saved.revision > item.revision ? saved : item;
+            }), ...current.filter((entry) => !refreshedIds.has(entry.taskId))];
+          });
+          setTasksHasMore(Boolean(result.hasMore));
+          tasksOffsetRef.current = result.tasks.length;
+        }
       } catch (error) { if (navigation === navigationSerial.current) setMessage((error as Error).message); }
       finally { if (navigation === navigationSerial.current) setLoading(false); }
     }
@@ -1005,8 +1022,19 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           }} onChange={(event) => setPrompt(event.target.value)} placeholder="What should viewers notice about your product?" /><span className={styles.help}>{prompt.length} / {WORKSPACE_PROMPT_MAX_LENGTH} characters</span></label>
         </div>
         {scene.needsActor && <p className={styles.help} style={{ marginTop: 16 }}>You can choose a presenter after saving the draft.</p>}
-        {importedBriefNotice()}
-        <div className={styles.footerActions}><button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveSceneDraft(scene, surface)}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button></div>
+        {surface !== "product" && importedBriefNotice()}
+        {/* Same control row as the home composer's footer: the draft honours
+        the shared composer state, so a choice made here carries everywhere. */}
+        <div className={styles.parameterGrid} style={{ marginTop: 18 }}>
+          <div className={styles.field}><span className={styles.fieldLabel}>Video model</span><WorkspaceSelect ariaLabel="Video model" disabled={busy} value={composerModel || activeModel?.id || ""} options={editorModelOptions} onChange={(value) => setComposerModel(value)} placeholder="No model connected" /></div>
+          <div className={styles.field}><span className={styles.fieldLabel}>Duration</span><WorkspaceSelect ariaLabel="Video duration" disabled={busy} value={String(composerDuration)} options={editorDurationOptions} onChange={(value) => setComposerDuration(Number(value) as TaskInput["options"]["duration"])} /></div>
+          <div className={styles.field}><span className={styles.fieldLabel}>Aspect ratio</span><WorkspaceSelect ariaLabel="Aspect ratio" disabled={busy} value={composerAspect} options={editorAspectOptions} onChange={(value) => setComposerAspect(value as TaskInput["options"]["aspect"])} /></div>
+          {composerModelResolutions.length > 0 && <div className={styles.field}><span className={styles.fieldLabel}>Resolution</span><WorkspaceSelect ariaLabel="Video resolution" disabled={busy} value={composerResolution || composerModelResolutions[0]} options={composerModelResolutions.map((value) => ({ value, label: value }))} onChange={(value) => setComposerResolution(value)} /></div>}
+        </div>
+        <div className={styles.footerActions}>
+          {composerQuote?.available && composerQuote.credits != null && <span className={styles.help} role="status">Estimated cost: {composerQuote.credits} credits</span>}
+          <button className={`${styles.button} ${styles.primary}`} disabled={busy} onClick={() => void saveSceneDraft(scene, surface)}>{busy ? <Loader2 size={16} className={styles.spin} /> : <Check size={16} />}<span>Create video</span></button>
+        </div>
         <p className={styles.help}>We'll generate your video from this prompt and your photos, then save it to your Library.</p>
       </section>
       {surface === "agent" && canBrowseTemplates && templatePickerCallout()}
@@ -1400,6 +1428,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (promptOptimizing) return;
     setPromptOptimizer({ status: "submitting", sourcePrompt: source });
     setModal("promptOptimizer");
+    // The confirmed product brief rides along so the optimized prompt states
+    // real product facts (name, materials, sizes, price) instead of guesses.
+    const briefSource = composerProducts.find((item) => item.confirmedBrief)?.confirmedBrief;
+    const productBrief = briefSource ? {
+      title: briefSource.title?.value,
+      description: briefSource.description?.value,
+      price: briefSource.possiblePrice?.value,
+      variants: briefSource.variants?.value?.map((variant) => [variant.label, variant.price ? `${variant.price}${variant.currency ? ` ${variant.currency}` : ""}` : ""].filter(Boolean).join(" · ")).filter(Boolean)
+    } : undefined;
     try {
       const accepted = await request<{ jobId: string }>("/prompt-optimizations", {
         method: "POST",
@@ -1409,7 +1446,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           durationSeconds: composerDuration,
           aspectRatio: composerAspect,
           resolution: composerResolution || undefined,
-          referenceUrls: composerTab === "AI Video" ? videoReferenceUrls : []
+          referenceUrls: composerTab === "AI Video" ? videoReferenceUrls : [],
+          productBrief
         }),
         headers: { "Idempotency-Key": crypto.randomUUID() }
       });
@@ -1628,8 +1666,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } else if (view === "images" || (view === "home" && composerTab === "AI Image")) {
       setImageInput((current) => ({ ...current, assetUrls: [...current.assetUrls, asset.previewUrl].slice(0, 4) }));
     } else {
-      setComposerProducts((items) => [...items, brief ? { ...asset, confirmedBrief: brief } : asset].slice(0, 4));
-      if (selectedSceneId || view === "product" || view === "videoLink") setDraftReferenceUrls((items) => items.includes(asset.previewUrl) ? items : [...items, asset.previewUrl].slice(0, 4));
+      // Confirming a preview REPLACES the previous product selection: the
+      // composer works on one product at a time and the library keeps the
+      // history, so a fresh confirm overwrites instead of accumulating.
+      setComposerProducts([brief ? { ...asset, confirmedBrief: brief } : asset]);
+      if (selectedSceneId || view === "product" || view === "videoLink") setDraftReferenceUrls([asset.previewUrl]);
       if (title) setComposerTitle(title.slice(0, 120));
     }
     setModal(null);
@@ -1642,7 +1683,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     let brief: ConfirmedProductBrief | undefined;
     try { brief = confirmedBriefFromSnapshot(record.brief as ProductBriefSnapshotLike); } catch { brief = undefined; }
     const restored: ComposerProduct = { id: record.assetId, previewUrl: record.previewUrl, ...(record.title ? { label: record.title } : {}), ...(brief ? { confirmedBrief: brief } : {}) };
-    setComposerProducts((items) => [...items.filter((item) => item.previewUrl !== record.previewUrl), restored].slice(-4));
+    // Backfilling from the library also replaces the current selection.
+    setComposerProducts([restored]);
     setDraftReferenceUrls([record.previewUrl]);
     if (record.title) setComposerTitle(record.title.slice(0, 120));
     setMessage("");
@@ -1733,6 +1775,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const editorLanguageOptions = (catalog?.languages ?? []).map((item) => ({ value: item.value, label: item.label }));
   const activeModel = catalog?.models.find((model) => model.available) ?? catalog?.models[0];
   const selectedModel = catalog?.models.find((model) => model.id === (task?.input.modelId || composerModel)) ?? activeModel;
+  const composerModelResolutions = (catalog?.models.find((model) => model.id === composerModel) ?? activeModel)?.resolutions ?? [];
   const durationCapability = catalog?.durations.find((duration) => duration.value === task?.input.options.duration);
   const batchScene = catalog?.scenes.find((item) => item.id === batchSceneId) ?? catalog?.scenes[0];
   const actorSpeechSupported = !scene?.needsActor || Boolean(selectedModel?.nativeSpeech);
@@ -2396,7 +2439,18 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       const scene = catalog?.scenes.find((entry) => entry.id === item.sceneId);
       const model = catalog?.models.find((entry) => entry.id === item.input.modelId)?.label;
       const description = cardDescription(String(item.input.fields.description ?? item.input.creativeDirection ?? Object.values(item.input.fields).find((value) => typeof value === "string" && value.trim()) ?? ""));
+      // A presenter-showcase task also carries the host portrait: surface it in
+      // the reference row (count + thumbnail) next to the product photos.
+      const needsActor = Boolean(scene?.needsActor);
+      const actorPortrait = needsActor && item.input.actorId
+        ? catalog?.actors.find((entry) => entry.actorId === item.input.actorId)?.imageUrl
+        : undefined;
+      const referenceThumbs = [
+        ...(actorPortrait ? [{ src: actorPortrait, label: "Host" }] : []),
+        ...(item.input.images.productImages ?? []).slice(0, 2).map((src) => ({ src, label: "Product" }))
+      ];
       const references = [
+        ...(needsActor && actorPortrait ? ["1 host"] : []),
         item.input.images.productImages?.length ? `${item.input.images.productImages.length} photos` : "",
         ...(item.input.referenceVideos?.length ? [`${item.input.referenceVideos.length} videos`] : []),
         ...(item.input.referenceAudios?.length ? [`${item.input.referenceAudios.length} audio`] : [])
@@ -2429,6 +2483,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         aspect={item.input.options.aspect}
         resolution={item.input.options.resolution}
         referenceSummary={references || undefined}
+        referenceThumbs={referenceThumbs}
         media={libraryMedia.get(item.taskId) ?? taskMedia(item, scene)}
         disabled={busy || itemRunning}
         openDisabled={busy}

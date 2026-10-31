@@ -20,6 +20,15 @@ export type Wan30PromptOptimizationInput = {
   resolution: string;
   /** Reference images as data URIs (already ownership-checked by the route). */
   referenceImages: string[];
+  /** Confirmed product facts from the product-links importer. When present the
+   * optimizer states these facts verbatim instead of guessing, and the
+   * unverified-claim validator allows the sourced price. */
+  productBrief?: {
+    title?: string;
+    description?: string;
+    price?: { amount: string; currency?: string };
+    variants?: string[];
+  };
 };
 
 export type Wan30PromptOptimizationResult = {
@@ -115,11 +124,14 @@ function validatePreservedDialogues(prompt: string, input: Wan30PromptOptimizati
   if (missing.length) throw new Error("wan30_prompt_optimization_dialogue_missing");
 }
 
-const UNSUPPORTED_CLAIM_PATTERNS = [
-  /\b(?:clinically proven|doctor approved|guaranteed|certified|award[- ]winning|best[- ]selling|waterproof|cure[sd]?)\b/i,
-  /\b(?:recommended|endorsed) by\b/i,
-  /\b(?:price|costs?|discount|sale price|limited[- ]time offer|free shipping|buy now)\b/i,
-  /临床(?:验证|证明)|包治|根治|治愈| guaranteed|获奖|最低价|免费送|买一送一|限时优惠/i
+const UNSUPPORTED_CLAIM_PATTERNS: Array<{ pattern: RegExp; /** A confirmed product brief turns the price into a sourced fact. */ briefAllowsPrice?: boolean }> = [
+  { pattern: /\b(?:clinically proven|doctor approved|guaranteed|certified|award[- ]winning|best[- ]selling|waterproof|cure[sd]?)\b/i },
+  { pattern: /\b(?:recommended|endorsed) by\b/i },
+  // A plain price mention becomes a sourced fact once the confirmed product
+  // brief carries one; offer/urgency language stays rejected either way.
+  { pattern: /\b(?:price|costs?)\b/i, briefAllowsPrice: true },
+  { pattern: /\b(?:discount|sale price|limited[- ]time offer|free shipping|buy now)\b/i },
+  { pattern: /临床(?:验证|证明)|包治|根治|治愈| guaranteed|获奖|最低价|免费送|买一送一|限时优惠/i }
 ];
 
 function hasPositiveClaim(value: string, pattern: RegExp): boolean {
@@ -131,10 +143,11 @@ function hasPositiveClaim(value: string, pattern: RegExp): boolean {
 }
 
 function validateNoInventedClaims(prompt: string, input: Wan30PromptOptimizationInput): void {
-  for (const pattern of UNSUPPORTED_CLAIM_PATTERNS) {
-    if (hasPositiveClaim(prompt, pattern) && !hasPositiveClaim(input.sourcePrompt, pattern)) {
-      throw new Error("wan30_prompt_optimization_unverified_claim");
-    }
+  for (const { pattern, briefAllowsPrice } of UNSUPPORTED_CLAIM_PATTERNS) {
+    if (!hasPositiveClaim(prompt, pattern)) continue;
+    if (hasPositiveClaim(input.sourcePrompt, pattern)) continue;
+    if (briefAllowsPrice && input.productBrief?.price && !/discount|sale|limited|free shipping|buy now/i.test(prompt)) continue;
+    throw new Error("wan30_prompt_optimization_unverified_claim");
   }
   const inventedReferenceContent = /\b(?:reference|source|uploaded|selected)\s+(?:image|photo|frame)\s+(?:shows?|contains?|features?|depicts?)\b|参考图[\S]{0,6}(?:显示|包含|出现|展示)/i;
   if (inventedReferenceContent.test(prompt)) {
@@ -175,11 +188,22 @@ function generationMessages(input: Wan30PromptOptimizationInput): PlatformTextMe
     sourcePrompt: input.sourcePrompt,
     videoType: videoType.label,
     videoTypeInstruction: videoType.instruction,
+    videoTypeStrategy: videoType.strategy,
     durationSeconds: input.durationSeconds,
     aspectRatio: input.aspectRatio,
     resolution: input.resolution.toUpperCase(),
     referenceCount: input.referenceImages.length,
-    references: input.referenceImages.map((_, index) => ({ label: `图${index + 1}`, role: index === 0 ? "商品主图（外观/配色/标识基准）" : "补充参考（角度/场景/使用方式）" }))
+    references: input.referenceImages.map((_, index) => ({ label: `图${index + 1}`, role: index === 0 ? "商品主图（外观/配色/标识基准）" : "补充参考（角度/场景/使用方式）" })),
+    // 已确认的产品事实：优化后的提示词必须与这些事实一致，不得虚构参数。
+    ...(input.productBrief ? {
+      productBrief: {
+        ...(input.productBrief.title ? { title: input.productBrief.title } : {}),
+        ...(input.productBrief.description ? { description: input.productBrief.description } : {}),
+        ...(input.productBrief.price ? { price: input.productBrief.price.currency ? `${input.productBrief.price.currency} ${input.productBrief.price.amount}` : input.productBrief.price.amount } : {}),
+        ...(input.productBrief.variants?.length ? { variants: input.productBrief.variants } : {}),
+        rule: "提示词中涉及产品名称、材质、规格、颜色、尺寸与价格时，只能使用这里的事实；未提供的事实不得编造。"
+      }
+    } : {})
   });
   const content: string | PlatformTextContentPart[] = input.referenceImages.length
     ? [

@@ -38,6 +38,7 @@
 .productSummaryCopy h3 { margin: 0; font-size: 20px; line-height: 1.3; overflow-wrap: anywhere; }
 .productSummaryCopy p { display: -webkit-box; margin: 0; overflow: hidden; color: #5f6470; font-size: 13px; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .summaryPrice, .summaryImageCount { color: #73777d; font-size: 12px; }
+.summaryVariants { color: #73777d; font-size: 12px; overflow-wrap: anywhere; }
 .previewActions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 3px; }
 .importedProducts { display: grid; gap: 12px; margin-top: 16px; }
 .importedProduct { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; align-items: center; padding: 12px; border: 1px solid #e3e6ec; border-radius: 10px; background: #fff; }
@@ -73,6 +74,7 @@
 .historyThumb { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; background: #f0eef8; }
 .historyCopy { min-width: 0; display: grid; gap: 3px; }
 .historyTitle { font-size: 13px; font-weight: 600; color: #101623; overflow-wrap: anywhere; }
+.historyDescription { font-size: 12px; color: #4a4f57; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .historyMeta { font-size: 11px; color: #73777d; overflow-wrap: anywhere; }
 .historyDelete { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid #e3e6ec; border-radius: 7px; background: #fff; color: #73777d; cursor: pointer; }
 .historyDelete:hover { color: #a52c38; border-color: #eec4c9; }

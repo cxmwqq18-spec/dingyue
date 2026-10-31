@@ -101,6 +101,17 @@ export function publicTask(task: StoredTask): WorkspaceTask & { operation?: Pick
   return operation ? { ...result, operation: { action: operation.action, state: operation.state, error: interrupted ? "operation_interrupted" : operation.error } } : result;
 }
 
+/** Library payload: everything the cards and the detail drawer render, minus
+ * the editor-only histories and the per-version input snapshots that dominate
+ * the stored blob. The editor always re-fetches the full task by id, so the
+ * list can travel light — a 20-task page otherwise carries every shot's
+ * cloned input several times over. */
+export function publicTaskSummary(task: StoredTask): WorkspaceTask & { operation?: Pick<TaskOperation, "action" | "state" | "error"> } {
+  const skip = new Set(["inputSnapshot", "storyboardHistory", "revisions", "videoHistory"]);
+  const slim = JSON.parse(JSON.stringify(publicTask(task), (key, value) => (skip.has(key) ? undefined : value)));
+  return slim;
+}
+
 export async function listActors(siteId: string, customerId: string): Promise<ActorAsset[]> {
   assertWorkspaceSite(siteId);
   const rows = await prisma.$queryRaw<{ data: ActorAsset }[]>`SELECT "data" FROM "AidreamcapesWorkspaceActor" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ORDER BY "createdAt" DESC LIMIT 100`;

@@ -105,6 +105,11 @@ export function ProductVideoPage({
           ? <div className={productStyles.historyList} style={{ marginTop: 12 }}>
             {imports.map((record) => {
               const title = record.title || "Imported product";
+              // The stored brief carries the sourced product facts; they live
+              // on the library row so nothing dangles outside the list.
+              const brief = record.brief as { description?: { value?: unknown }; possiblePrice?: { value?: { amount?: number | string; currency?: string } } } | null;
+              const description = typeof brief?.description?.value === "string" ? brief.description.value : "";
+              const price = brief?.possiblePrice?.value;
               return <div key={record.id} className={productStyles.historyRow}>
                 <button type="button" className={productStyles.historyItem} disabled={disabled} onClick={() => onBackfill(record)}>
                   {/* Imported customer assets use authenticated URLs. */}
@@ -112,7 +117,9 @@ export function ProductVideoPage({
                   <img className={productStyles.historyThumb} loading="lazy" decoding="async" src={record.previewUrl} alt={title} />
                   <span className={productStyles.historyCopy}>
                     <span className={productStyles.historyTitle}>{title}</span>
+                    {description && <span className={productStyles.historyDescription}>{description}</span>}
                     <span className={productStyles.historyMeta}>{new Date(record.updatedAt).toLocaleString()} · {historySourceLabel(record)}</span>
+                    {price?.amount != null && price.amount !== "" && <span className={productStyles.historyMeta}>Possible price · unconfirmed: {price.currency ? `${price.currency} ` : ""}{price.amount}</span>}
                   </span>
                 </button>
                 <button type="button" className={productStyles.historyDelete} aria-label={`Remove ${title} from your product library`} disabled={disabled} onClick={() => onDeleteImport(record.id)}><X size={14} /></button>
