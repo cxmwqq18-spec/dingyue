@@ -14,6 +14,7 @@ import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
 import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
+import { HubMediaLoader } from "./hub-media-loader";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
@@ -42,6 +43,15 @@ function pickerSourcePage(data: V2Data): string | undefined {
   if (data.id === "home") return "/";
   const lastHref = data.breadcrumbs.at(-1)?.href;
   return presetSourcePage(lastHref);
+}
+
+/** Cards the video hub renders server-side before the loader takes over. */
+const HUB_MEDIA_PAGE_SIZE = 20;
+
+/** Base-path prefix for client-built hrefs so appended cards match the SSR resolver in path mode. */
+function storefrontHrefPrefix(r: V2Resolvers): string {
+  const root = r.href("/");
+  return root === "/" ? "" : root.replace(/\/+$/, "");
 }
 
 function ctaTitle(data: V2Data, fallback: string): string {
@@ -313,7 +323,7 @@ function VideoHubPage({ data, r }: Props) {
     </>],
     ["strip", <VisualStrip visual={visual} r={r} />],
     ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>],
-    ["picker", <VisualPicker eyebrow="Choose a tool" pageId={data.id} sourcePage={pickerSourcePage(data)} relatedGroups={relatedGroups} visual={visual} r={r} />],
+    ["picker", <VisualPicker childrenAfterGrid={<HubMediaLoader hrefPrefix={storefrontHrefPrefix(r)} initialOffset={HUB_MEDIA_PAGE_SIZE} pageSize={HUB_MEDIA_PAGE_SIZE} total={visual.picker.cards.length} />} eyebrow="Choose a tool" maxCards={HUB_MEDIA_PAGE_SIZE} pageId={data.id} sourcePage={pickerSourcePage(data)} relatedGroups={relatedGroups} visual={visual} r={r} />],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />],
     ["steps", <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
     ["features", data.blockOrder ? <MoreSections r={r} sections={data.more_sections as never} /> : null],

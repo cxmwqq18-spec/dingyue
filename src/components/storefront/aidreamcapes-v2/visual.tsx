@@ -7,6 +7,7 @@ import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
 import { AIDREAMCAPES_V2_FRESH_MEDIA_SIZES, AIDREAMCAPES_V2_PICKER_CARD_SIZES } from "./image-sizes";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
+import { Adc2VideoPreview } from "./video-preview-card";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2AfterMock,
@@ -242,7 +243,7 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
   );
 }
 
-export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards, childrenAfterGrid }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
@@ -250,6 +251,8 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   eyebrow?: string;
   sectionId?: string;
   maxCards?: number;
+  /** Rendered directly under the card grid, inside the filter scope — the video-hub pagination lives here. */
+  childrenAfterGrid?: ReactNode;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
@@ -275,12 +278,13 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
               {card.video ? (
-                <video aria-label={card.video.name ?? card.label} autoPlay controls height={card.video.height} loop muted playsInline poster={r.asset(card.video.poster.src)} preload="none" src={r.asset(card.video.src)} width={card.video.width} />
+                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(card.video.poster.src), src: r.asset(card.video.src), width: card.video.width }} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>
           ))}
         </div>
+        {childrenAfterGrid}
         {relatedGroups.length ? <div className="v-related-groups">
           {relatedGroups.map((group) => <div className="v-related-group" key={group.title}>
             <h3>{group.title}</h3>

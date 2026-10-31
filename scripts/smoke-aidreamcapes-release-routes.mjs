@@ -283,6 +283,18 @@ assert.equal(typeof inspirationBody.nextOffset, "number", "inspirations API: nex
 assert.ok(inspirationBody.counts && typeof inspirationBody.counts.all === "number", "inspirations API: counts");
 checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspirationBody.total} total`);
 
+const hubMediaResponse = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
+assert.equal(hubMediaResponse.status, 200, `hub media API: status ${hubMediaResponse.status}`);
+const hubMediaBody = await hubMediaResponse.json();
+assert.ok(Array.isArray(hubMediaBody.items), "hub media API: items");
+assert.equal(typeof hubMediaBody.total, "number", "hub media API: total");
+assert.ok(hubMediaBody.items.length > 0, "hub media API: a page beyond the first returns cards");
+for (const card of hubMediaBody.items) {
+  assert.ok(typeof card.href === "string" && card.href.startsWith("/"), `hub media API: card href is a path (${card.href})`);
+  if (card.video) assert.ok(typeof card.video.src === "string" && card.video.src.startsWith("/") && typeof card.video.poster === "string", "hub media API: video card carries src and poster paths");
+}
+checks.push(`hub media API: ${hubMediaBody.items.length} cards / ${hubMediaBody.total} total`);
+
 const { response: home, html: homeHtml } = await getText("/");
 assert.equal(home.status, 200, "home: status");
 const legacyQueryLinks = (homeHtml.match(/href="[^"]*\/app\/create\?[^"]*(?:tool|template|prompt|size|length|view)=/gi) || []).length;

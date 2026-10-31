@@ -9,6 +9,7 @@ import { AIDREAMCAPES_V2_COLLAGE_SIZES, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } fr
 import type { V2Article, V2BenefitIcon, V2Card, V2CompareTable, V2Crumb, V2Definition, V2EnrichmentBlock, V2EnrichmentSection, V2Examples, V2Example, V2Faq, V2FitBlock, V2HeroMedia, V2Image, V2ImageItem, V2Item, V2Maker, V2MoreSection, V2Plan, V2Resolvers, V2SpecRow, V2TextSection, V2Tool, V2Video, V2GlossaryEntry, V2DirectorySpecs, V2DirectoryScene, V2ActorScenePicker, V2SellerScenarioBlock, V2CardBlock, V2CardBlockItem, V2ReviewBlock, V2ReviewItem, V2TeamIcon, V2ClosingBlock, V2LinkCardBlock } from "./types";
 import type { V2Company } from "./company";
 import { copyLabel } from "./types";
+import { Adc2VideoPreview } from "./video-preview-card";
 import { Coins, Captions, DollarSign, Gauge, Calendar, Camera, CircleCheck, Clapperboard, Clock, Copy, Crop, Droplet, Eye, FileText, Film, Gem, Hand, House, Image, Images, Languages, Laptop, Layers, LayoutGrid, Link, Megaphone, MessageCircle, Mic, Music, Package, Palette, PenLine, Play, Ratio, RefreshCw, Repeat, Rocket, Ruler, Scissors, Share2, ShieldCheck, Shirt, ShoppingCart, Smartphone, Sparkles, Star, Store, Sun, Tag, Target, Timer, Type, UserCheck, UserRound, Users, Utensils, WandSparkles, Zap } from "lucide-react";
 
 function SoonLabel({ soon }: { soon?: boolean }) {
@@ -592,7 +593,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         {video ? (
-          <video aria-label={video.name ?? card.name} autoPlay controls height={video.height} loop muted playsInline poster={r.asset(video.poster.src)} preload="none" src={r.asset(video.src)} width={video.width} />
+          <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(video.poster.src), src: r.asset(video.src), width: video.width }} />
         ) : <Img image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
       </div>
       <div className="tb">
