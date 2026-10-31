@@ -1,0 +1,429 @@
+{
+  "generatedAt": "2026-10-31T07:05:14.867Z",
+  "pairs": [
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-indoor-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/ari-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-indoor-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ari-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/mila-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-indoor-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/mila-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/dev-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-home-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/dev-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-home-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/elena-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-home-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/elena-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-outdoor-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/priyanka-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-outdoor-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/priyanka-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/jon-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/jon-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-living-room-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/celine-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-living-room-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/celine-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-living-room-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/gordon-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-living-room-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/gordon-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-studio-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/ravi-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-studio-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ravi-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-studio-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/evan-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-studio-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/evan-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-office-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/omar-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-office-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/omar-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-office-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/nisha-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-office-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/nisha-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-garden-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/claire-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garden-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/claire-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-garden-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/amara-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garden-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/amara-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-gym-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/sofia-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-gym-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/sofia-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-gym-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/lana-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-gym-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/lana-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-cafe-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/tess-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-cafe-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/tess-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-cafe-2-r2-640.webp",
+      "to": "/ai-image-generation/actors/yara-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-cafe-2-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/yara-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/im08-ai-actors-kitchen-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/asha-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/im08-ai-actors-kitchen-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/asha-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-kitchen-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/mara-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-kitchen-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/mara-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-podcast-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/leonie-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-podcast-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/leonie-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-podcast-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/bria-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-podcast-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/bria-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-fitness-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/caleb-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-fitness-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/caleb-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-fitness-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/rina-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-fitness-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/rina-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-beach-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/nia-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-beach-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/nia-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/fx50-ai-actors-lola-beach-640.webp",
+      "to": "/ai-image-generation/actors/lola-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/fx50-ai-actors-lola-beach-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/lola-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-car-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/mateo-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-car-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/mateo-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-car-2-r2-640.webp",
+      "to": "/ai-image-generation/actors/jade-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-car-2-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/jade-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-hospital-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/adrian-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-hospital-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/adrian-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-hospital-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/sana-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-hospital-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/sana-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-balcony-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/tessa-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-balcony-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/tessa-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-balcony-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/iris-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-balcony-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/iris-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-pet-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/rhea-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pet-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/rhea-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-pet-2-r3-640.webp",
+      "to": "/ai-image-generation/actors/anika-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pet-2-r3-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/anika-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-shopping-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/lena-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-shopping-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/lena-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-shopping-2-r3-640.webp",
+      "to": "/ai-image-generation/actors/casey-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-shopping-2-r3-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/casey-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-sports-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/damon-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-sports-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/damon-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-sports-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/mireya-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-sports-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/mireya-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-study-room-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/maxwell-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-study-room-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/maxwell-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-study-room-2-r1-640.webp",
+      "to": "/ai-image-generation/actors/sora-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-study-room-2-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/sora-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/noah-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-classroom-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/noah-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640.webp",
+      "to": "/ai-image-generation/actors/elise-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-terrace-1-r3-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/elise-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-terrace-2-r2-640.webp",
+      "to": "/ai-image-generation/actors/ken-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-terrace-2-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ken-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-bathroom-1-r2-640.webp",
+      "to": "/ai-image-generation/actors/lila-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-bathroom-1-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/lila-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-exercise-1-r3-640.webp",
+      "to": "/ai-image-generation/actors/vera-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-exercise-1-r3-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/vera-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640.webp",
+      "to": "/ai-image-generation/actors/akio-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-exercise-2-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/akio-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-bedroom-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/nora-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-bedroom-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/nora-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-garage-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/luis-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-garage-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/luis-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-interview-1-r3-640.webp",
+      "to": "/ai-image-generation/actors/gianna-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-interview-1-r3-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/gianna-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-pool-1-r2-640.webp",
+      "to": "/ai-image-generation/actors/tara-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-pool-1-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/tara-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-reporting-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/dalia-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-reporting-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/dalia-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-travel-1-r2-640.webp",
+      "to": "/ai-image-generation/actors/avery-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-travel-1-r2-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/avery-640--320.webp"
+    },
+    {
+      "from": "/ai-image-generation/actors/ac1-actor-card-yoga-1-r1-640.webp",
+      "to": "/ai-image-generation/actors/anjali-640.webp"
+    },
+    {
+      "from": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/ac1-actor-card-yoga-1-r1-640--320.webp",
+      "to": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/actors/anjali-640--320.webp"
+    }
+  ]
+}

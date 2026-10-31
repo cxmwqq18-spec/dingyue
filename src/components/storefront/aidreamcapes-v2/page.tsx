@@ -38,6 +38,14 @@ export function isAidreamcapesV2Section(section: SectionInstance | undefined): b
 
 type Props = { data: V2Data; r: V2Resolvers };
 
+/** Quick-link label for a directory card: the stored label when present, else the facet slug title-cased ("beauty-skincare" -> "Beauty Skincare"). */
+function directoryItemLabel(item: { label?: string; href: string }): string {
+  const stored = (item.label ?? "").trim();
+  if (stored) return stored;
+  const slug = item.href.split("/").filter(Boolean).pop() ?? "";
+  return slug.split("-").filter(Boolean).map((part) => part[0].toUpperCase() + part.slice(1)).join(" ");
+}
+
 function pickerSourcePage(data: V2Data): string | undefined {
   if (data.id === "home") return "/";
   const lastHref = data.breadcrumbs.at(-1)?.href;
@@ -644,7 +652,7 @@ function IndexPage({ data, r }: Props) {
       ["templates", cards.length ? <VisualDirectoryFilter eyebrow="Browse templates" pageId={data.id} visual={visual}>
         <TemplateGrid cards={cards} filterChips={visual.picker.chips} r={r} />
       </VisualDirectoryFilter> : null],
-      ["directory", items.length ? <VisualDirectoryFilter eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} visual={visual}>
+      ["directory", items.length ? <VisualDirectoryFilter allHref={presetSourcePage(data.breadcrumbs.at(-1)?.href)} eyebrow={data.id === "platforms" ? "Browse platforms" : "Browse industries"} pageId={data.id} quickLinks={items.map((item) => ({ label: directoryItemLabel(item), href: r.href(item.href) }))} visual={visual}>
         <div className="cardlist v-filter-grid">
           {items.map((item) => {
             const indexes = visual.picker.chips.map((chip, index) => ({ chip, index: index + 1 })).filter(({ chip }) => (item.filterTags ?? []).includes(chip.id)).map(({ index }) => index);

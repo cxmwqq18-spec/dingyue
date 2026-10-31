@@ -4,25 +4,24 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
 import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
+import { Adc2VideoPreview } from "./video-preview-card";
+import { GalleryGridLoader } from "./gallery-grid-loader";
+import { storefrontHrefPrefix } from "./visual";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
 export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
-export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number } };
+export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
 export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; pageSize: number; totalPages: number; kind?: "photo" | "video" };
 
-/** The /templates example gallery: every public example, newest first, SSR-cumulative pagination. */
+/** The /templates example gallery: every public example, newest first. The
+ * server renders the first page (plus any deep-linked ?page content); the
+ * client loader appends the rest into the same grid — infinite scroll, no
+ * navigation, no scroll reset. */
 export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) {
   const directory = data.exampleDirectory as ExampleDirectoryConfig;
   const gallery = data.exampleGallery as ExampleGalleryState | undefined;
   if (!gallery) return null;
-  const loadMoreHref = (() => {
-    if (gallery.page >= gallery.totalPages) return undefined;
-    const params = new URLSearchParams();
-    params.set("page", String(gallery.page + 1));
-    if (gallery.kind) params.set("kind", gallery.kind);
-    return `/templates?${params.toString()}`;
-  })();
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -30,10 +29,13 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
       <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
       <p className="meta-line">{gallery.total} examples</p>
       <div className="tgrid" data-example-gallery="true">{gallery.items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
-        <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+        <a className="ti" href={r.href(item.href)}>{item.video ? (
+          <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={item.video} />
+        ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
         <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
-      </article>)}</div>
-      {loadMoreHref ? <p style={{ marginTop: 28 }}><a className="btn btn-ghost" href={r.href(loadMoreHref)} rel="next">Load more examples</a></p> : null}
+      </article>)}
+        <GalleryGridLoader hrefPrefix={storefrontHrefPrefix(r)} initialOffset={gallery.items.length} kind={gallery.kind} pageSize={gallery.pageSize} total={gallery.total} />
+      </div>
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;

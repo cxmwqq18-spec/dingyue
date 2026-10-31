@@ -33,6 +33,9 @@ const DIRECTORY_FILTER_FOCUS_SELECTORS = Array.from({ length: 40 }, (_, index) =
 });
 const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:none}
 .adc2 .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${DIRECTORY_FILTER_FOCUS_SELECTORS.join(",")} {outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}
+.adc2 .v-picker-chips a.v-picker-chip{flex:none;padding:8px 14px;border:1px solid var(--line-2);border-radius:999px;background:var(--card);color:var(--ink-2);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:border-color .16s ease,color .16s ease}
+.adc2 .v-picker-chips a.v-picker-chip:hover{border-color:rgba(236,72,153,.65);color:var(--ink)}
+.adc2 .v-picker-chips a.v-picker-chip.is-current{background:#fff;border-color:#fff;color:#09090b}
 .adc2 .v-directory-related{margin-top:32px;padding-top:24px;border-top:1px solid rgba(22,34,54,.12)}
 .adc2 .v-directory-related ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 24px;list-style:none;margin:12px 0 0;padding:0}
 .adc2 .v-directory-related a{color:inherit;text-decoration:underline;text-underline-offset:3px}
@@ -222,11 +225,20 @@ export function VisualFreshLook({ heading, lead, items, button, href, r }: {
   );
 }
 
-export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Browse all", title, lead }: {
+export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Browse all", title, lead, quickLinks, allHref }: {
   visual: V2Visual; pageId: string; children: ReactNode; eyebrow?: string; title?: string; lead?: string;
+  /** When the row defines no filter chips, the strip renders as quick links into the directory's own pages. */
+  quickLinks?: { label: string; href: string }[];
+  allHref?: string;
 }) {
   const picker = visual.picker;
   const pickerId = `visual-directory-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
+  const linkStrip = !picker.chips.length && quickLinks?.length
+    ? <nav aria-label="Browse directory pages" className="v-picker-chips">
+      {allHref ? <a className="v-picker-chip is-current" href={allHref}>All</a> : null}
+      {quickLinks.map(link => <a className="v-picker-chip" href={link.href} key={link.href}>{link.label}</a>)}
+    </nav>
+    : null;
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: DIRECTORY_FILTER_CSS }} />
@@ -234,10 +246,12 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
         <div className="v-picker" id={pickerId}>
           <input aria-label="All" className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
           {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
-          <div className="v-picker-chips" role="group" aria-label="Filter directory cards">
-            <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
-            {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
-          </div>
+          {linkStrip ?? (
+            <div className="v-picker-chips" role="group" aria-label="Filter directory cards">
+              <label data-filter-chip="all" htmlFor={`${pickerId}-all`}>All</label>
+              {picker.chips.map((chip, index) => <label data-filter-chip={chip.id} data-filter-index={index + 1} htmlFor={`${pickerId}-${chip.id}`} key={chip.id}>{chip.label}</label>)}
+            </div>
+          )}
           {children}
         </div>
       </Section>
@@ -246,7 +260,7 @@ export function VisualDirectoryFilter({ visual, pageId, children, eyebrow = "Bro
 }
 
 /** Base-path prefix for client-built hrefs so appended cards match the SSR resolver in path mode. */
-function storefrontHrefPrefix(r: V2Resolvers): string {
+export function storefrontHrefPrefix(r: V2Resolvers): string {
   const root = r.href("/");
   return root === "/" ? "" : root.replace(/\/+$/, "");
 }

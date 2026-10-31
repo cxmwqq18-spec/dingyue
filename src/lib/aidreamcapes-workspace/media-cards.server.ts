@@ -215,6 +215,9 @@ export type MediaGalleryEntry = {
   label: string;
   href: string;
   image: { src: string; alt?: string; w?: number; h?: number };
+  /** Present when the card ships a rendered result video; the gallery previews it. */
+  video?: { src: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
+  duration?: number;
   updatedAt: Date;
 };
 
@@ -308,6 +311,8 @@ export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<Med
       label: card.label,
       href: mediaDetailPath(kind, slug) ?? `/ai-${kind === "photo" ? "image" : "video"}-generation/${slug}`,
       image: card.image,
+      ...(card.video?.src ? { video: card.video } : {}),
+      ...(card.duration !== undefined ? { duration: Number(card.duration) || undefined } : {}),
       updatedAt
     }))
     .sort((left, right) => (right.updatedAt.getTime() - left.updatedAt.getTime()) || left.slug.localeCompare(right.slug));
