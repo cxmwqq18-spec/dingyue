@@ -593,7 +593,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         {video ? (
-          <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(video.poster.src), src: r.asset(video.src), width: video.width }} />
+          <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(video.poster.src), previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined, src: r.asset(video.src), width: video.width }} />
         ) : <Img image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
       </div>
       <div className="tb">

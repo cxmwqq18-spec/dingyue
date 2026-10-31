@@ -58,7 +58,7 @@ export type V2Visual = {
   titles?: V2VisualTitles;
   overview?: string;
 };
-export type V2Video = { src: string; width: number; height: number; duration?: number; name?: string; description?: string; uploadDate?: string; poster: V2Image };
+export type V2Video = { src: string; width: number; height: number; duration?: number; name?: string; description?: string; uploadDate?: string; poster: V2Image; /** 10s low-bitrate preview clip for list grids; absent when not yet generated. */ previewSrc?: string };
 export type V2HeroMedia =
   | { kind: "pair"; before: V2Image; after: V2Image }
   | { kind: "image"; image: V2Image }

@@ -50,6 +50,7 @@ export async function GET(request: Request) {
       // These gallery assets are plain public paths; the SSR asset resolver's
       // rewrite chain is an identity for them, so raw stored paths are served.
       src: entry.video.src,
+      ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}),
       poster: entry.video.poster?.src ?? entry.image.src,
       ...(entry.video.width ? { width: entry.video.width } : {}),
       ...(entry.video.height ? { height: entry.video.height } : {}),

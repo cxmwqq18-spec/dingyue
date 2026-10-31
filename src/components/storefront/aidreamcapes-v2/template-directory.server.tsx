@@ -87,7 +87,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         label: entry.label,
         href: entry.href,
         image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
-        ...(entry.video?.src ? { video: { src: entry.video.src, poster: entry.video.poster?.src ?? entry.image.src, ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
+        ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: entry.video.poster?.src ?? entry.image.src, ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
       }));
       resolved = { ...data, exampleGallery: { items, total: all.length, page, pageSize, increment, totalPages, ...(kind ? { kind } : {}) } };
     } else if (data.templateDirectory) {

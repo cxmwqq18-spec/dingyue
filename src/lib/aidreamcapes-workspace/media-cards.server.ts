@@ -124,6 +124,7 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
   const aspect = str(value.aspect);
   const placement = placementValues(value.placement);
   const videoSrc = str(video?.src);
+  const videoPreviewSrc = str(video?.previewSrc);
   const posterSrc = str(poster?.src);
   const posterAlt = str(poster?.alt);
   const videoWidth = num(video?.width);
@@ -152,6 +153,7 @@ export function toDetailCard(value: RecordValue): MediaDetailCard | undefined {
       ? {
           video: {
             src: videoSrc,
+            ...(videoPreviewSrc ? { previewSrc: videoPreviewSrc } : {}),
             ...(posterSrc ? { poster: { src: posterSrc, ...(posterAlt ? { alt: posterAlt } : {}) } } : {}),
             ...(videoWidth ? { width: videoWidth } : {}),
             ...(videoHeight ? { height: videoHeight } : {})
@@ -216,7 +218,7 @@ export type MediaGalleryEntry = {
   href: string;
   image: { src: string; alt?: string; w?: number; h?: number };
   /** Present when the card ships a rendered result video; the gallery previews it. */
-  video?: { src: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
+  video?: { src: string; previewSrc?: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
   duration?: number;
   updatedAt: Date;
 };

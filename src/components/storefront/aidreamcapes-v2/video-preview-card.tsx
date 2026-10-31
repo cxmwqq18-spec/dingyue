@@ -18,9 +18,15 @@ const MAX_PLAYING_DESKTOP = 12;
 const MAX_PLAYING_MOBILE = 6;
 const MOBILE_MAX_QUERY = "(max-width: 768px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+/** Distance at which a preview clip is silently fetched into the browser
+ * cache, so playback starts the moment the card scrolls into view. */
+const PREFETCH_ROOT_MARGIN = "1200px 0px";
 
 export type Adc2VideoPreviewMedia = {
   src: string;
+  /** 10s low-bitrate clip; when present it replaces src for playback and is
+   * prefetched ahead of the viewport. */
+  previewSrc?: string;
   poster: string;
   width?: number;
   height?: number;
@@ -29,6 +35,15 @@ export type Adc2VideoPreviewMedia = {
 };
 
 type ReleasePreview = () => void;
+
+// One silent download per clip URL, shared by every card on the page.
+const prefetchedClips = new Set<string>();
+
+function prefetchClip(url: string): void {
+  if (!url || prefetchedClips.has(url)) return;
+  prefetchedClips.add(url);
+  fetch(url, { priority: "low" }).catch(() => prefetchedClips.delete(url));
+}
 
 // Cards play in insertion order; when more previews request a slot than the
 // device budget allows, the longest-playing one is released back to its poster.
@@ -109,7 +124,9 @@ export function Adc2VideoPreview({ media, ariaLabel }: { media: Adc2VideoPreview
     const activate = () => {
       if (failed || reducedMotion.matches || video.getAttribute("src")) return;
       video.muted = true;
-      video.src = media.src;
+      // The low-bitrate clip (when generated) is the playback source: tiny,
+      // fully cached by the prefetcher, and loop-seamless.
+      video.src = media.previewSrc ?? media.src;
       video.load();
       if (video.readyState >= 2) play();
       else video.addEventListener("loadeddata", play, { once: true });
@@ -119,6 +136,24 @@ export function Adc2VideoPreview({ media, ariaLabel }: { media: Adc2VideoPreview
       if (visible) activate();
       else release();
     });
+
+    // Cache-warm the clip one screen ahead of the viewport so playback starts
+    // from the browser cache instead of a cold stream.
+    let stopPrefetching: (() => void) | undefined;
+    if (media.previewSrc) {
+      if (typeof IntersectionObserver === "undefined") prefetchClip(media.previewSrc);
+      else {
+        const prefetchObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            prefetchClip(media.previewSrc!);
+            prefetchObserver.disconnect();
+            stopPrefetching = undefined;
+          }
+        }, { rootMargin: PREFETCH_ROOT_MARGIN });
+        prefetchObserver.observe(video);
+        stopPrefetching = () => prefetchObserver.disconnect();
+      }
+    }
 
     const onTimeUpdate = () => {
       if (video.currentTime > PREVIEW_LOOP_SECONDS) video.currentTime = 0;
@@ -133,10 +168,11 @@ export function Adc2VideoPreview({ media, ariaLabel }: { media: Adc2VideoPreview
       video.removeEventListener("timeupdate", onTimeUpdate);
       video.removeEventListener("error", onError);
       stopObserving();
+      stopPrefetching?.();
       release();
       releaseByVideo.delete(video);
     };
-  }, [media.src]);
+  }, [media.previewSrc, media.src]);
 
   return (
     <div className="v-preview-box">

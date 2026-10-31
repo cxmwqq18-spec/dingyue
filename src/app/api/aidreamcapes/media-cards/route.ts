@@ -75,6 +75,7 @@ export async function GET(request: Request) {
       // rewrite chain is an identity for them (every rewrite is guarded by
       // another site or a legacy path), so the raw stored path is served.
       src: card.video.src,
+      ...(card.video.previewSrc ? { previewSrc: card.video.previewSrc } : {}),
       poster: card.video.poster.src,
       ...(card.video.width ? { width: card.video.width } : {}),
       ...(card.video.height ? { height: card.video.height } : {}),
