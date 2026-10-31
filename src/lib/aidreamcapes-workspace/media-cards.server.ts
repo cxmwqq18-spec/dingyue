@@ -279,11 +279,43 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
 }
 
 /**
+ * Process-level cache over the enumeration. Every storefront page request used
+ * to re-scan the whole LivePage table (a full-contentJson parse per request),
+ * which made each CDN cache MISS/SWR revalidation pay ~10s of origin work. All
+ * consumers (gallery API, /templates SSR, sitemap) are public and tolerate
+ * this short TTL; batch imports can call the invalidation hook for immediate
+ * visibility. The in-flight promise also collapses concurrent misses.
+ */
+const MEDIA_CARD_CACHE_TTL_MS = 90_000;
+let mediaCardCache: { at: number; entries: EnumeratedDetailCard[] } | null = null;
+let mediaCardInflight: Promise<EnumeratedDetailCard[]> | null = null;
+
+export function invalidateAidreamcapesMediaCardCaches(): void {
+  mediaCardCache = null;
+  mediaCardInflight = null;
+}
+
+async function enumerateSingleOwnerDetailCardsCached(): Promise<EnumeratedDetailCard[]> {
+  if (mediaCardCache && Date.now() - mediaCardCache.at < MEDIA_CARD_CACHE_TTL_MS) return mediaCardCache.entries;
+  if (!mediaCardInflight) {
+    mediaCardInflight = enumerateSingleOwnerDetailCards()
+      .then((entries) => {
+        mediaCardCache = { at: Date.now(), entries };
+        return entries;
+      })
+      .finally(() => {
+        mediaCardInflight = null;
+      });
+  }
+  return mediaCardInflight;
+}
+
+/**
  * Enumerate every public media detail card for the AIVideosUGC storefront.
  * Future videos added to any card are picked up automatically.
  */
 export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailSitemapEntry[]> {
-  const cards = await enumerateSingleOwnerDetailCards();
+  const cards = await enumerateSingleOwnerDetailCardsCached();
   return cards.map(({ card, slug, kind, updatedAt }) => ({
     kind,
     slug,
@@ -298,13 +330,57 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
 }
 
 /**
+ * Cluster key for near-duplicate suppression in the gallery: cards from one
+ * product/actor batch share a slug prefix (e.g. `open-ear-earbuds-run-and-call`
+ * and `open-ear-earbuds-park-walk`), and a pure updatedAt sort lands them
+ * adjacent. Strip the trailing numeric suffix, keep the first two semantic
+ * segments. Deterministic, no data changes needed.
+ */
+export function galleryClusterKey(slug: string): string {
+  return slug.replace(/-[0-9]+$/, "").split("-").slice(0, 2).join("-");
+}
+
+/**
+ * Spread same-cluster cards at least `minGap` positions apart while keeping
+ * the newest-first macro order. Items that would sit too close to a previous
+ * cluster member are reinserted after the earliest allowed position in a
+ * second pass. Pure and deterministic: the SSR gallery, the pagination API
+ * and deep-linked ?page URLs always agree on the order.
+ */
+export function spreadGalleryByCluster<T extends { slug: string }>(items: T[], minGap = 4): T[] {
+  const result: T[] = [];
+  const deferred: T[] = [];
+  const lastPos = new Map<string, number>();
+  for (const item of items) {
+    const key = galleryClusterKey(item.slug);
+    const last = lastPos.get(key);
+    if (last !== undefined && result.length - last < minGap) {
+      deferred.push(item);
+    } else {
+      result.push(item);
+      lastPos.set(key, result.length - 1);
+    }
+  }
+  for (const item of deferred) {
+    const key = galleryClusterKey(item.slug);
+    let insertAt = result.length;
+    for (let index = 0; index < result.length; index++) {
+      if (galleryClusterKey(result[index].slug) === key) insertAt = Math.max(insertAt, index + minGap + 1);
+    }
+    result.splice(Math.min(insertAt, result.length), 0, item);
+  }
+  return result;
+}
+
+/**
  * Every public example for the /templates gallery, newest first (the owning
- * row's updatedAt, slug as the stable tiebreak). Same ownership rules as the
- * sitemap: exactly one owner row, no aliases.
+ * row's updatedAt, slug as the stable tiebreak), with same-batch near
+ * duplicates spread apart. Same ownership rules as the sitemap: exactly one
+ * owner row, no aliases.
  */
 export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<MediaGalleryEntry[]> => {
-  const cards = await enumerateSingleOwnerDetailCards();
-  return cards
+  const cards = await enumerateSingleOwnerDetailCardsCached();
+  const entries = cards
     .map(({ card, slug, kind, updatedAt }) => ({
       kind,
       slug,
@@ -316,4 +392,5 @@ export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<Med
       updatedAt
     }))
     .sort((left, right) => (right.updatedAt.getTime() - left.updatedAt.getTime()) || left.slug.localeCompare(right.slug));
+  return spreadGalleryByCluster(entries);
 });

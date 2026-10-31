@@ -15,6 +15,7 @@
     "start": "NODE_ENV=production NEXT_DIST_DIR=.next-build node server.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
+    "audit:aivideosugc-media-integrity": "node scripts/audit-aivideosugc-media-integrity.mjs",
     "generate:storefront-responsive-images": "node scripts/generate-storefront-responsive-image-variants.mjs",
     "smoke:storefront-responsive-images": "node scripts/smoke-storefront-responsive-images.mjs",
     "smoke:eu-video-topic-layout": "node scripts/smoke-eu-video-topic-layout.mjs",

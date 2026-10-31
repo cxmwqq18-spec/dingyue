@@ -168,11 +168,17 @@ export function mediaDetailParameters(card: Pick<MediaDetailCard, "aspect" | "du
   return parameters;
 }
 
-/** Breadcrumb trail for a detail page: home -> owning directory -> the card. */
+/** Breadcrumb trail for a detail page: home -> example gallery -> owning directory -> the card. */
 export function mediaDetailCrumbs(card: Pick<MediaDetailCard, "kind" | "label">): { label: string; href: string }[] {
   const rootPath = `/${MEDIA_DETAIL_ROOT[card.kind]}`;
   return [
     { label: "Home", href: "/" },
+    // The /templates gallery aggregates every public example of this kind; it
+    // gives each detail page a real link back to the browsing context visitors
+    // come from (and an extra internal link to the gallery). Point at the bare
+    // /templates URL — that is the canonical form both the sitemap and the
+    // ?kind variants converge on.
+    { label: "Examples", href: "/templates" },
     { label: MEDIA_DETAIL_ROOT_LABEL[card.kind], href: rootPath },
     { label: mediaDetailTitle(card), href: "" },
   ];

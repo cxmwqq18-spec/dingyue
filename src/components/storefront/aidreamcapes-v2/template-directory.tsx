@@ -10,9 +10,9 @@ import { storefrontHrefPrefix } from "./visual";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
-export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
+export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number; increment?: number };
 export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
-export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; pageSize: number; totalPages: number; kind?: "photo" | "video" };
+export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; pageSize: number; increment: number; totalPages: number; kind?: "photo" | "video" };
 
 /** The /templates example gallery: every public example, newest first. The
  * server renders the first page (plus any deep-linked ?page content); the
@@ -34,7 +34,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
         ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
         <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
       </article>)}
-        <GalleryGridLoader hrefPrefix={storefrontHrefPrefix(r)} initialOffset={gallery.items.length} kind={gallery.kind} pageSize={gallery.pageSize} total={gallery.total} />
+        <GalleryGridLoader hrefPrefix={storefrontHrefPrefix(r)} increment={gallery.increment} initialOffset={gallery.items.length} kind={gallery.kind} pageSize={gallery.pageSize} total={gallery.total} />
       </div>
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}

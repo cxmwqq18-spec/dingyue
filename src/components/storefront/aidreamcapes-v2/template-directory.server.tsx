@@ -9,7 +9,7 @@ import type { Directory, Template } from "./template-directory";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
-import type { ExampleDirectoryConfig, ExampleGalleryState, GalleryItem } from "./template-directory";
+import type { ExampleDirectoryConfig, GalleryItem } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
   const pages = await prisma.$queryRaw<Array<{ slug: string; definition: Template | null }>>`
@@ -74,6 +74,9 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       // The browser fetches no data; "load more" is a plain link.
       const directory = data.exampleDirectory as ExampleDirectoryConfig;
       const pageSize = Math.max(1, Math.min(50, Math.floor(Number(directory.pageSize)) || 20));
+      // Scroll increments stay small so each continuation request is cheap;
+      // the first page size is what search engines see in the SSR HTML.
+      const increment = Math.max(1, Math.min(50, Math.floor(Number(directory.increment)) || 8));
       const kind = props.query?.kind === "video" || props.query?.kind === "photo" ? props.query.kind : undefined;
       const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => !kind || entry.kind === kind);
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
@@ -86,7 +89,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
         ...(entry.video?.src ? { video: { src: entry.video.src, poster: entry.video.poster?.src ?? entry.image.src, ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
       }));
-      resolved = { ...data, exampleGallery: { items, total: all.length, page, pageSize, totalPages, ...(kind ? { kind } : {}) } };
+      resolved = { ...data, exampleGallery: { items, total: all.length, page, pageSize, increment, totalPages, ...(kind ? { kind } : {}) } };
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
       const kind = typeof data.kind === "string" ? data.kind : "";

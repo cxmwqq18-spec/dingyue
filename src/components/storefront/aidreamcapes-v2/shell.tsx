@@ -1,5 +1,6 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
+import { StorefrontSpeculationRules } from "@/components/storefront/speculation-rules";
 import { CreditCard } from "lucide-react";
 import { isValidElement, type ReactNode } from "react";
 import type { AidreamcapesPartnerBadge, AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
@@ -235,6 +236,7 @@ export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-co
   return (
     <div className={`adc2${homeExperience?.language === "zh-CN" ? " adc-home-locale" : ""}`} lang={homeExperience?.language}>
       <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS + AIDREAMCAPES_V2_VISUAL_CSS + AIDREAMCAPES_V2_VISUAL_CSS_POLISH }} />
+      <StorefrontSpeculationRules />
       <AidreamcapesV2Header headerAccount={headerAccount} headerCustomer={headerCustomer} navigation={navigation} r={r} siteId={siteId} />
       <main
         className={legacyPublicPage ? "bg-[#06070b] text-white" : undefined}
