@@ -212,6 +212,22 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
         }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} />
         <span className={styles.characterCount}>{`${promptValue.length} / ${WORKSPACE_PROMPT_MAX_LENGTH}`}</span>
       </div>
+      {/* 视频类型 + Wan3.0 优化：单独一行，紧跟提示词输入区。 */}
+      {(videoMode || draftMode) && (onVideoTypeChange || onOptimizePrompt) && <div className={styles.optimizerRow}>
+        {onVideoTypeChange && <div className={styles.setting}><Film size={15} aria-hidden="true" /><span>Type</span><WorkspaceSelect
+          ariaLabel="Video type"
+          disabled={disabled}
+          value={videoTypeId ?? "general"}
+          options={WAN30_VIDEO_TYPES.map((type) => ({ value: type.id, label: type.label }))}
+          onChange={(value) => onVideoTypeChange(value)}
+          bare
+          buttonClassName={styles.settingSelect}
+        /></div>}
+        {onOptimizePrompt && <button type="button" className={styles.controlButton} disabled={disabled || promptOptimizing || !promptValue.trim()} onClick={onOptimizePrompt} title="Optimize this prompt with the Wan3.0 e-commerce video skill" aria-label="Optimize prompt">
+          {promptOptimizing ? <Loader2 size={14} className={styles.spin} aria-hidden="true" /> : <WandSparkles size={14} aria-hidden="true" />}
+          <span>{promptOptimizing ? "Optimizing…" : "Optimize"}</span>
+        </button>}
+      </div>}
       <div className={styles.footer}>
         <div className={styles.controls}>
         {imageMode ? <>
@@ -234,15 +250,6 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             buttonClassName={styles.settingSelect}
           /></div>
         </> : <>
-          {onVideoTypeChange && <div className={styles.setting}><Film size={15} aria-hidden="true" /><span>Type</span><WorkspaceSelect
-            ariaLabel="Video type"
-            disabled={disabled}
-            value={videoTypeId ?? "general"}
-            options={WAN30_VIDEO_TYPES.map((type) => ({ value: type.id, label: type.label }))}
-            onChange={(value) => onVideoTypeChange(value)}
-            bare
-            buttonClassName={styles.settingSelect}
-          /></div>}
           <div className={`${styles.setting} ${styles.modelSetting}`}><Sparkles size={15} aria-hidden="true" /><WorkspaceSelect
             ariaLabel="Video model"
             disabled={disabled || !catalog?.models.length}
@@ -295,10 +302,6 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
             event.preventDefault();
             onLogin();
           }}>Log in to add photos</a>}
-          {(videoMode || draftMode) && onOptimizePrompt && <button type="button" className={styles.controlButton} disabled={disabled || promptOptimizing || !promptValue.trim()} onClick={onOptimizePrompt} title="Optimize this prompt with the Wan3.0 e-commerce video skill" aria-label="Optimize prompt">
-            {promptOptimizing ? <Loader2 size={14} className={styles.spin} aria-hidden="true" /> : <WandSparkles size={14} aria-hidden="true" />}
-            <span>{promptOptimizing ? "Optimizing…" : "Optimize"}</span>
-          </button>}
           <button type="button" className={`${styles.continue} ${styles.continueWithLabel}`} aria-label={imageMode ? onImageGenerate ? imageGenerateLabel : "Continue to image" : draftMode ? "Start video draft" : "Continue to video"} title={imageMode && onImageGenerate ? imageGenerateLabel : undefined} disabled={!canContinue} onClick={() => imageMode && onImageGenerate ? onImageGenerate() : onContinue(activeTab, { ...(model ? { modelId: model.id } : {}), aspect: selectedAspect ?? aspect, duration: selectedDuration ?? duration, ...(selectedResolution ? { resolution: selectedResolution } : {}) })}><span>{imageMode && onImageGenerate ? imageGenerateLabel : draftMode ? "Generate video" : "Generate"}</span><ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>
