@@ -14,8 +14,8 @@ import { useEffect, useRef } from "react";
 
 /** Seconds of the source a preview loops over before returning to the start. */
 const PREVIEW_LOOP_SECONDS = 10;
-const MAX_PLAYING_DESKTOP = 6;
-const MAX_PLAYING_MOBILE = 4;
+const MAX_PLAYING_DESKTOP = 12;
+const MAX_PLAYING_MOBILE = 6;
 const MOBILE_MAX_QUERY = "(max-width: 768px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 

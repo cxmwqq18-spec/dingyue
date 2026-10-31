@@ -1,17 +1,16 @@
 "use client";
 
-// Video-hub pagination. The server renders the first page of picker cards;
-// this loader appends the remaining pages client-side: an observer near the
-// bottom fetches the next page automatically, and a button does the same on
-// demand. Without JavaScript nothing renders here — the SSR page stays the
-// complete no-JS experience.
-//
-// The extra grid sits inside the picker's filter scope, so the chip filter
-// keeps covering appended cards (a hidden card never intersects, so it never
-// plays). Cards reuse the Adc2VideoPreview poster-first behavior.
+// Grid continuation for hub pickers. The server renders the first page of
+// cards inside the SSR grid; this component mounts as the grid's last cell
+// block and appends the remaining pages into the SAME grid, so the chip
+// filter and the column flow keep treating the list as one surface (a hidden
+// card never intersects, so it never plays; a full-width cell hosts the
+// sentinel and the load-more button). Without JavaScript nothing renders —
+// the SSR page stays the complete no-JS experience.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Adc2VideoPreview, type Adc2VideoPreviewMedia } from "./video-preview-card";
+import { MEDIA_PAGE_SIZE } from "./types";
 
 const MEDIA_CARDS_ENDPOINT = "/api/aidreamcapes/media-cards";
 const SENTINEL_ROOT_MARGIN = "600px";
@@ -29,10 +28,12 @@ export type HubMediaCard = {
 
 type MediaCardsResponse = { items: HubMediaCard[]; total: number; nextOffset: number | null };
 
-export function HubMediaLoader({ total, initialOffset, pageSize, hrefPrefix }: {
+export function MediaGridLoader({ page, total, initialOffset = MEDIA_PAGE_SIZE, pageSize = MEDIA_PAGE_SIZE, hrefPrefix }: {
+  /** LivePage slug of the page owning the picker (the API slices the same row the SSR renders). */
+  page: string;
   total: number;
-  initialOffset: number;
-  pageSize: number;
+  initialOffset?: number;
+  pageSize?: number;
   /** Storefront base path ("", or "/site/<slug>" in path mode) prefixed onto API hrefs. */
   hrefPrefix: string;
 }) {
@@ -51,7 +52,8 @@ export function HubMediaLoader({ total, initialOffset, pageSize, hrefPrefix }: {
     loadingRef.current = true;
     setLoading(true);
     try {
-      const response = await fetch(`${MEDIA_CARDS_ENDPOINT}?offset=${offsetRef.current}&limit=${pageSize}`);
+      const query = new URLSearchParams({ page, offset: String(offsetRef.current), limit: String(pageSize) });
+      const response = await fetch(`${MEDIA_CARDS_ENDPOINT}?${query.toString()}`);
       if (!response.ok) return;
       const body = (await response.json()) as MediaCardsResponse;
       setCards((previous) => [...previous, ...body.items]);
@@ -63,7 +65,7 @@ export function HubMediaLoader({ total, initialOffset, pageSize, hrefPrefix }: {
       loadingRef.current = false;
       setLoading(false);
     }
-  }, [pageSize, total]);
+  }, [page, pageSize, total]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -80,26 +82,22 @@ export function HubMediaLoader({ total, initialOffset, pageSize, hrefPrefix }: {
   const exhausted = loadedOffset >= total;
   return (
     <>
-      <div className="v-picker-grid">
-        {cards.map((card) => (
-          <a className="v-pick-card" data-chips={card.chips} data-filter-indexes={card.filterIndexes} href={`${hrefPrefix}${card.href}`} key={card.key}>
-            {card.video ? (
-              <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={card.video} />
-            ) : <img alt={card.image.alt} loading="lazy" src={card.image.src} />}
-            <span>{card.label}</span>
-          </a>
-        ))}
-      </div>
-      <div className="v-picker-more">
-        {exhausted ? null : (
-          <>
-            <div className="v-picker-sentinel" ref={sentinelRef} />
-            <button className="btn btn-grad v-picker-more-btn" disabled={loading} onClick={() => void loadMore()} type="button">
-              {loading ? "加载中…" : "加载更多"}
-            </button>
-          </>
-        )}
-      </div>
+      {cards.map((card) => (
+        <a className="v-pick-card" data-chips={card.chips} data-filter-indexes={card.filterIndexes} href={`${hrefPrefix}${card.href}`} key={card.key}>
+          {card.video ? (
+            <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={card.video} />
+          ) : <img alt={card.image.alt} loading="lazy" src={card.image.src} />}
+          <span>{card.label}</span>
+        </a>
+      ))}
+      {exhausted ? null : (
+        <div className="v-picker-more">
+          <div className="v-picker-sentinel" ref={sentinelRef} />
+          <button className="btn btn-grad v-picker-more-btn" disabled={loading} onClick={() => void loadMore()} type="button">
+            {loading ? "加载中…" : "加载更多"}
+          </button>
+        </div>
+      )}
     </>
   );
 }

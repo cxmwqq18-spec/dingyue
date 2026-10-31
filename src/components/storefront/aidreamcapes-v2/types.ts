@@ -118,6 +118,9 @@ export const V2_BLOCK_IDS = [
   // Layout blocks that have no counterpart in the shared list above.
   "plan", "sizes", "input", "outputs", "after", "limitations", "tools"
 ] as const;
+
+/** Cards a picker grid renders server-side before the client loader appends the rest. */
+export const MEDIA_PAGE_SIZE = 20;
 export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
 export type V2CardBlockItem = { t: string; d: string; soon?: boolean; img?: V2Image; alt?: string; icon?: string };
 export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };
