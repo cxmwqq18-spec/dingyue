@@ -1567,9 +1567,27 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       announceRun(`Your video “${finalTask.title}” is ready — find it in your Library.`);
       setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "ready", status: `Your video “${finalTask.title}” is ready.`, videoUrl: finalTask.video?.finalUrl } : current);
     } catch (error) {
-      setMessage((error as Error).message);
-      setMessageKind("error");
-      setInlineRun((current) => current ? { ...current, state: "failed", status: (error as Error).message } : current);
+      // A tracking hiccup after a successful submit (transient request failure
+      // while polling/dispatching) must not claim the generation failed: the
+      // upstream job keeps running. Re-read the task and report its real state.
+      let taskStillGenerating = false;
+      try {
+        const latest = await request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`);
+        const t = latest.task;
+        taskStillGenerating = t.operation?.state === "run" || t.operation?.state === "pending" ||
+          Boolean(t.storyboard?.shots.some((shot) => shot.genStatus === "run")) ||
+          t.status === "rendering" || Boolean(t.video && (t.video.status === "run" || !t.video.finalUrl && t.video.status !== "fail"));
+      } catch { /* fall back to the original error when even the re-read fails */ }
+      if (taskStillGenerating) {
+        const soft = "We lost track of progress on this screen, but your video is still generating — follow it in your Library.";
+        setMessage(soft);
+        setMessageKind("info");
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "running", status: soft } : current);
+      } else {
+        setMessage((error as Error).message);
+        setMessageKind("error");
+        setInlineRun((current) => current && current.taskId === taskId ? { ...current, state: "failed", status: (error as Error).message } : current);
+      }
     }
   }
 
