@@ -73,7 +73,10 @@ export function buildPublicSurface(paths) {
 export function cacheRuleExpression() {
   const exclusions = PRIVATE_PATH_PREFIXES.map((path) => `not starts_with(http.request.uri.path, "${path}")`);
   const cookieGuards = SESSION_COOKIE_MARKERS.map((marker) => `not http.cookie contains "${marker}"`);
-  const navigationGuards = CLIENT_NAVIGATION_HEADERS.map((header) => `not http.request.headers["${header}"][0]`);
+  // A bare header lookup is not a boolean in the ruleset engine, and `hdr[0] != ""` on an
+  // absent header does not match either (the whole rule silently stops matching). The
+  // quantified form `any(hdr[*] != "")` is the variant that both parses and matches.
+  const navigationGuards = CLIENT_NAVIGATION_HEADERS.map((header) => `not any(http.request.headers["${header}"][*] != "")`);
   return [
     `http.host eq "${PUBLIC_HOST}"`,
     `http.request.method in {"GET" "HEAD"}`,
@@ -91,8 +94,11 @@ export function cacheRule() {
     action: "set_cache_settings",
     action_parameters: {
       cache: true,
+      // The zone is on the Free plan: an explicit edge TTL below the 2h plan minimum is
+      // clamped, and respect_origin never engaged (responses stayed DYNAMIC). 2h at the
+      // edge is acceptable because every release purges exactly these URLs (purgePublicUrls).
       browser_ttl: { mode: "respect_origin" },
-      edge_ttl: { mode: "respect_origin" }
+      edge_ttl: { mode: "override_origin", default: 7200 }
     }
   };
 }
