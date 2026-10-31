@@ -83,6 +83,7 @@ for f in $files; do
   mkdir -p "$BACKUP"
   mv "$f" "$BACKUP/$name"
   mv "$tmp" "$f"
+  chmod 644 "$f"   # mktemp creates 0600; nginx workers must be able to read it
   bytes_after=$((bytes_after + new_size))
   plan_row "$name" "$size" "$new_size" "OK ($(awk -v a=$size -v b=$new_size 'BEGIN{printf "%.0f%%", (1-b/a)*100}') saved)"
   done_n=$((done_n+1))
