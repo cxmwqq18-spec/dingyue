@@ -87,7 +87,7 @@ function observePreviewVisibility(element: Element, callback: (visible: boolean)
   };
 }
 
-export function Adc2VideoPreview({ media, ariaLabel, showDuration = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
