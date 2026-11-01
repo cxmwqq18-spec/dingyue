@@ -2,7 +2,7 @@
 // so the rules only apply inside the v2 shell and never reach other storefronts.
 export const AIDREAMCAPES_V2_VISUAL_CSS_POLISH = `
 /* Visual modules: full-size examples, aligned cards and readable mock frames. */
-.adc2 .v-strip-section{padding-block:42px;border-top:0}
+.adc2 #home-product-scenes .v-pick-card img{aspect-ratio:9/16;object-fit:cover}.adc2 #home-product-scenes .v-pick-card video{aspect-ratio:9/16}.adc2 .v-strip-section{padding-block:42px;border-top:0}
 .adc2 .v-strip{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;overflow:visible;padding:2px 0 10px}
 .adc2 .v-strip[data-count="6"]{grid-template-columns:repeat(6,minmax(0,1fr))}
 .adc2 .v-strip[data-count="7"]{grid-template-columns:repeat(7,minmax(0,1fr))}
