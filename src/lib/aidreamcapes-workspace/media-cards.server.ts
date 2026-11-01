@@ -397,5 +397,10 @@ export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<Med
       Number(Boolean(right.video)) - Number(Boolean(left.video)) ||
       (right.updatedAt.getTime() - left.updatedAt.getTime()) ||
       left.slug.localeCompare(right.slug));
-  return spreadGalleryByCluster(entries);
+  // Spread each group separately so cluster spacing can never pull an
+  // image-only card ahead of a video card across the group boundary.
+  return [
+    ...spreadGalleryByCluster(entries.filter((entry) => entry.video)),
+    ...spreadGalleryByCluster(entries.filter((entry) => !entry.video))
+  ];
 });
