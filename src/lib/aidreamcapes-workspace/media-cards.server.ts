@@ -375,10 +375,10 @@ export function spreadGalleryByCluster<T extends { slug: string }>(items: T[], m
 }
 
 /**
- * Every public example for the /templates gallery, newest first (the owning
- * row's updatedAt, slug as the stable tiebreak), with same-batch near
- * duplicates spread apart. Same ownership rules as the sitemap: exactly one
- * owner row, no aliases.
+ * Every public example for the /templates gallery: video-attached cards first
+ * (newest first by the owning row's updatedAt, slug as the stable tiebreak),
+ * image-only cards last. Same-batch near duplicates are spread apart. Same
+ * ownership rules as the sitemap: exactly one owner row, no aliases.
  */
 export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<MediaGalleryEntry[]> => {
   const cards = await enumerateSingleOwnerDetailCardsCached();
@@ -393,6 +393,9 @@ export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<Med
       ...(card.duration !== undefined ? { duration: Number(card.duration) || undefined } : {}),
       updatedAt
     }))
-    .sort((left, right) => (right.updatedAt.getTime() - left.updatedAt.getTime()) || left.slug.localeCompare(right.slug));
+    .sort((left, right) =>
+      Number(Boolean(right.video)) - Number(Boolean(left.video)) ||
+      (right.updatedAt.getTime() - left.updatedAt.getTime()) ||
+      left.slug.localeCompare(right.slug));
   return spreadGalleryByCluster(entries);
 });
