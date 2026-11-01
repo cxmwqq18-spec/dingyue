@@ -1,12 +1,35 @@
 {
  "generated": "2026-11-01",
- "rev": 2,
+ "rev": 3,
+ "method": "R1 prompt-entity, R2 cross-check, R3 visual ground-truth (25 images downloaded & inspected)",
  "totals": {
   "detailPages": 358,
   "videoDetailPages": 250,
   "withVideo": 171
  },
- "fixesPlanned": 52,
+ "fixesPlanned": 57,
+ "titleImageMismatchPages": [
+  "bottle-ad-with-a-person",
+  "brand-film",
+  "cardigan-ready-for-season-end",
+  "close-shot-of-a-silver-ring",
+  "color-variants",
+  "every-angle",
+  "gift-bottle-held-in-both-hands",
+  "jar-on-white-for-catalog-match",
+  "lunch-box-on-the-last-day",
+  "packaging-preview",
+  "running-shoes-before-the-jog",
+  "sage-soap-dispenser-on-white",
+  "sale-banner",
+  "sandals-tried-on-at-the-market",
+  "sea-glass-kettle-on-white",
+  "steel-bottle-on-white",
+  "story-ad",
+  "suitcase-with-room-for-the-offer",
+  "tote-with-space-for-the-offer",
+  "wallet-unboxing-with-offer-space"
+ ],
  "assignments": [
   {
    "slug": "360-showcase-linen-shirt",
@@ -340,11 +363,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness",
+    "sports-gym"
+   ],
    "tool_primary": "image-to-video",
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "【图片真值】画面=健身房柜+水瓶出运动袋→健康+运动，替换food-drinks"
   },
   {
    "slug": "brand-film",
@@ -362,7 +388,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "黑色蓝牙音箱→数码，摘jewelry/shoes"
+   "note": "【图片真值】画面=黑色蓝牙音箱→数码，摘jewelry/shoes"
   },
   {
    "slug": "budget-desk-overview",
@@ -605,7 +631,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "开衫→服装，摘shoes"
+   "note": "【图片真值】画面=米白羊毛大衣→服装（保留fashion，摘shoes）"
   },
   {
    "slug": "cardigan-turn-reel",
@@ -783,7 +809,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "银戒指→珠宝，摘fashion/shoes"
+   "note": "【图片真值】画面=银印章戒→珠宝，摘fashion/shoes"
   },
   {
    "slug": "closet-organizer-walkthrough",
@@ -866,8 +892,8 @@
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "分装瓶/分配器→家居生活，替换fashion/shoes"
+   "confidence": "high",
+   "note": "【图片真值】画面=鼠尾草绿皂液器→家居生活，替换fashion/shoes"
   },
   {
    "slug": "coral-lipstick-swatch",
@@ -972,7 +998,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "台灯→家居生活，摘beauty"
+   "note": "【提示词】台灯→家居生活，摘beauty"
   },
   {
    "slug": "cream-mug-desk",
@@ -1236,7 +1262,7 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "耳机开箱→数码"
+   "note": "提示词：耳机开箱→数码"
   },
   {
    "slug": "every-angle",
@@ -1256,7 +1282,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "音箱多角度白底图→数码，摘home/jewelry/shoes"
+   "note": "【图片真值】画面=音箱前后多角度→数码，摘home/jewelry/shoes"
   },
   {
    "slug": "everyday-lipstick-vanity-check",
@@ -1409,7 +1435,7 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "折叠自行车→运动健身"
+   "note": "提示词+常识：折叠自行车→运动出行"
   },
   {
    "slug": "folding-bike-hinge-opens",
@@ -1541,11 +1567,13 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "【图片真值】画面=圣诞礼盒+水瓶→保留holidays，行业food→health"
   },
   {
    "slug": "gift-box-ready-for-a-black-friday-offer",
@@ -1666,7 +1694,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "桌面文具→家居生活"
+   "note": "提示词：桌面文具→家居生活"
   },
   {
    "slug": "gym-bench-check-in",
@@ -1985,8 +2013,8 @@
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "玻璃储物罐→家居生活，替换beauty"
+   "confidence": "high",
+   "note": "【图片真值】画面=玻璃储物罐→家居生活（保留e-commerce）"
   },
   {
    "slug": "jelly-mask-sunday-reset",
@@ -2151,13 +2179,11 @@
     "platforms",
     "platforms"
    ],
-   "placement_after": [
-    "jewelry-accessories"
-   ],
+   "placement_after": null,
    "tool_primary": null,
-   "change": "placement-fix",
-   "confidence": "medium",
-   "note": "鼠尾草绿帆布包→珠宝配饰，替换electronics/food"
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "leather-sandal-strap",
@@ -2282,7 +2308,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "午餐包→家居生活，替换fashion/food"
+   "note": "午餐包（无画面验证）→家居生活，替换fashion/food；保留BF/sale场合"
   },
   {
    "slug": "lunch-box-on-the-last-day",
@@ -2298,12 +2324,12 @@
     "platforms"
    ],
    "placement_after": [
-    "home-living"
+    "jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "午餐盒→家居生活，替换fashion/shoes"
+   "confidence": "high",
+   "note": "【图片真值】画面=藏青棒球帽→配饰；slug文字不可信"
   },
   {
    "slug": "lunchbox-latch-clicks-shut",
@@ -2351,7 +2377,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "充电宝→数码"
+   "note": "磁吸充电宝→数码"
   },
   {
    "slug": "matcha-bowl-set-on-linen",
@@ -2737,7 +2763,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "咖啡包装袋→食品饮品，摘beauty/home/jewelry"
+   "note": "【图片真值】画面=咖啡包装袋→食品饮品，摘beauty/home/jewelry"
   },
   {
    "slug": "pendant-creator-try-on",
@@ -2779,7 +2805,7 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "香水→美妆，剔除误挂food-drinks"
+   "note": "香水→美妆，摘food-drinks"
   },
   {
    "slug": "pet-brush-living-room-demo",
@@ -3081,7 +3107,7 @@
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "化妆刷具→美妆个护"
+   "note": "提示词：化妆刷具→美妆个护"
   },
   {
    "slug": "quilted-jacket-lifted-from-a-gift-box",
@@ -3206,12 +3232,12 @@
     "platforms"
    ],
    "placement_after": [
-    "shoes"
+    "jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "跑鞋→鞋靴，摘fashion"
+   "note": "【图片真值】画面=藏青棒球帽白底→配饰；slug文字不可信"
   },
   {
    "slug": "sage-bottle-desk-detail",
@@ -3277,11 +3303,13 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "【图片真值】画面=皂液器→家居生活，替换beauty"
   },
   {
    "slug": "sale-banner",
@@ -3301,8 +3329,8 @@
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "行李箱季末海报→家居生活，替换fashion/shoes"
+   "confidence": "high",
+   "note": "【图片真值】画面=蓝色拉杆箱机场→家居/旅行"
   },
   {
    "slug": "sandals-tried-on-at-the-market",
@@ -3323,7 +3351,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "凉鞋→鞋靴，摘fashion"
+   "note": "【图片真值】画面=白球鞋绿背景→鞋靴（保留shoes，摘fashion）"
   },
   {
    "slug": "sea-glass-kettle-on-white",
@@ -3332,11 +3360,13 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "【图片真值】画面=珐琅烧水壶→家居厨房，替换food-drinks"
   },
   {
    "slug": "sealed-box-order-unboxing",
@@ -3507,11 +3537,13 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "beauty-skincare"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "【图片真值】画面=无标签粉色泵瓶（洗护形态）→美妆个护，替换food-drinks"
   },
   {
    "slug": "show-the-sauce-bottle-on-white",
@@ -3812,11 +3844,13 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "【图片真值】画面=钢制水瓶→健康饮水，替换food-drinks"
   },
   {
    "slug": "stemless-earbud-desk-demo",
@@ -3863,7 +3897,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "辣酱淋taco→食品饮品，替换fashion/health"
+   "note": "【图片真值】画面=辣酱瓶+辣椒→食品饮品，替换fashion/health"
   },
   {
    "slug": "streamer-reaction-app",
@@ -3993,12 +4027,12 @@
     "platforms"
    ],
    "placement_after": [
-    "home-living"
+    "shoes"
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "行李箱→家居生活(旅行收纳)，替换fashion/shoes"
+   "confidence": "high",
+   "note": "【图片真值】画面=白色皮面球鞋→鞋靴"
   },
   {
    "slug": "sunset-lamp-room-glow-before-after",
@@ -4137,7 +4171,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "充电宝→数码"
+   "note": "磁吸充电宝→数码"
   },
   {
    "slug": "tiktok-spark-ad-video",
@@ -4222,12 +4256,12 @@
     "platforms"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "fashion-clothing"
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "帆布托特包→珠宝配饰(包袋配饰)，替换fashion/shoes"
+   "confidence": "high",
+   "note": "【图片真值】画面=米色针织衫模特肖像→服装"
   },
   {
    "slug": "trail-belt-finish-reel",
@@ -4414,12 +4448,12 @@
     "platforms"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "shoes"
    ],
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "钱包→珠宝配饰，替换fashion/shoes"
+   "note": "【图片真值】画面=牛仔裤配白球鞋→鞋靴"
   },
   {
    "slug": "walnut-organizer-desk",
@@ -4491,7 +4525,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "水瓶→健康饮水，替换误挂fashion/food"
+   "note": "水瓶→健康饮水"
   },
   {
    "slug": "white-tee-wardrobe-basic-check",
@@ -4663,7 +4697,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "酸奶→食品饮品"
+   "note": "酸奶试吃→食品饮品"
   }
  ]
 }
