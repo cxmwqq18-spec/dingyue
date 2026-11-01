@@ -265,7 +265,7 @@ export function storefrontHrefPrefix(r: V2Resolvers): string {
   return root === "/" ? "" : root.replace(/\/+$/, "");
 }
 
-export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards, paginateWith }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards, paginateWith, hideDuration = false }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
@@ -275,6 +275,8 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   maxCards?: number;
   /** LivePage slug of the owning page: when the picker holds more than MEDIA_PAGE_SIZE cards, the grid paginates client-side. */
   paginateWith?: string;
+  /** Hide the duration badge on preview cards (the homepage picker opts out). */
+  hideDuration?: boolean;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
@@ -303,7 +305,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
               {card.video ? (
-                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(card.video.poster.src), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} />
+                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(card.video.poster.src), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} showDuration={!hideDuration} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>

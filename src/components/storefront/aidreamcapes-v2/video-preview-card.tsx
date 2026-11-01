@@ -87,7 +87,7 @@ function observePreviewVisibility(element: Element, callback: (visible: boolean)
   };
 }
 
-export function Adc2VideoPreview({ media, ariaLabel }: { media: Adc2VideoPreviewMedia; ariaLabel?: string }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -188,7 +188,7 @@ export function Adc2VideoPreview({ media, ariaLabel }: { media: Adc2VideoPreview
         ref={videoRef}
         width={media.width}
       />
-      {media.duration ? <div className="v-preview-dur">{formatPreviewDuration(media.duration)}</div> : null}
+      {showDuration && media.duration ? <div className="v-preview-dur">{formatPreviewDuration(media.duration)}</div> : null}
     </div>
   );
 }

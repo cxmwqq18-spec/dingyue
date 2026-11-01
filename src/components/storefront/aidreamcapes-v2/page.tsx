@@ -227,7 +227,7 @@ function HomePage({ data, r }: Props) {
           {list<V2Item>(ugc.formats).length ? <div style={{ marginTop: 22 }}><Boxes className="ideas" items={list<V2Item>(ugc.formats)} numbered /></div> : null}
         </Section>
       ) : null],
-    ["picker", visual ? <VisualPicker maxCards={20} sectionId="home-product-scenes" pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
+    ["picker", visual ? <VisualPicker hideDuration maxCards={20} sectionId="home-product-scenes" pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} /> : null],
     ["steps", visual ? <VisualSteps sectionId="home-product-image-steps" eyebrow={text(data.stepsEyebrow) || undefined} actions={experience?.blocks.find((block) => block.after === "hero")?.actions} buttonLabel={text((data.maker as V2Maker | undefined)?.cta) || "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} /> : null],
     ["benefits", campaign && toolsDemo ? <HomeBrandTools items={benefitItems} demo={toolsDemo} header={{ eyebrow: text(data.benefitsEyebrow), title: text(data.benefitsH2), lead: text(data.benefitsLead) }} r={r} /> : <BenefitsSection data={data} fallbackTitle="Everything you need to scale your brand" r={r} />],
     ["features", <MoreSections numbered r={r} sections={campaign ? list<V2MoreSection>(data.more_sections).slice(1) : data.more_sections as never} />],
