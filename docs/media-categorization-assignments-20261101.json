@@ -1,1373 +1,1406 @@
 {
  "generated": "2026-11-01",
+ "rev": 2,
  "totals": {
   "detailPages": 358,
   "videoDetailPages": 250,
   "withVideo": 171
  },
+ "fixesPlanned": 52,
  "assignments": [
   {
    "slug": "360-showcase-linen-shirt",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce",
-    "fashion-clothing"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "an-avatar-holds-the-shaker",
    "owner": "/ai-video-generation",
    "hasVideo": false,
-   "kind": "scene",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "app-screen-walkthrough-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "apps"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bag-on-a-cafe-table",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "包→配饰，替换fashion"
   },
   {
    "slug": "balcony-plant-side-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "balcony-railing-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "basket-on-a-room-shelf",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bathroom-review-moisturizer",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bathroom-robe-mirror-selfie",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "beauty-skincare"
+   ],
    "tool_primary": "spokesperson-video",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "早晚护肤泵瓶→美妆个护，替换home-living"
   },
   {
    "slug": "beach-boardwalk-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "beach-shoreline-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "beauty-routine-video",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bedroom-mirror-check-with-the-product",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bedroom-try-on-knitwear",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bento-box-walkthrough",
    "owner": "/ai-video-generation",
    "hasVideo": false,
-   "kind": "scene",
    "placement_now": [
-    "apps"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "berry-bowl-first-bite-reel",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness",
+    "food-drinks"
+   ],
    "tool_primary": "video-ads",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "莓果碗→补食品饮品"
   },
   {
    "slug": "black-dress-pants-fold-test",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "black-espresso-machine-counter-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "other",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "black-friday-video",
    "owner": "/ai-video-generation/black-friday-countdown",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "other",
-    "black-friday",
-    "sale-discount",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "black-milk-frother-morning-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "other",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "black-speaker-balcony-soundtest",
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "blue-denim-jacket-city-sidewalk",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "blue-shirt-steamer-second-take",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "bottle-ad-with-a-person",
    "owner": "/ai-video-generation",
    "hasVideo": false,
-   "kind": "scene",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "brand-film",
    "owner": "/ai-video-generation/cinematic-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "jewelry-accessories",
-    "shoes",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "industries",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "electronics"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "黑色蓝牙音箱→数码，摘jewelry/shoes"
   },
   {
    "slug": "budget-desk-overview",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "budget-tool-desk-explainer",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cable-organizer-before-after",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "explainer"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cable-organizer-desk-before-after",
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cable-organizer-white-setup",
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cafe-counter-introduction",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cafe-window-seat-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "camel-coat-on-a-city-walk",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "camel-coat-on-a-sidewalk",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "camel-weekender-on-a-car-seat",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "周末旅行袋→配饰，替换fashion"
   },
   {
    "slug": "canvas-tote-everyday-carry",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "jewelry-accessories",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "canvas-tote-pack-with-me",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "jewelry-accessories",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "canvas-tote-product-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "canvas-tote-sidewalk",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "car-driver-seat-selfie",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "car-passenger-seat-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cardigan-ready-for-season-end",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "fashion-clothing"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "开衫→服装，摘shoes"
   },
   {
    "slug": "cardigan-turn-reel",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "charcoal-hiking-shoe-city-curb",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "charcoal-hiking-shoe-front-hall",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "charcoal-hiking-shoe-studio",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "charcoal-sweatshirt-plain-studio",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "chili-crisp-oil-rice-upgrade",
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "food-drinks",
-    "facebook-ads",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "platforms",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cinematic-watch-detail",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "citrus-drink-first-sip",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "citrus-drink-pour-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "classroom-lesson-introduction",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "clay-mask-texture-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "clean-studio",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "close-shot-of-a-silver-ring",
    "owner": "/ai-image-generation/colorway-variations",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing",
-    "jewelry-accessories",
-    "shoes",
-    "amazon-product-photos",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "银戒指→珠宝，摘fashion/shoes"
   },
   {
    "slug": "closet-organizer-walkthrough",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "explainer"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "clothing-try-on",
    "owner": "/ai-image-generation/virtual-try-on",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shopify-product-photos"
+    "industries",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "coffee-maker-how-to-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "color-block-unboxing-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "color-blocks-unboxing",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "color-variants",
    "owner": "/ai-image-generation/colorway-variations",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "amazon-product-photos",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "分装瓶/分配器→家居生活，替换fashion/shoes"
   },
   {
    "slug": "coral-lipstick-swatch",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cotton-shirt-fit-check",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cream-blouse-in-a-studio",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
     "fashion-clothing"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "衬衫→服装，摘beauty"
   },
   {
    "slug": "cream-bowl-sauce-demo",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
     "food-drinks"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "酱料碗演示→食品饮品，摘beauty"
   },
   {
    "slug": "cream-candle-jar",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
     "home-living"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "蜡烛罐→家居生活，摘beauty"
   },
   {
    "slug": "cream-chunky-cardigan-two-ways",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "cream-lamp-desk",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
     "home-living"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "台灯→家居生活，摘beauty"
   },
   {
    "slug": "cream-mug-desk",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
     "food-drinks",
     "home-living"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "马克杯→食品器皿+家居，摘beauty"
   },
   {
    "slug": "creator-style-photo",
    "owner": "/ai-image-generation/ugc-still-ad",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "health-wellness",
-    "instagram-ads",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "运动后水瓶→健康，摘beauty"
   },
   {
    "slug": "crossbody-try-on-fabric-messenger-bag",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "邮差包→配饰，替换fashion"
   },
   {
    "slug": "cufflink-detail-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "deal-day-product-demo",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "sale-discount"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "denim-shirt-detail-reel",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "desk-chart-explainer",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "desk-dashboard-clip",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "desk-lamp-product-demo-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "ugc"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "desk-lamp-switches-on",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "dog-brush-care",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "dog-brush-care-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "dog-harness-fit-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "dog-harness-park-setup",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "drawer-organizer-explainer",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "explainer"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "drawer-trays-slide-into-place",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "drink-demo-first-sip-reaction",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "drink-pour",
    "owner": "/ai-video-generation/food-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "food-drinks",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "earbud-box-reveal",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": [
     "electronics"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "electronics"
-    ],
-    "note": "真实产品=耳机开箱，非珠宝",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "耳机开箱→数码"
   },
   {
    "slug": "every-angle",
    "owner": "/ai-image-generation/packshot-multi-angle",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "jewelry-accessories",
-    "shoes",
-    "amazon-product-photos",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "electronics"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "音箱多角度白底图→数码，摘home/jewelry/shoes"
   },
   {
    "slug": "everyday-lipstick-vanity-check",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "exercise-mat-recovery-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "exercise-warm-up-explanation",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "fabric-cleaner-lesson-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "felt-slippers-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "finance-hook-phone-demo",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "first-person-discovery-court-gear",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "explainer",
-    "health-wellness"
+    "industries",
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "explainer",
+    "health-wellness",
+    "sports-gym"
+   ],
    "tool_primary": "video-ads",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "球场握力带→补运动健身"
   },
   {
    "slug": "fitness-recovery-tip",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "fitness-routine-explanation",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "folded-trousers-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "folding-bike-commute",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": [
     "sports-gym",
@@ -1375,932 +1408,941 @@
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "sports-gym",
-     "e-commerce"
-    ],
-    "note": "真实产品=折叠自行车，与珠宝无关；jewelry-accessories 为错标",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "折叠自行车→运动健身"
   },
   {
    "slug": "folding-bike-hinge-opens",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "folding-phone-stand",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "four-side-box-grater-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "other",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "fragrance-reveal-reaction",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "viral"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gaming-monitor-framed-for-a-black-friday-post",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "electronics",
-    "black-friday",
-    "sale-discount"
+    "industries",
+    "occasions",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "garage-storage-shelf-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "garden-garden-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "garden-greenhouse-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "get-ready-unboxing-knitwear",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gift-bottle-held-in-both-hands",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gift-box-ready-for-a-black-friday-offer",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "black-friday",
-    "holidays",
-    "sale-discount"
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gift-guide-product-pack",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gift-reveal-product-bundle",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gold-necklace-revealed-from-tissue",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "graphite-speaker-desk",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "electronics",
-    "home-living"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "green-clay-mask-sunday-reset",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "green-cleanser-black-friday-deal",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "black-friday",
-    "sale-discount",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "green-notebook-desk-ritual",
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "jewelry-accessories",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": [
     "home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "home-living"
-    ],
-    "note": "真实产品=桌面笔记本/文具，非珠宝",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "桌面文具→家居生活"
   },
   {
    "slug": "gym-bench-check-in",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gym-pre-workout-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "gym-protein-scoop-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hand-applies-balm-from-a-plain-jar",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hand-cream-on-a-bathroom-counter",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "home-living"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hand-demo-open-a-leather-wallet",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "真皮钱包→配饰，替换fashion"
   },
   {
    "slug": "handbag-on-a-marble-cafe-table",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "手提包→配饰，替换fashion"
   },
   {
    "slug": "headphone-creator-review",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "ugc"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "headphone-product-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "ugc"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "home-organizing",
    "owner": "/ai-video-generation/home-organization",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "facebook-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "home-sofa-welcome",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "home-table-explanation",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hook-home-app-walkthrough",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "explainer"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hospital-corridor-briefing",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hospital-staff-room-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hot-sauce-pour",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "hot-sauce-taco-drizzle",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "how-to-product-video",
    "owner": "/ai-video-generation/how-to-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "health-wellness",
-    "home-living",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "industries",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "electronics",
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "手持挂烫机→家居衣物护理，摘health-wellness"
   },
   {
    "slug": "iced-citrus-drink-mix-switch",
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "food-drinks",
-    "health-wellness",
-    "instagram-ads",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "indoor-entryway-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "indoor-home-corner-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "interview-street-interview-answer",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "jar-on-white-for-catalog-match",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
+    "industries",
+    "industries"
+   ],
+   "placement_after": [
+    "home-living",
     "e-commerce"
    ],
-   "placement_after": null,
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "玻璃储物罐→家居生活，替换beauty"
   },
   {
    "slug": "jelly-mask-sunday-reset",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "jewelry-on-model",
    "owner": "/ai-image-generation/jewelry-positioning",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "jewelry-accessories",
-    "instagram-ads",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "银项链→珠宝，摘beauty"
   },
   {
    "slug": "jewelry-try-on-layered-gold-necklaces",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kettlebell-powder-reveal-reel",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness",
-    "sports-gym"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kitchen-appliance-evening-demo-reel",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kitchen-counter-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kitchen-island-explanation",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kitchen-tool-lesson-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "knit-sweater-mirror",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "kraft-coffee-pour",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "laptop-sleeve-opens-for-fit",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "launch-promo",
    "owner": "/ai-video-generation/promo-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "food-drinks",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "鼠尾草绿帆布包→珠宝配饰，替换electronics/food"
   },
   {
    "slug": "leather-sandal-strap",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "lifestyle-app-recommendation",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "apps"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "linen-suit-on-a-terrace",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "linen-tote-at-a-farmers-market",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "托特包→配饰，替换fashion"
   },
   {
    "slug": "lipstick-gift-reveal",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "living-room-lounge-introduction",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "living-room-sofa-check-in",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "low-profile-keyboard-review",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "lunch-bag-packed-for-a-black-friday-deal",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "food-drinks",
-    "black-friday",
-    "sale-discount"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "午餐包→家居生活，替换fashion/food"
   },
   {
    "slug": "lunch-box-on-the-last-day",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "午餐盒→家居生活，替换fashion/shoes"
   },
   {
    "slug": "lunchbox-latch-clicks-shut",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": "product-video",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "午餐盒卡扣→家居生活，替换electronics"
   },
   {
    "slug": "lunchbox-leak-tutorial",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "magnetic-power-bank-snap-on-unboxing",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "financial-services",
-    "sale-discount",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": [
     "electronics",
@@ -2308,1860 +2350,1785 @@
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "electronics",
-     "sale-discount"
-    ],
-    "note": "磁吸充电宝，financial-services 为误标",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "充电宝→数码"
   },
   {
    "slug": "matcha-bowl-set-on-linen",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mint-face-mist-hook",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare",
-    "viral"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mint-shower-speaker-bathroom-concert",
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mint-speaker-tile-steam-session",
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mirror-selfie-denim",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "moisturizer-lifted-from-a-carton",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mug-color-reveal-hook",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "mug-on-white-for-store-page",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "e-commerce",
-    "food-drinks"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "navy-cardigan-one-piece-two-looks",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "night-serum-order-packing",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare",
-    "e-commerce",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": [
-    "beauty-skincare",
-    "e-commerce",
-    "amazon-product-photos"
-   ],
+   "placement_after": null,
    "tool_primary": "video-ads",
-   "change": "placement-fix",
-   "note": {
-    "after": [
-     "beauty-skincare",
-     "e-commerce",
-     "amazon-product-photos"
-    ],
-    "note": "打包发货场景；补 amazon（现 0），存疑待确认",
-    "confidence": "medium"
-   }
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "notes-app-chaos-to-calm",
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "apps",
-    "electronics",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "offer-ready-product-view",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "sale-discount"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "office-desk-explanation",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "office-workday-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "olive-jacket-cuff",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "olive-overshirt-fit-reel",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "olive-overshirt-sunset-terrace",
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "open-ear-earbuds-run-and-call",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "sports-gym",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "open-ear-sports-earbuds-park-walk",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "sports-gym",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "orange-drink-mix-morning-ritual",
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "food-drinks",
-    "health-wellness",
-    "instagram-ads",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "organizer-review-scene",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "outdoor-park-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "outdoor-walkway-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "outfit-reel",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "over-ear-headphone-unboxing",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "package-reveal-unboxing-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "e-commerce"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "packaging-preview",
    "owner": "/ai-image-generation/packaging-mockup",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "food-drinks",
-    "home-living",
-    "jewelry-accessories",
-    "amazon-product-photos",
-    "shopify-product-photos"
+    "industries",
+    "industries",
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "food-drinks"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "咖啡包装袋→食品饮品，摘beauty/home/jewelry"
   },
   {
    "slug": "pendant-creator-try-on",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "performance-shoe-step-ad",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "perfume-bottle-in-a-room",
    "owner": "/ai-video-generation",
    "hasVideo": false,
-   "kind": "scene",
    "placement_now": [
-    "beauty-skincare",
-    "food-drinks"
+    "industries",
+    "industries"
    ],
    "placement_after": [
     "beauty-skincare"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "beauty-skincare"
-    ],
-    "note": "香水归美妆，去除误加的 food-drinks",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "香水→美妆，剔除误挂food-drinks"
   },
   {
    "slug": "pet-brush-living-room-demo",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pet-cat-cuddle-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pet-dog-cuddle-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pet-grooming-kit-unboxing",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "phone-case-compare",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "viral"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "phone-first-sale-post",
    "owner": "/occasions/black-friday",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "electronics",
-    "sale-discount"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "phone-grip-app-demo-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "apps"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "phone-ring-grip-one-hand-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "jewelry-accessories",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": [
     "electronics"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "electronics"
-    ],
-    "note": "手机指环支架，归数码配件",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "手机指环支架→数码"
   },
   {
    "slug": "picnic-blanket-in-use",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pink-mini-printer-desk-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pink-tint-stick-lip-and-cheek",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "place-the-blue-bottle-underwater",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "podcast-microphone-opener",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "podcast-podcast-intro",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pool-poolside-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "post-workout-bottle-check-in",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness",
-    "sports-gym"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "post-workout-shaker",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "product-in-use-sale-scene",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "sale-discount"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "product-listing-screen-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce"
+    "industries"
    ],
-   "placement_after": [
-    "e-commerce",
-    "shopify-product-photos"
-   ],
+   "placement_after": null,
    "tool_primary": "image-to-video",
-   "change": "placement-fix",
-   "note": {
-    "after": [
-     "e-commerce",
-     "shopify-product-photos"
-    ],
-    "note": "商品列表操作演示；补 shopify（现 0 视频）",
-    "confidence": "medium"
-   }
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "protein-pouch-gym-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "pump-moisturizer-routine-reel",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare",
-    "ugc"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "quiet-unboxing-makeup-tools",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": [
     "beauty-skincare"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "beauty-skincare"
-    ],
-    "note": "真实产品=化妆刷具，应归美妆个护",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "化妆刷具→美妆个护"
   },
   {
    "slug": "quilted-jacket-lifted-from-a-gift-box",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "realtor-walkthrough-home",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "financial-services"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "reporting-sidewalk-report",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "resistance-band-home-demo",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness",
+    "sports-gym"
+   ],
    "tool_primary": "video-ads",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "阻力带→补运动健身"
   },
   {
    "slug": "routine-demo-cream",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "running-jacket-checked-in-a-mirror",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "sports-gym"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "running-shoe-color-lineup",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "running-shoe-creator-showcase",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "running-shoes-before-the-jog",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "shoes"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "跑鞋→鞋靴，摘fashion"
   },
   {
    "slug": "sage-bottle-desk-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sage-bottle-front-hall",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "保温瓶→健康饮水，替换food-drinks"
   },
   {
    "slug": "sage-earbuds-pocket-fit",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sage-overshirt-unboxing",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing",
-    "ugc"
+    "industries",
+    "industries"
    ],
-   "placement_after": [
-    "fashion-clothing",
-    "ugc",
-    "sale-discount"
-   ],
+   "placement_after": null,
    "tool_primary": "video-ads",
-   "change": "placement-fix",
-   "note": {
-    "after": [
-     "fashion-clothing",
-     "ugc",
-     "sale-discount"
-    ],
-    "note": "服饰开箱支撑折扣位",
-    "confidence": "medium"
-   }
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "sage-soap-dispenser-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sale-banner",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "行李箱季末海报→家居生活，替换fashion/shoes"
   },
   {
    "slug": "sandals-tried-on-at-the-market",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "shoes"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "凉鞋→鞋靴，摘fashion"
   },
   {
    "slug": "sea-glass-kettle-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sealed-box-order-unboxing",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce",
-    "home-living",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": [
-    "e-commerce",
-    "home-living",
-    "amazon-product-photos"
-   ],
+   "placement_after": null,
    "tool_primary": "video-ads",
-   "change": "placement-fix",
-   "note": {
-    "after": [
-     "e-commerce",
-     "home-living",
-     "amazon-product-photos"
-    ],
-    "note": "快递箱开箱；补 amazon，存疑待确认",
-    "confidence": "medium"
-   }
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "seasonal-garden",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "seasonal-product-use",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sensory-hook-citrus-sip",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "set-the-sauce-bottle-with-tomatoes",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sheet-mask-routine",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "shirt-steamer-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "shopping-clothing-rack-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "shopping-shop-aisle-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "short-sale-clip-opening",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other",
-    "sale-discount"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "show-the-blue-bottle-on-white",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "show-the-canister-on-white",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "show-the-pump-bottle-on-white",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "show-the-sauce-bottle-on-white",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "silicone-case-compare-ad",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce"
+    "industries"
    ],
    "placement_after": [
     "e-commerce",
-    "shopify-product-photos"
+    "electronics"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "e-commerce",
-     "shopify-product-photos"
-    ],
-    "note": "手机壳对比广告适合电商位，存疑待确认",
-    "confidence": "medium"
-   }
+   "confidence": "high",
+   "note": "手机壳→补数码"
   },
   {
    "slug": "silk-scarf-unboxing",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
-   "placement_after": [
-    "jewelry-accessories",
-    "holidays",
-    "fashion-clothing"
-   ],
+   "placement_after": null,
    "tool_primary": "image-to-video",
-   "change": "placement-fix",
-   "note": {
-    "after": [
-     "jewelry-accessories",
-     "holidays",
-     "fashion-clothing"
-    ],
-    "note": "礼盒开箱贴节日送礼；holidays 现仅 1",
-    "confidence": "medium"
-   }
+   "change": null,
+   "confidence": null,
+   "note": null
   },
   {
    "slug": "silver-bracelet-close-up",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "silver-magnetic-ring-desk-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "home-living",
-    "jewelry-accessories",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "silver-magnetic-ring-snap-on-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "jewelry-accessories",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "silver-ring-size-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "silver-signet-macro-reveal",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "single-camera-case-fit",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "skincare-gift-set-lifted-from-tissue",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "skincare-gift-set-unbox-routine",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "holidays",
-    "sale-discount",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "skincare-order-packing-reel",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "e-commerce"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sneaker-photo-for-the-feed",
    "owner": "/ai-video-generation",
    "hasVideo": false,
-   "kind": "scene",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "speaker-feature-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "speaker-feature-walkthrough",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "explainer"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "splash-the-pump-bottle",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sports-ball-court-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "sports-racket-court-tip",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "squeeze-bottle-hot-sauce-tacos",
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "food-drinks",
-    "facebook-ads",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "platforms",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "stadium-hydration-fan-moment",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness",
-    "viral"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "steam-the-ceramic-canister",
    "owner": "/ai-image-generation",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "steel-bottle-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "stemless-earbud-desk-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "stemless-earbud-product-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "jewelry-accessories"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "story-ad",
    "owner": "/ai-image-generation/story-ad-vertical",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "health-wellness",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "food-drinks"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "辣酱淋taco→食品饮品，替换fashion/health"
   },
   {
    "slug": "streamer-reaction-app",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "apps"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "street-interview-fitness-gear",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "e-commerce",
-    "health-wellness"
+    "industries",
+    "industries"
    ],
    "placement_after": [
-    "sports-gym",
-    "e-commerce"
+    "e-commerce",
+    "health-wellness",
+    "sports-gym"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "sports-gym",
-     "e-commerce"
-    ],
-    "note": "街头采访运动装备，补 sports-gym",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "运动装备→+运动健身"
   },
   {
    "slug": "street-interview-snack-bite",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "street-style-linen-set",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "studio-creator-intro",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "studio-speaking-to-camera",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "study-room-desk-study-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education",
-    "home-living"
+    "industries",
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "education",
+    "home-living",
+    "food-drinks"
+   ],
    "tool_primary": "spokesperson-video",
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "冻干零食袋→补食品饮品"
   },
   {
    "slug": "study-room-notebook-routine",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "suitcase-with-room-for-the-offer",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "行李箱→家居生活(旅行收纳)，替换fashion/shoes"
   },
   {
    "slug": "sunset-lamp-room-glow-before-after",
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "supplement-creator-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "ugc"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "talking-head-skin-lesson",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tea-bundle-unbox-scene",
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "teal-leash-dog",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "pet"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "team-headshots",
    "owner": "/ai-image-generation/professional-headshot",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "terrace-patio-chat",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "terrace-rooftop-greeting",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "terracotta-planter-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "thin-magnetic-power-bank-unboxing",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "electronics",
-    "financial-services",
-    "sale-discount",
-    "tiktok-ads",
-    "youtube-shorts-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": [
     "electronics",
@@ -4169,543 +4136,534 @@
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "electronics",
-     "sale-discount"
-    ],
-    "note": "同上",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "充电宝→数码"
   },
   {
    "slug": "tiktok-spark-ad-video",
    "owner": "/ai-video-generation/spark-ads-style-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "other",
-    "tiktok-ads"
+    "industries",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tinted-balm-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tinted-balm-vanity-reel",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "beauty-skincare"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tote-at-a-farmers-market",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "托特包→配饰，替换fashion"
   },
   {
    "slug": "tote-on-white-for-a-marketplace",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "e-commerce",
-    "fashion-clothing"
+    "industries",
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tote-with-space-for-the-offer",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "note": "帆布托特包→珠宝配饰(包袋配饰)，替换fashion/shoes"
   },
   {
    "slug": "trail-belt-finish-reel",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trail-bottle-detail",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trail-bottle-feature",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trail-shoe-lace-up-demo",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trail-shoe-step-ad",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trail-shoe-wet-path-reel",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "shoes"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "travel-airport-lounge-update",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "travel-charger-packs-away",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "electronics"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "trousers-fold-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "tutor-demo-study-tool",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "education"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "umbrella-opens-for-coverage",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "unbranded-red-sauce-poured-over-tacos",
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "food-drinks"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "vegetable-chopper-kitchen-demo",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "home-living",
-    "facebook-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wallet-unboxing-with-offer-space",
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "shoes",
-    "black-friday",
-    "holidays",
-    "sale-discount",
-    "facebook-ads",
-    "instagram-ads"
+    "industries",
+    "industries",
+    "occasions",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "钱包→珠宝配饰，替换fashion/shoes"
   },
   {
    "slug": "walnut-organizer-desk",
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "home-living"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "warm-wood-counter",
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "washed-graphic-tee-fabric-close-up",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "washed-graphic-tee-fit-check",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "water-bottle-demo-cap-twists-open",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "fashion-clothing",
-    "food-drinks"
+    "industries",
+    "industries"
    ],
    "placement_after": [
     "health-wellness"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "health-wellness"
-    ],
-    "note": "水瓶随行杯，fashion-clothing 为误标；sports-gym 亦可",
-    "confidence": "medium"
-   }
+   "confidence": "medium",
+   "note": "水瓶→健康饮水，替换误挂fashion/food"
   },
   {
    "slug": "white-tee-wardrobe-basic-check",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "whitening-strips-black-friday-tease",
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "beauty-skincare",
-    "black-friday",
-    "sale-discount",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "occasions",
+    "occasions",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wide-leg-work-pants-fit-check",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "winter-jacket-revealed-from-a-gift-box",
    "owner": "/occasions/holidays",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "fashion-clothing",
-    "holidays"
+    "industries",
+    "occasions"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wooden-stacker-play-demo",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wooden-toy-parent-play",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wooden-toy-train-on-white",
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
-   "kind": "photo",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wooden-train-play-demo",
    "owner": "/ai-video-generation",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "kids-toy"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "wrinkled-shirt-steamer-rescue",
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
-   "kind": "clip",
    "placement_now": [
-    "fashion-clothing",
-    "instagram-ads",
-    "tiktok-ads"
+    "industries",
+    "platforms",
+    "platforms"
    ],
    "placement_after": null,
    "tool_primary": null,
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "yoga-breathing-introduction",
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
-   "kind": "video",
    "placement_now": [
-    "sports-gym"
+    "industries"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
    "change": null,
+   "confidence": null,
    "note": null
   },
   {
    "slug": "yoga-mat-stretch-ugc",
    "owner": "/",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "health-wellness"
+    "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness",
+    "sports-gym"
+   ],
    "tool_primary": null,
-   "change": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "note": "瑜伽垫→补运动健身"
   },
   {
    "slug": "yogurt-demo-spoonful-tasted",
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
-   "kind": "video",
    "placement_now": [
-    "other"
+    "industries"
    ],
    "placement_after": [
     "food-drinks"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
-   "note": {
-    "after": [
-     "food-drinks"
-    ],
-    "note": "酸奶试吃，归食品饮品",
-    "confidence": "high"
-   }
+   "confidence": "high",
+   "note": "酸奶→食品饮品"
   }
  ]
 }
