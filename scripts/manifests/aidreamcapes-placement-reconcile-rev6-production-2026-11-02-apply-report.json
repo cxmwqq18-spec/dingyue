@@ -1,0 +1,345 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-placement-reconcile-rev6-2026-11-02-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "00361b81654a1e6b63a8ec9296812fd8649cc56c9261f37d6f5fa668ff885e10",
+  "revisionBefore": "3562",
+  "revisionAfter": "3572",
+  "revisionDelta": "10",
+  "pagesApplied": 10,
+  "mutationsApplied": 50,
+  "referenceCardsApplied": 0,
+  "invariants": {
+    "invalid_placement_values": 0
+  },
+  "applied": [
+    {
+      "page": "/",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Stemless Earbud Product Detail",
+          "publicSlug": "stemless-earbud-product-detail",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Kitchen Tool Lesson Demo",
+          "publicSlug": "kitchen-tool-lesson-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Coffee Maker How-To Demo",
+          "publicSlug": "coffee-maker-how-to-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cufflink Detail Demo",
+          "publicSlug": "cufflink-detail-demo",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[10]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[13]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[15]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[18]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[30]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[31]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[32]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[33]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[8]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[5]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Fabric Cleaner Lesson Demo",
+          "publicSlug": "fabric-cleaner-lesson-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Lunchbox Leak Tutorial",
+          "publicSlug": "lunchbox-leak-tutorial",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[0]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[1]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[7]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[4]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Studio: Speaking to Camera",
+          "publicSlug": "studio-speaking-to-camera",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Study Room: Desk Study Chat",
+          "publicSlug": "study-room-desk-study-chat",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/templates",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[2]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[3]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[6]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[7]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[9]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[12]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[16]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[17]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[19]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[20]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[21]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[24]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[25]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[26]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[27]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[28]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[29]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[30]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[34]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[35]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[36]"
+        }
+      ],
+      "referenceCards": []
+    }
+  ],
+  "readback": [
+    {
+      "page": "/",
+      "pageHash": "32dbbf642dda9736bc4e526fe892ebd3306718568033ea64e273135a586aa1e5"
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "pageHash": "1cf663233abcf53dffb8ae1d960efff39735a0d8b642526f9d90a40772810fd8"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "74d07bb3664513db0a9179e8c33c877b713df7eb0aea1a78d620ca7731e6ab33"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "e4bae734a0b06a725d190478b7684faeec2c6faf20f17c2358d6beef37f6eae8"
+    },
+    {
+      "page": "/ai-video-generation",
+      "pageHash": "374bb45c6e6b6b27097590a36fd26fc89bb2fe16e90491abf6620321284003af"
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "pageHash": "45e83a2f3e518d230ad46c267d5146e28d900df27000af487a112836a5206a8c"
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "f5e571d882d5abd9921016343bb0c569cb8ef51d92758c65f51b91e258684c6c"
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "pageHash": "69a6136a233cad071dd3ede8c95436b0447970a29146e697c60634d51881f786"
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "pageHash": "d7e6afd6927709072bce383e892fac624430d770426ad54f6fc4b0863c39e804"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "72852a481ee32854b6d7356294bf767622709b3ee44ae5ebc13d7e78462df752"
+    }
+  ]
+}
