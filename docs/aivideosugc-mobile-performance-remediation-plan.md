@@ -36,26 +36,16 @@
 
 ## 1. 整改项与顺序
 
-### P0-1 共享 CSS 拆分（用户已批准，共享层——按以下护栏执行）
+### P0-1 共享 CSS 拆分 —— 阶段 1 已上线（release `6e9b7f771`）
 
-目标：公开页不再加载与其无关的 508KB globals.css；workspace/账户/管理路由不受影响。
+阶段 1（表面拆分，2026-11-02）已实施并验证：
 
-方案（加法拆分、路由组双根布局）：
+- `globals.css`（7010 行）按表面切为 5 个文件：`globals.css`（保留 Tailwind + 公开编辑页规则 + mydreamshoots 展示区，69KB 源码）、`aidreamcapes-account-surfaces.css`（账户台，经 customer-account-shell/data-island 加载）、`aidreamcapes-admin-surfaces.css`（admin/ERP + 登录页 + designer，`@layer components` + `@tailwind components` 指令，经 admin layout/platform/login 加载）、`aidreamcapes-guest-workspace.css`（guest 弹层，随组件加载）、`aidreamcapes-video-topic-detail.css`（详情主题，随 video-topic-landing / ecommerce-main-image-detail 加载）。
+- 审计结论（生产实测）：公开站对旧 globals 的真实依赖只有 Tailwind 工具层 + 9 个自定义类；aivideosugc 全系页面几乎为 0（0-3 类）。
+- 验证：13 个页面×站点覆盖率断言 **0 类丢失**；release 冒烟全绿；旧 508KB chunk 已不被任何页面引用；行级 reassembly 校验守恒。
+- 效果：公开页渲染阻塞 CSS /templates 121→103KB gz（-15%）、首页 116→87KB gz（-25%）；globals chunk 77→56KB gz；公开页不再下载 ~190KB 源码的账户/admin 样式。
 
-1. **审计阶段**（先做，只读）：
-   - 本地构建确认 `c40ea7…` chunk 的源构成（globals.css 是否 1:1）。
-   - 对**每个公开站点**（mydreamshoots、aidreamshoots、aivideosugc 各域）的生产 home + 关键列表页跑同一选择器使用率脚本，量化各站点在 globals.css 上的真实依赖。
-   - 确认 workspace/admin/账户路由对 globals.css 的依赖为「全量需要」。
-2. **实施阶段**：
-   - `src/app` 拆两组路由组根布局：公开组（catch-all storefront + 公开静态页）不 import globals.css，改 import 新建 `public-base.css`（Tailwind base + 各公开页实测用到的规则，加法合并、逐条注释来源）；重任务组（/app、/account、/site/*、管理）保持 `globals.css`。
-   - 字体 preconnect/link（已在根布局 head）在两个根布局中都保留。
-   - 若其他站点公开页对 globals.css 有真实依赖（>5% 规则），它们的依赖规则同样并入 public-base.css，保证零回归。
-3. **验证**：
-   - 每个站点生产 home + 一个列表页的渲染前后截图/选择器覆盖率对比；
-   - release 冒烟全绿；MyDreamShoots 关键页回归清单（首页、能力页、博客、结账入口）。
-   - 回滚：单 commit revert 即恢复。
-
-预期收益：每页 render-blocking -77KB gzip（-66%），PSI「渲染阻塞请求」项直接消除或大幅收窄，全部列表页同步受益。
+**阶段 2（待批准，共享层）**：剩余大头是 Tailwind utilities 全量层（新 globals 387KB raw / 56KB gz 中约 300KB raw / ~45KB gz），由根布局 `@tailwind` 指令 + 全仓 content 扫描产生，所有路由共享。需要把 `src/app` 拆为路由组（公开组 vs 工作台组）并按组收窄 tailwind `content` 扫描范围，公开页 utilities 可再降到 ~6-10KB gz。涉及全站路由结构，需站点所有者批准后实施。
 
 ### P0-2 照片卡进变体管线（Aidreamcapes 范围）
 
@@ -82,7 +72,7 @@ nginx 站点配置（aivideosugc.com.conf）中 `/ai-image-generation/*.{img}`�
 
 | 项 | 状态 |
 |---|---|
-| P0-1 CSS 拆分 | 已批准，审计阶段待启动 |
+| P0-1 CSS 拆分 | 阶段 1 已上线（6e9b7f771）；阶段 2（路由组+tailwind content 收窄）待批准 |
 | P0-2 照片变体 | 待实施（媒体管线批次） |
 | P1-1 tap targets | 本轮实施 |
 | P1-2 缓存 TTL | 本轮实施 |
