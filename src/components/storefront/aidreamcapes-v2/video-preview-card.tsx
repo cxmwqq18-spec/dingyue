@@ -97,14 +97,15 @@ function runAfterWindowLoad(run: () => void): void {
     run();
     return;
   }
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  const done = () => {
-    window.removeEventListener("load", done);
-    if (timer !== undefined) clearTimeout(timer);
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    window.removeEventListener("load", finish);
     run();
   };
-  window.addEventListener("load", done, { once: true });
-  timer = setTimeout(done, 2500);
+  window.addEventListener("load", finish, { once: true });
+  setTimeout(finish, 2500);
 }
 
 export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
