@@ -179,15 +179,12 @@
 .home-v4 .hx-presenter-flow .hx-flow-video video{pointer-events:none}
 .home-v4 .hx-presenter-flow .hx-flow-video:hover{filter:brightness(1.07)}
 .home-v4 .hx-presenter-flow .hx-flow-video:focus-visible{outline:3px solid #c8a4ff;outline-offset:3px}
-.home-v4 .hx-presenter-flow .hx-flow-voice{flex:1;min-width:0;max-width:640px}
-.home-v4 .hx-presenter-flow .hx-flow-audio{display:block;width:100%;max-width:340px;height:36px;margin-top:12px;color-scheme:dark;accent-color:#b9a1f5}
 @media (max-width:900px){
 .home-v4 .hx-presenter-flow .hx-flow{grid-template-columns:1fr;gap:10px}
 .home-v4 .hx-presenter-flow .hx-flow-link{flex-direction:row;padding:2px 0}
 .home-v4 .hx-presenter-flow .hx-flow-tabs{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
 .home-v4 .hx-presenter-flow .hx-flow-tab{flex:0 0 auto}
 .home-v4 .hx-presenter-flow .hx-flow-bar{flex-direction:column;align-items:flex-start}
-.home-v4 .hx-presenter-flow .hx-flow-audio{max-width:100%}
 .home-v4 .hx-presenter-flow .hx-flow-action{align-items:flex-start;text-align:left}
 .home-v4 .hx-presenter-flow .hx-flow-how-steps{grid-template-columns:1fr}
 }

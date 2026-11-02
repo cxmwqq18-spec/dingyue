@@ -145,10 +145,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
                     </div>
                   </div>
                   <div className="hx-flow-bar">
-                    <div className="hx-flow-voice">
-                      <p className="hx-flow-quote">&#8220;{c[presenter.quote]}&#8221;<span className="hx-flow-who">{c[presenter.quoteWho]}</span></p>
-                      {video ? <audio className="hx-flow-audio" aria-label={video.name ?? c[presenter.tab]} controls preload="none" src={r.asset(video.src)} /> : null}
-                    </div>
+                    <p className="hx-flow-quote">&#8220;{c[presenter.quote]}&#8221;<span className="hx-flow-who">{c[presenter.quoteWho]}</span></p>
                     <div className="hx-flow-action">
                       <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t013}</WorkspaceEntryLink>
                       <p className="hx-flow-spec">{c[showcase.spec]}</p>
