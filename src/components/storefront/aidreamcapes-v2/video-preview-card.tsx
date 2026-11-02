@@ -10,17 +10,24 @@
 // The whole card remains a plain link; playback is decoration, never an
 // editing surface. Click still opens the detail page.
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Seconds of the source a preview loops over before returning to the start. */
 const PREVIEW_LOOP_SECONDS = 10;
 const MAX_PLAYING_DESKTOP = 12;
-const MAX_PLAYING_MOBILE = 6;
+const MAX_PLAYING_MOBILE = 2;
 const MOBILE_MAX_QUERY = "(max-width: 768px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 /** Distance at which a preview clip is silently fetched into the browser
- * cache, so playback starts the moment the card scrolls into view. */
+ * cache, so playback starts the moment the card scrolls into view. Mobile
+ * connections share the pipe with the gallery's poster images and the LCP
+ * element, so the prefetch stays close to the viewport there. */
 const PREFETCH_ROOT_MARGIN = "1200px 0px";
+const PREFETCH_ROOT_MARGIN_MOBILE = "400px 0px";
+/** Root margin for the deferred poster images below the first rows: close
+ * enough that scrolling never shows an empty card, far enough that a page of
+ * cards does not request every poster at parse time. */
+const POSTER_ROOT_MARGIN = "600px 0px";
 
 export type Adc2VideoPreviewMedia = {
   src: string;
@@ -36,13 +43,25 @@ export type Adc2VideoPreviewMedia = {
 
 type ReleasePreview = () => void;
 
-// One silent download per clip URL, shared by every card on the page.
+// One silent download per clip URL, shared by every card on the page, and one
+// at a time: four clips streaming together on a throttled mobile connection is
+// exactly the bandwidth burst that delays the gallery's poster paint.
 const prefetchedClips = new Set<string>();
+let clipDownloadChain: Promise<unknown> = Promise.resolve();
+
+function prefetchRootMargin(): string {
+  return typeof window !== "undefined" && window.matchMedia(MOBILE_MAX_QUERY).matches
+    ? PREFETCH_ROOT_MARGIN_MOBILE
+    : PREFETCH_ROOT_MARGIN;
+}
 
 function prefetchClip(url: string): void {
   if (!url || prefetchedClips.has(url)) return;
   prefetchedClips.add(url);
-  fetch(url, { priority: "low" }).catch(() => prefetchedClips.delete(url));
+  const download = clipDownloadChain.then(() => fetch(url, { priority: "low" }));
+  clipDownloadChain = download.then(() => undefined, () => {
+    prefetchedClips.delete(url);
+  });
 }
 
 // Cards play in insertion order; when more previews request a slot than the
@@ -57,6 +76,35 @@ function maxPlayingPreviews(): number {
 function unregisterPlaying(video: HTMLVideoElement): void {
   const index = playingPreviews.indexOf(video);
   if (index >= 0) playingPreviews.splice(index, 1);
+}
+
+type WaitingPreview = { activate: () => void; isVisible: () => boolean };
+
+// Cards whose activation is deferred because every playback slot is taken.
+// The budget has to hold at activation time, not after play() resolves —
+// otherwise every visible card mounts its source the moment the page loads
+// and the device downloads them all at once.
+const waitingPreviews = new Map<HTMLVideoElement, WaitingPreview>();
+
+function activateWithBudget(video: HTMLVideoElement, activate: () => void, isVisible: () => boolean): void {
+  if (playingPreviews.length < maxPlayingPreviews()) {
+    activate();
+    return;
+  }
+  waitingPreviews.set(video, { activate, isVisible });
+}
+
+/** Start one deferred activation when a playback slot has opened. */
+function pumpWaitingPreviews(): void {
+  if (!waitingPreviews.size) return;
+  for (const [video, waiting] of [...waitingPreviews]) {
+    if (playingPreviews.length >= maxPlayingPreviews()) return;
+    waitingPreviews.delete(video);
+    if (waiting.isVisible()) {
+      waiting.activate();
+      return;
+    }
+  }
 }
 
 function enforcePlayingBudget(): void {
@@ -108,8 +156,30 @@ function runAfterWindowLoad(run: () => void): void {
   setTimeout(finish, 2500);
 }
 
-export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
+export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, posterEager = true }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean; posterEager?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Poster images on a <video> are requested as soon as the attribute parses —
+  // unlike <img loading="lazy"> there is no native gate. Cards below the first
+  // rows therefore mount without a poster and pick it up on approach, so a
+  // page of cards does not fetch every poster at parse time.
+  const [posterSrc, setPosterSrc] = useState(posterEager ? media.poster : "");
+
+  useEffect(() => {
+    if (posterEager || !media.poster) return;
+    const video = videoRef.current;
+    if (!video || typeof IntersectionObserver === "undefined") {
+      setPosterSrc(media.poster);
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setPosterSrc(media.poster);
+        observer.disconnect();
+      }
+    }, { rootMargin: POSTER_ROOT_MARGIN });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [posterEager, media.poster]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -127,6 +197,8 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
       video.removeAttribute("src");
       video.load();
       unregisterPlaying(video);
+      waitingPreviews.delete(video);
+      pumpWaitingPreviews();
     };
     releaseByVideo.set(video, release);
 
@@ -142,7 +214,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
       });
     };
 
-    const activate = () => {
+    const activateNow = () => {
       if (failed || reducedMotion.matches || video.getAttribute("src")) return;
       video.muted = true;
       // The low-bitrate clip (when generated) is the playback source: tiny,
@@ -160,13 +232,13 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
     let ready = false;
     runAfterWindowLoad(() => {
       ready = true;
-      if (latestVisible) activate();
+      if (latestVisible) activateWithBudget(video, activateNow, () => latestVisible);
     });
 
     const stopObserving = observePreviewVisibility(video, (visible) => {
       latestVisible = visible;
       if (visible) {
-        if (ready) activate();
+        if (ready) activateWithBudget(video, activateNow, () => latestVisible);
       } else release();
     });
 
@@ -182,7 +254,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
             prefetchObserver.disconnect();
             stopPrefetching = undefined;
           }
-        }, { rootMargin: PREFETCH_ROOT_MARGIN });
+        }, { rootMargin: prefetchRootMargin() });
         prefetchObserver.observe(video);
         stopPrefetching = () => prefetchObserver.disconnect();
       }
@@ -216,7 +288,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
         loop
         muted
         playsInline
-        poster={media.poster}
+        poster={posterSrc || undefined}
         preload="none"
         ref={videoRef}
         width={media.width}

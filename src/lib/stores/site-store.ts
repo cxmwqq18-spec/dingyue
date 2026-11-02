@@ -1457,38 +1457,28 @@ const publicRuntimeCache = new Map<string, PublicRuntimeCacheEntry>();
 const publicRuntimeCacheInFlight = new Map<string, Promise<PlatformState | undefined>>();
 
 function publicRuntimeCacheMaxEntries(): number {
-  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 8);
-  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 8;
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 16);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 16;
 }
 
 function publicRuntimeCacheTtlMs(): number {
-  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 300_000);
-  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 300_000;
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 900_000);
+  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 900_000;
 }
 
-async function getCachedPublicRuntimeState(
+/** Load the state once and store it under the revision-keyed entry. Concurrent
+ * callers for the same key share one relational read (for example a crawler
+ * burst); the revision is part of the key so a caller that already observed a
+ * newer write never joins an older load. */
+function loadAndCachePublicRuntimeState(
   cacheKey: string,
   siteId: string,
+  revision: string,
   loader: () => Promise<PlatformState | undefined>
 ): Promise<PlatformState | undefined> {
-  if (!siteSnapshotCacheEnabled(siteId)) return loader();
-
-  const revision = await readSiteContentRevision(siteId);
-  if (!revision) return loader();
-
-  const cached = publicRuntimeCache.get(cacheKey);
-  const ttl = publicRuntimeCacheTtlMs();
-  if (cached && cached.revision === revision && (ttl === 0 || Date.now() - cached.createdAt < ttl)) {
-    return cached.state;
-  }
-
-  // Collapse concurrent cold misses (for example a crawler burst) into one
-  // relational read. The revision is part of the key so a caller that already
-  // observed a newer write never joins an older load.
   const inFlightKey = `${cacheKey}|${revision}`;
   const inFlight = publicRuntimeCacheInFlight.get(inFlightKey);
   if (inFlight) return inFlight;
-
   const pending = (async () => {
     const state = await loader();
     if (!state) return state;
@@ -1507,11 +1497,35 @@ async function getCachedPublicRuntimeState(
     return state;
   })();
   publicRuntimeCacheInFlight.set(inFlightKey, pending);
-  try {
-    return await pending;
-  } finally {
+  void pending.catch(() => undefined).finally(() => {
     publicRuntimeCacheInFlight.delete(inFlightKey);
+  });
+  return pending;
+}
+
+async function getCachedPublicRuntimeState(
+  cacheKey: string,
+  siteId: string,
+  loader: () => Promise<PlatformState | undefined>
+): Promise<PlatformState | undefined> {
+  if (!siteSnapshotCacheEnabled(siteId)) return loader();
+
+  const revision = await readSiteContentRevision(siteId);
+  if (!revision) return loader();
+
+  const cached = publicRuntimeCache.get(cacheKey);
+  const ttl = publicRuntimeCacheTtlMs();
+  if (cached && cached.revision === revision) {
+    if (ttl === 0 || Date.now() - cached.createdAt < ttl) return cached.state;
+    // Soft-expired: the revision still matches, so the snapshot is exactly as
+    // fresh as the published content. Serve it immediately and refresh in the
+    // background — a slow relational read must never land on the visitor's
+    // request path, which is what made public TTFB a hit-or-miss lottery.
+    void loadAndCachePublicRuntimeState(cacheKey, siteId, revision, loader);
+    return cached.state;
   }
+
+  return loadAndCachePublicRuntimeState(cacheKey, siteId, revision, loader);
 }
 
 export const getStorefrontPublicRuntimeStateForSite = cache(async (siteId: string, pageSlug?: string, contextSlug?: string): Promise<PlatformState | undefined> => {

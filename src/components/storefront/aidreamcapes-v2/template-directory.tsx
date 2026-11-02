@@ -81,11 +81,22 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
   </nav>;
 }
 
+/** Preload the first two card covers of a media grid. The first card is the
+ * grid's LCP element on mobile and desktop (equal-sized cards, first DOM
+ * position wins); the second covers the first row on multi-column layouts.
+ * Video cards contribute their display poster, photo cards their image. */
+function preloadMediaGridLcp(items: ReadonlyArray<GalleryItem | DirectoryMediaCard>, r: V2Resolvers): void {
+  const covers = items.slice(0, 2)
+    .map(item => (item.video ? item.video.poster : item.image.src))
+    .filter((src): src is string => Boolean(src));
+  covers.forEach((src, index) => preload(r.asset(src), { as: "image", ...(index === 0 ? { fetchPriority: "high" } : {}) }));
+}
+
 /** The gallery card grid shared by the /templates directory and hub galleries. */
 function GalleryCards({ items, r }: { items: GalleryItem[]; r: V2Resolvers }) {
   return <>{items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
     <a className="ti" href={r.href(item.href)}>{item.video ? (
-      <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} />
+      <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} posterEager={index < 6} />
     ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
     <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
   </article>)}</>;
@@ -102,6 +113,9 @@ export function ExampleGallerySection({ gallery, r, eyebrow, title, lead, pagePa
   lead?: string;
   pageParam?: string;
 }) {
+  // The hub gallery renders below the page's own hero, so it is not the LCP
+  // element — preloading its posters here would pull bandwidth away from the
+  // element that is. Card posters stay on their normal image priorities.
   return <section className="sec"><div className="wrap">
     <div className="sec-head">
       <div className="eyebrow">{eyebrow}</div>
@@ -122,10 +136,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
   // desktop (equal-sized cards, first DOM position wins). Preloading its
   // display poster moves the discover-or-fetch-latency out of the critical
   // path; the second card covers the first row on multi-column layouts.
-  const firstVideo = gallery.items.find(item => item.video);
-  const secondVideo = gallery.items.filter(item => item.video)[1];
-  if (firstVideo) preload(r.asset(firstVideo.video!.poster), { as: "image", fetchPriority: "high" });
-  if (secondVideo) preload(r.asset(secondVideo.video!.poster), { as: "image" });
+  preloadMediaGridLcp(gallery.items, r);
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -155,6 +166,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
     // the row data, but the page presents the placed media grid only. Cards
     // with a video preview play their 10-second loop in place, like the
     // /templates gallery; the grid paginates as independent SSR documents.
+    preloadMediaGridLcp(media, r);
     return <>
       <section className="sec"><div className={`wrap ${styles.directory}`}>
         <Crumbs items={data.breadcrumbs} r={r} />
@@ -168,7 +180,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           </div>
           <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
             <a className="ti" href={r.href(item.href)}>{item.video ? (
-              <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} />
+              <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} posterEager={index < 6} />
             ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
             <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
           </article>)}</div>
