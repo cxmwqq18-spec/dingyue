@@ -2,6 +2,7 @@
  * screen and the theme designer workbench (originally one @layer components block
  * in globals.css). Loaded via the admin layout, platform pages and the login
  * screen component. */
+@tailwind components;
 @layer components {
   .clear {
     clear: both;
