@@ -1457,8 +1457,8 @@ const publicRuntimeCache = new Map<string, PublicRuntimeCacheEntry>();
 const publicRuntimeCacheInFlight = new Map<string, Promise<PlatformState | undefined>>();
 
 function publicRuntimeCacheMaxEntries(): number {
-  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 16);
-  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 16;
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_MAX ?? 32);
+  return Number.isFinite(value) && value > 0 ? Math.floor(value) : 32;
 }
 
 function publicRuntimeCacheTtlMs(): number {

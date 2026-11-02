@@ -44,14 +44,14 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang={language} suppressHydrationWarning translate="yes">
       <head>
         <meta httpEquiv="Content-Language" content={language} />
-        {/* Font stylesheets load in parallel with the app CSS. Keeping the
-          family and weight lists identical to the previous @import rules
-          leaves the rendered output unchanged. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+        {/* Fonts are self-hosted subsets of the previous Google Fonts css2
+          response (latin and latin-ext only; the storefront copy is English,
+          and Spanish accents sit inside the latin range). Same-origin fonts
+          drop the two cross-origin connection chains that used to sit in the
+          render-blocking critical path. Outfit is the v2 theme's single text
+          family, so its latin file is preloaded. */}
+        <link rel="preload" href="/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="/fonts/aivideosugc-fonts.css?v=20261103" />
       </head>
       <body translate="yes">
         {children}
