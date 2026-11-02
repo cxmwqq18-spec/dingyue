@@ -47,11 +47,18 @@
 
 **阶段 2（待批准，共享层）**：剩余大头是 Tailwind utilities 全量层（新 globals 387KB raw / 56KB gz 中约 300KB raw / ~45KB gz），由根布局 `@tailwind` 指令 + 全仓 content 扫描产生，所有路由共享。需要把 `src/app` 拆为路由组（公开组 vs 工作台组）并按组收窄 tailwind `content` 扫描范围，公开页 utilities 可再降到 ~6-10KB gz。涉及全站路由结构，需站点所有者批准后实施。
 
-### P0-2 照片卡进变体管线（Aidreamcapes 范围）
+### P0-2 照片卡进变体管线（Aidreamcapes 范围）—— 已上线（release `b07d8cd6`，2026-11-02）
 
-1. 扩展 `generate-aidreamcapes-v2-responsive-variants.mjs` 枚举源：公开卡片 photo kind 的 `image.src`（当前只有视频 poster），生成 320/640 变体并入索引（含 `git add -f` 变体文件入库，沿 batch 1 先例）。
-2. 渲染端补 srcset：`GalleryCards` 照片 img、facet 目录照片 img、VisualStrip（给 sizes）、Collage 索引补齐。
-3. 预期收益：hub「改进图片传送 154 KiB」清零，照片卡在移动端下载 320px 变体（约 -60~70%/张）。
+1. ✅ 生成器扩展：`generate-aidreamcapes-v2-responsive-variants.mjs` 新增 `--site-wide-images` 全站扫描模式（递归遍历 site_aidreamcapes 全部 208 个 LivePage 行的 contentJson，收集 1510 个图片源），生成 **1787 个新 WebP 变体**（manifest 426 → 1636 条），变体文件沿 batch 1 先例 `git add -f` 入库（2241 个）。缺失的 45 张源图已从生产补齐后生成。移动端预估 **-78.3% 图片字节**（91.7MB → 19.9MB）。
+2. ✅ 渲染端接线（全部经 `r.asset` 保持 EU 镜像一致）：`template-directory.tsx` 四处 `cardImage`（含 `?kind=photo` 目录卡）、`shell.tsx` MenuLink 导航缩略图（120px）、`parts.tsx` ToolLink（46px）；新增 `aidreamcapesV2ResponsiveImagePropsFor(src, sizes, asset)` 带资产解析包装，保留原 `aidreamcapesV2ResponsiveImageProps` 兼容导出。
+3. ✅ 生产验证：`/templates` 13、`/templates?kind=photo` 37、`/ai-video-generation` 26、`/ai-image-generation` 28、`/ai-actors` 78 处 srcSet 属性（React 19 输出驼峰 `srcSet`，浏览器等价处理）。视频卡 poster 沿用第五批映射。残余 3 张 hub hero 图（各 ~66KB）带 srcSet 且浏览器按 DPR 正确选 640w，属审计口径误差。
+4. 实测（隧道 Lighthouse，PSI 同款移动节流模拟）：`/templates` **88 → 92**，「properly size images」机会项清零；`/ai-video-generation` 66 → 67（该页主要机会项已转为 SSR 服务器响应，见 §0.1）。
+
+### P0-3 测量能力与剩余瓶颈（2026-11-02 建立）
+
+- 已建立自测回路：SSH 隧道（本地 18443 → 源站 443）+ 本地 Lighthouse CLI（PSI 同款移动节流模拟），不再依赖用户截图。注意点：lighthouse CLI 的 `--chrome-flags` 值含空格需内层单引号；本机系统代理需 `--no-proxy-server`；本机网络 `fonts.googleapis.com` 挂起需 MAP 到 127.0.0.1 快速失败（真实中国大陆用户同样受此影响——**自托管字体是新的候选优化**）。
+- 当前两页机会项排序：① **SSR 服务器响应 1.1~1.4s**（两页共同的第一大项，源站本机 TTFB 0.6~0.9s、偶发 2.4s——需要页面级缓存/派生态方案，涉合约需站点所有者拍板）② 渲染阻塞资源 750ms ③ 未用 CSS 450~600ms/85~112KB（Tailwind 层，即 CSS 拆分阶段 2）④ 未用 JS。
+- 源站证书仅覆盖 aidreamcapes.com；aivideosugc.com 依赖 Cloudflare 边缘证书（若绕过 CF 直连或升级 Full (strict) 会出证书问题，已记录）。
 
 ### P1-1 分页 tap targets ≥48px（本轮已实施）
 
