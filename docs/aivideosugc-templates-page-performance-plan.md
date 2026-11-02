@@ -107,3 +107,14 @@ PageSpeed 报告的问题**基本属实**，且根因集中、可修：
 - **修复**：① 主题 CSS 给 `.adc2 .tc` 加 `content-visibility:auto; contain-intrinsic-size:auto 420px`——Chrome 对屏外卡推迟渲染与 poster 资源加载（不支持该属性的浏览器回退为现状，无破坏）；② `video-preview-card` 的可视激活与片段 prefetch 统一经 `runAfterWindowLoad` 门控（load 事件或 2.5s 兜底）——LCP 窗口内网络管道让给首屏 poster；③ 分页新增**跳页表单**：纯 HTML GET form（`/templates?page=N` + kind 隐藏字段 + min/max），无 JS 可用，aria-label 完整。
 - 生产验证：跳页表单渲染（page=3、max=28）、分页窗 `Previous 1 2 3 4 … 26 27 28 Next Go`、rel=next 在位、poster preload 2 个不变、内联主题 CSS 含 content-visibility。
 - 待办：PSI 第三次复测（预期 LCP 3s 上下）；CLS 复查（contain-intrinsic-size 估高 420px 与实际卡高的差在首屏外，CLS 应保持 0）。
+
+### 2026-11-02 第四批（全站视频列表 SSR 分页统一 20/页 + 视频优先 + 移除客户端媒体 loader）— 生产已上线（release ecd026a0f4f9ca77f680f63672c16ea756d80f85）
+
+- **背景**：PSI 第三次复测仍 75 分；用户同时要求所有视频列表页统一为「每页 20 条 + 分页查询 + 视频优先 + 首屏 10s 预览」。
+- **`/templates` pageSize 12→20**：字段级 manifest（`exampleDirectory.pageSize`，contract `aidreamcapes-gallery-page-size-20-2026-11-02-v1`），本地与生产各一次 plan/apply，CAS + 读回断言（revision 3572→3573）+ rollback 工件（本地 `scripts/manifests/aidreamcapes-gallery-page-size-20-{local,production}-2026-11-02*.json`）。
+- **hub/tool picker 改为离散 SSR 分页**：`AidreamcapesTemplateRenderer` 对非首页行、picker 卡数 > 20 的行计算 `pickerPagination`（`?page=N` 切片，`MEDIA_PAGE_SIZE=20`）；`VisualPicker` 改为渲染服务端切片 + 共享 `DiscretePager`（数字窗 + Previous/Next rel + 无 JS GET 跳页表单），不再挂 `MediaGridLoader`。**`MediaGridLoader` 与 `/api/aidreamcapes/media-cards` 已删除**（浏览器 JS 从此不抓取任何目录数据；next.config 头规则与 release 冒烟同步更新：API 断言 404 + 分页断言）。受影响页面：`/ai-video-generation`（36 卡）、`/ai-video-generation/spokesperson-video`（53）、`/ai-video-generation/video-ads`、`/ai-video-generation/product-video` 等全部 >20 卡的 hub/tool 页。首页 picker 保持 maxCards=20、不参与分页。
+- **facet 目录页（/industries|platforms|occasions/<slug>）**：`resolveDirectoryMedia` 卡片补齐 `video`（src/previewSrc/poster→640 WebP 变体/宽高）与 `duration`；网格排序改为**视频优先**（稳定排序，组内保持既有确定性顺序）；分页 20/页 + `directoryMediaPagination` + `DiscretePager`；视频卡渲染 `Adc2VideoPreview`（可视即播 10s 静音循环，与 /templates 一致）。
+- **`DiscretePager` 抽为共享组件**（template-directory.tsx）：example gallery、facet 目录、hub picker 三处复用；页 1 链接保持裸路径（canonical 唯一）；`ExampleGalleryState.basePath` 参数化（不再硬编码 /templates）。
+- **生产验证**：/templates 20 卡/页；video-hub page1=20、page2=16（36 总量切片正确）；spokesperson page3=13（53 总量）；beauty-skincare 20 卡其中 17 视频卡（视频优先生效）且全部带 10s 预览；退役 API 404；sitemap 516 条无 `?page=`；release 冒烟全过。
+- **待办**：PSI 复测回填；「首页默认可预览播放 10s」——当前首页 picker 38 卡全部为图片卡（0 视频），若指站点首页需内容级 manifest 替换部分卡片为带视频案例，待用户确认。
+- 剩余性能杠杆不变：① 共享 CSS 拆分（render-blocking ~2,030ms / 未使用 CSS 117KB）；② 水合 JS 193KB；③ TTFB ~0.6-0.75s。
