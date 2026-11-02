@@ -41,7 +41,7 @@ function paginationWindow(current: number, total: number): Array<number | "gap">
  * addressable and crawlable without JavaScript; page 1 keeps the bare
  * canonical URL, and preserved filters (e.g. the kind filter) ride along on
  * every link and as hidden fields in the no-JS jump form. */
-export function DiscretePager({ page, totalPages, basePath, params = {}, r, ariaLabel }: {
+export function DiscretePager({ page, totalPages, basePath, params = {}, r, ariaLabel, pageParam = "page" }: {
   page: number;
   totalPages: number;
   /** Canonical row path ("", "/templates", "/industries/beauty-skincare", …). */
@@ -49,12 +49,16 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
   params?: Record<string, string | undefined>;
   r: V2Resolvers;
   ariaLabel: string;
+  /** Query parameter carrying the page number. Grids that share a URL with
+   * another paginated grid (hub pickers use ?page) must use their own
+   * parameter so the two pagers never overwrite each other. */
+  pageParam?: string;
 }) {
   if (totalPages <= 1) return null;
   const href = (target: number) => {
     const search = new URLSearchParams();
     for (const [key, value] of Object.entries(params)) if (value) search.set(key, value);
-    if (target > 1) search.set("page", String(target));
+    if (target > 1) search.set(pageParam, String(target));
     const query = search.toString();
     return r.href(query ? `${basePath}?${query}` : basePath);
   };
@@ -69,10 +73,43 @@ export function DiscretePager({ page, totalPages, basePath, params = {}, r, aria
     {page < totalPages ? <a className="btn btn-primary" href={href(page + 1)} rel="next">Next</a> : null}
     <form className={styles.pageJump} method="get" action={r.href(basePath)}>
       {jumpParams.map(([key, value]) => <input key={key} type="hidden" name={key} value={value} />)}
-      <input name="page" type="number" inputMode="numeric" min={1} max={totalPages} defaultValue={page} aria-label={`Go to page, 1 to ${totalPages}`} />
+      <input name={pageParam} type="number" inputMode="numeric" min={1} max={totalPages} defaultValue={page} aria-label={`Go to page, 1 to ${totalPages}`} />
       <button type="submit" className="btn btn-ghost">Go</button>
     </form>
   </nav>;
+}
+
+/** The gallery card grid shared by the /templates directory and hub galleries. */
+function GalleryCards({ items, r }: { items: GalleryItem[]; r: V2Resolvers }) {
+  return <>{items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
+    <a className="ti" href={r.href(item.href)}>{item.video ? (
+      <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} />
+    ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
+    <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
+  </article>)}</>;
+}
+
+/** A paginated example-gallery section inside another page layout (the video
+ * hub's "browse every video example"). Same card grid and pager as
+ * /templates, but anchored to the hosting page's own URLs. */
+export function ExampleGallerySection({ gallery, r, eyebrow, title, lead, pageParam = "page" }: {
+  gallery: ExampleGalleryState;
+  r: V2Resolvers;
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  pageParam?: string;
+}) {
+  return <section className="sec"><div className="wrap">
+    <div className="sec-head">
+      <div className="eyebrow">{eyebrow}</div>
+      <h2>{title}</h2>
+      {lead ? <p>{lead}</p> : null}
+      <p className="meta-line">{gallery.total} examples</p>
+    </div>
+    <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
+    <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/"} r={r} pageParam={pageParam} ariaLabel="Browse more examples by page" />
+  </div></section>;
 }
 
 export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) {
@@ -93,13 +130,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
       <h1>{String(data.h1)}</h1><p>{String(data.lead ?? "")}</p>
       <nav aria-label="Browse examples" className={styles.links}>{directory.links.map(link => <WorkspaceEntryLink className="chip" key={link.href} href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>)}</nav>
       <p className="meta-line">{gallery.total} examples</p>
-      <div className="tgrid" data-example-gallery="true">{gallery.items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
-        <a className="ti" href={r.href(item.href)}>{item.video ? (
-          <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} />
-        ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
-        <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
-      </article>)}
-      </div>
+      <div className="tgrid" data-example-gallery="true"><GalleryCards items={gallery.items} r={r} /></div>
       {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}

@@ -287,9 +287,17 @@ const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-vi
 assert.equal(hubMediaResponse.status, 200, "video hub page 2: status");
 const hubMediaCards = (hubMediaHtml.match(/class="v-pick-card"/g) || []).length;
 assert.ok(hubMediaCards > 0 && hubMediaCards <= 20, `video hub page 2: ${hubMediaCards} SSR picker cards (max 20 per page)`);
-assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: pager present");
+assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: picker pager present");
 assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
 checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards with a plain-anchor pager`);
+
+const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation?galleryPage=2");
+assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status");
+assert.ok(hubGalleryHtml.includes("Browse every video example"), "video hub: full catalog section present");
+const hubGalleryCards = (hubGalleryHtml.match(/data-media-slug=/g) || []).length;
+assert.ok(hubGalleryCards > 0 && hubGalleryCards <= 20, `video hub gallery page 2: ${hubGalleryCards} catalog cards (max 20 per page)`);
+assert.ok(hubGalleryHtml.includes("galleryPage=3"), "video hub gallery: pager links the next catalog page");
+checks.push(`video hub full catalog: galleryPage=2 renders ${hubGalleryCards} cards with its own pager`);
 
 const hubMediaGone = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
 assert.equal(hubMediaGone.status, 404, `retired hub media API: status ${hubMediaGone.status} (expected 404)`);

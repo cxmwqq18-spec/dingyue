@@ -1,4 +1,4 @@
-import { ExampleDirectory, TemplateDirectory, templateDetailResolvers } from "./template-directory";
+import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, templateDetailResolvers, type ExampleGalleryState } from "./template-directory";
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
@@ -312,6 +312,7 @@ function VideoHubPage({ data, r }: Props) {
   const maker = data.maker as V2Maker | undefined;
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
+  const hubGallery = data.hubGallery as ExampleGalleryState | undefined;
   if (visual) return <>{orderedBlocks(data, r, [
     ["hero", <>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -331,7 +332,11 @@ function VideoHubPage({ data, r }: Props) {
     ...pageOwnBlocks(data, r),
     ["faq", <Faq items={data.faq} title="Questions About AI Video" r={r} />],
     ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
-  ])}</>;
+  ], {
+    // The complete video catalog rides directly after the curated picker,
+    // independent of the row's blockOrder configuration.
+    picker: hubGallery ? <ExampleGallerySection gallery={hubGallery} r={r} eyebrow="All video examples" title="Browse every video example" pageParam="galleryPage" /> : null
+  })}</>;
   return (
     <>
       <Crumbs items={data.breadcrumbs} r={r} />

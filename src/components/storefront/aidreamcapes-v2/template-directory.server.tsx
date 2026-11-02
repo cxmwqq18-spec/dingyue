@@ -62,6 +62,18 @@ export async function resolveTemplateCardLinks(data: V2Data): Promise<V2Data> {
   return result;
 }
 
+/** The public gallery-card projection of an enumerated detail entry. */
+function toGalleryItem(entry: Awaited<ReturnType<typeof listAidreamcapesExampleGalleryEntries>>[number]): GalleryItem {
+  return {
+    kind: entry.kind,
+    slug: entry.slug,
+    label: entry.label,
+    href: entry.href,
+    image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
+    ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: aidreamcapesV2ResponsivePosterSrc(entry.video.poster?.src ?? entry.image.src), ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
+  };
+}
+
 export async function AidreamcapesTemplateRenderer(props: Parameters<typeof ThemeRenderer>[0]) {
   const sections = { ...props.page.sections };
   for (const [id, section] of Object.entries(sections)) {
@@ -82,14 +94,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
       const start = (page - 1) * pageSize;
-      const items: GalleryItem[] = all.slice(start, start + pageSize).map(entry => ({
-        kind: entry.kind,
-        slug: entry.slug,
-        label: entry.label,
-        href: entry.href,
-        image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
-        ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: aidreamcapesV2ResponsivePosterSrc(entry.video.poster?.src ?? entry.image.src), ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
-      }));
+      const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
       resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
@@ -146,6 +151,18 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
         const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
         resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };
+      }
+      // The video hub carries a curated picker plus the complete video
+      // catalog: every public video example, video-first order, paginated
+      // under its own ?galleryPage parameter so the two pagers on the page
+      // never overwrite each other.
+      if (props.pagePath && resolved.id === "video-hub") {
+        const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => entry.kind === "video");
+        const total = all.length;
+        const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
+        const page = Math.min(Math.max(1, Math.floor(Number(props.query?.galleryPage)) || 1), totalPages);
+        const start = (page - 1) * MEDIA_PAGE_SIZE;
+        resolved.hubGallery = { items: all.slice(start, start + MEDIA_PAGE_SIZE).map(toGalleryItem), total, page, totalPages, basePath: props.pagePath };
       }
     }
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
