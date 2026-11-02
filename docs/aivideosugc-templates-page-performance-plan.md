@@ -86,4 +86,10 @@ PageSpeed 报告的问题**基本属实**，且根因集中、可修：
 - 代码：`template-directory.server.tsx` 离散分页（discrete `?page=N`，越界收敛）、poster 变体映射 helper、`ExampleDirectory` SSR 分页导航 + 首屏 preload；删除 `gallery-grid-loader.tsx` 与 `/api/aidreamcapes/gallery-cards`（含 next.config.mjs 头规则）；审计脚本改走 SSR 分页遍历并断言分页链严格递增。
 - 数据：`aidreamcapes-gallery-pagination-*-2026-11-02.json` manifest（pageSize 20→12，CAS + 保护哈希 + revision 断言 + rollback），本地已应用并读回确认。
 - 本地验证（dev-local 3002）：每页 12 张 video 卡、Page 1 of 28、rel=next/prev、`?page=2&kind=video` kind 透传、`?page=999` 收敛到 28、preload 注入（首张 fetchpriority=high）、HTML 无 gallery-cards 引用与 Load more 按钮。
-- 待生产：变体生成（释放主机）→ 构建/部署 → DB apply → 线上回归 + PSI 复测。
+
+### 2026-11-02 P0 一批 — 生产已上线（release 0d9e3e0722b0e63c51b207423000be662946f111）
+
+- 代码与数据：SSR 离散分页 + 客户端加载器下线 + poster/photo 宽度变体（656 个 WebP 文件入库 `public/assets/sites/site_aidreamcapes/v2-responsive/`，索引合并至 `aidreamcapes-v2-responsive-image-manifest.json`，共 426 条）随 release 部署；`exampleDirectory.pageSize` 20→12 经字段级 manifest 应用（planHash `bf738ec5…`，CAS + revision 断言 + 保护哈希 + rollback `aidreamcapes-gallery-pagination-production-2026-11-02-rollback.json`），DB 读回确认 12。变体生成脚本对生产 SSR 爬取 328 个源（171 poster + 157 照片），首屏样本字节降幅 −57%~−72%（如 citrus 147KB→42KB）。
+- 部署插曲（记录供复盘）：① 首次部署在 origin 冒烟阶段因一个详情页别名渲染超时触发回滚 trap（按设计工作，重试通过）；② apply 事务初版未调大交互事务超时（P2028，未产生写入，已修为 `timeout: 120s`）；③ 事务提交后运行崩溃于 rollback 工件写出（脚本缺陷已修，工件经 `--write-rollback-only` 只读模式补齐，DB 无二次写入）。
+- 生产回归：`/templates` 200（12 video 卡、12/12 poster 走 640 WebP 变体、3 个 preload、分页 nav、无 gallery-cards 引用）；`?page=2`、`?page=2&kind=video`、`?page=999` 均 200；`/templates/video` 保持 308；旧 `/api/aidreamcapes/gallery-cards` 404；变体文件 `image/webp` + `max-age=31536000, immutable`（31.5KB/张）；sitemap 516 条 URL 不变且无 `?page=` 入口；媒体完整性审计（SSR 分页链遍历）328/328 详情页、578 资产、0 失败。
+- 待办：PSI 复测（移动端目标：LCP 显著低于 8.6s、图片改进项消除）后回填本节；观察 Cloudflare 缓存预热后 TTFB。

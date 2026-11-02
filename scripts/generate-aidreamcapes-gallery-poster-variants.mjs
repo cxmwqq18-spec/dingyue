@@ -51,7 +51,7 @@ const baseArg = value("--base", "http://127.0.0.1:3000");
 const pin = value("--pin");
 const outRoot = path.resolve(value("--out-root", "."));
 const apply = args.includes("--apply");
-const mergeDeltaPath = args.find(arg => arg.startsWith("--merge-delta="));
+const mergeDeltaPath = value("--merge-delta", "");
 const REPORT_PATH = path.join(outRoot, "aidreamcapes-gallery-variants-report.json");
 const DELTA_PATH = path.join(outRoot, "aidreamcapes-gallery-variants-manifest-delta.json");
 
@@ -126,11 +126,11 @@ function parseGalleryPage(html) {
 
 function variantUrl(sourceUrl, width) {
   const name = path.basename(sourceUrl);
+  const base = name.replace(/\.(?:jpe?g|png|webp|avif)$/i, "");
   const folder = sourceUrl.slice(0, sourceUrl.length - name.length);
-  const rename = name.replace(/(\.[^.]+)$/, `--${width}$1`).replace(/(\.[^.]+)\.webp$/, "");
   return {
-    url: `${VARIANT_URL_PREFIX}${folder}${rename}.webp`,
-    diskPath: path.join(outRoot, VARIANT_URL_PREFIX.slice(1), folder, `${rename}.webp`)
+    url: `${VARIANT_URL_PREFIX}${folder}${base}--${width}.webp`,
+    diskPath: path.join(outRoot, VARIANT_URL_PREFIX.slice(1), folder, `${base}--${width}.webp`)
   };
 }
 
@@ -158,7 +158,11 @@ async function main() {
   };
 
   // Walk the pagination chain exactly like an auditor: every page contributes
-  // its own cards, then rel="next" decides the next URL.
+  // its own cards, then rel="next" decides the next URL. When the deployed
+  // markup does not carry the pager yet (the release has not shipped this
+  // change), the walk falls back to ?page=N increments and stops on the first
+  // page that adds no new card — the retired cumulative renderer repeats
+  // already-seen cards before that point, so the enumeration still converges.
   const posters = new Set();
   const photos = new Set();
   let nextPath = `${SOURCE_PAGE}?page=1`;
@@ -166,9 +170,15 @@ async function main() {
     const html = await fetchText(nextPath);
     report.pagesWalked += 1;
     const parsed = parseGalleryPage(html);
+    const beforeCount = posters.size + photos.size;
     for (const item of parsed.posters) posters.add(item);
     for (const item of parsed.photos) photos.add(item);
-    if (!parsed.next) break;
+    if (!parsed.next) {
+      const grew = posters.size + photos.size > beforeCount;
+      if (!grew) break;
+      nextPath = `${SOURCE_PAGE}?page=${page + 1}`;
+      continue;
+    }
     nextPath = parsed.next.startsWith("http") ? new URL(parsed.next).pathname + new URL(parsed.next).search : parsed.next;
   }
   const sources = [...posters, ...photos];
@@ -193,7 +203,7 @@ async function main() {
       report.skipped.push({ source, reason: "no intrinsic dimensions" });
       return;
     }
-    const widths = TARGET_WIDTHS.filter((width) => width < sourceWidth);
+    const widths = TARGET_WIDTHS.filter((width) => width <= sourceWidth);
     const variants = [];
     if (!widths.length) {
       report.skipped.push({ source, reason: `source is ${sourceWidth}px wide` });

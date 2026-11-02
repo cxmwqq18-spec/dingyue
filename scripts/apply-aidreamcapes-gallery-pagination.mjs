@@ -32,6 +32,7 @@ const target = process.argv.find((arg) => arg.startsWith("--target="))?.split("=
 const confirmation = process.argv.find((arg) => arg.startsWith("--confirm="))?.split("=")[1];
 const baseHash = process.argv.find((arg) => arg.startsWith("--base-hash="))?.split("=")[1];
 const apply = process.argv.includes("--apply");
+const writeRollbackOnly = process.argv.includes("--write-rollback-only");
 const rollbackTargetSlug = process.argv.find((arg) => arg.startsWith("--rollback-to="))?.split("=")[1];
 const expectedConfirmation = `site_aidreamcapes-gallery-pagination-${target}`;
 const manifestPath = path.resolve(
@@ -84,6 +85,43 @@ try {
   if (!row) {
     console.log(JSON.stringify({ ok: false, mode: apply ? "apply" : "dry-run", reason: "/templates LivePage is missing" }, null, 2));
     process.exitCode = 1;
+  } else if (writeRollbackOnly) {
+    // Artifact-completion mode for an apply whose transaction committed but
+    // whose run crashed before the rollback manifest was written. Read-only:
+    // the row must already carry the after value (CAS would reject a rewrite),
+    // and the emitted rollback still points at the reviewed before state.
+    const sectionId = Object.entries(row.contentJson?.sections ?? {})
+      .find(([, section]) => section?.settings?.data?.exampleDirectory)?.[0];
+    assert(sectionId, "exampleDirectory section vanished");
+    const current = row.contentJson.sections[sectionId].settings.data.exampleDirectory.pageSize ?? null;
+    assert.equal(hash(current), operation.afterHash, `Refusing to write a rollback: current pageSize ${current} is not the reviewed after state.`);
+    const rollbackPath = path.resolve(
+      process.cwd(),
+      process.argv.find((arg) => arg.startsWith("--rollback="))?.split("=")[1]
+      || `scripts/manifests/aidreamcapes-gallery-pagination-${target}-2026-11-02-rollback.json`
+    );
+    const rollback = {
+      ok: true,
+      contract: `${CONTRACT}-rollback`,
+      siteId: SITE_ID,
+      target,
+      generatedAt: new Date().toISOString(),
+      sourcePlanHash: manifest.planHash,
+      summary: { page: manifest.page.slug, fields: 1, note: "completed after a committed apply whose run crashed pre-artifact" },
+      page: { slug: manifest.page.slug, baseHash: pageHash(row) },
+      operations: [{
+        field: "exampleDirectory.pageSize",
+        jsonPath: manifest.jsonPath,
+        before: operation.before,
+        after: operation.after,
+        beforeHash: operation.beforeHash,
+        afterHash: operation.afterHash
+      }],
+      note: "Inverse of the apply: set exampleDirectory.pageSize back to the before value (delete the field when before is null) against the recorded current page baseHash."
+    };
+    fs.mkdirSync(path.dirname(rollbackPath), { recursive: true });
+    fs.writeFileSync(rollbackPath, `${JSON.stringify(rollback, null, 2)}\n`, "utf8");
+    console.log(JSON.stringify({ ok: true, mode: "write-rollback-only", current, rollbackPath, readback: { jsonPath: manifest.jsonPath, value: current } }, null, 2));
   } else if (pageHash(row) !== manifest.page.baseHash) {
     console.log(JSON.stringify({ ok: false, mode: apply ? "apply" : "dry-run", reason: "LivePage changed since the reviewed plan (baseHash mismatch)" }, null, 2));
     process.exitCode = 1;
@@ -151,6 +189,8 @@ try {
         process.argv.find((arg) => arg.startsWith("--rollback="))?.split("=")[1]
         || `scripts/manifests/aidreamcapes-gallery-pagination-${target}-2026-11-02-rollback.json`
       );
+      // The LivePage row carries a large contentJson blob; the default 5s
+      // interactive-transaction timeout is not enough on the release host.
       const report = await db.$transaction(async (tx) => {
         const protectedHash = async (client) => {
           const rowsOther = await client.$queryRaw`
@@ -208,7 +248,27 @@ try {
           pageHash: pageHash({ ...row, contentJson: nextContentJson, updatedAt: readbackRow.updatedAt }),
           readback: { jsonPath: manifest.jsonPath, value: readbackDirectory.pageSize }
         };
-      });
+      }, { maxWait: 10_000, timeout: 120_000 });
+
+      const rollback = {
+        ok: true,
+        contract: `${CONTRACT}-rollback`,
+        siteId: SITE_ID,
+        target,
+        generatedAt: new Date().toISOString(),
+        sourcePlanHash: manifest.planHash,
+        summary: { page: manifest.page.slug, fields: 1 },
+        page: { slug: manifest.page.slug, baseHash: report.pageHash },
+        operations: [{
+          field: "exampleDirectory.pageSize",
+          jsonPath: manifest.jsonPath,
+          before: operation.before,
+          after: operation.after,
+          beforeHash: operation.beforeHash,
+          afterHash: operation.afterHash
+        }],
+        note: "Inverse of the apply: set exampleDirectory.pageSize back to the before value (delete the field when before is null) with the page baseHash as CAS."
+      };
 
       fs.mkdirSync(path.dirname(rollbackPath), { recursive: true });
       fs.writeFileSync(rollbackPath, `${JSON.stringify(rollback, null, 2)}\n`, "utf8");

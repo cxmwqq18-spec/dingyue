@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-gallery-pagination-2026-11-02-v1-rollback",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-11-02T05:30:28.705Z",
+  "sourcePlanHash": "8d486dd1302f8c2d07ead409eccbd3d15f402ad7b9fd88a3166cbcb26db823cc",
+  "summary": {
+    "page": "/templates",
+    "fields": 1,
+    "note": "completed after a committed apply whose run crashed pre-artifact"
+  },
+  "page": {
+    "slug": "/templates",
+    "baseHash": "ca3f7280f1b9577d2dbd66ea1861938e7943f1c49634b1e615c08e990034099d"
+  },
+  "operations": [
+    {
+      "field": "exampleDirectory.pageSize",
+      "jsonPath": "contentJson.sections.v2_main.settings.data.exampleDirectory.pageSize",
+      "before": 20,
+      "after": 12,
+      "beforeHash": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+      "afterHash": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    }
+  ],
+  "note": "Inverse of the apply: set exampleDirectory.pageSize back to the before value (delete the field when before is null) against the recorded current page baseHash."
+}
