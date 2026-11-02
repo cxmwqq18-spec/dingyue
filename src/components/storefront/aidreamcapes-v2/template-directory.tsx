@@ -6,6 +6,8 @@ import { pickerPresetId } from "@/lib/aidreamcapes-workspace/preset-contract";
 import type { DirectoryMediaCard } from "@/lib/aidreamcapes-workspace/media-placement";
 import { templateMatchesFilters, type TemplateFilterState } from "@/lib/aidreamcapes-template-filter";
 import { Adc2VideoPreview } from "./video-preview-card";
+import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-responsive-images";
+import { AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
 import type { V2Data, V2Resolvers, V2VisualPickerCard } from "./types";
 export type Directory = { paths: string[]; links: { label: string; href: string }[]; hideTemplates?: boolean };
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
@@ -84,7 +86,7 @@ function GalleryCards({ items, r }: { items: GalleryItem[]; r: V2Resolvers }) {
   return <>{items.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
     <a className="ti" href={r.href(item.href)}>{item.video ? (
       <Adc2VideoPreview ariaLabel={item.video.name ?? item.label} media={{ ...item.video, poster: r.asset(item.video.poster) }} />
-    ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
+    ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
     <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
   </article>)}</>;
 }
@@ -167,7 +169,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
             <a className="ti" href={r.href(item.href)}>{item.video ? (
               <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} />
-            ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
+            ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
             <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
           </article>)}</div>
           {mediaPager ? <DiscretePager page={mediaPager.page} totalPages={mediaPager.totalPages} basePath={mediaPager.basePath} r={r} ariaLabel="Browse more examples by page" /> : null}
@@ -195,7 +197,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
         // template page itself.
         const href = template.path;
         return <article className="tc" key={template.id} data-template-id={template.id} data-type={template.kind}>
-          <a className="ti" href={r.href(href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></a>
+          <a className="ti" href={r.href(href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(template.card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(template.card.image.src)} alt={template.card.image.alt} width={template.card.image.w ?? 640} height={template.card.image.h ?? 640} /></a>
           <div className="tb"><span>{template.kind === "photo" ? "Photo template" : "Video template"}</span><h2><a href={r.href(href)}>{template.name}</a></h2><p>{template.description}</p><a className="use" href={r.href(href)}>View template →</a></div>
         </article>;
       })}</div>
@@ -207,7 +209,7 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
           {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
         </div>
         <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
-          <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+          <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" {...aidreamcapesV2ResponsiveImagePropsFor(item.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES, r.asset)} src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
           <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
         </article>)}</div>
       </section> : null}

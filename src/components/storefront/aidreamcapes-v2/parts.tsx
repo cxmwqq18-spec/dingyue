@@ -1,5 +1,5 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
+import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsiveImagePropsFor, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
 import type { CSSProperties, ReactNode } from "react";
@@ -664,7 +664,7 @@ const ToolIcon = ({ group }: { group?: string }) => (
 export function ToolLink({ tool, r }: { tool: V2Tool; r: V2Resolvers }) {
   return (
     <div className="mi">
-      {tool.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
+      {tool.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(tool.image.src, "46px", r.asset)} alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
       <div>
         <b><WorkspaceEntryLink className="card-title" href={r.href(tool.href)}>{tool.label}</WorkspaceEntryLink></b>
         <span>{tool.description}</span>

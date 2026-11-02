@@ -72,6 +72,35 @@ const PILOT_PAGES = [
   { slug: "/ai-actors", label: "actor directory", collect: collectActorImages }
 ];
 
+// Site-wide sweep: `--site-wide-images` walks every published LivePage row of
+// this site and collects every media image URL it references (photo example
+// cards, directory facets, detail heroes, nav strips...). This is what puts
+// the photo cards on /templates and the hub into the variant pipeline without
+// hand-listing every section shape. Generated variants themselves are skipped.
+const SITE_WIDE = hasArgument("--site-wide-images");
+const MEDIA_URL_PREFIXES = ["/ai-image-generation/", "/ai-video-generation/", "/ai-actors/", "/assets/sites/site_aidreamcapes/"];
+
+function collectSiteWideImages(value, out) {
+  if (typeof value === "string") {
+    if (
+      value.startsWith("/") &&
+      IMAGE_EXTENSIONS.test(value.split(/[?#]/, 1)[0] ?? "") &&
+      MEDIA_URL_PREFIXES.some((prefix) => value.startsWith(prefix)) &&
+      !value.startsWith(`${VARIANT_URL_PREFIX}/`)
+    ) {
+      out.push(value.split(/[?#]/, 1)[0]);
+    }
+    return;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) collectSiteWideImages(item, out);
+    return;
+  }
+  if (value && typeof value === "object") {
+    for (const item of Object.values(value)) collectSiteWideImages(item, out);
+  }
+}
+
 function record(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : undefined;
 }
@@ -212,6 +241,26 @@ async function main() {
         if (!bySource.has(source)) bySource.set(source, []);
         bySource.get(source).push(pilot.slug);
       }
+    }
+
+    // Site-wide sweep runs before the index merge so photo cards everywhere
+    // are covered in one pass.
+    if (SITE_WIDE) {
+      const rows = await prisma.livePage.findMany({
+        where: { siteId: SITE_ID },
+        select: { slug: true, contentJson: true }
+      });
+      const found = [];
+      for (const row of rows) {
+        const out = [];
+        collectSiteWideImages(row.contentJson, out);
+        if (out.length) found.push({ slug: row.slug, images: out.length });
+        for (const source of new Set(out)) {
+          if (!bySource.has(source)) bySource.set(source, []);
+          bySource.get(source).push(row.slug);
+        }
+      }
+      report.siteWide = { pages: rows.length, pagesWithImages: found.length, sources: bySource.size };
     }
 
     // The index is merged, not replaced: entries for other images survive a run

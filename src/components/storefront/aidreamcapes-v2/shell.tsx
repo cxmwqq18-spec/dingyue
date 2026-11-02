@@ -3,6 +3,7 @@ import { CustomerAccountMenu } from "@/components/storefront/customer-account-me
 import { StorefrontSpeculationRules } from "@/components/storefront/speculation-rules";
 import { CreditCard } from "lucide-react";
 import { isValidElement, type ReactNode } from "react";
+import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { AidreamcapesPartnerBadge, AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
@@ -29,7 +30,7 @@ function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   if (link.image || link.description) {
     return (
       <WorkspaceEntryLink className="mi" href={r.href(link.href)}>
-        {link.image ? <img alt="" decoding="async" height={46} loading="lazy" src={r.asset(link.image)} width={46} /> : null}
+        {link.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(link.image, "120px", r.asset)} alt="" decoding="async" height={46} loading="lazy" src={r.asset(link.image)} width={46} /> : null}
         <div>
           <b>{link.label}</b>
           {link.description ? <span>{link.description}</span> : null}

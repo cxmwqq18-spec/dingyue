@@ -32,10 +32,10 @@ function manifestKey(src: string): string {
   return src.trim().split(/[?#]/, 1)[0] ?? "";
 }
 
-/** Width candidates for one image, or undefined when the image has no variant set. */
-export function aidreamcapesV2ResponsiveSrcSet(src: string): string | undefined {
+/** Width candidates for one image, or an empty list when the image has no variant set. */
+function responsiveCandidates(src: string): { width: number; url: string }[] {
   const entry = imageManifest[manifestKey(src)];
-  if (!entry?.variants?.length) return undefined;
+  if (!entry?.variants?.length) return [];
   const candidates = entry.variants
     .slice()
     .sort((left, right) => left.width - right.width)
@@ -44,17 +44,34 @@ export function aidreamcapesV2ResponsiveSrcSet(src: string): string | undefined 
   // download a picture that is smaller than the one it has today.
   const widest = candidates.at(-1)?.width ?? 0;
   if (entry.width > widest) candidates.push({ width: entry.width, url: entry.original });
+  return candidates;
+}
+
+/** Width candidates for one image, or undefined when the image has no variant set. */
+export function aidreamcapesV2ResponsiveSrcSet(src: string): string | undefined {
+  const candidates = responsiveCandidates(src);
+  if (!candidates.length) return undefined;
   return candidates.map((candidate) => `${candidate.url} ${candidate.width}w`).join(", ");
 }
 
 /**
  * Image attributes for a responsive candidate list. `sizes` must describe the
  * width the stylesheet actually gives the picture; it is only used when a
- * generated variant set exists for that picture.
+ * generated variant set exists for that picture. Every candidate URL goes
+ * through the storefront asset resolver (`r.asset`) exactly like the poster
+ * mapping, so mirrored EU paths and cache-busting stay consistent.
  */
-export function aidreamcapesV2ResponsiveImageProps(src: string, sizes: string): { srcSet?: string; sizes?: string } {
-  const srcSet = aidreamcapesV2ResponsiveSrcSet(src);
-  return srcSet ? { srcSet, sizes } : {};
+export function aidreamcapesV2ResponsiveImagePropsFor(
+  src: string,
+  sizes: string,
+  asset: (url: string) => string
+): { srcSet?: string; sizes?: string } {
+  const candidates = responsiveCandidates(src);
+  if (!candidates.length) return {};
+  return {
+    srcSet: candidates.map((candidate) => `${asset(candidate.url)} ${candidate.width}w`).join(", "),
+    sizes
+  };
 }
 
 /** A `<video>` poster takes one URL, so the variant is chosen up front instead
