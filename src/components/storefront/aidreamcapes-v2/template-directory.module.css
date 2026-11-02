@@ -8,14 +8,15 @@
 .cardImage { display: block; aspect-ratio: 1 / 1; object-fit: cover; width: 100%; height: auto; }
 .mediaSection { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
 .galleryPages { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 40px; }
+.galleryPages .btn { min-height: 48px; }
 .galleryPages span { color: var(--ink-3); font-size: 15px; }
-.pageNum { display: inline-flex; min-width: 38px; height: 38px; padding: 0 8px; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); font-size: 15px; text-decoration: none; }
+.pageNum { display: inline-flex; min-width: 48px; height: 48px; padding: 0 10px; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); font-size: 15px; text-decoration: none; }
 .pageNum:hover { border-color: var(--pink); color: var(--ink); }
 .pageNum[aria-current="page"] { background: #fff; border-color: #fff; color: #0a0a0a; font-weight: 600; }
 .pageGap { min-width: 20px; text-align: center; }
-.pageJump { display: inline-flex; align-items: center; gap: 8px; margin-left: 6px; }
-.pageJump input { width: 5.5ch; padding: 9px 10px; font: inherit; font-size: 15px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; text-align: center; }
+.pageJump { display: inline-flex; align-items: center; gap: 8px; margin-left: 4px; }
+.pageJump input { width: 6ch; padding: 12px 10px; font: inherit; font-size: 15px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; text-align: center; }
 .pageJump input:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
-.pageJump .btn { padding: 9px 16px; font-size: 14px; }
+.pageJump .btn { padding: 12px 18px; font-size: 15px; }
 @media (max-width: 900px) { .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .filters { grid-template-columns: minmax(0, 1fr); } }
