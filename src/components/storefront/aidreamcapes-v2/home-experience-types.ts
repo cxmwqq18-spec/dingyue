@@ -1,4 +1,4 @@
-import type { V2Image, V2MoreSection } from "./types";
+import type { V2Image, V2MoreSection, V2Video } from "./types";
 
 export type HomeCampaignSections = {
   workflow: V2MoreSection;
@@ -20,7 +20,30 @@ export type HomeExperienceData = {
   language: "en" | "zh-CN";
   labels: Record<string, string>;
   media: Record<string, V2Image>;
-  blocks: { after: HomeExperienceKind; href: string; actions?: Record<string, string>; copy: Record<string, string>; presentation?: { contentLayout?: "benefits-workflow"; workflowDemo?: HomeWorkflowDemo; workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[]; sceneCategories?: Record<string, string[]>; steps?: { number: string; title: string; description: string }[] } }[];
+  /** Example clips referenced by blocks; keys are stable media ids, not copy. */
+  videos?: Record<string, V2Video>;
+  blocks: {
+    after: HomeExperienceKind;
+    href: string;
+    actions?: Record<string, string>;
+    copy: Record<string, string>;
+    presentation?: {
+      contentLayout?: "benefits-workflow";
+      workflowDemo?: HomeWorkflowDemo;
+      workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[];
+      sceneCategories?: Record<string, string[]>;
+      steps?: { number: string; title: string; description: string }[];
+      /** Tabbed presenter showcase: presenter photo + product photo = generated video. */
+      presenterShowcase?: {
+        presenters: { key: string; tab: string; scene: string; quote: string; quoteWho: string; actorMedia: string; productMedia: string; video: string }[];
+        connectors: { plus: string; arrow: string };
+        cards: { presenter: string; product: string; productSub: string; video: string; videoSub: string };
+        stepsTitle: string;
+        steps: { number: string; title: string; description: string }[];
+        spec: string;
+      };
+    };
+  }[];
 };
 
 /** Page-owned translations; destinations and identifiers retain their original values. */

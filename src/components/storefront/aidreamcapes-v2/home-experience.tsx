@@ -1,5 +1,5 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
+import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { ReactNode } from "react";
 import { Img } from "./parts";
 import { AIDREAMCAPES_V2_HOME_PHONE_SIZES, AIDREAMCAPES_V2_HOME_PRODUCT_SIZES } from "./image-sizes";
@@ -89,7 +89,85 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         {scenes.map(([key, image, title]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c.t028}</p></Preview>)}
       </section>
     );
-    case "steps": return (
+    case "steps": {
+      const showcase = block.presentation?.presenterShowcase;
+      if (showcase) return (
+        <section className="hx-feature hx-presenter-flow" data-hx-root data-home-experience="steps" id="home-experience-steps" aria-labelledby="home-experience-steps-title">
+          <div className="hx-wrap">
+            <div className="hx-flow-head">
+              <div className="hx-tag">{c.t004}</div>
+              <h2 id="home-experience-steps-title">{c.t005}<br /><em>{c.t006}</em></h2>
+              <p className="hx-intro">{c.t007}</p>
+            </div>
+            <div className="hx-flow-tabs">
+              {showcase.presenters.map((presenter, index) => (
+                <button type="button" className={`hx-flow-tab${index === 0 ? " is-active" : ""}`} data-home-local={presenter.key} data-hx-select-group="presenter" data-hx-select-value={presenter.key} aria-pressed={index === 0} key={presenter.key}>
+                  <Img image={m[presenter.actorMedia]} r={r} />
+                  <span>{c[presenter.tab]}<small>{c[presenter.scene]}</small></span>
+                </button>
+              ))}
+            </div>
+            {showcase.presenters.map((presenter, index) => {
+              const video = experience?.videos?.[presenter.video];
+              return (
+                <div className="hx-flow-stage" data-hx-panel-group="presenter" data-hx-panel-value={presenter.key} hidden={index !== 0} key={presenter.key}>
+                  <div className="hx-flow">
+                    <div className="hx-flow-slot">
+                      <div className="hx-flow-shot">
+                        <span className="hx-flow-num" aria-hidden="true">1</span>
+                        <Img image={m[presenter.actorMedia]} r={r} />
+                        <div className="hx-flow-cap"><b>{c[showcase.cards.presenter]}</b><span>{c[presenter.scene]}</span></div>
+                      </div>
+                    </div>
+                    <div className="hx-flow-link" aria-hidden="true">
+                      <span className="hx-flow-sym">+</span>
+                      <span className="hx-flow-lbl">{c[showcase.connectors.plus]}</span>
+                    </div>
+                    <div className="hx-flow-slot">
+                      <div className="hx-flow-shot hx-flow-shot-product">
+                        <span className="hx-flow-num" aria-hidden="true">2</span>
+                        <Img image={m[presenter.productMedia]} r={r} />
+                        <div className="hx-flow-cap"><b>{c[showcase.cards.product]}</b><span>{c[showcase.cards.productSub]}</span></div>
+                      </div>
+                    </div>
+                    <div className="hx-flow-link" aria-hidden="true">
+                      <span className="hx-flow-sym">&#8594;</span>
+                      <span className="hx-flow-lbl">{c[showcase.connectors.arrow]}</span>
+                    </div>
+                    <div className="hx-flow-slot">
+                      <div className="hx-flow-shot hx-flow-shot-video">
+                        <span className="hx-flow-num" aria-hidden="true">3</span>
+                        {video ? <video aria-label={video.name ?? c[presenter.tab]} controls height={video.height} loop muted playsInline preload="none" poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src))} src={r.asset(video.src)} width={video.width} /> : <Img image={m[presenter.actorMedia]} r={r} />}
+                        <div className="hx-flow-cap"><b>{c[showcase.cards.video]}</b><span>{c[showcase.cards.videoSub]}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="hx-flow-bar">
+                    <p className="hx-flow-quote">&#8220;{c[presenter.quote]}&#8221;<span className="hx-flow-who">{c[presenter.quoteWho]}</span></p>
+                    <div className="hx-flow-action">
+                      <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t013}</WorkspaceEntryLink>
+                      <p className="hx-flow-spec">{c[showcase.spec]}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="hx-flow-how">
+              <div className="hx-flow-how-head"><h3>{c[showcase.stepsTitle]}</h3><span aria-hidden="true" /></div>
+              <div className="hx-flow-how-steps">
+                {showcase.steps.map((step) => (
+                  <div className="hx-flow-how-step" key={step.title}>
+                    <i aria-hidden="true">{c[step.number]}</i>
+                    <div><b>{c[step.title]}</b><p>{c[step.description]}</p></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <p className="hx-note hx-flow-note">{c.t012}</p>
+          </div>
+        </section>
+      );
+      return (
       <section className="hx-feature hx-presenter" data-hx-root data-home-experience="steps" id="home-experience-steps" aria-labelledby="home-experience-steps-title">
         <div className="hx-wrap hx-presenter-layout">
           <div className="hx-presenter-visual">
@@ -105,7 +183,8 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         <Preview id={previewId("main")} title={c.t008} close={c.uiClose} images={[m.m02]} r={r} />
         {presenters.map(([key, image, title]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key} />)}
       </section>
-    );
+      );
+    }
     case "features": return (
       <section className="hx-feature hx-board" data-hx-root data-home-experience="features" id="home-experience-features" aria-labelledby="home-experience-features-title">
         <div className="hx-wrap">
