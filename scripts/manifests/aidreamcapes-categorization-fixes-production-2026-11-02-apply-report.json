@@ -1,0 +1,1352 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-categorization-fixes-2026-11-02-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "982077bafc460c1c88d581e35ae4f8f79fbccce8be0ec3ae490688342dcfbfe6",
+  "revisionBefore": "3516",
+  "revisionAfter": "3549",
+  "revisionDelta": "33",
+  "pagesApplied": 33,
+  "mutationsApplied": 204,
+  "referenceCardsApplied": 22,
+  "invariants": {
+    "invalid_placement_values": 0
+  },
+  "applied": [
+    {
+      "page": "/",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Coffee Maker How-To Demo",
+          "publicSlug": "coffee-maker-how-to-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Desk Lamp Product Demo UGC",
+          "publicSlug": "desk-lamp-product-demo-ugc",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Headphone Creator Review",
+          "publicSlug": "headphone-creator-review",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Sage Bottle Desk Detail",
+          "publicSlug": "sage-bottle-desk-detail",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Speaker Feature Walkthrough",
+          "publicSlug": "speaker-feature-walkthrough",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Yoga Mat Stretch UGC",
+          "publicSlug": "yoga-mat-stretch-ugc",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[1].items[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[0]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/change-background",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Hand Demo: Open a leather wallet",
+          "publicSlug": "hand-demo-open-a-leather-wallet",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Matcha bowl set on linen",
+          "publicSlug": "matcha-bowl-set-on-linen",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Color Variants",
+          "publicSlug": "color-variants",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[25]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Jewelry On Model",
+          "publicSlug": "jewelry-on-model",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/lifestyle-photos",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Bag on a cafe table",
+          "publicSlug": "bag-on-a-cafe-table",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Camel weekender on a car seat",
+          "publicSlug": "camel-weekender-on-a-car-seat",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Handbag on a marble cafe table",
+          "publicSlug": "handbag-on-a-marble-cafe-table",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Linen tote at a farmers market",
+          "publicSlug": "linen-tote-at-a-farmers-market",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Tote at a farmers market",
+          "publicSlug": "tote-at-a-farmers-market",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/model-photos",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cream blouse in a studio",
+          "publicSlug": "cream-blouse-in-a-studio",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Crossbody Try-On: fabric messenger bag",
+          "publicSlug": "crossbody-try-on-fabric-messenger-bag",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Packaging Preview",
+          "publicSlug": "packaging-preview",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Every Angle",
+          "publicSlug": "every-angle",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/professional-headshot",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Sale Banner",
+          "publicSlug": "sale-banner",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[4]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[6]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[2]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[3]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[5]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/social-ad-photos",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Canvas tote sidewalk",
+          "publicSlug": "canvas-tote-sidewalk",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cream bowl sauce demo",
+          "publicSlug": "cream-bowl-sauce-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cream candle jar",
+          "publicSlug": "cream-candle-jar",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cream lamp desk",
+          "publicSlug": "cream-lamp-desk",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Cream mug desk",
+          "publicSlug": "cream-mug-desk",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Sage bottle front hall",
+          "publicSlug": "sage-bottle-front-hall",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Story Ad",
+          "publicSlug": "story-ad",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Creator-Style Photo",
+          "publicSlug": "creator-style-photo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/white-background-photos",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Jar on white for catalog match",
+          "publicSlug": "jar-on-white-for-catalog-match",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Sage soap dispenser on white",
+          "publicSlug": "sage-soap-dispenser-on-white",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Sea-Glass Kettle on White",
+          "publicSlug": "sea-glass-kettle-on-white",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Steel bottle on white",
+          "publicSlug": "steel-bottle-on-white",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Tote on White for a Marketplace",
+          "publicSlug": "tote-on-white-for-a-marketplace",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation",
+      "mutations": [
+        {
+          "mode": "remove",
+          "detailAliasOf": "lifestyle-app-recommendation"
+        },
+        {
+          "mode": "remove",
+          "detailAliasOf": "streamer-reaction-app"
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Earbud Box Reveal",
+          "publicSlug": "earbud-box-reveal",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Fabric Cleaner Lesson Demo",
+          "publicSlug": "fabric-cleaner-lesson-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Folding Bike Commute",
+          "publicSlug": "folding-bike-commute",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Silicone Case Compare Ad",
+          "publicSlug": "silicone-case-compare-ad",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[3].items[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[2].items[0]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/black-friday-countdown",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/cinematic-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Brand Film",
+          "publicSlug": "brand-film",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "How-To Product Video",
+          "publicSlug": "how-to-product-video",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.templateDefinition.card"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/image-to-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Green Notebook Desk Ritual",
+          "publicSlug": "green-notebook-desk-ritual",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "washed-graphic-tee-fit-check"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "wrinkled-shirt-steamer-rescue"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "canvas-tote-everyday-carry"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "wide-leg-work-pants-fit-check"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "cream-chunky-cardigan-two-ways"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "washed-graphic-tee-fabric-close-up"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "blue-shirt-steamer-second-take"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "canvas-tote-pack-with-me"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "black-dress-pants-fold-test"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "navy-cardigan-one-piece-two-looks"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "white-tee-wardrobe-basic-check"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "whitening-strips-black-friday-tease"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "skincare-gift-set-unbox-routine"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "pink-tint-stick-lip-and-cheek"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "jelly-mask-sunday-reset"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "green-cleanser-black-friday-deal"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "everyday-lipstick-vanity-check"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "green-clay-mask-sunday-reset"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "chili-crisp-oil-rice-upgrade"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "orange-drink-mix-morning-ritual"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "squeeze-bottle-hot-sauce-tacos"
+        },
+        {
+          "mode": "add",
+          "detailAliasOf": "iced-citrus-drink-mix-switch"
+        }
+      ],
+      "referenceCards": [
+        "washed-graphic-tee-fit-check",
+        "wrinkled-shirt-steamer-rescue",
+        "canvas-tote-everyday-carry",
+        "wide-leg-work-pants-fit-check",
+        "cream-chunky-cardigan-two-ways",
+        "washed-graphic-tee-fabric-close-up",
+        "blue-shirt-steamer-second-take",
+        "canvas-tote-pack-with-me",
+        "black-dress-pants-fold-test",
+        "navy-cardigan-one-piece-two-looks",
+        "white-tee-wardrobe-basic-check",
+        "whitening-strips-black-friday-tease",
+        "skincare-gift-set-unbox-routine",
+        "pink-tint-stick-lip-and-cheek",
+        "jelly-mask-sunday-reset",
+        "green-cleanser-black-friday-deal",
+        "everyday-lipstick-vanity-check",
+        "green-clay-mask-sunday-reset",
+        "chili-crisp-oil-rice-upgrade",
+        "orange-drink-mix-morning-ritual",
+        "squeeze-bottle-hot-sauce-tacos",
+        "iced-citrus-drink-mix-switch"
+      ]
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Lunchbox latch clicks shut",
+          "publicSlug": "lunchbox-latch-clicks-shut",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Magnetic Power Bank Snap-On Unboxing",
+          "publicSlug": "magnetic-power-bank-snap-on-unboxing",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Phone Ring Grip One Hand Demo",
+          "publicSlug": "phone-ring-grip-one-hand-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Thin Magnetic Power Bank Unboxing",
+          "publicSlug": "thin-magnetic-power-bank-unboxing",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Umbrella opens for coverage",
+          "publicSlug": "umbrella-opens-for-coverage",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Water Bottle Demo: Cap Twists Open",
+          "publicSlug": "water-bottle-demo-cap-twists-open",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Yogurt Demo: Spoonful Tasted",
+          "publicSlug": "yogurt-demo-spoonful-tasted",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Bathroom: Robe Mirror Selfie",
+          "publicSlug": "bathroom-robe-mirror-selfie",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Study Room: Desk Study Chat",
+          "publicSlug": "study-room-desk-study-chat",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/video-ads",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Berry Bowl First Bite Reel",
+          "publicSlug": "berry-bowl-first-bite-reel",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "First-Person Discovery: Court Gear",
+          "publicSlug": "first-person-discovery-court-gear",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Quiet Unboxing: Makeup Tools",
+          "publicSlug": "quiet-unboxing-makeup-tools",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Resistance Band Home Demo",
+          "publicSlug": "resistance-band-home-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Street Interview: Fitness Gear",
+          "publicSlug": "street-interview-fitness-gear",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/occasions/black-friday",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[2]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/occasions/holidays",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.examples.groups[0].items[1]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[2]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[1]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/templates",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[22]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[14]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[0]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[23]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        }
+      ],
+      "referenceCards": []
+    }
+  ],
+  "readback": [
+    {
+      "page": "/",
+      "pageHash": "2e8bc9d4d1ceaf73d062473ef91d04aa26fbd1a5b67785dc0d87eabc20a5bc30"
+    },
+    {
+      "page": "/ai-image-generation",
+      "pageHash": "8646f2078462d813b3c6a51b507580bf4dc99cbc58af0489c386f3fd1dc786c4"
+    },
+    {
+      "page": "/ai-image-generation/change-background",
+      "pageHash": "a4edc0546e6bf2b1e039e43f563c8e64a318d7a9d3bb6c344b04428c71c08dbc"
+    },
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "pageHash": "3d1f4407cb721fe0d4a2e8967d022d98b4e81e33835198986b6c84b9c7a44d34"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "52e4e0129f3932bb3247b44e71d78eb329ddb8280cb6ab323fe6243ca5e73c39"
+    },
+    {
+      "page": "/ai-image-generation/lifestyle-photos",
+      "pageHash": "1eabf290e6565e1dd56998cc81bb61f1061cc058e570b8cab2ba4a3142cd69a9"
+    },
+    {
+      "page": "/ai-image-generation/model-photos",
+      "pageHash": "77007276e6e33f7980ecea8f9056f19b6fa8193d46d81f4e0eeae228cd920638"
+    },
+    {
+      "page": "/ai-image-generation/packaging-mockup",
+      "pageHash": "1e0a1bc84434892d50eadd098da632e7e8a55c5a6e378b1ec0b1e8f8520bbb49"
+    },
+    {
+      "page": "/ai-image-generation/packshot-multi-angle",
+      "pageHash": "2687223162aa2fc9856e1d54abd742a71986a84483ae12b393f492bac1bb1a60"
+    },
+    {
+      "page": "/ai-image-generation/professional-headshot",
+      "pageHash": "ca18e3b5d8f4e342fd77384424795b0822981d8a566dc4c9ba65c8f4ebd1a6b0"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "f54d84d896027a2d9dd828b3a3f8ea1b814cefd609f01b867400a23d907dceea"
+    },
+    {
+      "page": "/ai-image-generation/social-ad-photos",
+      "pageHash": "8f49dd5a59416cdb79573973e0dfecf7eac3790fba6e256e9a3d9c5528b60b07"
+    },
+    {
+      "page": "/ai-image-generation/story-ad-vertical",
+      "pageHash": "c613dc57eb4223df0b85921e1acdfbf2e4ea46c47e2eb9de2ea2788b6fd419bc"
+    },
+    {
+      "page": "/ai-image-generation/ugc-still-ad",
+      "pageHash": "fe51efaa07ba88c103a4173d7d70db2c413d892b6ff61fc131c3c2052cab4ec2"
+    },
+    {
+      "page": "/ai-image-generation/virtual-try-on",
+      "pageHash": "7efba1ef90e1692320930f33aeb5fbc9778c9f7c712a944b6af1c9c3e4532e8e"
+    },
+    {
+      "page": "/ai-image-generation/white-background-photos",
+      "pageHash": "d23943941dba0b1b66ec3039d1f22b774b6105eb75946b2c94febe2ca08c7071"
+    },
+    {
+      "page": "/ai-video-generation",
+      "pageHash": "43dee562611c70f01ab834d8569c02bcc0452a5bfa5fc11caae49b1f541fa0ea"
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "pageHash": "ebfcd824f56bbb9dd27f9851a34f201b498327e4f70bb17fd8e3242173c04527"
+    },
+    {
+      "page": "/ai-video-generation/black-friday-countdown",
+      "pageHash": "315639ecd7c7f7a7dad4a544ca9371987b1cebeef0650c1e3847e721b7f9e2c9"
+    },
+    {
+      "page": "/ai-video-generation/cinematic-video",
+      "pageHash": "1c70484a147f19c67bde5a702e6ed760c2d60f31536eb0bb77e780514d8420f9"
+    },
+    {
+      "page": "/ai-video-generation/fashion-try-on-reel",
+      "pageHash": "7fa5fc3a2e2f4bfe81eeba30bbc67056a0dce53f589fb25d9ad4279a46fe982d"
+    },
+    {
+      "page": "/ai-video-generation/food-video",
+      "pageHash": "e64a7890c8d07b70fc29be4193800c9bd42fd671c29dcefe4466e045614c5110"
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "pageHash": "bf37f30087759e9f7251f89f8453fae96eaf87a8689663461c2a06386850f30a"
+    },
+    {
+      "page": "/ai-video-generation/how-to-video",
+      "pageHash": "c21d3c8e71f7a4972f83a7d3fb53a7ac32c75a682a8cb691c6d355a9e433899f"
+    },
+    {
+      "page": "/ai-video-generation/image-to-video",
+      "pageHash": "871ba3b81d05290cee1d0def926edfcdbbd9b3ceb0cfca66ee9f1e6c453f3738"
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "pageHash": "b37391fbba556d7c680ad9a8c411a09a758a7ac7c2c5777e47991e86ea8899f5"
+    },
+    {
+      "page": "/ai-video-generation/promo-video",
+      "pageHash": "8a24cab11fc98cdbee196c7738aaf4f467ac58281eb891f8f50d3e65e7e1b999"
+    },
+    {
+      "page": "/ai-video-generation/spark-ads-style-video",
+      "pageHash": "866ee64af0d16235fc27a7a5206541528eea8a687f08d4640573357e2a04cfb1"
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "pageHash": "7700e07ab7f86065042fbb54009ea42b617c09e2968923e25ea34228af2acc3b"
+    },
+    {
+      "page": "/ai-video-generation/video-ads",
+      "pageHash": "62a69ff8b404b4419de123db3820ed6a30f822b7685fff0fdcc647c02012ccc3"
+    },
+    {
+      "page": "/occasions/black-friday",
+      "pageHash": "fa78d064bc6ffc7404c88cb51f50ac70b9401917ee569c42fbab44c6fe7e6ab7"
+    },
+    {
+      "page": "/occasions/holidays",
+      "pageHash": "3685c22dc34c1b02c4397bb7e34cefda9ef213cc6042daa99463707c71b6857f"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "a74f62f978d1c3b1141f9cc01b62ddd630973d22577a9c286d95533c577075ba"
+    }
+  ]
+}

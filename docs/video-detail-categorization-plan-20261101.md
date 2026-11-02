@@ -1,6 +1,6 @@
 # 视频详情页归类计划（2026-11-01，rev4 三源定稿）
 
-> 状态：**纯计划文档，未动代码/数据**。复核方法升级为三源交叉：**标题(label) × 提示词(产品实体) × 原始图片(52 张逐张肉眼查验)**。最终修正 76 条（图片实证 32 条；高置信 57 / 待确认 19）。
+> 状态：**已于 2026-11-02 在生产执行完毕**（apply report：`scripts/manifests/aidreamcapes-categorization-fixes-production-2026-11-02-apply-report.json`，revision 3516→3549，33 页 / 204 处变更 / 22 张引用卡；回滚清单同目录 `-rollback.json`）。复核方法为三源交叉：**标题(label) × 提示词(产品实体) × 原始图片(52 张逐张肉眼查验)**。最终修正 76 条（图片实证 32 条；高置信 57 / 待确认 19）。
 
 ## 1. 三源一致性结论（本轮核心交付）
 
@@ -133,12 +133,21 @@
 
 P0 本文档确认 → P1 manifest（placement/label before-after + 方案B 22 引用卡 + rollback）→ P2 生产 CAS → P3 门禁（alias smoke / 媒体完整性 / sitemap 契约 URL 集不变 / video:video 仍 171 / facet 抽查）→ P4 CDN purge + 公网复测。
 
-## 7. 待确认
+### 6.1 执行记录（2026-11-02，全部通过）
 
-1. App 冲突卡摘 hub（等你确认）。
-2. 8 个标题≠画面页：本期只补 label，同意？
-3. medium 条目过目。
-4. 包袋/帽子→珠宝配饰、内容型 facet 保留口径是否符合预期？
+- **脚本**：`scripts/plan-aidreamcapes-categorization-fixes.mjs`（只读规划）+ `scripts/apply-aidreamcapes-categorization-fixes.mjs`（双层 CAS + 事务内不变量 + 自动回滚清单）；目标常量 `scripts/lib/aidreamcapes-categorization-fix-targets.mjs`。
+- **manifest**：33 页；180 张卡写入（76 条 placement 修正覆盖全部副本含 alias 副本 + 8 页 label）；hub 摘 2 张 app 别名卡；image-to-video 增 22 张 `detailAliasOf` 引用卡（**不带 publicSlug**，不破坏单属主规则）。
+- **方案 B 实现口径**：22 个模板示范视频（试穿 11 + 护肤 7 + 食品 4）的引用卡挂在 `/ai-video-generation/image-to-video` 的 picker 末尾，href 指向原详情页；详情页属主不变、站点地图不受影响。
+- **P3 门禁实测**：sitemap URL 集逐条 diff 零变化（516 loc / 251 视频详情 / 342 video:video）；8 个改 label 页全部 200 且 H1 为诚实标题；单属主校验 328 slug 全部恰 1 属主（0 违例）；唯一成片仍 171；facet 抽查（jewelry 错标清零、sports-gym/health/food 新成员、fashion 抹茶碗迁出）全部符合；公网经 Cloudflare 复测一致。
+- **P4**：CDN purge 31 文件 + 8 前缀完成，公网复测通过。
+- **后续待办**：本地库按字段同步本次 33 页（`npm run db:sync:aidreamcapes` 流程）；生成队列（holidays 礼盒 > amazon/shopify 演示 > food-drinks > apps）另行开工。
+
+## 7. 待确认（已全部落定并执行）
+
+1. ~~App 冲突卡摘 hub~~ — 已执行（2 张别名卡移除，video-ads 保留属主）。
+2. ~~8 个标题≠画面页：本期只补 label~~ — 已执行（H1/title 换为诚实标题，slug/URL 不动）。
+3. ~~medium 条目过目~~ — 已随 76 条清单一并执行。
+4. ~~包袋/帽子→珠宝配饰、内容型 facet 保留口径~~ — 按此口径执行完毕。
 
 
 ## 9. 归类执行后的视频详情案例分布（模拟，基于 171 个唯一成片）
