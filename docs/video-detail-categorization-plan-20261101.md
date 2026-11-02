@@ -140,6 +140,65 @@ P0 本文档确认 → P1 manifest（placement/label before-after + 方案B 22 �
 3. medium 条目过目。
 4. 包袋/帽子→珠宝配饰、内容型 facet 保留口径是否符合预期？
 
-## 8. 全量分配表
+
+## 9. 归类执行后的视频详情案例分布（模拟，基于 171 个唯一成片）
+
+### 9.1 行业 facets（带片视频数）
+
+| facet | 现在 | 归类后 | 变化 | 说明 |
+|---|---|---|---|---|
+| home-living 家居生活 | 26 | 26 | = | 最强，修正后更准 |
+| other 其他（兜底） | 26 | 26 | = | 修正后渐进收窄（后续生成按类归） |
+| fashion-clothing 服装 | 22 | 22 | = | 修正后全部真实服装 |
+| tiktok-ads（平台） | 45 | 45 | = | — |
+| electronics 数码 | 20 | 22 | +2 | 承接耳机/手机壳 |
+| beauty-skincare 美妆个护 | 14 | 16 | +2 | 承接泵瓶/唇膏场景 |
+| instagram-ads（平台） | 28 | 28 | = | — |
+| jewelry-accessories 珠宝配饰 | 14 | 9 | -5 | 5 支错标视频迁出（音箱/耳机/自行车/文具/支架），包袋类为 v0 图片；
+9 均为真实珠宝配饰 |
+| sports-gym 运动健身 | 13 | 17 | +4 | 承接自行车/阻力带/瑜伽垫/健身包水瓶 |
+| health-wellness 健康 | 13 | 13 | = | 准确 |
+| financial-services 金融服务 | 6 | 4 | -2 | 充电宝错标迁出 |
+| food-drinks 食品饮品 | 8 | 10 | +2 | 承接辣酱/酸奶/莓果 |
+| e-commerce 电商 | 7 | 8 | +1 | — |
+| education 教育（内容型） | 7 | 7 | = | how-to 类保留 |
+| pet 宠物 | 6 | 6 | = | — |
+| youtube-shorts-ads（平台） | 15 | 15 | = | — |
+| facebook-ads（平台） | 6 | 6 | = | — |
+| shoes 鞋靴 | 4 | 4 | = | 准确 |
+| explainer 讲解（内容型） | 4 | 4 | = | — |
+| ugc（内容型） | 4 | 4 | = | — |
+| viral | 4 | 4 | = | — |
+| apps 应用（内容型） | 3 | 3 | = | — |
+| kids-toy 儿童玩具 | 3 | 3 | = | — |
+| black-friday（场合） | 2 | 2 | = | 待生成补强 |
+| sale-discount（场合） | 5 | 5 | = | — |
+| **holidays（场合）** | **1** | **1** | = | **全站最薄弱**，生成队列第一优先 |
+| amazon-product-photos（平台） | 0 | 0 | = | 生成队列 |
+| shopify-product-photos（平台） | 0 | 0 | = | 生成队列 |
+
+> 同一视频可同时挂行业+场合+平台（多维展示）；工具维度唯一、行业维度去重后全站仍为 **171**。
+
+### 9.2 工具维度（带片视频案例数，工具唯一）
+
+| 工具页 | 现在 | 归类后 | 变化 |
+|---|---|---|---|
+| spokesperson-video 发言人视频 | 53 | 53 | = |
+| video-ads 视频广告 | 39 | 41 | +2（app 冲突卡归一） |
+| hub picker（图片转视频） | 36 | 36 | -2 |
+| product-video 产品视频 | 13 | 13 | = |
+| image-to-video 图片转视频工具页 | 4 | 26 | +22（方案 B 引用卡） |
+| before-after-video 前后对比 | 4 | 4 | = |
+| url-to-video 视频链接 | 0 | 0 | 待真实案例 |
+| text-to-video 文字转视频 | 0 | 0 | 待真实案例 |
+| ai-twin AI孪生 | 0 | 0 | 待真实案例 |
+| **合计（唯一视频）** | **171** | **171** | 0 Loss |
+
+### 9.3 覆盖结论
+
+- **每个分类至少 1 个视频**：28 个 facet 中 26 个达标；唯二例外 = amazon/shopify 平台位（0）与 holidays 只有 1 —— 不硬凑，生成队列优先补：holidays 礼盒 > amazon/shopify 开箱/店铺演示 > food-drinks > apps。
+- 修正后珠宝配饰从 14→9 是纯「准确性红利」：去掉的是音箱/自行车/文具等假珠宝；真实配饰（9 支）+ 包袋/帽子等新配饰类图片示例在分类模式下依旧可见。
+
+## 10. 全量分配表
 
 docs/media-categorization-assignments-20261101.json（rev4，全部 328 页含 now/after/置信度/证据类型）。

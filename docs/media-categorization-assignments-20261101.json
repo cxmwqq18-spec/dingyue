@@ -1,37 +1,26 @@
 {
  "generated": "2026-11-02",
- "rev": 4,
+ "rev": 4.1,
  "verification": {
   "method": "title-label vs prompt-entity vs original-image",
   "labelsChecked": 328,
   "imagesViewed": 52,
   "labelPromptMismatch": 0
  },
- "stats": {
-  "total_slugs": 328,
-  "fixes": 76,
-  "image_verified": 32,
-  "images_viewed": 52,
-  "title_mismatch": 8
+ "totals": {
+  "detailPages": 358,
+  "videoDetailPages": 250,
+  "withVideo": 171
  },
- "titleMismatchPages": [
-  "lunch-box-on-the-last-day",
-  "suitcase-with-room-for-the-offer",
-  "tote-with-space-for-the-offer",
-  "wallet-unboxing-with-offer-space",
-  "cardigan-ready-for-season-end",
-  "sandals-tried-on-at-the-market",
-  "running-shoes-before-the-jog",
-  "gift-box-ready-for-a-black-friday-offer"
- ],
+ "fixesPlanned": 76,
  "assignments": [
   {
    "slug": "360-showcase-linen-shirt",
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/e-commerce",
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -45,11 +34,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": [
-    "health-wellness",
-    "sports-gym"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -62,7 +51,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/apps"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -76,10 +65,10 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -92,7 +81,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -106,7 +95,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -120,7 +109,7 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -134,7 +123,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -148,10 +137,10 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare"
    ],
    "tool_primary": "spokesperson-video",
    "change": "placement-fix",
@@ -164,7 +153,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -178,7 +167,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -192,9 +181,9 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -208,7 +197,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -222,7 +211,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -236,7 +225,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/apps"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -250,11 +239,11 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": [
-    "food-drinks",
-    "health-wellness"
+    "industries/food-drinks",
+    "industries/health-wellness"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
@@ -267,9 +256,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -283,10 +272,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "industries/other",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -300,11 +289,11 @@
    "owner": "/ai-video-generation/black-friday-countdown",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/other",
+    "occasions/black-friday",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -318,10 +307,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "industries/other",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -335,9 +324,9 @@
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -351,7 +340,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -365,9 +354,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -381,11 +370,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "health-wellness",
-    "sports-gym"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -398,13 +387,14 @@
    "owner": "/ai-video-generation/cinematic-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "platforms"
+    "industries/electronics",
+    "industries/jewelry-accessories",
+    "industries/shoes",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": [
-    "electronics"
+    "industries/electronics",
+    "platforms/youtube-shorts-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -417,7 +407,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -431,7 +421,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -445,7 +435,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/explainer"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -459,10 +449,10 @@
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
@@ -476,10 +466,10 @@
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
@@ -493,7 +483,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -507,7 +497,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -521,7 +511,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -535,7 +525,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -549,10 +539,10 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -565,10 +555,10 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/jewelry-accessories",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -582,10 +572,10 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/jewelry-accessories",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -599,7 +589,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -613,10 +603,10 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -629,7 +619,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -643,7 +633,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -657,16 +647,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "fashion-clothing"
+    "industries/fashion-clothing",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -679,7 +674,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -693,7 +688,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -707,7 +702,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -721,7 +716,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -735,7 +730,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -749,10 +744,10 @@
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms",
-    "platforms"
+    "industries/food-drinks",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -766,7 +761,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -780,7 +775,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -794,7 +789,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -808,7 +803,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -822,7 +817,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -836,7 +831,7 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -850,14 +845,16 @@
    "owner": "/ai-image-generation/colorway-variations",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/jewelry-accessories",
+    "industries/shoes",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -870,7 +867,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/explainer"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -884,8 +881,8 @@
    "owner": "/ai-image-generation/virtual-try-on",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -899,11 +896,11 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": [
-    "education",
-    "home-living"
+    "industries/education",
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -916,7 +913,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -930,7 +927,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -944,13 +941,15 @@
    "owner": "/ai-image-generation/colorway-variations",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -963,7 +962,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -977,7 +976,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -991,11 +990,11 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "fashion-clothing"
+    "industries/fashion-clothing"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1008,11 +1007,11 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "food-drinks"
+    "industries/food-drinks"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1025,11 +1024,11 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/home-living"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1042,9 +1041,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1058,11 +1057,11 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/home-living"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1075,13 +1074,13 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/food-drinks",
+    "industries/home-living"
    ],
    "placement_after": [
-    "food-drinks",
-    "home-living"
+    "industries/food-drinks",
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1094,13 +1093,15 @@
    "owner": "/ai-image-generation/ugc-still-ad",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "industries/health-wellness",
+    "platforms/instagram-ads",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness",
+    "platforms/instagram-ads",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1113,10 +1114,10 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1129,7 +1130,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1143,11 +1144,13 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/sale-discount"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "occasions/holidays",
+    "occasions/sale-discount"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1160,7 +1163,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1174,7 +1177,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1188,7 +1191,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1202,11 +1205,11 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/ugc"
    ],
    "placement_after": [
-    "home-living",
-    "ugc"
+    "industries/home-living",
+    "industries/ugc"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1219,7 +1222,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -1233,7 +1236,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1247,7 +1250,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1261,7 +1264,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1275,7 +1278,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -1289,7 +1292,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/explainer"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1303,7 +1306,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -1317,7 +1320,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -1331,9 +1334,9 @@
    "owner": "/ai-video-generation/food-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/food-drinks",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1347,10 +1350,10 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": [
-    "electronics"
+    "industries/electronics"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -1363,15 +1366,17 @@
    "owner": "/ai-image-generation/packshot-multi-angle",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "industries/jewelry-accessories",
+    "industries/shoes",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "electronics"
+    "industries/electronics",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1384,9 +1389,9 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1400,7 +1405,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1414,7 +1419,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1428,11 +1433,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": [
-    "education",
-    "home-living"
+    "industries/education",
+    "industries/home-living"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -1445,7 +1450,7 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1459,7 +1464,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -1473,13 +1478,13 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/explainer",
+    "industries/health-wellness"
    ],
    "placement_after": [
-    "explainer",
-    "health-wellness",
-    "sports-gym"
+    "industries/explainer",
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
@@ -1492,7 +1497,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1506,7 +1511,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1520,7 +1525,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1534,11 +1539,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": [
-    "e-commerce",
-    "sports-gym"
+    "industries/e-commerce",
+    "industries/sports-gym"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -1551,7 +1556,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -1565,7 +1570,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1579,10 +1584,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "industries/other",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -1596,7 +1601,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/viral"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1610,9 +1615,9 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions"
+    "industries/electronics",
+    "occasions/black-friday",
+    "occasions/sale-discount"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1626,7 +1631,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1640,7 +1645,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1654,7 +1659,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1668,7 +1673,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -1682,11 +1687,12 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/food-drinks",
+    "occasions/holidays"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness",
+    "occasions/holidays"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1699,13 +1705,16 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions"
+    "industries/other",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1718,11 +1727,12 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/holidays"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "occasions/holidays"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1735,11 +1745,12 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/holidays"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare",
+    "occasions/holidays"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1752,7 +1763,7 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1766,8 +1777,8 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/electronics",
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1781,9 +1792,9 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1797,11 +1808,11 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "occasions/black-friday",
+    "occasions/sale-discount",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1815,13 +1826,15 @@
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "industries/jewelry-accessories",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1834,7 +1847,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1848,7 +1861,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1862,7 +1875,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1876,7 +1889,7 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1890,8 +1903,8 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1905,10 +1918,10 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1921,10 +1934,10 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1937,11 +1950,11 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/ugc"
    ],
    "placement_after": [
-    "electronics",
-    "ugc"
+    "industries/electronics",
+    "industries/ugc"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -1954,7 +1967,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/ugc"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -1968,9 +1981,9 @@
    "owner": "/ai-video-generation/home-organization",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "platforms/facebook-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -1984,7 +1997,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -1998,7 +2011,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2012,7 +2025,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/explainer"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2026,7 +2039,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2040,7 +2053,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2054,7 +2067,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -2068,7 +2081,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2082,14 +2095,15 @@
    "owner": "/ai-video-generation/how-to-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "platforms"
+    "industries/electronics",
+    "industries/health-wellness",
+    "industries/home-living",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": [
-    "electronics",
-    "home-living"
+    "industries/electronics",
+    "industries/home-living",
+    "platforms/youtube-shorts-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2102,11 +2116,11 @@
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms",
-    "platforms"
+    "industries/food-drinks",
+    "industries/health-wellness",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2120,7 +2134,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2134,7 +2148,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2148,7 +2162,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2162,12 +2176,12 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/e-commerce"
    ],
    "placement_after": [
-    "e-commerce",
-    "home-living"
+    "industries/e-commerce",
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2180,9 +2194,9 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2196,13 +2210,15 @@
    "owner": "/ai-image-generation/jewelry-positioning",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "industries/jewelry-accessories",
+    "platforms/instagram-ads",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories",
+    "platforms/instagram-ads",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2215,7 +2231,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2229,8 +2245,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2244,7 +2260,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2258,7 +2274,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2272,7 +2288,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2286,7 +2302,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2300,7 +2316,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -2314,7 +2330,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2328,7 +2344,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -2342,12 +2358,12 @@
    "owner": "/ai-video-generation/promo-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/food-drinks",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2361,7 +2377,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2375,7 +2391,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/apps"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2389,7 +2405,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2403,10 +2419,10 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2419,8 +2435,8 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/beauty-skincare",
+    "occasions/holidays"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2434,7 +2450,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2448,7 +2464,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2462,7 +2478,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2476,13 +2492,15 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions"
+    "industries/fashion-clothing",
+    "industries/food-drinks",
+    "occasions/black-friday",
+    "occasions/sale-discount"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "occasions/black-friday",
+    "occasions/sale-discount"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2495,16 +2513,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2517,10 +2540,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -2533,7 +2556,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -2547,15 +2570,17 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/financial-services",
+    "occasions/sale-discount",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": [
-    "electronics",
-    "sale-discount"
+    "industries/electronics",
+    "occasions/sale-discount",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -2568,10 +2593,10 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "food-drinks"
+    "industries/food-drinks"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2584,8 +2609,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/viral"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2599,10 +2624,10 @@
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2616,9 +2641,9 @@
    "owner": "/ai-video-generation/image-to-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2632,7 +2657,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2646,7 +2671,7 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2660,7 +2685,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2674,8 +2699,8 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/e-commerce",
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2689,9 +2714,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2705,10 +2730,10 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "industries/e-commerce",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2722,10 +2747,10 @@
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/apps",
+    "industries/electronics",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
@@ -2739,8 +2764,8 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/sale-discount"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2754,7 +2779,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2768,7 +2793,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2782,7 +2807,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2796,7 +2821,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -2810,7 +2835,7 @@
    "owner": "/ai-image-generation/model-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2824,10 +2849,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/sports-gym",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -2841,10 +2866,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/sports-gym",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -2858,11 +2883,11 @@
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms",
-    "platforms"
+    "industries/food-drinks",
+    "industries/health-wellness",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2876,7 +2901,7 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2890,7 +2915,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2904,7 +2929,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -2918,9 +2943,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2934,7 +2959,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -2948,7 +2973,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/e-commerce"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -2962,15 +2987,17 @@
    "owner": "/ai-image-generation/packaging-mockup",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "industries/food-drinks",
+    "industries/home-living",
+    "industries/jewelry-accessories",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "placement_after": [
-    "food-drinks"
+    "industries/food-drinks",
+    "platforms/amazon-product-photos",
+    "platforms/shopify-product-photos"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -2983,7 +3010,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -2997,7 +3024,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3011,11 +3038,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -3028,7 +3055,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3042,7 +3069,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3056,7 +3083,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3070,7 +3097,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3084,7 +3111,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/viral"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3098,12 +3125,13 @@
    "owner": "/occasions/black-friday",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/electronics",
+    "occasions/sale-discount"
    ],
    "placement_after": [
-    "black-friday",
-    "electronics"
+    "industries/electronics",
+    "occasions/black-friday",
+    "occasions/sale-discount"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3116,7 +3144,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/apps"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3130,13 +3158,15 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/jewelry-accessories",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": [
-    "electronics"
+    "industries/electronics",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -3149,7 +3179,7 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3163,10 +3193,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -3180,9 +3210,9 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3196,7 +3226,7 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3210,7 +3240,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3224,7 +3254,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3238,7 +3268,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3252,8 +3282,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3267,7 +3297,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3281,8 +3311,8 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/sale-discount"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3296,7 +3326,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/e-commerce"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3310,7 +3340,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3324,8 +3354,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/beauty-skincare",
+    "industries/ugc"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3339,10 +3369,10 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
@@ -3355,8 +3385,8 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/fashion-clothing",
+    "occasions/holidays"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3370,7 +3400,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/financial-services"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3384,7 +3414,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3398,11 +3428,11 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": [
-    "health-wellness",
-    "sports-gym"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
@@ -3415,7 +3445,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3429,8 +3459,8 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/fashion-clothing",
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3444,7 +3474,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3458,7 +3488,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3472,16 +3502,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3494,10 +3529,10 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3510,10 +3545,10 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3526,9 +3561,9 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -3542,8 +3577,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/fashion-clothing",
+    "industries/ugc"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3557,10 +3592,10 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3573,16 +3608,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3595,16 +3635,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "shoes"
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3617,10 +3662,10 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3633,10 +3678,10 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/e-commerce",
+    "industries/home-living",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3650,8 +3695,8 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/home-living",
+    "occasions/holidays"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3665,11 +3710,12 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/holidays"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare",
+    "occasions/holidays"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3682,7 +3728,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3696,7 +3742,7 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3710,7 +3756,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3724,7 +3770,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3738,7 +3784,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3752,7 +3798,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/e-commerce"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -3766,8 +3812,8 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/other",
+    "occasions/sale-discount"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3781,7 +3827,7 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3795,10 +3841,10 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3811,10 +3857,10 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "beauty-skincare"
+    "industries/beauty-skincare"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -3827,7 +3873,7 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3841,11 +3887,11 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/e-commerce"
    ],
    "placement_after": [
-    "e-commerce",
-    "electronics"
+    "industries/e-commerce",
+    "industries/electronics"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
@@ -3858,7 +3904,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3872,7 +3918,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3886,11 +3932,11 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/home-living",
+    "industries/jewelry-accessories",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -3904,10 +3950,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/jewelry-accessories",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -3921,7 +3967,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3935,7 +3981,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -3949,7 +3995,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -3963,8 +4009,8 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/beauty-skincare",
+    "occasions/holidays"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3978,11 +4024,11 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -3996,7 +4042,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/e-commerce"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4010,7 +4056,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4024,7 +4070,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4038,11 +4084,11 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/explainer"
    ],
    "placement_after": [
-    "electronics",
-    "explainer"
+    "industries/electronics",
+    "industries/explainer"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4055,7 +4101,7 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4069,7 +4115,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4083,7 +4129,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4097,10 +4143,10 @@
    "owner": "/ai-video-generation/food-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms",
-    "platforms"
+    "industries/food-drinks",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4114,8 +4160,8 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/health-wellness",
+    "industries/viral"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4129,11 +4175,11 @@
    "owner": "/ai-image-generation",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": [
-    "food-drinks",
-    "home-living"
+    "industries/food-drinks",
+    "industries/home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4146,10 +4192,10 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4162,7 +4208,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4176,7 +4222,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/jewelry-accessories"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4190,16 +4236,21 @@
    "owner": "/ai-image-generation/story-ad-vertical",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/health-wellness",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "food-drinks"
+    "industries/food-drinks",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4212,7 +4263,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/apps"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4226,13 +4277,13 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/e-commerce",
+    "industries/health-wellness"
    ],
    "placement_after": [
-    "e-commerce",
-    "health-wellness",
-    "sports-gym"
+    "industries/e-commerce",
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
@@ -4245,7 +4296,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4259,7 +4310,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4273,7 +4324,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4287,7 +4338,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4301,13 +4352,13 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/education",
+    "industries/home-living"
    ],
    "placement_after": [
-    "education",
-    "food-drinks",
-    "home-living"
+    "industries/education",
+    "industries/food-drinks",
+    "industries/home-living"
    ],
    "tool_primary": "spokesperson-video",
    "change": "placement-fix",
@@ -4320,7 +4371,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4334,16 +4385,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "shoes"
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4356,9 +4412,9 @@
    "owner": "/ai-video-generation/before-after-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "before-after-video",
@@ -4372,7 +4428,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/ugc"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4386,7 +4442,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4400,7 +4456,7 @@
    "owner": "/occasions/sale-discount",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4414,7 +4470,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/pet"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4428,7 +4484,7 @@
    "owner": "/ai-image-generation/professional-headshot",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4442,7 +4498,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4456,7 +4512,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4470,7 +4526,7 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4484,15 +4540,17 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/electronics",
+    "industries/financial-services",
+    "occasions/sale-discount",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "placement_after": [
-    "electronics",
-    "sale-discount"
+    "industries/electronics",
+    "occasions/sale-discount",
+    "platforms/tiktok-ads",
+    "platforms/youtube-shorts-ads"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -4505,8 +4563,8 @@
    "owner": "/ai-video-generation/spark-ads-style-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "platforms"
+    "industries/other",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4520,7 +4578,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4534,7 +4592,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/beauty-skincare"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4548,10 +4606,10 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "jewelry-accessories"
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4564,12 +4622,12 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/e-commerce",
+    "industries/fashion-clothing"
    ],
    "placement_after": [
-    "e-commerce",
-    "jewelry-accessories"
+    "industries/e-commerce",
+    "industries/jewelry-accessories"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4582,16 +4640,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "fashion-clothing"
+    "industries/fashion-clothing",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4604,7 +4667,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4618,7 +4681,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4632,7 +4695,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4646,7 +4709,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4660,7 +4723,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4674,7 +4737,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/shoes"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4688,7 +4751,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -4702,7 +4765,7 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/electronics"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -4716,7 +4779,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/fashion-clothing"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -4730,7 +4793,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/education"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4744,10 +4807,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": [
-    "home-living"
+    "industries/home-living"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -4760,7 +4823,7 @@
    "owner": "/ai-image-generation/lifestyle-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/food-drinks"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4774,9 +4837,9 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/home-living",
+    "platforms/facebook-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": "product-video",
@@ -4790,16 +4853,21 @@
    "owner": "/ai-image-generation/sale-campaign-key-visual",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries",
-    "occasions",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "placement_after": [
-    "shoes"
+    "industries/shoes",
+    "occasions/black-friday",
+    "occasions/holidays",
+    "occasions/sale-discount",
+    "platforms/facebook-ads",
+    "platforms/instagram-ads"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -4812,7 +4880,7 @@
    "owner": "/ai-image-generation/social-ad-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/home-living"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4826,7 +4894,7 @@
    "owner": "/ai-image-generation/change-background",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4840,9 +4908,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4856,9 +4924,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4872,11 +4940,11 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "industries"
+    "industries/fashion-clothing",
+    "industries/food-drinks"
    ],
    "placement_after": [
-    "health-wellness"
+    "industries/health-wellness"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
@@ -4889,9 +4957,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4905,11 +4973,11 @@
    "owner": "/ai-video-generation/beauty-routine",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "occasions",
-    "occasions",
-    "platforms",
-    "platforms"
+    "industries/beauty-skincare",
+    "occasions/black-friday",
+    "occasions/sale-discount",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4923,9 +4991,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4939,8 +5007,8 @@
    "owner": "/occasions/holidays",
    "hasVideo": false,
    "placement_now": [
-    "industries",
-    "occasions"
+    "industries/fashion-clothing",
+    "occasions/holidays"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4954,7 +5022,7 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4968,7 +5036,7 @@
    "owner": "/ai-video-generation/video-ads",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": "video-ads",
@@ -4982,7 +5050,7 @@
    "owner": "/ai-image-generation/white-background-photos",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -4996,7 +5064,7 @@
    "owner": "/ai-video-generation",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/kids-toy"
    ],
    "placement_after": null,
    "tool_primary": "image-to-video",
@@ -5010,9 +5078,9 @@
    "owner": "/ai-video-generation/fashion-try-on-reel",
    "hasVideo": true,
    "placement_now": [
-    "industries",
-    "platforms",
-    "platforms"
+    "industries/fashion-clothing",
+    "platforms/instagram-ads",
+    "platforms/tiktok-ads"
    ],
    "placement_after": null,
    "tool_primary": null,
@@ -5026,7 +5094,7 @@
    "owner": "/ai-video-generation/spokesperson-video",
    "hasVideo": true,
    "placement_now": [
-    "industries"
+    "industries/sports-gym"
    ],
    "placement_after": null,
    "tool_primary": "spokesperson-video",
@@ -5040,11 +5108,11 @@
    "owner": "/",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/health-wellness"
    ],
    "placement_after": [
-    "health-wellness",
-    "sports-gym"
+    "industries/health-wellness",
+    "industries/sports-gym"
    ],
    "tool_primary": null,
    "change": "placement-fix",
@@ -5057,10 +5125,10 @@
    "owner": "/ai-video-generation/product-video",
    "hasVideo": false,
    "placement_now": [
-    "industries"
+    "industries/other"
    ],
    "placement_after": [
-    "food-drinks"
+    "industries/food-drinks"
    ],
    "tool_primary": "product-video",
    "change": "placement-fix",
