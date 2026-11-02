@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Media integrity audit for the AIVideosUGC /templates example gallery.
 //
-// Walks every public media detail card via the gallery pagination API, fetches
-// each detail page, collects every rendered/reference media URL, and validates
-// each unique asset with a Range request: HTTP status, container magic bytes
-// (JPEG/PNG/GIF/WebP/MP4/WebM) and a minimum total size. Catches the failure
-// modes HEAD checks miss: zero-byte files, truncated containers and origin
-// files whose served size drifts between requests.
+// Walks every public media detail card via the /templates SSR gallery
+// pagination links (?page=N), fetches each detail page, collects every
+// rendered/reference media URL, and validates each unique asset with a Range
+// request: HTTP status, container magic bytes (JPEG/PNG/GIF/WebP/MP4/WebM) and
+// a minimum total size. Catches the failure modes HEAD checks miss: zero-byte
+// files, truncated containers and origin files whose served size drifts between
+// requests. The same walk also asserts the SSR pager chain — every page must
+// link a strictly further page until the last one.
 //
 // Usage:
 //   node scripts/audit-aivideosugc-media-integrity.mjs [--base-url https://www.aivideosugc.com] [--apply]
@@ -16,7 +18,7 @@
 const args = process.argv.slice(2);
 const baseUrlArg = args.includes("--base-url") ? args[args.indexOf("--base-url") + 1] : process.env.AUDIT_BASE_URL || "http://127.0.0.1:3000";
 const base = String(baseUrlArg).replace(/\/$/, "");
-const GALLERY_PATH = "/api/aidreamcapes/gallery-cards";
+const GALLERY_FIRST_PAGE = "/templates";
 const PAGE_BATCH = 6;
 const ASSET_BATCH = 6;
 const MIN_BYTES = 3000;
@@ -37,16 +39,29 @@ function classify(contentType, bytes) {
 }
 
 async function fetchGalleryEntries() {
-  const entries = [];
-  let offset = 0;
-  for (;;) {
-    const response = await fetch(`${base}${GALLERY_PATH}?offset=${offset}&limit=50`);
-    if (!response.ok) throw new Error(`gallery API ${response.status} at offset ${offset}`);
-    const body = await response.json();
-    entries.push(...body.items);
-    if (body.nextOffset == null || !body.items.length) return { entries, total: body.total };
-    offset = body.nextOffset;
+  // The JS gallery pagination API was retired with the client loader; the
+  // gallery is a chain of independent SSR pages now. The audit therefore
+  // walks the real markup: every page's cards, following the pager's
+  // rel="next" anchor, and asserting the chain advances past each starting
+  // page until it terminates.
+  const hrefs = [];
+  let next = GALLERY_FIRST_PAGE;
+  let lowestLinkedPage = 2;
+  for (let guard = 0; guard < 200; guard++) {
+    const response = await fetch(`${base}${next}`);
+    if (!response.ok) throw new Error(`gallery page ${next} status ${response.status}`);
+    const html = await response.text();
+    hrefs.push(...[...html.matchAll(/<article[^>]*data-media-slug="[^"]*"[\s\S]*?<a class="ti" href="([^"]+)"/g)].map((match) => match[1]));
+    const nextAnchor = [...html.matchAll(/<a\b([^>]*)>/g)].find(([, attrs]) => /\brel="next"/.test(attrs ?? ""));
+    if (!nextAnchor) return { entries: hrefs.map((href) => ({ href })), total: hrefs.length };
+    const href = /\bhref="([^"]+)"/.exec(nextAnchor[1])?.[1];
+    if (!href) throw new Error(`pager on ${next} has a rel="next" anchor without href`);
+    const linkedPage = Number(/(?:^|[?&])page=(\d+)/.exec(href)?.[1]);
+    if (!Number.isFinite(linkedPage) || linkedPage < lowestLinkedPage) throw new Error(`pager on ${next} does not advance (${href})`);
+    lowestLinkedPage = linkedPage + 1;
+    next = href;
   }
+  throw new Error("gallery pager chain did not terminate within 200 pages");
 }
 
 async function fetchDetailMedia(href) {
@@ -102,7 +117,7 @@ async function runBatched(list, size, worker) {
 }
 
 const { entries, total } = await fetchGalleryEntries();
-console.log(`gallery: ${entries.length}/${total} entries from ${base}`);
+console.log(`gallery: ${entries.length}/${total} detail cards across the SSR pagination chain from ${base}`);
 
 const pageResults = await runBatched(entries.map((entry) => entry.href), PAGE_BATCH, fetchDetailMedia);
 const failedPages = pageResults.filter((result) => !result.media);

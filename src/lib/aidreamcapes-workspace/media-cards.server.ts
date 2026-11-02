@@ -346,8 +346,8 @@ export function galleryClusterKey(slug: string): string {
  * Spread same-cluster cards at least `minGap` positions apart while keeping
  * the newest-first macro order. Items that would sit too close to a previous
  * cluster member are reinserted after the earliest allowed position in a
- * second pass. Pure and deterministic: the SSR gallery, the pagination API
- * and deep-linked ?page URLs always agree on the order.
+ * second pass. Pure and deterministic: the SSR gallery, its ?page=N pages and
+ * the media-integrity audit always agree on the order.
  */
 export function spreadGalleryByCluster<T extends { slug: string }>(items: T[], minGap = 4): T[] {
   const result: T[] = [];

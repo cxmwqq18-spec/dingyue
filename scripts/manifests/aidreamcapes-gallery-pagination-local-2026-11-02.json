@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "contract": "aidreamcapes-gallery-pagination-2026-11-02-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "generatedAt": "2026-11-02T04:36:44.206Z",
+  "page": {
+    "slug": "/templates",
+    "baseHash": "cbf4dfa05903d2e601582bd3228856912bc5642026962a3b3aa90a4ae728f045"
+  },
+  "jsonPath": "contentJson.sections.v2_main.settings.data.exampleDirectory.pageSize",
+  "operations": [
+    {
+      "field": "exampleDirectory.pageSize",
+      "before": 12,
+      "after": 12,
+      "beforeHash": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+      "afterHash": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    }
+  ],
+  "planHash": "2de7b5641669476ef578552a6d4219af44bd8e7d7c93e8961bd7d69acc54113b"
+}

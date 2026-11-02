@@ -8,6 +8,7 @@ import type { V2Data } from "./types";
 import type { Directory, Template } from "./template-directory";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
+import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import type { ExampleDirectoryConfig, GalleryItem } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
@@ -70,26 +71,25 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
     let resolved: V2Data;
     if (data.exampleDirectory) {
       // The /templates example gallery: every public detail card, newest
-      // first, SSR-cumulative pagination (?page=N shows the first N pages).
-      // The browser fetches no data; "load more" is a plain link.
+      // first, paginated into independent SSR pages (?page=N shows page N).
+      // The browser fetches no data; the pager at the end of the grid links
+      // neighbouring pages, and deep-linked pages stay directly addressable.
       const directory = data.exampleDirectory as ExampleDirectoryConfig;
-      const pageSize = Math.max(1, Math.min(50, Math.floor(Number(directory.pageSize)) || 20));
-      // Scroll increments stay small so each continuation request is cheap;
-      // the first page size is what search engines see in the SSR HTML.
-      const increment = Math.max(1, Math.min(50, Math.floor(Number(directory.increment)) || 8));
+      const pageSize = Math.max(1, Math.min(50, Math.floor(Number(directory.pageSize)) || 12));
       const kind = props.query?.kind === "video" || props.query?.kind === "photo" ? props.query.kind : undefined;
       const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => !kind || entry.kind === kind);
       const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
       const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
-      const items: GalleryItem[] = all.slice(0, page * pageSize).map(entry => ({
+      const start = (page - 1) * pageSize;
+      const items: GalleryItem[] = all.slice(start, start + pageSize).map(entry => ({
         kind: entry.kind,
         slug: entry.slug,
         label: entry.label,
         href: entry.href,
         image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
-        ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: entry.video.poster?.src ?? entry.image.src, ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
+        ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: aidreamcapesV2ResponsivePosterSrc(entry.video.poster?.src ?? entry.image.src), ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
       }));
-      resolved = { ...data, exampleGallery: { items, total: all.length, page, pageSize, increment, totalPages, ...(kind ? { kind } : {}) } };
+      resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}) } };
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
       const kind = typeof data.kind === "string" ? data.kind : "";

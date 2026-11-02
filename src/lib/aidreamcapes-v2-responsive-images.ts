@@ -56,3 +56,21 @@ export function aidreamcapesV2ResponsiveImageProps(src: string, sizes: string): 
   const srcSet = aidreamcapesV2ResponsiveSrcSet(src);
   return srcSet ? { srcSet, sizes } : {};
 }
+
+/** A `<video>` poster takes one URL, so the variant is chosen up front instead
+ * of left to the browser's `srcset` negotiation. The grid card shows a video
+ * frame at up to 520 CSS px (`AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES`), so the
+ * 640px candidate is the width the card actually renders; when no variant set
+ * exists the stored poster stays untouched, exactly like every unpublished
+ * variant pipeline so far. */
+const PREFERRED_POSTER_WIDTH = 640;
+
+export function aidreamcapesV2ResponsivePosterSrc(src: string): string {
+  const entry = imageManifest[manifestKey(src)];
+  if (!entry?.variants?.length) return src;
+  let best = entry.variants[0];
+  for (const variant of entry.variants) {
+    if (Math.abs(variant.width - PREFERRED_POSTER_WIDTH) < Math.abs(best.width - PREFERRED_POSTER_WIDTH)) best = variant;
+  }
+  return best.url;
+}
