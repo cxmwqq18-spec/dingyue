@@ -74,6 +74,13 @@ export function aidreamcapesV2ResponsiveImagePropsFor(
   };
 }
 
+/** Back-compat form of {@link aidreamcapesV2ResponsiveImagePropsFor} without the
+ * storefront asset resolver: candidate URLs stay exactly as the manifest lists
+ * them. Existing call sites already render these paths verbatim. */
+export function aidreamcapesV2ResponsiveImageProps(src: string, sizes: string): { srcSet?: string; sizes?: string } {
+  return aidreamcapesV2ResponsiveImagePropsFor(src, sizes, (url) => url);
+}
+
 /** A `<video>` poster takes one URL, so the variant is chosen up front instead
  * of left to the browser's `srcset` negotiation. The grid card shows a video
  * frame at up to 520 CSS px (`AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES`), so the
