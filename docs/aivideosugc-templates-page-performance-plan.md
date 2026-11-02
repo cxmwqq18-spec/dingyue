@@ -100,3 +100,10 @@ PageSpeed 报告的问题**基本属实**，且根因集中、可修：
 - **字体并行发现**（`940f920ca`，经站点所有者批准的共享层修改）：`globals.css` 头三个 Google Fonts `@import`（渲染阻塞 CSS 解析后才能发现，串行拖慢移动端 FCP/LCP 1.5~2.5s）移至共享根布局 head 的 `preconnect ×2` + `stylesheet ×3`；family/weight 列表逐字不变，渲染输出不变，全站点同享。生产验证：head 中 2 preconnect + 3 font link、全部阻塞 CSS 中 `@import` 计数为 0。
 - 生产回归：`?page=15` 渲染 `1 2 3 … 14 15 16 … 26 27 28`、rel=next/prev 在位；poster preload 2 个不变。
 - **移动端剩余杠杆**（按预计收益排序，后续批次）：① 共享应用 CSS 508KB 原始/78KB gzip（render-blocking，含大量非 Aidreamcapes 主题包样式，需按站点拆分——共享层，需批准）；② head 16 个水合 script 的体积与「未用 JS」项；③ SSR TTFB ~0.6-0.75s。
+
+### 2026-11-02 第三批（LCP 带宽饥饿修复 + 跳页表单）— 生产已上线（release efa42aaba3c190b76196e40576973633e51093c1）
+
+- **PSI 实测**（用户复测，第二批后）：移动 75 分（72→75），FCP 2.1s、LCP 6.2s、TBT 40ms、CLS 0、SEO/无障碍/最佳做法 98-100。LCP 与 FCP 间 ~4.1s 差距定位为带宽饥饿：12 张 poster 属性图（~700KB）无原生懒加载 + 预览片段 300KB/个在视口下方 1200px 即被 prefetch（初始即 1.2~2.4MB），移动限速管道下 LCP 图被挤压。
+- **修复**：① 主题 CSS 给 `.adc2 .tc` 加 `content-visibility:auto; contain-intrinsic-size:auto 420px`——Chrome 对屏外卡推迟渲染与 poster 资源加载（不支持该属性的浏览器回退为现状，无破坏）；② `video-preview-card` 的可视激活与片段 prefetch 统一经 `runAfterWindowLoad` 门控（load 事件或 2.5s 兜底）——LCP 窗口内网络管道让给首屏 poster；③ 分页新增**跳页表单**：纯 HTML GET form（`/templates?page=N` + kind 隐藏字段 + min/max），无 JS 可用，aria-label 完整。
+- 生产验证：跳页表单渲染（page=3、max=28）、分页窗 `Previous 1 2 3 4 … 26 27 28 Next Go`、rel=next 在位、poster preload 2 个不变、内联主题 CSS 含 content-visibility。
+- 待办：PSI 第三次复测（预期 LCP 3s 上下）；CLS 复查（contain-intrinsic-size 估高 420px 与实际卡高的差在首屏外，CLS 应保持 0）。
