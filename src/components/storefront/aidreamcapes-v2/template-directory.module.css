@@ -7,7 +7,11 @@
 .filters select:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
 .cardImage { display: block; aspect-ratio: 1 / 1; object-fit: cover; width: 100%; height: auto; }
 .mediaSection { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
-.galleryPages { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 40px; }
+.galleryPages { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin-top: 40px; }
 .galleryPages span { color: var(--ink-3); font-size: 15px; }
+.pageNum { display: inline-flex; min-width: 38px; height: 38px; padding: 0 8px; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); font-size: 15px; text-decoration: none; }
+.pageNum:hover { border-color: var(--pink); color: var(--ink); }
+.pageNum[aria-current="page"] { background: #fff; border-color: #fff; color: #0a0a0a; font-weight: 600; }
+.pageGap { min-width: 20px; text-align: center; }
 @media (max-width: 900px) { .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .filters { grid-template-columns: minmax(0, 1fr); } }

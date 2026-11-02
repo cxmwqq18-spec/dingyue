@@ -18,6 +18,23 @@ export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: n
  * cards and the pager links the neighbouring pages as plain anchors, so every
  * page — including deep-linked URLs — is directly addressable and crawlable
  * without any browser data request. */
+/** Discrete pager window: the three first pages, the three last pages and
+ * the pages around the current one, with gap markers where the groups do not
+ * touch. Everything renders as plain anchors (or a marker span), so deep
+ * pagination stays crawlable without JavaScript. */
+function paginationWindow(current: number, total: number): Array<number | "gap"> {
+  const wanted = new Set<number>([1, 2, 3, total - 2, total - 1, total, current - 1, current, current + 1]);
+  const pages = [...wanted].filter(page => page >= 1 && page <= total).sort((a, b) => a - b);
+  const entries: Array<number | "gap"> = [];
+  let previous = 0;
+  for (const page of pages) {
+    if (previous && page - previous > 1) entries.push("gap");
+    entries.push(page);
+    previous = page;
+  }
+  return entries;
+}
+
 export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) {
   const directory = data.exampleDirectory as ExampleDirectoryConfig;
   const gallery = data.exampleGallery as ExampleGalleryState | undefined;
@@ -46,7 +63,11 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
       </div>
       {gallery.totalPages > 1 ? <nav aria-label="Browse more examples by page" className={styles.galleryPages}>
         {gallery.page > 1 ? <a className="btn btn-ghost" href={galleryHref(gallery.page - 1)} rel="prev">Previous</a> : null}
-        <span aria-current="page">Page {gallery.page} of {gallery.totalPages}</span>
+        {paginationWindow(gallery.page, gallery.totalPages).map((entry, index) => entry === "gap"
+          ? <span key={`gap-${index}`} className={styles.pageGap} aria-hidden="true">…</span>
+          : entry === gallery.page
+            ? <span key={`page-${entry}`} className={styles.pageNum} aria-current="page">{entry}</span>
+            : <a key={`page-${entry}`} className={styles.pageNum} href={galleryHref(entry)}>{entry}</a>)}
         {gallery.page < gallery.totalPages ? <a className="btn btn-primary" href={galleryHref(gallery.page + 1)} rel="next">Next</a> : null}
       </nav> : null}
     </div></section>
