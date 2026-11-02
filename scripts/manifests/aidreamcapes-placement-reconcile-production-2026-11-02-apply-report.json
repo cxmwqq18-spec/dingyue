@@ -1,0 +1,339 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "contract": "aidreamcapes-placement-reconcile-2026-11-02-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "planHash": "7077b8f9bc03bd67db92fac5a8f487172d335468d2248f0b920797b1df4f6aaa",
+  "revisionBefore": "3550",
+  "revisionAfter": "3562",
+  "revisionDelta": "12",
+  "pagesApplied": 12,
+  "mutationsApplied": 36,
+  "referenceCardsApplied": 0,
+  "invariants": {
+    "invalid_placement_values": 0
+  },
+  "applied": [
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[10]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[13]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[15]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[18]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[30]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[31]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[32]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[33]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[8]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[5]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Folding Bike Commute",
+          "publicSlug": "folding-bike-commute",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Silicone Case Compare Ad",
+          "publicSlug": "silicone-case-compare-ad",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Lunchbox Leak Tutorial",
+          "publicSlug": "lunchbox-leak-tutorial",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Supplement Creator Demo",
+          "publicSlug": "supplement-creator-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Headphone Product Demo",
+          "publicSlug": "headphone-product-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Fragrance Reveal Reaction",
+          "publicSlug": "fragrance-reveal-reaction",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Phone Case Compare",
+          "publicSlug": "phone-case-compare",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[1]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/before-after-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Notes App Chaos To Calm",
+          "publicSlug": "notes-app-chaos-to-calm",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[4]"
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/image-to-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Mint Shower Speaker Bathroom Concert",
+          "publicSlug": "mint-shower-speaker-bathroom-concert",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Silver Magnetic Ring Desk Demo",
+          "publicSlug": "silver-magnetic-ring-desk-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Silver Magnetic Ring Snap-On Demo",
+          "publicSlug": "silver-magnetic-ring-snap-on-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Black Milk Frother Morning Demo",
+          "publicSlug": "black-milk-frother-morning-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Black Espresso Machine Counter Demo",
+          "publicSlug": "black-espresso-machine-counter-demo",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Four-Side Box Grater Demo",
+          "publicSlug": "four-side-box-grater-demo",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Studio: Speaking to Camera",
+          "publicSlug": "studio-speaking-to-camera",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Study Room: Desk Study Chat",
+          "publicSlug": "study-room-desk-study-chat",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/ai-video-generation/video-ads",
+      "mutations": [
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "360 Showcase: Linen Shirt",
+          "publicSlug": "360-showcase-linen-shirt",
+          "detailAliasOf": null
+        },
+        {
+          "mode": "write",
+          "picker": true,
+          "label": "Street Interview: Fitness Gear",
+          "publicSlug": "street-interview-fitness-gear",
+          "detailAliasOf": null
+        }
+      ],
+      "referenceCards": []
+    },
+    {
+      "page": "/templates",
+      "mutations": [
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[11]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[29]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[30]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[34]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[35]"
+        },
+        {
+          "mode": "write",
+          "jsonPath": "sections.v2_main.settings.data.workspaceCases[36]"
+        }
+      ],
+      "referenceCards": []
+    }
+  ],
+  "readback": [
+    {
+      "page": "/ai-image-generation/colorway-variations",
+      "pageHash": "999208bd121a0995d05446710d26e45d4bd7e5b3b0606afaaf35b5b882b33d8c"
+    },
+    {
+      "page": "/ai-image-generation/jewelry-positioning",
+      "pageHash": "bb10f586c0bd9993acc137d684f87c231b74f556aa4f7992ddde526a05848aa3"
+    },
+    {
+      "page": "/ai-image-generation/sale-campaign-key-visual",
+      "pageHash": "9b86ec3786dc7d43afe711faeffdd62920300fb151afca7158f50840615ec6c7"
+    },
+    {
+      "page": "/ai-video-generation",
+      "pageHash": "c203deb1b8f8a8b560caca899d8907cb1d67dba31de54f1f29852e63c66b0e2f"
+    },
+    {
+      "page": "/ai-video-generation/beauty-routine",
+      "pageHash": "de8896f50c02517acd246d1449f420aa801d9e82c8223ed3cb11b077d9dd8457"
+    },
+    {
+      "page": "/ai-video-generation/before-after-video",
+      "pageHash": "6824dcc0d073196695aba56d02df8756841c11c7bcc21aaaee5e3080f17de556"
+    },
+    {
+      "page": "/ai-video-generation/home-organization",
+      "pageHash": "e78f70cab712997dc68509104cc1cbbf7bfab4c781212c5d940c29165d475076"
+    },
+    {
+      "page": "/ai-video-generation/image-to-video",
+      "pageHash": "ba9ed01ef78f01141915162b2314b369d8a6d18efa5d4e0431c3c7750c8612bb"
+    },
+    {
+      "page": "/ai-video-generation/product-video",
+      "pageHash": "f9c5b3c36d5812a2c14cc05c352c090b8e16000e56c719b02bc16d096d4961df"
+    },
+    {
+      "page": "/ai-video-generation/spokesperson-video",
+      "pageHash": "e40733684ff481fa0a712a7027e031d5c47f653be4bd7454af24baede4cd680b"
+    },
+    {
+      "page": "/ai-video-generation/video-ads",
+      "pageHash": "cbc959d2ecf840db58c7de04d37666f8ab12b96f56aa1a15300d9337fea18485"
+    },
+    {
+      "page": "/templates",
+      "pageHash": "5da1f49962007e8bec3c453a3e70ced02d0c030970505ee08a214764e4e5e651"
+    }
+  ]
+}

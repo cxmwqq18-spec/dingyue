@@ -38,21 +38,18 @@ const require = createRequire(
 const { PrismaClient } = require("@prisma/client");
 
 const SITE_ID = "site_aidreamcapes";
-const CONTRACT = "aidreamcapes-categorization-fixes-2026-11-02-v1";
 const target = process.argv.find((arg) => arg.startsWith("--target="))?.split("=")[1]
   || process.env.DATABASE_TARGET
   || "local";
 const confirmation = process.argv.find((arg) => arg.startsWith("--confirm="))?.split("=")[1];
 const baseHash = process.argv.find((arg) => arg.startsWith("--base-hash="))?.split("=")[1];
 const apply = process.argv.includes("--apply");
-const expectedConfirmation = target === "production"
-  ? "site_aidreamcapes-categorization-fixes-production"
-  : "site_aidreamcapes-categorization-fixes";
 const manifestPath = path.resolve(
   process.cwd(),
   process.argv.find((arg) => arg.startsWith("--manifest="))?.split("=")[1]
   || `scripts/manifests/aidreamcapes-categorization-fixes-${target}-2026-11-02.json`
 );
+const manifestStem = path.basename(manifestPath, ".json");
 
 function stable(value) {
   if (value === undefined) return '"<undefined>"';
@@ -143,7 +140,10 @@ function cardHash(card) {
 
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 assert.equal(manifest.ok, true, "Manifest is not marked ok; plan first.");
-assert.equal(manifest.contract, CONTRACT, "Manifest contract mismatch.");
+const CONTRACT = String(manifest.contract || "");
+assert.ok(CONTRACT, "Manifest is missing its contract.");
+const expectedConfirmation = String(manifest.confirmation || "");
+assert.ok(expectedConfirmation, "Manifest is missing its confirmation string.");
 assert.equal(manifest.siteId, SITE_ID, "Manifest site mismatch.");
 assert.equal(manifest.target, target, "Manifest target mismatch.");
 if (apply) {
@@ -382,12 +382,12 @@ try {
     const reportPath = path.resolve(
       process.cwd(),
       process.argv.find((arg) => arg.startsWith("--report="))?.split("=")[1]
-      || `scripts/manifests/aidreamcapes-categorization-fixes-${target}-2026-11-02-apply-report.json`
+      || `scripts/manifests/${manifestStem}-apply-report.json`
     );
     const rollbackPath = path.resolve(
       process.cwd(),
       process.argv.find((arg) => arg.startsWith("--rollback="))?.split("=")[1]
-      || `scripts/manifests/aidreamcapes-categorization-fixes-${target}-2026-11-02-rollback.json`
+      || `scripts/manifests/${manifestStem}-rollback.json`
     );
 
     const protectedMyDreamShootsHash = async (tx) => {

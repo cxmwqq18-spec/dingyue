@@ -140,7 +140,8 @@ P0 本文档确认 → P1 manifest（placement/label before-after + 方案B 22 �
 - **方案 B 实现口径**：22 个模板示范视频（试穿 11 + 护肤 7 + 食品 4）的引用卡挂在 `/ai-video-generation/image-to-video` 的 picker 末尾，href 指向原详情页；详情页属主不变、站点地图不受影响。
 - **P3 门禁实测**：sitemap URL 集逐条 diff 零变化（516 loc / 251 视频详情 / 342 video:video）；8 个改 label 页全部 200 且 H1 为诚实标题；单属主校验 328 slug 全部恰 1 属主（0 违例）；唯一成片仍 171；facet 抽查（jewelry 错标清零、sports-gym/health/food 新成员、fashion 抹茶碗迁出）全部符合；公网经 Cloudflare 复测一致。
 - **P4**：CDN purge 31 文件 + 8 前缀完成，公网复测通过。
-- **后续待办**：本地库按字段同步本次 33 页（`npm run db:sync:aidreamcapes` 流程）；生成队列（holidays 礼盒 > amazon/shopify 演示 > food-drinks > apps）另行开工。
+- **6.2 rev5 收口（2026-11-02 下午，用户线上抽查发现残留错标后执行）**：用户在 shoes/beauty/e-commerce/food 四个 facet 页看到无关素材。根因：rev4 只复核了 76 条 slug，而墙页/案例条上**不在 76 名单内的副本**（colorway-variations、sale-campaign、hub、/templates 的别名卡与桶标签副本）从未逐条复核，旧打包标签（fashion/shoes/e-commerce/amazon/shopify）经 placement 并集灌进 facet 网格；另有 39 张「别名详情页」卡（publicSlug+detailAliasOf 双标，同一视频的第二 URL）带未复核标签。rev5 规则：**全站每张带标签副本 = 该 slug 评审终值；别名 slug 镜像其本尊**；另按提示词实证微调 18 条 canonical（如 studio-speaking-to-camera 实为咖啡豆→food-drinks；手机磁吸环→摘 jewelry；e-commerce 仅保留真实电商工作流片）。执行：12 页 / 36 卡，revision 3550→3562；门禁：四 facet stray 清零、真片保留、sitemap URL 集逐条一致（516/251/342）、328 slug 单属主 0 违例、171 唯一成片不变；CDN purge 后公网复测一致。脚本：`scripts/plan-aidreamcapes-placement-reconcile.mjs` + `scripts/lib/aidreamcapes-categorization-fix-targets-rev5.mjs`（apply 脚本已泛化为 manifest 驱动）。
+- **后续待办**：本地库按字段同步本次变更（`npm run db:sync:aidreamcapes` 流程）；生成队列（holidays 礼盒 > amazon/shopify 演示 > food-drinks > apps）另行开工。
 
 ## 7. 待确认（已全部落定并执行）
 
