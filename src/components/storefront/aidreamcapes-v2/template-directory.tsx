@@ -11,7 +11,8 @@ export type Directory = { paths: string[]; links: { label: string; href: string 
 export type Template = { id: string; kind: "photo" | "video"; path: string; name: string; description: string; card: V2VisualPickerCard; industries: string[]; platforms: string[]; occasions: string[] };
 export type ExampleDirectoryConfig = { links: { label: string; href: string }[]; pageSize?: number };
 export type GalleryItem = { kind: "photo" | "video"; slug: string; label: string; href: string; image: { src: string; alt?: string; w?: number; h?: number }; video?: { src: string; poster: string; width?: number; height?: number; duration?: number; name?: string } };
-export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; totalPages: number; kind?: "photo" | "video" };
+export type ExampleGalleryState = { items: GalleryItem[]; total: number; page: number; totalPages: number; kind?: "photo" | "video"; basePath?: string };
+export type MediaPaginationState = { page: number; totalPages: number; total: number; basePath: string };
 
 /** The /templates example gallery: every public example, newest first.
  * Pages are independent SSR documents: the grid shows the requested number of
@@ -35,6 +36,45 @@ function paginationWindow(current: number, total: number): Array<number | "gap">
   return entries;
 }
 
+/** Shared discrete pager for SSR media grids (example gallery, directory
+ * media, hub pickers). Every page is a plain anchor, so deep pagination stays
+ * addressable and crawlable without JavaScript; page 1 keeps the bare
+ * canonical URL, and preserved filters (e.g. the kind filter) ride along on
+ * every link and as hidden fields in the no-JS jump form. */
+export function DiscretePager({ page, totalPages, basePath, params = {}, r, ariaLabel }: {
+  page: number;
+  totalPages: number;
+  /** Canonical row path ("", "/templates", "/industries/beauty-skincare", …). */
+  basePath: string;
+  params?: Record<string, string | undefined>;
+  r: V2Resolvers;
+  ariaLabel: string;
+}) {
+  if (totalPages <= 1) return null;
+  const href = (target: number) => {
+    const search = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) if (value) search.set(key, value);
+    if (target > 1) search.set("page", String(target));
+    const query = search.toString();
+    return r.href(query ? `${basePath}?${query}` : basePath);
+  };
+  const jumpParams = Object.entries(params).filter((entry): entry is [string, string] => Boolean(entry[1]));
+  return <nav aria-label={ariaLabel} className={styles.galleryPages}>
+    {page > 1 ? <a className="btn btn-ghost" href={href(page - 1)} rel="prev">Previous</a> : null}
+    {paginationWindow(page, totalPages).map((entry, index) => entry === "gap"
+      ? <span key={`gap-${index}`} className={styles.pageGap} aria-hidden="true">…</span>
+      : entry === page
+        ? <span key={`page-${entry}`} className={styles.pageNum} aria-current="page">{entry}</span>
+        : <a key={`page-${entry}`} className={styles.pageNum} href={href(entry)}>{entry}</a>)}
+    {page < totalPages ? <a className="btn btn-primary" href={href(page + 1)} rel="next">Next</a> : null}
+    <form className={styles.pageJump} method="get" action={r.href(basePath)}>
+      {jumpParams.map(([key, value]) => <input key={key} type="hidden" name={key} value={value} />)}
+      <input name="page" type="number" inputMode="numeric" min={1} max={totalPages} defaultValue={page} aria-label={`Go to page, 1 to ${totalPages}`} />
+      <button type="submit" className="btn btn-ghost">Go</button>
+    </form>
+  </nav>;
+}
+
 export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) {
   const directory = data.exampleDirectory as ExampleDirectoryConfig;
   const gallery = data.exampleGallery as ExampleGalleryState | undefined;
@@ -47,7 +87,6 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
   const secondVideo = gallery.items.filter(item => item.video)[1];
   if (firstVideo) preload(r.asset(firstVideo.video!.poster), { as: "image", fetchPriority: "high" });
   if (secondVideo) preload(r.asset(secondVideo.video!.poster), { as: "image" });
-  const galleryHref = (page: number) => r.href(`/templates?page=${page}${gallery.kind ? `&kind=${gallery.kind}` : ""}`);
   return <>
     <section className="sec"><div className={`wrap ${styles.directory}`}>
       <Crumbs items={data.breadcrumbs} r={r} />
@@ -61,22 +100,7 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
         <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
       </article>)}
       </div>
-      {gallery.totalPages > 1 ? <nav aria-label="Browse more examples by page" className={styles.galleryPages}>
-        {gallery.page > 1 ? <a className="btn btn-ghost" href={galleryHref(gallery.page - 1)} rel="prev">Previous</a> : null}
-        {paginationWindow(gallery.page, gallery.totalPages).map((entry, index) => entry === "gap"
-          ? <span key={`gap-${index}`} className={styles.pageGap} aria-hidden="true">…</span>
-          : entry === gallery.page
-            ? <span key={`page-${entry}`} className={styles.pageNum} aria-current="page">{entry}</span>
-            : <a key={`page-${entry}`} className={styles.pageNum} href={galleryHref(entry)}>{entry}</a>)}
-        {gallery.page < gallery.totalPages ? <a className="btn btn-primary" href={galleryHref(gallery.page + 1)} rel="next">Next</a> : null}
-        {/* A plain GET form: the browser navigates to /templates?page=N without
-          any script, and the kind filter rides along as a hidden field. */}
-        <form className={styles.pageJump} method="get" action={r.href("/templates")}>
-          {gallery.kind ? <input type="hidden" name="kind" value={gallery.kind} /> : null}
-          <input name="page" type="number" inputMode="numeric" min={1} max={gallery.totalPages} defaultValue={gallery.page} aria-label={`Go to page, 1 to ${gallery.totalPages}`} />
-          <button type="submit" className="btn btn-ghost">Go</button>
-        </form>
-      </nav> : null}
+      {gallery.totalPages > 1 ? <DiscretePager page={gallery.page} totalPages={gallery.totalPages} basePath={gallery.basePath ?? "/templates"} params={gallery.kind ? { kind: gallery.kind } : {}} r={r} ariaLabel="Browse more examples by page" /> : null}
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
   </>;
@@ -92,9 +116,12 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
   const labels = data.directoryLabels as Record<string, string>;
   const label = (path: string) => labels[path] ?? path;
   const mediaHeading = String(data.label ?? "").trim() || "category";
+  const mediaPager = data.directoryMediaPagination as MediaPaginationState | undefined;
   if (directory.hideTemplates) {
     // The directory is example-first: the template registry (paths) stays in
-    // the row data, but the page presents the placed media grid only.
+    // the row data, but the page presents the placed media grid only. Cards
+    // with a video preview play their 10-second loop in place, like the
+    // /templates gallery; the grid paginates as independent SSR documents.
     return <>
       <section className="sec"><div className={`wrap ${styles.directory}`}>
         <Crumbs items={data.breadcrumbs} r={r} />
@@ -107,9 +134,12 @@ export function TemplateDirectory({ data, r, query = {} }: { data: V2Data; r: V2
             {data.mediaLead ? <p>{String(data.mediaLead)}</p> : null}
           </div>
           <div className="tgrid">{media.map((item, index) => <article className="tc" data-media-slug={item.slug} key={`${item.kind}-${item.slug}`}>
-            <a className="ti" href={r.href(item.href)}><img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} /></a>
+            <a className="ti" href={r.href(item.href)}>{item.video ? (
+              <Adc2VideoPreview ariaLabel={item.label} media={{ ...item.video, name: item.label, poster: r.asset(item.video.poster) }} />
+            ) : <img className={styles.cardImage} loading={index < 4 ? "eager" : "lazy"} decoding="async" src={r.asset(item.image.src)} alt={item.image.alt || item.label} width={item.image.w ?? 640} height={item.image.h ?? 640} />}</a>
             <div className="tb"><span>{item.kind === "photo" ? "Photo example" : "Video example"}</span><h3><a href={r.href(item.href)}>{item.label}</a></h3></div>
           </article>)}</div>
+          {mediaPager ? <DiscretePager page={mediaPager.page} totalPages={mediaPager.totalPages} basePath={mediaPager.basePath} r={r} ariaLabel="Browse more examples by page" /> : null}
         </section> : null}
       </div></section>
       {data.faq.length ? <Faq items={data.faq} r={r} /> : null}

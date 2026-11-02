@@ -201,14 +201,7 @@ const nextConfig = {
         headers: publicApiHeaders
       },
       {
-        source: "/api/aidreamcapes/media-cards",
-        headers: [
-          ...publicApiHeaders,
-          { key: "Cache-Control", value: "public, max-age=60, s-maxage=300, stale-while-revalidate=1800" }
-        ]
-      },
-      {
-        source: "/api/:path((?!local-assets(?:/|$)|site-slugs/[^/]+/storefront-section(?:/|$)|aidreamcapes/media-cards(?:/|$)).*)",
+        source: "/api/:path((?!local-assets(?:/|$)|site-slugs/[^/]+/storefront-section(?:/|$)).*)",
         headers: noindexPrivateHeaders
       },
       {

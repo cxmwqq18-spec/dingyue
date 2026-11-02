@@ -10,6 +10,7 @@ import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placem
 import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import { MEDIA_PAGE_SIZE } from "./types";
 import type { ExampleDirectoryConfig, GalleryItem } from "./template-directory";
 const readTemplates = cache(async (paths: string[]) => {
   if (!paths.length) return [];
@@ -89,7 +90,7 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         image: { src: entry.image.src, ...(entry.image.alt ? { alt: entry.image.alt } : {}), w: entry.image.w, h: entry.image.h },
         ...(entry.video?.src ? { video: { src: entry.video.src, ...(entry.video.previewSrc ? { previewSrc: entry.video.previewSrc } : {}), poster: aidreamcapesV2ResponsivePosterSrc(entry.video.poster?.src ?? entry.image.src), ...(entry.video.width ? { width: entry.video.width } : {}), ...(entry.video.height ? { height: entry.video.height } : {}), ...(entry.duration ? { duration: entry.duration } : {}), name: entry.label } } : {})
       }));
-      resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}) } };
+      resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
       const kind = typeof data.kind === "string" ? data.kind : "";
@@ -114,8 +115,39 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const selectedFacets = Object.values(filterState?.filters ?? {}).filter(value => value.startsWith("/"));
       const intersections = await Promise.all(selectedFacets.filter(value => value !== props.pagePath).map(resolveDirectoryMedia));
       const filteredMedia = directoryMedia.filter(card => intersections.every(cards => cards.some(other => other.kind === card.kind && other.slug === card.slug)));
-      resolved = { ...data, directoryFilterState: filterState, directoryTemplates: orderedTemplates, directoryMedia: filteredMedia, directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title])) };
-    } else resolved = await resolveTemplateCardLinks(data);
+      // Video-bearing examples lead the grid (stable within each group), and
+      // the grid paginates into discrete SSR pages: ?page=N shows page N with
+      // MEDIA_PAGE_SIZE cards, and the pager links the neighbouring pages as
+      // plain anchors. The browser fetches no catalog data.
+      const orderedMedia = [...filteredMedia].sort((left, right) => ((left.video ? 0 : 1) - (right.video ? 0 : 1)));
+      const mediaTotal = orderedMedia.length;
+      const mediaTotalPages = Math.max(1, Math.ceil(mediaTotal / MEDIA_PAGE_SIZE));
+      const mediaPage = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), mediaTotalPages);
+      const mediaStart = (mediaPage - 1) * MEDIA_PAGE_SIZE;
+      resolved = {
+        ...data,
+        directoryFilterState: filterState,
+        directoryTemplates: orderedTemplates,
+        directoryMedia: orderedMedia.slice(mediaStart, mediaStart + MEDIA_PAGE_SIZE),
+        ...(mediaTotalPages > 1 && props.pagePath ? { directoryMediaPagination: { page: mediaPage, totalPages: mediaTotalPages, total: mediaTotal, basePath: props.pagePath } } : {}),
+        directoryLabels: Object.fromEntries(facets.map(page => [page.slug, page.label ?? page.title]))
+      };
+    } else {
+      resolved = await resolveTemplateCardLinks(data);
+      // Hub/tool picker grids hold the full media list in the row. When it
+      // exceeds one page, the grid paginates server-side (?page=N slices the
+      // stored list) instead of the former client-side loader, so the browser
+      // never fetches catalog data. The homepage picker keeps its curated
+      // first-page slice and never paginates.
+      const visual = resolved.visual as { picker?: { cards?: unknown[] } } | undefined;
+      const cards = visual?.picker?.cards;
+      if (props.pagePath && resolved.id !== "home" && Array.isArray(cards) && cards.length > MEDIA_PAGE_SIZE) {
+        const total = cards.length;
+        const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
+        const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
+        resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };
+      }
+    }
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };
   }
   return <ThemeRenderer {...props} page={{ ...props.page, sections } as ThemePageJson} />;

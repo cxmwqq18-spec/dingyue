@@ -21,6 +21,9 @@ export type DirectoryMediaCard = {
   kind: "photo" | "video";
   href: string;
   image: { src: string; alt?: string; w?: number; h?: number };
+  /** Display media for in-place preview playback, when the product has video. */
+  video?: { src: string; previewSrc?: string; poster: string; width?: number; height?: number };
+  duration?: number;
 };
 
 export type PlacementDirectory = {

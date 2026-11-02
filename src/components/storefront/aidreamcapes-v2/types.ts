@@ -119,8 +119,13 @@ export const V2_BLOCK_IDS = [
   "plan", "sizes", "input", "outputs", "after", "limitations", "tools"
 ] as const;
 
-/** Cards a picker grid renders server-side before the client loader appends the rest. */
+/** Cards a picker grid renders per server page; the grid paginates discretely
+ * (?page=N) instead of appending cards client-side. */
 export const MEDIA_PAGE_SIZE = 20;
+
+/** Server-computed pager state for a picker grid whose source row holds more
+ * than MEDIA_PAGE_SIZE cards. */
+export type V2PickerPagination = { page: number; totalPages: number; total: number; basePath: string };
 export type V2BlockId = (typeof V2_BLOCK_IDS)[number];
 export type V2CardBlockItem = { t: string; d: string; soon?: boolean; img?: V2Image; alt?: string; icon?: string };
 export type V2CardBlock = { h2: string; lead?: string; items: V2CardBlockItem[] };

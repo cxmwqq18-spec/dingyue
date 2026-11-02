@@ -6,6 +6,7 @@ import { AIVIDEOSUGC_SITE_ID } from "./types";
 import { mediaDetailPath } from "./media-detail";
 import type { MediaDetail } from "./media-detail.server";
 import { cardsFromContent, templateDefinitionFrom, toDetailCard } from "./media-cards.server";
+import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import {
   MEDIA_PLACEMENT_PATTERN,
   PLACEMENT_GROUP_LABEL,
@@ -264,7 +265,17 @@ export const resolveDirectoryMedia = cache(async (directorySlug: string): Promis
             ...(card.image.alt ? { alt: card.image.alt } : {}),
             ...(card.image.w ? { w: card.image.w } : {}),
             ...(card.image.h ? { h: card.image.h } : {})
-          }
+          },
+          ...(card.video?.src ? {
+            video: {
+              src: card.video.src,
+              ...(card.video.previewSrc ? { previewSrc: card.video.previewSrc } : {}),
+              poster: aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src),
+              ...(card.video.width ? { width: card.video.width } : {}),
+              ...(card.video.height ? { height: card.video.height } : {})
+            }
+          } : {}),
+          ...(Number.isFinite(Number(card.duration)) && card.duration !== "" && card.duration !== undefined ? { duration: Number(card.duration) } : {})
         }
       });
     }

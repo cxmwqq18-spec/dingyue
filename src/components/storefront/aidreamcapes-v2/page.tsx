@@ -12,7 +12,7 @@ import { TeamCards,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock } from "./types";
+import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -321,7 +321,7 @@ function VideoHubPage({ data, r }: Props) {
     </>],
     ["strip", <VisualStrip visual={visual} r={r} />],
     ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : <Section eyebrow="About" title="What is an AI video generator?"><Intro paras={list<string>(data.intro)} r={r} /></Section>],
-    ["picker", <VisualPicker eyebrow="Choose a tool" paginateWith={pickerSourcePage(data) ?? "/ai-video-generation"} pageId={data.id} sourcePage={pickerSourcePage(data)} relatedGroups={relatedGroups} visual={visual} r={r} />],
+    ["picker", <VisualPicker eyebrow="Choose a tool" paginateWith={pickerSourcePage(data) ?? "/ai-video-generation"} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} relatedGroups={relatedGroups} visual={visual} r={r} />],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Reasons to use an AI video generator" r={r} />],
     ["steps", <VisualSteps buttonLabel={maker?.cta ?? "Make my video"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
     ["features", data.blockOrder ? <MoreSections r={r} sections={data.more_sections as never} /> : null],
@@ -404,7 +404,7 @@ function ToolPage({ data, r }: Props) {
     ])}</>;
     return <>{orderedBlocks(data, r, [
       ["hero", heroBlock], definition, actorScript,
-      ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} />],
+      ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} visual={visual} r={r} />],
       ["strip", <VisualStrip visual={visual} r={r} />],
       ["examples", gallery?.images.length ? <Section eyebrow="Examples" title={visual.titles?.gallery?.h2 ?? `What ${data.label} looks like`}><Gallery images={gallery.images} r={r} />{pairs.length ? null : <MoreExamples r={r} />}</Section> : null],
       ["examples", pairs.length ? <Section eyebrow="Before and after" title={visual.titles?.beforeAfter?.h2 ?? "Your photo, then the result"}><PairGrid pairs={pairs} r={r} /><MoreExamples r={r} /></Section> : null],
@@ -479,7 +479,7 @@ function TemplatePage({ data, r }: Props) {
       </PageHero>
     </>],
     ["definition", data.blockOrder && data.definition ? <DefinitionBlock definition={data.definition as V2Definition} r={r} /> : null],
-    ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} />],
+    ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} visual={visual} r={r} />],
     ["strip", <VisualStrip includeOverview visual={visual} r={r} />],
     ["benefits", <BenefitsSection data={data} fallbackTitle="Why sellers start from this template" r={r} />],
     ["steps", <VisualSteps buttonLabel={maker.cta} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
@@ -550,7 +550,7 @@ function CollectionPage({ data, r }: Props) {
     ["benefits", <BenefitsSection data={data} fallbackTitle={`Why ${data.label} sellers use ${BRAND_NAME}`} r={r} />],
     ["steps", <VisualSteps buttonLabel={visualMaker?.cta ?? "Get started"} stepsH2={text(data.stepsH2)} stepsLead={text(data.stepsLead)} visual={visual} r={r} />],
     ["features", <MoreSections r={r} sections={data.more_sections as never} />],
-    ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} />],
+    ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} visual={visual} r={r} />],
     ["uses", <VisualUses visual={visual} r={r} />],
     ["sizes", <VisualSizes visual={visual} r={r} />],
     ["input", <VisualInput visual={visual} r={r} />],
@@ -633,7 +633,7 @@ function IndexPage({ data, r }: Props) {
     const faqBlock: PageBlock = ["faq", <Faq items={data.faq} title="Questions" r={r} />];
     if (data.id === "templates") return <>{orderedBlocks(data, r, [
       heroBlock,
-      ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} visual={visual} r={r} />],
+      ["picker", <VisualPicker paginateWith={pickerSourcePage(data)} pageId={data.id} sourcePage={pickerSourcePage(data)} pagination={data.pickerPagination as V2PickerPagination | undefined} visual={visual} r={r} />],
       ["templates", cards.length ? <Section eyebrow="Template gallery" lead={text(data.galleryLead) || visual.titles?.m3?.lead} title={text(data.galleryH2) || (visual.titles?.m3?.h2 ?? "Pick a product ad template for your next campaign")}>
         <TemplateGrid cards={cards} r={r} />
       </Section> : null],

@@ -8,8 +8,8 @@ import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-
 import { AIDREAMCAPES_V2_FRESH_MEDIA_SIZES, AIDREAMCAPES_V2_PICKER_CARD_SIZES } from "./image-sizes";
 import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { Adc2VideoPreview } from "./video-preview-card";
-import { MediaGridLoader } from "./hub-media-loader";
-import { MEDIA_PAGE_SIZE } from "./types";
+import { DiscretePager } from "./template-directory";
+import { MEDIA_PAGE_SIZE, type V2PickerPagination } from "./types";
 import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2AfterMock,
@@ -265,7 +265,7 @@ export function storefrontHrefPrefix(r: V2Resolvers): string {
   return root === "/" ? "" : root.replace(/\/+$/, "");
 }
 
-export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards, paginateWith, hideDuration = false }: {
+export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGroups = [], sectionId, maxCards, paginateWith, hideDuration = false, pagination }: {
   visual: V2Visual;
   r: V2Resolvers;
   pageId: string;
@@ -273,17 +273,21 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   eyebrow?: string;
   sectionId?: string;
   maxCards?: number;
-  /** LivePage slug of the owning page: when the picker holds more than MEDIA_PAGE_SIZE cards, the grid paginates client-side. */
+  /** LivePage slug of the owning page: when the picker holds more than MEDIA_PAGE_SIZE cards, the grid paginates. */
   paginateWith?: string;
+  /** Server-computed pager state; when present the grid shows this page's slice and a plain-anchor pager instead of a client loader. */
+  pagination?: V2PickerPagination;
   /** Hide the duration badge on preview cards (the homepage picker opts out). */
   hideDuration?: boolean;
   relatedGroups?: { title: string; links: { label: string; href: string }[] }[];
 }) {
   const picker = visual.picker;
   const paginated = Boolean(paginateWith) && picker.cards.length > MEDIA_PAGE_SIZE;
-  const cards = paginated
-    ? picker.cards.slice(0, MEDIA_PAGE_SIZE)
-    : maxCards === undefined ? picker.cards : picker.cards.slice(0, Math.max(0, maxCards));
+  const cards = pagination
+    ? picker.cards.slice((pagination.page - 1) * MEDIA_PAGE_SIZE, pagination.page * MEDIA_PAGE_SIZE)
+    : paginated
+      ? picker.cards.slice(0, MEDIA_PAGE_SIZE)
+      : maxCards === undefined ? picker.cards : picker.cards.slice(0, Math.max(0, maxCards));
   const sectionEyebrow = eyebrow ?? visual.titles?.m3?.eyebrow ?? "Choose a scene";
   const pickerId = `visual-picker-${pageId.replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
   if (!cards.length) return null;
@@ -310,8 +314,8 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
               <span>{card.label}</span>
             </a>
           ))}
-          {paginated && paginateWith ? <MediaGridLoader hrefPrefix={storefrontHrefPrefix(r)} page={paginateWith} total={picker.cards.length} /> : null}
         </div>
+        {paginated && paginateWith && pagination ? <DiscretePager page={pagination.page} totalPages={pagination.totalPages} basePath={pagination.basePath} r={r} ariaLabel="Browse more tools by page" /> : null}
         {relatedGroups.length ? <div className="v-related-groups">
           {relatedGroups.map((group) => <div className="v-related-group" key={group.title}>
             <h3>{group.title}</h3>

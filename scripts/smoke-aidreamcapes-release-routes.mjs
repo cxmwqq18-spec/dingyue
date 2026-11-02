@@ -283,17 +283,17 @@ assert.equal(typeof inspirationBody.nextOffset, "number", "inspirations API: nex
 assert.ok(inspirationBody.counts && typeof inspirationBody.counts.all === "number", "inspirations API: counts");
 checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspirationBody.total} total`);
 
-const hubMediaResponse = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
-assert.equal(hubMediaResponse.status, 200, `hub media API: status ${hubMediaResponse.status}`);
-const hubMediaBody = await hubMediaResponse.json();
-assert.ok(Array.isArray(hubMediaBody.items), "hub media API: items");
-assert.equal(typeof hubMediaBody.total, "number", "hub media API: total");
-assert.ok(hubMediaBody.items.length > 0, "hub media API: a page beyond the first returns cards");
-for (const card of hubMediaBody.items) {
-  assert.ok(typeof card.href === "string" && card.href.startsWith("/"), `hub media API: card href is a path (${card.href})`);
-  if (card.video) assert.ok(typeof card.video.src === "string" && card.video.src.startsWith("/") && typeof card.video.poster === "string", "hub media API: video card carries src and poster paths");
-}
-checks.push(`hub media API: ${hubMediaBody.items.length} cards / ${hubMediaBody.total} total`);
+const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-video-generation?page=2");
+assert.equal(hubMediaResponse.status, 200, "video hub page 2: status");
+const hubMediaCards = (hubMediaHtml.match(/class="v-pick-card"/g) || []).length;
+assert.ok(hubMediaCards > 0 && hubMediaCards <= 20, `video hub page 2: ${hubMediaCards} SSR picker cards (max 20 per page)`);
+assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: pager present");
+assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
+checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards with a plain-anchor pager`);
+
+const hubMediaGone = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
+assert.equal(hubMediaGone.status, 404, `retired hub media API: status ${hubMediaGone.status} (expected 404)`);
+checks.push("retired hub media API: 404 (browser JS no longer fetches catalog data)");
 
 const { response: home, html: homeHtml } = await getText("/");
 assert.equal(home.status, 200, "home: status");
