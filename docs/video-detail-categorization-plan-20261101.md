@@ -1,137 +1,145 @@
-# 视频详情页归类计划（2026-11-01，第三轮图片真值定稿）
+# 视频详情页归类计划（2026-11-01，rev4 三源定稿）
 
-> 状态：**纯计划文档，未动任何代码或数据**。三轮复核：R1 提示词实体 → R2 全量交叉校验+人工 → **R3 下载 25 张卡片原图肉眼查验（硬证据）**。最终修正 57 条（高置信 41 / 待你确认 16）。
+> 状态：**纯计划文档，未动代码/数据**。复核方法升级为三源交叉：**标题(label) × 提示词(产品实体) × 原始图片(52 张逐张肉眼查验)**。最终修正 76 条（图片实证 32 条；高置信 57 / 待确认 19）。
 
-## 1. 目标与约束
+## 1. 三源一致性结论（本轮核心交付）
 
-1. **工具唯一**：每个视频详情页在工具维度只归一个工具页（图片转视频/视频链接/视频广告/产品视频/前后对比视频/文字转视频/发言人视频/AI孪生）。
-2. **分类覆盖**：19 行业 + 3 场合 + 6 平台 facet 页每个都应有视频示例（硬性 ≥1，目标 ≥3）。
-3. **真实产品归类**：按画面/提示词中的真实产品实体判定。
-4. **收录安全红线**：不删除已收录页、不改 publicSlug、不移动属主；变更=placement 字段 + 工具页引用卡（方案B），manifest+CAS+门禁。
-
-## 2. 重大发现（R3 图片真值）
-
-### 2.1 七个详情页标题与画面完全不符
-
-下表 7 个 KV 模板示例卡（属主 `/ai-image-generation/sale-campaign-key-visual`，label 为空、线上标题由 slug 生成），**slug 文字与画面是两个世界**——已逐张下载原图确认：
-
-| slug（=现线上标题） | 画面真实内容（原图已查验） | 分类结论 |
-|---|---|---|| lunch-box-on-the-last-day | **藏青色棒球帽** 桌面棚拍 | 棒球帽→珠宝配饰（帽=配饰） || suitcase-with-room-for-the-offer | **白色皮面球鞋** 蓝灰棚拍 | 球鞋→鞋靴 || tote-with-space-for-the-offer | **米色针织衫模特半身像** | 模特时装→服装 || wallet-unboxing-with-offer-space | **牛仔裤+白球鞋上脚** | 上脚鞋→鞋靴 || cardigan-ready-for-season-end | **米白羊毛大衣** 穿着照 | 大衣→服装 || sandals-tried-on-at-the-market | **白色球鞋** 绿慕斯棚拍 | 球鞋→鞋靴 || running-shoes-before-the-jog | **藏青棒球帽** 白棚拍（与 lunch-box 同款帽不同角度） | 棒球帽→珠宝配饰 |
-**影响**：这 7 个已收录页存在「标题说午餐盒/鞋，画面是帽子/球鞋」的内容完整性问题（Google 抓取标题与图片不符是不好的信号）。且这些卡挂着一刀切模板标签（fashion+shoes+BF+holidays+sale+fb+ig）。
-
-### 2.2 处置建议（本周内动作，字段级）
-1. **分类**按画面改（本计划第 4 节已含这 7 条）。
-2. **标题修复**：这些卡 label 为空、标题取自 slug。修复=给卡补 `label` 字段为画面真实产品名（如 "Navy Baseball Cap on Wooden Table"），**不改 slug/URL**——线上 `<title>` 需确认随 label 渲染后生效（执行时验证），属正常内容更新。
-3. 若想彻底把 slug 也改对（URL 层改名），必须走 308 别名迁移流程（google-indexed-url-safety），**建议本期不做**，只修 label。
-
-## 3. 工具维度（不变，含已确认决策）
-
-| 页面 | 带片视频 | 备注 |
+| 检查维度 | 范围 | 结果 |
 |---|---|---|
-| spokesperson-video | 53 | 发言人 |
-| video-ads | 39 | 视频广告 |
-| hub picker | 36 | 图片转视频 |
-| product-video | 13 | 产品视频 |
-| fashion-try-on-reel | 11 | 模板页→方案B |
-| beauty-routine | 7 | 模板页→方案B |
-| before-after-video | 4 | 前后对比 |
-| image-to-video | 4 | 方案B 承接22张引用卡 |
-| food-video | 4 | 模板页→方案B |
+| label(线上标题来源) vs 提示词产品实体 | 全部 328 页 | **0 处不一致**（有 label 的卡全部吻合；无 label 的 8 张见 1.2） |
+| 提示词产品实体 vs 行业 placement | 全部 328 页 | 关键词交叉标 120 疑似 → 逐条人工判定，错标已列入修正（62 处行业变化） |
+| 原始图片 vs slug/label/行业 | 52 张（8 张无 label 高风险卡全查 + 全部黑五/节日卡 + 模板命名嫌疑卡） | **8 张标题与画面完全不符**；其余全部吻合 |
 
-已确认：方案B（模板页 22 视频在图片转视频工具页建引用）；首页 38 v1 页保留待替换；App 冲突卡摘除（零收录影响）待你最终点头；视频链接/文字转视频/AI孪生 0 片不硬凑。
+### 1.1 内容型 facet 澄清（口径修正）
 
-## 4. 最终修正清单（57 条，行业 placement）
+线上核实：`/industries/education`="Course and Lesson Promos"（课程教学）、`/industries/explainer`="Explain the Product"、`/industries/apps`="App Promos"，ugc/viral 为内容风格页。**how-to 教学、产品走查、UGC 卡挂这些 facet 属真实内容匹配，不算行业错标**——本计划对这类卡「保留内容型标签 + 补真实行业标签」（如咖啡机 how-to = education + home-living）。
 
-| # | slug | 现行业 | 修正后 | 置信 | 依据 |
-|---|---|---|---|---|---|| 1 | `bag-on-a-cafe-table` | industries | jewelry-accessories | medium | 包→配饰，替换fashion |
-| 2 | `bathroom-robe-mirror-selfie` | industries | beauty-skincare | medium | 早晚护肤泵瓶→美妆个护，替换home-living |
-| 3 | `berry-bowl-first-bite-reel` | industries | health-wellness,food-drinks | high | 莓果碗→补食品饮品 |
-| 4 | `bottle-ad-with-a-person` | industries | health-wellness,sports-gym | high | 【图片真值】画面=健身房柜+水瓶出运动袋→健康+运动，替换food-drinks |
-| 5 | `brand-film` | industries,industries,industries,platforms | electronics | high | 【图片真值】画面=黑色蓝牙音箱→数码，摘jewelry/shoes |
-| 6 | `camel-weekender-on-a-car-seat` | industries | jewelry-accessories | medium | 周末旅行袋→配饰，替换fashion |
-| 7 | `cardigan-ready-for-season-end` | industries,industries,occasions,occasions,occasions,platforms,platforms | fashion-clothing | high | 【图片真值】画面=米白羊毛大衣→服装（保留fashion，摘shoes） |
-| 8 | `close-shot-of-a-silver-ring` | industries,industries,industries,platforms,platforms | jewelry-accessories | high | 【图片真值】画面=银印章戒→珠宝，摘fashion/shoes |
-| 9 | `color-variants` | industries,industries,platforms,platforms | home-living | high | 【图片真值】画面=鼠尾草绿皂液器→家居生活，替换fashion/shoes |
-| 10 | `cream-blouse-in-a-studio` | industries,industries | fashion-clothing | high | 衬衫→服装，摘beauty |
-| 11 | `cream-bowl-sauce-demo` | industries,industries | food-drinks | high | 酱料碗演示→食品饮品，摘beauty |
-| 12 | `cream-candle-jar` | industries,industries | home-living | medium | 蜡烛罐→家居生活，摘beauty |
-| 13 | `cream-lamp-desk` | industries,industries | home-living | high | 【提示词】台灯→家居生活，摘beauty |
-| 14 | `cream-mug-desk` | industries,industries,industries | food-drinks,home-living | medium | 马克杯→食品器皿+家居，摘beauty |
-| 15 | `creator-style-photo` | industries,industries,platforms,platforms | health-wellness | high | 运动后水瓶→健康，摘beauty |
-| 16 | `crossbody-try-on-fabric-messenger-bag` | industries | jewelry-accessories | medium | 邮差包→配饰，替换fashion |
-| 17 | `earbud-box-reveal` | industries | electronics | high | 提示词：耳机开箱→数码 |
-| 18 | `every-angle` | industries,industries,industries,industries,platforms,platforms | electronics | high | 【图片真值】画面=音箱前后多角度→数码，摘home/jewelry/shoes |
-| 19 | `first-person-discovery-court-gear` | industries,industries | explainer,health-wellness,sports-gym | medium | 球场握力带→补运动健身 |
-| 20 | `folding-bike-commute` | industries | sports-gym,e-commerce | high | 提示词+常识：折叠自行车→运动出行 |
-| 21 | `gift-bottle-held-in-both-hands` | industries,occasions | health-wellness | high | 【图片真值】画面=圣诞礼盒+水瓶→保留holidays，行业food→health |
-| 22 | `green-notebook-desk-ritual` | industries,industries,platforms,platforms | home-living | high | 提示词：桌面文具→家居生活 |
-| 23 | `hand-demo-open-a-leather-wallet` | industries | jewelry-accessories | high | 真皮钱包→配饰，替换fashion |
-| 24 | `handbag-on-a-marble-cafe-table` | industries | jewelry-accessories | medium | 手提包→配饰，替换fashion |
-| 25 | `how-to-product-video` | industries,industries,industries,platforms | electronics,home-living | medium | 手持挂烫机→家居衣物护理，摘health-wellness |
-| 26 | `jar-on-white-for-catalog-match` | industries,industries | home-living,e-commerce | high | 【图片真值】画面=玻璃储物罐→家居生活（保留e-commerce） |
-| 27 | `jewelry-on-model` | industries,industries,platforms,platforms | jewelry-accessories | high | 银项链→珠宝，摘beauty |
-| 28 | `linen-tote-at-a-farmers-market` | industries | jewelry-accessories | medium | 托特包→配饰，替换fashion |
-| 29 | `lunch-bag-packed-for-a-black-friday-deal` | industries,industries,occasions,occasions | home-living | medium | 午餐包（无画面验证）→家居生活，替换fashion/food；保留BF/sale场合 |
-| 30 | `lunch-box-on-the-last-day` | industries,industries,occasions,occasions,occasions,platforms,platforms | jewelry-accessories | high | 【图片真值】画面=藏青棒球帽→配饰；slug文字不可信 |
-| 31 | `lunchbox-latch-clicks-shut` | industries | home-living | high | 午餐盒卡扣→家居生活，替换electronics |
-| 32 | `magnetic-power-bank-snap-on-unboxing` | industries,industries,occasions,platforms,platforms | electronics,sale-discount | high | 磁吸充电宝→数码 |
-| 33 | `packaging-preview` | industries,industries,industries,industries,platforms,platforms | food-drinks | high | 【图片真值】画面=咖啡包装袋→食品饮品，摘beauty/home/jewelry |
-| 34 | `perfume-bottle-in-a-room` | industries,industries | beauty-skincare | high | 香水→美妆，摘food-drinks |
-| 35 | `phone-ring-grip-one-hand-demo` | industries,industries,platforms,platforms | electronics | high | 手机指环支架→数码 |
-| 36 | `quiet-unboxing-makeup-tools` | industries | beauty-skincare | high | 提示词：化妆刷具→美妆个护 |
-| 37 | `resistance-band-home-demo` | industries | health-wellness,sports-gym | high | 阻力带→补运动健身 |
-| 38 | `running-shoes-before-the-jog` | industries,industries,occasions,occasions,occasions,platforms,platforms | jewelry-accessories | high | 【图片真值】画面=藏青棒球帽白底→配饰；slug文字不可信 |
-| 39 | `sage-bottle-front-hall` | industries | health-wellness | medium | 保温瓶→健康饮水，替换food-drinks |
-| 40 | `sage-soap-dispenser-on-white` | industries | home-living | high | 【图片真值】画面=皂液器→家居生活，替换beauty |
-| 41 | `sale-banner` | industries,industries,occasions,occasions,occasions,platforms,platforms | home-living | high | 【图片真值】画面=蓝色拉杆箱机场→家居/旅行 |
-| 42 | `sandals-tried-on-at-the-market` | industries,industries,occasions,occasions,occasions,platforms,platforms | shoes | high | 【图片真值】画面=白球鞋绿背景→鞋靴（保留shoes，摘fashion） |
-| 43 | `sea-glass-kettle-on-white` | industries | home-living | high | 【图片真值】画面=珐琅烧水壶→家居厨房，替换food-drinks |
-| 44 | `show-the-pump-bottle-on-white` | industries | beauty-skincare | medium | 【图片真值】画面=无标签粉色泵瓶（洗护形态）→美妆个护，替换food-drinks |
-| 45 | `silicone-case-compare-ad` | industries | e-commerce,electronics | high | 手机壳→补数码 |
-| 46 | `steel-bottle-on-white` | industries | health-wellness | high | 【图片真值】画面=钢制水瓶→健康饮水，替换food-drinks |
-| 47 | `story-ad` | industries,industries,occasions,occasions,occasions,platforms,platforms | food-drinks | high | 【图片真值】画面=辣酱瓶+辣椒→食品饮品，替换fashion/health |
-| 48 | `street-interview-fitness-gear` | industries,industries | e-commerce,health-wellness,sports-gym | high | 运动装备→+运动健身 |
-| 49 | `study-room-desk-study-chat` | industries,industries | education,home-living,food-drinks | medium | 冻干零食袋→补食品饮品 |
-| 50 | `suitcase-with-room-for-the-offer` | industries,industries,occasions,occasions,occasions,platforms,platforms | shoes | high | 【图片真值】画面=白色皮面球鞋→鞋靴 |
-| 51 | `thin-magnetic-power-bank-unboxing` | industries,industries,occasions,platforms,platforms | electronics,sale-discount | high | 磁吸充电宝→数码 |
-| 52 | `tote-at-a-farmers-market` | industries | jewelry-accessories | medium | 托特包→配饰，替换fashion |
-| 53 | `tote-with-space-for-the-offer` | industries,industries,occasions,occasions,occasions,platforms,platforms | fashion-clothing | high | 【图片真值】画面=米色针织衫模特肖像→服装 |
-| 54 | `wallet-unboxing-with-offer-space` | industries,industries,occasions,occasions,occasions,platforms,platforms | shoes | high | 【图片真值】画面=牛仔裤配白球鞋→鞋靴 |
-| 55 | `water-bottle-demo-cap-twists-open` | industries,industries | health-wellness | medium | 水瓶→健康饮水 |
-| 56 | `yoga-mat-stretch-ugc` | industries | health-wellness,sports-gym | high | 瑜伽垫→补运动健身 |
-| 57 | `yogurt-demo-spoonful-tasted` | industries | food-drinks | high | 酸奶试吃→食品饮品 |
+### 1.2 标题与画面不符的 8 个页面（slug 编造内容）
 
-共同规则：包袋/钱包/帽子→珠宝配饰；鞋靴→鞋靴；餐盒/行李箱/烛灯/文具→家居生活；水瓶→健康饮水；包装袋→食品饮品。（场合/平台标签在视觉语境属实时保留：sale-wall 组保留 sale-discount+facebook/instagram，摘 black-friday/holidays）
+| 线上标题(=slug) | 原图真实内容 | 处置 |
+|---|---|---|
+| Lunch Box on the Last Day | 藏青棒球帽（桌面棚拍） | 行业→配饰；补 label="Navy Baseball Cap on Wooden Table" |
+| Suitcase With Room for the Offer | 白色皮面球鞋 | 行业→鞋靴；补 label="White Leather Sneaker Studio" |
+| Tote With Space for the Offer | 米色针织衫模特像 | 行业→服装（保留）；补 label="Beige Knit Top Studio Portrait" |
+| Wallet Unboxing With Offer Space | 牛仔裤配白球鞋上脚 | 行业→鞋靴；补 label="White Sneakers With Denim, On-Foot" |
+| Cardigan Ready for Season End | 米白羊毛大衣 | 行业→服装（保留）；补 label="Cream Wool Coat Street Look" |
+| Sandals Tried On at the Market | 白球鞋（无凉鞋） | 行业→鞋靴；补 label="White Sneaker on Green Backdrop" |
+| Running Shoes Before the Jog | 藏青棒球帽 | 行业→配饰；补 label="Navy Baseball Cap, White Studio" |
+| Gift Box Ready for a Black-Friday Offer | 棕色皮革旅行袋 | 行业→配饰；补 label="Brown Leather Duffel"（BF/sale 场合留） |
 
-## 5. 覆盖面影响（修正后模拟）
+> 本期修复=补 label（不改 slug/URL，正常内容更新）；彻底改 slug 需走 308 流程，本期不做。
 
-| facet | 修正前产品数 | 修正后 |
-|---|---|---|| beauty-skincare | 0 | 4 |
-| e-commerce | 0 | 4 |
-| education | 0 | 1 |
-| electronics | 0 | 8 |
-| explainer | 0 | 1 |
-| fashion-clothing | 0 | 3 |
-| food-drinks | 0 | 7 |
-| health-wellness | 0 | 11 |
-| home-living | 0 | 13 |
-| industries | 328 | 271 |
-| jewelry-accessories | 0 | 11 |
-| occasions | 33 | 20 |
-| platforms | 70 | 49 |
-| sale-discount | 0 | 2 |
-| shoes | 0 | 3 |
-| sports-gym | 0 | 6 |
+## 2. 目标与约束
 
-> 修正前的视频覆盖率不变（28 个 facet 已全部满足 ≥1 视频，被拒的 amazon/shopify/holidays 候选走生成队列）。
+1. **工具唯一**：每个视频详情页只归一个工具页；同一视频不得重复出现在两个工具页示例。
+2. **分类覆盖**：28 个 facet 每个都有示例（硬性 ≥1 视频）；场合/平台标签在视觉语境属实时保留、无据不硬标。
+3. **真实产品归类**：以画面/提示词中的真实产品实体为准。
+4. **收录安全红线**：不删已收录页、不改 publicSlug、不搬属主；placement/label 字段级 manifest + CAS + 门禁。
 
-## 6. 执行计划与红线（不变）
+## 3. 现状与已定决策（不变）
 
-P0 本文档确认 → P1 manifest（before/after + label 补写 + 方案B 22 引用卡 + rollback）→ P2 生产 CAS → P3 门禁（alias smoke / 媒体完整性 / sitemap 契约 / facet 抽查）→ P4 CDN purge + 公网复测。全程 0 URL 消失、0 别名新增、0 属主迁移。
+358 详情页（视频 250 + 图 108）；171 个唯一 mp4；facet=19 行业+3 场合+6 平台；工具页带片：发言人 53 / 广告 39 / hub 36 / 产品 13 / 试穿 11 / 护肤 7 / 前后对比 4 / 图转视频页 4 / 食品 4；模板页 22 视频走方案 B（图片转视频工具页补 22 张引用卡）；首页 38 v1 页保留待替换；App 冲突卡摘 hub 零收录影响待确认；视频链接/文字转视频/AI孪生 0 片不硬凑。
+
+## 4. 最终修正清单（76 条）
+
+| # | slug | 现行业 | 修正后 | 置信 | 证据 |
+|---|---|---|---|---|---|
+| 1 | `an-avatar-holds-the-shaker` | industries | health-wellness,sports-gym | high | 【图片】健身房摇摇杯→健康+运动，替换other |
+| 2 | `bag-on-a-cafe-table` | industries | jewelry-accessories | medium | 包→配饰，替换fashion |
+| 3 | `bathroom-robe-mirror-selfie` | industries | beauty-skincare | medium | 早晚泵瓶→美妆，替换home |
+| 4 | `berry-bowl-first-bite-reel` | industries | food-drinks,health-wellness | high | 莓果碗→+食品 |
+| 5 | `bottle-ad-with-a-person` | industries | health-wellness,sports-gym | high | 【图片】健身房+水瓶→健康+运动，替换food |
+| 6 | `brand-film` | industries,platforms | electronics | high | 【图片】蓝牙音箱→数码 |
+| 7 | `camel-weekender-on-a-car-seat` | industries | jewelry-accessories | medium | 旅行袋→配饰，替换fashion |
+| 8 | `canvas-tote-sidewalk` | industries | jewelry-accessories | medium | 托特包→配饰，替换fashion |
+| 9 | `cardigan-ready-for-season-end` | industries,occasions,platforms | fashion-clothing | high | 【图片】羊毛大衣→服装，摘shoes |
+| 10 | `close-shot-of-a-silver-ring` | industries,platforms | jewelry-accessories | high | 【图片】银戒指→珠宝 |
+| 11 | `coffee-maker-how-to-demo` | industries | education,home-living | high | 咖啡机；保留内容型 education，补真实行业 home-living |
+| 12 | `color-variants` | industries,platforms | home-living | high | 【图片】皂液器→家居 |
+| 13 | `cream-blouse-in-a-studio` | industries | fashion-clothing | high | 衬衫→服装，摘beauty |
+| 14 | `cream-bowl-sauce-demo` | industries | food-drinks | high | 酱料碗→食品，摘beauty |
+| 15 | `cream-candle-jar` | industries | home-living | medium | 蜡烛罐→家居，摘beauty |
+| 16 | `cream-lamp-desk` | industries | home-living | high | 台灯→家居，摘beauty |
+| 17 | `cream-mug-desk` | industries | food-drinks,home-living | medium | 马克杯→食品+家居，摘beauty |
+| 18 | `creator-style-photo` | industries,platforms | health-wellness | high | 运动后水瓶→健康，摘beauty |
+| 19 | `crossbody-try-on-fabric-messenger-bag` | industries | jewelry-accessories | medium | 邮差包→配饰，替换fashion |
+| 20 | `deal-day-product-demo` | industries,occasions | home-living | high | 【图片】挂烫机+圣诞树→家居(留sale、补holidays)，替换other |
+| 21 | `desk-lamp-product-demo-ugc` | industries | home-living,ugc | high | 台灯；保留 ugc，补 home-living |
+| 22 | `earbud-box-reveal` | industries | electronics | high | 耳机开箱→数码 |
+| 23 | `every-angle` | industries,platforms | electronics | high | 【图片】音箱多视角→数码 |
+| 24 | `fabric-cleaner-lesson-demo` | industries | education,home-living | high | 织物清洁剂；保留 education，补 home-living |
+| 25 | `first-person-discovery-court-gear` | industries | explainer,health-wellness,sports-gym | medium | 球场握力带→+运动 |
+| 26 | `folding-bike-commute` | industries | e-commerce,sports-gym | high | 折叠自行车→运动出行 |
+| 27 | `gift-bottle-held-in-both-hands` | industries,occasions | health-wellness | high | 【图片】圣诞礼盒+水瓶→行业改health；holidays留 |
+| 28 | `gift-box-ready-for-a-black-friday-offer` | industries,occasions | jewelry-accessories | high | 【图片】皮革旅行袋(非礼盒!)→配饰；BF/sale留、摘holidays |
+| 29 | `gift-guide-product-pack` | industries,occasions | home-living | high | 【图片】礼盒+蜡烛→家居(留holidays)，替换other |
+| 30 | `gift-reveal-product-bundle` | industries,occasions | beauty-skincare | high | 【图片】护肤礼盒→美妆(留holidays)，替换other |
+| 31 | `green-notebook-desk-ritual` | industries,platforms | home-living | high | 桌面文具→家居生活 |
+| 32 | `hand-demo-open-a-leather-wallet` | industries | jewelry-accessories | high | 真皮钱包→配饰，替换fashion |
+| 33 | `handbag-on-a-marble-cafe-table` | industries | jewelry-accessories | medium | 手提包→配饰，替换fashion |
+| 34 | `headphone-creator-review` | industries | electronics,ugc | high | 耳机创作者测评；保留 ugc，补 electronics |
+| 35 | `how-to-product-video` | industries,platforms | electronics,home-living | medium | 手持挂烫机→家居衣物护理，摘health |
+| 36 | `jar-on-white-for-catalog-match` | industries | e-commerce,home-living | high | 【图片】储物罐→家居(留e-comm) |
+| 37 | `jewelry-on-model` | industries,platforms | jewelry-accessories | high | 银项链→珠宝，摘beauty |
+| 38 | `linen-tote-at-a-farmers-market` | industries | jewelry-accessories | medium | 托特包→配饰，替换fashion |
+| 39 | `lunch-bag-packed-for-a-black-friday-deal` | industries,occasions | home-living | high | 【图片】保温午餐包→家居；BF/sale场合留，替换fashion/food |
+| 40 | `lunch-box-on-the-last-day` | industries,occasions,platforms | jewelry-accessories | high | 【图片】棒球帽→配饰；slug不可信 |
+| 41 | `lunchbox-latch-clicks-shut` | industries | home-living | high | 午餐盒→家居，替换electronics |
+| 42 | `magnetic-power-bank-snap-on-unboxing` | industries,occasions,platforms | electronics,sale-discount | high | 磁吸充电宝→数码 |
+| 43 | `matcha-bowl-set-on-linen` | industries | food-drinks | high | 抹茶碗组→食品饮品，替换fashion |
+| 44 | `packaging-preview` | industries,platforms | food-drinks | high | 【图片】咖啡包装袋→食品 |
+| 45 | `perfume-bottle-in-a-room` | industries | beauty-skincare | high | 香水→美妆，摘food |
+| 46 | `phone-first-sale-post` | industries,occasions | black-friday,electronics | medium | 【图片】黑机身+黑色礼盒丝带→补BF场合 |
+| 47 | `phone-ring-grip-one-hand-demo` | industries,platforms | electronics | high | 手机指环支架→数码 |
+| 48 | `quiet-unboxing-makeup-tools` | industries | beauty-skincare | high | 化妆刷具→美妆个护 |
+| 49 | `resistance-band-home-demo` | industries | health-wellness,sports-gym | high | 阻力带→+运动健身 |
+| 50 | `running-shoes-before-the-jog` | industries,occasions,platforms | jewelry-accessories | high | 【图片】棒球帽→配饰；slug不可信 |
+| 51 | `sage-bottle-desk-detail` | industries | health-wellness | high | 【图片】桌面开盖水瓶→健康，替换sports-gym |
+| 52 | `sage-bottle-front-hall` | industries | health-wellness | medium | 保温瓶→健康，替换food |
+| 53 | `sage-soap-dispenser-on-white` | industries | home-living | high | 【图片】皂液器→家居，替换beauty |
+| 54 | `sale-banner` | industries,occasions,platforms | home-living | high | 【图片】拉杆箱→家居/旅行 |
+| 55 | `sandals-tried-on-at-the-market` | industries,occasions,platforms | shoes | high | 【图片】白球鞋→鞋靴，摘fashion |
+| 56 | `sea-glass-kettle-on-white` | industries | home-living | high | 【图片】烧水壶→家居厨房，替换food |
+| 57 | `seasonal-product-use` | industries,occasions | beauty-skincare | high | 【图片】圣诞窗前涂唇膏→美妆(留holidays)，替换other |
+| 58 | `show-the-canister-on-white` | industries | home-living | high | 【图片】陶瓷储物罐→家居，替换beauty |
+| 59 | `show-the-pump-bottle-on-white` | industries | beauty-skincare | medium | 【图片】粉色泵瓶→美妆，替换food |
+| 60 | `silicone-case-compare-ad` | industries | e-commerce,electronics | high | 手机壳→+数码 |
+| 61 | `speaker-feature-walkthrough` | industries | electronics,explainer | high | 音箱功能走查；保留 explainer，补 electronics |
+| 62 | `steam-the-ceramic-canister` | industries | food-drinks,home-living | high | 【图片】咖啡罐冒蒸汽→家居+食品，替换beauty |
+| 63 | `steel-bottle-on-white` | industries | health-wellness | high | 【图片】钢水瓶→健康，替换food |
+| 64 | `story-ad` | industries,occasions,platforms | food-drinks | high | 【图片】辣酱→食品 |
+| 65 | `street-interview-fitness-gear` | industries | e-commerce,health-wellness,sports-gym | high | 运动装备→+运动健身 |
+| 66 | `study-room-desk-study-chat` | industries | education,food-drinks,home-living | medium | 冻干零食袋；补 food-drinks |
+| 67 | `suitcase-with-room-for-the-offer` | industries,occasions,platforms | shoes | high | 【图片】白色球鞋→鞋靴 |
+| 68 | `thin-magnetic-power-bank-unboxing` | industries,occasions,platforms | electronics,sale-discount | high | 磁吸充电宝→数码 |
+| 69 | `tote-at-a-farmers-market` | industries | jewelry-accessories | medium | 托特包→配饰，替换fashion |
+| 70 | `tote-on-white-for-a-marketplace` | industries | e-commerce,jewelry-accessories | medium | 托特包白底图→配饰(留e-comm)，替换fashion |
+| 71 | `tote-with-space-for-the-offer` | industries,occasions,platforms | fashion-clothing | high | 【图片】针织衫模特像→服装 |
+| 72 | `umbrella-opens-for-coverage` | industries | home-living | medium | 伞→家居日用，替换other |
+| 73 | `wallet-unboxing-with-offer-space` | industries,occasions,platforms | shoes | high | 【图片】牛仔裤白球鞋→鞋靴 |
+| 74 | `water-bottle-demo-cap-twists-open` | industries | health-wellness | medium | 水瓶→健康饮水 |
+| 75 | `yoga-mat-stretch-ugc` | industries | health-wellness,sports-gym | high | 瑜伽垫→+运动健身 |
+| 76 | `yogurt-demo-spoonful-tasted` | industries | food-drinks | high | 酸奶→食品饮品 |
+
+**共同规则**：包袋/钱包/帽子→珠宝配饰；水瓶/保温瓶→健康饮水；餐盒/烛灯/壶/文具/旅行箱→家居生活；包装袋/酱料/饮品→食品饮品；音箱/耳机/手机壳/充电宝→数码；场合标签只在画面有真实呼应时补/留。
+
+## 5. 修正口径
+
+- 内容型标签（education/explainer/apps/ugc）**只保留、不删除**，同时补真实行业 → facet 目录内容只增不减。
+- 纯行业错标（如辣酱标 fashion）= 替换。
+- tabular 一刀切模板组（sale-campaign 等）按每卡真实产品重写。
+
+## 6. 执行计划
+
+P0 本文档确认 → P1 manifest（placement/label before-after + 方案B 22 引用卡 + rollback）→ P2 生产 CAS → P3 门禁（alias smoke / 媒体完整性 / sitemap 契约 URL 集不变 / video:video 仍 171 / facet 抽查）→ P4 CDN purge + 公网复测。
 
 ## 7. 待确认
 
-1. App 冲突卡摘 hub（零收录影响，等你确认）。
-2. medium 条目（约 12 条）过目：`lunch-bag-packed-for-a-black-friday-deal`、`show-the-pump-bottle-on-white`、`yogurt` family 已高置信。
-3. 七个「标题≠画面」页：同意本期只补 label（不动 slug/URL）？
-4. 包袋/帽子→珠宝配饰规则是否符合直觉？
+1. App 冲突卡摘 hub（等你确认）。
+2. 8 个标题≠画面页：本期只补 label，同意？
+3. medium 条目过目。
+4. 包袋/帽子→珠宝配饰、内容型 facet 保留口径是否符合预期？
+
+## 8. 全量分配表
+
+docs/media-categorization-assignments-20261101.json（rev4，全部 328 页含 now/after/置信度/证据类型）。

@@ -1,34 +1,28 @@
 {
- "generated": "2026-11-01",
- "rev": 3,
- "method": "R1 prompt-entity, R2 cross-check, R3 visual ground-truth (25 images downloaded & inspected)",
- "totals": {
-  "detailPages": 358,
-  "videoDetailPages": 250,
-  "withVideo": 171
+ "generated": "2026-11-02",
+ "rev": 4,
+ "verification": {
+  "method": "title-label vs prompt-entity vs original-image",
+  "labelsChecked": 328,
+  "imagesViewed": 52,
+  "labelPromptMismatch": 0
  },
- "fixesPlanned": 57,
- "titleImageMismatchPages": [
-  "bottle-ad-with-a-person",
-  "brand-film",
-  "cardigan-ready-for-season-end",
-  "close-shot-of-a-silver-ring",
-  "color-variants",
-  "every-angle",
-  "gift-bottle-held-in-both-hands",
-  "jar-on-white-for-catalog-match",
+ "stats": {
+  "total_slugs": 328,
+  "fixes": 76,
+  "image_verified": 32,
+  "images_viewed": 52,
+  "title_mismatch": 8
+ },
+ "titleMismatchPages": [
   "lunch-box-on-the-last-day",
-  "packaging-preview",
-  "running-shoes-before-the-jog",
-  "sage-soap-dispenser-on-white",
-  "sale-banner",
-  "sandals-tried-on-at-the-market",
-  "sea-glass-kettle-on-white",
-  "steel-bottle-on-white",
-  "story-ad",
   "suitcase-with-room-for-the-offer",
   "tote-with-space-for-the-offer",
-  "wallet-unboxing-with-offer-space"
+  "wallet-unboxing-with-offer-space",
+  "cardigan-ready-for-season-end",
+  "sandals-tried-on-at-the-market",
+  "running-shoes-before-the-jog",
+  "gift-box-ready-for-a-black-friday-offer"
  ],
  "assignments": [
   {
@@ -43,6 +37,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -52,11 +47,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness",
+    "sports-gym"
+   ],
    "tool_primary": "image-to-video",
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】健身房摇摇杯→健康+运动，替换other"
   },
   {
    "slug": "app-screen-walkthrough-ugc",
@@ -69,6 +68,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -84,6 +84,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "包→配饰，替换fashion"
   },
   {
@@ -97,6 +98,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -110,6 +112,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -123,6 +126,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -136,6 +140,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -151,7 +156,8 @@
    "tool_primary": "spokesperson-video",
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "早晚护肤泵瓶→美妆个护，替换home-living"
+   "evidence": "prompt-entity",
+   "note": "早晚泵瓶→美妆，替换home"
   },
   {
    "slug": "beach-boardwalk-update",
@@ -164,6 +170,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -177,6 +184,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -192,6 +200,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -205,6 +214,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -218,6 +228,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -231,6 +242,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -241,13 +253,14 @@
     "industries"
    ],
    "placement_after": [
-    "health-wellness",
-    "food-drinks"
+    "food-drinks",
+    "health-wellness"
    ],
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "莓果碗→补食品饮品"
+   "evidence": "prompt-entity",
+   "note": "莓果碗→+食品"
   },
   {
    "slug": "black-dress-pants-fold-test",
@@ -262,6 +275,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -278,6 +292,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -295,6 +310,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -311,6 +327,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -326,6 +343,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -339,6 +357,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -354,6 +373,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -370,7 +390,8 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=健身房柜+水瓶出运动袋→健康+运动，替换food-drinks"
+   "evidence": "image-verified",
+   "note": "【图片】健身房+水瓶→健康+运动，替换food"
   },
   {
    "slug": "brand-film",
@@ -388,7 +409,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=黑色蓝牙音箱→数码，摘jewelry/shoes"
+   "evidence": "image-verified",
+   "note": "【图片】蓝牙音箱→数码"
   },
   {
    "slug": "budget-desk-overview",
@@ -401,6 +423,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -414,6 +437,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -427,6 +451,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -443,6 +468,7 @@
    "tool_primary": "before-after-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -459,6 +485,7 @@
    "tool_primary": "before-after-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -472,6 +499,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -485,6 +513,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -498,6 +527,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -511,6 +541,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -526,7 +557,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "周末旅行袋→配饰，替换fashion"
+   "evidence": "prompt-entity",
+   "note": "旅行袋→配饰，替换fashion"
   },
   {
    "slug": "canvas-tote-everyday-carry",
@@ -542,6 +574,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -558,6 +591,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -571,6 +605,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -580,11 +615,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "evidence": "prompt-entity",
+   "note": "托特包→配饰，替换fashion"
   },
   {
    "slug": "car-driver-seat-selfie",
@@ -597,6 +635,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -610,6 +649,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -631,7 +671,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=米白羊毛大衣→服装（保留fashion，摘shoes）"
+   "evidence": "image-verified",
+   "note": "【图片】羊毛大衣→服装，摘shoes"
   },
   {
    "slug": "cardigan-turn-reel",
@@ -644,6 +685,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -657,6 +699,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -670,6 +713,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -683,6 +727,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -696,6 +741,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -712,6 +758,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -725,6 +772,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -738,6 +786,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -751,6 +800,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -764,6 +814,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -777,6 +828,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -790,6 +842,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -809,7 +862,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=银印章戒→珠宝，摘fashion/shoes"
+   "evidence": "image-verified",
+   "note": "【图片】银戒指→珠宝"
   },
   {
    "slug": "closet-organizer-walkthrough",
@@ -822,6 +876,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -836,6 +891,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -845,11 +901,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "education",
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "咖啡机；保留内容型 education，补真实行业 home-living"
   },
   {
    "slug": "color-block-unboxing-ugc",
@@ -862,6 +922,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -875,6 +936,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -893,7 +955,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=鼠尾草绿皂液器→家居生活，替换fashion/shoes"
+   "evidence": "image-verified",
+   "note": "【图片】皂液器→家居"
   },
   {
    "slug": "coral-lipstick-swatch",
@@ -906,6 +969,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -919,6 +983,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -935,6 +1000,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "衬衫→服装，摘beauty"
   },
   {
@@ -951,7 +1017,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "酱料碗演示→食品饮品，摘beauty"
+   "evidence": "prompt-entity",
+   "note": "酱料碗→食品，摘beauty"
   },
   {
    "slug": "cream-candle-jar",
@@ -967,7 +1034,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "蜡烛罐→家居生活，摘beauty"
+   "evidence": "prompt-entity",
+   "note": "蜡烛罐→家居，摘beauty"
   },
   {
    "slug": "cream-chunky-cardigan-two-ways",
@@ -982,6 +1050,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -998,7 +1067,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【提示词】台灯→家居生活，摘beauty"
+   "evidence": "prompt-entity",
+   "note": "台灯→家居，摘beauty"
   },
   {
    "slug": "cream-mug-desk",
@@ -1016,7 +1086,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "马克杯→食品器皿+家居，摘beauty"
+   "evidence": "prompt-entity",
+   "note": "马克杯→食品+家居，摘beauty"
   },
   {
    "slug": "creator-style-photo",
@@ -1034,6 +1105,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "运动后水瓶→健康，摘beauty"
   },
   {
@@ -1049,6 +1121,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "邮差包→配饰，替换fashion"
   },
   {
@@ -1062,6 +1135,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1072,11 +1146,14 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】挂烫机+圣诞树→家居(留sale、补holidays)，替换other"
   },
   {
    "slug": "denim-shirt-detail-reel",
@@ -1089,6 +1166,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1102,6 +1180,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1115,6 +1194,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1124,11 +1204,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living",
+    "ugc"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "台灯；保留 ugc，补 home-living"
   },
   {
    "slug": "desk-lamp-switches-on",
@@ -1141,6 +1225,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1154,6 +1239,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1167,6 +1253,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1180,6 +1267,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1193,6 +1281,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1206,6 +1295,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1219,6 +1309,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1232,6 +1323,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1247,6 +1339,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1262,7 +1355,8 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "提示词：耳机开箱→数码"
+   "evidence": "prompt-entity",
+   "note": "耳机开箱→数码"
   },
   {
    "slug": "every-angle",
@@ -1282,7 +1376,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=音箱前后多角度→数码，摘home/jewelry/shoes"
+   "evidence": "image-verified",
+   "note": "【图片】音箱多视角→数码"
   },
   {
    "slug": "everyday-lipstick-vanity-check",
@@ -1297,6 +1392,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1310,6 +1406,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1323,6 +1420,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1332,11 +1430,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "education",
+    "home-living"
+   ],
    "tool_primary": "image-to-video",
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "织物清洁剂；保留 education，补 home-living"
   },
   {
    "slug": "felt-slippers-on-white",
@@ -1349,6 +1451,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1362,6 +1465,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1380,7 +1484,8 @@
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "球场握力带→补运动健身"
+   "evidence": "prompt-entity",
+   "note": "球场握力带→+运动"
   },
   {
    "slug": "fitness-recovery-tip",
@@ -1393,6 +1498,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1406,6 +1512,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1419,6 +1526,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1429,13 +1537,14 @@
     "industries"
    ],
    "placement_after": [
-    "sports-gym",
-    "e-commerce"
+    "e-commerce",
+    "sports-gym"
    ],
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "提示词+常识：折叠自行车→运动出行"
+   "evidence": "prompt-entity",
+   "note": "折叠自行车→运动出行"
   },
   {
    "slug": "folding-bike-hinge-opens",
@@ -1448,6 +1557,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1461,6 +1571,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1477,6 +1588,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1490,6 +1602,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1505,6 +1618,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1518,6 +1632,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1531,6 +1646,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1544,6 +1660,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1557,6 +1674,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1573,7 +1691,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=圣诞礼盒+水瓶→保留holidays，行业food→health"
+   "evidence": "image-verified",
+   "note": "【图片】圣诞礼盒+水瓶→行业改health；holidays留"
   },
   {
    "slug": "gift-box-ready-for-a-black-friday-offer",
@@ -1585,11 +1704,14 @@
     "occasions",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】皮革旅行袋(非礼盒!)→配饰；BF/sale留、摘holidays"
   },
   {
    "slug": "gift-guide-product-pack",
@@ -1599,11 +1721,14 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】礼盒+蜡烛→家居(留holidays)，替换other"
   },
   {
    "slug": "gift-reveal-product-bundle",
@@ -1613,11 +1738,14 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "beauty-skincare"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】护肤礼盒→美妆(留holidays)，替换other"
   },
   {
    "slug": "gold-necklace-revealed-from-tissue",
@@ -1630,6 +1758,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1644,6 +1773,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1659,6 +1789,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1676,6 +1807,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1694,7 +1826,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "提示词：桌面文具→家居生活"
+   "evidence": "prompt-entity",
+   "note": "桌面文具→家居生活"
   },
   {
    "slug": "gym-bench-check-in",
@@ -1707,6 +1840,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1720,6 +1854,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1733,6 +1868,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1746,6 +1882,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1760,6 +1897,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1775,6 +1913,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "真皮钱包→配饰，替换fashion"
   },
   {
@@ -1790,6 +1929,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "手提包→配饰，替换fashion"
   },
   {
@@ -1799,11 +1939,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "electronics",
+    "ugc"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "耳机创作者测评；保留 ugc，补 electronics"
   },
   {
    "slug": "headphone-product-demo",
@@ -1816,6 +1960,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1831,6 +1976,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1844,6 +1990,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1857,6 +2004,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1870,6 +2018,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1883,6 +2032,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1896,6 +2046,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1909,6 +2060,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1922,6 +2074,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1941,7 +2094,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "手持挂烫机→家居衣物护理，摘health-wellness"
+   "evidence": "prompt-entity",
+   "note": "手持挂烫机→家居衣物护理，摘health"
   },
   {
    "slug": "iced-citrus-drink-mix-switch",
@@ -1958,6 +2112,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1971,6 +2126,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1984,6 +2140,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -1997,6 +2154,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2008,13 +2166,14 @@
     "industries"
    ],
    "placement_after": [
-    "home-living",
-    "e-commerce"
+    "e-commerce",
+    "home-living"
    ],
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=玻璃储物罐→家居生活（保留e-commerce）"
+   "evidence": "image-verified",
+   "note": "【图片】储物罐→家居(留e-comm)"
   },
   {
    "slug": "jelly-mask-sunday-reset",
@@ -2029,6 +2188,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2047,6 +2207,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "银项链→珠宝，摘beauty"
   },
   {
@@ -2060,6 +2221,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2074,6 +2236,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2087,6 +2250,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2100,6 +2264,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2113,6 +2278,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2126,6 +2292,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2139,6 +2306,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2152,6 +2320,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2165,6 +2334,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2183,6 +2353,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2196,6 +2367,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2209,6 +2381,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2222,6 +2395,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2237,6 +2411,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "托特包→配饰，替换fashion"
   },
   {
@@ -2251,6 +2426,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2264,6 +2440,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2277,6 +2454,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2290,6 +2468,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2307,8 +2486,9 @@
    ],
    "tool_primary": null,
    "change": "placement-fix",
-   "confidence": "medium",
-   "note": "午餐包（无画面验证）→家居生活，替换fashion/food；保留BF/sale场合"
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】保温午餐包→家居；BF/sale场合留，替换fashion/food"
   },
   {
    "slug": "lunch-box-on-the-last-day",
@@ -2329,7 +2509,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=藏青棒球帽→配饰；slug文字不可信"
+   "evidence": "image-verified",
+   "note": "【图片】棒球帽→配饰；slug不可信"
   },
   {
    "slug": "lunchbox-latch-clicks-shut",
@@ -2344,7 +2525,8 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "午餐盒卡扣→家居生活，替换electronics"
+   "evidence": "prompt-entity",
+   "note": "午餐盒→家居，替换electronics"
   },
   {
    "slug": "lunchbox-leak-tutorial",
@@ -2357,6 +2539,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2377,6 +2560,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "磁吸充电宝→数码"
   },
   {
@@ -2386,11 +2570,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "food-drinks"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "抹茶碗组→食品饮品，替换fashion"
   },
   {
    "slug": "mint-face-mist-hook",
@@ -2404,6 +2591,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2420,6 +2608,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2435,6 +2624,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2448,6 +2638,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2461,6 +2652,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2474,6 +2666,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2488,6 +2681,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2503,6 +2697,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2519,6 +2714,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2535,6 +2731,7 @@
    "tool_primary": "before-after-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2549,6 +2746,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2562,6 +2760,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2575,6 +2774,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2588,6 +2788,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2601,6 +2802,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2614,6 +2816,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2630,6 +2833,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2646,6 +2850,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2663,6 +2868,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2676,6 +2882,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2689,6 +2896,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2702,6 +2910,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2717,6 +2926,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2730,6 +2940,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2743,6 +2954,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2763,7 +2975,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=咖啡包装袋→食品饮品，摘beauty/home/jewelry"
+   "evidence": "image-verified",
+   "note": "【图片】咖啡包装袋→食品"
   },
   {
    "slug": "pendant-creator-try-on",
@@ -2776,6 +2989,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2789,6 +3003,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2805,7 +3020,8 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "香水→美妆，摘food-drinks"
+   "evidence": "prompt-entity",
+   "note": "香水→美妆，摘food"
   },
   {
    "slug": "pet-brush-living-room-demo",
@@ -2818,6 +3034,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2831,6 +3048,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2844,6 +3062,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2857,6 +3076,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2870,6 +3090,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2880,11 +3101,15 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "black-friday",
+    "electronics"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "evidence": "image-verified",
+   "note": "【图片】黑机身+黑色礼盒丝带→补BF场合"
   },
   {
    "slug": "phone-grip-app-demo-ugc",
@@ -2897,6 +3122,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2915,6 +3141,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "手机指环支架→数码"
   },
   {
@@ -2928,6 +3155,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2944,6 +3172,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2959,6 +3188,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2972,6 +3202,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2985,6 +3216,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -2998,6 +3230,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3011,6 +3244,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3025,6 +3259,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3038,6 +3273,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3052,6 +3288,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3065,6 +3302,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3078,6 +3316,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3092,6 +3331,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3107,7 +3347,8 @@
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "提示词：化妆刷具→美妆个护"
+   "evidence": "prompt-entity",
+   "note": "化妆刷具→美妆个护"
   },
   {
    "slug": "quilted-jacket-lifted-from-a-gift-box",
@@ -3121,6 +3362,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3134,6 +3376,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3147,6 +3390,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3163,7 +3407,8 @@
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "阻力带→补运动健身"
+   "evidence": "prompt-entity",
+   "note": "阻力带→+运动健身"
   },
   {
    "slug": "routine-demo-cream",
@@ -3176,6 +3421,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3190,6 +3436,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3203,6 +3450,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3216,6 +3464,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3237,7 +3486,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=藏青棒球帽白底→配饰；slug文字不可信"
+   "evidence": "image-verified",
+   "note": "【图片】棒球帽→配饰；slug不可信"
   },
   {
    "slug": "sage-bottle-desk-detail",
@@ -3246,11 +3496,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "health-wellness"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】桌面开盖水瓶→健康，替换sports-gym"
   },
   {
    "slug": "sage-bottle-front-hall",
@@ -3265,7 +3518,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "保温瓶→健康饮水，替换food-drinks"
+   "evidence": "prompt-entity",
+   "note": "保温瓶→健康，替换food"
   },
   {
    "slug": "sage-earbuds-pocket-fit",
@@ -3280,6 +3534,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3294,6 +3549,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3309,7 +3565,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=皂液器→家居生活，替换beauty"
+   "evidence": "image-verified",
+   "note": "【图片】皂液器→家居，替换beauty"
   },
   {
    "slug": "sale-banner",
@@ -3330,7 +3587,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=蓝色拉杆箱机场→家居/旅行"
+   "evidence": "image-verified",
+   "note": "【图片】拉杆箱→家居/旅行"
   },
   {
    "slug": "sandals-tried-on-at-the-market",
@@ -3351,7 +3609,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=白球鞋绿背景→鞋靴（保留shoes，摘fashion）"
+   "evidence": "image-verified",
+   "note": "【图片】白球鞋→鞋靴，摘fashion"
   },
   {
    "slug": "sea-glass-kettle-on-white",
@@ -3366,7 +3625,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=珐琅烧水壶→家居厨房，替换food-drinks"
+   "evidence": "image-verified",
+   "note": "【图片】烧水壶→家居厨房，替换food"
   },
   {
    "slug": "sealed-box-order-unboxing",
@@ -3382,6 +3642,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3396,6 +3657,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3406,11 +3668,14 @@
     "industries",
     "occasions"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "beauty-skincare"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】圣诞窗前涂唇膏→美妆(留holidays)，替换other"
   },
   {
    "slug": "sensory-hook-citrus-sip",
@@ -3423,6 +3688,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3436,6 +3702,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3449,6 +3716,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3462,6 +3730,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3475,6 +3744,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3488,6 +3758,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3502,6 +3773,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3515,6 +3787,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3524,11 +3797,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】陶瓷储物罐→家居，替换beauty"
   },
   {
    "slug": "show-the-pump-bottle-on-white",
@@ -3543,7 +3819,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "【图片真值】画面=无标签粉色泵瓶（洗护形态）→美妆个护，替换food-drinks"
+   "evidence": "image-verified",
+   "note": "【图片】粉色泵瓶→美妆，替换food"
   },
   {
    "slug": "show-the-sauce-bottle-on-white",
@@ -3556,6 +3833,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3572,7 +3850,8 @@
    "tool_primary": "image-to-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "手机壳→补数码"
+   "evidence": "prompt-entity",
+   "note": "手机壳→+数码"
   },
   {
    "slug": "silk-scarf-unboxing",
@@ -3585,6 +3864,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3598,6 +3878,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3615,6 +3896,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3631,6 +3913,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3644,6 +3927,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3657,6 +3941,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3670,6 +3955,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3684,6 +3970,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3701,6 +3988,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3714,6 +4002,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3727,6 +4016,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3740,6 +4030,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3749,11 +4040,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "electronics",
+    "explainer"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "prompt-entity",
+   "note": "音箱功能走查；保留 explainer，补 electronics"
   },
   {
    "slug": "splash-the-pump-bottle",
@@ -3766,6 +4061,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3779,6 +4075,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3792,6 +4089,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3808,6 +4106,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3822,6 +4121,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3831,11 +4131,15 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "food-drinks",
+    "home-living"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "high",
+   "evidence": "image-verified",
+   "note": "【图片】咖啡罐冒蒸汽→家居+食品，替换beauty"
   },
   {
    "slug": "steel-bottle-on-white",
@@ -3850,7 +4154,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=钢制水瓶→健康饮水，替换food-drinks"
+   "evidence": "image-verified",
+   "note": "【图片】钢水瓶→健康，替换food"
   },
   {
    "slug": "stemless-earbud-desk-demo",
@@ -3863,6 +4168,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3876,6 +4182,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3897,7 +4204,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=辣酱瓶+辣椒→食品饮品，替换fashion/health"
+   "evidence": "image-verified",
+   "note": "【图片】辣酱→食品"
   },
   {
    "slug": "streamer-reaction-app",
@@ -3910,6 +4218,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3928,6 +4237,7 @@
    "tool_primary": "video-ads",
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "运动装备→+运动健身"
   },
   {
@@ -3941,6 +4251,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3954,6 +4265,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3967,6 +4279,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3980,6 +4293,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -3992,13 +4306,14 @@
    ],
    "placement_after": [
     "education",
-    "home-living",
-    "food-drinks"
+    "food-drinks",
+    "home-living"
    ],
    "tool_primary": "spokesperson-video",
    "change": "placement-fix",
    "confidence": "medium",
-   "note": "冻干零食袋→补食品饮品"
+   "evidence": "prompt-entity",
+   "note": "冻干零食袋；补 food-drinks"
   },
   {
    "slug": "study-room-notebook-routine",
@@ -4011,6 +4326,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4032,7 +4348,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=白色皮面球鞋→鞋靴"
+   "evidence": "image-verified",
+   "note": "【图片】白色球鞋→鞋靴"
   },
   {
    "slug": "sunset-lamp-room-glow-before-after",
@@ -4047,6 +4364,7 @@
    "tool_primary": "before-after-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4060,6 +4378,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4073,6 +4392,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4086,6 +4406,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4099,6 +4420,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4112,6 +4434,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4125,6 +4448,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4138,6 +4462,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4151,6 +4476,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4171,6 +4497,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
+   "evidence": "prompt-entity",
    "note": "磁吸充电宝→数码"
   },
   {
@@ -4185,6 +4512,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4198,6 +4526,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4211,6 +4540,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4226,6 +4556,7 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "托特包→配饰，替换fashion"
   },
   {
@@ -4236,11 +4567,15 @@
     "industries",
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "e-commerce",
+    "jewelry-accessories"
+   ],
    "tool_primary": null,
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "evidence": "prompt-entity",
+   "note": "托特包白底图→配饰(留e-comm)，替换fashion"
   },
   {
    "slug": "tote-with-space-for-the-offer",
@@ -4261,7 +4596,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=米色针织衫模特肖像→服装"
+   "evidence": "image-verified",
+   "note": "【图片】针织衫模特像→服装"
   },
   {
    "slug": "trail-belt-finish-reel",
@@ -4274,6 +4610,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4287,6 +4624,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4300,6 +4638,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4313,6 +4652,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4326,6 +4666,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4339,6 +4680,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4352,6 +4694,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4365,6 +4708,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4378,6 +4722,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4391,6 +4736,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4400,11 +4746,14 @@
    "placement_now": [
     "industries"
    ],
-   "placement_after": null,
+   "placement_after": [
+    "home-living"
+   ],
    "tool_primary": "product-video",
-   "change": null,
-   "confidence": null,
-   "note": null
+   "change": "placement-fix",
+   "confidence": "medium",
+   "evidence": "prompt-entity",
+   "note": "伞→家居日用，替换other"
   },
   {
    "slug": "unbranded-red-sauce-poured-over-tacos",
@@ -4417,6 +4766,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4432,6 +4782,7 @@
    "tool_primary": "product-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4453,7 +4804,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "【图片真值】画面=牛仔裤配白球鞋→鞋靴"
+   "evidence": "image-verified",
+   "note": "【图片】牛仔裤白球鞋→鞋靴"
   },
   {
    "slug": "walnut-organizer-desk",
@@ -4466,6 +4818,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4479,6 +4832,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4494,6 +4848,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4509,6 +4864,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4525,6 +4881,7 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "medium",
+   "evidence": "prompt-entity",
    "note": "水瓶→健康饮水"
   },
   {
@@ -4540,6 +4897,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4557,6 +4915,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4572,6 +4931,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4586,6 +4946,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4599,6 +4960,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4612,6 +4974,7 @@
    "tool_primary": "video-ads",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4625,6 +4988,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4638,6 +5002,7 @@
    "tool_primary": "image-to-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4653,6 +5018,7 @@
    "tool_primary": null,
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4666,6 +5032,7 @@
    "tool_primary": "spokesperson-video",
    "change": null,
    "confidence": null,
+   "evidence": null,
    "note": null
   },
   {
@@ -4682,7 +5049,8 @@
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
-   "note": "瑜伽垫→补运动健身"
+   "evidence": "prompt-entity",
+   "note": "瑜伽垫→+运动健身"
   },
   {
    "slug": "yogurt-demo-spoonful-tasted",
@@ -4697,7 +5065,8 @@
    "tool_primary": "product-video",
    "change": "placement-fix",
    "confidence": "high",
-   "note": "酸奶试吃→食品饮品"
+   "evidence": "prompt-entity",
+   "note": "酸奶→食品饮品"
   }
  ]
 }
