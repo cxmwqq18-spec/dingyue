@@ -93,3 +93,10 @@ PageSpeed 报告的问题**基本属实**，且根因集中、可修：
 - 部署插曲（记录供复盘）：① 首次部署在 origin 冒烟阶段因一个详情页别名渲染超时触发回滚 trap（按设计工作，重试通过）；② apply 事务初版未调大交互事务超时（P2028，未产生写入，已修为 `timeout: 120s`）；③ 事务提交后运行崩溃于 rollback 工件写出（脚本缺陷已修，工件经 `--write-rollback-only` 只读模式补齐，DB 无二次写入）。
 - 生产回归：`/templates` 200（12 video 卡、12/12 poster 走 640 WebP 变体、3 个 preload、分页 nav、无 gallery-cards 引用）；`?page=2`、`?page=2&kind=video`、`?page=999` 均 200；`/templates/video` 保持 308；旧 `/api/aidreamcapes/gallery-cards` 404；变体文件 `image/webp` + `max-age=31536000, immutable`（31.5KB/张）；sitemap 516 条 URL 不变且无 `?page=` 入口；媒体完整性审计（SSR 分页链遍历）328/328 详情页、578 资产、0 失败。
 - 待办：PSI 复测（移动端目标：LCP 显著低于 8.6s、图片改进项消除）后回填本节；观察 Cloudflare 缓存预热后 TTFB。
+
+### 2026-11-02 第二批（数字页码分页 + 字体并行发现）— 生产已上线（release 940f920ca01cfac3ec217101ea898c6b889c75f6）
+
+- **数字页码分页**（`1b940e8be`）：页底改为「Previous + 首三页/末三页/当前页±1 的数字锚点 + 省略号 + Next」（如 `1 2 3 … 14 15 16 … 26 27 28`），全部纯 SSR `<a>`，无 JS；`rel=prev/next` 保留在 Previous/Next 上（审计与枚举脚本依赖的锚不变）；当前页为 `aria-current="page"` 胶囊（白底，与全站选中态一致）；kind 过滤视图页数独立（如 video 20 页）且透传。
+- **字体并行发现**（`940f920ca`，经站点所有者批准的共享层修改）：`globals.css` 头三个 Google Fonts `@import`（渲染阻塞 CSS 解析后才能发现，串行拖慢移动端 FCP/LCP 1.5~2.5s）移至共享根布局 head 的 `preconnect ×2` + `stylesheet ×3`；family/weight 列表逐字不变，渲染输出不变，全站点同享。生产验证：head 中 2 preconnect + 3 font link、全部阻塞 CSS 中 `@import` 计数为 0。
+- 生产回归：`?page=15` 渲染 `1 2 3 … 14 15 16 … 26 27 28`、rel=next/prev 在位；poster preload 2 个不变。
+- **移动端剩余杠杆**（按预计收益排序，后续批次）：① 共享应用 CSS 508KB 原始/78KB gzip（render-blocking，含大量非 Aidreamcapes 主题包样式，需按站点拆分——共享层，需批准）；② head 16 个水合 script 的体积与「未用 JS」项；③ SSR TTFB ~0.6-0.75s。
