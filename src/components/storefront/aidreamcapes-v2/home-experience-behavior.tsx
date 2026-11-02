@@ -13,9 +13,17 @@ export function HomeExperienceBehavior() {
         const selected = control.dataset.hxSelectValue === value;
         control.setAttribute("aria-pressed", String(selected));
         control.classList.toggle("is-selected", selected);
+        control.classList.toggle("is-active", selected);
       });
       root.querySelectorAll<HTMLElement>("[data-hx-panel-group]").forEach((panel) => {
         if (panel.dataset.hxPanelGroup === group) panel.hidden = panel.dataset.hxPanelValue !== value;
+      });
+      // Autoplaying previews follow the visible panel; hidden ones stop and rewind.
+      root.querySelectorAll<HTMLVideoElement>("video[data-hx-preview]").forEach((video) => {
+        const panel = video.closest<HTMLElement>("[data-hx-panel-group]");
+        if (!panel || panel.hidden) { video.pause(); video.currentTime = 0; return; }
+        if (video.preload === "none") { video.preload = "auto"; video.load(); }
+        video.play().catch(() => { /* autoplay refused; the poster stays */ });
       });
     };
     const handleClick = (event: MouseEvent) => {

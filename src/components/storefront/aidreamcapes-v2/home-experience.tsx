@@ -137,13 +137,18 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
                     <div className="hx-flow-slot">
                       <div className="hx-flow-shot hx-flow-shot-video">
                         <span className="hx-flow-num" aria-hidden="true">3</span>
-                        {video ? <video aria-label={video.name ?? c[presenter.tab]} controls height={video.height} loop muted playsInline preload="none" poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src))} src={r.asset(video.src)} width={video.width} /> : <Img image={m[presenter.actorMedia]} r={r} />}
+                        {video ? <a className="hx-flow-video" href={`/ai-video-generation/${video.src.split("/").pop()?.replace(/\.mp4$/, "") ?? ""}`} aria-label={video.name ?? c[presenter.tab]}>
+                          <video aria-hidden="true" autoPlay={index === 0} data-hx-preview height={video.height} loop muted playsInline preload={index === 0 ? "auto" : "none"} poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src))} src={r.asset(video.previewSrc ?? video.src)} width={video.width} />
+                        </a> : <Img image={m[presenter.actorMedia]} r={r} />}
                         <div className="hx-flow-cap"><b>{c[showcase.cards.video]}</b><span>{c[showcase.cards.videoSub]}</span></div>
                       </div>
                     </div>
                   </div>
                   <div className="hx-flow-bar">
-                    <p className="hx-flow-quote">&#8220;{c[presenter.quote]}&#8221;<span className="hx-flow-who">{c[presenter.quoteWho]}</span></p>
+                    <div className="hx-flow-voice">
+                      <p className="hx-flow-quote">&#8220;{c[presenter.quote]}&#8221;<span className="hx-flow-who">{c[presenter.quoteWho]}</span></p>
+                      {video ? <audio className="hx-flow-audio" aria-label={video.name ?? c[presenter.tab]} controls preload="none" src={r.asset(video.src)} /> : null}
+                    </div>
                     <div className="hx-flow-action">
                       <WorkspaceEntryLink className="hx-button hx-action" data-action-block={after} data-home-cta="primary" href={primary}>{c.t013}</WorkspaceEntryLink>
                       <p className="hx-flow-spec">{c[showcase.spec]}</p>
