@@ -50,6 +50,8 @@ assert.equal(git("rev-parse", "origin/main"), commit, "Release must equal origin
 assert.equal(git("ls-remote", "origin", "refs/heads/main").split(/\s/)[0], commit, "GitHub main must contain this exact commit");
 const sourcePaths = ["package.json", "package-lock.json", "next.config.mjs", "next-env.d.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json", "tsconfig.typecheck.json", "eslint.config.mjs", "server.mjs", "data/saas-fonts.json", "data/saas-theme-packages.json", "data/saas-theme1-package.json", "prisma", "scripts", "src"];
 const productionAssetPaths = [
+  // Self-hosted font subsets referenced by the root layout stylesheet.
+  "public/fonts",
   "public/assets/sites/site_aidreamcapes/workspace/actors/voices",
   "public/media/site_aidreamcapes/workspace/actors/library",
   // Width variants for the first viewport and the hub card images. They are
