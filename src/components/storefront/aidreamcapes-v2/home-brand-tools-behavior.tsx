@@ -180,7 +180,7 @@ export function HomeBrandToolsBehavior() {
     root.addEventListener("input", input);
     root.addEventListener("close", close, true);
     document.addEventListener("visibilitychange", visibility);
-    return () => { stop(); observer.disconnect(); typeObserver.disconnect(); videoObserver.disconnect(); typeTimers.forEach(timer => clearTimeout(timer)); root.removeEventListener("click", click); root.removeEventListener("input", input); root.removeEventListener("close", close, true); document.removeEventListener("visibilitychange", visibility); };
+    return () => { stop(); observer.disconnect(); typeObserver.disconnect(); videoObserver.disconnect(); typeFields.forEach(el => { const timer = typeTimers.get(el); if (timer) clearTimeout(timer); }); root.removeEventListener("click", click); root.removeEventListener("input", input); root.removeEventListener("close", close, true); document.removeEventListener("visibilitychange", visibility); };
   }, []);
   return null;
 }
