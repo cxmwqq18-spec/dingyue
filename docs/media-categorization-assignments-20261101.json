@@ -1,11 +1,12 @@
 {
  "generated": "2026-11-02",
- "rev": 4.1,
+ "rev": 4.2,
  "verification": {
   "method": "title-label vs prompt-entity vs original-image",
   "labelsChecked": 328,
   "imagesViewed": 52,
-  "labelPromptMismatch": 0
+  "labelPromptMismatch": 0,
+  "postApplyAudit": "2026-11-02 production apply verified: 76/76 placements live, 8/8 labels live, 0 multi-owner slugs, 171 unique videos, sitemap URL set unchanged"
  },
  "totals": {
   "detailPages": 358,
@@ -1713,14 +1714,13 @@
    "placement_after": [
     "industries/jewelry-accessories",
     "occasions/black-friday",
-    "occasions/holidays",
     "occasions/sale-discount"
    ],
    "tool_primary": null,
    "change": "placement-fix",
    "confidence": "high",
    "evidence": "image-verified",
-   "note": "【图片】皮革旅行袋(非礼盒!)→配饰；BF/sale留、摘holidays"
+   "note": "【图片】皮革旅行袋(非礼盒!)→配饰；BF/sale留、摘holidays(画面无节日元素，执行时已按此落库)"
   },
   {
    "slug": "gift-guide-product-pack",
