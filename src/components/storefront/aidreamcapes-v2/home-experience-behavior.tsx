@@ -76,6 +76,19 @@ export function HomeExperienceBehavior() {
       if (trigger?.isConnected) trigger.focus({ preventScroll: true });
     };
     document.querySelectorAll<HTMLElement>("[data-hx-root]").forEach((root) => { root.dataset.hxReady = "true"; root.dataset.localReady = "true"; });
+    // Presenter panels are hidden with `hidden`, so lazy images and preload=none
+    // videos inside them only fetch at first tab switch. Warm them once the page
+    // is idle so switching tabs reveals every panel's media instantly.
+    const warmPresenterPanels = () => {
+      document.querySelectorAll<HTMLElement>('[data-hx-panel-group="presenter"]').forEach((panel) => {
+        panel.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((img) => { img.loading = "eager"; });
+        panel.querySelectorAll<HTMLVideoElement>("video[data-hx-preview]").forEach((video) => {
+          if (video.preload !== "auto") { video.preload = "auto"; video.load(); }
+        });
+      });
+    };
+    if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(() => warmPresenterPanels(), { timeout: 3000 });
+    else window.setTimeout(warmPresenterPanels, 1200);
     document.addEventListener("click", handleClick);
     document.addEventListener("close", handleClose, true);
     return () => {
