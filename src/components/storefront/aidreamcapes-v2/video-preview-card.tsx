@@ -87,6 +87,26 @@ function observePreviewVisibility(element: Element, callback: (visible: boolean)
   };
 }
 
+// Playback and clip prefetching are decoration. Gating them on the window
+// load event keeps the network pipe free for the gallery's LCP poster during
+// the first seconds on throttled mobile connections; on fast connections the
+// delay is a fraction of a second. A timeout bounds the wait for visitors
+// whose load event stalls on a slow third-party asset.
+function runAfterWindowLoad(run: () => void): void {
+  if (document.readyState === "complete") {
+    run();
+    return;
+  }
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const done = () => {
+    window.removeEventListener("load", done);
+    if (timer !== undefined) clearTimeout(timer);
+    run();
+  };
+  window.addEventListener("load", done, { once: true });
+  timer = setTimeout(done, 2500);
+}
+
 export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { media: Adc2VideoPreviewMedia; ariaLabel?: string; showDuration?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -132,20 +152,32 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false }: { m
       else video.addEventListener("loadeddata", play, { once: true });
     };
 
+    // LCP gating: the latest visibility is remembered while the load gate is
+    // closed, so a card that is already on screen starts previewing the
+    // moment the gate opens, and one scrolled away meanwhile does not.
+    let latestVisible = false;
+    let ready = false;
+    runAfterWindowLoad(() => {
+      ready = true;
+      if (latestVisible) activate();
+    });
+
     const stopObserving = observePreviewVisibility(video, (visible) => {
-      if (visible) activate();
-      else release();
+      latestVisible = visible;
+      if (visible) {
+        if (ready) activate();
+      } else release();
     });
 
     // Cache-warm the clip one screen ahead of the viewport so playback starts
     // from the browser cache instead of a cold stream.
     let stopPrefetching: (() => void) | undefined;
     if (media.previewSrc) {
-      if (typeof IntersectionObserver === "undefined") prefetchClip(media.previewSrc);
+      if (typeof IntersectionObserver === "undefined") runAfterWindowLoad(() => prefetchClip(media.previewSrc!));
       else {
         const prefetchObserver = new IntersectionObserver((entries) => {
           if (entries.some((entry) => entry.isIntersecting)) {
-            prefetchClip(media.previewSrc!);
+            runAfterWindowLoad(() => prefetchClip(media.previewSrc!));
             prefetchObserver.disconnect();
             stopPrefetching = undefined;
           }

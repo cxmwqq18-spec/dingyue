@@ -69,6 +69,13 @@ export function ExampleDirectory({ data, r }: { data: V2Data; r: V2Resolvers }) 
             ? <span key={`page-${entry}`} className={styles.pageNum} aria-current="page">{entry}</span>
             : <a key={`page-${entry}`} className={styles.pageNum} href={galleryHref(entry)}>{entry}</a>)}
         {gallery.page < gallery.totalPages ? <a className="btn btn-primary" href={galleryHref(gallery.page + 1)} rel="next">Next</a> : null}
+        {/* A plain GET form: the browser navigates to /templates?page=N without
+          any script, and the kind filter rides along as a hidden field. */}
+        <form className={styles.pageJump} method="get" action={r.href("/templates")}>
+          {gallery.kind ? <input type="hidden" name="kind" value={gallery.kind} /> : null}
+          <input name="page" type="number" inputMode="numeric" min={1} max={gallery.totalPages} defaultValue={gallery.page} aria-label={`Go to page, 1 to ${gallery.totalPages}`} />
+          <button type="submit" className="btn btn-ghost">Go</button>
+        </form>
       </nav> : null}
     </div></section>
     {data.faq.length ? <Faq items={data.faq} r={r} /> : null}
