@@ -1,3 +1,4 @@
+import "../../app/aidreamcapes-video-topic-detail.css";
 /* eslint-disable @next/next/no-img-element */
 
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles, X } from "lucide-react";

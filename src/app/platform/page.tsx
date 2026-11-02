@@ -1,3 +1,4 @@
+import "../aidreamcapes-admin-surfaces.css";
 import { Suspense } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";

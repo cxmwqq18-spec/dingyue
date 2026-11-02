@@ -1,5 +1,6 @@
 "use client";
 
+import "../../app/aidreamcapes-account-surfaces.css";
 // Customer media URLs are private account endpoints, so keep them as direct browser requests.
 /* eslint-disable @next/next/no-img-element */
 

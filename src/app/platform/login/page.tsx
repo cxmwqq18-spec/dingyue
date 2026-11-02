@@ -1,3 +1,4 @@
+import "../../aidreamcapes-admin-surfaces.css";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { AdminLoginScreen } from "@/components/auth/admin-login-screen";

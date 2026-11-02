@@ -1,0 +1,111 @@
+/* Aidreamcapes video-topic detail themes (ads-testing / brand-creator / image-theme
+ * detail layouts). Split out of globals.css; loaded via video-topic-landing and
+ * ecommerce-main-image-detail. */
+/* Aidreamcapes video detail themes: keep the shared information architecture
+ * while giving each intent a distinct visual accent for scanning and wayfinding. */
+.aidreamcapes-ads-testing-detail,
+.aidreamcapes-brand-creator-detail {
+  --aidreamcapes-detail-accent: #8b5cf6;
+  --aidreamcapes-detail-accent-strong: #ec4899;
+  --aidreamcapes-detail-accent-soft: rgba(139, 92, 246, 0.14);
+  --aidreamcapes-detail-panel: #14111d;
+}
+
+html:has(.aidreamcapes-ads-testing-detail),
+html:has(.aidreamcapes-brand-creator-detail) {
+  color-scheme: dark;
+}
+
+.aidreamcapes-ads-testing-detail[data-aidreamcapes-detail-variant="conversion-seeding-detail"] {
+  --aidreamcapes-detail-accent: #22d3ee;
+  --aidreamcapes-detail-accent-strong: #3b82f6;
+  --aidreamcapes-detail-accent-soft: rgba(34, 211, 238, 0.13);
+  --aidreamcapes-detail-panel: #0e1b25;
+}
+
+.aidreamcapes-ads-testing-detail[data-aidreamcapes-detail-variant="promo-category-detail"] {
+  --aidreamcapes-detail-accent: #f59e0b;
+  --aidreamcapes-detail-accent-strong: #f97316;
+  --aidreamcapes-detail-accent-soft: rgba(245, 158, 11, 0.14);
+  --aidreamcapes-detail-panel: #21180d;
+}
+
+.aidreamcapes-brand-creator-detail[data-aidreamcapes-brand-creator-key$="founder-update"] {
+  --aidreamcapes-detail-accent: #34d399;
+  --aidreamcapes-detail-accent-strong: #14b8a6;
+  --aidreamcapes-detail-accent-soft: rgba(52, 211, 153, 0.13);
+  --aidreamcapes-detail-panel: #0e211d;
+}
+
+.aidreamcapes-brand-creator-detail[data-aidreamcapes-brand-creator-key$="multilingual-video"] {
+  --aidreamcapes-detail-accent: #60a5fa;
+  --aidreamcapes-detail-accent-strong: #22d3ee;
+  --aidreamcapes-detail-accent-soft: rgba(96, 165, 250, 0.13);
+  --aidreamcapes-detail-panel: #0e1b2a;
+}
+
+.aidreamcapes-brand-creator-detail[data-aidreamcapes-brand-creator-key$="cinematic-product-film"] {
+  --aidreamcapes-detail-accent: #fb7185;
+  --aidreamcapes-detail-accent-strong: #f59e0b;
+  --aidreamcapes-detail-accent-soft: rgba(251, 113, 133, 0.12);
+  --aidreamcapes-detail-panel: #241318;
+}
+
+.aidreamcapes-brand-creator-detail[data-aidreamcapes-brand-creator-key$="trending-audio-sync"] {
+  --aidreamcapes-detail-accent: #c084fc;
+  --aidreamcapes-detail-accent-strong: #f472b6;
+  --aidreamcapes-detail-accent-soft: rgba(192, 132, 252, 0.14);
+  --aidreamcapes-detail-panel: #211329;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-eyebrow,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-eyebrow {
+  color: var(--aidreamcapes-detail-accent) !important;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-hero-glow,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-hero-glow {
+  background-color: var(--aidreamcapes-detail-accent-soft) !important;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-hero-frame,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-hero-frame {
+  border-color: color-mix(in srgb, var(--aidreamcapes-detail-accent) 42%, transparent) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--aidreamcapes-detail-accent) 14%, #171225), #0d1020 58%, color-mix(in srgb, var(--aidreamcapes-detail-accent-strong) 10%, #121018)) !important;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-platform-card,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-platform-card {
+  border-color: color-mix(in srgb, var(--aidreamcapes-detail-accent) 42%, transparent) !important;
+  background: var(--aidreamcapes-detail-panel) !important;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-final-cta,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-final-cta {
+  border-color: color-mix(in srgb, var(--aidreamcapes-detail-accent) 48%, transparent) !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--aidreamcapes-detail-accent) 18%, #191329), #101321 58%, color-mix(in srgb, var(--aidreamcapes-detail-accent-strong) 12%, #111018)) !important;
+}
+
+.aidreamcapes-ads-testing-detail .aidreamcapes-detail-primary-action,
+.aidreamcapes-brand-creator-detail .aidreamcapes-detail-primary-action {
+  background: linear-gradient(90deg, var(--aidreamcapes-detail-accent), var(--aidreamcapes-detail-accent-strong), #3b82f6) !important;
+}
+
+@keyframes aidreamcapes-commerce-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.aidreamcapes-image-theme-detail [data-commerce-reveal] {
+  animation: aidreamcapes-commerce-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.aidreamcapes-image-theme-detail [data-commerce-reveal="canvas"] {
+  animation-delay: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aidreamcapes-image-theme-detail [data-commerce-reveal] {
+    animation: none;
+  }
+}

@@ -1,3 +1,4 @@
+import "../../app/aidreamcapes-video-topic-detail.css";
 import { ArrowRight, Check, ChevronRight, ShieldCheck, Sparkles } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { AidreamcapesImageThemeGallery, type AidreamcapesImageThemeGalleryMode } from "@/components/storefront/aidreamcapes-image-theme-gallery";

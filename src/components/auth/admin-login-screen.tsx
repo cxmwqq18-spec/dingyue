@@ -1,3 +1,4 @@
+import "../../app/aidreamcapes-admin-surfaces.css";
 import Link from "next/link";
 import type { ReactNode } from "react";
 

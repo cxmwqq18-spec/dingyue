@@ -1,5 +1,6 @@
 "use client";
 
+import "../../app/aidreamcapes-guest-workspace.css";
 import { useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";

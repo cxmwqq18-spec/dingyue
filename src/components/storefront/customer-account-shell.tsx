@@ -1,5 +1,6 @@
 "use client";
 
+import "../../app/aidreamcapes-account-surfaces.css";
 // Account avatars are private customer media URLs; render them directly.
 /* eslint-disable @next/next/no-img-element */
 
