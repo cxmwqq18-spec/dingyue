@@ -118,3 +118,13 @@ PageSpeed 报告的问题**基本属实**，且根因集中、可修：
 - **生产验证**：/templates 20 卡/页；video-hub page1=20、page2=16（36 总量切片正确）；spokesperson page3=13（53 总量）；beauty-skincare 20 卡其中 17 视频卡（视频优先生效）且全部带 10s 预览；退役 API 404；sitemap 516 条无 `?page=`；release 冒烟全过。
 - **待办**：PSI 复测回填；「首页默认可预览播放 10s」——当前首页 picker 38 卡全部为图片卡（0 视频），若指站点首页需内容级 manifest 替换部分卡片为带视频案例，待用户确认。
 - 剩余性能杠杆不变：① 共享 CSS 拆分（render-blocking ~2,030ms / 未使用 CSS 117KB）；② 水合 JS 193KB；③ TTFB ~0.6-0.75s。
+
+### 2026-11-02 第五批（hub 全量视频目录 + 全站 poster 变体覆盖 + picker 卡渲染推迟）— 生产已上线（release 1f962738bf4020f66f46907e237767292c625243）
+
+- **背景**：PSI 移动端复测 75→83；用户指出 /ai-video-generation 只有 36 条精选（而非全量 234 条），且其他列表页评分低，要求列表页优化同步。
+- **视频中枢全量目录区**（用户选定方案：保留精选 picker + 新增全量分页区）：`AidreamcapesTemplateRenderer` 对 video-hub 行计算 `hubGallery`（`listAidreamcapesExampleGalleryEntries` 过滤 kind=video，20/页），挂在精选 picker 之后（orderedBlocks afterBlocks["picker"]，不受行 blockOrder 影响）。**独立 `?galleryPage=N` 参数**——DiscretePager 增加 `pageParam` 选项，与精选区的 `?page=N` 互不覆盖。
+- **全站 poster 变体覆盖**（本轮最大性能项）：VisualPicker、CaseCard（hub examples/detail 相关案例）、VideoPlayer、HeroMedia loop 的视频 poster 此前全部直出**原始尺寸**文件，现统一经 `aidreamcapesV2ResponsivePosterSrc` 映射 640px WebP 变体。生产验证：/ai-video-generation 85/85、spokesperson-video 20/20 全部走变体（改前 0）。
+- **`.v-pick-card` 加 `content-visibility:auto; contain-intrinsic-size:auto 320px`**：hub picker 网格与 /templates 卡片（.tc）同等获得屏外渲染/资源推迟。
+- **冒烟扩展**：`/ai-video-generation?galleryPage=2` 断言全量目录区存在、≤20 卡、pager 链接 galleryPage=3。
+- 生产验证：catalog p1/p2 切片内容不同（balcony-plant… → home-sofa…）；?page 与 ?galleryPage 互不干扰；sitemap 516 条不变。
+- 待办：PSI 复测回填（templates 83 分基线 + hub/tool 页预期显著改善）；共享 CSS 拆分仍待用户批准（render-blocking 最大项）。
