@@ -47,7 +47,7 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
         <div className="adc-tools-import-result" id="adc-tools-import-result">
           <div className="adc-tools-import-status" role="status"><span aria-hidden="true">✓</span><span data-tools-import-before>{c.importExample}</span><span data-tools-import-after hidden>{c.importStatus ?? c.reviewProduct}</span></div>
           <p className="adc-tools-import-caption"><b>{demo.importTitle}</b><span>{c.importNoteShort}</span><em>{demo.importCount}</em></p>
-          <div className="adc-tools-import-gallery">{demo.importGallery.map((entry, index) => <span className="adc-tools-gallery-slot" key={entry.image.src}><span className="adc-tools-gallery-frame">{openImage(index === 0 ? "product" : `gallery-${index}`, entry.image)}<i className="adc-tools-check" aria-hidden="true">✓</i></span><span className="adc-tools-gallery-label">{entry.label}</span></span>)}</div>
+          <div className="adc-tools-import-gallery">{demo.importGallery.map((entry, index) => <span className="adc-tools-gallery-slot" key={entry.image.src}><span className="adc-tools-gallery-frame">{openImage(`gallery-${index}`, entry.image)}<i className="adc-tools-check" aria-hidden="true">✓</i></span><span className="adc-tools-gallery-label">{entry.label}</span></span>)}</div>
         </div>
       </div> : <div className="adc-tools-import" data-imported="false">
         <div className="adc-tools-url-field"><Icon kind="link" /><span>{c.urlExample}</span><button type="button" data-tools-import aria-label={c.previewImport} aria-pressed="false" aria-controls="adc-tools-import-result"><Icon kind="arrow" /></button></div>
@@ -63,8 +63,8 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
           <input type="hidden" name="tool" defaultValue="video-ads" data-tools-tool />
           <input type="hidden" name="tool_id" defaultValue="image_generator" disabled data-tools-image-tool />
           <div className="adc-tools-tabs" role="group" aria-label={c.modeLabel}>{demo.tabs.map((tab, index) => <button type="button" data-tools-mode={tab.value} aria-pressed={index === 0} key={tab.value}><Icon kind={index === 0 ? "spark" : "image"} />{tab.label}</button>)}</div>
-          <label className="sr-only" htmlFor="adc-tools-prompt">{c.promptLabel}</label><textarea id="adc-tools-prompt" name="prompt" maxLength={2000} rows={4} defaultValue={c.promptValue} placeholder={c.promptPlaceholder} required data-tools-type-target={demo.ideaTyping ?? ""} />
-          <output className="adc-tools-count" htmlFor="adc-tools-prompt"><span data-tools-count>{c.promptValue.length}</span> / 2000</output>
+          <input type="hidden" name="prompt" defaultValue={c.promptValue} />
+          <Typing text={demo.ideaTyping ?? c.promptValue} className="adc-tools-prompt-display" />
           <div className="adc-tools-compose-controls"><details><summary><Icon kind="image" />{c.productLabel}</summary><div className="adc-tools-popover"><Img image={demo.product} r={r} /><p>{c.sampleProduct}</p></div></details><details><summary><Icon kind="person" />{c.avatarLabel}</summary><div className="adc-tools-popover"><Img image={demo.presenter} r={r} /><p>{c.samplePresenter}</p></div></details>
             <label><span className="sr-only">{c.formatLabel}</span><select name="aspect" defaultValue="9:16">{demo.aspects.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}</select></label>
             <label data-tools-duration><span className="sr-only">{c.durationLabel}</span><select name="duration" defaultValue="15">{demo.durations.map(o => <option value={o.value} key={o.value}>{o.label}</option>)}</select></label>
@@ -94,7 +94,7 @@ export function HomeBrandTools({ items, demo, header, r }: { items: HomeBrandToo
           <span className="adc-tools-transform" aria-hidden="true"><Icon kind="arrow" /></span>
           <span className="adc-tools-i2v-frame adc-tools-i2v-out"><Clip video={demo.imageToVideo.video} r={r} /><span className="adc-tools-chip">{demo.imageToVideo.videoLabel}</span></span>
         </div>
-        <p className="adc-tools-promptbar"><Icon kind="spark" /><Typing text={demo.imageToVideo.promptTyping} /><span className="adc-tools-caret" aria-hidden="true" /></p>
+        <p className="adc-tools-promptbar"><Icon kind="spark" />{demo.imageToVideo.promptTyping}</p>
       </div> : <div className="adc-tools-image-demo">
         <div>{openImage("product", demo.product)}<span>{c.photoLabel}</span></div><span className="adc-tools-transform" aria-hidden="true"><Icon kind="arrow" /></span>
         <div className="adc-tools-result-frame">{openImage("presenter", demo.presenter)}<button className="adc-tools-play" type="button" data-tools-motion aria-label={c.playMotion} aria-pressed="false" data-play-label={c.playMotion} data-pause-label={c.pauseMotion}><Icon kind="play" /><span className="adc-tools-pause" aria-hidden="true">Ⅱ</span></button><span>{c.motionLabel}</span></div>

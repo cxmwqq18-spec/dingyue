@@ -9,7 +9,7 @@ export function HomeBrandToolsBehavior() {
     const root = document.querySelector<HTMLElement>("[data-home-brand-tools]");
     if (!root) return;
     const form = root.querySelector<HTMLFormElement>("[data-tools-form]");
-    const prompt = form?.querySelector<HTMLTextAreaElement>('textarea[name="prompt"]');
+    const prompt = form?.querySelector<HTMLInputElement>('input[name="prompt"]');
     const mediaDialog = root.querySelector<HTMLDialogElement>("#adc-tools-media-dialog");
     const briefDialog = root.querySelector<HTMLDialogElement>("#adc-tools-brief-dialog");
     const previousFocus = new WeakMap<HTMLDialogElement, HTMLElement>();
@@ -112,7 +112,6 @@ export function HomeBrandToolsBehavior() {
     };
     const input = (event: Event) => {
       const target = event.target;
-      if (target === prompt) { const count = root.querySelector<HTMLElement>("[data-tools-count]"); if (count) count.textContent = String(prompt?.value.length ?? 0); }
       if (target instanceof HTMLInputElement && target.hasAttribute("data-tools-compare")) root.querySelector<HTMLElement>(".adc-tools-compare")?.style.setProperty("--compare", `${target.value}%`);
     };
     const close = (event: Event) => { if (event.target instanceof HTMLDialogElement) previousFocus.get(event.target)?.focus({ preventScroll: true }); };
@@ -126,7 +125,6 @@ export function HomeBrandToolsBehavior() {
     const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const typeFields = [...root.querySelectorAll<HTMLElement>("[data-tools-type]")];
     const typeTimers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
-    const promptField = root.querySelector<HTMLTextAreaElement>("[data-tools-type-target]");
     const typeInto = (el: HTMLElement) => {
       const text = el.dataset.toolsType ?? "";
       const out = el.querySelector<HTMLElement>("[data-tools-type-text]");
@@ -146,27 +144,6 @@ export function HomeBrandToolsBehavior() {
     };
     const typeObserver = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) typeInto(entry.target as HTMLElement); }), { threshold: 0.4 });
     typeFields.forEach(el => typeObserver.observe(el));
-    if (promptField) {
-      const original = promptField.value;
-      let started = false;
-      const promptObserver = new IntersectionObserver(entries => {
-        if (started || !entries.some(entry => entry.isIntersecting)) return;
-        started = true;
-        promptObserver.disconnect();
-        if (reduceMotion) return;
-        let i = 0;
-        const tick = () => {
-          if (document.activeElement === promptField) return;
-          i += 1;
-          promptField.value = original.slice(0, i);
-          const count = root.querySelector<HTMLElement>("[data-tools-count]");
-          if (count) count.textContent = String(i);
-          if (i < original.length) setTimeout(tick, 45 + Math.random() * 45);
-        };
-        setTimeout(tick, 600);
-      }, { threshold: 0.4 });
-      promptObserver.observe(promptField);
-    }
     // Motion gate: autoplay muted clips only while they are on screen.
     const videos = [...root.querySelectorAll<HTMLVideoElement>("[data-tools-video]")];
     const videoObserver = new IntersectionObserver(entries => entries.forEach(entry => {
