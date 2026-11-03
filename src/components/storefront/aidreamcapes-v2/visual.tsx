@@ -10,7 +10,6 @@ import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./par
 import { Adc2VideoPreview } from "./video-preview-card";
 import { DiscretePager } from "./template-directory";
 import { MEDIA_PAGE_SIZE, type V2PickerPagination } from "./types";
-import { AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
 import type {
   V2AfterMock,
   V2Resolvers,
@@ -54,10 +53,11 @@ function visualRatio(image: V2VisualImage): string {
 }
 
 export function VisualStrip({ visual, r, includeOverview = false, heading, lead }: { visual: V2Visual; r: V2Resolvers; includeOverview?: boolean; heading?: string; lead?: string }) {
-  if (!visual.strip.length && !(includeOverview && visual.overview)) return <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />;
+  // The v2 visual styles ride the shared theme stylesheet (see shell.tsx);
+  // re-injecting them here duplicated the payload once per section.
+  if (!visual.strip.length && !(includeOverview && visual.overview)) return null;
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       <section aria-label="Product examples" className="sec v-strip-section">
         <div className="wrap">
           {heading ? <div className="v-strip-heading"><h2>{heading}</h2>{lead ? <p>{lead}</p> : null}</div> : null}
@@ -121,7 +121,6 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
   ) : null;
   return (
     <Section id={sectionId} eyebrow={eyebrow ?? copyLabel(r, "How it works")} lead={stepsLead || visual.titles?.m2?.lead} title={stepsH2 || visual.titles?.m2?.h2 || "Three steps"}>
-      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}` }} />
       {actorStepStyles}
       {actions ? <style dangerouslySetInnerHTML={{ __html: `
         .adc2 .v-steps [data-home-local],.adc2 .v-steps a[data-home-cta]{cursor:pointer;text-decoration:none;pointer-events:auto}
@@ -209,7 +208,6 @@ export function VisualFreshLook({ heading, lead, items, button, href, r }: {
   if (!items.length) return null;
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: `${AIDREAMCAPES_V2_VISUAL_CSS}\n${AIDREAMCAPES_V2_VISUAL_CSS_POLISH}\n.adc2 .v-fresh-look{padding-block:72px;border-top:1px solid var(--line)}.adc2 .v-fresh-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}.adc2 .v-fresh-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px;border:1px solid var(--line-2);border-radius:20px;background:#08080a}.adc2 .v-fresh-media figure{position:relative;min-width:0;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#111}.adc2 .v-fresh-media img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}.adc2 .v-fresh-media figcaption{position:absolute;left:10px;bottom:10px;padding:4px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(5,5,5,.78);font-size:12px;font-weight:600}.adc2 .v-fresh-copy{max-width:540px}.adc2 .v-fresh-copy h2{max-width:520px}.adc2 .v-fresh-copy p{margin-top:16px;color:var(--ink-2);font-size:18px;line-height:1.65}.adc2 .v-fresh-copy .btn{margin-top:24px}@media(max-width:760px){.adc2 .v-fresh-look{padding-block:52px}.adc2 .v-fresh-grid{grid-template-columns:minmax(0,1fr);gap:28px}.adc2 .v-fresh-copy{max-width:none}}` }} />
       <section aria-label={heading} className="sec v-fresh-look">
         <div className="wrap">
           <div className="v-fresh-grid">

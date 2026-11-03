@@ -1462,8 +1462,8 @@ function publicRuntimeCacheMaxEntries(): number {
 }
 
 function publicRuntimeCacheTtlMs(): number {
-  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 900_000);
-  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 900_000;
+  const value = Number(process.env.STOREFRONT_SNAPSHOT_CACHE_TTL_MS ?? 3_600_000);
+  return Number.isFinite(value) && value >= 0 ? Math.floor(value) : 3_600_000;
 }
 
 /** Load the state once and store it under the revision-keyed entry. Concurrent

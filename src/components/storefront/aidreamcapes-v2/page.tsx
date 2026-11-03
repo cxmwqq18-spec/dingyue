@@ -16,7 +16,6 @@ import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Defin
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { AIDREAMCAPES_V2_HOME_CSS } from "./styles";
 import { AidreamcapesV2PricingSection } from "./pricing";
 import { HomeExperienceSection } from "./home-experience";
 import { HomeExperienceBehavior } from "./home-experience-behavior";
@@ -200,7 +199,6 @@ function HomePage({ data, r }: Props) {
   const relatedGroups = list<{ title: string; links: { label: string; href: string }[] }>(data.relatedGroups);
   const sellerScenarios = data.sellerScenarios as V2SellerScenarioBlock | undefined;
   return <div className={`home-v2${experience ? " home-v4" : ""}`}>
-    <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_HOME_CSS }} />
     {orderedBlocks(data, r, [
     ["hero",
       <section className="hero hero-center">

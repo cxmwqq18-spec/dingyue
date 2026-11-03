@@ -8,7 +8,7 @@ import type { AidreamcapesPartnerBadge, AidreamcapesV2Navigation, ThemeNavLink, 
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
 import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
-import { AIDREAMCAPES_V2_CARD_CSS, AIDREAMCAPES_V2_CSS, AIDREAMCAPES_V2_VISUAL_CSS, AIDREAMCAPES_V2_VISUAL_CSS_POLISH } from "./styles";
+import { aidreamcapesV2ThemeCssHref } from "./styles";
 import type { V2Resolvers } from "./types";
 import { copyLabel } from "./types";
 import { homePresentationValue, type HomeExperienceData } from "./home-experience-types";
@@ -236,7 +236,12 @@ export function AidreamcapesV2Shell({ navigation, r, children, mainId = "main-co
   }
   return (
     <div className={`adc2${homeExperience?.language === "zh-CN" ? " adc-home-locale" : ""}`} lang={homeExperience?.language}>
-      <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS + AIDREAMCAPES_V2_CARD_CSS + AIDREAMCAPES_V2_VISUAL_CSS + AIDREAMCAPES_V2_VISUAL_CSS_POLISH }} />
+      {/* The v2 theme ships as one shared, content-hashed stylesheet instead of
+        * inline <style> markup: inline server styles inside client boundaries
+        * were serialized into the RSC flight payload as well as the markup,
+        * duplicating ~135KB of CSS in every document. React hoists the
+        * stylesheet link into <head>, keeping first-paint semantics intact. */}
+      <link href={aidreamcapesV2ThemeCssHref()} precedence="high" rel="stylesheet" />
       <StorefrontSpeculationRules />
       <AidreamcapesV2Header headerAccount={headerAccount} headerCustomer={headerCustomer} navigation={navigation} r={r} siteId={siteId} />
       <main

@@ -6,7 +6,7 @@ import { ClickMegaMenu } from "@/components/storefront/click-mega-menu";
 import { AidreamcapesZipDesktopNavigation, AidreamcapesZipMobileNavigation } from "@/components/storefront/aidreamcapes-zip-navigation";
 import { AidreamcapesV2Header } from "@/components/storefront/aidreamcapes-v2/shell";
 import { AidreamcapesV2MenuBehavior } from "@/components/storefront/aidreamcapes-v2/behavior";
-import { AIDREAMCAPES_V2_CSS } from "@/components/storefront/aidreamcapes-v2/styles";
+import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
 import { DreamShootMegaToolsPanel, getToolBlocksForMenu } from "@/components/storefront/dreamshoot-tools-mega-menu";
 import { HeaderPhotoPackageMegaPanel, HeaderSaveTheDateMegaPanel, HeaderVideoGenerationMegaPanel, type HeaderPhotoPackageMegaGroup, type HeaderVideoGenerationTopic } from "@/components/storefront/header-mega-menu-panels";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
@@ -297,7 +297,7 @@ export function CustomerShellHeader({
   if (hasPublishedNavigation && aidreamcapesPublishedNavigation) {
     return (
       <div className="adc2" data-storefront-global-header="">
-        <style dangerouslySetInnerHTML={{ __html: AIDREAMCAPES_V2_CSS }} />
+        <link href={aidreamcapesV2ThemeCssHref()} precedence="high" rel="stylesheet" />
         <AidreamcapesV2Header
           headerAccount={{ href: accountHref, label: isSpanishXby ? "Iniciar sesion" : "Log in" }}
           headerCustomer={{ balance: customer.balance, email: customer.email, name: customer.name, profile: customer.profile }}

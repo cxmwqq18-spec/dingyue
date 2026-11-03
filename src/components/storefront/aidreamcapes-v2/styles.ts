@@ -238,3 +238,36 @@ export const AIDREAMCAPES_V2_CARD_CSS = `
 .adc2 .prompt-chip{padding:6px 10px;font-size:12.5px}
 }
 `;
+
+/** The "fresh look" visual variant's extra rules, extracted from visual.tsx so
+ * every v2 theme rule ships through the single shared stylesheet route. */
+export const AIDREAMCAPES_V2_FRESH_CSS = `
+.adc2 .v-fresh-look{padding-block:72px;border-top:1px solid var(--line)}.adc2 .v-fresh-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}.adc2 .v-fresh-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px;border:1px solid var(--line-2);border-radius:20px;background:#08080a}.adc2 .v-fresh-media figure{position:relative;min-width:0;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:#111}.adc2 .v-fresh-media img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}.adc2 .v-fresh-media figcaption{position:absolute;left:10px;bottom:10px;padding:4px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(5,5,5,.78);font-size:12px;font-weight:600}.adc2 .v-fresh-copy{max-width:540px}.adc2 .v-fresh-copy h2{max-width:520px}.adc2 .v-fresh-copy p{margin-top:16px;color:var(--ink-2);font-size:18px;line-height:1.65}.adc2 .v-fresh-copy .btn{margin-top:24px}@media(max-width:760px){.adc2 .v-fresh-look{padding-block:52px}.adc2 .v-fresh-grid{grid-template-columns:minmax(0,1fr);gap:28px}.adc2 .v-fresh-copy{max-width:none}}`;
+
+/** Content-hashed href for the shared v2 theme stylesheet (/themes route).
+ * The immutable cache busts itself whenever any theme constant changes. */
+const AIDREAMCAPES_V2_THEME_CSS_SOURCE = AIDREAMCAPES_V2_CSS
+  + AIDREAMCAPES_V2_CARD_CSS
+  + AIDREAMCAPES_V2_HOME_CSS
+  + AIDREAMCAPES_V2_VISUAL_CSS
+  + AIDREAMCAPES_V2_VISUAL_CSS_POLISH
+  + AIDREAMCAPES_V2_FRESH_CSS;
+
+function themeCssHash(): string {
+  let hash = 5381;
+  for (let index = 0; index < AIDREAMCAPES_V2_THEME_CSS_SOURCE.length; index += 1) {
+    hash = ((hash << 5) + hash + AIDREAMCAPES_V2_THEME_CSS_SOURCE.charCodeAt(index)) >>> 0;
+  }
+  return hash.toString(36);
+}
+
+let themeCssHrefCache: string | undefined;
+
+export function aidreamcapesV2ThemeCssHref(): string {
+  themeCssHrefCache ??= "/themes/aidreamcapes-v2.css?v=" + themeCssHash();
+  return themeCssHrefCache;
+}
+
+export function aidreamcapesV2ThemeCssEtag(): string {
+  return '"' + themeCssHash() + '"';
+}
