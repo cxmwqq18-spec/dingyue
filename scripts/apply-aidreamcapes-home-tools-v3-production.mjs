@@ -18,10 +18,10 @@ import { loadRuntimeEnv } from './load-runtime-env.mjs';
 import { assertAllowedSite, assertDatabaseTarget } from './lib/database-target.mjs';
 
 loadRuntimeEnv();
+const applying = process.argv.includes('--apply-production');
 assertDatabaseTarget({ expectedTarget: 'production', requireProductionConfirmation: applying, productionConfirmed: applying });
 const siteId = assertAllowedSite('site_aidreamcapes');
 const pageId = 'site_aidreamcapes_home';
-const applying = process.argv.includes('--apply-production');
 const stable = value => Array.isArray(value) ? value.map(stable) : value && typeof value === 'object' ? Object.fromEntries(Object.keys(value).sort().map(key => [key, stable(value[key])])) : value;
 const hash = value => crypto.createHash('sha256').update(value === undefined ? '<undefined>' : JSON.stringify(stable(value))).digest('hex');
 const db = new PrismaClient();
