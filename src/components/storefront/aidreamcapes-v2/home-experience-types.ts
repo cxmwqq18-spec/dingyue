@@ -18,6 +18,16 @@ export type HomeWorkflowDemo = {
   defaultDuration?: string;
 };
 
+/** "One platform, infinite possibilities": workspace capability rows with looping demos.
+ * Copy lives in the block copy record under wf* keys; templates reference page media. */
+export type HomeWorkspaceFlowDemo = {
+  version: 1;
+  /** Template cards: `video` keys resolve against HomeExperienceData.videos, `media` keys against HomeExperienceData.media. Exactly one of the two per card. */
+  templates: { id: string; label: string; video?: string; media?: string }[];
+  /** Key into HomeExperienceData.videos for the Subtitle Studio demo clip. */
+  captionsVideo: string;
+};
+
 export const HOME_EXPERIENCE_KINDS = ["hero", "picker", "steps", "features", "audience", "reviews"] as const;
 export type HomeExperienceKind = (typeof HOME_EXPERIENCE_KINDS)[number];
 export type HomeExperienceData = {
@@ -47,6 +57,8 @@ export type HomeExperienceData = {
         steps: { number: string; title: string; description: string }[];
         spec: string;
       };
+      /** Workspace capability rows (assistant, prompt optimizer, example templates, Subtitle Studio). */
+      workspaceFlow?: HomeWorkspaceFlowDemo;
     };
   }[];
 };

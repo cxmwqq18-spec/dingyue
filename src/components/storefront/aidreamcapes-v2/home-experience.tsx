@@ -7,6 +7,7 @@ import type { V2Image, V2Resolvers } from "./types";
 import type { HomeCampaignSections, HomeExperienceData, HomeExperienceKind } from "./home-experience-types";
 import "./home-campaign.css";
 import { HomeWorkflow } from "./home-workflow";
+import { HomeWorkspaceFlow } from "./home-workspace-flow";
 
 function Preview({ id, title, close, images, r, children }: {
   id: string; title: string; close: string; images: V2Image[]; r: V2Resolvers; children?: ReactNode;
@@ -46,6 +47,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
   ];
 
   if (after === "audience" && campaign) return <HomeWorkflow workflow={campaign.workflow} demo={block.presentation?.workflowDemo} media={m} videos={experience.videos ?? {}} r={r} />;
+  if (after === "features" && block.presentation?.workspaceFlow) return <HomeWorkspaceFlow demo={block.presentation.workspaceFlow} copy={c} media={m} videos={experience.videos ?? {}} r={r} actions={block.actions} />;
 
   switch (after) {
     case "hero": return (
