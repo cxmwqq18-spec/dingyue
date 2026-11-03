@@ -218,3 +218,6 @@
 .home-v4 .hx-pf-grid{grid-template-columns:1fr;max-width:420px}
 .home-v4 .hx-pf-action{gap:14px}
 }
+/* Hero phone example clip: the preview box fills the phone frame behind the caption overlays. */
+.home-v4 .hx-signature .hx-phone .v-preview-box{position:absolute;inset:0}
+.home-v4 .hx-signature .hx-phone .v-preview-box video{width:100%;height:100%;object-fit:cover;object-position:center}

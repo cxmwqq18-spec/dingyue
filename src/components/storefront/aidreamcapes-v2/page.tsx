@@ -12,7 +12,7 @@ import { TeamCards,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination } from "./types";
+import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -104,7 +104,7 @@ function pageOwnBlocks(data: V2Data, r: V2Resolvers): PageBlock[] {
     ["reasons", <ReasonsSection block={data.reasons as V2CardBlock | undefined} r={r} />],
     ["platforms", <LinkCardsSection block={data.platformLinks as V2LinkCardBlock | undefined} eyebrow="Where it runs" r={r} />],
     ["trust", <TrustCards block={data.trust as V2CardBlock | undefined} r={r} />],
-    ["reviews", <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} id={data.id === "home" ? "home-seller-examples" : undefined} />],
+    ["reviews", <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} id={data.id === "home" ? "home-seller-examples" : undefined} videos={(data.homeExperience as { videos?: Record<string, V2Video> } | undefined)?.videos} />],
     ["closing", <ClosingStatement block={data.closing as V2ClosingBlock | undefined} r={r} />]
   ];
 }

@@ -28,6 +28,8 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
   if (!experience || !block) return null;
   const c = block.copy;
   const m = experience.media;
+  // The hero phone loops its example clip once the page provides one; the still stays the fallback.
+  const heroVideo = experience.videos?.[block.presentation?.heroVideo ?? ""];
   const destination = (key: string) => r.href(block.actions?.[key] ?? block.href);
   const primary = r.href(block.href);
   const previewId = (key: string) => `hx-${after}-preview-${key}`;
@@ -61,7 +63,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             </div>
             <div className="hx-story">
               <button type="button" className="hx-source" data-home-local="source" data-hx-dialog={previewId("source")}><div className="hx-photo"><Img image={m.m01} r={r} {...aidreamcapesV2ResponsiveImageProps(m.m01.src, AIDREAMCAPES_V2_HOME_PRODUCT_SIZES)} /></div><span>{c.t010}</span></button>
-              <button type="button" className="hx-phone" data-home-local="result" data-hx-dialog={previewId("result")}><Img eager image={m.m02} r={r} {...aidreamcapesV2ResponsiveImageProps(m.m02.src, AIDREAMCAPES_V2_HOME_PHONE_SIZES)} /><span className="hx-play">{c.t011}</span><span className="hx-caption">{c.t012}<br />{c.t013}</span></button>
+              <button type="button" className="hx-phone" data-home-local="result" data-hx-dialog={previewId("result")}>{heroVideo ? <Adc2VideoPreview ariaLabel={heroVideo.name ?? c.t011} media={{ src: r.asset(heroVideo.src), previewSrc: heroVideo.previewSrc ? r.asset(heroVideo.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(heroVideo.poster.src)), width: heroVideo.width, height: heroVideo.height, duration: heroVideo.duration }} posterEager /> : <Img eager image={m.m02} r={r} {...aidreamcapesV2ResponsiveImageProps(m.m02.src, AIDREAMCAPES_V2_HOME_PHONE_SIZES)} />}<span className="hx-play">{c.t011}</span><span className="hx-caption">{c.t012}<br />{c.t013}</span></button>
               <div className="hx-sticker">{c.t014}</div>
               <button type="button" className="hx-mini-version" data-home-local="versions" data-hx-dialog={previewId("versions")}><strong>{c.t015}</strong><p>{c.t016}<br />{c.t017}</p><span aria-hidden="true" className="hx-bars"><i /><i /><i /></span></button>
             </div>
@@ -81,15 +83,19 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
           </div>
           <div className="hx-selector">
             <div className="hx-window-head"><span>{c.t014}</span><small>{c.t015}</small></div>
-            <div className="hx-filters">{[["all", "t016"], ["beauty", "t017"], ["clothing", "t018"], ["tech", "t019"], ["home", "t020"]].map(([key, text], index) => <button type="button" aria-pressed={index === 0} className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${key}`} data-hx-filter={key} key={key}>{c[text]}</button>)}</div>
-            <div className="hx-scene-grid">{scenes.map(([key, image, title], index) => <button type="button" className={`hx-scene-card${index === 0 ? " is-selected" : ""}`} data-home-local={key} data-hx-filter-tags={(block.presentation?.sceneCategories?.[key] ?? []).join(" ")} data-hx-select-group="scene" data-hx-select-value={key} aria-pressed={index === 0} key={key}><span className="photo"><Img image={m[image]} r={r} /></span><b>{c[title]}</b></button>)}</div>
-            {scenes.map(([key, image, title], index) => <div className="hx-selector-footer" data-hx-panel-group="scene" data-hx-panel-value={key} hidden={index !== 0} key={key}>
-              <button type="button" className="hx-selected" data-home-local={`preview-${key}`} data-hx-dialog={previewId(key)}><Img image={m[image]} r={r} /><span><small>{c.t027}</small>{c[title]}</span></button>
-              <WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.t029}</WorkspaceEntryLink>
+            <div className="hx-filters">{(block.presentation?.sceneTabsV3 ?? [["all", "t016"], ["beauty", "t017"], ["clothing", "t018"], ["tech", "t019"], ["home", "t020"]].map(([key, text]) => ({ key, label: c[text] }))).map((tab, index) => <button type="button" aria-pressed={index === 0} className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${tab.key}`} data-hx-filter={tab.key} key={tab.key}>{tab.label}</button>)}</div>
+            <div className="hx-scene-grid">{(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], category: (block.presentation?.sceneCategories?.[key] ?? []).join(" "), publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => <button type="button" className={`hx-scene-card${index === 0 ? " is-selected" : ""}`} data-home-local={card.key} data-hx-filter-tags={card.category} data-hx-select-group="scene" data-hx-select-value={card.key} aria-pressed={index === 0} key={card.key}><span className="photo">{card.video ? <video src={r.asset(card.video.src)} poster={r.asset(card.video.poster.src)} muted loop playsInline preload="metadata" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}{card.category ? <span className="hx-scene-chip">{card.category}</span> : null}</span><b>{card.title}</b></button>)}</div>
+            {(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => <div className="hx-selector-footer" data-hx-panel-group="scene" data-hx-panel-value={card.key} hidden={index !== 0} key={card.key}>
+              <button type="button" className="hx-selected" data-home-local={`preview-${card.key}`} data-hx-dialog={previewId(card.key)}>{card.video ? <video src={r.asset(card.video.src)} poster={r.asset(card.video.poster.src)} muted loop playsInline preload="metadata" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}<span><small>{c.t027}</small>{card.title}</span></button>
+              <WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={card.key} href={destination(card.key)}>{c.t029}</WorkspaceEntryLink>
             </div>)}
           </div>
         </div>
-        {scenes.map(([key, image, title]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c.t028}</p></Preview>)}
+        {(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map(card => <Preview id={previewId(card.key)} title={card.title} close={c.uiClose} images={card.video ? [] : [card.image]} r={r} key={card.key}>
+          {card.video ? <video className="hx-dialog-video" src={r.asset(card.video.src)} poster={r.asset(card.video.poster.src)} controls muted loop playsInline preload="metadata" data-hx-video /> : null}
+          <p>{c.t028}</p>
+          {card.detailHref ? <WorkspaceEntryLink className="hx-detail-link" href={r.href(card.detailHref)}>Open the video detail page <span aria-hidden="true">→</span></WorkspaceEntryLink> : null}
+        </Preview>)}
       </section>
     );
     case "steps": {

@@ -142,3 +142,6 @@
 @media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px minmax(224px,auto) 1fr}}
 @media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:center}.adc2 .adc-workflow-heading .hx-tag{justify-content:center}.adc2 .adc-workflow-heading h2{text-align:center}.adc2 .adc-workflow-heading p{text-align:center;font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto minmax(224px,auto) 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
 @media(prefers-reduced-motion:reduce){.adc2 .adc-workflow *{transition:none!important;animation:none!important}}
+/* Step 06 example clip: the preview box fills the phone; the label stays overlaid. */
+.home-v4 .adc-workflow-phone .v-preview-box{position:absolute;inset:0}
+.home-v4 .adc-workflow-phone .v-preview-box video{width:100%;height:100%;object-fit:cover;object-position:50% 30%}

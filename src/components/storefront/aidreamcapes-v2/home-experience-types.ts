@@ -57,9 +57,16 @@ export type HomeExperienceData = {
     copy: Record<string, string>;
     presentation?: {
       contentLayout?: "benefits-workflow";
+      /** Key into HomeExperienceData.videos; the hero phone loops that clip instead of the still. */
+      heroVideo?: string;
       workflowDemo?: HomeWorkflowDemo;
       workflowVisuals?: { kind: "product" | "presenter" | "brief" | "storyboard" | "assembly" | "review"; media: string[]; label: string; detail: string; preview: string }[];
       sceneCategories?: Record<string, string[]>;
+      /** v3: motion scene cards. Each card carries its own clip, poster, category tab key and the
+       * publicSlug of the detail page owned by the matching examples card in the page content. */
+      sceneCardsV3?: { key: string; title: string; category: string; publicSlug: string; image: V2Image; video: { src: string; poster: V2Image }; detailHref: string }[];
+      /** v3: filter pills for the sceneCardsV3 grid. */
+      sceneTabsV3?: { key: string; label: string }[];
       steps?: { number: string; title: string; description: string }[];
       /** Tabbed presenter showcase: presenter photo + product photo = generated video. */
       presenterShowcase?: {

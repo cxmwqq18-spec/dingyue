@@ -1086,10 +1086,10 @@ export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }
 
 // Example cards always carry an "Example" label. A card presented as a real review
 // must name its source; without one it is left out.
-export function ReviewWall({ block, r, id }: { block?: V2ReviewBlock; r: V2Resolvers; id?: string }) {
+export function ReviewWall({ block, r, id, videos }: { block?: V2ReviewBlock; r: V2Resolvers; id?: string; videos?: Record<string, V2Video> }) {
   const items = (block?.items ?? []).filter((item) => item.example || Boolean(item.source?.trim()));
   if (!block || !items.length) return null;
-  if (items.every((item) => item.srcImg && item.img)) return <ShowcaseWall block={block} items={items} r={r} id={id} />;
+  if (items.every((item) => item.srcImg && item.img)) return <ShowcaseWall block={block} items={items} r={r} id={id} videos={videos} />;
   return (
     <Section id={id} eyebrow={items.every((item) => item.example) ? "Seller examples" : "Reviews"} lead={block.lead} title={block.h2}>
       <CardBlockCss />
@@ -1179,7 +1179,7 @@ export function TeamCards({ items, r }: { items: V2Item[]; r: V2Resolvers }) {
 }
 
 // Seller showcase: the plain photo a seller uploads, an arrow, and the vertical ad made from it.
-function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers; id?: string }) {
+function ShowcaseWall({ block, items, r, id, videos }: { block: V2ReviewBlock; items: V2ReviewItem[]; r: V2Resolvers; id?: string; videos?: Record<string, V2Video> }) {
   return (
     <Section id={id} eyebrow={copyLabel(r, "Seller examples")} lead={block.lead} title={block.h2}>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -1192,6 +1192,8 @@ function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2
         .adc2 .v-show-arrow{color:#a78bfa;font-size:26px;font-weight:700}
         .adc2 .v-show-ad{position:relative;margin:0 auto;width:min(100%,220px);padding:7px;border-radius:24px;background:#050506;box-shadow:0 16px 40px rgba(0,0,0,.45)}
         .adc2 .v-show-ad img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:17px}
+        .adc2 .v-show-ad .v-preview-box{width:100%;aspect-ratio:9/16;height:auto;border-radius:17px;overflow:hidden}
+        .adc2 .v-show-ad .v-preview-box video{width:100%;height:100%;object-fit:cover}
         .adc2 .v-show-ad .v-show-tag{left:15px;top:15px;background:linear-gradient(90deg,#8b5cf6,#ec4899);color:#fff}
         .adc2 .v-show-time{position:absolute;right:15px;top:15px;padding:2px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700}
         .adc2 .v-show-cap{position:absolute;left:16px;right:16px;bottom:22px;padding:6px 9px;border-radius:8px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;line-height:1.3;text-align:center}
@@ -1206,12 +1208,13 @@ function ShowcaseWall({ block, items, r, id }: { block: V2ReviewBlock; items: V2
       <div className="v-shows">
         {items.map((item) => {
           const ad = item.alt && item.img ? { ...item.img, alt: item.alt } : item.img;
+          const adVideo = item.video ? videos?.[item.video] : undefined;
           const seconds = item.length ?? 15;
           return <article className="v-show" key={`${item.who}-${item.t}`}>
             <div className="v-show-stage">
               {item.srcImg ? <figure className="v-show-src"><Img image={item.srcImg} r={r} /><figcaption>{copyLabel(r, "Their photo")}</figcaption></figure> : null}
               <span aria-hidden="true" className="v-show-arrow">→</span>
-              {ad ? <figure className="v-show-ad"><Img image={ad} r={r} /><span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
+              {ad ? <figure className="v-show-ad">{adVideo ? <Adc2VideoPreview ariaLabel={item.alt ?? item.t} media={{ src: r.asset(adVideo.src), previewSrc: adVideo.previewSrc ? r.asset(adVideo.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(adVideo.poster.src)), width: adVideo.width, height: adVideo.height, duration: adVideo.duration }} posterEager={false} /> : <Img image={ad} r={r} />}<span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
             </div>
             <div className="v-show-body"><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></div>
           </article>;
