@@ -41,8 +41,8 @@ const DIRECTORY_FILTER_CSS = `${DIRECTORY_FILTER_SELECTORS.join(",")}{display:no
 .adc2 .v-directory-related a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:720px){.adc2 .v-directory-related ul{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
 
-function VisualImage({ image, r, className, sizes }: { image: V2VisualImage; r: V2Resolvers; className?: string; sizes?: string }) {
-  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} {...(sizes ? aidreamcapesV2ResponsiveImageProps(image.src, sizes) : {})} />;
+function VisualImage({ image, r, className, eager, sizes }: { image: V2VisualImage; r: V2Resolvers; className?: string; eager?: boolean; sizes?: string }) {
+  return <Img image={{ src: image.src, alt: image.alt, width: image.w, height: image.h }} r={r} className={className} eager={eager} style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined} {...(sizes ? aidreamcapesV2ResponsiveImageProps(image.src, sizes) : {})} />;
 }
 
 function visualRatio(image: V2VisualImage): string {
@@ -64,7 +64,10 @@ export function VisualStrip({ visual, r, includeOverview = false, heading, lead 
           <div className="v-strip" data-count={visual.strip.length}>
             {visual.strip.map((item, index) => (
               <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`${item.src}-${index}`}>
-                <VisualImage image={item} r={r} />
+                {/* The strip's first card is the video hub's LCP element on
+                    mobile; it loads eagerly with high priority while the rest
+                    of the rail stays lazy. */}
+                <VisualImage eager={index === 0} image={item} r={r} />
               </figure>
             ))}
           </div>
@@ -309,7 +312,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           {cards.map((card, index) => (
             <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
               {card.video ? (
-                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} showDuration={!hideDuration} />
+                <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} posterEager={index < 4} showDuration={!hideDuration} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
               <span>{card.label}</span>
             </a>
