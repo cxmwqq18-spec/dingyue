@@ -1,5 +1,4 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { Img, RichText } from "./parts";
 import type { HomeWorkflowDemo } from "./home-experience-types";
 import type { V2Image, V2MoreSection, V2Resolvers, V2Video } from "./types";
@@ -64,7 +63,7 @@ export function HomeWorkflow({ workflow, demo, media, videos, r }: { workflow: V
       </div>;
       case 5: return <div className="adc-workflow-review">
         {demo.version === 2
-          ? <button type="button" className="adc-workflow-phone" data-hx-dialog="adc-workflow-sequence" aria-label={c.previewSequence}><video src={r.asset(v2Example.previewSrc ?? v2Example.src)} poster={r.asset(aidreamcapesV2ResponsivePosterSrc(v2Example.poster.src))} muted loop autoPlay playsInline preload="metadata" aria-hidden="true" /><span><Icon kind="play" /></span><small>{c.videoLabel}</small></button>
+          ? <span className="adc-workflow-phone"><Img image={v2Example.poster} r={r} /><small>{c.videoLabel}</small></span>
           : <button type="button" className="adc-workflow-phone" data-hx-dialog="adc-workflow-sequence" aria-label={c.previewSequence}>{photo(demo.shots[1].media)}<span><Icon kind="play" /></span><small>{c.sequenceLabel}</small></button>}
         <div className="adc-workflow-delivery"><Icon kind="file" /><b>{c.finalPreview}</b><small>{c.reviewNote}</small><WorkspaceEntryLink className="adc-workflow-primary" href={r.href(c.reviewHref)}>{c.reviewInWorkspace}<Icon kind="arrow" /></WorkspaceEntryLink></div>
       </div>;
@@ -76,8 +75,8 @@ export function HomeWorkflow({ workflow, demo, media, videos, r }: { workflow: V
       <footer className="adc-workflow-footer"><p>{c.notice}</p><WorkspaceEntryLink className="adc-workflow-primary" href={r.href(c.startHref)}>{c.start}<Icon kind="arrow" /></WorkspaceEntryLink></footer>
     </div>
     {demo.shots.map((shot, index) => <dialog className="hx-dialog adc-workflow-dialog" id={`adc-workflow-shot-${index}`} aria-labelledby={`adc-workflow-shot-title-${index}`} key={shot.label}><div className="hx-dialog-head"><h3 id={`adc-workflow-shot-title-${index}`}>{shot.label}</h3><form method="dialog"><button type="submit" data-hx-close>{c.close}<span aria-hidden="true">×</span></button></form></div><figure>{photo(shot.media)}<figcaption>{shot.description}</figcaption></figure><WorkspaceEntryLink className="adc-workflow-primary" href={r.href(c.startHref)}>{c.start}<Icon kind="arrow" /></WorkspaceEntryLink></dialog>)}
-    <dialog className="hx-dialog adc-workflow-dialog" id="adc-workflow-sequence" aria-labelledby="adc-workflow-sequence-title"><div className="hx-dialog-head"><h3 id={`adc-workflow-sequence-title`}>{c.sequenceLabel}</h3><form method="dialog"><button type="submit" data-hx-close>{c.close}<span aria-hidden="true">×</span></button></form></div>
+    {demo.version === 1 && <dialog className="hx-dialog adc-workflow-dialog" id="adc-workflow-sequence" aria-labelledby="adc-workflow-sequence-title"><div className="hx-dialog-head"><h3 id={`adc-workflow-sequence-title`}>{c.sequenceLabel}</h3><form method="dialog"><button type="submit" data-hx-close>{c.close}<span aria-hidden="true">×</span></button></form></div>
       <div className="adc-workflow-sequence" data-workflow-sequence>{demo.shots.map((shot, i) => <figure data-workflow-frame hidden={i !== 0} key={shot.label}>{photo(shot.media)}<figcaption><b>{shot.label}</b>{shot.description}</figcaption></figure>)}<button type="button" data-workflow-play aria-pressed="false" data-play-label={c.play} data-pause-label={c.pause}><Icon kind="play" /><span>{c.play}</span></button></div><p>{c.sequenceNotice}</p><WorkspaceEntryLink className="adc-workflow-primary" href={r.href(c.reviewHref)}>{c.reviewInWorkspace}<Icon kind="arrow" /></WorkspaceEntryLink>
-    </dialog><HomeWorkflowBehavior />
+    </dialog>}<HomeWorkflowBehavior />
   </section>;
 }

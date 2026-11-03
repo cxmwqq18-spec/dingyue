@@ -82,7 +82,7 @@
 .adc2 .adc-workflow-timeline>div span{flex:1;height:28px;min-width:0;border-radius:3px;overflow:hidden}
 .adc2 .adc-workflow-timeline>div i{position:absolute;top:0;bottom:0;left:42%;border-left:2px solid #8e58bf}
 .adc2 .adc-workflow-review{display:flex;gap:20px;justify-content:center;align-items:center;height:100%}
-.adc2 .adc-workflow-phone{height:224px;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
+.adc2 .adc-workflow-phone{display:block;height:224px;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
 .adc2 .adc-workflow-phone>img,.adc2 .adc-workflow-phone>video{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .adc2 .adc-workflow-phone>span{display:grid;place-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#231b3380;color:white;border:1px solid white;border-radius:50%}
 .adc2 .adc-workflow-phone small{position:absolute;left:5px;right:5px;bottom:7px;font-size:9px;color:white;background:#241b3780;border-radius:4px;padding:4px}
