@@ -30,7 +30,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 .adc2 .adc-workflow-heading h2{font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal;font-weight:650}
 .adc2 .adc-workflow-heading p{font-size:17px;line-height:1.65;color:#756d7f;margin:0}
 .adc2 .adc-workflow-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.adc2 .adc-workflow-card{display:grid;grid-template-rows:auto 224px 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
+.adc2 .adc-workflow-card{display:grid;grid-template-rows:auto minmax(224px,auto) 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
 .adc2 .adc-workflow-card:hover{border-color:#bca7d2;box-shadow:0 8px 24px #3f285009}
 .adc2 .adc-workflow-card h3{display:flex;align-items:center;gap:10px;font-size:18px;line-height:1.35;color:#241f2d;letter-spacing:-.02em;margin:0;min-height:48px;font-weight:700}
 .adc2 .adc-workflow-card h3>span{flex:none;font-size:15px;color:#8956ba;background:#f2ebfa;border-radius:10px;display:grid;place-items:center;width:34px;height:34px;letter-spacing:0}
@@ -83,37 +83,40 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 .adc2 .adc-workflow-opt{display:inline-flex;align-items:center;gap:5px;color:#7b4fa8;background:#f4eefb;border:1px solid #e0d0f0;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:600;transition:background .2s}
 .adc2 .adc-workflow-opt:hover{background:#ece0f7}
 .adc2 .adc-workflow-opt svg{width:12px;height:12px}
-/* stage 4 — board */
-.adc2 .adc-workflow-board{display:flex;flex-direction:column;gap:12px;height:100%}
-.adc2 .adc-workflow-shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;min-height:0;flex:1}
-.adc2 .adc-workflow-shots>div{min-width:0;min-height:0}
-.adc2 .adc-workflow-shots button{display:flex;flex-direction:column;gap:7px;width:100%;height:100%;border:0;padding:0;font-size:10px}
-.adc2 .adc-workflow-shots button img{min-height:0;flex:1;border-radius:6px;object-position:50% 32%}
-.adc2 .adc-workflow-shots button span{display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:10px;width:100%}
-.adc2 .adc-workflow-shots button svg{width:13px;height:13px}
+/* stage 4 — storyboard draft: product + presenter + dialogue (uncropped) */
+.adc2 .adc-workflow-draft{display:flex;flex-direction:column;gap:10px;height:100%}
+.adc2 .adc-workflow-refs{display:flex;justify-content:center;align-items:center;gap:12px}
+.adc2 .adc-workflow-ref{position:relative;border:0;padding:0;border-radius:9px;overflow:hidden;background:#fff;box-shadow:0 1px 5px #3f285014}
+.adc2 .adc-workflow-ref>img{display:block;width:100%;height:100%;object-fit:cover}
+.adc2 .adc-workflow-ref>span{position:absolute;top:6px;left:6px;background:#fffc;border-radius:6px;padding:2px 9px;font-size:10px;font-weight:600;color:#6d4f8c}
+.adc2 .adc-workflow-ref-product{width:150px;height:150px}
+.adc2 .adc-workflow-ref-presenter{width:100px;height:150px}
+.adc2 .adc-workflow-dialogue{background:#fff;border:1px solid #ece7f3;border-radius:8px;padding:8px 11px}
+.adc2 .adc-workflow-dialogue>span{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#9b6bc5}
+.adc2 .adc-workflow-dialogue>span svg{width:12px;height:12px}
+.adc2 .adc-workflow-dialogue>p{margin:4px 0 0;font-size:11.5px;line-height:1.55;color:#584366}
 .adc2 .adc-workflow-saved{display:flex;align-items:center;gap:7px;background:#f0e8f8;border-radius:7px;padding:8px;color:#8051a6;font-size:11px}
 .adc2 .adc-workflow-saved>a{margin-left:auto;font-size:16px;text-decoration:none;color:#8051a6}
-/* stage 5 — assembly */
-.adc2 .adc-workflow-assembly{display:flex;flex-direction:column;gap:8px;height:100%}
-.adc2 .adc-workflow-clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;height:68px}
-.adc2 .adc-workflow-clips>div{min-width:0;min-height:0;height:68px}
-.adc2 .adc-workflow-clips button>img{height:68px;object-position:50% 32%}
-.adc2 .adc-workflow-clips button{border:0;padding:0;width:100%;height:100%;position:relative;border-radius:6px;overflow:hidden}
-.adc2 .adc-workflow-clips button>span{display:none}
-.adc2 .adc-workflow-versions{display:flex;gap:8px;align-items:center;min-height:0;flex:1}
-.adc2 .adc-workflow-versions>span{font-size:10px;color:#967ba6;flex:1}
-.adc2 .adc-workflow-versions button{width:70px;height:64px;position:relative;padding:2px;border:2px solid transparent;border-radius:7px;overflow:hidden}
-.adc2 .adc-workflow-versions button.is-selected{border-color:#9460bf}
-.adc2 .adc-workflow-versions button img{border-radius:4px;object-position:center 26%}
-.adc2 .adc-workflow-versions button span{position:absolute;bottom:2px;left:2px;right:2px;background:#2f233999;color:#fff;font-size:9px;padding:2px}
-.adc2 .adc-workflow-timeline{display:flex;gap:10px;align-items:center}
-.adc2 .adc-workflow-timeline>button{display:grid;place-items:center;border:0;border-radius:50%;background:#8c59bd;color:#fff;width:33px;height:33px;flex:none}
-.adc2 .adc-workflow-timeline>div{position:relative;display:flex;gap:3px;flex:1;background:#ddcbed;padding:3px;border-radius:6px;overflow:hidden}
-.adc2 .adc-workflow-timeline>div span{flex:1;height:28px;min-width:0;border-radius:3px;overflow:hidden}
-.adc2 .adc-workflow-timeline>div i{position:absolute;top:0;bottom:0;left:42%;border-left:2px solid #8e58bf}
+/* stage 5 — waiting for the video to generate */
+.adc2 .adc-workflow-gen{display:flex;flex-direction:column;gap:12px;height:100%;justify-content:center}
+.adc2 .adc-workflow-gen-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.adc2 .adc-workflow-gen-thumb{position:relative;border-radius:8px;overflow:hidden;min-width:0}
+.adc2 .adc-workflow-gen-thumb>img{height:88px;object-position:50% 32%}
+.adc2 .adc-workflow-gen-status{position:absolute;left:5px;right:5px;bottom:5px;text-align:center;font-size:9.5px;font-weight:600;border-radius:5px;padding:3px 4px;color:#fff;background:#2f2339b3}
+.adc2 .adc-workflow-gen-status.is-ready{background:#3f8f5fd9}
+.adc2 .adc-workflow-gen-status.is-working{background:#8051b3e0}
+.adc2 .adc-workflow-gen-status.is-working::after{content:"";display:inline-block;width:7px;height:7px;border:1.5px solid #fff;border-top-color:transparent;border-radius:50%;margin-left:4px;vertical-align:-1px;animation:adc-gen-spin 1s linear infinite}
+.adc2 .adc-workflow-gen-status.is-queued{background:#5f5670b3}
+@keyframes adc-gen-spin{to{transform:rotate(360deg)}}
+.adc2 .adc-workflow-progress>span{display:block;font-size:10.5px;color:#7a6890;margin-bottom:5px}
+.adc2 .adc-workflow-progress-track{position:relative;height:8px;border-radius:999px;background:#e6dcf2;overflow:hidden}
+.adc2 .adc-workflow-progress-track i{position:absolute;top:2px;bottom:2px;width:34%;border-radius:999px;background:linear-gradient(90deg,#8c59bd,#a580c7);animation:adc-gen-progress 2.6s ease-in-out infinite}
+@keyframes adc-gen-progress{0%{left:-34%}100%{left:100%}}
+.adc2 .adc-workflow-gen-note{display:flex;align-items:center;gap:7px;background:#f0e8f8;border-radius:7px;padding:8px;color:#8051a6;font-size:11px}
+.adc2 .adc-workflow-gen-note>a{margin-left:auto;font-size:16px;text-decoration:none;color:#8051a6}
 /* stage 6 — review */
 .adc2 .adc-workflow-review{display:flex;gap:20px;justify-content:center;align-items:center;height:100%}
-.adc2 .adc-workflow-phone{height:100%;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
+.adc2 .adc-workflow-phone{height:224px;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
 .adc2 .adc-workflow-phone>img{object-position:50% 20%}
 .adc2 .adc-workflow-phone>span{display:grid;place-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#231b3380;color:white;border:1px solid white;border-radius:50%}
 .adc2 .adc-workflow-phone small{position:absolute;left:5px;right:5px;bottom:7px;font-size:9px;color:white;background:#241b3780;border-radius:4px;padding:4px}
@@ -140,12 +143,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 .adc2 .hx-dialog-head h3{margin:0;font-size:18px;color:#31253c}
 .adc2 .hx-dialog-head button{border:1px solid #cdb9de;border-radius:8px;padding:7px 12px;background:#fff;color:#6d5684;font-size:12px}
 .adc2 .adc-workflow-dialog .adc-workflow-primary{border:0}
-/* 特写裁切镜头：同一成片的放大裁切，读作第三个“细节镜头” */
-.adc2 .adc-workflow-zoom{overflow:hidden;border-radius:6px}
-.adc2 .adc-workflow-zoom>img{transform:scale(1.75);transform-origin:52% 80%;object-position:52% 80%}
-.adc2 .adc-workflow-clips .adc-workflow-zoom>img{transform:scale(1.75);transform-origin:52% 80%;object-position:52% 80%;height:68px}
-.adc2 .adc-workflow-timeline .adc-workflow-zoom>img{transform:scale(1.75);transform-origin:52% 80%;object-position:52% 80%}
-@media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px 224px 1fr}}
+@media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px minmax(224px,auto) 1fr}}
 @media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto 224px 1fr;gap:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}}
 @media(prefers-reduced-motion:reduce){.adc2 .adc-workflow *{transition:none!important;animation:none!important}}
 </style>
@@ -155,7 +153,8 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 <div class="pv-bar">
   <b>设计预览 · 首页「How it works」模块</b>
   <span class="pv-pill">架构 / 布局不变</span>
-  <span class="pv-pill">文案对齐真实工作台交互</span>
+  <span class="pv-pill">v2：04 = 产品 + 模特 + 台词（完整展示）</span>
+  <span class="pv-pill">v2：05 = 等待视频生成</span>
   <span class="pv-pill">素材替换：精华液 → 香薰蜡烛产品线</span>
   <span class="pv-live">仅本地预览 · 未改动线上代码与数据</span>
 </div>
@@ -257,84 +256,60 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
         <p>Describe your product, audience and creative idea. Choose the format and length, then check the credit estimate before you generate.</p>
       </li>
 
-      <!-- 04 · Save & refine the storyboard -->
+      <!-- 04 · Save & refine the storyboard：产品图 + 模特图 + 台词文案，图片完整展示 -->
       <li class="adc-workflow-card">
         <h3><span>04</span>Save &amp; refine the storyboard</h3>
         <div class="adc-workflow-visual adc-workflow-stage-4">
-          <div class="adc-workflow-board">
-            <div class="adc-workflow-shots">
-              <div>
-                <button type="button" data-hx-dialog="adc-workflow-shot-0" aria-label="Enlarge: Shot 01">
-                  <img alt="A scented candle in the original product photo" src="assets/teams1-home-r2-src-640.webp" width="640" height="640" loading="lazy" decoding="async" />
-                  <span>Shot 01 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zm10-10 4 4"/></svg></span>
-                </button>
-              </div>
-              <div>
-                <button type="button" data-hx-dialog="adc-workflow-shot-1" aria-label="Enlarge: Shot 02">
-                  <img alt="Example of an AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                  <span>Shot 02 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zm10-10 4 4"/></svg></span>
-                </button>
-              </div>
-              <div>
-                <button type="button" class="adc-workflow-zoom" data-hx-dialog="adc-workflow-shot-2" aria-label="Enlarge: Shot 03">
-                  <img alt="Close-up of the AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                  <span>Shot 03 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zm10-10 4 4"/></svg></span>
-                </button>
-              </div>
+          <div class="adc-workflow-draft">
+            <div class="adc-workflow-refs">
+              <button type="button" class="adc-workflow-ref adc-workflow-ref-product" data-hx-dialog="adc-workflow-shot-0" aria-label="Enlarge the product reference">
+                <img alt="A scented candle in the original product photo" src="assets/teams1-home-r2-src-640.webp" width="640" height="640" loading="lazy" decoding="async" />
+                <span>Product</span>
+              </button>
+              <button type="button" class="adc-workflow-ref adc-workflow-ref-presenter" data-hx-dialog="adc-workflow-shot-1" aria-label="Enlarge the presenter reference">
+                <img alt="Example of an AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
+                <span>Presenter</span>
+              </button>
+            </div>
+            <div class="adc-workflow-dialogue">
+              <span>Shot 02 · Dialogue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 16 12-12 4 4L8 20H4zm10-10 4 4"/></svg>
+              </span>
+              <p>Hand-poured soy wax with up to 40 hours of burn time.</p>
             </div>
             <div class="adc-workflow-saved"><span aria-hidden="true">✓</span>All changes saved<a href="https://www.aivideosugc.com/app/create/library" aria-label="Open my Library">↗</a></div>
           </div>
         </div>
-        <p>Your draft is saved to the Library automatically. Review every shot, rewrite the lines and lock the takes you like.</p>
+        <p>Your draft is saved to the Library automatically. Check the product, presenter and dialogue of every shot before generating.</p>
       </li>
 
-      <!-- 05 · Generate & assemble shots -->
+      <!-- 05 · Wait for your video to generate -->
       <li class="adc-workflow-card">
-        <h3><span>05</span>Generate &amp; assemble shots</h3>
+        <h3><span>05</span>Wait for your video to generate</h3>
         <div class="adc-workflow-visual adc-workflow-stage-5">
-          <div class="adc-workflow-assembly">
-            <div class="adc-workflow-clips">
-              <div>
-                <button type="button" data-hx-dialog="adc-workflow-shot-0" aria-label="Enlarge: Shot 01">
-                  <img alt="A scented candle in the original product photo" src="assets/teams1-home-r2-src-640.webp" width="640" height="640" loading="lazy" decoding="async" />
-                </button>
+          <div class="adc-workflow-gen">
+            <div class="adc-workflow-gen-thumbs">
+              <div class="adc-workflow-gen-thumb">
+                <img alt="A scented candle in the original product photo" src="assets/teams1-home-r2-src-640.webp" width="640" height="640" loading="lazy" decoding="async" />
+                <span class="adc-workflow-gen-status is-ready">✓ Ready</span>
               </div>
-              <div>
-                <button type="button" data-hx-dialog="adc-workflow-shot-1" aria-label="Enlarge: Shot 02">
-                  <img alt="Example of an AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                </button>
-              </div>
-              <div>
-                <button type="button" class="adc-workflow-zoom" data-hx-dialog="adc-workflow-shot-2" aria-label="Enlarge: Shot 03">
-                  <img alt="Close-up of the AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                </button>
-              </div>
-            </div>
-            <div class="adc-workflow-versions">
-              <span>Compare versions</span>
-              <button type="button" data-hx-select-group="workflow-version" data-hx-select-value="0" aria-pressed="true" class="is-selected">
+              <div class="adc-workflow-gen-thumb">
                 <img alt="Example of an AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                <span>Version 1</span>
-              </button>
-              <button type="button" data-hx-select-group="workflow-version" data-hx-select-value="1" aria-pressed="false">
+                <span class="adc-workflow-gen-status is-working">Generating</span>
+              </div>
+              <div class="adc-workflow-gen-thumb">
                 <img alt="Example AI presenter outdoors" src="assets/amara-640.webp" width="640" height="960" loading="lazy" decoding="async" />
-                <span>Version 2</span>
-              </button>
-            </div>
-            <div class="adc-workflow-timeline">
-              <button type="button" data-hx-dialog="adc-workflow-sequence" aria-label="Play sequence">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg>
-              </button>
-              <div>
-                <span><img alt="" src="assets/teams1-home-r2-src-640.webp" width="640" height="640" loading="lazy" decoding="async" /></span>
-                <span><img alt="" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" /></span>
-                <span class="adc-workflow-zoom"><img alt="" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" /></span>
-                <i></i>
+                <span class="adc-workflow-gen-status is-queued">Queued</span>
               </div>
             </div>
+            <div class="adc-workflow-progress">
+              <span>Generating your video — 1 of 3 shots ready</span>
+              <div class="adc-workflow-progress-track"><i></i></div>
+            </div>
+            <div class="adc-workflow-gen-note">You can close the page — follow the progress in your Library.<a href="https://www.aivideosugc.com/app/create/library" aria-label="Open my Library">↗</a></div>
           </div>
         </div>
-        <p>Generate shots one by one or all at once, compare versions, and your selected clips are assembled into one video.</p>
+        <p>Generate the shots and follow the progress here or in your Library. You can close the page while the clips render.</p>
       </li>
 
       <!-- 06 · Review & download -->
@@ -414,13 +389,13 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 </div>
 
 <section class="pv-notes">
-  <h2>本次整改说明（预览稿）</h2>
+  <h2>本次整改说明（预览稿 v2，已按反馈修订）</h2>
   <ul>
-    <li><strong>架构不变</strong>：完全复刻线上 <code>HomeWorkflow</code> 的 DOM 与 CSS —— 6 卡网格、两位数编号、6 种 stage 面板、footer CTA、镜头放大与序列播放弹窗全部保留。</li>
-    <li><strong>素材替换</strong>：产品线由精华液整体换为香薰蜡烛（<code>teams1-home-r2-src / r2-ad</code>，白底原图 + 主持人手持成片，与模块暖米色背景更协调）；第三镜头用同一成片的放大裁切读作「产品特写」；Version 2 缩略图换用未出场过的主持人 <code>amara</code>，消除原版同一张图重复 12 次的单调感。</li>
-    <li><strong>文案对齐真实工作台</strong>：01 补「确认识别到的商品信息」（URL 导入确认步）；02 补「可试听声音」；03 补「生成前确认积分预估」并在表单内加真实存在的 <code>Optimize</code> 提示词优化按钮、时长补 10s/30s；04 的状态条改用工作台真实文案 <code>All changes saved</code>；06 补「字幕 / 导出脚本与单镜头片段」；footer 通知改为真实的 15 天保留期规则。</li>
-    <li><strong>可交互</strong>：主持人选择、版本选择可点选；镜头卡片可放大；时间线播放键可循环播放三镜头序列（与线上 <code>home-workflow-behavior</code> 行为一致）。</li>
-    <li>落地方式（确认设计后）：全部改动是 <code>site_aidreamcapes_home</code> 行 <code>contentJson</code> 的字段级编辑 —— <code>more_sections[0].items</code>（6 条文案）+ <code>homeExperience.blocks.audience.presentation.workflowDemo</code>（labels/scenes/shots/media），走 manifest + CAS，不改代码、不动 URL。</li>
+    <li><strong>04 保存并完善故事板（v2）</strong>：改为「产品图 + 模特图 + 台词文案」三要素——Product 白底原图与 Presenter 模特图<strong>按原始比例完整展示不裁切</strong>（卡片高度自适应加高），下方 Dialogue 台词块对应工作台里每个镜头的台词字段，保留 <code>All changes saved</code> 状态条。</li>
+    <li><strong>05 等待视频生成（v2）</strong>：原「生成并组装镜头」按反馈替换为生成等待态——三个镜头缩略图带真实工作台状态徽标（Ready ✓ / Generating 转圈 / Queued），下方生成进度条动画 +「可关闭页面，随时回 Library 查看进度」，缩略图素材同步更换。</li>
+    <li><strong>其余卡片</strong>：01–03、06 与 v1 一致（上传/导入确认、场景+主持人、AI Video Agent 简介 + Optimize、成片审阅下载），架构与线上 <code>HomeWorkflow</code> 完全一致。</li>
+    <li><strong>素材</strong>：产品线为香薰蜡烛（<code>teams1-home-r2-src / r2-ad</code>），主持人组合 Product host / At home / At work，05 的 Queued 镜头用主持人 amara。</li>
+    <li><strong>落地方式（确认设计后）</strong>：6 条文案与标签 = <code>site_aidreamcapes_home</code> 行 contentJson 的字段级编辑（<code>more_sections[0].items</code> + <code>workflowDemo.labels/scenes/shots/media</code>），走 manifest + CAS；04/05 的面板布局变化需同步一次受审的 <code>home-workflow.tsx</code> + CSS 组件改动（代码部署），不改 URL、不动收录。</li>
   </ul>
 </section>
 
