@@ -28,6 +28,19 @@ export type HomeWorkspaceFlowDemo = {
   captionsVideo: string;
 };
 
+/** "Platform-native AI videos": three platform cards, each a real library clip shot in that platform's native style.
+ * Copy lives in the block copy record under pf* keys (plus t001-t004/t017 for the shared heading and note);
+ * the clip references a HomeExperienceData.videos key and the CTA reuses an existing block actions key. */
+export type HomePlatformsFlowDemo = {
+  version: 1;
+  /** Render order. `key` also selects the platform glyph and the actions key prefix. */
+  platforms: { key: string; platform: string; title: string; descriptionLead: string; description: string; spec: string; tags: string[]; video: string; ctaKey: string }[];
+  /** Copy keys in the block copy record. */
+  selectedLabel: string;
+  /** "{platform}" is replaced with the card's platform name at render time. */
+  ctaLabel: string;
+};
+
 export const HOME_EXPERIENCE_KINDS = ["hero", "picker", "steps", "features", "audience", "reviews"] as const;
 export type HomeExperienceKind = (typeof HOME_EXPERIENCE_KINDS)[number];
 export type HomeExperienceData = {
@@ -59,6 +72,8 @@ export type HomeExperienceData = {
       };
       /** Workspace capability rows (assistant, prompt optimizer, example templates, Subtitle Studio). */
       workspaceFlow?: HomeWorkspaceFlowDemo;
+      /** Platform video styles: one real library clip per platform, autoplaying in view. */
+      platformsFlow?: HomePlatformsFlowDemo;
     };
   }[];
 };

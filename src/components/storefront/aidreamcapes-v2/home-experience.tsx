@@ -1,10 +1,11 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
+import { Adc2VideoPreview } from "./video-preview-card";
 import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { ReactNode } from "react";
 import { Img } from "./parts";
 import { AIDREAMCAPES_V2_HOME_PHONE_SIZES, AIDREAMCAPES_V2_HOME_PRODUCT_SIZES } from "./image-sizes";
 import type { V2Image, V2Resolvers } from "./types";
-import type { HomeCampaignSections, HomeExperienceData, HomeExperienceKind } from "./home-experience-types";
+import type { HomeCampaignSections, HomeExperienceData, HomeExperienceKind, HomePlatformsFlowDemo } from "./home-experience-types";
 import "./home-campaign.css";
 import { HomeWorkflow } from "./home-workflow";
 import { HomeWorkspaceFlow } from "./home-workspace-flow";
@@ -229,7 +230,10 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         {briefs.map(([key, image, , title, line1, line2]) => <Preview id={previewId(key)} title={c[title]} close={c.uiClose} images={[m[image]]} r={r} key={key}><p>{c[line1]} {c[line2]}</p><p>{c.t009}</p><WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={key} href={destination(key)}>{c.uiUseBrief}</WorkspaceEntryLink></Preview>)}
       </section>
     );
-    case "reviews": return (
+    case "reviews": {
+      const platformsFlow = block.presentation?.platformsFlow;
+      if (platformsFlow) return <HomePlatformsFlow platformsFlow={platformsFlow} block={block} experience={experience} c={c} r={r} />;
+      return (
       <section className="hx-feature hx-formats" data-hx-root data-home-experience="reviews" id="home-experience-reviews" aria-labelledby="home-experience-reviews-title">
         <div className="hx-wrap"><div className="hx-top"><div><div className="hx-tag">{c.t001}</div><h2 id="home-experience-reviews-title">{c.t002}<br /><em>{c.t003}</em></h2></div><p>{c.t004}</p></div>
           <div className="hx-formats-board">
@@ -244,6 +248,75 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
         <Preview id={previewId("image")} title={c.t007} close={c.uiClose} images={[m.m01]} r={r} />
         <Preview id={previewId("productPage")} title={c.t009} close={c.uiClose} images={[m.m01, m.m02]} r={r} />
       </section>
-    );
+      );
+    }
   }
+}
+
+const platformGlyphs: Record<string, ReactNode> = {
+  tiktok: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.1 1.8 3.6 3.9 3.9v3c-1.5 0-2.8-.4-3.9-1.2v5.6c0 3.6-2.6 5.9-5.8 5.9-3 0-5.4-2.3-5.4-5.3 0-3.1 2.6-5.5 6-5.2v3.1c-1.7-.4-3 .5-3 2 0 1.3 1 2.2 2.4 2.2 1.5 0 2.6-1 2.6-2.9V3h3.2z" /></svg>,
+  instagram: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none" /></svg>,
+  facebook: <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z" /></svg>
+};
+
+/** "Native style, platform by platform": one real library clip per platform,
+ * each autoplaying in view through the shared preview budget. Presentation-only
+ * selection switches the CTA destination; SSR renders the first card selected. */
+function HomePlatformsFlow({ platformsFlow, block, experience, c, r }: {
+  platformsFlow: HomePlatformsFlowDemo;
+  block: NonNullable<HomeExperienceData["blocks"][number]>;
+  experience: HomeExperienceData;
+  c: Record<string, string>;
+  r: V2Resolvers;
+}) {
+  const destination = (key: string) => r.href(block.actions?.[key] ?? block.href);
+  const clipMedia = (key: string, ariaLabel: string) => {
+    const video = (experience.videos ?? {})[key];
+    if (!video) throw new Error(`Missing platform video: ${key}`);
+    return {
+      src: r.asset(video.src),
+      previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined,
+      poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src)),
+      width: video.width,
+      height: video.height,
+      duration: video.duration,
+      name: ariaLabel
+    };
+  };
+  return (
+    <section className="hx-feature hx-platforms" data-hx-root data-home-experience="reviews" id="home-experience-reviews" aria-labelledby="home-experience-reviews-title">
+      <div className="hx-wrap">
+        <div className="hx-pf-top">
+          <div className="hx-tag">{c.t001}</div>
+          <h2 id="home-experience-reviews-title">{c.t002}<br /><em>{c.t003}</em></h2>
+          <p className="hx-pf-lead">{c.t004}</p>
+        </div>
+        <div className="hx-pf-grid">
+          {platformsFlow.platforms.map((entry, index) => (
+            <button type="button" className={`hx-pf-card${index === 0 ? " is-selected" : ""}`} data-hx-select-group="platform" data-hx-select-value={entry.key} data-hx-cta-href={destination(entry.ctaKey)} aria-pressed={index === 0} key={entry.key}>
+              <span className="hx-pf-screen">
+                <Adc2VideoPreview ariaLabel={c[entry.title]} media={clipMedia(entry.video, c[entry.title])} posterEager={false} />
+                <span className="hx-pf-chip">{platformGlyphs[entry.key] ?? null}<b>{entry.platform}</b></span>
+              </span>
+              <span className="hx-pf-body">
+                <strong className="hx-pf-title">{c[entry.title]}</strong>
+                <span className="hx-pf-spec">{c[entry.spec]}</span>
+                <span className="hx-pf-desc"><b>{c[entry.descriptionLead]}</b> {c[entry.description]}</span>
+                <span className="hx-pf-style">{entry.tags.map((tag) => <span key={tag}>{c[tag]}</span>)}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+        <div className="hx-pf-action">
+          {platformsFlow.platforms.map((entry, index) => (
+            <div data-hx-panel-group="platform" data-hx-panel-value={entry.key} hidden={index !== 0} key={entry.key}>
+              <p className="hx-pf-selected">{c[platformsFlow.selectedLabel]} <b>{entry.platform}</b></p>
+              <WorkspaceEntryLink className="hx-button hx-action" data-action-block="reviews" data-home-cta={`pf-${entry.key}`} href={destination(entry.ctaKey)}>{c[platformsFlow.ctaLabel].replace("{platform}", entry.platform)}</WorkspaceEntryLink>
+            </div>
+          ))}
+        </div>
+        <p className="hx-note">{c.t017}</p>
+      </div>
+    </section>
+  );
 }
