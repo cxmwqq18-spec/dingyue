@@ -117,7 +117,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 /* stage 6 — review */
 .adc2 .adc-workflow-review{display:flex;gap:20px;justify-content:center;align-items:center;height:100%}
 .adc2 .adc-workflow-phone{height:224px;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
-.adc2 .adc-workflow-phone>img{object-position:50% 20%}
+.adc2 .adc-workflow-phone>img,.adc2 .adc-workflow-phone>video{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
 .adc2 .adc-workflow-phone>span{display:grid;place-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#231b3380;color:white;border:1px solid white;border-radius:50%}
 .adc2 .adc-workflow-phone small{position:absolute;left:5px;right:5px;bottom:7px;font-size:9px;color:white;background:#241b3780;border-radius:4px;padding:4px}
 .adc2 .adc-workflow-delivery{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:150px;text-align:center}
@@ -155,6 +155,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
   <span class="pv-pill">架构 / 布局不变</span>
   <span class="pv-pill">v2：04 = 产品 + 模特 + 台词（完整展示）</span>
   <span class="pv-pill">v2：05 = 等待视频生成</span>
+  <span class="pv-pill">v3：文案 SEO 优化 · 卡片 06 用真实示例视频</span>
   <span class="pv-pill">素材替换：精华液 → 香薰蜡烛产品线</span>
   <span class="pv-live">仅本地预览 · 未改动线上代码与数据</span>
 </div>
@@ -166,7 +167,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
     <header class="adc-workflow-heading">
       <div class="hx-tag">HOW IT WORKS</div>
       <h2 id="home-campaign-workflow-title">From your product to a finished AI video</h2>
-      <p>Add a product, cast an AI presenter and generate your video shot by shot — you review every step before download.</p>
+      <p>Add your product, choose an AI presenter and approve the storyboard — then download a finished product video, ready for ads and social media.</p>
     </header>
 
     <ol class="adc-workflow-grid">
@@ -196,7 +197,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             </div>
           </div>
         </div>
-        <p>Upload a product photo or import a public product URL. Confirm the detected details before anything is generated.</p>
+        <p>Start from one product photo or paste your product page URL. The workspace reads the photos and details for you — confirm them before anything is generated.</p>
       </li>
 
       <!-- 02 · Choose a scene & presenter -->
@@ -224,7 +225,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             </div>
           </div>
         </div>
-        <p>Pick a scene template and an AI presenter. Every presenter comes with a previewable voice and a ready-made setting.</p>
+        <p>Choose where the video takes place and who presents it. Pick an AI presenter, preview the voice, and the scene is set up around your product automatically.</p>
       </li>
 
       <!-- 03 · Shape your video brief -->
@@ -253,7 +254,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             </div>
           </form>
         </div>
-        <p>Describe your product, audience and creative idea. Choose the format and length, then check the credit estimate before you generate.</p>
+        <p>Write one short brief — what you sell, who it is for, and your idea. Pick a video format (9:16, 1:1 or 16:9) and length, then check the credit estimate before you generate.</p>
       </li>
 
       <!-- 04 · Save & refine the storyboard：产品图 + 模特图 + 台词文案，图片完整展示 -->
@@ -280,7 +281,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             <div class="adc-workflow-saved"><span aria-hidden="true">✓</span>All changes saved<a href="https://www.aivideosugc.com/app/create/library" aria-label="Open my Library">↗</a></div>
           </div>
         </div>
-        <p>Your draft is saved to the Library automatically. Check the product, presenter and dialogue of every shot before generating.</p>
+        <p>The storyboard splits your idea into shots — product photo, presenter and dialogue for each one. Edit any line, save the draft to your Library, and approve it when it looks right.</p>
       </li>
 
       <!-- 05 · Wait for your video to generate -->
@@ -309,7 +310,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             <div class="adc-workflow-gen-note">You can close the page — follow the progress in your Library.<a href="https://www.aivideosugc.com/app/create/library" aria-label="Open my Library">↗</a></div>
           </div>
         </div>
-        <p>Generate the shots and follow the progress here or in your Library. You can close the page while the clips render.</p>
+        <p>Generate every shot and follow the progress here or in your Library. You can close the page while the clips render and come back when they are ready.</p>
       </li>
 
       <!-- 06 · Review & download -->
@@ -317,10 +318,10 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
         <h3><span>06</span>Review &amp; download</h3>
         <div class="adc-workflow-visual adc-workflow-stage-6">
           <div class="adc-workflow-review">
-            <button type="button" class="adc-workflow-phone" data-hx-dialog="adc-workflow-sequence" aria-label="Play sequence">
-              <img alt="Example of an AI presenter holding the scented candle" src="assets/teams1-home-r2-ad-640.webp" width="640" height="960" loading="lazy" decoding="async" />
+            <button type="button" class="adc-workflow-phone" data-hx-dialog="adc-workflow-sequence" aria-label="Play the real example video">
+              <video src="assets/candle-unboxing-living-room.mp4" poster="assets/teams1-home-r2-ad-640.webp" muted loop autoplay playsinline preload="metadata"></video>
               <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5 11 7-11 7Z" transform="translate(1.5 0)"/></svg></span>
-              <small>Example shot sequence</small>
+              <small>Real example video</small>
             </button>
             <div class="adc-workflow-delivery">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h8l5 5v15H6zm8 0v6h5M9 13h7m-7 4h7"/></svg>
@@ -332,7 +333,7 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
             </div>
           </div>
         </div>
-        <p>Watch the finished video with captions, download it, or export the script and individual shot clips for your ads and product pages.</p>
+        <p>Watch the finished video with captions, check the product and the voiceover, then download it — or export the script and single clips — ready for ads, social media and your product page.</p>
       </li>
 
     </ol>
@@ -389,13 +390,14 @@ body{margin:0;background:#e9e4dd;font-family:"Outfit","Noto Sans SC",system-ui,-
 </div>
 
 <section class="pv-notes">
-  <h2>本次整改说明（预览稿 v2，已按反馈修订）</h2>
+  <h2>本次整改说明（预览稿 v3，已按反馈修订）</h2>
   <ul>
-    <li><strong>04 保存并完善故事板（v2）</strong>：改为「产品图 + 模特图 + 台词文案」三要素——Product 白底原图与 Presenter 模特图<strong>按原始比例完整展示不裁切</strong>（卡片高度自适应加高），下方 Dialogue 台词块对应工作台里每个镜头的台词字段，保留 <code>All changes saved</code> 状态条。</li>
-    <li><strong>05 等待视频生成（v2）</strong>：原「生成并组装镜头」按反馈替换为生成等待态——三个镜头缩略图带真实工作台状态徽标（Ready ✓ / Generating 转圈 / Queued），下方生成进度条动画 +「可关闭页面，随时回 Library 查看进度」，缩略图素材同步更换。</li>
-    <li><strong>其余卡片</strong>：01–03、06 与 v1 一致（上传/导入确认、场景+主持人、AI Video Agent 简介 + Optimize、成片审阅下载），架构与线上 <code>HomeWorkflow</code> 完全一致。</li>
-    <li><strong>素材</strong>：产品线为香薰蜡烛（<code>teams1-home-r2-src / r2-ad</code>），主持人组合 Product host / At home / At work，05 的 Queued 镜头用主持人 amara。</li>
-    <li><strong>落地方式（确认设计后）</strong>：6 条文案与标签 = <code>site_aidreamcapes_home</code> 行 contentJson 的字段级编辑（<code>more_sections[0].items</code> + <code>workflowDemo.labels/scenes/shots/media</code>），走 manifest + CAS；04/05 的面板布局变化需同步一次受审的 <code>home-workflow.tsx</code> + CSS 组件改动（代码部署），不改 URL、不动收录。</li>
+    <li><strong>v3 · 文案 SEO 优化</strong>：6 条卡片描述全部重写——每条直接回答「这一步做什么、做完得到什么」，并自然嵌入搜索关键词（product photo / product URL / AI presenter / storyboard / captions / download），标题引导句同步改为利益导向。</li>
+    <li><strong>v3 · 真实示例视频</strong>：卡片 06 的手机预览改为<strong>直接播放站内真实视频素材</strong> <code>living-room-sofa-check-in-p10.mp4</code>（来自 <code>spokesperson-video</code> 详情卡的演示视频：客厅沙发场景、女士从礼盒中取出蜡烛 + 火柴盒、带字幕）。线上已有素材核实结论：有蜡烛开箱/展示视频，<strong>没有「点燃蜡烛」特写镜头</strong>的成品视频。</li>
+    <li><strong>v2 · 04 保存并完善故事板</strong>：产品图 + 模特图 + 台词文案三要素，图片按原始比例完整展示不裁切，卡片高度自适应加高，保留 <code>All changes saved</code> 状态条。</li>
+    <li><strong>v2 · 05 等待视频生成</strong>：镜头缩略图带真实工作台状态徽标（Ready ✓ / Generating / Queued）+ 进度条动画 +「可关闭页面，回 Library 查看进度」。</li>
+    <li><strong>素材体系</strong>：产品线 = 香薰蜡烛（<code>teams1-home-r2-src / r2-ad</code> 静帧 + 真实 mp4 示例视频），主持人组合 Product host / At home / At work。</li>
+    <li><strong>落地方式（确认设计后）</strong>：文案与媒体引用 = <code>site_aidreamcapes_home</code> 行 contentJson 字段级编辑（<code>more_sections[0].items</code> + <code>workflowDemo</code>），manifest + CAS；04/05 面板布局与 06 视频播放需一次受审的 <code>home-workflow.tsx</code> + CSS 组件改动（代码部署），不改 URL、不动收录。</li>
   </ul>
 </section>
 
