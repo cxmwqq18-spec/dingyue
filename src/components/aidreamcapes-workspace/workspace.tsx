@@ -1209,15 +1209,15 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   }
 
-  /** 确认后直接提交上游生成：direct 单镜头直出，任务即时进入生成状态。 */
-  async function createAvatarGeneration() {
-    if (!customer) { window.location.assign(currentLoginHref()); return; }
+  /** 主持人视频共用的校验与入参构建：生成与「Save as draft」两条路径走同一份输入。 */
+  function prepareAvatarGeneration(): { input: TaskInput; title: string } | null {
+    if (!customer) { window.location.assign(currentLoginHref()); return null; }
     const selectedActor = catalog?.actors.find((item) => item.actorId === avatarSelectionId);
     const presenterScene = catalog?.scenes.find((item) => item.id === "presenter_showcase");
-    if (!selectedActor || !presenterScene) { setMessage("Choose a presenter before continuing."); return; }
-    if (!avatarProductImages.length) { setMessage("Add at least one product photo before continuing."); return; }
-    if (!avatarScript.trim()) { setMessage("Add a script or key talking points before continuing."); return; }
-    if (avatarModelUnavailable) { setMessage("No connected video model currently supports presenter speech."); return; }
+    if (!selectedActor || !presenterScene) { setMessage("Choose a presenter before continuing."); return null; }
+    if (!avatarProductImages.length) { setMessage("Add at least one product photo before continuing."); return null; }
+    if (!avatarScript.trim()) { setMessage("Add a script or key talking points before continuing."); return null; }
+    if (avatarModelUnavailable) { setMessage("No connected video model currently supports presenter speech."); return null; }
 
     const input = defaultInput(presenterScene);
     input.actorId = selectedActor.actorId;
@@ -1237,23 +1237,52 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     input.options.language = selectedAvatarLanguage;
     input.options.subtitle = Boolean(catalog?.subtitles?.available);
     if (avatarModel) input.modelId = avatarModel.id;
+    return { input, title: `${selectedActor.name} video` };
+  }
 
+  function clearAvatarComposer() {
+    setAvatarScript(""); setAvatarProductImages([]); setAvatarSelectionId("");
+  }
+
+  /** 确认后直接提交上游生成：direct 单镜头直出，任务即时进入生成状态。 */
+  async function createAvatarGeneration() {
+    const prepared = prepareAvatarGeneration();
+    if (!prepared) return;
     setBusy(true); setMessage("");
     try {
       const result = await request<{ task: WorkspaceTask }>("/tasks", {
         method: "POST",
         headers: { "Idempotency-Key": crypto.randomUUID() },
-        body: JSON.stringify({ sceneId: presenterScene.id, input, title: `${selectedActor.name} video` }),
+        body: JSON.stringify({ sceneId: "presenter_showcase", input: prepared.input, title: prepared.title }),
       });
       setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
       void refreshBalanceSoon();
-      setAvatarScript(""); setAvatarProductImages([]); setAvatarSelectionId("");
+      clearAvatarComposer();
       setInlineRun({ taskId: result.task.taskId, title: result.task.title, status: "Preparing your video…", state: "running" });
       setMessage(`Generating “${result.task.title}” — progress is shown below and in your Library.`);
       setMessageKind("info");
       setMessageAction(true);
       window.scrollTo({ top: 0 });
       await autoRunVideoTask(result.task.taskId);
+    } catch (error) { setMessage((error as Error).message); setMessageKind("error"); } finally { setBusy(false); }
+  }
+
+  /** 确认弹窗中的「Save as draft」：只保存主持人视频的脚本与设置，不触发生成。 */
+  async function saveAvatarDraft() {
+    const prepared = prepareAvatarGeneration();
+    if (!prepared) return;
+    setBusy(true); setMessage("");
+    try {
+      const result = await request<{ task: WorkspaceTask }>("/tasks", {
+        method: "POST",
+        headers: { "Idempotency-Key": crypto.randomUUID() },
+        body: JSON.stringify({ sceneId: "presenter_showcase", input: prepared.input, title: prepared.title }),
+      });
+      setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
+      clearAvatarComposer();
+      setMessage(`Saved “${result.task.title}” to your Library as a draft. Open it anytime to review and generate.`);
+      setMessageKind("info");
+      setMessageAction(true);
     } catch (error) { setMessage((error as Error).message); setMessageKind("error"); } finally { setBusy(false); }
   }
 
@@ -1530,6 +1559,33 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       setMessage((error as Error).message);
       setMessageKind("error");
       setInlineRun((current) => current ? { ...current, state: "failed", status: (error as Error).message } : current);
+    } finally { setBusy(false); }
+  }
+
+  /**
+   * 确认弹窗中的「Save as draft」：只创建草稿任务（与生成同一条 POST /tasks），
+   * 不触发分镜/生成/合成；表单随保存清空，横幅提供 Library 入口。
+   */
+  async function saveConfirmedDraft() {
+    const pending = pendingGenerate;
+    if (!pending || !customer) return;
+    setPendingGenerate(null); setBusy(true); setMessage("");
+    try {
+      const result = await request<{ task: WorkspaceTask }>("/tasks", { method: "POST", headers: { "Idempotency-Key": crypto.randomUUID() }, body: JSON.stringify({ sceneId: pending.scene.id, input: pending.input, title: pending.title, ...(pending.productBrief ? { productBrief: pending.productBrief } : {}), ...(pending.source ? { preset: pending.source } : {}) }) });
+      setTasks((current) => [result.task, ...current.filter((item) => item.taskId !== result.task.taskId)]);
+      if (pending.surface === "composer") {
+        setPrompt(""); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerProducts([]); setComposerTitle(""); setInlineRun(null);
+      } else {
+        setSelectedSceneId(""); setDraftReferenceUrls([]); setComposerProducts([]); setVideoReferenceUrls([]); setVideoReferenceFiles([]); setAudioReferenceFiles([]); setComposerTitle(""); setPrompt(""); setPresets((current) => ({ ...current, video: undefined })); setPresetSceneId(undefined);
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("scene")) { url.searchParams.delete("scene"); window.history.replaceState(window.history.state, "", url); }
+      }
+      setMessage(`Saved “${result.task.title}” to your Library as a draft. Open it anytime to review and generate.`);
+      setMessageKind("info");
+      setMessageAction(true);
+    } catch (error) {
+      setMessage((error as Error).message);
+      setMessageKind("error");
     } finally { setBusy(false); }
   }
 
@@ -2280,6 +2336,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       {totalCredits != null && <p className={styles.help}>{direct ? `This ${pendingGenerate.input.options.duration}s video is generated as one clip. ` : ""}Credits are held when you confirm and returned automatically if generation fails.</p>}
       <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
         <button type="button" className={styles.button} onClick={() => setPendingGenerate(null)}>Cancel</button>
+        <button type="button" className={styles.button} disabled={busy} onClick={() => void saveConfirmedDraft()}>Save as draft</button>
         <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || (totalCredits != null && balance != null && balance < totalCredits)} onClick={() => void runConfirmedGeneration()}>Generate now</button>
       </div>
     </section></div>; })()}
@@ -2296,6 +2353,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         {quote.available && credits != null && <p className={styles.help}>Priced the same as image-to-video for now. Credits are held when a shot generates and returned automatically if generation fails.</p>}
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 16 }}>
           <button type="button" className={styles.button} onClick={() => setPendingAvatarSubmit(null)}>Cancel</button>
+          <button type="button" className={styles.button} disabled={busy} onClick={() => { setPendingAvatarSubmit(null); void saveAvatarDraft(); }}>Save as draft</button>
           <button type="button" className={styles.button} style={{ background: "#7c3aed", borderColor: "#7c3aed", color: "#fff" }} disabled={busy || !quote.available || (credits != null && balance != null && balance < credits)} onClick={() => { setPendingAvatarSubmit(null); void createAvatarGeneration(); }}>Generate now</button>
         </div>
       </section></div>;
