@@ -1474,7 +1474,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           videoTypeId: composerVideoType,
           durationSeconds: composerDuration,
           aspectRatio: composerAspect,
-          resolution: composerResolution || undefined,
+          resolution: composerResolution || (catalog?.models.find((model) => model.id === composerModel) ?? activeModel)?.resolutions?.[0] || undefined,
           referenceUrls: composerTab === "AI Video" ? videoReferenceUrls : [],
           productBrief
         }),
