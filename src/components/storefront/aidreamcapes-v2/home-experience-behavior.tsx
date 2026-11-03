@@ -89,9 +89,24 @@ export function HomeExperienceBehavior() {
     };
     if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(() => warmPresenterPanels(), { timeout: 3000 });
     else window.setTimeout(warmPresenterPanels, 1200);
+    // Motion scene cards: loop only while on screen so a grid of clips never
+    // decodes off-viewport. Dialog clips pause with their dialog.
+    const motionVideos = [...document.querySelectorAll<HTMLVideoElement>("video[data-hx-video]")];
+    const motionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      const video = entry.target as HTMLVideoElement;
+      const dialog = video.closest("dialog");
+      if (dialog && !dialog.open) { video.pause(); return; }
+      if (entry.isIntersecting && !document.hidden) video.play().catch(() => { /* poster stays */ });
+      else video.pause();
+    }), { threshold: 0.25 });
+    motionVideos.forEach(video => motionObserver.observe(video));
+    const motionVisibility = () => { if (document.hidden) motionVideos.forEach(video => video.pause()); };
+    document.addEventListener("visibilitychange", motionVisibility);
     document.addEventListener("click", handleClick);
     document.addEventListener("close", handleClose, true);
     return () => {
+      motionObserver.disconnect();
+      document.removeEventListener("visibilitychange", motionVisibility);
       document.removeEventListener("click", handleClick);
       document.removeEventListener("close", handleClose, true);
     };
