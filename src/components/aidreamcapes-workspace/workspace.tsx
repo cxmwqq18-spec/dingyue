@@ -1489,7 +1489,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           return;
         }
         if (job.status === "failed") {
-          setPromptOptimizer({ status: "failed", sourcePrompt: source, error: job.error?.message || "Prompt optimization failed. Please adjust the prompt and try again." });
+          const rawError = job.error?.message || "";
+          setPromptOptimizer({ status: "failed", sourcePrompt: source, error: rawError ? humanError(rawError) : "Prompt optimization failed. Please adjust the prompt and try again." });
           return;
         }
       }
@@ -2797,6 +2798,18 @@ function humanError(code?: string) {
     request_too_large: "That upload is too large. Use a smaller file.",
     product_brief_confirmation_required: "Confirm the imported product details before generating.",
     product_brief_invalid: "The imported product details are incomplete. Re-import the product page.",
+    wan30_prompt_optimization_prompt_required: "Write the prompt you want optimized first.",
+    wan30_prompt_optimization_prompt_too_long: "This prompt is too long to optimize. Shorten it and try again.",
+    wan30_prompt_optimization_video_type_invalid: "The video type isn't supported for optimization. Pick another type and try again.",
+    wan30_prompt_optimization_duration_invalid: "Choose a supported video length and try again.",
+    wan30_prompt_optimization_aspect_ratio_invalid: "Choose a supported aspect ratio and try again.",
+    wan30_prompt_optimization_resolution_invalid: "Choose a supported resolution and try again.",
+    wan30_prompt_optimization_reference_invalid: "One of the reference images can't be used. Replace it and try again.",
+    wan30_prompt_optimization_reference_count_invalid: "Too many reference images. Remove a few and try again.",
+    wan30_prompt_optimization_reference_image_invalid: "One of the reference images isn't a supported photo format. Use a JPG, PNG, or WebP image.",
+    wan30_prompt_optimization_reference_too_large: "A reference image is too large. Use a smaller file.",
+    wan30_prompt_optimization_product_brief_invalid: "The imported product details are incomplete. Re-import the product page.",
+    wan30_prompt_optimization_limit_reached: "You've reached today's optimization limit. Try again tomorrow.",
     storyboard_facts_invalid: "The generated script didn't pass fact checks against your product details. Retry or clarify your details.",
     shot_count_invalid: "The storyboard came back with an unexpected structure. Please retry.",
     quote_secret_required: "Generation pricing is temporarily unavailable. Please try again shortly."

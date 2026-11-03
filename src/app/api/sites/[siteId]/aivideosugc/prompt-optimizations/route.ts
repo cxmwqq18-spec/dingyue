@@ -1,4 +1,6 @@
 import crypto from "crypto";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { NextResponse, type NextRequest } from "next/server";
 import { AsyncJobRollingLimitError, createAsyncJob, getAsyncJobByIdempotency, type AsyncJobSnapshot } from "@/lib/async-jobs";
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
@@ -63,33 +65,84 @@ function parseProductBrief(value: unknown): Wan30PromptOptimizationInput["produc
   return Object.keys(brief).length ? brief : undefined;
 }
 
-/** 工作台作曲家的参考图下载路径 → 校验归属并解析 assetId。 */
-function parseOwnedReferenceAssetIds(value: unknown, siteId: string, customerId: string): string[] {
+/**
+ * 优化请求的参考图来自两个受控来源：
+ * 1. 工作台上传的客户资产下载路径（归属校验后按 storageKey 读取）；
+ * 2. 模板/示例卡预填的站点自有公开媒体路径（与 SAFE_PREVIEW_PATH 同一 URL 家族，
+ *    文件在部署包 public/ 下，按白名单前缀 + 图片扩展名读取）。
+ * 其余一律拒绝，避免把任意外链喂给视觉模型。
+ */
+type ReferenceDescriptor =
+  | { kind: "customer"; assetId: string }
+  | { kind: "site"; pathname: string };
+
+const SITE_REFERENCE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
+const SITE_REFERENCE_MIME_BY_EXTENSION: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
+
+function parseReferences(value: unknown, siteId: string, customerId: string): ReferenceDescriptor[] {
   if (value === undefined || value === null) return [];
   if (!Array.isArray(value)) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
   const urls = value.map((item) => typeof item === "string" ? item.trim() : "");
   if (urls.length > WAN30_PROMPT_OPTIMIZATION_MAX_REFERENCES) throw new WorkspaceError("wan30_prompt_optimization_reference_count_invalid", 400);
-  const prefix = `/api/sites/${siteId}/customers/${customerId}/assets/`;
+  const customerPrefix = `/api/sites/${siteId}/customers/${customerId}/assets/`;
+  const sitePrefixes = [`/ai-image-generation/`, `/ai-video-generation/`, `/assets/sites/${siteId}/`, `/media/${siteId}/`];
   return urls.map((url) => {
-    const path = url.startsWith("http") ? (() => { try { return new URL(url).pathname; } catch { return ""; } })() : url;
-    if (!path.startsWith(prefix) || !path.endsWith("/download")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
-    const assetId = path.slice(prefix.length, -"/download".length);
-    if (!assetId || assetId.includes("/")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
-    return assetId;
+    let pathname = url;
+    if (url.startsWith("http")) {
+      try { pathname = new URL(url).pathname; } catch { throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400); }
+    }
+    if (pathname.startsWith(customerPrefix) && pathname.endsWith("/download")) {
+      const assetId = pathname.slice(customerPrefix.length, -"/download".length);
+      if (!assetId || assetId.includes("/")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+      return { kind: "customer", assetId };
+    }
+    if (sitePrefixes.some((prefix) => pathname.startsWith(prefix))) {
+      return { kind: "site", pathname: normalizeSiteReferencePathname(pathname) };
+    }
+    throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
   });
 }
 
-async function loadReferenceDataUris(assetIds: string[], siteId: string, customerId: string): Promise<string[]> {
+/** 站点媒体路径：解码 + 逐段拒绝穿越，仅接受图片扩展名。 */
+function normalizeSiteReferencePathname(pathname: string): string {
+  let decoded: string;
+  try { decoded = decodeURIComponent(pathname); } catch { throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400); }
+  if (decoded.includes("\\") || decoded.includes("\0")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+  const extension = decoded.slice(decoded.lastIndexOf(".")).toLowerCase();
+  if (!decoded.includes("/") || !SITE_REFERENCE_EXTENSIONS.has(extension.slice(1))) {
+    throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+  }
+  const segments = decoded.split("/");
+  if (segments.some((part) => part === "." || part === ".." || part === "")) {
+    throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+  }
+  return decoded;
+}
+
+async function loadReferenceDataUris(references: ReferenceDescriptor[], siteId: string, customerId: string): Promise<string[]> {
   const dataUris: string[] = [];
-  for (const assetId of assetIds) {
-    const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
-    const mimeType = (asset.mimeType || "").toLowerCase();
-    if (!mimeType.startsWith(REFERENCE_IMAGE_MIME_PREFIX) || !/image\/(?:jpeg|png|webp)/.test(mimeType)) {
-      throw new WorkspaceError("wan30_prompt_optimization_reference_image_invalid", 400);
+  const publicRoot = path.resolve(process.cwd(), "public");
+  for (const reference of references) {
+    if (reference.kind === "customer") {
+      const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId: reference.assetId });
+      const mimeType = (asset.mimeType || "").toLowerCase();
+      if (!mimeType.startsWith(REFERENCE_IMAGE_MIME_PREFIX) || !/image\/(?:jpeg|png|webp)/.test(mimeType)) {
+        throw new WorkspaceError("wan30_prompt_optimization_reference_image_invalid", 400);
+      }
+      const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
+      if (result.bytes.length > MAX_REFERENCE_IMAGE_BYTES) throw new WorkspaceError("wan30_prompt_optimization_reference_too_large", 413);
+      dataUris.push(`data:${mimeType};base64,${result.bytes.toString("base64")}`);
+      continue;
     }
-    const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
-    if (result.bytes.length > MAX_REFERENCE_IMAGE_BYTES) throw new WorkspaceError("wan30_prompt_optimization_reference_too_large", 413);
-    dataUris.push(`data:${mimeType};base64,${result.bytes.toString("base64")}`);
+    const filePath = path.resolve(publicRoot, `.${reference.pathname}`);
+    if (filePath !== publicRoot && !filePath.startsWith(publicRoot + path.sep)) {
+      throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+    }
+    let bytes: Buffer;
+    try { bytes = await fs.readFile(filePath); } catch { throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400); }
+    if (bytes.length > MAX_REFERENCE_IMAGE_BYTES) throw new WorkspaceError("wan30_prompt_optimization_reference_too_large", 413);
+    const mimeType = SITE_REFERENCE_MIME_BY_EXTENSION[reference.pathname.slice(reference.pathname.lastIndexOf(".") + 1).toLowerCase()];
+    dataUris.push(`data:${mimeType};base64,${bytes.toString("base64")}`);
   }
   return dataUris;
 }
@@ -114,7 +167,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const durationSeconds = Number(body.durationSeconds);
     const aspectRatio = typeof body.aspectRatio === "string" ? body.aspectRatio.trim() : "";
     const resolution = typeof body.resolution === "string" ? body.resolution.trim() : "";
-    const referenceAssetIds = parseOwnedReferenceAssetIds(body.referenceUrls, siteId, customerId);
+    const references = parseReferences(body.referenceUrls, siteId, customerId);
     const productBrief = parseProductBrief(body.productBrief);
 
     const idempotencyKey = request.headers.get("idempotency-key")?.trim();
@@ -123,7 +176,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const promptHash = crypto.createHash("sha256").update(prompt).digest("hex");
     const requestFingerprint = crypto.createHash("sha256").update(JSON.stringify({
-      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, referenceAssetIds, productBrief
+      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, references, productBrief
     })).digest("hex");
     const scopedIdempotencyKey = `${siteId}:${customerId}:wan30-prompt:${idempotencyKey}`;
     const existingJob = await getAsyncJobByIdempotency({ kind: JOB_KIND, actorId: customerId, idempotencyKey: scopedIdempotencyKey });
@@ -134,8 +187,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ ok: true, accepted: true, jobId: existingJob.id, job: jobView(existingJob as AsyncJobSnapshot<Wan30PromptOptimizationResult>) }, { status: 202 });
     }
 
-    // 参考图在入库前完成归属校验与字节读取（data URI 传给视觉模型）。
-    const referenceImages = await loadReferenceDataUris(referenceAssetIds, siteId, customerId);
+    // 参考图在入库前完成来源校验与字节读取（data URI 传给视觉模型）。
+    const referenceImages = await loadReferenceDataUris(references, siteId, customerId);
 
     try {
       const job = await createAsyncJob<Wan30PromptOptimizationResult>({
