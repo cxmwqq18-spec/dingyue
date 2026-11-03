@@ -1,0 +1,300 @@
+{
+  "ok": true,
+  "mode": "apply",
+  "target": "production",
+  "siteId": "site_aidreamcapes",
+  "codeCommit": "8270bcb6ac1da6ea893939a3ef953a8d82da1ead",
+  "owner": "Current relational LivePage.contentJson, ThemeSettings footer and Product metadata",
+  "applied": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/2/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/5/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/media/m18"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/videos/workflowExample"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/version"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/video"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/defaultDuration"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/description"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/1/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/2/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/scenes/0/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/durations"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/prompt"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/notice"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/draftPreview"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimize"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimizeNote"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/productRef"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/presenterRef"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogue"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogueText"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genReady"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genWorking"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genQueued"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genProgress"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genNote"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/videoLabel"
+    }
+  ],
+  "planned": [
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/lead"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/0/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/1/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/2/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/3/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/t"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/5/d"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/media/m18"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/videos/workflowExample"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/version"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/video"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/defaultDuration"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/description"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/1/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/2/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/scenes/0/media"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/durations"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/prompt"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/notice"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/draftPreview"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimize"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimizeNote"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/productRef"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/presenterRef"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogue"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogueText"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genReady"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genWorking"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genQueued"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genProgress"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genNote"
+    },
+    {
+      "id": "site_aidreamcapes_home",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/videoLabel"
+    }
+  ],
+  "skipped": [],
+  "conflicts": [],
+  "protectedHashBefore": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "protectedHashAfter": "95d8141b8843ecad941ee23d6f1ed306160c180f87f7baecce736311748b97e5",
+  "derivedState": {
+    "relation": "\"SitePublishedState\"",
+    "restored": false
+  },
+  "revisions": [
+    {
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "before": "e6f8248a8f17666eaf0ac7d7f0f869d646a1b0905aa7248a2a9c2a01ab4679cb",
+      "after": "eee4f7b9669419e673f48dcd490a7763f6156d6a38e3a876bcce0662e87a80bb"
+    }
+  ]
+}

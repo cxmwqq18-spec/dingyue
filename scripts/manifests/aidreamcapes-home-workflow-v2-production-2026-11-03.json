@@ -1,0 +1,311 @@
+{
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "codeCommit": "8270bcb6ac1da6ea893939a3ef953a8d82da1ead",
+  "kind": "homepage workflow module v2: section copy, workflow demo v2 (draft sheet, generation state, real example video)",
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/lead",
+      "baseHash": "61d0034172c181bde141a4103b912eb358715582b1a46be07d9cf4bdfde620c6",
+      "value": "Add your product, choose an AI presenter and approve the storyboard — then download a finished product video, ready for ads and social media."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/0/d",
+      "baseHash": "35e19221b28c251121c17199f031d50ea37e82df45324edbdad608d46ad09cbe",
+      "value": "Start from one product photo or paste your product page URL. The workspace reads the photos and details for you — confirm them before anything is generated."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/1/d",
+      "baseHash": "744e606bdaa633d6c206786aac8ec44b368326ea41f20b4ce8382eb69f2ca3db",
+      "value": "Choose where the video takes place and who presents it. Pick an AI presenter, preview the voice, and the scene is set up around your product automatically."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/2/d",
+      "baseHash": "731929003c1296496836ecf634fa9c7b07c858c86723fccfa80c186373ac88ff",
+      "value": "Write one short brief — what you sell, who it is for, and your idea. Pick a video format (9:16, 1:1 or 16:9) and length, then check the credit estimate before you generate."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/3/d",
+      "baseHash": "19a4f9de7b5f52bc4fd73adf0fa0aeee282db9ab9c3d08016fc330c1e9ae64d9",
+      "value": "The storyboard splits your idea into shots — product photo, presenter and dialogue for each one. Edit any line, save the draft to your Library, and approve it when it looks right."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/t",
+      "baseHash": "8a4d15df053534d9b28965ae8ed72bee0018597b58a58cd130f78707dbff3085",
+      "value": "Wait for your video to generate"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/4/d",
+      "baseHash": "e53270a00fcead86b68062b04bdf11920b379d84ce1450898940790216e12d44",
+      "value": "Generate every shot and follow the progress here or in your Library. You can close the page while the clips render and come back when they are ready."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/more_sections/0/items/5/d",
+      "baseHash": "9ba13eca080cf2ee729e4932858b77d24142166450597a253f7dd9605fba3cd1",
+      "value": "Watch the finished video with captions, check the product and the voiceover, then download it — or export the script and single clips — ready for ads, social media and your product page."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/media/m18",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": {
+        "src": "/ai-image-generation/teams1-home-r2-src-640.webp",
+        "alt": "A scented candle in the original product photo",
+        "width": 640,
+        "height": 640
+      }
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/videos/workflowExample",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": {
+        "src": "/ai-video-generation/living-room-sofa-check-in.mp4",
+        "previewSrc": "/ai-video-generation/living-room-sofa-check-in-p10.mp4",
+        "width": 540,
+        "height": 960,
+        "duration": 10,
+        "name": "Home: Sofa Check-In",
+        "poster": {
+          "src": "/ai-image-generation/teams1-home-r2-ad-640.webp",
+          "alt": "Example of a presenter showing a scented candle at home",
+          "width": 640,
+          "height": 960
+        }
+      }
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/version",
+      "baseHash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "value": 2
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/video",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "workflowExample"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/defaultDuration",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "15"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/media",
+      "baseHash": "015a81f29672a78dc78a6c73e9b153a8b83ed073eed6a253ea47401a34593e07",
+      "value": "m18"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/0/description",
+      "baseHash": "19c28f4d24263ca46a050cac3c54f6af3e80435789fc132175cbe6031eb394c4",
+      "value": "Show the candle clearly, including the glass jar and the wooden lid."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/1/media",
+      "baseHash": "e1452a46eea609b2da746a01bf37d33e192fccb7c6cc3868bf4fc0f877c1510e",
+      "value": "m07"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/shots/2/media",
+      "baseHash": "015a81f29672a78dc78a6c73e9b153a8b83ed073eed6a253ea47401a34593e07",
+      "value": "m18"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/scenes/0/media",
+      "baseHash": "e1452a46eea609b2da746a01bf37d33e192fccb7c6cc3868bf4fc0f877c1510e",
+      "value": "m07"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/durations",
+      "baseHash": "faf0ec0068b77a758c4df2c4ac3d8dac3e059c33036e13f5cb2a048dcd0bfa66",
+      "value": [
+        {
+          "value": "10",
+          "label": "10s"
+        },
+        {
+          "value": "15",
+          "label": "15s"
+        },
+        {
+          "value": "30",
+          "label": "30s"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/prompt",
+      "baseHash": "b79b46e907694f671dd4aa690625759188ebc7c70aadcbc4826d0407b5227170",
+      "value": "Introduce this candle in a cozy evening scene."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/notice",
+      "baseHash": "b10555cc1ea6d0e26851f20bf843b82f7ef6261732c5d4584764b86e1de36909",
+      "value": "Your draft is saved to the Library, and finished videos are kept for 15 days — download the ones you want to keep."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/draftPreview",
+      "baseHash": "6fb27228403be2b6180a64a1028ef6b9706791cbdaf6d9ec28fcfc4b76aa2af4",
+      "value": "All changes saved"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimize",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Optimize"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/optimizeNote",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Optimize the prompt in the workspace"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/productRef",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Product"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/presenterRef",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Presenter"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogue",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Dialogue"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/dialogueText",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Hand-poured soy wax with up to 40 hours of burn time."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genReady",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "✓ Ready"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genWorking",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Generating"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genQueued",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Queued"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genProgress",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Generating your video — 1 of 3 shots ready"
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/genNote",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "You can close the page — follow the progress in your Library."
+    },
+    {
+      "entityType": "live_page",
+      "id": "site_aidreamcapes_home",
+      "field": "contentJson",
+      "path": "/sections/v2_main/settings/data/homeExperience/blocks/4/presentation/workflowDemo/labels/videoLabel",
+      "baseHash": "4bd0a6a19082ab4c147761194a77c8066f4b89725c09883822c7c72d20d211d1",
+      "value": "Real example video"
+    }
+  ]
+}
