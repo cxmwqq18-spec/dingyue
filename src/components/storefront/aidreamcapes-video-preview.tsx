@@ -7,6 +7,9 @@ import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-vid
 type AidreamcapesVideoPreviewProps = {
   alt: string;
   className?: string;
+  /** Source for the sound-on dialog. Defaults to `src`; pass the full-quality
+   * file here when `src` is a lightweight ambient loop (the 10s preview). */
+  dialogSrc?: string;
   deferLoading?: boolean;
   height?: number;
   nearViewportPreload?: "metadata" | "auto";
@@ -19,6 +22,7 @@ type AidreamcapesVideoPreviewProps = {
 export function AidreamcapesVideoPreview({
   alt,
   className = "",
+  dialogSrc,
   deferLoading = false,
   height = 720,
   nearViewportPreload = "metadata",
@@ -124,7 +128,7 @@ export function AidreamcapesVideoPreview({
               playsInline
               poster={poster}
               ref={dialogVideoRef}
-              src={src}
+              src={dialogSrc ?? src}
               width={width}
             />
             <div className="border-t border-white/10 px-4 py-3 text-[11px] text-white/55 sm:px-5">

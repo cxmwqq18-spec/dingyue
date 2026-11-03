@@ -1,4 +1,5 @@
 import type { AidreamcapesV2Navigation } from "@/lib/types";
+import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
@@ -27,19 +28,18 @@ import { MediaDetailPromptCopy } from "./media-detail-prompt-copy";
 function MediaFigure({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   const { card } = detail;
   if (card.video) {
+    // The ambient loop plays the lightweight 10-second preview clip when one
+    // exists; the full-quality file (5-7MB) loads only when the visitor opens
+    // the sound-on dialog, instead of auto-downloading on every detail view.
     return (
       <figure className="v-detail-media">
-        <video
-          aria-label={card.label}
-          autoPlay
-          controls
+        <AidreamcapesVideoPreview
+          alt={card.label}
+          dialogSrc={r.asset(card.video.src)}
           height={card.video.height}
-          loop
-          muted
-          playsInline
           poster={card.video.poster ? r.asset(card.video.poster.src) : undefined}
-          preload="metadata"
-          src={r.asset(card.video.src)}
+          src={r.asset(card.video.previewSrc ?? card.video.src)}
+          videoClassName="block w-full h-auto"
           width={card.video.width}
         />
       </figure>
