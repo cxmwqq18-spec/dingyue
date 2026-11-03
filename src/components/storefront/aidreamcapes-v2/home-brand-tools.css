@@ -223,8 +223,8 @@
 .adc-tools-import-caption em { padding: 1px 7px; border: 1px solid #634a80; border-radius: 999px; background: #37264a; color: #d9c3f5; font-size: 9px; font-style: normal; white-space: nowrap; }
 .adc-tools-import-gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; opacity: .85; transform: translateY(3px); transition: opacity .4s, transform .4s; }
 .adc-tools-import[data-imported="true"] .adc-tools-import-gallery { opacity: 1; transform: none; }
-.adc-tools-gallery-frame { position: relative; display: block; }
-.adc-tools-gallery-frame .adc-tools-photo { aspect-ratio: 1/1; border-radius: 8px; }
+.adc-tools-gallery-frame { position: relative; display: block; aspect-ratio: 1/1; }
+.adc-tools-gallery-frame .adc-tools-photo { position: absolute; inset: 0; height: auto; aspect-ratio: auto; border-radius: 8px; }
 .adc-tools-check { position: absolute; top: 6px; left: 6px; z-index: 1; display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #35c98e; color: #fff; font-size: 9px; font-style: normal; box-shadow: 0 2px 8px #0006; }
 .adc-tools-gallery-label { display: block; padding-top: 5px; color: #a396b2; font-size: 9px; text-align: center; }
 

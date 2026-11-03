@@ -104,7 +104,7 @@ try {
     const v3Demo = {
       ...demo,
       version: 3,
-      labels: { ...demo.labels, importNoteShort: 'review the photos from the import', importStatus: 'Description parsed · ready to brief' },
+      labels: { ...demo.labels, importNoteShort: 'review the photos from the import', importStatus: 'Description parsed · ready to brief', promptValue: 'Give this moisturizer a 15-second review.' },
       urlTyping: 'yourstore.com/products/canvas-tote',
       importTitle: 'Canvas tote bag',
       importCount: '3 found',

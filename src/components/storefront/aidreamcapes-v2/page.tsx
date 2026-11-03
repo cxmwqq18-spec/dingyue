@@ -178,7 +178,7 @@ function HomePage({ data, r }: Props) {
     benefitItems.length !== 6 ||
     benefitItems.some((item) => !item.id || !item.img || !item.href || !item.cta || !item.t || !item.d) ||
     !text(data.benefitsEyebrow) || !text(data.benefitsH2) || !text(data.benefitsLead) ||
-    toolsDemo?.version !== 2 || !toolsDemo.labels.promptValue || !toolsDemo.product || !toolsDemo.presenter || toolsDemo.actors.length !== 5 || toolsDemo.shots.length !== 3 ||
+    (toolsDemo?.version !== 2 && toolsDemo?.version !== 3) || !toolsDemo.labels.promptValue || !toolsDemo.product || !toolsDemo.presenter || toolsDemo.actors.length !== 5 || toolsDemo.shots.length !== 3 ||
     workflow?.items.length !== 6
   )) {
     throw new Error("The homepage tool directory requires six complete tool cards and the six-step workflow");
