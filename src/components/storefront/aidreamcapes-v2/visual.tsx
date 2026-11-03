@@ -137,7 +137,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
         .adc2 .v-steps .v-step-result-link img.v-step-result-portrait{object-position:center bottom}
         .adc2 .v-steps .v-step-video-frame .v-step-result-link{position:static;display:block;height:100%}
         .adc2 .v-steps .v-download,.adc2 .v-steps .v-step-download-icon{pointer-events:auto;z-index:2}
-        .adc2 .v-steps .v-step-source img.v-step-thumb{flex:none;width:64px;height:64px;object-fit:cover}
+        .adc2 .v-steps .v-step-source img.v-step-thumb{flex:none;width:128px;height:128px;object-fit:cover;border-radius:12px}
         .adc2 .v-steps .v-step-source-only img.v-step-thumb{width:100%;height:100%}
         .adc2 .v-step-preview-dialog .v-step-preview-media{display:block;width:100%;max-height:70vh;object-fit:contain;border-radius:12px}
         .adc2 .v-step-preview-dialog h3{margin:0 48px 18px 0}
