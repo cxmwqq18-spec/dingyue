@@ -15,7 +15,7 @@ function isHtmlResponse(response) {
 
 function shouldInterceptHtmlPath(pathname) {
   return !(
-    /^\/(?:assets|fonts|_next)(?:\/|$)/i.test(pathname) ||
+    /^\/(?:assets|fonts|themes|_next)(?:\/|$)/i.test(pathname) ||
     /^\/(?:favicon(?:\.ico|\.svg)?|robots\.txt|sitemap(?:\.xml)?)(?:$|\/)/i.test(pathname)
   );
 }
