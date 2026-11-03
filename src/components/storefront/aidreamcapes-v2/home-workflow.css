@@ -9,7 +9,7 @@
 .adc2 .adc-workflow-heading h2{font-size:clamp(28px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;color:#241f2d;margin:0 0 15px;font-style:normal}
 .adc2 .adc-workflow-heading p{font-size:17px;line-height:1.65;color:#756d7f;margin:0}
 .adc2 .adc-workflow-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.adc2 .adc-workflow-card{display:grid;grid-template-rows:auto 224px 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
+.adc2 .adc-workflow-card{display:grid;grid-template-rows:auto minmax(224px,auto) 1fr;gap:16px;padding:22px;background:#fffefd;border:1px solid #ddd7e4;border-radius:18px;min-width:0;box-shadow:0 3px 12px #3f285003;transition:border-color .2s,box-shadow .2s}
 .adc2 .adc-workflow-card:hover{border-color:#bca7d2;box-shadow:0 8px 24px #3f285009}
 .adc2 .adc-workflow-card h3{display:flex;align-items:center;gap:10px;font-size:18px;line-height:1.35;color:#241f2d;letter-spacing:-.02em;margin:0;min-height:40px;font-weight:700}
 .adc2 .adc-workflow-card h3>span{flex:none;font-size:15px;color:#8956ba;background:#f2ebfa;border-radius:10px;display:grid;place-items:center;width:34px;height:34px;letter-spacing:0}
@@ -82,8 +82,8 @@
 .adc2 .adc-workflow-timeline>div span{flex:1;height:28px;min-width:0;border-radius:3px;overflow:hidden}
 .adc2 .adc-workflow-timeline>div i{position:absolute;top:0;bottom:0;left:42%;border-left:2px solid #8e58bf}
 .adc2 .adc-workflow-review{display:flex;gap:20px;justify-content:center;align-items:center;height:100%}
-.adc2 .adc-workflow-phone{height:100%;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
-.adc2 .adc-workflow-phone>img{object-position:50% 20%}
+.adc2 .adc-workflow-phone{height:224px;aspect-ratio:9/14;position:relative;border:0;border-radius:10px;overflow:hidden;padding:0;flex:none}
+.adc2 .adc-workflow-phone>img,.adc2 .adc-workflow-phone>video{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .adc2 .adc-workflow-phone>span{display:grid;place-items:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:#231b3380;color:white;border:1px solid white;border-radius:50%}
 .adc2 .adc-workflow-phone small{position:absolute;left:5px;right:5px;bottom:7px;font-size:9px;color:white;background:#241b3780;border-radius:4px;padding:4px}
 .adc2 .adc-workflow-delivery{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:150px;text-align:center}
@@ -104,7 +104,41 @@
 .adc2 .adc-workflow-sequence figure b{display:block;color:#4c365e}
 .adc2 .adc-workflow-sequence>button{display:flex;align-items:center;gap:7px;margin-top:16px;border:1px solid #c7afd9;border-radius:8px;padding:8px 12px;background:#eee3f6}
 .adc2 .adc-workflow-dialog>p{font-size:13px;line-height:1.6;color:#82718f}
+/* v2 storyboard draft: product reference + presenter reference + dialogue, shown uncropped. */
+.adc2 .adc-workflow-draft{display:flex;flex-direction:column;gap:10px;height:100%}
+.adc2 .adc-workflow-refs{display:flex;justify-content:center;align-items:center;gap:12px}
+.adc2 .adc-workflow-ref{position:relative;border:0;padding:0;border-radius:9px;overflow:hidden;background:#fff;box-shadow:0 1px 5px #3f285014;flex:none}
+.adc2 .adc-workflow-ref>img{width:100%;height:100%}
+.adc2 .adc-workflow-ref>span{position:absolute;top:6px;left:6px;background:#fffc;border-radius:6px;padding:2px 9px;font-size:10px;font-weight:600;color:#6d4f8c}
+.adc2 .adc-workflow-ref-product{width:150px;height:150px}
+.adc2 .adc-workflow-ref-presenter{width:100px;height:150px}
+.adc2 .adc-workflow-dialogue{background:#fff;border:1px solid #ece7f3;border-radius:8px;padding:8px 11px}
+.adc2 .adc-workflow-dialogue>span{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#9b6bc5}
+.adc2 .adc-workflow-dialogue>span svg{width:12px;height:12px}
+.adc2 .adc-workflow-dialogue>p{margin:4px 0 0;font-size:11.5px;line-height:1.55;color:#584366}
+/* v2 generation waiting state: shot thumbs with workspace status badges + progress. */
+.adc2 .adc-workflow-gen{display:flex;flex-direction:column;gap:12px;height:100%;justify-content:center}
+.adc2 .adc-workflow-gen-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.adc2 .adc-workflow-gen-thumb{position:relative;border-radius:8px;overflow:hidden;min-width:0}
+.adc2 .adc-workflow-gen-thumb>img{height:88px;object-position:50% 32%}
+.adc2 .adc-workflow-gen-status{position:absolute;left:5px;right:5px;bottom:5px;text-align:center;font-size:9.5px;font-weight:600;border-radius:5px;padding:3px 4px;color:#fff;background:#2f2339b3}
+.adc2 .adc-workflow-gen-status.is-ready{background:#3f8f5fd9}
+.adc2 .adc-workflow-gen-status.is-working{background:#8051b3e0}
+.adc2 .adc-workflow-gen-status.is-working::after{content:"";display:inline-block;width:7px;height:7px;border:1.5px solid #fff;border-top-color:transparent;border-radius:50%;margin-left:4px;vertical-align:-1px;animation:adc-gen-spin 1s linear infinite}
+.adc2 .adc-workflow-gen-status.is-queued{background:#5f5670b3}
+@keyframes adc-gen-spin{to{transform:rotate(360deg)}}
+.adc2 .adc-workflow-progress{margin-top:2px}
+.adc2 .adc-workflow-progress>span{display:block;font-size:10.5px;color:#7a6890;margin-bottom:5px}
+.adc2 .adc-workflow-progress-track{position:relative;height:8px;border-radius:999px;background:#e6dcf2;overflow:hidden}
+.adc2 .adc-workflow-progress-track i{position:absolute;top:2px;bottom:2px;width:34%;border-radius:999px;background:linear-gradient(90deg,#8c59bd,#a580c7);animation:adc-gen-progress 2.6s ease-in-out infinite}
+@keyframes adc-gen-progress{0%{left:-34%}100%{left:100%}}
+.adc2 .adc-workflow-gen-note{display:flex;align-items:center;gap:7px;background:#f0e8f8;border-radius:7px;padding:8px;color:#8051a6;font-size:11px}
+.adc2 .adc-workflow-gen-note>a{margin-left:auto;font-size:16px}
+/* v2 brief form: prompt optimize shortcut into the workspace. */
+.adc2 .adc-workflow-opt{display:inline-flex;align-items:center;gap:5px;color:#7b4fa8;background:#f4eefb;border:1px solid #e0d0f0;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:600;transition:background .2s}
+.adc2 .adc-workflow-opt:hover{background:#ece0f7}
+.adc2 .adc-workflow-opt svg{width:12px;height:12px}
 @media(min-width:1101px){.adc2 .adc-workflow-card:nth-child(-n+3) h3{min-height:48px}.adc2 .adc-workflow-card:nth-child(n+4) h3{min-height:48px}}
-@media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px 224px 1fr}}
-@media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:center}.adc2 .adc-workflow-heading .hx-tag{justify-content:center}.adc2 .adc-workflow-heading h2{text-align:center}.adc2 .adc-workflow-heading p{text-align:center;font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto 224px 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
+@media(max-width:1100px){.adc2 .adc-workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adc2 .adc-workflow-card{grid-template-rows:48px minmax(224px,auto) 1fr}}
+@media(max-width:640px){.adc2 .adc-workflow{padding:48px 16px}.adc2 .adc-workflow-heading{margin-bottom:24px;text-align:center}.adc2 .adc-workflow-heading .hx-tag{justify-content:center}.adc2 .adc-workflow-heading h2{text-align:center}.adc2 .adc-workflow-heading p{text-align:center;font-size:15px}.adc2 .adc-workflow-grid{grid-template-columns:minmax(0,1fr);gap:16px}.adc2 .adc-workflow-card{padding:18px;grid-template-rows:auto minmax(224px,auto) 1fr;gap:14px}.adc2 .adc-workflow-card h3{font-size:17px}.adc2 .adc-workflow-card>p{font-size:14px}.adc2 .adc-workflow-footer{align-items:flex-start;flex-direction:column;gap:16px}.adc2 .adc-workflow-dialog{width:calc(100vw - 32px);padding:18px}.adc2 .adc-workflow-dialog figure img{height:280px}}
 @media(prefers-reduced-motion:reduce){.adc2 .adc-workflow *{transition:none!important;animation:none!important}}

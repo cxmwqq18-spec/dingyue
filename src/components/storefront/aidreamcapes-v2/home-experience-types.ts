@@ -5,12 +5,17 @@ export type HomeCampaignSections = {
 };
 
 export type HomeWorkflowDemo = {
-  version: 1;
+  /** 1: original shot-grid storyboard and clip assembly examples. 2: draft sheet (product + presenter + dialogue), generation progress and a real finished example clip. */
+  version: 1 | 2;
   labels: Record<string, string>;
   scenes: { id: string; label: string; media: string }[];
   shots: { label: string; media: string; description: string }[];
   aspects: string[];
   durations: { value: string; label: string }[];
+  /** v2: key into HomeExperienceData.videos for the finished example clip shown in step 06. */
+  video?: string;
+  /** v2: brief form duration preselected before the user chooses. */
+  defaultDuration?: string;
 };
 
 export const HOME_EXPERIENCE_KINDS = ["hero", "picker", "steps", "features", "audience", "reviews"] as const;

@@ -45,7 +45,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
     ["draftLaunch", "m01", "t025", "t026", "t027", "t028", "t029", "product"]
   ];
 
-  if (after === "audience" && campaign) return <HomeWorkflow workflow={campaign.workflow} demo={block.presentation?.workflowDemo} media={m} r={r} />;
+  if (after === "audience" && campaign) return <HomeWorkflow workflow={campaign.workflow} demo={block.presentation?.workflowDemo} media={m} videos={experience.videos ?? {}} r={r} />;
 
   switch (after) {
     case "hero": return (
