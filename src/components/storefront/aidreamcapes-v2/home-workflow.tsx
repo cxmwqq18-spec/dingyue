@@ -65,7 +65,7 @@ export function HomeWorkflow({ workflow, demo, media, videos, r }: { workflow: V
       </div>;
       case 5: return <div className="adc-workflow-review">
         {demo.version === 2
-          ? <span className="adc-workflow-phone"><Adc2VideoPreview ariaLabel={v2Example.name ?? c.videoLabel} media={{ src: r.asset(v2Example.src), previewSrc: v2Example.previewSrc ? r.asset(v2Example.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(v2Example.poster.src)), width: v2Example.width, height: v2Example.height, duration: v2Example.duration }} posterEager={false} /><small>{c.videoLabel}</small></span>
+          ? <span className="adc-workflow-phone"><Adc2VideoPreview ariaLabel={v2Example.name ?? c.videoLabel} media={{ src: r.asset(v2Example.src), previewSrc: v2Example.previewSrc ? r.asset(v2Example.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(v2Example.poster.src)), width: v2Example.width, height: v2Example.height, duration: v2Example.duration }} posterEager /><small>{c.videoLabel}</small></span>
           : <button type="button" className="adc-workflow-phone" data-hx-dialog="adc-workflow-sequence" aria-label={c.previewSequence}>{photo(demo.shots[1].media)}<span><Icon kind="play" /></span><small>{c.sequenceLabel}</small></button>}
         <div className="adc-workflow-delivery"><Icon kind="file" /><b>{c.finalPreview}</b><small>{c.reviewNote}</small><WorkspaceEntryLink className="adc-workflow-primary" href={r.href(c.reviewHref)}>{c.reviewInWorkspace}<Icon kind="arrow" /></WorkspaceEntryLink></div>
       </div>;
