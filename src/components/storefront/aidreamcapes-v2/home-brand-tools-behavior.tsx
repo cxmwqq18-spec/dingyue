@@ -1,6 +1,7 @@
 "use client";
 
 import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { gateDeferredPosters } from "./deferred-poster";
 import { requestDecorationPlay, releaseDecorationSlot } from "./preview-budget";
 import { useEffect } from "react";
 
@@ -147,6 +148,7 @@ export function HomeBrandToolsBehavior() {
     typeFields.forEach(el => typeObserver.observe(el));
     // Motion gate: autoplay muted clips only while they are on screen.
     const videos = [...root.querySelectorAll<HTMLVideoElement>("[data-tools-video]")];
+    gateDeferredPosters(root);
     const videoObserver = new IntersectionObserver(entries => entries.forEach(entry => {
       const video = entry.target as HTMLVideoElement;
       if (entry.isIntersecting && !document.hidden) requestDecorationPlay(video, () => video.play());

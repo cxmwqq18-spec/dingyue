@@ -13,9 +13,10 @@ function Icon({ kind }: { kind: "arrow" | "play" | "link" | "spark" | "image" | 
 }
 
 /** Looping silent preview clip. Playback is gated by the behavior script
- * (IntersectionObserver) so off-screen clips never load or decode. */
+ * (IntersectionObserver) so off-screen clips never load or decode; the poster
+ * is gated the same way because <video poster> has no native lazy load. */
 function Clip({ video, r, className }: { video: HomeToolVideo; r: V2Resolvers; className?: string }) {
-  return <video className={className} src={r.asset(video.src)} poster={r.asset(video.poster.src)} muted loop playsInline preload="none" data-tools-video aria-hidden="true" />;
+  return <video className={className} src={r.asset(video.src)} data-deferred-poster={r.asset(video.poster.src)} muted loop playsInline preload="none" data-tools-video aria-hidden="true" />;
 }
 
 /** Text that the behavior script types out character by character. The full

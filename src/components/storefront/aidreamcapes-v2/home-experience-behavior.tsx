@@ -1,6 +1,7 @@
 "use client";
 
 import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { gateDeferredPosters, showDeferredPoster } from "./deferred-poster";
 import { requestDecorationPlay, releaseDecorationSlot } from "./preview-budget";
 import { useEffect } from "react";
 
@@ -8,6 +9,7 @@ import { useEffect } from "react";
 export function HomeExperienceBehavior() {
   useEffect(() => {
     const focusBeforeDialog = new WeakMap<HTMLDialogElement, HTMLElement>();
+    gateDeferredPosters(document);
     const select = (root: HTMLElement, group: string, value: string) => {
       root.querySelectorAll<HTMLElement>("[data-hx-select-group]").forEach((control) => {
         if (control.dataset.hxSelectGroup !== group) return;
@@ -59,6 +61,9 @@ export function HomeExperienceBehavior() {
           if (dialog instanceof HTMLDialogElement && root.contains(dialog) && !dialog.open) {
             focusBeforeDialog.set(dialog, control);
             dialog.showModal();
+            // The clip's poster was deferred while the dialog stayed hidden;
+            // assign it now so the frame never opens empty.
+            dialog.querySelectorAll<HTMLVideoElement>("video[data-deferred-poster]").forEach(showDeferredPoster);
           }
         }
         if (control.hasAttribute("data-hx-close")) {
