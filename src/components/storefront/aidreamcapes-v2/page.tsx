@@ -333,8 +333,10 @@ function VideoHubPage({ data, r }: Props) {
     ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
   ], {
     // The complete video catalog rides directly after the curated picker,
-    // independent of the row's blockOrder configuration.
-    picker: hubGallery ? <ExampleGallerySection gallery={hubGallery} r={r} eyebrow="All video examples" title="Browse every video example" pageParam="galleryPage" /> : null
+    // independent of the row's blockOrder configuration. A page's data can
+    // retire the catalog module (hideHubGallery) without touching other
+    // storefronts that share this layout.
+    picker: hubGallery && !data.hideHubGallery ? <ExampleGallerySection gallery={hubGallery} r={r} eyebrow="All video examples" title="Browse every video example" pageParam="galleryPage" /> : null
   })}</>;
   return (
     <>
