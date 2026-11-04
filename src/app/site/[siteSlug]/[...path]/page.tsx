@@ -35,7 +35,7 @@ import {
   renderAidreamcapesMediaDetailPage
 } from "@/lib/aidreamcapes-guest-workspace";
 import { actorFlatRedirectTarget, isActorDetailSegment, parseMediaDetailSegments } from "@/lib/aidreamcapes-workspace/media-detail";
-import { resolveActorDetail, resolveMediaDetail, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { resolveActorDetail, resolveMediaDetail, retiredMediaPageRedirect, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 import type { PlatformState, ThemePage } from "@/lib/types";
@@ -647,6 +647,10 @@ export default async function SiteCatchAllPage({
   if (slug === "/404") notFound();
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
+    // Retired example addresses keep redirecting to their living page even
+    // after their owning cards left the relational content.
+    const retiredRedirect = retiredMediaPageRedirect(mediaDetail.kind, mediaDetail.slug);
+    if (retiredRedirect) permanentRedirect(routePath(retiredRedirect));
     // A current public card owns its detail page. Unmatched slugs fall through
     // to the published content pages and collection routes below.
     const detail = await resolveMediaDetail(mediaDetail.kind, mediaDetail.slug);
