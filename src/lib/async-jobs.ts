@@ -367,6 +367,9 @@ export async function createAsyncJob<Result = unknown>(params: CreateAsyncJobPar
   return cloneJob(persistedJob as AsyncJobSnapshot<Result>);
 }
 
+/** A queued/running job with no updates for this long means its runner died (e.g. a service restart mid-run). */
+const STALLED_RUNNING_MS = 15 * 60 * 1000;
+
 export async function getAsyncJob(jobId: string): Promise<AsyncJobSnapshot | undefined> {
   pruneExpiredJobs();
   const dbJob = await withDbTimeout(
@@ -374,11 +377,18 @@ export async function getAsyncJob(jobId: string): Promise<AsyncJobSnapshot | und
       .findFirst({ where: { id: jobId, expiresAt: { gt: new Date() } } })
       .then((row) => (row ? rowToJob(row) : undefined)),
   );
-  if (dbJob) {
-    rememberJob(dbJob as AsyncJobRecord);
-    return dbJob;
+  if (!dbJob) return undefined;
+  if ((dbJob.status === "queued" || dbJob.status === "running") && Date.now() - Date.parse(dbJob.updatedAt) > STALLED_RUNNING_MS) {
+    // The runner process is gone (service restart killed it mid-run): heal the
+    // read path so clients stop polling and the actor's quota frees up.
+    try {
+      return await patchAsyncJob(dbJob.id, { status: "failed", error: { message: "async_job_stalled" }, finishedAt: nowIso() });
+    } catch {
+      return dbJob;
+    }
   }
-  return undefined;
+  rememberJob(dbJob as AsyncJobRecord);
+  return dbJob;
 }
 
 export async function getAsyncJobByIdempotency(params: {
