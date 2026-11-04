@@ -1503,6 +1503,31 @@ function loadAndCachePublicRuntimeState(
   return pending;
 }
 
+// The Cloudflare zone caches public storefront HTML at the edge for two hours.
+// A committed content write bumps the SiteContentRevision; the first request
+// that observes the new revision purges the edge once so visitors never spend
+// those two hours on stale pages. Fire-and-forget: a failed purge must never
+// fail the request, and the last-purged marker keeps concurrent requests from
+// purging in a storm.
+const edgePurgeLastRevision = new Map<string, string>();
+
+function purgeEdgeCacheAfterContentWrite(siteId: string, revision: string): void {
+  if (edgePurgeLastRevision.get(siteId) === revision) return;
+  edgePurgeLastRevision.set(siteId, revision);
+  const token = process.env.CLOUDFLARE_API_TOKEN?.trim();
+  const zoneId = process.env.CLOUDFLARE_HTML_PURGE_ZONE_ID?.trim() || "8bd33b91a4bc763f3d994e0d0777bbf9";
+  if (!token) return;
+  void fetch(`https://api.cloudflare.com/client/v4/zones/${zoneId}/purge_cache`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ purge_everything: true })
+  }).then((response) => response.json()).then((body) => {
+    if (!body?.success) console.error("edge purge rejected after content write", JSON.stringify(body?.errors ?? body).slice(0, 200));
+  }).catch((error) => {
+    console.error("edge purge failed after content write", error instanceof Error ? error.message : error);
+  });
+}
+
 async function getCachedPublicRuntimeState(
   cacheKey: string,
   siteId: string,
@@ -1525,6 +1550,7 @@ async function getCachedPublicRuntimeState(
     return cached.state;
   }
 
+  if (cached) purgeEdgeCacheAfterContentWrite(siteId, revision);
   return loadAndCachePublicRuntimeState(cacheKey, siteId, revision, loader);
 }
 
