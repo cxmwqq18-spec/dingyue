@@ -293,11 +293,16 @@ checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards wit
 
 const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation?galleryPage=2");
 assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status");
-assert.ok(hubGalleryHtml.includes("Browse every video example"), "video hub: full catalog section present");
-const hubGalleryCards = (hubGalleryHtml.match(/data-media-slug=/g) || []).length;
-assert.ok(hubGalleryCards > 0 && hubGalleryCards <= 20, `video hub gallery page 2: ${hubGalleryCards} catalog cards (max 20 per page)`);
-assert.ok(hubGalleryHtml.includes("galleryPage=3"), "video hub gallery: pager links the next catalog page");
-checks.push(`video hub full catalog: galleryPage=2 renders ${hubGalleryCards} cards with its own pager`);
+// The full-catalog module is retired on the video-hub page (content-level
+// decision); any galleryPage address must keep answering the standard layout
+// without resurrecting it.
+assert.ok(!hubGalleryHtml.includes("Browse every video example"), "video hub: retired full catalog stays absent");
+assert.ok(!hubGalleryHtml.includes("data-media-slug="), "video hub: no retired catalog cards");
+assert.ok(!hubGalleryHtml.includes("galleryPage=3"), "video hub: no retired catalog pager");
+assert.ok(hubGalleryHtml.includes("TikTok Shop case studies"), "video hub: TikTok Shop case-studies section present");
+const hubCaseCards = (hubGalleryHtml.match(/data-adc2-preview/g) || []).length;
+assert.ok(hubCaseCards >= 20, `video hub: ${hubCaseCards} TikTok Shop case-study previews (expect the full set of 20)`);
+checks.push(`video hub: retired catalog stays absent; ${hubCaseCards} case-study previews in industry groups`);
 
 const hubMediaGone = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
 assert.equal(hubMediaGone.status, 404, `retired hub media API: status ${hubMediaGone.status} (expected 404)`);
