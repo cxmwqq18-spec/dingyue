@@ -304,6 +304,18 @@ function aidreamcapesLegacyGalleryRedirect(request: NextRequest): NextResponse |
   return NextResponse.redirect(publicRedirectUrlForRequest(request, `${target.pathname}${target.search}`), 301);
 }
 
+function aidreamcapesDuplicateSlashRedirect(request: NextRequest): NextResponse | undefined {
+  if (request.method !== "GET" && request.method !== "HEAD") return undefined;
+  const pathname = request.nextUrl.pathname;
+  if (!pathname.includes("//") || INTERNAL_PATH_RE.test(pathname)) return undefined;
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host") ?? "";
+  if (PRIVATE_STORE_PATH_RE.test(pathname) || !TARGET_SITE_PATH_RE.test(pathname) && !TARGET_HOST_RE.test(host)) return undefined;
+  const mergedPath = pathname.replace(/\/{2,}/g, "/") || "/";
+  const target = publicRedirectUrlForRequest(request, mergedPath);
+  target.search = request.nextUrl.search;
+  return NextResponse.redirect(target, 301);
+}
+
 function aidreamcapesTrailingSlashRedirect(request: NextRequest): NextResponse | undefined {
   if (request.method !== "GET" && request.method !== "HEAD") return undefined;
   const pathname = request.nextUrl.pathname;
@@ -1025,6 +1037,8 @@ function aidreamcapesV2Redirect(request: NextRequest): Response | undefined {
 export async function middleware(request: NextRequest) {
   const canonicalHostResponse = aidreamcapesCanonicalHostRedirect(request);
   if (canonicalHostResponse) return finalizeStorefrontResponse(canonicalHostResponse, request);
+  const duplicateSlashResponse = aidreamcapesDuplicateSlashRedirect(request);
+  if (duplicateSlashResponse) return finalizeStorefrontResponse(duplicateSlashResponse, request);
   const aidreamcapesV2RedirectResponse = aidreamcapesV2Redirect(request);
   if (aidreamcapesV2RedirectResponse) return finalizeStorefrontResponse(aidreamcapesV2RedirectResponse, request);
   // Normalize types before SSR without losing a facet or tracking parameter.
