@@ -190,6 +190,23 @@ await expectPage("/ai-video-generation", ["AIVideosUGC"]);
 await expectPage("/ai-image-generation", ["AIVideosUGC"]);
 await expectPage("/inspiration", ["AIVideosUGC"]);
 await expectPage("/pricing", ["AIVideosUGC"]);
+// Every published facet directory warms its public runtime snapshot here, so
+// the first real visitor after a deploy gets a warm TTFB instead of the cold
+// relational read. Keep in sync with the sitemap's facet rows.
+const facetPages = [
+  "/industries/apps", "/industries/beauty-skincare", "/industries/e-commerce", "/industries/education",
+  "/industries/electronics", "/industries/explainer", "/industries/fashion-clothing", "/industries/financial-services",
+  "/industries/food-drinks", "/industries/health-wellness", "/industries/home-living", "/industries/jewelry-accessories",
+  "/industries/kids-toy", "/industries/other", "/industries/pet", "/industries/shoes", "/industries/sports-gym",
+  "/industries/ugc", "/industries/viral",
+  "/occasions/black-friday", "/occasions/holidays", "/occasions/sale-discount",
+  "/platforms/amazon-product-photos", "/platforms/facebook-ads", "/platforms/instagram-ads",
+  "/platforms/shopify-product-photos", "/platforms/tiktok-ads", "/platforms/youtube-shorts-ads"
+];
+for (const facet of facetPages) {
+  await expectPage(facet, ["AIVideosUGC"]);
+}
+
 
 await expectRedirect("/app/create/video", "/app/create/ai-video-generation");
 await expectRedirect("/app/create/images", "/app/create/ai-image-generation");
