@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "mode": "contract",
+  "contract": "aidreamcapes-hub-example-slug-retirement-2026-11-04-v1",
+  "siteId": "site_aidreamcapes",
+  "target": "production",
+  "generatedAt": "2026-11-04T00:00:00.000Z",
+  "owner": "code",
+  "rules": {
+    "why": "the five renamed hub example cards were retired together with the all-video-examples catalog module; the card rewrite could not carry their persisted publicAliases across, so the retired addresses started answering 404",
+    "redirectRule": "each retired address answers 308 to the living hub page /ai-video-generation; the mapping lives in RETIRED_HUB_EXAMPLE_ADDRESSES (src/lib/aidreamcapes-workspace/media-detail.server.ts) so a later content rewrite cannot break it again",
+    "scopeRule": "only the five example addresses from the 2026-10-22 hub example slug normalization",
+    "supersedes": "the matching addresses in aidreamcapes-hub-example-slugs-production-2026-10-22.json, whose target cards no longer exist"
+  },
+  "addresses": [
+    { "oldPath": "/ai-video-generation/a-clip-sized-for-the-feed", "newPath": "/ai-video-generation", "page": "/ai-video-generation", "label": "Sneaker Photo for the Feed (retired card)", "kind": "video", "source": "examples" },
+    { "oldPath": "/ai-video-generation/a-showcase-in-a-real-room", "newPath": "/ai-video-generation", "page": "/ai-video-generation", "label": "Perfume Bottle in a Room (retired card)", "kind": "video", "source": "examples" },
+    { "oldPath": "/ai-video-generation/a-spoken-ad-with-a-person-on-camera", "newPath": "/ai-video-generation", "page": "/ai-video-generation", "label": "Bottle Ad with a Person (retired card)", "kind": "video", "source": "examples" },
+    { "oldPath": "/ai-video-generation/an-actor-matched-to-the-buyer", "newPath": "/ai-video-generation", "page": "/ai-video-generation", "label": "An Avatar Holds the Shaker (retired card)", "kind": "video", "source": "examples" },
+    { "oldPath": "/ai-video-generation/the-same-product-walkthrough", "newPath": "/ai-video-generation", "page": "/ai-video-generation", "label": "Bento Box Walkthrough (retired card)", "kind": "video", "source": "examples" }
+  ]
+}

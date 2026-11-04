@@ -46,7 +46,7 @@ import {
   renderAidreamcapesSceneCreatePage
 } from "@/lib/aidreamcapes-guest-workspace";
 import { actorFlatRedirectTarget, isActorDetailSegment } from "@/lib/aidreamcapes-workspace/media-detail";
-import { resolveActorDetail, resolveMediaDetail, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { resolveActorDetail, resolveMediaDetail, retiredMediaPageRedirect, aidreamcapesMissingPageRedirect } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { PUBLIC_SCENE_SLUG_RE } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { legacyCreateHrefToStatic, legacyStaticCreateRedirect, parseStaticCreateSegments, staticCreateQuery } from "@/lib/aidreamcapes-workspace/static-routes";
 
@@ -733,6 +733,10 @@ export default async function HostStorefrontCatchAllPage({
     // to the published content pages and collection routes below.
     if ((firstSegment === "ai-image-generation" || firstSegment === "ai-video-generation") && PUBLIC_SCENE_SLUG_RE.test(path[1])) {
       const detailKind = firstSegment === "ai-image-generation" ? "photo" : "video";
+      // Retired example addresses keep redirecting to their living page even
+      // after their owning cards left the relational content.
+      const retiredRedirect = retiredMediaPageRedirect(detailKind, path[1]);
+      if (retiredRedirect) permanentRedirect(retiredRedirect);
       const detail = await resolveMediaDetail(detailKind, path[1]);
       if (detail) {
         return renderAidreamcapesMediaDetailPage({ kind: detailKind, slug: path[1], basePath: "", detail });

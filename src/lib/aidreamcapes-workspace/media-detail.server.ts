@@ -23,6 +23,24 @@ import { mediaCardCanonicalSlug } from "./media-card-canonical";
 import { mediaAliasTarget } from "./media-alias.server";
 import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 
+// Retired hub example addresses. Their owning cards were retired together
+// with the all-video-examples catalog module, and the card rewrite could not
+// carry the persisted publicAliases across, so the relational alias lookup no
+// longer knows them. These five crawlable addresses must keep answering 308
+// to the living hub page — never 404.
+const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
+  "a-clip-sized-for-the-feed": "/ai-video-generation",
+  "a-showcase-in-a-real-room": "/ai-video-generation",
+  "a-spoken-ad-with-a-person-on-camera": "/ai-video-generation",
+  "an-actor-matched-to-the-buyer": "/ai-video-generation",
+  "the-same-product-walkthrough": "/ai-video-generation"
+};
+
+/** Living page a retired address still redirects to, if any. */
+export function retiredMediaPageRedirect(kind: MediaDetailKind, slug: string): string | undefined {
+  return kind === "video" ? RETIRED_HUB_EXAMPLE_ADDRESSES[slug] : undefined;
+}
+
 // Server-side resolution for public media detail pages. Every field is read
 // from the current LivePage row; nothing is cached, generated, or persisted.
 // A committed LivePage update is visible on the next request.

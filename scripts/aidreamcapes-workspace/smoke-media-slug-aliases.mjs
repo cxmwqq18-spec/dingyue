@@ -35,7 +35,11 @@ const MANIFESTS = [
   'scripts/manifests/aidreamcapes-example-prefix-slugs-local-2026-10-22.json',
   'scripts/manifests/aidreamcapes-example-prefix-slugs-production-2026-10-22.json',
   'scripts/manifests/aidreamcapes-card-renames-local-2026-10-22.json',
-  'scripts/manifests/aidreamcapes-card-renames-production-2026-10-22.json'
+  'scripts/manifests/aidreamcapes-card-renames-production-2026-10-22.json',
+  // Later files win for the same oldPath: the retirement contract redirects
+  // the five example addresses to the living hub page after their cards left
+  // the relational content with the all-video-examples catalog module.
+  'scripts/manifests/aidreamcapes-hub-example-slug-retirement-2026-11-04.json'
 ];
 const entries = [];
 for (const file of MANIFESTS) {
