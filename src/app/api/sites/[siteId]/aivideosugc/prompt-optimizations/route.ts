@@ -6,7 +6,7 @@ import { AsyncJobRollingLimitError, createAsyncJob, getAsyncJobByIdempotency, ty
 import { workspaceAuth } from "@/lib/aidreamcapes-workspace/auth";
 import { workspaceFailure, jsonBody } from "@/lib/aidreamcapes-workspace/api";
 import { WorkspaceError } from "@/lib/aidreamcapes-workspace/types";
-import { getCustomerAssetRelational, readCustomerAssetFileByStorageKey } from "@/lib/stores/asset-store";
+import { getCustomerAssetRelational, getCustomerAssetByStorageKeyRelational, readCustomerAssetFileByStorageKey } from "@/lib/stores/asset-store";
 import {
   optimizeWan30VideoPrompt,
   WAN30_PROMPT_OPTIMIZATION_MAX_PROMPT_LENGTH,
@@ -66,14 +66,18 @@ function parseProductBrief(value: unknown): Wan30PromptOptimizationInput["produc
 }
 
 /**
- * 优化请求的参考图来自两个受控来源：
+ * 优化请求的参考图来自三个受控来源：
  * 1. 工作台上传的客户资产下载路径（归属校验后按 storageKey 读取）；
- * 2. 模板/示例卡预填的站点自有公开媒体路径（与 SAFE_PREVIEW_PATH 同一 URL 家族，
+ * 2. 工作台上传的客户资产预览路径 /api/local-assets/{storageKey}
+ *    （storageKey 内嵌 siteId/customerId，经 safeCustomerAssetStorageKey 归属校验后读取，
+ *    与作曲家上传参考图实际持有的 previewUrl 一致）；
+ * 3. 模板/示例卡预填的站点自有公开媒体路径（与 SAFE_PREVIEW_PATH 同一 URL 家族，
  *    文件在部署包 public/ 下，按白名单前缀 + 图片扩展名读取）。
  * 其余一律拒绝，避免把任意外链喂给视觉模型。
  */
 type ReferenceDescriptor =
   | { kind: "customer"; assetId: string }
+  | { kind: "local"; storageKey: string }
   | { kind: "site"; pathname: string };
 
 const SITE_REFERENCE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
@@ -95,6 +99,11 @@ function parseReferences(value: unknown, siteId: string, customerId: string): Re
       const assetId = pathname.slice(customerPrefix.length, -"/download".length);
       if (!assetId || assetId.includes("/")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
       return { kind: "customer", assetId };
+    }
+    if (pathname.startsWith("/api/local-assets/")) {
+      const storageKey = pathname.slice("/api/local-assets/".length);
+      if (!storageKey || storageKey.includes("/../")) throw new WorkspaceError("wan30_prompt_optimization_reference_invalid", 400);
+      return { kind: "local", storageKey };
     }
     if (sitePrefixes.some((prefix) => pathname.startsWith(prefix))) {
       return { kind: "site", pathname: normalizeSiteReferencePathname(pathname) };
@@ -125,6 +134,17 @@ async function loadReferenceDataUris(references: ReferenceDescriptor[], siteId: 
   for (const reference of references) {
     if (reference.kind === "customer") {
       const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId: reference.assetId });
+      const mimeType = (asset.mimeType || "").toLowerCase();
+      if (!mimeType.startsWith(REFERENCE_IMAGE_MIME_PREFIX) || !/image\/(?:jpeg|png|webp)/.test(mimeType)) {
+        throw new WorkspaceError("wan30_prompt_optimization_reference_image_invalid", 400);
+      }
+      const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
+      if (result.bytes.length > MAX_REFERENCE_IMAGE_BYTES) throw new WorkspaceError("wan30_prompt_optimization_reference_too_large", 413);
+      dataUris.push(`data:${mimeType};base64,${result.bytes.toString("base64")}`);
+      continue;
+    }
+    if (reference.kind === "local") {
+      const { asset } = await getCustomerAssetByStorageKeyRelational({ siteId, customerId, storageKey: reference.storageKey });
       const mimeType = (asset.mimeType || "").toLowerCase();
       if (!mimeType.startsWith(REFERENCE_IMAGE_MIME_PREFIX) || !/image\/(?:jpeg|png|webp)/.test(mimeType)) {
         throw new WorkspaceError("wan30_prompt_optimization_reference_image_invalid", 400);

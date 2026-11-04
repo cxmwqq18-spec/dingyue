@@ -272,6 +272,18 @@ export async function getCustomerAssetRelational(
   return { asset: toAssetUploadRelational(asset as unknown as Record<string, unknown>) };
 }
 
+export async function getCustomerAssetByStorageKeyRelational(
+  params: { siteId: string; customerId: string; storageKey: string },
+  client: DbClient = prisma
+): Promise<{ asset: AssetUpload }> {
+  const storageKey = safeCustomerAssetStorageKey(params);
+  const asset = await client.assetUpload.findFirst({
+    where: { storageKey, siteId: params.siteId, customerId: params.customerId, deletedAt: null }
+  });
+  if (!asset) throw new StoreError("asset_not_found_for_customer", 404);
+  return { asset: toAssetUploadRelational(asset as unknown as Record<string, unknown>) };
+}
+
 export async function updateAssetReviewRelational(
   params: { siteId: string; customerId: string; assetId: string; reviewStatus: AssetUpload["reviewStatus"] },
   client: DbClient = prisma
