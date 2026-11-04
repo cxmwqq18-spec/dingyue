@@ -1,6 +1,7 @@
 "use client";
 
 import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { requestDecorationPlay, releaseDecorationSlot } from "./preview-budget";
 import { useEffect } from "react";
 
 /** Presentation-only controls over HTML already rendered by the server. */
@@ -95,9 +96,9 @@ export function HomeExperienceBehavior() {
     const motionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
       const video = entry.target as HTMLVideoElement;
       const dialog = video.closest("dialog");
-      if (dialog && !dialog.open) { video.pause(); return; }
-      if (entry.isIntersecting && !document.hidden) video.play().catch(() => { /* poster stays */ });
-      else video.pause();
+      if (dialog && !dialog.open) { releaseDecorationSlot(video); video.pause(); return; }
+      if (entry.isIntersecting && !document.hidden) requestDecorationPlay(video, () => video.play());
+      else { releaseDecorationSlot(video); video.pause(); }
     }), { threshold: 0.25 });
     motionVideos.forEach(video => motionObserver.observe(video));
     const motionVisibility = () => { if (document.hidden) motionVideos.forEach(video => video.pause()); };

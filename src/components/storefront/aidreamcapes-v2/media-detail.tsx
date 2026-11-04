@@ -89,7 +89,7 @@ function ReferenceAssets({ card, r }: { card: MediaDetail["card"]; r: V2Resolver
         <ul className="v-detail-refs-videos">
           {references.videos.map((video, index) => (
             <li key={`${video.src}-${index}`}>
-              <video aria-label={`Reference clip ${index + 1}`} controls loop muted playsInline poster={video.poster ? r.asset(video.poster) : undefined} preload="metadata" src={r.asset(video.src)} />
+              <video aria-label={`Reference clip ${index + 1}`} controls loop muted playsInline poster={video.poster ? r.asset(video.poster) : undefined} preload="none" src={r.asset(video.src)} />
             </li>
           ))}
         </ul>

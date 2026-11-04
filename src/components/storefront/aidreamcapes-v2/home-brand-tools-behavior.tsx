@@ -1,6 +1,7 @@
 "use client";
 
 import { workspaceEntryTarget } from "@/lib/aidreamcapes-workspace/entry-transfer";
+import { requestDecorationPlay, releaseDecorationSlot } from "./preview-budget";
 import { useEffect } from "react";
 
 /** Reviewed presentation-only enhancement of page-owned SSR HTML. No data requests. */
@@ -148,8 +149,8 @@ export function HomeBrandToolsBehavior() {
     const videos = [...root.querySelectorAll<HTMLVideoElement>("[data-tools-video]")];
     const videoObserver = new IntersectionObserver(entries => entries.forEach(entry => {
       const video = entry.target as HTMLVideoElement;
-      if (entry.isIntersecting && !document.hidden) video.play().catch(() => undefined);
-      else video.pause();
+      if (entry.isIntersecting && !document.hidden) requestDecorationPlay(video, () => video.play());
+      else { releaseDecorationSlot(video); video.pause(); }
     }), { threshold: 0.25 });
     videos.forEach(video => videoObserver.observe(video));
     root.dataset.toolsReady = "true";
