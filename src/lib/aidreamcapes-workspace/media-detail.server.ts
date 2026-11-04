@@ -26,14 +26,16 @@ import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 // Retired hub example addresses. Their owning cards were retired together
 // with the all-video-examples catalog module, and the card rewrite could not
 // carry the persisted publicAliases across, so the relational alias lookup no
-// longer knows them. These five crawlable addresses must keep answering 308
-// to the living hub page — never 404.
+// longer knows them. These five crawlable addresses must keep answering 308 —
+// never 404. Each redirects to the nearest surviving example of the same
+// content shape (a detail page with its single workspace CTA), because the
+// alias contract resolves to a detail canonical, not a catalog index.
 const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
-  "a-clip-sized-for-the-feed": "/ai-video-generation",
-  "a-showcase-in-a-real-room": "/ai-video-generation",
-  "a-spoken-ad-with-a-person-on-camera": "/ai-video-generation",
-  "an-actor-matched-to-the-buyer": "/ai-video-generation",
-  "the-same-product-walkthrough": "/ai-video-generation"
+  "a-clip-sized-for-the-feed": "/ai-video-generation/open-ear-sports-earbuds-park-walk",
+  "a-showcase-in-a-real-room": "/ai-video-generation/sunset-lamp-room-glow-before-after",
+  "a-spoken-ad-with-a-person-on-camera": "/ai-video-generation/wrinkled-shirt-steamer-rescue",
+  "an-actor-matched-to-the-buyer": "/ai-video-generation/washed-graphic-tee-fit-check",
+  "the-same-product-walkthrough": "/ai-video-generation/vegetable-chopper-kitchen-demo"
 };
 
 /** Living page a retired address still redirects to, if any. */
