@@ -366,22 +366,23 @@ if (legacyQueryLinks || nextHashLinks) {
   for (const slug of sellerSlugs) await expectDetailPage(`/ai-video-generation/${slug}`, { kind: "video", slug });
   checks.push(`home: ${sellerSlugs.size} seller examples open their own detail pages`);
 
-  const platformAnchors = [...homeHtml.matchAll(/<a\b[^>]*\bclass=["'][^"']*hx-pf-card[^"']*["'][^>]*>/gi)].map((match) => match[0]);
-  assert.equal(platformAnchors.length, 3, `home: expected 3 platform card links, found ${platformAnchors.length}`);
+  const platformAnchors = [...homeHtml.matchAll(/<a\b[^>]*\bclass=["'][^"']*hx-pf-selected[^"']*["'][^>]*>/gi)].map((match) => match[0]);
+  assert.equal(platformAnchors.length, 3, `home: expected 3 selected-platform label links, found ${platformAnchors.length}`);
   const platformPaths = new Set();
   for (const anchor of platformAnchors) {
     const href = anchorHref(anchor);
     const parsed = sitePath(href);
-    assert.ok(parsed, `home platform card: href is not a path (${href})`);
-    assert.equal(parsed.query, "", `home platform card: href carries a query string (${href})`);
-    assert.equal(parsed.hash, "", `home platform card: href carries a fragment (${href})`);
-    assert.doesNotMatch(anchor, /\bdata-workspace-entry=/i, `home platform card: href carries a workspace payload (${href})`);
-    assert.match(parsed.pathname, /^\/platforms\/[a-z0-9-]+$/, `home platform card: not a platform directory page (${href})`);
+    assert.ok(parsed, `home selected-platform label: href is not a path (${href})`);
+    assert.equal(parsed.query, "", `home selected-platform label: href carries a query string (${href})`);
+    assert.equal(parsed.hash, "", `home selected-platform label: href carries a fragment (${href})`);
+    assert.doesNotMatch(anchor, /\bdata-workspace-entry=/i, `home selected-platform label: href carries a workspace payload (${href})`);
+    assert.match(parsed.pathname, /^\/platforms\/[a-z0-9-]+$/, `home selected-platform label: not a platform directory page (${href})`);
     platformPaths.add(parsed.pathname);
   }
-  assert.equal(platformPaths.size, 3, "home: platform cards must open three distinct platform pages");
+  assert.equal(platformPaths.size, 3, "home: selected-platform labels must open three distinct platform pages");
+  assert.equal([...homeHtml.matchAll(/<a\b[^>]*\bclass=["'][^"']*hx-pf-card[^"']*["'][^>]*>/gi)].length, 0, "home: platform cards must stay select buttons, not links");
   for (const path of platformPaths) await expectPage(path, ["AIVideosUGC"]);
-  checks.push(`home: ${platformPaths.size} platform cards open their platform directory pages`);
+  checks.push(`home: ${platformPaths.size} selected-platform labels open their platform directory pages`);
 }
 
 const { response: sitemap, html: sitemapXml } = await getText("/sitemap.xml");

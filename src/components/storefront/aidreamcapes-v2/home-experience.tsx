@@ -320,17 +320,18 @@ function HomePlatformsFlow({ platformsFlow, block, experience, c, r }: {
                 <span className="hx-pf-style">{entry.tags.map((tag) => <span key={tag}>{c[tag]}</span>)}</span>
               </span>
             </>;
-            // A platform with a public directory address is a plain SSR link;
-            // the select-and-CTA button stays only for entries without one.
-            return entry.href
-              ? <a className={className} href={r.href(entry.href)} key={entry.key}>{body}</a>
-              : <button type="button" className={className} data-hx-select-group="platform" data-hx-select-value={entry.key} data-hx-cta-href={destination(entry.ctaKey)} aria-pressed={index === 0} key={entry.key}>{body}</button>;
+            // Clicking a card only selects the platform (driving the action
+            // panel below); navigation to the public directory happens from
+            // the selected-platform label inside the panel, per platform.
+            return <button type="button" className={className} data-hx-select-group="platform" data-hx-select-value={entry.key} data-hx-cta-href={destination(entry.ctaKey)} aria-pressed={index === 0} key={entry.key}>{body}</button>;
           })}
         </div>
         <div className="hx-pf-action">
           {platformsFlow.platforms.map((entry, index) => (
             <div data-hx-panel-group="platform" data-hx-panel-value={entry.key} hidden={index !== 0} key={entry.key}>
-              <p className="hx-pf-selected">{c[platformsFlow.selectedLabel]} <b>{entry.platform}</b></p>
+              {entry.href
+                ? <a className="hx-pf-selected" href={r.href(entry.href)}>{c[platformsFlow.selectedLabel]} <b>{entry.platform}</b></a>
+                : <p className="hx-pf-selected">{c[platformsFlow.selectedLabel]} <b>{entry.platform}</b></p>}
               <WorkspaceEntryLink className="hx-button hx-action" data-action-block="reviews" data-home-cta={`pf-${entry.key}`} href={destination(entry.ctaKey)}>{c[platformsFlow.ctaLabel].replace("{platform}", entry.platform)}</WorkspaceEntryLink>
             </div>
           ))}

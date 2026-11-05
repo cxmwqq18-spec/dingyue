@@ -215,6 +215,8 @@
 .home-v4 .hx-pf-style span{padding:2.5px 9px;border:1px solid #4a3c5e;border-radius:999px;background:#1a1426;color:#d9c3f5;font-size:10px;font-weight:600}
 .home-v4 .hx-pf-action{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:26px;margin-top:22px;padding:16px 18px;border:1px solid #353040;border-radius:14px;background:linear-gradient(160deg,#1a1426,#120e1c)}
 .home-v4 .hx-pf-action .hx-pf-selected{color:#a396b2;font-size:12.5px;text-align:center}
+.home-v4 .hx-pf-action a.hx-pf-selected{display:block;text-decoration:none;color:#a396b2}
+.home-v4 .hx-pf-action a.hx-pf-selected:hover b{text-decoration:underline}
 .home-v4 .hx-pf-action .hx-pf-selected b{display:block;color:#f6f1f9;font-size:14.5px}
 .home-v4 .hx-platforms .hx-note{text-align:center;margin-top:20px}
 @media(max-width:700px){
