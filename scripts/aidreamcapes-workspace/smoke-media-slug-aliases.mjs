@@ -54,9 +54,21 @@ report.aliases = aliases.length;
 async function get(path, mode) {
   const base = mode === 'path' ? '/site/aidreamcapes' : '';
   const headers = mode === 'host' ? { 'x-forwarded-host': 'www.aivideosugc.com', 'x-forwarded-proto': 'https' } : {};
-  const response = await fetch(`${origin}${base}${path}`, { headers, redirect: 'manual', signal: AbortSignal.timeout(requestTimeout) });
-  const html = await response.text();
-  return { status: response.status, headers: response.headers, html, $: load(html) };
+  // This smoke runs immediately after the release switch restarts the service;
+  // the first connections can be refused or reset while the server warms up.
+  // Retry transient network failures only — status assertions stay strict.
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(`${origin}${base}${path}`, { headers, redirect: 'manual', signal: AbortSignal.timeout(requestTimeout) });
+      const html = await response.text();
+      return { status: response.status, headers: response.headers, html, $: load(html) };
+    } catch (error) {
+      lastError = error;
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
+  }
+  throw lastError;
 }
 
 async function check(name, run) {
