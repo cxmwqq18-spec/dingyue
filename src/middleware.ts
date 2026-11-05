@@ -943,8 +943,8 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   if (!hostSlug || upstreamUrl.pathname.startsWith("/site/")) return upstreamUrl;
   // aidreamcapes.com/llms.txt is answered by an internal handler; every other host
   // keeps its usual handling for this path.
-  if (hostSlug === "aidreamcapes" && upstreamUrl.pathname === "/llms.txt") {
-    upstreamUrl.pathname = "/api/aidreamcapes/llms-txt";
+  if (hostSlug === "aidreamcapes" && (upstreamUrl.pathname === "/llms.txt" || upstreamUrl.pathname === "/llms-full.txt")) {
+    upstreamUrl.pathname = upstreamUrl.pathname === "/llms.txt" ? "/api/aidreamcapes/llms-txt" : "/api/aidreamcapes/llms-full-txt";
     upstreamUrl.search = "";
     return upstreamUrl;
   }
