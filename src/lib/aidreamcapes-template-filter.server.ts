@@ -87,20 +87,28 @@ export const AIDREAMCAPES_KIND_CATALOG_COPY: Record<"video" | "photo", { title: 
  * variants keep the noindex metadata and inherit the current page's copy. */
 export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | undefined, path: string, query: TemplateFilterQuery): Promise<Metadata | undefined> {
   if (siteSlug !== "aidreamcapes" && siteSlug !== "aivideosugc") return;
+  // Kind catalogs are decided by pure URL rules — they must not depend on the
+  // template inventory, which content rewrites may reshuffle at any time.
+  if (path === "/templates") {
+    const urlState = normalizeAidreamcapesTemplateFilter(path, query);
+    const kind = urlState.filters.kind;
+    if (!urlState.noindex && (kind === "video" || kind === "photo")) {
+      const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
+      const canonical = new URL(urlState.canonicalPath, "https://www.aivideosugc.com").href;
+      const row = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } }, select: { contentJson: true } });
+      const seo = (row?.contentJson as { seo?: { ogImage?: string; ogImageAlt?: string } } | undefined)?.seo;
+      const images = seo?.ogImage ? [{ url: new URL(seo.ogImage, canonical).href, alt: seo.ogImageAlt }] : [];
+      return {
+        title: { absolute: copy.title },
+        description: copy.description,
+        alternates: { canonical },
+        openGraph: { title: copy.title, description: copy.description, url: canonical, images },
+        twitter: { card: "summary_large_image", title: copy.title, description: copy.description, images }
+      };
+    }
+  }
   const state = await resolveAidreamcapesTemplateFilter(path, query);
   if (!state) return;
-  if (!state.noindex && state.path === "/templates" && (state.filters.kind === "video" || state.filters.kind === "photo")) {
-    const kind = state.filters.kind as "video" | "photo";
-    const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
-    const canonical = new URL(state.canonicalPath, "https://www.aivideosugc.com").href;
-    return {
-      title: { absolute: copy.title },
-      description: copy.description,
-      alternates: { canonical },
-      openGraph: { title: copy.title, description: copy.description, url: canonical },
-      twitter: { card: "summary_large_image", title: copy.title, description: copy.description }
-    };
-  }
   if (!state?.noindex) return;
   const row = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } }, select: { contentJson: true } });
   const content = row?.contentJson as { seo?: { title?: string; description?: string; ogImage?: string; ogImageAlt?: string } } | undefined;
