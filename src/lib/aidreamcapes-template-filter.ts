@@ -54,6 +54,12 @@ export function normalizeAidreamcapesTemplateFilter(path: string, query: Templat
   }
   const suffix = params.size ? `?${params}` : "";
   const canonicalPath = targetPath + suffix;
+  // A valid kind filter on the /templates catalog is a standalone, indexable
+  // view — the video-examples / photo-examples catalogs — with its own copy
+  // and self canonical. Facet filters and any invalid input keep the
+  // noindexed utility-view treatment.
+  const kindOnlyCatalog = targetPath === "/templates" && !invalid
+    && Boolean(filters.kind) && !filters.industries && !filters.platforms && !filters.occasions;
   // Tracking and unknown parameters stay on real navigation; they are excluded
   // from canonical identity. They must never cause a redirect loop.
   const hasUrlChange = targetPath !== path || Boolean(query.type) || Boolean(pathKind && query.kind);
@@ -63,7 +69,7 @@ export function normalizeAidreamcapesTemplateFilter(path: string, query: Templat
     for (const value of Array.isArray(raw) ? raw : raw === undefined ? [] : [raw]) navigationParams.append(key, value);
   }
   const redirectPath = !invalid && hasUrlChange ? targetPath + (navigationParams.size ? `?${navigationParams}` : "") : undefined;
-  return { path: targetPath, filters, invalid, badRequest, canonicalPath, noindex: invalid || params.size > 0, ...(redirectPath ? { redirectPath } : {}) };
+  return { path: targetPath, filters, invalid, badRequest, canonicalPath, noindex: invalid || (params.size > 0 && !kindOnlyCatalog), ...(redirectPath ? { redirectPath } : {}) };
 }
 
 export function templateMatchesFilters(template: { kind: string; industries: string[]; platforms: string[]; occasions: string[] }, filters: TemplateFilters) {

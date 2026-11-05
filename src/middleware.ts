@@ -923,9 +923,16 @@ function finalizeStorefrontResponse(response: Response, request: NextRequest): R
   const path = request.nextUrl.pathname.replace(/^\/site\/(?:aidreamcapes|aivideosugc)(?=\/|$)/, "");
   const aidreamcapes = /^\/site\/(?:aidreamcapes|aivideosugc)(?:\/|$)/.test(request.nextUrl.pathname)
     || storefrontSlugForHost(request.headers.get("x-forwarded-host") ?? request.headers.get("host")) === "aidreamcapes";
-  if (aidreamcapes && /^\/(?:templates|industries|platforms|occasions)(?:\/|$)/.test(path)
-    && ["kind", "industries", "platforms", "occasions"].some(key => Boolean(request.nextUrl.searchParams.get(key)))) {
-    guarded.headers.set("X-Robots-Tag", "noindex, follow");
+  if (aidreamcapes && /^\/(?:templates|industries|platforms|occasions)(?:\/|$)/.test(path)) {
+    // The kind catalogs (/templates?kind=video|photo) are standalone indexable
+    // pages with their own copy; facet filters and kind-on-facet views stay
+    // noindexed utility views.
+    const facetParam = ["industries", "platforms", "occasions"].some(key => Boolean(request.nextUrl.searchParams.get(key)));
+    const kindParam = Boolean(request.nextUrl.searchParams.get("kind"));
+    const kindCatalog = path === "/templates" && kindParam && !facetParam;
+    if (facetParam || (kindParam && !kindCatalog)) {
+      guarded.headers.set("X-Robots-Tag", "noindex, follow");
+    }
   }
   return applyGrownstrideNoindex(guarded, request);
 }

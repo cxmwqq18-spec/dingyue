@@ -7,7 +7,7 @@ import type { SectionInstance, ThemePageJson } from "@/lib/types";
 import type { V2Data } from "./types";
 import type { Directory, Template } from "./template-directory";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
-import { resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
+import { AIDREAMCAPES_KIND_CATALOG_COPY, resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
 import { aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { MEDIA_PAGE_SIZE } from "./types";
@@ -96,6 +96,12 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       const start = (page - 1) * pageSize;
       const items: GalleryItem[] = all.slice(start, start + pageSize).map(toGalleryItem);
       resolved = { ...data, exampleGallery: { items, total: all.length, page, totalPages, ...(kind ? { kind } : {}), basePath: props.pagePath ?? "/templates" } };
+      // The kind catalogs are standalone pages: their heading and lead must
+      // describe the filtered result set, not the all-examples catalog.
+      if (kind) {
+        const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
+        resolved = { ...resolved, h1: copy.h1, lead: copy.lead };
+      }
     } else if (data.templateDirectory) {
       const directory = data.templateDirectory as Directory;
       const kind = typeof data.kind === "string" ? data.kind : "";

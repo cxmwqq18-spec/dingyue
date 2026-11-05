@@ -65,10 +65,42 @@ export async function redirectAidreamcapesTemplateFilter(siteSlug: string | unde
   if (state?.redirectPath) permanentRedirect(basePath + state.redirectPath);
 }
 
-/** Filtered variants retain their current page's copy and social image. */
+/** Copy for the standalone kind catalogs (/templates?kind=video|photo).
+ * These are indexable pages, so the copy must describe exactly the filtered
+ * result set instead of reusing the all-examples title. */
+export const AIDREAMCAPES_KIND_CATALOG_COPY: Record<"video" | "photo", { title: string; description: string; h1: string; lead: string }> = {
+  video: {
+    title: "AI UGC Video Examples | AIVideosUGC",
+    description: "Browse every AI product video example on AIVideosUGC. Open any example to see the full prompt behind it and recreate it with your own product.",
+    h1: "Video Examples",
+    lead: "Every AI product video example in one place. Open any example to see the full prompt behind it, then recreate it with your own product."
+  },
+  photo: {
+    title: "AI Product Photo Examples | AIVideosUGC",
+    description: "Browse every AI product photo example on AIVideosUGC. Open any example to see the prompt behind it and recreate it with your own product.",
+    h1: "Photo Examples",
+    lead: "Every AI product photo example in one place. Open any example to see the prompt behind it, then recreate it with your own product."
+  }
+};
+
+/** Kind catalog views are indexable pages with their own copy; facet-filtered
+ * variants keep the noindex metadata and inherit the current page's copy. */
 export async function aidreamcapesTemplateFilterMetadata(siteSlug: string | undefined, path: string, query: TemplateFilterQuery): Promise<Metadata | undefined> {
   if (siteSlug !== "aidreamcapes" && siteSlug !== "aivideosugc") return;
   const state = await resolveAidreamcapesTemplateFilter(path, query);
+  if (!state) return;
+  if (!state.noindex && state.path === "/templates" && (state.filters.kind === "video" || state.filters.kind === "photo")) {
+    const kind = state.filters.kind as "video" | "photo";
+    const copy = AIDREAMCAPES_KIND_CATALOG_COPY[kind];
+    const canonical = new URL(state.canonicalPath, "https://www.aivideosugc.com").href;
+    return {
+      title: { absolute: copy.title },
+      description: copy.description,
+      alternates: { canonical },
+      openGraph: { title: copy.title, description: copy.description, url: canonical },
+      twitter: { card: "summary_large_image", title: copy.title, description: copy.description }
+    };
+  }
   if (!state?.noindex) return;
   const row = await prisma.livePage.findUnique({ where: { siteId_slug: { siteId: "site_aidreamcapes", slug: path } }, select: { contentJson: true } });
   const content = row?.contentJson as { seo?: { title?: string; description?: string; ogImage?: string; ogImageAlt?: string } } | undefined;
