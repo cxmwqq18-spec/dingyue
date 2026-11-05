@@ -34,7 +34,7 @@ export type HomeWorkspaceFlowDemo = {
 export type HomePlatformsFlowDemo = {
   version: 1;
   /** Render order. `key` also selects the platform glyph and the actions key prefix. */
-  platforms: { key: string; platform: string; title: string; descriptionLead: string; description: string; spec: string; tags: string[]; video: string; ctaKey: string }[];
+  platforms: { key: string; platform: string; title: string; descriptionLead: string; description: string; spec: string; tags: string[]; video: string; ctaKey: string; /** Public platform directory page this card opens, e.g. /platforms/tiktok-ads. */ href?: string }[];
   /** Copy keys in the block copy record. */
   selectedLabel: string;
   /** "{platform}" is replaced with the card's platform name at render time. */

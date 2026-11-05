@@ -84,7 +84,15 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
           <div className="hx-selector">
             <div className="hx-window-head"><span>{c.t014}</span><small>{c.t015}</small></div>
             <div className="hx-filters">{(block.presentation?.sceneTabsV3 ?? [["all", "t016"], ["beauty", "t017"], ["clothing", "t018"], ["tech", "t019"], ["home", "t020"]].map(([key, text]) => ({ key, label: c[text] }))).map((tab, index) => <button type="button" aria-pressed={index === 0} className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${tab.key}`} data-hx-filter={tab.key} key={tab.key}>{tab.label}</button>)}</div>
-            <div className="hx-scene-grid">{(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], category: (block.presentation?.sceneCategories?.[key] ?? []).join(" "), publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => <button type="button" className={`hx-scene-card${index === 0 ? " is-selected" : ""}`} data-home-local={card.key} data-hx-filter-tags={card.category} data-hx-select-group="scene" data-hx-select-value={card.key} aria-pressed={index === 0} key={card.key}><span className="photo">{card.video ? <video src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster.src)} muted loop playsInline preload="none" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}{card.category ? <span className="hx-scene-chip">{card.category}</span> : null}</span><b>{card.title}</b></button>)}</div>
+            <div className="hx-scene-grid">{(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], category: (block.presentation?.sceneCategories?.[key] ?? []).join(" "), publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => {
+              const className = `hx-scene-card${index === 0 ? " is-selected" : ""}`;
+              const body = <><span className="photo">{card.video ? <video src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster.src)} muted loop playsInline preload="none" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}{card.category ? <span className="hx-scene-chip">{card.category}</span> : null}</span><b>{card.title}</b></>;
+              // A card with a live detail slug is a plain SSR link; the legacy
+              // select-and-preview button stays only for cards without one.
+              return card.detailHref
+                ? <a className={className} href={r.href(card.detailHref)} data-hx-filter-tags={card.category} key={card.key}>{body}</a>
+                : <button type="button" className={className} data-home-local={card.key} data-hx-filter-tags={card.category} data-hx-select-group="scene" data-hx-select-value={card.key} aria-pressed={index === 0} key={card.key}>{body}</button>;
+            })}</div>
             {(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => <div className="hx-selector-footer" data-hx-panel-group="scene" data-hx-panel-value={card.key} hidden={index !== 0} key={card.key}>
               <button type="button" className="hx-selected" data-home-local={`preview-${card.key}`} data-hx-dialog={previewId(card.key)}>{card.video ? <video src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster.src)} muted loop playsInline preload="none" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}<span><small>{c.t027}</small>{card.title}</span></button>
               <WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={card.key} href={destination(card.key)}>{c.t029}</WorkspaceEntryLink>
@@ -298,8 +306,9 @@ function HomePlatformsFlow({ platformsFlow, block, experience, c, r }: {
           <p className="hx-pf-lead">{c.t004}</p>
         </div>
         <div className="hx-pf-grid">
-          {platformsFlow.platforms.map((entry, index) => (
-            <button type="button" className={`hx-pf-card${index === 0 ? " is-selected" : ""}`} data-hx-select-group="platform" data-hx-select-value={entry.key} data-hx-cta-href={destination(entry.ctaKey)} aria-pressed={index === 0} key={entry.key}>
+          {platformsFlow.platforms.map((entry, index) => {
+            const className = `hx-pf-card${index === 0 ? " is-selected" : ""}`;
+            const body = <>
               <span className="hx-pf-screen">
                 <Adc2VideoPreview ariaLabel={c[entry.title]} media={clipMedia(entry.video, c[entry.title])} posterEager={false} />
                 <span className="hx-pf-chip">{platformGlyphs[entry.key] ?? null}<b>{entry.platform}</b></span>
@@ -310,8 +319,13 @@ function HomePlatformsFlow({ platformsFlow, block, experience, c, r }: {
                 <span className="hx-pf-desc"><b>{c[entry.descriptionLead]}</b> {c[entry.description]}</span>
                 <span className="hx-pf-style">{entry.tags.map((tag) => <span key={tag}>{c[tag]}</span>)}</span>
               </span>
-            </button>
-          ))}
+            </>;
+            // A platform with a public directory address is a plain SSR link;
+            // the select-and-CTA button stays only for entries without one.
+            return entry.href
+              ? <a className={className} href={r.href(entry.href)} key={entry.key}>{body}</a>
+              : <button type="button" className={className} data-hx-select-group="platform" data-hx-select-value={entry.key} data-hx-cta-href={destination(entry.ctaKey)} aria-pressed={index === 0} key={entry.key}>{body}</button>;
+          })}
         </div>
         <div className="hx-pf-action">
           {platformsFlow.platforms.map((entry, index) => (

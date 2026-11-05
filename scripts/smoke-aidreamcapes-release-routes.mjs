@@ -335,6 +335,55 @@ if (legacyQueryLinks || nextHashLinks) {
   checks.push("home: no legacy query workspace links");
 }
 
+// ---- Homepage modules open their own public pages (2026-11-05) -------------
+//
+// Scene cards, platform cards and seller example copy blocks are plain SSR
+// links: no query string, no fragment, no workspace payload on the card itself.
+{
+  const sceneAnchors = [...homeHtml.matchAll(/<a\b[^>]*\bclass=["'][^"']*hx-scene-card[^"']*["'][^>]*>/gi)].map((match) => match[0]);
+  assert.equal(sceneAnchors.length, 6, `home: expected 6 scene card links, found ${sceneAnchors.length}`);
+  const sceneSlugs = new Set();
+  for (const anchor of sceneAnchors) {
+    const pathname = assertCardOpensDetailPage("home scene card", anchor);
+    const slug = pathname.match(MEDIA_DETAIL_RE)?.[2];
+    assert.ok(slug, `home scene card: unexpected detail path (${pathname})`);
+    sceneSlugs.add(slug);
+  }
+  assert.equal(sceneSlugs.size, 6, "home: scene cards must open six distinct detail pages");
+  for (const slug of sceneSlugs) await expectDetailPage(`/ai-video-generation/${slug}`, { kind: "video", slug });
+  checks.push(`home: ${sceneSlugs.size} scene cards open their own detail pages`);
+
+  const sellerAnchors = [...homeHtml.matchAll(/<a\b[^>]*\bclass=["']v-show-body["'][^>]*>/gi)].map((match) => match[0]);
+  assert.equal(sellerAnchors.length, 4, `home: expected 4 seller example links, found ${sellerAnchors.length}`);
+  const sellerSlugs = new Set();
+  for (const anchor of sellerAnchors) {
+    const pathname = assertCardOpensDetailPage("home seller example", anchor);
+    const slug = pathname.match(MEDIA_DETAIL_RE)?.[2];
+    assert.ok(slug, `home seller example: unexpected detail path (${pathname})`);
+    sellerSlugs.add(slug);
+  }
+  assert.equal(sellerSlugs.size, 4, "home: seller examples must open four distinct detail pages");
+  for (const slug of sellerSlugs) await expectDetailPage(`/ai-video-generation/${slug}`, { kind: "video", slug });
+  checks.push(`home: ${sellerSlugs.size} seller examples open their own detail pages`);
+
+  const platformAnchors = [...homeHtml.matchAll(/<a\b[^>]*\bclass=["'][^"']*hx-pf-card[^"']*["'][^>]*>/gi)].map((match) => match[0]);
+  assert.equal(platformAnchors.length, 3, `home: expected 3 platform card links, found ${platformAnchors.length}`);
+  const platformPaths = new Set();
+  for (const anchor of platformAnchors) {
+    const href = anchorHref(anchor);
+    const parsed = sitePath(href);
+    assert.ok(parsed, `home platform card: href is not a path (${href})`);
+    assert.equal(parsed.query, "", `home platform card: href carries a query string (${href})`);
+    assert.equal(parsed.hash, "", `home platform card: href carries a fragment (${href})`);
+    assert.doesNotMatch(anchor, /\bdata-workspace-entry=/i, `home platform card: href carries a workspace payload (${href})`);
+    assert.match(parsed.pathname, /^\/platforms\/[a-z0-9-]+$/, `home platform card: not a platform directory page (${href})`);
+    platformPaths.add(parsed.pathname);
+  }
+  assert.equal(platformPaths.size, 3, "home: platform cards must open three distinct platform pages");
+  for (const path of platformPaths) await expectPage(path, ["AIVideosUGC"]);
+  checks.push(`home: ${platformPaths.size} platform cards open their platform directory pages`);
+}
+
 const { response: sitemap, html: sitemapXml } = await getText("/sitemap.xml");
 assert.equal(sitemap.status, 200, `sitemap: status ${sitemap.status}`);
 assert.match(sitemapXml, /<urlset[\s>]/i, "sitemap: urlset");

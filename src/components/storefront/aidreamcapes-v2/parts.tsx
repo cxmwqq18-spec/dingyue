@@ -1198,6 +1198,8 @@ function ShowcaseWall({ block, items, r, id, videos }: { block: V2ReviewBlock; i
         .adc2 .v-show-time{position:absolute;right:15px;top:15px;padding:2px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700}
         .adc2 .v-show-cap{position:absolute;left:16px;right:16px;bottom:22px;padding:6px 9px;border-radius:8px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:700;line-height:1.3;text-align:center}
         .adc2 .v-show-body{padding:16px 24px 24px}
+        .adc2 a.v-show-body{display:block;color:inherit;text-decoration:none}
+        .adc2 a.v-show-body:hover h3{text-decoration:underline;text-underline-offset:3px}
         .adc2 .v-show-body h3{font-size:20px;margin:6px 0 8px}
         .adc2 .v-show-body p{color:var(--ink-2);font-size:15px;line-height:1.6;margin:0}
         .adc2 .v-show-who{color:#c4b5fd;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
@@ -1216,7 +1218,9 @@ function ShowcaseWall({ block, items, r, id, videos }: { block: V2ReviewBlock; i
               <span aria-hidden="true" className="v-show-arrow">→</span>
               {ad ? <figure className="v-show-ad">{adVideo ? <Adc2VideoPreview ariaLabel={item.alt ?? item.t} media={{ src: r.asset(adVideo.src), previewSrc: adVideo.previewSrc ? r.asset(adVideo.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(adVideo.poster.src)), width: adVideo.width, height: adVideo.height, duration: adVideo.duration }} posterEager /> : <Img image={ad} r={r} />}<span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
             </div>
-            <div className="v-show-body"><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></div>
+            {item.detailHref
+              ? <a className="v-show-body" href={r.href(item.detailHref)}><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></a>
+              : <div className="v-show-body"><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></div>}
           </article>;
         })}
       </div>
