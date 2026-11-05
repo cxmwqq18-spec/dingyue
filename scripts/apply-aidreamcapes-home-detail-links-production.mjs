@@ -191,8 +191,9 @@ try {
     assert.equal(exampleItems.length, 6, `expected 6 example items before append, found ${exampleItems.length}`);
     const existingSlugs = new Set(exampleItems.map(item => item.publicSlug).filter(Boolean));
     for (const card of sellerCards) assert.ok(!existingSlugs.has(card.publicSlug), `duplicate publicSlug in examples: ${card.publicSlug}`);
+    const appendBase = exampleItems.length;
     sellerCards.forEach((card, offset) => {
-      const index = exampleItems.length + offset;
+      const index = appendBase + offset;
       push(`${base}/examples/groups/0/items/${index}`, undefined, card);
       exampleItems.push(card);
     });
