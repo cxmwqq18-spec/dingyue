@@ -30,7 +30,7 @@ export function HomeWorkspaceFlow({ demo, copy, media, videos, r, actions }: {
     return {
       src: r.asset(video.src),
       previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined,
-      poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src)),
+      poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? "")),
       width: video.width,
       height: video.height,
       duration: video.duration,

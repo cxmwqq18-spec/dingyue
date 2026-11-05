@@ -593,7 +593,7 @@ export function CaseCard({ card, r, filterIndexes = [] }: { card: V2Card; r: V2R
     <article className={`tc case-card${filterIndexes.length ? " v-filter-card" : ""}`} data-filter-indexes={filterIndexes.length ? filterIndexes.join(" ") : undefined} data-ind={card.industries.join(" ")} data-plat={card.platforms.join(" ")} data-type={card.kind}>
       <div className="ti">
         {video ? (
-          <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src)), previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined, src: r.asset(video.src), width: video.width }} />
+          <Adc2VideoPreview ariaLabel={video.name ?? card.name} media={{ duration: video.duration, height: video.height, name: video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? "")), previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined, src: r.asset(video.src), width: video.width }} />
         ) : <Img image={card.image} r={r} {...aidreamcapesV2ResponsiveImageProps(card.image.src, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES)} />}
       </div>
       <div className="tb">
@@ -855,7 +855,7 @@ export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
 export function VideoPlayer({ video, r }: { video: V2Video; r: V2Resolvers }) {
   return (
     <figure className="vid">
-      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster.src))} preload="none" src={r.asset(video.src)} width={video.width} />
+      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? ""))} preload="none" src={r.asset(video.src)} width={video.width} />
     </figure>
   );
 }
@@ -869,7 +869,7 @@ export function HeroMedia({ media, r }: { media: V2HeroMedia; r: V2Resolvers }) 
   if (media.kind === "loop") {
     return (
       <div className="hm hm-loop">
-        <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(media.video.poster.src))} preload="metadata" src={r.asset(media.video.src)} width={media.video.width} />
+        <video aria-label={media.video.poster.alt} autoPlay data-adc2-loop height={media.video.height} loop muted playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(media.video.poster?.src ?? ""))} preload="metadata" src={r.asset(media.video.src)} width={media.video.width} />
         {media.inset ? <div className="inset"><span className="lbl">Your product</span><Img eager image={media.inset} r={r} /></div> : null}
       </div>
     );
@@ -1216,7 +1216,7 @@ function ShowcaseWall({ block, items, r, id, videos }: { block: V2ReviewBlock; i
             <div className="v-show-stage">
               {item.srcImg ? <figure className="v-show-src"><Img image={item.srcImg} r={r} /><figcaption>{copyLabel(r, "Their photo")}</figcaption></figure> : null}
               <span aria-hidden="true" className="v-show-arrow">→</span>
-              {ad ? <figure className="v-show-ad">{adVideo ? <Adc2VideoPreview ariaLabel={item.alt ?? item.t} media={{ src: r.asset(adVideo.src), previewSrc: adVideo.previewSrc ? r.asset(adVideo.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(adVideo.poster.src)), width: adVideo.width, height: adVideo.height, duration: adVideo.duration }} posterEager /> : <Img image={ad} r={r} />}<span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
+              {ad ? <figure className="v-show-ad">{adVideo ? <Adc2VideoPreview ariaLabel={item.alt ?? item.t} media={{ src: r.asset(adVideo.src), previewSrc: adVideo.previewSrc ? r.asset(adVideo.previewSrc) : undefined, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(adVideo.poster?.src ?? "")), width: adVideo.width, height: adVideo.height, duration: adVideo.duration }} posterEager /> : <Img image={ad} r={r} />}<span className="v-show-tag">{copyLabel(r, "Ready-to-run ad")}</span><span className="v-show-time">00:{String(seconds).padStart(2, "0")}</span>{item.caption ? <span className="v-show-cap">{item.caption}</span> : null}</figure> : null}
             </div>
             {item.detailHref
               ? <a className="v-show-body" href={r.href(item.detailHref)}><span className="v-show-who">{item.who}</span><h3>{item.t}</h3><p><RichText r={r} text={item.d} /></p></a>
