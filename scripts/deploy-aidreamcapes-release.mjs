@@ -304,6 +304,15 @@ test "$(systemctl is-active aidreamshoots.service)" = active
 echo 'build window closed: aidreamcapes-eu.service and aidreamshoots.service active again'` : `test "$(systemctl show aidreamcapes-eu.service aidreamshoots.service -p MainPID)" = "$EU_SERVICE_PIDS"`}
 trap - EXIT
 printf '%s\n' "deployed_commit=$COMMIT" "current=$RELEASE" 'service=aidreamcapes.service'
+# The Cloudflare edge caches public HTML for two hours. A new release changes
+# what the origin answers without touching any content revision, so the
+# revision-triggered purge never fires — purge the edge here instead, or
+# visitors keep the previous release's HTML (and headers) for up to two hours.
+if curl -fsS --max-time 20 -H "Authorization: Bearer $(grep '^CLOUDFLARE_API_TOKEN=' "$RELEASE/.env.local" | cut -d= -f2- | tr -d '"' | tr -d ' ')" -H "Content-Type: application/json" "https://api.cloudflare.com/client/v4/zones/\${AIDREAMCAPES_PURGE_ZONE_ID:-8bd33b91a4bc763f3d994e0d0777bbf9}/purge_cache" --data '{"purge_everything":true}' | grep -q '"success":true'; then
+  echo 'edge_purge=ok'
+else
+  echo 'edge_purge=FAILED (run the purge manually: the edge may serve the previous release for up to two hours)'
+fi
 `;
   if (args.includes("--print-remote-command")) {
     fs.rmSync(temp, { recursive: true, force: true });
