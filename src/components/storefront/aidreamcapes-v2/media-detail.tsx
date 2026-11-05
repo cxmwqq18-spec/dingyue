@@ -228,7 +228,10 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail-prompt-head h2{margin:0;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 #media-detail .v-detail-prompt-copy{flex:none;padding:6px 12px;border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--ink-2);font-size:12.5px;font-weight:600;line-height:1.2;cursor:pointer;transition:border-color .16s ease,color .16s ease}
 #media-detail .v-detail-prompt-copy:hover{border-color:rgba(255,255,255,.34);color:var(--ink)}
-#media-detail .v-detail-prompt-text{margin:0;white-space:pre-wrap;color:var(--ink-2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+#media-detail .v-detail-prompt-text{margin:0;white-space:pre-wrap;color:var(--ink-2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.7;overflow-wrap:anywhere;max-height:620px;overflow-y:auto;overscroll-behavior:contain;padding-right:8px;scrollbar-width:thin;scrollbar-color:rgba(148,140,170,.35) transparent}
+#media-detail .v-detail-prompt-text::-webkit-scrollbar{width:6px}
+#media-detail .v-detail-prompt-text::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(148,140,170,.35)}
+#media-detail .v-detail-prompt-text::-webkit-scrollbar-track{background:transparent}
 #media-detail .v-detail-prompt-note{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);color:var(--ink-3);font-size:13px;line-height:1.55}
 #media-detail .v-detail-categories{margin:0 0 26px;padding-top:18px;border-top:1px solid var(--line)}
 #media-detail .v-detail-categories dl{display:grid;gap:10px;margin:10px 0 0}
@@ -238,7 +241,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail-categories .chip:hover{border-color:var(--line-2);color:var(--ink)}
 #media-detail .v-crumbs{display:flex;flex-wrap:wrap;gap:6px;font-size:.85rem;opacity:.75;padding-top:8px}
 #media-detail .v-crumbs a{text-decoration:underline;text-underline-offset:3px}
-@media(max-width:880px){#media-detail .v-detail{grid-template-columns:minmax(0,1fr);gap:26px}}
+@media(max-width:880px){#media-detail .v-detail{grid-template-columns:minmax(0,1fr);gap:26px}#media-detail .v-detail-prompt-text{max-height:440px}}
 @media(max-width:520px){#media-detail .v-detail-categories dl>div{grid-template-columns:1fr;gap:4px}#media-detail .v-detail-categories dt{padding-top:0}}
       ` }} />
       <div className="wrap">
