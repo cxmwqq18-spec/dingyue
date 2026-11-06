@@ -1073,6 +1073,30 @@ export function ThematicLinkChips({ links, r }: { links: { label: string; href: 
   })}</div>;
 }
 
+// Grouped internal directory links (industry / platform / occasion groups on
+// the hubs, "related tools and guides" on the actor pages). Card panels in the
+// same visual language as ThematicLinkChips, replacing the old plain
+// underlined link lists.
+export function RelatedLinkGroups({ groups, r }: { groups: { title: string; links: { label: string; href: string }[] }[]; r: V2Resolvers }) {
+  const visible = groups.filter((group) => group.links?.length);
+  if (!visible.length) return null;
+  return <div className="adc-related-dirs">
+    {visible.map((group) => <div className="adc-related-dir" key={group.title}>
+      <h3>{group.title}</h3>
+      <ul>{group.links.map((link) => {
+        const Icon = relatedTopicIcon(link.href);
+        return <li key={link.href}>
+          <WorkspaceEntryLink href={r.href(link.href)}>
+            <span aria-hidden="true" className="adc-related-dir-icon"><Icon size={15} strokeWidth={1.8} /></span>
+            <span>{link.label}</span>
+            <span aria-hidden="true" className="adc-related-dir-arrow">→</span>
+          </WorkspaceEntryLink>
+        </li>;
+      })}</ul>
+    </div>)}
+  </div>;
+}
+
 export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }) {
   const items = block?.items ?? [];
   if (!block || !items.length) return null;

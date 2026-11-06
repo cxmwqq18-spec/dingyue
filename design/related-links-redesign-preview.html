@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design preview · Related directory links v2 — AIVideosUGC</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0d0a14; color: #f2f0f7; font-family: -apple-system, "Segoe UI", "PingFang SC", sans-serif; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 36px 24px 80px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .lead { color: #a396b2; font-size: 14px; line-height: 1.6; margin: 0 0 34px; }
+  .case { margin: 0 0 52px; }
+  .case > h2 { font-size: 15px; color: #d8b4fe; margin: 0 0 6px; }
+  .case > p { color: #8d899b; font-size: 12.5px; margin: 0 0 16px; }
+  .eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #8d899b; margin: 0 0 8px; }
+  .sec-h2 { font-size: 26px; margin: 0 0 22px; }
+
+  /* ===== 新模块：adc-related-dirs ===== */
+  .adc2 .adc-related-dirs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .adc2 .adc-related-dir { padding: 20px 22px 18px; border: 1px solid #30313b; border-radius: 16px; background: linear-gradient(120deg, #181820, #101115); }
+  .adc2 .adc-related-dir h3 { margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid #26262f; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #8d899b; }
+  .adc2 .adc-related-dir ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; }
+  .adc2 .adc-related-dir a { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 8px 10px; border: 1px solid transparent; border-radius: 10px; color: #cfcbdd; font-size: 13.5px; font-weight: 500; line-height: 1.35; text-decoration: none; transition: background .16s, border-color .16s, color .16s; }
+  .adc2 .adc-related-dir a:hover { background: #1f1f29; border-color: #8675c066; color: #fff; }
+  .adc2 .adc-related-dir a:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 2px; }
+  .adc2 .adc-related-dir .i { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 8px; color: #d8b4fe; background: #d8b4fe10; }
+  .adc2 .adc-related-dir .l { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .adc2 .adc-related-dir .a { margin-left: auto; color: #6f6b7e; font-size: 13px; transition: transform .16s, color .16s; }
+  .adc2 .adc-related-dir a:hover .a { color: #d8b4fe; transform: translateX(2px); }
+  .adc2 .adc-related-dir a:hover .i { color: #fff; background: #d8b4fe1f; }
+  @media (max-width: 640px) { .adc2 .adc-related-dir ul { grid-template-columns: minmax(0, 1fr); } }
+
+  /* picker 内嵌场景：与上方卡片区的分隔 */
+  .adc2 .v-related-groups { margin-top: 30px; padding-top: 24px; border-top: 1px solid #26262f; }
+
+  .icon-dot { width: 15px; height: 15px; border: 1.6px solid currentColor; border-radius: 4px; display: inline-block; opacity: .85; }
+  .notes { border: 1px solid #30313b; border-radius: 12px; padding: 16px 18px; color: #a396b2; font-size: 12.5px; line-height: 1.7; background: #12101b; }
+  .notes b { color: #e8e4f2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>内链目录模块 · UI v2</h1>
+  <p class="lead">替换三处纯文字下划线链接模块（视频 hub「Browse by industry」、图片 hub 同模块、AI Actors「More Ways to Start an Ad」）。统一为站点已有的卡片视觉语言：分组卡片 + 图标链接行 + 悬停箭头反馈。纯 SSR，无浏览器脚本。</p>
+
+  <div class="case">
+    <h2>场景 1 · 视频 hub /ai-video-generation（picker 底部，3 组）</h2>
+    <p>链接改为目录地址（/industries、/platforms、/occasions 及其 facet），不再指向 /templates。</p>
+    <div class="adc2">
+      <p class="eyebrow">Examples</p>
+      <h2 class="sec-h2">Browse by category</h2>
+      <div class="v-related-groups">
+        <div class="adc-related-dirs">
+          <div class="adc-related-dir">
+            <h3>Browse by industry</h3>
+            <ul>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Beauty &amp; Personal Care</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Clothing</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Tech &amp; Electronics</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Food &amp; Beverage</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Home &amp; Living</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Pet</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Kids &amp; Toy</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">E-Commerce</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">All industries</span><span class="a">→</span></a></li>
+            </ul>
+          </div>
+          <div class="adc-related-dir">
+            <h3>Browse by platform</h3>
+            <ul>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">TikTok</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Instagram</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Facebook</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">YouTube Shorts</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">All platforms</span><span class="a">→</span></a></li>
+            </ul>
+          </div>
+          <div class="adc-related-dir">
+            <h3>Browse by occasion</h3>
+            <ul>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Sale &amp; Discount</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Black Friday</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Holidays</span><span class="a">→</span></a></li>
+              <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">All occasions</span><span class="a">→</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case">
+    <h2>场景 2 · AI Actors「More Ways to Start an Ad」（2 组）</h2>
+    <p>同样的组件，组数随数据自适应；图标按链接目标自动匹配（行业=店铺、视频=场记板、指南=文档）。</p>
+    <div class="adc2">
+      <p class="eyebrow">Related tools and guides</p>
+      <h2 class="sec-h2">More Ways to Start an Ad</h2>
+      <div class="adc-related-dirs">
+        <div class="adc-related-dir">
+          <h3>Ads for what you sell</h3>
+          <ul>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Clothing</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Beauty &amp; Personal Care</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Food &amp; Beverage</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Tech &amp; Electronics</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Home &amp; Living</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Jewelry &amp; Accessories</span><span class="a">→</span></a></li>
+          </ul>
+        </div>
+        <div class="adc-related-dir">
+          <h3>More industries</h3>
+          <ul>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Health &amp; Fitness</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Shoes &amp; Footwear</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Pet Products</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Kids &amp; Toys</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Sports &amp; Gym</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">All Industries</span><span class="a">→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case">
+    <h2>场景 3 · 工具详情页 Related groups（窄容器单列）</h2>
+    <div class="adc2" style="max-width:420px">
+      <div class="adc-related-dirs">
+        <div class="adc-related-dir">
+          <h3>Photo templates</h3>
+          <ul>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Every Angle</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Color Variants</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Packaging Preview</span><span class="a">→</span></a></li>
+            <li><a href="#"><span class="i"><span class="icon-dot"></span></span><span class="l">Clothing Try-On</span><span class="a">→</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <b>设计要点</b>：① 分组卡片沿用 adc-thematic-link 的暗色渐变 + 描边 + 紫色 hover；② 链接行为 26px 图标方块 + 单行省略标签 + 右侧箭头（hover 右移 2px、变紫）；③ 组标题 12px 大写字距，底部分隔线；④ 内部 2 列栅格（≤640px 单列），外层 auto-fit ≥300px 自适应；⑤ 键盘焦点 2px #c4b5fd 外圈；⑥ prefers-reduced-motion 关闭动效；⑦ 全部纯 CSS + SSR 锚点，无脚本。
+  </div>
+</div>
+</body>
+</html>

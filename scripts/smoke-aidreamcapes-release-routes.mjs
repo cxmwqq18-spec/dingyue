@@ -308,18 +308,29 @@ assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "vide
 assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
 checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards with a plain-anchor pager`);
 
+// The hub's related-groups module browses the public directories only — no
+// /templates links, and the industry/platform/occasion groups match the nav.
+// (Nav, hero and footer /templates links are global components, out of scope.)
+const relatedModule = hubMediaHtml.slice(hubMediaHtml.indexOf("v-related-groups"), hubMediaHtml.indexOf("v-picker-action"));
+assert.ok(relatedModule.includes("Browse by industry"), "video hub: related-groups module rendered");
+assert.ok(!relatedModule.includes("/templates"), "video hub: no /templates link in the related-groups module");
+for (const marker of ["Browse by industry", "Browse by platform", "Browse by occasion", 'href="/industries"', 'href="/platforms"', 'href="/occasions"']) {
+  assert.ok(hubMediaHtml.includes(marker), `video hub: related-groups module includes ${marker}`);
+}
+checks.push("video hub: related-groups module browses /industries, /platforms, /occasions (no /templates)");
+
 const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation?galleryPage=2");
 assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status");
 // The full-catalog module is retired on the video-hub page (content-level
-// decision); any galleryPage address must keep answering the standard layout
-// without resurrecting it.
+// decision) and the industry-grouped case-studies block is retired from the
+// rendered layout (blockOrder); any galleryPage address must keep answering
+// the standard layout without resurrecting either. The example cards stay in
+// the relational data — their detail pages keep their single owner row.
 assert.ok(!hubGalleryHtml.includes("Browse every video example"), "video hub: retired full catalog stays absent");
 assert.ok(!hubGalleryHtml.includes("data-media-slug="), "video hub: no retired catalog cards");
 assert.ok(!hubGalleryHtml.includes("galleryPage=3"), "video hub: no retired catalog pager");
-assert.ok(hubGalleryHtml.includes("TikTok Shop case studies"), "video hub: TikTok Shop case-studies section present");
-const hubCaseCards = (hubGalleryHtml.match(/data-adc2-preview/g) || []).length;
-assert.ok(hubCaseCards >= 20, `video hub: ${hubCaseCards} TikTok Shop case-study previews (expect the full set of 20)`);
-checks.push(`video hub: retired catalog stays absent; ${hubCaseCards} case-study previews in industry groups`);
+assert.ok(!hubGalleryHtml.includes("TikTok Shop case studies"), "video hub: case-studies block stays absent from the rendered layout");
+checks.push("video hub: retired catalog and case-studies block stay absent; example detail pages keep their owner rows");
 
 const hubMediaGone = await get("/api/aidreamcapes/media-cards?offset=20&limit=20");
 assert.equal(hubMediaGone.status, 404, `retired hub media API: status ${hubMediaGone.status} (expected 404)`);
