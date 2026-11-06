@@ -8,7 +8,7 @@ import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/l
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import { TeamCards,
-  BRAND_NAME, RelatedLinkGroups, ThematicLinkChips, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
+  BRAND_NAME, ThematicLinkChips, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
@@ -77,7 +77,13 @@ function RelatedGroupsSection({ groups, r, title = "Related tools" }: { groups: 
   const visible = groups.filter((group) => group.links?.length);
   if (!visible.length) return null;
   return <Section eyebrow="Related tools" title={title}>
-    <RelatedLinkGroups groups={visible} r={r} />
+    <style dangerouslySetInnerHTML={{ __html: ".adc2 .related-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.adc2 .related-groups>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px}.adc2 .related-groups h3{margin:0 0 12px;font-size:16px;color:var(--ink)}.adc2 .related-groups ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}.adc2 .related-groups a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}.adc2 .related-groups a:hover{color:var(--ink)}@media(max-width:520px){.adc2 .related-groups ul{grid-template-columns:1fr}}" }} />
+    <div className="related-groups">
+      {visible.map((group) => <div key={group.title}>
+        <h3>{group.title}</h3>
+        <ThematicLinkChips links={group.links} r={r} />
+      </div>)}
+    </div>
   </Section>;
 }
 
@@ -852,7 +858,12 @@ function ActorDirectoryPage({ data, r }: Props) {
     {honesty ? <Section eyebrow="Responsible use" title={honesty.h2}><Boxes className="ben" items={honesty.items} /></Section> : null}
     {/* The library's own directory links and the hand-written related pages show together. */}
     {relatedGroups.length ? <Section eyebrow="Related tools and guides" title={text(data.relatedH2) || "Plan where the actor ad runs"}>
-      <RelatedLinkGroups groups={relatedGroups.map((group) => ({ ...group, links: actorFlatLinks(group.links) }))} r={r} />
+      <div className="related">
+        {relatedGroups.map((group) => <div key={group.title}>
+          <h3>{group.title}</h3>
+          <ul>{actorFlatLinks(group.links).map((item) => <li key={item.href}><WorkspaceEntryLink href={r.href(item.href)}>{item.label}</WorkspaceEntryLink></li>)}</ul>
+        </div>)}
+      </div>
     </Section> : null}
     {actorRelatedLinks.length ? <RelatedLinksSection lead={text(data.relatedLead) || undefined} links={actorRelatedLinks} r={r} title={text(data.relatedH2) || "Related Pages"} /> : null}
     <ReviewWall block={data.reviews as V2ReviewBlock | undefined} r={r} />

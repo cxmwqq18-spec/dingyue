@@ -6,7 +6,7 @@ import { pickerPresetHref } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
 import { AIDREAMCAPES_V2_FRESH_MEDIA_SIZES, AIDREAMCAPES_V2_PICKER_CARD_SIZES } from "./image-sizes";
-import { ImageItemRows, Img, normalizeStepLabel, RelatedLinkGroups, RichText, Section } from "./parts";
+import { ImageItemRows, Img, normalizeStepLabel, RichText, Section } from "./parts";
 import { Adc2VideoPreview } from "./video-preview-card";
 import { DiscretePager } from "./template-directory";
 import { MEDIA_PAGE_SIZE, type V2PickerPagination } from "./types";
@@ -295,10 +295,10 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
   const isHub = pageId === "video-hub" || pageId === "photo-hub";
   const photoGridStyle = pageId === "photo-hub" ? `#${pickerId} .v-picker-grid{grid-template-columns:repeat(5,minmax(0,1fr))}@media(max-width:1000px){#${pickerId} .v-picker-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:480px){#${pickerId} .v-picker-chips{flex-wrap:wrap;overflow-x:visible}}` : "";
   const pickerFocusCss = isHub ? `#${pickerId} .v-filter[data-chip="all"]:focus-visible~.v-picker-chips label[data-filter-chip="all"],${Array.from({ length: 3 }, (_, index) => `#${pickerId} .v-filter[data-filter-index="${index + 1}"]:focus-visible~.v-picker-chips label[data-filter-index="${index + 1}"]`).join(",")}{outline:3px solid #6e62f2;outline-offset:3px;border-radius:999px}` : "";
-  const relatedWrapper = relatedGroups.length;
+  const relatedCss = relatedGroups.length ? `#${pickerId} .v-related-groups{margin-top:30px;padding-top:22px;border-top:1px solid rgba(22,34,54,.12)}#${pickerId} .v-related-group+.v-related-group{margin-top:22px}#${pickerId} .v-related-group ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 22px;list-style:none;margin:10px 0 0;padding:0}#${pickerId} .v-related-group a{color:inherit;text-decoration:underline;text-underline-offset:3px}@media(max-width:720px){#${pickerId} .v-related-group ul{grid-template-columns:repeat(2,minmax(0,1fr))}}` : "";
   return (
     <Section id={sectionId} eyebrow={sectionEyebrow} lead={visual.titles?.m3?.lead ?? picker.lead} title={visual.titles?.m3?.h2 ?? picker.title}>
-      {photoGridStyle || pickerFocusCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}` }} /> : null}
+      {photoGridStyle || pickerFocusCss || relatedCss ? <style dangerouslySetInnerHTML={{ __html: `${photoGridStyle}\n${pickerFocusCss}\n${relatedCss}` }} /> : null}
       <div className="v-picker" id={pickerId}>
         <input aria-label={isHub ? "All tools" : "All scenes"} className="v-filter" data-chip="all" defaultChecked id={`${pickerId}-all`} name={`${pickerId}-filter`} type="radio" />
         {picker.chips.map((chip, index) => <input aria-label={chip.label} className="v-filter" data-chip={chip.id} data-filter-index={index + 1} id={`${pickerId}-${chip.id}`} key={chip.id} name={`${pickerId}-filter`} type="radio" />)}
@@ -317,7 +317,12 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
           ))}
         </div>
         {paginated && paginateWith && pagination ? <DiscretePager page={pagination.page} totalPages={pagination.totalPages} basePath={pagination.basePath} r={r} ariaLabel="Browse more tools by page" /> : null}
-        {relatedWrapper ? <div className="v-related-groups"><RelatedLinkGroups groups={relatedGroups} r={r} /></div> : null}
+        {relatedGroups.length ? <div className="v-related-groups">
+          {relatedGroups.map((group) => <div className="v-related-group" key={group.title}>
+            <h3>{group.title}</h3>
+            <ul>{group.links.map((link) => <li key={link.href}><WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink></li>)}</ul>
+          </div>)}
+        </div> : null}
         <div className="v-picker-action"><WorkspaceEntryLink className="btn btn-grad" href={r.href(picker.href)}>{picker.button} →</WorkspaceEntryLink></div>
       </div>
     </Section>
