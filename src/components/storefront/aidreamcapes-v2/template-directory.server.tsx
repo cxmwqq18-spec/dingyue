@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { ThemeRenderer } from "@/components/theme-renderer";
 import type { SectionInstance, ThemePageJson } from "@/lib/types";
-import type { V2Data } from "./types";
+import type { V2Data, V2VisualImage, V2VisualPickerCard } from "./types";
 import type { Directory, Template } from "./template-directory";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { AIDREAMCAPES_KIND_CATALOG_COPY, resolveAidreamcapesTemplateFilter } from "@/lib/aidreamcapes-template-filter.server";
@@ -145,6 +145,46 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
       };
     } else {
       resolved = await resolveTemplateCardLinks(data);
+      // The video hub's picker grid is the single place that browses videos
+      // (the owner retired the separate full-catalog gallery module). The
+      // row's curated cards lead — they carry the filter chips — then every
+      // remaining public video example follows in gallery order (video-first,
+      // newest first, clusters spread). The appended entries come from the
+      // same single-owner enumeration of relational owner rows that the
+      // sitemap reads, so future videos appear without a data write. The
+      // merged list paginates below like any other hub picker grid.
+      if (props.pagePath && resolved.id === "video-hub") {
+        const hubPicker = (resolved.visual as { picker?: { cards: V2VisualPickerCard[] } } | undefined)?.picker;
+        if (hubPicker) {
+          const curated = new Set(hubPicker.cards.map((card) => card.publicSlug ?? card.label));
+          hubPicker.cards = [...hubPicker.cards, ...(await listAidreamcapesExampleGalleryEntries())
+            .filter((entry) => entry.kind === "video" && !curated.has(entry.slug))
+            .map((entry) => {
+              const image: V2VisualImage = { src: entry.image.src, alt: entry.image.alt ?? entry.label, w: entry.image.w ?? 0, h: entry.image.h ?? 0, kind: "video" };
+              return {
+                image,
+                label: entry.label,
+                chips: [] as string[],
+                href: entry.href,
+                prompt: "",
+                kind: "video" as const,
+                publicSlug: entry.slug,
+                // Catalog video cards always carry dimensions, a poster and a
+                // preview path; without all of them the card renders its still.
+                ...(entry.video && entry.video.width && entry.video.height
+                  ? {
+                    video: {
+                      ...entry.video,
+                      poster: entry.video.poster ? { src: entry.video.poster.src, alt: entry.video.poster.alt ?? image.alt } : { src: image.src, alt: image.alt },
+                      width: entry.video.width,
+                      height: entry.video.height
+                    }
+                  }
+                  : {})
+              };
+            })];
+        }
+      }
       // Hub/tool picker grids hold the full media list in the row. When it
       // exceeds one page, the grid paginates server-side (?page=N slices the
       // stored list) instead of the former client-side loader, so the browser
@@ -157,18 +197,6 @@ export async function AidreamcapesTemplateRenderer(props: Parameters<typeof Them
         const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
         const page = Math.min(Math.max(1, Math.floor(Number(props.query?.page)) || 1), totalPages);
         resolved.pickerPagination = { page, totalPages, total, basePath: props.pagePath };
-      }
-      // The video hub carries a curated picker plus the complete video
-      // catalog: every public video example, video-first order, paginated
-      // under its own ?galleryPage parameter so the two pagers on the page
-      // never overwrite each other.
-      if (props.pagePath && resolved.id === "video-hub") {
-        const all = (await listAidreamcapesExampleGalleryEntries()).filter(entry => entry.kind === "video");
-        const total = all.length;
-        const totalPages = Math.max(1, Math.ceil(total / MEDIA_PAGE_SIZE));
-        const page = Math.min(Math.max(1, Math.floor(Number(props.query?.galleryPage)) || 1), totalPages);
-        const start = (page - 1) * MEDIA_PAGE_SIZE;
-        resolved.hubGallery = { items: all.slice(start, start + MEDIA_PAGE_SIZE).map(toGalleryItem), total, page, totalPages, basePath: props.pagePath };
       }
     }
     sections[id] = { ...section, settings: { ...settings, data: resolved } as unknown as SectionInstance["settings"] };

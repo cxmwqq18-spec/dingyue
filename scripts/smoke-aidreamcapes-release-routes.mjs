@@ -303,10 +303,22 @@ checks.push(`inspirations API: ${inspirationBody.cards.length} cards / ${inspira
 const { response: hubMediaResponse, html: hubMediaHtml } = await getText("/ai-video-generation?page=2");
 assert.equal(hubMediaResponse.status, 200, "video hub page 2: status");
 const hubMediaCards = (hubMediaHtml.match(/class="v-pick-card"/g) || []).length;
-assert.ok(hubMediaCards > 0 && hubMediaCards <= 20, `video hub page 2: ${hubMediaCards} SSR picker cards (max 20 per page)`);
+assert.equal(hubMediaCards, 20, `video hub page 2: ${hubMediaCards} SSR picker cards (full catalog, 20 per page)`);
 assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "video hub page 2: picker pager present");
 assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
-checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards with a plain-anchor pager`);
+// The picker grid is the hub's single video catalog display: its pager must
+// reach the whole catalog (200+ detail pages), the last page answers, and an
+// out-of-range page clamps to the last page instead of erroring.
+const totalPagesMatch = hubMediaHtml.match(/aria-label="Go to page, 1 to (\d+)"/);
+assert.ok(totalPagesMatch, "video hub: pager exposes the total page count");
+const hubTotalPages = Number(totalPagesMatch[1]);
+assert.ok(hubTotalPages >= 10, `video hub: full catalog paginates into ${hubTotalPages} pages`);
+const { html: hubLastHtml } = await getText(`/ai-video-generation?page=${hubTotalPages}`);
+assert.equal((hubLastHtml.match(/class="v-pick-card"/g) || []).length > 0, true, `video hub last page (${hubTotalPages}): renders cards`);
+assert.ok(!hubLastHtml.includes(`page=${hubTotalPages + 1}`), "video hub last page: no pager link past the last page");
+const { html: hubClampHtml } = await getText(`/ai-video-generation?page=${hubTotalPages + 5}`);
+assert.equal((hubClampHtml.match(/class="v-pick-card"/g) || []).length, (hubLastHtml.match(/class="v-pick-card"/g) || []).length, "video hub: out-of-range page clamps to the last page");
+checks.push(`video hub: picker grid browses the full video catalog (${hubTotalPages} SSR pages, plain-anchor pager)`);
 
 // The hub's related module links the eight make-a-video tool pages — the same
 // items as the nav's "Make a video" panel. No /templates links, and the

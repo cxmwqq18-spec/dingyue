@@ -326,10 +326,10 @@ function VideoHubPage({ data, r }: Props) {
     ["faq", <Faq items={data.faq} title="Questions About AI Video" r={r} />],
     ["cta", <CtaBand href={text(data.appHref)} lead={ctaLead(data, "Upload a product photo and see the cost before you start.")} r={r} title={ctaTitle(data, "Make your first video today")} />]
   ], {
-    // The complete video catalog rides directly after the curated picker,
-    // independent of the row's blockOrder configuration. A page's data can
-    // retire the catalog module (hideHubGallery) without touching other
-    // storefronts that share this layout.
+    // The picker grid above is the hub's only video catalog display (the
+    // owner retired the separate full-catalog gallery module); the row can
+    // still retire the picker's source grid (hideHubGallery) without touching
+    // other storefronts that share this layout.
     picker: hubGallery && !data.hideHubGallery ? <ExampleGallerySection gallery={hubGallery} r={r} eyebrow="All video examples" title="Browse every video example" pageParam="galleryPage" /> : null
   })}</>;
   return (
