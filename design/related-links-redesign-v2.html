@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design preview v2 · Related directory links — AIVideosUGC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; color: #f2f0f7; font-family: "Poppins", -apple-system, "PingFang SC", sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 44px 28px 90px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  .lead { color: #a396b2; font-size: 14px; line-height: 1.7; margin: 0 0 14px; max-width: 760px; }
+  .rejected { color: #8d899b; font-size: 12.5px; line-height: 1.8; margin: 0 0 40px; max-width: 760px; }
+  .case { margin: 0 0 70px; }
+  .case > h2 { font-size: 16px; color: #d8b4fe; margin: 0 0 4px; }
+  .case > p { color: #8d899b; font-size: 12.5px; line-height: 1.7; margin: 0 0 22px; max-width: 720px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #0d0a14; background: #d8b4fe; border-radius: 999px; padding: 3px 10px; margin-left: 10px; vertical-align: 2px; }
+
+  /* 模拟模块上下的页面环境（分页器 + CTA） */
+  .pager { display: flex; justify-content: center; gap: 14px; margin: 0 0 44px; }
+  .pager span { width: 46px; height: 46px; border-radius: 50%; background: #111017; color: #cfcbe0; display: grid; place-items: center; font-weight: 600; }
+  .pager span.on { background: #fff; color: #0d0a14; }
+  .pager span.next { width: auto; padding: 0 28px; background: #fff; color: #0d0a14; }
+  .cta { display: flex; justify-content: center; margin-top: 48px; }
+  .cta a { background: linear-gradient(100deg, #8b5cf6, #ec4899, #6366f1); color: #fff; text-decoration: none; font-weight: 600; font-size: 16px; padding: 16px 34px; border-radius: 999px; }
+
+  /* ============ 方案 A · 药丸标签组 ============ */
+  .a-groups { display: grid; gap: 30px; }
+  .a-group h3 { margin: 0 0 14px; font-size: 16px; font-weight: 600; color: #fff; }
+  .a-pills { display: flex; flex-wrap: wrap; gap: 10px 10px; }
+  .a-pills a { display: inline-block; padding: 9px 18px; border: 1px solid #2c2a35; border-radius: 999px; background: #100e15; color: #d6d3e0; font-size: 14px; font-weight: 500; text-decoration: none; transition: border-color .15s, color .15s, background .15s; }
+  .a-pills a:hover { border-color: #8b5cf6; color: #fff; background: #181422; }
+  .a-pills a.all { border-color: transparent; background: linear-gradient(100deg, #8b5cf6, #d946ef); color: #fff; font-weight: 600; }
+  .a-pills a.all:hover { filter: brightness(1.12); }
+
+  /* ============ 方案 B · 精致分栏（无框，编辑风） ============ */
+  .b-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; border-top: 1px solid #201d28; padding-top: 34px; }
+  .b-col h3 { margin: 0 0 6px; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #9a93ab; }
+  .b-col h3 em { font-style: normal; color: #5c5668; font-weight: 500; margin-left: 6px; }
+  .b-col ul { list-style: none; margin: 0; padding: 0; }
+  .b-col li { border-bottom: 1px solid #17151d; }
+  .b-col a { display: flex; align-items: center; justify-content: space-between; padding: 12px 2px; color: #d6d3e0; font-size: 15px; font-weight: 500; text-decoration: none; transition: color .15s, padding-left .15s; }
+  .b-col a::after { content: "→"; color: #8b5cf6; opacity: 0; transform: translateX(-6px); transition: opacity .15s, transform .15s; font-size: 14px; }
+  .b-col a:hover { color: #fff; padding-left: 8px; }
+  .b-col a:hover::after { opacity: 1; transform: translateX(0); }
+  @media (max-width: 860px) { .b-cols { grid-template-columns: 1fr; gap: 30px; } }
+
+  /* ============ 方案 C · 一体化目录面板（每组一个图标） ============ */
+  .c-panel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; background: #0e0c13; border: 1px solid #26232f; border-radius: 20px; overflow: hidden; }
+  .c-group { padding: 28px 30px 30px; }
+  .c-group + .c-group { border-left: 1px solid #201d28; }
+  .c-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .c-head .gi { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(139, 92, 246, .12); color: #c4b5fd; flex: none; }
+  .c-head h3 { margin: 0; font-size: 15px; font-weight: 600; color: #fff; }
+  .c-group ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 18px; }
+  .c-group ul.single { grid-template-columns: minmax(0, 1fr); }
+  .c-group a { display: block; padding: 7px 0; color: #c3bfd2; font-size: 14px; font-weight: 500; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .15s; }
+  .c-group a:hover { color: #d8b4fe; }
+  @media (max-width: 960px) { .c-panel { grid-template-columns: 1fr; } .c-group + .c-group { border-left: 0; border-top: 1px solid #201d28; } }
+
+  .notes { border: 1px solid #26232f; border-radius: 14px; padding: 18px 22px; color: #a396b2; font-size: 12.5px; line-height: 1.9; background: #0c0a11; }
+  .notes b { color: #e8e4f2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>内链目录模块 · UI 设计 v2（3 个方案）</h1>
+  <p class="lead">位置不变：视频 hub 分页器下方、CTA 按钮上方。三个方案都是纯 SSR + 纯 CSS（hover 为 CSS 实现），链接数据用当前线上真实数据。仅为预览，未动任何线上代码。</p>
+  <p class="rejected">上一版被否的原因，本版针对性修正：<b>① 每个链接带图标 + 箭头太吵</b> → 全部去掉（方案 C 只给每组一个图标）；<b>② 卡片盒子感重、三块等大很呆</b> → 方案 A/B 无盒子或极轻；<b>③ 长标签被截断</b>（"Beauty &amp; Pe…"）→ 本版所有方案都不截断。</p>
+
+  <!-- ============ A ============ -->
+  <div class="case">
+    <h2>方案 A · 药丸标签组<span class="tag">最轻量</span></h2>
+    <p>组标题 + 圆角标签自然换行。信息密度最高、高度最矮，和上方视频卡片区衔接最顺；「All industries / All platforms / All occasions」用品牌渐变实底做视觉锚点，用户一眼找到「全部」入口。</p>
+    <div class="pager"><span class="on">1</span><span>2</span><span class="next">Next</span></div>
+    <div class="a-groups">
+      <div class="a-group">
+        <h3>Browse by industry</h3>
+        <div class="a-pills">
+          <a href="#">Beauty &amp; Personal Care</a><a href="#">Clothing</a><a href="#">Tech &amp; Electronics</a><a href="#">Food &amp; Beverage</a><a href="#">Home &amp; Living</a><a href="#">Pet</a><a href="#">Kids &amp; Toy</a><a href="#">E-Commerce</a><a href="#" class="all">All industries</a>
+        </div>
+      </div>
+      <div class="a-group">
+        <h3>Browse by platform</h3>
+        <div class="a-pills">
+          <a href="#">TikTok</a><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube Shorts</a><a href="#" class="all">All platforms</a>
+        </div>
+      </div>
+      <div class="a-group">
+        <h3>Browse by occasion</h3>
+        <div class="a-pills">
+          <a href="#">Sale &amp; Discount</a><a href="#">Black Friday</a><a href="#">Holidays</a><a href="#" class="all">All occasions</a>
+        </div>
+      </div>
+    </div>
+    <div class="cta"><a href="#">Open the video creator →</a></div>
+  </div>
+
+  <!-- ============ B ============ -->
+  <div class="case">
+    <h2>方案 B · 精致分栏<span class="tag">编辑风 · 推荐</span></h2>
+    <p>保留现在「分栏 + 下划线链接」的骨架（改动观感最小），但去掉下划线、改成分隔线列表：行高舒展、永不截断，hover 时整行右移并出现紫色箭头。顶部一条细分割线与分页器区分。最像正式站点的 footer 导航 / 目录页质感。</p>
+    <div class="pager"><span class="on">1</span><span>2</span><span class="next">Next</span></div>
+    <div class="b-cols">
+      <div class="b-col">
+        <h3>Browse by industry <em>9</em></h3>
+        <ul>
+          <li><a href="#">Beauty &amp; Personal Care</a></li>
+          <li><a href="#">Clothing</a></li>
+          <li><a href="#">Tech &amp; Electronics</a></li>
+          <li><a href="#">Food &amp; Beverage</a></li>
+          <li><a href="#">Home &amp; Living</a></li>
+          <li><a href="#">Pet</a></li>
+          <li><a href="#">Kids &amp; Toy</a></li>
+          <li><a href="#">E-Commerce</a></li>
+          <li><a href="#">All industries</a></li>
+        </ul>
+      </div>
+      <div class="b-col">
+        <h3>Browse by platform <em>5</em></h3>
+        <ul>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">YouTube Shorts</a></li>
+          <li><a href="#">All platforms</a></li>
+        </ul>
+      </div>
+      <div class="b-col">
+        <h3>Browse by occasion <em>4</em></h3>
+        <ul>
+          <li><a href="#">Sale &amp; Discount</a></li>
+          <li><a href="#">Black Friday</a></li>
+          <li><a href="#">Holidays</a></li>
+          <li><a href="#">All occasions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cta"><a href="#">Open the video creator →</a></div>
+  </div>
+
+  <!-- ============ C ============ -->
+  <div class="case">
+    <h2>方案 C · 一体化目录面板<span class="tag">面板感</span></h2>
+    <p>一个圆角大面板包住三组，组和组之间用竖分隔线；每组只有一个图标（行业=标签、平台=喇叭、场景=日历），链接内部两列排布、hover 变紫。比上一版安静得多，但保留了「这是一个完整模块」的分量感。手机上自动变单组堆叠。</p>
+    <div class="pager"><span class="on">1</span><span>2</span><span class="next">Next</span></div>
+    <div class="c-panel">
+      <div class="c-group">
+        <div class="c-head"><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.83z"/><circle cx="7" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg></span><h3>Browse by industry</h3></div>
+        <ul>
+          <li><a href="#">Beauty &amp; Personal Care</a></li>
+          <li><a href="#">Clothing</a></li>
+          <li><a href="#">Tech &amp; Electronics</a></li>
+          <li><a href="#">Food &amp; Beverage</a></li>
+          <li><a href="#">Home &amp; Living</a></li>
+          <li><a href="#">Pet</a></li>
+          <li><a href="#">Kids &amp; Toy</a></li>
+          <li><a href="#">E-Commerce</a></li>
+          <li><a href="#">All industries</a></li>
+        </ul>
+      </div>
+      <div class="c-group">
+        <div class="c-head"><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7-7 18-2.5-7.5L3 11z"/></svg></span><h3>Browse by platform</h3></div>
+        <ul class="single">
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">YouTube Shorts</a></li>
+          <li><a href="#">All platforms</a></li>
+        </ul>
+      </div>
+      <div class="c-group">
+        <div class="c-head"><span class="gi"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><h3>Browse by occasion</h3></div>
+        <ul class="single">
+          <li><a href="#">Sale &amp; Discount</a></li>
+          <li><a href="#">Black Friday</a></li>
+          <li><a href="#">Holidays</a></li>
+          <li><a href="#">All occasions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cta"><a href="#">Open the video creator →</a></div>
+  </div>
+
+  <div class="notes">
+    <b>三个方案对比</b>：A 最矮最轻（约 260px 高），适合把注意力留给上面的视频卡片；B 无盒子、编辑质感，观感改动最小但精致度提升明显；C 模块感最强，适合想让它成为页面「目录枢纽」的定位。<br>
+    <b>共同点</b>：全部链接不截断；无逐链接图标/箭头；hover 只做颜色/位移反馈；纯 CSS 无脚本；actors 页和工具页的同一类模块会复用同一套样式（组数随数据自适应）。<br>
+    <b>选哪个？</b>回复 A / B / C 即可；也可以混搭（比如 B 的分栏 + A 的渐变「All」标签），或指出想调整的细节（颜色、密度、是否要图标等）。
+  </div>
+</div>
+</body>
+</html>

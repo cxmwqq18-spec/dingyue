@@ -1073,6 +1073,24 @@ export function ThematicLinkChips({ links, r }: { links: { label: string; href: 
   })}</div>;
 }
 
+// Grouped internal directory links (industry / platform / occasion groups on
+// the hubs, "related tools and guides" on the actor pages). Editorial columns
+// per the approved design/related-links-redesign-v2.html variant B: hairline
+// dividers, no per-link icons, hover slides the row and reveals an arrow.
+// Labels render in full — no truncation.
+export function RelatedLinkGroups({ groups, r }: { groups: { title: string; links: { label: string; href: string }[] }[]; r: V2Resolvers }) {
+  const visible = groups.filter((group) => group.links?.length);
+  if (!visible.length) return null;
+  return <div className="adc-related-cols">
+    {visible.map((group) => <div className="adc-related-col" key={group.title}>
+      <h3>{group.title} <em>{group.links.length}</em></h3>
+      <ul>{group.links.map((link) => <li key={link.href}>
+        <WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>
+      </li>)}</ul>
+    </div>)}
+  </div>;
+}
+
 export function TrustCards({ block, r }: { block?: V2CardBlock; r: V2Resolvers }) {
   const items = block?.items ?? [];
   if (!block || !items.length) return null;

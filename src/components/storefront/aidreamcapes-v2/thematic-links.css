@@ -13,3 +13,18 @@
 @media(max-width:850px){.adc2 .adc-thematic-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.adc2 .adc-thematic-links{grid-template-columns:minmax(0,1fr)}.adc2 .adc-thematic-link{padding:13px 15px}}
 @media(prefers-reduced-motion:reduce){.adc2 .adc-thematic-link{transition:none}.adc2 .adc-thematic-link:hover{transform:none}}
+/* RelatedLinkGroups — editorial directory columns (approved variant B of
+   design/related-links-redesign-v2.html). Full labels, hairline dividers,
+   hover slide + arrow. */
+.adc2 .adc-related-cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;border-top:1px solid #201d28;padding-top:34px}
+.adc2 .adc-related-col h3{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#9a93ab}
+.adc2 .adc-related-col h3 em{font-style:normal;color:#5c5668;font-weight:500;margin-left:6px}
+.adc2 .adc-related-col ul{list-style:none;margin:0;padding:0}
+.adc2 .adc-related-col li{border-bottom:1px solid #17151d}
+.adc2 .adc-related-col a{display:flex;align-items:center;justify-content:space-between;padding:12px 2px;color:#d6d3e0;font-size:15px;font-weight:500;line-height:1.4;text-decoration:none;transition:color .15s,padding-left .15s}
+.adc2 .adc-related-col a::after{content:"→";color:#8b5cf6;opacity:0;transform:translateX(-6px);transition:opacity .15s,transform .15s;font-size:14px}
+.adc2 .adc-related-col a:hover{color:#fff;padding-left:8px}
+.adc2 .adc-related-col a:hover::after{opacity:1;transform:translateX(0)}
+.adc2 .adc-related-col a:focus-visible{outline:2px solid #c4b5fd;outline-offset:2px}
+@media(max-width:860px){.adc2 .adc-related-cols{grid-template-columns:1fr;gap:30px}}
+@media(prefers-reduced-motion:reduce){.adc2 .adc-related-col a,.adc2 .adc-related-col a::after{transition:none}.adc2 .adc-related-col a:hover{padding-left:2px}.adc2 .adc-related-col a:hover::after{transform:none}}
