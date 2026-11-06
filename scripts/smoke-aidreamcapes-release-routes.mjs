@@ -308,16 +308,18 @@ assert.ok(hubMediaHtml.includes('aria-label="Browse more tools by page"'), "vide
 assert.ok(!hubMediaHtml.includes("MediaGridLoader"), "video hub: no client media loader");
 checks.push(`video hub SSR pagination: page 2 renders ${hubMediaCards} cards with a plain-anchor pager`);
 
-// The hub's related-groups module browses the public directories only — no
-// /templates links, and the industry/platform/occasion groups match the nav.
-// (Nav, hero and footer /templates links are global components, out of scope.)
+// The hub's related module links the eight make-a-video tool pages — the same
+// items as the nav's "Make a video" panel. No /templates links, and the
+// industry/platform/occasion directory groups are gone. (Nav, hero and footer
+// /templates links are global components, out of scope.)
 const relatedModule = hubMediaHtml.slice(hubMediaHtml.indexOf("v-related-groups"), hubMediaHtml.indexOf("v-picker-action"));
-assert.ok(relatedModule.includes("Browse by industry"), "video hub: related-groups module rendered");
-assert.ok(!relatedModule.includes("/templates"), "video hub: no /templates link in the related-groups module");
-for (const marker of ["Browse by industry", "Browse by platform", "Browse by occasion", 'href="/industries"', 'href="/platforms"', 'href="/occasions"']) {
-  assert.ok(hubMediaHtml.includes(marker), `video hub: related-groups module includes ${marker}`);
+assert.ok(relatedModule.includes("Make a video"), "video hub: make-a-video module rendered");
+assert.ok(!relatedModule.includes("/templates"), "video hub: no /templates link in the related module");
+assert.ok(!relatedModule.includes("Browse by industry"), "video hub: directory groups removed from the related module");
+for (const slug of ["image-to-video", "url-to-video", "video-ads", "product-video", "before-after-video", "spokesperson-video", "text-to-video", "ai-twin"]) {
+  assert.ok(relatedModule.includes(`href="/ai-video-generation/${slug}"`), `video hub: related module links to ${slug}`);
 }
-checks.push("video hub: related-groups module browses /industries, /platforms, /occasions (no /templates)");
+checks.push("video hub: related module links the 8 make-a-video tool pages (no directory or /templates links)");
 
 const { response: hubGalleryResponse, html: hubGalleryHtml } = await getText("/ai-video-generation?galleryPage=2");
 assert.equal(hubGalleryResponse.status, 200, "video hub gallery page 2: status");

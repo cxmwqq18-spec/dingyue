@@ -1073,19 +1073,24 @@ export function ThematicLinkChips({ links, r }: { links: { label: string; href: 
   })}</div>;
 }
 
-// Grouped internal directory links (industry / platform / occasion groups on
-// the hubs, "related tools and guides" on the actor pages). Editorial columns
-// per the approved design/related-links-redesign-v2.html variant B: hairline
-// dividers, no per-link icons, hover slides the row and reveals an arrow.
-// Labels render in full — no truncation.
-export function RelatedLinkGroups({ groups, r }: { groups: { title: string; links: { label: string; href: string }[] }[]; r: V2Resolvers }) {
+// Grouped internal directory links (the hub's "Make a video" tool group,
+// "related tools and guides" on the actor pages, tool-page related groups).
+// Editorial style per design/related-links-redesign-v3.html 方案一: hairline
+// dividers, full untruncated labels with an optional data-driven description,
+// no per-link icons, hover slides the row and reveals an arrow. A single
+// group flows into two sub-columns.
+export function RelatedLinkGroups({ groups, r }: { groups: { title: string; links: { label: string; href: string; description?: string }[] }[]; r: V2Resolvers }) {
   const visible = groups.filter((group) => group.links?.length);
   if (!visible.length) return null;
-  return <div className="adc-related-cols">
+  const single = visible.length === 1;
+  return <div className={`adc-related-cols${single ? " adc-related-cols--single" : ""}`}>
     {visible.map((group) => <div className="adc-related-col" key={group.title}>
       <h3>{group.title} <em>{group.links.length}</em></h3>
       <ul>{group.links.map((link) => <li key={link.href}>
-        <WorkspaceEntryLink href={r.href(link.href)}>{link.label}</WorkspaceEntryLink>
+        <WorkspaceEntryLink href={r.href(link.href)}>
+          <span className="adc-related-item-title">{link.label}</span>
+          {link.description ? <span className="adc-related-item-desc">{link.description}</span> : null}
+        </WorkspaceEntryLink>
       </li>)}</ul>
     </div>)}
   </div>;
