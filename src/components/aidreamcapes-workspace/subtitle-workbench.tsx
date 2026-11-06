@@ -87,7 +87,11 @@ function taskVersions(task: WorkspaceTask): SubtitleVersion[] {
   const versionUrl = (renderId: string) =>
     `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=video&renderId=${encodeURIComponent(renderId)}`;
   const versions: SubtitleVersion[] = [];
-  task.videoHistory.forEach((entry, index) => {
+  // List summaries strip videoHistory for payload weight (store.ts
+  // publicTaskSummary) — a list task degrades to its current render only; the
+  // full history arrives with the by-id fetch when the drawer opens.
+  const history = task.videoHistory ?? [];
+  history.forEach((entry, index) => {
     if (entry.status === "done" && entry.finalUrl && entry.renderId !== task.video?.renderId) {
       versions.push({ renderId: entry.renderId, url: versionUrl(entry.renderId), number: index + 1, hasCaptions: Boolean(entry.captionLines?.length), isCurrent: false });
     }
