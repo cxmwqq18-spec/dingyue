@@ -16,8 +16,8 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
           <Link className="prp-logo" href="/">
             <Clapperboard aria-hidden="true" />
             <span>AIVideosUGC<small>PARTNER PROGRAM</small></span>
-          </a>
-          <a className="prp-toplink" href="/">Back to aivideosugc.com</Link>
+          </Link>
+          <Link className="prp-toplink" href="/">Back to aivideosugc.com</Link>
         </div>
       </header>
 
