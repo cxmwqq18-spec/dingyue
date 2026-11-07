@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-07",
+  "pageId": "site_aidreamcapes_home",
+  "path": "$.siteNavigation.footer.groups",
+  "groupLabel": "Platforms & help",
+  "itemsBefore": [
+    {
+      "href": "/platforms/tiktok-ads",
+      "label": "TikTok"
+    },
+    {
+      "href": "/platforms/instagram-ads",
+      "label": "Instagram"
+    },
+    {
+      "href": "/platforms/facebook-ads",
+      "label": "Facebook"
+    },
+    {
+      "href": "/platforms/youtube-shorts-ads",
+      "label": "YouTube Shorts"
+    },
+    {
+      "href": "/platforms/amazon-product-photos",
+      "label": "Amazon"
+    },
+    {
+      "href": "/platforms/shopify-product-photos",
+      "label": "Shopify"
+    },
+    {
+      "href": "/pricing",
+      "label": "Pricing"
+    },
+    {
+      "href": "/faq",
+      "label": "FAQ"
+    },
+    {
+      "href": "/glossary",
+      "label": "Glossary"
+    },
+    {
+      "href": "/contact-us",
+      "label": "Contact"
+    },
+    {
+      "href": "/about-us",
+      "label": "About"
+    },
+    {
+      "href": "/trust-and-safety",
+      "label": "Trust & Safety"
+    },
+    {
+      "href": "/ai-info",
+      "label": "Company Facts"
+    },
+    {
+      "href": "/blog",
+      "label": "Blog"
+    },
+    {
+      "href": "/guides",
+      "label": "How-to Guides"
+    }
+  ]
+}
