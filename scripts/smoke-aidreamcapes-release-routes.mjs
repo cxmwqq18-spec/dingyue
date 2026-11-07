@@ -203,6 +203,9 @@ const facetPages = [
   "/platforms/amazon-product-photos", "/platforms/facebook-ads", "/platforms/instagram-ads",
   "/platforms/shopify-product-photos", "/platforms/tiktok-ads", "/platforms/youtube-shorts-ads"
 ];
+// The public partner-program page and its no-JS success round trip.
+await expectPage("/partners", ["AIVideosUGC", "Partner Program"]);
+await expectPage("/partners?partner=success", ["Application received"]);
 for (const facet of facetPages) {
   await expectPage(facet, ["AIVideosUGC"]);
 }

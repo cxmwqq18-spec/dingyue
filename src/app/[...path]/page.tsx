@@ -37,6 +37,7 @@ import { getSiteByHostForPublicAuth } from "@/lib/stores/site-store";
 import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
+import { renderAidreamcapesPartnerProgramPage } from "@/lib/aidreamcapes-partner-program";
 import {
   aidreamcapesMediaDetailMetadata,
   aidreamcapesActorPublicMetadata,
@@ -465,6 +466,17 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const hostSiteSlug = knownWorkspaceSiteSlugForHost([host ?? null]);
   const filterMetadata = await aidreamcapesTemplateFilterMetadata(hostSiteSlug, requestedPath, searchParams ? await searchParams : {});
   if (filterMetadata) return filterMetadata;
+  if (hostSiteSlug === "aidreamcapes" && requestedPath === "/partners") {
+    const title = "Partner Program | AIVideosUGC";
+    const description = "Earn 30% recurring commission promoting AI UGC video ads. Apply to the AIVideosUGC partner program — manual review within 48 hours, monthly payouts, full creative kit.";
+    return {
+      title: { absolute: title },
+      description,
+      alternates: { canonical: "/partners" },
+      openGraph: { title, description, url: "https://www.aivideosugc.com/partners" },
+      twitter: { card: "summary_large_image", title, description }
+    };
+  }
   if (hostSiteSlug === "aidreamcapes" && /^(?:images|videos)\/[a-z0-9][a-z0-9-]{0,119}$/i.test(path.join("/"))) {
     // Retired short scene paths are redirected by the page handler.
     return {};
@@ -939,6 +951,10 @@ export default async function HostStorefrontCatchAllPage({
         });
       }
     }
+  }
+  if (hostSiteSlug === "aidreamcapes" && slug === "/partners") {
+    const query = searchParams ? await searchParams : {};
+    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success" });
   }
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)
