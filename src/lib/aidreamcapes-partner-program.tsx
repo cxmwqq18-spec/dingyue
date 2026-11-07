@@ -1,15 +1,26 @@
 import Link from "next/link";
 import { ArrowRight, Captions, Check, Clapperboard, FileText, Handshake, Image as ImageIcon, LineChart, Link as LinkIcon, Repeat, Send, Type, UserRound, Video, Wrench } from "lucide-react";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import { loadAidreamcapesChrome } from "@/lib/aidreamcapes-workspace/media-detail.server";
+import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
+import { AidreamcapesV2Footer } from "@/components/storefront/aidreamcapes-v2/shell";
+import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
+import type { AidreamcapesV2Navigation } from "@/lib/types";
+import { notFound } from "next/navigation";
 
 /** The public partner-program page: the storefront-coherent landing page whose
  * application form feeds the admin 推广合作伙伴 queue (site-scoped). The form
  * posts as plain multipart so the no-JS flow works: the API answers with a 303
  * back to this page carrying ?partner=success. */
 
-export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
+export async function AidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
+  const chrome = await loadAidreamcapesChrome();
+  if (!chrome) notFound();
+  const r = { asset: (value: string) => value, href: (value: string) => value, copy: {} } as const;
+  const company = aidreamcapesV2Company(chrome.identity);
   return (
     <div className="prp">
+      <link rel="stylesheet" href={aidreamcapesV2ThemeCssHref()} precedence="high" />
       <style>{PRP_CSS}</style>
       <header className="prp-header">
         <div className="prp-wrap prp-header-in">
@@ -23,34 +34,14 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
 
       <div className="prp-glow">
         <section className="prp-wrap prp-hero">
-          <div className="prp-hero-grid">
-            <div>
-              <span className="prp-eyebrow"><Handshake aria-hidden="true" />Partner Program</span>
-              <h1>Get paid every time your audience hits <span className="prp-grad-text">generate</span>.</h1>
-              <p className="prp-hero-sub">Share AIVideosUGC with creators, brands and agencies. You earn recurring commission on every subscription they open — we handle onboarding, support and the AI pipeline.</p>
-              <div className="prp-cta">
-                <a className="prp-btn-primary" href="#apply"><Send aria-hidden="true" />Apply in 3 minutes</a>
-                <a className="prp-btn-ghost" href="#faq"><FileText aria-hidden="true" />Read the terms</a>
-              </div>
-            </div>
-            <aside className="prp-hero-panel">
-              <span className="prp-panel-label">Recurring commission</span>
-              <div className="prp-big-number prp-grad-text">30%</div>
-              <p className="prp-panel-note">of every subscription revenue your referrals pay, for their first 12 months.</p>
-              <div className="prp-panel-rows">
-                <div className="prp-panel-row"><span>Cookie window</span><b>90 days</b></div>
-                <div className="prp-panel-row"><span>Payout schedule</span><b>Monthly</b></div>
-                <div className="prp-panel-row"><span>Minimum payout</span><b>$50</b></div>
-                <div className="prp-panel-row"><span>Approval time</span><b>&lt; 48h</b></div>
-              </div>
-            </aside>
+          <span className="prp-eyebrow"><Handshake aria-hidden="true" />Partner Program</span>
+          <h1>Get paid every time your audience hits <span className="prp-grad-text">generate</span>.</h1>
+          <p className="prp-hero-sub">Share AIVideosUGC with creators, brands and agencies — you earn <b>30% recurring commission</b> on every subscription your referrals open, for their first 12 months. We handle onboarding, support and the AI pipeline.</p>
+          <div className="prp-cta">
+            <a className="prp-btn-primary" href="#apply"><Send aria-hidden="true" />Apply in 3 minutes</a>
+            <a className="prp-btn-ghost" href="#faq"><FileText aria-hidden="true" />Read the terms</a>
           </div>
-          <div className="prp-ticker">
-            <div><b>30%</b><span>recurring revenue share</span></div>
-            <div><b>90d</b><span>referral attribution window</span></div>
-            <div><b>0</b><span>minimum followers to apply</span></div>
-            <div><b>100%</b><span>free creative kit &amp; demo accounts</span></div>
-          </div>
+          <p className="prp-metaline">30% recurring share &nbsp;·&nbsp; 90-day cookie &nbsp;·&nbsp; monthly payouts &nbsp;·&nbsp; $50 minimum &nbsp;·&nbsp; reviewed within 48h</p>
         </section>
 
         <section className="prp-wrap">
@@ -80,22 +71,6 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
         </section>
 
         <section className="prp-wrap">
-          <div className="prp-sec-head">
-            <span className="prp-kicker">What you promote</span>
-            <h2>One link, six products your audience actually wants</h2>
-            <p className="prp-sec-lead">Every product shares the same partner link and the same 30% share.</p>
-          </div>
-          <div className="prp-products">
-            <div className="prp-product"><Type aria-hidden="true" /><div><b>Text to Video</b><span>Product video ads from a prompt</span></div></div>
-            <div className="prp-product"><Video aria-hidden="true" /><div><b>AI Video</b><span>Wan 3.0 render pipeline, 9:16 &amp; 16:9</span></div></div>
-            <div className="prp-product"><ImageIcon aria-hidden="true" /><div><b>AI Image</b><span>Product photos from one shot</span></div></div>
-            <div className="prp-product"><LinkIcon aria-hidden="true" /><div><b>URL to Video</b><span>Paste a store link, get an ad</span></div></div>
-            <div className="prp-product"><UserRound aria-hidden="true" /><div><b>AI Actors</b><span>53 consistent presenter avatars</span></div></div>
-            <div className="prp-product"><Captions aria-hidden="true" /><div><b>Subtitle Studio</b><span>Auto captions in 30+ languages</span></div></div>
-          </div>
-        </section>
-
-        <section className="prp-wrap">
           <div className="prp-kit">
             <div>
               <span className="prp-kicker">Partner kit</span>
@@ -109,6 +84,7 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
               <li><Check aria-hidden="true" />A free Pro workspace to produce your own demos</li>
               <li><Check aria-hidden="true" />Real-time click and conversion dashboard</li>
               <li><Check aria-hidden="true" />Direct line to the partnership team</li>
+              <li><Check aria-hidden="true" />One link covers Text to Video, AI Video, AI Image, URL to Video, AI Actors and Subtitle Studio</li>
             </ul>
           </div>
         </section>
@@ -166,6 +142,9 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
           </div>
         </section>
 
+        <div className="adc2">
+          <AidreamcapesV2Footer articles={chrome.articles} articlesTitle={chrome.articlesTitle} company={company} navigation={chrome.navigation as AidreamcapesV2Navigation} r={r} />
+        </div>
         <footer className="prp-wrap prp-footer">
           <span>© 2026 AIVideosUGC — AI UGC video ads from one product photo.</span>
           <span><Link href="/">aivideosugc.com</Link> · <Link href="/pricing">Pricing</Link> · <Link href="/#apply">Apply</Link></span>
@@ -193,13 +172,15 @@ const PRP_CSS = `
 .prp .prp-logo small { display: block; font-size: 10px; letter-spacing: .22em; color: var(--prp-ink-3); font-weight: 500; }
 .prp .prp-toplink { font-size: 13px; color: var(--prp-ink-2); border: 1px solid var(--prp-line); border-radius: 999px; padding: 7px 14px; transition: border-color .2s, color .2s; }
 .prp .prp-toplink:hover { border-color: var(--prp-line-2); color: var(--prp-ink); }
-.prp .prp-hero { padding: 84px 0 64px; position: relative; }
+.prp .prp-hero { padding: 64px 0 88px; border-top: 0; position: relative; }
 .prp .prp-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #c4b5fd; border: 1px solid rgba(139,92,246,.35); background: rgba(139,92,246,.10); border-radius: 999px; padding: 7px 14px; }
 .prp .prp-eyebrow svg { width: 12px; height: 12px; }
 .prp h1 { margin: 26px 0 0; font-size: clamp(38px, 5.4vw, 62px); line-height: 1.04; font-weight: 600; letter-spacing: -.03em; }
 .prp .prp-hero-grid { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); gap: 56px; align-items: end; }
-.prp .prp-hero-sub { margin: 22px 0 0; font-size: 17px; color: var(--prp-ink-2); max-width: 520px; }
+.prp .prp-hero-sub { margin: 22px 0 0; font-size: 17px; line-height: 1.75; color: var(--prp-ink-2); max-width: 640px; }
+.prp .prp-hero-sub b { color: var(--prp-ink); font-weight: 600; }
 .prp .prp-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+.prp .prp-metaline { margin: 30px 0 0; font-family: var(--prp-mono); font-size: 12.5px; letter-spacing: .02em; color: var(--prp-ink-3); }
 .prp .prp-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--prp-grad); color: #fff; font-weight: 600; font-size: 14px; border: 0; border-radius: 999px; padding: 15px 28px; cursor: pointer; transition: transform .2s, box-shadow .2s; box-shadow: 0 14px 40px -16px rgba(139,92,246,.65); }
 .prp .prp-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 48px -16px rgba(236,72,153,.6); }
 .prp .prp-btn-ghost { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--prp-line-2); color: var(--prp-ink); font-weight: 500; font-size: 14px; border-radius: 999px; padding: 15px 26px; cursor: pointer; background: transparent; transition: border-color .2s, background .2s; }
@@ -220,7 +201,7 @@ const PRP_CSS = `
 .prp .prp-ticker > div:last-child { border-right: 0; }
 .prp .prp-ticker b { display: block; font-family: var(--prp-mono); font-size: 26px; font-weight: 500; letter-spacing: -.01em; }
 .prp .prp-ticker span { font-size: 12.5px; color: var(--prp-ink-3); }
-.prp section { padding: 72px 0; }
+.prp section { padding: 88px 0; border-top: 1px solid var(--prp-line); }
 .prp .prp-sec-head { max-width: 640px; }
 .prp .prp-kicker { font-family: var(--prp-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #d8b4fe; }
 .prp h2 { margin: 12px 0 0; font-size: clamp(26px, 3.2vw, 38px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
@@ -231,9 +212,9 @@ const PRP_CSS = `
 .prp .prp-card svg { width: 20px; height: 20px; color: #d8b4fe; }
 .prp .prp-card h3 { margin: 16px 0 8px; font-size: 16.5px; font-weight: 600; }
 .prp .prp-card p { margin: 0; font-size: 14px; color: var(--prp-ink-2); }
-.prp .prp-steps { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); margin-top: 36px; border: 1px solid var(--prp-line); border-radius: 18px; overflow: hidden; }
-.prp .prp-step { padding: 26px; border-right: 1px solid var(--prp-line); background: rgba(255,255,255,.02); }
-.prp .prp-step:last-child { border-right: 0; }
+.prp .prp-steps { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 40px; margin-top: 40px; }
+.prp .prp-step { padding: 0; }
+
 .prp .prp-step em { font-family: var(--prp-mono); font-style: normal; font-size: 12px; color: #f0abfc; }
 .prp .prp-step h3 { margin: 12px 0 8px; font-size: 15.5px; font-weight: 600; }
 .prp .prp-step p { margin: 0; font-size: 13.5px; color: var(--prp-ink-2); }
@@ -282,8 +263,8 @@ const PRP_CSS = `
 @media (prefers-reduced-motion: reduce) { .prp .prp-load { animation: none; opacity: 1; transform: none; } }
 @media (max-width: 980px) {
   .prp .prp-hero-grid, .prp .prp-cards, .prp .prp-products, .prp .prp-kit, .prp .prp-faq-grid, .prp .prp-form-shell { grid-template-columns: 1fr; }
-  .prp .prp-steps { grid-template-columns: 1fr 1fr; }
-  .prp .prp-step:nth-child(2) { border-right: 0; }
+  .prp .prp-steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+  
   .prp .prp-ticker { grid-template-columns: 1fr 1fr; }
   .prp .prp-ticker > div:nth-child(2) { border-right: 0; }
   .prp .prp-ticker > div:nth-child(-n+2) { border-bottom: 1px solid var(--prp-line); }
@@ -291,7 +272,7 @@ const PRP_CSS = `
 @media (max-width: 620px) {
   .prp .prp-hero { padding: 56px 0 40px; }
   .prp .prp-steps { grid-template-columns: 1fr; }
-  .prp .prp-step { border-right: 0; border-bottom: 1px solid var(--prp-line); }
+  
   .prp .prp-step:last-child { border-bottom: 0; }
   .prp .prp-ticker { grid-template-columns: 1fr; }
   .prp .prp-ticker > div { border-right: 0; border-bottom: 1px solid var(--prp-line); }
@@ -301,6 +282,6 @@ const PRP_CSS = `
 `;
 
 /** Route entry for /partners on the aidreamcapes storefront. */
-export function renderAidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
+export async function renderAidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
   return <AidreamcapesPartnerProgramPage success={success} />;
 }
