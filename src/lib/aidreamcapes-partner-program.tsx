@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, Captions, Check, Clapperboard, FileText, Handshake, Image as ImageIcon, LineChart, Link as LinkIcon, Repeat, Send, Type, UserRound, Video, Wrench } from "lucide-react";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 
@@ -12,11 +13,11 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
       <style>{PRP_CSS}</style>
       <header className="prp-header">
         <div className="prp-wrap prp-header-in">
-          <a className="prp-logo" href="/">
+          <Link className="prp-logo" href="/">
             <Clapperboard aria-hidden="true" />
             <span>AIVideosUGC<small>PARTNER PROGRAM</small></span>
           </a>
-          <a className="prp-toplink" href="/">Back to aivideosugc.com</a>
+          <a className="prp-toplink" href="/">Back to aivideosugc.com</Link>
         </div>
       </header>
 
@@ -167,7 +168,7 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
 
         <footer className="prp-wrap prp-footer">
           <span>© 2026 AIVideosUGC — AI UGC video ads from one product photo.</span>
-          <span><a href="/">aivideosugc.com</a> · <a href="/pricing">Pricing</a> · <a href="/#apply">Apply</a></span>
+          <span><Link href="/">aivideosugc.com</Link> · <Link href="/pricing">Pricing</Link> · <a href="/#apply">Apply</a></span>
         </footer>
       </div>
     </div>
