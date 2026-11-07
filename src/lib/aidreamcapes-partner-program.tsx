@@ -143,7 +143,7 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
                 <h3>Application received</h3>
                 <p>Your application is in the partnership queue as <b>pending review</b>. A human reads every application — expect an answer within 48 hours at the email you provided.</p>
                 <p className="prp-hint">Approved partners receive their dashboard invite, channel link and creative kit in the approval email.</p>
-                <a className="prp-btn-ghost" href="/">Back to aivideosugc.com</a>
+                <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
               </div>
             ) : (
               <form className="prp-form" action="/api/sites/site_aidreamcapes/partner-applications" method="post">
@@ -168,7 +168,7 @@ export function AidreamcapesPartnerProgramPage({ success }: { success: boolean }
 
         <footer className="prp-wrap prp-footer">
           <span>© 2026 AIVideosUGC — AI UGC video ads from one product photo.</span>
-          <span><Link href="/">aivideosugc.com</Link> · <Link href="/pricing">Pricing</Link> · <a href="/#apply">Apply</a></span>
+          <span><Link href="/">aivideosugc.com</Link> · <Link href="/pricing">Pricing</Link> · <Link href="/#apply">Apply</Link></span>
         </footer>
       </div>
     </div>
