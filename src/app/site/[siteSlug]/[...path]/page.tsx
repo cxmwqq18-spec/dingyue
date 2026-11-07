@@ -28,6 +28,7 @@ import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editoria
 import { isMydreamshootsSaveDateTopicGroupPathRequest, isMydreamshootsTopicGroupActive, isMydreamshootsVideoTopicGroupPathRequest, mydreamshootsTopicGroupForPath } from "@/lib/mydreamshoots-topic-groups";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
+import { renderAidreamcapesPartnerProgramPage } from "@/lib/aidreamcapes-partner-program";
 import {
   aidreamcapesMediaDetailMetadata,
   aidreamcapesActorPublicMetadata,
@@ -366,6 +367,17 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   const pathModePublicSlug = publicSiteSlug(siteSlug);
   const filterMetadata = await aidreamcapesTemplateFilterMetadata(pathModePublicSlug, requestedSlug, metadataQuery);
   if (filterMetadata) return filterMetadata;
+  if (isAidreamcapesPathModeSite(pathModePublicSlug) && requestedSlug === "/partners") {
+    const title = "Partner Program | AIVideosUGC";
+    const description = "Earn 30% recurring commission promoting AI UGC video ads. Apply to the AIVideosUGC partner program — manual review within 48 hours, monthly payouts, full creative kit.";
+    return {
+      title: { absolute: title },
+      description,
+      alternates: { canonical: "/partners" },
+      openGraph: { title, description, url: "https://www.aivideosugc.com/partners" },
+      twitter: { card: "summary_large_image", title, description }
+    };
+  }
   const mediaDetail = isAidreamcapesPathModeSite(pathModePublicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
     // A current public card owns its detail page; the workspace is only
@@ -645,6 +657,10 @@ export default async function SiteCatchAllPage({
   await redirectAidreamcapesTemplateFilter(publicSlug, slug, searchParams ? await searchParams : {}, routeBasePath);
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
+  if (isAidreamcapesPathModeSite(publicSlug) && slug === "/partners") {
+    const success = (searchParams ? await searchParams : {}).partner === "success";
+    return renderAidreamcapesPartnerProgramPage({ success });
+  }
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
     // Retired example addresses keep redirecting to their living page even
