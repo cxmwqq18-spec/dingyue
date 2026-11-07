@@ -3,10 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { GalleryVerticalEnd, Sparkles, UploadCloud, Users } from "lucide-react";
 import { fetchAdminJson, invalidateAdminJson } from "@/components/admin/admin-api-client";
-import { AlbumDeliveryPanel } from "@/components/admin/album-delivery-panel";
-import type { AlbumDeliveryPagination } from "@/components/admin/album-delivery-panel";
 import { CustomerAdminPanel } from "@/components/admin/customer-admin-panel";
-import { CustomerAssetReviewPanel } from "@/components/admin/customer-asset-review-panel";
+import { CustomerAssetWallPanel } from "@/components/admin/customer-asset-wall-panel";
 import { ErpSection, ErpStatGrid } from "@/components/admin/erp-primitives";
 import { ModelTrainingPanel } from "@/components/admin/model-training-panel";
 import type { Album, AssetUpload, CreativePack, CustomerModel, PublicCustomer, SiteAdmin } from "@/lib/types";
@@ -23,6 +21,19 @@ type CustomerAssetJob = {
   error?: string;
   createdAt: string;
   updatedAt: string;
+};
+
+type AlbumDeliveryPagination = {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  query: string;
+  status: Album["status"] | "";
+  totalCount: number;
+  readyCount: number;
+  processingCount: number;
+  hiddenCount: number;
 };
 
 type CustomersPagePayload = {
@@ -251,38 +262,23 @@ export function CustomersPageClient({
             <LoadingSection title="客户模型" />
           )}
         </ErpSection>
-        <ErpSection description="相册和输出素材只属于当前站点和当前顾客，不允许跨站读取。" eyebrow="相册交付" title="相册交付">
-          {payload.albums && payload.packs && payload.customerAssets ? (
-            <AlbumDeliveryPanel
-              albumCustomers={payload.albumCustomers ?? []}
-              albums={payload.albums}
-              assets={derived.generatedAssets}
-              customers={payload.customers ?? []}
-              packs={payload.packs}
-              pagination={payload.albumPagination}
-              siteId={siteId}
-            />
-          ) : (
-            <LoadingSection title="相册交付" />
-          )}
-        </ErpSection>
       </div>
 
       <ErpSection
-        description="源图、训练图和输出图按当前站点筛选展示，便于验收客户私有素材边界和审核状态。"
-        eyebrow="客户素材"
-        title="客户素材表格"
+        description="AI 成品与客户上传素材统一展示；前台按素材直出，无相册概念。点开素材即可切换交付状态或完成审核。"
+        eyebrow="顾客素材"
+        title="顾客素材墙"
       >
         {payload.customerAssets && payload.customerModels && payload.customerAssetJobs ? (
-          <CustomerAssetReviewPanel
-            assets={payload.customerAssets}
+          <CustomerAssetWallPanel
             assetJobs={payload.customerAssetJobs ?? []}
+            assets={payload.customerAssets}
             customers={payload.customers ?? []}
             models={payload.customerModels}
             siteId={siteId}
           />
         ) : (
-          <LoadingSection title="客户素材" />
+          <LoadingSection title="顾客素材" />
         )}
       </ErpSection>
         </>

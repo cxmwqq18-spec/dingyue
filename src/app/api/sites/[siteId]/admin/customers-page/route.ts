@@ -22,10 +22,10 @@ function envInt(name: string, fallback: number): number {
   return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
 }
 
-const adminCustomerAssetTake = envInt("SITE_ADMIN_CUSTOMER_ASSET_TAKE", 80);
+const adminCustomerAssetTake = envInt("SITE_ADMIN_CUSTOMER_ASSET_TAKE", 300);
 const adminCustomerListTake = envInt("SITE_ADMIN_CUSTOMER_LIST_TAKE", 50);
 const adminAlbumPageSizeDefault = envInt("SITE_ADMIN_ALBUM_PAGE_SIZE", 20);
-const adminAlbumPageSizeMax = envInt("SITE_ADMIN_ALBUM_PAGE_SIZE_MAX", 50);
+const adminAlbumPageSizeMax = envInt("SITE_ADMIN_ALBUM_PAGE_SIZE_MAX", 300);
 const adminPackListTake = envInt("SITE_ADMIN_PACK_LIST_TAKE", 100);
 const adminSiteAdminListTake = envInt("SITE_ADMIN_SITE_ADMIN_LIST_TAKE", 50);
 const siteAdminReadConcurrency = envInt("SITE_ADMIN_READ_CONCURRENCY", 2);
