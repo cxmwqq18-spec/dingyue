@@ -11,7 +11,10 @@ export async function POST(request: NextRequest) {
   const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `platform:${request.headers.get("x-forwarded-for") ?? "local"}`);
   if (!limited.allowed) return limited.response;
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string };
-  if (!body.email || !body.password) {
+  if (typeof body.email !== "string" || typeof body.password !== "string") {
+    return NextResponse.json({ error: "invalid_email_or_password_type" }, { status: 400 });
+  }
+  if (!body.email.trim() || !body.password.trim()) {
     return NextResponse.json({ error: "missing_email_or_password" }, { status: 400 });
   }
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requirePlatformMutation } from "@/lib/api-auth";
+import { getCurrentPlatformAdmin, requirePlatformMutation } from "@/lib/api-auth";
 import { getPlatformStateCountsRelational } from "@/lib/stores/platform-store";
 
 function stateErrorResponse(error: unknown, fallback: string) {
@@ -7,6 +7,10 @@ function stateErrorResponse(error: unknown, fallback: string) {
 }
 
 export async function GET() {
+  const current = await getCurrentPlatformAdmin();
+  if (!current) {
+    return NextResponse.json({ error: "platform_login_required" }, { status: 401 });
+  }
   try {
     return NextResponse.json({
       ok: true,
