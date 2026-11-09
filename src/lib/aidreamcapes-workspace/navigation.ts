@@ -14,7 +14,8 @@ export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: str
   { id: "agent", title: "Text to Video", summary: "Turn a written idea and product details into an editable video storyboard.", group: "create" },
   { id: "video", title: "AI Video", summary: "Start a video from your own description and reference photos.", group: "create" },
   { id: "images", title: "AI Image", summary: "Create product images from your description and reference photos.", group: "create" },
-  { id: "videoLink", title: "URL to Video", summary: "Review a product page and use its confirmed details in a video draft.", group: "create" },
+  // videoLink (URL to Video, /app/create/url-to-video) is hidden from the sidebar
+  // and All Tools for now per the site owner; the route and entry intents still work.
   { id: "product", title: "Product Links", summary: "Import product pages into your product library, then create videos without leaving the page.", group: "create" },
   { id: "actors", title: "AI Avatar", summary: "Browse presenters, preview voices or add your own portrait.", group: "create" },
   { id: "subtitles", title: "Subtitle Studio", summary: "Pick a finished video and burn in subtitles, promo lines, or product copy.", group: "create" },
