@@ -17,7 +17,7 @@ import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 
 const AUDIENCE_FIT = [
   { title: "Short-form creators", body: "TikTok, Reels and Shorts educators whose feed is product ads — your viewers already ask which tool made them." },
-  { title: "Newsletter & community owners", body: "E-commerce and dropshipping lists that recommend tools once a week and want a link that pays." },
+  { title: "Newsletter & community owners", body: "E-commerce and dropshipping lists that recommend tools once a week and want a link their readers can actually use." },
   { title: "Agencies & freelancers", body: "Teams that deliver video ads for clients can resell the workflow they already run." },
   { title: "Performance partners", body: "Media buyers running paid traffic can point at a product-first tool with a free entry workflow." }
 ];
@@ -26,7 +26,7 @@ const STEPS = [
   { n: "01", title: "Apply", body: "Tell us who you reach and where you publish. Every application is reviewed by a person within 48 hours." },
   { n: "02", title: "Get your channel", body: "Approved partners receive a tracking link, a dashboard and a Pro demo workspace for producing demos." },
   { n: "03", title: "Publish", body: "Tutorials, comparisons, behind-the-scenes — any format that shows what the tool does. Swipe copy included." },
-  { n: "04", title: "Get paid", body: "Commissions settle monthly on the 5th via Stripe or PayPal once your balance passes $50." }
+  { n: "04", title: "Grow with us", body: "Tell us what your audience responds to and we keep the campaign briefs, creative kit and partner support coming as you publish." }
 ];
 
 const QUALITY_BAR = [
@@ -65,13 +65,13 @@ export async function AidreamcapesPartnerProgramPage({ success }: { success: boo
 
         <section className="prp-hero">
           <span className="prp-eyebrow">Partner Program</span>
-          <h1>Earn with AI video ads your audience can <span className="prp-grad-text">actually try</span>.</h1>
-          <p className="prp-hero-sub">Share AIVideosUGC with the creators, sellers and agencies you already talk to. You earn <b>30% recurring commission</b> on every subscription they open for their first 12 months — we run onboarding, support and the render pipeline.</p>
+          <h1>Grow with AI video ads your audience can <span className="prp-grad-text">actually try</span>.</h1>
+          <p className="prp-hero-sub">Share AIVideosUGC with the creators, sellers and agencies you already talk to. Approved partners get a dedicated channel, a Pro demo workspace and a dashboard — we run onboarding, support and the render pipeline.</p>
           <div className="prp-cta">
             <a className="prp-btn-primary" href="#apply"><Send aria-hidden="true" />Apply in 3 minutes</a>
             <a className="prp-btn-ghost" href="#how"><FileText aria-hidden="true" />How it works</a>
           </div>
-          <p className="prp-metaline">30% recurring share &middot; 90-day cookie &middot; monthly payouts &middot; $50 minimum &middot; reviewed within 48h</p>
+          <p className="prp-metaline">Free to join &middot; Pro demo workspace &middot; Creative kit included &middot; Dedicated dashboard &middot; Reviewed within 48h</p>
         </section>
 
         <section className="prp-sec">
@@ -154,8 +154,8 @@ export async function AidreamcapesPartnerProgramPage({ success }: { success: boo
           <h2>The questions we get before approval.</h2>
           <div className="prp-faq">
             <details open><summary>Who gets approved?</summary><p>Creators, agencies and community owners whose audience makes or markets video content: e-commerce sellers, TikTok/Reels educators, dropshipping communities, marketing newsletters and agencies. There is no minimum follower count &mdash; we care about fit and activity.</p></details>
-            <details><summary>How and when do I get paid?</summary><p>Commissions settle monthly on the 5th for the previous calendar month, via Stripe or PayPal once your balance passes $50. The dashboard shows every conversion and its status.</p></details>
-            <details><summary>How is my referral attributed?</summary><p>Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you, including renewals for the first 12 months.</p></details>
+            <details><summary>What do approved partners receive?</summary><p>The approval email includes your tracking link, dashboard invite and creative kit. The partner terms &mdash; shared with you before anything goes live &mdash; cover how referrals are recognized. The dashboard shows every referral and its status.</p></details>
+            <details><summary>How is my referral attributed?</summary><p>Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you.</p></details>
             <details><summary>Can I run paid ads?</summary><p>Yes &mdash; paid, email and organic are all welcome. We only ask that you do not bid on our brand keywords or run misleading creatives; the terms spell out the details.</p></details>
             <details><summary>What happens after I submit the form?</summary><p>The application lands in our partnership queue. You will get an email within 48 hours &mdash; approved partners receive their dashboard invite, channel link and creative kit in the same email.</p></details>
           </div>

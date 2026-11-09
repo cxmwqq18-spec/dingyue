@@ -468,7 +468,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
   if (filterMetadata) return filterMetadata;
   if (hostSiteSlug === "aidreamcapes" && requestedPath === "/partners") {
     const title = "Partner Program | AIVideosUGC";
-    const description = "Earn 30% recurring commission promoting AI UGC video ads. Apply to the AIVideosUGC partner program — manual review within 48 hours, monthly payouts, full creative kit.";
+    const description = "Apply to the AIVideosUGC partner program — share AI UGC video ads with your audience. Manual review within 48 hours, Pro demo workspace, full creative kit.";
     return {
       title: { absolute: title },
       description,
