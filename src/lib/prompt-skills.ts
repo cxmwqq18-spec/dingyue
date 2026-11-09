@@ -1,7 +1,6 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
-import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { WAN30_PROMPT_SKILL_MD, WAN30_PROMPT_SKILL_VERSION } from "@/lib/wan30-prompt-skill";
 import type { Wan30PromptSkillRef } from "@/lib/wan30-video-prompt-optimizer";
 
