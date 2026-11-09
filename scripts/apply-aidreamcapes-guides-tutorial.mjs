@@ -92,7 +92,7 @@ try {
 
   const nextSeo = {
     ...seo,
-    title: "The Workspace Guide: Create Product Videos Step by Step",
+    title: "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
     description: payload.description,
     ogImageAlt: payload.guide.h1,
     twitterDescription: payload.description,
