@@ -9,7 +9,7 @@ import styles from "./guides-tutorial.module.css";
    into <code> spans. */
 
 type GuideStep = { title: string; body: string };
-type GuideMedia = { src: string; alt: string; width: number; height: number; gif?: boolean };
+type GuideMedia = { src: string; alt: string; width: number; height: number; gif?: boolean; video?: boolean; poster?: string; caption?: string };
 type GuideChapter = {
   id: string;
   num: string;
@@ -143,16 +143,29 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
                 <div className={styles.media}>
                   {chapter.media.map((item) => (
                     <figure className={styles.figure} key={item.src}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={item.src}
-                        alt={item.alt}
-                        width={item.width}
-                        height={item.height}
-                        loading="lazy"
-                        decoding="async"
-                        data-motion={item.gif ? "gif" : undefined}
-                      />
+                      {item.video ? (
+                        <video
+                          className={styles.video}
+                          controls
+                          muted
+                          playsInline
+                          preload="metadata"
+                          poster={item.poster}
+                          src={item.src}
+                        />
+                      ) : (
+                        /* eslint-disable-next-line @next/next/no-img-element */
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          width={item.width}
+                          height={item.height}
+                          loading="lazy"
+                          decoding="async"
+                          data-motion={item.gif ? "gif" : undefined}
+                        />
+                      )}
+                      {item.caption ? <figcaption className={styles.caption}>{item.caption}</figcaption> : null}
                     </figure>
                   ))}
                 </div>

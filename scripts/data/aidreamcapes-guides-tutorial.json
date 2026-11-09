@@ -5,25 +5,46 @@
     "eyebrow": "AIVideosUGC workspace guide",
     "h1": "The workspace guide, chapter by chapter.",
     "lead": "A step-by-step manual for the creation workspace: one chapter per module, numbered steps and real annotated screenshots — so a first-time user can go from an idea to a finished, subtitled ad without leaving the guide.",
-    "meta": ["Chapters 12", "Learning paths 3", "~35 min full · 8 min per path"],
+    "meta": [
+      "Chapters 12",
+      "Learning paths 3",
+      "~35 min full · 8 min per path"
+    ],
     "paths": [
       {
         "label": "Path A · ~8 min",
         "title": "Your first video today",
         "body": "From a blank prompt to a rendered, downloadable video — the full core loop.",
-        "chapters": ["01", "02", "03", "04", "11"]
+        "chapters": [
+          "01",
+          "02",
+          "03",
+          "04",
+          "11"
+        ]
       },
       {
         "label": "Path B · ~10 min",
         "title": "From product link to ad",
         "body": "Sellers with a live product page: import, build the product library, generate variations.",
-        "chapters": ["01", "07", "08", "09", "11"]
+        "chapters": [
+          "01",
+          "07",
+          "08",
+          "09",
+          "11"
+        ]
       },
       {
         "label": "Path C · ~7 min",
         "title": "Polish and deliver",
         "body": "You already have a video: track the job, subtitle it, manage your library and account.",
-        "chapters": ["04", "10", "11", "12"]
+        "chapters": [
+          "04",
+          "10",
+          "11",
+          "12"
+        ]
       }
     ],
     "concepts": [
@@ -214,6 +235,15 @@
             "alt": "The failed job panel: Let's try that again, a plain-language reason, and the Try again and Back to Library buttons",
             "width": 1440,
             "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch04.mp4",
+            "alt": "A real finished ad playing back — the kind of clip that lands in your library after a job completes.",
+            "width": 1280,
+            "height": 720,
+            "video": true,
+            "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch04.jpg",
+            "caption": "Real example · a finished ad generated in the workspace, playable right here."
           }
         ],
         "tip": {
@@ -430,6 +460,15 @@
             "width": 900,
             "height": 563,
             "gif": true
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch10.mp4",
+            "alt": "A real vertical UGC clip loaded in Subtitle Studio — the style chips act on real footage, not placeholders.",
+            "width": 540,
+            "height": 960,
+            "video": true,
+            "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch10.jpg",
+            "caption": "Real example · a vertical UGC clip, ready for subtitle styling."
           }
         ],
         "tip": {
@@ -467,6 +506,15 @@
             "alt": "The Library details modal open on a completed job with the player, clips and submitted parameters",
             "width": 1440,
             "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch11.mp4",
+            "alt": "A real clip sitting in the library grid — every thumbnail opens the full video.",
+            "width": 540,
+            "height": 960,
+            "video": true,
+            "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch11.jpg",
+            "caption": "Real example · clips like this live in your library grid."
           }
         ]
       },
@@ -524,11 +572,26 @@
       "title": "Go deeper",
       "lead": "Five focused guides live under this page — each one takes a single job and walks it through end to end.",
       "items": [
-        { "label": "Build a TikTok UGC ad from a product link", "href": "/guides/first-tiktok-video-ad" },
-        { "label": "Social video sizes for TikTok and Reels", "href": "/guides/ad-sizes-by-platform" },
-        { "label": "AI product image tips from your phone", "href": "/guides/product-photo-tips" },
-        { "label": "AI video ads for ad tests", "href": "/guides/testing-ad-versions" },
-        { "label": "Amazon main image rules for every listing", "href": "/guides/white-background-amazon" }
+        {
+          "label": "Build a TikTok UGC ad from a product link",
+          "href": "/guides/first-tiktok-video-ad"
+        },
+        {
+          "label": "Social video sizes for TikTok and Reels",
+          "href": "/guides/ad-sizes-by-platform"
+        },
+        {
+          "label": "AI product image tips from your phone",
+          "href": "/guides/product-photo-tips"
+        },
+        {
+          "label": "AI video ads for ad tests",
+          "href": "/guides/testing-ad-versions"
+        },
+        {
+          "label": "Amazon main image rules for every listing",
+          "href": "/guides/white-background-amazon"
+        }
       ]
     }
   }

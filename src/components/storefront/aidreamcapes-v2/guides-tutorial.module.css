@@ -326,6 +326,21 @@
   width: 100%;
   height: auto;
 }
+.figure video {
+  display: block;
+  width: 100%;
+  max-height: 560px;
+  margin: 0 auto;
+  background: #000;
+}
+.figure .caption {
+  display: block;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  color: #cdc4dd;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
 
 /* ---------- tip ---------- */
 .tip {
