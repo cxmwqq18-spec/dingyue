@@ -1,9 +1,9 @@
 {
   "siteId": "site_aidreamcapes",
   "slug": "/guides",
-  "capturedAt": "2026-11-09T16:29:46.594Z",
+  "capturedAt": "2026-11-09T17:04:18.119Z",
   "target": "production",
-  "baseHash": "522d1c51a255c1a6",
+  "baseHash": "6f65168cf00a02cb",
   "original": {
     "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
     "sectionId": "v2_main",
@@ -586,7 +586,7 @@
     },
     "seo": {
       "index": true,
-      "title": "The Workspace Guide: Create Product Videos Step by Step",
+      "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
       "jsonLd": {
         "@graph": [
           {
