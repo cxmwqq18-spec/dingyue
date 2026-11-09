@@ -180,7 +180,8 @@ await expectPage("/app/create/text-to-video", ["Workspace navigation", "Text to 
 await expectPage("/app/create/photo-hub/color", ["Workspace navigation"]);
 await expectPage("/app/create/video-ads/creator", ["Workspace navigation"]);
 await expectPage("/app/create/inspirations", ["Workspace navigation", "data-inspiration-card="]);
-await expectPage("/app/inspirations", ["AIVideosUGC"]);
+await expectRedirect("/app/inspirations", "/app/create/inspirations");
+await expectRedirect("/app/inspirations?kind=video", "/app/create/inspirations");
 await expectPage("/site/aidreamcapes/app/create/ai-image-generation", ["Workspace navigation", "AI Image"]);
 await expectPage("/site/aidreamcapes/app/create/url-to-video", ["Workspace navigation", "Product for your video"]);
 await expectPage("/site/aidreamcapes/app/create/product-links", ["Workspace navigation", "Your product library"]);

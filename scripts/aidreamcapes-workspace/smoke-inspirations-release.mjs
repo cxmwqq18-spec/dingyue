@@ -78,6 +78,7 @@ async function read(path, { workspace = false } = {}) {
     ...card,
     createHref: serialized.get(card.id)?.createHref,
     workspaceHref: serialized.get(card.id)?.workspaceHref,
+    entry: serialized.get(card.id)?.entry,
   }));
 }
 
@@ -91,18 +92,10 @@ try {
     const picker = (content?.sectionsOrder || []).map((id) => content.sections?.[id]).find((section) => section?.type === "aidreamcapes_v2_page" && Array.isArray(section.settings?.data?.visual?.picker?.cards));
     return [page.slug, picker?.settings?.data?.visual?.picker?.cards || []];
   }));
-  const embeddedCards = await read("/app/create/inspirations", { workspace: true });
-  const cards = await read("/app/inspirations");
+  // The standalone gallery retired (308 to this page): the embedded gallery is
+  // the only remaining render and the baseline set.
+  const cards = await read("/app/create/inspirations", { workspace: true });
   assert(cards.length > 0, "Current relational examples must exist before releasing the gallery");
-  assert(embeddedCards.length > 0, "The workspace gallery renders its first server page");
-  assert(embeddedCards.length <= cards.length, "The workspace gallery is a page of the standalone gallery");
-  const standaloneIds = new Set(cards.map((card) => card.id));
-  for (const card of embeddedCards) assert(standaloneIds.has(card.id), `Workspace example ${card.id} exists in the standalone gallery`);
-  const video = await read("/app/inspirations?kind=video");
-  const photo = await read("/app/inspirations?kind=photo");
-  assert.equal(video.length + photo.length, cards.length);
-  assert(video.length > 0 && photo.length > 0);
-  const photoIds = new Set(photo.map((card) => card.id));
   const creationTargets = new Set();
   for (const card of cards) {
     const pageSlug = [...currentSources.keys()].find((slug) => card.id.startsWith(`${slug}:`));
@@ -113,7 +106,7 @@ try {
     if (source.image?.src) assert.equal(card.src, source.image.src.trim(), "SSR uses the current relational image URL");
     else assert(source.ref, "Reference-only media must retain a current relational binding");
     if (source.publicSlug) {
-      const detailPath = `/${photoIds.has(card.id) ? "ai-image-generation" : "ai-video-generation"}/${source.publicSlug}`;
+      const detailPath = `/${card.entry.view === "images" ? "ai-image-generation" : "ai-video-generation"}/${source.publicSlug}`;
       assert(new URL(card.createHref, origin).pathname.endsWith(detailPath), `Example ${card.id} card link opens its own detail page`);
       creationTargets.add(detailPath);
     } else {
@@ -151,7 +144,7 @@ try {
   const derivedState = stateTable[0]?.name
     ? await prisma.sitePublishedState.findUnique({ where: { siteId }, select: { revision: true, contentHash: true } })
     : null;
-  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, embeddedExamples: embeddedCards.length, videos: video.length, photos: photo.length, checkedImages: urls.length, checkedCreationTargets: targets.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
+  console.log(JSON.stringify({ ok: true, origin, siteId, source: "LivePage.contentJson", sourcePages: pages.length, examples: cards.length, checkedImages: urls.length, checkedCreationTargets: targets.length, latestSourceRevision: pages.map((page) => page.updatedAt.toISOString()).sort().at(-1), derivedCacheConsumed: false, derivedState }, null, 2));
 } finally {
   await prisma.$disconnect();
 }

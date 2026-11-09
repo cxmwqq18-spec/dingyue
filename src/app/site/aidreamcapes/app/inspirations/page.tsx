@@ -1,18 +1,9 @@
-import { renderAidreamcapesInspirationsPage } from "@/lib/aidreamcapes-guest-workspace";
+import { permanentRedirect } from "next/navigation";
 
-export const metadata = {
-  title: "Inspirations | AIVideosUGC",
-  description: "Explore product video and photo examples and choose an idea for your next project.",
-  robots: { index: false, follow: false },
-};
+// The standalone dark inspirations page retired to a single 308 hop: the same
+// SSR gallery lives embedded in the workspace at /app/create/inspirations.
 export const dynamic = "force-dynamic";
 
-export default async function AidreamcapesWorkspaceInspirationsPage({ searchParams }: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  return renderAidreamcapesInspirationsPage({
-    siteSlug: "aidreamcapes",
-    basePath: "/site/aidreamcapes",
-    query: await searchParams,
-  });
+export default async function AidreamcapesWorkspaceInspirationsPage() {
+  permanentRedirect("/site/aidreamcapes/app/create/inspirations");
 }

@@ -42,7 +42,6 @@ import {
   aidreamcapesMediaDetailMetadata,
   aidreamcapesActorPublicMetadata,
   renderAidreamcapesCreatePage,
-  renderAidreamcapesInspirationsPage,
   renderAidreamcapesMediaDetailPage,
   renderAidreamcapesSceneCreatePage
 } from "@/lib/aidreamcapes-guest-workspace";
@@ -560,13 +559,6 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Private workspace", robots: { index: false, follow: false } };
   }
-  if (hostSiteSlug === "aidreamcapes" && requestedPath === "/app/inspirations") {
-    return {
-      title: "Inspirations | AIVideosUGC",
-      description: "Browse product video and photo examples, filter by category, and start a version for your own product.",
-      robots: { index: false, follow: false }
-    };
-  }
   if (requestedPath === "/404" && hostSiteSlug === "aidreamcapes") {
     return {
       title: "Page not found | AIVideosUGC",
@@ -854,13 +846,19 @@ export default async function HostStorefrontCatchAllPage({
       permanentRedirect(`${legacyStaticPath}${searchParamsSuffix(legacyQuery)}`);
     }
   }
-  // AIVideosUGC lets unsigned visitors open the create workspace and the
-  // in-site inspiration library; every other private route still requires a
-  // session. This allowance applies to aidreamcapes only.
+  // The standalone inspirations page retired: the same SSR gallery lives
+  // embedded at /app/create/inspirations. Single 308 hop; the query string is
+  // dropped because the embedded gallery does not read URL filter parameters.
+  if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") {
+    permanentRedirect("/app/create/inspirations");
+  }
+  // AIVideosUGC lets unsigned visitors open the create workspace; every other
+  // private route still requires a session. This allowance applies to
+  // aidreamcapes only.
   const isGuestAllowedAppRoute =
     firstSegment === "app" &&
     hostSiteSlug === "aidreamcapes" &&
-    (slug === "/app/create" || slug === "/app/inspirations" || isAidreamcapesSceneCreateRoute || Boolean(aidreamcapesStaticCreate));
+    (slug === "/app/create" || isAidreamcapesSceneCreateRoute || Boolean(aidreamcapesStaticCreate));
   if (needsPrivateRuntime && !(await hasAnyCustomerSessionCookie()) && !isGuestAllowedAppRoute) {
     const query = searchParams ? await searchParams : {};
     redirect(`/login?next=${encodeURIComponent(`${slug}${searchParamsSuffix(query)}`)}`);
@@ -873,11 +871,6 @@ export default async function HostStorefrontCatchAllPage({
     if (slug === "/app") redirect(`/app/create${searchParamsSuffix(query)}`);
     const siteSlug = await getHostSiteSlugShellWithFallback(hostCandidates);
     if (!siteSlug) notFound();
-    // Inspirations are a published Aidreamcapes gallery, not a customer-owned
-    // workspace view. Keep the same SSR list for signed-in and guest visitors.
-    if (hostSiteSlug === "aidreamcapes" && slug === "/app/inspirations") {
-      return renderAidreamcapesInspirationsPage({ query, siteSlug });
-    }
     if (hostSiteSlug === "aidreamcapes" && isAidreamcapesSceneCreateRoute) {
       return renderAidreamcapesSceneCreatePage({ sceneRouteSlug: path[3], routeSlug: "aidreamcapes" });
     }

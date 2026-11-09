@@ -1,8 +1,10 @@
 import { renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
 
-// Resolve the fixed entry to the standalone canonical URL before any private
-// runtime loads. Gallery filters then survive the fixed-route normalization.
-export { metadata } from "../../inspirations/page";
+export const metadata = {
+  title: "Inspirations | AIVideosUGC",
+  description: "Browse product video and photo examples, filter by category, and start a version for your own product.",
+  robots: { index: false, follow: false },
+};
 export const dynamic = "force-dynamic";
 
 export default async function AidreamcapesInspirationEntry() {

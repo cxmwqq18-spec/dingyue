@@ -1,5 +1,4 @@
 import { aidreamcapesWorkspaceEntry, renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
-import { AidreamcapesInspirationsPage } from "@/components/storefront/aidreamcapes-inspirations-page";
 import { AidreamcapesMediaDetailPage } from "@/components/storefront/aidreamcapes-v2/media-detail";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -13,11 +12,6 @@ import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
 import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/company";
-import { inspirationExampleLinks } from "@/lib/aidreamcapes-inspirations-types";
-import {
-  AIDREAMCAPES_INSPIRATIONS_SITE_SLUG,
-  getAidreamcapesInspirationCards
-} from "@/lib/aidreamcapes-inspirations";
 
 /** Site-relative links gain the path-mode prefix; assets and absolute URLs do not. */
 function publicResolvers(basePath: string) {
@@ -179,31 +173,4 @@ export function aidreamcapesActorPublicMetadata(metadata: Metadata, path: string
     alternates: { ...metadata.alternates, canonical },
     openGraph: { ...metadata.openGraph, url: canonical },
   };
-}
-
-export async function renderAidreamcapesInspirationsPage({ siteSlug, basePath = "", query = {} }: {
-  query?: GuestRouteQuery;
-  siteSlug: string;
-  basePath?: string;
-}) {
-  if (siteSlug !== AIDREAMCAPES_INSPIRATIONS_SITE_SLUG) notFound();
-  const cards = await getAidreamcapesInspirationCards();
-  const kind = query.kind === "video" || query.kind === "photo" ? query.kind : "all";
-  return <AidreamcapesInspirationsPage
-    cards={cards.map((card) => ({
-      id: card.id,
-      label: card.label,
-      imageSrc: card.imageSrc,
-      imageAlt: card.imageAlt,
-      pageTitle: card.pageTitle,
-      kind: card.kind,
-      description: card.description,
-      category: card.category,
-      ...inspirationExampleLinks(card, basePath),
-    }))}
-    basePath={basePath}
-    initialKind={kind}
-    initialCategory={typeof query.category === "string" ? query.category : "All"}
-    initialQuery={typeof query.q === "string" ? query.q.slice(0, 180) : ""}
-  />;
 }

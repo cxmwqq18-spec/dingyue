@@ -5,7 +5,7 @@ import { getWorkspaceInspirationPage } from "@/lib/aidreamcapes-workspace/inspir
 export const dynamic = "force-dynamic";
 
 // Public example gallery used by the workspace's embedded Inspiration tab.
-// Same relational source as the standalone /app/inspirations page.
+// Same relational source as the embedded /app/create/inspirations gallery.
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   try {
     const { siteId } = await params;

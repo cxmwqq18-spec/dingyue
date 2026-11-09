@@ -153,7 +153,7 @@ with sync_playwright() as p:
         for width, label in [(1440,'desktop'), (390,'mobile')]:
             page.set_viewport_size({'width':width, 'height':1000 if width == 1440 else 844})
             for view in ['twin','clone']:
-                url=origin + '/site/aidreamcapes/app/inspirations?view=' + view
+                url=origin + '/site/aidreamcapes/app/create/' + view
                 page.goto(url, wait_until='networkidle', timeout=120000)
                 if view == 'twin':
                     workbench=page.locator('section[aria-label="AI Twin workbench"]')
