@@ -58,6 +58,8 @@ const productionAssetPaths = [
   // referenced by the committed responsive index, so a release that ships the
   // index has to ship the files with it.
   "public/assets/sites/site_aidreamcapes/v2-responsive",
+  // Workspace guide screenshots and interaction loops for /guides.
+  "public/assets/sites/site_aidreamcapes/guides",
 ];
 const archivePaths = [...sourcePaths, ...productionAssetPaths];
 const root = "/www/wwwroot/aidreamcapes.com";

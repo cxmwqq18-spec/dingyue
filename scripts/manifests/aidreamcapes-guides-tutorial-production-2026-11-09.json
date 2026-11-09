@@ -1,0 +1,480 @@
+{
+  "siteId": "site_aidreamcapes",
+  "slug": "/guides",
+  "capturedAt": "2026-11-09T09:26:54.419Z",
+  "target": "production",
+  "baseHash": "6ed63241d792d570",
+  "original": {
+    "title": "Product Photo and Video Guides for Sellers",
+    "sectionId": "v2_main",
+    "section": {
+      "type": "aidreamcapes_v2_page",
+      "blocks": [],
+      "settings": {
+        "data": {
+          "h1": "Product Photo and Video Guides for Sellers",
+          "id": "guides",
+          "cta": {
+            "href": "/app/create",
+            "lead": "Upload one product photo and try what you just read.",
+            "title": "Put the Guides Into Practice"
+          },
+          "faq": [
+            {
+              "a": "Yes. Use the same photo to try different product images and video ads. Each new file uses credits.",
+              "q": "Can I reuse one product photo in several guides?"
+            },
+            {
+              "a": "No. Follow the steps with one clear product photo and a short message. You can make an ad without editing software.",
+              "q": "Do I need video editing experience?"
+            },
+            {
+              "a": "Post the result on your store, social feed, or in a paid ad. Pick a size that fits the placement.",
+              "q": "Where can I post the result?"
+            },
+            {
+              "a": "A photo uses 24 credits; 6, 10, 15, and 30 second videos use 24, 40, 60, and 120. Failed jobs return credits.",
+              "q": "How many credits do photos and videos use?"
+            },
+            {
+              "a": "These guides show you how to make product photos and video ads, choose sizes, and test different versions. Start with the task you need today.",
+              "q": "What can I learn from these product guides?"
+            },
+            {
+              "a": "A guide gives you clear steps for making an ad from your product photo. It helps you start quickly and check the result.",
+              "q": "Why start with a guide?"
+            },
+            {
+              "a": "Yes. Start with a product photo to make a new image or creator-style video. You do not need a film crew.",
+              "q": "Can I make an ad without booking a shoot?"
+            },
+            {
+              "a": "Yes. Choose a guide that fits your product and where you plan to post it. Use its steps to make your own ad.",
+              "q": "Will these guides work for my kind of store?"
+            },
+            {
+              "a": "Sellers making their own product photos and ads, and small teams that need clear steps for the next campaign.",
+              "q": "Who are these guides for?"
+            },
+            {
+              "a": "Yes. Use your watermark-free download in ads or on your store, and check each platform’s rules before posting.",
+              "q": "Can I use my download in paid ads?"
+            },
+            {
+              "a": "Choose the guide for your task and follow its steps with your own product photo or link. You can make the result in minutes.",
+              "q": "How do I use a guide to make an ad?"
+            },
+            {
+              "a": "Start with the first TikTok video ad guide, then choose an AI actor for your product. You can make it without hiring a presenter.",
+              "q": "Which guide helps me make a video with a presenter?"
+            }
+          ],
+          "lead": "Find product photo and video guides for the next ad you need. Follow clear steps, use your own product, and make a file ready to post.",
+          "intro": [
+            "Browse quick guides for the next task on your list, from a clear product photo to an ad you can publish.",
+            "Choose a [template](/templates), start from a [product link](/ai-video-generation/url-to-video), or turn a [photo into a video](/ai-video-generation/image-to-video). Explore the [actor library](/ai-actors) for video guides that need a presenter."
+          ],
+          "label": "How-to Guides",
+          "steps": [
+            {
+              "d": "Take a clear photo of the product you sell, then choose the guide for your next photo or ad.",
+              "t": "Take Your Product Photo"
+            },
+            {
+              "d": "Follow the guide to upload your photo or paste your product link. Review the result before you spend credits again.",
+              "t": "Make the File"
+            },
+            {
+              "d": "Download your finished image or video and post it where its size fits.",
+              "t": "Download and Post"
+            }
+          ],
+          "ctaLead": "Start with your own product photo, follow a practical guide, and make an image or video ready for your store or ads.",
+          "eyebrow": "Practical Guides for Your Next Product Ad",
+          "reviews": {
+            "h2": "How Sellers Put These Guides to Work",
+            "lead": "See how sellers use one guide to prepare a product photo, make an ad, or compare versions.",
+            "items": [
+              {
+                "d": "They check the tote photo for light and framing before using it in a product ad.",
+                "t": "Check the Tote Photo",
+                "img": {
+                  "alt": "Woman with a short auburn bob checks a plain sage canvas tote at a packing table, phone face-down beside it.",
+                  "src": "/ai-image-generation/img2-guides-review1-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 800,
+                  "srcSet": "/ai-image-generation/img2-guides-review1-r1-640.webp 640w, /ai-image-generation/img2-guides-review1-r1.webp 1024w"
+                },
+                "who": "Tote seller",
+                "example": true
+              },
+              {
+                "d": "They use the photo guide to turn a kitchen-table shot of the lunch container into a clearer listing image.",
+                "t": "Shoot on the Kitchen Table",
+                "img": {
+                  "alt": "Man with a short dark-blonde crop photographs a plain bamboo lunch box on a kitchen table.",
+                  "src": "/ai-image-generation/img2-guides-review2-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 800,
+                  "srcSet": "/ai-image-generation/img2-guides-review2-r1-640.webp 640w, /ai-image-generation/img2-guides-review2-r1.webp 1024w"
+                },
+                "who": "Lunch-container seller",
+                "example": true
+              },
+              {
+                "d": "They follow the white-background guide so the whole plate shows clearly in its main image.",
+                "t": "Make the Plate the Main Image",
+                "img": {
+                  "alt": "Woman with a short silver pixie sets a plain cream plate inside a white backdrop.",
+                  "src": "/ai-image-generation/img2-guides-review3-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 800,
+                  "srcSet": "/ai-image-generation/img2-guides-review3-r1-640.webp 640w, /ai-image-generation/img2-guides-review3-r1.webp 1024w"
+                },
+                "who": "Tableware seller",
+                "example": true
+              },
+              {
+                "d": "They compare two pouch ads with one change between them, then keep the version they prefer.",
+                "t": "Test One Pouch Change",
+                "img": {
+                  "alt": "Man with short black hair compares a plain oatmeal pouch and a plain dusty-blue pouch.",
+                  "src": "/ai-image-generation/img2-guides-review4-r1-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 800,
+                  "srcSet": "/ai-image-generation/img2-guides-review4-r1-640.webp 640w, /ai-image-generation/img2-guides-review4-r1.webp 1024w"
+                },
+                "who": "Small-goods seller",
+                "example": true
+              }
+            ]
+          },
+          "stepsH2": "How to Make a Product Ad in 3 Simple Steps",
+          "articles": [
+            {
+              "href": "/guides/product-photo-tips",
+              "image": {
+                "alt": "Adult adjusts the laces of a plain running shoe for a close product photo.",
+                "src": "/ai-image-generation/q12-guide-product-photo-tips-shoe-640.webp",
+                "width": 640,
+                "height": 640
+              },
+              "title": "AI Product Image Generator Tips From Your Phone",
+              "minutes": 8,
+              "summary": "Upload one photo or describe the setting. Check the color against the real item, then download a listing image."
+            },
+            {
+              "href": "/guides/white-background-amazon",
+              "image": {
+                "alt": "Olive canvas backpack with a brown leather base, centered on a pure white background.",
+                "src": "/ai-image-generation/img2-guide-white-background-amazon-hero-r1-640.webp",
+                "width": 640,
+                "height": 360
+              },
+              "title": "Amazon Main Image Rules for Every Listing",
+              "minutes": 5,
+              "summary": "One white setup covers the whole catalog, not just the first color. The square stays white, the product stays large, and the frame stays limited to what the box contains."
+            },
+            {
+              "href": "/guides/first-tiktok-video-ad",
+              "image": {
+                "alt": "Adult creator applies sunscreen while looking toward a bathroom mirror.",
+                "src": "/ai-image-generation/q12-guide-first-tiktok-sunscreen-640.webp",
+                "width": 640,
+                "height": 640
+              },
+              "title": "Build a TikTok UGC Ad From a Product Link",
+              "minutes": 8,
+              "summary": "You leave with a tall TikTok ad, a spoken voice, captions, and one reason to buy."
+            },
+            {
+              "href": "/guides/ad-sizes-by-platform",
+              "image": {
+                "alt": "Adult creator with a short blonde bob holds a plain white sunscreen tube beside her face outdoors.",
+                "src": "/ai-image-generation/rd1-guide-ad-sizes-by-platform-cover-r1-640.webp",
+                "width": 640,
+                "height": 640
+              },
+              "title": "Social Video Sizes for TikTok and Reels",
+              "minutes": 8,
+              "summary": "Make the tall 9:16 file first, then add a square feed and a wide 16:9 when you need it."
+            },
+            {
+              "href": "/guides/testing-ad-versions",
+              "image": {
+                "alt": "Two trail shoes in contrasting colorways on an adult runner’s feet.",
+                "src": "/ai-image-generation/q12-guide-testing-sneaker-split-640.webp",
+                "width": 640,
+                "height": 640
+              },
+              "title": "AI Video Ads Generator for Ad Tests",
+              "minutes": 5,
+              "summary": "Make a test ad in minutes and find a stronger opening without a second filming day. Change one thing, and run a few versions on the same audience and budget."
+            }
+          ],
+          "benefits": [
+            {
+              "d": "Use the photo guide to check framing and light before you make an ad with your tote.",
+              "t": "Start With a Clear Product Photo",
+              "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera.",
+              "img": {
+                "alt": "Woman with black hair in a low bun holds a plain sage canvas tote and speaks to the camera.",
+                "src": "/ai-image-generation/img2-guides-benefits-0-r1-640.webp",
+                "sizes": "(max-width: 700px) 100vw, 380px",
+                "width": 640,
+                "height": 1138,
+                "srcSet": "/ai-image-generation/img2-guides-benefits-0-r1-640.webp 640w, /ai-image-generation/img2-guides-benefits-0-r1.webp 864w"
+              }
+            },
+            {
+              "d": "Use a phone photo of your lunch container and learn how to make it ready for a product page.",
+              "t": "Make Product Photos Without a Studio",
+              "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera.",
+              "img": {
+                "alt": "Man with a short crop holds a plain bamboo lunch box in a kitchen and speaks to the camera.",
+                "src": "/ai-image-generation/img2-guides-benefits-1-r1-640.webp",
+                "sizes": "(max-width: 700px) 100vw, 380px",
+                "width": 640,
+                "height": 1138,
+                "srcSet": "/ai-image-generation/img2-guides-benefits-1-r1-640.webp 640w, /ai-image-generation/img2-guides-benefits-1-r1.webp 864w"
+              }
+            },
+            {
+              "d": "Follow the white-background guide to show the whole plate clearly in its listing image.",
+              "t": "Prepare a Clean Main Image",
+              "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera.",
+              "img": {
+                "alt": "Woman with short white hair holds a plain cream plate and speaks to the camera.",
+                "src": "/ai-image-generation/img2-guides-benefits-2-r1-640.webp",
+                "sizes": "(max-width: 700px) 100vw, 380px",
+                "width": 640,
+                "height": 1138,
+                "srcSet": "/ai-image-generation/img2-guides-benefits-2-r1-640.webp 640w, /ai-image-generation/img2-guides-benefits-2-r1.webp 864w"
+              }
+            },
+            {
+              "d": "Compare two pouch ads with one clear difference, so you can see which version works better.",
+              "t": "Test One Ad Change at a Time",
+              "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera.",
+              "img": {
+                "alt": "Man with short dark curls holds a plain oatmeal pouch and a plain dusty-blue pouch and speaks to the camera.",
+                "src": "/ai-image-generation/img2-guides-benefits-3-r1-640.webp",
+                "sizes": "(max-width: 700px) 100vw, 380px",
+                "width": 640,
+                "height": 1138,
+                "srcSet": "/ai-image-generation/img2-guides-benefits-3-r1-640.webp 640w, /ai-image-generation/img2-guides-benefits-3-r1.webp 864w"
+              }
+            }
+          ],
+          "ctaTitle": "Choose a Guide and Make Your Next Ad",
+          "relatedH2": "Tools to Use With These Guides",
+          "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+          "stepsLead": "Pick a guide, use your own product, and download the photo or video you need for your next post.",
+          "benefitsH2": "Find the Guide for Your Next Ad",
+          "breadcrumbs": [
+            {
+              "href": "/",
+              "label": "Home"
+            },
+            {
+              "href": "/guides",
+              "label": "Guides"
+            }
+          ],
+          "relatedLead": "Move from the guide to a product photo tool, an ad template, or the platform where you plan to post.",
+          "benefitsLead": "Get practical steps for product photos and ads without planning a studio shoot or starting from a blank brief.",
+          "relatedLinks": [
+            {
+              "href": "/ai-image-generation/white-background-photos",
+              "label": "White Background Photos"
+            },
+            {
+              "href": "/ai-video-generation/video-ads",
+              "label": "Video Ads"
+            },
+            {
+              "href": "/ai-image-generation/social-ad-photos",
+              "label": "Social Ad Photos"
+            },
+            {
+              "href": "/ai-image-generation/lifestyle-photos",
+              "label": "Lifestyle Photos"
+            },
+            {
+              "href": "/templates",
+              "label": "Templates"
+            }
+          ]
+        },
+        "layout": "index"
+      }
+    },
+    "seo": {
+      "index": true,
+      "title": "Product Photo and Video Guides | AIVideosUGC",
+      "jsonLd": {
+        "@graph": [
+          {
+            "@id": "https://www.aivideosugc.com/#organization",
+            "url": "https://www.aivideosugc.com/",
+            "name": "AIVideosUGC",
+            "@type": "Organization"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "item": "https://www.aivideosugc.com/",
+                "name": "Home",
+                "@type": "ListItem",
+                "position": 1
+              },
+              {
+                "item": "https://www.aivideosugc.com/guides",
+                "name": "Guides",
+                "@type": "ListItem",
+                "position": 2
+              }
+            ]
+          },
+          {
+            "@id": "https://www.aivideosugc.com/guides#webpage",
+            "url": "https://www.aivideosugc.com/guides",
+            "name": "Product Photo and Video Guides | AIVideosUGC",
+            "@type": "CollectionPage",
+            "isPartOf": {
+              "@id": "https://www.aivideosugc.com/#website"
+            },
+            "inLanguage": "en",
+            "description": "Explore product photo and video guides for your store. Learn to prepare a clear image, make your first ad, choose the right size, and test new versions.",
+            "primaryImageOfPage": {
+              "url": "/ai-image-generation/og-12.webp",
+              "@type": "ImageObject",
+              "width": 1200,
+              "height": 630
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "name": "Can I reuse one product photo in several guides?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Use the same photo to try different product images and video ads. Each new file uses credits.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Do I need video editing experience?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "No. Follow the steps with one clear product photo and a short message. You can make an ad without editing software.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Where can I post the result?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Post the result on your store, social feed, or in a paid ad. Pick a size that fits the placement.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "How many credits do photos and videos use?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "A photo uses 24 credits; 6, 10, 15, and 30 second videos use 24, 40, 60, and 120. Failed jobs return credits.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "What can I learn from these product guides?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "These guides show you how to make product photos and video ads, choose sizes, and test different versions. Start with the task you need today.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Why start with a guide?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "A guide gives you clear steps for making an ad from your product photo. It helps you start quickly and check the result.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can I make an ad without booking a shoot?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Start with a product photo to make a new image or creator-style video. You do not need a film crew.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Will these guides work for my kind of store?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Choose a guide that fits your product and where you plan to post it. Use its steps to make your own ad.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Who are these guides for?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Sellers making their own product photos and ads, and small teams that need clear steps for the next campaign.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Can I use my download in paid ads?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Yes. Use your watermark-free download in ads or on your store, and check each platform’s rules before posting.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "How do I use a guide to make an ad?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Choose the guide for your task and follow its steps with your own product photo or link. You can make the result in minutes.",
+                  "@type": "Answer"
+                }
+              },
+              {
+                "name": "Which guide helps me make a video with a presenter?",
+                "@type": "Question",
+                "acceptedAnswer": {
+                  "text": "Start with the first TikTok video ad guide, then choose an AI actor for your product. You can make it without hiring a presenter.",
+                  "@type": "Answer"
+                }
+              }
+            ]
+          }
+        ],
+        "@context": "https://schema.org"
+      },
+      "robots": {
+        "index": true,
+        "follow": true,
+        "maxImagePreview": "large"
+      },
+      "ogImage": "/ai-image-generation/og-12.webp",
+      "keywords": "product photography tips for online sellers, how to make product video ads, ecommerce ad creative tips, Amazon main image tips",
+      "canonical": "https://www.aivideosugc.com/guides",
+      "ogImageAlt": "Product Photo and Video Guides for Sellers",
+      "description": "Explore product photo and video guides for your store. Learn to prepare a clear image, make your first ad, choose the right size, and test new versions.",
+      "canonicalPath": "/guides",
+      "primaryKeyword": "product photo and video guides",
+      "twitterDescription": "Explore product photo and video guides for your store. Learn to prepare a clear image, make your first ad, choose the right size, and test new versions."
+    }
+  }
+}

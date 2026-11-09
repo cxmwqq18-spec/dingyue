@@ -1,0 +1,411 @@
+/* /guides — the workspace tutorial. Scoped to this component via the module
+   class; colors reuse the v2 shell variables so the page sits naturally in
+   the site chrome. Pure static HTML: the chapter rail is anchor links. */
+
+.page {
+  padding: 26px 0 30px;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 18px 0 8px;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b9a1f5;
+}
+.hero h1 {
+  margin: 12px 0 0;
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  background: linear-gradient(92deg, #f5f5f7 42%, #8b6cf0 68%, #e879a6 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lead {
+  margin: 16px auto 0;
+  max-width: 640px;
+  color: #b4abba;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin: 18px 0 0;
+  font-size: 13px;
+  color: #9b91ad;
+}
+.meta span {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+/* ---------- layout + rail ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  max-width: 1180px;
+  margin: 26px auto 0;
+  padding: 0 24px;
+}
+.rail {
+  position: sticky;
+  top: 84px;
+  display: grid;
+  gap: 10px;
+}
+.railTitle {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9b91ad;
+}
+.railList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.railList a {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: #cdc4dd;
+  font-size: 13.5px;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.railList a:hover {
+  background: var(--card);
+  color: var(--ink);
+}
+.railList em {
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 700;
+  color: #8b6cf0;
+}
+.main {
+  min-width: 0;
+}
+
+/* ---------- shared section headers ---------- */
+.sectionTitle {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.sectionLead {
+  margin: 10px 0 0;
+  max-width: 640px;
+  color: #b4abba;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---------- learning paths ---------- */
+.paths {
+  padding: 18px 0 8px;
+}
+.pathGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.pathCard {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+}
+.pathLabel {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #b9a1f5;
+  text-transform: uppercase;
+}
+.pathCard h3 {
+  margin: 9px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+.pathBody {
+  margin: 8px 0 0;
+  color: #b4abba;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.pathChapters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 14px 0 0;
+}
+.pathChapters b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid #3d374d;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e9e4f2;
+}
+.pathChapters span {
+  color: #6f6680;
+  font-size: 11px;
+}
+
+/* ---------- core concepts ---------- */
+.concepts {
+  padding: 30px 0 8px;
+}
+.conceptGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.conceptCard {
+  border-top: 2px solid #8b6cf0;
+  padding-top: 12px;
+}
+.conceptCard h3 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+.conceptCard p {
+  margin: 8px 0 0;
+  color: #b4abba;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* ---------- chapters ---------- */
+.chapter {
+  padding: 46px 0 6px;
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+  scroll-margin-top: 92px;
+}
+.chapterHead {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.chapterNum {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #5b4a8f;
+  letter-spacing: -0.02em;
+}
+.chapterHead h2 {
+  margin: 2px 0 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.chapterRoute {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: #9b91ad;
+}
+.chapterRoute b {
+  color: #cdc4dd;
+  font-weight: 600;
+}
+.chapterWhat {
+  margin: 10px 0 0;
+  max-width: 660px;
+  color: #b4abba;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+.steps {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+.steps li {
+  position: relative;
+  padding-left: 42px;
+  counter-increment: guide-step;
+}
+.steps {
+  counter-reset: guide-step;
+}
+.steps li::before {
+  content: counter(guide-step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3d374d;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #cdc4dd;
+  background: var(--card);
+}
+.steps h3 {
+  margin: 3px 0 0;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+.steps p {
+  margin: 6px 0 0;
+  color: #b4abba;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.page code {
+  padding: 1px 7px;
+  border: 1px solid #3d374d;
+  border-radius: 6px;
+  background: #17151e;
+  color: #d9ccff;
+  font-size: 0.86em;
+  font-family: var(--f-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- media ---------- */
+.media {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+.figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card);
+}
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- tip ---------- */
+.tip {
+  margin: 20px 0 0;
+  padding: 13px 16px;
+  border: 1px solid #3d374d;
+  border-left: 3px solid #8b6cf0;
+  border-radius: 12px;
+  background: var(--card);
+  color: #cdc4dd;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.tip b {
+  color: var(--ink);
+}
+
+/* ---------- more guides ---------- */
+.more {
+  margin-top: 46px;
+  padding: 26px 0 10px;
+  border-top: 1px solid var(--line);
+}
+.moreList {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.moreList li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+}
+.moreList a {
+  color: #cdbcff;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.moreList a:hover {
+  text-decoration: underline;
+}
+.moreList span {
+  color: #9b91ad;
+  font-size: 13px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .rail {
+    position: static;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    background: var(--card);
+  }
+  .railList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: grid;
+  }
+  .pathGrid,
+  .conceptGrid {
+    grid-template-columns: 1fr;
+  }
+  .chapterNum {
+    font-size: 32px;
+  }
+}
+@media (max-width: 560px) {
+  .railList {
+    grid-template-columns: 1fr;
+  }
+  .chapterHead {
+    gap: 12px;
+  }
+}

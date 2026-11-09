@@ -7,6 +7,7 @@ import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/l
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
+import { GuidesTutorialPage, isAidreamcapesGuidesSectionData } from "./guides-tutorial";
 import { TeamCards,
   BRAND_NAME, RelatedLinkGroups, ThematicLinkChips, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
@@ -1182,6 +1183,7 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "tool") return <ToolPage data={data} r={r} />;
   if (layout === "template") return <TemplatePage data={data} r={r} />;
   if (layout === "collection") return <CollectionPage data={data} r={r} />;
+  if (layout === "guides" && isAidreamcapesGuidesSectionData(data)) return <GuidesTutorialPage data={data} r={r} />;
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {

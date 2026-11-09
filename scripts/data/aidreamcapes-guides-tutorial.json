@@ -1,0 +1,535 @@
+{
+  "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
+  "description": "A step-by-step guide to the AIVideosUGC workspace: write a prompt, confirm the quote, track the job, download your video — plus avatars, subtitles, your library, performance and account tools.",
+  "guide": {
+    "eyebrow": "AIVideosUGC workspace guide",
+    "h1": "The workspace guide, chapter by chapter.",
+    "lead": "A step-by-step manual for the creation workspace: one chapter per module, numbered steps and real annotated screenshots — so a first-time user can go from an idea to a finished, subtitled ad without leaving the guide.",
+    "meta": ["Chapters 12", "Learning paths 3", "~35 min full · 8 min per path"],
+    "paths": [
+      {
+        "label": "Path A · ~8 min",
+        "title": "Your first video today",
+        "body": "From a blank prompt to a rendered, downloadable video — the full core loop.",
+        "chapters": ["01", "02", "03", "04", "11"]
+      },
+      {
+        "label": "Path B · ~10 min",
+        "title": "From product link to ad",
+        "body": "Sellers with a live product page: import, build the product library, generate variations.",
+        "chapters": ["01", "07", "08", "09", "11"]
+      },
+      {
+        "label": "Path C · ~7 min",
+        "title": "Polish and deliver",
+        "body": "You already have a video: track the job, subtitle it, manage your library and account.",
+        "chapters": ["04", "10", "11", "12"]
+      }
+    ],
+    "concepts": [
+      {
+        "title": "Credits & confirmation",
+        "body": "Every generation shows its estimated cost before it runs. Confirming holds the credits; a failed job returns them automatically. Nothing is ever charged twice."
+      },
+      {
+        "title": "Drafts & statuses",
+        "body": "A job is a draft until you confirm it, then moves through generating → finishing → completed. Failed jobs show a human-readable reason and always offer a retry."
+      },
+      {
+        "title": "15-day retention",
+        "body": "Generated videos are kept for 15 days, then automatically deleted. Download anything you want to keep — the guide shows where."
+      }
+    ],
+    "chapters": [
+      {
+        "id": "ch01",
+        "num": "01",
+        "title": "How a generation job runs",
+        "route": "Applies to **every tool** · the loop you will repeat the most",
+        "what": "Video and image tools all share the same job loop. Understand it once and every chapter after this one is just different inputs. **Estimated cost is always shown before you commit** — you decide with the price on screen.",
+        "steps": [
+          {
+            "title": "Describe what you want",
+            "body": "Type a prompt, drop product photos, or paste a product link — depending on the tool. The composer shows an `Optimize` button that rewrites your draft into a structured shooting script."
+          },
+          {
+            "title": "Review the quote",
+            "body": "The composer footer shows the estimated cost live. When you press generate, a confirmation modal restates the cost and your current balance before anything runs."
+          },
+          {
+            "title": "Confirm — or save as draft",
+            "body": "`Generate now` holds the credits and starts the job. `Save as draft` keeps everything you entered without spending anything. If generation fails, held credits are returned automatically."
+          },
+          {
+            "title": "Track it in the Library",
+            "body": "Jobs move through generating → finishing your video → completed. You can leave the page; the badge updates when you come back."
+          },
+          {
+            "title": "Open, download, keep",
+            "body": "Finished results open in a details modal with `View details` and download links. Generated videos are kept for 15 days — download anything you want to keep."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch11-library-cards.webp?v=20261109gd",
+            "alt": "Logged-in Library: filters All videos / In progress / Failed / Completed, a completed job card and the 15-day retention notice",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch03-confirm-modal.webp?v=20261109gd",
+            "alt": "The Confirm generation modal with the estimated cost, balance, and Cancel / Save as draft / Generate now buttons",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "Guests can build a draft without an account — it is restored the moment you sign in."
+        }
+      },
+      {
+        "id": "ch02",
+        "num": "02",
+        "title": "Home & the composer",
+        "route": "Route **/app/create** · your starting point every time",
+        "what": "Home is one composer with **three tabs** — Text to Video, AI Video, AI Image — plus quick-start chips, the tool grid and your recent videos. Anything you start here can be continued from any other module.",
+        "steps": [
+          {
+            "title": "Pick the right tab",
+            "body": "**Text to Video** turns a written idea into one finished video. **AI Video** animates the references you attach. **AI Image** generates stills."
+          },
+          {
+            "title": "Write the prompt — or start from a chip",
+            "body": "The quick-start chips — \"Product video ad for your store\", \"TikTok ad for your brand\", \"UGC testimonial for your product\", \"Instagram Reel for your campaign\", \"Cinematic product reveal\", \"How-to product video\" — prefill the composer with a proven starting prompt."
+          },
+          {
+            "title": "Set type, then Optimize",
+            "body": "The `Type` selector picks the video family (General product video, UGC review, unboxing…). `Optimize` rewrites your prompt into the structured script the model expects."
+          },
+          {
+            "title": "Model, format, duration, resolution",
+            "body": "The setting row: model (wan-1080p and friends, with credit cost per duration), aspect ratio (9:16 …), duration (15s …), resolution (1080p). `Generate video` starts the run."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch02-home-composer.webp?v=20261109gd",
+            "alt": "Signed-in home: composer with Text to Video / AI Video / AI Image tabs, quick-start chips, tool grid and recent videos",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "The composer is the same component in every tool module — learn it here and you know it everywhere."
+        }
+      },
+      {
+        "id": "ch03",
+        "num": "03",
+        "title": "Write it, attach it, send it",
+        "route": "Route **/app/create** · the composer, start to submit",
+        "what": "There is no multi-step editor to learn: a video starts with **one prompt and your product photos**. This chapter zooms into the composer form and the confirmation step; what happens after you submit is chapter 04.",
+        "steps": [
+          {
+            "title": "Write the prompt",
+            "body": "Describe the video you want in plain language — what the product is, what happens on screen, the mood. One clear paragraph is enough; the provider receives your text as the creative direction."
+          },
+          {
+            "title": "Attach product photos",
+            "body": "Up to four photos, dragged or pasted in. They are sent to the provider as-is — the reference limit is set by what the model supports, not by a fixed template."
+          },
+          {
+            "title": "Type + Optimize",
+            "body": "The `Type` selector picks the video family (General product video, UGC review, unboxing…). `Optimize` rewrites your prompt into the structured script the model expects."
+          },
+          {
+            "title": "Model, format, duration, resolution",
+            "body": "The setting row: model (with credit cost per duration), aspect ratio, duration, resolution. The footer shows the estimated cost live before you commit."
+          },
+          {
+            "title": "Confirm — or save as draft",
+            "body": "`Generate video` opens a confirmation modal: **Confirm generation** restates the estimated cost and your balance. `Generate now` submits and holds the credits; `Save as draft` keeps everything without spending anything. If generation fails, held credits are returned automatically."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch02-home-composer.webp?v=20261109gd",
+            "alt": "The composer: prompt, product photos, type selector, settings row and Generate video",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch03-confirm-modal.webp?v=20261109gd",
+            "alt": "The Confirm generation modal: estimated cost 30 credits, balance 1,250 credits, and the Cancel / Save as draft / Generate now buttons",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "Saving as a draft costs nothing — you only spend credits when you confirm a generation."
+        }
+      },
+      {
+        "id": "ch04",
+        "num": "04",
+        "title": "Track it & deliver",
+        "route": "Route **/app/create** · from submit to download",
+        "what": "After you confirm, the server runs the whole job on its own — there are no render steps to babysit. The editor turns into a progress panel, your Library tracks everything, and finished videos are **yours to download for 15 days**.",
+        "steps": [
+          {
+            "title": "Watch the progress panel",
+            "body": "Right after you confirm, the editor shows **Creating your video** — \"Your prompt and photos are with the video provider. You can leave this page and return from your Library.\" The status moves from **Generating your video…** to **Finishing your video…**."
+          },
+          {
+            "title": "Leave freely",
+            "body": "You don't need to keep the page open. The Library badge updates while you work elsewhere — chapter 11 covers the filters."
+          },
+          {
+            "title": "Collect the video",
+            "body": "When it's done the panel becomes **Your video** — \"Your video is ready to download.\" — with the player, `Download video`, `Create another video` and `Back to progress`. Your Library keeps every finished video for 15 days."
+          },
+          {
+            "title": "If it fails, retry in one click",
+            "body": "A failed job shows **Let's try that again** with a plain-language reason — `Try again` resubmits the same prompt and photos. Held credits are returned automatically on failure."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch04-creating.webp?v=20261109gd",
+            "alt": "The Creating your video progress panel: Generating badge, the you-can-leave line, Generating your video… spinner and Back to Library",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch04-ready.webp?v=20261109gd",
+            "alt": "The finished video panel: Your video, ready to download, with the player, Download video, Create another video and Back to progress",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch04-failed.webp?v=20261109gd",
+            "alt": "The failed job panel: Let's try that again, a plain-language reason, and the Try again and Back to Library buttons",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "Generated videos are kept for 15 days — download what you want to keep, from the editor or your Library."
+        }
+      },
+      {
+        "id": "ch05",
+        "num": "05",
+        "title": "AI Video from references",
+        "route": "Route **/app/create/ai-video-generation** · animate what you attach",
+        "what": "This module is the composer in **AI Video** mode: your references drive the shot. Product photos are the baseline; video and audio references unlock motion and voice on supported models.",
+        "steps": [
+          {
+            "title": "Attach references",
+            "body": "1–4 product photos by drag or paste. On models that support them, reference video and reference audio slots appear — attach a motion clip or a voice sample to steer the result."
+          },
+          {
+            "title": "Type + Optimize",
+            "body": "Choose the video family and let the optimizer structure your prompt around the references you attached."
+          },
+          {
+            "title": "Quote, confirm, generate",
+            "body": "The same core loop: estimated cost → confirmation modal → the video lands in your Library."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/ch05-ai-video-references.webp?v=20261109gd",
+            "alt": "AI Video composer with the reference strip, prompt and settings row",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "Reference slots depend on the selected model — switch models and the available slots switch with it."
+        }
+      },
+      {
+        "id": "ch06",
+        "num": "06",
+        "title": "AI Image",
+        "route": "Route **/app/create/ai-image-generation** · stills with live pricing",
+        "what": "Image generation uses tool presets instead of storyboards. Results appear **inline on the page** with download links — they do not enter the video Library.",
+        "steps": [
+          {
+            "title": "Pick a tool preset",
+            "body": "Custom image, White background, Change background, Lifestyle photo, Model photo — each preset reshapes the form for its job."
+          },
+          {
+            "title": "Set ratio and references",
+            "body": "Aspect ratio plus up to four product reference photos. The price line stays honest: `Add a product reference photo to see the price.`"
+          },
+          {
+            "title": "Watch the price confirm",
+            "body": "The line switches to `This generation costs N credits`. If the price changes after you edit inputs, the button asks for a second click — that's the guard, not a bug."
+          },
+          {
+            "title": "Collect the results",
+            "body": "Queued and running cards show `N credits reserved`; completed cards show Download links right in the grid."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/ch06-ai-image.webp?v=20261109gd",
+            "alt": "AI Image page: preset row, ratio and reference slots with the live price line",
+            "width": 1440,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "id": "ch07",
+        "num": "07",
+        "title": "URL to Video",
+        "route": "Route **/app/create/url-to-video** · paste a link, get a draft",
+        "what": "The fastest entry path for sellers: paste a live product URL and the importer reads the page for you. You confirm what it found, pick the hero photo, and land in a prefilled video draft.",
+        "steps": [
+          {
+            "title": "Paste the product URL",
+            "body": "Any public HTTPS product page. Blocked or unsupported pages return a specific reason — not a generic error."
+          },
+          {
+            "title": "Review the scrape preview",
+            "body": "The importer shows the sourced title, description, detected images and a possible price — each with a confidence label, so you know what to trust."
+          },
+          {
+            "title": "Pick the photo and import",
+            "body": "Choose the hero image and confirm. The import is saved into your product history."
+          },
+          {
+            "title": "Continue to the video draft",
+            "body": "One click opens the product-demo scene form with the photo and brief already filled in."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/ch07-url-to-video.webp?v=20261109gd",
+            "alt": "URL to Video importer: URL field, Import button and how-it-works copy",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "\"Possible price\" is read from the page and always marked unconfirmed — the video never quotes a price you didn't approve."
+        }
+      },
+      {
+        "id": "ch08",
+        "num": "08",
+        "title": "Product Links — your product library",
+        "route": "Route **/app/create/product-links** · import once, generate many",
+        "what": "Everything you import lives in **your product library** with its photo, description and source. Generate again whenever you need a new variation — the page even builds videos inline without leaving.",
+        "steps": [
+          {
+            "title": "Import products",
+            "body": "Same importer as chapter 07. Each import becomes a library entry with thumbnail, description and source host."
+          },
+          {
+            "title": "Manage the library",
+            "body": "Click an entry to backfill anything the scrape missed; delete entries you no longer need."
+          },
+          {
+            "title": "Create a video inline",
+            "body": "The \"Create your video\" panel embeds the scene form right on the page. A live run banner tracks progress: \"Generating your video\" → \"Your video is ready\" with Download and Open Library."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/ch08-product-links.webp?v=20261109gd",
+            "alt": "Product Links page with the import call to action",
+            "width": 1440,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "id": "ch09",
+        "num": "09",
+        "title": "AI Avatar studio",
+        "route": "Route **/app/create/ai-actors** · a presenter for your product stories",
+        "what": "Pick a presenter (or upload your own portrait), attach the product, write the script, and the studio produces a talking-head product video. Every presenter card carries a voice profile and a sample line with audio — listen before you commit.",
+        "steps": [
+          {
+            "title": "Attach product references",
+            "body": "Drag or paste the product photos the presenter will hold, wear or demonstrate."
+          },
+          {
+            "title": "Choose a presenter",
+            "body": "**Available avatars · 53**, filtered All / Women / Men with search by name, character or scene. Each card previews the voice and shows a sample line; `Use this presenter` casts them. **My avatars** lets you upload your own portrait."
+          },
+          {
+            "title": "Write the script",
+            "body": "Talking points or a full script (up to 5,000 characters), then set format, duration and spoken language."
+          },
+          {
+            "title": "Quote, confirm, generate",
+            "body": "The confirm modal shows estimated cost against balance — same core loop as every tool."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch09-avatar-picker.webp?v=20261109gd",
+            "alt": "The presenter picker dialog: 53 avatars, gender filters with counts, search, cards with voice traits, sample quotes and audio players, Use this presenter",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/gif-ch09-avatar-picker.gif?v=20261109gd",
+            "alt": "Browsing the presenter grid and auditioning a voice sample",
+            "width": 900,
+            "height": 563,
+            "gif": true
+          }
+        ]
+      },
+      {
+        "id": "ch10",
+        "num": "10",
+        "title": "Subtitle Studio",
+        "route": "Route **/app/create/subtitles** · versions, not re-renders",
+        "what": "Subtitle Studio works on **finished** videos. Each operation creates a new version of the video — the original is never overwritten — and long jobs keep running while you work elsewhere in the workspace.",
+        "steps": [
+          {
+            "title": "Pick a finished video",
+            "body": "The left list shows completed videos only — search by prompt or title, page through your history."
+          },
+          {
+            "title": "Choose an operation",
+            "body": "**Generate subtitles** — smart captions from the actual speech. **Promo lines** — burn short promotional lines into a new version. **Product copy** — turn product copy into on-screen text. The last two accept your own text, one line per screen."
+          },
+          {
+            "title": "Style it with live preview",
+            "body": "STYLE Auto / Classic / Bold / Minimal · SIZE Small / Medium / Large · POSITION Bottom / Middle / Top · COLOUR White / Yellow / Cyan / Black · BACKDROP Auto / None / Box / Outline — the **sample caption preview** updates as you click."
+          },
+          {
+            "title": "Generate a new version",
+            "body": "The job runs server-side; a pill elsewhere in the workspace tells you it's still going. Versions stack as tabs over the player — V2 · With subtitles, V1 · With subtitles…"
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch10-subtitle-studio.webp?v=20261109gd",
+            "alt": "The three-column Subtitle Studio: source list, operations, style chips with preview stage and version tabs",
+            "width": 1440,
+            "height": 900
+          },
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/gif-ch10-subtitle-styles.gif?v=20261109gd",
+            "alt": "Clicking style chips while the sample caption preview updates live",
+            "width": 900,
+            "height": 563,
+            "gif": true
+          }
+        ],
+        "tip": {
+          "title": "Good to know",
+          "body": "Submit a long batch of subtitle jobs first — the pill keeps you informed while you generate your next video elsewhere."
+        }
+      },
+      {
+        "id": "ch11",
+        "num": "11",
+        "title": "Library",
+        "route": "Route **/app/create/library** · every job, one list",
+        "what": "The Library is the single source of truth for video jobs: filters, the details modal, retries and the 15-day retention clock. If a result exists, it lives here.",
+        "steps": [
+          {
+            "title": "Filter the list",
+            "body": "**All videos / In progress / Failed / Completed**, with infinite scroll and a reference-reel strip of the images your jobs used. The filter row is captured in chapter 01."
+          },
+          {
+            "title": "Open the details modal",
+            "body": "`View details` on any card opens the result video, per-shot clips, description, every reference you attached and the exact submitted parameters — duration, aspect, resolution, refs."
+          },
+          {
+            "title": "Fix a failure the right way",
+            "body": "**Retry render** re-runs assembly when the clips are fine (failed render, finished clips). **Regenerate** prefills the composer from the job for a fresh attempt. Failed jobs explain themselves in plain language."
+          },
+          {
+            "title": "Delete deliberately",
+            "body": "Delete asks for confirmation and uses a revision check, so two open tabs can't delete the same job twice. Everything auto-expires after 15 days."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch11-library-details.webp?v=20261109gd",
+            "alt": "The Library details modal open on a completed job with the player, clips and submitted parameters",
+            "width": 1440,
+            "height": 900
+          }
+        ]
+      },
+      {
+        "id": "ch12",
+        "num": "12",
+        "title": "Assistant, extras & your account",
+        "route": "Routes **/app/create** (assistant) · **Inspirations**, **Performance**, **Teams & Brands**, **Developer access** in the workspace sidebar · **/account**",
+        "what": "The supporting cast: an assistant for scripts and shot ideas, an inspiration gallery that hands its cards straight into your composer, the tools that turn finished videos into decisions — performance, teams, and API access — and the account page where credits and receipts live.",
+        "steps": [
+          {
+            "title": "Brief the assistant",
+            "body": "Suggestion chips start the conversation — a 15-second product video script, three shot ideas, a UGC-style voiceover, a stronger first three seconds. Replies stream as you read. It advises; it doesn't generate."
+          },
+          {
+            "title": "Borrow from Inspirations",
+            "body": "Filter the gallery by video or photo idea, search by category, and open a card that catches your eye. The detail dialog hands the setup straight into your workspace with `Create a video like this` or `Create an image like this`."
+          },
+          {
+            "title": "Compare your ad results",
+            "body": "**Performance** imports your advertising results and lines them up by period: a performance overview plus a breakdown by creative, so you can see which video actually drove results before you make the next one."
+          },
+          {
+            "title": "Manage teams & brands",
+            "body": "**Teams & Brands** is where workspace access, brand details and product information you have reviewed live — the shared facts every teammate's videos build on."
+          },
+          {
+            "title": "Connect with the API",
+            "body": "**Developer access** issues API keys and webhook endpoints. Keys carry scopes; task creation asks for a unique `Idempotency-Key` header so a retry refers to the same operation."
+          },
+          {
+            "title": "Watch your credits",
+            "body": "The toolbar chip shows your balance and refreshes after every paid operation. The account page holds credits, purchases and receipts."
+          },
+          {
+            "title": "Get help",
+            "body": "Support opens a dialog with a four-step getting-started guide (\"Create a product video in four steps\") and a Book-a-Call path to a human."
+          }
+        ],
+        "media": [
+          {
+            "src": "/assets/sites/site_aidreamcapes/guides/li-ch12-inspirations.webp?v=20261109gd",
+            "alt": "The embedded Inspirations gallery: filter tabs, a category wall, and the detail dialog for a linen-shirt showcase with Create a video like this",
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "tip": {
+          "title": "Heads-up",
+          "body": "Two sidebar items are marked **Simulation** — AI Twin and Ad Clone. They let you try the workflows on sample data; neither produces a real video today."
+        }
+      }
+    ],
+    "moreGuides": {
+      "title": "Go deeper",
+      "lead": "Five focused guides live under this page — each one takes a single job and walks it through end to end.",
+      "items": [
+        { "label": "Build a TikTok UGC ad from a product link", "href": "/guides/first-tiktok-video-ad" },
+        { "label": "Social video sizes for TikTok and Reels", "href": "/guides/ad-sizes-by-platform" },
+        { "label": "AI product image tips from your phone", "href": "/guides/product-photo-tips" },
+        { "label": "AI video ads for ad tests", "href": "/guides/testing-ad-versions" },
+        { "label": "Amazon main image rules for every listing", "href": "/guides/white-background-amazon" }
+      ]
+    }
+  }
+}
