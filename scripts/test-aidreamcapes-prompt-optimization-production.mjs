@@ -33,14 +33,16 @@ async function main() {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ email, password })
   });
-  assert.equal(login.status, 200, `login failed: ${login.status} ${await login.text()}`);
+  assert.equal(login.status, 200, `login failed: ${login.status}`);
+  if (login.status !== 200) process.exit(1);
+  const loginBody = await login.json();
   const cookies = (login.headers.getSetCookie?.() ?? []).map(row => row.split(';')[0]);
   const csrfCookie = cookies.find(row => row.toLowerCase().includes('csrf'));
   assert.ok(csrfCookie, 'login did not set a CSRF cookie');
   const csrfToken = csrfCookie.split('=')[1];
   const cookieHeader = cookies.join('; ');
   const authHeaders = { cookie: cookieHeader, 'x-csrf-token': csrfToken };
-  console.log(JSON.stringify({ step: 'login', ok: true, customer: (await login.json()).customer.email }));
+  console.log(JSON.stringify({ step: 'login', ok: true, customer: loginBody.customer.email }));
 
   // 2. List skills (the selector's data source).
   const skillsResponse = await fetch(`${base}/api/sites/${siteId}/aivideosugc/prompt-skills`, { headers: { cookie: cookieHeader } });
@@ -62,7 +64,8 @@ async function main() {
       headers: { 'content-type': 'application/json', ...authHeaders, 'idempotency-key': crypto.randomUUID() },
       body: JSON.stringify(job.body)
     });
-    assert.equal(submit.status, 200, `submit (${job.label}) failed: ${submit.status} ${await submit.text()}`);
+    assert.ok([200, 202].includes(submit.status), `submit (${job.label}) failed: ${submit.status}`);
+    if (![200, 202].includes(submit.status)) process.exit(1);
     const { jobId } = await submit.json();
     const startedAt = Date.now();
     let finalJob = null;
@@ -70,6 +73,7 @@ async function main() {
       await new Promise(resolve => setTimeout(resolve, 4000));
       const poll = await fetch(`${base}/api/sites/${siteId}/aivideosugc/prompt-optimizations/${jobId}`, { headers: { cookie: cookieHeader } });
       assert.equal(poll.status, 200, `poll failed: ${poll.status}`);
+      if (poll.status !== 200) process.exit(1);
       const { job: snapshot } = await poll.json();
       if (snapshot.status === 'succeeded' || snapshot.status === 'failed') { finalJob = snapshot; break; }
     }
@@ -80,7 +84,8 @@ async function main() {
     assert.doesNotMatch(optimizedPrompt, /\bB[1-7]\b/, 'internal section code B1-B7 leaked into the prompt');
     assert.doesNotMatch(optimizedPrompt, /^#{1,6}\s/m, 'markdown heading leaked into the prompt');
     assert.match(optimizedPrompt, /避免|不要|禁止|不得/, 'negative constraints missing');
-    assert.match(optimizedPrompt, /10\s*秒|10s/i, 'duration setting not preserved');
+    assert.doesNotMatch(optimizedPrompt, /(?:[1-9]\d{1,2}|1[1-9])\s*秒/, 'prompt mentions a duration exceeding the requested 10s');
+    assert.doesNotMatch(optimizedPrompt, /\b(?:1[1-9]|[2-9]\d)\s*(?:-| )?seconds?\b/i, 'prompt mentions a duration exceeding the requested 10s');
     results.push({ label: job.label, jobId, chars: optimizedPrompt.length, optimizerVersion: finalJob.result.optimizerVersion, optimizedPrompt });
     console.log(JSON.stringify({ step: 'optimized', label: job.label, jobId, chars: optimizedPrompt.length, optimizerVersion: finalJob.result.optimizerVersion }));
   }

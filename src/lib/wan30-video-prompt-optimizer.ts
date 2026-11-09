@@ -115,8 +115,11 @@ function promptMentionsWrongSettings(prompt: string, input: Wan30PromptOptimizat
     ...Array.from(prompt.matchAll(/\b(\d{1,3})\s*(?:-| )?seconds?\b/gi), (match) => Number(match[1])),
     // 总时长声明（如「15秒、9:16」）；时间轴区间「[0-15秒]」以 ] 结尾，不算声明。
     ...Array.from(prompt.matchAll(/(\d{1,3})\s*秒(?!\])/g), (match) => Number(match[1]))
-  ].filter((duration) => duration !== input.durationSeconds);
-  if (durations.length) return true;
+  ];
+  // Natural-language timelines mention segment boundaries ("前5秒…后5秒") that
+  // legitimately under-run the requested length; only a mention EXCEEDING the
+  // requested duration (e.g. claiming 15s of a 10s video) is a conflict.
+  if (durations.some((duration) => duration > input.durationSeconds)) return true;
   const resolutions = Array.from(prompt.matchAll(/\b(480p|720p|1080p|1440p|4k)\b/gi), (match) => match[1].toLowerCase());
   const expectedResolution = input.resolution.toLowerCase();
   if (resolutions.some((resolution) => resolution !== expectedResolution)) return true;
