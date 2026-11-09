@@ -15,6 +15,7 @@ import {
   type Wan30PromptOptimizationResult
 } from "@/lib/wan30-video-prompt-optimizer";
 import { isWan30VideoTypeId } from "@/lib/wan30-video-prompt-types";
+import { resolvePromptSkill } from "@/lib/prompt-skills";
 
 const JOB_KIND = "wan30_video_prompt_optimization";
 const QUOTA_WINDOW_MS = 24 * 60 * 60 * 1000;
@@ -30,6 +31,7 @@ type RequestBody = {
   resolution?: unknown;
   referenceUrls?: unknown;
   productBrief?: unknown;
+  skillSlug?: unknown;
 };
 
 /** 确认过的产品简介：标题/描述/价格/规格，作为优化器的事实锚点。 */
@@ -189,6 +191,15 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const resolution = typeof body.resolution === "string" ? body.resolution.trim() : "";
     const references = parseReferences(body.referenceUrls, siteId, customerId);
     const productBrief = parseProductBrief(body.productBrief);
+    // 可选 skill：管理员维护的提示词优化技能文件；缺省走站点默认（Wan3.0）。
+    const requestedSkillSlug = typeof body.skillSlug === "string" ? body.skillSlug.trim().slice(0, 100) : "";
+    let skill: Awaited<ReturnType<typeof resolvePromptSkill>>;
+    try {
+      skill = await resolvePromptSkill(siteId, requestedSkillSlug || undefined);
+    } catch (error) {
+      if ((error as Error).message === "prompt_skill_not_found") throw new WorkspaceError("wan30_prompt_optimization_skill_not_found", 400);
+      throw error;
+    }
 
     const idempotencyKey = request.headers.get("idempotency-key")?.trim();
     if (!idempotencyKey) throw new WorkspaceError("idempotency_key_required", 400);
@@ -196,7 +207,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
     const promptHash = crypto.createHash("sha256").update(prompt).digest("hex");
     const requestFingerprint = crypto.createHash("sha256").update(JSON.stringify({
-      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, references, productBrief
+      siteId, customerId, promptHash, videoTypeId, durationSeconds, aspectRatio, resolution, references, productBrief, skillSlug: skill.slug, skillVersion: skill.version
     })).digest("hex");
     const scopedIdempotencyKey = `${siteId}:${customerId}:wan30-prompt:${idempotencyKey}`;
     const existingJob = await getAsyncJobByIdempotency({ kind: JOB_KIND, actorId: customerId, idempotencyKey: scopedIdempotencyKey });
@@ -227,7 +238,10 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           durationSeconds,
           aspectRatio,
           resolution,
-          referenceCount: referenceImages.length
+          referenceCount: referenceImages.length,
+          skillSlug: skill.slug,
+          skillTitle: skill.title,
+          skillVersion: skill.version
         },
         run: () => optimizeWan30VideoPrompt({
           sourcePrompt: prompt,
@@ -236,7 +250,8 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
           aspectRatio,
           resolution,
           referenceImages,
-          productBrief
+          productBrief,
+          skill
         })
       });
       if (job.metadata.requestFingerprint !== requestFingerprint) {

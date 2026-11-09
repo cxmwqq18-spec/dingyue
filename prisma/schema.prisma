@@ -215,6 +215,7 @@ model Site {
   aidreamcapesDeveloperApiKeys AidreamcapesDeveloperApiKey[]
   aiChatConversations         AiChatConversation[]
   aiChatMessages              AiChatMessage[]
+  promptSkills                PromptSkill[]
   aidreamcapesWebhookSubscriptions AidreamcapesWebhookSubscription[]
   aidreamcapesWebhookDeliveries AidreamcapesWebhookDelivery[]
   aidreamcapesPublishingJobs AidreamcapesPublishingJob[]
@@ -545,6 +546,29 @@ model AiChatConversation {
   messages   AiChatMessage[]
 
   @@index([siteId, customerId, updatedAt(sort: Desc)], map: "AiChatConversation_owner")
+}
+
+/// Admin-curated prompt-optimization skills (the "Optimize" agent reads the
+/// selected skill's markdown as its system instructions). Rows are per-site and
+/// seeded by field-level scripts; users only choose among active skills.
+model PromptSkill {
+  id        String   @id
+  siteId    String
+  slug      String
+  title     String
+  summary   String?
+  /// Full skill markdown injected as the optimizer's system instructions.
+  skillMd   String
+  /// Bumped whenever skillMd changes; keeps the provider prefix cache keyed.
+  version   String
+  isDefault Boolean  @default(false) @map("isDefault")
+  /// active | retired
+  status    String   @default("active")
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @db.Timestamptz(6) @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, slug])
 }
 
 model AiChatMessage {

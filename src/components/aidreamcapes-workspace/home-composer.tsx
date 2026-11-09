@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Film, ImageIcon, Loader2, Monitor, Music, Ratio, Sparkles, Timer, Upload, Video, WandSparkles, X } from "lucide-react";
+import { ArrowRight, BookOpen, Film, ImageIcon, Loader2, Monitor, Music, Ratio, Sparkles, Timer, Upload, Video, WandSparkles, X } from "lucide-react";
 import { useCallback } from "react";
 import type { TaskInput, WorkspaceCatalog } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
@@ -56,6 +56,10 @@ export interface HomeComposerProps {
   /** 视频类型（Wan3.0 优化器的工作类型），仅在视频作曲家显示。 */
   videoTypeId?: string;
   onVideoTypeChange?: (videoTypeId: string) => void;
+  /** 提示词优化 skill（管理员维护的技能文件）；多于一课时显示选择器。 */
+  promptSkills?: { slug: string; title: string; summary: string; isDefault: boolean }[];
+  promptSkillSlug?: string;
+  onPromptSkillChange?: (slug: string) => void;
   /** 用 Wan3.0 skill 优化当前提示词；缺省时隐藏优化按钮。 */
   onOptimizePrompt?: () => void;
   promptOptimizing?: boolean;
@@ -140,7 +144,7 @@ function References({ urls, max, disabled, canUpload, onUpload, onRemove, onMove
   </div>;
 }
 
-export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, videoTypeId, onVideoTypeChange, onOptimizePrompt, promptOptimizing = false, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
+export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onPromptChange, catalog, modelId, onModelChange, aspect, onAspectChange, duration, onDurationChange, resolution, onResolutionChange, videoReferenceUrls, onVideoReferenceUpload, onVideoReferenceRemove, onVideoReferenceMove, videoReferenceFiles = [], onVideoFileUpload, onVideoFileRemove, onVideoFileMove, audioReferenceFiles = [], onAudioFileUpload, onAudioFileRemove, onAudioFileMove, imageInput, onImageInputChange, onImageReferenceUpload, onImageReferenceRemove, onImageReferenceMove, onImageGenerate, imageGenerateDisabled = false, imageGenerateLabel = "Generate image", onContinue, videoTypeId, onVideoTypeChange, promptSkills = [], promptSkillSlug = "", onPromptSkillChange, onOptimizePrompt, promptOptimizing = false, creditsNote, onLogin, disabled = false, canUpload = false, loginHref }: HomeComposerProps) {
   const activeTab: HomeComposerTab = tab === "AI Video" || tab === "AI Image" ? tab : "AI Video Agent";
   const imageMode = activeTab === "AI Image";
   const videoMode = activeTab === "AI Video";
@@ -212,7 +216,7 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
         }} placeholder={imageMode ? "Describe the product image you want to create…" : videoMode ? "Describe your video idea…" : "Describe your product and the story you want to tell…"} aria-label={imageMode ? "Describe your image idea" : "Describe your video idea"} maxLength={WORKSPACE_PROMPT_MAX_LENGTH} />
         <span className={styles.characterCount}>{`${promptValue.length} / ${WORKSPACE_PROMPT_MAX_LENGTH}`}</span>
       </div>
-      {/* 视频类型 + Wan3.0 优化：单独一行，紧跟提示词输入区。 */}
+      {/* 视频类型 + 优化 skill + Wan3.0 优化：单独一行，紧跟提示词输入区。 */}
       {(videoMode || draftMode) && (onVideoTypeChange || onOptimizePrompt) && <div className={styles.optimizerRow}>
         {onVideoTypeChange && <div className={styles.setting}><Film size={15} aria-hidden="true" /><span>Type</span><WorkspaceSelect
           ariaLabel="Video type"
@@ -223,7 +227,16 @@ export function HomeComposer({ tab, showTabs = true, onTabChange, prompt, onProm
           bare
           buttonClassName={styles.settingSelect}
         /></div>}
-        {onOptimizePrompt && <button type="button" className={styles.controlButton} disabled={disabled || promptOptimizing || !promptValue.trim()} onClick={onOptimizePrompt} title="Optimize this prompt with the Wan3.0 e-commerce video skill" aria-label="Optimize prompt">
+        {onOptimizePrompt && promptSkills.length > 1 && onPromptSkillChange && <div className={styles.setting}><BookOpen size={15} aria-hidden="true" /><span>Skill</span><WorkspaceSelect
+          ariaLabel="Optimization skill"
+          disabled={disabled}
+          value={promptSkillSlug || promptSkills.find((skill) => skill.isDefault)?.slug || promptSkills[0].slug}
+          options={promptSkills.map((skill) => ({ value: skill.slug, label: skill.title }))}
+          onChange={(value) => onPromptSkillChange(value)}
+          bare
+          buttonClassName={styles.settingSelect}
+        /></div>}
+        {onOptimizePrompt && <button type="button" className={styles.controlButton} disabled={disabled || promptOptimizing || !promptValue.trim()} onClick={onOptimizePrompt} title="Optimize this prompt with the selected skill" aria-label="Optimize prompt">
           {promptOptimizing ? <Loader2 size={14} className={styles.spin} aria-hidden="true" /> : <WandSparkles size={14} aria-hidden="true" />}
           <span>{promptOptimizing ? "Optimizing…" : "Optimize"}</span>
         </button>}

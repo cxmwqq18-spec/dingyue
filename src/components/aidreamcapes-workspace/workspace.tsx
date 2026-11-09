@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, Clapperboard, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle2, Clapperboard, Copy, Download, FileVideo, Gift, Headphones, Home, ImageIcon, Layers3, Library, Lightbulb, Loader2, LockKeyhole, Menu, MessageSquare, Moon, PanelLeftClose, PhoneCall, Play, Plus, RotateCcw, Search, Sparkles, Sun, Trash2, UnlockKeyhole, Upload, UserRound, Video, WandSparkles, X } from "lucide-react";
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_THEME_STORAGE_KEY } from "@/lib/aidreamcapes-workspace/login";
@@ -265,6 +265,10 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [prompt, setPrompt] = useState(initialPreset?.kind === "video" ? initialPreset.prompt : initialHandoff?.prompt ?? "");
   // Wan3.0 提示词优化：视频工作台类型选择 + 优化任务状态（提交/轮询/结果）。
   const [composerVideoType, setComposerVideoType] = useState<string>("general");
+  // 提示词优化 skill（管理员维护的技能文件）；空串 = 站点默认。
+  const [promptSkills, setPromptSkills] = useState<{ slug: string; title: string; summary: string; isDefault: boolean }[]>([]);
+  const [composerSkillSlug, setComposerSkillSlug] = useState<string>("");
+  const [copiedOptimizedPrompt, setCopiedOptimizedPrompt] = useState(false);
   const [promptOptimizer, setPromptOptimizer] = useState<{ status: "submitting" | "polling" | "succeeded" | "failed"; sourcePrompt: string; optimizedPrompt?: string; error?: string } | null>(null);
   const promptOptimizing = Boolean(promptOptimizer && (promptOptimizer.status === "submitting" || promptOptimizer.status === "polling"));
   const [selectedSceneId, setSelectedSceneId] = useState(initialSceneId ?? "");
@@ -678,6 +682,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!initialCatalog) {
       loads.push(request<{ catalog: WorkspaceCatalog }>("/catalog", { signal: controller.signal }).then((result) => { if (!controller.signal.aborted) setCatalog(result.catalog); }));
     }
+    // Prompt-optimization skills (admin-curated); failure just hides the selector.
+    loads.push(request<{ skills: { slug: string; title: string; summary: string; isDefault: boolean }[] }>("/prompt-skills", { signal: controller.signal }).then((result) => {
+      if (controller.signal.aborted) return;
+      setPromptSkills(result.skills);
+      const preferred = result.skills.find((skill) => skill.isDefault) ?? result.skills[0];
+      setComposerSkillSlug((current) => current || preferred?.slug || "");
+    }).catch(() => { }));
     if (customerId && taskId) {
       setLoading(true);
       loads.push(request<{ task: WorkspaceTask }>(`/tasks/${encodeURIComponent(taskId)}`, { signal: controller.signal }).then((result) => {
@@ -1456,6 +1467,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (!customer) { continueToLoginWithDraft(); return; }
     if (promptOptimizing) return;
     setPromptOptimizer({ status: "submitting", sourcePrompt: source });
+    setCopiedOptimizedPrompt(false);
     setModal("promptOptimizer");
     // The confirmed product brief rides along so the optimized prompt states
     // real product facts (name, materials, sizes, price) instead of guesses.
@@ -1472,6 +1484,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
         body: JSON.stringify({
           prompt: source,
           videoTypeId: composerVideoType,
+          skillSlug: composerSkillSlug || undefined,
           durationSeconds: composerDuration,
           aspectRatio: composerAspect,
           resolution: composerResolution || (catalog?.models.find((model) => model.id === composerModel) ?? activeModel)?.resolutions?.[0] || undefined,
@@ -1965,6 +1978,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
             videoTypeId={composerVideoType} onVideoTypeChange={setComposerVideoType}
+            promptSkills={promptSkills} promptSkillSlug={composerSkillSlug} onPromptSkillChange={setComposerSkillSlug}
             onOptimizePrompt={() => void optimizeCurrentPrompt()} promptOptimizing={promptOptimizing}
           />
           {importedBriefNotice()}
@@ -1995,6 +2009,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
             videoTypeId={composerVideoType} onVideoTypeChange={setComposerVideoType}
+            promptSkills={promptSkills} promptSkillSlug={composerSkillSlug} onPromptSkillChange={setComposerSkillSlug}
             onOptimizePrompt={() => void optimizeCurrentPrompt()} promptOptimizing={promptOptimizing}
           />
           {canBrowseTemplates && templatePickerCallout()}
@@ -2017,6 +2032,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onImageReferenceRemove={(index) => setImageInput((current) => ({ ...current, assetUrls: current.assetUrls.filter((_, position) => position !== index) }))} onImageReferenceMove={(from, to) => setImageInput((current) => ({ ...current, assetUrls: moveItem(current.assetUrls, from, to) }))}
             onContinue={continueHomeComposer} onLogin={() => continueToLoginWithDraft()} disabled={working} canUpload={Boolean(customer)} loginHref={loginHref}
             videoTypeId={composerVideoType} onVideoTypeChange={setComposerVideoType}
+            promptSkills={promptSkills} promptSkillSlug={composerSkillSlug} onPromptSkillChange={setComposerSkillSlug}
             onOptimizePrompt={() => void optimizeCurrentPrompt()} promptOptimizing={promptOptimizing}
           />
           {importedBriefNotice()}
@@ -2361,28 +2377,49 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     })()}
     {modal === "product" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={styles.modal} role="dialog" aria-modal="true" aria-label="Add your product"><div className={styles.modalHeader}><h2>Add your product</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{customer && <div className={styles.field} style={{ marginBottom: 18 }}><span className={styles.fieldLabel}>Product photo</span><FileDropZone activeClassName={styles.dropActive} disabled={busy} onFiles={(files) => { const image = files.find((file) => fileKind(file) === "image"); if (image) void uploadProduct(image); }}><label className={styles.upload} style={{ width: 106 }}><Upload size={21} /><span>{busy ? "Uploading…" : "Add a product photo"}</span><input type="file" accept="image/*" disabled={busy} aria-label="Upload product photo" onChange={(event) => { void uploadProduct(event.target.files?.[0]); event.target.value = ""; }} /></label></FileDropZone></div>}<p className={styles.help} style={{ margin: "0 0 10px" }}>Or import product details from a product page</p><ProductUrlImport siteId={siteId} customerId={customer?.id} csrfToken={csrfToken} loginHref={loginHref} onImported={importProduct} />{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}</section></div>}
     {modal === "actors" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section ref={privateModalRef} className={`${styles.modal} ${presenterStudioEnabled ? styles.actorPickerModal : ""}`} role="dialog" aria-modal="true" aria-label="Choose a presenter"><div className={styles.modalHeader}><div><h2>{presenterStudioEnabled ? "Choose a presenter" : "Choose your avatar"}</h2>{presenterStudioEnabled && <p className={styles.help}>Preview voice profiles and choose who appears in your video.</p>}</div><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>{message && <div className={`${styles.notice} ${styles.error}`} role="alert">{message}</div>}{renderActors(Boolean(task) || (presenterStudioEnabled && view === "actors"))}{!task && (!presenterStudioEnabled || view !== "actors") && <div className={styles.notice}>Choose a video scene first to select the presenter for your saved task.</div>}</section></div>}
-    {modal === "promptOptimizer" && <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Optimize prompt">
-      <div className={styles.modalHeader}><h2>Optimize prompt</h2><button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button></div>
-      <p className={styles.help}>Rewrites your description into a Wan3.0-ready e-commerce video prompt using the selected video type and references. This usually takes about a minute.</p>
-      {promptOptimizer && <>
-        <div className={styles.field}><span className={styles.fieldLabel}>Original</span><p className={styles.help} style={{ whiteSpace: "pre-wrap", maxHeight: "18dvh", overflowY: "auto" }}>{promptOptimizer.sourcePrompt}</p></div>
-        {promptOptimizer.status === "succeeded" && promptOptimizer.optimizedPrompt && <>
-          <div className={styles.field}><span className={styles.fieldLabel}>Optimized (Wan3.0 · 7-section)</span><p className={styles.help} style={{ whiteSpace: "pre-wrap", maxHeight: "40dvh", overflowY: "auto", color: "inherit" }}>{promptOptimizer.optimizedPrompt}</p></div>
-          <div className={styles.footerActions}>
-            <button type="button" className={styles.linkButton} onClick={retryPromptOptimization}>Optimize again</button>
-            <button type="button" className={`${styles.button} ${styles.primary}`} onClick={adoptOptimizedPrompt}><Check size={16} /><span>Use this prompt</span></button>
+    {modal === "promptOptimizer" && (() => {
+      const skillTitle = promptSkills.find((skill) => skill.slug === composerSkillSlug)?.title;
+      return <div className={styles.modalOverlay} onClick={(event) => { if (event.target === event.currentTarget) closeModal(); }}><section className={`${styles.modal} ${styles.optimizerModal}`} role="dialog" aria-modal="true" aria-label="Optimize prompt">
+        <div className={styles.optimizerHead}>
+          <span className={styles.optimizerBadge} aria-hidden="true"><WandSparkles size={21} /></span>
+          <div className={styles.optimizerHeadCopy}>
+            <h2>Optimize prompt</h2>
+            <p>Rewrites your description with the selected skill, video type, and references into a paste-ready Wan3.0 prompt. Usually about a minute.</p>
           </div>
-        </>}
-        {promptOptimizer.status === "failed" && <>
-          <div className={`${styles.notice} ${styles.error}`} role="alert">{promptOptimizer.error || "Prompt optimization failed."}</div>
-          <div className={styles.footerActions}>
-            <button type="button" className={styles.linkButton} onClick={closeModal}>Close</button>
-            <button type="button" className={`${styles.button} ${styles.primary}`} onClick={retryPromptOptimization}><WandSparkles size={15} /><span>Try again</span></button>
+          <button className={styles.iconButton} onClick={closeModal} aria-label="Close dialog"><X size={23} /></button>
+        </div>
+        {promptOptimizer && <div className={styles.optimizerBody}>
+          {(promptOptimizer.status === "submitting" || promptOptimizer.status === "polling") && <div className={styles.optimizerProgress} role="status">
+            <div className={styles.optimizerProgressCopy}><Loader2 size={15} className={styles.spin} aria-hidden="true" /><span>Optimizing… you can keep this open.</span></div>
+            <div className={styles.optimizerProgressTrack} aria-hidden="true"><span className={styles.optimizerProgressBar} /></div>
+          </div>}
+          <div className={styles.optimizerCard}>
+            <div className={styles.optimizerCardHead}><span>Original</span><span className={styles.optimizerCount}>{promptOptimizer.sourcePrompt.length} characters</span></div>
+            <p className={styles.optimizerText}>{promptOptimizer.sourcePrompt}</p>
           </div>
-        </>}
-        {(promptOptimizer.status === "submitting" || promptOptimizer.status === "polling") && <div className={styles.notice} role="status"><Loader2 size={15} className={styles.spin} /> Optimizing… you can keep this open, it usually finishes within a minute.</div>}
-      </>}
-    </section></div>}
+          {promptOptimizer.status === "succeeded" && promptOptimizer.optimizedPrompt && <div className={`${styles.optimizerCard} ${styles.optimizerResult}`}>
+            <div className={styles.optimizerCardHead}>
+              <span>{skillTitle ? `Optimized · ${skillTitle}` : "Optimized prompt"}</span>
+              <button type="button" className={styles.optimizerCopy} onClick={() => { void navigator.clipboard?.writeText(promptOptimizer.optimizedPrompt ?? ""); setCopiedOptimizedPrompt(true); window.setTimeout(() => setCopiedOptimizedPrompt(false), 1600); }}>
+                {copiedOptimizedPrompt ? <Check size={13} /> : <Copy size={13} />}<span>{copiedOptimizedPrompt ? "Copied" : "Copy"}</span>
+              </button>
+            </div>
+            <p className={styles.optimizerText}>{promptOptimizer.optimizedPrompt}</p>
+          </div>}
+          {promptOptimizer.status === "failed" && <div className={`${styles.notice} ${styles.error}`} role="alert" style={{ margin: 0 }}>{promptOptimizer.error || "Prompt optimization failed."}</div>}
+          <div className={styles.optimizerFooter}>
+            {promptOptimizer.status === "failed" && <button type="button" className={styles.linkButton} onClick={closeModal}>Close</button>}
+            {promptOptimizer.status === "succeeded" && <button type="button" className={styles.linkButton} onClick={retryPromptOptimization}>Optimize again</button>}
+            <button type="button" className={`${styles.button} ${styles.primary}`} disabled={promptOptimizer.status !== "succeeded"}
+              onClick={() => { if (promptOptimizer.status === "succeeded") adoptOptimizedPrompt(); else if (promptOptimizer.status === "failed") retryPromptOptimization(); }}>
+              {promptOptimizer.status === "succeeded" ? <><Check size={16} /><span>Use this prompt</span></>
+                : promptOptimizer.status === "failed" ? <><WandSparkles size={15} /><span>Try again</span></>
+                : <><Loader2 size={15} className={styles.spin} /><span>Optimizing…</span></>}
+            </button>
+          </div>
+        </div>}
+      </section></div>;
+    })()}
     {batchScene && <BatchDraftDialog open={batchOpen} initialSceneId={batchScene.id} initialInput={composerInput(batchScene)} scenes={catalog?.scenes.map((item) => ({ id: item.id, label: item.name })) ?? []} disabled={busy} onClose={() => setBatchOpen(false)} onSubmit={(items) => void createBatch(items)} />}
 
   </div>;
@@ -2805,6 +2842,9 @@ function humanError(code?: string) {
     wan30_prompt_optimization_aspect_ratio_invalid: "Choose a supported aspect ratio and try again.",
     wan30_prompt_optimization_resolution_invalid: "Choose a supported resolution and try again.",
     wan30_prompt_optimization_reference_invalid: "One of the reference images can't be used. Replace it and try again.",
+    wan30_prompt_optimization_skill_not_found: "The selected optimization skill is no longer available. Pick another skill and try again.",
+    wan30_prompt_optimization_skill_invalid: "The selected optimization skill is misconfigured. Contact support if this keeps happening.",
+    wan30_prompt_optimization_section_labels: "The optimized prompt came back in an internal format. Optimizing again usually fixes it.",
     wan30_prompt_optimization_reference_count_invalid: "Too many reference images. Remove a few and try again.",
     wan30_prompt_optimization_reference_image_invalid: "One of the reference images isn't a supported photo format. Use a JPG, PNG, or WebP image.",
     wan30_prompt_optimization_reference_too_large: "A reference image is too large. Use a smaller file.",

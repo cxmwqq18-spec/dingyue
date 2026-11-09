@@ -10,7 +10,14 @@ export const WAN30_PROMPT_OPTIMIZATION_MAX_REFERENCES = 4;
 /** gpt-5.6 with the full skill runs ~40-80s; the provider default is 30s. */
 const WAN30_OPTIMIZER_TIMEOUT_MS = 180_000;
 
-const OPTIMIZER_VERSION = `wan30-video-prompt-optimizer-v1:${WAN30_PROMPT_SKILL_VERSION}`;
+export type Wan30PromptSkillRef = {
+  slug: string;
+  title: string;
+  /** Full skill markdown injected after the fixed system prefix. */
+  skillMd: string;
+  /** Skill version; part of the optimizer identity for caching/debugging. */
+  version: string;
+};
 
 export type Wan30PromptOptimizationInput = {
   sourcePrompt: string;
@@ -20,6 +27,8 @@ export type Wan30PromptOptimizationInput = {
   resolution: string;
   /** Reference images as data URIs (already ownership-checked by the route). */
   referenceImages: string[];
+  /** Admin-curated skill row resolved by the route. Absent = built-in Wan3.0 skill. */
+  skill?: Wan30PromptSkillRef;
   /** Confirmed product facts from the product-links importer. When present the
    * optimizer states these facts verbatim instead of guessing, and the
    * unverified-claim validator allows the sourced price. */
@@ -57,6 +66,11 @@ export function validateWan30OptimizationInput(input: Wan30PromptOptimizationInp
   if (input.referenceImages.length > WAN30_PROMPT_OPTIMIZATION_MAX_REFERENCES) throw new Error("wan30_prompt_optimization_reference_count_invalid");
   for (const dataUri of input.referenceImages) {
     if (!/^data:image\/(?:jpeg|png|webp);base64,/.test(dataUri)) throw new Error("wan30_prompt_optimization_reference_image_invalid");
+  }
+  if (input.skill) {
+    const { slug, title, skillMd, version } = input.skill;
+    if (!/^[\w-]{1,100}$/.test(slug) || !title.trim() || title.length > 200 || !version.trim() || version.length > 100) throw new Error("wan30_prompt_optimization_skill_invalid");
+    if (skillMd.trim().length < 200 || skillMd.length > 60_000) throw new Error("wan30_prompt_optimization_skill_invalid");
   }
   return { ...input, sourcePrompt, videoTypeId: input.videoTypeId, durationSeconds, aspectRatio: input.aspectRatio.trim(), resolution, referenceImages: input.referenceImages };
 }
@@ -169,6 +183,14 @@ function validateHasNegativeConstraints(prompt: string): void {
   }
 }
 
+/** The seven-section skill is an internal checklist; section codes must never
+ * reach the merchant-facing prompt (B1–B7 labels, markdown headings). */
+function validateNoSectionLabels(prompt: string): void {
+  if (/\bB[1-7]\b/.test(prompt) || /^#{1,6}\s/m.test(prompt)) {
+    throw new Error("wan30_prompt_optimization_section_labels");
+  }
+}
+
 function validatePayload(payload: OptimizationPayload, input: Wan30PromptOptimizationInput): string {
   const prompt = typeof payload.optimizedPrompt === "string" ? payload.optimizedPrompt.trim() : "";
   if (!prompt) throw new Error("wan30_prompt_optimization_empty_response");
@@ -178,6 +200,7 @@ function validatePayload(payload: OptimizationPayload, input: Wan30PromptOptimiz
   validateNoInventedClaims(prompt, input);
   validateNoSensitiveLeak(prompt);
   validateHasNegativeConstraints(prompt);
+  validateNoSectionLabels(prompt);
   return prompt;
 }
 
@@ -212,7 +235,7 @@ function generationMessages(input: Wan30PromptOptimizationInput): PlatformTextMe
       ]
     : textPayload;
   return [
-    { role: "system", content: WAN30_OPTIMIZER_SYSTEM_PREFIX + WAN30_PROMPT_SKILL_MD },
+    { role: "system", content: WAN30_OPTIMIZER_SYSTEM_PREFIX + (input.skill?.skillMd ?? WAN30_PROMPT_SKILL_MD) },
     { role: "user", content }
   ];
 }
@@ -261,14 +284,15 @@ export async function optimizeWan30VideoPrompt(input: Wan30PromptOptimizationInp
   const normalized = validateWan30OptimizationInput(input);
   const hash = sourceHash(normalized.sourcePrompt);
   const invocationId = crypto.randomUUID();
+  const optimizerVersion = `wan30-video-prompt-optimizer-v1:${normalized.skill?.version ?? WAN30_PROMPT_SKILL_VERSION}`;
   const optimizedPrompt = await generateAndValidate(
     normalized,
-    `${OPTIMIZER_VERSION}:${hash}:${normalized.videoTypeId}:${invocationId}`
+    `${optimizerVersion}:${hash}:${normalized.videoTypeId}:${invocationId}`
   );
   return {
     optimizedPrompt,
     videoTypeId: normalized.videoTypeId,
     sourceHash: hash,
-    optimizerVersion: OPTIMIZER_VERSION
+    optimizerVersion
   };
 }
