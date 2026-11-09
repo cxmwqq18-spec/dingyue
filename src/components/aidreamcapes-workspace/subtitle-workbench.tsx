@@ -134,7 +134,13 @@ export function SubtitleWorkbench({ siteId, csrfToken, activeJob, onJobStarted }
   // Keeps the editor stable while a search hides the selected video's card.
   const selectedCacheRef = useRef<WorkspaceTask | null>(null);
 
-  useEffect(() => () => { aliveRef.current = false; }, []);
+  // StrictMode (dev) runs mount → cleanup → mount: reset the flag in the
+  // effect body, or the second mount inherits false and the list never
+  // leaves its loading state. Production single-mount is unaffected.
+  useEffect(() => {
+    aliveRef.current = true;
+    return () => { aliveRef.current = false; };
+  }, []);
   useEffect(() => { itemsRef.current = items; }, [items]);
 
   const headers = useCallback(() => ({
