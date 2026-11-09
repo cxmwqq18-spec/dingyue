@@ -84,8 +84,8 @@ async function main() {
     assert.doesNotMatch(optimizedPrompt, /\bB[1-7]\b/, 'internal section code B1-B7 leaked into the prompt');
     assert.doesNotMatch(optimizedPrompt, /^#{1,6}\s/m, 'markdown heading leaked into the prompt');
     assert.match(optimizedPrompt, /避免|不要|禁止|不得/, 'negative constraints missing');
-    assert.doesNotMatch(optimizedPrompt, /(?:[1-9]\d{1,2}|1[1-9])\s*秒/, 'prompt mentions a duration exceeding the requested 10s');
-    assert.doesNotMatch(optimizedPrompt, /\b(?:1[1-9]|[2-9]\d)\s*(?:-| )?seconds?\b/i, 'prompt mentions a duration exceeding the requested 10s');
+    assert.doesNotMatch(optimizedPrompt, /(?:1[1-9]|[2-9]\d)\d*\s*秒/, 'prompt mentions a duration exceeding the requested 10s');
+    assert.doesNotMatch(optimizedPrompt, /\b(?:1[1-9]|[2-9]\d)\d*\s*(?:-| )?seconds?\b/i, 'prompt mentions a duration exceeding the requested 10s');
     results.push({ label: job.label, jobId, chars: optimizedPrompt.length, optimizerVersion: finalJob.result.optimizerVersion, optimizedPrompt });
     console.log(JSON.stringify({ step: 'optimized', label: job.label, jobId, chars: optimizedPrompt.length, optimizerVersion: finalJob.result.optimizerVersion }));
   }
