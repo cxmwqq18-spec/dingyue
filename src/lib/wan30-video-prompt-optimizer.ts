@@ -125,7 +125,9 @@ function promptMentionsWrongSettings(prompt: string, input: Wan30PromptOptimizat
   if (resolutions.some((resolution) => resolution !== expectedResolution)) return true;
   const referenceIndexes = Array.from(prompt.matchAll(/图(\d{1,2})/g), (match) => Number(match[1]));
   if (referenceIndexes.some((index) => index > input.referenceImages.length)) return true;
-  if (input.referenceImages.length === 0 && /参考图|参考图片|reference images?/i.test(prompt)) return true;
+  // Only flag ASSERTIVE use of reference images ("根据参考图…" / "参考图中…");
+  // honest negatives like "当前没有商品参考图" are correct and must pass.
+  if (input.referenceImages.length === 0 && /(?:使用|根据|按|参照|对照|参见|结合)参考图|参考图(?:中|里|上|所示|显示|呈现|展示)/i.test(prompt)) return true;
   return false;
 }
 
