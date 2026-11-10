@@ -92,7 +92,21 @@ export type V2Plan = { name: string; price: string; credits: string; who: string
 export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2ImageItem[] };
 export type V2SellerScenario = { audience: string; tool: string; href: string; task: string; image: V2Image };
 export type V2SellerScenarioBlock = { title: string; lead: string; items: V2SellerScenario[] };
-export type V2Section = { h2: string; paras: string[]; img?: V2Image; alt?: string };
+/** A real example clip embedded in an article section. The preview loops the
+ * 10s clip in view (same budgeted component as every gallery card); `href`
+ * points at the example's detail page and `caption` says what to watch for. */
+export type V2SectionVideo = {
+  src: string;
+  previewSrc?: string;
+  poster: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  duration?: number;
+  href?: string;
+  caption?: string;
+};
+export type V2Section = { h2: string; paras: string[]; img?: V2Image; alt?: string; video?: V2SectionVideo };
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };
 export type V2FitBlock = { h2: string; good: V2Item[]; not_ideal: V2Item[] };

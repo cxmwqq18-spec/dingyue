@@ -2,7 +2,8 @@ import { ExampleDirectory, ExampleGallerySection, TemplateDirectory, templateDet
 import { PlatformDirectory } from "./platform-directory";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
-import { aidreamcapesV2ResponsiveImageProps } from "@/lib/aidreamcapes-v2-responsive-images";
+import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
+import { Adc2VideoPreview } from "./video-preview-card";
 import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/lib/aidreamcapes-workspace/media-detail";
 /* eslint-disable react/jsx-key -- block lists are [id, element] tuples; orderedBlocks renders each one inside a keyed Fragment. */
 import type { SectionInstance } from "@/lib/types";
@@ -13,7 +14,7 @@ import { TeamCards,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
+import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SectionVideo, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -967,6 +968,32 @@ function ActorDetailPage({ data, r }: Props) {
   </>;
 }
 
+/** A real example clip inside an article body. The budgeted preview component
+ * keeps playback silent, viewport-gated and capped like every gallery card;
+ * the figure just frames it for prose width and points at the detail page. */
+function ArticleVideoFigure({ video, r }: { video: V2SectionVideo; r: V2Resolvers }) {
+  const portrait = !video.width || !video.height ? true : video.height > video.width;
+  return (
+    <figure className="article-video" data-orient={portrait ? "portrait" : "landscape"}>
+      <Adc2VideoPreview
+        ariaLabel={video.alt}
+        media={{
+          src: r.asset(video.src),
+          previewSrc: video.previewSrc ? r.asset(video.previewSrc) : undefined,
+          poster: r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster)),
+          width: video.width,
+          height: video.height,
+          duration: video.duration,
+          name: video.alt
+        }}
+        posterEager
+      />
+      {video.caption ? <figcaption>{video.caption}</figcaption> : null}
+      {video.href ? <WorkspaceEntryLink className="article-video-link" href={r.href(video.href)}>Open this example →</WorkspaceEntryLink> : null}
+    </figure>
+  );
+}
+
 function ArticlePage({ data, r }: Props) {
   const sections = list<V2Section>(data.sections);
   const checklist = list<string>(data.checklist);
@@ -991,7 +1018,7 @@ function ArticlePage({ data, r }: Props) {
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
-              {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
+              {section.video ? <ArticleVideoFigure video={section.video} r={r} /> : section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
               {tryBox && sectionIndex === tryAfter ? (
                 <aside className="trybox">
                   <b>{tryBox.title}</b>

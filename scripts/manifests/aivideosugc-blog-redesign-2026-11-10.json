@@ -1,0 +1,3125 @@
+{
+  "date": "2026-11-10",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "mode": "plan",
+  "baseHash": "aaf7f5fd680ba7a9e3c2e81deda35c9f7ef126d6da260a1d373294634d103815",
+  "slugs": [
+    "/blog/ai-product-photography-guide",
+    "/blog/ai-ugc-video-ads-guide",
+    "/blog/ai-video-review-checklist",
+    "/blog/unboxing-videos-for-launches",
+    "/blog/model-photos-without-a-photoshoot",
+    "/blog"
+  ],
+  "changes": [
+    {
+      "slug": "/blog/ai-product-photography-guide",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Product Photo Generator: Listings and Scenes | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog/ai-product-photography-guide",
+                    "name": "AI Product Photo Generator",
+                    "@type": "ListItem",
+                    "position": 3
+                  }
+                ]
+              },
+              {
+                "@type": "BlogPosting",
+                "image": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp",
+                "author": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "headline": "AI Product Photo Generator: Listings and Scenes",
+                "publisher": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "inLanguage": "en",
+                "description": "Turn one product photo into white-background listing shots, lifestyle scenes, model photos and social ads — and see a real example move. Costs shown before every job.",
+                "dateModified": "2026-11-10",
+                "datePublished": "2026-10-02",
+                "mainEntityOfPage": "https://www.aivideosugc.com/blog/ai-product-photography-guide"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "How much does one AI product photo cost?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Every photo costs 24 credits. The exact cost shows before the job starts, and a failed job returns its credits to your balance.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do I need more than one product photo?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "One clear reference photo is enough to start. Extra angles help for products with details on several sides, and video jobs accept up to seven reference photos.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the main image go on Amazon and Shopify?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. The white background tool makes square, clean-background images for marketplace main slots. Always check the current marketplace rules for your category before publishing.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Will the product look exactly like mine?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The reference photo anchors shape, color and visible details. Still compare the result with the real product — color in daylight, parts, and every label letter — and rerun with a clearer photo if anything drifted.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I put my product on a model?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. The model photos tool works from one garment photo, and you can save the model's face to reuse across your whole catalog.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can my product photo become a video too?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. The same reference photo starts an image-to-video job: the product moves inside the scene you described, from 24 credits for a 6-second clip.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I use the photos in listings and ads?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. The files come without a watermark and are yours to publish. The content policy still applies: no misleading claims and no presenting generated imagery as real customers.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What happens if a job fails?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The credits go back to your balance automatically, so a rerun never costs extra.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do I need design skills?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. The flow is three steps: upload a product photo, describe the scene, download the image. Editing skills only matter if you want to fine-tune after.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Green Notebook Desk Ritual — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/green-notebook-desk-ritual.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "At a wooden desk she pairs a green notebook with its pen and shows the layout she uses to plan her week.",
+                "thumbnailUrl": "/ai-image-generation/green-notebook-desk-ritual-640.webp"
+              }
+            ]
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp",
+          "keywords": "AI product photos for ecommerce, AI product photo tips, product photos from one image, AI lifestyle product images",
+          "canonical": "https://www.aivideosugc.com/blog/ai-product-photography-guide",
+          "ogImageAlt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+          "description": "Turn one product photo into white-background listing shots, lifestyle scenes, model photos and social ads — and see a real example move. Costs shown before every job.",
+          "canonicalPath": "/blog/ai-product-photography-guide",
+          "primaryKeyword": "AI Product Photo Generator Guide",
+          "twitterDescription": "An AI product photo generator turns one photo into a new setting, a white catalog shot, or a lifestyle scene. Check it against the item you ship, then post."
+        },
+        "version": 2,
+        "pageType": "article",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "AI Product Photo Generator: Listings and Scenes",
+                "id": "blog-ai-product-photography-guide",
+                "faq": [
+                  {
+                    "a": "Every photo costs 24 credits. The exact cost shows before the job starts, and a failed job returns its credits to your balance.",
+                    "q": "How much does one AI product photo cost?"
+                  },
+                  {
+                    "a": "One clear reference photo is enough to start. Extra angles help for products with details on several sides, and video jobs accept up to seven reference photos.",
+                    "q": "Do I need more than one product photo?"
+                  },
+                  {
+                    "a": "Yes. The white background tool makes square, clean-background images for marketplace main slots. Always check the current marketplace rules for your category before publishing.",
+                    "q": "Can the main image go on Amazon and Shopify?"
+                  },
+                  {
+                    "a": "The reference photo anchors shape, color and visible details. Still compare the result with the real product — color in daylight, parts, and every label letter — and rerun with a clearer photo if anything drifted.",
+                    "q": "Will the product look exactly like mine?"
+                  },
+                  {
+                    "a": "Yes. The model photos tool works from one garment photo, and you can save the model's face to reuse across your whole catalog.",
+                    "q": "Can I put my product on a model?"
+                  },
+                  {
+                    "a": "Yes. The same reference photo starts an image-to-video job: the product moves inside the scene you described, from 24 credits for a 6-second clip.",
+                    "q": "Can my product photo become a video too?"
+                  },
+                  {
+                    "a": "Yes. The files come without a watermark and are yours to publish. The content policy still applies: no misleading claims and no presenting generated imagery as real customers.",
+                    "q": "Can I use the photos in listings and ads?"
+                  },
+                  {
+                    "a": "The credits go back to your balance automatically, so a rerun never costs extra.",
+                    "q": "What happens if a job fails?"
+                  },
+                  {
+                    "a": "No. The flow is three steps: upload a product photo, describe the scene, download the image. Editing skills only matter if you want to fine-tune after.",
+                    "q": "Do I need design skills?"
+                  }
+                ],
+                "lead": "Start from one product photo. The AI Image workspace turns it into white-background listing shots, lifestyle scenes, model photos and social ads — the five image types a full listing needs.",
+                "image": {
+                  "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+                  "src": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp",
+                  "sizes": "(max-width: 900px) 100vw, 560px",
+                  "width": 1254,
+                  "height": 1254,
+                  "srcSet": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp 1254w"
+                },
+                "label": "AI Product Photo Generator",
+                "tryBox": {
+                  "href": "/app/create/tool/lifestyle-photos",
+                  "more": {
+                    "href": "/ai-image-generation/lifestyle-photos",
+                    "label": "How Lifestyle Photos works"
+                  },
+                  "text": "Place your product in a real-life scene from one photo. You see the cost before the job starts.",
+                  "label": "Make my photo",
+                  "title": "Try Lifestyle Photos"
+                },
+                "ctaLead": "Turn one product photo into the images your listing is missing — and the clip that moves it.",
+                "eyebrow": "One Photo, One Full Listing Set",
+                "minutes": 5,
+                "related": [
+                  {
+                    "href": "/ai-image-generation/model-photos",
+                    "text": "Your clothes and accessories on a reusable AI model.",
+                    "label": "Model Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/white-background-photos",
+                    "text": "The clean main image marketplaces expect.",
+                    "label": "White Background Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/social-ad-photos",
+                    "text": "Images styled for Facebook and Instagram placements.",
+                    "label": "Social Ad Photos"
+                  },
+                  {
+                    "href": "/blog/model-photos-without-a-photoshoot",
+                    "text": "The full model-photo workflow, from flat lay to color set.",
+                    "label": "AI Fashion Model Photos Without a Photoshoot"
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "Turn the same product photo into video ads.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  }
+                ],
+                "section": "blog",
+                "ctaTitle": "Make the Listing Set",
+                "sections": [
+                  {
+                    "h2": "What This Guide Covers",
+                    "paras": [
+                      "This guide walks the photo half of the workspace: what the five image tools make, what one product photo can cover, and the checks that keep a generated photo safe to publish. Every tool runs on the same three steps — upload, describe, download — and every job shows its credit cost before it starts.",
+                      "By the end you'll know which tool fills which slot on your listing, what a photo costs, and what to look at before it goes live."
+                    ]
+                  },
+                  {
+                    "h2": "One Photo Starts the Whole Set",
+                    "img": {
+                      "alt": "Hands place your tan handbag upright on a pale studio surface for the catalog shot.",
+                      "src": "/ai-image-generation/fx04-blog-photo-source-clear-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-source-clear-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-source-clear-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Open the AI Image tool in your workspace, upload one photo of your product, and describe the shot you want. The generator keeps the shape, the color and the visible details from your reference photo, then places the product in the scene you described.",
+                      "Every image costs 24 credits, and the exact cost shows before the job starts. If a job fails, the credits go back to your balance. The same photo can run through a different scene in the next minute — no booking, no props, no reshoot."
+                    ]
+                  },
+                  {
+                    "h2": "Five Photo Tools Cover a Full Listing",
+                    "img": {
+                      "alt": "A hand lifts your tan handbag from a softly lit cafe table so you can post that use shot.",
+                      "src": "/ai-image-generation/fx04-blog-photo-look-cafe-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-look-cafe-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-look-cafe-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "The workspace groups product images into five tools. [White background photos](/ai-image-generation/white-background-photos) give you the clean main image marketplaces expect. [Lifestyle photos](/ai-image-generation/lifestyle-photos) place the product in a real scene — a cafe table, a kitchen counter, a desk by the window. [Change background](/ai-image-generation/change-background) keeps the product untouched and swaps only what is behind it.",
+                      "[Model photos](/ai-image-generation/model-photos) put clothes and accessories on a reusable AI model, and [social ad photos](/ai-image-generation/social-ad-photos) style images for Facebook and Instagram placements. Start with whichever photo your listing is missing today; the same product photo feeds all five."
+                    ]
+                  },
+                  {
+                    "h2": "Make a Product Photo in Three Steps",
+                    "paras": [
+                      "Upload one clear photo of your product — daylight, plain background, shot from the front works best. Describe the scene in one or two sentences: the setting, the light, what sits around the product. Pick the size: square for product pages, 9:16 for stories, 16:9 for banners.",
+                      "The cost appears before you confirm the job. Download the finished image, check it against the real product, then publish. If the first version is not right, change one line of the description and run it again — a rerun costs minutes, not a shoot."
+                    ]
+                  },
+                  {
+                    "h2": "Scenes the Generator Can Build",
+                    "img": {
+                      "alt": "A hand sets your tan handbag beside a folded scarf on the entry table, ready to post.",
+                      "src": "/ai-image-generation/fx04-blog-photo-social-scene-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-social-scene-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-social-scene-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "A coffee table with a magazine and a cup. A windowsill in soft morning light. A bathroom shelf, a gym bag, a picnic table, a marble vanity. Write the scene like a stage direction: \"a serum bottle on a marble vanity, soft window light, a small plant in the background.\"",
+                      "The reference photo anchors the product. If the generated product drifts — the label shifts, the color changes, the shape rounds off — drop that version and rerun with a clearer reference photo. A scene that hides the product is a scene that fails the listing."
+                    ]
+                  },
+                  {
+                    "h2": "The Same Photo Can Move",
+                    "paras": [
+                      "A photo set covers the listing; a video covers the feed. The same reference photo that builds your images also starts an image-to-video job, where the product moves inside the scene you described — a hand picks it up, sets it down, shows it in use.",
+                      "Nothing extra to prepare: the video job takes the same photo, runs from 24 credits for a 6-second clip, and shows its cost before it starts."
+                    ],
+                    "video": {
+                      "alt": "At a wooden desk she pairs a green notebook with its pen and shows the layout she uses to plan her week.",
+                      "src": "/ai-video-generation/green-notebook-desk-ritual.mp4",
+                      "href": "/ai-video-generation/green-notebook-desk-ritual",
+                      "label": "Green Notebook Desk Ritual",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/green-notebook-desk-ritual-640.webp",
+                      "caption": "Real example, generated from one photo: a green notebook becomes a weekly-planning scene. Watch how the notebook, the pen and the desk keep their shape from the first frame to the last.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/green-notebook-desk-ritual-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Listing Photos vs Social Ad Photos",
+                    "img": {
+                      "alt": "A woman with short hair sits at a cafe table beside your tan handbag, a coffee cup, and sunglasses.",
+                      "src": "/ai-image-generation/fx04-blog-photo-marketplace-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-marketplace-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-marketplace-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Marketplace main images follow strict rules: square, clean background, no text overlays, product filling the frame. The [white background](/ai-image-generation/white-background-photos) tool is built for that job. Social placements have room to move: 9:16 for Reels and TikTok covers, 1:1 for feed posts, 16:9 for wide placements.",
+                      "The [social ad photos](/ai-image-generation/social-ad-photos) tool crops and styles images for Facebook and Instagram ad sizes, so one product photo feeds both your listing and your ad account without a second shoot."
+                    ]
+                  },
+                  {
+                    "h2": "Put the Product on a Model",
+                    "img": {
+                      "alt": "Hands open your tan handbag on a sunlit desk beside a folded sweater, ready to post.",
+                      "src": "/ai-image-generation/fx04-blog-photo-shop-scene-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-shop-scene-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-shop-scene-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Clothes, bags, jewelry and eyewear read differently on a person. The [model photos](/ai-image-generation/model-photos) tool puts your product on an AI model from one garment photo — no casting, no studio day. Save the model you like and reuse the same face across product pages and social posts, so the collection reads as one brand.",
+                      "The full workflow — source photos, fit checks, color sets — lives in [AI Fashion Model Photos Without a Photoshoot](/blog/model-photos-without-a-photoshoot)."
+                    ]
+                  },
+                  {
+                    "h2": "What One Product Photo Can Cover",
+                    "paras": [
+                      "From one reference photo you can build the whole set: the white-background main image, two or three lifestyle scenes, a model shot, and social crops. Each image costs 24 credits, so a Starter plan at 200 credits a month covers about eight images — a full listing refresh without a photoshoot.",
+                      "Plans start at $24.50 a month. You see the credit cost before every job, and if a job fails its credits go back to your balance."
+                    ]
+                  },
+                  {
+                    "h2": "How Shops Use These Photos",
+                    "paras": [
+                      "A jewelry brand runs every colorway on the same model and scene, so the collection page reads as one set. A kitchen brand replaces old supplier photos with lifestyle shots that match its brand colors. A dropshipper tests three scenes for one product before spending on ads. An apparel shop fills its Instagram grid between real shoots."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Photo Before You Publish",
+                    "img": {
+                      "alt": "Hands check your tan handbag beside a blank phone before you post the photo.",
+                      "src": "/ai-image-generation/fx04-blog-photo-review-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-photo-review-r1-640.webp 640w, /ai-image-generation/fx04-blog-photo-review-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Put the generated photo next to the real product. Compare the color in daylight, count the visible parts, and read every letter on the label — small text is where generation drifts first. Enlarge the image to 100% before it goes live.",
+                      "Generated images follow the [content policy](/content): no misleading claims, no real people's faces presented as buyers. Your uploads and results stay private to your workspace."
+                    ]
+                  },
+                  {
+                    "h2": "A Set You Can Publish Today",
+                    "paras": [
+                      "One clear product photo is enough to start. Open the workspace, pick the tool your listing is missing, and generate the first image in minutes — then let the same photo finish the set."
+                    ]
+                  }
+                ],
+                "heroMedia": {
+                  "kind": "image",
+                  "image": {
+                    "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+                    "src": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp",
+                    "sizes": "(max-width: 900px) 100vw, 560px",
+                    "width": 1254,
+                    "height": 1254,
+                    "srcSet": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp 1254w"
+                  }
+                },
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  },
+                  {
+                    "href": "/blog/ai-product-photography-guide",
+                    "label": "AI Product Photo Generator"
+                  }
+                ],
+                "relatedLinks": [
+                  {
+                    "href": "/ai-image-generation/model-photos",
+                    "text": "Your clothes and accessories on a reusable AI model.",
+                    "label": "Model Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/white-background-photos",
+                    "text": "The clean main image marketplaces expect.",
+                    "label": "White Background Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/social-ad-photos",
+                    "text": "Images styled for Facebook and Instagram placements.",
+                    "label": "Social Ad Photos"
+                  },
+                  {
+                    "href": "/blog/model-photos-without-a-photoshoot",
+                    "text": "The full model-photo workflow, from flat lay to color set.",
+                    "label": "AI Fashion Model Photos Without a Photoshoot"
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "Turn the same product photo into video ads.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  }
+                ]
+              },
+              "layout": "article"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+            "src": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1.webp",
+            "width": 1254,
+            "height": 1254
+          },
+          {
+            "alt": "A hand sets your tan handbag beside a folded scarf on the entry table, ready to post.",
+            "src": "/ai-image-generation/fx04-blog-photo-social-scene-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands place your tan handbag upright on a pale studio surface for the catalog shot.",
+            "src": "/ai-image-generation/fx04-blog-photo-source-clear-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "A hand lifts your tan handbag from a softly lit cafe table so you can post that use shot.",
+            "src": "/ai-image-generation/fx04-blog-photo-look-cafe-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands open your tan handbag on a sunlit desk beside a folded sweater, ready to post.",
+            "src": "/ai-image-generation/fx04-blog-photo-shop-scene-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "A woman with short hair sits at a cafe table beside your tan handbag, a coffee cup, and sunglasses.",
+            "src": "/ai-image-generation/fx04-blog-photo-marketplace-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands check your tan handbag beside a blank phone before you post the photo.",
+            "src": "/ai-image-generation/fx04-blog-photo-review-r1-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    },
+    {
+      "slug": "/blog/ai-ugc-video-ads-guide",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Video Ads Generator: Creator-Style Clips for Your Shop | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide",
+                    "name": "AI Video Ads Generator",
+                    "@type": "ListItem",
+                    "position": 3
+                  }
+                ]
+              },
+              {
+                "@type": "BlogPosting",
+                "image": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp",
+                "author": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "headline": "AI Video Ads Generator: Creator-Style Clips for Your Shop",
+                "publisher": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "inLanguage": "en",
+                "description": "Turn a product photo into creator-style video ads with script, AI presenter, voice and subtitles. Watch real generated examples before you spend credits.",
+                "dateModified": "2026-11-10",
+                "datePublished": "2026-10-02",
+                "mainEntityOfPage": "https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "What is the AI video ads generator?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "It turns a product photo or an imported product page into a creator-style video ad with a script, an AI presenter, voice and subtitles, in sizes for TikTok, Reels, Shorts and your product page.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How much does an ad cost?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "A 6-second clip costs 24 credits, 10 seconds 40, 15 seconds 60 and 30 seconds 120. The exact cost shows before the job starts, and failed jobs return their credits.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the presenter speak my customer's language?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Voiceover comes in nine languages, including English, Spanish, Portuguese, Japanese, Korean and Thai. You pick the language per job.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the presenter hold my actual product?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Your reference photo anchors the product in the presenter's hands. Check the label letters and the color against the real product before you publish.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Which platforms are the sizes for?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "9:16 fits TikTok, Instagram Reels and YouTube Shorts; 1:1 fits feed placements; 16:9 fits YouTube and product pages.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I start from a product link?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Product Links imports the product's photos and details into your workspace, so the brief uses the real specs without retyping.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do I need editing skills?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. You review the storyboard before generation and the file after. Subtitle Studio burns in captions or promo lines without regenerating the clip.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Are the ads watermark-free and cleared for ads?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Files come without a watermark and are yours to run commercially. Platform ad rules and the content policy still apply.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the AI presenter be presented as a real buyer?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. Never present a generated face as a real customer or reviewer, and label AI content the way each platform currently requires.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What if the generation fails?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The credits go back to your balance automatically. Rerun with a clearer description — a rerun never costs extra.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Black Milk Frother Morning Demo — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT29S",
+                "contentUrl": "/ai-video-generation/black-milk-frother-morning-demo.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "She froths milk in a black handheld frother and pours a cafe-style foam over her morning coffee at the kitchen counter.",
+                "thumbnailUrl": "/ai-image-generation/black-milk-frother-morning-demo-640.webp"
+              },
+              {
+                "name": "Silver Magnetic Ring Snap-On Demo — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/silver-magnetic-ring-snap-on-demo.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "The same silver magnetic ring grip in a second desk take: the snap-on moment, the stand angle and a one-handed scroll, closer to the product.",
+                "thumbnailUrl": "/ai-image-generation/silver-magnetic-ring-snap-on-demo-640.webp"
+              }
+            ]
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp",
+          "keywords": "UGC style video ads, creator style product videos, AI video ads for TikTok, how to make UGC ads, short video ads for small brands",
+          "canonical": "https://www.aivideosugc.com/blog/ai-ugc-video-ads-guide",
+          "ogImageAlt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+          "description": "Turn a product photo into creator-style video ads with script, AI presenter, voice and subtitles. Watch real generated examples before you spend credits.",
+          "canonicalPath": "/blog/ai-ugc-video-ads-guide",
+          "primaryKeyword": "AI UGC video ads guide",
+          "twitterDescription": "This AI video ads generator turns one product photo into a creator-style ad with a voice and a person on screen. Make the clip, then post it where it sells."
+        },
+        "version": 2,
+        "pageType": "article",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "AI Video Ads Generator: Creator-Style Clips for Your Shop",
+                "id": "blog-ai-ugc-video-ads-guide",
+                "faq": [
+                  {
+                    "a": "It turns a product photo or an imported product page into a creator-style video ad with a script, an AI presenter, voice and subtitles, in sizes for TikTok, Reels, Shorts and your product page.",
+                    "q": "What is the AI video ads generator?"
+                  },
+                  {
+                    "a": "A 6-second clip costs 24 credits, 10 seconds 40, 15 seconds 60 and 30 seconds 120. The exact cost shows before the job starts, and failed jobs return their credits.",
+                    "q": "How much does an ad cost?"
+                  },
+                  {
+                    "a": "Yes. Voiceover comes in nine languages, including English, Spanish, Portuguese, Japanese, Korean and Thai. You pick the language per job.",
+                    "q": "Can the presenter speak my customer's language?"
+                  },
+                  {
+                    "a": "Yes. Your reference photo anchors the product in the presenter's hands. Check the label letters and the color against the real product before you publish.",
+                    "q": "Can the presenter hold my actual product?"
+                  },
+                  {
+                    "a": "9:16 fits TikTok, Instagram Reels and YouTube Shorts; 1:1 fits feed placements; 16:9 fits YouTube and product pages.",
+                    "q": "Which platforms are the sizes for?"
+                  },
+                  {
+                    "a": "Yes. Product Links imports the product's photos and details into your workspace, so the brief uses the real specs without retyping.",
+                    "q": "Can I start from a product link?"
+                  },
+                  {
+                    "a": "No. You review the storyboard before generation and the file after. Subtitle Studio burns in captions or promo lines without regenerating the clip.",
+                    "q": "Do I need editing skills?"
+                  },
+                  {
+                    "a": "Yes. Files come without a watermark and are yours to run commercially. Platform ad rules and the content policy still apply.",
+                    "q": "Are the ads watermark-free and cleared for ads?"
+                  },
+                  {
+                    "a": "No. Never present a generated face as a real customer or reviewer, and label AI content the way each platform currently requires.",
+                    "q": "Can the AI presenter be presented as a real buyer?"
+                  },
+                  {
+                    "a": "The credits go back to your balance automatically. Rerun with a clearer description — a rerun never costs extra.",
+                    "q": "What if the generation fails?"
+                  }
+                ],
+                "lead": "One product photo is enough to start. The video ads generator writes the script, puts your product in an AI presenter's hands, adds voice and subtitles, and hands you a clip ready for TikTok, Reels and Shorts.",
+                "image": {
+                  "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+                  "src": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp",
+                  "sizes": "(max-width: 900px) 100vw, 560px",
+                  "width": 1024,
+                  "height": 1024,
+                  "srcSet": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review-640.webp 640w, /ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp 1024w"
+                },
+                "label": "AI Video Ads Generator",
+                "tryBox": {
+                  "href": "/app/create/tool/video-ads#step-video",
+                  "more": {
+                    "href": "/ai-video-generation/video-ads",
+                    "label": "How Video Ads works"
+                  },
+                  "text": "Short ads for TikTok, Reels and Shorts. Upload one product photo and see the cost before the job starts.",
+                  "label": "Make my video",
+                  "title": "Try Video Ads"
+                },
+                "ctaLead": "Upload one product photo and get a creator-style clip with voice and subtitles.",
+                "eyebrow": "Creator-Style Ads From One Photo",
+                "minutes": 5,
+                "related": [
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "text": "The five-minute pass before any ad goes live.",
+                    "label": "AI Video Ads Generator: A Pre-Publish Checklist"
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "text": "Teaser, reveal and closer look from one package photo.",
+                    "label": "AI Product Videos for a Launch Unboxing"
+                  },
+                  {
+                    "href": "/templates?kind=video",
+                    "text": "Open any example to see the full prompt behind it.",
+                    "label": "Browse every video template"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Presenters by scene, gender and age range.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/guides",
+                    "text": "Step-by-step workspace tutorials.",
+                    "label": "How-to Guides"
+                  }
+                ],
+                "section": "blog",
+                "ctaTitle": "Make the Ad From Your Photo",
+                "sections": [
+                  {
+                    "h2": "What This Guide Covers",
+                    "paras": [
+                      "This guide walks the video ads generator end to end: how a brief becomes a storyboard, how the seven video types and the Optimize button shape the clip, and what the presenter, the voice and the subtitles add. Two real examples generated on this site show the structure before you spend a single credit.",
+                      "By the end you'll know what an ad costs by length, which tools finish it, and how to keep one presenter consistent across a whole campaign."
+                    ]
+                  },
+                  {
+                    "h2": "What the Video Ads Generator Makes",
+                    "img": {
+                      "alt": "You skip the shoot: hands hold the gray skincare jar by the bathroom mirror and open its lid.",
+                      "src": "/ai-image-generation/fx04-blog-ugc-definition-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-ugc-definition-r1-640.webp 640w, /ai-image-generation/fx04-blog-ugc-definition-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "The video ads generator turns a product photo or an imported product page into a creator-style video ad. The script explains the product in plain language, an AI presenter holds it and talks to the camera, and the clip comes out with voice and subtitles in sizes for TikTok, Instagram Reels, YouTube Shorts and your product page.",
+                      "You review the storyboard before the job runs and the finished file before you download. No camera, no crew, no editing timeline."
+                    ]
+                  },
+                  {
+                    "h2": "Start From a Photo, a Link, or One Line",
+                    "img": {
+                      "alt": "Two hands unscrew a plain gray jar in front of a bathroom shelf that holds a second gray jar.",
+                      "src": "/ai-image-generation/img2-blog-ai-ugc-video-ads-guide-1-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 1138,
+                      "srcSet": "/ai-image-generation/img2-blog-ai-ugc-video-ads-guide-1-r1-640.webp 640w, /ai-image-generation/img2-blog-ai-ugc-video-ads-guide-1-r1.webp 864w"
+                    },
+                    "paras": [
+                      "Upload one product photo and the generator builds the ad around it. Or import a product page through Product Links: the workspace pulls in the product's photos and details, so the brief writes itself without retyping specs.",
+                      "The workspace also ships quickstarts for the most common jobs — a TikTok ad for your brand, a UGC testimonial for your product, an Instagram Reel for your campaign. Pick one, replace the product, and edit the brief until it sounds like you."
+                    ]
+                  },
+                  {
+                    "h2": "A Real Example, From One Photo",
+                    "paras": [
+                      "The clearest way to understand the output is to watch one. This clip was generated around a single product photo: a morning coffee routine for a kitchen brand, with the voiceover and the subtitles part of the file."
+                    ],
+                    "video": {
+                      "alt": "She froths milk in a black handheld frother and pours a cafe-style foam over her morning coffee at the kitchen counter.",
+                      "src": "/ai-video-generation/black-milk-frother-morning-demo.mp4",
+                      "href": "/ai-video-generation/black-milk-frother-morning-demo",
+                      "label": "Black Milk Frother Morning Demo",
+                      "width": 720,
+                      "height": 1280,
+                      "poster": "/ai-image-generation/black-milk-frother-morning-demo-640.webp",
+                      "caption": "Real example generated on this site: a creator-style morning demo built around one product photo. Watch the structure — a hook in the first seconds, one action (froth, pour), and the product never leaving the frame.",
+                      "duration": 29,
+                      "previewSrc": "/ai-video-generation/black-milk-frother-morning-demo-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Pick a Video Type, Then Optimize the Prompt",
+                    "img": {
+                      "alt": "You show the cream in use: hands scoop a little from the gray skincare jar onto a hand, with no shoot.",
+                      "src": "/ai-image-generation/fx04-blog-ugc-scene-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-ugc-scene-r1-640.webp 640w, /ai-image-generation/fx04-blog-ugc-scene-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Every job starts from a type: general product video, product ad, TikTok ad, UGC review, social Reels, cinematic launch, or how-to demo. The type sets the pacing and the shot structure — a UGC review reads like a customer's phone video, a cinematic launch reads like a brand film.",
+                      "The Optimize button rewrites your prompt against the type before you spend credits: it tightens the scene, the actions and the sound design. Edit the suggested version or run it as is."
+                    ]
+                  },
+                  {
+                    "h2": "Choose the Face That Fits Your Brand",
+                    "img": {
+                      "alt": "You start as the jar comes out of the tote: hands pull the gray skincare jar onto the bathroom counter.",
+                      "src": "/ai-image-generation/fx04-blog-ugc-hook-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-ugc-hook-r1-640.webp 640w, /ai-image-generation/fx04-blog-ugc-hook-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Pick from 53 AI actors across 31 scenes and five age ranges. Preview voices, choose one of nine languages, and save the presenter — the same face can carry every ad for the product, which keeps a campaign consistent from first test to retargeting.",
+                      "The presenter holds your real product and performs one clear action per clip: the lid lift, the click, the pour, the try-on. One action per clip keeps the motion checkable and the hook fast."
+                    ]
+                  },
+                  {
+                    "h2": "One Clear Action Per Clip",
+                    "paras": [
+                      "The generator follows one action per clip, and that discipline is what makes a clip feel real instead of busy. This example stays on a single moment — the snap-on — from grip to scroll."
+                    ],
+                    "video": {
+                      "alt": "The same silver magnetic ring grip in a second desk take: the snap-on moment, the stand angle and a one-handed scroll, closer to the product.",
+                      "src": "/ai-video-generation/silver-magnetic-ring-snap-on-demo.mp4",
+                      "href": "/ai-video-generation/silver-magnetic-ring-snap-on-demo",
+                      "label": "Silver Magnetic Ring Snap-On Demo",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/silver-magnetic-ring-snap-on-demo-640.webp",
+                      "caption": "Real example: one action, start to finish. The ring snaps on, the angle changes, one hand scrolls. Nothing else happens — which is exactly what makes the clip easy to follow and easy to check.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/silver-magnetic-ring-snap-on-demo-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Lengths, Sizes, and Credits",
+                    "img": {
+                      "alt": "You can post the closing shot: hands shut the gray skincare jar on a neutral bedroom dresser.",
+                      "src": "/ai-image-generation/fx04-blog-ugc-length-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-ugc-length-r1-640.webp 640w, /ai-image-generation/fx04-blog-ugc-length-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Clips run 6, 10, 15 or 30 seconds — 24, 40, 60 or 120 credits. Sizes: 9:16 for TikTok, Reels and Shorts; 1:1 for feed placements; 16:9 for YouTube and your product page. The exact cost shows before the job starts, and a failed job returns its credits.",
+                      "A 15-second ad costs the same as three product photos. Most shops test two or three openings before they scale the winner — that is the point of a workspace: versions are cheap."
+                    ]
+                  },
+                  {
+                    "h2": "Subtitles and Sound",
+                    "img": {
+                      "alt": "You leave room for the offer: hands hold the gray skincare jar over a vanity beside a blank phone.",
+                      "src": "/ai-image-generation/fx04-blog-ugc-edit-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-ugc-edit-r1-640.webp 640w, /ai-image-generation/fx04-blog-ugc-edit-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Every ad comes with voice and subtitles. The [Subtitle Studio](/app/create/subtitles) burns in subtitles, promo lines, or product copy on a finished video — change the wording without regenerating the clip.",
+                      "Keep captions in the upper safe area so platform buttons don't cover them. The voiceover language is a choice you make per job: pick the language your audience speaks and the presenter speaks it."
+                    ]
+                  },
+                  {
+                    "h2": "Start From a Proven Template",
+                    "paras": [
+                      "The [template wall](/templates) shows every finished example with the full prompt behind it. Filter by [industry](/industries), [platform](/platforms) or [occasion](/occasions), open a clip close to what you sell, and recreate it with your own product photo.",
+                      "Spark-ads-style and retargeting formats are already in the wall, so paid placements start from structures platforms reward instead of a blank prompt."
+                    ]
+                  },
+                  {
+                    "h2": "AI Ads vs a Filming Day",
+                    "paras": [
+                      "A filming day buys one set of footage. An AI workspace buys versions: new openings, new presenters, new languages, new hooks — each in minutes, each from the same product photo. The wording stays under your control because the script is text you can edit.",
+                      "There is no usage-rights negotiation, no reshoot when the angle changes, and no archive dig when the next product ships."
+                    ]
+                  },
+                  {
+                    "h2": "How Shops Use These Ads",
+                    "paras": [
+                      "A serum brand tests three hooks for one product and keeps the one with the lower cost per view. A gadget shop runs the same 15-second ad in English and Spanish. A gift brand refreshes its TikTok ad every two weeks with a new presenter so the account never looks stale."
+                    ]
+                  },
+                  {
+                    "h2": "Make Your First Ad Today",
+                    "paras": [
+                      "One product photo, one sentence about the product, one presenter. The generator handles the script, the voice, the subtitles and the cut — you keep the final say on what ships."
+                    ]
+                  }
+                ],
+                "heroMedia": {
+                  "kind": "image",
+                  "image": {
+                    "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+                    "src": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp",
+                    "sizes": "(max-width: 900px) 100vw, 560px",
+                    "width": 1024,
+                    "height": 1024,
+                    "srcSet": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review-640.webp 640w, /ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp 1024w"
+                  }
+                },
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "label": "AI Video Ads Generator"
+                  }
+                ],
+                "relatedLinks": [
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "text": "The five-minute pass before any ad goes live.",
+                    "label": "AI Video Ads Generator: A Pre-Publish Checklist"
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "text": "Teaser, reveal and closer look from one package photo.",
+                    "label": "AI Product Videos for a Launch Unboxing"
+                  },
+                  {
+                    "href": "/templates?kind=video",
+                    "text": "Open any example to see the full prompt behind it.",
+                    "label": "Browse every video template"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Presenters by scene, gender and age range.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/guides",
+                    "text": "Step-by-step workspace tutorials.",
+                    "label": "How-to Guides"
+                  }
+                ]
+              },
+              "layout": "article"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+            "src": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review.webp",
+            "width": 1024,
+            "height": 1024
+          },
+          {
+            "alt": "You skip the shoot: hands hold the gray skincare jar by the bathroom mirror and open its lid.",
+            "src": "/ai-image-generation/fx04-blog-ugc-definition-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Two hands unscrew a plain gray jar in front of a bathroom shelf that holds a second gray jar.",
+            "src": "/ai-image-generation/img2-blog-ai-ugc-video-ads-guide-1-r1-640.webp",
+            "width": 640,
+            "height": 1138
+          },
+          {
+            "alt": "You show the cream in use: hands scoop a little from the gray skincare jar onto a hand, with no shoot.",
+            "src": "/ai-image-generation/fx04-blog-ugc-scene-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You start as the jar comes out of the tote: hands pull the gray skincare jar onto the bathroom counter.",
+            "src": "/ai-image-generation/fx04-blog-ugc-hook-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You can post the closing shot: hands shut the gray skincare jar on a neutral bedroom dresser.",
+            "src": "/ai-image-generation/fx04-blog-ugc-length-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You leave room for the offer: hands hold the gray skincare jar over a vanity beside a blank phone.",
+            "src": "/ai-image-generation/fx04-blog-ugc-edit-r1-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    },
+    {
+      "slug": "/blog/ai-video-review-checklist",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Video Ads Generator: Pre-Publish Checklist | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog/ai-video-review-checklist",
+                    "name": "AI Video Ad Pre-Publish Checklist",
+                    "@type": "ListItem",
+                    "position": 3
+                  }
+                ]
+              },
+              {
+                "@type": "BlogPosting",
+                "image": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp",
+                "author": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "headline": "AI Video Ads Generator: A Pre-Publish Checklist",
+                "publisher": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "inLanguage": "en",
+                "description": "Run this five-minute pre-publish checklist on every AI video ad: product accuracy, close-up details, motion, typed captions, rights, and platform AI-content labels.",
+                "dateModified": "2026-11-10",
+                "datePublished": "2026-10-02",
+                "mainEntityOfPage": "https://www.aivideosugc.com/blog/ai-video-review-checklist"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "How long does the pre-publish check take?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "About five minutes for a 15-second ad: watch it once on a phone, compare the product, read the subtitles, confirm rights and labels.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "The product looks slightly off — publish or rerun?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Rerun. An ad must match the product customers receive. A clearer reference photo and a sharper description usually fix it in one run.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "The label text is unreadable — what do I do?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Rerun the scene with a sharper reference photo, or frame the shot so the label is not the focus. Never publish wrong product text.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I edit the video after download?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes for words: Subtitle Studio burns in captions and promo lines on the finished file. Scene fixes need a regeneration of that scene.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Who owns the finished ad?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "You do. Files come without a watermark and are yours to run commercially, within the content policy.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do I have to label AI content?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Follow each platform's current rules. Two constants: never present a generated face as a real buyer or reviewer, and never promise outcomes the product doesn't have.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What music can I use?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The built-in library or tracks you have licensed. Don't drop in commercial songs you haven't cleared for ads.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Who types the price and the discount code?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "You do, in the caption or in Subtitle Studio. Generated text breaks on small letters, so numbers and codes are always typed.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do failed jobs cost credits?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. Credits return to your balance automatically when a job fails.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Does the same checklist work for photos?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Color, parts, label letters, rights and platform rules — the same checks, minus motion and voice.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can teammates review before publish?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Teams & Brands stores shared product facts, and the library keeps every version so reviewers compare files, not links.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What if the ad could still mislead someone?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Don't publish it. Fix the claim, the scene or the wording first — the rerun costs minutes, the misleading ad costs trust.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Washed Graphic Tee Fabric Close-Up — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/washed-graphic-tee-fabric-close-up.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton.",
+                "thumbnailUrl": "/ai-image-generation/washed-graphic-tee-fabric-close-up-640.webp"
+              },
+              {
+                "name": "Cable Organizer Desk Before After — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/cable-organizer-desk-before-after.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "A tangle of charging cables behind the desk becomes one clipped, labeled setup with a cable organizer kit.",
+                "thumbnailUrl": "/ai-image-generation/cable-organizer-desk-before-after-640.webp"
+              }
+            ]
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp",
+          "keywords": "AI video review checklist, check AI product images, AI generated content labels, AI ad checks before publishing, AI content disclosure for ads",
+          "canonical": "https://www.aivideosugc.com/blog/ai-video-review-checklist",
+          "ogImageAlt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+          "description": "Run this five-minute pre-publish checklist on every AI video ad: product accuracy, close-up details, motion, typed captions, rights, and platform AI-content labels.",
+          "canonicalPath": "/blog/ai-video-review-checklist",
+          "primaryKeyword": "AI Video Ads Generator",
+          "twitterDescription": "Use this checklist before publishing AI product photos or video ads. Compare the item, verify claims and prices, review rights, and check each platform’s rules."
+        },
+        "version": 2,
+        "pageType": "article",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "AI Video Ads Generator: A Pre-Publish Checklist",
+                "id": "blog-ai-video-review-checklist",
+                "faq": [
+                  {
+                    "a": "About five minutes for a 15-second ad: watch it once on a phone, compare the product, read the subtitles, confirm rights and labels.",
+                    "q": "How long does the pre-publish check take?"
+                  },
+                  {
+                    "a": "Rerun. An ad must match the product customers receive. A clearer reference photo and a sharper description usually fix it in one run.",
+                    "q": "The product looks slightly off — publish or rerun?"
+                  },
+                  {
+                    "a": "Rerun the scene with a sharper reference photo, or frame the shot so the label is not the focus. Never publish wrong product text.",
+                    "q": "The label text is unreadable — what do I do?"
+                  },
+                  {
+                    "a": "Yes for words: Subtitle Studio burns in captions and promo lines on the finished file. Scene fixes need a regeneration of that scene.",
+                    "q": "Can I edit the video after download?"
+                  },
+                  {
+                    "a": "You do. Files come without a watermark and are yours to run commercially, within the content policy.",
+                    "q": "Who owns the finished ad?"
+                  },
+                  {
+                    "a": "Follow each platform's current rules. Two constants: never present a generated face as a real buyer or reviewer, and never promise outcomes the product doesn't have.",
+                    "q": "Do I have to label AI content?"
+                  },
+                  {
+                    "a": "The built-in library or tracks you have licensed. Don't drop in commercial songs you haven't cleared for ads.",
+                    "q": "What music can I use?"
+                  },
+                  {
+                    "a": "You do, in the caption or in Subtitle Studio. Generated text breaks on small letters, so numbers and codes are always typed.",
+                    "q": "Who types the price and the discount code?"
+                  },
+                  {
+                    "a": "No. Credits return to your balance automatically when a job fails.",
+                    "q": "Do failed jobs cost credits?"
+                  },
+                  {
+                    "a": "Yes. Color, parts, label letters, rights and platform rules — the same checks, minus motion and voice.",
+                    "q": "Does the same checklist work for photos?"
+                  },
+                  {
+                    "a": "Yes. Teams & Brands stores shared product facts, and the library keeps every version so reviewers compare files, not links.",
+                    "q": "Can teammates review before publish?"
+                  },
+                  {
+                    "a": "Don't publish it. Fix the claim, the scene or the wording first — the rerun costs minutes, the misleading ad costs trust.",
+                    "q": "What if the ad could still mislead someone?"
+                  }
+                ],
+                "lead": "Generation is fast, so the final check is where quality lives. Run this five-minute pass on every AI video ad before it goes live — product, motion, words, rights, and platform labels.",
+                "image": {
+                  "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+                  "src": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp",
+                  "sizes": "(max-width: 900px) 100vw, 560px",
+                  "width": 1254,
+                  "height": 1254,
+                  "srcSet": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp 1254w"
+                },
+                "label": "AI Video Ad Pre-Publish Checklist",
+                "tryBox": {
+                  "href": "/app/create/tool/image-to-video#step-video",
+                  "more": {
+                    "href": "/ai-video-generation/image-to-video",
+                    "label": "How Image to Video works"
+                  },
+                  "text": "Animate one product photo into a short clip. You review the storyboard and the file before anything ships.",
+                  "label": "Make my video",
+                  "title": "Try Image to Video"
+                },
+                "ctaLead": "Animate a product photo, review it against the real thing, and publish with confidence.",
+                "eyebrow": "Five Minutes Before You Publish",
+                "minutes": 5,
+                "related": [
+                  {
+                    "href": "/app/create/subtitles",
+                    "text": "Burn in subtitles, promo lines, or product copy after download.",
+                    "label": "Subtitle Studio"
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "What the ads generator builds before the check.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "text": "Launch-week clips that pass the same check.",
+                    "label": "AI Product Videos for a Launch Unboxing"
+                  },
+                  {
+                    "href": "/content",
+                    "text": "What generated content can and cannot claim.",
+                    "label": "Content Policy"
+                  },
+                  {
+                    "href": "/pricing",
+                    "text": "Credits per job, monthly plans, and automatic refunds.",
+                    "label": "Pricing"
+                  }
+                ],
+                "section": "blog",
+                "ctaTitle": "Put the Checklist Into Practice",
+                "sections": [
+                  {
+                    "h2": "What This Guide Covers",
+                    "paras": [
+                      "This guide is the pre-publish pass for AI video ads: what to look at, in what order, and what to do when something is off. Two real clips generated on this site show exactly where accuracy problems hide — in the close-up details and in the promise the clip makes.",
+                      "Run it as a list at the end; the whole pass takes about five minutes on a 15-second ad."
+                    ]
+                  },
+                  {
+                    "h2": "Why Every AI Ad Gets a Final Check",
+                    "img": {
+                      "alt": "Hands check the front pocket and zipper of plain black travel backpack.",
+                      "src": "/ai-image-generation/fx04-blog-review-why-r2-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-review-why-r2-640.webp 640w, /ai-image-generation/fx04-blog-review-why-r2.webp 1024w"
+                    },
+                    "paras": [
+                      "An AI workspace lets you produce ads at the speed you used to save for one shoot a quarter. Speed cuts both ways: the same afternoon can ship five versions, and the check decides which of them deserve your audience.",
+                      "The workspace already gates two steps — you review the storyboard before the job runs, and the file before download. This checklist covers the last five minutes between download and publish."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Product First",
+                    "img": {
+                      "alt": "Hands count pockets, buckles and straps on plain black travel backpack.",
+                      "src": "/ai-image-generation/fx04-blog-review-product-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-review-product-r1-640.webp 640w, /ai-image-generation/fx04-blog-review-product-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Put the real product next to your screen. Compare the color in daylight, count the visible parts, and read every letter on the label — small text is where generation drifts first. If the label is wrong, fix the reference photo or the description and rerun.",
+                      "Hands deserve a second look: check the grip, the proportions, and whatever the presenter does with the product. One clear action per clip is easier to verify than three."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Close-Up Details",
+                    "paras": [
+                      "Close-ups reward scrutiny. This example is built around a fabric-and-print close-up, which makes it the perfect practice clip: at this zoom you can see whether the print sits where it sits on the real garment, whether the texture reads true, and whether anything drifted."
+                    ],
+                    "video": {
+                      "alt": "A second bedroom session with the washed-graphic cotton tee, this time lingering on the faded sunset print and the softness of the washed cotton.",
+                      "src": "/ai-video-generation/washed-graphic-tee-fabric-close-up.mp4",
+                      "href": "/ai-video-generation/washed-graphic-tee-fabric-close-up",
+                      "label": "Washed Graphic Tee Fabric Close-Up",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/washed-graphic-tee-fabric-close-up-640.webp",
+                      "caption": "Real example: the close-up is where accuracy lives. Watch the print placement and the fabric texture — this is the level of detail to compare against the real product before you publish.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/washed-graphic-tee-fabric-close-up-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Check the Motion and the Voice",
+                    "img": {
+                      "alt": "Hands open the zipper and flap of plain black travel backpack.",
+                      "src": "/ai-image-generation/fx04-blog-review-motion-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-review-motion-r1-640.webp 640w, /ai-image-generation/fx04-blog-review-motion-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Watch the clip on a phone at full volume before you watch it anywhere else — that is where your audience meets it. Listen to the voiceover while reading the subtitles line by line: the spoken words and the burned-in text must match.",
+                      "If the voice lands but one scene is off, you don't need to start over — regenerate the one scene, or keep the file and fix the words in [Subtitle Studio](/app/create/subtitles)."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Words You Typed Yourself",
+                    "img": {
+                      "alt": "Plain black travel backpack centered on a white background.",
+                      "src": "/ai-image-generation/fx04-blog-review-copy-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-review-copy-r1-640.webp 640w, /ai-image-generation/fx04-blog-review-copy-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Prices, dates, discount codes and shipping claims are yours to type. Add them in the caption or in Subtitle Studio — not as text you asked the generator to draw, because generated letters break and misread. A discount code that reads wrong costs more than any reshoot ever did."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Claim the Clip Makes",
+                    "paras": [
+                      "If the ad promises a difference, the difference has to happen on camera. Before-and-after clips are the clearest case: the promise is the edit itself, and the viewer can verify it frame by frame — exactly what a reviewer should do."
+                    ],
+                    "video": {
+                      "alt": "A tangle of charging cables behind the desk becomes one clipped, labeled setup with a cable organizer kit.",
+                      "src": "/ai-video-generation/cable-organizer-desk-before-after.mp4",
+                      "href": "/ai-video-generation/cable-organizer-desk-before-after",
+                      "label": "Cable Organizer Desk Before After",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/cable-organizer-desk-before-after-640.webp",
+                      "caption": "Real example: a before/after claim in motion. The tangle becomes the clipped setup on camera — if your clip promises a difference, the difference has to happen in the frame.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/cable-organizer-desk-before-after-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Check Your Rights",
+                    "img": {
+                      "alt": "Hands hold plain black travel backpack beside a plain camera and blank phone.",
+                      "src": "/ai-image-generation/fx04-blog-review-rights-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx04-blog-review-rights-r1-640.webp 640w, /ai-image-generation/fx04-blog-review-rights-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Only photos and logos you own the rights to go into a job. Supplier images need an agreement that covers advertising use. Music comes from the built-in library or tracks you licensed. If a teammate sent the product photo, confirm where it came from before it feeds a paid ad."
+                    ]
+                  },
+                  {
+                    "h2": "Check the Platform Labels",
+                    "img": {
+                      "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone.",
+                      "src": "/ai-image-generation/b2f12-blog-review-rules-r1-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/b2f12-blog-review-rules-r1-640.webp 640w, /ai-image-generation/b2f12-blog-review-rules-r1.webp 1024w"
+                    },
+                    "paras": [
+                      "Each platform sets its own rules for labeling AI-generated content — check the current policy for TikTok, Meta and YouTube before the ad goes live. Two rules are constant everywhere: never present a generated face as a real buyer or reviewer, and never promise health outcomes your product doesn't have."
+                    ]
+                  },
+                  {
+                    "h2": "Fix One Scene or Regenerate the Clip?",
+                    "paras": [
+                      "A wrong label, a drifting color, an awkward hand: regenerate just that scene with a sharper reference photo and keep the rest. A wrong script, a wrong language, a wrong product: regenerate the whole clip from a better brief.",
+                      "Failed jobs return their credits, so a rerun never costs extra — the only real cost is the minute you spend writing a clearer description."
+                    ]
+                  },
+                  {
+                    "h2": "How Teams Run the Check",
+                    "paras": [
+                      "A two-person shop checks every ad against the physical product on the desk. A bigger team stores reviewed product facts in Teams & Brands so every brief uses the same approved wording. An agency keeps this checklist in the client's onboarding doc and archives each approved file in the library with the version that shipped."
+                    ]
+                  },
+                  {
+                    "h2": "Ship It, Then Test the Next Version",
+                    "paras": [
+                      "Publish the checked ad, then let the workspace make the next test cheap: a new hook, a new presenter, a new language. The checklist stays the same; the versions get better."
+                    ]
+                  }
+                ],
+                "checklist": [
+                  "Product matches the real item: color, parts, and every label letter",
+                  "Close-up details checked: print placement, texture, finish",
+                  "Clip watched on a phone, sound on, subtitles read line by line",
+                  "Price, dates and discount codes typed by you, not drawn by the generator",
+                  "Any promise the clip makes — a difference, a result — happens on camera",
+                  "Photos, logos and music cleared for advertising use",
+                  "Platform AI-content labels applied; no AI face presented as a buyer",
+                  "Cost confirmed before the job; failed jobs refunded automatically"
+                ],
+                "heroMedia": {
+                  "kind": "image",
+                  "image": {
+                    "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+                    "src": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp",
+                    "sizes": "(max-width: 900px) 100vw, 560px",
+                    "width": 1254,
+                    "height": 1254,
+                    "srcSet": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp 1254w"
+                  }
+                },
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  },
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "label": "AI Video Ad Pre-Publish Checklist"
+                  }
+                ],
+                "relatedLinks": [
+                  {
+                    "href": "/app/create/subtitles",
+                    "text": "Burn in subtitles, promo lines, or product copy after download.",
+                    "label": "Subtitle Studio"
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "What the ads generator builds before the check.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "text": "Launch-week clips that pass the same check.",
+                    "label": "AI Product Videos for a Launch Unboxing"
+                  },
+                  {
+                    "href": "/content",
+                    "text": "What generated content can and cannot claim.",
+                    "label": "Content Policy"
+                  },
+                  {
+                    "href": "/pricing",
+                    "text": "Credits per job, monthly plans, and automatic refunds.",
+                    "label": "Pricing"
+                  }
+                ]
+              },
+              "layout": "article"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+            "src": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1.webp",
+            "width": 1254,
+            "height": 1254
+          },
+          {
+            "alt": "Adult hands hold a plain black travel backpack beside a blank laptop and a blank phone.",
+            "src": "/ai-image-generation/b2f12-blog-review-rules-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands check the front pocket and zipper of plain black travel backpack.",
+            "src": "/ai-image-generation/fx04-blog-review-why-r2-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands count pockets, buckles and straps on plain black travel backpack.",
+            "src": "/ai-image-generation/fx04-blog-review-product-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands open the zipper and flap of plain black travel backpack.",
+            "src": "/ai-image-generation/fx04-blog-review-motion-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Plain black travel backpack centered on a white background.",
+            "src": "/ai-image-generation/fx04-blog-review-copy-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands hold plain black travel backpack beside a plain camera and blank phone.",
+            "src": "/ai-image-generation/fx04-blog-review-rights-r1-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    },
+    {
+      "slug": "/blog/unboxing-videos-for-launches",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "Unboxing AI Product Video Generator | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog/unboxing-videos-for-launches",
+                    "name": "Unboxing Videos for Product Launches",
+                    "@type": "ListItem",
+                    "position": 3
+                  }
+                ]
+              },
+              {
+                "@type": "BlogPosting",
+                "image": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp",
+                "author": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "headline": "AI Product Videos for a Launch Unboxing",
+                "publisher": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "inLanguage": "en",
+                "description": "Build launch week's three unboxing clips — teaser, reveal, closer look — from one package photo, and watch real generated unboxing examples before you make yours.",
+                "dateModified": "2026-11-10",
+                "datePublished": "2026-10-02",
+                "mainEntityOfPage": "https://www.aivideosugc.com/blog/unboxing-videos-for-launches"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "How is an AI unboxing different from filming one?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "It starts from your package photo, so the teaser, the reveal and the closer look are ready in minutes. Versions are cheap: a new opening or a new presenter takes minutes, not a reshoot.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I start from a product link?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Product Links imports the product's photos and details into your workspace. Still check that the package in the video matches the box you ship.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What if the video shows the wrong item?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Rerun with clearer photos and a description of the exact box contents. Compare the finished clip with the real package before it goes live.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What if my packaging changes before launch?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Make the clips again from the new package photo. Shoppers remember the box they open, so the video must match it.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the clips show how the product works?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes — that is the closer look. Describe one action per clip and let the reveal stay focused on the open.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How long should each clip be?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Teaser and reveal work at 6 or 10 seconds. The closer look has room at 15 seconds. Thirty seconds suits a single combined cut.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How much does the set cost?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "At typical lengths: 24 credits for the teaser, 40 for the reveal, 60 for the closer look — about 124 credits, within a Starter month of 200. Costs show before every job.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the same presenter appear in all three clips?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Save the presenter profile once and reuse it across the set — the same face and voice in every clip.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I add the launch date and the price?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Type them in the caption or burn them in Subtitle Studio. Don't ask the generator to draw numbers or codes.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the voiceover run in another language?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes, nine languages. The same storyboard reruns with a different language while the face and pacing stay identical.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Do I keep rights to the clips?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Files come without a watermark and are yours to publish and promote with.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What if a clip fails to generate?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The credits return to your balance automatically, and you can rerun right away.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Sealed Box Order Unboxing — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/sealed-box-order-unboxing.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "On her living-room table she slices open a sealed shipping box she has waited all week for and lifts the first item out.",
+                "thumbnailUrl": "/ai-image-generation/sealed-box-order-unboxing-640.webp"
+              },
+              {
+                "name": "Magnetic Power Bank Snap-On Unboxing — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/magnetic-power-bank-snap-on-unboxing.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "A second desk unboxing for the slim lavender magnetic power bank, with a tighter shot of it snapping onto the back of the phone.",
+                "thumbnailUrl": "/ai-image-generation/magnetic-power-bank-snap-on-unboxing-640.webp"
+              }
+            ]
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp",
+          "keywords": "product launch unboxing video, AI unboxing video ideas, launch teaser video, unboxing video for new products, short unboxing clips for TikTok",
+          "canonical": "https://www.aivideosugc.com/blog/unboxing-videos-for-launches",
+          "ogImageAlt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+          "description": "Build launch week's three unboxing clips — teaser, reveal, closer look — from one package photo, and watch real generated unboxing examples before you make yours.",
+          "canonicalPath": "/blog/unboxing-videos-for-launches",
+          "primaryKeyword": "unboxing AI Product Video Generator",
+          "twitterDescription": "Turn one package photo into an unboxing product video without a studio or a crew. Build the teaser, the open, and the closer look in minutes, then post it."
+        },
+        "version": 2,
+        "pageType": "article",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "AI Product Videos for a Launch Unboxing",
+                "id": "blog-unboxing-videos-for-launches",
+                "faq": [
+                  {
+                    "a": "It starts from your package photo, so the teaser, the reveal and the closer look are ready in minutes. Versions are cheap: a new opening or a new presenter takes minutes, not a reshoot.",
+                    "q": "How is an AI unboxing different from filming one?"
+                  },
+                  {
+                    "a": "Yes. Product Links imports the product's photos and details into your workspace. Still check that the package in the video matches the box you ship.",
+                    "q": "Can I start from a product link?"
+                  },
+                  {
+                    "a": "Rerun with clearer photos and a description of the exact box contents. Compare the finished clip with the real package before it goes live.",
+                    "q": "What if the video shows the wrong item?"
+                  },
+                  {
+                    "a": "Make the clips again from the new package photo. Shoppers remember the box they open, so the video must match it.",
+                    "q": "What if my packaging changes before launch?"
+                  },
+                  {
+                    "a": "Yes — that is the closer look. Describe one action per clip and let the reveal stay focused on the open.",
+                    "q": "Can the clips show how the product works?"
+                  },
+                  {
+                    "a": "Teaser and reveal work at 6 or 10 seconds. The closer look has room at 15 seconds. Thirty seconds suits a single combined cut.",
+                    "q": "How long should each clip be?"
+                  },
+                  {
+                    "a": "At typical lengths: 24 credits for the teaser, 40 for the reveal, 60 for the closer look — about 124 credits, within a Starter month of 200. Costs show before every job.",
+                    "q": "How much does the set cost?"
+                  },
+                  {
+                    "a": "Yes. Save the presenter profile once and reuse it across the set — the same face and voice in every clip.",
+                    "q": "Can the same presenter appear in all three clips?"
+                  },
+                  {
+                    "a": "Yes. Type them in the caption or burn them in Subtitle Studio. Don't ask the generator to draw numbers or codes.",
+                    "q": "Can I add the launch date and the price?"
+                  },
+                  {
+                    "a": "Yes, nine languages. The same storyboard reruns with a different language while the face and pacing stay identical.",
+                    "q": "Can the voiceover run in another language?"
+                  },
+                  {
+                    "a": "Yes. Files come without a watermark and are yours to publish and promote with.",
+                    "q": "Do I keep rights to the clips?"
+                  },
+                  {
+                    "a": "The credits return to your balance automatically, and you can rerun right away.",
+                    "q": "What if a clip fails to generate?"
+                  }
+                ],
+                "lead": "Launch week needs three clips: the teaser, the reveal, and the closer look. One package photo and one saved presenter cover all three — no studio, no crew, no editing day.",
+                "image": {
+                  "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+                  "src": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp",
+                  "sizes": "(max-width: 900px) 100vw, 560px",
+                  "width": 1254,
+                  "height": 1254,
+                  "srcSet": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp 1254w"
+                },
+                "label": "Unboxing Videos for Product Launches",
+                "tryBox": {
+                  "href": "/app/create/tool/unboxing-videos",
+                  "more": {
+                    "href": "/ai-video-generation/unboxing-experience",
+                    "label": "See unboxing examples"
+                  },
+                  "text": "Start from the real package photo and build the teaser, the reveal, and the closer look.",
+                  "label": "Make my video",
+                  "title": "Try Unboxing Videos"
+                },
+                "ctaLead": "Turn one package photo into a teaser, a reveal, or a closer look, then check it against the real box.",
+                "eyebrow": "Teaser, Reveal, Closer Look",
+                "minutes": 5,
+                "related": [
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "The ad-side workflow for launch week.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  },
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "text": "Check every launch clip against the real box.",
+                    "label": "AI Video Ads Generator: A Pre-Publish Checklist"
+                  },
+                  {
+                    "href": "/ai-video-generation/unboxing-experience",
+                    "text": "Finished unboxing clips with the full prompt behind them.",
+                    "label": "Unboxing examples"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Save one presenter for the whole launch set.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/occasions",
+                    "text": "Launch-adjacent formats by calendar.",
+                    "label": "Occasions: sale, Black Friday, holidays"
+                  }
+                ],
+                "section": "blog",
+                "ctaTitle": "Make the Launch Unboxing",
+                "sections": [
+                  {
+                    "h2": "What This Guide Covers",
+                    "paras": [
+                      "This guide walks launch week's three unboxing clips: what each clip shows, how the AI Video Agent plans them as one storyboard, and what the real examples look like. It also covers the practical details — lengths, credits, subtitles, and where the launch date goes.",
+                      "By the end you'll have a three-clip plan you can generate in one afternoon from one package photo."
+                    ]
+                  },
+                  {
+                    "h2": "The Three Clips Launch Week Needs",
+                    "img": {
+                      "alt": "You get the teaser still. Hands hold the cream mug over the open kraft parcel and tissue.",
+                      "src": "/ai-image-generation/fx05-unbox-details-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-unbox-details-640.webp 640w, /ai-image-generation/fx05-unbox-details.webp 1024w"
+                    },
+                    "paras": [
+                      "A teaser shows the closed box and promises the open. The reveal is the lid lift — the moment the product appears. The closer look shows one action: the pour, the click, the try-on. Three short clips carry a launch better than one long video, because each earns its own post slot.",
+                      "All three start from the same photo of the final package, and all three can share the same presenter."
+                    ]
+                  },
+                  {
+                    "h2": "Plan the Storyboard With the AI Video Agent",
+                    "img": {
+                      "alt": "You get the start of the open. Hands lift the kraft lid and begin to show the cream mug.",
+                      "src": "/ai-image-generation/fx05-unbox-clips-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-unbox-clips-640.webp 640w, /ai-image-generation/fx05-unbox-clips.webp 1024w"
+                    },
+                    "paras": [
+                      "Open the [AI Video Agent](/app/create/agent), paste your product details, and describe the launch in one line — \"teaser, reveal, and closer look for a ceramic travel mug, natural morning light.\" The agent turns it into an editable storyboard, scene by scene, with actions and voice lines.",
+                      "Edit the storyboard before any credits are spent. What you approve is what generates — the surprise belongs in the video, not in the bill."
+                    ]
+                  },
+                  {
+                    "h2": "Start From the Real Package",
+                    "img": {
+                      "alt": "You get the mug beside its mailer. Hands place the cream mug beside the matching kraft parcel and folded tissue.",
+                      "src": "/ai-image-generation/fx05-unbox-ready-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-unbox-ready-640.webp 640w, /ai-image-generation/fx05-unbox-ready.webp 1024w"
+                    },
+                    "paras": [
+                      "Use a photo of the package customers will actually receive: final artwork, daylight, shot from the front. Count what ships in the box and show only what the camera will see — if the video shows tissue paper, the box needs tissue paper.",
+                      "If the packaging changes before launch day, make the clips again. Shoppers remember the box they open; the video must match it."
+                    ]
+                  },
+                  {
+                    "h2": "The Reveal: A Real Unboxing Example",
+                    "paras": [
+                      "The reveal is the beat shoppers remember. This example runs the full structure: the sealed box on the table, the slice open, the first item lifted out — all of it generated from package photos."
+                    ],
+                    "video": {
+                      "alt": "On her living-room table she slices open a sealed shipping box she has waited all week for and lifts the first item out.",
+                      "src": "/ai-video-generation/sealed-box-order-unboxing.mp4",
+                      "href": "/ai-video-generation/sealed-box-order-unboxing",
+                      "label": "Sealed Box Order Unboxing",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/sealed-box-order-unboxing-640.webp",
+                      "caption": "Real example generated on this site: the reveal. Closed box, the slice open, the first item lifted out — the same teaser-to-reveal structure launch week needs.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/sealed-box-order-unboxing-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Make the Three Clips in Three Steps",
+                    "img": {
+                      "alt": "You get the mug coming out. Hands raise the cream mug, with no lid, from tissue inside the kraft parcel.",
+                      "src": "/ai-image-generation/fx05-unbox-sentence-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-unbox-sentence-640.webp 640w, /ai-image-generation/fx05-unbox-sentence.webp 1024w"
+                    },
+                    "paras": [
+                      "Upload the package photo. Choose your saved presenter and describe one action per clip: the closed box held to camera; the lid lift; one use action. Set the size — 9:16 for launch-day platforms — and the length.",
+                      "The teaser and the reveal work at 6 or 10 seconds — 24 or 40 credits. The closer look has room at 15 seconds — 60 credits. The cost shows before each job starts, and failed jobs return their credits."
+                    ]
+                  },
+                  {
+                    "h2": "Unbox, Then Show One Action",
+                    "paras": [
+                      "After the reveal, the closer look earns its slot: the product out of the box and straight into one real action. This example pairs the unboxing with the snap-on, so the clip teaches the product instead of just showing it."
+                    ],
+                    "video": {
+                      "alt": "A second desk unboxing for the slim lavender magnetic power bank, with a tighter shot of it snapping onto the back of the phone.",
+                      "src": "/ai-video-generation/magnetic-power-bank-snap-on-unboxing.mp4",
+                      "href": "/ai-video-generation/magnetic-power-bank-snap-on-unboxing",
+                      "label": "Magnetic Power Bank Snap-On Unboxing",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/magnetic-power-bank-snap-on-unboxing-640.webp",
+                      "caption": "Real example: unbox, then one action. The power bank comes out of the box and snaps onto the phone in the same clip — the 'closer look' beat that follows the reveal.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/magnetic-power-bank-snap-on-unboxing-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Keep One Presenter Across the Set",
+                    "paras": [
+                      "Save the presenter profile once and reuse it: the same face opens the teaser, lifts the lid, and demonstrates the action. Pick from 53 AI actors, preview voices, and set the voiceover language from nine options.",
+                      "Launching in more than one market? The same storyboard runs again with a different language — the face and the pacing stay identical."
+                    ]
+                  },
+                  {
+                    "h2": "Subtitles, Price, and the Launch Date",
+                    "img": {
+                      "alt": "You get the closer look. Hands set the cream mug beside the open kraft parcel after the reveal.",
+                      "src": "/ai-image-generation/fx05-unbox-after-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-unbox-after-640.webp 640w, /ai-image-generation/fx05-unbox-after.webp 1024w"
+                    },
+                    "paras": [
+                      "Voice and subtitles come with every clip. Burn the launch date, the early price, or the drop time in [Subtitle Studio](/app/create/subtitles) — and type them yourself. Keep captions in the upper safe area.",
+                      "Countdown text changes on launch day: Subtitle Studio edits the finished file without regenerating the clips."
+                    ]
+                  },
+                  {
+                    "h2": "Start From a Template",
+                    "paras": [
+                      "The [template wall](/templates) has finished unboxing examples with the full prompt behind each one — open the one closest to your product and recreate it with your package photo. The [occasions](/occasions) filter groups launch-adjacent formats: sale and discount, Black Friday, holidays."
+                    ]
+                  },
+                  {
+                    "h2": "How Shops Run Launch Week",
+                    "paras": [
+                      "A home goods brand posts the teaser three days out, the reveal on launch morning, and the closer look the same evening — one photo, one presenter, one afternoon of generation. A gift brand runs the reveal in two languages for two markets. A two-person team schedules all three clips from the library between customer emails."
+                    ]
+                  },
+                  {
+                    "h2": "The Launch Unboxing in Short",
+                    "paras": [
+                      "One photo of the real package. One saved presenter. Three short clips: tease, reveal, closer. Type the date and the price yourself, check every clip against the box, and post."
+                    ]
+                  }
+                ],
+                "heroMedia": {
+                  "kind": "image",
+                  "image": {
+                    "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+                    "src": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp",
+                    "sizes": "(max-width: 900px) 100vw, 560px",
+                    "width": 1254,
+                    "height": 1254,
+                    "srcSet": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1-640.webp 640w, /ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp 1254w"
+                  }
+                },
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "label": "Unboxing Videos for Product Launches"
+                  }
+                ],
+                "relatedLinks": [
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "text": "The ad-side workflow for launch week.",
+                    "label": "AI Video Ads Generator: Creator-Style Clips for Your Shop"
+                  },
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "text": "Check every launch clip against the real box.",
+                    "label": "AI Video Ads Generator: A Pre-Publish Checklist"
+                  },
+                  {
+                    "href": "/ai-video-generation/unboxing-experience",
+                    "text": "Finished unboxing clips with the full prompt behind them.",
+                    "label": "Unboxing examples"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Save one presenter for the whole launch set.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/occasions",
+                    "text": "Launch-adjacent formats by calendar.",
+                    "label": "Occasions: sale, Black Friday, holidays"
+                  }
+                ]
+              },
+              "layout": "article"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+            "src": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1.webp",
+            "width": 1254,
+            "height": 1254
+          },
+          {
+            "alt": "You get the teaser still. Hands hold the cream mug over the open kraft parcel and tissue.",
+            "src": "/ai-image-generation/fx05-unbox-details-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You get the reveal. Hands open a blank kraft parcel and show the cream mug wrapped in tissue.",
+            "src": "/ai-image-generation/fx05-unbox-why-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You get the mug beside its mailer. Hands place the cream mug beside the matching kraft parcel and folded tissue.",
+            "src": "/ai-image-generation/fx05-unbox-ready-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You get the start of the open. Hands lift the kraft lid and begin to show the cream mug.",
+            "src": "/ai-image-generation/fx05-unbox-clips-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You get the mug coming out. Hands raise the cream mug, with no lid, from tissue inside the kraft parcel.",
+            "src": "/ai-image-generation/fx05-unbox-sentence-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "You get the closer look. Hands set the cream mug beside the open kraft parcel after the reveal.",
+            "src": "/ai-image-generation/fx05-unbox-after-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    },
+    {
+      "slug": "/blog/model-photos-without-a-photoshoot",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI Virtual Model Photos, No Photoshoot | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog/model-photos-without-a-photoshoot",
+                    "name": "AI Model Photos Without a Photoshoot",
+                    "@type": "ListItem",
+                    "position": 3
+                  }
+                ]
+              },
+              {
+                "@type": "BlogPosting",
+                "image": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp",
+                "author": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "headline": "AI Fashion Model Photos Without a Photoshoot",
+                "publisher": {
+                  "@id": "https://www.aivideosugc.com/#organization"
+                },
+                "inLanguage": "en",
+                "description": "Put your clothing on an AI model from one garment photo — and watch real generated try-on clips. Keep the same face across your color set, product pages and social posts.",
+                "dateModified": "2026-11-10",
+                "datePublished": "2026-10-02",
+                "mainEntityOfPage": "https://www.aivideosugc.com/blog/model-photos-without-a-photoshoot"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "Do I still need a photoshoot?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Not for listing coverage: one garment photo generates model photos, lifestyle scenes and white-background images. Real shoots still earn their place for hero campaigns.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "What photo works as the source?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "A daylight flat lay or hanger shot, full front, wrinkles smoothed, collar to hem fully in frame.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I keep the same model across products?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Save the model and reuse the same face across your catalog, marketplaces and social posts.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Does it work for jewelry and eyewear?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Keep close-ups sharp, count the stones, and check clasps against the real piece before publishing.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the model appear in video too?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. The same garment photo starts a fashion try-on reel: fit check, fabric close-up, styling — a full clip from the photo you already have.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Will the fit look accurate?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The model shows drape and scale. The size chart stays the source of truth for fit — compare every photo with the real garment before publish.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can marketplace main images be generated?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes, with the white background tool: square, clean background, product filling the frame. Check your marketplace's current rules for the category.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How much does it cost?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "24 credits per photo, with the cost shown before the job starts. Plans run from $24.50 a month, and failed jobs refund their credits.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can the AI model be presented as a real customer?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. The model is generated, so never present her as a real buyer or reviewer, and follow each platform's AI-content labeling rules.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "Washed Graphic Tee Fit Check — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/washed-graphic-tee-fit-check.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link.",
+                "thumbnailUrl": "/ai-image-generation/washed-graphic-tee-fit-check-640.webp"
+              },
+              {
+                "name": "Cream Chunky Cardigan Two Ways — AIVideosUGC example",
+                "@type": "VideoObject",
+                "duration": "PT30S",
+                "contentUrl": "/ai-video-generation/cream-chunky-cardigan-two-ways.mp4",
+                "uploadDate": "2026-11-01",
+                "description": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted.",
+                "thumbnailUrl": "/ai-image-generation/cream-chunky-cardigan-two-ways-640.webp"
+              }
+            ]
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp",
+          "keywords": "AI model photos for clothing, on-model photos from a flat lay, AI fashion model images, clothing photos without a model, AI jewelry model photos",
+          "canonical": "https://www.aivideosugc.com/blog/model-photos-without-a-photoshoot",
+          "ogImageAlt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+          "description": "Put your clothing on an AI model from one garment photo — and watch real generated try-on clips. Keep the same face across your color set, product pages and social posts.",
+          "canonicalPath": "/blog/model-photos-without-a-photoshoot",
+          "primaryKeyword": "model photos without a photoshoot",
+          "twitterDescription": "Put your clothing on a lifelike virtual model and skip the studio day. Show the fit, keep one face across the set, and download a photo you can post."
+        },
+        "version": 2,
+        "pageType": "article",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "AI Fashion Model Photos Without a Photoshoot",
+                "id": "blog-model-photos-without-a-photoshoot",
+                "faq": [
+                  {
+                    "a": "Not for listing coverage: one garment photo generates model photos, lifestyle scenes and white-background images. Real shoots still earn their place for hero campaigns.",
+                    "q": "Do I still need a photoshoot?"
+                  },
+                  {
+                    "a": "A daylight flat lay or hanger shot, full front, wrinkles smoothed, collar to hem fully in frame.",
+                    "q": "What photo works as the source?"
+                  },
+                  {
+                    "a": "Yes. Save the model and reuse the same face across your catalog, marketplaces and social posts.",
+                    "q": "Can I keep the same model across products?"
+                  },
+                  {
+                    "a": "Yes. Keep close-ups sharp, count the stones, and check clasps against the real piece before publishing.",
+                    "q": "Does it work for jewelry and eyewear?"
+                  },
+                  {
+                    "a": "Yes. The same garment photo starts a fashion try-on reel: fit check, fabric close-up, styling — a full clip from the photo you already have.",
+                    "q": "Can the model appear in video too?"
+                  },
+                  {
+                    "a": "The model shows drape and scale. The size chart stays the source of truth for fit — compare every photo with the real garment before publish.",
+                    "q": "Will the fit look accurate?"
+                  },
+                  {
+                    "a": "Yes, with the white background tool: square, clean background, product filling the frame. Check your marketplace's current rules for the category.",
+                    "q": "Can marketplace main images be generated?"
+                  },
+                  {
+                    "a": "24 credits per photo, with the cost shown before the job starts. Plans run from $24.50 a month, and failed jobs refund their credits.",
+                    "q": "How much does it cost?"
+                  },
+                  {
+                    "a": "No. The model is generated, so never present her as a real buyer or reviewer, and follow each platform's AI-content labeling rules.",
+                    "q": "Can the AI model be presented as a real customer?"
+                  }
+                ],
+                "lead": "Upload one garment photo and put it on an AI model — the same face across your whole color set, your product pages, and your social posts. No casting, no studio day, no reshoots.",
+                "image": {
+                  "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+                  "src": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp",
+                  "sizes": "(max-width: 900px) 100vw, 560px",
+                  "width": 1024,
+                  "height": 1024,
+                  "srcSet": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1-640.webp 640w, /ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp 1024w"
+                },
+                "label": "AI Model Photos Without a Photoshoot",
+                "tryBox": {
+                  "href": "/app/create/tool/model-photos",
+                  "more": {
+                    "href": "/ai-image-generation/model-photos",
+                    "label": "How Model Photos works"
+                  },
+                  "text": "Your clothes and accessories on an AI model, from one garment photo. The face saves for your whole catalog.",
+                  "label": "Make my photo",
+                  "title": "Try Model Photos"
+                },
+                "ctaLead": "Put your garment on an AI model and launch the whole color set together.",
+                "eyebrow": "Your Garment, Your Model, No Studio",
+                "minutes": 5,
+                "related": [
+                  {
+                    "href": "/ai-image-generation/lifestyle-photos",
+                    "text": "Your product in real-life scenes.",
+                    "label": "Lifestyle Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/white-background-photos",
+                    "text": "Marketplace-ready main images.",
+                    "label": "White Background Photos"
+                  },
+                  {
+                    "href": "/blog/ai-product-photography-guide",
+                    "text": "The full photo workflow from one product photo.",
+                    "label": "AI Product Photo Generator: Listings and Scenes"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Browse models by scene, gender and age range.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/ai-video-generation/fashion-try-on-reel",
+                    "text": "Turn the same garment photo into video.",
+                    "label": "Fashion try-on reel"
+                  }
+                ],
+                "section": "blog",
+                "ctaTitle": "Your Next Set Is One Photo Away",
+                "sections": [
+                  {
+                    "h2": "What This Guide Covers",
+                    "paras": [
+                      "This guide walks the model photo workflow: which source photo works, how to pick and keep a model, and how one garment photo becomes a whole set — model shots, lifestyle scenes and video. Two real clips generated on this site show what a finished set looks like in motion.",
+                      "By the end you'll know how to launch an entire color set in one afternoon, and what to check before each photo goes live."
+                    ]
+                  },
+                  {
+                    "h2": "Your Clothes on a Model, Without the Shoot",
+                    "img": {
+                      "alt": "Adult man with short silver hair wearing a plain gray hoodie outside a storefront.",
+                      "src": "/ai-image-generation/fx05-model-work-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-model-work-640.webp 640w, /ai-image-generation/fx05-model-work.webp 1024w"
+                    },
+                    "paras": [
+                      "The [model photos](/ai-image-generation/model-photos) tool turns a flat-lay or hanger shot into a model photo. Choose the model, the pose and the background; the generator drapes your garment and keeps its color, print and visible details.",
+                      "Each photo costs 24 credits, the cost shows before the job starts, and failed jobs return their credits."
+                    ]
+                  },
+                  {
+                    "h2": "Start From a Flat Lay or Hanger Shot",
+                    "img": {
+                      "alt": "Hands smooth a plain gray hoodie beside a wooden hanger on a light surface.",
+                      "src": "/ai-image-generation/fx05-model-garment-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-model-garment-640.webp 640w, /ai-image-generation/fx05-model-garment.webp 1024w"
+                    },
+                    "paras": [
+                      "One clear photo of the garment is enough: daylight, full front, laid flat or on a hanger. Smooth the wrinkles first — folds in the source photo become folds on the model. Make sure the collar, the cuffs and the hem are fully in frame.",
+                      "Read every label before upload: the generator reproduces what it sees, including the care tag hanging out of the collar."
+                    ]
+                  },
+                  {
+                    "h2": "Pick the Model and Keep the Face",
+                    "paras": [
+                      "Choose from 53 AI actors across five age ranges and 31 scenes. Save the model you like and reuse the same face on every product page, marketplace and social post — the collection reads as one brand, not a collage.",
+                      "Jewelry and eyewear follow the same path: clear close-ups, count the stones, check the clasps. The saved face works across accessories too."
+                    ]
+                  },
+                  {
+                    "h2": "Show the Fit, the Drape, the Fabric",
+                    "paras": [
+                      "A model photo has to show how the garment sits. The fit check is the standard format — and it works just as well generated as filmed, straight from the garment photo you already have."
+                    ],
+                    "video": {
+                      "alt": "A short-haired creator shows off a washed-graphic cotton tee in her bedroom: fit check, fabric close-up, tucked and untucked styling, ending on her cart link.",
+                      "src": "/ai-video-generation/washed-graphic-tee-fit-check.mp4",
+                      "href": "/ai-video-generation/washed-graphic-tee-fit-check",
+                      "label": "Washed Graphic Tee Fit Check",
+                      "width": 1080,
+                      "height": 1920,
+                      "poster": "/ai-image-generation/washed-graphic-tee-fit-check-640.webp",
+                      "caption": "Real example: a fit check from one garment photo. Watch the beats — the mirror check, the fabric close-up, tucked and untucked — that turn one photo into a whole set of posts.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/washed-graphic-tee-fit-check-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Build the Whole Color Set Together",
+                    "img": {
+                      "alt": "Adult East Asian man checking the sleeve and hem of a plain gray hoodie in a fitting room.",
+                      "src": "/ai-image-generation/fx05-model-fit-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-model-fit-640.webp 640w, /ai-image-generation/fx05-model-fit.webp 1024w"
+                    },
+                    "paras": [
+                      "Run every colorway on the same model and the same scene: the set looks intentional, and shoppers compare colors instead of comparing photos. Generate the white-background main image for the marketplace, the model photo for the page, and the lifestyle shot for social — all from the same garment photo.",
+                      "If the print drifted or the collar shape changed, rerun with a sharper source photo instead of shipping a version that doesn't match."
+                    ]
+                  },
+                  {
+                    "h2": "Style It More Than One Way",
+                    "paras": [
+                      "One garment, two outfits doubles the feed without a second garment: the same knit worn open over a tee, then belted, keeps the model and the room identical while the look changes."
+                    ],
+                    "video": {
+                      "alt": "In front of a full-length mirror she styles a cream chunky-knit cardigan two ways: open over a tee, then belted.",
+                      "src": "/ai-video-generation/cream-chunky-cardigan-two-ways.mp4",
+                      "href": "/ai-video-generation/cream-chunky-cardigan-two-ways",
+                      "label": "Cream Chunky Cardigan Two Ways",
+                      "width": 720,
+                      "height": 1280,
+                      "poster": "/ai-image-generation/cream-chunky-cardigan-two-ways-640.webp",
+                      "caption": "Real example: one garment, two outfits. Open over a tee, then belted — styling variety from a single source photo, with the same model kept across both looks.",
+                      "duration": 30,
+                      "previewSrc": "/ai-video-generation/cream-chunky-cardigan-two-ways-p10.mp4"
+                    }
+                  },
+                  {
+                    "h2": "Make Model Photos in Three Steps",
+                    "img": {
+                      "alt": "Adult woman with short copper hair wearing a plain gray hoodie on an autumn city sidewalk.",
+                      "src": "/ai-image-generation/fx05-model-when-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-model-when-640.webp 640w, /ai-image-generation/fx05-model-when.webp 1024w"
+                    },
+                    "paras": [
+                      "Upload the garment photo. Pick the model, the pose and the background — and save the person for next time. Download the square version for the listing and the vertical for stories, then check the collar, the length and the closures before you publish."
+                    ]
+                  },
+                  {
+                    "h2": "Where Each Photo Goes",
+                    "img": {
+                      "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall.",
+                      "src": "/ai-image-generation/fx05-model-setting-640.webp",
+                      "sizes": "(max-width: 700px) 100vw, 380px",
+                      "width": 640,
+                      "height": 640,
+                      "srcSet": "/ai-image-generation/fx05-model-setting-640.webp 640w, /ai-image-generation/fx05-model-setting.webp 1024w"
+                    },
+                    "paras": [
+                      "Marketplace main images follow strict rules — use the [white background](/ai-image-generation/white-background-photos) tool for those. Product pages take the model photo and the lifestyle shot. Stories and Reels covers take 9:16. The same source photo feeds all three."
+                    ]
+                  },
+                  {
+                    "h2": "Check Before You Post",
+                    "paras": [
+                      "Check the collar, the hem and the closures against the real garment; enlarge to 100% and read every printed letter. Follow the [content policy](/content): the model is generated, so never present her as a real customer or reviewer."
+                    ]
+                  }
+                ],
+                "heroMedia": {
+                  "kind": "image",
+                  "image": {
+                    "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+                    "src": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp",
+                    "sizes": "(max-width: 900px) 100vw, 560px",
+                    "width": 1024,
+                    "height": 1024,
+                    "srcSet": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1-640.webp 640w, /ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp 1024w"
+                  }
+                },
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  },
+                  {
+                    "href": "/blog/model-photos-without-a-photoshoot",
+                    "label": "AI Model Photos Without a Photoshoot"
+                  }
+                ],
+                "relatedLinks": [
+                  {
+                    "href": "/ai-image-generation/lifestyle-photos",
+                    "text": "Your product in real-life scenes.",
+                    "label": "Lifestyle Photos"
+                  },
+                  {
+                    "href": "/ai-image-generation/white-background-photos",
+                    "text": "Marketplace-ready main images.",
+                    "label": "White Background Photos"
+                  },
+                  {
+                    "href": "/blog/ai-product-photography-guide",
+                    "text": "The full photo workflow from one product photo.",
+                    "label": "AI Product Photo Generator: Listings and Scenes"
+                  },
+                  {
+                    "href": "/ai-actors",
+                    "text": "Browse models by scene, gender and age range.",
+                    "label": "53 AI actors"
+                  },
+                  {
+                    "href": "/ai-video-generation/fashion-try-on-reel",
+                    "text": "Turn the same garment photo into video.",
+                    "label": "Fashion try-on reel"
+                  }
+                ]
+              },
+              "layout": "article"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+            "src": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1.webp",
+            "width": 1024,
+            "height": 1024
+          },
+          {
+            "alt": "Adult man with short silver hair wearing a plain gray hoodie outside a storefront.",
+            "src": "/ai-image-generation/fx05-model-work-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult woman with short copper hair wearing a plain gray hoodie on an autumn city sidewalk.",
+            "src": "/ai-image-generation/fx05-model-when-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands smooth a plain gray hoodie beside a wooden hanger on a light surface.",
+            "src": "/ai-image-generation/fx05-model-garment-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult East Asian man checking the sleeve and hem of a plain gray hoodie in a fitting room.",
+            "src": "/ai-image-generation/fx05-model-fit-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall.",
+            "src": "/ai-image-generation/fx05-model-setting-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    },
+    {
+      "slug": "/blog",
+      "originalContentJson": {
+        "seo": {
+          "index": true,
+          "title": "AI UGC and AI Ads Blog | AIVideosUGC",
+          "jsonLd": {
+            "@graph": [
+              {
+                "@id": "https://www.aivideosugc.com/#organization",
+                "url": "https://www.aivideosugc.com/",
+                "name": "AIVideosUGC",
+                "@type": "Organization"
+              },
+              {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "item": "https://www.aivideosugc.com/",
+                    "name": "Home",
+                    "@type": "ListItem",
+                    "position": 1
+                  },
+                  {
+                    "item": "https://www.aivideosugc.com/blog",
+                    "name": "Blog",
+                    "@type": "ListItem",
+                    "position": 2
+                  }
+                ]
+              },
+              {
+                "@id": "https://www.aivideosugc.com/blog#webpage",
+                "url": "https://www.aivideosugc.com/blog",
+                "name": "AI UGC and AI Ads Blog | AIVideosUGC",
+                "@type": "CollectionPage",
+                "isPartOf": {
+                  "@id": "https://www.aivideosugc.com/#website"
+                },
+                "inLanguage": "en",
+                "description": "Read the AI UGC and AI ads blog for product photos, short video ads, and launch clips. Open the guide that matches the job, then make the file.",
+                "primaryImageOfPage": {
+                  "url": "/ai-image-generation/example-04-1280-4.webp",
+                  "@type": "ImageObject",
+                  "width": 1280,
+                  "height": 720
+                }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "name": "Why start from a guide instead of a blank file?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "A guide gives you a simple starting point for the photo or ad. Add your product and message, then make the file in minutes.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I put the downloaded file in a paid ad?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Your watermark-free download can be used in paid ads and client work. Use only product photos and brand assets you have permission to upload.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Who are these guides for?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "They are for shop owners and marketers making product photos or video ads. You can follow them without a studio or editing team.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How do I use a guide to make a post?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Follow the steps with your own product photo, then download the finished photo or video. You can publish it on your store or social channels.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Why make a short ad instead of waiting on a creator?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "A short AI ad can be ready in minutes, without booking a creator. Change the opening message and make more versions for testing.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How many credits does a photo or a clip cost?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "One photo costs 24 credits. Videos cost 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Failed jobs return their credits.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "How much does it cost to make content from a guide?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. A photo costs 24 credits; video credits depend on length.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can a beginner follow a guide?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Start with a clear product photo and follow the steps. You do not need filming or editing experience.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Are the faces in the clip real customers?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "No. AI actors are generated presenters, not customers who bought your product. Use them for ads without claiming they gave a real review.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Which product marketing guide should I read first?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Start with the guide for the photo or ad you need today. Each one shows a simple way to turn your product into content.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Which platforms can I post the file to?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Post the finished file on your store, TikTok, Instagram, Facebook, or YouTube. Choose a tall, square, or wide format for the placement.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Can I start from photos I already shot?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "Yes. Upload a clear photo of the product you sell. You can build a new scene or video from it in minutes.",
+                      "@type": "Answer"
+                    }
+                  },
+                  {
+                    "name": "Which products do the guides cover?",
+                    "@type": "Question",
+                    "acceptedAnswer": {
+                      "text": "The guides cover clothing, beauty, food, home goods, and electronics. The same steps can help with other products you sell.",
+                      "@type": "Answer"
+                    }
+                  }
+                ]
+              }
+            ],
+            "@context": "https://schema.org"
+          },
+          "robots": {
+            "index": true,
+            "follow": true,
+            "maxImagePreview": "large"
+          },
+          "ogImage": "/ai-image-generation/example-04-1280-4.webp",
+          "keywords": "product photo tips for online stores, video ad ideas for small brands, ecommerce content ideas, AI product content tips",
+          "canonical": "https://www.aivideosugc.com/blog",
+          "ogImageAlt": "Top view of the wireless speaker with simple controls",
+          "description": "Read the AI UGC and AI ads blog for product photos, short video ads, and launch clips. Open the guide that matches the job, then make the file.",
+          "canonicalPath": "/blog",
+          "primaryKeyword": "AI UGC and AI Ads Blog",
+          "twitterDescription": "Read the AI UGC and AI ads blog for product photos, short video ads, and launch clips. Open the guide that matches the job, then make the file."
+        },
+        "version": 2,
+        "pageType": "blog",
+        "sections": {
+          "v2_main": {
+            "type": "aidreamcapes_v2_page",
+            "blocks": [],
+            "settings": {
+              "data": {
+                "h1": "The AI UGC and AI Ads Blog",
+                "id": "blog",
+                "cta": {
+                  "href": "/app/create",
+                  "lead": "Upload one product photo and turn it into a video ad or store-ready photos.",
+                  "title": "Try It With Your Own Product"
+                },
+                "faq": [
+                  {
+                    "a": "A guide gives you a simple starting point for the photo or ad. Add your product and message, then make the file in minutes.",
+                    "q": "Why start from a guide instead of a blank file?"
+                  },
+                  {
+                    "a": "Yes. Your watermark-free download can be used in paid ads and client work. Use only product photos and brand assets you have permission to upload.",
+                    "q": "Can I put the downloaded file in a paid ad?"
+                  },
+                  {
+                    "a": "They are for shop owners and marketers making product photos or video ads. You can follow them without a studio or editing team.",
+                    "q": "Who are these guides for?"
+                  },
+                  {
+                    "a": "Follow the steps with your own product photo, then download the finished photo or video. You can publish it on your store or social channels.",
+                    "q": "How do I use a guide to make a post?"
+                  },
+                  {
+                    "a": "A short AI ad can be ready in minutes, without booking a creator. Change the opening message and make more versions for testing.",
+                    "q": "Why make a short ad instead of waiting on a creator?"
+                  },
+                  {
+                    "a": "One photo costs 24 credits. Videos cost 24, 40, 60, or 120 credits for 6, 10, 15, or 30 seconds. Failed jobs return their credits.",
+                    "q": "How many credits does a photo or a clip cost?"
+                  },
+                  {
+                    "a": "Starter costs $24.50 for 200 credits, Pro costs $35 for 300, and Premium costs $63 for 600. A photo costs 24 credits; video credits depend on length.",
+                    "q": "How much does it cost to make content from a guide?"
+                  },
+                  {
+                    "a": "Yes. Start with a clear product photo and follow the steps. You do not need filming or editing experience.",
+                    "q": "Can a beginner follow a guide?"
+                  },
+                  {
+                    "a": "No. AI actors are generated presenters, not customers who bought your product. Use them for ads without claiming they gave a real review.",
+                    "q": "Are the faces in the clip real customers?"
+                  },
+                  {
+                    "a": "Start with the guide for the photo or ad you need today. Each one shows a simple way to turn your product into content.",
+                    "q": "Which product marketing guide should I read first?"
+                  },
+                  {
+                    "a": "Post the finished file on your store, TikTok, Instagram, Facebook, or YouTube. Choose a tall, square, or wide format for the placement.",
+                    "q": "Which platforms can I post the file to?"
+                  },
+                  {
+                    "a": "Yes. Upload a clear photo of the product you sell. You can build a new scene or video from it in minutes.",
+                    "q": "Can I start from photos I already shot?"
+                  },
+                  {
+                    "a": "The guides cover clothing, beauty, food, home goods, and electronics. The same steps can help with other products you sell.",
+                    "q": "Which products do the guides cover?"
+                  }
+                ],
+                "lead": "The workspace turns product photos into video ads, photo sets and launch clips. These guides walk the workflows — with real examples generated on the site and the checks that keep them honest.",
+                "intro": [
+                  "Every guide here mirrors a tool in the workspace: photo generators for listings, the video ads generator for creator-style clips, the launch unboxing for product videos, and model photos for apparel. The features, the credit costs and the review steps match what you'll see when you open the workspace — and each guide embeds real examples generated on this site.",
+                  "Start with the article closest to your next job. Each one ends at a workspace tool you can open without an account, and every job shows its credit cost before it starts."
+                ],
+                "label": "Blog",
+                "steps": [
+                  {
+                    "d": "Choose the guide for the file you need, then follow its steps with your own product photo.",
+                    "t": "Pick the Article"
+                  },
+                  {
+                    "d": "Every guide embeds real clips generated on the site, with the prompts behind them.",
+                    "t": "Watch a Real Example"
+                  },
+                  {
+                    "d": "Open the workspace tool, make the file, review it against the real product, then publish.",
+                    "t": "Make One File and Check It"
+                  }
+                ],
+                "ctaLead": "Use a guide to turn your product photo into a polished store image or ad you can post today.",
+                "eyebrow": "Inside the AI UGC Workspace",
+                "stepsH2": "How to Make a Post From a Guide in 3 Simple Steps",
+                "articles": [
+                  {
+                    "href": "/blog/ai-product-photography-guide",
+                    "image": {
+                      "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+                      "src": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1-640.webp",
+                      "width": 640,
+                      "height": 640
+                    },
+                    "title": "AI Product Photo Generator: Listings and Scenes",
+                    "minutes": 5,
+                    "summary": "Start from one product photo. The AI Image workspace builds white-background shots, lifestyle scenes, model photos and social ads — and the same photo can move."
+                  },
+                  {
+                    "href": "/blog/ai-ugc-video-ads-guide",
+                    "image": {
+                      "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+                      "src": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review-640.webp",
+                      "width": 640,
+                      "height": 640
+                    },
+                    "title": "AI Video Ads Generator: Creator-Style Clips for Your Shop",
+                    "minutes": 5,
+                    "summary": "One product photo is enough. The generator writes the script, picks the presenter, and hands you a clip ready for TikTok, Reels and Shorts — real examples included."
+                  },
+                  {
+                    "href": "/blog/ai-video-review-checklist",
+                    "image": {
+                      "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+                      "src": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1-640.webp",
+                      "width": 640,
+                      "height": 640
+                    },
+                    "title": "AI Video Ads Generator: A Pre-Publish Checklist",
+                    "minutes": 5,
+                    "summary": "Generation is fast, so the final check is where quality lives. A five-minute pass before every ad goes live."
+                  },
+                  {
+                    "href": "/blog/unboxing-videos-for-launches",
+                    "image": {
+                      "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+                      "src": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1-640.webp",
+                      "width": 640,
+                      "height": 640
+                    },
+                    "title": "AI Product Videos for a Launch Unboxing",
+                    "minutes": 5,
+                    "summary": "Three clips carry launch week: the teaser, the reveal, and the closer look. One package photo covers all three."
+                  },
+                  {
+                    "href": "/blog/model-photos-without-a-photoshoot",
+                    "image": {
+                      "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+                      "src": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1-640.webp",
+                      "width": 640,
+                      "height": 640
+                    },
+                    "title": "AI Fashion Model Photos Without a Photoshoot",
+                    "minutes": 5,
+                    "summary": "Put your clothing on an AI model from one garment photo, and keep the same face across the whole color set."
+                  }
+                ],
+                "ctaTitle": "Start From One Product Photo",
+                "relatedH2": "Open the Tool the Guide Names",
+                "startNote": "[Plans from $24.50 a month](/pricing). You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+                "stepsLead": "You get a file you can post. You type the price in the app you already use.",
+                "breadcrumbs": [
+                  {
+                    "href": "/",
+                    "label": "Home"
+                  },
+                  {
+                    "href": "/blog",
+                    "label": "Blog"
+                  }
+                ],
+                "relatedLead": "The guides land you in the tool that finishes the file, or in layouts and shop categories.",
+                "relatedLinks": [
+                  {
+                    "href": "/ai-image-generation/lifestyle-photos",
+                    "label": "Lifestyle Photos"
+                  },
+                  {
+                    "href": "/ai-video-generation/video-ads",
+                    "label": "Video Ads"
+                  },
+                  {
+                    "href": "/ai-image-generation/model-photos",
+                    "label": "Model Photos"
+                  },
+                  {
+                    "href": "/ai-video-generation/product-video",
+                    "label": "Product Video"
+                  },
+                  {
+                    "href": "/templates",
+                    "label": "Templates"
+                  },
+                  {
+                    "href": "/industries",
+                    "label": "Industries"
+                  }
+                ]
+              },
+              "layout": "index"
+            }
+          }
+        },
+        "mediaManifest": [
+          {
+            "alt": "Adult with a short copper pixie haircut sits beside a plain tan handbag on a cafe table with a latte.",
+            "src": "/ai-image-generation/rd1-blog-ai-product-photography-guide-cover-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Hands demonstrate a plain gray skincare jar on a sunlit living-room table, with no face or camera visible.",
+            "src": "/ai-image-generation/gen2guide-k8-blog-ugc-video-review-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult with short silver pixie hair sits beside a plain black travel backpack near a dining chair.",
+            "src": "/ai-image-generation/rd1-blog-ai-video-review-checklist-cover-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult hands open a blank kraft parcel to reveal a plain ceramic travel mug wrapped in tissue.",
+            "src": "/ai-image-generation/rd1-blog-unboxing-videos-for-launches-cover-r1-640.webp",
+            "width": 640,
+            "height": 640
+          },
+          {
+            "alt": "Adult woman with a short blonde bob walks toward the camera in a gray hoodie and jeans on an autumn city sidewalk, full face visible.",
+            "src": "/ai-image-generation/im12-blog-model-photo-hoodie-street-r1-640.webp",
+            "width": 640,
+            "height": 640
+          }
+        ],
+        "sectionsOrder": [
+          "v2_main"
+        ],
+        "contentContract": {
+          "seoSource": "LivePage.contentJson",
+          "mediaSource": "LivePage.contentJson",
+          "sourceRevision": "aidreamcapes-site-v2"
+        }
+      }
+    }
+  ],
+  "note": "Content-only rewrite; slugs, covers, inline images and canonicals unchanged. Originals for applied targets live in SiteContentRevision history."
+}
