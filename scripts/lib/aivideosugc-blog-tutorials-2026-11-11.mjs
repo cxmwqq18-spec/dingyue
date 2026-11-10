@@ -564,7 +564,7 @@ export const ARTICLES = [
         {
           h2: "Step 1: Write the One-Line Brief",
           paras: [
-            "A good brief names three things: the product, the audience moment, and the structure you want. \"Teaser, reveal, and closer look for a ceramic travel mug, natural morning light\" gives the agent everything it needs — product to show, shopper moment to serve, and the shape of the story. Structure words work like templates: hook-demo-close for a single ad, teaser-reveal-closer for a launch set, fit-check-fabric-style for apparel.",
+            "A good brief names three things: the product, the audience moment, and the structure you want. \"Teaser, reveal, and closer look for a ceramic travel mug, natural morning light\" gives the agent everything it needs — product to show, shopper moment to serve, and the shape of the story. Structure words work like templates: hook-demo-close for a single ad, teaser-reveal-closer for a launch set, fit-check-fabric-style for apparel. The names are plain — the hook is the first three seconds, the demo is the showing, the close is the ask — and the same three beats travel through every short ad, including the unboxing and apparel guides on this blog.",
             "A weaker brief reads like a spec sheet: \"30-second product ad for a power bank, 9:16, show features.\" It technically works — the scene selector and the generator carry it — but every choice the brief leaves out is a choice the storyboard makes for you. Naming the shopper moment (a commuter topping up before a flight) and the structure (demo-then-close) is how the storyboard comes back already half-decided the way you wanted.",
             "What a brief doesn't need: product descriptions (the reference photos already carry them), camera jargon, or shot timings — the agent budgets those. Keep the line human; you can be surgical in the storyboard."
           ]
@@ -577,18 +577,38 @@ export const ARTICLES = [
           ]
         },
         {
+          h2: "See a Storyboarded Clip",
+          video: video("powerBank", "Real example: a storyboarded unbox-then-action clip — out of the box, into the hand, snapping onto the phone. Three scenes, three actions, each editable in the storyboard before generation."),
+          paras: [
+            "This unboxing clip is the kind of result a storyboard produces: three scenes, three actions, one product — each beat editable in text before a single credit was spent."
+          ]
+        },
+        {
+          h2: "Worked Example: A Real Demo Brief",
+          paras: [
+            "The workspace ships curated demo briefs you can open directly — no typing needed. One of them, the skincare presenter intro, is a complete agent brief in a single sentence:"
+          ],
+          prompt: prompt(
+            "Real demo brief",
+            "Skincare Presenter Intro · workspace demo",
+            "Create a natural AI presenter introduction to my skincare serum. Show the bottle and dropper, use only the product details I provide, and end with an invitation to learn more.",
+            undefined,
+            ["Ships with the workspace: /app/create/demo/skincare-presenter-agent", "Scene: AI presenter · 9:16 · 15s"]
+          )
+        },
+        {
+          h2: "How the Agent Reads That Brief",
+          paras: [
+            "Read the brief in three moves. \"Introduction to my skincare serum\" opens the storyboard: the presenter, the bottle in hand, the hello. \"Show the bottle and dropper\" is the middle scene — a close-up that demonstrates, not just displays. \"Use only the product details I provide\" is the constraint the agent carries through every scene: no invented claims, no invented ingredients. \"End with an invitation\" writes the closing line. Three scenes, one per clause — the sentence was already the storyboard.",
+            "Editing it is just as direct. Want a second benefit scene? Insert a scene line and the agent writes the voice line for it. Want the ending to point at the cart instead of a learn-more page? Rewrite the closing line in the storyboard before anything generates. This is the cheapest moment to steer the video — after the plan exists, before the credits move."
+          ]
+        },
+        {
           h2: "Step 3: Generate, Then Run the Five-Minute Review",
           img: IMG.reviewMotion,
           paras: [
             "After download, run the review before publishing. Watch the clip on a phone at full volume, read the subtitles against the voice, compare the product with the real thing, and confirm rights and platform labels. The full list sits at the end of this guide.",
             "Fix what fails at the cheapest level: one wrong scene regenerates alone; wrong words burn in with [Subtitle Studio](/app/create/subtitles); a wrong script regenerates from a better brief — credits for failed jobs return automatically."
-          ]
-        },
-        {
-          h2: "See a Storyboarded Clip",
-          video: video("powerBank", "Real example: a storyboarded unbox-then-action clip — out of the box, into the hand, snapping onto the phone. Three scenes, three actions, each editable in the storyboard before generation."),
-          paras: [
-            "This unboxing clip is the kind of result a storyboard produces: three scenes, three actions, one product — each beat editable in text before a single credit was spent."
           ]
         },
         {
@@ -609,11 +629,11 @@ export const ARTICLES = [
         }
       ],
       tryBox: {
-        title: "Try Image to Video",
-        text: "Animate one product photo into a short clip. You review the storyboard and the file before anything ships.",
-        href: "/app/create/tool/image-to-video#step-video",
-        label: "Make my video",
-        more: { label: "How Image to Video works", href: "/ai-video-generation/image-to-video" }
+        title: "Try the AI Video Agent",
+        text: "Write one line and get an editable storyboard — editing is free, and nothing generates until you approve it.",
+        href: "/app/create/agent",
+        label: "Open the agent",
+        more: { label: "How Text to Video works", href: "/ai-video-generation/text-to-video" }
       },
       faq: [
         { q: "Does the agent cost credits to storyboard?", a: "No — editing the storyboard costs nothing. Credits are spent when a generation job runs, with the cost shown before it starts." },
