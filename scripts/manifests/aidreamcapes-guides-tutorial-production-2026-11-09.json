@@ -1,9 +1,9 @@
 {
   "siteId": "site_aidreamcapes",
   "slug": "/guides",
-  "capturedAt": "2026-11-09T17:04:18.119Z",
+  "capturedAt": "2026-11-09T17:10:31.294Z",
   "target": "production",
-  "baseHash": "6f65168cf00a02cb",
+  "baseHash": "69801d9c58f2c4be",
   "original": {
     "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
     "sectionId": "v2_main",
@@ -217,6 +217,15 @@
                     "src": "/assets/sites/site_aidreamcapes/guides/li-ch04-failed.webp?v=20261109gd",
                     "width": 1440,
                     "height": 900
+                  },
+                  {
+                    "alt": "A real finished ad playing back — the kind of clip that lands in your library after a job completes.",
+                    "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch04.mp4",
+                    "video": true,
+                    "width": 1280,
+                    "height": 720,
+                    "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch04.jpg",
+                    "caption": "Real example · a finished ad generated in the workspace, playable right here."
                   }
                 ],
                 "route": "Route **/app/create** · from submit to download",
@@ -433,6 +442,15 @@
                     "src": "/assets/sites/site_aidreamcapes/guides/gif-ch10-subtitle-styles.gif?v=20261109gd",
                     "width": 900,
                     "height": 563
+                  },
+                  {
+                    "alt": "A real vertical UGC clip loaded in Subtitle Studio — the style chips act on real footage, not placeholders.",
+                    "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch10.mp4",
+                    "video": true,
+                    "width": 540,
+                    "height": 960,
+                    "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch10.jpg",
+                    "caption": "Real example · a vertical UGC clip, ready for subtitle styling."
                   }
                 ],
                 "route": "Route **/app/create/subtitles** · versions, not re-renders",
@@ -466,6 +484,15 @@
                     "src": "/assets/sites/site_aidreamcapes/guides/li-ch11-library-details.webp?v=20261109gd",
                     "width": 1440,
                     "height": 900
+                  },
+                  {
+                    "alt": "A real clip sitting in the library grid — every thumbnail opens the full video.",
+                    "src": "/assets/sites/site_aidreamcapes/guides/video-real-ch11.mp4",
+                    "video": true,
+                    "width": 540,
+                    "height": 960,
+                    "poster": "/assets/sites/site_aidreamcapes/guides/video-real-ch11.jpg",
+                    "caption": "Real example · clips like this live in your library grid."
                   }
                 ],
                 "route": "Route **/app/create/library** · every job, one list",

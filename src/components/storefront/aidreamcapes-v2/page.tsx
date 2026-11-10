@@ -14,7 +14,7 @@ import { TeamCards,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SectionVideo, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
+import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SectionPrompt, type V2SectionVideo, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
@@ -968,6 +968,52 @@ function ActorDetailPage({ data, r }: Props) {
   </>;
 }
 
+/** Anatomy terms the tutorial prompts use; line-leading occurrences render
+ * bold so readers can scan the prompt's parts. React escapes the text. */
+const PROMPT_TERM_RE = /(Shot \d+ \[[^\]]+\]|Image \d+|Character:|Audio:|Negative prompt:)/g;
+
+function formatPromptBody(text: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  let last = 0;
+  for (const match of text.matchAll(PROMPT_TERM_RE)) {
+    const start = match.index ?? 0;
+    if (start > last) nodes.push(text.slice(last, start));
+    nodes.push(<b key={`t${start}`}>{match[0]}</b>);
+    last = start + match[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes;
+}
+
+/** A real template-wall prompt inside an article body: card head, the prompt
+ * itself with anatomy terms bolded, the part-by-part walkthrough, and notes. */
+function ArticlePromptFigure({ prompt }: { prompt: V2SectionPrompt }) {
+  return (
+    <figure className="article-prompt">
+      <div className="article-prompt-head">
+        <span className="article-prompt-tag">{prompt.label}</span>
+        <b>{prompt.title}</b>
+      </div>
+      <pre>{formatPromptBody(prompt.body)}</pre>
+      {prompt.parts?.length ? (
+        <ul className="article-prompt-parts">
+          {prompt.parts.map((part) => (
+            <li key={part.term}>
+              <span>{part.term}</span>
+              <p>{part.text}</p>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {prompt.notes?.length ? (
+        <div className="article-prompt-notes">
+          {prompt.notes.map((note) => <span key={note}>{note}</span>)}
+        </div>
+      ) : null}
+    </figure>
+  );
+}
+
 /** A real example clip inside an article body. The budgeted preview component
  * keeps playback silent, viewport-gated and capped like every gallery card;
  * the figure just frames it for prose width and points at the detail page. */
@@ -1018,7 +1064,7 @@ function ArticlePage({ data, r }: Props) {
             <div key={section.h2}>
               <h2>{section.h2}</h2>
               {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
-              {section.video ? <ArticleVideoFigure video={section.video} r={r} /> : section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
+              {section.prompt ? <ArticlePromptFigure prompt={section.prompt} /> : section.video ? <ArticleVideoFigure video={section.video} r={r} /> : section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
               {tryBox && sectionIndex === tryAfter ? (
                 <aside className="trybox">
                   <b>{tryBox.title}</b>

@@ -106,7 +106,17 @@ export type V2SectionVideo = {
   href?: string;
   caption?: string;
 };
-export type V2Section = { h2: string; paras: string[]; img?: V2Image; alt?: string; video?: V2SectionVideo };
+export type V2Section = { h2: string; paras: string[]; img?: V2Image; alt?: string; video?: V2SectionVideo; prompt?: V2SectionPrompt };
+/** A real template-wall prompt shown as a copy-shaped card inside an article
+ * section. `parts` walks the prompt's anatomy term by term; `notes` carry the
+ * meta line under the card (source, length, format). */
+export type V2SectionPrompt = {
+  label: string;
+  title: string;
+  body: string;
+  parts?: { term: string; text: string }[];
+  notes?: string[];
+};
 export type V2EnrichmentSection = { h2: string; paras: string[]; items?: V2Item[] };
 export type V2EnrichmentBlock = { h2: string; items: V2Item[] };
 export type V2FitBlock = { h2: string; good: V2Item[]; not_ideal: V2Item[] };

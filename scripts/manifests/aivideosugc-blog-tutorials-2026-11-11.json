@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-11",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "mode": "applied",
+  "baseHash": "aaf7f5fd680ba7a9e3c2e81deda35c9f7ef126d6da260a1d373294634d103815",
+  "slugs": [
+    "/blog/ai-ugc-video-ads-guide",
+    "/blog/ai-product-photography-guide",
+    "/blog/unboxing-videos-for-launches",
+    "/blog/ai-video-review-checklist",
+    "/blog/model-photos-without-a-photoshoot",
+    "/blog"
+  ],
+  "changes": [
+    {
+      "slug": "/blog/ai-ugc-video-ads-guide"
+    },
+    {
+      "slug": "/blog/ai-product-photography-guide"
+    },
+    {
+      "slug": "/blog/unboxing-videos-for-launches"
+    },
+    {
+      "slug": "/blog/ai-video-review-checklist"
+    },
+    {
+      "slug": "/blog/model-photos-without-a-photoshoot"
+    },
+    {
+      "slug": "/blog"
+    }
+  ],
+  "note": "Tutorial rewrite; slugs, covers, inline images and canonicals unchanged. h1/seo titles move to the tutorial keywords per the reviewed v3 design draft. Originals for applied targets live in SiteContentRevision history and the committed v1 manifests."
+}
