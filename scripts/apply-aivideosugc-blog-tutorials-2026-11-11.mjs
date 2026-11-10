@@ -151,7 +151,7 @@ try {
       const next = { h2: section.h2, paras: section.paras };
       if (section.img) next.img = img(section.img);
       if (section.video) next.video = section.video;
-      if (section.prompt) next.prompt = section.prompt;
+      if (section.prompt) next.prompt = JSON.parse(JSON.stringify(section.prompt));
       return next;
     });
     const data = {
