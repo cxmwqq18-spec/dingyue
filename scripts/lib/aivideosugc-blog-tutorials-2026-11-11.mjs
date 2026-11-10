@@ -161,19 +161,19 @@ export const ARTICLES = [
             "Black Milk Frother Morning Demo · template wall",
             "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout.\n\nImage 1 shows the product for this video. Match its appearance, color, and packaging exactly to Image 1. There must be no text or brand marks on the product or packaging.\n\nCharacter: a woman in her twenties, hair tied in a bun, wearing light-colored loungewear, no jewelry.\n\nShot 1 [0-3 sec] Close-up: In a bright morning kitchen, she holds up the black milk frother. Spoken line: \"Here's how I make a café iced latte at home.\"\nShot 2 [3-9 sec] Medium shot: She pours cold milk into a glass jar. Spoken line: \"Cold milk in a jar.\"\nShot 3 [9-18 sec] Close-up: She froths the milk in the jar; it quickly turns into thick, creamy foam. Spoken line: \"A few seconds with this frother, and look at that foam.\"\n\nAudio: Natural spoken English dialogue, together with pouring milk, the frother buzzing, and ice cubes clinking. No background music.\n\nNegative prompt: background music, subtitles, on-screen text, text on the packaging, watermarks, logos, extra fingers, deformed hands, duplicate people, blurred backgrounds…",
             [
-              { term: "Opening", text: "第一句定调：时长 + 画幅 + 平台 + 风格（\"30-second vertical TikTok Shop… authentic UGC style\"）。生成器拿它定节奏和剪辑密度。" },
-              { term: "Lock", text: "参考图锁定：Image 1 是唯一产品参考，颜色包装完全一致、不得出现文字品牌。产品一致性全靠这段——写两遍产品描述反而会让产品漂移。" },
-              { term: "Character", text: "人物一次说清：年龄段、发型、服装、饰品、语言与语气。之后每个 Shot 都复用这个人物，不再重新描述。" },
-              { term: "Shots", text: "Shot 时间轴：每镜一个动作 + 时间区间 + 景别。口播 Spoken line 是口语短句，一句一个信息——这是\"像真人说话\"的关键。" },
-              { term: "Audio", text: "声音层：人声 + 环境音效（倒奶、蜂鸣、冰块），要不要 BGM 在这里明确写。不写就是留给模型猜。" },
-              { term: "Negative", text: "负向兜底：水印/字幕/屏幕文字/多余手指/变形手/景深糊。把最常见的翻车点提前禁止，等于给成品上了保险。" }
+              { term: "Opening", text: "The first line sets the frame: duration + aspect ratio + platform + style. The generator reads it for pacing and cut density." },
+              { term: "Lock", text: "Reference lock: Image 1 is the only product reference — same shape, color and packaging, no text or brand marks. All product consistency lives here; describing the product twice invites drift." },
+              { term: "Character", text: "The person is described once — age range, hair, outfit, jewelry, language and tone. Every later Shot reuses them without re-describing." },
+              { term: "Shots", text: "The Shot timeline: one action per shot, with a time range and a shot size. Spoken lines are casual speech, one idea each — that is what keeps the clip sounding human." },
+              { term: "Audio", text: "The sound layer: dialogue plus environment effects (pouring, buzzing, ice). Say whether you want background music — anything left unsaid is left to the model." },
+              { term: "Negative", text: "The safety net: watermarks, captions, on-screen text, extra fingers, warped hands, depth blur. Forbidding the commonest failures up front is cheap insurance." }
             ],
-            ["完整 1,856 字符", "来源：模板墙示例卡", "9:16 · 30s"]
+            ["Full text: 1,856 characters", "Source: template wall example card", "9:16 · 30s"]
           )
         },
         {
           h2: "Step 4: Watch the Real Result",
-          video: video("frother", "Real example generated from the prompt above. Hook 0-3s → pour → froth → pour-over → close. 每一镜都能和提示词对上——结构即质检清单。"),
+          video: video("frother", "Real example generated from the prompt above. Hook 0-3s → pour → froth → pour-over → close. Every beat on screen maps to one line in the prompt — the structure doubles as your review checklist."),
           paras: [
             "This clip was generated from the prompt above. Watch it with the Shot lines in front of you — every beat on screen maps to one line in the prompt, which is the whole point of the structure."
           ]
@@ -307,12 +307,12 @@ export const ARTICLES = [
             "Green Notebook Desk Ritual · template wall",
             "This is a 30-second vertical TikTok product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout. Image 1 shows the product for this video; the product must have no legible brand text.\n\nShot 1 [0-3 sec] Close-up: Seated at a wooden desk, she holds the green notebook and pen up to the camera. Spoken line: \"Desk tour. Everything here has a job.\"\nShot 2 [3-10 sec] Medium shot: She points to the wooden desk tray holding paper clips and sticky notes. Spoken line: \"This tray keeps all the little stuff in one spot, so my desk stays clear.\"\n\nNegative prompt: no extra or swapped product, no changed parts, no readable text or labels…",
             [
-              { term: "Surface", text: "产品放在什么上面：\"a wooden desk\"。表面决定质感基调，图片和视频通用。" },
-              { term: "Light", text: "什么光：\"natural light\"。光是场景情绪的全部来源——换光等于换场景。" },
-              { term: "Neighbours", text: "周围物件（1-2 件就够）：\"a wooden desk tray holding paper clips\"。多过两件，产品就不再是主角。" },
-              { term: "Lock", text: "无论图片还是视频，产品一致性都靠参考图锁定——描述里不再重复产品外观。" }
+              { term: "Surface", text: "What the product sits on: \"a wooden desk\". The surface sets the texture base — the same wording works for images and video." },
+              { term: "Light", text: "What light: \"natural light\". Light carries all the scene mood — changing the light changes the scene." },
+              { term: "Neighbours", text: "One or two nearby objects: \"a wooden desk tray holding paper clips\". More than two and the product stops being the star." },
+              { term: "Lock", text: "Product consistency comes from the reference photo in both image and video jobs — never re-describe the product in the prompt." }
             ],
-            ["同一张参考图：先出图，后出片", "表面 = wooden desk · 光 = natural light · 邻物 = desk tray"]
+            ["Same reference photo: images first, video after", "Surface = wooden desk · Light = natural light · Neighbours = desk tray"]
           )
         },
         {
@@ -326,6 +326,7 @@ export const ARTICLES = [
           h2: "Which Tool Fills Which Slot",
           paras: [
             "Each image type owns one slot of a listing. [White background photos](/ai-image-generation/white-background-photos) are the marketplace main image: square, clean, product filling the frame. [Lifestyle photos](/ai-image-generation/lifestyle-photos) are the gallery shots that show the product in a real scene. [Change background](/ai-image-generation/change-background) rescues old photos by swapping only what's behind the product. [Model photos](/ai-image-generation/model-photos) put clothes and accessories on a person. [Social ad photos](/ai-image-generation/social-ad-photos) crop and style for Facebook and Instagram placements. One source photo, five slots, no second shoot.",
+            "A practical order that works for most shops: white background first (the main image unblocks the listing), then two lifestyle scenes, then the model shot if the product is wearable, and social crops last — social can wait; the listing cannot. Run them as separate jobs so a failed scene never blocks the main image.",
             "Marketplace rules stay yours to enforce: main-image requirements differ by category, so check the current rules before you upload. The generator makes the compliant image; the marketplace decides what's compliant."
           ]
         },
@@ -431,7 +432,8 @@ export const ARTICLES = [
         {
           h2: "Step 1: Paste the Product URL",
           paras: [
-            "Open Product Links, paste the URL, confirm the import. The card appears in your library in seconds. Nothing is generated yet — the import only gathers the raw material your next jobs will use."
+            "Open Product Links, paste the URL, confirm the import. The card appears in your library in seconds. Nothing is generated yet — the import only gathers the raw material your next jobs will use.",
+            "Products you import stay in the library for reuse: the same card feeds next month's variant videos and the image set for a new marketplace. Most shops import once per product and never touch Product Links again until the listing changes — the card only needs re-importing when the page itself changes."
           ]
         },
         {
@@ -452,11 +454,11 @@ export const ARTICLES = [
             "Sealed Box Order Unboxing · template wall",
             "This is a 30-second vertical TikTok Shop product-promotion video, filmed on a phone in an authentic UGC style. Use natural light and a realistic everyday setting, and keep the image clear throughout.\n\nShot 1 [0-3 sec] Close-up: In the living room, she holds a sealed cardboard box up to the camera. Spoken line: \"It finally came. Let's open it.\"\nShot 2 [3-9 sec] Medium shot: She slices through the packing tape and opens the box flaps. Spoken line: \"I've been waiting on this all week.\"\n\nNegative prompt: no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product…",
             [
-              { term: "Box lock", text: "开箱片的\"产品\"是盒子本身：参考图锁定包装外观，Negative 禁止画面出现可读文字——快递面单的乱字最容易穿帮。" },
-              { term: "Beat order", text: "拿盒 → 划胶带 → 开盖 → 取物，一镜一步。开箱的爽感来自顺序不可跳。" },
-              { term: "Spoken lines", text: "口语期待感：\"It finally came\" / \"I've been waiting on this all week\"——买家视角的话，不是广告词。" }
+              { term: "Box lock", text: "In an unboxing clip the \"product\" is the box itself: the reference photo locks the packaging, and the Negative prompt bans readable text — stray shipping-label characters are the easiest way a clip breaks." },
+              { term: "Beat order", text: "Hold the box → slice the tape → lift the lid → take the item out, one step per shot. The satisfaction of an unboxing comes from an order that never skips." },
+              { term: "Spoken lines", text: "Spoken anticipation: \"It finally came\" / \"I've been waiting on this all week\" — buyer's words, not ad copy." }
             ],
-            ["包装锁定：盒子即产品", "开箱节奏：拿盒 → 划胶带 → 开盖", "Negative 先禁文字与水印"]
+            ["Package lock: the box is the product", "Unboxing rhythm: box → tape → lid", "Negative prompt bans text and watermarks first"]
           ),
         },
         {
@@ -468,7 +470,7 @@ export const ARTICLES = [
         },
         {
           h2: "Where Launch Week Goes From Here",
-          video: video("sealedBox", "Real example: sealed box → slice → first item. 教学点：每一镜的包装都与提示词的锁定一致，开箱顺序与 Shot 轴完全对应。"),
+          video: video("sealedBox", "Real example: sealed box → slice → first item. Every shot's packaging matches the prompt's lock, and the unboxing order follows the Shot timeline exactly."),
           paras: [
             "One import powers the whole launch. The teaser and the reveal work at 6 or 10 seconds — 24 or 40 credits; the closer look has room at 15 — 60 credits. Keep one [AI presenter](/ai-actors) across the set so the same face opens the teaser, lifts the lid, and demonstrates the action. Burn the launch date and the early price in [Subtitle Studio](/app/create/subtitles) — typed by you, never generated.",
             "A home goods brand runs the teaser three days out, the reveal on launch morning, and the closer look the same evening — one import, one presenter, one afternoon of generation. A gift brand runs the reveal in two languages for two markets; the storyboard and the box stay identical, only the voice changes. When you want the prompt-level view for the ad itself, the [AI video prompt tutorial](/blog/ai-ugc-video-ads-guide) picks up where this import leaves off."
@@ -563,6 +565,7 @@ export const ARTICLES = [
           h2: "Step 1: Write the One-Line Brief",
           paras: [
             "A good brief names three things: the product, the audience moment, and the structure you want. \"Teaser, reveal, and closer look for a ceramic travel mug, natural morning light\" gives the agent everything it needs — product to show, shopper moment to serve, and the shape of the story. Structure words work like templates: hook-demo-close for a single ad, teaser-reveal-closer for a launch set, fit-check-fabric-style for apparel.",
+            "A weaker brief reads like a spec sheet: \"30-second product ad for a power bank, 9:16, show features.\" It technically works — the scene selector and the generator carry it — but every choice the brief leaves out is a choice the storyboard makes for you. Naming the shopper moment (a commuter topping up before a flight) and the structure (demo-then-close) is how the storyboard comes back already half-decided the way you wanted.",
             "What a brief doesn't need: product descriptions (the reference photos already carry them), camera jargon, or shot timings — the agent budgets those. Keep the line human; you can be surgical in the storyboard."
           ]
         },
@@ -583,7 +586,7 @@ export const ARTICLES = [
         },
         {
           h2: "See a Storyboarded Clip",
-          video: video("powerBank", "Real example: a storyboarded unbox-then-action clip — 开盒、取出、磁吸上机，三镜三动作，全部可由 agent 故事板预先编辑。"),
+          video: video("powerBank", "Real example: a storyboarded unbox-then-action clip — out of the box, into the hand, snapping onto the phone. Three scenes, three actions, each editable in the storyboard before generation."),
           paras: [
             "This unboxing clip is the kind of result a storyboard produces: three scenes, three actions, one product — each beat editable in text before a single credit was spent."
           ]
@@ -688,7 +691,8 @@ export const ARTICLES = [
         {
           h2: "Step 2: Audition the Voice",
           paras: [
-            "Preview voices before you commit. The same face ships with voice options, and the language is a per-job choice across nine languages — English, Spanish, Portuguese, Japanese, Korean, Thai, Vietnamese, Bahasa Indonesia and Chinese. One audition rule: pick the tone you can live with across twenty clips, not the one that impresses once. Campaigns are marathons; a quirky voice ages fast."
+            "Preview voices before you commit. The same face ships with voice options, and the language is a per-job choice across nine languages — English, Spanish, Portuguese, Japanese, Korean, Thai, Vietnamese, Bahasa Indonesia and Chinese. One audition rule: pick the tone you can live with across twenty clips, not the one that impresses once. Campaigns are marathons; a quirky voice ages fast.",
+            "Auditioning takes a minute per presenter: open the profile, play the sample, imagine the line you'll actually use. If you will run the presenter in a second language, audition that voice too — delivery styles do not translate one-to-one, and the best English voice is not always the best Spanish one."
           ]
         },
         {
@@ -698,19 +702,19 @@ export const ARTICLES = [
           ],
           prompt: prompt(
             "Real prompt",
-            "Washed Graphic Tee Fit Check · Character 段",
+            "Washed Graphic Tee Fit Check · the Character part",
             "Character: a woman in her twenties, with short hair, no jewelry. The person speaks directly to the phone camera throughout in relaxed, natural American English, with a warm, conversational tone, as if sharing a great new find with a friend. Keep the delivery at a natural pace, without sounding like a presenter.\n\nShot 1 [0-3 sec] Medium shot: A phone on a tripod faces her as she holds up the washed graphic T-shirt with both hands in a bright bedroom. Spoken line: \"Fit check. This is the tee everyone keeps asking about.\"",
             [
-              { term: "Look", text: "外形三件套：年龄段 + 发型 + 饰品取舍。写得越短越稳——每多一个形容词，漂移点多一个。" },
-              { term: "Voice", text: "声音锁：语言 + 语气 + 对镜头说话的姿态（\"speaks directly to the phone camera\"）。" },
-              { term: "Tone guard", text: "\"without sounding like a presenter\"——一句负向写法，把播音腔挡在门外。" }
+              { term: "Look", text: "Three look-attributes: age range + hair + jewelry choice. The shorter the steadier — every extra adjective adds another drift point." },
+              { term: "Voice", text: "The voice lock: language + tone + the posture of speaking to camera (\"speaks directly to the phone camera\")." },
+              { term: "Tone guard", text: "\"without sounding like a presenter\" — one negative phrase that keeps the announcer voice out." }
             ],
-            ["年龄+发型+饰品 = 外形锁", "语气三连 = 声音锁", "\"not a presenter\" = 防播音腔"]
+            ["Age + hair + jewelry = the look lock", "Language + tone = the voice lock", "\"not a presenter\" = the announcer guard"]
           ),
           },
         {
           h2: "See the Same Face Work",
-          video: video("teeFit", "Real example: the same presenter carries the fit check — mirror beat, fabric close-up, tucked and untucked. 人物全程与 Character 锁一致。"),
+          video: video("teeFit", "Real example: the same presenter carries the fit check — mirror beat, fabric close-up, tucked and untucked. The person holds to the Character lock from first frame to last."),
           paras: [
             "Three attributes, one sentence of delivery, one guard. Anything more and you're not locking the person, you're hoping. This fit-check clip is the result: one presenter, one garment, every beat holding to the Character lock from first frame to last."
           ]
