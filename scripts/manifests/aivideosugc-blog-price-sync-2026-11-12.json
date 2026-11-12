@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-12",
+  "siteId": "site_aidreamcapes",
+  "target": "local",
+  "mode": "applied",
+  "baseHash": "f1a3322d7b6ad7851ef3aacc0e5ec24fcaecfb09f91389a50ea869f4cff88162",
+  "slugs": [
+    "/blog/ai-ugc-video-ads-guide",
+    "/blog/ai-product-photography-guide",
+    "/blog/unboxing-videos-for-launches",
+    "/blog/ai-video-review-checklist",
+    "/blog/model-photos-without-a-photoshoot",
+    "/blog"
+  ],
+  "note": "Post-reprice semantic fixes on the blog rows; string fragments only, no URLs or structure changes."
+}
