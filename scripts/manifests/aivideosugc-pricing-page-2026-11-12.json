@@ -1,0 +1,109 @@
+{
+  "applyDate": "2026-11-12",
+  "siteId": "site_aidreamcapes",
+  "slug": "/pricing",
+  "description": "Pricing page restructure (design draft design/pricing-page-redesign-v3.html): one-time credit packages with 1/6/12 month terms (no subscription, no auto-renewal, one package purchase per calendar month, prorated upgrades), one-time credit packs open to everyone with a tier x term discount matrix, three-step usage explainer, terms line. Field-level update on sections.v2_main.settings.data only. The legacy subscription `plans` field is removed. h1, canonical URL, costs table (photo 24 / video 6s 24 / 10s 40 / 15s 60 / 30s 120 credits) and credits paragraphs stay unchanged; the two subscription-worded FAQ entries are rewritten for the package model.",
+  "pricingSectionHead": {
+    "eyebrow": "Plans & Credits",
+    "title": "Pay Once, Create All Month",
+    "lead": "No subscription. Buy a credit package for one, six, or twelve months — one payment, credits delivered monthly. Credit packs are open to everyone, and package members unlock deeper discounts."
+  },
+  "creditSchedule": { "photoCredits": 24, "fifteenSecondVideoCredits": 60 },
+  "tiers": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "who": "For trying video ads and product photos.",
+      "creditsPerMonth": 200,
+      "ctaHref": "/app/create",
+      "terms": {
+        "1": { "price": "$24", "periodLabel": "one month" },
+        "6": { "price": "$132", "perMonth": "$22", "strike": "$24", "savingsLabel": "Save $12 vs monthly", "periodLabel": "6 months, one payment" },
+        "12": { "price": "$228", "perMonth": "$19", "strike": "$24", "savingsLabel": "Save $60 vs monthly", "periodLabel": "12 months, one payment" }
+      },
+      "features": ["All core image and video models", "All templates and video sizes", "No watermark", "Email support"]
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "who": "For stores testing new ads every week.",
+      "badge": "Most popular",
+      "creditsPerMonth": 500,
+      "ctaHref": "/app/create",
+      "terms": {
+        "1": { "price": "$59", "periodLabel": "one month" },
+        "6": { "price": "$312", "perMonth": "$52", "strike": "$59", "savingsLabel": "Save $42 vs monthly", "periodLabel": "6 months, one payment" },
+        "12": { "price": "$540", "perMonth": "$45", "strike": "$59", "savingsLabel": "Save $168 vs monthly", "periodLabel": "12 months, one payment" }
+      },
+      "features": ["Everything in Starter", "Up to 20% off credit packs", "Room for weekly ad testing"]
+    },
+    {
+      "id": "studio",
+      "name": "Studio",
+      "who": "For brands and agencies with many products.",
+      "creditsPerMonth": 1200,
+      "ctaHref": "/app/create",
+      "terms": {
+        "1": { "price": "$129", "periodLabel": "one month" },
+        "6": { "price": "$696", "perMonth": "$116", "strike": "$129", "savingsLabel": "Save $78 vs monthly", "periodLabel": "6 months, one payment" },
+        "12": { "price": "$1,140", "perMonth": "$95", "strike": "$129", "savingsLabel": "Save $408 vs monthly", "periodLabel": "12 months, one payment" }
+      },
+      "features": ["Everything in Pro", "Up to 25% off credit packs", "Most room for new products"]
+    }
+  ],
+  "packs": [
+    {
+      "id": "pack-100",
+      "name": "Starter Pack",
+      "credits": 100,
+      "price": "$14",
+      "note": "A small top-up when a campaign runs long. About 4 product photos or 1 short video.",
+      "href": "/app/create"
+    },
+    {
+      "id": "pack-300",
+      "name": "Standard Pack",
+      "credits": 300,
+      "price": "$36",
+      "popular": true,
+      "note": "The standard top-up for active stores. About 12 product photos or 5 short videos.",
+      "href": "/app/create"
+    },
+    {
+      "id": "pack-1000",
+      "name": "Volume Pack",
+      "credits": 1000,
+      "price": "$99",
+      "note": "Our lowest list price. About 40 product photos or 16 short videos.",
+      "href": "/app/create"
+    }
+  ],
+  "packDiscounts": {
+    "starter": { "1": 0, "6": 5, "12": 10 },
+    "pro": { "1": 10, "6": 15, "12": 20 },
+    "studio": { "1": 15, "6": 20, "12": 25 }
+  },
+  "steps": [
+    { "title": "Pick a package", "text": "One package purchase per calendar month. Credits land in your account at the start of every month of your term." },
+    { "title": "Top up any time", "text": "Credit packs are open to everyone — the bigger your package and the longer its term, the deeper your pack discount." },
+    { "title": "Upgrade anytime", "text": "Switch to a bigger package mid-term and pay only the difference. Unused credits carry over." }
+  ],
+  "pricingTerms": [
+    "Package credits are delivered monthly and expire at the end of each month of the term. Credit-pack credits are valid for 24 months from purchase.",
+    "Failed generations are automatically refunded. One package purchase per calendar month; upgrades are prorated. Prices in USD."
+  ],
+  "faqUpdates": [
+    {
+      "matchQuestion": "How do I move to a larger plan when I need more credits?",
+      "question": "How do I move to a larger package when I need more credits?",
+      "answer": "Switch to a bigger package from your account page. You pay only the difference for the rest of your term, and your unused credits carry over. Email support@aivideosugc.com if you need help."
+    },
+    {
+      "matchQuestion": "How do I cancel and keep the month I already paid?",
+      "question": "What happens to credits I do not use?",
+      "answer": "Package credits are delivered monthly and expire at the end of each month of your term. Credits from a one-time credit pack stay valid for 24 months. When a job fails, its credits return to your balance on their own."
+    }
+  ],
+  "teams": "Making more than the Studio package covers, for a shop or an agency? Email support@aivideosugc.com with how many photos and videos you make in a month. We will suggest a setup that fits that volume.",
+  "ctaLead": "Pick a package when you are ready."
+}

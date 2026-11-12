@@ -14,11 +14,12 @@ import { TeamCards,
 } from "./parts";
 import type { V2Company } from "./company";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import { list, text, type V2Card, type V2CompareTable, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2Plan, type V2Resolvers, type V2Section, type V2SectionPrompt, type V2SectionVideo, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
+import { list, text, type V2Card, type V2CompareTable, type V2CreditPack, type V2CreditSchedule, type V2Data, type V2Definition, type V2DirectoryScene, type V2Examples, type V2Flow, type V2HeroMedia, type V2Image, type V2Item, type V2Maker, type V2PackDiscounts, type V2Plan, type V2PricingStep, type V2PricingTier, type V2Resolvers, type V2Section, type V2SectionPrompt, type V2SectionVideo, type V2SpecRow, type V2TextSection, type V2Tool, type V2ActorScenePicker, type V2SellerScenarioBlock, type V2BlockId, type V2CardBlock, type V2ReviewBlock, type V2ClosingBlock, type V2LinkCardBlock, type V2PickerPagination, type V2Video } from "./types";
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AidreamcapesV2PricingSection } from "./pricing";
+import { AidreamcapesPricingPage } from "./pricing-page";
 import { HomeExperienceSection } from "./home-experience";
 import { HomeExperienceBehavior } from "./home-experience-behavior";
 import { HomeWorkspaceFlowBehavior } from "./home-workspace-flow-behavior";
@@ -60,6 +61,15 @@ function ctaTitle(data: V2Data, fallback: string): string {
 
 function ctaLead(data: V2Data, fallback: string): string {
   return text(data.ctaLead) || fallback;
+}
+
+function record(value: unknown): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return value as Record<string, unknown>;
+}
+
+function numberField(value: unknown, fallback: number): number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : fallback;
 }
 
 // The "why use it" block shows on every layout once the page data lists benefits.
@@ -1124,6 +1134,42 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
   const heroImage = data.image as V2Image | undefined;
   const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
   if (layout === "pricing") {
+    const tiers = list<V2PricingTier>(data.tiers);
+    if (tiers.length) {
+      const head = record(data.pricingSectionHead);
+      return (
+        <>
+          {hero}
+          <Section
+            eyebrow={typeof head.eyebrow === "string" ? head.eyebrow : "Plans & Credits"}
+            lead={typeof head.lead === "string" ? head.lead : undefined}
+            title={typeof head.title === "string" ? head.title : "Pay Once, Create All Month"}
+          >
+            <AidreamcapesPricingPage
+              creditSchedule={{
+                photoCredits: numberField(record(data.creditSchedule).photoCredits, 24),
+                fifteenSecondVideoCredits: numberField(record(data.creditSchedule).fifteenSecondVideoCredits, 60)
+              }}
+              packs={list<V2CreditPack>(data.packs)}
+              packDiscounts={record(data.packDiscounts) as V2PackDiscounts}
+              steps={list<V2PricingStep>(data.steps)}
+              terms={list<string>(data.pricingTerms)}
+              tiers={tiers}
+            />
+          </Section>
+          {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How Credits Work"><Intro paras={list<string>(data.credits)} /></Section> : null}
+          {list<V2SpecRow>(data.costs).length ? (
+            <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What Each Photo and Video Costs">
+              <Specs r={r} rows={list<V2SpecRow>(data.costs)} />
+              {text(data.teams) ? <p className="meta-line" style={{ marginTop: 18 }}>{text(data.teams)}</p> : null}
+            </Section>
+          ) : null}
+          <Faq items={data.faq} title="Pricing Questions" r={r} />
+          <NextLinks data={data} r={r} />
+          <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Pick a package when you are ready.")} r={r} title={ctaTitle(data, "Start with one product photo")} />
+        </>
+      );
+    }
     return (
       <>
         {hero}

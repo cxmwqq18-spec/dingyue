@@ -89,6 +89,31 @@ export type V2FlowStep = { label: string; image: V2Image; tall?: boolean };
 export type V2Flow = { t: string; d: string; steps: V2FlowStep[]; id?: string; filterTags?: string[]; cta?: { label: string; href: string } };
 export type V2Maker = { options: [string, string][]; cta: string; href: string; urlInput?: boolean; uploadTitle?: string };
 export type V2Plan = { name: string; price: string; credits: string; who: string; features: string[]; popular: boolean };
+
+// One-time credit packages (no subscription). A package covers a term of 1, 6
+// or 12 months, delivers `creditsPerMonth` credits at the start of every month
+// of the term, and is sold with a single payment. `terms` carries the display
+// price per term; longer terms show the discounted per-month price next to the
+// struck-through monthly price.
+export type V2PricingTerm = "1" | "6" | "12";
+export type V2PricingTierTerm = { price: string; periodLabel: string; perMonth?: string; strike?: string; savingsLabel?: string };
+export type V2PricingTier = {
+  id: string;
+  name: string;
+  who: string;
+  badge?: string;
+  creditsPerMonth: number;
+  /** Workspace entry the package CTA opens; a plain path string so the tier list stays serializable for the client renderer. */
+  ctaHref: string;
+  terms: Partial<Record<V2PricingTerm, V2PricingTierTerm>>;
+  features: string[];
+};
+export type V2CreditPack = { id: string; name: string; credits: number; price: string; note: string; popular?: boolean; href?: string };
+/** Credit-pack discount percentages keyed by package tier, then by package term
+ * in months ("1" | "6" | "12"). A missing tier entry means list price. */
+export type V2PackDiscounts = Record<string, Partial<Record<V2PricingTerm, number>>>;
+export type V2PricingStep = { title: string; text: string };
+export type V2CreditSchedule = { photoCredits: number; fifteenSecondVideoCredits: number };
 export type V2MoreSection = { eyebrow: string; h2: string; lead?: string; items: V2ImageItem[] };
 export type V2SellerScenario = { audience: string; tool: string; href: string; task: string; image: V2Image };
 export type V2SellerScenarioBlock = { title: string; lead: string; items: V2SellerScenario[] };
