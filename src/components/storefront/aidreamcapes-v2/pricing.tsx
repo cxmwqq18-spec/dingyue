@@ -1,7 +1,25 @@
 import { Section } from "./parts";
-import { copyLabel, type V2Resolvers } from "./types";
+import { copyLabel, text, type V2Resolvers } from "./types";
 import { AidreamcapesPricingToggle } from "./pricing-toggle";
 import { AidreamcapesPackageCards } from "./package-cards";
+
+type V2PromoBanner = { enabled: boolean; text: string; href: string; linkLabel: string };
+
+// One-line offer banner above the pricing plans. Fully data-driven: without an
+// enabled promoBanner carrying text and an href it renders nothing at all.
+export function AidreamcapesV2PromoBanner({ banner, r }: { banner: unknown; r: V2Resolvers }) {
+  const promo = banner as V2PromoBanner | undefined;
+  const label = text(promo?.linkLabel) || "Learn more";
+  if (!promo?.enabled || !text(promo.text) || !text(promo.href)) return null;
+  return (
+    <div className="wrap apromo-banner-wrap">
+      <a className="apromo-banner" href={r.href(promo.href)}>
+        <span className="apromo-banner-text">{promo.text}</span>
+        <span className="apromo-banner-link">{label} →</span>
+      </a>
+    </div>
+  );
+}
 
 function numberField(value: unknown, fallback: number): number {
   const n = Number(value);

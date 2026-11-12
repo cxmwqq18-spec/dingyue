@@ -12,7 +12,8 @@ import { AUTO_VIDEO_MODEL_FAMILY, CUSTOMER_VIDEO_FRAME_LIMIT, normalizeVideoDura
 import { videoProviderAvailability } from "@/lib/video-provider-availability";
 import { videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider } from "@/lib/video-provider-family";
 import { configuredVideoProviderFrameLimit, effectiveVideoFrameLimit } from "@/lib/video-provider-limits";
-import { providerCreditsForRequest, selectBillingProvider } from "@/lib/ai-provider-billing";
+import { firstVideoTrialAppliesToProvider, providerCreditsForRequest, selectBillingProvider } from "@/lib/ai-provider-billing";
+import { consumeFirstVideoOfferTx } from "@/lib/stores/first-video-offer-store";
 import { isGeminiVideoFrameMimeType, type VideoProviderFailure } from "@/lib/video-provider-policy";
 import { videoProviderCreateTimeoutMs, videoProviderWorkerTimeoutMs } from "@/lib/video-provider-timeouts";
 import type { WorkerOutputSlot } from "@/lib/worker";
@@ -739,7 +740,8 @@ function providerRecordIsRunnable(provider: {
 
 /**
  * 计算模型级价格；返回 null 表示本次请求没有命中开启 priceEnabled 的通道，
- * 调用方应回落到主题价/应用价。
+ * 调用方应回落到主题价/应用价。trialApplied 标记专享价确实生效（同一次
+ * 报价/扣费口径必须一致，见 createGenerationJobInTx 的 offer 消费）。
  */
 async function resolveModelPricedCreditsForJob(
   tx: Tx,
@@ -752,8 +754,9 @@ async function resolveModelPricedCreditsForJob(
     durationSeconds?: number | null;
     resolution?: string | null;
     outputCount: number;
+    firstVideoTrial?: boolean;
   }
-): Promise<number | null> {
+): Promise<{ credits: number | null; trialApplied: boolean }> {
   const providerType = platformProviderTypeForAppType(params.siteAiApp.aiApp.appType);
   const selection = jsonObject<Record<string, unknown>>(params.requestJson?.providerSelection as Prisma.JsonValue | undefined);
   const fields = jsonObject<Record<string, unknown>>(params.requestJson?.fields as Prisma.JsonValue | undefined);
@@ -790,7 +793,7 @@ async function resolveModelPricedCreditsForJob(
     },
     orderBy: [{ priority: "asc" }, { preferred: "desc" }]
   });
-  if (!providers.some((provider) => provider.priceEnabled)) return null;
+  if (!providers.some((provider) => provider.priceEnabled)) return { credits: null, trialApplied: false };
 
   const family = typeof params.requestJson?.videoModelFamily === "string"
     ? params.requestJson.videoModelFamily
@@ -801,7 +804,7 @@ async function resolveModelPricedCreditsForJob(
   const billingProvider = selectionProviderId
     ? providers.find((provider) => provider.id === selectionProviderId) ?? null
     : selectBillingProvider({ providers, providerType, modelOverride, modelFamily: family });
-  if (!billingProvider?.priceEnabled) return null;
+  if (!billingProvider?.priceEnabled) return { credits: null, trialApplied: false };
 
   // 输入模态计费：按客户实际提供的素材类型统计。
   // 素材表不持久化时长，视频/音频的按秒计费只统计明确传入时长的输入，
@@ -841,9 +844,13 @@ async function resolveModelPricedCreditsForJob(
     videoInputSeconds,
     audioInputCount,
     audioInputSeconds,
-    outputCount: 1
+    outputCount: 1,
+    trialOffer: Boolean(params.firstVideoTrial)
   });
-  return breakdown ? breakdown.unitCredits : null;
+  // 与 resolveAiProviderPrice 的生效条件保持一致：trialOffer 只有在命中
+  // 专享通道的 15s 视频档时才真正折扣（provider 作用域在 providerCreditsForRequest 内再校验）。
+  const trialApplied = Boolean(params.firstVideoTrial) && providerType === "video" && params.durationSeconds === 15 && firstVideoTrialAppliesToProvider(billingProvider?.id);
+  return { credits: breakdown ? breakdown.unitCredits : null, trialApplied };
 }
 
 async function normalizeProviderSelectionForAvailability(
@@ -906,7 +913,7 @@ async function reserveCreditsForJob(tx: Tx, job: { id: string; siteId: string; c
   let ledger = await tx.creditLedger.findFirst({
     where: { siteId: job.siteId, customerId: job.customerId, type: "reserve", sourceId: job.id }
   });
-  if (ledger) return ledger;
+  if (ledger) return { ledger, reserved: false };
   const updated = await tx.creditBalance.updateMany({
     where: { siteId: job.siteId, customerId: job.customerId, balance: { gte: job.creditsReserved } },
     data: { balance: { decrement: job.creditsReserved }, reserved: { increment: job.creditsReserved } }
@@ -923,7 +930,7 @@ async function reserveCreditsForJob(tx: Tx, job: { id: string; siteId: string; c
       sourceId: job.id
     }
   });
-  return ledger;
+  return { ledger, reserved: true };
 }
 
 const TASK_HOLD_SOURCE_TYPE = "workspace_task_hold";
@@ -1375,6 +1382,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
   requestHash?: string;
   skipProviderAvailabilityCheck?: boolean;
   reserveFromTaskHold?: { taskId: string };
+  firstVideoTrial?: boolean;
 }) {
   await lockCustomerGenerationSubmit(tx, { siteId: params.siteId, customerId: params.customerId });
   const customer = await readCustomerForUpdate(tx, params.siteId, params.customerId);
@@ -1559,7 +1567,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
 
   // 模型级计价：只有显式开启 priceEnabled 的通道才接管价格，否则沿用主题价/应用价。
   // 报价与扣费必须走同一函数（src/lib/ai-provider-billing.ts），否则工作台会 409。
-  const modelPricedCredits = await resolveModelPricedCreditsForJob(tx, {
+  const modelPriced = await resolveModelPricedCreditsForJob(tx, {
     requestJson: params.requestJson,
     siteAiApp,
     requestedAssetIds,
@@ -1567,8 +1575,10 @@ async function createGenerationJobInTx(tx: Tx, params: {
     videoTheme,
     durationSeconds: requestedVideoDurationSeconds,
     resolution: requestedVideoResolution,
-    outputCount
+    outputCount,
+    firstVideoTrial: params.firstVideoTrial
   });
+  const modelPricedCredits = modelPriced.credits;
 
   const durationCreditCost = modelPricedCredits ?? (videoTheme
     ? (requestedModelPreference ?? AUTO_VIDEO_MODEL_FAMILY) === AUTO_VIDEO_MODEL_FAMILY
@@ -1750,7 +1760,7 @@ async function createGenerationJobInTx(tx: Tx, params: {
       })
     }
   });
-  let ledger: Awaited<ReturnType<typeof reserveCreditsForJob>> | undefined;
+  let ledger: Awaited<ReturnType<typeof reserveCreditsForJob>>["ledger"] | undefined;
   if (creditsReserved > 0) {
     // 工作台任务在“确认生成”时已整任务冻结积分（workspace_task_hold）。
     // 派发镜头时在同事务内先把本镜头金额从任务冻结额转出，再走常规 job 预留，
@@ -1764,7 +1774,15 @@ async function createGenerationJobInTx(tx: Tx, params: {
         ref: job.id
       });
     }
-    ledger = await reserveCreditsForJob(tx, job);
+    const reserve = await reserveCreditsForJob(tx, job);
+    ledger = reserve.ledger;
+    // 首条视频专享价：本次扣费确实按 8 积分档生效时，同事务把 offer 置为 consumed。
+    // 唯一 customerId 保证并发下单条 job 消费成功，失败方按正常价重报价（409）。
+    // P0 简化：后续 job 失败不回滚 consumed——积分退款兜底损失，offer 不重新开放。
+    if (reserve.reserved && params.firstVideoTrial && modelPriced.trialApplied) {
+      const consumed = await consumeFirstVideoOfferTx(tx, { siteId: params.siteId, customerId: params.customerId });
+      if (!consumed) throw new StoreError("workspace_price_quote_changed", 409);
+    }
   }
   const updatedCustomer = await tx.customer.findFirstOrThrow({ where: { id: params.customerId, siteId: params.siteId }, include: { balance: true } });
   return { job, siteAiApp, ledger, customer: updatedCustomer, reused: false as const };
@@ -1781,6 +1799,7 @@ export async function createGenerationJobRelational(params: {
   requestHash?: string;
   skipProviderAvailabilityCheck?: boolean;
   reserveFromTaskHold?: { taskId: string };
+  firstVideoTrial?: boolean;
 }): Promise<{ job: GenerationJob; siteAiApp: SiteAiApp; ledger?: CreditLedgerEntry; customer: Customer; reused: boolean }> {
   try {
     await reconcileDeliveredVideoGenerationJobsRelational({

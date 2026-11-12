@@ -1,6 +1,6 @@
 import type { SceneId } from "./types";
 
-export const WORKSPACE_VIEWS = ["home", "tools", "agent", "video", "images", "chat", "subtitles", "product", "videoLink", "actors", "batch", "library", "twin", "clone", "inspirations", "analytics", "teams", "developer", "rewards"] as const;
+export const WORKSPACE_VIEWS = ["home", "tools", "agent", "video", "images", "chat", "subtitles", "product", "videoLink", "actors", "batch", "library", "twin", "clone", "inspirations", "analytics", "teams", "developer", "rewards", "starterOffer"] as const;
 export type WorkspaceView = typeof WORKSPACE_VIEWS[number];
 export function isWorkspaceView(value: unknown): value is WorkspaceView {
   return typeof value === "string" && (WORKSPACE_VIEWS as readonly string[]).includes(value);
@@ -9,6 +9,9 @@ export function isWorkspaceView(value: unknown): value is WorkspaceView {
 export const WORKSPACE_MODULES: { id: WorkspaceView; title: string; summary: string; group: "main" | "create" | "explore"; status?: "planned" | "simulation" }[] = [
   { id: "home", title: "Home", summary: "Start your next project.", group: "main" },
   { id: "chat", title: "AI Assistant", summary: "Chat with an assistant for video ideas, scripts, and product marketing advice.", group: "main" },
+  // First-video $1 offer: the nav entry and home card only render while the
+  // customer is eligible or still holds the purchased offer (workspace.tsx).
+  { id: "starterOffer", title: "First Video Offer", summary: "Claim your first 15s product video for $1.", group: "main" },
   { id: "tools", title: "All Tools", summary: "Find a tool for your next project.", group: "main" },
   { id: "library", title: "Library", summary: "Resume saved videos and download your results.", group: "main" },
   { id: "agent", title: "Text to Video", summary: "Turn a written idea and product details into an editable video storyboard.", group: "create" },
@@ -40,6 +43,7 @@ export const WORKSPACE_VIEW_SEGMENTS = {
   videoLink: "url-to-video",
   product: "product-links",
   agent: "text-to-video",
+  starterOffer: "starter-offer",
 } as const;
 export type WorkspaceViewSegment = keyof typeof WORKSPACE_VIEW_SEGMENTS;
 

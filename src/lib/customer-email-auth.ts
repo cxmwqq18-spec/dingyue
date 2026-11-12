@@ -45,6 +45,16 @@ function normalizeEmail(email: string): string {
   return normalized;
 }
 
+/** Lowercased email plus gmail/googlemail dot-and-plus collapsing, used for
+ * duplicate/risk matching where dot aliases should count as the same inbox. */
+export function canonicalizeEmail(email: string): { email: string; canonical: string } {
+  const normalized = normalizeEmail(email);
+  const [local, domain] = normalized.split("@");
+  const isGmail = domain === "gmail.com" || domain === "googlemail.com";
+  const canonicalLocal = isGmail ? local.replace(/\./g, "").split("+")[0] : local;
+  return { email: normalized, canonical: `${canonicalLocal}@${domain}` };
+}
+
 function codeHash(siteId: string, email: string, code: string): string {
   return crypto.createHash("sha256").update(`${siteId}:${email}:${code}`).digest("hex");
 }
@@ -180,7 +190,15 @@ export async function requestCustomerEmailCode(params: { siteId: string; email: 
   };
 }
 
-async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "slug" | "signupCreditGrant">; email: string; password: string; purpose: VerificationPurpose; name?: string }) {
+async function completeVerifiedCustomerAuth(params: {
+  site: Pick<Site, "id" | "slug" | "signupCreditGrant">;
+  email: string;
+  password: string;
+  purpose: VerificationPurpose;
+  name?: string;
+  signupIp?: string;
+  signupUa?: string;
+}) {
   return prisma.$transaction(async (tx) => {
     const existing = await tx.customer.findUnique({
       where: { siteId_email: { siteId: params.site.id, email: params.email } },
@@ -201,6 +219,8 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
           passwordHash: hashRelationalPassword(params.password),
           name: params.name?.trim() || params.email.split("@")[0],
           status: "active",
+          signupIp: params.signupIp,
+          signupUa: params.signupUa,
           balance: {
             create: {
               id: relationalUid("bal"),
@@ -231,7 +251,7 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
       if (customer.status === "blocked") throw new StoreError("customer_account_blocked", 403);
       customer = await tx.customer.update({
         where: { id: customer.id },
-        data: { passwordHash: hashRelationalPassword(params.password) },
+        data: { passwordHash: hashRelationalPassword(params.password), lastLoginIp: params.signupIp },
         include: { balance: true }
       });
       await tx.customerSession.deleteMany({ where: { siteId: params.site.id, customerId: customer.id } });
@@ -254,7 +274,7 @@ async function completeVerifiedCustomerAuth(params: { site: Pick<Site, "id" | "s
   });
 }
 
-export async function verifyCustomerEmailCode(params: { siteId: string; email: string; code: string; password?: string; confirmPassword?: string; purpose?: VerificationPurpose; name?: string }): Promise<{
+export async function verifyCustomerEmailCode(params: { siteId: string; email: string; code: string; password?: string; confirmPassword?: string; purpose?: VerificationPurpose; name?: string; signupIp?: string; signupUa?: string }): Promise<{
   customer: PublicCustomer;
   session: CustomerSession;
   createdCustomer: boolean;
@@ -321,5 +341,5 @@ export async function verifyCustomerEmailCode(params: { siteId: string; email: s
     return consumed.count ? { ok: true as const } : { ok: false as const, error: "verification_code_expired" };
   });
   if (!verificationResult.ok) throw new StoreError(verificationResult.error, 400);
-  return completeVerifiedCustomerAuth({ site, email, password, purpose, name: params.name });
+  return completeVerifiedCustomerAuth({ site, email, password, purpose, name: params.name, signupIp: params.signupIp, signupUa: params.signupUa });
 }

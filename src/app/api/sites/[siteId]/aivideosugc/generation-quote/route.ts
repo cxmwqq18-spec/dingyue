@@ -16,6 +16,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     if (!Number.isSafeInteger(duration) || !(WORKSPACE_DURATIONS as readonly number[]).includes(duration)) throw new WorkspaceError("invalid_options");
     const quote = await quoteComposerGeneration({
       siteId,
+      customerId: auth.current.customer.id,
       direct: body.direct !== false,
       modelId: typeof body.modelId === "string" ? body.modelId : undefined,
       duration,

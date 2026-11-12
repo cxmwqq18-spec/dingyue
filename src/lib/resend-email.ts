@@ -206,7 +206,18 @@ async function resendFetch<T>(settings: PlatformEmailSettings | undefined, path:
   return payload;
 }
 
-export async function sendVerificationEmail(params: SendVerificationEmailParams): Promise<{ messageId?: string }> {
+export interface SendResendEmailParams {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+  site: Pick<Site, "id">;
+  settings?: PlatformEmailSettings;
+  settingsContext?: ResendSettingsContext;
+}
+
+/** Generic single-email send over the platform/site Resend config. */
+export async function sendResendEmail(params: SendResendEmailParams): Promise<{ messageId?: string }> {
   const selected = params.settingsContext ? resolveResendSettingsForSite(params.settingsContext, params.site.id) : params.settings;
   const settings = effectiveResendSettings(selected);
   const apiKey = settings.apiKey;
@@ -214,13 +225,6 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
   if (!apiKey || !from) {
     throw new Error("email_provider_not_configured");
   }
-
-  const replyTo = settings.replyTo;
-  const siteName = params.site.branding.logoText || params.site.name;
-  const action = params.purpose === "register" ? "complete your account registration" : "reset your password";
-  const subject = params.purpose === "register" ? `${siteName} verification code` : `${siteName} password reset code`;
-  const escapedCode = escapeHtml(params.code);
-  const escapedSiteName = escapeHtml(siteName);
 
   let response: Response;
   try {
@@ -234,17 +238,10 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
       body: JSON.stringify({
         from,
         to: [params.to],
-        subject,
-        ...(replyTo ? { reply_to: replyTo } : {}),
-        text: `Your ${siteName} verification code is ${params.code}. It expires in 10 minutes.`,
-        html: `
-        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827">
-          <h1 style="font-size:20px;margin:0 0 12px">${escapedSiteName} verification code</h1>
-          <p>Use this code to ${escapeHtml(action)}. It expires in 10 minutes.</p>
-          <p style="font-size:28px;font-weight:700;letter-spacing:6px;margin:24px 0">${escapedCode}</p>
-          <p>If you did not request this code, you can safely ignore this email.</p>
-        </div>
-      `
+        subject: params.subject,
+        ...(settings.replyTo ? { reply_to: settings.replyTo } : {}),
+        text: params.text,
+        html: params.html
       })
     });
   } catch (error) {
@@ -260,6 +257,30 @@ export async function sendVerificationEmail(params: SendVerificationEmailParams)
     throw resendProviderError(response.status, payload);
   }
   return { messageId: payload.id };
+}
+
+export async function sendVerificationEmail(params: SendVerificationEmailParams): Promise<{ messageId?: string }> {
+  const siteName = params.site.branding.logoText || params.site.name;
+  const action = params.purpose === "register" ? "complete your account registration" : "reset your password";
+  const subject = params.purpose === "register" ? `${siteName} verification code` : `${siteName} password reset code`;
+  const escapedCode = escapeHtml(params.code);
+  const escapedSiteName = escapeHtml(siteName);
+  return sendResendEmail({
+    to: params.to,
+    subject,
+    site: { id: params.site.id },
+    settings: params.settings,
+    settingsContext: params.settingsContext,
+    text: `Your ${siteName} verification code is ${params.code}. It expires in 10 minutes.`,
+    html: `
+        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827">
+          <h1 style="font-size:20px;margin:0 0 12px">${escapedSiteName} verification code</h1>
+          <p>Use this code to ${escapeHtml(action)}. It expires in 10 minutes.</p>
+          <p style="font-size:28px;font-weight:700;letter-spacing:6px;margin:24px 0">${escapedCode}</p>
+          <p>If you did not request this code, you can safely ignore this email.</p>
+        </div>
+      `
+  });
 }
 
 export function resendEmailConfigStatus(): {

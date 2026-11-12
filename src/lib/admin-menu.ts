@@ -6,6 +6,7 @@ import {
   CreditCard,
   FileText,
   Gauge,
+  Gift,
   LayoutDashboard,
   MailCheck,
   Palette,
@@ -27,6 +28,7 @@ export type SiteAdminModuleCode =
   | "orders"
   | "customers"
   | "partners"
+  | "credit-applications"
   | "ai"
   | "processes"
   | "content"
@@ -146,6 +148,18 @@ export const siteAdminModules: AdminModuleDefinition[] = [
     aiExtension: "合作者申请按站点隔离审核，批准后再进入后续运营流程。",
     keywords: ["partners", "affiliate", "creator", "influencer", "collaboration", "推广", "合作者", "申请"],
     items: ["申请列表", "渠道资料", "审核状态", "备注记录"]
+  },
+  {
+    label: "免费积分",
+    code: "credit-applications",
+    icon: Gift,
+    href: "/admin/credit-applications",
+    metric: "积分",
+    tone: "warn",
+    description: "审核创作者免费积分申请，批准后自动发放 20/40/60 credits 到客户余额。",
+    aiExtension: "积分发放走 ledger 幂等写入，单人终身 60 credits、全站每月 100 单上限。",
+    keywords: ["credits", "creator", "free", "grant", "积分", "免费", "创作者", "发放"],
+    items: ["申请列表", "风险旗标", "发放档位", "月度配额"]
   },
   {
     label: "AI 工厂",

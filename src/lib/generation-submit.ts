@@ -24,6 +24,8 @@ export interface GenerationSubmitInput {
   includeWorkerPayload?: boolean;
   /** 工作台任务级积分冻结：派发镜头时从任务冻结额转出本镜头金额（同事务）。 */
   reserveFromTaskHold?: { taskId: string };
+  /** 首条视频 $1 专享价意图：命中主打 Wan 通道 15s 档时扣 8 积分并消费 offer（同事务）。 */
+  firstVideoTrial?: boolean;
 }
 
 export interface GenerationSubmitResult {
@@ -117,7 +119,8 @@ export async function submitGenerationJob(input: GenerationSubmitInput): Promise
     idempotencyKey,
     requestHash,
     skipProviderAvailabilityCheck: input.skipWorkerDispatch === true,
-    reserveFromTaskHold: input.reserveFromTaskHold
+    reserveFromTaskHold: input.reserveFromTaskHold,
+    firstVideoTrial: input.firstVideoTrial
   });
 
   if (created.reused) {

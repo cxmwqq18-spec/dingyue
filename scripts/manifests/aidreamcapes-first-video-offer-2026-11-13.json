@@ -1,0 +1,22 @@
+{
+  "siteId": "site_aidreamcapes",
+  "product": {
+    "id": "prod_aidreamcapes_first_video",
+    "name": "First Video — $1",
+    "type": "credit_pack",
+    "status": "active",
+    "metadata": {
+      "kind": "first_video_trial",
+      "summary": "One-time $1 starter offer: 8 credits for the customer's first 15s product video."
+    }
+  },
+  "price": {
+    "id": "price_aidreamcapes_first_video",
+    "label": "First Video — $1 (8 credits)",
+    "amountCents": 100,
+    "currency": "usd",
+    "interval": "one_time",
+    "creditsGranted": 8,
+    "status": "active"
+  }
+}

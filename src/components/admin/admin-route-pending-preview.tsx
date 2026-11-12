@@ -53,6 +53,12 @@ const routeMeta: Record<SiteAdminModuleCode, PendingRouteMeta> = {
     title: "推广合作者",
     subtitle: "正在加载推广合作者申请、渠道资料、审核状态和备注记录。"
   },
+  "credit-applications": {
+    code: "credit-applications",
+    eyebrow: "创作者积分",
+    title: "免费积分申请",
+    subtitle: "正在加载免费积分申请、风险旗标、发放档位和月度配额。"
+  },
   ai: {
     code: "ai",
     eyebrow: "AI 工厂运营",

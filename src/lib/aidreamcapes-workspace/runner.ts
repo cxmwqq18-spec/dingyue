@@ -85,6 +85,7 @@ async function reserveFreshStoryboardTaskHold(task: StoredTask) {
   const direct = Boolean(task.input.direct);
   const quote = await quoteComposerGeneration({
     siteId: task.siteId,
+    customerId: task.customerId,
     direct,
     modelId: task.input.modelId || undefined,
     duration: task.input.options.duration,

@@ -63,6 +63,8 @@ type ActionQuote = { available: boolean; credits: number | null; currency: "cred
 /** 生成确认载荷里的商品资料：确认简报去掉 candidateImages 后的形状（服务端会再规范化）。 */
 type PendingProductBrief = Omit<ConfirmedProductBrief, "candidateImages">;
 type ImageResult = { jobs: { id: string; status: string; creditsReserved: number; createdAt?: string }[]; assets: { id: string; jobId?: string; label: string; previewUrl: string; downloadUrl?: string }[] };
+/** $1 first-video offer state resolved server-side (never from client hints). */
+type StarterOfferState = { state: "eligible" | "purchased" | "consumed" | "ineligible"; priceId: string | null };
 
 type GuestDraftHandoff = {
   version: 1;
@@ -325,6 +327,8 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const [imageQuote, setImageQuote] = useState<ActionQuote | null>(null);
   const [imageResults, setImageResults] = useState<ImageResult>({ jobs: [], assets: [] });
   const [balance, setBalance] = useState(customer?.balance);
+  const [starterOffer, setStarterOffer] = useState<StarterOfferState | null>(null);
+  const [starterOfferClaiming, setStarterOfferClaiming] = useState(false);
   const [tagDrafts, setTagDrafts] = useState<Record<string, string>>({});
   const [videoReferenceUrls, setVideoReferenceUrls] = useState<string[]>(initialPreset?.kind === "video" ? (initialPreset.referenceImageUrls ?? []).slice(0, 4) : []);
   const [videoReferenceFiles, setVideoReferenceFiles] = useState<string[]>(initialPreset?.kind === "video" ? (initialPreset.referenceVideoUrls ?? []).slice(0, 4) : []);
@@ -829,6 +833,21 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
       } catch { /* Balance refresh should not interrupt the current workflow. */ }
     }, 4000, customer?.balance == null);
   }, [customerId, customer?.balance, request]);
+
+  // $1 first-video offer: eligibility, the purchased flag and the offer price
+  // are all resolved server-side. Refresh on view changes so a completed
+  // checkout (redirect back to /app/create/starter-offer) flips the entry.
+  const loadStarterOffer = useCallback(async () => {
+    if (!customerId) return;
+    try {
+      const result = await request<{ state: StarterOfferState["state"]; priceId?: string | null }>("/starter-offer");
+      setStarterOffer({ state: result.state, priceId: result.priceId ?? null });
+    } catch { /* The offer entry stays hidden until the state resolves. */ }
+  }, [customerId, request]);
+  useEffect(() => {
+    if (!customerId) return;
+    void loadStarterOffer();
+  }, [customerId, loadStarterOffer, view]);
 
   useEffect(() => {
     const warn = (event: BeforeUnloadEvent) => { if (dirty.current) { event.preventDefault(); event.returnValue = ""; } };
@@ -1829,8 +1848,34 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     } catch (error) { setMessage((error as Error).message); setBusy(false); }
   }
 
+  // $1 first-video offer checkout: eligibility is re-validated server-side and
+  // Stripe returns to /app/create/starter-offer, where the state refetch runs.
+  async function claimStarterOffer() {
+    if (!customer) { window.location.assign(currentLoginHref()); return; }
+    setStarterOfferClaiming(true);
+    setMessage("");
+    try {
+      const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/checkout/subscription`, {
+        method: "POST",
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: { "Content-Type": "application/json", ...customerJsonHeaders(siteId), ...(csrfToken ? { "x-csrf-token": csrfToken } : {}) },
+        body: JSON.stringify({ customerId: customer.id, priceId: starterOffer?.priceId ?? undefined })
+      });
+      const result = await response.json().catch(() => ({})) as { checkoutUrl?: string; error?: string; message?: string };
+      if (!response.ok || !result.checkoutUrl) throw new Error(result.message || humanError(result.error) || "We couldn't start the $1 checkout. Please try again.");
+      window.location.assign(result.checkoutUrl);
+    } catch (error) {
+      setMessage((error as Error).message);
+      setStarterOfferClaiming(false);
+    }
+  }
+
   const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo, chat: MessageSquare, subtitles: Captions };
-  const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group).map((item) => {
+  // The $1 first-video offer module only navigates while the customer can buy
+  // or use the offer; once consumed (or for existing customers) it disappears.
+  const starterOfferNavVisible = starterOffer?.state === "eligible" || starterOffer?.state === "purchased";
+  const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group && (item.id !== "starterOffer" || starterOfferNavVisible)).map((item) => {
     const Icon = moduleIcons[item.id as keyof typeof moduleIcons];
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -1982,11 +2027,56 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onOptimizePrompt={() => void optimizeCurrentPrompt()} promptOptimizing={promptOptimizing}
           />
           {importedBriefNotice()}
+          {customer && starterOffer?.state === "eligible" && <section className={styles.panel} aria-live="polite">
+            <span className={styles.badge}>FIRST VIDEO OFFER</span>
+            <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
+            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · 58% OFF · Full quality. No watermark. No subscription.</p>
+            <div className={styles.footerActions}>
+              <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
+              <button className={styles.linkButton} onClick={() => void navigate("starterOffer")}><span>See the offer</span><ArrowRight size={15} /></button>
+            </div>
+          </section>}
+          {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
+            <h2 style={{ margin: "0 0 4px" }}>Your $1 first-video credits are ready</h2>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>8 credits added — your first 15s video costs 8 credits instead of 20. Finish it from the composer below; the special price applies automatically.</p>
+            <div className={styles.footerActions}>
+              <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("video")}><span>Finish your first video</span><ArrowRight size={15} /></button>
+            </div>
+          </section>}
           <div className={styles.quickPrompts}>{(catalog?.quickStarts ?? catalog?.scenes.map((item) => ({ label: item.name, sceneId: item.id, aspect: undefined, duration: undefined })) ?? []).map((item, index) => <button type="button" key={`${item.sceneId}-${index}`} className={styles.quick} disabled={working} onClick={() => fillQuickStart(item)}><Sparkles size={12} /><span>{item.label}</span></button>)}</div>
           {canBrowseTemplates && templatePickerCallout()}
           <section className={styles.section}><div className={styles.sectionHead}><h2>Tools</h2><button className={styles.linkButton} onClick={() => void navigate("tools")}><span>See All</span><ArrowRight size={15} /></button></div><WorkspaceTools disabled={working} onNavigate={(next) => void navigate(next)} /></section>
           <section className={styles.section} id="aivideosugc-models"><div className={styles.sectionHead}><h2>AI Models</h2><button className={styles.linkButton} onClick={() => void navigate("agent")}><span>Create a video </span><ArrowRight size={15} /></button></div>{catalog?.models.some((model) => model.available) ? <div className={styles.models}>{catalog.models.filter((model) => model.available).map((model, index) => <div key={model.id} className={styles.model}><div className={styles.modelTop}>{Boolean(initialTemplateGallery?.options.length) && <img loading="lazy" decoding="async" src={initialTemplateGallery!.options[index % initialTemplateGallery!.options.length].previewUrl} alt="Product reference example" />}<span className={styles.modelExample}>REFERENCE EXAMPLE</span><div className={styles.modelOverlay}><h3>{displayModel(model.model)}</h3><span className={styles.badge}>{model.available ? "Available" : "Not available"}</span></div></div><p>{model.available ? `${model.durations.join(" / ")}s · ${model.aspects.join(" / ")}${model.nativeSpeech ? " · Native audio" : ""}` : humanError(model.reason) || "This model is not connected yet."}</p></div>)}</div> : <div className={styles.empty}><Clapperboard size={28} /><h3>{loading ? "Loading models…" : "No video model is connected"}</h3><p>You can save a draft once you log in. Generation needs an available model.</p></div>}</section>
           {customer && tasks.length > 0 && <section className={styles.section}><div className={styles.sectionHead}><h2>Recent videos</h2><button className={styles.linkButton} onClick={() => void navigate("library")}><span>View Library </span><ArrowRight size={15} /></button></div>{renderTaskCards(tasks.slice(0, 3))}</section>}
+        </>}
+
+        {view === "starterOffer" && <>
+          <div className={styles.pageTitle}><h1>First Video Offer</h1><p>A one-time starter offer for your first product video.</p></div>
+          {!customer && <section className={styles.panel}><h2 style={{ margin: "0 0 4px" }}>Log in to claim your offer</h2><p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is for new customers. Log in to check your eligibility.</p><div className={styles.footerActions}><a className={`${styles.button} ${styles.primary}`} href={loginHref}>Log in</a></div></section>}
+          {customer && !starterOffer && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Checking your offer…</span></div>}
+          {customer && starterOffer?.state === "eligible" && <section className={styles.panel} aria-live="polite">
+            <span className={styles.badge}>FIRST VIDEO OFFER</span>
+            <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
+            <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · <strong>58% OFF</strong> · 8 credits toward one 15s video at full quality.</p>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>Full quality. No watermark. No subscription.</p>
+            <div className={styles.footerActions}>
+              <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
+            </div>
+          </section>}
+          {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
+            <h2 style={{ margin: "0 0 4px" }}>8 credits added — create your first 15s video</h2>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>Your first 15s video is priced at 8 credits (normally 20). The special price applies automatically in the composer.</p>
+            <div className={styles.footerActions}>
+              <button className={`${styles.button} ${styles.primary}`} onClick={() => void navigate("home")}><span>Create your first video</span><ArrowRight size={15} /></button>
+            </div>
+          </section>}
+          {customer && (starterOffer?.state === "consumed" || starterOffer?.state === "ineligible") && <section className={styles.panel}>
+            <h2 style={{ margin: "0 0 4px" }}>{starterOffer.state === "consumed" ? "This offer has been used" : "This offer is for new customers"}</h2>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is one-time and new-customer only. Standard credit packs are available any time.</p>
+            <div className={styles.footerActions}>
+              <button className={styles.linkButton} onClick={() => void navigate("home")}><span>Back to Home</span><ArrowRight size={15} /></button>
+            </div>
+          </section>}
         </>}
 
         {view === "tools" && <><div className={styles.pageTitle}><h1>All Tools</h1><p>Choose a workspace tool. Each tool is also available from the left menu.</p></div><WorkspaceTools all disabled={working} onNavigate={(next) => void navigate(next)} /></>}
@@ -2752,6 +2842,10 @@ function humanError(code?: string) {
     site_not_allowed: "This video isn't available on your account.",
     customer_login_required: "Log in to continue.",
     customer_site_mismatch: "This video isn't available on your account.",
+    first_video_offer_ineligible: "The $1 first-video offer is one-time and new-customer only. Standard credit packs are available any time.",
+    first_video_offer_exists: "You already claimed the $1 first-video offer.",
+    connect_not_ready: "Payments are not enabled for this store yet. Please try again later.",
+    price_not_public: "This offer price is not available right now. Please try again later.",
     scene_invalid: "This video scene is no longer available.",
     scene_has_no_actor: "Choose an avatar for this scene before generating.",
     scene_has_no_voiceover: "This scene needs dialogue for the selected model. Add a script or choose another model.",

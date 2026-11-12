@@ -18,7 +18,8 @@ import { list, text, type V2Card, type V2CompareTable, type V2CreditPack, type V
 import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, VisualLimitations, VisualOverview, VisualOutputs, VisualPicker, VisualSizes, VisualSteps, VisualStrip, VisualUses } from "./visual";
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { AidreamcapesV2PricingSection } from "./pricing";
+import { AidreamcapesV2PricingSection, AidreamcapesV2PromoBanner } from "./pricing";
+import { AidreamcapesV2PromoStrip } from "./promo";
 import { AidreamcapesPricingPage } from "./pricing-page";
 import { HomeExperienceSection } from "./home-experience";
 import { HomeExperienceBehavior } from "./home-experience-behavior";
@@ -194,6 +195,8 @@ function HomePage({ data, r }: Props) {
     after,
     relocate && (after === "audience" || after === "reviews") ? null : <HomeExperienceSection after={after} campaign={campaign} experience={experience} key={after} r={r} />
   ])) : {};
+  // Offer band under the hero area; the component renders null without page data.
+  const promoStrip = <AidreamcapesV2PromoStrip promo={data.promoStrip} r={r} />;
   const beforeBlocks = relocate && experience
     ? { features: <><HomeExperienceSection after="audience" campaign={campaign} experience={experience} r={r} /><HomeExperienceSection after="reviews" experience={experience} r={r} /></> }
     : {};
@@ -263,7 +266,7 @@ function HomePage({ data, r }: Props) {
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
     ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}{experience?.blocks.some((block) => block.after === "features" && block.presentation?.workspaceFlow) ? <HomeWorkspaceFlowBehavior /> : null}{ugc?.composer ? <HomeComposerBehavior /> : null}</>]
-  ], additions, beforeBlocks)}
+  ], { ...additions, hero: <>{additions.hero}{promoStrip}</> }, beforeBlocks)}
   </div>;
 }
 
@@ -1133,6 +1136,8 @@ function NextLinks({ data, r }: { data: V2Data; r: V2Resolvers }) {
 function SimplePage({ data, r, layout, company }: Props & { layout: string; company?: V2Company }) {
   const heroImage = data.image as V2Image | undefined;
   const hero = <><Crumbs items={data.breadcrumbs} r={r} /><PageHero eyebrow={data.eyebrow} lead={data.lead} right={heroImage?.src ? <HeroMedia media={{ kind: "image", image: heroImage }} r={r} /> : undefined} title={data.h1} /></>;
+  // Offer banner for the pricing layout; the component renders null without page data.
+  const promoBanner = <AidreamcapesV2PromoBanner banner={data.promoBanner} r={r} />;
   if (layout === "pricing") {
     const tiers = list<V2PricingTier>(data.tiers);
     if (tiers.length) {
@@ -1140,6 +1145,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
       return (
         <>
           {hero}
+          {promoBanner}
           <Section
             eyebrow={typeof head.eyebrow === "string" ? head.eyebrow : "Plans & Credits"}
             lead={typeof head.lead === "string" ? head.lead : undefined}
@@ -1175,6 +1181,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
     return (
       <>
         {hero}
+        {promoBanner}
         <Section eyebrow="Plans" title="Monthly Plans"><Plans plans={list<V2Plan>(data.plans)} r={r} /></Section>
         {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How Credits Work"><Intro paras={list<string>(data.credits)} /></Section> : null}
         {list<V2SpecRow>(data.costs).length ? (

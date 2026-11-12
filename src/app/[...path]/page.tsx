@@ -947,7 +947,7 @@ export default async function HostStorefrontCatchAllPage({
   }
   if (hostSiteSlug === "aidreamcapes" && slug === "/partners") {
     const query = searchParams ? await searchParams : {};
-    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success" });
+    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied" });
   }
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)

@@ -270,6 +270,8 @@ model Site {
   customerDownloads       CustomerAssetDownload[]
   auditLogs               AuditLog[]
   partnerApplications     PartnerApplication[]
+  creditApplications      CreditApplication[]
+  firstVideoOffers        FirstVideoOffer[]
   emailConfigAssignment   SiteEmailConfigAssignment?
   contentSyncBaselines     ContentSyncBaseline[]
 
@@ -351,6 +353,9 @@ model Customer {
   passwordHash  String?
   name          String
   status        String
+  signupIp      String?
+  signupUa      String?
+  lastLoginIp   String?
   createdAt     DateTime                @default(now())
   updatedAt     DateTime                @updatedAt
   site          Site                    @relation(fields: [siteId], references: [id], onDelete: Cascade)
@@ -390,6 +395,8 @@ model Customer {
   aidreamcapesOwnedCreativeMetrics AidreamcapesCreativeMetric[] @relation("AidreamcapesCreativeMetricOwner")
   aidreamcapesImportedCreativeMetrics AidreamcapesCreativeMetric[] @relation("AidreamcapesCreativeMetricImporter")
   aidreamcapesMusicLicenses AidreamcapesMusicLicense[]
+  creditApplications        CreditApplication[]
+  firstVideoOffer           FirstVideoOffer?
 
   @@unique([siteId, email])
   @@index([siteId, status])
@@ -1690,6 +1697,55 @@ model PartnerApplication {
   @@index([siteId, createdAt])
   @@index([siteId, status, createdAt])
   @@index([siteId, email])
+}
+
+// Free-credit program applications: creators submit follower tier + tagged
+// post evidence, site admins review and grant credits (20/40/60).
+model CreditApplication {
+  id             String    @id
+  siteId         String
+  customerId     String
+  email          String
+  canonicalEmail String
+  platform       String
+  profileUrl     String
+  followerTier   String
+  evidencePosts  Json
+  audience       String?
+  message        String?
+  status         String    @default("pending")
+  grantCredits   Int?
+  riskFlags      Json?
+  submitIp       String?
+  submitUa       String?
+  reviewedBy     String?
+  reviewedAt     DateTime?
+  reviewNote     String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  site           Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer       Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, status])
+  @@index([siteId, customerId])
+  @@index([siteId, status, createdAt])
+  @@index([siteId, canonicalEmail])
+}
+
+// One-time $1 first-video offer: purchased-but-not-yet-consumed flag gating
+// the starter workspace page and its discounted 15s quote (8 credits).
+model FirstVideoOffer {
+  id          String    @id
+  siteId      String
+  customerId  String    @unique
+  status      String    @default("purchased")
+  orderId     String?
+  purchasedAt DateTime  @default(now())
+  consumedAt  DateTime?
+  site        Site      @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  customer    Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, status])
 }
 
 model GenerationJob {

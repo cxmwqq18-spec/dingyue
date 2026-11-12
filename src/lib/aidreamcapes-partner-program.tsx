@@ -10,10 +10,11 @@ import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 
 /** The public partner-program page: standard storefront chrome, creators-circle
- * content flow (audience fit -> how it works -> apply -> quality bar -> FAQ),
- * and an application form that posts straight into the admin partner queue. The
- * no-JS flow works: the API answers the multipart post with a 303 back to this
- * page carrying ?partner=success. */
+ * content flow (audience fit -> how it works -> apply -> free credits -> quality
+ * bar -> FAQ), a partner application form and a logged-in free-credit form that
+ * post straight into the admin queues. The no-JS flow works: each API answers
+ * the multipart post with a 303 back to this page carrying ?partner=success or
+ * ?credits=applied. */
 
 const AUDIENCE_FIT = [
   { title: "Short-form creators", body: "TikTok, Reels and Shorts educators whose feed is product ads — your viewers already ask which tool made them." },
@@ -36,7 +37,21 @@ const QUALITY_BAR = [
   { title: "A testable plan", body: "You can name the first piece of content you would publish and where it would go live." }
 ];
 
-export async function AidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
+const FOLLOWER_TIERS = [
+  { value: "under_5k", label: "Under 5K" },
+  { value: "5k_25k", label: "5K – 25K" },
+  { value: "25k_100k", label: "25K – 100K" },
+  { value: "100k_plus", label: "100K+" }
+];
+
+const CREDIT_PLATFORMS = [
+  { value: "tiktok", label: "TikTok" },
+  { value: "instagram", label: "Instagram" },
+  { value: "youtube", label: "YouTube" },
+  { value: "x", label: "X / Twitter" }
+];
+
+export async function AidreamcapesPartnerProgramPage({ success, creditsApplied }: { success: boolean; creditsApplied?: boolean }) {
   const [chrome, customer] = await Promise.all([
     loadAidreamcapesChrome(),
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID)
@@ -136,6 +151,60 @@ export async function AidreamcapesPartnerProgramPage({ success }: { success: boo
           </div>
         </section>
 
+        <section className="prp-sec prp-apply" id="free-credits">
+          <div className="prp-apply-grid">
+            <div className="prp-sec-head">
+              <span className="prp-kicker">Free credits for creators</span>
+              <h2>Get free credits for your next video.</h2>
+              <p className="prp-sec-lead">Post a video with <b>#AivideosUGC</b>, submit it below, and once we approve it your account gets 20 free credits &mdash; enough for a full 15s video. Bigger audiences can earn up to 60.</p>
+              <p className="prp-sec-lead">A real person reviews every application &mdash; you&rsquo;ll get an email either way.</p>
+              <p className="prp-metaline">One grant per creator &middot; 20&ndash;60 credits &middot; Reviewed by hand &middot; Credits never expire</p>
+            </div>
+            {creditsApplied ? (
+              <div className="prp-form prp-success" role="status">
+                <h3>Application received</h3>
+                <p>Your free-credit application is in the queue as <b>pending review</b>. A real person reads every application &mdash; you&rsquo;ll get an email either way, usually within 48 hours.</p>
+                <p className="prp-hint">Approved credits land on your account balance automatically.</p>
+                <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
+              </div>
+            ) : customer ? (
+              <form className="prp-form" action={`/api/sites/${AIVIDEOSUGC_SITE_ID}/credit-applications`} method="post">
+                <input type="text" name="website_url" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: -9999 }} />
+                <div className="prp-form-grid">
+                  <div className="prp-field"><label>Main platform <em>*</em></label><select name="platform" defaultValue="tiktok">{CREDIT_PLATFORMS.map((platform) => <option key={platform.value} value={platform.value}>{platform.label}</option>)}</select></div>
+                  <div className="prp-field"><label>Profile link <em>*</em></label><input name="profileUrl" type="url" placeholder="https://tiktok.com/@you" required /></div>
+                  <div className="prp-field prp-full"><label>Follower count <em>*</em></label>
+                    <div className="prp-radio-row-wrap">
+                      {FOLLOWER_TIERS.map((tier, index) => (
+                        <label className="prp-radio-row" key={tier.value}>
+                          <input type="radio" name="followerTier" value={tier.value} defaultChecked={index === 0} />
+                          {tier.label}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="prp-field prp-full"><label>Posts with #AivideosUGC <em>*</em></label>
+                    <input name="evidencePosts" type="url" placeholder="Post link 1 — must include #AivideosUGC" required />
+                    <input name="evidencePosts" type="url" placeholder="Post link 2 (optional)" />
+                    <input name="evidencePosts" type="url" placeholder="Post link 3 (optional)" />
+                  </div>
+                  <div className="prp-field prp-full"><label>Who is your audience?</label><input name="audience" placeholder="e.g. 45k Shopify dropshippers, mostly US, 25&ndash;40" /></div>
+                  <div className="prp-field prp-full"><label>Anything else?</label><textarea name="message" style={{ minHeight: 72 }} placeholder="Campaign angle, niche, anything useful." /></div>
+                </div>
+                <button className="prp-btn-primary" type="submit"><Send aria-hidden="true" />Submit application</button>
+                <p className="prp-hint">Applying as {customer.customer.email}. One grant per creator; posts are checked manually &mdash; no auto-approvals.</p>
+              </form>
+            ) : (
+              <div className="prp-form prp-success">
+                <h3>Log in to apply</h3>
+                <p>Free credits go straight onto your creator account, so we review applications from logged-in accounts only.</p>
+                <p className="prp-hint">No account yet? Registration takes about a minute and includes free starter credits.</p>
+                <a className="prp-btn-primary" href={`/login?next=${encodeURIComponent("/partners")}`}><Send aria-hidden="true" />Log in to apply</a>
+              </div>
+            )}
+          </div>
+        </section>
+
         <section className="prp-sec">
           <span className="prp-kicker">Before you submit</span>
           <h2>What we look for in partner channels.</h2>
@@ -208,6 +277,9 @@ const PRP_CSS = `
 .prp .prp-field textarea { min-height: 88px; resize: vertical; }
 .prp .prp-field input:focus, .prp .prp-field select:focus, .prp .prp-field textarea:focus { border-color: rgba(139,92,246,.6); }
 .prp .prp-field input::placeholder, .prp .prp-field textarea::placeholder { color: rgba(255,255,255,.28); }
+.prp .prp-radio-row-wrap { display: flex; flex-wrap: wrap; gap: 10px 18px; padding-top: 2px; }
+.prp .prp-radio-row { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; color: var(--prp-ink-2); cursor: pointer; }
+.prp .prp-radio-row input { width: 15px; height: 15px; accent-color: #a855f7; cursor: pointer; }
 .prp .prp-hint { font-size: 12px; color: var(--prp-ink-3); margin: 14px 0 0; }
 .prp .prp-form .prp-btn-primary { width: 100%; justify-content: center; margin-top: 20px; }
 .prp .prp-success h3 { margin: 0 0 10px; font-size: 20px; font-weight: 600; }
@@ -230,6 +302,6 @@ const PRP_CSS = `
 `;
 
 /** Route entry for /partners on the aidreamcapes storefront (both catch-alls). */
-export async function renderAidreamcapesPartnerProgramPage({ success }: { success: boolean }) {
-  return <AidreamcapesPartnerProgramPage success={success} />;
+export async function renderAidreamcapesPartnerProgramPage({ success, creditsApplied }: { success: boolean; creditsApplied?: boolean }) {
+  return <AidreamcapesPartnerProgramPage success={success} creditsApplied={creditsApplied} />;
 }

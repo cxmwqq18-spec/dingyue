@@ -23,7 +23,12 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   }
 
   try {
-    const result = await createExistingCustomerSessionRelational({ siteId, email: body.email, password: body.password });
+    const result = await createExistingCustomerSessionRelational({
+      siteId,
+      email: body.email,
+      password: body.password,
+      lastLoginIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined
+    });
     primeCustomerSessionAuthCache({ customer: result.customer, session: result.session, sessionId: result.session.id });
     const response = NextResponse.json({
       ok: true,

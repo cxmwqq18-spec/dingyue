@@ -8,6 +8,7 @@ import { mapCreditLedger, mapCustomer, mapPaymentEvent, mapPrice, mapProduct } f
 import { clearSiteReadCache } from "@/lib/stores/site-store";
 import { fakeStripePriceAdapter, verifyPriceReadOnly, type StripePriceReadAdapter } from "@/lib/stripe-price-verification";
 import { clearStorefrontContextCache, isPublicPriceFact } from "@/lib/storefront-context";
+import { createFirstVideoOfferTx } from "@/lib/stores/first-video-offer-store";
 
 type Tx = Prisma.TransactionClient;
 const validPriceIntervals = ["month", "quarter", "half_year", "year", "one_time"] as const;
@@ -598,7 +599,7 @@ export async function recordStripeWebhookRelational(payload: {
     object?: {
       id?: string;
       subscription?: string;
-      metadata?: { siteId?: string; customerId?: string; priceId?: string; orderId?: string; creditsGranted?: string };
+      metadata?: { siteId?: string; customerId?: string; priceId?: string; orderId?: string; creditsGranted?: string; kind?: string };
     };
   };
 }): Promise<{ event: PaymentEvent; siteId: string; alreadyProcessed: boolean; ledger?: CreditLedgerEntry; order?: Order; subscription?: Subscription }> {
@@ -720,6 +721,13 @@ export async function recordStripeWebhookRelational(payload: {
         credits
       }
     });
+
+    // First-video $1 trial: checkout.session.completed and payment_intent.succeeded
+    // both carry the same session metadata; the customerId unique constraint plus
+    // createMany skipDuplicates keep the offer single-shot across both events.
+    if (metadata?.kind === "first_video_trial") {
+      await createFirstVideoOfferTx(tx, { siteId, customerId: customer.id, orderId: order.id });
+    }
 
     let subscriptionRow: Prisma.SubscriptionGetPayload<object> | undefined;
     if (price && (isSubscriptionInterval(price.interval) || price.productId)) {

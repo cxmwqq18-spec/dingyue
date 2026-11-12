@@ -16,7 +16,17 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!body.email || !body.code) return NextResponse.json({ error: "missing_email_or_code" }, { status: 400 });
 
   try {
-    const result = await verifyCustomerEmailCode({ siteId, email: body.email, code: body.code, password: body.password, confirmPassword: body.confirmPassword, purpose: body.purpose, name: body.name });
+    const result = await verifyCustomerEmailCode({
+      siteId,
+      email: body.email,
+      code: body.code,
+      password: body.password,
+      confirmPassword: body.confirmPassword,
+      purpose: body.purpose,
+      name: body.name,
+      signupIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
+      signupUa: request.headers.get("user-agent") ?? undefined
+    });
     if (body.purpose === "password_reset") clearCustomerSessionAuthCache(siteId, result.customer.id);
     primeCustomerSessionAuthCache({ customer: result.customer, session: result.session, sessionId: result.session.id });
     const response = NextResponse.json({

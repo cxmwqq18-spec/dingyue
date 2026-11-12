@@ -658,8 +658,8 @@ export default async function SiteCatchAllPage({
   const routePath = (targetPath: string) => storefrontPathForRouteMode(publicSlug, targetPath, routeMode);
   if (slug === "/404") notFound();
   if (isAidreamcapesPathModeSite(publicSlug) && slug === "/partners") {
-    const success = (searchParams ? await searchParams : {}).partner === "success";
-    return renderAidreamcapesPartnerProgramPage({ success });
+    const query = searchParams ? await searchParams : {};
+    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied" });
   }
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {

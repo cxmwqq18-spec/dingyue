@@ -10,6 +10,9 @@ type StripeCheckoutParams = {
   origin: string;
   mode: "subscription" | "payment";
   metadata: Record<string, string>;
+  /** Workspace-scoped checkouts (e.g. the $1 first-video offer) return to their own view. */
+  successUrl?: string;
+  cancelUrl?: string;
 };
 
 export type StripeCheckoutResult = {
@@ -48,8 +51,8 @@ export async function createStripeCheckoutSession(params: StripeCheckoutParams):
   form.set("line_items[0][quantity]", "1");
   form.set("customer_email", params.customer.email);
   form.set("client_reference_id", params.order.id);
-  form.set("success_url", `${params.origin}/site/${params.siteSlug}/account?checkout=success&order=${params.order.id}`);
-  form.set("cancel_url", `${params.origin}/site/${params.siteSlug}/cart?checkout=cancelled&order=${params.order.id}`);
+  form.set("success_url", params.successUrl ?? `${params.origin}/site/${params.siteSlug}/account?checkout=success&order=${params.order.id}`);
+  form.set("cancel_url", params.cancelUrl ?? `${params.origin}/site/${params.siteSlug}/cart?checkout=cancelled&order=${params.order.id}`);
   form.set("payment_intent_data[application_fee_amount]", "0");
   for (const [key, value] of Object.entries(params.metadata)) {
     form.set(`metadata[${key}]`, value);

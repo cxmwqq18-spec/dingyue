@@ -519,6 +519,42 @@ export interface PartnerApplication {
 
 export type PublicPartnerApplicationReceipt = Pick<PartnerApplication, "id" | "status" | "createdAt">;
 
+export type CreditApplicationStatus = "pending" | "approved" | "rejected" | "archived";
+
+export interface CreditApplication {
+  id: string;
+  siteId: string;
+  customerId: string;
+  email: string;
+  canonicalEmail: string;
+  platform: string;
+  profileUrl: string;
+  followerTier: string;
+  evidencePosts: Array<{ url: string; urlHash: string }>;
+  audience?: string;
+  message?: string;
+  status: CreditApplicationStatus;
+  grantCredits?: number;
+  riskFlags: string[];
+  submitIp?: string;
+  submitUa?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
+  reviewNote?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreditApplicationReviewContext {
+  customerId: string;
+  accountAgeDays: number;
+  signupIp?: string;
+  submitIp?: string;
+  sameSubnetHistoryCount: number;
+  generationCount: number;
+  paidOrderCount: number;
+}
+
 export interface Customer {
   id: string;
   siteId: string;

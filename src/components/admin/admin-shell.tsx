@@ -34,6 +34,7 @@ function fallbackBreadcrumbs({
 const lightweightAdminPrefetchAllow = [
   "/admin/ai-tools",
   "/admin/content",
+  "/admin/credit-applications",
   "/admin/customers",
   "/admin/orders",
   "/admin/partners",

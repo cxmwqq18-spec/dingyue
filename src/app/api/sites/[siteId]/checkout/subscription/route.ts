@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireCustomerMutation } from "@/lib/api-auth";
 import { canPublishPaidProducts } from "@/lib/billing";
 import { completeAdminCheckoutRelational, startCustomerCheckoutRelational } from "@/lib/stores/billing-store";
+import { firstVideoOfferPurchaseEligibility } from "@/lib/stores/first-video-offer-store";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import { mapProduct } from "@/lib/stores/prisma-mappers";
@@ -13,6 +14,11 @@ const CHECKOUT_RETRY_RATE_LIMIT = { windowMs: 60000, maxRequests: 12, keyPrefix:
 
 function checkoutModeForInterval(interval: string): "subscription" | "payment" {
   return interval === "one_time" ? "payment" : "subscription";
+}
+
+/** The $1 first-video offer is keyed on the product row, never on a client hint. */
+function isFirstVideoTrialProduct(metadata: unknown): boolean {
+  return (metadata as { kind?: string } | null)?.kind === "first_video_trial";
 }
 
 export async function HEAD() {
@@ -49,7 +55,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   if (!guard.ok) return guard.response;
   const price = await prisma.price.findFirst({
     where: { siteId, id: body.priceId },
-    select: { id: true, interval: true, stripePriceId: true, status: true, amountCents: true, currency: true, effectiveFrom: true, effectiveTo: true, providerVerifiedAt: true, providerFingerprint: true }
+    select: { id: true, interval: true, stripePriceId: true, status: true, amountCents: true, currency: true, effectiveFrom: true, effectiveTo: true, providerVerifiedAt: true, providerFingerprint: true, product: { select: { metadata: true } } }
   }).catch(() => null);
   if (!price) {
     return NextResponse.json({ error: "price_not_found_for_site" }, { status: 404 });
@@ -57,6 +63,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
   const now = Date.now();
   if (!isPublicPriceFact(price, new Date(now), site.currency)) {
     return NextResponse.json({ error: "price_not_public" }, { status: 409 });
+  }
+  const firstVideoTrial = isFirstVideoTrialProduct(price.product?.metadata);
+  if (firstVideoTrial) {
+    const eligibility = await firstVideoOfferPurchaseEligibility(siteId, body.customerId);
+    if (!eligibility.eligible) {
+      return NextResponse.json({ error: "first_video_offer_ineligible", reason: eligibility.reason }, { status: 403 });
+    }
   }
   const checkoutMode = checkoutModeForInterval(price.interval);
 
@@ -70,7 +83,9 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     select: { id: true, email: true, role: true }
   }).catch(() => null);
 
-  if (admin) {
+  // Admin comp cannot fulfill the trial: the FirstVideoOffer row is created by
+  // the Stripe webhook, so this product always goes through real payment.
+  if (admin && !firstVideoTrial) {
     try {
       const result = await completeAdminCheckoutRelational({
         siteId,
@@ -149,8 +164,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       mode: checkoutMode,
       metadata: {
         ...checkout.metadata,
+        ...(firstVideoTrial ? { kind: "first_video_trial" } : {}),
         stripePriceId: checkout.price.stripePriceId ?? price.stripePriceId ?? ""
-      }
+      },
+      ...(firstVideoTrial ? {
+        successUrl: `${origin}/site/${site.slug}/app/create/starter-offer?checkout=success&order=${checkout.order.id}`,
+        cancelUrl: `${origin}/site/${site.slug}/app/create/starter-offer?checkout=cancelled`
+      } : {})
     });
     return NextResponse.json({
       ok: true,

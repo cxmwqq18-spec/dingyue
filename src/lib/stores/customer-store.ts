@@ -49,7 +49,7 @@ export async function createCustomerSessionRelational(
 }
 
 export async function createExistingCustomerSessionRelational(
-  params: { siteId: string; email: string; password: string },
+  params: { siteId: string; email: string; password: string; lastLoginIp?: string },
   client: DbClient = prisma
 ) {
   const createSession = async () => createExistingCustomerSessionRelationalOnce(params, client);
@@ -59,7 +59,7 @@ export async function createExistingCustomerSessionRelational(
 }
 
 async function createExistingCustomerSessionRelationalOnce(
-  params: { siteId: string; email: string; password: string },
+  params: { siteId: string; email: string; password: string; lastLoginIp?: string },
   client: DbClient
 ) {
   const email = params.email.trim().toLowerCase();
@@ -93,6 +93,10 @@ async function createExistingCustomerSessionRelationalOnce(
       expiresAt: new Date(Date.now() + relationalSessionTtlMs)
     }
   });
+
+  if (params.lastLoginIp) {
+    await client.customer.update({ where: { id: customer.id }, data: { lastLoginIp: params.lastLoginIp } });
+  }
 
   return {
     customer: toPublicCustomerRelational(customer as unknown as Record<string, unknown>),
