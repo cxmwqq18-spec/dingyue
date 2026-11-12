@@ -1871,10 +1871,13 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     }
   }
 
-  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo, chat: MessageSquare, subtitles: Captions };
+  const moduleIcons = { ...workspaceModuleIcons, home: Home, tools: Layers3, library: Library, inspirations: Lightbulb, analytics: Clapperboard, teams: UserRound, developer: LockKeyhole, twin: WandSparkles, clone: FileVideo, chat: MessageSquare, subtitles: Captions, starterOffer: Gift };
   // The $1 first-video offer module only navigates while the customer can buy
   // or use the offer; once consumed (or for existing customers) it disappears.
-  const starterOfferNavVisible = starterOffer?.state === "eligible" || starterOffer?.state === "purchased";
+  // An eligible state without a purchasable price means Stripe isn't wired up
+  // yet, so the entry stays hidden instead of showing a claim button that
+  // cannot check out.
+  const starterOfferNavVisible = (starterOffer?.state === "eligible" && Boolean(starterOffer?.priceId)) || starterOffer?.state === "purchased";
   const navGroup = (group: "main" | "create" | "explore") => WORKSPACE_MODULES.filter((item) => item.group === group && (item.id !== "starterOffer" || starterOfferNavVisible)).map((item) => {
     const Icon = moduleIcons[item.id as keyof typeof moduleIcons];
     return <a key={item.id} href={workspaceViewHref(basePath, item.id)} className={`${styles.navitem} ${view === item.id ? styles.active : ""}`} aria-current={view === item.id ? "page" : undefined} aria-disabled={busy} onClick={(event) => {
@@ -2027,7 +2030,7 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
             onOptimizePrompt={() => void optimizeCurrentPrompt()} promptOptimizing={promptOptimizing}
           />
           {importedBriefNotice()}
-          {customer && starterOffer?.state === "eligible" && <section className={styles.panel} aria-live="polite">
+          {customer && starterOffer?.state === "eligible" && starterOffer.priceId && <section className={styles.panel} aria-live="polite">
             <span className={styles.badge}>FIRST VIDEO OFFER</span>
             <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
             <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · 58% OFF · Full quality. No watermark. No subscription.</p>
@@ -2054,13 +2057,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
           <div className={styles.pageTitle}><h1>First Video Offer</h1><p>A one-time starter offer for your first product video.</p></div>
           {!customer && <section className={styles.panel}><h2 style={{ margin: "0 0 4px" }}>Log in to claim your offer</h2><p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is for new customers. Log in to check your eligibility.</p><div className={styles.footerActions}><a className={`${styles.button} ${styles.primary}`} href={loginHref}>Log in</a></div></section>}
           {customer && !starterOffer && <div className={styles.empty}><Loader2 size={24} className={styles.spin} /><span>Checking your offer…</span></div>}
-          {customer && starterOffer?.state === "eligible" && <section className={styles.panel} aria-live="polite">
+          {customer && starterOffer?.state === "eligible" && starterOffer.priceId && <section className={styles.panel} aria-live="polite">
             <span className={styles.badge}>FIRST VIDEO OFFER</span>
             <h2 style={{ margin: "10px 0 0" }}>Your first 15s product video — just $1</h2>
             <p className={styles.help} style={{ margin: "6px 0 0" }}><span style={{ textDecoration: "line-through" }}>$2.40</span> · <strong>58% OFF</strong> · 8 credits toward one 15s video at full quality.</p>
             <p className={styles.help} style={{ margin: "4px 0 0" }}>Full quality. No watermark. No subscription.</p>
             <div className={styles.footerActions}>
               <button className={`${styles.button} ${styles.primary}`} disabled={starterOfferClaiming || working || !starterOffer.priceId} onClick={() => void claimStarterOffer()}>{starterOfferClaiming ? "Starting checkout…" : "Claim your $1 video"}</button>
+            </div>
+          </section>}
+          {customer && starterOffer?.state === "eligible" && !starterOffer.priceId && <section className={styles.panel}>
+            <h2 style={{ margin: "0 0 4px" }}>This offer isn't available right now</h2>
+            <p className={styles.help} style={{ margin: "4px 0 0" }}>The $1 first-video offer is being set up. Check back soon — your eligibility is saved to your account.</p>
+            <div className={styles.footerActions}>
+              <button className={styles.linkButton} onClick={() => void navigate("home")}><span>Back to Home</span><ArrowRight size={15} /></button>
             </div>
           </section>}
           {customer && starterOffer?.state === "purchased" && <section className={styles.panel} aria-live="polite">
