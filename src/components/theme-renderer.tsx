@@ -29,6 +29,7 @@ import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/she
 import { AidreamcapesV2Page, isAidreamcapesV2Section } from "@/components/storefront/aidreamcapes-v2/page";
 import { AidreamcapesV2PolicyPage, isAidreamcapesV2PolicyPage } from "@/components/storefront/aidreamcapes-v2/policy";
 import { aidreamcapesPricingCards } from "@/components/storefront/aidreamcapes-v2/pricing-data";
+import type { V2CreditSchedule, V2PricingTier } from "@/components/storefront/aidreamcapes-v2/types";
 import { AidreamcapesZipHomepageSection } from "@/components/storefront/aidreamcapes-zip-homepage";
 import { AidreamcapesPublicSection } from "@/components/storefront/aidreamcapes-public-section";
 import { AidreamcapesZipFooter, type AidreamcapesZipCompanyProfile, type AidreamcapesZipPaymentMethod, type AidreamcapesZipSocialLink } from "@/components/storefront/aidreamcapes-zip-footer";
@@ -338,11 +339,20 @@ function ThemeRendererBody({
   // Aidreamcapes navigation is part of its current relational homepage data.
   // The site-id guard keeps this v2 shell isolated from every other storefront.
   const aidreamcapesRootLiveContent = displaySite.id === "site_aidreamcapes"
-    ? (displaySite.pages.find((page) => page.slug === "/") as unknown as { liveContentJson?: { siteNavigation?: AidreamcapesV2Navigation; seo?: { keywords?: unknown } } } | undefined)?.liveContentJson
+    ? (displaySite.pages.find((page) => page.slug === "/") as unknown as { liveContentJson?: { siteNavigation?: AidreamcapesV2Navigation; seo?: { keywords?: unknown }; sections?: { v2_main?: { settings?: { data?: { pricingPackages?: { tiers?: unknown; creditSchedule?: unknown } } } } } } } | undefined)?.liveContentJson
     : undefined;
   const aidreamcapesV2Navigation = aidreamcapesRootLiveContent?.siteNavigation;
   const aidreamcapesHomeKeywords = typeof aidreamcapesRootLiveContent?.seo?.keywords === "string"
     ? aidreamcapesRootLiveContent.seo.keywords.trim() || undefined
+    : undefined;
+  // One-time credit packages published on the homepage row replace the legacy
+  // subscription product cards in the pricing block.
+  const aidreamcapesHomePackagesTiers = aidreamcapesRootLiveContent?.sections?.v2_main?.settings?.data?.pricingPackages?.tiers;
+  const aidreamcapesHomePackages = Array.isArray(aidreamcapesHomePackagesTiers) && aidreamcapesHomePackagesTiers.length
+    ? {
+        tiers: aidreamcapesHomePackagesTiers as V2PricingTier[],
+        ...(aidreamcapesRootLiveContent?.sections?.v2_main?.settings?.data?.pricingPackages?.creditSchedule as V2CreditSchedule | undefined)
+      }
     : undefined;
   if (aidreamcapesV2Navigation?.version === 2) {
     const v2Entry = getSectionEntries(displayPage).find(([, section]) => isAidreamcapesV2Section(section));
@@ -353,7 +363,9 @@ function ThemeRendererBody({
       href: v2Href,
       asset: (value: string) => mediaAssetUrl(routedSite, value),
       ...(displaySite.id === "site_aidreamcapes" && normalizedPath === "/"
-        ? { pricingPlans: aidreamcapesPricingCards(products ?? [], displaySite, { href: v2Href }) }
+        ? aidreamcapesHomePackages
+          ? { pricingPackages: aidreamcapesHomePackages }
+          : { pricingPlans: aidreamcapesPricingCards(products ?? [], displaySite, { href: v2Href }) }
         : {})
     };
     const aidreamcapesFooterArticles = displaySite.id === "site_aidreamcapes"

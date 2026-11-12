@@ -1157,14 +1157,16 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
               tiers={tiers}
             />
           </Section>
-          {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How Credits Work"><Intro paras={list<string>(data.credits)} /></Section> : null}
-          {list<V2SpecRow>(data.costs).length ? (
-            <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What Each Photo and Video Costs">
-              <Specs r={r} rows={list<V2SpecRow>(data.costs)} />
-              {text(data.teams) ? <p className="meta-line" style={{ marginTop: 18 }}>{text(data.teams)}</p> : null}
-            </Section>
-          ) : null}
-          <Faq items={data.faq} title="Pricing Questions" r={r} />
+          <div className="v2-pp-center">
+            {list<string>(data.credits).length ? <Section eyebrow="Credits" title="How Credits Work"><Intro paras={list<string>(data.credits)} /></Section> : null}
+            {list<V2SpecRow>(data.costs).length ? (
+              <Section eyebrow="Credits per job" lead="Each job shows its exact cost before it starts." title="What Each Photo and Video Costs">
+                <Specs r={r} rows={list<V2SpecRow>(data.costs)} />
+                {text(data.teams) ? <p className="meta-line" style={{ marginTop: 18 }}>{text(data.teams)}</p> : null}
+              </Section>
+            ) : null}
+            <Faq items={data.faq} title="Pricing Questions" r={r} />
+          </div>
           <NextLinks data={data} r={r} />
           <CtaBand note={text(data.startNote)} href="/app/create" lead={ctaLead(data, "Pick a package when you are ready.")} r={r} title={ctaTitle(data, "Start with one product photo")} />
         </>

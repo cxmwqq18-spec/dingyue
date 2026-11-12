@@ -1,6 +1,7 @@
 import { Section } from "./parts";
 import { copyLabel, type V2Resolvers } from "./types";
 import { AidreamcapesPricingToggle } from "./pricing-toggle";
+import { AidreamcapesPackageCards } from "./package-cards";
 
 
 const pricingCss = `
@@ -43,6 +44,22 @@ const pricingCss = `
 `;
 
 export function AidreamcapesV2PricingSection({ r }: { r: V2Resolvers }) {
+  const packages = r.pricingPackages?.tiers ?? [];
+  if (packages.length) {
+    return (
+      <Section
+        eyebrow={copyLabel(r, "Plans & Credits")}
+        id="pricing"
+        lead={copyLabel(r, "One-time credit packages for one, six, or twelve months — credits delivered monthly, no auto-renewal. Credit packs are open to everyone when a month runs short.")}
+        title={copyLabel(r, "Pay Once, Create All Month")}
+      >
+        <AidreamcapesPackageCards
+          creditSchedule={r.pricingPackages?.creditSchedule ?? { photoCredits: 24, fifteenSecondVideoCredits: 60 }}
+          tiers={packages}
+        />
+      </Section>
+    );
+  }
   const plans = r.pricingPlans ?? [];
   return (
     <>

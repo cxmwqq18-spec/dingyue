@@ -1,0 +1,108 @@
+{
+  "applyDate": "2026-11-12",
+  "siteId": "site_aidreamcapes",
+  "description": "Pricing fixes after production review: (1) /pricing 'How Credits Work' paragraph 3 still described the retired subscription prices ($24.50/200, $35/300, $63/600) — rewritten to the one-time package numbers with clear per-term pricing; (2) six/twelve-month strike prices now carry the /mo unit so the struck-through monthly price cannot be misread as a one-time price; (3) the homepage pricing block switches from the legacy subscription product cards to the same one-time packages (pricingPackages written to the '/' row; renderer falls back to product cards when absent). Costs table, h1, canonical, packs, discounts, FAQ and JSON-LD stay as applied earlier today.",
+  "pricing": {
+    "slug": "/pricing",
+    "credits": [
+      "One product photo uses 24 credits. A 6-second video uses 24, a 10-second video uses 40, a 15-second video uses 60, and a 30-second video uses 120. You can add up to 7 reference photos. The amount appears before you confirm the job.",
+      "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance on their own. You do not send a ticket for that return.",
+      "Every package is a one-time purchase, and its credits arrive at the start of each month of the term. Starter is $24 for one month with 200 credits — about 8 product photos or 3 fifteen-second videos. Pro is $59 with 500 credits, about 20 photos or 8 of those videos. Studio is $129 with 1,200 credits, about 50 photos or 20. Six- and twelve-month terms cost less per month, and one-time credit packs from $14 cover a month that runs short."
+    ],
+    "seo": {
+      "description": "AI UGC video pricing: one-time credit packages from $24 for 200 credits a month — six- and twelve-month terms cost less per month, and one-time credit packs from $14 cover a short month. No subscription."
+    },
+    "startNote": "Packages from $24 for one month. You see the credit cost before every job, and if a job fails its credits go back to your balance.",
+    "ctaTitle": "Pick a Package and Make the Next Ad",
+    "tiers": [
+      {
+        "id": "starter",
+        "name": "Starter",
+        "who": "For trying video ads and product photos.",
+        "creditsPerMonth": 200,
+        "ctaHref": "/app/create",
+        "terms": {
+          "1": { "price": "$24", "periodLabel": "one month" },
+          "6": { "price": "$132", "perMonth": "$22", "strike": "$24/mo", "savingsLabel": "Save $12 vs monthly", "periodLabel": "6 months, one payment" },
+          "12": { "price": "$228", "perMonth": "$19", "strike": "$24/mo", "savingsLabel": "Save $60 vs monthly", "periodLabel": "12 months, one payment" }
+        },
+        "features": ["All core image and video models", "All templates and video sizes", "No watermark", "Email support"]
+      },
+      {
+        "id": "pro",
+        "name": "Pro",
+        "who": "For stores testing new ads every week.",
+        "badge": "Most popular",
+        "creditsPerMonth": 500,
+        "ctaHref": "/app/create",
+        "terms": {
+          "1": { "price": "$59", "periodLabel": "one month" },
+          "6": { "price": "$312", "perMonth": "$52", "strike": "$59/mo", "savingsLabel": "Save $42 vs monthly", "periodLabel": "6 months, one payment" },
+          "12": { "price": "$540", "perMonth": "$45", "strike": "$59/mo", "savingsLabel": "Save $168 vs monthly", "periodLabel": "12 months, one payment" }
+        },
+        "features": ["Everything in Starter", "Up to 20% off credit packs", "Room for weekly ad testing"]
+      },
+      {
+        "id": "studio",
+        "name": "Studio",
+        "who": "For brands and agencies with many products.",
+        "creditsPerMonth": 1200,
+        "ctaHref": "/app/create",
+        "terms": {
+          "1": { "price": "$129", "periodLabel": "one month" },
+          "6": { "price": "$696", "perMonth": "$116", "strike": "$129/mo", "savingsLabel": "Save $78 vs monthly", "periodLabel": "6 months, one payment" },
+          "12": { "price": "$1,140", "perMonth": "$95", "strike": "$129/mo", "savingsLabel": "Save $408 vs monthly", "periodLabel": "12 months, one payment" }
+        },
+        "features": ["Everything in Pro", "Up to 25% off credit packs", "Most room for new products"]
+      }
+    ]
+  },
+  "home": {
+    "slug": "/",
+    "pricingPackages": {
+      "creditSchedule": { "photoCredits": 24, "fifteenSecondVideoCredits": 60 },
+      "tiers": [
+        {
+          "id": "starter",
+          "name": "Starter",
+          "who": "For trying video ads and product photos.",
+          "creditsPerMonth": 200,
+          "ctaHref": "/app/create",
+          "terms": {
+            "1": { "price": "$24", "periodLabel": "one month" },
+            "6": { "price": "$132", "perMonth": "$22", "strike": "$24/mo", "savingsLabel": "Save $12 vs monthly", "periodLabel": "6 months, one payment" },
+            "12": { "price": "$228", "perMonth": "$19", "strike": "$24/mo", "savingsLabel": "Save $60 vs monthly", "periodLabel": "12 months, one payment" }
+          },
+          "features": ["All core image and video models", "All templates and video sizes", "No watermark", "Email support"]
+        },
+        {
+          "id": "pro",
+          "name": "Pro",
+          "who": "For stores testing new ads every week.",
+          "badge": "Most popular",
+          "creditsPerMonth": 500,
+          "ctaHref": "/app/create",
+          "terms": {
+            "1": { "price": "$59", "periodLabel": "one month" },
+            "6": { "price": "$312", "perMonth": "$52", "strike": "$59/mo", "savingsLabel": "Save $42 vs monthly", "periodLabel": "6 months, one payment" },
+            "12": { "price": "$540", "perMonth": "$45", "strike": "$59/mo", "savingsLabel": "Save $168 vs monthly", "periodLabel": "12 months, one payment" }
+          },
+          "features": ["Everything in Starter", "Up to 20% off credit packs", "Room for weekly ad testing"]
+        },
+        {
+          "id": "studio",
+          "name": "Studio",
+          "who": "For brands and agencies with many products.",
+          "creditsPerMonth": 1200,
+          "ctaHref": "/app/create",
+          "terms": {
+            "1": { "price": "$129", "periodLabel": "one month" },
+            "6": { "price": "$696", "perMonth": "$116", "strike": "$129/mo", "savingsLabel": "Save $78 vs monthly", "periodLabel": "6 months, one payment" },
+            "12": { "price": "$1,140", "perMonth": "$95", "strike": "$129/mo", "savingsLabel": "Save $408 vs monthly", "periodLabel": "12 months, one payment" }
+          },
+          "features": ["Everything in Pro", "Up to 25% off credit packs", "Most room for new products"]
+        }
+      ]
+    }
+  }
+}
