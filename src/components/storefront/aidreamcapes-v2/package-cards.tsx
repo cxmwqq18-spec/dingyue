@@ -48,21 +48,21 @@ export const pricingPageCss = `
 .adc2 .v2-pp-card li:before{position:absolute;left:1px;top:0;color:#a78bfa;content:"\\2713";font-weight:800}
 .adc2 .v2-pp-cta{display:flex;min-height:47px;align-items:center;justify-content:center;margin-top:auto;border:1px solid rgba(255,255,255,.82);border-radius:11px;background:transparent;color:var(--ink);font-size:14px;font-weight:700;text-decoration:none}
 .adc2 .v2-pp-card.is-featured .v2-pp-cta{border-color:transparent;background:var(--grad)}
-.adc2 .v2-pp-matrix{max-width:560px;margin:26px auto 0;border:1px solid var(--line-2);border-radius:14px;background:var(--card);padding:16px 18px;font-size:13px}
-.adc2 .v2-pp-matrix .t{margin:0 0 10px;font-size:11px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);text-align:center}
+.adc2 .v2-pp-matrix{max-width:780px;margin:30px auto 0;border:1px solid var(--line-2);border-radius:16px;background:var(--card);padding:24px 30px 20px;font-size:15px}
+.adc2 .v2-pp-matrix .t{margin:0 0 14px;font-size:13px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);text-align:center}
 .adc2 .v2-pp-matrix table{width:100%;border-collapse:collapse}
-.adc2 .v2-pp-matrix th{font-size:11.5px;color:var(--ink-3);font-weight:650;padding:5px 6px;text-align:right}
+.adc2 .v2-pp-matrix th{font-size:13.5px;color:var(--ink-3);font-weight:650;padding:9px 10px;text-align:right}
 .adc2 .v2-pp-matrix th:first-child{text-align:left}
-.adc2 .v2-pp-matrix td{padding:6px;border-top:1px solid var(--line);text-align:right;color:var(--ink-2)}
+.adc2 .v2-pp-matrix td{padding:12px 10px;border-top:1px solid var(--line);text-align:right;color:var(--ink-2)}
 .adc2 .v2-pp-matrix td:first-child{text-align:left;color:var(--ink);font-weight:650}
 .adc2 .v2-pp-matrix td.hit{color:#8cf0c5;font-weight:700}
-.adc2 .v2-pp-matrix .note{margin:10px 0 0;font-size:11.5px;color:var(--ink-3);text-align:center}
-.adc2 .v2-pp-packs-h{margin:54px 0 6px;text-align:center}
-.adc2 .v2-pp-packs-h h3{font-size:26px;letter-spacing:-.02em;margin:0 0 6px;font-weight:750}
-.adc2 .v2-pp-packs-h p{color:var(--ink-2);margin:0 auto;font-size:14px;max-width:640px}
-.adc2 .v2-pp-mytier{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:16px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
-.adc2 .v2-pp-mytier .opts{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line-2);border-radius:999px;background:var(--card)}
-.adc2 .v2-pp-mytier button{border:0;border-radius:999px;background:transparent;padding:6px 14px;color:var(--ink-2);font-size:12.5px;font-weight:650;cursor:pointer}
+.adc2 .v2-pp-matrix .note{margin:14px 0 0;font-size:13.5px;color:var(--ink-3);text-align:center}
+.adc2 .v2-pp-packs-h{margin:64px 0 6px;text-align:center}
+.adc2 .v2-pp-packs-h h3{font-size:32px;letter-spacing:-.02em;margin:0 0 8px;font-weight:750}
+.adc2 .v2-pp-packs-h p{color:var(--ink-2);margin:0 auto;font-size:15.5px;max-width:680px}
+.adc2 .v2-pp-mytier{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:20px;font-size:15px;color:var(--ink-2);flex-wrap:wrap}
+.adc2 .v2-pp-mytier .opts{display:inline-flex;gap:4px;padding:5px;border:1px solid var(--line-2);border-radius:999px;background:var(--card)}
+.adc2 .v2-pp-mytier button{border:0;border-radius:999px;background:transparent;padding:9px 20px;color:var(--ink-2);font-size:14.5px;font-weight:650;cursor:pointer}
 .adc2 .v2-pp-mytier button.is-on{background:rgba(139,92,246,.22);color:#ddd0ff}
 .adc2 .v2-pp-packs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:20px}
 .adc2 .v2-pp-pack{border:1px solid var(--line-2);border-radius:20px;background:var(--card);padding:24px;display:flex;flex-direction:column;position:relative}
