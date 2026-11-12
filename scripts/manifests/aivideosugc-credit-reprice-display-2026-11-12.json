@@ -1,0 +1,44 @@
+{
+  "applyDate": "2026-11-12",
+  "siteId": "site_aidreamcapes",
+  "description": "Credit reprice display pass (runtime companion: apply-aivideosugc-credit-reprice-2026-11-12.mjs). Approved rate card: photo 1 credit ($0.12, benchmarked against Topview ≈$0.10 / Photoroom $0.33 / Presti $0.29), 15s video 20 credits ($2.40), 30s video 40 credits ($4.80 — undercuts Topview's ~$6/30s). 6s/10s rows removed: the workspace only offers 15s/30s, so those display rows described durations the product does not sell. Updates the /pricing costs table and credits copy, the conversion schedule on both /pricing and the homepage packages, the homepage meta description with the quotable differentiators (GEO batch), and adds Product/Offer JSON-LD for the three packages to /pricing so crawlers and AI assistants can read the structured prices.",
+  "pricing": {
+    "slug": "/pricing",
+    "costs": [
+      ["Product photo", "1 credit"],
+      ["Video, 15 seconds", "20 credits"],
+      ["Video, 30 seconds", "40 credits"]
+    ],
+    "credits": [
+      "One product photo uses 1 credit. A 15-second video uses 20, and a 30-second video uses 40. You can add up to 7 reference photos. The amount appears before you confirm the job.",
+      "A job reserves its credits while it runs and charges them when the file is ready. When a job fails, the reserved credits return to your balance on their own. You do not send a ticket for that return.",
+      "Every package is a one-time purchase, and its credits arrive at the start of each month of the term. Starter is $24 for one month with 200 credits — 200 product photos or about 10 fifteen-second videos. Pro is $59 with 500 credits, and Studio is $129 with 1,200 credits — 1,200 photos or about 60 of those videos. Six- and twelve-month terms cost less per month, and one-time credit packs from $14 cover a month that runs short."
+    ],
+    "creditSchedule": { "photoCredits": 1, "fifteenSecondVideoCredits": 20 },
+    "packages": [
+      {
+        "id": "starter",
+        "name": "AIVideosUGC Starter — 200 credits a month",
+        "price": "24",
+        "description": "One-time $24 purchase with 200 credits delivered monthly for one month. No subscription."
+      },
+      {
+        "id": "pro",
+        "name": "AIVideosUGC Pro — 500 credits a month",
+        "price": "59",
+        "description": "One-time $59 purchase with 500 credits delivered monthly for one month. No subscription."
+      },
+      {
+        "id": "studio",
+        "name": "AIVideosUGC Studio — 1,200 credits a month",
+        "price": "129",
+        "description": "One-time $129 purchase with 1,200 credits delivered monthly for one month. No subscription."
+      }
+    ]
+  },
+  "home": {
+    "slug": "/",
+    "creditSchedule": { "photoCredits": 1, "fifteenSecondVideoCredits": 20 },
+    "seoDescription": "Turn one product image into UGC video ads and product photos. One-time credit packages from $24 — no subscription, all models and AI actors included, watermark-free export."
+  }
+}

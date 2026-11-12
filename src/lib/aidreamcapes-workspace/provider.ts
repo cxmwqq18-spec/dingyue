@@ -134,6 +134,10 @@ function workspaceDurationCredits(
   }
   return credits;
 }
+
+/** 旧共享视频通道：保留原费率作为其他站点的平台回退价，本工作台不展示、不选择。 */
+const AIVIDEOSUGC_LEGACY_VIDEO_PROVIDER_ID = "aiprov_mvjo1842_gt4f4c";
+
 export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCatalog> {
   assertWorkspaceSite(siteId);
   if (isWorkspaceStabilityMockMode()) {
@@ -164,7 +168,10 @@ export async function getWorkspaceCatalog(siteId: string): Promise<WorkspaceCata
     };
   }
   const [providers, app, imageProviders, imageApp, subtitlesAvailable, actors] = await Promise.all([
-    listWorkspaceProviderRows({ providerType: "video" }),
+    // The legacy shared video channel keeps its old rate card as the platform
+    // fallback for other sites; this workspace only exposes the dedicated
+    // priced channel whose rate card matches the published pricing page.
+    listWorkspaceProviderRows({ providerType: "video" }).then((rows) => rows.filter((provider) => provider.id !== AIVIDEOSUGC_LEGACY_VIDEO_PROVIDER_ID)),
     prisma.siteAiApp.findFirst({ where: { siteId, enabled: true, aiApp: { slug: "video_generator" } }, select: { creditCost: true } }),
     listWorkspaceProviderRows({ providerType: "image" }),
     prisma.siteAiApp.findFirst({ where: { siteId, enabled: true, aiApp: { slug: "image_generator" } }, select: { creditCost: true } }),
