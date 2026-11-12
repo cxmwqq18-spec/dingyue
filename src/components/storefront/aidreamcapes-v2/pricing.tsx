@@ -3,6 +3,11 @@ import { copyLabel, type V2Resolvers } from "./types";
 import { AidreamcapesPricingToggle } from "./pricing-toggle";
 import { AidreamcapesPackageCards } from "./package-cards";
 
+function numberField(value: unknown, fallback: number): number {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
 
 const pricingCss = `
 .adc2 .v2-pricing-content{display:grid;gap:28px}
@@ -54,7 +59,14 @@ export function AidreamcapesV2PricingSection({ r }: { r: V2Resolvers }) {
         title={copyLabel(r, "Pay Once, Create All Month")}
       >
         <AidreamcapesPackageCards
-          creditSchedule={r.pricingPackages?.creditSchedule ?? { photoCredits: 24, fifteenSecondVideoCredits: 60 }}
+          creditSchedule={{
+            // The homepage resolver passes the schedule flattened next to
+            // tiers (theme-renderer spread); the pricing page nests it under
+            // creditSchedule. Support both shapes and fall back to the same
+            // values the legacy cards used.
+            photoCredits: numberField(r.pricingPackages?.creditSchedule?.photoCredits ?? r.pricingPackages?.photoCredits, 24),
+            fifteenSecondVideoCredits: numberField(r.pricingPackages?.creditSchedule?.fifteenSecondVideoCredits ?? r.pricingPackages?.fifteenSecondVideoCredits, 60)
+          }}
           tiers={packages}
         />
       </Section>

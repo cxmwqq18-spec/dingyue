@@ -225,7 +225,9 @@ export type V2Resolvers = {
   pricingPlans?: V2PricingCard[];
   /** One-time credit packages for the homepage pricing block; when present it
    * replaces the legacy subscription product cards. */
-  pricingPackages?: { tiers: V2PricingTier[]; creditSchedule?: V2CreditSchedule };
+  // Homepage resolver spreads the credit schedule flat next to tiers; the
+  // pricing page nests it under creditSchedule.
+  pricingPackages?: { tiers: V2PricingTier[]; creditSchedule?: V2CreditSchedule; photoCredits?: number; fifteenSecondVideoCredits?: number };
   // The plain link for a workspace address, used where a form must submit there directly.
   direct?: (value: string) => string;
 };
