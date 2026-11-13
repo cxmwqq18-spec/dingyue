@@ -31,7 +31,9 @@ function verifyStripeSignature(rawBody: string, header: string | null, secret: s
   if (nowSeconds - parsed.timestamp < 0 || nowSeconds - parsed.timestamp >= SIGNATURE_TOLERANCE_SECONDS) return false;
   const expected = createHmac("sha256", secret).update(`${parsed.timestamp}.${rawBody}`).digest();
   return parsed.signatures.some((candidate) => {
-    const actual = Buffer.from(candidate, "utf8");
+    // Stripe v1 signatures are hex digests; compare decoded bytes, not the
+    // hex text (utf8 bytes are 64 long and never match the 32-byte digest).
+    const actual = Buffer.from(candidate, "hex");
     return actual.length === expected.length && timingSafeEqual(actual, expected);
   });
 }
