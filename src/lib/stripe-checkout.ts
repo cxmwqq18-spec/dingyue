@@ -29,6 +29,23 @@ function stripeApiKey(): string | undefined {
   return key || undefined;
 }
 
+// Sites can run on the platform's own Stripe account (single-account mode) or
+// on a separate connected account. The Stripe-Account header is only valid for
+// the connected-account case, so resolve which account the key belongs to once
+// per process and omit the header when it already matches the payee.
+let keyAccountIdCache: string | null | undefined;
+async function resolveKeyAccountId(apiKey: string): Promise<string | null> {
+  if (keyAccountIdCache !== undefined) return keyAccountIdCache;
+  try {
+    const response = await fetch("https://api.stripe.com/v1/account", { headers: { Authorization: `Bearer ${apiKey}` }, cache: "no-store" });
+    const payload = await response.json().catch(() => ({})) as { id?: string };
+    keyAccountIdCache = response.ok && payload.id ? payload.id : null;
+  } catch {
+    keyAccountIdCache = null;
+  }
+  return keyAccountIdCache;
+}
+
 export function stripeCheckoutReadiness(params: { stripeAccountId?: string | null; stripePriceId?: string | null }): { ok: true } | { ok: false; reason: string } {
   if (!stripeApiKey()) return { ok: false, reason: "STRIPE_SECRET_KEY is not configured." };
   if (!params.stripeAccountId || !params.stripeAccountId.startsWith("acct_")) return { ok: false, reason: "A real Stripe connected account is required." };
@@ -44,6 +61,8 @@ export async function createStripeCheckoutSession(params: StripeCheckoutParams):
   if (!readiness.ok) throw new Error(readiness.reason);
   const apiKey = stripeApiKey();
   if (!apiKey || !params.price.stripePriceId) throw new Error("stripe_checkout_not_ready");
+  const keyAccountId = await resolveKeyAccountId(apiKey);
+  if (!keyAccountId) throw new Error("stripe_account_resolution_failed");
 
   const form = new URLSearchParams();
   form.set("mode", params.mode);
@@ -60,13 +79,14 @@ export async function createStripeCheckoutSession(params: StripeCheckoutParams):
     if (params.mode === "payment") form.set(`payment_intent_data[metadata][${key}]`, value);
   }
 
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
+    "Content-Type": "application/x-www-form-urlencoded"
+  };
+  if (keyAccountId !== params.stripeAccountId) headers["Stripe-Account"] = params.stripeAccountId;
   const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Stripe-Account": params.stripeAccountId
-    },
+    headers,
     body: form,
     cache: "no-store"
   });
