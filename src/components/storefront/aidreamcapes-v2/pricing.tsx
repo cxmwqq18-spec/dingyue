@@ -2,6 +2,7 @@ import { Section } from "./parts";
 import { copyLabel, text, type V2Resolvers } from "./types";
 import { AidreamcapesPricingToggle } from "./pricing-toggle";
 import { AidreamcapesPackageCards } from "./package-cards";
+import { AidreamcapesV2PricingPromoRibbon } from "./promo";
 
 type V2PromoBanner = { enabled: boolean; text: string; href: string; linkLabel: string };
 
@@ -76,6 +77,7 @@ export function AidreamcapesV2PricingSection({ r }: { r: V2Resolvers }) {
         lead={copyLabel(r, "One-time credit packages for one, six, or twelve months — credits delivered monthly, no auto-renewal. Credit packs are open to everyone when a month runs short.")}
         title={copyLabel(r, "Pay Once, Create All Month")}
       >
+        <AidreamcapesV2PricingPromoRibbon cards={r.promoStripCards} r={r} />
         <AidreamcapesPackageCards
           creditSchedule={{
             // The homepage resolver passes the schedule flattened next to

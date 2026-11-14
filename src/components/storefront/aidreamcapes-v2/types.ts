@@ -230,6 +230,8 @@ export type V2Resolvers = {
   pricingPackages?: { tiers: V2PricingTier[]; creditSchedule?: V2CreditSchedule; photoCredits?: number; fifteenSecondVideoCredits?: number };
   // The plain link for a workspace address, used where a form must submit there directly.
   direct?: (value: string) => string;
+  /** Compact offer pills for the pricing module, mirroring the homepage promo strip cards. */
+  promoStripCards?: Array<{ key?: string; badge?: string; title?: string; cta?: string; href?: string }>;
 };
 
 export function copyLabel(r: Pick<V2Resolvers, "copy">, value: string): string {

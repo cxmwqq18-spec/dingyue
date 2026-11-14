@@ -8,6 +8,8 @@
 // JavaScript the 1-month packages render first, and both lookup tables
 // (package prices, pack discounts) carry every value in static HTML.
 import { useState } from "react";
+import type { V2Resolvers } from "./types";
+import { AidreamcapesV2PricingPromoRibbon } from "./promo";
 import { AidreamcapesPackageCards, EntryCta, PRICING_TERM_LABEL, pricingPageCss } from "./package-cards";
 import type { V2CreditPack, V2CreditSchedule, V2PackDiscounts, V2PricingStep, V2PricingTerm, V2PricingTier } from "./types";
 
@@ -27,7 +29,9 @@ export function AidreamcapesPricingPage({
   packDiscounts,
   steps,
   terms,
-  creditSchedule
+  creditSchedule,
+  promoCards,
+  r
 }: {
   tiers: V2PricingTier[];
   packs: V2CreditPack[];
@@ -35,6 +39,8 @@ export function AidreamcapesPricingPage({
   steps: V2PricingStep[];
   terms: string[];
   creditSchedule: V2CreditSchedule;
+  promoCards?: Array<{ key?: string; badge?: string; title?: string; cta?: string; href?: string }>;
+  r: V2Resolvers;
 }) {
   const [memberTier, setMemberTier] = useState<string>("none");
   const [memberTerm, setMemberTerm] = useState<V2PricingTerm>("1");
@@ -54,6 +60,8 @@ export function AidreamcapesPricingPage({
           ))}
         </div>
       ) : null}
+
+      {promoCards?.length ? <AidreamcapesV2PricingPromoRibbon cards={promoCards} r={r} /> : null}
 
       <AidreamcapesPackageCards creditSchedule={creditSchedule} tiers={tiers} />
 

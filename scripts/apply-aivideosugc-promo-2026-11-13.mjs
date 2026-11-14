@@ -36,6 +36,14 @@ const manifest = {
   },
   pricing: {
     slug: "/pricing",
+    promoStrip: {
+      enabled: true,
+      stats: "",
+      cards: [
+        { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits" },
+        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer" }
+      ]
+    },
     promoBanner: {
       enabled: true,
       text: "🎁 Free credits for creators · $1 first video for new users",
@@ -78,7 +86,7 @@ try {
 
   for (const part of ["home", "pricing"]) {
     const spec = manifest[part];
-    const key = part === "home" ? "promoStrip" : "promoBanner";
+    const keys = part === "home" ? ["promoStrip"] : ["promoBanner", "promoStrip"];
     const row = bySlug.get(spec.slug);
     assert(row, `LivePage ${spec.slug} does not exist on ${target}. Nothing was written.`);
     assert(row.contentJson && typeof row.contentJson === "object" && !Array.isArray(row.contentJson), `LivePage ${spec.slug} contentJson is missing or not an object.`);
@@ -88,17 +96,19 @@ try {
     if (baseHashes[part]) assert.equal(hash(row.contentJson), baseHashes[part], `${spec.slug} contentJson changed since the reviewed dry run; refusing to apply.`);
 
     // Idempotency: absent -> write; identical -> no-op; different -> refuse.
-    const current = settings.data[key];
-    if (current !== undefined) {
-      assert.equal(stable(current), stable(spec[key]), `LivePage ${spec.slug} already has ${key} with different content; refusing to overwrite manual edits.`);
-      console.log(`[aivideosugc-promo] ${spec.slug}: ${key} already identical; no-op.`);
-      continue;
-    }
+    for (const key of keys) {
+      const current = settings.data[key];
+      if (current !== undefined) {
+        assert.equal(stable(current), stable(spec[key]), `LivePage ${spec.slug} already has ${key} with different content; refusing to overwrite manual edits.`);
+        console.log(`[aivideosugc-promo] ${spec.slug}: ${key} already identical; no-op.`);
+        continue;
+      }
 
-    const h1Before = settings.data.h1;
-    settings.data[key] = spec[key];
-    assert.equal(settings.data.h1, h1Before, `${spec.slug} h1 changed; not allowed.`);
-    plans[spec.slug] = contentJson;
+      const h1Before = settings.data.h1;
+      settings.data[key] = spec[key];
+      assert.equal(settings.data.h1, h1Before, `${spec.slug} h1 changed; not allowed.`);
+      plans[spec.slug] = contentJson;
+    }
   }
 
   console.log(`[aivideosugc-promo] target=${target}`);

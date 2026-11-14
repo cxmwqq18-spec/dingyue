@@ -348,6 +348,8 @@ function ThemeRendererBody({
   // One-time credit packages published on the homepage row replace the legacy
   // subscription product cards in the pricing block.
   const aidreamcapesHomePackagesTiers = aidreamcapesRootLiveContent?.sections?.v2_main?.settings?.data?.pricingPackages?.tiers;
+  // Promo strip cards feed the compact offer ribbon inside the pricing module.
+  const aidreamcapesHomePromoCards = (aidreamcapesRootLiveContent?.sections?.v2_main?.settings?.data as { promoStrip?: { cards?: Array<{ key?: string; badge?: string; title?: string; cta?: string; href?: string }> } } | undefined)?.promoStrip?.cards;
   const aidreamcapesHomePackages = Array.isArray(aidreamcapesHomePackagesTiers) && aidreamcapesHomePackagesTiers.length
     ? {
         tiers: aidreamcapesHomePackagesTiers as V2PricingTier[],
@@ -366,6 +368,9 @@ function ThemeRendererBody({
         ? aidreamcapesHomePackages
           ? { pricingPackages: aidreamcapesHomePackages }
           : { pricingPlans: aidreamcapesPricingCards(products ?? [], displaySite, { href: v2Href }) }
+        : {}),
+      ...(displaySite.id === "site_aidreamcapes" && normalizedPath === "/" && aidreamcapesHomePromoCards?.length
+        ? { promoStripCards: aidreamcapesHomePromoCards }
         : {})
     };
     const aidreamcapesFooterArticles = displaySite.id === "site_aidreamcapes"
