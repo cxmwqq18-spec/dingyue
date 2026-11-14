@@ -1152,7 +1152,7 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
             title={typeof head.title === "string" ? head.title : "Pay Once, Create All Month"}
           >
             <AidreamcapesPricingPage
-              promoCards={list<{ key?: string; badge?: string; title?: string; cta?: string; href?: string }>(record(data.promoStrip).cards).map((card) => ({ ...card, href: r.href(card.href) }))}
+              promoCards={list<{ key?: string; badge?: string; title?: string; cta?: string; href?: string }>(record(data.promoStrip).cards).filter((card): card is typeof card & { href: string } => typeof card.href === "string").map((card) => ({ ...card, href: r.href(card.href) }))}
               creditSchedule={{
                 photoCredits: numberField(record(data.creditSchedule).photoCredits, 24),
                 fifteenSecondVideoCredits: numberField(record(data.creditSchedule).fifteenSecondVideoCredits, 60)
