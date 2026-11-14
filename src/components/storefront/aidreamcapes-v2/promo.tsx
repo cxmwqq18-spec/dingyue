@@ -1,6 +1,6 @@
 import { text, type V2Resolvers } from "./types";
 
-type V2PromoStripCard = { key: string; badge: string; title: string; body: string; cta: string; href: string; price?: string; priceNote?: string };
+type V2PromoStripCard = { key: string; badge: string; title: string; body: string; cta: string; href: string; price?: string };
 type V2PromoStrip = { enabled: boolean; stats: string; cards: V2PromoStripCard[] };
 
 // Homepage offer band under the hero area. Fully data-driven: without an
@@ -25,12 +25,7 @@ export function AidreamcapesV2PromoStrip({ promo, r }: { promo: unknown; r: V2Re
                 {text(card.body) ? <p className="apromo-body">{card.body}</p> : null}
                 {text(card.cta) ? <a className="apromo-cta" href={r.href(card.href)}>{card.cta} →</a> : null}
               </div>
-              {text(card.price) ? (
-                <div className="apromo-price" aria-hidden="true">
-                  <span>{card.price}</span>
-                  <small>{text(card.priceNote) || "first video"}</small>
-                </div>
-              ) : null}
+              {text(card.price) ? <div className="apromo-price" aria-hidden="true"><span>{card.price}</span><small>first video</small></div> : null}
             </article>
           ))}
         </div>

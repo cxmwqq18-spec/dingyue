@@ -29,8 +29,8 @@ const manifest = {
       enabled: true,
       stats: "1,200+ product videos generated in the last 30 days",
       cards: [
-        { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits", price: "FREE", priceNote: "with #tag" },
-        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1", priceNote: "first video" }
+        { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits" },
+        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1" }
       ]
     }
   },
@@ -40,8 +40,8 @@ const manifest = {
       enabled: true,
       stats: "",
       cards: [
-        { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits", price: "FREE", priceNote: "with #tag" },
-        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1", priceNote: "first video" }
+        { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits" },
+        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1" }
       ]
     },
     promoBanner: {
