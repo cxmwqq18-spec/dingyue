@@ -82,7 +82,13 @@ const imageStyles: { id: WorkspaceImageTool; label: string }[] = [
 
 /** Keep displayed settings and submitted settings inside the selected model's capabilities. */
 export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, modelId: string, aspect: Aspect, duration: Duration, resolution?: string) {
-  const model = catalog?.models.find((item) => item.id === modelId) ?? catalog?.models.find((item) => item.available) ?? catalog?.models[0];
+  // Default to the published pricing channel (Wan 2.6 1080p): its 15s=20cr
+  // rate card matches the pricing page and it is the first-video trial
+  // channel. Provider priority otherwise surfaces a 30cr/15s row first.
+  const model = (modelId && catalog?.models.find((item) => item.id === modelId))
+    ?? catalog?.models.find((item) => item.available && item.id === "aiprov_aivideosugc_wan1080")
+    ?? catalog?.models.find((item) => item.available)
+    ?? catalog?.models[0];
   const aspects = catalog?.aspects.filter((item) => !model || model.aspects.includes(item)) ?? [];
   const durations = catalog?.durations.filter((item) => !model || model.durations.includes(item.value)) ?? [];
   const resolutions = model?.resolutions ?? [];
