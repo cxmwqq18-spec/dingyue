@@ -85,7 +85,7 @@ export function homeComposerVideoOptions(catalog: WorkspaceCatalog | undefined, 
   // Default to the published pricing channel (Wan 2.6 1080p): its 15s=20cr
   // rate card matches the pricing page and it is the first-video trial
   // channel. Provider priority otherwise surfaces a 30cr/15s row first.
-  const model = (modelId && catalog?.models.find((item) => item.id === modelId))
+  const model = (modelId ? catalog?.models.find((item) => item.id === modelId) : undefined)
     ?? catalog?.models.find((item) => item.available && item.id === "aiprov_aivideosugc_wan1080")
     ?? catalog?.models.find((item) => item.available)
     ?? catalog?.models[0];
