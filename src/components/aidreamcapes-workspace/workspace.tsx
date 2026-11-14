@@ -337,13 +337,20 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
     if (composerTab === "AI Image") { setComposerQuote(null); return; }
     let cancelled = false;
     const timer = setTimeout(() => {
+      // Quote the model the composer actually displays (published pricing
+      // channel first) — an empty modelId would fall back to the server's
+      // priority default and show a rate the user isn't looking at.
+      const quotedModelId = composerModel
+        || catalog?.models.find((model) => model.available && model.id === "aiprov_aivideosugc_wan1080")?.id
+        || catalog?.models.find((model) => model.available)?.id
+        || undefined;
       request<{ quote: { available: boolean; credits?: number } }>("/generation-quote", {
         method: "POST",
-        body: JSON.stringify({ direct: true, modelId: composerModel || undefined, duration: composerDuration, aspect: composerAspect, resolution: composerResolution || undefined, imageInputCount: composerTab === "AI Video" ? videoReferenceUrls.length : composerProducts.length, videoInputCount: composerTab === "AI Video" ? videoReferenceFiles.length : 0, audioInputCount: composerTab === "AI Video" ? audioReferenceFiles.length : 0 })
+        body: JSON.stringify({ direct: true, modelId: quotedModelId, duration: composerDuration, aspect: composerAspect, resolution: composerResolution || undefined, imageInputCount: composerTab === "AI Video" ? videoReferenceUrls.length : composerProducts.length, videoInputCount: composerTab === "AI Video" ? videoReferenceFiles.length : 0, audioInputCount: composerTab === "AI Video" ? audioReferenceFiles.length : 0 })
       }).then((result) => { if (!cancelled) setComposerQuote(result.quote); }).catch(() => { if (!cancelled) setComposerQuote(null); });
     }, 400);
     return () => { cancelled = true; clearTimeout(timer); };
-  }, [composerTab, composerModel, composerDuration, composerAspect, composerResolution, videoReferenceUrls.length, videoReferenceFiles.length, audioReferenceFiles.length, composerProducts.length]);
+  }, [composerTab, composerModel, composerDuration, composerAspect, composerResolution, videoReferenceUrls.length, videoReferenceFiles.length, audioReferenceFiles.length, composerProducts.length, catalog]);
   const [presetSceneId, setPresetSceneId] = useState(initialPreset?.sceneId);
   const currentRef = useRef<WorkspaceTask | null>(null);
   const savedRef = useRef<WorkspaceTask | null>(null);
