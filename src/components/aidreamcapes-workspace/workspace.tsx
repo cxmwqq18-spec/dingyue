@@ -6,7 +6,6 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Captions, Check, CheckCircle
 import type { ActorAsset, RefKind, SceneField, SceneSchema, StoryboardShot, TaskInput, WorkspaceCatalog, WorkspaceTask as BaseWorkspaceTask } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_PROMPT_MAX_LENGTH } from "@/lib/aidreamcapes-workspace/types";
 import { WORKSPACE_THEME_STORAGE_KEY } from "@/lib/aidreamcapes-workspace/login";
-import { FIRST_VIDEO_TRIAL_PROVIDER_ID } from "@/lib/ai-provider-billing";
 import { customerJsonHeaders, csrfHeader } from "@/lib/client-csrf";
 import { CustomerAccountMenu } from "@/components/storefront/customer-account-menu";
 import { prepareCustomerImageUploadFile } from "@/lib/client-image-upload";
@@ -1894,9 +1893,11 @@ export function AidreamcapesWorkspace({ siteId, basePath, customer, csrfToken, i
   const editorLanguageOptions = (catalog?.languages ?? []).map((item) => ({ value: item.value, label: item.label }));
   // Default the composer to the published pricing channel (Wan 2.6 1080p):
   // it matches the 15s=20cr rate card on the pricing page and is the channel
-  // the first-video trial price applies to. Catalog order follows provider
-  // priority, which currently surfaces a 30cr/15s row first.
-  const activeModel = catalog?.models.find((model) => model.available && model.id === FIRST_VIDEO_TRIAL_PROVIDER_ID)
+  // the first-video trial price applies to (server: FIRST_VIDEO_TRIAL_PROVIDER_ID).
+  // Catalog order follows provider priority, which currently surfaces a
+  // 30cr/15s row first.
+  const FIRST_VIDEO_CHANNEL_MODEL_ID = "aiprov_aivideosugc_wan1080";
+  const activeModel = catalog?.models.find((model) => model.available && model.id === FIRST_VIDEO_CHANNEL_MODEL_ID)
     ?? catalog?.models.find((model) => model.available)
     ?? catalog?.models[0];
   const selectedModel = catalog?.models.find((model) => model.id === (task?.input.modelId || composerModel)) ?? activeModel;
