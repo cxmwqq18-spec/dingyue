@@ -19,7 +19,7 @@ import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, Visua
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AidreamcapesV2PricingSection, AidreamcapesV2PromoBanner } from "./pricing";
-import { AidreamcapesV2PromoStrip } from "./promo";
+import { AidreamcapesV2HeroOfferBadge, AidreamcapesV2PromoStrip } from "./promo";
 import { AidreamcapesPricingPage } from "./pricing-page";
 import { HomeExperienceSection } from "./home-experience";
 import { HomeExperienceBehavior } from "./home-experience-behavior";
@@ -219,6 +219,7 @@ function HomePage({ data, r }: Props) {
             </div>
             <h1>{data.h1}</h1>
             <p className="lead">{data.lead}</p>
+            <AidreamcapesV2HeroOfferBadge promo={data.promoStrip} r={r} />
           </div>
           <div className="hero-ctas">
             <WorkspaceEntryLink className="btn btn-grad" href={r.href(hero.videoHref)}>{copyLabel(r, "Make my video →")}</WorkspaceEntryLink>

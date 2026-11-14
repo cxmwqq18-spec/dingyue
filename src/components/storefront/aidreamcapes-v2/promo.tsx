@@ -1,6 +1,6 @@
 import { text, type V2Resolvers } from "./types";
 
-type V2PromoStripCard = { key: string; badge: string; title: string; body: string; cta: string; href: string };
+type V2PromoStripCard = { key: string; badge: string; title: string; body: string; cta: string; href: string; price?: string };
 type V2PromoStrip = { enabled: boolean; stats: string; cards: V2PromoStripCard[] };
 
 // Homepage offer band under the hero area. Fully data-driven: without an
@@ -18,17 +18,36 @@ export function AidreamcapesV2PromoStrip({ promo, r }: { promo: unknown; r: V2Re
       <div className="wrap">
         <div className="apromo-grid">
           {cards.map((card) => (
-            <article className="apromo-card" key={text(card.key) || text(card.href)}>
-              {text(card.badge) ? <span className="apromo-badge">{card.badge}</span> : null}
-              <b className="apromo-title">{card.title}</b>
-              {text(card.body) ? <p className="apromo-body">{card.body}</p> : null}
-              {text(card.cta) ? <a className="apromo-cta" href={r.href(card.href)}>{card.cta} →</a> : null}
+            <article className={`apromo-card${text(card.price) ? " has-price" : ""}`} key={text(card.key) || text(card.href)}>
+              <div className="apromo-card-main">
+                {text(card.badge) ? <span className="apromo-badge">{card.badge}</span> : null}
+                <b className="apromo-title">{card.title}</b>
+                {text(card.body) ? <p className="apromo-body">{card.body}</p> : null}
+                {text(card.cta) ? <a className="apromo-cta" href={r.href(card.href)}>{card.cta} →</a> : null}
+              </div>
+              {text(card.price) ? <div className="apromo-price" aria-hidden="true"><span>{card.price}</span><small>first video</small></div> : null}
             </article>
           ))}
         </div>
         {stats ? <p className="apromo-stats">{stats}</p> : null}
       </div>
     </section>
+  );
+}
+
+// Compact offer pill inside the hero copy, above the CTAs — the earliest
+// above-the-fold promo surface. Reads the starter card from the promo strip.
+export function AidreamcapesV2HeroOfferBadge({ promo, r }: { promo: unknown; r: V2Resolvers }) {
+  const strip = promo as V2PromoStrip | undefined;
+  if (!strip?.enabled) return null;
+  const starter = strip.cards.find((card) => card.key === "starter") ?? strip.cards[0];
+  if (!starter || !text(starter.href)) return null;
+  return (
+    <a className="apromo-hero-badge" href={r.href(starter.href)}>
+      <span className="apromo-ribbon-badge">{text(starter.badge) || "OFFER"}</span>
+      <span className="apromo-hero-badge-text">{text(starter.price) ? `First video just ${starter.price}` : starter.title}</span>
+      <span className="apromo-hero-badge-arrow">→</span>
+    </a>
   );
 }
 

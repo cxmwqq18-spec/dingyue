@@ -30,7 +30,7 @@ const manifest = {
       stats: "1,200+ product videos generated in the last 30 days",
       cards: [
         { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits" },
-        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer" }
+        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1" }
       ]
     }
   },
@@ -41,7 +41,7 @@ const manifest = {
       stats: "",
       cards: [
         { key: "creators", badge: "FREE", title: "Free video for creators", body: "Post with #AivideosUGC, get a free 15s video after review.", cta: "Get free credits", href: "/partners#free-credits" },
-        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer" }
+        { key: "starter", badge: "FIRST VIDEO OFFER", title: "Your first 15s video — just $1", body: "New here? Full quality, no watermark, no subscription.", cta: "Claim your $1 video", href: "/app/create/starter-offer", price: "$1" }
       ]
     },
     promoBanner: {
@@ -95,13 +95,19 @@ try {
     assert(settings?.data && typeof settings.data === "object" && !Array.isArray(settings.data), `LivePage ${spec.slug} is missing sections.v2_main.settings.data; page shape changed.`);
     if (baseHashes[part]) assert.equal(hash(row.contentJson), baseHashes[part], `${spec.slug} contentJson changed since the reviewed dry run; refusing to apply.`);
 
-    // Idempotency: absent -> write; identical -> no-op; different -> refuse.
+    // Idempotency: absent -> write; identical -> no-op; different -> refuse
+    // unless --allow-overwrite is passed for a reviewed data migration.
+    const allowOverwrite = hasArgument("--allow-overwrite");
     for (const key of keys) {
       const current = settings.data[key];
       if (current !== undefined) {
-        assert.equal(stable(current), stable(spec[key]), `LivePage ${spec.slug} already has ${key} with different content; refusing to overwrite manual edits.`);
-        console.log(`[aivideosugc-promo] ${spec.slug}: ${key} already identical; no-op.`);
-        continue;
+        if (allowOverwrite) {
+          console.log(`[aivideosugc-promo] ${spec.slug}: ${key} exists; overwriting (--allow-overwrite).`);
+        } else {
+          assert.equal(stable(current), stable(spec[key]), `LivePage ${spec.slug} already has ${key} with different content; refusing to overwrite manual edits (pass --allow-overwrite to migrate).`);
+          console.log(`[aivideosugc-promo] ${spec.slug}: ${key} already identical; no-op.`);
+          continue;
+        }
       }
 
       const h1Before = settings.data.h1;
