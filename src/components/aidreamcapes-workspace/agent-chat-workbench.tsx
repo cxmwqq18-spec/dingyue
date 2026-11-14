@@ -301,7 +301,10 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
             const showTyping = (message.pending && !message.content) || (isLive && message.content.length > 0 && liveChars === 0);
             return (
               <div key={message.id} className={`${styles.row} ${message.role === "user" ? styles.rowUser : ""}`}>
-                <div className={`${styles.bubble} ${message.role === "user" ? styles.bubbleUser : styles.bubbleAssistant}`}>
+                {/* translate="no": browser page-translation rewrites these nodes
+                    mid-typewriter, so the reveal freezes after its first frame
+                    (a bubble stuck at two characters) until a full reload. */}
+                <div translate="no" className={`notranslate ${styles.bubble} ${message.role === "user" ? styles.bubbleUser : styles.bubbleAssistant}`}>
                   {showTyping
                     ? <span className={styles.typingRow}><span className={styles.miniAvatar} aria-hidden="true"><Sparkles size={11} /></span><span className={styles.dots} aria-hidden="true"><i /><i /><i /></span></span>
                     : <span className={styles.text}>{revealedText}{isLive && liveChars < message.content.length ? <span className={styles.caret} aria-hidden="true" /> : null}</span>}
@@ -309,7 +312,7 @@ export function AgentChatWorkbench({ siteId, csrfToken }: { siteId: string; csrf
               </div>
             );
           })}
-          {streaming && <div className={styles.streamHint} role="status">
+          {streaming && <div translate="no" className={`notranslate ${styles.streamHint}`} role="status">
             <span className={styles.hintAvatar} aria-hidden="true"><Sparkles size={13} /></span>
             <span key={phraseIndex} className={styles.hintPhrase}>{TYPING_PHRASES[phraseIndex]}</span>
             <span className={styles.dots} aria-hidden="true"><i /><i /><i /></span>
