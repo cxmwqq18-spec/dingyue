@@ -542,7 +542,7 @@ async function approveCreditApplicationRelational(
       targetType: "credit_application",
       targetId: application.id,
       metadata: { grantCredits, platform: application.platform, followerTier: application.followerTier }
-    });
+    }, { syncPlatformState: false });
 
     return {
       application: toCreditApplicationRelational(updated as unknown as Record<string, unknown>),
