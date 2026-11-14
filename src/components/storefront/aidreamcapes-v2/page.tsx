@@ -19,6 +19,8 @@ import { VisualAfter, VisualDirectoryFilter, VisualFreshLook, VisualInput, Visua
 import type { V2Visual, V2MoreSection } from "./types";
 import { presetSourcePage } from "@/lib/aidreamcapes-workspace/preset-contract";
 import { AidreamcapesV2PricingSection, AidreamcapesV2PromoBanner } from "./pricing";
+import { AidreamcapesPricingPromoPopup, type PricingPromoPopupData } from "./promo-popup";
+import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { AidreamcapesV2HeroOfferBadge, AidreamcapesV2PromoStrip } from "./promo";
 import { AidreamcapesPricingPage } from "./pricing-page";
 import { HomeExperienceSection } from "./home-experience";
@@ -1147,6 +1149,12 @@ function SimplePage({ data, r, layout, company }: Props & { layout: string; comp
         <>
           {hero}
           {promoBanner}
+          <AidreamcapesPricingPromoPopup
+            siteId={AIVIDEOSUGC_SITE_ID}
+            data={record(data.promoPopup) as PricingPromoPopupData}
+            starterHref={r.href("/app/create/starter-offer")}
+            creatorHref={r.href("/partners#free-credits")}
+          />
           <Section
             eyebrow={typeof head.eyebrow === "string" ? head.eyebrow : "Plans & Credits"}
             lead={typeof head.lead === "string" ? head.lead : undefined}

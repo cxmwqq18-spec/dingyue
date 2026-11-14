@@ -49,6 +49,23 @@ const manifest = {
       text: "🎁 Free credits for creators · $1 first video for new users",
       href: "/partners#free-credits",
       linkLabel: "Learn more"
+    },
+    promoPopup: {
+      enabled: true,
+      kicker: "New user exclusive",
+      title: "Your first video, just $1",
+      sub: "One full 15s AI UGC product video · one-time payment",
+      price: "$1",
+      priceWas: "$2.40 list",
+      priceOff: "58% OFF",
+      priceNote: "8 credits · auto-applied",
+      ctaLabel: "Claim your $1 video",
+      ctaHref: "/app/create/starter-offer",
+      altPre: "Creator? Post with",
+      altTag: "#AivideosUGC",
+      altText: "get a 15s video FREE",
+      altHref: "/partners#free-credits",
+      fine: "Reviewed by hand · credits land on your account automatically · no subscription"
     }
   }
 };
@@ -86,7 +103,7 @@ try {
 
   for (const part of ["home", "pricing"]) {
     const spec = manifest[part];
-    const keys = part === "home" ? ["promoStrip"] : ["promoBanner", "promoStrip"];
+    const keys = part === "home" ? ["promoStrip"] : ["promoBanner", "promoStrip", "promoPopup"];
     const row = bySlug.get(spec.slug);
     assert(row, `LivePage ${spec.slug} does not exist on ${target}. Nothing was written.`);
     assert(row.contentJson && typeof row.contentJson === "object" && !Array.isArray(row.contentJson), `LivePage ${spec.slug} contentJson is missing or not an object.`);
