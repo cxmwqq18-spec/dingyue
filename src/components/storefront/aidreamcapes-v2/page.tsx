@@ -264,12 +264,12 @@ function HomePage({ data, r }: Props) {
         </div>
       </Section>],
     ["seller_scenarios", sellerScenarios ? <SellerScenarioSection scenarios={sellerScenarios} r={r} /> : null],
-    ["pricing", <AidreamcapesV2PricingSection r={r} />],
+    ["pricing", <>{promoStrip}<AidreamcapesV2PricingSection r={r} /></>],
     ...pageOwnBlocks(data, r),
     ["faq", <Faq items={data.faq} title={visual?.titles?.faq?.h2 ?? "Questions before you start"} r={r} />],
     ["cta", <CtaBand href="/app/create" lead={ctaLead(data, "Upload a photo, pick a template and get a video ad or store-ready photos.")} r={r} title={ctaTitle(data, "Your next ad starts with one product photo")} />],
     ["always", <><AidreamcapesV2HeroTabs /><AidreamcapesV2MotionPreference />{experience ? <HomeExperienceBehavior /> : null}{experience?.blocks.some((block) => block.after === "features" && block.presentation?.workspaceFlow) ? <HomeWorkspaceFlowBehavior /> : null}{ugc?.composer ? <HomeComposerBehavior /> : null}</>]
-  ], { ...additions, hero: <>{additions.hero}{promoStrip}</> }, beforeBlocks)}
+  ], { ...additions, hero: additions.hero }, beforeBlocks)}
   </div>;
 }
 
