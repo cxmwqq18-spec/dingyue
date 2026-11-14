@@ -459,6 +459,10 @@ export async function submitShotGeneration(args: {
       // Reference audio rides in a dedicated list so the shared frame pipeline
       // (frame limits, duration normalization, image pricing counts) is untouched.
       audioAssetIds,
+      // Billing must resolve the exact provider the shot was quoted on — the
+      // modelType override alone re-resolves by priority and can land on a
+      // different row with a different rate card (quote/charge mismatch 409).
+      providerSelection: { mode: "fixed_provider", providerId: provider.id, fallbackEnabled: false },
       fields: { videoThemeId: theme.id, promptNote: prompt, durationSeconds: providerDuration, aspectRatio: args.input.options.aspect, resolution, modelOverride: provider.modelType, videoModelFamily: modelFamily },
       workspace: { taskId: args.taskId, shotId: args.shot.shotId, plannedDuration: args.shot.duration, providerDuration, providerId: provider.id,
         direct: Boolean(args.input.direct), expectedCredits: billedCredits } } });
@@ -495,7 +499,7 @@ export async function submitActorProductComposite(args: {
   const created = await submitGenerationJob({ siteId: args.siteId, customerId: args.customerId, aiAppSlug: "image_generator", entryPoint: "customer_workspace",
     authContext: { kind: "customer", actorId: args.customerId }, baseUrls: args.baseUrls, idempotencyKey: args.idempotencyKey,
     skipWorkerDispatch: true, includeWorkerPayload: true,
-    params: { assetIds, fields: { userDirection: prompt }, workspace: { taskId: args.taskId, shotId: args.shot.shotId, kind: "composite", scene: args.storyboard.scenePlan.mainScene, aspect: args.input.options.aspect } } });
+    params: { assetIds, fields: { userDirection: prompt }, providerSelection: { mode: "fixed_provider", providerId: provider.id, fallbackEnabled: false }, workspace: { taskId: args.taskId, shotId: args.shot.shotId, kind: "composite", scene: args.storyboard.scenePlan.mainScene, aspect: args.input.options.aspect } } });
   if (created.reused && created.job.status !== "queued") return created;
   if (created.job.creditsReserved !== args.expectedCredits) {
     await settleGenerationJobRelational({ siteId: args.siteId, jobId: created.job.id, requestId: `req_${created.job.id}`, status: "failed", error: "workspace_price_quote_changed" });
