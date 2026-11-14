@@ -77,7 +77,7 @@ export function AidreamcapesV2PricingSection({ r }: { r: V2Resolvers }) {
         lead={copyLabel(r, "One-time credit packages for one, six, or twelve months — credits delivered monthly, no auto-renewal. Credit packs are open to everyone when a month runs short.")}
         title={copyLabel(r, "Pay Once, Create All Month")}
       >
-        <AidreamcapesV2PricingPromoRibbon cards={r.promoStripCards} r={r} />
+        <AidreamcapesV2PricingPromoRibbon cards={(r.promoStripCards ?? []).filter((card) => Boolean(card.href)).map((card) => ({ ...card, href: r.href(card.href) }))} />
         <AidreamcapesPackageCards
           creditSchedule={{
             // The homepage resolver passes the schedule flattened next to

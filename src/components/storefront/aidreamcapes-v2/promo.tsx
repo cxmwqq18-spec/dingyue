@@ -35,8 +35,9 @@ export function AidreamcapesV2PromoStrip({ promo, r }: { promo: unknown; r: V2Re
 // Slim offer pills rendered inside the pricing module. Shares the promo strip
 // card data so the homepage band, the pricing page banner and this ribbon stay
 // one editable source of truth; the $1 pill links straight into the workspace
-// starter-offer claim flow.
-export function AidreamcapesV2PricingPromoRibbon({ cards, r }: { cards: unknown; r: V2Resolvers }) {
+// starter-offer claim flow. Hrefs arrive already resolved — the pricing page
+// body is a client component, so resolvers must stay on the server.
+export function AidreamcapesV2PricingPromoRibbon({ cards }: { cards: unknown }) {
   const list = Array.isArray(cards)
     ? cards.filter((card): card is NonNullable<typeof card> => Boolean(card && text(card.title) && text(card.href)))
     : [];
@@ -44,7 +45,7 @@ export function AidreamcapesV2PricingPromoRibbon({ cards, r }: { cards: unknown;
   return (
     <div className="apromo-ribbon" role="note" aria-label="Current offers">
       {list.map((card, index) => (
-        <a className="apromo-ribbon-pill" href={r.href(card.href)} key={text(card.key) || `${text(card.href)}-${index}`}>
+        <a className="apromo-ribbon-pill" href={card.href} key={text(card.key) || `${text(card.href)}-${index}`}>
           {text(card.badge) ? <span className="apromo-ribbon-badge">{card.badge}</span> : null}
           <span className="apromo-ribbon-title">{card.title}</span>
           {text(card.cta) ? <span className="apromo-ribbon-cta">{card.cta} →</span> : null}
