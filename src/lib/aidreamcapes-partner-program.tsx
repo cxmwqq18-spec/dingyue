@@ -7,6 +7,7 @@ import { aidreamcapesV2Company } from "@/components/storefront/aidreamcapes-v2/c
 import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
 import { loadAidreamcapesChrome } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
+import { prisma } from "@/lib/prisma";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 
 /** The public partner-program page: standard storefront chrome, creators-circle
@@ -57,6 +58,15 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied }
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID)
   ]);
   if (!chrome) notFound();
+  // Repeat visitors who already have a live application see its status instead
+  // of the form — resubmitting would only bounce off the dedup guard.
+  const existingApplication = customer
+    ? await prisma.creditApplication.findFirst({
+        where: { siteId: AIVIDEOSUGC_SITE_ID, customerId: customer.customer.id, status: { in: ["pending", "approved"] } },
+        orderBy: { createdAt: "desc" },
+        select: { status: true, grantCredits: true }
+      })
+    : null;
   const headerAccount = customer ? { href: "/account", label: "My account" } : undefined;
   const headerCustomer = customer
     ? { balance: customer.customer.balance, email: customer.customer.email, name: customer.customer.name, profile: customer.customer.profile }
@@ -165,6 +175,23 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied }
                 <h3>Application received</h3>
                 <p>Your free-credit application is in the queue as <b>pending review</b>. A real person reads every application &mdash; you&rsquo;ll get an email either way, usually within 48 hours.</p>
                 <p className="prp-hint">Approved credits land on your account balance automatically.</p>
+                <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
+              </div>
+            ) : existingApplication ? (
+              <div className="prp-form prp-success" role="status">
+                {existingApplication.status === "pending" ? (
+                  <>
+                    <h3>Your application is in the queue</h3>
+                    <p>It&rsquo;s <b>pending review</b> &mdash; a real person reads every application, usually within 48 hours. You&rsquo;ll get an email either way.</p>
+                    <p className="prp-hint">Approved credits land on your account balance automatically. One application per creator is enough.</p>
+                  </>
+                ) : (
+                  <>
+                    <h3>You&rsquo;re in — credits granted 🎉</h3>
+                    <p>Your application was <b>approved</b> and {existingApplication.grantCredits ?? 20} credits landed on your account. Post your next video with <b>#AivideosUGC</b> to keep the momentum.</p>
+                    <p className="prp-hint">Spend them from the workspace composer — every job shows its exact cost first.</p>
+                  </>
+                )}
                 <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
               </div>
             ) : customer ? (
