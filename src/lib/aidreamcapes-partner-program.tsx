@@ -52,7 +52,7 @@ const CREDIT_PLATFORMS = [
   { value: "x", label: "X / Twitter" }
 ];
 
-export async function AidreamcapesPartnerProgramPage({ success, creditsApplied }: { success: boolean; creditsApplied?: boolean }) {
+export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, duplicate, limited }: { success: boolean; creditsApplied?: boolean; duplicate?: boolean; limited?: boolean }) {
   const [chrome, customer] = await Promise.all([
     loadAidreamcapesChrome(),
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID)
@@ -138,6 +138,19 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied }
                 <h3>Application received</h3>
                 <p>Your application is in the partnership queue as <b>pending review</b>. A human reads every application — expect an answer within 48 hours at the email you provided.</p>
                 <p className="prp-hint">Approved partners receive their dashboard invite, channel link and creative kit in the approval email.</p>
+                <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
+              </div>
+            ) : duplicate ? (
+              <div className="prp-form prp-success" role="status">
+                <h3>You already have an application in the queue</h3>
+                <p>We found a <b>pending application for this email</b> — a human reads every one, usually within 48 hours, so there is no need to submit again.</p>
+                <p className="prp-hint">Submitted with the wrong details? Reply to our confirmation email and we will update the application for you.</p>
+                <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
+              </div>
+            ) : limited ? (
+              <div className="prp-form prp-success" role="status">
+                <h3>Too many applications from your network</h3>
+                <p>We have already received several applications from your connection today. Please try again tomorrow &mdash; or if you are an agency submitting for multiple creators, email us and we will help.</p>
                 <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
               </div>
             ) : (
@@ -329,6 +342,6 @@ const PRP_CSS = `
 `;
 
 /** Route entry for /partners on the aidreamcapes storefront (both catch-alls). */
-export async function renderAidreamcapesPartnerProgramPage({ success, creditsApplied }: { success: boolean; creditsApplied?: boolean }) {
-  return <AidreamcapesPartnerProgramPage success={success} creditsApplied={creditsApplied} />;
+export async function renderAidreamcapesPartnerProgramPage({ success, creditsApplied, duplicate, limited }: { success: boolean; creditsApplied?: boolean; duplicate?: boolean; limited?: boolean }) {
+  return <AidreamcapesPartnerProgramPage success={success} creditsApplied={creditsApplied} duplicate={duplicate} limited={limited} />;
 }

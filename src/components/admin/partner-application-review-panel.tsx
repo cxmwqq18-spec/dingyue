@@ -96,6 +96,7 @@ export function PartnerApplicationReviewPanel({
               <DetailRow label="公司/团队" value={application.company} />
               <DetailRow label="站点" value={application.website} />
               <DetailRow label="来源" value={application.source} />
+              <DetailRow label="提交 IP" value={typeof application.metadata?.ip === "string" ? application.metadata.ip : undefined} />
               <DetailRow label="提交时间" value={formatDate(application.createdAt)} />
               <DetailRow label="更新时间" value={formatDate(application.updatedAt)} />
               <DetailRow label="审核时间" value={formatDate(application.reviewedAt)} />

@@ -4,12 +4,17 @@ import type { Prisma, PrismaClient } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { StoreError } from "@/lib/server-store";
 import type { PartnerApplication, PartnerApplicationStatus, PublicPartnerApplicationReceipt } from "@/lib/types";
-import { cloneJson, relationalUid, toPartnerApplicationRelational } from "@/lib/stores/prisma-mappers";
+import { relationalUid, toPartnerApplicationRelational } from "@/lib/stores/prisma-mappers";
 
 type DbClient = PrismaClient;
 
 const statuses: PartnerApplicationStatus[] = ["pending", "approved", "rejected", "archived"];
 const statusSet = new Set<string>(statuses);
+// Public lead form, no login: cap submissions per client IP per day so one
+// connection cannot flood the review queue. An agency submitting for several
+// creators still fits under it.
+const IP_DAILY_LIMIT = 5;
+const dayMs = 24 * 60 * 60 * 1000;
 
 export type PartnerApplicationCreateInput = {
   siteId: string;
@@ -23,6 +28,7 @@ export type PartnerApplicationCreateInput = {
   campaignIdeas?: string;
   message?: string;
   source?: string;
+  submitIp?: string;
   metadata?: Record<string, unknown>;
 };
 
@@ -113,6 +119,23 @@ export async function createPartnerApplicationRelational(
   const site = await client.site.findUnique({ where: { id: input.siteId }, select: { id: true, slug: true } });
   if (!site) throw new StoreError("site_not_found", 404);
 
+  // One live application per email: a pending or approved one blocks new
+  // submissions (rejected/archived free the email again, so the admin can
+  // let someone reapply). Keeps duplicate form spam out of the queue.
+  const existingForEmail = await client.partnerApplication.findFirst({
+    where: { siteId: input.siteId, email, status: { in: ["pending", "approved"] } },
+    select: { id: true }
+  });
+  if (existingForEmail) throw new StoreError("partner_application_already_applied", 409);
+
+  const submitIp = cleanText(input.submitIp, 64);
+  if (submitIp) {
+    const recentFromIp = await client.partnerApplication.count({
+      where: { siteId: input.siteId, createdAt: { gte: new Date(Date.now() - dayMs) }, metadata: { path: ["ip"], equals: submitIp } }
+    });
+    if (recentFromIp >= IP_DAILY_LIMIT) throw new StoreError("partner_application_ip_rate_limited", 429);
+  }
+
   const application = await client.partnerApplication.create({
     data: {
       id: relationalUid(`partner_${site.slug}`),
@@ -128,7 +151,9 @@ export async function createPartnerApplicationRelational(
       message: cleanLongText(input.message, 2000),
       status: "pending",
       source: cleanText(input.source, 120) ?? (site.id === "site_dreamshoot" || site.slug === "mydreamshoots" ? "creators-circle" : "partner-registration"),
-      metadata: input.metadata ? cloneJson(input.metadata) as Prisma.InputJsonValue : undefined
+      metadata: (input.metadata || submitIp
+        ? { ...(input.metadata ?? {}), ...(submitIp ? { ip: submitIp } : {}) }
+        : undefined) as Prisma.InputJsonValue | undefined
     },
     select: applicationSelect()
   });

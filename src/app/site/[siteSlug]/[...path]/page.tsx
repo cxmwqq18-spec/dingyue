@@ -659,7 +659,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/404") notFound();
   if (isAidreamcapesPathModeSite(publicSlug) && slug === "/partners") {
     const query = searchParams ? await searchParams : {};
-    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied" });
+    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied", duplicate: query.partner === "duplicate", limited: query.partner === "limited" });
   }
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
