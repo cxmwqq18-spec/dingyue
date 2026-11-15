@@ -1,9 +1,9 @@
 {
   "siteId": "site_aidreamcapes",
   "slug": "/guides",
-  "capturedAt": "2026-11-09T17:10:31.294Z",
+  "capturedAt": "2026-11-15T04:19:48.246Z",
   "target": "production",
-  "baseHash": "69801d9c58f2c4be",
+  "baseHash": "5ffbef062a5965df",
   "original": {
     "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
     "sectionId": "v2_main",
@@ -687,7 +687,7 @@
                 "name": "How many credits do photos and videos use?",
                 "@type": "Question",
                 "acceptedAnswer": {
-                  "text": "A photo uses 24 credits; 6, 10, 15, and 30 second videos use 24, 40, 60, and 120. Failed jobs return credits.",
+                  "text": "A photo uses 1 credit; 15 second videos use 20 and 30 second videos use 40. Failed jobs return credits.",
                   "@type": "Answer"
                 }
               },

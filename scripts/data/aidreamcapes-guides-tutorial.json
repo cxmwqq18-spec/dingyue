@@ -63,7 +63,7 @@
     ],
     "chapters": [
       {
-        "id": "ch01",
+        "id": "how-a-generation-job-runs",
         "num": "01",
         "title": "How a generation job runs",
         "route": "Applies to **every tool** · the loop you will repeat the most",
@@ -110,7 +110,7 @@
         }
       },
       {
-        "id": "ch02",
+        "id": "home-the-composer",
         "num": "02",
         "title": "Home & the composer",
         "route": "Route **/app/create** · your starting point every time",
@@ -147,7 +147,7 @@
         }
       },
       {
-        "id": "ch03",
+        "id": "write-it-attach-it-send-it",
         "num": "03",
         "title": "Write it, attach it, send it",
         "route": "Route **/app/create** · the composer, start to submit",
@@ -194,7 +194,7 @@
         }
       },
       {
-        "id": "ch04",
+        "id": "track-it-deliver",
         "num": "04",
         "title": "Track it & deliver",
         "route": "Route **/app/create** · from submit to download",
@@ -252,7 +252,7 @@
         }
       },
       {
-        "id": "ch05",
+        "id": "ai-video-from-references",
         "num": "05",
         "title": "AI Video from references",
         "route": "Route **/app/create/ai-video-generation** · animate what you attach",
@@ -285,7 +285,7 @@
         }
       },
       {
-        "id": "ch06",
+        "id": "ai-image",
         "num": "06",
         "title": "AI Image",
         "route": "Route **/app/create/ai-image-generation** · stills with live pricing",
@@ -318,7 +318,7 @@
         ]
       },
       {
-        "id": "ch07",
+        "id": "url-to-video",
         "num": "07",
         "title": "URL to Video",
         "route": "Route **/app/create/url-to-video** · paste a link, get a draft",
@@ -355,7 +355,7 @@
         }
       },
       {
-        "id": "ch08",
+        "id": "product-links-your-product-library",
         "num": "08",
         "title": "Product Links — your product library",
         "route": "Route **/app/create/product-links** · import once, generate many",
@@ -384,7 +384,7 @@
         ]
       },
       {
-        "id": "ch09",
+        "id": "ai-avatar-studio",
         "num": "09",
         "title": "AI Avatar studio",
         "route": "Route **/app/create/ai-actors** · a presenter for your product stories",
@@ -424,7 +424,7 @@
         ]
       },
       {
-        "id": "ch10",
+        "id": "subtitle-studio",
         "num": "10",
         "title": "Subtitle Studio",
         "route": "Route **/app/create/subtitles** · versions, not re-renders",
@@ -477,7 +477,7 @@
         }
       },
       {
-        "id": "ch11",
+        "id": "library",
         "num": "11",
         "title": "Library",
         "route": "Route **/app/create/library** · every job, one list",
@@ -519,7 +519,7 @@
         ]
       },
       {
-        "id": "ch12",
+        "id": "assistant-extras-your-account",
         "num": "12",
         "title": "Assistant, extras & your account",
         "route": "Routes **/app/create** (assistant) · **Inspirations**, **Performance**, **Teams & Brands**, **Developer access** in the workspace sidebar · **/account**",
