@@ -1378,7 +1378,12 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
   }
   return (await Promise.all([...entries.values()].map(async (entry) => {
       if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
-      const path = new URL(entry.loc).pathname;
+      const parsedLoc = new URL(entry.loc);
+      const path = parsedLoc.pathname;
+      // Query canonicals (the /templates?kind= catalogs) own their entries
+      // verbatim — the readback targets a page row by pathname and would
+      // otherwise inject the hosting gallery's images into these rows.
+      if (parsedLoc.search) return entry;
       // The v1 photo directory lists its theme images; the v2 page lists its own image.
       const aidreamcapesRootLiveContent = site.id === AIDREAMCAPES_SITE_ID
         ? (site.pages.find((candidate) => candidate.slug === "/") as (ThemePage & { liveContentJson?: ThemePageJson & { siteNavigation?: { version?: number } } }) | undefined)?.liveContentJson
