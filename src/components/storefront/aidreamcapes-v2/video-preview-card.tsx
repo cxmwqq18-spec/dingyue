@@ -161,7 +161,9 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
   // Poster images on a <video> are requested as soon as the attribute parses —
   // unlike <img loading="lazy"> there is no native gate. Cards below the first
   // rows therefore mount without a poster and pick it up on approach, so a
-  // page of cards does not fetch every poster at parse time.
+  // page of cards does not fetch every poster at parse time. The SSR markup
+  // still publishes the poster address in data-deferred-poster so crawlers
+  // see the same reference a visitor's video eventually renders.
   const [posterSrc, setPosterSrc] = useState(posterEager ? media.poster : "");
 
   useEffect(() => {
@@ -284,6 +286,7 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
       <video
         aria-label={ariaLabel ?? media.name}
         data-adc2-preview=""
+        data-deferred-poster={posterEager || !media.poster ? undefined : media.poster}
         height={media.height}
         loop
         muted
