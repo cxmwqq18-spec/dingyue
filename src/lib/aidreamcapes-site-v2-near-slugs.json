@@ -6332,22 +6332,6 @@
     "/templates"
   ],
   [
-    "/Templates?kind=photo",
-    "/templates?kind=photo"
-  ],
-  [
-    "/TEMPLATES?KIND=PHOTO",
-    "/templates?kind=photo"
-  ],
-  [
-    "/Templates?kind=video",
-    "/templates?kind=video"
-  ],
-  [
-    "/TEMPLATES?KIND=VIDEO",
-    "/templates?kind=video"
-  ],
-  [
     "/Terms",
     "/terms"
   ],

@@ -46,7 +46,16 @@ async function publicPathSet() {
   });
   assert(response.ok, `Sitemap request failed with ${response.status}`);
   const xml = await response.text();
-  const paths = [...xml.matchAll(/<loc>\s*https?:\/\/[^/]+([^<]*?)\s*<\/loc>/g)].map((match) => match[1] || "/");
+  const paths = [...xml.matchAll(/<loc>\s*https?:\/\/[^/]+([^<]*?)\s*<\/loc>/g)].map((match) => {
+    // Sitemap rows may carry a query (the indexable /templates?kind= catalogs).
+    // The near slug table and the middleware match pathnames only, so every
+    // address is normalized to its pathname here — a query row folds into the
+    // page that answers it, and never becomes a source or a target.
+    const raw = match[1] || "/";
+    const withoutFragment = raw.split("#")[0];
+    const queryIndex = withoutFragment.indexOf("?");
+    return (queryIndex === -1 ? withoutFragment : withoutFragment.slice(0, queryIndex)) || "/";
+  });
   assert(paths.length > 0, "Sitemap held no locations");
   return new Set(paths);
 }
