@@ -192,7 +192,7 @@ try {
       await prisma.$transaction(async (tx) => {
         await tx.livePage.update({ where: { id: hubRow.id }, data: { title: saved.original.title, contentJson: revertedJson } });
         await tx.livePage.deleteMany({ where: { id: { in: deletable.map((row) => row.id) } } });
-      }, { isolationLevel: "Serializable" });
+      }, { isolationLevel: "Serializable", timeout: 120_000, maxWait: 30_000 });
       console.log(JSON.stringify({ restored: true }, null, 2));
     }
     process.exit(0);
@@ -331,7 +331,7 @@ try {
           });
         }
       }
-    }, { isolationLevel: "Serializable" });
+    }, { isolationLevel: "Serializable", timeout: 120_000, maxWait: 30_000 });
 
     const readback = await prisma.livePage.findMany({
       where: { siteId, slug: { in: [hubSlug, ...createdRows.map((row) => row.slug)] } },
