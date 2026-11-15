@@ -984,6 +984,28 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     const directoryLoc = sitemapUrl(site, "/ai-image-generation");
     const directoryEntry = entries.get(directoryLoc);
     if (directoryEntry) directoryEntry.images = collectAidreamcapesImageDirectorySitemapImages(snapshot, site);
+    // The kind-only template catalogs are standalone indexable pages with
+    // self canonicals on the /templates gallery's ?kind= query. Submit both so
+    // crawlers discover them through the sitemap, not only through in-page
+    // links. Images stay off these rows: the shared tiles belong to the
+    // /templates entry that already lists them.
+    const templatesPage = snapshot.pages.find((page) => normalizePath(page.slug) === "/templates");
+    if (templatesPage) {
+      const templatesEffective = resolveEffectivePublishedPage(snapshot, templatesPage.slug);
+      if (templatesEffective.routeDisposition.kind === "render" && templatesEffective.indexability.sitemapEligible) {
+        const templatesLastmod = sitemapLastModifiedForPath(state, site, snapshot, "/templates", templatesPage);
+        for (const kind of ["photo", "video"]) {
+          const loc = sitemapUrl(site, `/templates?kind=${kind}`);
+          entries.set(loc, {
+            loc,
+            images: [],
+            lastmod: templatesLastmod,
+            changefreq: sitemapChangeFrequencyForPath("/templates"),
+            priority: sitemapPriorityForPath("/templates")
+          });
+        }
+      }
+    }
   }
   if (isPrimaryMydreamshootsSite(site) && collectionPage) {
     for (const route of snapshot.publishedRoutes.filter((candidate): candidate is PublishedLeafRouteProjection =>
@@ -1213,13 +1235,14 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
     // This final guard is intentionally scoped to the main Aidreamcapes site;
     // other storefront sitemap hosts and aliases remain untouched.
     for (const [loc, entry] of entries) {
-      let path: string;
+      let url: URL;
       try {
-        path = new URL(loc).pathname;
+        url = new URL(loc);
       } catch {
         entries.delete(loc);
         continue;
       }
+      const path = url.pathname;
       if (path === "/tools" || aidreamcapesLegacyVideoSaveTheDatePath(path) || isRetiredAidreamcapesPublicPath(site.slug, path)) {
         entries.delete(loc);
         continue;
@@ -1228,6 +1251,11 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
         entries.delete(loc);
         continue;
       }
+      // Kind-only template catalogs are self-canonical WITH the ?kind= query
+      // on the /templates gallery. The pathname normalization below would
+      // strip that query and collapse these rows into /templates, so leave
+      // them untouched here.
+      if (path === "/templates" && ["photo", "video"].includes(url.searchParams.get("kind") ?? "")) continue;
       const canonicalLoc = sitemapUrl(site, path);
       if (canonicalLoc === loc) continue;
       entries.delete(loc);
