@@ -105,11 +105,10 @@ export function GuidesHubPage({ data, r }: { data: GuidesHubData; r: V2Resolvers
                 <span className={styles.thumb}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
-                  <span className={styles.chip}>{item.tool}</span>
                 </span>
                 <span className={styles.cardPad}>
                   <span className={styles.read}>{item.minutes} read</span>
-                  <h3>{item.title}</h3>
+                  <h3><span className={styles.cardTag}>{item.tool}:</span> {item.title}</h3>
                   <span className={styles.cardBody}>{item.body}</span>
                   <span className={styles.go}>Read the tutorial →</span>
                 </span>

@@ -154,8 +154,8 @@
             {
               "href": "/guides/how-do-text-to-video",
               "tool": "Text to Video",
-              "minutes": "6 min",
-              "title": "From one sentence to a video brief",
+              "minutes": "8 min",
+              "title": "from one sentence to a video brief",
               "body": "Type a sentence about your product, let AI write the script and scenes, then edit the brief.",
               "image": {
                 "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
@@ -167,8 +167,8 @@
             {
               "href": "/guides/how-do-ai-video",
               "tool": "AI Video",
-              "minutes": "6 min",
-              "title": "Make a video from product references",
+              "minutes": "9 min",
+              "title": "make a video from product references",
               "body": "Attach product photos, describe the scene, and generate a campaign-ready clip.",
               "image": {
                 "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
@@ -180,8 +180,8 @@
             {
               "href": "/guides/how-do-ai-image",
               "tool": "AI Image",
-              "minutes": "6 min",
-              "title": "Generate product images that sell",
+              "minutes": "8 min",
+              "title": "generate product images that sell",
               "body": "Pick a preset, set the ratio and references, and collect store-ready product photos.",
               "image": {
                 "src": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
@@ -193,8 +193,8 @@
             {
               "href": "/guides/how-do-product-links",
               "tool": "Product Links",
-              "minutes": "6 min",
-              "title": "Build your product library from links",
+              "minutes": "8 min",
+              "title": "build a product library from your links",
               "body": "Paste product pages once, keep a clean library, and brief videos straight from it.",
               "image": {
                 "src": "/ai-image-generation/teams1-home-r1-src-640.webp",
@@ -206,8 +206,8 @@
             {
               "href": "/guides/how-do-ai-avatar",
               "tool": "AI Avatar",
-              "minutes": "6 min",
-              "title": "Present your product with an AI avatar",
+              "minutes": "8 min",
+              "title": "put a presenter in front of your product",
               "body": "Choose a presenter, paste your script, and generate a talking product video.",
               "image": {
                 "src": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
@@ -219,8 +219,8 @@
             {
               "href": "/guides/how-do-subtitle-studio",
               "tool": "Subtitle Studio",
-              "minutes": "6 min",
-              "title": "Subtitle a finished video in minutes",
+              "minutes": "8 min",
+              "title": "subtitle a finished video in minutes",
               "body": "Pick a video, choose the style with live preview, and burn in readable captions.",
               "image": {
                 "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp",
@@ -232,8 +232,8 @@
             {
               "href": "/guides/how-do-url-to-video",
               "tool": "URL to Video",
-              "minutes": "6 min",
-              "title": "Turn a product link into a video ad",
+              "minutes": "8 min",
+              "title": "turn a product link into a video ad",
               "body": "Paste one product URL, review the photos AI imports, and brief your first ready-to-post video.",
               "image": {
                 "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
@@ -245,8 +245,8 @@
             {
               "href": "/guides/how-do-image-to-video",
               "tool": "Image to Video",
-              "minutes": "6 min",
-              "title": "Bring one product photo to life",
+              "minutes": "8 min",
+              "title": "bring one product photo to life",
               "body": "Upload a single photo, describe the motion, and generate a moving product clip in minutes.",
               "image": {
                 "src": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
@@ -304,10 +304,10 @@
     {
       "slug": "/guides/how-do-url-to-video",
       "id": "aidreamcapes_v2_guide_how_do_url_to_video",
-      "title": "Turn a Product Link Into a Video Ad | AIVideosUGC",
+      "title": "URL to Video: Turn a Product Link Into a Video Ad | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Turn a Product Link Into a Video Ad | AIVideosUGC",
+        "title": "URL to Video: Turn a Product Link Into a Video Ad | AIVideosUGC",
         "description": "Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video. No camera, no filming, no editing timeline.",
         "keywords": "url to video, product link video ad, ai product video from url, tiktok product video",
         "ogImage": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
@@ -317,8 +317,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · URL to Video",
-          "h1": "Turn a product link into a video ad.",
+          "eyebrow": "How-to guide",
+          "h1": "URL to Video: turn a product link into a video ad",
           "lead": "Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video. No camera, no filming, no editing timeline.",
           "image": {
             "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
@@ -327,9 +327,8 @@
             "height": 640
           },
           "tool": "URL to Video",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · URL to Video",
             "Input · Public HTTPS page",
             "Level · First video"
           ],
@@ -379,32 +378,77 @@
                 "Finished work lands in the Library under All videos, In progress, Failed and Completed. The details modal shows the result, the per-shot clips, the description, every reference you attached, and the submitted duration, aspect ratio and resolution.",
                 "When one clip is wrong, pick the smallest repair. Try again re-runs a failed job, Retry render re-assembles clips that are already fine, and Regenerate prefills the composer from the job. Captions are a separate pass in [Subtitle Studio](/guides/how-do-subtitle-studio), and each pass saves a new version."
               ]
+            },
+            {
+              "h2": "How to import a product page into your first draft",
+              "paras": [
+                "Start at your workspace Home and paste the link to a public product page. The import reads that link and usually brings back a main product shot, a model shot and an in-use shot, plus the title, the description, the detected price and the product details. It also writes a first draft of the video, so you start with a structure rather than a blank brief.",
+                "Nothing is charged until you have read what the import returned. The imported photos and fields land in the tool tab, where you can fix anything the page did not carry, such as a size, a color name or a short description. Once the brief reads right, the credit estimate appears before you confirm, and confirming reserves those credits. A job that fails hands them back."
+              ],
+              "cards": [
+                {
+                  "tag": "Main photo",
+                  "title": "The plain photo the import treats as the base",
+                  "body": "The import treats this plain view of the canvas tote as the reference. Check shape, stitching and print here, since the other two shots follow what this photo shows.",
+                  "meta": "Product reference",
+                  "image": {
+                    "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+                    "alt": "Canvas tote bag main product photo standing on a wooden table",
+                    "width": 640,
+                    "height": 640
+                  }
+                },
+                {
+                  "tag": "Model shot",
+                  "title": "A model carrying the tote in daylight",
+                  "body": "A model carries the tote outdoors, which shows the bag at real scale on a shoulder. Use it when the brief wants a person in frame, and skip it for a flat product.",
+                  "meta": "Human in frame",
+                  "image": {
+                    "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+                    "alt": "Model carrying the canvas tote bag outdoors",
+                    "width": 640,
+                    "height": 640
+                  }
+                },
+                {
+                  "tag": "In-use shot",
+                  "title": "The bag in use, with a water bottle inside",
+                  "body": "This photo shows the tote in use with a green water bottle inside, so the clip can show what the bag holds. Use it late, once the product is introduced.",
+                  "meta": "Shows capacity",
+                  "image": {
+                    "src": "/ai-image-generation/fx18-social-use-tote-640.webp",
+                    "alt": "Canvas tote bag in use holding a green water bottle",
+                    "width": 640,
+                    "height": 640
+                  }
+                }
+              ]
             }
           ],
           "steps": [
             {
-              "title": "Paste the product URL",
-              "body": "Open the live product page in a browser and copy the full address from the address bar. Paste it into the URL to Video field on Home. If the page cannot be read, the tool names the block."
+              "title": "Paste the product link",
+              "body": "Open [Home](/app/create/home) and paste the link to the product page into the field at the top. Use a public product page rather than a private account screen, so the import can read it. Once the link is in, you continue in the tool tab, where the import begins and the photos and copy start to fill in."
             },
             {
-              "title": "Review the imported photos",
-              "body": "The preview lists the title, the description, the detected images and a possible price, each with a confidence label. Open every thumbnail at full size. Keep the shots that show the product clearly, and choose the one the video opens on."
+              "title": "Review what the import found",
+              "body": "In the tool tab, the import lists the photos it found, often a plain product shot, a model shot and an in-use shot. Below them sit the title, the description, the detected price and the product details. Read each one against the real product and note anything that looks wrong, such as a color name or a price that no longer matches the page."
             },
             {
-              "title": "Brief the video",
-              "body": "Write a sentence or two about what the product does, who it suits and where it is used. Fix any line the import got wrong, and retype the price if the ad shows one. The cost is visible before you commit."
+              "title": "Correct the details by hand",
+              "body": "Move to the composer and edit the fields the import left thin. If the page carried no size, type the tote measurements or a short line such as heavy canvas with two handles. Rewrite the title in plain words and trim the description to two sentences. Save the draft when the fields read right, since saving generates nothing and spends no credits."
             },
             {
-              "title": "Confirm and generate",
-              "body": "The confirmation modal restates the estimated cost and your current balance. Confirming holds the credits and starts the job on the server. A failed job returns them automatically, and you can leave the page while it runs."
+              "title": "Brief the video in the composer",
+              "body": "The import has already written a first draft, so read it before you change it. Keep the shot order if it makes sense, then rewrite the lines that describe the product: what appears in the first three seconds, the scene, the framing and the sound. Adjust the duration and the aspect ratio on the same screen, and leave the draft saved if you want to stop here."
             },
             {
-              "title": "Collect from the Library",
-              "body": "The job moves through generating, finishing and completed, and the Library badge updates when you come back. Download what you want to keep within 15 days, because finished videos expire after that, and a download carries no watermark."
+              "title": "Confirm the estimate and generate",
+              "body": "The composer shows the credit estimate before anything runs. Read it next to the duration and the shot count, then open the confirmation dialog. Confirming reserves the credits for this job. If the number looks high, step back and cut a shot or shorten the duration before you confirm. A job that fails returns its credits automatically, so you can try again."
             },
             {
-              "title": "Fix the part that is wrong",
-              "body": "If the clips are fine and the assembly is not, use Retry render. If the direction was off, Regenerate prefills the composer from the job, so you change one thing rather than start over. Both keep the references you attached."
+              "title": "Collect the file from the Library",
+              "body": "When the render finishes, open [the Library](/app/create/library) and find the job under your finished files. Play it once at full size before you download, checking the product photo against the real tote. Download the file and post it, or send it to Subtitle Studio first if you want captions. The file stays downloadable for 15 days and carries no watermark."
             }
           ],
           "stepsIntro": {
@@ -529,10 +573,10 @@
     {
       "slug": "/guides/how-do-image-to-video",
       "id": "aidreamcapes_v2_guide_how_do_image_to_video",
-      "title": "Bring One Product Photo to Life (Image to Video) | AIVideosUGC",
+      "title": "Image to Video: Bring One Product Photo to Life | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Bring One Product Photo to Life (Image to Video) | AIVideosUGC",
+        "title": "Image to Video: Bring One Product Photo to Life | AIVideosUGC",
         "description": "Upload a single product photo and add a short prompt — watch the photo come alive as a moving product clip, ready for ads and social posts.",
         "keywords": "image to video, photo to video ai, product photo animation, ai product clip",
         "ogImage": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
@@ -542,8 +586,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · Image to Video",
-          "h1": "Bring one product photo to life.",
+          "eyebrow": "How-to guide",
+          "h1": "Image to Video: bring one product photo to life",
           "lead": "Upload a single product photo and add a short prompt — watch the photo come alive as a moving product clip, ready for ads and social posts.",
           "image": {
             "src": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
@@ -552,9 +596,8 @@
             "height": 1138
           },
           "tool": "Image to Video",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · Image to Video",
             "Input · One product photo",
             "Output · 15 or 30s clip"
           ],
@@ -612,32 +655,59 @@
                 "Finished videos wait in the Library, where All videos, In progress, Failed and Completed separate running jobs from ready ones. The badge updates while you are away. Download what you keep within 15 days.",
                 "The details modal lists the duration, aspect ratio and resolution you submitted, plus every reference you attached. If the clip needs words, [Subtitle Studio](/guides/how-do-subtitle-studio) works on completed videos and saves each pass as a version. Run the [review checklist](/blog/ai-video-review-checklist) first."
               ]
+            },
+            {
+              "h2": "How one product photo becomes a clip for any platform",
+              "paras": [
+                "Image to Video starts from a still you already have. Upload one product photo, describe the motion you want in a short prompt, and the tool returns a moving clip that keeps the product readable. You don't book a shoot or hire anyone to hold the item, so a photo taken on a kitchen table can open an ad. When you want to try it, [open the workspace](/app/create).",
+                "Three directions are documented for the same photo. A creator-style TikTok unboxing opens on a strong hook and walks through the product, an Instagram get-ready reel sits in soft light with minimal captions, and a Facebook offer testimonial leads with the deal and shows the item in use. All three are 9:16 vertical, 10-second loops. Review the generated details against the photo before you publish, and if you only have a link, [import the product page instead](/guides/how-do-url-to-video)."
+              ],
+              "cards": [
+                {
+                  "tag": "9:16 vertical 10-second loop",
+                  "title": "TikTok: creator-style unboxing",
+                  "body": "Opens on a strong hook, then walks through the product step by step. The framing stays creator-style, so it reads like a first look rather than a finished ad. Your upload supplies the item.",
+                  "meta": "creator unboxing, talking head, on-screen captions"
+                },
+                {
+                  "tag": "9:16 vertical 10-second loop",
+                  "title": "Instagram: get-ready reel",
+                  "body": "Soft light, a measured pace and minimal captions. The reel follows a routine built around the product rather than a hard sell. Keep the colors true to the photo as the clip moves.",
+                  "meta": "get-ready reel, soft light, minimal captions"
+                },
+                {
+                  "tag": "9:16 vertical 10-second loop",
+                  "title": "Facebook: offer testimonial",
+                  "body": "Leads with the deal, then shows the product in use so the offer has proof. The testimonial framing carries the message without a hard sell. Compare the generated details with your photo before publishing.",
+                  "meta": "UGC testimonial, offer hook, product demo"
+                }
+              ]
             }
           ],
           "steps": [
             {
-              "title": "Pick one strong photo",
-              "body": "Open the composer and add your product photo. Is the product fully in frame, is the background plain, is the light even enough to read the label? A phone shot that passes those three beats a studio shot that fails one."
+              "title": "Upload the product photo in Home",
+              "body": "Home is where a new product starts, so upload the photo there first. A clear shot such as a canvas tote bag on a wooden table works better than a busy scene, because the tool needs the item's edges and color to read. Once the upload finishes you see the photo attached, and the next click takes you to the tool tab you chose from the tools menu."
             },
             {
-              "title": "Describe one action",
-              "body": "Write one sentence with one verb: she lifts the bottle, the lid turns, the box slides open. Adjectives about mood add nothing the photo lacks. If you want a second beat, plan a second clip."
+              "title": "Pick Image to Video in the tool tab",
+              "body": "The tool tab opens with that photo already attached, and the prompt field sits in front of you. This is the point to decide which of the three documented directions you want, because each one sets a different tone for the prompt you write next. The format controls and the estimate area stay on the same screen, so nothing is hidden behind a second page."
             },
             {
-              "title": "Check the quote, confirm",
-              "body": "Set the duration to 15 or 30 seconds, then read the cost line, 20 credits or 40. The confirmation modal repeats that number next to your balance. Confirm only when it matches your plan; held credits return if the job fails."
+              "title": "Write the motion prompt in the composer",
+              "body": "In the composer, describe the motion in plain words: a slow push toward the tote, a hand lifting it from the table, a turn that shows the other side. Name the light you want and keep the original framing as the base shot. Set the aspect to 9:16 and the duration to 10 seconds when you are aiming at one of the documented placements."
             },
             {
-              "title": "Compare and keep",
-              "body": "Generate a variation when the motion feels off, changing one input at a time. Watch both takes with the sound off and keep the one where the product stays recognisable. One clean take beats two near identical attempts."
+              "title": "Confirm the credit estimate",
+              "body": "The confirmation dialog shows the credit estimate before anything is rendered. Read the number, check the aspect and duration once more, then confirm to reserve the credits. A failed job returns those credits automatically, so a misfire does not eat the budget. If something looks off, close the dialog and fix it in the composer before you confirm."
             },
             {
-              "title": "Collect it from the Library",
-              "body": "The job moves from generating to finishing to completed on the server, so you can leave the page. Check the submitted duration and resolution in the details modal, then download a copy to your own drive."
+              "title": "Compare the clip with your photo",
+              "body": "Generation runs and the clip lands in the job view. Play it beside the original photo and compare shape, color and any logo, so the item still reads as the same product. If a detail drifted, open Regenerate, which prefills the composer from the job so you change one line instead of rewriting the whole brief."
             },
             {
-              "title": "Caption it if it needs words",
-              "body": "A moving product clip often works without speech, but a price, a size or a claim needs on-screen text. Subtitle Studio runs on completed videos and saves each operation as a new version, so the clean clip stays underneath."
+              "title": "Download the file from the Library",
+              "body": "Finished clips sit in the Library next to your drafts and versions, and they stay downloadable for 15 days. Open the job, download the file, and note that the download carries no watermark. For a second platform, use Regenerate to prefill the composer from this job, adjust the prompt, then confirm the new estimate before you render again."
             }
           ],
           "stepsIntro": {
@@ -727,10 +797,10 @@
     {
       "slug": "/guides/how-do-text-to-video",
       "id": "aidreamcapes_v2_guide_how_do_text_to_video",
-      "title": "From One Sentence to a Video Brief (Text to Video) | AIVideosUGC",
+      "title": "Text to Video: From One Sentence to a Video Brief | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "From One Sentence to a Video Brief (Text to Video) | AIVideosUGC",
+        "title": "Text to Video: From One Sentence to a Video Brief | AIVideosUGC",
         "description": "Type one sentence about your product. AI writes the script and scenes, and turns it into an editable video brief — then generates the shots you choose.",
         "keywords": "text to video, ai video from text, ai script to video, product review video ai",
         "ogImage": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
@@ -740,8 +810,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · Text to Video",
-          "h1": "From one sentence to a video brief.",
+          "eyebrow": "How-to guide",
+          "h1": "Text to Video: from one sentence to a video brief",
           "lead": "Type one sentence about your product. AI writes the script and scenes, and turns it into an editable video brief — then generates the shots you choose.",
           "image": {
             "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
@@ -750,9 +820,8 @@
             "height": 1138
           },
           "tool": "Text to Video",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · Text to Video",
             "Input · One sentence",
             "Level · First video"
           ],
@@ -809,6 +878,44 @@
                 "Captions come later, in [Subtitle Studio](/guides/how-do-subtitle-studio), and only for completed videos. Generate subtitles reads the actual speech, Promo lines and Product copy write on-screen text from your own words, and each operation stacks a new version over the player.",
                 "Publishing is one click to TikTok or Meta, or a download with no watermark. Keep the first paid clip narrow, one claim and one duration, so the next version has something honest to compare against. For the account side, see [the first TikTok video ad](/guides/first-tiktok-video-ad)."
               ]
+            },
+            {
+              "h2": "How the prompt optimizer builds a scene-by-scene script",
+              "paras": [
+                "Open [the workspace](/app/create) and pick Text to Video from the tools menu. In the composer you type one line of plain words, such as a canvas tote on a wooden table in afternoon light, then tap Optimize. The editor answers with a scene-by-scene prompt that carries framing, lighting and sound. Tool, model, aspect, duration and resolution sit on the same screen, so the brief and the format stay together.",
+                "Nothing in the prompt is locked. You can rewrite any of the six lines, from the light and the shot list to the rules about on-screen text, before anything renders. The credit estimate appears before you confirm, and confirming reserves those credits, while a job that fails hands them back. If you already hold good product photos, [Image to Video](/guides/how-do-image-to-video) is the shorter route."
+              ],
+              "panel": {
+                "kicker": "Optimized prompt",
+                "title": "One tote, six scene-by-scene lines",
+                "rows": [
+                  {
+                    "label": "STYLE",
+                    "value": "Warm afternoon daylight, soft shadows, wooden table surface, steady handheld camera."
+                  },
+                  {
+                    "label": "GOAL",
+                    "value": "Show the canvas tote carrying a full day of errands, ending on the print and the handles."
+                  },
+                  {
+                    "label": "SCENE",
+                    "value": "Wooden table by a window, tote resting open, a green bottle pulled out and set down."
+                  },
+                  {
+                    "label": "SHOTS",
+                    "value": "Slow push on the tote, close on the print, a hand lifting the bottle, wide shot to close."
+                  },
+                  {
+                    "label": "SOUND",
+                    "value": "Room tone, one calm voiceover line, canvas rustle as the bottle comes out."
+                  },
+                  {
+                    "label": "RULES",
+                    "value": "Keep the print sharp, no extra logos, no on-screen text, hands stay natural."
+                  }
+                ],
+                "foot": "The estimate appears before you confirm, and every line stays editable, so a fix in the rules does not mean rewriting the brief."
+              }
             }
           ],
           "stepsIntro": {
@@ -817,28 +924,28 @@
           },
           "steps": [
             {
-              "title": "Write the sentence",
-              "body": "Start with the product, the person you are speaking to, and the one claim the video has to land. Keep it to one or two lines. If you cannot name the claim in a sentence, no script will fix that."
+              "title": "Start the product in Home",
+              "body": "Home is where a new product begins, so open it first and add the canvas tote: paste the product link if the page exists, or upload the photo if it does not. Confirm the product, then choose Text to Video from the tools menu. The tool tab opens with that product attached, and the composer is the next thing you see."
             },
             {
-              "title": "Review the brief",
-              "body": "Press Optimize and read what comes back: scene order, the shot inside each scene, and the lines the voice will read. Change the wording or the order before anything runs. Keep the shots you can picture and rewrite the rest."
+              "title": "Write one plain line in the composer",
+              "body": "In the composer, describe the product the way you would to a friend rather than in prompt language: a heavy canvas tote on a wooden table in warm afternoon light, a hand pulling out a green water bottle. One line is enough to start. Leave the tool, model, aspect, duration and resolution as they are for now, then click Optimize and read what comes back."
             },
             {
-              "title": "Confirm the quote",
-              "body": "The confirmation window restates the estimated cost and your balance. Confirming holds the credits, with a 15-second video at 20 credits and a 30-second one at 40. Close the window if the number does not match the version on screen."
+              "title": "Read the six lines the optimizer returns",
+              "body": "The composer answers with six labeled lines, from the look and the light to the sound and the rules. Each one is a working instruction, so compare the framing and the lighting with the tote in your hand. If the voiceover or the shot order is off, fix it there in place rather than retype the brief."
             },
             {
-              "title": "Collect from the Library",
-              "body": "The job runs on the server, so you can leave the page while the badge moves through generating, finishing and completed. Open the details modal when it reads completed, watch the result and the per-shot clips, then download a copy before 15 days pass."
+              "title": "Edit the row that needs work",
+              "body": "Every row stays editable. Change the light in the style line, cut a shot from the list, or add a rule such as keep the print sharp when the label matters. Keep the edits short, because the prompt is what the clips are built from. Read the whole prompt once more after a change, so two lines do not ask for opposite things."
             },
             {
-              "title": "Fix the scene that missed",
-              "body": "Compare the weak shot with the rest before you rerun anything. Retry render re-runs assembly when the clips themselves are fine. Regenerate prefills the composer from that job, so change the vague line in the brief before you run it again."
+              "title": "Confirm the estimate in the dialog",
+              "body": "The estimate sits on the same screen as the format controls, and the confirmation dialog shows it before anything runs. Compare the number with the duration and the count of shots, and shorten the clip if it reads high. Confirming reserves the credits for this job, and a job that fails returns them automatically."
             },
             {
-              "title": "Add captions before you export",
-              "body": "Subtitle Studio works on completed videos only, and each operation saves a new version while the original stays intact. Generate subtitles from the actual speech, or write product copy one line per screen. Download the version you prefer."
+              "title": "Collect the file from the Library",
+              "body": "When the render finishes, open the Library and find the job among your drafts, versions and finished files. Play it once at full size and check the print, the bottle and the light against the real tote. Then download the file, which carries no watermark and stays available for 15 days. If a detail drifted, Regenerate prefills the composer from the job so you change one line."
             }
           ],
           "tip": {
@@ -928,10 +1035,10 @@
     {
       "slug": "/guides/how-do-ai-video",
       "id": "aidreamcapes_v2_guide_how_do_ai_video",
-      "title": "Make a Video From Product References (AI Video) | AIVideosUGC",
+      "title": "AI Video: Make a Video From Product References | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Make a Video From Product References (AI Video) | AIVideosUGC",
+        "title": "AI Video: Make a Video From Product References | AIVideosUGC",
         "description": "Attach two or three product photos, describe the scene you want, and generate a campaign-ready clip — the model keeps your product consistent across every shot.",
         "keywords": "ai video from photos, product reference video, ai product video generator, ugc product video",
         "ogImage": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
@@ -941,8 +1048,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · AI Video",
-          "h1": "Make a video from product references.",
+          "eyebrow": "How-to guide",
+          "h1": "AI Video: make a video from product references",
           "lead": "Attach two or three product photos, describe the scene you want, and generate a campaign-ready clip — the model keeps your product consistent across every shot.",
           "image": {
             "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
@@ -951,9 +1058,8 @@
             "height": 640
           },
           "tool": "AI Video",
-          "minutes": 6,
+          "minutes": 9,
           "meta": [
-            "Tool · AI Video",
             "Input · 1–4 photos",
             "Output · 15 or 30 seconds"
           ],
@@ -1008,28 +1114,75 @@
                 "Open the details modal and the per-shot clips settle it. One weak shot with the rest holding is an assembly problem. A drift across every shot is a brief problem, and the description needs a sharper place or action.",
                 "Finished videos stay in the Library for 15 days, so download the keeper the day you choose it. Publish to TikTok or Meta in one click, or download without a watermark and size the crop with [ad sizes by platform](/guides/ad-sizes-by-platform)."
               ]
+            },
+            {
+              "h2": "How AI Video turns a product brief into a storyboard",
+              "paras": [
+                "AI Video takes the pieces you already have, product photos, a scene, a presenter and a short written brief, and turns them into a shot list you can read before anything renders. You work inside its own tab on [the workspace](/app/create), so the product you started on Home follows you into the tool instead of being pasted a second time.",
+                "Nothing is charged while you shape the draft, and the storyboard can be refined until you decide to generate. Each shot can be compared across versions, so you keep the stronger take instead of guessing. Assembly joins the clips into a single file, and the finished video waits in [your Library](/app/create/library) and stays downloadable for 15 days."
+              ],
+              "flow": {
+                "title": "Six stages from product to finished video",
+                "lead": "Each stage ends before the next one begins, so you can read the plan before any shot renders.",
+                "items": [
+                  {
+                    "title": "Add the product assets",
+                    "body": "Start on Home with a product URL or a product photo, then open the AI Video tab. Your confirmed product brings its photo and details along, so the job starts with real material rather than a blank prompt.",
+                    "note": "Works from a link or a photo"
+                  },
+                  {
+                    "title": "Pick a scene and a presenter",
+                    "body": "Choose a scene that matches how the product gets used, such as a kitchen table when the product is Food and beverage. The presenter keeps that setting through the whole video, so every shot shares the same room.",
+                    "note": "Presenters stay in the scene"
+                  },
+                  {
+                    "title": "Write the product brief",
+                    "body": "Say what the product is, who it is for, and what the first three seconds should show. Short notes work better, because the brief is what the storyboard grows from and one detail gives a shot something to prove.",
+                    "note": "Keep it plain and specific"
+                  },
+                  {
+                    "title": "Save the draft and refine the storyboard",
+                    "body": "Saving a draft generates nothing and costs no credits, so the storyboard can be reworked freely. Read each shot in order, move a beat that lands too late, and cut a scene that repeats what another shot already covers.",
+                    "note": "Draft saves, nothing renders"
+                  },
+                  {
+                    "title": "Generate the shots, then assemble",
+                    "body": "Confirm the estimate in the dialog and the shots render as a set. Each shot can be compared across versions, so two takes sit side by side before you choose. Assembly joins the chosen clips into a single file.",
+                    "note": "Compare takes before assembly"
+                  },
+                  {
+                    "title": "Review the file and download it",
+                    "body": "Watch the assembled video once through, then take the file from the Library. Downloads carry no watermark, and the finished video stays available for 15 days, so grab it as soon as the cut looks right.",
+                    "note": "Download within 15 days"
+                  }
+                ]
+              }
             }
           ],
           "steps": [
             {
-              "title": "Attach 2–3 references",
-              "body": "Open the AI Video tab and add your photos, up to four. Choose angles that answer different questions: the front label, the side seam, the product in a hand. Three frames of one corner teach the model nothing new."
+              "title": "Start the product on Home",
+              "body": "Open Home and paste a public product link for the item you want to sell, for example a canvas tote bag, or upload its main photo instead. The card you confirm saves the photo and the details, so the AI Video tab opens with that product attached and nothing left to retype."
             },
             {
-              "title": "Describe one scene",
-              "body": "Name a place, a light and one action in a single line. 'Kitchen counter at seven, low sun, she sets the bottle down.' The model fills the camera move and the rhythm, so your words carry the moment rather than a shot list."
+              "title": "Choose the scene and presenter",
+              "body": "In the AI Video tab, pick the scene category that fits the product, such as Food and beverage for a kitchen table set or Beauty and personal care for skincare, then select one presenter. That scene stays with the presenter for the whole video, so every shot shares one room and one face."
             },
             {
-              "title": "Confirm the quote",
-              "body": "The cost updates as the duration or a reference changes. Before anything runs, the confirmation restates the estimate and your balance, and confirming holds the credits. A failed job lifts that hold on its own."
+              "title": "Write the brief in the composer",
+              "body": "The composer asks for the product brief. Name the product, the buyer it suits and the moment the first three seconds should capture, and add one detail you can check on camera, such as the stitching on a tote or the texture of a cream. The assistant offers script ideas on the same screen if you get stuck."
             },
             {
-              "title": "Compare versions",
-              "body": "Run the brief again without editing it, then open both takes side by side. Judge the label, the strap and the light you asked for. Keep the stronger one; the other stays in the Library as a record of what changed."
+              "title": "Save the draft and read the storyboard",
+              "body": "Save the draft from the composer, which stores the job in the Library without generating or spending anything. The storyboard then lists each shot in order, so you can reorder a beat, shorten a scene, or ask for another version of a shot before any render starts."
             },
             {
-              "title": "Read the job details",
-              "body": "Open the details modal on the take you are judging. It lists the result, the per-shot clips, your description, every reference you attached, and the duration, aspect ratio and resolution. The per-shot clips show which shot broke, if any."
+              "title": "Confirm the cost and generate the shots",
+              "body": "Press generate and the confirmation dialog shows the credit estimate before anything runs. Confirming reserves those credits, and a job that fails returns them without you asking. Put two takes of the same shot side by side, then assemble the chosen clips into one file."
+            },
+            {
+              "title": "Collect the video from the Library",
+              "body": "The Library holds the assembled file next to its draft and earlier versions. Watch it once through, check that the product still looks like your photo, then download it. Files carry no watermark and remain available for 15 days, so pull the copy you want before that window closes."
             }
           ],
           "stepsIntro": {
@@ -1128,10 +1281,10 @@
     {
       "slug": "/guides/how-do-ai-image",
       "id": "aidreamcapes_v2_guide_how_do_ai_image",
-      "title": "Generate Product Images That Sell (AI Image) | AIVideosUGC",
+      "title": "AI Image: Generate Product Images That Sell | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Generate Product Images That Sell (AI Image) | AIVideosUGC",
+        "title": "AI Image: Generate Product Images That Sell | AIVideosUGC",
         "description": "Pick a tool preset, set the ratio and references, and collect store-ready product photos — main images, lifestyle shots and social crops from one session.",
         "keywords": "ai product image generator, ai product photography, white background product image, lifestyle product photo ai",
         "ogImage": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
@@ -1141,8 +1294,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · AI Image",
-          "h1": "Generate product images that sell.",
+          "eyebrow": "How-to guide",
+          "h1": "AI Image: generate product images that sell",
           "lead": "Pick a tool preset, set the ratio and references, and collect store-ready product photos — main images, lifestyle shots and social crops from one session.",
           "image": {
             "src": "/ai-image-generation/teams1-home-r1-ad-640.webp",
@@ -1151,9 +1304,8 @@
             "height": 960
           },
           "tool": "AI Image",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · AI Image",
             "Output · Product stills",
             "Level · First images"
           ],
@@ -1208,32 +1360,56 @@
                 "Finished images appear inline on the page, each with a download link. They do not enter the video Library, so save the frames you keep before you close the tab. The Library holds video jobs, and videos stay there for 15 days.",
                 "Plan a set rather than a pile: one main image that carries the listing, one lifestyle frame that shows scale, and the crops your placements will buy. [Ad sizes by platform](/guides/ad-sizes-by-platform) lists what each channel wants, and [white background rules](/guides/white-background-amazon) covers marketplace main images."
               ]
+            },
+            {
+              "h2": "Pick a preset to turn one product photo into a listing image",
+              "paras": [
+                "The image tool starts with the product itself. Add one clear photo of the item, such as a canvas tote bag, and leave the scene template empty when you already know how the shot should look. Pick a preset to set the starting direction: Lifestyle, White background, Product detail or Social image. The photo stays the reference, so shape, color and logo should still read as your product.",
+                "Choose the preset by where the image will run. White background keeps a catalog row clean, Product detail brings a texture or a label closer, Lifestyle places the item in a room or in a hand, and Social image points the frame at a feed post. Review the first version beside your original photo, then edit the description for the next version rather than uploading a new photo."
+              ],
+              "flow": {
+                "title": "From product photo to a finished image",
+                "lead": "The tool follows a short path: your photo, one direction, and a review you can steer without starting over.",
+                "items": [
+                  {
+                    "title": "Add the product photo",
+                    "body": "Open the image tool from Home and add a clear photo of the item, such as a canvas tote bag on a plain surface. A scene template is optional, so skip it when your setup already looks right.",
+                    "note": "Photo first, no template needed"
+                  },
+                  {
+                    "title": "Choose a scene and write the brief",
+                    "body": "Pick the scene that fits the product, choose a preset such as White background, then name the style and the aspect ratio you need. Keep the brief short and specific, because those words are what the tool follows.",
+                    "note": "Estimate shown before you confirm"
+                  },
+                  {
+                    "title": "Review, refine and download",
+                    "body": "Compare the result with your product photo before you publish it. If the shape, the color or the logo drifts, edit the description and generate another version from the same photo. Then download the file from [the Library](/app/create/library).",
+                    "note": "Edit the words, not the photo"
+                  }
+                ]
+              }
             }
           ],
           "steps": [
             {
-              "title": "Pick a tool preset",
-              "body": "Open the AI Image tab and choose the preset that matches the file you need. White background for a marketplace main image, Lifestyle photo for an ad that shows the product in use, Model photo when a person belongs in the frame."
+              "title": "Open Home and add the product photo",
+              "body": "Open Home in the workspace, then choose AI Image from the tool menu. Upload the photo you want to keep faithful, such as a canvas tote bag shot on a plain table, and confirm it appears in the composer. Leave the scene template empty when the photo is already what you want to build on."
             },
             {
-              "title": "Set ratio and references",
-              "body": "Set the aspect ratio before you add photos, because it decides the crop. Then attach up to four references, starting with the clearest. Square suits a listing, tall suits stories, portrait suits a feed placement."
+              "title": "Choose a scene, a preset and an aspect ratio",
+              "body": "In the composer, pick the scene that matches the product and select one preset: Lifestyle, White background, Product detail or Social image. Set the style you want and the aspect ratio your placement needs. The credit estimate appears before the generation starts, so you can check the cost first."
             },
             {
-              "title": "Watch the price confirm",
-              "body": "Attach the first reference and the price line swaps its placeholder for a credit total. Change the preset, ratio or references after that and the total moves, so the button asks for a second click. Read the new figure, then confirm."
+              "title": "Write the brief in the composer",
+              "body": "In the composer, name what the shot should show: the bag on a shoulder, the label in close view, or the item beside a laptop. Keep the brief to details that matter for the product and skip the rest. The confirmation dialog shows the credit estimate before anything is spent, so start the first version only when the wording reads right."
             },
             {
-              "title": "Collect the results",
-              "body": "The run returns images inline on the page: a card shows the reserved credits while it works, then a download link when the file is ready. Nothing lands in the video Library. Judge each frame at thumbnail size first."
+              "title": "Review the version against the photo",
+              "body": "Put the generated image beside your original photo and look at the shape, the color and the logo. If something drifted, open the description in the composer and change the wording rather than uploading a different photo. Generating again from the same photo produces a new version, and the earlier one stays in the Library."
             },
             {
-              "title": "Download the keepers",
-              "body": "Follow each download link and save the frames you will actually use. Keep the source photo beside them so you can explain later why a preset was chosen. A saved near miss is worth more than a repeat of the same idea."
-            },
-            {
-              "title": "Run the crops a channel wants",
-              "body": "Return to the composer with the same preset and reference, change only the ratio, and confirm the new total. Each crop is its own run, so plan two or three, starting with the placement you have bought."
+              "title": "Download the file from the Library",
+              "body": "When the image matches your product, open the Library, where drafts, versions and finished files sit together. Pick the version you want and download it, then check the file once more at full size. If a later placement needs a different preset, the same photo and a new description are enough to start it."
             }
           ],
           "stepsIntro": {
@@ -1339,10 +1515,10 @@
     {
       "slug": "/guides/how-do-product-links",
       "id": "aidreamcapes_v2_guide_how_do_product_links",
-      "title": "Build Your Product Library From Links (Product Links) | AIVideosUGC",
+      "title": "Product Links: Build a Product Library From Links | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Build Your Product Library From Links (Product Links) | AIVideosUGC",
+        "title": "Product Links: Build a Product Library From Links | AIVideosUGC",
         "description": "Paste product pages once, keep a clean library of every product you sell, and brief videos or images straight from a product card — no re-uploading photos.",
         "keywords": "product links import, product library, ai product catalog, brief from product page",
         "ogImage": "/ai-image-generation/teams1-home-r1-src-640.webp",
@@ -1352,8 +1528,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · Product Links",
-          "h1": "Build your product library from links.",
+          "eyebrow": "How-to guide",
+          "h1": "Product Links: build a product library from your links",
           "lead": "Paste product pages once, keep a clean library of every product you sell, and brief videos or images straight from a product card — no re-uploading photos.",
           "image": {
             "src": "/ai-image-generation/teams1-home-r1-src-640.webp",
@@ -1362,9 +1538,8 @@
             "height": 640
           },
           "tool": "Product Links",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · Product Links",
             "Input · Product page URL",
             "Output · Brief-ready cards"
           ],
@@ -1427,28 +1602,59 @@
                 "Captions and on-screen text come later, in [Subtitle Studio](/guides/how-do-subtitle-studio), which works on completed videos only. Each operation saves a new version, the original stays untouched, and versions stack as tabs over the player.",
                 "The card stays useful after that. Keep it current, and the next ad starts from work you already did, one click from the shelf you keep tidy rather than a folder you rebuild."
               ]
+            },
+            {
+              "h2": "How the product library saves and reuses a product link",
+              "paras": [
+                "A product link only becomes useful when the page behind it is kept. Every product page you confirm is stored with its photo and details, so the listing you imported once is ready for the next brief. Pull it up from the saved list, check the photo still matches the product you ship, and skip the paste step entirely. The [product link guide](/guides/how-do-url-to-video) covers what the import pulls in from a public page.",
+                "Your saved products do more than save typing. Import advertising results and compare the creatives side by side, so the version that worked is easy to spot. Share brand profiles and reviewed product facts with the people who brief the work, and decide who on the team can open them. Everything you keep sits in the [Library](/app/create/library) with your drafts, versions and finished files."
+              ],
+              "cards": [
+                {
+                  "tag": "Reuse",
+                  "title": "Product library",
+                  "body": "Each confirmed product page keeps its photo and details, ready for the next video. Choose the saved item instead of a link and the brief starts from details you already reviewed.",
+                  "meta": "Photo and details kept"
+                },
+                {
+                  "tag": "Compare",
+                  "title": "Performance",
+                  "body": "Import advertising results and compare creatives side by side, so a version that worked is easy to spot. Take the detail that landed back into the composer and rebuild from there.",
+                  "meta": "Results next to work"
+                },
+                {
+                  "tag": "Shared access",
+                  "title": "Teams and brands",
+                  "body": "Brand profiles and reviewed product facts live in one place, so every brief starts from lines the team already approved. You decide who on the team can open them, and nothing has to be retyped.",
+                  "meta": "Brand profiles shared"
+                }
+              ]
             }
           ],
           "steps": [
             {
-              "title": "Import products",
-              "body": "Paste the product page URL and let the import read it. The entry saves with a thumbnail, description and source host, so the same product never needs a second upload for the next ad. Start with the items you advertise most."
+              "title": "Paste the link on Home",
+              "body": "Open Home and put the address of a public product page into the link field, for example a listing for a canvas tote. The import reads the page and fills the product with a photo and the details it finds. You can upload a photo instead when there is no page to link."
             },
             {
-              "title": "Manage the library",
-              "body": "Open a card when it looks thin and backfill the photos or description the scrape missed. Delete entries you no longer sell, because a long shelf of dead products slows every visit you make to it."
+              "title": "Check the imported product",
+              "body": "On the same screen, look over the photo and the details the import returned, and fix anything that is off before you go further. A wrong size, a missing color or a short description is edited by hand in the composer, and you can swap the photo for one of your own."
             },
             {
-              "title": "Create from a card",
-              "body": "Press \"Create your video\" on the card and the panel builds the video inline, with the product photos already attached. Read the estimated cost, confirm, and the banner tracks the run to \"Your video is ready\"."
+              "title": "Confirm the estimate and generate",
+              "body": "The credit estimate shows up in the confirmation dialog before anything is charged, so read it against the job you described. Confirming reserves those credits, and if the render fails they come back automatically so you can try again. If the product is not right yet, save the draft, which generates nothing and spends no credits."
             },
             {
-              "title": "Refresh a stale card",
-              "body": "When the shop page has new photography or new copy, re-import the same URL instead of patching the card by hand. Nothing on the card changes until you import, which keeps old briefs and new ones consistent."
+              "title": "Keep the confirmed page in the library",
+              "body": "Confirming stores the product page with its photo and details, which is what makes the second job faster than the first. That saved entry is not tied to one video, so the same listing can serve a short ad today and a longer cut next month. Open the tool tab again and the product is already there to choose."
             },
             {
-              "title": "Check the result",
-              "body": "Open the Library and filter to Completed, then open the details modal for the video, per-shot clips, the description and every reference you attached. If the clips are fine but the assembly is wrong, use Retry render; for a different take, Regenerate prefills the panel."
+              "title": "Reuse the saved product next time",
+              "body": "Start the next video from the saved item in the product library instead of a link. Choose the product, check that the photo still matches what you ship, and brief the new angle in the composer, for example a short vertical cut for a story ad. If the creative already ran, import the advertising results and compare the two versions side by side."
+            },
+            {
+              "title": "Find the finished file in the Library",
+              "body": "Finished videos and their drafts and versions stay together in the Library, so you can download the file you need without hunting through the composer. Downloads carry no watermark, and the file stays available for 15 days. If a version is nearly right, regenerate from the same job so one detail changes instead of the whole brief."
             }
           ],
           "stepsIntro": {
@@ -1550,10 +1756,10 @@
     {
       "slug": "/guides/how-do-ai-avatar",
       "id": "aidreamcapes_v2_guide_how_do_ai_avatar",
-      "title": "Present Your Product With an AI Avatar | AIVideosUGC",
+      "title": "AI Avatar: Put a Presenter in Front of Your Product | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Present Your Product With an AI Avatar | AIVideosUGC",
+        "title": "AI Avatar: Put a Presenter in Front of Your Product | AIVideosUGC",
         "description": "Choose a presenter, paste your script, and generate a talking product video — no filming, no studio, and the same face across every video you publish.",
         "keywords": "ai avatar video, ai presenter, talking product video, ai actor for product ads",
         "ogImage": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
@@ -1563,8 +1769,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · AI Avatar",
-          "h1": "Present your product with an AI avatar.",
+          "eyebrow": "How-to guide",
+          "h1": "AI Avatar: put a presenter in front of your product",
           "lead": "Choose a presenter, paste your script, and generate a talking product video — no filming, no studio, and the same face across every video you publish.",
           "image": {
             "src": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
@@ -1573,9 +1779,8 @@
             "height": 1138
           },
           "tool": "AI Avatar",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · AI Avatar",
             "Output · Presenter video",
             "Level · First video"
           ],
@@ -1630,28 +1835,82 @@
                 "Keep one presenter for a campaign and test the script instead of the face. A viewer who meets the same person three times recognises the ad before the product name appears, while a new actor each time starts the introduction over.",
                 "Captions come after the cut. [Subtitle Studio](/guides/how-do-subtitle-studio) works on completed videos only. Each operation saves a new version and leaves the original untouched. Captions from the actual speech follow the delivery, while Product copy puts your own lines on screen."
               ]
+            },
+            {
+              "h2": "How to choose an AI presenter for your product video",
+              "paras": [
+                "Fifty-three presenters appear across thirty-one real scenes, from a cafe counter to a poolside. Each presenter card carries its own sample video, a voice and the list of supported languages, so you can watch the room and hear the delivery before you commit. What you see in the sample is what the finished video keeps, because the scene does not change.",
+                "Upload your product photos and the presenter shows the item you sent, keeping its shape, color and logo true to the photo. The scene is fixed, so a cafe counter stays a cafe counter from the first frame to the last. You get a 9:16 video in minutes, and the finished file waits in the Library for download."
+              ],
+              "cards": [
+                {
+                  "tag": "Cafe counter",
+                  "title": "Yara, a cafe counter presenter",
+                  "body": "A cafe counter fits drinks, snacks and small accessories picked up on a break. Choose it for a casual story where the product sits naturally in a hand. The counter stays the setting throughout.",
+                  "meta": "English voice"
+                },
+                {
+                  "tag": "Home table",
+                  "title": "Elena, a home table presenter",
+                  "body": "A home table works for food, skincare and household items used in a daily routine. The room feels calm and familiar, which suits a trusted tone. Elena keeps the table throughout.",
+                  "meta": "English voice"
+                },
+                {
+                  "tag": "Living-room sofa",
+                  "title": "Dev, on a living-room sofa",
+                  "body": "A living-room sofa suits tech and gadgets shown in a relaxed setting at home. It works for a demo where the presenter holds the device and explains one clear use.",
+                  "meta": "English voice"
+                },
+                {
+                  "tag": "Poolside",
+                  "title": "Tara, poolside presenter",
+                  "body": "A poolside scene suits swimwear, sunscreen, drinks and gear for warm days outdoors. Use it when the product belongs beside water and the story is about a season or a trip.",
+                  "meta": "English voice"
+                }
+              ],
+              "flow": {
+                "title": "How the avatar video comes together",
+                "lead": "Three moves take you from a presenter you like to a vertical video with your product in it.",
+                "items": [
+                  {
+                    "title": "Choose a presenter",
+                    "body": "Open the AI Avatar tab and browse the presenter cards. Each card carries a sample video, a voice and the languages it supports, so you can hear the delivery before you pick. Pick the room that fits the story.",
+                    "note": "Scene stays as sampled"
+                  },
+                  {
+                    "title": "Add your product photos",
+                    "body": "Add the product photos you want the presenter to show. The presenter reproduces the item you sent, so its shape, color and logo stay true to the photo. Keep the shot sharp and evenly lit.",
+                    "note": "Shape, color and logo hold"
+                  },
+                  {
+                    "title": "AI generates the video",
+                    "body": "Confirm the estimate, then let the job run. The presenter speaks in the scene you chose, holds your product and the assembly lands as a single 9:16 file. Download it from the Library when you're ready.",
+                    "note": "Ready in minutes"
+                  }
+                ]
+              }
             }
           ],
           "steps": [
             {
-              "title": "Attach product references",
-              "body": "Add the photos the presenter will hold, wear or demonstrate. Front and back views on a plain surface give the hands somewhere to land, and the detail the script mentions should be readable in the frame."
+              "title": "Start a product from Home",
+              "body": "Open [Home](/app/create/home) in the workspace and paste a product URL or upload a product photo. Confirm the product page, which saves its photo and details for reuse. Then open the tool menu and choose AI Avatar, and the tool tab opens with the presenter cards in front of you."
             },
             {
-              "title": "Choose a presenter",
-              "body": "Filter All, Women or Men, or search by name, character or scene. Each card previews the voice and a sample line, so you hear the delivery before you cast. My avatars accepts a portrait you upload instead."
+              "title": "Pick a presenter and check the sample",
+              "body": "In the AI Avatar tab, open a presenter card such as Yara at a cafe counter. Play the sample video, listen to the voice and read the supported languages before you decide. Then set the presenter for this job, and the next panel asks for your product photos. The scene stays exactly as sampled."
             },
             {
-              "title": "Write the script",
-              "body": "Scripts run up to 5,000 characters, more room than a short video needs. Write spoken sentences, one idea each, and read them aloud before you paste. A line that takes two breaths will sound rushed."
+              "title": "Add your product photos",
+              "body": "Upload the product photos you want the presenter to hold, in the photo step of the AI Avatar composer. The presenter reproduces the item exactly as sent, so its shape, color and logo stay true to the image. Keep the shot sharp and evenly lit, since the presenter copies what the photo shows."
             },
             {
-              "title": "Quote, confirm, generate",
-              "body": "Set the format, the duration and the spoken language first, then read the cost and confirm. The modal restates the estimate against your balance, and held credits return on their own if the render fails."
+              "title": "Confirm the estimate and generate",
+              "body": "Review the job in the composer, where the presenter, photos and scene are already set. The credit estimate shows before you confirm, and confirming reserves those credits. If the render fails, the credits return automatically and you can run it again. The confirmation dialog is the last step before the job starts."
             },
             {
-              "title": "Check the cut before you download",
-              "body": "Play it once with the sound off to check the product, then with sound on to check the voice. If the clips are fine and the joins are not, use Retry render. If the casting is wrong, use Regenerate."
+              "title": "Collect the video from the Library",
+              "body": "The job lands in the [Library](/app/create/library) as a 9:16 file, next to your drafts and earlier versions. Open the finished item, play it once against the product photo, then download it. The file carries no watermark and stays downloadable for 15 days. If one detail is off, regenerate from the job instead of starting a new brief."
             }
           ],
           "stepsIntro": {
@@ -1768,10 +2027,10 @@
     {
       "slug": "/guides/how-do-subtitle-studio",
       "id": "aidreamcapes_v2_guide_how_do_subtitle_studio",
-      "title": "Subtitle a Finished Video in Minutes (Subtitle Studio) | AIVideosUGC",
+      "title": "Subtitle Studio: Subtitle a Finished Video in Minutes | AIVideosUGC",
       "seo": {
         "index": true,
-        "title": "Subtitle a Finished Video in Minutes (Subtitle Studio) | AIVideosUGC",
+        "title": "Subtitle Studio: Subtitle a Finished Video in Minutes | AIVideosUGC",
         "description": "Pick a finished video, choose the operation, and style the captions with a live preview — then burn in a new version, ready for silent autoplay feeds.",
         "keywords": "subtitle studio, add subtitles to video, translate video captions, silent autoplay subtitles",
         "ogImage": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp",
@@ -1781,8 +2040,8 @@
       },
       "data": {
         "howto": {
-          "eyebrow": "How-to · Subtitle Studio",
-          "h1": "Subtitle a finished video in minutes.",
+          "eyebrow": "How-to guide",
+          "h1": "Subtitle Studio: subtitle a finished video in minutes",
           "lead": "Pick a finished video, choose the operation, and style the captions with a live preview — then burn in a new version, ready for silent autoplay feeds.",
           "image": {
             "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp",
@@ -1791,9 +2050,8 @@
             "height": 1138
           },
           "tool": "Subtitle Studio",
-          "minutes": 6,
+          "minutes": 8,
           "meta": [
-            "Tool · Subtitle Studio",
             "Output · Captioned version",
             "Level · Polished cut"
           ],
@@ -1851,32 +2109,66 @@
                 "Versions stack as tabs above the player. Switch between them at the same timestamp, sound off, and ask which answers a buyer's first question. A line that reads well on a desktop can vanish into a busy phone frame, so check the crop you will post.",
                 "Keep the tab you trust, download it, and publish. Finished videos stay in the Library for 15 days, so download what you want to keep. Crops for each placement sit in [ad sizes by platform](/guides/ad-sizes-by-platform), with [the review checklist](/blog/ai-video-review-checklist) for the rest."
               ]
+            },
+            {
+              "h2": "Style, size and position for every caption",
+              "paras": [
+                "Caption work comes last in Subtitle Studio, after the video itself is generated. You don't write the text: it's read from your voiceover automatically, line by line. Your job is the look and the wording. Pick a style, a size, a position and a color that stay readable over the product, then read each line against what's on screen. Open the tool from the menu in the workspace and the settings below are what you see.",
+                "Nothing about the video's picture changes — you're only adding words on top. The captioned file is saved as a new version, so the render you already had stays in the Library untouched. Every line can be edited before you export, which matters when a product name or a price has to be exact. Read through the lines, fix the ones that came through wrong, then export."
+              ],
+              "panel": {
+                "kicker": "Subtitle settings",
+                "title": "Caption controls before you export",
+                "rows": [
+                  {
+                    "label": "Style",
+                    "value": "Classic, Bold or Minimal, chosen for how much the words should stand out"
+                  },
+                  {
+                    "label": "Size",
+                    "value": "S, M or L, so the type fits the frame you're captioning"
+                  },
+                  {
+                    "label": "Position",
+                    "value": "Bottom, Middle or Top, wherever it reads best over the product"
+                  },
+                  {
+                    "label": "Color",
+                    "value": "Adjustable, matched to the background sitting behind the words"
+                  },
+                  {
+                    "label": "Captions",
+                    "value": "Taken from your voiceover automatically, editable line by line"
+                  }
+                ],
+                "foot": "The picture itself is untouched. Export saves the captioned file as a new version, and your original stays in the Library."
+              }
             }
           ],
           "steps": [
             {
-              "title": "Pick a finished video",
-              "body": "Open Subtitle Studio and choose a completed job from the list on the left. Search by a word from the prompt or the title when the list is long. Only finished videos appear, because the tool works on footage that already exists."
+              "title": "Open Subtitle Studio from the tool menu",
+              "body": "Open [the workspace](/app/create/home) and choose Subtitle Studio from the tool menu, where it sits with AI Avatar, Product Links and the rest of the tools. The subtitle tab opens on a list of your finished videos, because a caption needs a voiceover to read from. Pick one you've already generated rather than a draft."
             },
             {
-              "title": "Choose an operation",
-              "body": "Choose Generate subtitles to caption the speech in the video, or Promo lines and Product copy to set your own text. For the text operations, write one line per screen. The operation sets the words; the style controls set the look."
+              "title": "Pick the render that carries the voiceover",
+              "body": "In the Subtitle Studio tab, choose the finished video, the one whose voiceover you want turned into text. It helps to know the name you gave it when you generated the render, so you can spot it among the versions you've kept. The panel fills with caption lines taken from that voiceover, in the order they're spoken. The footage itself doesn't change at this point."
             },
             {
-              "title": "Style it with live preview",
-              "body": "Set Style, Size, Position, Colour and Backdrop and watch the sample caption preview change. Change one control at a time so you can tell which one helped. Judge the line against the busiest frame."
+              "title": "Read each caption line and edit it",
+              "body": "In the panel, go through the caption lines one at a time. The text is pulled from the voiceover automatically, so most lines only need a glance, but a product name or a number can come out wrong. Fix the canvas tote where the take blurred it, or a price that came through wrong. Every line can be edited before export."
             },
             {
-              "title": "Generate a new version",
-              "body": "Start the job and the tool saves the styled cut as a new version beside the original. Nothing is overwritten, so the approved video stays in the Library. Leave the page if you need to; the badge updates later."
+              "title": "Set style, size, position and color",
+              "body": "Now shape the look. Style offers Classic, Bold or Minimal; size runs S, M and L; position is Bottom, Middle or Top; color is adjustable. Middle tends to sit over a product held in someone's hands, so look at the frame before you settle on it. Keep the words clear of faces and fine product detail, and choose a color that separates from the background rather than blending into it."
             },
             {
-              "title": "Compare the two tabs",
-              "body": "Switch between the version tabs at the same moment in the clip and watch both with the sound off. Judge the opening line, the longest line, and the final frame. Note one thing each version does better."
+              "title": "Check the frame before you export",
+              "body": "Play the captioned video once through in the tool tab and watch the words, not the product. Check the lines you rewrote and the ones near a face, where a caption is hardest to read. If something sits badly, change the position or the color in the panel and play it again. When the clip reads cleanly, you're ready to export."
             },
             {
-              "title": "Download or publish",
-              "body": "Download the version you chose, or publish it to TikTok or Meta from the workspace. Downloads carry no watermark, and the Library copy expires after 15 days, so keep your own file."
+              "title": "Export, then find the new version in Library",
+              "body": "Export writes the captioned file as a new version, so nothing you already had is overwritten. The original render stays where it was, and the captioned cut appears beside it. Open [the Library](/app/create/library) from the workspace and check both are there, then download the captioned version before the 15 days run out. Finished files are kept for 15 days without a watermark."
             }
           ],
           "stepsIntro": {

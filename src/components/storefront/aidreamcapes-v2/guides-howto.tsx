@@ -34,10 +34,23 @@ type SectionMedia = {
   video?: { src: string; poster?: string };
   caption?: string;
 };
+type InfoCard = {
+  tag?: string;
+  title: string;
+  body: string;
+  meta?: string;
+  image?: HowtoImage;
+  href?: string;
+};
+type FlowItem = { number?: string; title: string; body: string; note?: string };
+type InfoPanel = { title?: string; kicker?: string; rows: { label: string; value: string }[]; foot?: string };
 type HowtoSection = {
   h2: string;
   paras?: string[];
   media?: SectionMedia;
+  cards?: InfoCard[];
+  flow?: { title?: string; lead?: string; items: FlowItem[] };
+  panel?: InfoPanel;
   steps?: { title: string; body: string }[];
   bullets?: string[];
   checklist?: string[];
@@ -214,6 +227,68 @@ function Steps({ steps, className }: { steps: { title: string; body: string }[];
   );
 }
 
+function ReferenceCards({ cards, r }: { cards: InfoCard[]; r: V2Resolvers }) {
+  const withMedia = cards.every((card) => Boolean(card.image));
+  return (
+    <div className={`${styles.cards} ${withMedia ? styles.cardsMedia : ""}`.trim()}>
+      {cards.map((card) => (
+        <article key={card.title}>
+          {card.image ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={card.image.src} alt={card.image.alt} width={card.image.width} height={card.image.height} loading="lazy" decoding="async" />
+          ) : null}
+          {card.tag ? <span className={styles.cardTag}>{card.tag}</span> : null}
+          <b className={styles.cardTitle}>{card.title}</b>
+          <span className={styles.cardBody}><RichText r={r} text={card.body} /></span>
+          {card.meta ? <span className={styles.cardMeta}>{card.meta}</span> : null}
+          {card.href ? (
+            <a className={styles.cardLink} href={r.href(card.href)}>
+              Read more →
+            </a>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ReferenceFlow({ flow }: { flow: { title?: string; lead?: string; items: FlowItem[] } }) {
+  return (
+    <div className={styles.flowBlock}>
+      {flow.title ? <p className={styles.flowTitle}>{flow.title}</p> : null}
+      {flow.lead ? <p className={styles.flowLead}>{flow.lead}</p> : null}
+      <ol className={styles.flow}>
+        {flow.items.map((item, index) => (
+          <li key={item.title}>
+            <span className={styles.flowNum}>{item.number ?? `0${index + 1}`}</span>
+            <b>{item.title}</b>
+            <span className={styles.flowBody}>{item.body}</span>
+            {item.note ? <em className={styles.flowNote}>{item.note}</em> : null}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function ReferencePanel({ panel }: { panel: InfoPanel }) {
+  return (
+    <aside className={styles.panelBox}>
+      {panel.kicker ? <p className={styles.panelKicker}>{panel.kicker}</p> : null}
+      {panel.title ? <p className={styles.panelTitle}>{panel.title}</p> : null}
+      <dl className={styles.panelRows}>
+        {panel.rows.map((row) => (
+          <div key={row.label}>
+            <dt>{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+      {panel.foot ? <p className={styles.panelFoot}>{panel.foot}</p> : null}
+    </aside>
+  );
+}
+
 function SectionMediaFigure({ media, r }: { media: SectionMedia; r: V2Resolvers }) {
   if (media.video) {
     return (
@@ -284,6 +359,9 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
                 <p key={index}><RichText r={r} text={para} /></p>
               ))}
               {section.media ? <SectionMediaFigure media={section.media} r={r} /> : null}
+              {section.cards?.length ? <ReferenceCards cards={section.cards} r={r} /> : null}
+              {section.flow?.items?.length ? <ReferenceFlow flow={section.flow} /> : null}
+              {section.panel ? <ReferencePanel panel={section.panel} /> : null}
               {section.bullets?.length ? (
                 <ul>
                   {section.bullets.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}

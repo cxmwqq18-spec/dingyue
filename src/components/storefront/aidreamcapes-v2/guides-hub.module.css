@@ -275,6 +275,10 @@
   line-height: 1.35;
   color: #ffffff;
 }
+.cardTag {
+  color: #9494a2;
+  font-weight: 700;
+}
 .cardBody {
   font-size: 14px;
   color: #d4d4d8;
