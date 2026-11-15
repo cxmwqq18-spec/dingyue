@@ -948,6 +948,13 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
     upstreamUrl.search = "";
     return upstreamUrl;
   }
+  // Google Search Console HTML verification files are static public assets at the
+  // host root. Keeping their top-level path lets the public asset handler answer
+  // them; rewriting them under /site/ would fall through to the storefront
+  // catch-all and replace them with the branded not-found page.
+  if (hostSlug === "aidreamcapes" && /^\/google[a-z0-9]+\.html$/i.test(upstreamUrl.pathname)) {
+    return upstreamUrl;
+  }
   // Video watch pages are standalone routes for all three storefront hosts.
   // Keep them on the top-level App Router path so they do not fall through to
   // the database-backed storefront catch-all and lose their site-specific
