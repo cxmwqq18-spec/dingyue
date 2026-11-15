@@ -455,7 +455,10 @@ const ACTOR_HUB_PATHS = new Set(["/ai-actors/men", "/ai-actors/women", "/ai-acto
 const pageStatus = await mapLimit(entriesForReadback, 3, async (entry) => {
   const url = entry.loc;
   assert.equal(new URL(url).origin, "https://www.aivideosugc.com", "sitemap origin");
-  const response = await get(new URL(url).pathname);
+  // Fetch the full path with its query: standalone catalog pages canonicalize
+  // with their ?kind= query, so a pathname-only fetch would compare the
+  // hosting page's canonical against a different address.
+  const response = await get(`${new URL(url).pathname}${new URL(url).search}`);
   assert.equal(response.status(), 200, `sitemap URL status ${response.status()}: ${url}`);
   const html = await response.text();
   assert.equal(htmlCanonical(html), url, `sitemap URL canonical: ${url}`);
