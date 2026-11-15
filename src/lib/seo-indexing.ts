@@ -1,5 +1,7 @@
 import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitemap";
-import { listAidreamcapesMediaDetailEntries, cardsFromContent, toDetailCard } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import { aidreamcapesV2ResponsivePosterSrc } from "./aidreamcapes-v2-responsive-images";
+import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
+import { listAidreamcapesMediaDetailEntries, listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
 import { mediaDetailPath } from "@/lib/aidreamcapes-workspace/media-detail";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
@@ -711,48 +713,108 @@ function overrideAidreamcapesHomepageSitemapImages(site: Site, entry: SitemapEnt
  * images — the manifest-based collector would submit reference images the
  * page never shows.
  */
-function aidreamcapesListingSitemapImages(site: Site, page: ThemePage): SitemapImageEntry[] | undefined {
+// Keep in sync with MEDIA_PAGE_SIZE (aidreamcapes-v2/types.ts): the picker
+// and media grids paginate server-side with this page size, and the sitemap
+// submits exactly the cards the canonical (page-1) address renders.
+const AIDREAMCAPES_MEDIA_PAGE_SIZE = 20;
+
+type AidreamcapesPickerCard = {
+  image?: { src?: string; alt?: string };
+  label?: string;
+  kind?: string;
+  publicSlug?: string;
+  video?: { poster?: { src?: string; alt?: string } };
+};
+
+async function aidreamcapesListingSitemapImages(site: Site, page: ThemePage): Promise<SitemapImageEntry[] | undefined> {
   if (site.id !== AIDREAMCAPES_SITE_ID) return undefined;
   const slug = normalizePath(page.slug);
-  if (slug !== "/ai-video-generation" && slug !== "/ai-video-generation/video-ads" && slug !== "/ai-image-generation") return undefined;
+  if (slug !== "/ai-video-generation" && slug !== "/ai-video-generation/video-ads" && slug !== "/ai-video-generation/spokesperson-video" && slug !== "/ai-image-generation") return undefined;
+  const section = page.publishedJson.sectionsOrder
+    .map((sectionId) => page.publishedJson.sections?.[sectionId])
+    .find((candidate) => candidate?.type === "aidreamcapes_v2_page");
+  const data = (section?.settings as { data?: { id?: string; visual?: { picker?: { cards?: AidreamcapesPickerCard[] } } } } | undefined)?.data;
+  const storedCards = data?.visual?.picker?.cards;
+  if (!Array.isArray(storedCards)) return [];
+  let cards = storedCards.filter((card): card is AidreamcapesPickerCard => Boolean(card && typeof card === "object"));
+  if (data?.id === "video-hub") {
+    // Mirror the SSR hub picker: the row's curated cards lead, then every
+    // remaining public video example follows in gallery order. Catalog cards
+    // without complete video dimensions render their still image instead.
+    const curated = new Set(cards.map((card) => (card.publicSlug || card.label || "")));
+    cards = [...cards, ...(await listAidreamcapesExampleGalleryEntries())
+      .filter((entry) => entry.kind === "video" && !curated.has(entry.slug))
+      .map((entry) => ({
+        image: entry.image,
+        label: entry.label,
+        kind: "video" as const,
+        publicSlug: entry.slug,
+        ...(entry.video && entry.video.width && entry.video.height
+          ? {
+            video: {
+              poster: {
+                src: entry.video.poster?.src ?? entry.image.src,
+                alt: entry.video.poster?.alt ?? entry.image.alt ?? entry.label
+              }
+            }
+          }
+          : {})
+      }))];
+  }
+  // The canonical address renders page 1 of the picker grid.
+  if (cards.length > AIDREAMCAPES_MEDIA_PAGE_SIZE) cards = cards.slice(0, AIDREAMCAPES_MEDIA_PAGE_SIZE);
   const entries: SitemapImageEntry[] = [];
   const seen = new Set<string>();
-  for (const raw of cardsFromContent(page.publishedJson)) {
-    const card = toDetailCard(raw);
-    if (!card) continue;
-    // A video tile renders the poster only; a photo tile renders the image.
-    // A video card without a poster shows no still image at all.
-    const poster = card.kind === "video" ? card.video?.poster : undefined;
-    const displaySrc = poster?.src ?? (card.kind === "video" ? undefined : card.image.src);
+  for (const card of cards) {
+    // A card with playable video renders one poster address: the responsive
+    // variant, exactly as VisualPicker maps it. A card without playable video
+    // renders its still image raw.
+    const displaySrc = card.video
+      ? aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image?.src ?? "")
+      : card.image?.src;
     if (!displaySrc) continue;
-    const displayAlt = poster?.alt ?? card.image.alt;
     const loc = imageSitemapUrl(site, displaySrc);
     if (!loc || seen.has(loc)) continue;
     seen.add(loc);
-    const text = displayAlt ?? card.label;
+    const text = card.video?.poster?.alt ?? card.image?.alt ?? card.label ?? "";
     entries.push({ loc, title: text, caption: text });
   }
   return entries;
 }
 
-function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): SitemapImageEntry[] {
-  const templateMedia = aidreamcapesTemplateSitemapMedia(site, page);
+async function collectPageSitemapImages(site: Site, page: ThemePage, limit = 6): Promise<SitemapImageEntry[]> {
+  const templateMedia = await aidreamcapesTemplateSitemapMedia(site, page);
   if (templateMedia !== undefined) return templateMedia.map(image => ({ loc: imageSitemapUrl(site, image.src), title: image.alt, caption: image.alt })).filter(image => image.loc);
 
-  const listingImages = aidreamcapesListingSitemapImages(site, page);
+  const listingImages = await aidreamcapesListingSitemapImages(site, page);
   if (listingImages) return listingImages;
 
   const themeManifest = (site.id === AIDREAMCAPES_SITE_ID && normalizePath(page.slug) !== "/") || isAidreamcapesImageThemePath(site.slug, normalizePath(page.slug))
     ? page.publishedJson.mediaManifest
     : undefined;
   if (themeManifest?.length) {
-    return themeManifest
-      .map((image) => ({
-        loc: imageSitemapUrl(site, image.src),
-        ...(cleanText(image.alt) ? { title: cleanText(image.alt), caption: cleanText(image.alt) } : {})
-      }))
-      .filter((image) => image.loc)
-      .slice(0, themeManifest.length);
+    // The manifest is derived state that can fall behind online edits. Only
+    // manifest images still referenced by the current section content are
+    // submitted; when none survive, the section walk below submits the
+    // images the page renders today instead.
+    const referenced = new Set<string>();
+    const collect = (value: unknown): void => {
+      if (typeof value === "string") { if (value.trim()) referenced.add(value.trim()); return; }
+      if (Array.isArray(value)) { for (const item of value) collect(item); return; }
+      if (!value || typeof value !== "object") return;
+      for (const child of Object.values(value)) collect(child);
+    };
+    for (const sectionId of page.publishedJson.sectionsOrder) collect(page.publishedJson.sections?.[sectionId]);
+    const filtered = themeManifest.filter((image) => image?.src && referenced.has(String(image.src).trim()));
+    if (filtered.length) {
+      return filtered
+        .map((image) => ({
+          loc: imageSitemapUrl(site, image.src),
+          ...(cleanText(image.alt) ? { title: cleanText(image.alt), caption: cleanText(image.alt) } : {})
+        }))
+        .filter((image) => image.loc)
+        .slice(0, themeManifest.length);
+    }
   }
   const images: SitemapImageEntry[] = [];
   const seen = new Set<string>();
@@ -890,7 +952,7 @@ function mydreamshootsVideoWatchPagesForSnapshot(
   });
 }
 
-export function sitemapEntriesForSite(state: PlatformState, site: Site): SitemapEntry[] {
+export async function sitemapEntriesForSite(state: PlatformState, site: Site): Promise<SitemapEntry[]> {
   const snapshot = createPublishedSiteSnapshot(state, site);
   const videoWatchPages = mydreamshootsVideoWatchPagesForSnapshot(state, site, snapshot);
   const videoWatchSourcePaths = new Set(videoWatchPages.flatMap((video) => video.sourcePaths));
@@ -939,7 +1001,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
             })).filter((image) => image.loc)
         : isPrimaryMydreamshootsSite(site)
           ? []
-          : collectPageSitemapImages(site, page),
+          : await collectPageSitemapImages(site, page),
       video: videoWatchSourcePaths.has(path)
         ? undefined
         : pageSitemapVideoForSite(site, page),
@@ -1068,7 +1130,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const images = pack
         ? packSitemapImages(site, pack)
         : page
-          ? collectPageSitemapImages(site, page)
+          ? await collectPageSitemapImages(site, page)
           : [];
       entries.set(loc, {
         loc,
@@ -1132,7 +1194,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       if (entries.has(loc)) continue;
       entries.set(loc, {
         loc,
-        images: collectPageSitemapImages(site, page),
+        images: await collectPageSitemapImages(site, page),
         lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
         changefreq: sitemapChangeFrequencyForPath(path),
         priority: sitemapPriorityForPath(path)
@@ -1158,7 +1220,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       const page = pageForCanonicalSeoPath(snapshot, site, path);
       entries.set(loc, {
         loc,
-        images: pack ? packSitemapImages(site, pack) : page ? collectPageSitemapImages(site, page) : [],
+        images: pack ? packSitemapImages(site, pack) : page ? await collectPageSitemapImages(site, page) : [],
         lastmod: seoPage.lastModified,
         changefreq: sitemapChangeFrequencyForPath(path),
         priority: sitemapPriorityForPath(path)
@@ -1275,7 +1337,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       if (!page || page.publishedJson.seo?.index === false || page.publishedJson.seo?.robots?.index === false) continue;
       entries.set(loc, {
         loc,
-        images: collectPageSitemapImages(site, page),
+        images: await collectPageSitemapImages(site, page),
         lastmod: pageContentLastModified(page, snapshot.publication?.publishedAt),
         changefreq: sitemapChangeFrequencyForPath(path),
         priority: sitemapPriorityForPath(path)
@@ -1314,8 +1376,7 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       }
     }
   }
-  return [...entries.values()]
-    .map((entry) => {
+  return (await Promise.all([...entries.values()].map(async (entry) => {
       if (site.id !== AIDREAMCAPES_SITE_ID) return entry;
       const path = new URL(entry.loc).pathname;
       // The v1 photo directory lists its theme images; the v2 page lists its own image.
@@ -1327,8 +1388,8 @@ export function sitemapEntriesForSite(state: PlatformState, site: Site): Sitemap
       // the legacy catalogue projection for a different layout.
       const page = site.pages.find((candidate) => normalizePath(candidate.slug) === path);
       const liveContent = (page as (ThemePage & { liveContentJson?: ThemePageJson }) | undefined)?.liveContentJson;
-      return page && liveContent ? { ...entry, images: collectPageSitemapImages(site, { ...page, publishedJson: liveContent }) } : entry;
-    })
+      return page && liveContent ? { ...entry, images: await collectPageSitemapImages(site, { ...page, publishedJson: liveContent }) } : entry;
+  })))
     .map((entry) => overrideAidreamcapesHomepageSitemapImages(site, entry))
     .sort((left, right) => left.loc.localeCompare(right.loc));
 }
@@ -1990,30 +2051,30 @@ export async function getMydreamshootsSitemapUrls(): Promise<string[]> {
   if (!runtime) return [];
   const site = runtime?.sites.find(isDreamshootSite);
   if (!site) return [];
-  return getSitemapUrlsForSite(runtime.state, site);
+  return await getSitemapUrlsForSite(runtime.state, site);
 }
 
 export async function getAidreamcapesSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return [];
   const site = runtime.sites.find(isAidreamcapesSite);
-  return site ? getSitemapUrlsForSite(runtime.state, site) : [];
+  return site ? await getSitemapUrlsForSite(runtime.state, site) : [];
 }
 
-function getSitemapUrlsForSite(state: PlatformState, site: Site): string[] {
-  return sitemapEntriesForSite(state, site).map((entry) => entry.loc);
+async function getSitemapUrlsForSite(state: PlatformState, site: Site): Promise<string[]> {
+  return (await sitemapEntriesForSite(state, site)).map((entry) => entry.loc);
 }
 
 export async function getStorefrontSitemapUrls(): Promise<string[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return [];
-  return runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site));
+  return (await Promise.all(runtime.sites.map((site) => getSitemapUrlsForSite(runtime.state, site)))).flat();
 }
 
 export async function getStorefrontSitemapEntries(): Promise<SitemapEntry[]> {
   const runtime = await readIndexableStateAndSites();
   if (!runtime) return [];
-  return runtime.sites.flatMap((site) => sitemapEntriesForSite(runtime.state, site));
+  return (await Promise.all(runtime.sites.map((site) => sitemapEntriesForSite(runtime.state, site)))).flat();
 }
 
 function normalizeHostCandidate(host: string | null | undefined): string {
@@ -2133,8 +2194,8 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
       ? runtime.sites[0]
       : getSiteByHostCandidatesFromState(runtime.state, siteHostCandidates) ?? runtime.sites.find((item) => siteHostCandidates.some((host) => isHostForSite(item, host)));
   const entries = isLocalHostRequest
-    ? runtime.sites.flatMap((item) => sitemapEntriesForSite(runtime.state, item))
-    : site ? sitemapEntriesForSite(runtime.state, site) : [];
+    ? (await Promise.all(runtime.sites.map((item) => sitemapEntriesForSite(runtime.state, item)))).flat()
+    : site ? await sitemapEntriesForSite(runtime.state, site) : [];
   if (site?.id === AIDREAMCAPES_SITE_ID) {
     // Media detail pages are rendering projections of card data (no LivePage
     // row of their own), so the card enumeration owns their sitemap entries.
