@@ -219,7 +219,7 @@ if (siteV2) {
   assert.match(await llms.text(), /^# (?:AIVideosUGC|Aidreamcapes)/m, "llms.txt heading");
   assert(homepageDom('header.site nav#adc2-main-nav a[href="/pricing"]').length > 0, "v2 header navigation");
   assert(homepageDom('footer.site a[href="/privacy"]').length > 0, "v2 footer legal links");
-  for (const path of ["/ai-image-generation", "/templates/photo", "/templates/video"]) {
+  for (const path of ["/ai-image-generation"]) {
     const response = await get(path);
     assert.equal(response.status(), 200, `${path}: current v2 page status`);
     const html = await response.text();
@@ -232,6 +232,15 @@ if (siteV2) {
       `${path}: stored v2 graph must publish a derived BreadcrumbList`
     );
     assert.match(htmlMeta(html, "robots"), /max-image-preview:\s*large/i, `${path}: robots must allow large image previews`);
+  }
+  // The retired /templates/photo and /templates/video catalogs answer with a
+  // permanent redirect to the /templates gallery; the kind dimension lives in
+  // the indexable ?kind= catalog there. They must never render as pages again.
+  for (const path of ["/templates/photo", "/templates/video"]) {
+    const response = await get(path, { maxRedirects: 0 });
+    assert.equal(response.status(), 308, `${path}: retired kind catalog redirects permanently`);
+    const location = response.headers().location || "";
+    assert.equal(new URL(location, "https://www.aivideosugc.com").pathname, "/templates", `${path}: redirect target is the /templates gallery`);
   }
   if (!preNavigationMigration) {
     const headerLinks = homepageDom("header.site a").toArray().map((node) => ({
