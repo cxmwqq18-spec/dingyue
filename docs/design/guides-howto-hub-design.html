@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design mockup v4 — Guides Hub & All Tool How-tos · AIVideosUGC</title>
+<style>
+  /* ============ design tokens — monochrome text system ============
+     Text colors restricted to white + two grays. Gradient only on fills. */
+  :root{
+    --bg:#050505; --fg:#ffffff; --body:#d4d4d8; --muted:#9494a2;
+    --card:#0d0d12; --card2:#12121a; --line:rgba(255,255,255,.09);
+    --fill:#26262e;
+    --grad:linear-gradient(90deg,#8b5cf6 0%,#ec4899 52%,#3b82f6 100%);
+    --radius:16px; --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--body);font-family:-apple-system,"Helvetica Neue",Helvetica,"Segoe UI",Arial,sans-serif;line-height:1.6}
+  img,video{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* mockup chrome */
+  .mockbar{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .mockbar .wrap{display:flex;gap:6px;align-items:center;height:auto;min-height:52px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .mocktag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+  .mockbtn{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--body);cursor:pointer;background:transparent;white-space:nowrap}
+  .mockbtn.on{background:var(--fill);border-color:rgba(255,255,255,.35);color:var(--fg)}
+  .mocknote{font-size:12px;color:var(--muted);margin-left:auto}
+  .view{display:none}.view.on{display:block}
+  .note{font-size:12px;color:var(--muted);max-width:var(--max);margin:14px auto 0;padding:0 24px}
+
+  /* shared */
+  .sitehead{border-bottom:1px solid var(--line)}
+  .sitehead .wrap{display:flex;align-items:center;gap:28px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--fg)}
+  .logobox{width:26px;height:26px;border-radius:8px;background:var(--fill);display:grid;place-items:center;color:var(--fg);font-size:13px}
+  .sitehead nav{display:flex;gap:22px;font-size:14px;color:var(--body)}
+  .avatar{margin-left:auto;width:34px;height:34px;border-radius:50%;background:var(--fill);display:grid;place-items:center;color:var(--fg);font-size:12px;font-weight:700}
+
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  h1{color:var(--fg);font-size:clamp(30px,4.4vw,44px);line-height:1.15;margin:12px 0 14px}
+  h2{color:var(--fg);font-size:24px;line-height:1.25}
+  h3{color:var(--fg);font-size:17px;line-height:1.35}
+  .lead{font-size:17px;max-width:660px}
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .meta span{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;font-weight:700;font-size:15px;border-radius:12px;padding:12px 22px}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.25);color:var(--fg)}
+  .crumb{font-size:13px;color:var(--muted);padding:22px 0 0}
+  .crumb a:hover{color:var(--fg)}
+  section{padding:52px 0}
+  .sechead{margin-bottom:26px}
+  .sechead p{margin-top:8px;max-width:640px}
+
+  /* cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:border-color .18s ease,transform .18s ease;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.3)}
+  .card .thumb{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--card2)}
+  .card .thumb img{width:100%;height:100%;object-fit:cover}
+  .card .thumb .chip{position:absolute;left:10px;bottom:10px;font-size:11px;color:var(--fg);background:rgba(5,5,5,.78);border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+  .card .pad{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .card .read{font-size:12px;color:var(--muted)}
+  .card h3{font-size:18px}
+  .card p{font-size:14px}
+  .card .go{margin-top:auto;color:var(--fg);font-size:14px;font-weight:600}
+  .card.textonly .pad{padding-top:22px;padding-bottom:22px}
+
+  /* big feature card */
+  .bigcard{display:grid;grid-template-columns:1.15fr .85fr;background:var(--card);border:1px solid rgba(255,255,255,.18);border-radius:20px;overflow:hidden;transition:border-color .2s ease}
+  .bigcard:hover{border-color:rgba(255,255,255,.4)}
+  .bigcard .pad{padding:34px 36px;display:flex;flex-direction:column;align-items:flex-start}
+  .bigcard h2{font-size:30px;margin:12px 0 12px}
+  .bigcard .lead{font-size:15.5px}
+  .bigcard .chapters-mini{list-style:none;margin:24px 0 26px;display:grid;width:100%}
+  .bigcard .chapters-mini li{display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:14px;align-items:baseline}
+  .bigcard .chapters-mini li:first-child{border-top:0}
+  .bigcard .chapters-mini em{font-style:normal;font-weight:700;color:var(--fg);font-size:13px}
+  .bigcard .chapters-mini b{color:var(--fg);font-weight:600}
+  .bigcard .chapters-mini span.more{color:var(--muted);font-size:13px;padding-top:12px}
+  .bigcard .visual{position:relative;background:var(--card2);display:flex;flex-direction:column;justify-content:center;padding:30px;gap:10px;border-left:1px solid var(--line)}
+  .bigcard .visual .rail-preview{list-style:none;display:grid;gap:6px}
+  .bigcard .visual .rail-preview li{display:flex;gap:10px;align-items:baseline;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--body)}
+  .bigcard .visual .rail-preview em{font-style:normal;font-weight:700;color:var(--fg);font-size:12px}
+  .bigcard .visual .rail-preview li.here{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.09);color:var(--fg)}
+  .stamp{position:absolute;top:16px;right:16px;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--fg);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 12px;background:rgba(5,5,5,.6)}
+
+  /* spec table + schema */
+  .nametable{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .nametable th,.nametable td{text-align:left;padding:11px 16px;border-top:1px solid var(--line);color:var(--body);vertical-align:top}
+  .nametable th{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-top:0}
+  .nametable code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--fg);background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .schema{background:#08080c;border:1px solid var(--line);border-radius:14px;padding:18px 20px;overflow:auto}
+  .schema pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.55;color:var(--body);white-space:pre}
+  .schema .k{color:var(--fg)} .schema .s{color:var(--body)} .schema .c{color:var(--muted)}
+
+  /* demo windows */
+  .demo{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:grid;grid-template-columns:1.2fr .9fr;gap:28px;align-items:center}
+  .demo h3{font-size:22px;display:flex;align-items:center;gap:12px}
+  .demo .d-lead{margin-top:10px;font-size:15px}
+  .d-url{margin-top:20px;display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .d-url .fld{flex:1;display:flex;align-items:center;gap:10px;color:var(--fg);font-size:15px}
+  .caret{display:inline-block;width:2px;height:18px;background:var(--fg);margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .d-url button{width:40px;height:40px;border-radius:11px;border:0;background:var(--grad);color:#fff;font-size:16px}
+  .d-import{margin-top:16px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .d-import .st{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg)}
+  .d-import .st i{width:18px;height:18px;border-radius:50%;background:var(--fill);color:var(--fg);font-size:11px;font-weight:800;display:grid;place-items:center;font-style:normal}
+  .d-import .cap{margin-top:10px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .d-import .cap b{color:var(--fg)}
+  .d-import .cap em{font-style:normal;font-size:11px;color:var(--fg);background:var(--fill);border-radius:999px;padding:2px 8px}
+  .d-gallery{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .d-gallery.two{grid-template-columns:repeat(2,1fr)}
+  .d-gallery figure{position:relative;margin:0}
+  .d-gallery img{border-radius:10px;aspect-ratio:1/1.05;object-fit:cover;width:100%}
+  .d-gallery .ok{position:absolute;top:8px;left:8px;width:20px;height:20px;border-radius:50%;background:rgba(5,5,5,.7);color:var(--fg);font-size:12px;font-weight:800;display:grid;place-items:center;border:1px solid rgba(255,255,255,.35)}
+  .d-gallery figcaption{font-size:11px;color:var(--muted);text-align:center;margin-top:6px}
+  .d-media{display:flex;align-items:center;gap:14px}
+  .d-frame{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);flex:1}
+  .d-frame .tag{position:absolute;left:10px;top:10px;font-size:11px;color:var(--fg);background:rgba(5,5,5,.78);border:1px solid var(--line);border-radius:999px;padding:4px 10px;z-index:1}
+  .d-frame video{width:100%;aspect-ratio:9/14;object-fit:cover;background:#000}
+  .d-frame img{width:100%;aspect-ratio:1/1.15;object-fit:cover}
+  .d-transform{color:var(--fg);font-size:22px;flex:0 0 auto}
+  .d-prompt{margin-top:16px;display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--fg);font-size:14px}
+  .d-tabs{display:flex;gap:18px;font-size:13px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+  .d-tabs .on{color:var(--fg);font-weight:700;box-shadow:0 2px 0 var(--fg)}
+  .d-tabs span{color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+  .d-chips{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .d-chips span{font-size:12px;color:var(--body);border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+  .d-chips span.solid{background:var(--grad);border:0;color:#fff;font-weight:700}
+  .d-list{list-style:none;display:grid;gap:8px;margin-top:16px}
+  .d-list li{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--body)}
+  .d-list li img{width:44px;height:44px;border-radius:9px;object-fit:cover}
+  .d-list b{color:var(--fg);font-weight:600;display:block;font-size:13.5px}
+  .d-list .sub{font-size:12px;color:var(--muted)}
+  .d-subrow{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+  .d-subrow .sub-card{background:var(--card2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .d-subrow .sub-card video{width:100%;aspect-ratio:16/11;object-fit:cover}
+  .d-subrow .sub-card .bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 12px}
+  .d-subrow .sub-card .bar span{font-size:10.5px;color:var(--body);background:var(--fill);border-radius:999px;padding:3px 9px}
+
+  /* steps */
+  .steps{list-style:none;display:grid;counter-reset:st}
+  .steps li{counter-increment:st;display:grid;grid-template-columns:44px 1fr;gap:18px;padding:22px 0;border-top:1px solid var(--line)}
+  .steps li:first-child{border-top:0}
+  .steps li::before{content:"0" counter(st);font-size:15px;font-weight:700;color:var(--fg);padding-top:2px}
+  .steps h3{margin-bottom:6px}
+  .steps p{font-size:14.5px;max-width:680px}
+  .steps code{font-size:.92em;color:var(--fg);background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  .steps b{color:var(--fg)}
+
+  .faq{display:grid;gap:14px;max-width:760px}
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .faq summary{cursor:pointer;color:var(--fg);font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  .faq summary::after{content:"+";color:var(--muted)}
+  .faq details[open] summary::after{content:"–"}
+  .faq p{margin-top:10px;font-size:14.5px}
+  .rel{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .rel a{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:6px;transition:border-color .18s ease}
+  .rel a:hover{border-color:rgba(255,255,255,.3)}
+  .rel .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .rel h3{font-size:16px}
+  .rel span{font-size:13px;color:var(--muted)}
+
+  .tip{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:14.5px;max-width:760px}
+  .tip b{color:var(--fg)}
+
+  footer{border-top:1px solid var(--line);margin-top:40px}
+  footer .wrap{padding:28px 24px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* workspace-guide page */
+  .wg-layout{display:grid;grid-template-columns:250px 1fr;gap:44px;align-items:start}
+  .rail{position:sticky;top:76px}
+  .rail .t{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .rail ol{list-style:none;display:grid;gap:2px}
+  .rail a{display:flex;gap:10px;padding:8px 10px;border-radius:10px;font-size:13.5px;color:var(--body)}
+  .rail a:hover{background:var(--card2)}
+  .rail em{font-style:normal;color:var(--fg);font-weight:700;font-size:12px;padding-top:2px}
+  .paths{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .path{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .path .lab{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .path h3{margin:8px 0 6px}
+  .path p{font-size:13.5px}
+  .path .ch{margin-top:12px;font-size:12px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .path .ch b{color:var(--fg);font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+
+  @media(max-width:960px){
+    .cards,.rel,.paths{grid-template-columns:1fr 1fr}
+    .demo,.bigcard{grid-template-columns:1fr}
+    .wg-layout{grid-template-columns:1fr}
+    .rail{position:static}
+  }
+  @media(max-width:640px){.cards,.rel,.paths{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ================= mockup chrome ================= -->
+<div class="mockbar"><div class="wrap">
+  <span class="mocktag">v4</span>
+  <button class="mockbtn on" data-v="hub" onclick="go('hub',this)">① /guides 门户</button>
+  <button class="mockbtn" data-v="url" onclick="go('url',this)">② url-to-video</button>
+  <button class="mockbtn" data-v="i2v" onclick="go('i2v',this)">③ image-to-video</button>
+  <button class="mockbtn" data-v="t2v" onclick="go('t2v',this)">④ text-to-video</button>
+  <button class="mockbtn" data-v="aiv" onclick="go('aiv',this)">⑤ ai-video</button>
+  <button class="mockbtn" data-v="aiimg" onclick="go('aiimg',this)">⑥ ai-image</button>
+  <button class="mockbtn" data-v="pl" onclick="go('pl',this)">⑦ product-links</button>
+  <button class="mockbtn" data-v="av" onclick="go('av',this)">⑧ ai-avatar</button>
+  <button class="mockbtn" data-v="sub" onclick="go('sub',this)">⑨ subtitle-studio</button>
+  <button class="mockbtn" data-v="wg" onclick="go('wg',this)">⑩ workspace-guide 12章</button>
+  <button class="mockbtn" data-v="spec" onclick="go('spec',this)">⑪ 命名 · Schema</button>
+  <span class="mocknote">monochrome text · real site assets · no production code</span>
+</div></div>
+
+<!-- ================================================================
+     VIEW ①  /guides — portal hub
+================================================================= -->
+<div class="view on" id="v-hub">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · Guides</p>
+
+    <section style="padding-top:26px">
+      <p class="eyebrow">AIVideosUGC guides</p>
+      <h1>The guides hub.</h1>
+      <p class="lead">Written for first-time users. Start with the chapter-by-chapter workspace manual, or jump straight into a short how-to for the tool you are starting from.</p>
+      <div class="meta"><span>Workspace guide · 12 chapters</span><span>How-to tutorials · 7</span><span>Field guides · 5</span></div>
+    </section>
+
+    <!-- BIG card: workspace guide entry -->
+    <section style="padding-top:10px">
+      <a class="bigcard" href="#">
+        <span class="pad">
+          <span class="eyebrow">The workspace guide · chapter by chapter</span>
+          <h2>From an idea to a finished, subtitled ad.</h2>
+          <p class="lead">One chapter per module, numbered steps and real annotated screenshots — a first-time user never has to leave the guide. ~35 min full, 8 min per learning path.</p>
+          <ul class="chapters-mini">
+            <li><em>01</em><b>How a generation job runs</b><span style="color:var(--muted);font-size:12px;margin-left:auto">the loop you repeat the most</span></li>
+            <li><em>02</em><b>Home &amp; the composer</b><span style="color:var(--muted);font-size:12px;margin-left:auto">your starting point every time</span></li>
+            <li><em>03</em><b>Write it, attach it, send it</b><span style="color:var(--muted);font-size:12px;margin-left:auto">prompts, photos, quotes</span></li>
+            <li style="border-top:1px solid var(--line);padding-top:12px"><span class="more">… chapters 04–12 track delivery, references, images, product links, avatars, subtitles, the library and your account.</span></li>
+          </ul>
+          <span class="btn">Open the 12-chapter guide →</span>
+        </span>
+        <span class="visual">
+          <span class="stamp">12 CHAPTERS</span>
+          <ul class="rail-preview">
+            <li class="here"><em>01</em> How a generation job runs</li>
+            <li><em>02</em> Home &amp; the composer</li>
+            <li><em>03</em> Write it, attach it, send it</li>
+            <li><em>04</em> Track it &amp; deliver</li>
+            <li><em>05</em> AI Video from references</li>
+            <li style="color:var(--muted)"><em>…</em> 06–12 in the guide</li>
+          </ul>
+        </span>
+      </a>
+    </section>
+
+    <!-- How-to tutorials: one per workspace CREATE tool -->
+    <section>
+      <div class="sechead">
+        <h2>How-to tutorials by tool.</h2>
+        <p>One tutorial per workspace tool, named the same way the tool is named in the sidebar. Pick where you are starting from.</p>
+      </div>
+      <div class="cards">
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp" alt="Review-style video preview generated from one sentence" loading="lazy"><span class="chip">Text to Video</span></span>
+          <span class="pad">
+            <span class="read">5 min · guides/how-do-text-to-video</span>
+            <h3>From one sentence to a video brief</h3>
+            <p>Type a sentence about your product, let AI write the script and scenes, then edit the brief.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp" alt="Model carrying the tote bag, generated from product references" loading="lazy"><span class="chip">AI Video</span></span>
+          <span class="pad">
+            <span class="read">6 min · guides/how-do-ai-video</span>
+            <h3>Make a video from product references</h3>
+            <p>Attach product photos, describe the scene, and generate a campaign-ready clip.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/img1-home-steps-source-r1-640.webp" alt="Matte navy travel mug product photo used for AI image generation" loading="lazy"><span class="chip">AI Image</span></span>
+          <span class="pad">
+            <span class="read">5 min · guides/how-do-ai-image</span>
+            <h3>Generate product images that sell</h3>
+            <p>Pick a preset, set the ratio and references, and collect store-ready product photos.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/teams1-home-r1-src-640.webp" alt="Product library source photos ready to brief from" loading="lazy"><span class="chip">Product Links</span></span>
+          <span class="pad">
+            <span class="read">5 min · guides/how-do-product-links</span>
+            <h3>Build your product library from links</h3>
+            <p>Paste product pages once, keep a clean library, and brief videos straight from it.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp" alt="Jon, an outdoor AI actor presenter card" loading="lazy"><span class="chip">AI Avatar</span></span>
+          <span class="pad">
+            <span class="read">6 min · guides/how-do-ai-avatar</span>
+            <h3>Present your product with an AI avatar</h3>
+            <p>Choose a presenter, paste your script, and generate a talking product video.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp" alt="Video frame with styled subtitles burned in" loading="lazy"><span class="chip">Subtitle Studio</span></span>
+          <span class="pad">
+            <span class="read">5 min · guides/how-do-subtitle-studio</span>
+            <h3>Subtitle a finished video in minutes</h3>
+            <p>Pick a video, choose the style with live preview, and burn in readable captions.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/fx14-white-input-tote-good-r1-640.webp" alt="Canvas tote bag imported from a product URL" loading="lazy"><span class="chip">URL to Video</span></span>
+          <span class="pad">
+            <span class="read">6 min · guides/how-do-url-to-video</span>
+            <h3>Turn a product link into a video ad</h3>
+            <p>Paste one product URL, review the photos AI imports, and brief your first ready-to-post video.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+        <a class="card" href="#">
+          <span class="thumb"><img src="https://www.aivideosugc.com/ai-image-generation/im01-video-hub-balm-r1-640.webp" alt="Tinted balm product photo used for image to video" loading="lazy"><span class="chip">Image to Video</span></span>
+          <span class="pad">
+            <span class="read">5 min · guides/how-do-image-to-video</span>
+            <h3>Bring one product photo to life</h3>
+            <p>Upload a single photo, describe the motion, and generate a moving product clip in minutes.</p>
+            <span class="go">Read the tutorial →</span>
+          </span>
+        </a>
+      </div>
+      <p style="margin-top:20px"><a class="btn ghost" href="#">All field guides →</a></p>
+      <p class="note">↳ 卡片区 = CREATE 菜单全覆盖（8 个 how-to），目录按 URL 拆分自动扩展；每张卡带对应模块素材图（全部复用站内已有资产，零新增）。Field guides 改为独立入口按钮。</p>
+    </section>
+  </div>
+
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ②  /guides/how-do-url-to-video
+================================================================= -->
+<div class="view" id="v-url">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · URL to Video</p>
+
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · URL to Video</p>
+      <h1>Turn a product link into a video ad.</h1>
+      <p class="lead">Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video. No camera, no filming, no editing timeline.</p>
+      <div class="meta"><span>Reading time · 6 min</span><span>Tool · URL to Video</span><span>Level · First video</span></div>
+    </section>
+
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">A vertical product video assembled from the photos on your product page, with a script AI writes from the listing details.</p>
+          <div class="d-url"><span class="fld">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4d4d8" stroke-width="1.7" stroke-linecap="round"><path d="m10 13 4-4m-6 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg>
+            yourstore.com/products/canvas-tote<span class="caret"></span></span>
+            <button aria-label="demo">→</button>
+          </div>
+          <div class="d-import">
+            <div class="st"><i>✓</i> Description parsed · ready to brief</div>
+            <div class="cap"><b>Canvas tote bag</b><span>review the photos from the import</span><em>3 found</em></div>
+            <div class="d-gallery">
+              <figure><img src="https://www.aivideosugc.com/ai-image-generation/fx14-white-input-tote-good-r1-640.webp" alt="Canvas tote bag main product photo" loading="lazy"><span class="ok">✓</span><figcaption>Main photo</figcaption></figure>
+              <figure><img src="https://www.aivideosugc.com/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp" alt="Model carrying the canvas tote bag" loading="lazy"><span class="ok">✓</span><figcaption>Model shot</figcaption></figure>
+              <figure><img src="https://www.aivideosugc.com/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp" alt="Tote bag in use" loading="lazy"><span class="ok">✓</span><figcaption>In use</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="d-frame">
+            <span class="tag">Final result</span>
+            <video src="https://www.aivideosugc.com/ai-video-generation/tinted-balm-vanity-reel-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp" muted loop playsinline autoplay></video>
+          </div>
+          <div class="d-prompt">“Show the tote carried on a morning errand — bright, natural, everyday.”</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:20px">
+      <div class="sechead"><h2>Five steps, start to finish.</h2><p>The same job loop as chapter 01 of the workspace guide — the inputs are just different.</p></div>
+      <ol class="steps">
+        <li><div><h3>Paste the product URL</h3><p>Copy the link to any live product page and paste it into the <code>URL to Video</code> field on Home.</p></div></li>
+        <li><div><h3>Review the imported photos</h3><p>AI reads the page and pulls the product photos and description. Keep the shots you want; the badge shows how many were found.</p></div></li>
+        <li><div><h3>Brief the video</h3><p>One or two sentences are enough. <b>Estimated cost is always shown before you commit.</b></p></div></li>
+        <li><div><h3>Confirm and generate</h3><p>The confirmation modal restates the cost and your balance. Confirming holds the credits; a failed job returns them automatically.</p></div></li>
+        <li><div><h3>Collect from the Library</h3><p>The job moves through generating → finishing → completed. Download within 15 days — everything you keep is yours.</p></div></li>
+      </ol>
+      <div class="tip"><b>Good to know</b> — Guests can build the draft without an account; it is restored the moment you sign in.</div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>Does the product page need anything special?</summary><p>No. Any public product URL works — AI reads the photos and description that are already on the page.</p></details>
+        <details><summary>What if the import picks a photo I don't want?</summary><p>Deselect it before briefing. The video is built only from the photos you keep.</p></details>
+        <details><summary>How much does one video cost?</summary><p>The composer shows the estimated credits before anything runs. Nothing is charged until you confirm.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Bring one product photo to life</h3><span>Image to Video · 5 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>Build your product library from links</h3><span>Product Links · 5 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ③  /guides/how-do-image-to-video
+================================================================= -->
+<div class="view" id="v-i2v">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · Image to Video</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · Image to Video</p>
+      <h1>Bring one product photo to life.</h1>
+      <p class="lead">Upload a single product photo and add a short prompt — watch the photo come alive as a moving product clip, ready for ads and social posts.</p>
+      <div class="meta"><span>Reading time · 5 min</span><span>Tool · Image to Video</span><span>Level · First video</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>From still to motion →</h3>
+          <p class="d-lead">One photo in, one moving clip out. You describe the action; the model handles camera and motion.</p>
+          <div class="d-media" style="margin-top:22px">
+            <span class="d-frame"><span class="tag">Product photo</span><img src="https://www.aivideosugc.com/ai-image-generation/im01-video-hub-balm-r1-640.webp" alt="Peachy tinted balm product photo on a marble vanity" loading="lazy"></span>
+            <span class="d-transform">→</span>
+            <span class="d-frame"><span class="tag">Generated motion</span><video src="https://www.aivideosugc.com/ai-video-generation/tinted-balm-vanity-reel-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp" muted loop playsinline autoplay></video></span>
+          </div>
+          <div class="d-prompt">She picks it up and takes one swipe — naturally flushed lips</div>
+        </div>
+        <div>
+          <div class="sechead" style="margin-bottom:14px"><h2 style="font-size:20px">In this tutorial</h2></div>
+          <ol class="steps">
+            <li><div><h3>Pick one strong photo</h3><p>Clear product, plain background, good light — the same rules as the product-photo field guide.</p></div></li>
+            <li><div><h3>Describe one action</h3><p>Short and concrete beats long and vague. One motion per clip.</p></div></li>
+            <li><div><h3>Check the quote, confirm</h3><p>Cost is shown before you commit; held credits return if the job fails.</p></div></li>
+            <li><div><h3>Compare and keep</h3><p>Generate a variation if the motion feels off; download what you want to keep.</p></div></li>
+          </ol>
+        </div>
+      </div>
+      <div class="tip"><b>Good to know</b> — One motion per clip. If you want two actions, generate two clips and keep the better take of each.</div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>What kind of photo works best?</summary><p>One clear product, a plain background and even lighting. A phone photo is enough — motion comes from the prompt, not the source image.</p></details>
+        <details><summary>How long can the clip be?</summary><p>Pick 15 or 30 seconds when you brief the job. The composer shows the cost for each length before you confirm.</p></details>
+        <details><summary>Can I use the clip in ads?</summary><p>Yes. Download the finished clip from the Library and use it on your product page, in social posts and in ads.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Make a video from product references</h3><span>AI Video · 6 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>Turn a product link into a video ad</h3><span>URL to Video · 6 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ④  /guides/how-do-text-to-video
+================================================================= -->
+<div class="view" id="v-t2v">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · Text to Video</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · Text to Video</p>
+      <h1>From one sentence to a video brief.</h1>
+      <p class="lead">Type one sentence about your product. AI writes the script and scenes, and turns it into an editable video brief — then generates the shots you choose.</p>
+      <div class="meta"><span>Reading time · 5 min</span><span>Tool · Text to Video</span><span>Level · First video</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">A review-style product clip with presenter, script and subtitles — assembled from a single sentence.</p>
+          <div style="margin-top:20px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px 18px">
+            <div class="d-tabs"><span class="on">AI Video Agent</span><span>AI Video</span><span>AI Image</span></div>
+            <div style="color:var(--fg);font-size:15px;display:flex;align-items:center">Give this moisturizer a honest review<span class="caret"></span></div>
+            <div class="d-chips"><span>Product</span><span>Presenter</span><span>9:16 ▾</span><span>15s ▾</span><span class="solid">Generate</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="d-frame" style="max-width:240px;margin:0 auto">
+            <span class="tag">Motion preview</span>
+            <video src="https://www.aivideosugc.com/ai-video-generation/bathroom-review-moisturizer-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp" muted loop playsinline autoplay></video>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section style="padding-top:20px">
+      <div class="sechead"><h2>Four steps, start to finish.</h2></div>
+      <ol class="steps">
+        <li><div><h3>Write the sentence</h3><p>Product, audience, one message. The composer <code>Optimize</code> button turns it into a structured shooting script.</p></div></li>
+        <li><div><h3>Review the brief</h3><p>Scenes, shots and voice are editable before anything runs — change the wording, not the whole video.</p></div></li>
+        <li><div><h3>Confirm the quote</h3><p><b>Estimated cost is always shown before you commit.</b> Confirming holds the credits.</p></div></li>
+        <li><div><h3>Collect from the Library</h3><p>Download within 15 days; generate a variation if a scene needs another take.</p></div></li>
+      </ol>
+    </section>
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>How long should the first sentence be?</summary><p>One or two lines. Name the product and the one thing it does — AI expands it into scenes you can edit.</p></details>
+        <details><summary>Can I edit the script before generating?</summary><p>Yes. The brief is fully editable; you confirm only the version you want to render.</p></details>
+      </div>
+    </section>
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Make a video from product references</h3><span>AI Video · 6 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>Subtitle a finished video in minutes</h3><span>Subtitle Studio · 5 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑤  /guides/how-do-ai-video
+================================================================= -->
+<div class="view" id="v-aiv">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · AI Video</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · AI Video</p>
+      <h1>Make a video from product references.</h1>
+      <p class="lead">Attach two or three product photos, describe the scene you want, and generate a campaign-ready clip — the model keeps your product consistent across every shot.</p>
+      <div class="meta"><span>Reading time · 6 min</span><span>Tool · AI Video</span><span>Level · First video</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">Reference photos in, one coherent video out. Same product, different angles, one message.</p>
+          <div class="d-media" style="margin-top:22px">
+            <span class="d-media" style="flex:1;gap:10px">
+              <span class="d-frame"><span class="tag">Reference 1</span><img src="https://www.aivideosugc.com/ai-image-generation/fx14-white-input-tote-good-r1-640.webp" alt="Tote bag studio photo used as reference" loading="lazy"></span>
+              <span class="d-frame"><span class="tag">Reference 2</span><img src="https://www.aivideosugc.com/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp" alt="Model carrying the tote used as reference" loading="lazy"></span>
+            </span>
+            <span class="d-transform">→</span>
+            <span class="d-frame"><span class="tag">Generated video</span><video src="https://www.aivideosugc.com/ai-video-generation/tinted-balm-vanity-reel-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp" muted loop playsinline autoplay></video></span>
+          </div>
+          <div class="d-prompt">Morning routine with the tote — coffee, keys, out the door. Natural light.</div>
+        </div>
+        <div>
+          <div class="sechead" style="margin-bottom:14px"><h2 style="font-size:20px">In this tutorial</h2></div>
+          <ol class="steps">
+            <li><div><h3>Attach 2–3 references</h3><p>Different angles of the same product beat three near-identical shots.</p></div></li>
+            <li><div><h3>Describe one scene</h3><p>Where, who, what happens. The model fills camera work and pacing.</p></div></li>
+            <li><div><h3>Confirm the quote</h3><p>Cost is shown live; nothing runs until you confirm.</p></div></li>
+            <li><div><h3>Compare versions</h3><p>Generate a variation and keep the stronger take from the Library.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="tip"><b>Good to know</b> — References are just product photos you already have. Every version you generate is kept in the Library, so nothing you try is ever lost.</div>
+      <div class="sechead" style="margin-top:36px"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>How many references should I attach?</summary><p>Two or three photos of the same product from different angles. The references anchor the product's look — more angles mean fewer surprises between shots.</p></details>
+        <details><summary>Will my product stay consistent across shots?</summary><p>Yes. Every shot is generated from your references, so shape, color and details carry through the whole video.</p></details>
+        <details><summary>What if a scene needs another take?</summary><p>Generate a variation from the same brief — both versions land in the Library and you keep the stronger one. Held credits return automatically if a job fails.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Bring one product photo to life</h3><span>Image to Video · 5 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>From one sentence to a video brief</h3><span>Text to Video · 5 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑥  /guides/how-do-ai-image
+================================================================= -->
+<div class="view" id="v-aiimg">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · AI Image</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · AI Image</p>
+      <h1>Generate product images that sell.</h1>
+      <p class="lead">Pick a tool preset, set the ratio and references, and collect store-ready product photos — main images, lifestyle shots and social crops from one session.</p>
+      <div class="meta"><span>Reading time · 5 min</span><span>Tool · AI Image</span><span>Level · First images</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">A set of consistent product photos: one clean main image plus the lifestyle shots your listing and ads need.</p>
+          <div style="margin-top:20px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px 18px">
+            <div class="d-tabs"><span>AI Video Agent</span><span>AI Video</span><span class="on">AI Image</span></div>
+            <div style="color:var(--fg);font-size:15px;display:flex;align-items:center">Matte navy travel mug on a clean white background<span class="caret"></span></div>
+            <div class="d-chips"><span>Preset · White background</span><span>1:1 ▾</span><span class="solid">Generate</span></div>
+          </div>
+          <div class="d-import">
+            <div class="st"><i>✓</i> 4 images ready · pick your keepers</div>
+            <div class="d-gallery two" style="margin-top:12px">
+              <figure><img src="https://www.aivideosugc.com/ai-image-generation/img1-home-steps-source-r1-640.webp" alt="Navy travel mug source photo" loading="lazy"><figcaption>Source photo</figcaption></figure>
+              <figure><img src="https://www.aivideosugc.com/ai-image-generation/teams1-home-r1-ad-640.webp" alt="Generated lifestyle shot of the mug in use" loading="lazy"><span class="ok">✓</span><figcaption>Generated · in use</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="sechead" style="margin-bottom:14px"><h2 style="font-size:20px">In this tutorial</h2></div>
+          <ol class="steps">
+            <li><div><h3>Pick a tool preset</h3><p>White background for marketplaces, lifestyle for ads, social crops for stories.</p></div></li>
+            <li><div><h3>Set ratio and references</h3><p>1:1 for listings, 9:16 for stories; add one product photo to anchor the look.</p></div></li>
+            <li><div><h3>Watch the price confirm</h3><p>Each run quotes its credits up front — nothing is charged without a confirm.</p></div></li>
+            <li><div><h3>Collect the results</h3><p>Keep the winners, rerun the rest. Everything lands in the Library.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="tip"><b>Good to know</b> — Every run quotes its credits before it runs, and generated images stay in the Library until you delete them. Download the keepers.</div>
+      <div class="sechead" style="margin-top:36px"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>Can I get marketplace-ready white background images?</summary><p>Yes — the white-background preset produces clean main images sized for listings. Pair it with the field guide on Amazon main image rules.</p></details>
+        <details><summary>Do I need professional photos to start?</summary><p>No. A few clear phone photos are enough as references. Better input photos make better output, but nobody needs a studio.</p></details>
+        <details><summary>Can I make social crops of the same image?</summary><p>Yes — rerun the same brief with a different ratio: 1:1 for listings, 9:16 for stories, 4:5 for feeds.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">Field guide</span><h3>AI Product Image Generator Tips From Your Phone</h3><span>6 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>Bring one product photo to life</h3><span>Image to Video · 5 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑦  /guides/how-do-product-links
+================================================================= -->
+<div class="view" id="v-pl">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · Product Links</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · Product Links</p>
+      <h1>Build your product library from links.</h1>
+      <p class="lead">Paste product pages once, keep a clean library of every product you sell, and brief videos or images straight from a product card — no re-uploading photos.</p>
+      <div class="meta"><span>Reading time · 5 min</span><span>Tool · Product Links</span><span>Level · Setup</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">One card per product: photos, description and selling points, ready to brief from.</p>
+          <div class="d-url"><span class="fld">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4d4d8" stroke-width="1.7" stroke-linecap="round"><path d="m10 13 4-4m-6 7-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></svg>
+            yourstore.com/products/canvas-tote<span class="caret"></span></span>
+            <button aria-label="demo">→</button>
+          </div>
+          <div class="d-import">
+            <div class="st"><i>✓</i> Imported · saved to your library</div>
+            <div class="cap"><b>Canvas tote bag</b><span>description and photos parsed</span><em>3 photos</em></div>
+            <ul class="d-list">
+              <li><img src="https://www.aivideosugc.com/ai-image-generation/fx14-white-input-tote-good-r1-640.webp" alt="Canvas tote bag product card" loading="lazy"><span style="flex:1"><b>Canvas tote bag</b><span class="sub">3 photos · description parsed · ready to brief</span></span><span class="d-chips" style="margin:0"><span class="solid" style="padding:7px 14px">Create video</span></span></li>
+              <li><img src="https://www.aivideosugc.com/ai-image-generation/img1-home-steps-source-r1-640.webp" alt="Navy travel mug product card" loading="lazy"><span style="flex:1"><b>Matte navy travel mug</b><span class="sub">2 photos · description parsed</span></span><span class="d-chips" style="margin:0"><span style="padding:7px 14px">Create image</span></span></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="sechead" style="margin-bottom:14px"><h2 style="font-size:20px">In this tutorial</h2></div>
+          <ol class="steps">
+            <li><div><h3>Import products</h3><p>Paste one URL per product; AI parses photos, description and selling points.</p></div></li>
+            <li><div><h3>Manage the library</h3><p>Rename, fix photos, archive what you no longer sell.</p></div></li>
+            <li><div><h3>Create from a card</h3><p>Brief a video or image straight from the product — photos attach themselves.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="tip"><b>Good to know</b> — One card per product is enough to start. Re-import the same URL any time to refresh the photos and description.</div>
+      <div class="sechead" style="margin-top:36px"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>Which product pages can I import from?</summary><p>Any public product URL — marketplace listings, your own shop, landing pages. AI reads the photos and description that are already on the page.</p></details>
+        <details><summary>Can I fix things after the import?</summary><p>Yes. Every card is editable: rename the product, swap photos, rewrite the description. What you save is what future briefs use.</p></details>
+        <details><summary>What happens when my page changes?</summary><p>Import the URL again to refresh the card. Nothing in your library changes until you re-import.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Turn a product link into a video ad</h3><span>URL to Video · 6 min</span></a>
+        <a href="#"><span class="k">Field guide</span><h3>AI Product Image Generator Tips From Your Phone</h3><span>6 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑧  /guides/how-do-ai-avatar
+================================================================= -->
+<div class="view" id="v-av">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · AI Avatar</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · AI Avatar</p>
+      <h1>Present your product with an AI avatar.</h1>
+      <p class="lead">Choose a presenter, paste your script, and generate a talking product video — no filming, no studio, and the same face across every video you publish.</p>
+      <div class="meta"><span>Reading time · 6 min</span><span>Tool · AI Avatar</span><span>Level · First video</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">A presenter-led product video: script on screen, product in hand, natural delivery.</p>
+          <div class="d-import" style="margin-top:20px">
+            <div class="st"><i>2</i> Pick a presenter</div>
+            <ul class="d-list" style="margin-top:10px">
+              <li><img src="https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp" alt="Jon — outdoor AI actor card" loading="lazy"><span style="flex:1"><b>Jon · Outdoor</b><span class="sub">warm, grounded · good for everyday products</span></span><span class="d-chips" style="margin:0"><span style="padding:6px 12px">Selected</span></span></li>
+              <li><img src="https://www.aivideosugc.com/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp" alt="Dev — home AI actor card" loading="lazy"><span style="flex:1"><b>Dev · Home</b><span class="sub">low, grounded · good for demos</span></span><span class="d-chips" style="margin:0"><span style="padding:6px 12px">Preview</span></span></li>
+            </ul>
+            <div class="st" style="margin-top:16px"><i>3</i> Paste the script</div>
+            <div class="d-prompt" style="margin-top:10px">“This is the tote I take everywhere — it carries my laptop, my lunch, and somehow still looks sharp.”</div>
+            <div class="d-chips"><span>Language · EN ▾</span><span>Voice · Warm ▾</span><span>9:16 ▾</span><span class="solid">Generate</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="d-frame" style="max-width:240px;margin:0 auto">
+            <span class="tag">Final result</span>
+            <video src="https://www.aivideosugc.com/ai-video-generation/bathroom-review-moisturizer-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp" muted loop playsinline autoplay></video>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section style="padding-top:20px">
+      <div class="sechead"><h2>Four steps, start to finish.</h2></div>
+      <ol class="steps">
+        <li><div><h3>Attach product references</h3><p>Photos the presenter will hold or show; they carry into the scene automatically.</p></div></li>
+        <li><div><h3>Choose a presenter</h3><p>Match scene and tone to the product — the card tells you each actor's range.</p></div></li>
+        <li><div><h3>Write the script</h3><p>Write like you talk. Short sentences read naturally on camera.</p></div></li>
+        <li><div><h3>Quote, confirm, generate</h3><p>Cost shown up front; failed jobs return held credits automatically.</p></div></li>
+      </ol>
+    </section>
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>Can I use the same presenter across videos?</summary><p>Yes — that is the point. Pick once, and every video keeps the same face and voice.</p></details>
+        <details><summary>Which languages are supported?</summary><p>Nine languages with matching voice delivery; switch per video in the script panel.</p></details>
+      </div>
+    </section>
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Subtitle a finished video in minutes</h3><span>Subtitle Studio · 5 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>Turn a product link into a video ad</h3><span>URL to Video · 6 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑨  /guides/how-do-subtitle-studio
+================================================================= -->
+<div class="view" id="v-sub">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · How-to · Subtitle Studio</p>
+    <section style="padding-top:22px">
+      <p class="eyebrow">How-to · Subtitle Studio</p>
+      <h1>Subtitle a finished video in minutes.</h1>
+      <p class="lead">Pick a finished video, choose the operation, and style the captions with a live preview — then burn in a new version, ready for silent autoplay feeds.</p>
+      <div class="meta"><span>Reading time · 5 min</span><span>Tool · Subtitle Studio</span><span>Level · Polish</span></div>
+    </section>
+    <section style="padding-top:6px">
+      <div class="demo">
+        <div>
+          <h3>What you are building →</h3>
+          <p class="d-lead">Most social feeds autoplay muted — subtitles carry the message when the sound is off.</p>
+          <div class="d-subrow" style="margin-top:20px">
+            <div class="sub-card">
+              <span class="tag" style="position:absolute;margin:10px">Before</span>
+              <video src="https://www.aivideosugc.com/ai-video-generation/bathroom-review-moisturizer-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp" muted loop playsinline autoplay></video>
+              <div class="bar"><span>No captions</span></div>
+            </div>
+            <div class="sub-card">
+              <span class="tag" style="position:absolute;margin:10px">After</span>
+              <video src="https://www.aivideosugc.com/ai-video-generation/bathroom-review-moisturizer-p10.mp4" poster="https://www.aivideosugc.com/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp" muted loop playsinline autoplay></video>
+              <div class="bar"><span>Bold 22px</span><span>White · shadow</span><span>Bottom third</span></div>
+            </div>
+          </div>
+          <div class="d-chips"><span>Operation · Add subtitles ▾</span><span>Style · Bold ▾</span><span>Size · 22 ▾</span><span class="solid">Generate new version</span></div>
+        </div>
+        <div>
+          <div class="sechead" style="margin-bottom:14px"><h2 style="font-size:20px">In this tutorial</h2></div>
+          <ol class="steps">
+            <li><div><h3>Pick a finished video</h3><p>Any completed job from your Library — the original stays untouched.</p></div></li>
+            <li><div><h3>Choose an operation</h3><p>Add subtitles, restyle existing ones, or translate to another language.</p></div></li>
+            <li><div><h3>Style it with live preview</h3><p>Font, size, position and color update as you click.</p></div></li>
+            <li><div><h3>Generate a new version</h3><p>A new Library entry; compare both and keep the one that reads best.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="tip"><b>Good to know</b> — Most social feeds autoplay muted, so subtitled cuts usually hold attention longer than the same video without them.</div>
+      <div class="sechead" style="margin-top:36px"><h2>Questions people ask first.</h2></div>
+      <div class="faq">
+        <details open><summary>Will the original video change?</summary><p>No. The subtitled cut is saved as a new Library entry — the original stays untouched so you can always go back.</p></details>
+        <details><summary>Can I translate the subtitles?</summary><p>Yes. Pick the translation operation and target language; the new version keeps your video and swaps the captions.</p></details>
+        <details><summary>Which style reads best on mobile?</summary><p>Bold, medium-large text in the bottom third with a subtle shadow. The live preview shows exactly what viewers will see before you burn it in.</p></details>
+      </div>
+    </section>
+
+    <section style="padding-top:8px">
+      <div class="sechead"><h2>Keep going.</h2><p>Same flow, other starting points — or go back to the full workspace guide.</p></div>
+      <div class="rel">
+        <a href="#"><span class="k">How-to</span><h3>Present your product with an AI avatar</h3><span>AI Avatar · 6 min</span></a>
+        <a href="#"><span class="k">How-to</span><h3>From one sentence to a video brief</h3><span>Text to Video · 5 min</span></a>
+        <a href="#"><span class="k">Workspace guide</span><h3>The guide, chapter by chapter</h3><span>12 chapters · 35 min</span></a>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑩  /guides/workspace-guide — relocated 12-chapter page
+================================================================= -->
+<div class="view" id="v-wg">
+  <header class="sitehead"><div class="wrap">
+    <span class="logo"><span class="logobox">A</span>AIVIDEOSUGC</span>
+    <nav><span>Video</span><span>Image</span><span>Templates</span><span>AI Actors</span><span>Resources</span><span>Pricing</span></nav>
+    <span class="avatar">27</span>
+  </div></header>
+
+  <div class="wrap">
+    <p class="crumb"><a href="#">Home</a> · <a href="#">Guides</a> · Workspace guide</p>
+
+    <section style="padding-top:24px">
+      <p class="eyebrow">The workspace guide</p>
+      <h1>The workspace guide, chapter by chapter.</h1>
+      <p class="lead">A step-by-step manual for the creation workspace: one chapter per module, numbered steps and real annotated screenshots — so a first-time user can go from an idea to a finished, subtitled ad without leaving the guide.</p>
+      <div class="meta"><span>Chapters 12</span><span>Learning paths 3</span><span>~35 min full · 8 min per path</span></div>
+    </section>
+
+    <div class="wg-layout">
+      <nav class="rail" aria-label="Chapters">
+        <p class="t">Chapters</p>
+        <ol>
+          <li><a href="#c1"><em>01</em> How a generation job runs</a></li>
+          <li><a href="#c2"><em>02</em> Home &amp; the composer</a></li>
+          <li><a href="#c3"><em>03</em> Write it, attach it, send it</a></li>
+          <li><a href="#c4"><em>04</em> Track it &amp; deliver</a></li>
+          <li><a href="#c5"><em>05</em> AI Video from references</a></li>
+          <li><a href="#c6"><em>06</em> AI Image</a></li>
+          <li><a href="#c7"><em>07</em> URL to Video</a></li>
+          <li><a href="#c8"><em>08</em> Product Links — your product library</a></li>
+          <li><a href="#c9"><em>09</em> AI Avatar studio</a></li>
+          <li><a href="#c10"><em>10</em> Subtitle Studio</a></li>
+          <li><a href="#c11"><em>11</em> Library</a></li>
+          <li><a href="#c12"><em>12</em> Assistant, extras &amp; your account</a></li>
+        </ol>
+      </nav>
+
+      <div>
+        <section style="padding-top:8px">
+          <div class="sechead"><h2>Pick a path, follow the chapters.</h2><p>Most people don't need all twelve chapters. Three curated paths chain the chapters into the three things the workspace is actually used for.</p></div>
+          <div class="paths">
+            <div class="path"><span class="lab">Path A · ~8 min</span><h3>Your first video today</h3><p>From a blank prompt to a rendered, downloadable video — the full core loop.</p><span class="ch"><b>01</b>→<b>02</b>→<b>03</b>→<b>04</b>→<b>11</b></span></div>
+            <div class="path"><span class="lab">Path B · ~10 min</span><h3>From product link to ad</h3><p>Sellers with a live product page: import, build the product library, generate variations.</p><span class="ch"><b>01</b>→<b>07</b>→<b>08</b>→<b>09</b>→<b>11</b></span></div>
+            <div class="path"><span class="lab">Path C · ~7 min</span><h3>Polish and deliver</h3><p>You already have a video: track the job, subtitle it, manage your library and account.</p><span class="ch"><b>04</b>→<b>10</b>→<b>11</b>→<b>12</b></span></div>
+          </div>
+        </section>
+
+        <section id="c1">
+          <div class="sechead"><h2 style="font-size:26px"><span style="color:var(--fg);font-size:15px;margin-right:10px">01</span>How a generation job runs</h2><p>Video and image tools all share the same job loop. Understand it once and every chapter after this one is just different inputs.</p></div>
+          <ol class="steps">
+            <li><div><h3>Describe what you want</h3><p>Type a prompt, drop product photos, or paste a product link — depending on the tool. The composer shows an <code>Optimize</code> button that rewrites your draft into a structured shooting script.</p></div></li>
+            <li><div><h3>Review the quote</h3><p>The composer footer shows the estimated cost live. <b>Estimated cost is always shown before you commit.</b></p></div></li>
+            <li><div><h3>Confirm — or save as draft</h3><p><code>Generate now</code> holds the credits and starts the job. A failed job returns them automatically.</p></div></li>
+          </ol>
+        </section>
+
+        <section id="c2" style="padding-top:24px">
+          <div class="sechead"><h2 style="font-size:26px"><span style="color:var(--fg);font-size:15px;margin-right:10px">02</span>Home &amp; the composer</h2><p>Home is one composer with three tabs — Text to Video, AI Video, AI Image — plus quick-start chips and your recent videos.</p></div>
+          <ol class="steps">
+            <li><div><h3>Pick the right tab</h3><p>Text to Video for an idea, AI Video for references, AI Image for stills.</p></div></li>
+            <li><div><h3>Write the prompt — or start from a chip</h3><p>Quick-start chips prefill a working prompt for common products.</p></div></li>
+          </ol>
+        </section>
+
+        <p class="note">↳ 章节 03–12 与现有内容完全一致，此处仅示意前两章。原 /guides 的 paths / concepts / 12 章 / moreGuides 全部平移到本页。</p>
+
+        <section style="padding-top:30px">
+          <div class="sechead"><h2>Short on time?</h2><p>Task-first tutorials for the tool you are starting from.</p></div>
+          <div class="rel">
+            <a href="#"><span class="k">How-to</span><h3>Turn a product link into a video ad</h3><span>URL to Video · 6 min</span></a>
+            <a href="#"><span class="k">How-to</span><h3>From one sentence to a video brief</h3><span>Text to Video · 5 min</span></a>
+            <a href="#"><span class="k">How-to</span><h3>Present your product with an AI avatar</h3><span>AI Avatar · 6 min</span></a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<!-- ================================================================
+     VIEW ⑪  design spec: naming rules + Schema.org structured data
+================================================================= -->
+<div class="view" id="v-spec">
+  <div class="wrap">
+    <section style="padding-top:40px">
+      <p class="eyebrow">Design spec · naming</p>
+      <h1 style="font-size:34px">How-to URL 命名规则。</h1>
+      <p class="lead">对齐工作台侧栏 CREATE 菜单的工具名：how-do-{工具 slug}，侧栏每个 CREATE 工具都有对应教程页。新增教程按同一规则扩展。</p>
+
+      <table class="nametable" style="margin-top:26px">
+        <tr><th>工作台侧栏（CREATE）</th><th>How-to slug</th><th>页面主题</th><th>批次</th></tr>
+        <tr><td>URL to Video</td><td><code>/guides/how-do-url-to-video</code></td><td>视频的产品链接（粘贴 URL → 导入图 → 视频）</td><td>首批</td></tr>
+        <tr><td>AI Video（图生视频入口）</td><td><code>/guides/how-do-image-to-video</code></td><td>图像转换为视频（单图 → 运动片段）</td><td>首批</td></tr>
+        <tr><td>Text to Video</td><td><code>/guides/how-do-text-to-video</code></td><td>文本转视频（一句话 → 脚本/分镜 → 成片）</td><td>首批</td></tr>
+        <tr><td>AI Video（参考图多镜头）</td><td><code>/guides/how-do-ai-video</code></td><td>参考图 → 多镜头产品视频</td><td>首批</td></tr>
+        <tr><td>AI Image</td><td><code>/guides/how-do-ai-image</code></td><td>预设 → 商品图（白底/场景/社媒裁剪）</td><td>首批</td></tr>
+        <tr><td>Product Links</td><td><code>/guides/how-do-product-links</code></td><td>产品库导入与管理</td><td>首批</td></tr>
+        <tr><td>AI Avatar</td><td><code>/guides/how-do-ai-avatar</code></td><td>数字人讲解视频（选人 → 脚本 → 成片）</td><td>首批</td></tr>
+        <tr><td>Subtitle Studio</td><td><code>/guides/how-do-subtitle-studio</code></td><td>字幕样式与烧录（Before/After 预览）</td><td>首批</td></tr>
+      </table>
+      <p class="note">↳ Hub 卡片区按上表顺序展示，目录按 URL 拆分自动扩展，不进导航菜单。</p>
+    </section>
+
+    <section style="padding-top:10px">
+      <p class="eyebrow">Design spec · structured data</p>
+      <h2 style="font-size:28px;margin-top:12px">Schema 结构化数据设计。</h2>
+      <p style="margin-top:10px;max-width:720px">每个 how-do 页输出 4 组 JSON-LD（服务端渲染进 &lt;head&gt;，随静态 HTML 输出，无 JS 参与）：</p>
+      <table class="nametable" style="margin-top:20px">
+        <tr><th>页面</th><th>@type</th><th>用途</th></tr>
+        <tr><td rowspan="4">how-do-*</td><td><code>HowTo</code></td><td>教程主体：name/description/totalTime/tool/step[]（每步 name + text，与页面 Steps 逐字对应）</td></tr>
+        <tr><td><code>FAQPage</code></td><td>页面 FAQ 区块（q/a 与可见文案一致）</td></tr>
+        <tr><td><code>BreadcrumbList</code></td><td>Home → Guides → How-to → {Tool}</td></tr>
+        <tr><td><code>Article</code></td><td>作者/日期/封面，复用现有博客 article graph 形状</td></tr>
+        <tr><td>/guides hub</td><td><code>CollectionPage</code> + <code>ItemList</code></td><td>大卡片（workspace-guide）+ 7 张 how-to 卡 + field guides 卡，各为一个 hasPart ListItem</td></tr>
+        <tr><td>/guides/workspace-guide</td><td><code>Article</code>（现有 graph 扩展）</td><td>12 章长文沿用现有 page graph，补充 itemListElement 指向各章锚点</td></tr>
+      </table>
+
+      <h3 style="margin:28px 0 12px">示例：how-do-url-to-video 的 HowTo + FAQPage（节选）</h3>
+      <div class="schema"><pre><span class="c">// 全部渲染进 &lt;head&gt; 的 application/ld+json，与可见文案严格一致</span>
+{
+  <span class="k">"@context"</span>: <span class="s">"https://schema.org"</span>,
+  <span class="k">"@graph"</span>: [
+    {
+      <span class="k">"@type"</span>: <span class="s">"HowTo"</span>,
+      <span class="k">"name"</span>: <span class="s">"Turn a product link into a video ad"</span>,
+      <span class="k">"description"</span>: <span class="s">"Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video."</span>,
+      <span class="k">"totalTime"</span>: <span class="s">"PT6M"</span>,
+      <span class="k">"tool"</span>: <span class="s">"URL to Video"</span>,
+      <span class="k">"step"</span>: [
+        { <span class="k">"@type"</span>: <span class="s">"HowToStep"</span>, <span class="k">"position"</span>: 1, <span class="k">"name"</span>: <span class="s">"Paste the product URL"</span>, <span class="k">"text"</span>: <span class="s">"Copy the link to any live product page and paste it into the URL to Video field on Home."</span> },
+        { <span class="k">"@type"</span>: <span class="s">"HowToStep"</span>, <span class="k">"position"</span>: 2, <span class="k">"name"</span>: <span class="s">"Review the imported photos"</span>, <span class="k">"text"</span>: <span class="s">"AI reads the page and pulls the product photos and description."</span> }
+        <span class="c">// … steps 3–5，与页面 Steps 列表逐字一致</span>
+      ]
+    },
+    { <span class="k">"@type"</span>: <span class="s">"FAQPage"</span>, <span class="k">"mainEntity"</span>: [
+      { <span class="k">"@type"</span>: <span class="s">"Question"</span>, <span class="k">"name"</span>: <span class="s">"Does the product page need anything special?"</span>,
+        <span class="k">"acceptedAnswer"</span>: { <span class="k">"@type"</span>: <span class="s">"Answer"</span>, <span class="k">"text"</span>: <span class="s">"No. Any public product URL works — AI reads the photos and description that are already on the page."</span> } }
+      <span class="c">// … 与 FAQ 区块一致</span>
+    ]},
+    { <span class="k">"@type"</span>: <span class="s">"BreadcrumbList"</span>, <span class="k">"itemListElement"</span>: [
+      { <span class="k">"@type"</span>: <span class="s">"ListItem"</span>, <span class="k">"position"</span>: 1, <span class="k">"name"</span>: <span class="s">"Home"</span>, <span class="k">"item"</span>: <span class="s">"https://www.aivideosugc.com/"</span> },
+      { <span class="k">"@type"</span>: <span class="s">"ListItem"</span>, <span class="k">"position"</span>: 2, <span class="k">"name"</span>: <span class="s">"Guides"</span>, <span class="k">"item"</span>: <span class="s">"https://www.aivideosugc.com/guides"</span> },
+      { <span class="k">"@type"</span>: <span class="s">"ListItem"</span>, <span class="k">"position"</span>: 3, <span class="k">"name"</span>: <span class="s">"URL to Video"</span>, <span class="k">"item"</span>: <span class="s">"https://www.aivideosugc.com/guides/how-do-url-to-video"</span> }
+    ]}
+  ]
+}</pre></div>
+      <p class="note">↳ 校验口径：Rich Results Test（HowTo / FAQ / Breadcrumb / Article 全绿）；数据源仍是 LivePage.contentJson，由 article/hub 渲染器统一注入，不做手工维护。</p>
+    </section>
+  </div>
+  <footer><div class="wrap"><span>© AIVideosUGC</span><span>Design mockup v4 — not for production</span></div></footer>
+</div>
+
+<script>
+  function go(id, btn){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+    document.getElementById('v-'+id).classList.add('on');
+    document.querySelectorAll('.mockbtn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    window.scrollTo({top:0});
+  }
+  const io = new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video'); if(!v) return; e.isIntersecting? v.play().catch(()=>{}) : v.pause();}));
+  document.querySelectorAll('.d-frame video, .d-subrow video').forEach(v=>{const f=v.closest('.d-frame,.sub-card'); if(f) io.observe(f);});
+</script>
+</body>
+</html>

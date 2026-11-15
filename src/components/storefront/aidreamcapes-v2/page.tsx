@@ -9,6 +9,8 @@ import { ACTOR_DETAIL_ROOT, actorDetailPath, actorFlatRedirectTarget } from "@/l
 import type { SectionInstance } from "@/lib/types";
 import { AidreamcapesV2ActorFilters, AidreamcapesV2ActorScenePicker, AidreamcapesV2HeroTabs, AidreamcapesV2MotionPreference, AidreamcapesV2TemplateFilters } from "./behavior";
 import { GuidesTutorialPage, isAidreamcapesGuidesSectionData } from "./guides-tutorial";
+import { GuidesHubPage, isAidreamcapesGuidesHubData } from "./guides-hub";
+import { GuidesHowtoPage, isAidreamcapesGuidesHowtoData } from "./guides-howto";
 import { TeamCards,
   BRAND_NAME, RelatedLinkGroups, ThematicLinkChips, Boxes, Collage, QuickStart, CompanyDetails, CompareTableBlock, Crumbs, CtaBand, DefinitionBlock, StartNote, TextSections, withStartLinks, Faq, Gallery, GlossaryEntries, HeroMedia, Img, Intro, MakeToolGroup, Maker, MoreSections, PairGrid, PageHero, Plans, RichText, Section, SecHead, Single, Specs, Steps, TemplateGrid, ToolRow, ExampleGallery, EnrichmentOverview, EnrichmentBlockSection, FitSection, DirectorySpecs, DirectoryScenes, normalizeStepLabel, ActorScenePanel, SellerScenarioSection, ReasonsSection, TrustCards, ReviewWall, ClosingStatement, LinkCardsSection, AudienceTag,
 } from "./parts";
@@ -1322,6 +1324,8 @@ function AidreamcapesV2PageContent({ section, r: baseResolvers, company, homeKey
   if (layout === "template") return <TemplatePage data={data} r={r} />;
   if (layout === "collection") return <CollectionPage data={data} r={r} />;
   if (layout === "guides" && isAidreamcapesGuidesSectionData(data)) return <GuidesTutorialPage data={data} r={r} />;
+  if (layout === "guides-hub" && isAidreamcapesGuidesHubData(data)) return <GuidesHubPage data={data} r={r} />;
+  if (layout === "guides-howto" && isAidreamcapesGuidesHowtoData(data)) return <GuidesHowtoPage data={data} r={r} />;
   if (layout === "index") return <IndexPage data={data} r={r} />;
   if (layout === "article") return <ArticlePage data={data} r={r} />;
   if (layout === "ai-twin-landing" || layout === "text-to-video-landing") {

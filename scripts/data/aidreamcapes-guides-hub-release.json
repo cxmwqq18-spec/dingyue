@@ -1,0 +1,1268 @@
+{
+  "siteId": "site_aidreamcapes",
+  "note": "Guides portal release: /guides becomes the hub, the 12-chapter tutorial moves to /guides/workspace-guide, and eight how-do-* tutorial pages are created (one per workspace CREATE tool). Applied by scripts/apply-aidreamcapes-guides-hub-release.mjs.",
+  "hub": {
+    "slug": "/guides",
+    "title": "Product Video Guides and Tool Tutorials | AIVideosUGC",
+    "seo": {
+      "index": true,
+      "title": "Product Video Guides and Tool Tutorials | AIVideosUGC",
+      "description": "Start with the chapter-by-chapter workspace guide, or jump into a short how-to for the tool you are starting from: URL to Video, Image to Video, AI Video, AI Image, Product Links, AI Avatar and Subtitle Studio.",
+      "keywords": "ai video guides, ai ugc tutorials, product video guide, url to video, image to video, text to video, ai product images, ai avatar, subtitle studio",
+      "ogImage": "/ai-image-generation/og-12.webp",
+      "ogImageAlt": "AIVideosUGC guides hub with tutorials for every workspace tool",
+      "twitterDescription": "Chapter-by-chapter workspace guide plus one short how-to per tool. Pick where you are starting from."
+    },
+    "jsonLd": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://www.aivideosugc.com/guides#webpage",
+        "name": "Product Video Guides and Tool Tutorials",
+        "url": "https://www.aivideosugc.com/guides",
+        "inLanguage": "en",
+        "isPartOf": {
+          "@id": "https://www.aivideosugc.com/#website"
+        },
+        "publisher": {
+          "@id": "https://www.aivideosugc.com/#organization"
+        },
+        "description": "Start with the chapter-by-chapter workspace guide, or jump into a short how-to for the tool you are starting from: URL to Video, Image to Video, AI Video, AI Image, Product Links, AI Avatar and Subtitle Studio."
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.aivideosugc.com/guides#guides",
+        "name": "Guides and tool tutorials",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "The Workspace Guide: Create Product Videos Step by Step",
+            "url": "https://www.aivideosugc.com/guides/workspace-guide"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "From One Sentence to a Video Brief (Text to Video)",
+            "url": "https://www.aivideosugc.com/guides/how-do-text-to-video"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Make a Video From Product References (AI Video)",
+            "url": "https://www.aivideosugc.com/guides/how-do-ai-video"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Generate Product Images That Sell (AI Image)",
+            "url": "https://www.aivideosugc.com/guides/how-do-ai-image"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Build Your Product Library From Links (Product Links)",
+            "url": "https://www.aivideosugc.com/guides/how-do-product-links"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "Present Your Product With an AI Avatar",
+            "url": "https://www.aivideosugc.com/guides/how-do-ai-avatar"
+          },
+          {
+            "@type": "ListItem",
+            "position": 7,
+            "name": "Subtitle a Finished Video in Minutes (Subtitle Studio)",
+            "url": "https://www.aivideosugc.com/guides/how-do-subtitle-studio"
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "name": "Turn a Product Link Into a Video Ad (URL to Video)",
+            "url": "https://www.aivideosugc.com/guides/how-do-url-to-video"
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "name": "Bring One Product Photo to Life (Image to Video)",
+            "url": "https://www.aivideosugc.com/guides/how-do-image-to-video"
+          }
+        ]
+      }
+    ],
+    "data": {
+      "hub": {
+        "eyebrow": "AIVideosUGC guides",
+        "h1": "The guides hub.",
+        "lead": "Written for first-time users. Start with the chapter-by-chapter workspace manual, or jump straight into a short how-to for the tool you are starting from.",
+        "meta": [
+          "Workspace guide · 12 chapters",
+          "How-to tutorials · 8",
+          "Field guides · 5"
+        ],
+        "workspaceGuide": {
+          "eyebrow": "The workspace guide · chapter by chapter",
+          "title": "From an idea to a finished, subtitled ad.",
+          "lead": "One chapter per module, numbered steps and real annotated screenshots — a first-time user never has to leave the guide. ~35 min full, 8 min per learning path.",
+          "chaptersMini": [
+            {
+              "num": "01",
+              "title": "How a generation job runs",
+              "note": "the loop you repeat the most"
+            },
+            {
+              "num": "02",
+              "title": "Home & the composer",
+              "note": "your starting point every time"
+            },
+            {
+              "num": "03",
+              "title": "Write it, attach it, send it",
+              "note": "prompts, photos, quotes"
+            }
+          ],
+          "chaptersMore": "… chapters 04–12 track delivery, references, images, product links, avatars, subtitles, the library and your account.",
+          "railPreview": [
+            {
+              "num": "01",
+              "title": "How a generation job runs"
+            },
+            {
+              "num": "02",
+              "title": "Home & the composer"
+            },
+            {
+              "num": "03",
+              "title": "Write it, attach it, send it"
+            },
+            {
+              "num": "04",
+              "title": "Track it & deliver"
+            },
+            {
+              "num": "…",
+              "title": "06–12 in the guide"
+            }
+          ],
+          "ctaLabel": "Open the 12-chapter guide →",
+          "href": "/guides/workspace-guide"
+        },
+        "howTos": {
+          "title": "How-to tutorials by tool.",
+          "lead": "One tutorial per workspace tool, named the same way the tool is named in the sidebar. Pick where you are starting from.",
+          "items": [
+            {
+              "href": "/guides/how-do-text-to-video",
+              "tool": "Text to Video",
+              "minutes": "5 min",
+              "title": "From one sentence to a video brief",
+              "body": "Type a sentence about your product, let AI write the script and scenes, then edit the brief.",
+              "image": {
+                "src": "/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
+                "alt": "Review-style video preview generated from one sentence",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-ai-video",
+              "tool": "AI Video",
+              "minutes": "6 min",
+              "title": "Make a video from product references",
+              "body": "Attach product photos, describe the scene, and generate a campaign-ready clip.",
+              "image": {
+                "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+                "alt": "Model carrying the tote bag, generated from product references",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-ai-image",
+              "tool": "AI Image",
+              "minutes": "5 min",
+              "title": "Generate product images that sell",
+              "body": "Pick a preset, set the ratio and references, and collect store-ready product photos.",
+              "image": {
+                "src": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
+                "alt": "Matte navy travel mug product photo used for AI image generation",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-product-links",
+              "tool": "Product Links",
+              "minutes": "5 min",
+              "title": "Build your product library from links",
+              "body": "Paste product pages once, keep a clean library, and brief videos straight from it.",
+              "image": {
+                "src": "/ai-image-generation/teams1-home-r1-src-640.webp",
+                "alt": "Product library source photos ready to brief from",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-ai-avatar",
+              "tool": "AI Avatar",
+              "minutes": "6 min",
+              "title": "Present your product with an AI avatar",
+              "body": "Choose a presenter, paste your script, and generate a talking product video.",
+              "image": {
+                "src": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
+                "alt": "Jon, an outdoor AI actor presenter card",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-subtitle-studio",
+              "tool": "Subtitle Studio",
+              "minutes": "5 min",
+              "title": "Subtitle a finished video in minutes",
+              "body": "Pick a video, choose the style with live preview, and burn in readable captions.",
+              "image": {
+                "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp",
+                "alt": "Video frame with styled subtitles burned in",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-url-to-video",
+              "tool": "URL to Video",
+              "minutes": "6 min",
+              "title": "Turn a product link into a video ad",
+              "body": "Paste one product URL, review the photos AI imports, and brief your first ready-to-post video.",
+              "image": {
+                "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+                "alt": "Canvas tote bag imported from a product URL",
+                "width": 640,
+                "height": 400
+              }
+            },
+            {
+              "href": "/guides/how-do-image-to-video",
+              "tool": "Image to Video",
+              "minutes": "5 min",
+              "title": "Bring one product photo to life",
+              "body": "Upload a single photo, describe the motion, and generate a moving product clip in minutes.",
+              "image": {
+                "src": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
+                "alt": "Tinted balm product photo used for image to video",
+                "width": 640,
+                "height": 400
+              }
+            }
+          ]
+        },
+        "fieldGuides": {
+          "title": "Field guides.",
+          "lead": "Deeper reads on the details that make the difference — shot from your phone, sized for every platform, tested against real ad spend.",
+          "items": [
+            {
+              "label": "Build a TikTok UGC Ad From a Product Link",
+              "href": "/guides/first-tiktok-video-ad"
+            },
+            {
+              "label": "AI Product Image Generator Tips From Your Phone",
+              "href": "/guides/product-photo-tips"
+            },
+            {
+              "label": "Social Video Sizes for TikTok and Reels",
+              "href": "/guides/ad-sizes-by-platform"
+            },
+            {
+              "label": "AI Video Ads Generator for Ad Tests",
+              "href": "/guides/testing-ad-versions"
+            },
+            {
+              "label": "Amazon Main Image Rules for Every Listing",
+              "href": "/guides/white-background-amazon"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "workspaceGuide": {
+    "slug": "/guides/workspace-guide",
+    "id": "aidreamcapes_v2_guides_workspace_guide",
+    "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
+    "seo": {
+      "index": true,
+      "title": "The Workspace Guide: Create Product Videos Step by Step | AIVideosUGC",
+      "description": "The complete chapter-by-chapter guide to the AIVideosUGC workspace: how a generation job runs, the composer, quotes and confirmations, references, images, product links, avatars, subtitles and the library.",
+      "keywords": "ai video workspace guide, ai ugc tutorial, product video workflow, ai video step by step",
+      "ogImage": "/ai-image-generation/og-12.webp",
+      "ogImageAlt": "Chapter-by-chapter guide to creating product videos in the AIVideosUGC workspace",
+      "twitterDescription": "Twelve chapters, one per module — a first-time user never has to leave the guide."
+    }
+  },
+  "howTos": [
+    {
+      "slug": "/guides/how-do-url-to-video",
+      "id": "aidreamcapes_v2_guide_how_do_url_to_video",
+      "title": "Turn a Product Link Into a Video Ad | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Turn a Product Link Into a Video Ad | AIVideosUGC",
+        "description": "Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video. No camera, no filming, no editing timeline.",
+        "keywords": "url to video, product link video ad, ai product video from url, tiktok product video",
+        "ogImage": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+        "ogImageAlt": "Canvas tote bag imported from a product URL",
+        "twitterDescription": "Paste one product URL and brief your first ready-to-post video in five steps.",
+        "primaryKeyword": "url to video"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · URL to Video",
+          "h1": "Turn a product link into a video ad.",
+          "lead": "Paste one product URL — AI imports the photos and details for you, then turns them into a ready-to-post video. No camera, no filming, no editing timeline.",
+          "meta": [
+            "Reading time · 6 min",
+            "Tool · URL to Video",
+            "Level · First video"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "A vertical product video assembled from the photos on your product page, with a script AI writes from the listing details.",
+            "urlCard": {
+              "label": "yourstore.com/products/canvas-tote",
+              "action": "→",
+              "status": "Description parsed · ready to brief",
+              "ok": true,
+              "caption": {
+                "text": "Canvas tote bag — review the photos from the import",
+                "badge": "3 found"
+              }
+            },
+            "gallery": [
+              {
+                "image": {
+                  "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+                  "alt": "Canvas tote bag main product photo",
+                  "width": 480,
+                  "height": 504
+                },
+                "caption": "Main photo",
+                "ok": true
+              },
+              {
+                "image": {
+                  "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+                  "alt": "Model carrying the canvas tote bag",
+                  "width": 480,
+                  "height": 504
+                },
+                "caption": "Model shot",
+                "ok": true
+              },
+              {
+                "image": {
+                  "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+                  "alt": "Tote bag in use",
+                  "width": 480,
+                  "height": 504
+                },
+                "caption": "In use",
+                "ok": true
+              }
+            ],
+            "result": {
+              "frames": [
+                {
+                  "tag": "Final result",
+                  "video": {
+                    "src": "/ai-video-generation/tinted-balm-vanity-reel-p10.mp4",
+                    "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp"
+                  }
+                }
+              ],
+              "prompt": "“Show the tote carried on a morning errand — bright, natural, everyday.”"
+            }
+          },
+          "steps": [
+            {
+              "title": "Paste the product URL",
+              "body": "Copy the link to any live product page and paste it into the URL to Video field on Home."
+            },
+            {
+              "title": "Review the imported photos",
+              "body": "AI reads the page and pulls the product photos and description. Keep the shots you want; the badge shows how many were found."
+            },
+            {
+              "title": "Brief the video",
+              "body": "One or two sentences are enough. Estimated cost is always shown before you commit."
+            },
+            {
+              "title": "Confirm and generate",
+              "body": "The confirmation modal restates the cost and your balance. Confirming holds the credits; a failed job returns them automatically."
+            },
+            {
+              "title": "Collect from the Library",
+              "body": "The job moves through generating → finishing → completed. Download within 15 days — everything you keep is yours."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "Guests can build the draft without an account; it is restored the moment you sign in."
+          },
+          "faq": [
+            {
+              "q": "Does the product page need anything special?",
+              "a": "No. Any public product URL works — AI reads the photos and description that are already on the page."
+            },
+            {
+              "q": "What if the import picks a photo I don't want?",
+              "a": "Deselect it before briefing. The video is built only from the photos you keep."
+            },
+            {
+              "q": "How much does one video cost?",
+              "a": "The composer shows the estimated credits before anything runs. Nothing is charged until you confirm."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Bring one product photo to life",
+              "text": "Image to Video · 5 min",
+              "href": "/guides/how-do-image-to-video"
+            },
+            {
+              "kind": "How-to",
+              "label": "Build your product library from links",
+              "text": "Product Links · 5 min",
+              "href": "/guides/how-do-product-links"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ],
+          "stepsIntro": {
+            "title": "Five steps, start to finish.",
+            "lead": "The same job loop as chapter 01 of the workspace guide — the inputs are just different."
+          }
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "id": "aidreamcapes_v2_guide_how_do_image_to_video",
+      "title": "Bring One Product Photo to Life (Image to Video) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Bring One Product Photo to Life (Image to Video) | AIVideosUGC",
+        "description": "Upload a single product photo and add a short prompt — watch the photo come alive as a moving product clip, ready for ads and social posts.",
+        "keywords": "image to video, photo to video ai, product photo animation, ai product clip",
+        "ogImage": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
+        "ogImageAlt": "Tinted balm product photo used for image to video",
+        "twitterDescription": "One photo in, one moving clip out — describe the action and generate in minutes.",
+        "primaryKeyword": "image to video"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · Image to Video",
+          "h1": "Bring one product photo to life.",
+          "lead": "Upload a single product photo and add a short prompt — watch the photo come alive as a moving product clip, ready for ads and social posts.",
+          "meta": [
+            "Reading time · 5 min",
+            "Tool · Image to Video",
+            "Level · First video"
+          ],
+          "demo": {
+            "title": "From still to motion →",
+            "lead": "One photo in, one moving clip out. You describe the action; the model handles camera and motion.",
+            "frames": [
+              {
+                "tag": "Product photo",
+                "image": {
+                  "src": "/ai-image-generation/im01-video-hub-balm-r1-640.webp",
+                  "alt": "Peachy tinted balm product photo on a marble vanity",
+                  "width": 640,
+                  "height": 736
+                }
+              },
+              {
+                "tag": "Generated motion",
+                "video": {
+                  "src": "/ai-video-generation/tinted-balm-vanity-reel-p10.mp4",
+                  "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp"
+                }
+              }
+            ],
+            "prompt": "She picks it up and takes one swipe — naturally flushed lips"
+          },
+          "steps": [
+            {
+              "title": "Pick one strong photo",
+              "body": "Clear product, plain background, good light — the same rules as the product-photo field guide."
+            },
+            {
+              "title": "Describe one action",
+              "body": "Short and concrete beats long and vague. One motion per clip."
+            },
+            {
+              "title": "Check the quote, confirm",
+              "body": "Cost is shown before you commit; held credits return if the job fails."
+            },
+            {
+              "title": "Compare and keep",
+              "body": "Generate a variation if the motion feels off; download what you want to keep."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "One motion per clip. If you want two actions, generate two clips and keep the better take of each."
+          },
+          "faq": [
+            {
+              "q": "What kind of photo works best?",
+              "a": "One clear product, a plain background and even lighting. A phone photo is enough — motion comes from the prompt, not the source image."
+            },
+            {
+              "q": "How long can the clip be?",
+              "a": "Pick 15 or 30 seconds when you brief the job. The composer shows the cost for each length before you confirm."
+            },
+            {
+              "q": "Can I use the clip in ads?",
+              "a": "Yes. Download the finished clip from the Library and use it on your product page, in social posts and in ads."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Make a video from product references",
+              "text": "AI Video · 6 min",
+              "href": "/guides/how-do-ai-video"
+            },
+            {
+              "kind": "How-to",
+              "label": "Turn a product link into a video ad",
+              "text": "URL to Video · 6 min",
+              "href": "/guides/how-do-url-to-video"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "id": "aidreamcapes_v2_guide_how_do_text_to_video",
+      "title": "From One Sentence to a Video Brief (Text to Video) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "From One Sentence to a Video Brief (Text to Video) | AIVideosUGC",
+        "description": "Type one sentence about your product. AI writes the script and scenes, and turns it into an editable video brief — then generates the shots you choose.",
+        "keywords": "text to video, ai video from text, ai script to video, product review video ai",
+        "ogImage": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
+        "ogImageAlt": "Review-style product clip generated from a single sentence",
+        "twitterDescription": "Type one sentence about your product — AI writes the script, scenes and shots.",
+        "primaryKeyword": "text to video"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · Text to Video",
+          "h1": "From one sentence to a video brief.",
+          "lead": "Type one sentence about your product. AI writes the script and scenes, and turns it into an editable video brief — then generates the shots you choose.",
+          "meta": [
+            "Reading time · 5 min",
+            "Tool · Text to Video",
+            "Level · First video"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "A review-style product clip with presenter, script and subtitles — assembled from a single sentence.",
+            "panel": {
+              "tabs": [
+                "AI Video Agent",
+                "AI Video",
+                "AI Image"
+              ],
+              "activeTab": 0,
+              "input": "Give this moisturizer a honest review",
+              "chips": [
+                "Product",
+                "Presenter",
+                "9:16 ▾",
+                "15s ▾",
+                "Generate"
+              ]
+            },
+            "result": {
+              "frames": [
+                {
+                  "tag": "Motion preview",
+                  "video": {
+                    "src": "/ai-video-generation/bathroom-review-moisturizer-p10.mp4",
+                    "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp"
+                  }
+                }
+              ]
+            }
+          },
+          "steps": [
+            {
+              "title": "Write the sentence",
+              "body": "Product, audience, one message. The composer Optimize button turns it into a structured shooting script."
+            },
+            {
+              "title": "Review the brief",
+              "body": "Scenes, shots and voice are editable before anything runs — change the wording, not the whole video."
+            },
+            {
+              "title": "Confirm the quote",
+              "body": "Estimated cost is always shown before you commit. Confirming holds the credits."
+            },
+            {
+              "title": "Collect from the Library",
+              "body": "Download within 15 days; generate a variation if a scene needs another take."
+            }
+          ],
+          "faq": [
+            {
+              "q": "How long should the first sentence be?",
+              "a": "One or two lines. Name the product and the one thing it does — AI expands it into scenes you can edit."
+            },
+            {
+              "q": "Can I edit the script before generating?",
+              "a": "Yes. The brief is fully editable; you confirm only the version you want to render."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Make a video from product references",
+              "text": "AI Video · 6 min",
+              "href": "/guides/how-do-ai-video"
+            },
+            {
+              "kind": "How-to",
+              "label": "Subtitle a finished video in minutes",
+              "text": "Subtitle Studio · 5 min",
+              "href": "/guides/how-do-subtitle-studio"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ],
+          "stepsIntro": {
+            "title": "Four steps, start to finish."
+          }
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "id": "aidreamcapes_v2_guide_how_do_ai_video",
+      "title": "Make a Video From Product References (AI Video) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Make a Video From Product References (AI Video) | AIVideosUGC",
+        "description": "Attach two or three product photos, describe the scene you want, and generate a campaign-ready clip — the model keeps your product consistent across every shot.",
+        "keywords": "ai video from photos, product reference video, ai product video generator, ugc product video",
+        "ogImage": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+        "ogImageAlt": "Model carrying the tote bag, generated from product references",
+        "twitterDescription": "Reference photos in, one coherent video out — same product, different angles, one message.",
+        "primaryKeyword": "ai video"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · AI Video",
+          "h1": "Make a video from product references.",
+          "lead": "Attach two or three product photos, describe the scene you want, and generate a campaign-ready clip — the model keeps your product consistent across every shot.",
+          "meta": [
+            "Reading time · 6 min",
+            "Tool · AI Video",
+            "Level · First video"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "Reference photos in, one coherent video out. Same product, different angles, one message.",
+            "frames": [
+              {
+                "tag": "Reference 1",
+                "image": {
+                  "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+                  "alt": "Tote bag studio photo used as reference",
+                  "width": 640,
+                  "height": 736
+                }
+              },
+              {
+                "tag": "Reference 2",
+                "image": {
+                  "src": "/ai-image-generation/b2f1-social-ad-photos-picker-tote-r1-640.webp",
+                  "alt": "Model carrying the tote used as reference",
+                  "width": 640,
+                  "height": 736
+                }
+              },
+              {
+                "tag": "Generated video",
+                "video": {
+                  "src": "/ai-video-generation/tinted-balm-vanity-reel-p10.mp4",
+                  "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp"
+                }
+              }
+            ],
+            "prompt": "Morning routine with the tote — coffee, keys, out the door. Natural light."
+          },
+          "steps": [
+            {
+              "title": "Attach 2–3 references",
+              "body": "Different angles of the same product beat three near-identical shots."
+            },
+            {
+              "title": "Describe one scene",
+              "body": "Where, who, what happens. The model fills camera work and pacing."
+            },
+            {
+              "title": "Confirm the quote",
+              "body": "Cost is shown live; nothing runs until you confirm."
+            },
+            {
+              "title": "Compare versions",
+              "body": "Generate a variation and keep the stronger take from the Library."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "References are just product photos you already have. Every version you generate is kept in the Library, so nothing you try is ever lost."
+          },
+          "faq": [
+            {
+              "q": "How many references should I attach?",
+              "a": "Two or three photos of the same product from different angles. The references anchor the product's look — more angles mean fewer surprises between shots."
+            },
+            {
+              "q": "Will my product stay consistent across shots?",
+              "a": "Yes. Every shot is generated from your references, so shape, color and details carry through the whole video."
+            },
+            {
+              "q": "What if a scene needs another take?",
+              "a": "Generate a variation from the same brief — both versions land in the Library and you keep the stronger one. Held credits return automatically if a job fails."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Bring one product photo to life",
+              "text": "Image to Video · 5 min",
+              "href": "/guides/how-do-image-to-video"
+            },
+            {
+              "kind": "How-to",
+              "label": "From one sentence to a video brief",
+              "text": "Text to Video · 5 min",
+              "href": "/guides/how-do-text-to-video"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-ai-image",
+      "id": "aidreamcapes_v2_guide_how_do_ai_image",
+      "title": "Generate Product Images That Sell (AI Image) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Generate Product Images That Sell (AI Image) | AIVideosUGC",
+        "description": "Pick a tool preset, set the ratio and references, and collect store-ready product photos — main images, lifestyle shots and social crops from one session.",
+        "keywords": "ai product image generator, ai product photography, white background product image, lifestyle product photo ai",
+        "ogImage": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
+        "ogImageAlt": "Matte navy travel mug product photo used for AI image generation",
+        "twitterDescription": "Presets, ratios and references — collect store-ready product photos from one session.",
+        "primaryKeyword": "ai image"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · AI Image",
+          "h1": "Generate product images that sell.",
+          "lead": "Pick a tool preset, set the ratio and references, and collect store-ready product photos — main images, lifestyle shots and social crops from one session.",
+          "meta": [
+            "Reading time · 5 min",
+            "Tool · AI Image",
+            "Level · First images"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "A set of consistent product photos: one clean main image plus the lifestyle shots your listing and ads need.",
+            "panel": {
+              "tabs": [
+                "AI Video Agent",
+                "AI Video",
+                "AI Image"
+              ],
+              "activeTab": 2,
+              "input": "Matte navy travel mug on a clean white background",
+              "chips": [
+                "Preset · White background",
+                "1:1 ▾",
+                "Generate"
+              ]
+            },
+            "gallery": [
+              {
+                "image": {
+                  "src": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
+                  "alt": "Navy travel mug source photo",
+                  "width": 480,
+                  "height": 504
+                },
+                "caption": "Source photo"
+              },
+              {
+                "image": {
+                  "src": "/ai-image-generation/teams1-home-r1-ad-640.webp",
+                  "alt": "Generated lifestyle shot of the mug in use",
+                  "width": 480,
+                  "height": 504
+                },
+                "caption": "Generated · in use",
+                "ok": true
+              }
+            ]
+          },
+          "steps": [
+            {
+              "title": "Pick a tool preset",
+              "body": "White background for marketplaces, lifestyle for ads, social crops for stories."
+            },
+            {
+              "title": "Set ratio and references",
+              "body": "1:1 for listings, 9:16 for stories; add one product photo to anchor the look."
+            },
+            {
+              "title": "Watch the price confirm",
+              "body": "Each run quotes its credits up front — nothing is charged without a confirm."
+            },
+            {
+              "title": "Collect the results",
+              "body": "Keep the winners, rerun the rest. Everything lands in the Library."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "Every run quotes its credits before it runs, and generated images stay in the Library until you delete them. Download the keepers."
+          },
+          "faq": [
+            {
+              "q": "Can I get marketplace-ready white background images?",
+              "a": "Yes — the white-background preset produces clean main images sized for listings. Pair it with the field guide on Amazon main image rules."
+            },
+            {
+              "q": "Do I need professional photos to start?",
+              "a": "No. A few clear phone photos are enough as references. Better input photos make better output, but nobody needs a studio."
+            },
+            {
+              "q": "Can I make social crops of the same image?",
+              "a": "Yes — rerun the same brief with a different ratio: 1:1 for listings, 9:16 for stories, 4:5 for feeds."
+            }
+          ],
+          "related": [
+            {
+              "kind": "Field guide",
+              "label": "AI Product Image Generator Tips From Your Phone",
+              "text": "6 min",
+              "href": "/guides/product-photo-tips"
+            },
+            {
+              "kind": "How-to",
+              "label": "Bring one product photo to life",
+              "text": "Image to Video · 5 min",
+              "href": "/guides/how-do-image-to-video"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-product-links",
+      "id": "aidreamcapes_v2_guide_how_do_product_links",
+      "title": "Build Your Product Library From Links (Product Links) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Build Your Product Library From Links (Product Links) | AIVideosUGC",
+        "description": "Paste product pages once, keep a clean library of every product you sell, and brief videos or images straight from a product card — no re-uploading photos.",
+        "keywords": "product links import, product library, ai product catalog, brief from product page",
+        "ogImage": "/ai-image-generation/teams1-home-r1-src-640.webp",
+        "ogImageAlt": "Product library source photos ready to brief from",
+        "twitterDescription": "Paste product pages once — keep a clean library and brief straight from a product card.",
+        "primaryKeyword": "product links"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · Product Links",
+          "h1": "Build your product library from links.",
+          "lead": "Paste product pages once, keep a clean library of every product you sell, and brief videos or images straight from a product card — no re-uploading photos.",
+          "meta": [
+            "Reading time · 5 min",
+            "Tool · Product Links",
+            "Level · Setup"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "One card per product: photos, description and selling points, ready to brief from.",
+            "urlCard": {
+              "label": "yourstore.com/products/canvas-tote",
+              "action": "→",
+              "status": "Imported · saved to your library",
+              "ok": true,
+              "caption": {
+                "text": "Canvas tote bag — description and photos parsed",
+                "badge": "3 photos"
+              }
+            },
+            "list": [
+              {
+                "image": {
+                  "src": "/ai-image-generation/fx14-white-input-tote-good-r1-640.webp",
+                  "alt": "Canvas tote bag product card",
+                  "width": 96,
+                  "height": 96
+                },
+                "title": "Canvas tote bag",
+                "sub": "3 photos · description parsed · ready to brief",
+                "action": "Create video",
+                "primary": true
+              },
+              {
+                "image": {
+                  "src": "/ai-image-generation/img1-home-steps-source-r1-640.webp",
+                  "alt": "Navy travel mug product card",
+                  "width": 96,
+                  "height": 96
+                },
+                "title": "Matte navy travel mug",
+                "sub": "2 photos · description parsed",
+                "action": "Create image"
+              }
+            ]
+          },
+          "steps": [
+            {
+              "title": "Import products",
+              "body": "Paste one URL per product; AI parses photos, description and selling points."
+            },
+            {
+              "title": "Manage the library",
+              "body": "Rename, fix photos, archive what you no longer sell."
+            },
+            {
+              "title": "Create from a card",
+              "body": "Brief a video or image straight from the product — photos attach themselves."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "One card per product is enough to start. Re-import the same URL any time to refresh the photos and description."
+          },
+          "faq": [
+            {
+              "q": "Which product pages can I import from?",
+              "a": "Any public product URL — marketplace listings, your own shop, landing pages. AI reads the photos and description that are already on the page."
+            },
+            {
+              "q": "Can I fix things after the import?",
+              "a": "Yes. Every card is editable: rename the product, swap photos, rewrite the description. What you save is what future briefs use."
+            },
+            {
+              "q": "What happens when my page changes?",
+              "a": "Import the URL again to refresh the card. Nothing in your library changes until you re-import."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Turn a product link into a video ad",
+              "text": "URL to Video · 6 min",
+              "href": "/guides/how-do-url-to-video"
+            },
+            {
+              "kind": "Field guide",
+              "label": "AI Product Image Generator Tips From Your Phone",
+              "text": "6 min",
+              "href": "/guides/product-photo-tips"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "id": "aidreamcapes_v2_guide_how_do_ai_avatar",
+      "title": "Present Your Product With an AI Avatar | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Present Your Product With an AI Avatar | AIVideosUGC",
+        "description": "Choose a presenter, paste your script, and generate a talking product video — no filming, no studio, and the same face across every video you publish.",
+        "keywords": "ai avatar video, ai presenter, talking product video, ai actor for product ads",
+        "ogImage": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
+        "ogImageAlt": "Jon, an outdoor AI actor presenter card",
+        "twitterDescription": "Pick a presenter, paste your script — the same face across every video you publish.",
+        "primaryKeyword": "ai avatar"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · AI Avatar",
+          "h1": "Present your product with an AI avatar.",
+          "lead": "Choose a presenter, paste your script, and generate a talking product video — no filming, no studio, and the same face across every video you publish.",
+          "meta": [
+            "Reading time · 6 min",
+            "Tool · AI Avatar",
+            "Level · First video"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "A presenter-led product video: script on screen, product in hand, natural delivery.",
+            "panel": {
+              "input": "This is the tote I take everywhere — it carries my laptop, my lunch, and somehow still looks sharp.",
+              "chips": [
+                "Language · EN ▾",
+                "Voice · Warm ▾",
+                "9:16 ▾",
+                "Generate"
+              ]
+            },
+            "list": [
+              {
+                "image": {
+                  "src": "/ai-image-generation/actors/ac1-actor-card-outdoor-2-r1-640.webp",
+                  "alt": "Jon — outdoor AI actor card",
+                  "width": 96,
+                  "height": 96
+                },
+                "title": "Jon · Outdoor",
+                "sub": "warm, grounded · good for everyday products",
+                "action": "Selected",
+                "primary": true
+              },
+              {
+                "image": {
+                  "src": "/ai-image-generation/actors/ac1-actor-card-home-1-r1-640.webp",
+                  "alt": "Dev — home AI actor card",
+                  "width": 96,
+                  "height": 96
+                },
+                "title": "Dev · Home",
+                "sub": "low, grounded · good for demos",
+                "action": "Preview"
+              }
+            ],
+            "result": {
+              "frames": [
+                {
+                  "tag": "Final result",
+                  "video": {
+                    "src": "/ai-video-generation/bathroom-review-moisturizer-p10.mp4",
+                    "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp"
+                  }
+                }
+              ]
+            }
+          },
+          "steps": [
+            {
+              "title": "Attach product references",
+              "body": "Photos the presenter will hold or show; they carry into the scene automatically."
+            },
+            {
+              "title": "Choose a presenter",
+              "body": "Match scene and tone to the product — the card tells you each actor's range."
+            },
+            {
+              "title": "Write the script",
+              "body": "Write like you talk. Short sentences read naturally on camera."
+            },
+            {
+              "title": "Quote, confirm, generate",
+              "body": "Cost shown up front; failed jobs return held credits automatically."
+            }
+          ],
+          "faq": [
+            {
+              "q": "Can I use the same presenter across videos?",
+              "a": "Yes — that is the point. Pick once, and every video keeps the same face and voice."
+            },
+            {
+              "q": "Which languages are supported?",
+              "a": "Nine languages with matching voice delivery; switch per video in the script panel."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Subtitle a finished video in minutes",
+              "text": "Subtitle Studio · 5 min",
+              "href": "/guides/how-do-subtitle-studio"
+            },
+            {
+              "kind": "How-to",
+              "label": "Turn a product link into a video ad",
+              "text": "URL to Video · 6 min",
+              "href": "/guides/how-do-url-to-video"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ],
+          "stepsIntro": {
+            "title": "Four steps, start to finish."
+          }
+        }
+      }
+    },
+    {
+      "slug": "/guides/how-do-subtitle-studio",
+      "id": "aidreamcapes_v2_guide_how_do_subtitle_studio",
+      "title": "Subtitle a Finished Video in Minutes (Subtitle Studio) | AIVideosUGC",
+      "seo": {
+        "index": true,
+        "title": "Subtitle a Finished Video in Minutes (Subtitle Studio) | AIVideosUGC",
+        "description": "Pick a finished video, choose the operation, and style the captions with a live preview — then burn in a new version, ready for silent autoplay feeds.",
+        "keywords": "subtitle studio, add subtitles to video, translate video captions, silent autoplay subtitles",
+        "ogImage": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/tinted-balm-vanity-reel-ref--640.webp",
+        "ogImageAlt": "Video frame with styled subtitles burned in",
+        "twitterDescription": "Style captions with a live preview and burn in a new version — the original stays untouched.",
+        "primaryKeyword": "subtitle studio"
+      },
+      "data": {
+        "howto": {
+          "eyebrow": "How-to · Subtitle Studio",
+          "h1": "Subtitle a finished video in minutes.",
+          "lead": "Pick a finished video, choose the operation, and style the captions with a live preview — then burn in a new version, ready for silent autoplay feeds.",
+          "meta": [
+            "Reading time · 5 min",
+            "Tool · Subtitle Studio",
+            "Level · Polish"
+          ],
+          "demo": {
+            "title": "What you are building →",
+            "lead": "Most social feeds autoplay muted — subtitles carry the message when the sound is off.",
+            "subtitles": {
+              "before": {
+                "label": "Before",
+                "video": {
+                  "src": "/ai-video-generation/bathroom-review-moisturizer-p10.mp4",
+                  "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp"
+                },
+                "lines": [
+                  "No captions"
+                ]
+              },
+              "after": {
+                "label": "After",
+                "video": {
+                  "src": "/ai-video-generation/bathroom-review-moisturizer-p10.mp4",
+                  "poster": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp"
+                },
+                "lines": [
+                  "Bold 22px",
+                  "White · shadow",
+                  "Bottom third"
+                ]
+              },
+              "chips": [
+                "Operation · Add subtitles ▾",
+                "Style · Bold ▾",
+                "Size · 22 ▾",
+                "Generate new version"
+              ]
+            }
+          },
+          "steps": [
+            {
+              "title": "Pick a finished video",
+              "body": "Any completed job from your Library — the original stays untouched."
+            },
+            {
+              "title": "Choose an operation",
+              "body": "Add subtitles, restyle existing ones, or translate to another language."
+            },
+            {
+              "title": "Style it with live preview",
+              "body": "Font, size, position and color update as you click."
+            },
+            {
+              "title": "Generate a new version",
+              "body": "A new Library entry; compare both and keep the one that reads best."
+            }
+          ],
+          "tip": {
+            "title": "Good to know",
+            "body": "Most social feeds autoplay muted, so subtitled cuts usually hold attention longer than the same video without them."
+          },
+          "faq": [
+            {
+              "q": "Will the original video change?",
+              "a": "No. The subtitled cut is saved as a new Library entry — the original stays untouched so you can always go back."
+            },
+            {
+              "q": "Can I translate the subtitles?",
+              "a": "Yes. Pick the translation operation and target language; the new version keeps your video and swaps the captions."
+            },
+            {
+              "q": "Which style reads best on mobile?",
+              "a": "Bold, medium-large text in the bottom third with a subtle shadow. The live preview shows exactly what viewers will see before you burn it in."
+            }
+          ],
+          "related": [
+            {
+              "kind": "How-to",
+              "label": "Present your product with an AI avatar",
+              "text": "AI Avatar · 6 min",
+              "href": "/guides/how-do-ai-avatar"
+            },
+            {
+              "kind": "How-to",
+              "label": "From one sentence to a video brief",
+              "text": "Text to Video · 5 min",
+              "href": "/guides/how-do-text-to-video"
+            },
+            {
+              "kind": "Workspace guide",
+              "label": "The guide, chapter by chapter",
+              "text": "12 chapters · 35 min",
+              "href": "/guides/workspace-guide"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

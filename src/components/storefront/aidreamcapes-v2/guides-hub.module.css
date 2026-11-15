@@ -1,0 +1,347 @@
+/* /guides — the portal hub. Scoped to this component via the module class.
+   Text stays monochrome (#fff / #d4d4d8 / #9494a2); the gradient appears only
+   as a button fill. Pure static HTML, whole cards are single anchors. */
+
+.page {
+  padding: 26px 0 30px;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 18px 0 8px;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9494a2;
+}
+.hero h1 {
+  margin: 12px 0 14px;
+  font-size: clamp(30px, 4.4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+}
+.lead {
+  margin: 0 auto;
+  max-width: 660px;
+  color: #d4d4d8;
+  font-size: 17px;
+  line-height: 1.6;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+.meta span {
+  font-size: 12px;
+  color: #9494a2;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+/* ---------- big workspace-guide card ---------- */
+.bigSection {
+  padding-top: 26px;
+}
+.bigCard {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.bigCard:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.bigPad {
+  padding: 34px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.bigEyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9494a2;
+}
+.bigPad h2 {
+  margin: 12px 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #ffffff;
+}
+.bigLead {
+  color: #d4d4d8;
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.chaptersMini {
+  list-style: none;
+  margin: 24px 0 26px;
+  padding: 0;
+  display: grid;
+  width: 100%;
+}
+.chaptersMini li {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  align-items: baseline;
+}
+.chaptersMini li:first-child {
+  border-top: 0;
+}
+.chaptersMini em {
+  font-style: normal;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 13px;
+}
+.chaptersMini b {
+  color: #ffffff;
+  font-weight: 600;
+}
+.chapterNote {
+  color: #9494a2;
+  font-size: 12px;
+  margin-left: auto;
+}
+.chaptersMore {
+  color: #9494a2;
+  font-size: 13px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.bigCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #8b5cf6 0%, #ec4899 52%, #3b82f6 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 12px;
+  padding: 12px 22px;
+}
+.bigVisual {
+  position: relative;
+  background: var(--bg-2, #0d0d12);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  gap: 10px;
+  border-left: 1px solid var(--line);
+}
+.stamp {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: rgba(5, 5, 5, 0.6);
+}
+.railPreview {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.railPreview li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: #d4d4d8;
+}
+.railPreview em {
+  font-style: normal;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 12px;
+}
+.railHere {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
+
+/* ---------- how-to cards ---------- */
+.howtos {
+  padding-top: 46px;
+}
+.secHead {
+  margin-bottom: 26px;
+}
+.secHead h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+.secHead p {
+  margin: 8px 0 0;
+  max-width: 640px;
+  color: #d4d4d8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.thumb {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-2, #12121a);
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chip {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-size: 11px;
+  color: #ffffff;
+  background: rgba(5, 5, 5, 0.78);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.cardPad {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.read {
+  font-size: 12px;
+  color: #9494a2;
+}
+.cardPad h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+}
+.cardBody {
+  font-size: 14px;
+  color: #d4d4d8;
+  line-height: 1.55;
+}
+.go {
+  margin-top: auto;
+  padding-top: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+.fieldGuides {
+  margin: 46px 0 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px 28px;
+}
+.fieldGuides h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+.fieldGuides p {
+  margin: 8px 0 0;
+  color: #d4d4d8;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.fieldList {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.fieldList a {
+  display: inline-flex;
+  font-size: 13.5px;
+  color: #d4d4d8;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+.fieldList a:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .bigCard {
+    grid-template-columns: 1fr;
+  }
+  .bigVisual {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+@media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .bigPad {
+    padding: 26px 22px;
+  }
+}
