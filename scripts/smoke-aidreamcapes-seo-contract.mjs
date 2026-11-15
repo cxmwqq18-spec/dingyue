@@ -111,8 +111,12 @@ function imageKey(value, base = "https://www.aivideosugc.com/") {
 function pageImageKeys(html, url) {
   const $ = load(html);
   const values = [];
+  // data-deferred-poster is the lazy video poster mechanism: the renderer
+  // stores the poster URL in the data attribute and a small script assigns it
+  // to the poster property once the video scrolls into view. It is a real
+  // reference the page publishes, so the sitemap may submit it.
   $("img,source,video,[style]").each((_, node) => {
-    for (const attr of ["src", "poster", "data-src"]) {
+    for (const attr of ["src", "poster", "data-src", "data-deferred-poster"]) {
       const value = $(node).attr(attr);
       if (value && !value.startsWith("data:")) values.push(value);
     }
