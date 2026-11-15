@@ -273,7 +273,10 @@ try {
 
   if (!hubAlreadyApplied) {
     const currentLayout = baseSection.settings?.layout;
-    assert.equal(currentLayout, "guides", `Precondition failed: ${hubSlug} layout is "${currentLayout}", expected "guides" (the 12-chapter tutorial) or the hub state written by this release.`);
+    assert.ok(
+      currentLayout === "guides" || currentLayout === "guides-hub",
+      `Precondition failed: ${hubSlug} layout is "${currentLayout}", expected "guides" (the 12-chapter tutorial) or "guides-hub" (written by this release).`
+    );
   }
 
   const manifest = manifestNeeded ? {
@@ -313,8 +316,15 @@ try {
   if (apply) {
     assert.equal(argumentValue("--base-hash"), baseHash, "--base-hash does not match the current row state; rerun the dry run.");
     if (production && manifestNeeded) {
-      fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
-      console.log(`Manifest written: ${manifestPath}`);
+      // The manifest records the pre-release /guides row, which only exists once.
+      // A later content revision of the same release must keep the original
+      // capture instead of overwriting the rollback reference.
+      if (fs.existsSync(manifestPath)) {
+        console.log(`Manifest already captured, keeping the original rollback reference: ${manifestPath}`);
+      } else {
+        fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+        console.log(`Manifest written: ${manifestPath}`);
+      }
     }
     await prisma.$transaction(async (tx) => {
       const current = await tx.livePage.findFirst({ where: { siteId, slug: hubSlug }, select: { id: true, contentJson: true } });

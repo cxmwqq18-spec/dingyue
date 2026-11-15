@@ -1,47 +1,17 @@
-/* /guides/how-do-* — one skeleton for every tool tutorial. Scoped via the
-   module class; text stays monochrome (#fff / #d4d4d8 / #9494a2); gradient
-   only as a button fill. Pure static HTML, no client behavior. */
+/* /guides/how-do-* — one skeleton for every tool tutorial. The page body is
+   rendered with the site's article classes (`.ahero`, `.wrap prose`,
+   `.article-section-media`, `.trybox`, `.check`, `.related`), so this module
+   only styles the pieces the article shell does not cover: the hero meta chips,
+   the inline example visuals, and the numbered step list. Text stays
+   monochrome (#fff / #d4d4d8 / #9494a2); the gradient appears only as a
+   button fill. Pure static HTML, no client behavior. */
 
-.page {
-  padding: 26px 0 30px;
-}
-
-/* ---------- hero ---------- */
-.hero {
-  max-width: 860px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 18px 0 8px;
-}
-.eyebrow {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #9494a2;
-}
-.hero h1 {
-  margin: 12px 0 14px;
-  font-size: clamp(30px, 4.4vw, 44px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: #ffffff;
-}
-.lead {
-  margin: 0 auto;
-  max-width: 660px;
-  color: #d4d4d8;
-  font-size: 17px;
-  line-height: 1.6;
-}
+/* ---------- hero meta chips ---------- */
 .meta {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin: 16px 0 0;
+  gap: 8px;
+  margin: 14px 0 0;
 }
 .meta span {
   font-size: 12px;
@@ -51,37 +21,28 @@
   padding: 5px 12px;
 }
 
-/* ---------- demo + steps grid ---------- */
-.demo {
-  display: grid;
-  grid-template-columns: 1.2fr 0.9fr;
-  gap: 28px;
-  align-items: center;
-  background: var(--card);
-  border: 1px solid var(--line);
+/* ---------- hero image ----------
+   Shown at its own proportions instead of cropped to a wide banner: product
+   photos arrive in several shapes and a center crop can cut the product. */
+.heroFigure {
+  max-width: 860px;
+  margin: 26px auto 0;
+  display: flex;
+  justify-content: center;
+}
+.heroFigure img {
+  width: auto;
+  max-width: 100%;
+  max-height: 520px;
   border-radius: 20px;
-  padding: 28px;
-  margin-top: 26px;
+  border: 1px solid var(--line-2);
 }
-.demo h3 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  color: #ffffff;
-}
-.demoLead {
-  margin: 10px 0 0;
-  font-size: 15px;
-  color: #d4d4d8;
-  line-height: 1.6;
-}
-.tutorialTitle {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #9494a2;
+
+/* ---------- "what you are building" visuals ----------
+   Inline in the prose column: a demo is a heading, one paragraph and a stack
+   of example fragments, never a second column beside the text. */
+.demo {
+  margin-top: 8px;
 }
 
 /* demo: url import card */
@@ -97,78 +58,15 @@
 }
 .urlField {
   flex: 1;
+  min-width: 0;
   color: #ffffff;
   font-size: 15px;
   overflow-wrap: anywhere;
 }
-.result {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.result .media {
-  margin-top: 0;
-}
-.result .mediaRow {
-  flex: 0 1 auto;
-  width: 100%;
-  max-width: 240px;
-}
-.result .frame {
-  width: 100%;
-}
-
-/* demo: import gallery */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-.gallery figure {
-  position: relative;
-  margin: 0;
-}
-.gallery img {
-  border-radius: 10px;
-  aspect-ratio: 1 / 1.05;
-  object-fit: cover;
-  width: 100%;
-  display: block;
-}
-.galleryOk {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(5, 5, 5, 0.7);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 800;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-}
-.gallery figcaption {
-  font-size: 11px;
-  color: #9494a2;
-  text-align: center;
-  margin-top: 6px;
-}
-.stepsSectionNarrow {
-  margin: 26px auto 0;
-  max-width: 860px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 10px 28px;
-}
 .urlAction {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
   border-radius: 11px;
@@ -177,7 +75,7 @@
   font-size: 16px;
 }
 .import {
-  margin-top: 16px;
+  margin-top: 12px;
   background: var(--bg-2, #12121a);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -318,18 +216,61 @@
   flex: 0 0 auto;
 }
 
-/* demo: frames + prompt */
+/* demo: import gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 0;
+}
+.gallery figure {
+  position: relative;
+  margin: 0;
+}
+.gallery img {
+  border-radius: 10px;
+  aspect-ratio: 1 / 1.05;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+.galleryOk {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(5, 5, 5, 0.7);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.gallery figcaption {
+  font-size: 11px;
+  color: #9494a2;
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* demo: frames, quotes and prompt */
 .media {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 14px;
-  margin-top: 20px;
+  margin-top: 18px;
 }
 .mediaRow {
   display: flex;
   align-items: center;
   gap: 14px;
-  flex: 1;
+  flex: 1 1 200px;
+  max-width: 300px;
   min-width: 0;
 }
 .frame {
@@ -383,6 +324,14 @@
   color: #ffffff;
   font-size: 14px;
 }
+.quote {
+  margin: 14px 0 0;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid rgba(255, 255, 255, 0.28);
+  color: #d4d4d8;
+  font-size: 15px;
+  line-height: 1.6;
+}
 
 /* demo: subtitles before/after */
 .subRow {
@@ -423,10 +372,34 @@
   padding: 3px 9px;
 }
 
-/* ---------- steps ---------- */
+/* ---------- inline section media ---------- */
+.videoFig {
+  max-width: 620px;
+  margin: 24px auto 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.videoFig video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #000;
+  border-radius: 18px;
+  border: 1px solid var(--line-2);
+}
+.caption {
+  font-size: 13px;
+  color: #9494a2;
+  text-align: center;
+  padding: 10px 14px 0;
+}
+
+/* ---------- numbered steps ---------- */
 .steps {
   list-style: none;
-  margin: 14px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   display: grid;
   counter-reset: st;
@@ -434,173 +407,63 @@
 .steps li {
   counter-increment: st;
   display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 18px;
-  padding: 22px 0;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 20px 0;
   border-top: 1px solid var(--line);
-}
-.steps li:first-child {
-  border-top: 0;
 }
 .steps li::before {
   content: "0" counter(st);
-  font-size: 15px;
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 14px;
   font-weight: 700;
   color: #ffffff;
-  padding-top: 2px;
+  padding-top: 3px;
+}
+.steps li > h3,
+.steps li > p {
+  grid-column: 2;
+}
+.steps li:first-child {
+  border-top: 0;
+  padding-top: 6px;
 }
 .steps h3 {
   margin: 0 0 6px;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 600;
   line-height: 1.35;
   color: #ffffff;
 }
 .steps p {
   margin: 0;
-  font-size: 14.5px;
-  color: #d4d4d8;
-  line-height: 1.6;
 }
-.stepsSection {
-  margin-top: 26px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 10px 28px;
+.steps p + p {
+  margin-top: 10px;
 }
 
-/* ---------- tip / faq / related ---------- */
-.tipSection {
-  padding-top: 8px;
-}
-.tip {
-  margin: 26px 0 0;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 16px 18px;
-  font-size: 14.5px;
-  max-width: 760px;
-  color: #d4d4d8;
-  line-height: 1.6;
-}
-.tip b {
-  color: #ffffff;
-}
-.faqSection {
-  padding-top: 36px;
-}
-.secHead {
-  margin-bottom: 22px;
-}
-.secHead h2 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  color: #ffffff;
-}
-.secHead p {
-  margin: 8px 0 0;
-  max-width: 640px;
-  color: #d4d4d8;
-  font-size: 15px;
-  line-height: 1.6;
-}
-.faq {
-  display: grid;
-  gap: 14px;
-  max-width: 760px;
-}
-.faq details {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px 18px;
-}
-.faq summary {
-  cursor: pointer;
-  color: #ffffff;
-  font-weight: 600;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-.faq summary::after {
-  content: "+";
-  color: #9494a2;
-}
-.faq details[open] summary::after {
-  content: "–";
-}
-.faq p {
-  margin: 10px 0 0;
-  font-size: 14.5px;
-  color: #d4d4d8;
-  line-height: 1.6;
-}
-.relatedSection {
-  padding-top: 36px;
-}
-.rel {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.rel a {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: border-color 0.18s ease;
-}
-.rel a:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-}
-.relKind {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #9494a2;
-  font-weight: 600;
-}
-.rel h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.4;
-  color: #ffffff;
-}
-.rel > a > span:last-child {
-  font-size: 13px;
-  color: #9494a2;
-}
-
-@media (max-width: 960px) {
-  .demo {
-    grid-template-columns: 1fr;
-  }
-  .rel {
-    grid-template-columns: 1fr 1fr;
-  }
-}
 @media (max-width: 640px) {
-  .rel,
   .subRow {
     grid-template-columns: 1fr;
   }
-  .media {
-    flex-direction: column;
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .mediaRow {
-    flex-direction: column;
-    width: 100%;
+    flex-basis: 100%;
+    max-width: none;
   }
   .transform {
     transform: rotate(90deg);
+  }
+  .steps li {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .steps li > h3,
+  .steps li > p,
+  .steps li::before {
+    grid-column: 1;
   }
 }

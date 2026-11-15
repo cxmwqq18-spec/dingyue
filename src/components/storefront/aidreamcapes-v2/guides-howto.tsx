@@ -1,12 +1,14 @@
 import type { V2Resolvers } from "./types";
+import { BRAND_NAME, Crumbs, CtaBand, Faq, Img, RichText } from "./parts";
 import styles from "./guides-howto.module.css";
 
 /* Public how-to tutorial pages under /guides/how-do-*. Ships as complete
    static HTML from the relational row — no client data fetching, no client
-   behavior. One skeleton for every tool: Hero → Demo + Steps → Tip → FAQ →
-   Related. Demo blocks are optional and render in a fixed order; `result`
-   puts a finished-clip column next to the demo visuals, otherwise the steps
-   sit next to them. */
+   behavior. The page is a single-column article, rendered with the same shell
+   classes as /blog/* detail pages (`.ahero` hero, `.wrap prose` body,
+   `.article-section-media` figures, `.trybox`, `.check`, `.related`), so the
+   reading width, type scale and rhythm match the rest of the site. Visual
+   examples sit inline inside the prose column — never beside it. */
 
 type HowtoImage = { src: string; alt: string; width: number; height: number };
 type DemoFrame = { tag?: string; image?: HowtoImage; video?: { src: string; poster?: string } };
@@ -27,23 +29,48 @@ type Demo = {
   prompt?: string;
   result?: { frames: DemoFrame[]; prompt?: string };
 };
+type SectionMedia = {
+  image?: HowtoImage;
+  video?: { src: string; poster?: string };
+  caption?: string;
+};
+type HowtoSection = {
+  h2: string;
+  paras?: string[];
+  media?: SectionMedia;
+  steps?: { title: string; body: string }[];
+  bullets?: string[];
+  checklist?: string[];
+  note?: { title: string; body: string };
+};
 type HowtoData = {
   howto: {
     eyebrow?: string;
     h1: string;
     lead?: string;
+    tool?: string;
+    minutes?: number;
     meta?: string[];
+    image?: HowtoImage;
+    intro?: string[];
     demo?: Demo;
-    stepsIntro?: { title: string; lead?: string };
+    sections?: HowtoSection[];
     steps: { title: string; body: string }[];
+    stepsIntro?: { title: string; lead?: string };
     tip?: { title: string; body: string };
+    checklist?: string[];
     faq: { q: string; a: string }[];
-    related: { kind: string; label: string; text: string; href: string }[];
+    related: { kind?: string; label: string; text: string; href: string }[];
+    cta?: { title?: string; lead?: string; note?: string };
   };
 };
 
 export function isAidreamcapesGuidesHowtoData(data: unknown): data is HowtoData {
   return Boolean(data && typeof data === "object" && !Array.isArray(data) && (data as HowtoData).howto);
+}
+
+function cleanTitle(value: string) {
+  return value.replace(/\s*→\s*$/, "");
 }
 
 function Frames({ frames }: { frames: DemoFrame[] }) {
@@ -67,11 +94,11 @@ function Frames({ frames }: { frames: DemoFrame[] }) {
   );
 }
 
-function DemoVisuals({ demo }: { demo: Demo }) {
+function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
   return (
-    <div>
-      <h3>{demo.title}</h3>
-      {demo.lead ? <p className={styles.demoLead}>{demo.lead}</p> : null}
+    <div className={styles.demo}>
+      <h2>{cleanTitle(demo.title)}</h2>
+      {demo.lead ? <p>{demo.lead}</p> : null}
       {demo.urlCard ? (
         <div className={styles.urlCard}>
           <span className={styles.urlField}>{demo.urlCard.label}</span>
@@ -164,13 +191,19 @@ function DemoVisuals({ demo }: { demo: Demo }) {
         </>
       ) : null}
       {demo.prompt ? <div className={styles.prompt}>{demo.prompt}</div> : null}
+      {demo.result ? (
+        <>
+          <Frames frames={demo.result.frames} />
+          {demo.result.prompt ? <blockquote className={styles.quote}><RichText r={r} text={demo.result.prompt} /></blockquote> : null}
+        </>
+      ) : null}
     </div>
   );
 }
 
-function Steps({ steps }: { steps: { title: string; body: string }[] }) {
+function Steps({ steps, className }: { steps: { title: string; body: string }[]; className?: string }) {
   return (
-    <ol className={styles.steps}>
+    <ol className={className ?? styles.steps}>
       {steps.map((step) => (
         <li key={step.title}>
           <h3>{step.title}</h3>
@@ -181,94 +214,137 @@ function Steps({ steps }: { steps: { title: string; body: string }[] }) {
   );
 }
 
+function SectionMediaFigure({ media, r }: { media: SectionMedia; r: V2Resolvers }) {
+  if (media.video) {
+    return (
+      <figure className={styles.videoFig}>
+        <video controls muted playsInline preload="metadata" poster={media.video.poster} src={media.video.src} />
+        {media.caption ? <figcaption className={styles.caption}>{media.caption}</figcaption> : null}
+      </figure>
+    );
+  }
+  if (media.image) {
+    return (
+      <figure className="article-section-media">
+        <Img image={media.image} r={r} />
+        {media.caption ? <figcaption className={styles.caption}>{media.caption}</figcaption> : null}
+      </figure>
+    );
+  }
+  return null;
+}
+
 export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }) {
   const howto = data.howto;
-  const demo = howto.demo;
+  const guideLabel = howto.tool ?? howto.eyebrow?.replace(/^How-to\s*·\s*/, "") ?? "Guides";
+  const crumbs = [
+    { label: "Home", href: "/" },
+    { label: "Guides", href: "/guides" },
+    { label: guideLabel, href: "/guides" }
+  ];
   return (
-    <div className={styles.page}>
-      <header className={styles.hero}>
-        {howto.eyebrow ? <p className={styles.eyebrow}>{howto.eyebrow}</p> : null}
-        <h1>{howto.h1}</h1>
-        {howto.lead ? <p className={styles.lead}>{howto.lead}</p> : null}
-        {howto.meta?.length ? (
-          <p className={styles.meta}>
-            {howto.meta.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </p>
+    <>
+      <article>
+        <Crumbs items={crumbs} r={r} />
+        <section className="ahero">
+          <div className="wrap">
+            {howto.eyebrow ? <div className="eyebrow">{howto.eyebrow}</div> : null}
+            <h1>{howto.h1}</h1>
+            {howto.lead ? <p className="lead">{howto.lead}</p> : null}
+            <p className="meta-line">{howto.minutes ? `${howto.minutes} min read · ${BRAND_NAME}` : BRAND_NAME}</p>
+            {howto.meta?.length ? (
+              <p className={styles.meta}>
+                {howto.meta.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </p>
+            ) : null}
+          </div>
+        </section>
+
+        {howto.image ? (
+          <div className="wrap">
+            <figure className={styles.heroFigure}>
+              <Img eager image={howto.image} r={r} />
+            </figure>
+          </div>
         ) : null}
-      </header>
 
-      {demo ? (
-        <section className={styles.demo} aria-label={demo.title}>
-          <DemoVisuals demo={demo} />
-          {demo.result ? (
-            <div className={styles.result}>
-              <Frames frames={demo.result.frames} />
-              {demo.result.prompt ? <div className={styles.prompt}>{demo.result.prompt}</div> : null}
-            </div>
-          ) : (
-            <div>
-              <p className={styles.tutorialTitle}>In this tutorial</p>
-              <Steps steps={howto.steps} />
-            </div>
-          )}
-        </section>
-      ) : null}
+        <div className="wrap prose" style={{ paddingBottom: 40 }}>
+          {howto.intro?.map((para, index) => (
+            <p key={index}><RichText r={r} text={para} /></p>
+          ))}
 
-      {demo?.result || !demo ? (
-        <section className={demo ? styles.stepsSectionNarrow : styles.stepsSection} aria-label="In this tutorial">
-          {howto.stepsIntro ? (
-            <div className={styles.secHead}>
-              <h2>{howto.stepsIntro.title}</h2>
-              {howto.stepsIntro.lead ? <p>{howto.stepsIntro.lead}</p> : null}
+          {howto.demo ? <DemoVisuals demo={howto.demo} r={r} /> : null}
+
+          {howto.sections?.map((section) => (
+            <div key={section.h2}>
+              <h2>{section.h2}</h2>
+              {section.paras?.map((para, index) => (
+                <p key={index}><RichText r={r} text={para} /></p>
+              ))}
+              {section.media ? <SectionMediaFigure media={section.media} r={r} /> : null}
+              {section.bullets?.length ? (
+                <ul>
+                  {section.bullets.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}
+                </ul>
+              ) : null}
+              {section.steps?.length ? <Steps steps={section.steps} /> : null}
+              {section.checklist?.length ? (
+                <ul className="check">
+                  {section.checklist.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}
+                </ul>
+              ) : null}
+              {section.note ? (
+                <aside className="tip"><b>{section.note.title}</b> <RichText r={r} text={section.note.body} /></aside>
+              ) : null}
             </div>
+          ))}
+
+          <div>
+            <h2>{howto.stepsIntro?.title ?? "Step by step"}</h2>
+            {howto.stepsIntro?.lead ? <p><RichText r={r} text={howto.stepsIntro.lead} /></p> : null}
+            <Steps steps={howto.steps} />
+          </div>
+
+          {howto.tip ? (
+            <aside className="tip"><b>{howto.tip.title}</b> <RichText r={r} text={howto.tip.body} /></aside>
           ) : null}
-          <Steps steps={howto.steps} />
-        </section>
-      ) : null}
 
-      {howto.tip ? (
-        <section className={styles.tipSection}>
-          <p className={styles.tip}>
-            <b>{howto.tip.title}</b> {howto.tip.body}
-          </p>
-        </section>
-      ) : null}
+          {howto.checklist?.length ? (
+            <>
+              <h2>Checklist</h2>
+              <ul className="check">
+                {howto.checklist.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}
+              </ul>
+            </>
+          ) : null}
 
-      {howto.faq.length ? (
-        <section className={styles.faqSection} aria-label="Frequently asked questions">
-          <div className={styles.secHead}>
-            <h2>Questions people ask first.</h2>
-          </div>
-          <div className={styles.faq}>
-            {howto.faq.map((item, index) => (
-              <details key={item.q} open={index === 0}>
-                <summary>{item.q}</summary>
-                <p>{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      ) : null}
+          {howto.related.length ? (
+            <>
+              <h2>Related</h2>
+              <div className="related">
+                {howto.related.map((item) => (
+                  <article className="related-card" key={item.href}>
+                    <b><a className="card-title" href={r.href(item.href)}>{item.label}</a></b>
+                    <span>{item.text}</span>
+                    {item.kind ? <small>{item.kind}</small> : null}
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : null}
+        </div>
+      </article>
 
-      {howto.related.length ? (
-        <section className={styles.relatedSection} aria-label="Related guides">
-          <div className={styles.secHead}>
-            <h2>Keep going.</h2>
-            <p>Same flow, other starting points — or go back to the full workspace guide.</p>
-          </div>
-          <div className={styles.rel}>
-            {howto.related.map((item) => (
-              <a href={r.href(item.href)} key={item.href}>
-                <span className={styles.relKind}>{item.kind}</span>
-                <h3>{item.label}</h3>
-                <span>{item.text}</span>
-              </a>
-            ))}
-          </div>
-        </section>
-      ) : null}
-    </div>
+      <Faq items={howto.faq} title="Questions" r={r} />
+      <CtaBand
+        href="/app/create"
+        lead={howto.cta?.lead ?? "Upload a product photo, see the price before you start, and keep every version in your library."}
+        note={howto.cta?.note}
+        r={r}
+        title={howto.cta?.title ?? `Try ${guideLabel} with your own product`}
+      />
+    </>
   );
 }

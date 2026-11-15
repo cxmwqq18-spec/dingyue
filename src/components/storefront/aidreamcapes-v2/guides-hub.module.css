@@ -8,10 +8,12 @@
 
 /* ---------- hero ---------- */
 .hero {
+  padding: 18px 0 8px;
+}
+.heroInner {
   max-width: 860px;
   margin: 0 auto;
   text-align: center;
-  padding: 18px 0 8px;
 }
 .eyebrow {
   margin: 0;
