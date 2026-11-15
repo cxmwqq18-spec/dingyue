@@ -16,7 +16,8 @@
 //   - a target is always an address that answers today;
 //   - a source is never a media card address, so no live detail page is
 //     redirected away;
-//   - an address that two public pages claim is left alone.
+//   - an address that two public pages claim keeps the first claimant
+//     (sorted), so every non-live near address still answers.
 
 import fs from "node:fs";
 import assert from "node:assert/strict";
@@ -148,8 +149,13 @@ try {
       }
       const existing = claims.get(candidate.path);
       if (existing && existing !== path) {
-        skipped.push({ source: candidate.path, reason: `ambiguous:${existing}` });
-        claims.delete(candidate.path);
+        // Two public pages generate the same near address. The table carries
+        // one entry per source, so keep the first claimant (the paths iterate
+        // sorted, which makes the choice deterministic) and record the other
+        // claimants. The SEO contract requires every non-live candidate to
+        // answer: a redirect to one of the pages the visitor may have meant
+        // beats a 404.
+        skipped.push({ source: candidate.path, reason: `ambiguous-kept:${existing}`, alsoClaimedBy: path });
         continue;
       }
       claims.set(candidate.path, path);

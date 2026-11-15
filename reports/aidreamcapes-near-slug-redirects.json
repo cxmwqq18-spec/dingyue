@@ -4,8 +4,8 @@
   "target": "production",
   "publicPathCount": 530,
   "mediaCardAddressCount": 514,
-  "entries": 1588,
-  "planHash": "87d2b5e3369d56119c0f17228f03fd04484fdbcfef327fedc689a8445b0e2f6b",
+  "entries": 1589,
+  "planHash": "2a24d16252c01e4ff20319ff1e70e3be586457e9b7dfbce8df428afd8920a92f",
   "table": [
     [
       "/About-us",
@@ -5720,6 +5720,10 @@
       "/guides/first-tiktok-video-ad"
     ],
     [
+      "/guides/how-do-ai",
+      "/guides/how-do-ai-image"
+    ],
+    [
       "/Guides/How-do-ai-avatar",
       "/guides/how-do-ai-avatar"
     ],
@@ -6363,9 +6367,10 @@
   "skipped": [
     {
       "source": "/guides/how-do-ai",
-      "reason": "ambiguous:/guides/how-do-ai-image"
+      "reason": "ambiguous-kept:/guides/how-do-ai-image",
+      "alsoClaimedBy": "/guides/how-do-ai-video"
     }
   ],
   "skippedCount": 1,
-  "generatedAt": "2026-11-15T13:40:54.008Z"
+  "generatedAt": "2026-11-15T13:54:20.681Z"
 }
