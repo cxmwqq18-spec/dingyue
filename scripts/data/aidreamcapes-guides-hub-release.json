@@ -158,7 +158,7 @@
               "title": "From one sentence to a video brief",
               "body": "Type a sentence about your product, let AI write the script and scenes, then edit the brief.",
               "image": {
-                "src": "/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
+                "src": "/assets/sites/site_aidreamcapes/v2-responsive/ai-image-generation/bathroom-review-moisturizer-ref--640.webp",
                 "alt": "Review-style video preview generated from one sentence",
                 "width": 640,
                 "height": 400
