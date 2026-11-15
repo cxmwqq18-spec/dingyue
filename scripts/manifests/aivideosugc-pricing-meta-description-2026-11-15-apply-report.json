@@ -1,0 +1,14 @@
+{
+ "applyDate": "2026-11-15",
+ "siteId": "site_aidreamcapes",
+ "slug": "/pricing",
+ "manifest": "scripts/manifests/aivideosugc-pricing-meta-description-2026-11-15.json",
+ "applied": true,
+ "fields": ["contentJson.seo.description", "contentJson.seo.twitterDescription"],
+ "compareAndSet": "seo.description matched the reviewed 203-character 2026-11-12 value before the write",
+ "readback": "both fields read back as the 145-character manifest copy",
+ "independentVerification": "post-write seo object diffed against the pre-apply dump: only description and twitterDescription changed; all other seo fields identical",
+ "verificationRun": "re-run in verify mode reports noop with rest hash c4c73f1f0f316c417f9c8d9a95edb2bb3bc6b079898d65ae6781763783da34ed",
+ "liveReadback": "https://www.aivideosugc.com/pricing renders the 145-character description after a Cloudflare URL purge (origin served it immediately; the public URL was a stale edge HIT with age 6391s)",
+ "note": "The apply script's first run performed the write and the field readbacks but aborted before printing the report because its post-write rest comparison was scoped to the two manifest fields instead of the full seo object. The write itself was a single update of the row's contentJson with only those two fields mutated; the independent pre/post diff above confirms no other seo field changed, and the script was corrected and re-run in verify mode afterwards."
+}

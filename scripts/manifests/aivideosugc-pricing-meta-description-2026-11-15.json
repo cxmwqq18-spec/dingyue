@@ -1,0 +1,13 @@
+{
+ "applyDate": "2026-11-15",
+ "siteId": "site_aidreamcapes",
+ "description": "Pricing meta description length repair: /pricing contentJson.seo.description (and the matching twitterDescription) reached 203 characters in the 2026-11-12 pricing apply, while the release SEO contract bounds meta descriptions to 140-160 and the full-contract deploy gate fails on /pricing. This manifest rewrites both fields in place to the 145-character reviewed copy; every other seo field and all page copy stay untouched.",
+ "pricing": {
+  "slug": "/pricing",
+  "expectedCurrentDescription": "AI UGC video pricing: one-time credit packages from $24 for 200 credits a month — six- and twelve-month terms cost less per month, and one-time credit packs from $14 cover a short month. No subscription.",
+  "expectedCurrentDescriptionLength": 203,
+  "description": "AI UGC video pricing: one-time packages from $24 a month for 200 credits, six- and twelve-month terms cost less, packs from $14. No subscription.",
+  "descriptionLength": 145,
+  "postApplySeoRestHash": "c4c73f1f0f316c417f9c8d9a95edb2bb3bc6b079898d65ae6781763783da34ed"
+ }
+}
