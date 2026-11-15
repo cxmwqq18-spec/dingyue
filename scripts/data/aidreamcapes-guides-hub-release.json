@@ -994,7 +994,7 @@
               "h2": "What happens after you confirm",
               "paras": [
                 "Nothing runs until you confirm. The estimated cost appears as you change a reference or a duration: 20 credits for a 15-second video, 40 for 30 seconds. Edit an input and the figure can move, so read it once more before clicking.",
-                "The confirmation restates the estimate and your balance. Confirming holds the credits, and a failed job returns them on its own; the [refunds policy](/policies/refunds) covers the rest. The job runs on the server, so leave the page and the Library badge catches up with \"generating\", \"finishing\" and \"completed\"."
+                "The confirmation restates the estimate and your balance. Confirming holds the credits, and a failed job returns them on its own; the [refunds policy](/refunds) covers the rest. The job runs on the server, so leave the page and the Library badge catches up with \"generating\", \"finishing\" and \"completed\"."
               ],
               "note": {
                 "title": "Two kinds of retry",
