@@ -23,9 +23,9 @@ export const pricingPageCss = `
 .adc2 .v2-pp-periods button.is-active{background:var(--grad);color:#fff;box-shadow:0 6px 22px rgba(139,92,246,.22)}
 .adc2 .v2-pp-save-tag{font-size:10.5px;font-weight:800;background:rgba(255,255,255,.18);border-radius:999px;padding:1px 7px}
 .adc2 .v2-pp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
-.adc2 .v2-pp-card{position:relative;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line-2);border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015) 48%),var(--card);padding:27px 25px 24px;box-shadow:0 18px 48px rgba(0,0,0,.22)}
+.adc2 .v2-pp-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line-2);border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015) 48%),var(--card);padding:27px 25px 24px;box-shadow:0 18px 48px rgba(0,0,0,.22)}
 .adc2 .v2-pp-card.is-featured{border-color:rgba(168,85,247,.72);box-shadow:0 20px 56px rgba(91,33,182,.2),inset 0 1px rgba(255,255,255,.08)}
-.adc2 .v2-pp-badge{align-self:flex-start;margin-bottom:12px;border:1px solid rgba(196,181,253,.3);border-radius:999px;background:rgba(139,92,246,.16);padding:4px 10px;color:#ddd0ff;font-size:11px;font-weight:700}
+.adc2 .v2-pp-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);border:1px solid rgba(196,181,253,.3);border-radius:999px;background:var(--grad);padding:4px 12px;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;white-space:nowrap}
 .adc2 .v2-pp-card h3{font-size:22px;line-height:1.2;margin:0}
 .adc2 .v2-pp-who{min-height:44px;margin:10px 0 0;color:var(--ink-2);font-size:13.5px;line-height:1.55}
 .adc2 .v2-pp-amount{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;margin-top:20px}
