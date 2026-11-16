@@ -98,7 +98,7 @@ export async function listCloneSourceAssets(siteId: string, customerId: string) 
   // recent video/audio assets push them out of a small window.
   const { assets } = await getCustomerAssetsRelational({ siteId, customerId, take: 400, roles: ["input", "training_input", "output"] });
   return assets.filter((asset) => asset.siteId === AIVIDEOSUGC_SITE_ID && asset.customerId === customerId && !asset.deletedAt && /^(audio\/|image\/|video\/mp4$)/.test(asset.mimeType))
-    .map((asset) => { const view = toThemeRuntimeAssetRelational(asset); return { id: asset.id, label: asset.label, mimeType: asset.mimeType, role: asset.role, previewStatus: view.previewStatus, previewUrl: view.previewUrl, kind: asset.mimeType.startsWith("audio/") ? "audio" as const : asset.mimeType.startsWith("video/") ? "video" as const : "image" as const }; });
+    .map((asset) => { const view = toThemeRuntimeAssetRelational(asset); return { id: asset.id, label: asset.label, mimeType: asset.mimeType, role: asset.role, subjectRole: asset.subjectRole, previewStatus: view.previewStatus, previewUrl: view.previewUrl, kind: asset.mimeType.startsWith("audio/") ? "audio" as const : asset.mimeType.startsWith("video/") ? "video" as const : "image" as const }; });
 }
 
 export async function uploadCloneSourceAsset(siteId: string, customerId: string, workflow: Workflow, bytes: Buffer, filename: string) {
