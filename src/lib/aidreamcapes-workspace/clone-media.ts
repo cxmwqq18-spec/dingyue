@@ -93,7 +93,10 @@ function writable() {
 
 export async function listCloneSourceAssets(siteId: string, customerId: string) {
   assertWorkspaceSite(siteId);
-  const { assets } = await getCustomerAssetsRelational({ siteId, customerId, take: 100, roles: ["input", "training_input", "output"] });
+  // Cover the customer's whole upload history (not just the 100 newest rows):
+  // portrait tagging and picker filters must see older uploads even when many
+  // recent video/audio assets push them out of a small window.
+  const { assets } = await getCustomerAssetsRelational({ siteId, customerId, take: 400, roles: ["input", "training_input", "output"] });
   return assets.filter((asset) => asset.siteId === AIVIDEOSUGC_SITE_ID && asset.customerId === customerId && !asset.deletedAt && /^(audio\/|image\/|video\/mp4$)/.test(asset.mimeType))
     .map((asset) => { const view = toThemeRuntimeAssetRelational(asset); return { id: asset.id, label: asset.label, mimeType: asset.mimeType, role: asset.role, previewStatus: view.previewStatus, previewUrl: view.previewUrl, kind: asset.mimeType.startsWith("audio/") ? "audio" as const : asset.mimeType.startsWith("video/") ? "video" as const : "image" as const }; });
 }
