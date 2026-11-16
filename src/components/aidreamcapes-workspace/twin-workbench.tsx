@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { AudioLines, ImagePlus, Upload } from "lucide-react";
 import { csrfHeader } from "@/lib/client-csrf";
-import { activeTwinConsent, ownedTwinAssets, twinError, twinStatus, type TwinActor, type TwinAsset, type TwinCapabilities, type TwinConsent, type TwinJob } from "./twin-client";
+import { activeTwinConsent, ownedTwinAssets, preferredTwinPortraits, twinError, twinStatus, type TwinActor, type TwinAsset, type TwinCapabilities, type TwinConsent, type TwinJob } from "./twin-client";
 import styles from "./twin-workbench.module.css";
 
 export type TwinWorkbenchProps = { siteId: string; customerId?: string; csrfToken?: string; loginHref: string; onUseActor?: (actorId: string) => void };
@@ -32,6 +32,7 @@ function TwinWorkspace({ siteId, customerId, csrfToken, loginHref, onUseActor }:
   const [language, setLanguage] = useState("en");
   const [rights, setRights] = useState(false);
   const [demo, setDemo] = useState(false);
+  const [brokenPortraits, setBrokenPortraits] = useState<ReadonlySet<string>>(new Set());
   const lock = useRef(false);
   const generation = useRef(0);
   const mounted = useRef(true);
@@ -68,7 +69,7 @@ function TwinWorkspace({ siteId, customerId, csrfToken, loginHref, onUseActor }:
       if (!mounted.current || current !== generation.current) return;
       if ((cap.components?.database ?? cap.database)?.available === false) throw new Error(twinError("database_unavailable"));
       setCapabilities(cap); setActors(actorData.actors.filter(actor => actor.actorId.startsWith("custom-")));
-      setAssets(assetData.assets); setJobs(jobData.jobs.filter(job => job.workflow === "voice_twin"));
+      setAssets(assetData.assets); setJobs(jobData.jobs.filter(job => job.workflow === "voice_twin")); setBrokenPortraits(new Set());
       setConsents(consentData.consents.filter(consent => consent.workflow === "voice_twin")); setLoaded(true);
     } catch (error) {
       if (mounted.current && current === generation.current) { setMessage((error as Error).message); setLoaded(false); }
@@ -136,7 +137,7 @@ function TwinWorkspace({ siteId, customerId, csrfToken, loginHref, onUseActor }:
     if (!file) return;
     await mutate(async () => {
       if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size > 32 * 1024 * 1024) throw new Error("Choose a JPG, PNG or WebP portrait under 32 MB.");
-      const body = new FormData(); body.append("file", file); body.append("label", file.name.replace(/\.[^.]+$/, "")); body.append("role", "input");
+      const body = new FormData(); body.append("file", file); body.append("label", file.name.replace(/\.[^.]+$/, "")); body.append("role", "input"); body.append("subjectRole", "twin_portrait");
       const { asset } = await request<{ asset: TwinAsset }>(assetPath, { method: "POST", body });
       setAssets(previous => [asset, ...previous.filter(item => item.id !== asset.id)]); setPortrait(asset.id);
     });
@@ -182,7 +183,7 @@ function TwinWorkspace({ siteId, customerId, csrfToken, loginHref, onUseActor }:
     });
   }
 
-  const portraits = ownedTwinAssets(assets, "image");
+  const portraits = preferredTwinPortraits(assets).filter(asset => !brokenPortraits.has(asset.id));
   const visibleJobs = jobs.filter(job => job.status !== "deleted");
   const recordings = ownedTwinAssets(assets, "audio");
   const selectedActor = actors.find(actor => actor.actorId === actorId);
@@ -207,7 +208,7 @@ function TwinWorkspace({ siteId, customerId, csrfToken, loginHref, onUseActor }:
               {portraits.map(asset => <button key={asset.id} type="button" className={`${styles.mediaAsset} ${portrait === asset.id ? styles.mediaAssetSelected : ""}`} aria-pressed={portrait === asset.id} onClick={() => { setPortrait(asset.id); setRights(false); }}>
                 {/* Private, authenticated customer assets cannot use the public image optimizer. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={asset.previewUrl} alt="" loading="lazy" />
+                <img src={asset.previewUrl} alt="" loading="lazy" onError={() => setBrokenPortraits(previous => new Set(previous).add(asset.id))} />
                 <span>{asset.label || "Portrait"}</span>
               </button>)}
               <label className={styles.mediaUpload}>

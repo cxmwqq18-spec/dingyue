@@ -17,6 +17,7 @@ import { aidreamcapesCreateIntentFromSearchParams } from "@/lib/aidreamcapes-cre
 import { workspaceHandoffFromSearchParams, workspaceHandoffHref, type WorkspaceHandoff } from "./handoff";
 import { canonicalWorkspaceTool } from "./tool-aliases";
 import { getWorkspaceInspirationPage } from "./inspirations-page.server";
+import { listAidreamcapesInspirationEntries } from "./media-cards.server";
 
 export const aidreamcapesWorkspaceMetadata: Metadata = {
   title: "Workspace | AIVideosUGC",
@@ -76,6 +77,10 @@ export async function renderAidreamcapesWorkspace({
   const currentPromise = getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID);
   const catalogPromise = getWorkspaceCatalog(AIVIDEOSUGC_SITE_ID);
   const headerPromise = headers();
+  // Warm the shared media-card enumeration cache in the background so opening
+  // the inspirations view right after arriving never waits on the full
+  // LivePage scan; the request itself is not delayed by this.
+  void listAidreamcapesInspirationEntries().catch(() => undefined);
   const inspirationsPromise = initialView === "inspirations" ? headerPromise.then(header => {
     const host = (header.get("x-forwarded-host") ?? header.get("host") ?? "").split(",")[0].trim().split(":")[0].toLowerCase();
     return getWorkspaceInspirationPage({ basePath: workspaceHosts.has(host) ? "" : `/site/${routeSlug}` });

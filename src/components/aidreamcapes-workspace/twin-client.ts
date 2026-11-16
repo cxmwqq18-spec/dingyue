@@ -1,4 +1,4 @@
-export type TwinAsset = { id: string; label: string; mimeType: string; role?: string; previewUrl: string; previewStatus?: string };
+export type TwinAsset = { id: string; label: string; mimeType: string; role?: string; subjectRole?: string; previewUrl: string; previewStatus?: string };
 export type TwinActor = { actorId: string; name: string; imageUrl: string; voice: { refAudio?: string; voiceId?: string } };
 export type TwinConsent = { id: string; workflow: string; actorId: string | null; sourceAssetId: string; revision: number; status: string; expiresAt?: string | null };
 export type TwinJob = { id: string; workflow: string; actorId: string | null; consentId: string; consentRevision: number; status: string; revision: number; capabilityState: string; createdAt: string; result?: Record<string, unknown> | null; error?: string };
@@ -33,4 +33,14 @@ export function activeTwinConsent(consent: TwinConsent | undefined): boolean {
 
 export function ownedTwinAssets(assets: TwinAsset[], kind: "image" | "audio"): TwinAsset[] {
   return assets.filter(asset => ["input", "training_input"].includes(asset.role ?? "input") && asset.mimeType.startsWith(`${kind}/`) && asset.previewUrl && asset.previewStatus !== "loading");
+}
+
+/** Portrait picker source. Assets uploaded through the AI Twin portrait
+ * uploader are tagged subjectRole "twin_portrait" and are the real candidates;
+ * older accounts that never used the tagged uploader keep seeing their general
+ * image uploads so the picker never becomes mysteriously empty. */
+export function preferredTwinPortraits(assets: TwinAsset[]): TwinAsset[] {
+  const portraits = ownedTwinAssets(assets, "image");
+  const dedicated = portraits.filter(asset => asset.subjectRole === "twin_portrait");
+  return dedicated.length ? dedicated : portraits;
 }

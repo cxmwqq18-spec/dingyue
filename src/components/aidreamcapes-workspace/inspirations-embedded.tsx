@@ -199,12 +199,15 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
   );
 }
 
-/** One gallery card. Hovering (or keyboard-focusing) the card plays a looping
- * excerpt of the example's result video: the first INSPIRATIONS_PREVIEW_SECONDS
- * seconds, restarting at the top. Clicking still opens the full example. */
+/** One gallery card. Visible cards play their lightweight 10-second preview
+ * clip by default (muted, looping, paused when scrolled away); full-video
+ * cards without a preview clip stay hover-to-play. Clicking still opens the
+ * full example. */
 function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOpen: () => void }) {
+  const cardRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const hasPreviewClip = Boolean(card.video?.previewSrc);
   const start = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -219,16 +222,37 @@ function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOp
     video.pause();
     video.currentTime = 0;
   };
+  // Preview clips are short, muted and pause offscreen, so autoplaying every
+  // visible card stays cheap. Reduced-motion users keep hover-to-play.
+  useEffect(() => {
+    const element = cardRef.current;
+    const video = videoRef.current;
+    if (!hasPreviewClip || !element || !video) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) start();
+        else stop();
+      }
+    }, { threshold: 0.5 });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      video.pause();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasPreviewClip]);
   return (
     <button
+      ref={cardRef}
       aria-label={`Open ${card.label} example`}
       className={styles.card}
       data-inspiration-card={card.id}
-      onBlur={stop}
+      onBlur={hasPreviewClip ? undefined : stop}
       onClick={onOpen}
-      onFocus={start}
-      onMouseEnter={start}
-      onMouseLeave={stop}
+      onFocus={hasPreviewClip ? undefined : start}
+      onMouseEnter={hasPreviewClip ? undefined : start}
+      onMouseLeave={hasPreviewClip ? undefined : stop}
       type="button"
     >
       <span className={styles.cardImage}>
