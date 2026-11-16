@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { toAssetUploadRelational, toCustomerModelRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
+import { enrichLedgerEntriesWithGeneration } from "@/lib/stores/credit-ledger-context";
 import type { PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 
 export type CustomerAccountRuntimeSection =
@@ -568,6 +569,11 @@ export async function getCustomerAccountSummaryRuntimeRelational({
   const resolvedCustomer = customerRecord
     ? toPublicCustomerRelational(customerRecord as unknown as Record<string, unknown>)
     : customer;
+  const enrichedLedger = await enrichLedgerEntriesWithGeneration({
+    customerId: customer.id,
+    entries: ledger.map(mapRuntimeLedger),
+    siteId
+  });
   return {
     ...emptyRuntime(),
     customer: resolvedCustomer,
@@ -575,7 +581,7 @@ export async function getCustomerAccountSummaryRuntimeRelational({
     jobs: jobs.map(mapRuntimeJob),
     assets: assets.map((asset) => toThemeRuntimeAssetRelational(toAssetUploadRelational(asset as unknown as Record<string, unknown>))),
     albums: albums.map(mapRuntimeAlbum),
-    ledger: ledger.map(mapRuntimeLedger),
+    ledger: enrichedLedger,
     subscriptions: subscriptions.map(mapRuntimeSubscription),
     orders: orders.map(mapRuntimeOrder),
     downloads: downloads.map((download) => mapRuntimeDownload(download as unknown as Parameters<typeof mapRuntimeDownload>[0])),
@@ -695,7 +701,11 @@ export async function getCustomerAccountSectionRuntimeRelational({
       ...emptyRuntime(),
       customer,
       profile: customer.profile,
-      ledger: pageResult.rows.map(mapRuntimeLedger),
+      ledger: await enrichLedgerEntriesWithGeneration({
+        customerId: customer.id,
+        entries: pageResult.rows.map(mapRuntimeLedger),
+        siteId
+      }),
       pagination: pageResult.pagination
     };
   }

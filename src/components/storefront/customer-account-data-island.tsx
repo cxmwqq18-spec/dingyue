@@ -30,7 +30,7 @@ import { createContext, useContext, useEffect, useState, type FormEvent, type Re
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import type { PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimeDownloadEntry, ThemeRuntimePagination } from "@/lib/types";
+import type { CreditEntryDetail, CreditEntryOutlineShot, PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimeDownloadEntry, ThemeRuntimeLedgerEntry, ThemeRuntimePagination } from "@/lib/types";
 import { storefrontAccessibleMediaAlt, storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import type { LucideIcon } from "lucide-react";
@@ -1052,10 +1052,11 @@ function SubscriptionCard({ basePath, runtime }: { basePath: string; runtime: Th
   );
 }
 
-function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; variant?: "classic" | "statement" }) {
+function CreditsCard({ fallbackCustomer, runtime, siteId, variant = "classic" }: { fallbackCustomer: PublicCustomer; runtime: ThemeRuntimeData; siteId: string; variant?: "classic" | "statement" }) {
   const formatDate = useAccountDateLabel();
   const customer = accountCustomer(runtime, fallbackCustomer);
   const ledger = runtime.ledger ?? [];
+  const [openEntry, setOpenEntry] = useState<ThemeRuntimeLedgerEntry | null>(null);
   if (variant === "statement") {
     return (
       <div className="cc-statement">
@@ -1076,7 +1077,9 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
                 {ledger.map((entry) => (
                   <tr key={entry.id}>
                     <td className="cc-when">{formatDate(entry.createdAt)}</td>
-                    <td className="cc-what"><strong>{ledgerLabel(entry.type)}</strong><span>{entry.sourceLabel ?? entry.sourceId ?? "Account activity"}</span></td>
+                    <td className="cc-what">
+                      <LedgerEntryIdentity entry={entry} onOpen={() => setOpenEntry(entry)} variant="statement" />
+                    </td>
                     <td className={`cc-amount ${entry.amount >= 0 ? "is-pos" : "is-neg"}`}>{entry.amount >= 0 ? "+" : ""}{entry.amount}</td>
                   </tr>
                 ))}
@@ -1084,6 +1087,7 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
             </table>
           ) : <p className="cc-empty">Credit activity will appear here after checkout or generation.</p>}
         </div>
+        {openEntry ? <CreditEntrySheet entry={openEntry} formatDate={formatDate} onClose={() => setOpenEntry(null)} siteId={siteId} /> : null}
       </div>
     );
   }
@@ -1097,15 +1101,245 @@ function CreditsCard({ fallbackCustomer, runtime, variant = "classic" }: { fallb
       <div className="grid gap-3">
         {ledger.length ? ledger.map((entry) => (
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={entry.id}>
-            <div>
-              <p className="font-semibold text-[var(--account-strong)]">{ledgerLabel(entry.type)}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{entry.sourceLabel ?? entry.sourceId ?? "Account activity"} - {formatDate(entry.createdAt)}</p>
+            <LedgerEntryIdentity entry={entry} onOpen={() => setOpenEntry(entry)} variant="classic" />
+            <div className="flex items-center gap-3">
+              <span className={`font-mono text-sm font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
+                {entry.amount >= 0 ? "+" : ""}{entry.amount}
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--account-faint)]">{formatDate(entry.createdAt)}</span>
             </div>
-            <span className={`font-mono text-sm font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
-              {entry.amount >= 0 ? "+" : ""}{entry.amount}
-            </span>
           </div>
         )) : <EmptyState>Credit activity will appear here after checkout or generation.</EmptyState>}
+      </div>
+      {openEntry ? <CreditEntrySheet entry={openEntry} formatDate={formatDate} onClose={() => setOpenEntry(null)} siteId={siteId} /> : null}
+    </div>
+  );
+}
+
+/** What the ledger movement was for: the generated video at a glance, with its
+ * title, prompt summary, model, and length instead of an internal id. */
+function LedgerEntryIdentity({
+  entry,
+  onOpen,
+  variant
+}: {
+  entry: ThemeRuntimeLedgerEntry;
+  onOpen: () => void;
+  variant: "classic" | "statement";
+}) {
+  const context = entry.context;
+  const title = context?.title || ledgerLabel(entry.type);
+  const summary = ledgerSummary(title, context?.summary || entry.sourceLabel || entry.sourceId || "Account activity");
+  const meta = ledgerEntryMeta(entry);
+  const body = (
+    <>
+      <div className="cc-entry-thumb">
+        {context?.thumbnailUrl
+          ? <img alt="" decoding="async" loading="lazy" src={context.thumbnailUrl} />
+          : context ? <PlayCircle size={15} strokeWidth={1.6} /> : <ReceiptText size={15} strokeWidth={1.6} />}
+      </div>
+      <div className="cc-entry-text">
+        <strong>{title}</strong>
+        {summary ? <span className="cc-entry-summary">{summary}</span> : null}
+        {meta ? <span className="cc-entry-meta">{meta}</span> : null}
+      </div>
+      {context ? <div className="cc-entry-open">Details</div> : null}
+    </>
+  );
+  if (!context) return <div className={`cc-entry ${variant === "classic" ? "is-classic is-static" : "is-static"}`}>{body}</div>;
+  return (
+    <button className={`cc-entry ${variant === "classic" ? "is-classic" : ""}`} onClick={onOpen} type="button">
+      {body}
+    </button>
+  );
+}
+
+/** A title derived from the brief repeats the summary; drop the duplicate line. */
+function ledgerSummary(title: string, summary: string): string {
+  const bare = title.replace(/…$/, "").trim();
+  if (!summary) return "";
+  if (summary === title || (bare && summary.startsWith(bare))) return "";
+  return summary;
+}
+
+function ledgerEntryMeta(entry: ThemeRuntimeLedgerEntry): string {
+  const context = entry.context;
+  const parts = [
+    ledgerLabel(entry.type),
+    context?.status ? ledgerStatusLabel(context.status) : undefined,
+    context?.durationSeconds ? `${context.durationSeconds}s` : undefined,
+    context?.aspectRatio,
+    context?.resolution,
+    context?.shotCount ? `${context.shotCount} ${context.shotCount === 1 ? "shot" : "shots"}` : undefined,
+    context?.modelLabel
+  ];
+  return parts.filter(Boolean).join(" — ");
+}
+
+function ledgerStatusLabel(status: NonNullable<ThemeRuntimeLedgerEntry["context"]>["status"]): string {
+  if (status === "completed") return "Delivered";
+  if (status === "generating") return "In progress";
+  if (status === "failed") return "Failed";
+  if (status === "cancelled") return "Cancelled";
+  if (status === "draft") return "Draft";
+  return "Recorded";
+}
+
+function shotTimeLabel(shot: CreditEntryOutlineShot): string {
+  const seconds = (value?: number) => {
+    if (value === undefined) return "–";
+    const total = Math.max(0, Math.round(value));
+    return `${Math.floor(total / 60)}:${String(total % 60).padStart(2, "0")}`;
+  };
+  if (shot.start !== undefined && shot.end !== undefined) return `${seconds(shot.start)}–${seconds(shot.end)}`;
+  return shot.duration !== undefined ? `${Math.round(shot.duration)}s` : "";
+}
+
+/** The credit entry detail sheet: the generation this movement paid for, its
+ * full prompt, its shot outline, and the finished video. */
+function CreditEntrySheet({
+  entry,
+  formatDate,
+  onClose,
+  siteId
+}: {
+  entry: ThemeRuntimeLedgerEntry;
+  formatDate: (value: string | undefined) => string;
+  onClose: () => void;
+  siteId: string;
+}) {
+  const [detail, setDetail] = useState<CreditEntryDetail | null>(null);
+  const [failed, setFailed] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    setDetail(null);
+    setFailed(false);
+    setVideoFailed(false);
+    fetch(`/api/sites/${siteId}/customer/credit-entry/${entry.id}`, {
+      credentials: "same-origin",
+      headers: { accept: "application/json" },
+      signal: controller.signal
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("credit_entry_unavailable");
+        const payload = await response.json() as { entry?: CreditEntryDetail };
+        setDetail(payload.entry ?? null);
+      })
+      .catch(() => { if (!controller.signal.aborted) setFailed(true); });
+    return () => controller.abort();
+  }, [entry.id, siteId]);
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
+  const context = entry.context;
+  const title = detail?.title || context?.title || ledgerLabel(entry.type);
+  const summary = ledgerSummary(title, detail?.summary || context?.summary || entry.sourceLabel || "Account activity");
+  const status = detail?.status ?? context?.status;
+  const video = detail?.primaryVideo;
+  const chips = [
+    ledgerLabel(entry.type),
+    status ? ledgerStatusLabel(status) : undefined,
+    detail?.durationSeconds ? `${detail.durationSeconds}s` : context?.durationSeconds ? `${context.durationSeconds}s` : undefined,
+    detail?.aspectRatio ?? context?.aspectRatio,
+    detail?.resolution ?? context?.resolution,
+    detail?.language,
+    detail?.modelLabel ?? context?.modelLabel
+  ].filter(Boolean) as string[];
+  return (
+    <div className="cc-sheet-backdrop" onClick={onClose} role="presentation">
+      <div
+        aria-label={`Credit entry ${title}`}
+        aria-modal="true"
+        className="cc-sheet"
+        onClick={(event) => event.stopPropagation()}
+        role="dialog"
+      >
+        <div className="cc-sheet-head">
+          <div>
+            <p className="cc-sheet-kicker">{formatDate(entry.createdAt)} — {ledgerLabel(entry.type)}</p>
+            <h3>{title}</h3>
+            {summary ? <p className="cc-sheet-summary">{summary}</p> : null}
+          </div>
+          <div className="cc-sheet-head-end">
+            <span className={`font-mono text-lg font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
+              {entry.amount >= 0 ? "+" : ""}{entry.amount}
+            </span>
+            <button aria-label="Close details" className="cc-sheet-close" onClick={onClose} type="button">×</button>
+          </div>
+        </div>
+        {chips.length ? <div className="cc-sheet-chips">{chips.map((chip) => <span key={chip}>{chip}</span>)}</div> : null}
+        {failed ? <EmptyState>Details for this entry are unavailable right now. The credit movement itself is recorded in your ledger.</EmptyState> : null}
+        {!detail && !failed ? <p className="cc-sheet-loading">Loading the generation details…</p> : null}
+        {detail ? (
+          <div className="cc-sheet-body">
+            {video ? (
+              <section className="cc-sheet-section">
+                <h4>Finished video</h4>
+                {videoFailed
+                  ? <p className="cc-sheet-video-failed">The finished video cannot be played right now. The download below still uses the stored render.</p>
+                  : <video className="cc-sheet-video" controls onError={() => setVideoFailed(true)} playsInline preload="metadata" src={video.url} />}
+                <div className="cc-sheet-links">
+                  <a download href={video.downloadUrl} rel="noreferrer">Download video</a>
+                </div>
+              </section>
+            ) : null}
+            {detail.prompt ? (
+              <section className="cc-sheet-section">
+                <h4>{detail.outline.length ? "Brief" : "Prompt"}</h4>
+                <p className="cc-sheet-prompt">{detail.prompt}</p>
+              </section>
+            ) : null}
+            {detail.outline.length ? (
+              <section className="cc-sheet-section">
+                <h4>Outline — {detail.outline.length} {detail.outline.length === 1 ? "shot" : "shots"}</h4>
+                <ol className="cc-sheet-outline">
+                  {detail.outline.map((shot) => (
+                    <li key={`${shot.index}-${shot.start ?? ""}`}>
+                      <div className="cc-sheet-outline-head">
+                        <span className="cc-sheet-shot">Shot {shot.index}</span>
+                        <span className="cc-sheet-shot-time">{shotTimeLabel(shot)}</span>
+                      </div>
+                      {shot.visual ? <p>{shot.visual}</p> : null}
+                      {shot.voiceover ? <p className="cc-sheet-voiceover">“{shot.voiceover}”</p> : null}
+                      <div className="cc-sheet-shot-tags">
+                        {[shot.camera, shot.framing, shot.lighting, shot.expression].filter(Boolean).map((tag, index) => <span key={`${tag}-${index}`}>{tag}</span>)}
+                      </div>
+                      {shot.clipUrl ? <a className="cc-sheet-shot-link" href={shot.clipUrl} rel="noreferrer" target="_blank">Open shot clip</a> : null}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+            {detail.clips.length > 1 ? (
+              <section className="cc-sheet-section">
+                <h4>Rendered shots</h4>
+                <div className="cc-sheet-clips">
+                  {detail.clips.map((clip) => (
+                    <a download href={clip.downloadUrl} key={clip.url} rel="noreferrer">{clip.label}</a>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+            {detail.inputs.length ? (
+              <section className="cc-sheet-section">
+                <h4>References</h4>
+                <div className="cc-sheet-refs">
+                  {detail.inputs.map((input) => (
+                    <a href={input.url} key={input.url} rel="noreferrer" target="_blank">
+                      <img alt={input.label} decoding="async" loading="lazy" src={input.url} />
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+            {!detail.prompt && !detail.outline.length && !video ? (
+              <EmptyState>This credit movement is not tied to a generation, so there is no outline or video attached.</EmptyState>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -1567,7 +1801,7 @@ export function CustomerAccountDataIsland({
           section="credits"
           siteId={siteId}
         >
-          {(runtime) => <CreditsCard fallbackCustomer={customer} runtime={runtime} variant={variant} />}
+          {(runtime) => <CreditsCard fallbackCustomer={customer} runtime={runtime} siteId={siteId} variant={variant} />}
         </AccountCard>
       ) : null}
       {activeSection === "purchases" ? (

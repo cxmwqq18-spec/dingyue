@@ -1614,6 +1614,68 @@ export interface ThemeRuntimeAlbum {
   updatedAt: string;
 }
 
+export type LedgerGenerationStatus = "completed" | "generating" | "failed" | "cancelled" | "draft" | "unknown";
+
+export interface ThemeRuntimeLedgerContext {
+  title: string;
+  summary: string;
+  kind: "video" | "image";
+  status: LedgerGenerationStatus;
+  thumbnailUrl?: string;
+  videoUrl?: string;
+  taskId?: string;
+  jobId?: string;
+  durationSeconds?: number;
+  aspectRatio?: string;
+  resolution?: string;
+  modelLabel?: string;
+  shotCount?: number;
+}
+
+export interface CreditEntryOutlineShot {
+  index: number;
+  start?: number;
+  end?: number;
+  duration?: number;
+  visual: string;
+  voiceover: string;
+  camera: string;
+  framing: string;
+  lighting: string;
+  expression: string;
+  clipUrl?: string;
+}
+
+export interface CreditEntryMedia {
+  label: string;
+  url: string;
+  downloadUrl: string;
+}
+
+/** One credit ledger movement resolved to the generation it paid for. */
+export interface CreditEntryDetail {
+  entry: ThemeRuntimeLedgerEntry;
+  kind: "video" | "image";
+  title: string;
+  summary: string;
+  prompt: string;
+  status: LedgerGenerationStatus;
+  taskId?: string;
+  jobId?: string;
+  modelLabel?: string;
+  aspectRatio?: string;
+  resolution?: string;
+  language?: string;
+  durationSeconds?: number;
+  shotCount: number;
+  thumbnailUrl?: string;
+  primaryVideo?: CreditEntryMedia;
+  finalVideo?: CreditEntryMedia;
+  clips: CreditEntryMedia[];
+  inputs: CreditEntryMedia[];
+  outline: CreditEntryOutlineShot[];
+}
+
 export interface ThemeRuntimeLedgerEntry {
   id: string;
   amount: number;
@@ -1622,6 +1684,7 @@ export interface ThemeRuntimeLedgerEntry {
   sourceId?: string;
   sourceLabel?: string;
   createdAt: string;
+  context?: ThemeRuntimeLedgerContext;
 }
 
 export interface ThemeRuntimeCustomerModel {

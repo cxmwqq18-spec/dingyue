@@ -2818,3 +2818,423 @@
     padding-left: 4px;
   }
 }
+
+/* Credit ledger rows and the entry detail sheet.
+ * A credit movement only carries an internal id, so every row shows the video
+ * that movement paid for — reference frame, title, prompt summary, and the
+ * model/length that produced it. The detail sheet is opened from the row and
+ * shows the shipped video, the brief, and the shot outline.
+ * These rules live on the shell (not the statement scope) so the classic
+ * account layout reuses the same identity block and sheet. */
+.ac-account-shell .cc-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ac-account-shell .cc-entry.is-static {
+  cursor: default;
+}
+
+.ac-account-shell .cc-entry.is-classic {
+  flex: 1 1 240px;
+  width: auto;
+  align-items: center;
+}
+
+.ac-account-shell .cc-what .cc-entry {
+  width: 100%;
+}
+
+.ac-account-shell .cc-entry-thumb {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 54px;
+  overflow: hidden;
+  border: 1px solid var(--account-border);
+  border-radius: 3px;
+  background: var(--account-field);
+  color: var(--account-faint);
+}
+
+.ac-account-shell .cc-entry.is-classic .cc-entry-thumb {
+  width: 36px;
+  height: 46px;
+}
+
+.ac-account-shell .cc-entry-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ac-account-shell .cc-entry-text {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.ac-account-shell .cc-entry-text strong {
+  margin: 0;
+  color: var(--account-strong);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ac-account-shell .cc-entry-summary {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--account-muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.ac-account-shell .cc-entry-meta {
+  margin: 2px 0 0;
+  color: var(--account-faint);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-what .cc-entry .cc-entry-meta {
+  margin-top: 2px;
+  color: var(--account-faint);
+  font-size: 10px;
+}
+
+.ac-account-shell .cc-what .cc-entry .cc-entry-summary {
+  margin-top: 1px;
+  color: var(--account-muted);
+  font-size: 12.5px;
+}
+
+.ac-account-shell .cc-entry-open {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  color: var(--account-accent-strong);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-entry:hover .cc-entry-text strong,
+.ac-account-shell .cc-entry:focus-visible .cc-entry-text strong {
+  color: var(--account-accent-strong);
+}
+
+.ac-account-shell .cc-entry:focus-visible {
+  outline: 2px solid var(--account-accent-strong);
+  outline-offset: 4px;
+}
+
+.ac-account-shell .cc-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(6, 6, 9, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.ac-account-shell .cc-sheet {
+  display: grid;
+  gap: 18px;
+  width: min(760px, 100%);
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid var(--account-border-strong);
+  border-radius: 6px;
+  background: var(--account-page-bg);
+  color: var(--account-text);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+.ac-account-shell .cc-sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.ac-account-shell .cc-sheet-kicker {
+  margin: 0;
+  color: var(--account-subtle);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-sheet-head h3 {
+  margin: 6px 0 0;
+  color: var(--account-strong);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.ac-account-shell .cc-sheet-summary {
+  margin: 8px 0 0;
+  max-width: 60ch;
+  color: var(--account-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.ac-account-shell .cc-sheet-head-end {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.ac-account-shell .cc-sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--account-border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--account-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ac-account-shell .cc-sheet-close:hover {
+  border-color: var(--account-border-strong);
+  color: var(--account-strong);
+}
+
+.ac-account-shell .cc-sheet-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ac-account-shell .cc-sheet-chips span {
+  padding: 3px 9px;
+  border: 1px solid var(--account-border);
+  border-radius: 999px;
+  background: var(--account-field);
+  color: var(--account-muted);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-sheet-loading {
+  margin: 0;
+  color: var(--account-muted);
+  font-size: 13px;
+}
+
+.ac-account-shell .cc-sheet-body {
+  display: grid;
+  gap: 22px;
+}
+
+.ac-account-shell .cc-sheet-section {
+  display: grid;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--account-border);
+}
+
+.ac-account-shell .cc-sheet-section h4 {
+  margin: 0;
+  color: var(--account-strong);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-sheet-video {
+  width: 100%;
+  max-height: 60vh;
+  border: 1px solid var(--account-border);
+  border-radius: 4px;
+  background: #000;
+}
+
+.ac-account-shell .cc-sheet-links,
+.ac-account-shell .cc-sheet-clips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 12.5px;
+}
+
+.ac-account-shell .cc-sheet-links a,
+.ac-account-shell .cc-sheet-clips a {
+  color: var(--account-accent-strong);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ac-account-shell .cc-sheet-prompt {
+  margin: 0;
+  color: var(--account-text);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.ac-account-shell .cc-sheet-outline {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-account-shell .cc-sheet-outline li {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--account-border);
+  border-radius: 4px;
+  background: var(--account-panel-soft);
+}
+
+.ac-account-shell .cc-sheet-outline-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ac-account-shell .cc-sheet-shot {
+  color: var(--account-strong);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ac-account-shell .cc-sheet-shot-time {
+  color: var(--account-faint);
+  font-family: var(--account-mono, "SF Mono", ui-monospace, Menlo, monospace);
+  font-size: 11px;
+}
+
+.ac-account-shell .cc-sheet-outline li p {
+  margin: 0;
+  color: var(--account-text);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.ac-account-shell .cc-sheet-voiceover {
+  color: var(--account-muted) !important;
+  font-style: italic;
+}
+
+.ac-account-shell .cc-sheet-shot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ac-account-shell .cc-sheet-shot-tags span {
+  padding: 2px 8px;
+  border: 1px solid var(--account-border);
+  border-radius: 999px;
+  color: var(--account-subtle);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
+
+.ac-account-shell .cc-sheet-shot-link {
+  justify-self: start;
+  color: var(--account-accent-strong);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ac-account-shell .cc-sheet-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ac-account-shell .cc-sheet-refs a {
+  display: block;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--account-border);
+  border-radius: 4px;
+  background: var(--account-field);
+}
+
+.ac-account-shell .cc-sheet-refs a img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 820px) {
+  .ac-account-shell .cc-sheet-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .ac-account-shell .cc-sheet {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 10px 10px 0 0;
+    padding: 18px;
+  }
+
+  .ac-account-shell .cc-entry-open {
+    display: none;
+  }
+}
+
+.ac-account-shell .cc-sheet-video-failed {
+  margin: 0;
+  padding: 14px;
+  border: 1px dashed var(--account-border-strong);
+  border-radius: 4px;
+  color: var(--account-muted);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
