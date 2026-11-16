@@ -17,9 +17,11 @@
 // rendering the workspace shell, transient rebuild) are reported as skipped
 // instead of failing the run.
 //
-// Legacy example galleries (`data.examples.groups[*].items[*]`) are out of
-// scope here: they carry no `publicSlug`, so they cannot own a detail page and
-// keep their current workspace link.
+// Legacy example galleries (`data.examples.groups[*].items[*]`) are counted
+// like every other media card: a card without a `publicSlug` is compliant when
+// its href is a plain detail-path href — the showcase copies of already
+// published media do exactly that, opening the media's canonical detail page.
+// Only cards that still fall back to a tool/workspace link are counted.
 //
 // Usage:
 //   node scripts/aidreamcapes-workspace/audit-card-entry-links.mjs
@@ -40,11 +42,12 @@ const MEDIA_SLUG_RE = /^[a-z0-9][a-z0-9-]{0,119}$/i;
 const DETAIL_HREF_RE = /^\/(ai-image-generation|ai-video-generation)\/([a-z0-9][a-z0-9-]{0,119})$/i;
 const ACTOR_HREF_RE = /^\/ai-actors\/([a-z0-9][a-z0-9-]{0,79})$/i;
 const WORKSPACE_PREFIX = "/app/create";
-// Cards that cannot own a media detail page yet: they carry no `publicSlug`, and
-// no other card publishes the same image, so no truthful detail route exists.
-// The renderer keeps their tool/preset link until the field-level manifest
-// assigns a slug. These are exactly the `chips:["example"]` picker cards and the
-// legacy `examples` gallery; the counts are asserted so the gap cannot grow.
+// Cards that cannot reach a truthful detail route yet: they carry no
+// `publicSlug` and their href is not a plain detail-path href, so the renderer
+// keeps their tool/preset link until a field-level manifest assigns a slug or
+// the card is pointed at its media's canonical detail page. These are the
+// `chips:["example"]` picker cards and the legacy `examples` gallery; the
+// counts are asserted so the gap cannot grow.
 const EXAMPLE_PICKER_CHIP = "example";
 const EXAMPLE_GALLERY_SELECTOR = ".example-gallery";
 // A "media card" is a card the public renderer emits for a public media item.
@@ -281,14 +284,14 @@ try {
   for (const row of rows) {
     for (const entry of pageCards(row.contentJson)) {
       if (entry.source === "picker" && !entry.card.publicSlug && !detailHrefOf(entry.card)) cardsWithoutSlug.picker += 1;
-      if (entry.source === "examples" && !entry.card.publicSlug) cardsWithoutSlug.examples += 1;
+      if (entry.source === "examples" && !entry.card.publicSlug && !detailHrefOf(entry.card)) cardsWithoutSlug.examples += 1;
     }
   }
   if (cardsWithoutSlug.picker > 0) {
     failures.push(`${cardsWithoutSlug.picker} picker card(s) have neither publicSlug nor a detail-path href; every media card must reach a detail route`);
   }
   if (cardsWithoutSlug.examples > 0) {
-    failures.push(`${cardsWithoutSlug.examples} example-gallery card(s) have no publicSlug; every media card must own a detail route`);
+    failures.push(`${cardsWithoutSlug.examples} example-gallery card(s) have neither publicSlug nor a detail-path href; every media card must reach a detail route`);
   }
 
   // ---- DOM audit ----------------------------------------------------------
