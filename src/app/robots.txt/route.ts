@@ -32,7 +32,10 @@ export async function GET(request: Request): Promise<Response> {
     ? ["User-agent: *", "Disallow: /"]
     : sitemap
       ? ["User-agent: *", "Allow: /", ...privateRules, `Sitemap: ${sitemap}`]
-      : ["User-agent: *", "Disallow: /"];
+      // Unrecognized hosts must not accidentally deny the whole site: a
+      // crawler arriving with a missing/mangled Host header would otherwise
+      // read a full-site Disallow. Unknown hosts carry no sitemap to leak.
+      : ["User-agent: *", "Allow: /"];
 
   return new Response(`${body.join("\n")}\n`, {
     headers: {
