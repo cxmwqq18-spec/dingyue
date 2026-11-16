@@ -192,6 +192,19 @@
   object-fit: cover;
   display: block;
 }
+.cardVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.cardVideoPlaying {
+  opacity: 1;
+}
 .cardKind {
   position: absolute;
   left: 9px;

@@ -46,7 +46,10 @@ export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSr
 };
 
 /** Fixed inspiration page size, shared by the loader and the workspace pager. */
-export const INSPIRATIONS_PAGE_SIZE = 24;
+export const INSPIRATIONS_PAGE_SIZE = 20;
+
+/** Seconds of the example video a card hover preview plays before looping. */
+export const INSPIRATIONS_PREVIEW_SECONDS = 10;
 
 /**
  * The workspace destination for one example. It never points at a content

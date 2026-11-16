@@ -9,7 +9,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Image as ImageIcon, Loader2, Search, Sparkles, X } from "lucide-react";
 import styles from "./inspirations-embedded.module.css";
 
-import { INSPIRATIONS_PAGE_SIZE, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
+import { INSPIRATIONS_PAGE_SIZE, INSPIRATIONS_PREVIEW_SECONDS, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
 export type EmbeddedInspiration = InspirationExample;
 
@@ -145,18 +145,19 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
       <div className={styles.detail}>
         <div className={styles.preview}>
           {card.video ? (
-            /* The example's rendered result. The ambient loop plays the
-               lightweight preview clip when one exists; the full file loads
-               only on the example's public detail page. */
+            /* The example's complete rendered result, scrubable with the
+               native controls. The lightweight preview clip stays reserved
+               for the card hover excerpt. */
             <video
               aria-label={card.label}
               autoPlay
+              controls
               loop
               muted
               playsInline
               poster={card.video.poster?.src}
               preload="metadata"
-              src={card.video.previewSrc ?? card.video.src}
+              src={card.video.src}
             />
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
@@ -195,6 +196,65 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
         </div>
       </div>
     </dialog>
+  );
+}
+
+/** One gallery card. Hovering (or keyboard-focusing) the card plays a looping
+ * excerpt of the example's result video: the first INSPIRATIONS_PREVIEW_SECONDS
+ * seconds, restarting at the top. Clicking still opens the full example. */
+function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOpen: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const start = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    setPlaying(true);
+    video.currentTime = 0;
+    void video.play().catch(() => setPlaying(false));
+  };
+  const stop = () => {
+    setPlaying(false);
+    const video = videoRef.current;
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+  };
+  return (
+    <button
+      aria-label={`Open ${card.label} example`}
+      className={styles.card}
+      data-inspiration-card={card.id}
+      onBlur={stop}
+      onClick={onOpen}
+      onFocus={start}
+      onMouseEnter={start}
+      onMouseLeave={stop}
+      type="button"
+    >
+      <span className={styles.cardImage}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img alt={card.imageAlt} decoding="async" loading="lazy" src={card.imageSrc} />
+        {card.video ? (
+          <video
+            aria-hidden="true"
+            className={playing ? `${styles.cardVideo} ${styles.cardVideoPlaying}` : styles.cardVideo}
+            data-inspiration-preview={card.id}
+            muted
+            onTimeUpdate={(event) => {
+              if (event.currentTarget.currentTime >= INSPIRATIONS_PREVIEW_SECONDS) event.currentTarget.currentTime = 0;
+            }}
+            playsInline
+            poster={card.video.poster?.src ?? card.imageSrc}
+            preload="metadata"
+            ref={videoRef}
+            src={card.video.previewSrc ?? card.video.src}
+          />
+        ) : null}
+        <span className={styles.cardKind}>{card.kind === "video" ? <><Clapperboard size={11} /> Video idea</> : <><ImageIcon size={11} /> Photo idea</>}</span>
+        <span aria-hidden="true" className={styles.cardOpen}><ArrowUpRight size={16} /></span>
+      </span>
+      <span className={styles.cardInfo}><span>{card.label}</span><small>{card.category === ALL_CATEGORY ? card.pageTitle : card.category}</small></span>
+    </button>
   );
 }
 
@@ -301,17 +361,7 @@ export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { init
 
       {cards.length ? (
         <div aria-busy={loading} className={styles.grid}>
-          {cards.map((card) => (
-            <button aria-label={`Open ${card.label} example`} className={styles.card} data-inspiration-card={card.id} key={card.id} onClick={() => setActiveCardId(card.id)} type="button">
-              <span className={styles.cardImage}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img alt={card.imageAlt} decoding="async" loading="lazy" src={card.imageSrc} />
-                <span className={styles.cardKind}>{card.kind === "video" ? <><Clapperboard size={11} /> Video idea</> : <><ImageIcon size={11} /> Photo idea</>}</span>
-                <span aria-hidden="true" className={styles.cardOpen}><ArrowUpRight size={16} /></span>
-              </span>
-              <span className={styles.cardInfo}><span>{card.label}</span><small>{card.category === ALL_CATEGORY ? card.pageTitle : card.category}</small></span>
-            </button>
-          ))}
+          {cards.map((card) => <InspirationCardItem card={card} key={card.id} onOpen={() => setActiveCardId(card.id)} />)}
         </div>
       ) : (
         <div className={styles.empty}>
