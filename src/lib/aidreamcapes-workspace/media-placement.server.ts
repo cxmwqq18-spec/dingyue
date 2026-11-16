@@ -155,6 +155,41 @@ export const loadProductPlacementIndex = cache(async () => {
 const GROUP_ORDER: Array<MediaPlacementGroup["kind"]> = ["industry", "platform", "occasion", "catalog", "tool"];
 
 /**
+ * Industry category labels for a batch of detail cards, resolved exactly like
+ * the detail page's "Browse by category" industry group: placements are
+ * aggregated per product identity across every page copy of the same media
+ * asset, then mapped through the current facet registry. Cards without any
+ * industry placement resolve to undefined and let the caller fall back.
+ */
+export async function resolveInspirationIndustryCategories(
+  cards: Array<Pick<MediaDetail["card"], "kind" | "image" | "video" | "placement">>
+): Promise<Array<string | undefined>> {
+  const [registry, placementIndex] = await Promise.all([loadPlacementRegistry(), loadProductPlacementIndex()]);
+  const industryLabels = new Map<string, string>();
+  for (const [slug, facet] of registry.facets) {
+    if (facet.kind === "industry") industryLabels.set(slug, facet.label);
+  }
+  return cards.map((card) => {
+    let placements = card.placement ?? [];
+    const identity = productIdentityOf({
+      kind: card.kind,
+      imageSrc: card.image.src,
+      videoSrc: card.video?.src,
+      posterSrc: card.video?.poster?.src
+    });
+    if (identity) {
+      const indexed = placementIndex.get(identity.key);
+      if (indexed) placements = [...indexed.placements].sort();
+    }
+    for (const slug of placements) {
+      const label = industryLabels.get(slug);
+      if (label) return label;
+    }
+    return undefined;
+  });
+}
+
+/**
  * Resolve the category links of one detail page.
  *
  * Template cards use the reverse index of directory `paths`, so a directory is

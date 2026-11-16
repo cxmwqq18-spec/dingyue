@@ -23,6 +23,14 @@ export type InspirationCard = {
   category: string;
 };
 
+export type InspirationExampleVideo = {
+  src: string;
+  previewSrc?: string;
+  poster?: { src: string; alt?: string };
+  width?: number;
+  height?: number;
+};
+
 /** Server/client-safe example shape used by the standalone page and embedded workspace tab. */
 export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSrc" | "imageAlt" | "pageTitle" | "kind" | "description" | "category"> & {
   /** Public card link: the media detail page when the example owns one. */
@@ -30,7 +38,15 @@ export type InspirationExample = Pick<InspirationCard, "id" | "label" | "imageSr
   /** Fixed workspace entry path used only by the example's creation CTA. */
   workspaceHref: string;
   entry?: WorkspaceEntryTransfer;
+  /** The example's real generation prompt, cleaned for display. */
+  prompt: string;
+  /** Rendered result video when the underlying detail card ships one. */
+  video?: InspirationExampleVideo;
+  duration?: number;
 };
+
+/** Fixed inspiration page size, shared by the loader and the workspace pager. */
+export const INSPIRATIONS_PAGE_SIZE = 24;
 
 /**
  * The workspace destination for one example. It never points at a content

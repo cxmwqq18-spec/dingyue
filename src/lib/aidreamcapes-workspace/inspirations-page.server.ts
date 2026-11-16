@@ -1,61 +1,111 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import { getAidreamcapesInspirationCardsFromRows, inspirationCategoryLookup } from "@/lib/aidreamcapes-inspirations";
-import { inspirationExampleLinks, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
+import { listAidreamcapesInspirationEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
+import { resolveInspirationIndustryCategories } from "@/lib/aidreamcapes-workspace/media-placement.server";
+import { mediaDetailIntro, mediaDetailPrompt } from "@/lib/aidreamcapes-workspace/media-detail";
+import { inspirationCategoryLookup } from "@/lib/aidreamcapes-inspirations";
+import { INSPIRATIONS_PAGE_SIZE, inspirationExampleLinks, type InspirationCard, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
-// Project picker cards in PostgreSQL. Only one bounded batch crosses the DB
-// connection; page bodies and the remainder of the gallery are never loaded.
+// The inspiration library projects the same relational detail cards that own
+// the public media detail pages (single-owner enumeration, gallery order). It
+// adds no content of its own: every label, prompt, video and category below is
+// the example's current production data, so an online card edit is reflected
+// here on the next request.
+const CATEGORY_FALLBACK = "All";
+
+/**
+ * One-sentence card description. The card's own `line` when it has one;
+ * otherwise the opening of the real prompt — text already published on the
+ * example's public detail page. Never a section-level picker lead.
+ */
+function inspirationDescription(line: string | undefined, prompt: string, pageTitle: string): string {
+  const intro = mediaDetailIntro({ line: line ?? "", prompt });
+  if (intro) return intro;
+  const head = (mediaDetailPrompt({ prompt }).split("\n\n")[0] ?? "").replace(/\n+/g, " ").trim();
+  if (!head) return pageTitle;
+  return head.length > 220 ? `${head.slice(0, 219).trimEnd()}…` : head;
+}
+
+function toolSlugFromOwner(ownerSlug: string, tool: string | undefined): string {
+  if (tool?.trim()) return tool.trim();
+  const segment = ownerSlug.split("/").filter(Boolean).at(-1);
+  return segment && segment !== "ai-video-generation" && segment !== "ai-image-generation" ? segment : "video-ads";
+}
+
 export async function getWorkspaceInspirationPage(params: { offset?: number; kind?: string; category?: string; q?: string; basePath?: string } = {}): Promise<InspirationPage> {
   const offset = Number.isSafeInteger(params.offset) && params.offset! >= 0 ? Math.min(params.offset!, 100000) : 0;
   const kind = params.kind === "video" || params.kind === "photo" ? params.kind : "all";
   const category = params.category?.slice(0, 100) || "All";
   const q = params.q?.trim().toLowerCase().slice(0, 180) || "";
-  const overrides = JSON.stringify(inspirationCategoryLookup());
-  const [result] = await prisma.$queryRaw<Array<{
-    rows: Array<{ slug: string; title: string; card: unknown; lead: string; cardIndex: number }>;
-    total: number; counts: InspirationPage["counts"]; categories: string[];
-  }>>`
-    WITH lookup AS (SELECT ${overrides}::jsonb AS categories), raw AS (
-      SELECT p.slug, p.title, c.card, (c.n - 1)::int AS "cardIndex", picker.value->>'lead' AS lead,
-        COALESCE(NULLIF(c.card->>'ref', ''), 'src:' || NULLIF(c.card#>>'{image,src}', '')) AS ref,
-        COALESCE(NULLIF(c.card->>'label', ''), c.card#>>'{image,alt}', p.title) AS label,
-        CASE WHEN c.card->>'kind' IN ('video','photo') THEN c.card->>'kind'
-          WHEN ltrim(p.slug, '/') LIKE 'ai-video-generation/%' THEN 'video' ELSE 'photo' END AS kind
-      FROM "LivePage" p
-      CROSS JOIN LATERAL (
-        SELECT p."contentJson"->'sections'->sid.value->'settings'->'data'->'visual'->'picker' AS value
-        FROM jsonb_array_elements_text(CASE WHEN jsonb_typeof(p."contentJson"->'sectionsOrder') = 'array' THEN p."contentJson"->'sectionsOrder' ELSE '[]'::jsonb END) WITH ORDINALITY AS sid(value,n)
-        WHERE p."contentJson"->'sections'->sid.value->>'type' = 'aidreamcapes_v2_page'
-          AND jsonb_typeof(p."contentJson"->'sections'->sid.value->'settings'->'data'->'visual'->'picker'->'cards') = 'array'
-        ORDER BY sid.n LIMIT 1
-      ) picker
-      CROSS JOIN LATERAL jsonb_array_elements(picker.value->'cards') WITH ORDINALITY AS c(card,n)
-      WHERE p."siteId" = 'site_aidreamcapes'
-        AND (ltrim(p.slug, '/') LIKE 'ai-video-generation/%' OR ltrim(p.slug, '/') LIKE 'ai-image-generation/%')
-        AND (NULLIF(c.card#>>'{image,src}', '') IS NOT NULL OR NULLIF(c.card->>'ref', '') IS NOT NULL)
-    ), distinct_cards AS (
-      SELECT DISTINCT ON (ref) raw.*, COALESCE(lookup.categories->>ref, lookup.categories->>regexp_replace(card#>>'{image,src}', '-{1,2}[0-9]+[.]webp$', ''), 'All') AS category
-      FROM raw CROSS JOIN lookup WHERE ref IS NOT NULL ORDER BY ref, slug, "cardIndex"
-    ), filtered AS (
-      SELECT * FROM distinct_cards WHERE (${kind} = 'all' OR kind = ${kind})
-        AND (${category} = 'All' OR category = ${category})
-        AND (${q} = '' OR strpos(lower(concat_ws(' ', label, card#>>'{image,alt}', title, category)), ${q}) > 0)
-    ), batch AS (
-      SELECT slug, title, card, lead, "cardIndex", label, ref FROM filtered ORDER BY lower(label), ref LIMIT 24 OFFSET ${offset}
-    )
-    SELECT COALESCE((SELECT jsonb_agg(batch ORDER BY lower(label), ref) FROM batch), '[]'::jsonb) AS rows,
-      (SELECT count(*)::int FROM filtered) AS total,
-      (SELECT jsonb_build_object('all', count(*), 'video', count(*) FILTER (WHERE kind='video'), 'photo', count(*) FILTER (WHERE kind='photo')) FROM distinct_cards) AS counts,
-      COALESCE((SELECT jsonb_agg(category ORDER BY category) FROM (SELECT DISTINCT category FROM distinct_cards WHERE (${kind}='all' OR kind=${kind}) AND category <> 'All') categories), '[]'::jsonb) AS categories
-  `;
-  const cards = getAidreamcapesInspirationCardsFromRows(result.rows.map(row => ({
-    slug: row.slug, title: row.title, cardIndex: row.cardIndex,
-    contentJson: { sectionsOrder: ['picker'], sections: { picker: { type: 'aidreamcapes_v2_page', settings: { data: { visual: { picker: { lead: row.lead, cards: [row.card] } } } } } } }
-  }))).map(card => ({
-    id: card.id, label: card.label, imageSrc: card.imageSrc, imageAlt: card.imageAlt,
-    pageTitle: card.pageTitle, kind: card.kind, description: card.description, category: card.category,
-    ...inspirationExampleLinks(card, params.basePath)
-  }));
-  return { cards, counts: result.counts, categories: ['All', ...result.categories], total: result.total,
-    nextOffset: offset + result.rows.length < result.total ? offset + result.rows.length : null };
+
+  const entries = await listAidreamcapesInspirationEntries();
+
+  // Categories resolve like the detail page's industry group, then fall back to
+  // the media-catalog override map, then to the uncategorized "All".
+  const overrides = inspirationCategoryLookup();
+  const industryCategories = await resolveInspirationIndustryCategories(entries.map((entry) => ({
+    kind: entry.kind, image: entry.image, video: entry.video, placement: entry.placement
+  })));
+
+  const ownerSlugs = [...new Set(entries.map((entry) => entry.ownerSlug))];
+  const ownerRows = await prisma.livePage.findMany({
+    where: { siteId: "site_aidreamcapes", slug: { in: ownerSlugs } },
+    select: { slug: true, title: true }
+  });
+  const ownerTitles = new Map(ownerRows.map((row) => [row.slug, row.title]));
+
+  const cards: InspirationCard[] = entries.map((entry, index) => {
+    const pageTitle = ownerTitles.get(entry.ownerSlug)?.trim() || entry.ownerSlug;
+    const imageAlt = entry.image.alt?.trim() || entry.label;
+    const category = industryCategories[index]
+      ?? overrides[entry.image.src]
+      ?? overrides[entry.image.src.replace(/-{1,2}[0-9]+[.]webp$/, "")]
+      ?? CATEGORY_FALLBACK;
+    return {
+      id: `${entry.kind}:${entry.publicSlug}`,
+      ref: `slug:${entry.publicSlug}`,
+      label: entry.label,
+      prompt: entry.prompt,
+      imageSrc: entry.image.src,
+      imageAlt,
+      toolSlug: toolSlugFromOwner(entry.ownerSlug, entry.tool),
+      pageSlug: entry.ownerSlug,
+      sceneSlug: entry.sceneSlug,
+      publicSlug: entry.publicSlug,
+      pageTitle,
+      kind: entry.kind,
+      description: inspirationDescription(entry.line, entry.prompt, pageTitle),
+      category
+    };
+  });
+
+  const filtered = cards.filter((card) =>
+    (kind === "all" || card.kind === kind)
+    && (category === CATEGORY_FALLBACK || card.category === category)
+    && (!q || `${card.label} ${card.imageAlt} ${card.pageTitle} ${card.category}`.toLowerCase().includes(q)));
+
+  const counts = {
+    all: cards.length,
+    video: cards.filter((card) => card.kind === "video").length,
+    photo: cards.filter((card) => card.kind === "photo").length
+  };
+  const categories = [...new Set(cards
+    .filter((card) => (kind === "all" || card.kind === kind) && card.category !== CATEGORY_FALLBACK)
+    .map((card) => card.category))].sort((left, right) => left.localeCompare(right));
+
+  const batch = filtered.slice(offset, offset + INSPIRATIONS_PAGE_SIZE);
+  const examples: InspirationExample[] = batch.map((card) => {
+    const entry = entries.find((item) => `${item.kind}:${item.publicSlug}` === card.id)!;
+    return {
+      id: card.id, label: card.label, imageSrc: card.imageSrc, imageAlt: card.imageAlt,
+      pageTitle: card.pageTitle, kind: card.kind, description: card.description, category: card.category,
+      prompt: mediaDetailPrompt({ prompt: card.prompt }),
+      ...(entry.video ? { video: entry.video } : {}),
+      ...(entry.duration !== undefined ? { duration: entry.duration } : {}),
+      ...inspirationExampleLinks(card, params.basePath)
+    };
+  });
+
+  return { cards: examples, counts, categories: [CATEGORY_FALLBACK, ...categories], total: filtered.length,
+    nextOffset: offset + batch.length < filtered.length ? offset + batch.length : null };
 }

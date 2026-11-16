@@ -1,14 +1,15 @@
 "use client";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 
-// Inspiration gallery rendered inside the workspace content area. It reuses the
-// same card data and interactions as the public standalone inspiration page
-// but follows the workspace's light theme and never leaves the workspace shell.
+// Inspiration gallery rendered inside the workspace content area. It shows the
+// same relational detail cards that own the public media detail pages: real
+// result media, the real generation prompt, and numbered pagination instead of
+// infinite scroll. The light theme matches the workspace shell.
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Image as ImageIcon, Loader2, Search, Sparkles, X } from "lucide-react";
 import styles from "./inspirations-embedded.module.css";
 
-import type { InspirationExample, InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
+import { INSPIRATIONS_PAGE_SIZE, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
 export type EmbeddedInspiration = InspirationExample;
 
@@ -19,6 +20,81 @@ const mediaFilters = [
   { value: "video", label: "Video ideas", icon: Clapperboard },
   { value: "photo", label: "Photo ideas", icon: ImageIcon },
 ] as const;
+
+/** Pager window: three first pages, three last pages, neighbours of the current page. */
+function pagerWindow(current: number, total: number): Array<number | "gap"> {
+  const wanted = new Set<number>([1, 2, 3, total - 2, total - 1, total, current - 1, current, current + 1]);
+  const pages = [...wanted].filter((page) => page >= 1 && page <= total).sort((a, b) => a - b);
+  const entries: Array<number | "gap"> = [];
+  let previous = 0;
+  for (const page of pages) {
+    if (previous && page - previous > 1) entries.push("gap");
+    entries.push(page);
+    previous = page;
+  }
+  return entries;
+}
+
+function PromptCopyButton() {
+  const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
+  const copy = async () => {
+    const panel = document.querySelector<HTMLElement>("[data-inspiration-prompt]");
+    const text = panel?.querySelector("[data-inspiration-prompt-text]")?.textContent?.trim() ?? "";
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      setState("copied");
+    } catch {
+      const field = document.createElement("textarea");
+      field.value = text;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      let copied = false;
+      try { copied = document.execCommand("copy"); } catch { copied = false; }
+      document.body.removeChild(field);
+      setState(copied ? "copied" : "failed");
+    }
+    setTimeout(() => setState("idle"), 2200);
+  };
+  return (
+    <button className={styles.promptCopy} onClick={copy} type="button">
+      {state === "copied" ? "Copied" : state === "failed" ? "Copy failed" : "Copy prompt"}
+    </button>
+  );
+}
+
+function InspirationPager({ page, totalPages, disabled, onPage }: {
+  page: number;
+  totalPages: number;
+  disabled: boolean;
+  onPage: (target: number) => void;
+}) {
+  const [jump, setJump] = useState(String(page));
+  useEffect(() => { setJump(String(page)); }, [page]);
+  if (totalPages <= 1) return null;
+  return (
+    <nav aria-label="Inspiration pages" className={styles.pager}>
+      <button aria-label="Previous page" className={styles.pageNav} disabled={disabled || page <= 1} onClick={() => onPage(page - 1)} type="button"><ChevronLeft size={15} /></button>
+      {pagerWindow(page, totalPages).map((entry, index) => entry === "gap"
+        ? <span aria-hidden="true" className={styles.pageGap} key={`gap-${index}`}>…</span>
+        : entry === page
+          ? <span aria-current="page" className={`${styles.pageNum} ${styles.pageCurrent}`} key={`page-${entry}`}>{entry}</span>
+          : <button className={styles.pageNum} key={`page-${entry}`} onClick={() => onPage(entry)} type="button">{entry}</button>)}
+      <button aria-label="Next page" className={styles.pageNav} disabled={disabled || page >= totalPages} onClick={() => onPage(page + 1)} type="button"><ChevronRight size={15} /></button>
+      <form className={styles.pageJump} onSubmit={(event) => {
+        event.preventDefault();
+        const target = Math.round(Number(jump));
+        if (Number.isFinite(target) && target >= 1 && target <= totalPages) onPage(target);
+      }}>
+        <input aria-label={`Go to page, 1 to ${totalPages}`} inputMode="numeric" max={totalPages} min={1} onChange={(event) => setJump(event.target.value)} type="number" value={jump} />
+        <button disabled={disabled} type="submit">Go</button>
+      </form>
+    </nav>
+  );
+}
 
 function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
   card: EmbeddedInspiration;
@@ -68,17 +144,43 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
     >
       <div className={styles.detail}>
         <div className={styles.preview}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img alt={card.imageAlt} src={card.imageSrc} />
+          {card.video ? (
+            /* The example's rendered result. The ambient loop plays the
+               lightweight preview clip when one exists; the full file loads
+               only on the example's public detail page. */
+            <video
+              aria-label={card.label}
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={card.video.poster?.src}
+              preload="metadata"
+              src={card.video.previewSrc ?? card.video.src}
+            />
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img alt={card.imageAlt} src={card.imageSrc} />
+          )}
         </div>
         <div className={styles.detailBody}>
           <button aria-label="Close example" className={styles.close} onClick={onClose} ref={closeRef} type="button"><X size={18} /></button>
           <span className={styles.eyebrow}>{card.kind === "video" ? "Video idea" : "Photo idea"}</span>
           <h2 id={titleId}>{card.label}</h2>
           <p>{card.description}</p>
+          {card.prompt ? (
+            <div className={styles.promptPanel} data-inspiration-prompt="true">
+              <div className={styles.promptHead}>
+                <h3>Prompt</h3>
+                <PromptCopyButton />
+              </div>
+              <p className={styles.promptText} data-inspiration-prompt-text="true">{card.prompt}</p>
+            </div>
+          ) : null}
           <dl className={styles.detailMeta}>
             <div><dt>Collection</dt><dd>{card.pageTitle}</dd></div>
             {card.category !== ALL_CATEGORY ? <div><dt>Category</dt><dd>{card.category}</dd></div> : null}
+            {card.duration ? <div><dt>Length</dt><dd>{card.duration} seconds</dd></div> : null}
           </dl>
           <WorkspaceEntryLink className={styles.create} href={card.workspaceHref} entry={card.entry}>
             {card.kind === "video" ? "Create a video like this" : "Create an image like this"} <ArrowUpRight size={17} />
@@ -103,64 +205,62 @@ export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { init
   const [search, setSearch] = useState("");
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [page, setPage] = useState<InspirationPage | undefined>(initialPage);
+  const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(!initialPage);
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
-  const sentinel = useRef<HTMLDivElement>(null);
+  const gridTop = useRef<HTMLDivElement>(null);
   const controller = useRef<AbortController | null>(null);
-  const pending = useRef(false);
   const generation = useRef(0);
   const filterKey = `${kind}\n${category}\n${search}`;
-  const loadedFilter = useRef(initialPage ? filterKey : "");
+  const lastFilter = useRef(filterKey);
   useEffect(() => { const timer = setTimeout(() => setSearch(query.trim()), 300); return () => clearTimeout(timer); }, [query]);
-  const load = useCallback(async (offset: number, replace: boolean) => {
-    if (pending.current && !replace) return;
+  useEffect(() => {
+    if (lastFilter.current !== filterKey) { lastFilter.current = filterKey; setPageNumber(1); }
+  }, [filterKey]);
+  const load = useCallback(async (targetPage: number) => {
     controller.current?.abort();
     const abort = new AbortController();
     controller.current = abort;
     const requestGeneration = ++generation.current;
-    pending.current = true;
     setLoading(true); setError("");
-    const params = new URLSearchParams({ offset: String(offset), kind, category, q: search, basePath });
+    const params = new URLSearchParams({ offset: String((targetPage - 1) * INSPIRATIONS_PAGE_SIZE), kind, category, q: search, basePath });
     try {
       const response = await fetch(`${endpoint}?${params}`, { signal: abort.signal, credentials: "same-origin", cache: "no-store" });
       if (!response.ok) throw new Error("Couldn't load inspirations. Please try again.");
       const next = await response.json() as InspirationPage;
       if (generation.current !== requestGeneration) return;
-      loadedFilter.current = `${kind}\n${category}\n${search}`;
-      setPage(previous => ({ ...next, cards: replace ? next.cards : [...(previous?.cards ?? []), ...next.cards.filter(card => !previous?.cards.some(existing => existing.id === card.id))] }));
+      setPage(next);
     } catch (cause) {
       if (!abort.signal.aborted && generation.current === requestGeneration) setError(cause instanceof Error ? cause.message : "Couldn't load inspirations.");
     } finally {
-      if (generation.current === requestGeneration) { pending.current = false; setLoading(false); }
+      if (generation.current === requestGeneration) { setLoading(false); }
     }
   }, [endpoint, kind, category, search, basePath]);
   useEffect(() => {
-    if (initialPage && kind === "all" && category === ALL_CATEGORY && !search && !retry) {
-      controller.current?.abort(); generation.current++; pending.current = false;
-      loadedFilter.current = filterKey;
+    if (pageNumber === 1 && initialPage && kind === "all" && category === ALL_CATEGORY && !search && !retry) {
+      controller.current?.abort(); generation.current++;
       setPage(initialPage); setLoading(false); setError("");
       return;
     }
+    void load(pageNumber);
+    return () => { controller.current?.abort(); generation.current++; };
+  }, [filterKey, pageNumber, load, retry, initialPage, kind, category, search]);
+
+  const total = page?.total ?? 0;
+  const totalPages = Math.max(1, Math.ceil(total / INSPIRATIONS_PAGE_SIZE));
+  const goToPage = useCallback((target: number) => {
+    const next = Math.min(Math.max(1, Math.round(target)), totalPages);
+    if (next === pageNumber) return;
     setActiveCardId(null);
-    void load(0, true);
-    return () => { controller.current?.abort(); generation.current++; pending.current = false; };
-  }, [filterKey, load, retry, initialPage, kind, category, search]);
-  useEffect(() => {
-    const node = sentinel.current;
-    if (!node || loading || error || page?.nextOffset == null) return;
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) void load(page.nextOffset!, false);
-    }, { rootMargin: "400px" });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [load, loading, error, page]);
+    gridTop.current?.scrollIntoView({ block: "start" });
+    setPageNumber(next);
+  }, [pageNumber, totalPages]);
   const cards = page?.cards ?? [];
-  const visibleCards = cards;
   const counts = page?.counts ?? { all: 0, video: 0, photo: 0 };
   const categories = page?.categories ?? [ALL_CATEGORY];
-  const activeIndex = activeCardId ? visibleCards.findIndex((card) => card.id === activeCardId) : -1;
-  const activeCard = visibleCards[activeIndex];
+  const activeIndex = activeCardId ? cards.findIndex((card) => card.id === activeCardId) : -1;
+  const activeCard = cards[activeIndex];
 
   if (loading && !page) {
     return <div className={styles.loading}><Loader2 className={styles.spin} size={22} /><span>Loading inspirations…</span></div>;
@@ -177,7 +277,7 @@ export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { init
         <div className={styles.total}><strong>{counts.all}</strong><span>ideas to explore</span></div>
       </div>
 
-      <div className={styles.toolbar}>
+      <div ref={gridTop} className={styles.toolbar}>
         <h2>{mediaFilters.find((item) => item.value === kind)?.label}<span>{page?.total ?? 0}</span></h2>
         <div className={styles.kindFilters} role="group" aria-label="Example type">
           {mediaFilters.map(({ value, label, icon: Icon }) => (
@@ -196,12 +296,12 @@ export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { init
         <div aria-label="Category filters" className={styles.categories} role="group">
           {categories.map((value) => <button aria-pressed={category === value} className={styles.category} key={value} onClick={() => { setCategory(value); setActiveCardId(null); }} type="button">{value === ALL_CATEGORY ? "All categories" : value}</button>)}
         </div>
-        <p aria-live="polite" className={styles.resultCount}>{page?.total ?? 0} {page?.total === 1 ? "example" : "examples"}</p>
+        <p aria-live="polite" className={styles.resultCount}>{total} {total === 1 ? "example" : "examples"}</p>
       </div>
 
-      {visibleCards.length ? (
-        <div className={styles.grid} aria-busy={loading}>
-          {visibleCards.map((card) => (
+      {cards.length ? (
+        <div aria-busy={loading} className={styles.grid}>
+          {cards.map((card) => (
             <button aria-label={`Open ${card.label} example`} className={styles.card} data-inspiration-card={card.id} key={card.id} onClick={() => setActiveCardId(card.id)} type="button">
               <span className={styles.cardImage}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -222,13 +322,13 @@ export function EmbeddedInspirations({ initialPage, endpoint, basePath }: { init
         </div>
       )}
 
-      <div ref={sentinel} className={styles.pagination} aria-live="polite">
-        {loading ? <span>Loading more examples…</span> : null}
-        {error ? <><p role="alert">{error}</p><button type="button" onClick={() => page && loadedFilter.current === filterKey ? void load(page.nextOffset ?? 0, false) : setRetry(value => value + 1)}>Try again</button></> : null}
-        {!loading && !error && page?.nextOffset != null ? <button type="button" onClick={() => void load(page.nextOffset!, false)}>Load more examples</button> : null}
+      <div aria-live="polite" className={styles.pagination}>
+        {loading ? <span className={styles.paginationStatus}><Loader2 className={styles.spin} size={15} /> Loading examples…</span> : null}
+        {error ? <><p role="alert">{error}</p><button type="button" onClick={() => setRetry(value => value + 1)}>Try again</button></> : null}
       </div>
+      <InspirationPager disabled={loading} onPage={goToPage} page={pageNumber} totalPages={totalPages} />
 
-      {activeCard ? <CardModal card={activeCard} position={activeIndex} total={visibleCards.length} onClose={() => setActiveCardId(null)} onPrevious={() => setActiveCardId(visibleCards[activeIndex - 1]?.id ?? activeCard.id)} onNext={() => setActiveCardId(visibleCards[activeIndex + 1]?.id ?? activeCard.id)} /> : null}
+      {activeCard ? <CardModal card={activeCard} position={activeIndex} total={cards.length} onClose={() => setActiveCardId(null)} onPrevious={() => setActiveCardId(cards[activeIndex - 1]?.id ?? activeCard.id)} onNext={() => setActiveCardId(cards[activeIndex + 1]?.id ?? activeCard.id)} /> : null}
     </>
   );
 }

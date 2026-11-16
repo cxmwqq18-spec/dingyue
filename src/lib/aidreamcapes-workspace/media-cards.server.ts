@@ -228,6 +228,8 @@ type EnumeratedDetailCard = {
   slug: string;
   card: MediaDetailCard;
   updatedAt: Date;
+  /** The one LivePage row that owns this detail slug after the single-owner filter. */
+  ownerSlug: string;
 };
 
 /**
@@ -260,7 +262,7 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
       }
     }
   }
-  type Candidate = EnumeratedDetailCard & { owners: Set<string> };
+  type Candidate = Omit<EnumeratedDetailCard, "ownerSlug"> & { owners: Set<string> };
   const byKey = new Map<string, Candidate>();
   for (const { row, cards } of rowCards) {
     for (const raw of cards) {
@@ -277,7 +279,7 @@ async function enumerateSingleOwnerDetailCards(): Promise<EnumeratedDetailCard[]
   }
   return [...byKey.values()]
     .filter((candidate) => candidate.owners.size === 1 && !aliasClaims.has(candidate.slug))
-    .map(({ owners: _owners, ...entry }) => entry);
+    .map(({ owners, ...entry }) => ({ ...entry, ownerSlug: [...owners][0]! }));
 }
 
 /**
@@ -404,3 +406,51 @@ export const listAidreamcapesExampleGalleryEntries = cache(async (): Promise<Med
     ...spreadGalleryByCluster(entries.filter((entry) => !entry.video))
   ];
 });
+
+/**
+ * Source rows for the in-site inspiration library. Same enumeration and same
+ * deterministic order as the /templates gallery (video-attached cards first,
+ * newest first by the owning row's updatedAt, slug tiebreak, clusters spread
+ * apart), but it keeps the full detail card so the library can show the real
+ * prompt, video and category data behind every example.
+ */
+export type InspirationSourceEntry = {
+  kind: MediaDetailKind;
+  slug: string;
+  label: string;
+  line?: string;
+  prompt: string;
+  tool?: string;
+  sceneSlug?: string;
+  publicSlug: string;
+  ownerSlug: string;
+  image: { src: string; alt?: string; w?: number; h?: number };
+  video?: { src: string; previewSrc?: string; poster?: { src: string; alt?: string }; width?: number; height?: number };
+  duration?: number;
+  placement: string[];
+  updatedAt: Date;
+};
+
+export async function listAidreamcapesInspirationEntries(): Promise<InspirationSourceEntry[]> {
+  const cards = await enumerateSingleOwnerDetailCardsCached();
+  const entries = cards.map(({ card, slug, kind, updatedAt, ownerSlug }) => ({
+    kind,
+    slug,
+    label: card.label,
+    ...(card.line ? { line: card.line } : {}),
+    prompt: card.prompt,
+    ...(card.tool ? { tool: card.tool } : {}),
+    ...(card.sceneSlug ? { sceneSlug: card.sceneSlug } : {}),
+    publicSlug: slug,
+    ownerSlug,
+    image: card.image,
+    ...(card.video?.src ? { video: card.video } : {}),
+    ...(card.duration !== undefined ? { duration: Number(card.duration) || undefined } : {}),
+    placement: card.placement ?? [],
+    updatedAt
+  }));
+  return [
+    ...spreadGalleryByCluster(entries.filter((entry) => entry.video)),
+    ...spreadGalleryByCluster(entries.filter((entry) => !entry.video))
+  ];
+}
