@@ -20,7 +20,8 @@ async function main() {
     assetStore,
     runtimeCache,
     dataIsland,
-    shell
+    shell,
+    accountSurfaces
   ] = await Promise.all([
     read("src/lib/types.ts"),
     read("src/app/api/sites/[siteId]/customer/runtime/route.ts"),
@@ -28,7 +29,8 @@ async function main() {
     read("src/lib/stores/asset-store.ts"),
     read("src/lib/customer-runtime-api-cache.ts"),
     read("src/components/storefront/customer-account-data-island.tsx"),
-    read("src/components/storefront/customer-account-shell.tsx")
+    read("src/components/storefront/customer-account-shell.tsx"),
+    read("src/app/aidreamcapes-account-surfaces.css")
   ]);
 
   assert(types.includes("export interface ThemeRuntimePagination"), "account runtime should expose pagination metadata");
@@ -103,20 +105,22 @@ async function main() {
   assert(!dataIsland.includes("profileAssets.slice"), "profile avatar history should no longer be fixed to a client-side slice");
 
   for (const token of [
-    "export type AccountTheme",
-    "\"midnight\" | \"soft\"",
-    "mydreamshoots:account-theme:v1",
-    "data-account-theme={accountTheme}",
-    "--account-page-bg",
-    "--account-surface",
-    "Midnight",
-    "Dark",
-    "Light",
-    "window.localStorage.setItem(accountThemeStorageKey, accountTheme)",
-    "bg-[var(--account-page-bg)]",
-    "text-[var(--account-text)]"
+    "const ACCOUNT_THEME_KEY",
+    "useState<\"light\" | \"dark\">",
+    "data-cc-theme={mode}",
+    "window.localStorage.getItem(ACCOUNT_THEME_KEY)",
+    "window.localStorage.setItem(ACCOUNT_THEME_KEY",
+    ">Light</button>",
+    ">Dark</button>"
   ]) {
     assert(shell.includes(token), `account shell should include theme support token ${token}`);
+  }
+  for (const token of [
+    "--account-page-bg",
+    "--account-surface",
+    "text-[var(--account-text)]"
+  ]) {
+    assert(accountSurfaces.includes(token) || shell.includes(token), `account surfaces should include theme token ${token}`);
   }
   assert(!shell.includes("bg-[#eef3f8]"), "account shell should not hard-code the light theme as the only workspace background");
 }
