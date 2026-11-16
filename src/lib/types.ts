@@ -1582,6 +1582,7 @@ export interface ThemeRuntimeJob {
   updatedAt: string;
   requestJson?: Record<string, unknown>;
   resultJson?: Record<string, unknown>;
+  context?: ThemeRuntimeGenerationContext;
 }
 
 export interface ThemeRuntimeAsset {
@@ -1616,7 +1617,9 @@ export interface ThemeRuntimeAlbum {
 
 export type LedgerGenerationStatus = "completed" | "generating" | "failed" | "cancelled" | "draft" | "unknown";
 
-export interface ThemeRuntimeLedgerContext {
+/** Display fields resolved from a generation, shared by the account ledger,
+ * the generation list, and the detail sheet. */
+export interface ThemeRuntimeGenerationContext {
   title: string;
   summary: string;
   kind: "video" | "image";
@@ -1652,9 +1655,8 @@ export interface CreditEntryMedia {
   downloadUrl: string;
 }
 
-/** One credit ledger movement resolved to the generation it paid for. */
-export interface CreditEntryDetail {
-  entry: ThemeRuntimeLedgerEntry;
+/** Fully resolved generation: brief, shot outline, and finished media. */
+export interface GenerationDetail {
   kind: "video" | "image";
   title: string;
   summary: string;
@@ -1676,6 +1678,11 @@ export interface CreditEntryDetail {
   outline: CreditEntryOutlineShot[];
 }
 
+/** One credit ledger movement resolved to the generation it paid for. */
+export interface CreditEntryDetail extends GenerationDetail {
+  entry: ThemeRuntimeLedgerEntry;
+}
+
 export interface ThemeRuntimeLedgerEntry {
   id: string;
   amount: number;
@@ -1684,7 +1691,7 @@ export interface ThemeRuntimeLedgerEntry {
   sourceId?: string;
   sourceLabel?: string;
   createdAt: string;
-  context?: ThemeRuntimeLedgerContext;
+  context?: ThemeRuntimeGenerationContext;
 }
 
 export interface ThemeRuntimeCustomerModel {
@@ -1722,6 +1729,8 @@ export interface ThemeRuntimeOrder {
   credits: number;
   sourceId: string;
   createdAt: string;
+  /** The plan or product the customer bought, when the price still resolves. */
+  productLabel?: string;
 }
 
 export interface ThemeRuntimeDownloadEntry {

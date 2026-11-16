@@ -1,6 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
-import type { CreditEntryDetail, CreditEntryMedia, CreditEntryOutlineShot, LedgerGenerationStatus, LedgerType, ThemeRuntimeLedgerContext, ThemeRuntimeLedgerEntry } from "@/lib/types";
+import type { CreditEntryDetail, CreditEntryMedia, CreditEntryOutlineShot, GenerationDetail, LedgerGenerationStatus, LedgerType, ThemeRuntimeGenerationContext, ThemeRuntimeJob, ThemeRuntimeLedgerEntry } from "@/lib/types";
 
 /**
  * The account ledger lists balance movements, so a generation charge reads as
@@ -87,8 +87,8 @@ type AssetRow = {
   storageKey: string;
 };
 
-/** One generation's display fields, before the ledger entry is attached. */
-type GenerationView = Omit<CreditEntryDetail, "entry">;
+/** A ledger movement or generation request, reduced to what must be resolved. */
+type GenerationTarget = { jobId?: string; taskId?: string };
 
 function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -267,6 +267,7 @@ function jobStatus(value: unknown): LedgerGenerationStatus {
   if (status === "succeeded") return "completed";
   if (status === "failed") return "failed";
   if (status === "cancelled") return "cancelled";
+  if (status === "refunded") return "cancelled";
   return "generating";
 }
 
@@ -277,10 +278,16 @@ function ledgerTarget(entry: Pick<LedgerRow, "sourceType" | "sourceId">): { jobI
     return jobId ? { jobId } : {};
   }
   if (entry.sourceType === TASK_HOLD_SOURCE_TYPE) {
-    // Hold entries key on `${taskId}:${reference}`, so the first segment is
-    // the task that reserved the credits.
-    const taskId = text(entry.sourceId).split(":")[0];
-    return taskId ? { taskId } : {};
+    // Hold entries key on `${taskId}:${reference}`. The workspace also appends
+    // the job that created the hold, which still identifies the generation
+    // when the task row itself has been cleaned up.
+    const segments = text(entry.sourceId).split(":").map((segment) => segment.trim()).filter(Boolean);
+    const taskId = segments[0];
+    const jobId = segments.slice(1).find((segment) => /^(job|gen)_/.test(segment));
+    return {
+      ...(taskId ? { taskId } : {}),
+      ...(jobId ? { jobId } : {})
+    };
   }
   return {};
 }
@@ -303,7 +310,7 @@ function jobKind(job: GenerationJobRow): "video" | "image" {
   return mode === "image" ? "image" : "video";
 }
 
-function resolveFromTask(task: { id: string; data: unknown }, job: GenerationJobRow | undefined): GenerationView {
+function resolveFromTask(task: { id: string; data: unknown }, job: GenerationJobRow | undefined): GenerationDetail {
   const data = taskData(task.data);
   const prompt = taskPrompt(data) || (job ? jobPrompt(job) : "");
   const images = taskImages(data);
@@ -325,7 +332,9 @@ function resolveFromTask(task: { id: string; data: unknown }, job: GenerationJob
     prompt,
     resolution: text(options.resolution) || undefined,
     shotCount: outline.length,
-    status: taskStatus(data.status),
+    // The job carries the billing outcome, so it wins when both rows exist and
+    // the workspace task has not caught up yet.
+    status: job ? jobStatus(job.status) : taskStatus(data.status),
     summary: summaryOf(prompt),
     taskId: task.id,
     thumbnailUrl: images[0],
@@ -333,7 +342,30 @@ function resolveFromTask(task: { id: string; data: unknown }, job: GenerationJob
   };
 }
 
-function resolveFromJob(job: GenerationJobRow, assets: AssetRow[]): GenerationView {
+/** Older jobs record their renders in resultJson instead of asset rows; the
+ * files still live under the customer's asset prefix. */
+function jobStoredOutputs(job: GenerationJobRow): Array<{ media: CreditEntryMedia; video: boolean }> {
+  const outputs = record(job.resultJson).outputs;
+  if (!Array.isArray(outputs)) return [];
+  return outputs
+    .map((value) => record(value))
+    .map((output) => ({ mimeType: text(output.mimeType), storageKey: text(output.storageKey) }))
+    .filter((output) => output.storageKey.startsWith("sites/"))
+    .map((output, index) => {
+      const path = `/api/local-assets/${output.storageKey}`;
+      const video = output.mimeType.startsWith("video/");
+      return {
+        media: {
+          downloadUrl: path,
+          label: `${video ? "Finished video" : "Finished image"}${index > 0 ? ` ${index + 1}` : ""}`,
+          url: `${path}?preview=1`
+        },
+        video
+      };
+    });
+}
+
+function resolveFromJob(job: GenerationJobRow, assets: AssetRow[]): GenerationDetail {
   const fields = jobFields(job);
   const prompt = jobPrompt(job);
   const videoAssets = assets.filter((asset) => asset.mimeType.startsWith("video/"));
@@ -341,20 +373,24 @@ function resolveFromJob(job: GenerationJobRow, assets: AssetRow[]): GenerationVi
   const outputVideo = videoAssets.find((asset) => asset.role === "output") ?? videoAssets[0];
   const outputImage = imageAssets.find((asset) => asset.role === "output") ?? imageAssets[0];
   const inputImages = imageAssets.filter((asset) => asset.role !== "output");
+  const storedOutputs = jobStoredOutputs(job);
+  const storedVideo = storedOutputs.find((output) => output.video)?.media;
+  const storedImage = storedOutputs.find((output) => !output.video)?.media;
+  const finalVideo = outputVideo ? assetMedia(outputVideo, "Finished file") : storedVideo;
   const kind = jobKind(job);
   const title = displayTitle([], prompt) || jobModelLabel(fields) || "AI video";
   return {
     aspectRatio: jobAspectRatio(fields),
     clips: [],
     durationSeconds: jobDuration(fields),
-    finalVideo: outputVideo ? assetMedia(outputVideo, "Finished file") : undefined,
+    finalVideo,
     inputs: inputImages.slice(0, 8).map((asset, index) => assetMedia(asset, `Reference ${index + 1}`)),
     jobId: job.id,
     kind,
     language: undefined,
     modelLabel: jobModelLabel(fields),
     outline: [],
-    primaryVideo: outputVideo ? assetMedia(outputVideo, "Finished file") : outputImage ? assetMedia(outputImage, "Finished image") : undefined,
+    primaryVideo: finalVideo ?? (outputImage ? assetMedia(outputImage, "Finished image") : storedImage),
     prompt,
     resolution: text(fields.resolution) || undefined,
     shotCount: 0,
@@ -366,26 +402,29 @@ function resolveFromJob(job: GenerationJobRow, assets: AssetRow[]): GenerationVi
     // require decoding the render for every ledger row.
     thumbnailUrl: inputImages[0]
       ? `${assetMediaUrl(inputImages[0])}?preview=1`
-      : outputImage ? `${assetMediaUrl(outputImage)}?preview=1` : undefined,
+      : outputImage ? `${assetMediaUrl(outputImage)}?preview=1` : storedImage?.url,
   };
 }
 
-/** Resolve every ledger movement on the page in one pass: at most one job
- * lookup, one task lookup, and the assets needed for job-only entries. */
-async function resolveLedgerViews({
-  entries,
-  owner
+function targetKey(target: GenerationTarget): string {
+  return target.jobId ? `job:${target.jobId}` : `task:${target.taskId ?? ""}`;
+}
+
+/** Resolve a page of generations in one pass: at most one job lookup, one task
+ * lookup, and the assets needed for job-only generations. */
+async function resolveGenerationTargets({
+  owner,
+  targets
 }: {
-  entries: LedgerRow[];
   owner: { customerId: string; siteId: string };
-}): Promise<Map<string, GenerationView>> {
-  const views = new Map<string, GenerationView>();
-  if (!entries.length) return views;
+  targets: GenerationTarget[];
+}): Promise<Map<string, GenerationDetail>> {
+  const details = new Map<string, GenerationDetail>();
+  if (!targets.length) return details;
 
   const jobIds = new Set<string>();
   const directTaskIds = new Set<string>();
-  for (const entry of entries) {
-    const target = ledgerTarget(entry);
+  for (const target of targets) {
     if (target.jobId) jobIds.add(target.jobId);
     if (target.taskId) directTaskIds.add(target.taskId);
   }
@@ -427,36 +466,53 @@ async function resolveLedgerViews({
     assetsByJob.set(asset.jobId, [...(assetsByJob.get(asset.jobId) ?? []), asset]);
   }
 
-  for (const entry of entries) {
-    const target = ledgerTarget(entry);
+  for (const target of targets) {
     const job = target.jobId ? jobsById.get(target.jobId) : undefined;
     const task = tasksById.get(target.taskId ?? "") ?? (job ? tasksById.get(jobTaskId(job)) : undefined);
     if (task) {
-      views.set(entry.id, resolveFromTask(task, job));
+      details.set(targetKey(target), resolveFromTask(task, job));
     } else if (job) {
-      views.set(entry.id, resolveFromJob(job, assetsByJob.get(job.id) ?? []));
+      details.set(targetKey(target), resolveFromJob(job, assetsByJob.get(job.id) ?? []));
     }
   }
-  return views;
+  return details;
 }
 
-function contextOf(view: GenerationView): ThemeRuntimeLedgerContext {
+function contextOf(detail: GenerationDetail): ThemeRuntimeGenerationContext {
   return {
-    aspectRatio: view.aspectRatio,
-    durationSeconds: view.durationSeconds,
-    jobId: view.jobId,
-    kind: view.kind,
-    modelLabel: view.modelLabel,
-    resolution: view.resolution,
-    shotCount: view.shotCount || undefined,
-    status: view.status,
-    summary: view.summary || view.title,
-    taskId: view.taskId,
-    thumbnailUrl: view.thumbnailUrl,
-    title: view.title,
-    videoUrl: view.finalVideo?.url ?? view.primaryVideo?.url
+    aspectRatio: detail.aspectRatio,
+    durationSeconds: detail.durationSeconds,
+    jobId: detail.jobId,
+    kind: detail.kind,
+    modelLabel: detail.modelLabel,
+    resolution: detail.resolution,
+    shotCount: detail.shotCount || undefined,
+    status: detail.status,
+    summary: detail.summary || detail.title,
+    taskId: detail.taskId,
+    thumbnailUrl: detail.thumbnailUrl,
+    title: detail.title,
+    videoUrl: detail.finalVideo?.url ?? detail.primaryVideo?.url
   };
 }
+
+const EMPTY_DETAIL: GenerationDetail = {
+  aspectRatio: undefined,
+  clips: [],
+  durationSeconds: undefined,
+  finalVideo: undefined,
+  inputs: [],
+  kind: "video",
+  modelLabel: undefined,
+  outline: [],
+  primaryVideo: undefined,
+  prompt: "",
+  resolution: undefined,
+  shotCount: 0,
+  status: "unknown",
+  summary: "",
+  title: ""
+};
 
 /** Attach the generation each movement paid for to the ledger entries. */
 export async function enrichLedgerEntriesWithGeneration({
@@ -469,11 +525,51 @@ export async function enrichLedgerEntriesWithGeneration({
   siteId: string;
 }): Promise<ThemeRuntimeLedgerEntry[]> {
   if (!entries.length) return entries;
-  const views = await resolveLedgerViews({ entries: entries as LedgerRow[], owner: { customerId, siteId } });
-  return entries.map((entry) => {
-    const view = views.get(entry.id);
-    return view ? { ...entry, context: contextOf(view) } : entry;
+  const targets = entries.map((entry) => ledgerTarget(entry as LedgerRow));
+  const details = await resolveGenerationTargets({ owner: { customerId, siteId }, targets });
+  return entries.map((entry, index) => {
+    const detail = details.get(targetKey(targets[index]));
+    // Internal source ids stay server-side; the ledger renders the generation.
+    const { sourceId: _sourceId, ...rest } = entry;
+    return detail ? { ...rest, context: contextOf(detail) } : rest;
   });
+}
+
+/** Attach the same display fields to the account's generation list. */
+export async function enrichJobsWithGeneration({
+  customerId,
+  jobs,
+  siteId
+}: {
+  customerId: string;
+  jobs: ThemeRuntimeJob[];
+  siteId: string;
+}): Promise<ThemeRuntimeJob[]> {
+  if (!jobs.length) return jobs;
+  const targets: GenerationTarget[] = jobs.map((job) => ({ jobId: job.id }));
+  const details = await resolveGenerationTargets({ owner: { customerId, siteId }, targets });
+  return jobs.map((job) => {
+    const detail = details.get(targetKey({ jobId: job.id }));
+    return detail ? { ...job, context: contextOf(detail) } : job;
+  });
+}
+
+/** One generation resolved by id, for the detail sheet. */
+export async function readGenerationDetail({
+  customerId,
+  jobId,
+  siteId,
+  taskId
+}: {
+  customerId: string;
+  jobId?: string;
+  siteId: string;
+  taskId?: string;
+}): Promise<GenerationDetail | undefined> {
+  const target: GenerationTarget | undefined = jobId ? { jobId } : taskId ? { taskId } : undefined;
+  if (!target) return undefined;
+  const details = await resolveGenerationTargets({ owner: { customerId, siteId }, targets: [target] });
+  return details.get(targetKey(target));
 }
 
 /** The credit entry detail sheet: what the movement paid for, its outline,
@@ -499,27 +595,10 @@ export async function readCreditEntryDetail({
     sourceType: row.sourceType,
     type: row.type as LedgerType
   };
-  const views = await resolveLedgerViews({ entries: [row as LedgerRow], owner: { customerId, siteId } });
-  const view = views.get(row.id);
-  if (!view) {
-    return {
-      aspectRatio: undefined,
-      clips: [],
-      durationSeconds: undefined,
-      entry,
-      finalVideo: undefined,
-      inputs: [],
-      kind: "video",
-      modelLabel: undefined,
-      outline: [],
-      primaryVideo: undefined,
-      prompt: "",
-      resolution: undefined,
-      shotCount: 0,
-      status: "unknown",
-      summary: "",
-      title: ""
-    };
-  }
-  return { entry, ...view };
+  const detail = await readGenerationDetail({
+    customerId,
+    siteId,
+    ...ledgerTarget(row as LedgerRow)
+  });
+  return { entry, ...(detail ?? EMPTY_DETAIL) };
 }

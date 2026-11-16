@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { toAssetUploadRelational, toCustomerModelRelational, toPublicCustomerRelational } from "@/lib/stores/prisma-mappers";
 import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
-import { enrichLedgerEntriesWithGeneration } from "@/lib/stores/credit-ledger-context";
+import { enrichJobsWithGeneration, enrichLedgerEntriesWithGeneration } from "@/lib/stores/credit-ledger-context";
 import type { PublicCustomer, ThemeRuntimeData } from "@/lib/types";
 
 export type CustomerAccountRuntimeSection =
@@ -187,7 +187,8 @@ function sourceLabel(entry: Pick<RuntimeLedgerEntry, "sourceType" | "sourceId">)
   if (entry.sourceType === "generation_job") return "AI generation";
   if (entry.sourceType === "signup_credit") return "Signup credit";
   if (entry.sourceType === "admin_adjustment") return "Support adjustment";
-  return entry.sourceId || "Account activity";
+  if (entry.sourceType === "workspace_task_hold") return "AI generation";
+  return "Account activity";
 }
 
 function mapRuntimeJob(job: {
@@ -249,6 +250,7 @@ function mapRuntimeOrder(order: {
   credits: number;
   sourceId: string;
   createdAt: Date | string;
+  price?: { label: string; product?: { name: string } | null } | null;
 }): RuntimeOrder {
   return {
     id: order.id,
@@ -257,7 +259,8 @@ function mapRuntimeOrder(order: {
     currency: order.currency,
     credits: order.credits,
     sourceId: order.sourceId,
-    createdAt: iso(order.createdAt)
+    createdAt: iso(order.createdAt),
+    productLabel: order.price?.product?.name || order.price?.label || undefined
   };
 }
 
@@ -519,6 +522,7 @@ export async function getCustomerAccountSummaryRuntimeRelational({
     }),
     prisma.order.findMany({
       where: { siteId, customerId: customer.id },
+      include: { price: { select: { label: true, product: { select: { name: true } } } } },
       orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       take: 16
     }),
@@ -574,11 +578,16 @@ export async function getCustomerAccountSummaryRuntimeRelational({
     entries: ledger.map(mapRuntimeLedger),
     siteId
   });
+  const enrichedJobs = await enrichJobsWithGeneration({
+    customerId: customer.id,
+    jobs: jobs.map(mapRuntimeJob),
+    siteId
+  });
   return {
     ...emptyRuntime(),
     customer: resolvedCustomer,
     profile: resolvedCustomer.profile,
-    jobs: jobs.map(mapRuntimeJob),
+    jobs: enrichedJobs,
     assets: assets.map((asset) => toThemeRuntimeAssetRelational(toAssetUploadRelational(asset as unknown as Record<string, unknown>))),
     albums: albums.map(mapRuntimeAlbum),
     ledger: enrichedLedger,
@@ -669,6 +678,7 @@ export async function getCustomerAccountSectionRuntimeRelational({
       pageSize,
       rows: (skip, take) => prisma.order.findMany({
         where: countWhere,
+        include: { price: { select: { label: true, product: { select: { name: true } } } } },
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
         skip,
         take
@@ -736,7 +746,11 @@ export async function getCustomerAccountSectionRuntimeRelational({
       ...emptyRuntime(),
       customer,
       profile: customer.profile,
-      jobs: pageResult.rows.map(mapRuntimeJob),
+      jobs: await enrichJobsWithGeneration({
+        customerId: customer.id,
+        jobs: pageResult.rows.map(mapRuntimeJob),
+        siteId
+      }),
       pagination: pageResult.pagination
     };
   }

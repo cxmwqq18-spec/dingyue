@@ -25,5 +25,6 @@ export async function GET(_request: NextRequest, { params }: Context) {
   if (!detail) {
     return NextResponse.json({ error: "credit_entry_not_found" }, { status: 404 });
   }
-  return NextResponse.json({ entry: detail }, { headers: { "Cache-Control": "private, no-store" } });
+  const { entry: _entry, ...generation } = detail;
+  return NextResponse.json({ generation }, { headers: { "Cache-Control": "private, no-store" } });
 }

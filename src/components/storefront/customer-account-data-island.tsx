@@ -30,7 +30,7 @@ import { createContext, useContext, useEffect, useState, type FormEvent, type Re
 import { csrfHeader, customerJsonHeaders } from "@/lib/client-csrf";
 import { dispatchCustomerBootstrapInvalidation } from "@/components/storefront/customer-bootstrap-events";
 import { StorefrontInstantLink } from "@/components/storefront/storefront-instant-link";
-import type { CreditEntryDetail, CreditEntryOutlineShot, PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimeDownloadEntry, ThemeRuntimeLedgerEntry, ThemeRuntimePagination } from "@/lib/types";
+import type { CreditEntryOutlineShot, GenerationDetail, PublicCustomer, ThemeRuntimeAsset, ThemeRuntimeData, ThemeRuntimeDownloadEntry, ThemeRuntimeGenerationContext, ThemeRuntimeJob, ThemeRuntimeLedgerEntry, ThemeRuntimePagination } from "@/lib/types";
 import { storefrontAccessibleMediaAlt, storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import type { LucideIcon } from "lucide-react";
@@ -232,8 +232,9 @@ function jobStatusLabel(status: string) {
   if (status === "queued") return "Waiting";
   if (status === "running") return "Creating";
   if (status === "succeeded") return "Delivered";
-  if (status === "failed") return "Needs review";
-  return "Credits returned";
+  if (status === "failed") return "Failed";
+  if (status === "refunded") return "Credits returned";
+  return "In progress";
 }
 
 function ledgerLabel(type: string) {
@@ -704,7 +705,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
       key: `job-${job.id}`,
       sortAt: new Date(job.updatedAt).getTime(),
       when: formatDate(job.updatedAt),
-      title: requestTitle(job.id, 0),
+      title: job.context?.title ?? requestTitle(job.id, 0),
       detail: jobStatusLabel(job.status),
       amount: job.creditsReserved > 0 ? `−${job.creditsReserved}` : undefined,
       tone: "neg" as const
@@ -769,7 +770,7 @@ function OverviewStatement({ basePath, fallbackCustomer, runtime }: { basePath: 
         {inProgress.length ? inProgress.map((job, index) => (
           <div className="cc-job" key={job.id}>
             <div>
-              <strong>{requestTitle(job.id, index)}</strong>
+              <strong>{job.context?.title ?? requestTitle(job.id, index)}</strong>
               <span>{job.creditsReserved} credits held · updated {formatDate(job.updatedAt)}</span>
             </div>
             <span className="cc-pill is-warn">{jobStatusLabel(job.status)}</span>
@@ -1116,8 +1117,54 @@ function CreditsCard({ fallbackCustomer, runtime, siteId, variant = "classic" }:
   );
 }
 
-/** What the ledger movement was for: the generated video at a glance, with its
- * title, prompt summary, model, and length instead of an internal id. */
+/** One generation at a glance: thumbnail, title, prompt summary, model, and
+ * length instead of an internal id. Shared by the credit ledger and the
+ * generation list. */
+function GenerationIdentity({
+  context,
+  fallbackIcon,
+  fallbackSummary,
+  fallbackTitle,
+  hideStatus,
+  metaPrefix,
+  onOpen,
+  variant = "classic"
+}: {
+  context?: ThemeRuntimeGenerationContext;
+  fallbackIcon?: ReactNode;
+  fallbackSummary?: string;
+  fallbackTitle: string;
+  hideStatus?: boolean;
+  metaPrefix?: string;
+  onOpen: () => void;
+  variant?: "classic" | "statement";
+}) {
+  const title = context?.title || fallbackTitle;
+  const summary = ledgerSummary(title, context?.summary || fallbackSummary || "");
+  const meta = generationMeta(context, metaPrefix, hideStatus);
+  const body = (
+    <>
+      <div className="cc-entry-thumb">
+        {context?.thumbnailUrl
+          ? <img alt="" decoding="async" loading="lazy" src={context.thumbnailUrl} />
+          : fallbackIcon ?? <PlayCircle size={15} strokeWidth={1.6} />}
+      </div>
+      <div className="cc-entry-text">
+        <strong>{title}</strong>
+        {summary ? <span className="cc-entry-summary">{summary}</span> : null}
+        {meta ? <span className="cc-entry-meta">{meta}</span> : null}
+      </div>
+      <div className="cc-entry-open">Details</div>
+    </>
+  );
+  if (!context) return <div className={`cc-entry ${variant === "classic" ? "is-classic is-static" : "is-static"}`}>{body}</div>;
+  return (
+    <button className={`cc-entry ${variant === "classic" ? "is-classic" : ""}`} onClick={onOpen} type="button">
+      {body}
+    </button>
+  );
+}
+
 function LedgerEntryIdentity({
   entry,
   onOpen,
@@ -1127,30 +1174,36 @@ function LedgerEntryIdentity({
   onOpen: () => void;
   variant: "classic" | "statement";
 }) {
-  const context = entry.context;
-  const title = context?.title || ledgerLabel(entry.type);
-  const summary = ledgerSummary(title, context?.summary || entry.sourceLabel || entry.sourceId || "Account activity");
-  const meta = ledgerEntryMeta(entry);
-  const body = (
-    <>
-      <div className="cc-entry-thumb">
-        {context?.thumbnailUrl
-          ? <img alt="" decoding="async" loading="lazy" src={context.thumbnailUrl} />
-          : context ? <PlayCircle size={15} strokeWidth={1.6} /> : <ReceiptText size={15} strokeWidth={1.6} />}
-      </div>
-      <div className="cc-entry-text">
-        <strong>{title}</strong>
-        {summary ? <span className="cc-entry-summary">{summary}</span> : null}
-        {meta ? <span className="cc-entry-meta">{meta}</span> : null}
-      </div>
-      {context ? <div className="cc-entry-open">Details</div> : null}
-    </>
-  );
-  if (!context) return <div className={`cc-entry ${variant === "classic" ? "is-classic is-static" : "is-static"}`}>{body}</div>;
   return (
-    <button className={`cc-entry ${variant === "classic" ? "is-classic" : ""}`} onClick={onOpen} type="button">
-      {body}
-    </button>
+    <GenerationIdentity
+      context={entry.context}
+      fallbackIcon={<ReceiptText size={15} strokeWidth={1.6} />}
+      fallbackSummary={entry.sourceLabel}
+      fallbackTitle={ledgerLabel(entry.type)}
+      metaPrefix={ledgerLabel(entry.type)}
+      onOpen={onOpen}
+      variant={variant}
+    />
+  );
+}
+
+function GenerationJobIdentity({
+  job,
+  onOpen
+}: {
+  job: ThemeRuntimeJob;
+  onOpen: () => void;
+}) {
+  return (
+    <GenerationIdentity
+      context={job.context}
+      fallbackIcon={<Sparkles size={15} strokeWidth={1.6} />}
+      fallbackSummary={`${jobStatusLabel(job.status)} request`}
+      fallbackTitle="AI generation request"
+      hideStatus
+      onOpen={onOpen}
+      variant="classic"
+    />
   );
 }
 
@@ -1162,11 +1215,10 @@ function ledgerSummary(title: string, summary: string): string {
   return summary;
 }
 
-function ledgerEntryMeta(entry: ThemeRuntimeLedgerEntry): string {
-  const context = entry.context;
+function generationMeta(context: ThemeRuntimeGenerationContext | undefined, prefix?: string, hideStatus?: boolean): string {
   const parts = [
-    ledgerLabel(entry.type),
-    context?.status ? ledgerStatusLabel(context.status) : undefined,
+    prefix,
+    !hideStatus && context?.status ? ledgerStatusLabel(context.status) : undefined,
     context?.durationSeconds ? `${context.durationSeconds}s` : undefined,
     context?.aspectRatio,
     context?.resolution,
@@ -1176,7 +1228,7 @@ function ledgerEntryMeta(entry: ThemeRuntimeLedgerEntry): string {
   return parts.filter(Boolean).join(" — ");
 }
 
-function ledgerStatusLabel(status: NonNullable<ThemeRuntimeLedgerEntry["context"]>["status"]): string {
+function ledgerStatusLabel(status: NonNullable<ThemeRuntimeGenerationContext["status"]>): string {
   if (status === "completed") return "Delivered";
   if (status === "generating") return "In progress";
   if (status === "failed") return "Failed";
@@ -1195,20 +1247,30 @@ function shotTimeLabel(shot: CreditEntryOutlineShot): string {
   return shot.duration !== undefined ? `${Math.round(shot.duration)}s` : "";
 }
 
-/** The credit entry detail sheet: the generation this movement paid for, its
- * full prompt, its shot outline, and the finished video. */
-function CreditEntrySheet({
-  entry,
+/** The detail sheet for one generation: the brief it was made from, its shot
+ * outline, the finished video, the rendered clips, and the references. */
+function GenerationDetailSheet({
+  amount,
+  context,
+  endpoint,
+  eventAt,
+  fallbackSummary,
+  fallbackTitle,
   formatDate,
-  onClose,
-  siteId
+  kicker,
+  onClose
 }: {
-  entry: ThemeRuntimeLedgerEntry;
+  amount?: number;
+  context?: ThemeRuntimeGenerationContext;
+  endpoint: string;
+  eventAt: string;
+  fallbackSummary?: string;
+  fallbackTitle: string;
   formatDate: (value: string | undefined) => string;
+  kicker: string;
   onClose: () => void;
-  siteId: string;
 }) {
-  const [detail, setDetail] = useState<CreditEntryDetail | null>(null);
+  const [detail, setDetail] = useState<GenerationDetail | null>(null);
   const [failed, setFailed] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   useEffect(() => {
@@ -1216,31 +1278,29 @@ function CreditEntrySheet({
     setDetail(null);
     setFailed(false);
     setVideoFailed(false);
-    fetch(`/api/sites/${siteId}/customer/credit-entry/${entry.id}`, {
+    fetch(endpoint, {
       credentials: "same-origin",
       headers: { accept: "application/json" },
       signal: controller.signal
     })
       .then(async (response) => {
-        if (!response.ok) throw new Error("credit_entry_unavailable");
-        const payload = await response.json() as { entry?: CreditEntryDetail };
-        setDetail(payload.entry ?? null);
+        if (!response.ok) throw new Error("generation_unavailable");
+        const payload = await response.json() as { generation?: GenerationDetail };
+        setDetail(payload.generation ?? null);
       })
       .catch(() => { if (!controller.signal.aborted) setFailed(true); });
     return () => controller.abort();
-  }, [entry.id, siteId]);
+  }, [endpoint]);
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
-  const context = entry.context;
-  const title = detail?.title || context?.title || ledgerLabel(entry.type);
-  const summary = ledgerSummary(title, detail?.summary || context?.summary || entry.sourceLabel || "Account activity");
+  const title = detail?.title || context?.title || fallbackTitle;
+  const summary = ledgerSummary(title, detail?.summary || context?.summary || fallbackSummary || "");
   const status = detail?.status ?? context?.status;
   const video = detail?.primaryVideo;
   const chips = [
-    ledgerLabel(entry.type),
     status ? ledgerStatusLabel(status) : undefined,
     detail?.durationSeconds ? `${detail.durationSeconds}s` : context?.durationSeconds ? `${context.durationSeconds}s` : undefined,
     detail?.aspectRatio ?? context?.aspectRatio,
@@ -1251,7 +1311,7 @@ function CreditEntrySheet({
   return (
     <div className="cc-sheet-backdrop" onClick={onClose} role="presentation">
       <div
-        aria-label={`Credit entry ${title}`}
+        aria-label={`${kicker} ${title}`}
         aria-modal="true"
         className="cc-sheet"
         onClick={(event) => event.stopPropagation()}
@@ -1259,19 +1319,21 @@ function CreditEntrySheet({
       >
         <div className="cc-sheet-head">
           <div>
-            <p className="cc-sheet-kicker">{formatDate(entry.createdAt)} — {ledgerLabel(entry.type)}</p>
+            <p className="cc-sheet-kicker">{formatDate(eventAt)} — {kicker}</p>
             <h3>{title}</h3>
             {summary ? <p className="cc-sheet-summary">{summary}</p> : null}
           </div>
           <div className="cc-sheet-head-end">
-            <span className={`font-mono text-lg font-semibold ${entry.amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
-              {entry.amount >= 0 ? "+" : ""}{entry.amount}
-            </span>
+            {amount !== undefined ? (
+              <span className={`font-mono text-lg font-semibold ${amount >= 0 ? "text-[var(--account-success-text)]" : "text-[var(--account-danger-text)]"}`}>
+                {amount >= 0 ? "+" : ""}{amount}
+              </span>
+            ) : null}
             <button aria-label="Close details" className="cc-sheet-close" onClick={onClose} type="button">×</button>
           </div>
         </div>
         {chips.length ? <div className="cc-sheet-chips">{chips.map((chip) => <span key={chip}>{chip}</span>)}</div> : null}
-        {failed ? <EmptyState>Details for this entry are unavailable right now. The credit movement itself is recorded in your ledger.</EmptyState> : null}
+        {failed ? <EmptyState>Details for this request are unavailable right now. The request itself is still recorded in your account.</EmptyState> : null}
         {!detail && !failed ? <p className="cc-sheet-loading">Loading the generation details…</p> : null}
         {detail ? (
           <div className="cc-sheet-body">
@@ -1336,12 +1398,39 @@ function CreditEntrySheet({
               </section>
             ) : null}
             {!detail.prompt && !detail.outline.length && !video ? (
-              <EmptyState>This credit movement is not tied to a generation, so there is no outline or video attached.</EmptyState>
+              <EmptyState>This request is not tied to a saved generation, so there is no outline or video attached.</EmptyState>
             ) : null}
           </div>
         ) : null}
       </div>
     </div>
+  );
+}
+
+/** The credit entry detail sheet, keyed by the ledger movement. */
+function CreditEntrySheet({
+  entry,
+  formatDate,
+  onClose,
+  siteId
+}: {
+  entry: ThemeRuntimeLedgerEntry;
+  formatDate: (value: string | undefined) => string;
+  onClose: () => void;
+  siteId: string;
+}) {
+  return (
+    <GenerationDetailSheet
+      amount={entry.amount}
+      context={entry.context}
+      endpoint={`/api/sites/${siteId}/customer/credit-entry/${entry.id}`}
+      eventAt={entry.createdAt}
+      fallbackSummary={entry.sourceLabel}
+      fallbackTitle={ledgerLabel(entry.type)}
+      formatDate={formatDate}
+      kicker={ledgerLabel(entry.type)}
+      onClose={onClose}
+    />
   );
 }
 
@@ -1357,7 +1446,7 @@ function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
             <div>
               <p className="font-semibold text-[var(--account-strong)]">{money(order.amountCents, order.currency)}</p>
               <p className="mt-1 text-xs text-[var(--account-muted)]">{order.credits} credits - {formatDate(order.createdAt)}</p>
-              <p className="mt-1 truncate text-xs text-[var(--account-subtle)]">Source {order.sourceId}</p>
+              <p className="mt-1 truncate text-xs text-[var(--account-subtle)]">{order.productLabel ?? (order.credits > 0 ? `${order.credits} credit top-up` : "Account purchase")}</p>
             </div>
             <StatusPill tone={order.status === "paid" || order.status === "fulfilled" ? "good" : order.status === "checkout_started" ? "warn" : "neutral"}>{statusLabel(order.status)}</StatusPill>
           </div>
@@ -1367,23 +1456,42 @@ function PurchasesCard({ runtime }: { runtime: ThemeRuntimeData }) {
   );
 }
 
-function GenerationCard({ basePath, runtime }: { basePath: string; runtime: ThemeRuntimeData }) {
+function GenerationCard({ runtime, siteId, variant = "classic" }: { runtime: ThemeRuntimeData; siteId: string; variant?: "classic" | "statement" }) {
   const formatDate = useAccountDateLabel();
   const jobs = runtime.jobs ?? [];
+  const [openJob, setOpenJob] = useState<ThemeRuntimeJob | null>(null);
+  const videos = variant === "statement";
   return (
     <div className="grid gap-5">
-      <SectionHeader icon={Sparkles} kicker="Generation" title="AI photoshoot requests" subtitle="Follow queued, running, delivered, failed, and refunded generation work." />
+      <SectionHeader
+        icon={Sparkles}
+        kicker="Generation"
+        title={videos ? "AI video requests" : "AI photoshoot requests"}
+        subtitle={videos ? "Follow queued, running, delivered, failed, and refunded video generations." : "Follow queued, running, delivered, failed, and refunded generation work."}
+      />
       <div className="grid gap-3">
-        {jobs.length ? jobs.map((job, index) => (
-          <StorefrontInstantLink className="grid gap-2 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm transition hover:border-[var(--account-border-strong)] hover:bg-[var(--account-hover-bg)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" href={`${basePath}/app/jobs/${job.id}`} key={job.id}>
-            <div>
-              <p className="font-semibold text-[var(--account-strong)]">{requestTitle(job.id, index)}</p>
-              <p className="mt-1 text-xs text-[var(--account-muted)]">{job.creditsReserved} credits held - updated {formatDate(job.updatedAt)}</p>
+        {jobs.length ? jobs.map((job) => (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-[8px] border border-[var(--account-border)] bg-[var(--account-surface-elevated)] p-4 text-sm" key={job.id}>
+            <GenerationJobIdentity job={job} onOpen={() => setOpenJob(job)} />
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-[var(--account-muted)]">{job.creditsReserved} credits</span>
+              <StatusPill tone={job.status === "succeeded" ? "good" : job.status === "failed" ? "warn" : "neutral"}>{jobStatusLabel(job.status)}</StatusPill>
+              <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--account-faint)]">{formatDate(job.updatedAt)}</span>
             </div>
-            <StatusPill tone={job.status === "succeeded" ? "good" : job.status === "failed" ? "warn" : "neutral"}>{jobStatusLabel(job.status)}</StatusPill>
-          </StorefrontInstantLink>
-        )) : <EmptyState>No AI photoshoot requests yet.</EmptyState>}
+          </div>
+        )) : <EmptyState>{videos ? "No AI video requests yet." : "No AI photoshoot requests yet."}</EmptyState>}
       </div>
+      {openJob ? (
+        <GenerationDetailSheet
+          context={openJob.context}
+          endpoint={`/api/sites/${siteId}/customer/generation/${openJob.id}`}
+          eventAt={openJob.updatedAt}
+          fallbackTitle="AI generation request"
+          formatDate={formatDate}
+          kicker="AI generation"
+          onClose={() => setOpenJob(null)}
+        />
+      ) : null}
     </div>
   );
 }
@@ -1829,7 +1937,7 @@ export function CustomerAccountDataIsland({
           section="generation"
           siteId={siteId}
         >
-          {(runtime) => <GenerationCard basePath={basePath} runtime={runtime} />}
+          {(runtime) => <GenerationCard runtime={runtime} siteId={siteId} variant={variant} />}
         </AccountCard>
       ) : null}
       {activeSection === "downloads" ? (
