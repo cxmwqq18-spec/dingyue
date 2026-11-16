@@ -26,7 +26,7 @@ import { presetFromCard, presetGenerationIdentity } from "./presets.server";
 // Retired hub example addresses. Their owning cards were retired together
 // with the all-video-examples catalog module, and the card rewrite could not
 // carry the persisted publicAliases across, so the relational alias lookup no
-// longer knows them. These five crawlable addresses must keep answering 308 —
+// longer knows them. These crawlable addresses must keep answering 308 —
 // never 404. Each redirects to the nearest surviving example of the same
 // content shape (a detail page with its single workspace CTA), because the
 // alias contract resolves to a detail canonical, not a catalog index.
@@ -35,7 +35,16 @@ const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
   "a-showcase-in-a-real-room": "/ai-video-generation/sunset-lamp-room-glow-before-after",
   "a-spoken-ad-with-a-person-on-camera": "/ai-video-generation/wrinkled-shirt-steamer-rescue",
   "an-actor-matched-to-the-buyer": "/ai-video-generation/washed-graphic-tee-fit-check",
-  "the-same-product-walkthrough": "/ai-video-generation/vegetable-chopper-kitchen-demo"
+  "the-same-product-walkthrough": "/ai-video-generation/vegetable-chopper-kitchen-demo",
+  // Retired tool-style video pages (2026-11-17 GSC 404 audit): their cards
+  // left the relational content without alias claims, so Google's crawled
+  // addresses answer 404. Same contract as above: 308 to the nearest
+  // surviving same-shape detail page, never 404.
+  "talking-photo": "/ai-video-generation/talking-head-skin-lesson",
+  "talking-head-video": "/ai-video-generation/talking-head-skin-lesson",
+  "product-ad-video": "/ai-video-generation/promo-video",
+  "bottle-ad-with-a-person": "/ai-video-generation/water-bottle-demo-cap-twists-open",
+  "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools"
 };
 
 /** Living page a retired address still redirects to, if any. */

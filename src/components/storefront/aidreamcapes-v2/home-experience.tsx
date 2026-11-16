@@ -15,7 +15,7 @@ function Preview({ id, title, close, images, r, children }: {
 }) {
   return <dialog className="hx-dialog" id={id} aria-labelledby={`${id}-title`}>
     <div className="hx-dialog-head"><h3 id={`${id}-title`}>{title}</h3><form method="dialog"><button type="submit" data-hx-close aria-label={close}><span aria-hidden="true">×</span><span>{close}</span></button></form></div>
-    <div className={`hx-dialog-media${images.length > 1 ? " hx-dialog-pair" : ""}`}>{images.map((image, index) => <figure key={`${image.src}-${index}`}><Img image={image} r={r} /><figcaption>{image.alt}</figcaption></figure>)}</div>
+    <div className={`hx-dialog-media${images.length > 1 ? " hx-dialog-pair" : ""}`}>{images.map((image, index) => <figure key={`hx-dialog-media-${index}`}><Img image={image} r={r} /><figcaption>{image.alt}</figcaption></figure>)}</div>
     {children ? <div className="hx-dialog-copy">{children}</div> : null}
   </dialog>;
 }

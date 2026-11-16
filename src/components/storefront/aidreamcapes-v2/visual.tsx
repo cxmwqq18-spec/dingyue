@@ -63,7 +63,7 @@ export function VisualStrip({ visual, r, includeOverview = false, heading, lead 
           {heading ? <div className="v-strip-heading"><h2>{heading}</h2>{lead ? <p>{lead}</p> : null}</div> : null}
           <div className="v-strip" data-count={visual.strip.length}>
             {visual.strip.map((item, index) => (
-              <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`${item.src}-${index}`}>
+              <figure className="v-strip-card" data-kind={item.kind} data-ratio={visualRatio(item)} key={`v-strip-card-${index}`}>
                 {/* The strip's first card is the video hub's LCP element on
                     mobile; it loads eagerly with high priority while the rest
                     of the rail stays lazy. */}
@@ -161,7 +161,7 @@ export function VisualSteps({ visual, r, buttonLabel = "Make my video", stepsH2 
             {actorCards.length ? (
               <div aria-label={copyLabel(r, "Choose an actor")} className="maker v-step-maker v-step-actor-maker">
                 <div aria-label={actions ? copyLabel(r, "Example selection") : undefined} className="v-step-actor-grid" role={actions ? "group" : "list"}>
-                  {actorCards.map((card, index) => <SourceTag aria-pressed={actions ? Boolean(card.selected) : undefined} type={actions ? "button" : undefined} data-home-local={actions ? `visualActor${index + 1}` : undefined} data-hx-select-group={actions ? "visual-actor" : undefined} data-hx-select-value={actions ? String(index) : undefined} aria-label={card.label} className={`v-step-actor-card${!actions && card.selected ? " is-selected" : ""}`} key={`${card.image.src}-${index}`} role={actions ? undefined : "listitem"}>
+                  {actorCards.map((card, index) => <SourceTag aria-pressed={actions ? Boolean(card.selected) : undefined} type={actions ? "button" : undefined} data-home-local={actions ? `visualActor${index + 1}` : undefined} data-hx-select-group={actions ? "visual-actor" : undefined} data-hx-select-value={actions ? String(index) : undefined} aria-label={card.label} className={`v-step-actor-card${!actions && card.selected ? " is-selected" : ""}`} key={`v-step-actor-${index}`} role={actions ? undefined : "listitem"}>
                     <VisualImage image={card.image} r={r} className="v-step-actor-image" />
                     <span>{card.label}</span>
                   </SourceTag>)}
@@ -212,7 +212,7 @@ export function VisualFreshLook({ heading, lead, items, button, href, r }: {
         <div className="wrap">
           <div className="v-fresh-grid">
             <div className="v-fresh-media">
-              {items.map((item, index) => <figure key={`${item.image.src}-${index}`}><Img image={item.image} r={r} {...aidreamcapesV2ResponsiveImageProps(item.image.src, AIDREAMCAPES_V2_FRESH_MEDIA_SIZES)} /><figcaption>{item.label}</figcaption></figure>)}
+              {items.map((item, index) => <figure key={`v-fresh-figure-${index}`}><Img image={item.image} r={r} {...aidreamcapesV2ResponsiveImageProps(item.image.src, AIDREAMCAPES_V2_FRESH_MEDIA_SIZES)} /><figcaption>{item.label}</figcaption></figure>)}
             </div>
             <div className="v-fresh-copy">
               {heading ? <h2>{heading}</h2> : null}
@@ -308,7 +308,7 @@ export function VisualPicker({ visual, r, pageId, sourcePage, eyebrow, relatedGr
         </div>
         <div className="v-picker-grid">
           {cards.map((card, index) => (
-            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`${card.image.src}-${index}`}>
+            <a className="v-pick-card" data-chips={card.chips.join(" ")} data-filter-indexes={card.chips.map((id) => picker.chips.findIndex((chip) => chip.id === id) + 1).filter((index) => index > 0).join(" ")} href={r.href(mediaCardHref(card.kind, mediaCardCanonicalSlug(card), pickerPresetHref(card, sourcePage)))} key={`v-pick-card-${index}`}>
               {card.video ? (
                 <Adc2VideoPreview ariaLabel={card.video.name ?? card.label} media={{ duration: card.video.duration, height: card.video.height, name: card.video.name, poster: r.asset(aidreamcapesV2ResponsivePosterSrc(card.video.poster?.src ?? card.image.src)), previewSrc: card.video.previewSrc ? r.asset(card.video.previewSrc) : undefined, src: r.asset(card.video.src), width: card.video.width }} posterEager={index < 4} showDuration={!hideDuration} />
               ) : <VisualImage image={card.image} r={r} sizes={AIDREAMCAPES_V2_PICKER_CARD_SIZES} />}
@@ -376,7 +376,7 @@ export function VisualInput({ visual, r }: { visual: V2Visual; r: V2Resolvers })
   const darkened = visual.input.some((item) => item.darkened);
   return <Section eyebrow="Start with a clear photo" title={visual.titles?.m5?.h2 ?? "Choose a photo that shows the product well"}>
     {darkened ? <style dangerouslySetInnerHTML={{ __html: ".adc2 img.v-input-darkened{filter:brightness(.28)}" }} /> : null}
-    <div className="v-input-grid">{visual.input.map((item, index) => <InputPair item={item} key={`${item.good.src}-${index}`} r={r} />)}</div>
+    <div className="v-input-grid">{visual.input.map((item, index) => <InputPair item={item} key={`v-input-pair-${index}`} r={r} />)}</div>
   </Section>;
 }
 
@@ -386,7 +386,7 @@ function OutputCard({ item, r }: { item: V2VisualOutput; r: V2Resolvers }) {
 
 export function VisualOutputs({ visual, r, includeLimitations = false }: { visual: V2Visual; r: V2Resolvers; includeLimitations?: boolean }) {
   if (!visual.outputs.length && !includeLimitations) return null;
-  return <Section eyebrow="Your result" title={visual.titles?.m6?.h2 ?? "See the format and cost"}><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`${item.image.src}-${index}`} r={r} />)}</div>{includeLimitations ? <VisualLimitations asSubsection visual={visual} /> : null}</Section>;
+  return <Section eyebrow="Your result" title={visual.titles?.m6?.h2 ?? "See the format and cost"}><div className="v-output-grid">{visual.outputs.map((item, index) => <OutputCard item={item} key={`v-output-card-${index}`} r={r} />)}</div>{includeLimitations ? <VisualLimitations asSubsection visual={visual} /> : null}</Section>;
 }
 
 function MockOverlay({ mock }: { mock: V2AfterMock }) {

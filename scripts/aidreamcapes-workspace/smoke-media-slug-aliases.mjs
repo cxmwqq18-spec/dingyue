@@ -39,7 +39,11 @@ const MANIFESTS = [
   // Later files win for the same oldPath: the retirement contract redirects
   // the five example addresses to the living hub page after their cards left
   // the relational content with the all-video-examples catalog module.
-  'scripts/manifests/aidreamcapes-hub-example-slug-retirement-2026-11-04.json'
+  'scripts/manifests/aidreamcapes-hub-example-slug-retirement-2026-11-04.json',
+  // The 2026-11-17 retirement contract covers five more crawled video detail
+  // addresses (tool-style pages) whose cards left the content without alias
+  // claims; the mapping lives in RETIRED_HUB_EXAMPLE_ADDRESSES.
+  'scripts/manifests/aidreamcapes-video-tool-slug-retirement-2026-11-17.json'
 ];
 const entries = [];
 for (const file of MANIFESTS) {
