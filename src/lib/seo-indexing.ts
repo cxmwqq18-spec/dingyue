@@ -45,7 +45,11 @@ import {
 import aidreamcapesSiteV2Redirects from "@/lib/aidreamcapes-site-v2-redirects.json";
 
 const aidreamcapesSiteV2RedirectSources = new Set<string>((aidreamcapesSiteV2Redirects as [string, string][]).map(([from]) => from));
-const AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy"];
+const AIDREAMCAPES_V2_STATIC_SITEMAP_PATHS = ["/privacy", "/terms", "/refunds", "/cookies", "/content", "/digital-delivery", "/children-privacy", "/state-privacy", "/partners"];
+/** Code-rendered Aidreamcapes routes that are fully public and indexable but own
+ * no LivePage row or published-route projection, so the generic resolvers never
+ * see them. Closed allowlist: renderer ownership, one entry per public route. */
+const AIDREAMCAPES_RENDERER_OWNED_SITEMAP_PATHS = new Set<string>(["/partners"]);
 
 export const MYDREAMSHOOTS_ORIGIN = "https://www.mydreamshoots.com";
 export const MYDREAMSHOOTS_SITEMAP_URL = `${MYDREAMSHOOTS_ORIGIN}/sitemap.xml`;
@@ -1289,7 +1293,7 @@ export async function sitemapEntriesForSite(state: PlatformState, site: Site): P
               return liveSeo?.index !== false && liveSeo?.robots?.index !== false;
             })
             .map((page) => page.slug),
-          ...AIDREAMCAPES_V2_POLICY_SITEMAP_PATHS
+          ...AIDREAMCAPES_V2_STATIC_SITEMAP_PATHS
         ].filter((path) => !aidreamcapesSiteV2RedirectSources.has(path)))
       : undefined;
     // Keep every Aidreamcapes page URL on the non-www canonical origin and
@@ -2008,6 +2012,12 @@ export function indexableSeoPageEntriesForSite(state: PlatformState, site: Site,
     // do not require one historical LivePage row per public URL, but remain a
     // closed allowlist so arbitrary internal links cannot enter the sitemap.
     if (!indexable && site.id === "site_aidreamcapes_xby" && AIDREAMCAPES_EU_PUBLIC_DETAIL_PATHS.has(canonicalPath)) {
+      indexable = true;
+    }
+    // The Aidreamcapes partner program is rendered by code (no LivePage row and
+    // no published-route projection), so it needs the same renderer-owned,
+    // closed allowlist treatment as the EU tool leaves above.
+    if (!indexable && site.id === AIDREAMCAPES_SITE_ID && AIDREAMCAPES_RENDERER_OWNED_SITEMAP_PATHS.has(canonicalPath)) {
       indexable = true;
     }
     if (!indexable) continue;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, FileText, Send } from "lucide-react";
+import { FileText, Send } from "lucide-react";
 import type { AidreamcapesV2Navigation } from "@/lib/types";
 import { notFound } from "next/navigation";
 import { AidreamcapesV2Shell } from "@/components/storefront/aidreamcapes-v2/shell";
@@ -38,6 +38,25 @@ const QUALITY_BAR = [
   { title: "A testable plan", body: "You can name the first piece of content you would publish and where it would go live." }
 ];
 
+const FAQ_ITEMS: Array<{ q: string; a: string }> = [
+  { q: "Who gets approved?", a: "Creators, agencies and community owners whose audience makes or markets video content: e-commerce sellers, TikTok/Reels educators, dropshipping communities, marketing newsletters and agencies. There is no minimum follower count — we care about fit and activity." },
+  { q: "What do approved partners receive?", a: "The approval email includes your tracking link, dashboard invite and creative kit. The partner terms — shared with you before anything goes live — cover how referrals are recognized. The dashboard shows every referral and its status." },
+  { q: "How is my referral attributed?", a: "Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you." },
+  { q: "Can I run paid ads?", a: "Yes — paid, email and organic are all welcome. We only ask that you do not bid on our brand keywords or run misleading creatives; the terms spell out the details." },
+  { q: "What happens after I submit the form?", a: "The application lands in our partnership queue. You will get an email within 48 hours — approved partners receive their dashboard invite, channel link and creative kit in the same email." }
+];
+
+/** FAQPage JSON-LD for the partner FAQ, kept in sync with FAQ_ITEMS above. */
+const PARTNER_FAQ_JSON_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a }
+  }))
+});
+
 const FOLLOWER_TIERS = [
   { value: "under_5k", label: "Under 5K" },
   { value: "5k_25k", label: "5K – 25K" },
@@ -52,7 +71,9 @@ const CREDIT_PLATFORMS = [
   { value: "x", label: "X / Twitter" }
 ];
 
-export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, duplicate, limited }: { success: boolean; creditsApplied?: boolean; duplicate?: boolean; limited?: boolean }) {
+type CreditsIssue = "duplicate" | "limited" | "invalid";
+
+export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, creditsIssue, duplicate, limited, invalid }: { success: boolean; creditsApplied?: boolean; creditsIssue?: CreditsIssue; duplicate?: boolean; limited?: boolean; invalid?: boolean }) {
   const [chrome, customer] = await Promise.all([
     loadAidreamcapesChrome(),
     getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID)
@@ -153,6 +174,13 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
                 <p>We have already received several applications from your connection today. Please try again tomorrow &mdash; or if you are an agency submitting for multiple creators, email us and we will help.</p>
                 <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
               </div>
+            ) : invalid ? (
+              <div className="prp-form prp-success" role="status" id="apply">
+                <h3>Check the application</h3>
+                <p>We could not accept that submission. A <b>name</b>, a valid <b>email address</b>, a <b>channel link</b> and a short <b>audience description</b> are required.</p>
+                <p className="prp-hint">Everything else is optional &mdash; fill the four fields below and submit again.</p>
+                <Link className="prp-btn-ghost" href="/partners#apply">Fill the application again</Link>
+              </div>
             ) : (
               <form className="prp-form" action="/api/sites/site_aidreamcapes/partner-applications" method="post">
                 <input type="text" name="website_url" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: -9999 }} />
@@ -179,7 +207,7 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
             <div className="prp-sec-head">
               <span className="prp-kicker">Free credits for creators</span>
               <h2>Get free credits for your next video.</h2>
-              <p className="prp-sec-lead">Post a video with <b>#AivideosUGC</b>, submit it below, and once we approve it your account gets 20 free credits &mdash; enough for a full 15s video. Bigger audiences can earn up to 60.</p>
+              <p className="prp-sec-lead">Post a video with <b>#AIVideosUGC</b>, submit it below, and once we approve it your account gets 20 free credits &mdash; enough for a full 15s video. Bigger audiences can earn up to 60.</p>
               <p className="prp-sec-lead">A real person reviews every application &mdash; you&rsquo;ll get an email either way.</p>
               <p className="prp-metaline">One grant per creator &middot; 20&ndash;60 credits &middot; Reviewed by hand &middot; Credits never expire</p>
             </div>
@@ -201,11 +229,23 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
                 ) : (
                   <>
                     <h3>You&rsquo;re in — credits granted 🎉</h3>
-                    <p>Your application was <b>approved</b> and {existingApplication.grantCredits ?? 20} credits landed on your account. Post your next video with <b>#AivideosUGC</b> to keep the momentum.</p>
+                    <p>Your application was <b>approved</b> and {existingApplication.grantCredits ?? 20} credits landed on your account. Post your next video with <b>#AIVideosUGC</b> to keep the momentum.</p>
                     <p className="prp-hint">Spend them from the workspace composer — every job shows its exact cost first.</p>
                   </>
                 )}
                 <Link className="prp-btn-ghost" href="/">Back to aivideosugc.com</Link>
+              </div>
+            ) : creditsIssue ? (
+              <div className="prp-form prp-success" role="status" id="free-credits">
+                <h3>{creditsIssue === "duplicate" ? "You already have a credit application on file" : creditsIssue === "limited" ? "Too many applications from your network" : "Check the credit application"}</h3>
+                {creditsIssue === "duplicate" ? (
+                  <p>A creator gets <b>one grant per account</b>. If a post or profile link needs correcting, sign in to the account and update the application instead of submitting a second one.</p>
+                ) : creditsIssue === "limited" ? (
+                  <p>Several applications already arrived from your connection today. Please try again tomorrow, or email us if you are submitting for a team.</p>
+                ) : (
+                  <p>A <b>profile link</b>, a follower tier and at least one <b>post link that includes #AIVideosUGC</b> are required, and the email on your account has to be a real mailbox.</p>
+                )}
+                <Link className="prp-btn-ghost" href="/app/create/home">Open your account</Link>
               </div>
             ) : customer ? (
               <form className="prp-form" action={`/api/sites/${AIVIDEOSUGC_SITE_ID}/credit-applications`} method="post">
@@ -223,8 +263,8 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
                       ))}
                     </div>
                   </div>
-                  <div className="prp-field prp-full"><label>Posts with #AivideosUGC <em>*</em></label>
-                    <input name="evidencePosts" type="url" placeholder="Post link 1 — must include #AivideosUGC" required />
+                  <div className="prp-field prp-full"><label>Posts with #AIVideosUGC <em>*</em></label>
+                    <input name="evidencePosts" type="url" placeholder="Post link 1 — must include #AIVideosUGC" required />
                     <input name="evidencePosts" type="url" placeholder="Post link 2 (optional)" />
                     <input name="evidencePosts" type="url" placeholder="Post link 3 (optional)" />
                   </div>
@@ -262,11 +302,10 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
           <span className="prp-kicker">FAQ</span>
           <h2>The questions we get before approval.</h2>
           <div className="prp-faq">
-            <details open><summary>Who gets approved?</summary><p>Creators, agencies and community owners whose audience makes or markets video content: e-commerce sellers, TikTok/Reels educators, dropshipping communities, marketing newsletters and agencies. There is no minimum follower count &mdash; we care about fit and activity.</p></details>
-            <details><summary>What do approved partners receive?</summary><p>The approval email includes your tracking link, dashboard invite and creative kit. The partner terms &mdash; shared with you before anything goes live &mdash; cover how referrals are recognized. The dashboard shows every referral and its status.</p></details>
-            <details><summary>How is my referral attributed?</summary><p>Your channel link sets a 90-day cookie. Any subscription opened within that window is attributed to you.</p></details>
-            <details><summary>Can I run paid ads?</summary><p>Yes &mdash; paid, email and organic are all welcome. We only ask that you do not bid on our brand keywords or run misleading creatives; the terms spell out the details.</p></details>
-            <details><summary>What happens after I submit the form?</summary><p>The application lands in our partnership queue. You will get an email within 48 hours &mdash; approved partners receive their dashboard invite, channel link and creative kit in the same email.</p></details>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: PARTNER_FAQ_JSON_LD }} />
+            {FAQ_ITEMS.map((item, index) => (
+              <details key={item.q} open={index === 0}><summary>{item.q}</summary><p>{item.a}</p></details>
+            ))}
           </div>
         </section>
 
@@ -342,6 +381,6 @@ const PRP_CSS = `
 `;
 
 /** Route entry for /partners on the aidreamcapes storefront (both catch-alls). */
-export async function renderAidreamcapesPartnerProgramPage({ success, creditsApplied, duplicate, limited }: { success: boolean; creditsApplied?: boolean; duplicate?: boolean; limited?: boolean }) {
-  return <AidreamcapesPartnerProgramPage success={success} creditsApplied={creditsApplied} duplicate={duplicate} limited={limited} />;
+export async function renderAidreamcapesPartnerProgramPage({ success, creditsApplied, creditsIssue, duplicate, limited, invalid }: { success: boolean; creditsApplied?: boolean; creditsIssue?: CreditsIssue; duplicate?: boolean; limited?: boolean; invalid?: boolean }) {
+  return <AidreamcapesPartnerProgramPage success={success} creditsApplied={creditsApplied} creditsIssue={creditsIssue} duplicate={duplicate} limited={limited} invalid={invalid} />;
 }

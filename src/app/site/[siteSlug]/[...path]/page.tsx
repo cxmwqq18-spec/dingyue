@@ -373,9 +373,24 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     return {
       title: { absolute: title },
       description,
-      alternates: { canonical: "/partners" },
-      openGraph: { title, description, url: "https://www.aivideosugc.com/partners" },
-      twitter: { card: "summary_large_image", title, description }
+      alternates: { canonical: "https://www.aivideosugc.com/partners" },
+      openGraph: {
+        title,
+        description,
+        url: "https://www.aivideosugc.com/partners",
+        images: [{
+          url: "https://www.aivideosugc.com/ai-image-generation/partners-og-card-1200x630.png",
+          width: 1200,
+          height: 630,
+          alt: "AIVideosUGC partner program share card: a phone on a tripod filming a product, with the partner program headline."
+        }]
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: ["https://www.aivideosugc.com/ai-image-generation/partners-og-card-1200x630.png"]
+      }
     };
   }
   const mediaDetail = isAidreamcapesPathModeSite(pathModePublicSlug) ? parseMediaDetailSegments(path) : undefined;
@@ -659,7 +674,7 @@ export default async function SiteCatchAllPage({
   if (slug === "/404") notFound();
   if (isAidreamcapesPathModeSite(publicSlug) && slug === "/partners") {
     const query = searchParams ? await searchParams : {};
-    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied", duplicate: query.partner === "duplicate", limited: query.partner === "limited" });
+    return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied", creditsIssue: query.credits === "duplicate" ? "duplicate" : query.credits === "limited" ? "limited" : query.credits === "invalid" ? "invalid" : undefined, duplicate: query.partner === "duplicate", limited: query.partner === "limited", invalid: query.partner === "invalid" });
   }
   const mediaDetail = isAidreamcapesPathModeSite(publicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
