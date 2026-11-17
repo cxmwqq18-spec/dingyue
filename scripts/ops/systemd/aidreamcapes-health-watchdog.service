@@ -1,0 +1,12 @@
+[Unit]
+Description=Aidreamcapes liveness watchdog (probe, capture a Node report, restart a wedged process)
+After=aidreamcapes.service
+Wants=aidreamcapes.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/aidreamcapes/watchdog.env
+ExecStart=/usr/local/bin/aidreamcapes-health-watchdog
+Nice=5
+IOSchedulingClass=best-effort
+IOSchedulingPriority=6
