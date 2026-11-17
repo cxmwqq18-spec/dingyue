@@ -648,10 +648,15 @@ function resolveGenerationRequest(params: {
   const provider = jsonObject<AiProviderConfig>(params.siteAiApp.providerConfig) ?? { mode: "platform_fallback", fallbackEnabled: true };
   const themeMode = isThemeModeRequest(params.requestJson);
   const videoMode = isVideoModeRequest(params.requestJson) || Boolean(params.videoTheme);
+  // Workspace composers collect their own field set (creative direction, aspect
+  // ratio, duration). Legacy theme-managed fields such as the old storefront
+  // Style/Output count selects are never rendered there, so a workspace job must
+  // not be rejected for omitting them.
+  const workspaceMode = isWorkspaceJobRequest(params.requestJson);
   const fields = normalizePromptInputs(params.requestJson);
   const missingField = workflowFields(workflow).find((field) =>
     field.required &&
-    !((themeMode || videoMode) && isThemeManagedField(field)) &&
+    !((themeMode || videoMode || workspaceMode) && isThemeManagedField(field)) &&
     (fields[field.id] === undefined || fields[field.id] === "")
   );
   if (missingField) throw new StoreError("missing_required_prompt_input", 400);
