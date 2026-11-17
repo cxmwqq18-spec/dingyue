@@ -33,7 +33,14 @@ export const RATE_LIMITS: Record<string, RateLimitConfig> = {
   // 通用API - 每分钟60次
   api: { windowMs: 60000, maxRequests: 60, keyPrefix: "api" },
 
-  // 登录尝试 - 每分钟5次
+  // 登录尝试 - 每分钟 5 次
+  //
+  // This is the deliberate budget, not an accident: the security drill that saw
+  // the sixth attempt answered 429 was observing the design. The counter is
+  // keyed per site and per client IP (see getClientIP, which prefers
+  // cf-connecting-ip so a visitor cannot rotate x-forwarded-for). Narrowing or
+  // widening it changes the brute-force surface of every storefront, so treat a
+  // change here as a security decision and update this comment with it.
   login: { windowMs: 60000, maxRequests: 5, keyPrefix: "login" },
 
   // 注册 - 每小时10次

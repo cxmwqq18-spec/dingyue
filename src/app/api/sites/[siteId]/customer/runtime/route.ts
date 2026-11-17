@@ -826,8 +826,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const timing = createRuntimeTiming();
   const sessionId = (await cookies()).get(customerSessionCookie(siteId))?.value;
   if (!sessionId) {
+    // The unauthenticated response carries the error only. Returning an empty
+    // runtime skeleton here leaked the private runtime shape to anonymous
+    // callers and every client already requires `runtime` before using it.
     return NextResponse.json(
-      { ok: false, error: "customer_login_required", runtime: emptyRuntime() },
+      { ok: false, error: "customer_login_required" },
       { status: 401, headers: { "Server-Timing": timing.header() } }
     );
   }

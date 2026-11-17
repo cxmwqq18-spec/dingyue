@@ -77,7 +77,12 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
           ? "Stripe Connect onboarding is not complete for this site."
           : "Create at least one active subscription or credit pack."
       };
-  const pendingOrders = data.orders.filter((order) => order.status === "created" || order.status === "checkout_started").length;
+  // "Pending payment" means an order the customer actually placed; an order that
+  // never left the hosted checkout page is an abandoned session, not revenue at
+  // risk. Reporting both under one number made the overview look like it had
+  // eight unpaid orders that nobody had to chase.
+  const pendingOrders = data.orders.filter((order) => order.status === "created").length;
+  const abandonedCheckouts = data.orders.filter((order) => order.status === "checkout_started").length;
   const monthOrders = data.orders.filter((order) => withinDays(order.createdAt, 30));
   const monthRevenue = siteRevenue(monthOrders);
   const todayJobs = data.jobs.filter((job) => withinDays(job.createdAt, 1));
@@ -217,9 +222,11 @@ export default async function SiteAdminPage({ params }: { params: Promise<{ site
       label: "待付款订单",
       value: String(pendingOrders),
       href: modulePath(data.site, "/admin/orders"),
-      detail: "Checkout 已创建但 webhook 尚未确认付款。",
+      detail: abandonedCheckouts
+        ? `Checkout 已创建但 webhook 尚未确认付款；另有 ${abandonedCheckouts} 单停留在收银台，尚未完成付款。`
+        : "Checkout 已创建但 webhook 尚未确认付款。",
       owner: "订单订阅",
-      tone: pendingOrders ? "warn" : "good"
+      tone: pendingOrders || abandonedCheckouts ? "warn" : "good"
     },
     {
       label: "待发布草稿",

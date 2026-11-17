@@ -148,7 +148,11 @@ const nextConfig = {
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
-      { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+      // Phase one of the CSP rollout: directives that cannot break the current
+      // Next.js runtime. No external form target exists in either storefront, and
+      // object/base-uri hardening does not touch inline scripts, so script-src
+      // stays out until it can ship with a nonce or Report-Only collection.
+      { key: "Content-Security-Policy", value: "frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" },
       {
         key: "Permissions-Policy",
         value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()"

@@ -9,6 +9,7 @@ import { loadAidreamcapesChrome } from "@/lib/aidreamcapes-workspace/media-detai
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
+import { creditLabel } from "@/lib/format-credits";
 
 /** The public partner-program page: standard storefront chrome, creators-circle
  * content flow (audience fit -> how it works -> apply -> free credits -> quality
@@ -229,7 +230,7 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
                 ) : (
                   <>
                     <h3>You&rsquo;re in — credits granted 🎉</h3>
-                    <p>Your application was <b>approved</b> and {existingApplication.grantCredits ?? 20} credits landed on your account. Post your next video with <b>#AIVideosUGC</b> to keep the momentum.</p>
+                    <p>Your application was <b>approved</b> and {creditLabel(existingApplication.grantCredits ?? 20)} landed on your account. Post your next video with <b>#AIVideosUGC</b> to keep the momentum.</p>
                     <p className="prp-hint">Spend them from the workspace composer — every job shows its exact cost first.</p>
                   </>
                 )}

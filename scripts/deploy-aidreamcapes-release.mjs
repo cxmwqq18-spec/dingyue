@@ -120,6 +120,51 @@ if (/^[a-f0-9]{40}$/.test(liveCommit)) {
   const keepsLive = spawnSync("git", ["merge-base", "--is-ancestor", liveCommit, commit]).status === 0;
   assert(keepsLive, `Refusing to deploy ${commit}: the live commit ${liveCommit} is not an ancestor of it, so this release would roll the site back.`);
   console.log(JSON.stringify({ liveCommit, containsLiveCommit: true }));
+  assertPublicAssetsShipCommittedBytes(liveCommit);
+}
+// A release fills public/ from the live release and then overwrites only the
+// paths listed in productionAssetPaths. A tracked public file that changed in
+// git without being listed keeps serving the older bytes forever; that is how
+// /llms-full.txt stayed on a previous month's copy across several releases.
+// Compare the live copies against the committed blobs and refuse to ship stale
+// public files instead of discovering the drift after the release.
+function assertPublicAssetsShipCommittedBytes(baseCommit) {
+  const publicBlobMap = (sha) => {
+    const map = new Map();
+    for (const line of git("ls-tree", "-r", sha, "--", "public").split("\n")) {
+      if (!line) continue;
+      const tab = line.indexOf("\t");
+      map.set(line.slice(tab + 1), line.slice(0, tab).split(" ")[2]);
+    }
+    return map;
+  };
+  const covered = (assetPath) => productionAssetPaths.some((asset) => assetPath === asset || assetPath.startsWith(`${asset}/`));
+  const commitPublic = publicBlobMap(commit);
+  const basePublic = publicBlobMap(baseCommit);
+  // Files only in the base are deleted from git but resurrected by the copy step.
+  // They are reported, not refused: they serve unchanged bytes, so they cannot
+  // make a page show content the release did not ship.
+  const resurrected = [...basePublic.keys()].filter((assetPath) => !commitPublic.has(assetPath));
+  const inherited = [...commitPublic.keys()]
+    .filter((assetPath) => !covered(assetPath))
+    .map((assetPath) => assetPath.replace(/^public\//, ""));
+  const remote = spawnSync(
+    "ssh",
+    ["-p", port, ...connection, host, `cd ${quote(`${root}/current/public`)} && git hash-object --stdin-paths`],
+    { input: `${inherited.join("\n")}\n`, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }
+  );
+  assert.equal(remote.status, 0, `Refusing to deploy: could not read the live public asset hashes (${String(remote.stderr ?? "").trim().slice(0, 300)})`);
+  const liveHashes = String(remote.stdout ?? "").trim().split("\n");
+  const stale = [];
+  inherited.forEach((assetPath, index) => {
+    if (liveHashes[index] !== commitPublic.get(`public/${assetPath}`)) stale.push(assetPath);
+  });
+  assert.equal(
+    stale.length,
+    0,
+    `Refusing to deploy ${commit}: ${stale.length} tracked public file(s) differ from the live release but are not in productionAssetPaths, so this release would keep serving the older bytes: ${stale.slice(0, 5).join(", ")}${stale.length > 5 ? ", ..." : ""}. Add the path to productionAssetPaths or move it out of public/.`
+  );
+  console.log(JSON.stringify({ publicAssetsMatchLiveBytes: true, inheritedPaths: inherited.length, resurrectedPaths: resurrected.length }));
 }
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), "aidreamcapes-release-"));
 const archive = path.join(temp, "source.tar");
