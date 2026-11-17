@@ -60,6 +60,11 @@ const productionAssetPaths = [
   "public/assets/sites/site_aidreamcapes/v2-responsive",
   // Workspace guide screenshots and interaction loops for /guides.
   "public/assets/sites/site_aidreamcapes/guides",
+  // The committed full-content companion of /llms.txt. It is generated from the
+  // live page copy, so a release that regenerates it has to ship the file; a
+  // public directory copied from the previous release would keep serving the
+  // older text.
+  "public/llms-full.txt",
 ];
 const archivePaths = [...sourcePaths, ...productionAssetPaths];
 const root = "/www/wwwroot/aidreamcapes.com";

@@ -472,6 +472,7 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
       title: { absolute: title },
       description,
       alternates: { canonical: "https://www.aivideosugc.com/partners" },
+      robots: { index: true, follow: true, "max-image-preview": "large" },
       openGraph: {
         title,
         description,
