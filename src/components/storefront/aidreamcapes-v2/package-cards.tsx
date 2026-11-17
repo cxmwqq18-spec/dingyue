@@ -86,7 +86,8 @@ export const pricingPageCss = `
 .adc2 .v2-pp-center .faq .sec-head{text-align:center;align-items:center;margin-bottom:28px}
 .adc2 .v2-pp-center .specs{max-width:900px;margin:0 auto}
 .adc2 .v2-pp-center .meta-line{text-align:center}
-@media(max-width:900px){.adc2 .v2-pp-grid,.adc2 .v2-pp-packs,.adc2 .v2-pp-steps{grid-template-columns:minmax(0,1fr)}.adc2 .v2-pp-periods{flex-wrap:wrap;border-radius:18px}}
+@media(max-width:900px){.adc2 .v2-pp-grid,.adc2 .v2-pp-packs,.adc2 .v2-pp-steps{grid-template-columns:minmax(0,1fr)}.adc2 .v2-pp-periods{width:auto;max-width:100%;flex-wrap:wrap;border-radius:18px}.adc2 .v2-pp-periods button{min-width:0;flex:1 1 auto;padding:10px 12px}}
+@media(max-width:420px){.adc2 .v2-pp-periods{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;border-radius:16px}.adc2 .v2-pp-periods button{width:100%;justify-content:space-between}}
 `;
 
 const TERMS: V2PricingTerm[] = ["1", "6", "12"];

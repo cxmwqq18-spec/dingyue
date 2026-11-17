@@ -9,7 +9,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Clapperboard, Image as ImageIcon, Loader2, Search, Sparkles, X } from "lucide-react";
 import styles from "./inspirations-embedded.module.css";
 
-import { INSPIRATIONS_PAGE_SIZE, INSPIRATIONS_PREVIEW_SECONDS, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
+import { INSPIRATIONS_PAGE_SIZE, type InspirationExample, type InspirationPage } from "@/lib/aidreamcapes-inspirations-types";
 
 export type EmbeddedInspiration = InspirationExample;
 
@@ -201,8 +201,8 @@ function CardModal({ card, position, total, onClose, onPrevious, onNext }: {
 
 /** One gallery card. Visible cards play their lightweight 10-second preview
  * clip by default (muted, looping, paused when scrolled away); full-video
- * cards without a preview clip stay hover-to-play. Clicking still opens the
- * full example. */
+ * cards without a preview clip stay hover-to-play. Moving the pointer away
+ * pauses and rewinds the preview so it never looks like it is still playing. */
 function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOpen: () => void }) {
   const cardRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -211,12 +211,10 @@ function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOp
   const start = () => {
     const video = videoRef.current;
     if (!video) return;
-    setPlaying(true);
     video.currentTime = 0;
     void video.play().catch(() => setPlaying(false));
   };
   const stop = () => {
-    setPlaying(false);
     const video = videoRef.current;
     if (!video) return;
     video.pause();
@@ -240,7 +238,6 @@ function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOp
       observer.disconnect();
       video.pause();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasPreviewClip]);
   return (
     <button
@@ -248,11 +245,11 @@ function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOp
       aria-label={`Open ${card.label} example`}
       className={styles.card}
       data-inspiration-card={card.id}
-      onBlur={hasPreviewClip ? undefined : stop}
+      onBlur={stop}
       onClick={onOpen}
-      onFocus={hasPreviewClip ? undefined : start}
-      onMouseEnter={hasPreviewClip ? undefined : start}
-      onMouseLeave={hasPreviewClip ? undefined : stop}
+      onFocus={start}
+      onMouseEnter={start}
+      onMouseLeave={stop}
       type="button"
     >
       <span className={styles.cardImage}>
@@ -263,10 +260,15 @@ function InspirationCardItem({ card, onOpen }: { card: EmbeddedInspiration; onOp
             aria-hidden="true"
             className={playing ? `${styles.cardVideo} ${styles.cardVideoPlaying}` : styles.cardVideo}
             data-inspiration-preview={card.id}
+            loop={hasPreviewClip}
             muted
-            onTimeUpdate={(event) => {
-              if (event.currentTarget.currentTime >= INSPIRATIONS_PREVIEW_SECONDS) event.currentTarget.currentTime = 0;
+            onEnded={(event) => {
+              event.currentTarget.currentTime = 0;
+              if (hasPreviewClip) void event.currentTarget.play().catch(() => setPlaying(false));
+              else setPlaying(false);
             }}
+            onPause={() => setPlaying(false)}
+            onPlay={() => setPlaying(true)}
             playsInline
             poster={card.video.poster?.src ?? card.imageSrc}
             preload="metadata"
