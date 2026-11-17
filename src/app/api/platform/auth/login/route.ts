@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { StoreError } from "@/lib/server-store";
 import { platformSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { checkRateLimitOrResponse, getClientIP, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { clearPlatformSessionAuthCache } from "@/lib/api-auth";
 import { createPlatformAdminSessionRelational } from "@/lib/stores/platform-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
-  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `platform:${request.headers.get("x-forwarded-for") ?? "local"}`);
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `platform:${getClientIP(request)}`);
   if (!limited.allowed) return limited.response;
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string };
   if (typeof body.email !== "string" || typeof body.password !== "string") {

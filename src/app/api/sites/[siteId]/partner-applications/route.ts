@@ -1,27 +1,24 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { RATE_LIMITS, checkRateLimitOrResponse } from "@/lib/security/rate-limit";
+import { RATE_LIMITS, checkRateLimitOrResponse, getClientIP } from "@/lib/security/rate-limit";
 import { StoreError } from "@/lib/server-store";
 import { createPartnerApplicationRelational } from "@/lib/stores/partner-application-store";
 
 // Native form posts bounce back to the page with a flag instead of raw JSON;
-// JSON callers keep the error body.
+// JSON callers keep the error body. Validation problems map to one `invalid`
+// state so a browser submission always ends on a page with a next step.
 const formDataErrorFlags: Record<string, string> = {
   partner_application_already_applied: "duplicate",
-  partner_application_ip_rate_limited: "limited"
+  partner_application_ip_rate_limited: "limited",
+  invalid_partner_email: "invalid",
+  partner_name_required: "invalid",
+  partner_audience_required: "invalid",
+  partner_channel_required: "invalid"
 };
-
-/** First real client IP: Cloudflare's injected header, else the first XFF hop. */
-function clientIp(request: NextRequest): string | undefined {
-  const direct = request.headers.get("cf-connecting-ip")?.trim();
-  if (direct) return direct.slice(0, 64);
-  const first = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  return first ? first.slice(0, 64) : undefined;
-}
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const ip = clientIp(request);
-  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.register, `${siteId}:partner:${ip ?? request.headers.get("x-forwarded-for") ?? "unknown"}`);
+  const ip = getClientIP(request);
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.register, `${siteId}:partner:${ip}`);
   if (!limited.allowed) return limited.response;
 
   const contentType = request.headers.get("content-type") ?? "";
@@ -52,8 +49,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       }
     });
     if (!contentType.includes("application/json")) {
-      const referer = request.headers.get("referer");
-      if (referer) return NextResponse.redirect(new URL(`${referer}${referer.includes("?") ? "&" : "?"}partner=success`, request.url), 303);
+      return formRedirect(request, "partner=success");
     }
     return NextResponse.json({ ok: true, application: result.receipt });
   } catch (error) {
@@ -61,9 +57,31 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     const code = error instanceof Error ? error.message : "partner_application_submit_failed";
     if (!contentType.includes("application/json") && error instanceof StoreError) {
       const flag = formDataErrorFlags[code];
-      const referer = request.headers.get("referer");
-      if (flag && referer) return NextResponse.redirect(new URL(`${referer}${referer.includes("?") ? "&" : "?"}partner=${flag}`, request.url), 303);
+      if (flag) return formRedirect(request, `partner=${flag}`);
     }
     return NextResponse.json({ error: code }, { status });
   }
+}
+
+/**
+ * Send a native form submission back to the partner page with a state flag.
+ *
+ * A browser form post normally carries a Referer, but referrer policy, privacy
+ * settings and automation can drop it, and the earlier fallback answered those
+ * submissions with a bare `{"ok":true}` page. Always land on a real page instead.
+ */
+function formRedirect(request: NextRequest, query: string): NextResponse {
+  const referer = request.headers.get("referer");
+  let target: URL;
+  try {
+    const origin = new URL(request.url).origin;
+    const fromReferer = referer ? new URL(referer) : null;
+    target = new URL(fromReferer && fromReferer.origin === origin ? fromReferer : new URL("/partners", origin));
+  } catch {
+    target = new URL("/partners", request.url);
+  }
+  target.searchParams.delete("partner");
+  target.searchParams.append("partner", query.slice("partner=".length));
+  target.hash = "";
+  return NextResponse.redirect(target, 303);
 }

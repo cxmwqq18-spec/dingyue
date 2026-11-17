@@ -4,12 +4,12 @@ import { clearCustomerSessionAuthCache, primeCustomerSessionAuthCache } from "@/
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { checkRateLimitOrResponse, getClientIP, RATE_LIMITS } from "@/lib/security/rate-limit";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer-email-verify:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer-email-verify:${siteId}:${getClientIP(request)}`);
   if (!limited.allowed) return limited.response;
 
   const body = (await request.json().catch(() => ({}))) as { email?: string; code?: string; password?: string; confirmPassword?: string; purpose?: "register" | "password_reset"; name?: string };
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       confirmPassword: body.confirmPassword,
       purpose: body.purpose,
       name: body.name,
-      signupIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined,
+      signupIp: getClientIP(request),
       signupUa: request.headers.get("user-agent") ?? undefined
     });
     if (body.purpose === "password_reset") clearCustomerSessionAuthCache(siteId, result.customer.id);

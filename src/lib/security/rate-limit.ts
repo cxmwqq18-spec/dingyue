@@ -122,17 +122,31 @@ export function checkRateLimit(
 /**
  * 从请求中获取客户端IP
  */
+/**
+ * Accept only values that look like a single IPv4/IPv6 address, so a header
+ * value cannot inject an arbitrary rate-limit key.
+ */
+function normalizedIp(value: string | null | undefined): string | undefined {
+  const candidate = value?.split(",")[0]?.trim() ?? "";
+  if (!candidate || candidate.length > 45) return undefined;
+  return /^[0-9a-fA-F:.]+$/.test(candidate) && /[0-9]/.test(candidate) ? candidate : undefined;
+}
+
 export function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get("x-forwarded-for");
-  const realIp = request.headers.get("x-real-ip");
+  // Cloudflare overwrites CF-Connecting-IP at the edge, so a visitor cannot
+  // rotate it to escape a per-visitor limit. X-Forwarded-For still carries
+  // whatever the client sent ahead of the real hop, which is why limits keyed
+  // on it (and on its first entry) were bypassable by changing the header.
+  const cloudflareIp = normalizedIp(request.headers.get("cf-connecting-ip"));
+  if (cloudflareIp) return cloudflareIp;
 
-  if (forwarded) {
-    return forwarded.split(",")[0].trim();
-  }
+  // The origin allowlist keeps direct-to-origin traffic out, and the origin
+  // rewrites X-Real-IP from the proxy-observed address.
+  const realIp = normalizedIp(request.headers.get("x-real-ip"));
+  if (realIp) return realIp;
 
-  if (realIp) {
-    return realIp;
-  }
+  const forwarded = normalizedIp(request.headers.get("x-forwarded-for"));
+  if (forwarded) return forwarded;
 
   return "unknown";
 }

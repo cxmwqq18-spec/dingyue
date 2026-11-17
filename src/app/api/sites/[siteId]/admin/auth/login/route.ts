@@ -3,13 +3,13 @@ import { primeSiteAdminSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { shouldUseSecureCookie, siteAdminSessionCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { checkRateLimitOrResponse, getClientIP, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { createSiteAdminSessionRelational } from "@/lib/stores/site-store";
 import type { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `site-admin:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `site-admin:${siteId}:${getClientIP(request)}`);
   if (!limited.allowed) return limited.response;
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string };
   if (!body.email || !body.password) {

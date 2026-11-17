@@ -3,7 +3,7 @@ import { primeCustomerSessionAuthCache } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import { customerSessionCookie, shouldUseSecureCookie } from "@/lib/session";
 import { setCsrfCookie } from "@/lib/security/csrf";
-import { checkRateLimitOrResponse, RATE_LIMITS } from "@/lib/security/rate-limit";
+import { checkRateLimitOrResponse, getClientIP, RATE_LIMITS } from "@/lib/security/rate-limit";
 import { createExistingCustomerSessionRelational } from "@/lib/stores/customer-store";
 import type { NextRequest } from "next/server";
 
@@ -15,7 +15,7 @@ function isDatabaseUnavailableError(error: unknown): boolean {
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ siteId: string }> }) {
   const { siteId } = await params;
-  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer:${siteId}:${request.headers.get("x-forwarded-for") ?? "local"}`);
+  const limited = checkRateLimitOrResponse(request, RATE_LIMITS.login, `customer:${siteId}:${getClientIP(request)}`);
   if (!limited.allowed) return limited.response;
   const body = (await request.json().catch(() => ({}))) as { email?: string; password?: string; name?: string };
   if (!body.email || !body.password) {
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       siteId,
       email: body.email,
       password: body.password,
-      lastLoginIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || undefined
+      lastLoginIp: getClientIP(request)
     });
     primeCustomerSessionAuthCache({ customer: result.customer, session: result.session, sessionId: result.session.id });
     const response = NextResponse.json({
