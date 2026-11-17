@@ -16,6 +16,10 @@ const statusSet = new Set<string>(statuses);
 const IP_DAILY_LIMIT = 5;
 const dayMs = 24 * 60 * 60 * 1000;
 
+function isPrismaErrorCode(error: unknown, code: string): boolean {
+  return Boolean(error && typeof error === "object" && "code" in error && (error as { code?: unknown }).code === code);
+}
+
 export type PartnerApplicationCreateInput = {
   siteId: string;
   name: string;
@@ -136,27 +140,35 @@ export async function createPartnerApplicationRelational(
     if (recentFromIp >= IP_DAILY_LIMIT) throw new StoreError("partner_application_ip_rate_limited", 429);
   }
 
-  const application = await client.partnerApplication.create({
-    data: {
-      id: relationalUid(`partner_${site.slug}`),
-      siteId: input.siteId,
-      email,
-      name,
-      company: cleanText(input.company, 160),
-      website: cleanUrl(input.website),
-      socialLinks: socialLinks.length ? socialLinks : undefined,
-      audience,
-      cadence: cleanText(input.cadence, 240),
-      campaignIdeas: cleanLongText(input.campaignIdeas, 2000),
-      message: cleanLongText(input.message, 2000),
-      status: "pending",
-      source: cleanText(input.source, 120) ?? (site.id === "site_dreamshoot" || site.slug === "mydreamshoots" ? "creators-circle" : "partner-registration"),
-      metadata: (input.metadata || submitIp
-        ? { ...(input.metadata ?? {}), ...(submitIp ? { ip: submitIp } : {}) }
-        : undefined) as Prisma.InputJsonValue | undefined
-    },
-    select: applicationSelect()
-  });
+  let application;
+  try {
+    application = await client.partnerApplication.create({
+      data: {
+        id: relationalUid(`partner_${site.slug}`),
+        siteId: input.siteId,
+        email,
+        name,
+        company: cleanText(input.company, 160),
+        website: cleanUrl(input.website),
+        socialLinks: socialLinks.length ? socialLinks : undefined,
+        audience,
+        cadence: cleanText(input.cadence, 240),
+        campaignIdeas: cleanLongText(input.campaignIdeas, 2000),
+        message: cleanLongText(input.message, 2000),
+        status: "pending",
+        source: cleanText(input.source, 120) ?? (site.id === "site_dreamshoot" || site.slug === "mydreamshoots" ? "creators-circle" : "partner-registration"),
+        metadata: (input.metadata || submitIp
+          ? { ...(input.metadata ?? {}), ...(submitIp ? { ip: submitIp } : {}) }
+          : undefined) as Prisma.InputJsonValue | undefined
+      },
+      select: applicationSelect()
+    });
+  } catch (error) {
+    // 并发同邮箱提交可能同时通过上面的预检查，由部分唯一索引兜底；返回与
+    // 预检查一致的 duplicate 语义而不是 500。
+    if (isPrismaErrorCode(error, "P2002")) throw new StoreError("partner_application_already_applied", 409);
+    throw error;
+  }
   const mapped = toPartnerApplicationRelational(application as unknown as Record<string, unknown>);
   return {
     application: mapped,

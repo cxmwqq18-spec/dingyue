@@ -5,11 +5,44 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+type RateLimitEntry = { count: number; resetTime: number };
+
 // 内存存储（生产环境应使用Redis）
-const rateLimitStore =
-  ((globalThis as typeof globalThis & {
-    __dingyueRateLimitStore?: Map<string, { count: number; resetTime: number }>;
-  }).__dingyueRateLimitStore ??= new Map<string, { count: number; resetTime: number }>());
+const rateLimitGlobals = globalThis as typeof globalThis & {
+  __dingyueRateLimitStore?: Map<string, RateLimitEntry>;
+  __dingyueRateLimitSweepTimer?: { unref?: () => void };
+};
+const rateLimitStore = (rateLimitGlobals.__dingyueRateLimitStore ??= new Map<string, RateLimitEntry>());
+
+// 记录只在被再次访问时才会过期重建，冷 key（如每个不同的 IPv6 地址）会让 Map
+// 无界增长。周期性清扫过期 key，把内存占用压回活跃窗口规模。
+const RATE_LIMIT_SWEEP_INTERVAL_MS = 5 * 60 * 1000;
+
+function sweepExpiredRateLimits(): void {
+  const now = Date.now();
+  for (const [key, record] of rateLimitStore) {
+    if (now > record.resetTime) rateLimitStore.delete(key);
+  }
+}
+
+function startRateLimitSweeper(): void {
+  if (rateLimitGlobals.__dingyueRateLimitSweepTimer) return;
+  try {
+    const timer = setInterval(sweepExpiredRateLimits, RATE_LIMIT_SWEEP_INTERVAL_MS) as unknown as {
+      unref?: () => void;
+    };
+    timer.unref?.();
+    rateLimitGlobals.__dingyueRateLimitSweepTimer = timer;
+  } catch {
+    // 该运行时不可用定时器时跳过；checkRateLimit 的惰性过期仍然生效。
+  }
+}
+
+// 仅在 Node runtime 启动清扫定时器；edge isolate 生命周期短且 unref 不可用，
+// 交给惰性过期即可。
+if (typeof process !== "undefined" && typeof process.versions?.node === "string") {
+  startRateLimitSweeper();
+}
 export interface RateLimitConfig {
   windowMs: number;      // 时间窗口（毫秒）
   maxRequests: number;  // 窗口内最大请求数

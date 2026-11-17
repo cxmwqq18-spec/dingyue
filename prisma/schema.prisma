@@ -1696,6 +1696,9 @@ model PartnerApplication {
   @@index([siteId, status])
   @@index([siteId, createdAt])
   @@index([siteId, status, createdAt])
+  // One live (pending/approved) application per (siteId, email) is enforced by
+  // the partial unique index in migration 20261118120000_partner_email_unique;
+  // Prisma cannot express partial indexes, so it lives only in SQL there.
   @@index([siteId, email])
 }
 
