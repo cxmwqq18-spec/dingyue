@@ -130,8 +130,11 @@ export async function POST(request: NextRequest, { params }: Context) {
       }
       totalCredits += quote.credits!;
     }
-    const balance = await prisma.creditBalance.findFirst({ where: { siteId, customerId }, select: { balance: true, reserved: true } });
-    const available = (balance?.balance ?? 0) - (balance?.reserved ?? 0);
+    // balance is the net spendable amount: reserving already moves credits out
+    // of balance into reserved, so subtracting reserved here double-counts and
+    // rejects affordable batches.
+    const balance = await prisma.creditBalance.findFirst({ where: { siteId, customerId }, select: { balance: true } });
+    const available = balance?.balance ?? 0;
     if (totalCredits > available) {
       return workspaceResponse({ error: "insufficient_batch_credits", required: totalCredits, available }, 402);
     }

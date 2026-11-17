@@ -29,6 +29,10 @@ function isHtmlResponse(response) {
 
 function shouldInterceptHtmlPath(pathname) {
   return !(
+    // /api streams (SSE job-events) never call end until the client goes away;
+    // buffering their writes here would hold every byte forever. API routes
+    // never return HTML that needs the SEO head reorder.
+    /^\/api(?:\/|$)/i.test(pathname) ||
     /^\/(?:assets|fonts|themes|_next)(?:\/|$)/i.test(pathname) ||
     /^\/(?:favicon(?:\.ico|\.svg)?|robots\.txt|sitemap(?:\.xml)?)(?:$|\/)/i.test(pathname)
   );
