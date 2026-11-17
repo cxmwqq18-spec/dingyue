@@ -416,7 +416,7 @@ export function prepareCompressedCustomerImage(params: {
   const outputPath = path.join(tempDir, "output.webp");
   try {
     fs.writeFileSync(inputPath, params.bytes);
-    execFileSync(cwebpBin, ["-quiet", "-q", String(quality), inputPath, "-o", outputPath], { stdio: "ignore" });
+    execFileSync(cwebpBin, ["-quiet", "-q", String(quality), inputPath, "-o", outputPath], { stdio: "ignore", timeout: 30_000 });
     const compressed = fs.readFileSync(outputPath);
     if (!compressed.length || compressed.length >= params.bytes.length) {
       return { ...params, compressed: false };

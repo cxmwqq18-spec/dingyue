@@ -12,7 +12,8 @@ export type VideoProviderAvailabilityReason =
   | "ai_provider_video_content_unverified_magic666"
   | "ai_provider_video_reference_channel_unreliable_smartpicklid"
   | "ai_provider_video_first_frame_required_lk888_media"
-  | "ai_provider_video_reference_required_huitu";
+  | "ai_provider_video_reference_required_huitu"
+  | "ai_provider_video_channel_disabled_aivideosugc_wan1080";
 
 export type VideoProviderAvailabilityInput = {
   id?: string;
@@ -85,6 +86,14 @@ export function shouldAllowSmartPickLidReferenceVideo() {
   return envFlag("AI_WORKER_ALLOW_SMARTPICKLID_REFERENCE_VIDEO") ?? true;
 }
 
+/** Kill switch for the aidreamcapes dedicated wan-1080p channel (local.video.grok):
+ * set AI_WORKER_ALLOW_AIVIDEOSUGC_WAN1080_VIDEO=0 to refuse it at both the
+ * submit-side availability check and the dispatch loop while a provider-side
+ * incident is investigated. */
+export function shouldAllowAivideosugcWan1080VideoProvider() {
+  return envFlag("AI_WORKER_ALLOW_AIVIDEOSUGC_WAN1080_VIDEO") ?? true;
+}
+
 export function videoProviderAvailabilityReason(
   provider: VideoProviderAvailabilityInput,
   params: { referenceAssetCount: number }
@@ -92,6 +101,9 @@ export function videoProviderAvailabilityReason(
   const model = provider.modelType?.trim() ?? "";
   if (provider.providerType !== "video" && !isVideoProviderModel(model)) return "ai_provider_not_video_model";
   if (provider.enabled === false) return "ai_provider_disabled";
+  if (provider.id === "aiprov_aivideosugc_wan1080" && !shouldAllowAivideosugcWan1080VideoProvider()) {
+    return "ai_provider_video_channel_disabled_aivideosugc_wan1080";
+  }
   if (!provider.aiUrl?.trim()) return "ai_provider_url_missing";
   if (!provider.apiKey?.trim()) return "ai_provider_api_key_missing";
 

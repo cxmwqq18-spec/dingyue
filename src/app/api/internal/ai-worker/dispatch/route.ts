@@ -65,6 +65,7 @@ import { MAX_MULTI_REFERENCE_VIDEO_FRAME_LIMIT, VIDEO_RESOLUTIONS, normalizeVide
 import { orderAiProviderFallbackCandidates, orderSelectableAiProviderFallbackCandidates, shouldTryNextPaidVideoProvider } from "@/lib/video-provider-fallback";
 import { isTokengoMediaBaseUrl, isYinglingApiBaseUrl, videoProviderMatchesModelPreference, videoProviderModelFamilyForProvider, videoProviderProtocolForBaseUrl, type VideoProviderProtocol } from "@/lib/video-provider-family";
 import { isVideoProviderModel } from "@/lib/video-provider-limits";
+import { PROVIDER_JSON_BODY_MAX_BYTES, PROVIDER_REFERENCE_BODY_MAX_BYTES, PROVIDER_RESULT_BODY_MAX_BYTES, readBodyWithDeadline, readJsonWithDeadline } from "@/lib/provider-body-read";
 import { videoProviderAvailabilityReason } from "@/lib/video-provider-availability";
 import {
   attachVideoProviderFailure,
@@ -2143,7 +2144,12 @@ async function generateVideoSceneImageWithEdit(params: {
     params.timeoutMs,
     `ai_provider_video_scene_image_edit_timeout_${params.timeoutMs}`
   );
-  const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
+  const body = await readJsonWithDeadline<ImageGenerationResponse>(response, {
+    maxBytes: PROVIDER_JSON_BODY_MAX_BYTES,
+    timeoutMs: params.timeoutMs,
+    timeoutError: `ai_provider_video_scene_image_edit_body_timeout_${params.timeoutMs}`,
+    signal: params.signal
+  });
   if (!response.ok) {
     throw new Error(`ai_provider_video_scene_image_edit_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
   }
@@ -2261,7 +2267,12 @@ async function buildVideoReferenceForm(params: {
     );
     if (!response.ok) throw new Error(`ai_provider_video_reference_image_failed_${asset.assetId}_${response.status}`);
     const mimeType = response.headers.get("content-type")?.split(";")[0]?.trim() || "image/png";
-    const bytes = new Uint8Array(await response.arrayBuffer());
+    const bytes = new Uint8Array(await readBodyWithDeadline(response, {
+      maxBytes: PROVIDER_REFERENCE_BODY_MAX_BYTES,
+      timeoutMs: Math.min(params.timeoutMs, 60_000),
+      timeoutError: `ai_provider_video_reference_body_timeout_${asset.assetId}`,
+      signal: params.signal
+    }));
     const prepared = await prepareVideoReferenceImage(bytes, mimeType, params.videoParams.size);
     form.append("input_reference", new Blob([prepared.bytes], { type: prepared.mimeType }), `input-reference-${index + 1}-${asset.assetId}.${extensionForMime(prepared.mimeType)}`);
   }
@@ -3038,7 +3049,12 @@ async function createVideoTask(params: {
     cache: "no-store",
     signal: params.signal
   }, createTimeoutMs, `ai_provider_video_create_timeout_${createTimeoutMs}`);
-  const body = (await response.json().catch(() => ({}))) as VideoGenerateResponse;
+  const body = await readJsonWithDeadline<VideoGenerateResponse>(response, {
+    maxBytes: PROVIDER_JSON_BODY_MAX_BYTES,
+    timeoutMs: createTimeoutMs,
+    timeoutError: `ai_provider_video_create_body_timeout_${createTimeoutMs}`,
+    signal: params.signal
+  });
   const taskId = videoTaskId(body);
   if (!response.ok || !taskId) {
     const referenceCount = params.protocol === "openai-videos" ? params.referenceAssets.length : params.imageUrls.length;
@@ -3315,7 +3331,12 @@ async function downloadVideoResult(params: {
       });
       if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
       const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
-      const bytes = Buffer.from(await response.arrayBuffer());
+      const bytes = await readBodyWithDeadline(response, {
+        maxBytes: PROVIDER_RESULT_BODY_MAX_BYTES,
+        timeoutMs: Math.min(params.timeoutMs, 300_000),
+        timeoutError: "ai_provider_video_download_body_timeout",
+        signal: params.signal
+      });
       if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
       return { bytes, mimeType };
     }, params.signal);
@@ -3351,7 +3372,12 @@ async function downloadVideoResult(params: {
     }, Math.min(params.timeoutMs, 120_000), "ai_provider_video_download_timeout");
     if (!response.ok) throw new Error(`ai_provider_video_download_failed_${response.status}`);
     const mimeType = normalizedVideoMimeType(response.headers.get("content-type") ?? "video/mp4");
-    const bytes = Buffer.from(await response.arrayBuffer());
+    const bytes = await readBodyWithDeadline(response, {
+      maxBytes: PROVIDER_RESULT_BODY_MAX_BYTES,
+      timeoutMs: Math.min(params.timeoutMs, 300_000),
+      timeoutError: "ai_provider_video_download_body_timeout",
+      signal: params.signal
+    });
     if (!bytes.length) throw new Error("ai_provider_video_empty_payload");
     return { bytes, mimeType };
   }, params.signal);
@@ -3789,7 +3815,12 @@ async function generateWithProvider(params: {
               cache: "no-store",
               signal: params.signal
             }, timeoutMs, `ai_provider_generation_timeout_${timeoutMs}`);
-          const body = (await response.json().catch(() => ({}))) as ImageGenerationResponse;
+          const body = await readJsonWithDeadline<ImageGenerationResponse>(response, {
+            maxBytes: PROVIDER_JSON_BODY_MAX_BYTES,
+            timeoutMs,
+            timeoutError: `ai_provider_generation_body_timeout_${timeoutMs}`,
+            signal: params.signal
+          });
           if (!response.ok) {
             const mode = hasInputImages ? "image_edit" : "generation";
             throw new Error(`ai_provider_${mode}_failed_${response.status}_${JSON.stringify(body).slice(0, 240)}`);
