@@ -42,7 +42,10 @@ const RETIRED_HUB_EXAMPLE_ADDRESSES: Readonly<Record<string, string>> = {
   // surviving same-shape detail page, never 404.
   "talking-photo": "/ai-video-generation/talking-head-skin-lesson",
   "talking-head-video": "/ai-video-generation/talking-head-skin-lesson",
-  "product-ad-video": "/ai-video-generation/promo-video",
+  // The first target here was the /promo-video tool page, which renders four
+  // workspace entries and cannot satisfy the one-CTA rule every retired
+  // address promises, so the same-shape example detail page is used instead.
+  "product-ad-video": "/ai-video-generation/candle-cozy-gift",
   "bottle-ad-with-a-person": "/ai-video-generation/water-bottle-demo-cap-twists-open",
   "close-unboxing-makeup-tools-ai-video-generation-cinematic-video": "/ai-video-generation/quiet-unboxing-makeup-tools"
 };

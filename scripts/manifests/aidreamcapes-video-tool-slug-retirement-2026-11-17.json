@@ -10,12 +10,13 @@
     "why": "the 2026-11-17 GSC page-indexing audit found these five crawled video detail addresses answering 404: their owning cards left the relational content without publicAliases claims",
     "redirectRule": "each retired address answers 308 to the nearest surviving example detail page of the same content shape; the mapping lives in RETIRED_HUB_EXAMPLE_ADDRESSES (src/lib/aidreamcapes-workspace/media-detail.server.ts) so a later content rewrite cannot break it again",
     "scopeRule": "only the five retired video detail addresses observed in the GSC 404 report and the origin access logs",
-    "supersedes": "nothing; no earlier manifest covered these addresses"
+    "supersedes": "nothing; no earlier manifest covered these addresses",
+    "amended": "2026-11-17: /ai-video-generation/product-ad-video retargets to /ai-video-generation/candle-cozy-gift because the /promo-video tool page exposes four workspace entries and cannot satisfy the one-CTA contract"
   },
   "addresses": [
     { "oldPath": "/ai-video-generation/talking-photo", "newPath": "/ai-video-generation/talking-head-skin-lesson", "page": "/ai-video-generation", "label": "Talking Photo (retired card)", "kind": "video", "source": "examples" },
     { "oldPath": "/ai-video-generation/talking-head-video", "newPath": "/ai-video-generation/talking-head-skin-lesson", "page": "/ai-video-generation", "label": "Talking Head Video (retired card)", "kind": "video", "source": "examples" },
-    { "oldPath": "/ai-video-generation/product-ad-video", "newPath": "/ai-video-generation/promo-video", "page": "/ai-video-generation", "label": "Product Ad Video (retired card)", "kind": "video", "source": "examples" },
+    { "oldPath": "/ai-video-generation/product-ad-video", "newPath": "/ai-video-generation/candle-cozy-gift", "page": "/ai-video-generation", "label": "Product Ad Video (retired card)", "kind": "video", "source": "examples" },
     { "oldPath": "/ai-video-generation/bottle-ad-with-a-person", "newPath": "/ai-video-generation/water-bottle-demo-cap-twists-open", "page": "/ai-video-generation", "label": "Bottle Ad with a Person (retired card)", "kind": "video", "source": "examples" },
     { "oldPath": "/ai-video-generation/close-unboxing-makeup-tools-ai-video-generation-cinematic-video", "newPath": "/ai-video-generation/quiet-unboxing-makeup-tools", "page": "/ai-video-generation", "label": "Close Unboxing Makeup Tools (retired card)", "kind": "video", "source": "examples" }
   ]
