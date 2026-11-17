@@ -1,5 +1,19 @@
 import { createServer } from "node:http";
+import dns from "node:dns";
 import next from "next";
+
+// glibc 2.17 (CentOS 7) loader race: the process's first outbound DNS lookup
+// makes libuv's thread pool dlopen NSS modules, which segfaults when it runs
+// concurrently with another native dlopen (sharp/libvips during request
+// handling). Warm the resolver once, serially, before the app starts serving
+// so the first NSS load can never overlap a request-time dlopen. Best-effort:
+// a failed lookup still exercises the getaddrinfo path, which is all we need.
+try {
+  await dns.promises.lookup("api.resend.com", { family: 0 });
+  console.log("[server] nss-resolver-warmup ok");
+} catch (error) {
+  console.log(`[server] nss-resolver-warmup done (lookup failed, resolver initialized): ${error?.code ?? error}`);
+}
 
 const dev = process.env.NODE_ENV !== "production" && process.env.NEXT_RUNTIME_DEV === "1";
 const hostname = process.env.HOSTNAME || "0.0.0.0";
