@@ -73,7 +73,7 @@ export async function sendCreditApplicationDecisionEmail(params: {
           <h1 style="font-size:20px;margin:0 0 12px">${escapedName}: update on your credit application</h1>
           <p>Thanks for applying for free credits. A real person reviewed your application and this time we are <b>not able to approve it</b>.</p>
           <p style="color:#374151">Reason: ${reason}</p>
-          <p>You are welcome to apply again once your situation changes — for example after posting more #AivideosUGC content.</p>
+          <p>You are welcome to apply again once your situation changes — for example after posting more #AIVideosUGC content.</p>
         </div>
       `
     });

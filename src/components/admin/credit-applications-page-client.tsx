@@ -213,7 +213,7 @@ export function CreditApplicationsPageClient({ siteId }: { siteId: string }) {
       />
 
       <ErpSection
-        description="查看创作者提交的平台、主页、粉丝档位和带 #AivideosUGC 的帖子证据，在详情面板里检查风险旗标后批准或拒绝。"
+        description="查看创作者提交的平台、主页、粉丝档位和带 #AIVideosUGC 的帖子证据，在详情面板里检查风险旗标后批准或拒绝。"
         eyebrow="Free Credit Applications"
         title="免费积分申请"
       >
@@ -298,7 +298,7 @@ export function CreditApplicationsPageClient({ siteId }: { siteId: string }) {
                     <td className="text-left text-zinc-600" colSpan={7}>
                       <div className="rounded-[10px] border border-dashed border-zinc-300 bg-zinc-50 p-5">
                         <p className="font-semibold text-zinc-900">{loading ? "免费积分申请加载中..." : "当前筛选下没有免费积分申请。"}</p>
-                        <p className="mt-2 leading-6">创作者在 /partners 页提交带 #AivideosUGC 的帖子后会进入这里。运营先核对风险旗标和账号上下文，再在详情面板里选择发放档位并批准。</p>
+                        <p className="mt-2 leading-6">创作者在 /partners 页提交带 #AIVideosUGC 的帖子后会进入这里。运营先核对风险旗标和账号上下文，再在详情面板里选择发放档位并批准。</p>
                       </div>
                     </td>
                   </tr>

@@ -163,7 +163,7 @@ export function CreditApplicationReviewPanel({
           </div>
 
           <div className="rounded-[10px] border border-zinc-200 p-4">
-            <p className="text-sm font-semibold text-zinc-950">帖子证据（可点开核对 #AivideosUGC）</p>
+            <p className="text-sm font-semibold text-zinc-950">帖子证据（可点开核对 #AIVideosUGC）</p>
             <div className="mt-3 grid gap-2 text-sm">
               <a className="inline-flex min-w-0 items-center gap-2 break-all text-clay hover:underline" href={application.profileUrl} rel="noreferrer" target="_blank">
                 <ExternalLink className="h-4 w-4 shrink-0" strokeWidth={1.8} />
