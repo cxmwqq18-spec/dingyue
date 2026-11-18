@@ -2074,7 +2074,8 @@ export function buildToolDirectoryJsonLd({
   publicPath,
   routeMode,
   pageJson,
-  context
+  context,
+  aidreamcapesNavigation
 }: {
   site: Site;
   toolSlug: string;
@@ -2082,11 +2083,12 @@ export function buildToolDirectoryJsonLd({
   routeMode: "host" | "path";
   pageJson?: ThemePageJson;
   context: StorefrontContext;
+  aidreamcapesNavigation?: AidreamcapesV2Navigation;
 }): JsonLdNode[] {
   const aidreamcapesV2Graph = aidreamcapesV2StoredGraph(site, pageJson);
   if (aidreamcapesV2Graph) {
     const pagePath = publicPath ?? `/ai-video-generation/${toolSlug}`;
-    return aidreamcapesV2JsonLd({ site, routeMode, context, pageJson, pagePath, page: { id: toolSlug, slug: pagePath, title: siteBrandName(site), pageType: "ai_tool", updatedAt: "" } }, aidreamcapesV2Graph);
+    return aidreamcapesV2JsonLd({ site, routeMode, context, pageJson, pagePath, aidreamcapesNavigation, page: { id: toolSlug, slug: pagePath, title: siteBrandName(site), pageType: "ai_tool", updatedAt: "" } }, aidreamcapesV2Graph);
   }
   const topicSection = sectionOfType(pageJson, "ai_video_topic_landing");
   const talkingPhotoSection = sectionOfType(pageJson, "talking_photo_landing");
@@ -2153,7 +2155,7 @@ export function buildToolDirectoryJsonLd({
     } : {})
   };
   const graph: JsonLdNode[] = [
-    organizationSchema(site, routeMode, context, pagePath),
+    organizationSchema(site, routeMode, context, pagePath, aidreamcapesNavigation),
     ...websiteSchemaNodesForRoute(site, routeMode, pagePath),
     ...(isAidreamshootsStorefrontSite(site)
       ? [spanishStorefrontWebPageSchema({ site, page: context.page, pageJson, pagePath, routeMode, context }, title, description)].filter((node): node is JsonLdNode => Boolean(node))

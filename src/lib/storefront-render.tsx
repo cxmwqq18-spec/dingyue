@@ -4438,7 +4438,10 @@ export async function renderToolPage({
       publicPath,
       routeMode,
       pageJson,
-      context: storefrontContext
+      context: storefrontContext,
+      aidreamcapesNavigation: currentSite.id === "site_aidreamcapes"
+        ? publishedHomepageNavigation(publishedSnapshot)
+        : undefined
     })
   });
 }
