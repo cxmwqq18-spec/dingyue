@@ -206,13 +206,13 @@ function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
   );
 }
 
-function Steps({ steps, className }: { steps: { title: string; body: string }[]; className?: string }) {
+function Steps({ steps, r, className }: { steps: { title: string; body: string }[]; r: V2Resolvers; className?: string }) {
   return (
     <ol className={className ?? styles.steps}>
       {steps.map((step) => (
         <li key={step.title}>
           <h3>{step.title}</h3>
-          <p>{step.body}</p>
+          <p><RichText r={r} text={step.body} /></p>
         </li>
       ))}
     </ol>
@@ -359,7 +359,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
                   {section.bullets.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}
                 </ul>
               ) : null}
-              {section.steps?.length ? <Steps steps={section.steps} /> : null}
+              {section.steps?.length ? <Steps steps={section.steps} r={r} /> : null}
               {section.checklist?.length ? (
                 <ul className="check">
                   {section.checklist.map((item) => <li key={item}><RichText r={r} text={item} /></li>)}
@@ -374,7 +374,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
           <div>
             <h2>{howto.stepsIntro?.title ?? "Step by step"}</h2>
             {howto.stepsIntro?.lead ? <p><RichText r={r} text={howto.stepsIntro.lead} /></p> : null}
-            <Steps steps={howto.steps} />
+            <Steps steps={howto.steps} r={r} />
           </div>
 
           {howto.tip ? (

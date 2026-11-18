@@ -1,12 +1,13 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment } from "react";
 import type { V2Resolvers } from "./types";
+import { RichText } from "./parts";
 import styles from "./guides-tutorial.module.css";
 
 /* Public workspace tutorial for /guides. Ships as complete static HTML from
    the relational row — no client data fetching, no client behavior. The
    chapter rail is plain anchor links so the page works without JavaScript.
-   Inline copy may use `backticks` around UI labels; the renderer turns them
-   into <code> spans. */
+   Inline copy may use `backticks` around UI labels, **bold** emphasis and
+   [text](/link) markdown; RichText renders all three inline. */
 
 type GuideStep = { title: string; body: string };
 type GuideMedia = { src: string; alt: string; width: number; height: number; gif?: boolean; video?: boolean; poster?: string; caption?: string };
@@ -32,17 +33,6 @@ type GuideData = {
     moreGuides?: { title: string; lead?: string; items: { label: string; href: string; note?: string }[] };
   };
 };
-
-function rich(text: string): ReactNode[] {
-  return text
-    .split(/(`[^`]+`|\*\*[^*]+\*\*)/g)
-    .filter((token) => token !== "")
-    .map((token, index) => {
-      if (token.startsWith("`") && token.endsWith("`") && token.length > 2) return <code key={index}>{token.slice(1, -1)}</code>;
-      if (token.startsWith("**") && token.endsWith("**") && token.length > 4) return <b key={index}>{token.slice(2, -2)}</b>;
-      return <Fragment key={index}>{token}</Fragment>;
-    });
-}
 
 export function isAidreamcapesGuidesSectionData(data: unknown): data is GuideData {
   return Boolean(data && typeof data === "object" && !Array.isArray(data) && (data as GuideData).guide);
@@ -114,7 +104,7 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
                 {guide.concepts.map((concept) => (
                   <div className={styles.conceptCard} key={concept.title}>
                     <h3>{concept.title}</h3>
-                    <p>{rich(concept.body)}</p>
+                    <p><RichText text={concept.body} r={r} /></p>
                   </div>
                 ))}
               </div>
@@ -127,15 +117,15 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
                 <span className={styles.chapterNum}>{chapter.num}</span>
                 <div>
                   <h2>{chapter.title}</h2>
-                  {chapter.route ? <p className={styles.chapterRoute}>{rich(chapter.route)}</p> : null}
-                  {chapter.what ? <p className={styles.chapterWhat}>{rich(chapter.what)}</p> : null}
+                  {chapter.route ? <p className={styles.chapterRoute}><RichText text={chapter.route} r={r} /></p> : null}
+                  {chapter.what ? <p className={styles.chapterWhat}><RichText text={chapter.what} r={r} /></p> : null}
                 </div>
               </div>
               <ol className={styles.steps}>
                 {chapter.steps.map((step) => (
                   <li key={step.title}>
                     <h3>{step.title}</h3>
-                    <p>{rich(step.body)}</p>
+                    <p><RichText text={step.body} r={r} /></p>
                   </li>
                 ))}
               </ol>
@@ -172,7 +162,7 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
               ) : null}
               {chapter.tip ? (
                 <p className={styles.tip}>
-                  <b>{chapter.tip.title}</b> {rich(chapter.tip.body)}
+                  <b>{chapter.tip.title}</b> <RichText text={chapter.tip.body} r={r} />
                 </p>
               ) : null}
             </section>

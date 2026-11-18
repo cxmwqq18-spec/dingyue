@@ -1,0 +1,19 @@
+{
+  "siteId": "site_aidreamcapes",
+  "change": "Strip raw inline markdown ([text](url) links, **bold**, `code`) from stored seo.jsonLd strings so structured data ships plain text. Page-visible copy keeps its markdown and is rendered by the upgraded RichText instead.",
+  "reviewedAt": "2026-11-18",
+  "provenance": "Read-only production inventory /root/md-inventory-20261118/out.json (217 LivePage rows scanned): markdown inside seo.jsonLd appears only on the ten pages listed below, all under HowTo step.text or FAQPage acceptedAnswer.text.",
+  "expectedTotalMarkdownHits": 18,
+  "pages": [
+    { "slug": "/guides/how-do-ai-image", "id": "aidreamcapes_v2_guide_how_do_ai_image", "expectedMarkdownHits": 1 },
+    { "slug": "/guides/how-do-ai-video", "id": "aidreamcapes_v2_guide_how_do_ai_video", "expectedMarkdownHits": 1 },
+    { "slug": "/guides/how-do-image-to-video", "id": "aidreamcapes_v2_guide_how_do_image_to_video", "expectedMarkdownHits": 1 },
+    { "slug": "/guides/how-do-subtitle-studio", "id": "aidreamcapes_v2_guide_how_do_subtitle_studio", "expectedMarkdownHits": 3 },
+    { "slug": "/guides/how-do-ai-avatar", "id": "aidreamcapes_v2_guide_how_do_ai_avatar", "expectedMarkdownHits": 2 },
+    { "slug": "/guides/how-do-product-links", "id": "aidreamcapes_v2_guide_how_do_product_links", "expectedMarkdownHits": 1 },
+    { "slug": "/guides/how-do-text-to-video", "id": "aidreamcapes_v2_guide_how_do_text_to_video", "expectedMarkdownHits": 3 },
+    { "slug": "/guides/how-do-url-to-video", "id": "aidreamcapes_v2_guide_how_do_url_to_video", "expectedMarkdownHits": 1 },
+    { "slug": "/trust-and-safety", "id": "aidreamcapes_v2_trust", "expectedMarkdownHits": 4 },
+    { "slug": "/ai-video-generation/spark-ads-style-video", "id": "aidreamcapes_v2_tpl_spark_ads_style_video", "expectedMarkdownHits": 1 }
+  ]
+}

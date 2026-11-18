@@ -506,23 +506,42 @@ function localPathFromAbsoluteHref(href: string): string | undefined {
   return undefined;
 }
 
-// Inline links support internal paths, email addresses and approved official references.
+// Bold and inline-code markers inside a plain segment render as emphasis;
+// unpaired or malformed markers pass through as literal text.
+function richPlainSegment(segment: string, keyBase: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  for (const match of segment.matchAll(/(\*\*[^*\n]+\*\*|`[^`\n`]+`)/g)) {
+    const at = match.index ?? 0;
+    if (at > last) parts.push(segment.slice(last, at));
+    if (match[0].startsWith("`")) parts.push(<code key={`${keyBase}:${at}`}>{match[0].slice(1, -1)}</code>);
+    else parts.push(<b key={`${keyBase}:${at}`}>{match[0].slice(2, -2)}</b>);
+    last = at + match[0].length;
+  }
+  if (last < segment.length) parts.push(segment.slice(last));
+  return parts;
+}
+
+// Inline links support internal paths, email addresses and approved official
+// references; bold and `code` markers render in every segment. Link targets
+// outside the approval lists fall back to their label text so raw markdown
+// like [text](url) never surfaces on the page.
 export function RichText({ text, r }: { text: string; r: V2Resolvers }) {
   const parts: ReactNode[] = [];
   let last = 0;
   for (const match of text.matchAll(/\[([^\]\n]+)\]\((https:\/\/[^)\s]+|mailto:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\/[^)\s]*)\)/gi)) {
     const at = match.index ?? 0;
-    if (at > last) parts.push(text.slice(last, at));
+    if (at > last) parts.push(...richPlainSegment(text.slice(last, at), `t${at}`));
     if (/^mailto:/i.test(match[2])) parts.push(<WorkspaceEntryLink href={match[2]} key={at}>{match[1]}</WorkspaceEntryLink>);
     else if (/^https:\/\//i.test(match[2])) {
       const localPath = localPathFromAbsoluteHref(match[2]);
       if (localPath) parts.push(<WorkspaceEntryLink href={r.href(localPath)} key={at}>{match[1]}</WorkspaceEntryLink>);
       else if (isApprovedExternalHref(match[2])) parts.push(<WorkspaceEntryLink href={match[2]} key={at} rel="noopener noreferrer" target="_blank">{match[1]}</WorkspaceEntryLink>);
-      else parts.push(match[0]);
+      else parts.push(match[1]);
     } else parts.push(<WorkspaceEntryLink href={r.href(match[2])} key={at}>{match[1]}</WorkspaceEntryLink>);
     last = at + match[0].length;
   }
-  if (last < text.length) parts.push(text.slice(last));
+  if (last < text.length) parts.push(...richPlainSegment(text.slice(last), "t"));
   return <>{parts}</>;
 }
 

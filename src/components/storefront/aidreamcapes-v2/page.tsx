@@ -291,7 +291,7 @@ function Flows({ flows, r, filterChips }: { flows: V2Flow[]; r: V2Resolvers; fil
     <div className={`ex${filterChips?.length ? " v-filter-grid" : ""}`}>
       {flows.map((flow) => (
         <div className={`exrow${filterChips?.length ? " v-filter-card" : ""}`} data-filter-indexes={filterChips?.length ? indexesFor(flow).join(" ") : undefined} key={flow.t}>
-          <div className="meta"><h3>{flow.t}</h3><p>{flow.d}</p>{flow.cta ? <WorkspaceEntryLink className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</WorkspaceEntryLink> : null}</div>
+          <div className="meta"><h3>{flow.t}</h3><p><RichText r={r} text={flow.d} /></p>{flow.cta ? <WorkspaceEntryLink className="flow-cta" href={r.href(flow.cta.href)}>{flow.cta.label} →</WorkspaceEntryLink> : null}</div>
           <div className="flow">
             {flow.steps.map((step, index) => (
               <Fragment key={`${step.label}-${index}`}>
