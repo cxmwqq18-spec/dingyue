@@ -15,7 +15,7 @@ import fs from "node:fs";
 import { PrismaClient } from "@prisma/client";
 import "./load-runtime-env.mjs";
 import { argumentValue, assertAllowedSite, assertDatabaseTarget, hasArgument } from "./lib/database-target.mjs";
-import { ARTICLES, INDEX_PATCH, APPLY_DATE, VIDEO_UPLOAD_DATE, CLIPS } from "./lib/aivideosugc-blog-redesign-2026-11-10.mjs";
+import { ARTICLES, INDEX_PATCH, APPLY_DATE, APPLY_DATETIME, VIDEO_UPLOAD_DATE, CLIPS } from "./lib/aivideosugc-blog-redesign-2026-11-10.mjs";
 
 const CONFIRM_NAME = "aivideosugc-blog-redesign-2026-11-10";
 const siteId = assertAllowedSite("site_aidreamcapes");
@@ -103,8 +103,8 @@ try {
       publisher: previousBlog?.publisher ?? { "@id": "https://www.aivideosugc.com/#organization" },
       inLanguage: "en",
       description: article.seo.description,
-      dateModified: APPLY_DATE,
-      datePublished: previousBlog?.datePublished ?? APPLY_DATE,
+      dateModified: APPLY_DATETIME,
+      datePublished: previousBlog?.datePublished ?? APPLY_DATETIME,
       mainEntityOfPage: `https://www.aivideosugc.com${article.slug}`
     });
     graph.push({

@@ -10,8 +10,13 @@
 //   - example detail pages resolve from directory card data (card projection)
 
 export const APPLY_DATE = "2026-11-10";
+// JSON-LD wants full ISO 8601 datetimes with a timezone; Google reports a bare
+// date for VideoObject.uploadDate as missing the timezone information.
+export const APPLY_DATETIME = "2026-11-10T00:00:00Z";
 // First public release date of the example clips (media inventory 2026-11-01).
-export const VIDEO_UPLOAD_DATE = "2026-11-01";
+// Google requires a full ISO 8601 datetime with a timezone for
+// VideoObject.uploadDate; a bare date is reported as missing the timezone.
+export const VIDEO_UPLOAD_DATE = "2026-11-01T00:00:00Z";
 // Example clip table keyed for the apply script's JSON-LD lookup.
 export { CLIPS };
 

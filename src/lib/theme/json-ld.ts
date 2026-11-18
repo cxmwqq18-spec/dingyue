@@ -1796,6 +1796,50 @@ function withAidreamcapesAbsoluteSchemaUrls<T>(value: T, site: Site, routeMode: 
   return value;
 }
 
+// Stored v2 graphs were authored with bare dates ("2026-11-01"). Google
+// requires a full ISO 8601 datetime with a timezone for VideoObject.uploadDate
+// and flags the bare date as "missing timezone information" or outright
+// invalid, so normalize every schema date at render time — the same
+// render-derived pattern as the URL rewriting above. Nothing is rewritten in
+// the relational content; an already-correct graph flows through unchanged.
+const AIDREAMCAPES_SCHEMA_DATE_KEYS = new Set(["uploadDate", "datePublished", "dateModified"]);
+const AIDREAMCAPES_SCHEMA_DATE_ONLY_RE = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+const AIDREAMCAPES_SCHEMA_TIMEZONE_RE = /(?:z|[+-][0-9]{2}:?[0-9]{2})$/i;
+
+function aidreamcapesSchemaDateTimeValue(value: string): string | undefined {
+  const text = value.trim();
+  if (!text) return undefined;
+  if (AIDREAMCAPES_SCHEMA_DATE_ONLY_RE.test(text)) {
+    // Bare dates are UTC-authored; pin midnight to UTC instead of letting the
+    // server zone shift the day.
+    const date = new Date(`${text}T00:00:00Z`);
+    return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+  }
+  if (AIDREAMCAPES_SCHEMA_TIMEZONE_RE.test(text)) return text;
+  // Datetime without a zone designator ("2026-11-01T00:00:00") reads as UTC
+  // for the same reason. Unparseable values are dropped: Google rejects them
+  // as invalid, and a missing uploadDate is better than a broken one.
+  const date = new Date(`${text}Z`);
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
+function withAidreamcapesSchemaDateTimes<T>(value: T, key?: string): T {
+  if (typeof value === "string") {
+    if (!key || !AIDREAMCAPES_SCHEMA_DATE_KEYS.has(key)) return value;
+    return aidreamcapesSchemaDateTimeValue(value) as T;
+  }
+  if (Array.isArray(value)) return value.map((item) => withAidreamcapesSchemaDateTimes(item, key)) as T;
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).flatMap(([entryKey, item]) => {
+        const next = withAidreamcapesSchemaDateTimes(item, entryKey);
+        return next === undefined ? [] : [[entryKey, next]];
+      })
+    ) as T;
+  }
+  return value;
+}
+
 // Aidreamcapes v2 pages store their JSON-LD graph together with the page copy.
 // Those graphs were written over several months, so the same page shape does not
 // always carry the same nodes: some tool pages publish a SoftwareApplication and
@@ -1952,10 +1996,12 @@ function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): Js
     ...(hasStoredBreadcrumb || publicPath.split("/").filter(Boolean).length === 0
       ? []
       : [breadcrumbs(input.site, input.routeMode, pagePath, title, input.publishedRoutePaths)]),
-    ...withAidreamcapesAbsoluteSchemaUrls(
-      withAidreamcapesOrigin(normalizeAidreamcapesV2StoredGraph(input, storedGraph, pagePath, title, description)),
-      input.site,
-      input.routeMode
+    ...withAidreamcapesSchemaDateTimes(
+      withAidreamcapesAbsoluteSchemaUrls(
+        withAidreamcapesOrigin(normalizeAidreamcapesV2StoredGraph(input, storedGraph, pagePath, title, description)),
+        input.site,
+        input.routeMode
+      )
     )
   ];
   return [{ "@context": "https://schema.org", "@graph": graph.filter(Boolean) }];
