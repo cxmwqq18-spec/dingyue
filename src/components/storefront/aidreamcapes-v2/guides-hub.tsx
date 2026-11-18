@@ -104,7 +104,7 @@ export function GuidesHubPage({ data, r }: { data: GuidesHubData; r: V2Resolvers
               <a className={styles.card} href={r.href(item.href)} key={item.href}>
                 <span className={styles.thumb}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                 </span>
                 <span className={styles.cardPad}>
                   <span className={styles.read}>{item.minutes} read</span>

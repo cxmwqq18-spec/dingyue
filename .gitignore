@@ -69,3 +69,16 @@ releases/*/
 __pycache__/
 *.pyc
 docs/plans/aidreamcapes-static-media-and-recreate-plan-2026-10-18.md
+
+# Keep only the approved local Guides subtitle comparison assets in Git.
+!public/assets/
+public/assets/*
+!public/assets/sites/
+public/assets/sites/*
+!public/assets/sites/site_aidreamcapes/
+public/assets/sites/site_aidreamcapes/*
+!public/assets/sites/site_aidreamcapes/guides/
+public/assets/sites/site_aidreamcapes/guides/*
+!public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-original.mp4
+!public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-captioned-en.mp4
+!public/assets/sites/site_aidreamcapes/guides/subtitle-example-study-desk-lamp-poster.jpg

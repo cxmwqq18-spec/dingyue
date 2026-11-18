@@ -1,10 +1,12 @@
 import type { V2Resolvers } from "./types";
 import { BRAND_NAME, Crumbs, CtaBand, Faq, Img, RichText } from "./parts";
+import { GuidesSubtitleCompare } from "./guides-subtitle-comparison";
 import styles from "./guides-howto.module.css";
 
-/* Public how-to tutorial pages under /guides/how-do-*. Ships as complete
-   static HTML from the relational row — no client data fetching, no client
-   behavior. The page is a single-column article, rendered with the same shell
+/* Public how-to tutorial pages under /guides/how-do-*. Content ships from the
+   relational row with no client data fetching. The subtitle comparison adds
+   only local player synchronization. The page is a single-column article,
+   rendered with the same shell
    classes as /blog/* detail pages (`.ahero` hero, `.wrap prose` body,
    `.article-section-media` figures, `.trybox`, `.check`, `.related`), so the
    reading width, type scale and rhythm match the rest of the site. Visual
@@ -74,7 +76,7 @@ type HowtoData = {
     checklist?: string[];
     faq: { q: string; a: string }[];
     related: { kind?: string; label: string; text: string; href: string }[];
-    cta?: { title?: string; lead?: string; note?: string };
+    cta?: { title?: string; lead?: string; note?: string; href?: string };
   };
 };
 
@@ -86,7 +88,7 @@ function cleanTitle(value: string) {
   return value.replace(/\s*→\s*$/, "");
 }
 
-function Frames({ frames }: { frames: DemoFrame[] }) {
+function Frames({ frames, r }: { frames: DemoFrame[]; r: V2Resolvers }) {
   return (
     <div className={styles.media}>
       {frames.map((frame, index) => (
@@ -95,10 +97,10 @@ function Frames({ frames }: { frames: DemoFrame[] }) {
           <span className={styles.frame}>
             {frame.tag ? <span className={styles.frameTag}>{frame.tag}</span> : null}
             {frame.video ? (
-              <video controls muted playsInline preload="metadata" poster={frame.video.poster} src={frame.video.src} />
+              <video controls playsInline preload="metadata" poster={frame.video.poster ? r.asset(frame.video.poster) : undefined} src={r.asset(frame.video.src)} />
             ) : frame.image ? (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={frame.image.src} alt={frame.image.alt} width={frame.image.width} height={frame.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(frame.image.src)} alt={frame.image.alt} width={frame.image.width} height={frame.image.height} loading="lazy" decoding="async" />
             ) : null}
           </span>
         </span>
@@ -156,7 +158,7 @@ function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
           {demo.list.map((item) => (
             <li key={item.title} className={item.primary ? styles.listPrimary : undefined}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
               <span className={styles.listText}>
                 <b>{item.title}</b>
                 <span className={styles.listSub}>{item.sub}</span>
@@ -171,42 +173,32 @@ function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
           {demo.gallery.map((item) => (
             <figure key={item.image.src + (item.caption ?? "")}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
               {item.ok ? <span className={styles.galleryOk} aria-hidden="true">✓</span> : null}
               {item.caption ? <figcaption>{item.caption}</figcaption> : null}
             </figure>
           ))}
         </div>
       ) : null}
-      {demo.frames?.length ? <Frames frames={demo.frames} /> : null}
+      {demo.frames?.length ? <Frames frames={demo.frames} r={r} /> : null}
       {demo.subtitles ? (
-        <>
-          <div className={styles.subRow}>
-            {[demo.subtitles.before, demo.subtitles.after].map((side) => (
-              <div className={styles.subCard} key={side.label}>
-                <video controls muted playsInline preload="metadata" poster={side.video.poster} src={side.video.src} />
-                <div className={styles.subBar}>
-                  <b>{side.label}</b>
-                  {side.lines.map((line) => (
-                    <span key={line}>{line}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          {demo.subtitles.chips?.length ? (
-            <div className={styles.chips}>
-              {demo.subtitles.chips.map((chip) => (
-                <span key={chip}>{chip}</span>
-              ))}
-            </div>
-          ) : null}
-        </>
+        <GuidesSubtitleCompare
+          before={{ ...demo.subtitles.before, video: {
+            src: r.asset(demo.subtitles.before.video.src),
+            poster: demo.subtitles.before.video.poster ? r.asset(demo.subtitles.before.video.poster) : undefined,
+          } }}
+          after={{ ...demo.subtitles.after, video: {
+            src: r.asset(demo.subtitles.after.video.src),
+            poster: demo.subtitles.after.video.poster ? r.asset(demo.subtitles.after.video.poster) : undefined,
+          } }}
+          chips={demo.subtitles.chips}
+          classNames={{ row: styles.subRow, card: styles.subCard, bar: styles.subBar, chips: styles.chips }}
+        />
       ) : null}
       {demo.prompt ? <div className={styles.prompt}>{demo.prompt}</div> : null}
       {demo.result ? (
         <>
-          <Frames frames={demo.result.frames} />
+          <Frames frames={demo.result.frames} r={r} />
           {demo.result.prompt ? <blockquote className={styles.quote}><RichText r={r} text={demo.result.prompt} /></blockquote> : null}
         </>
       ) : null}
@@ -235,7 +227,7 @@ function ReferenceCards({ cards, r }: { cards: InfoCard[]; r: V2Resolvers }) {
         <article key={card.title}>
           {card.image ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={card.image.src} alt={card.image.alt} width={card.image.width} height={card.image.height} loading="lazy" decoding="async" />
+            <img src={r.asset(card.image.src)} alt={card.image.alt} width={card.image.width} height={card.image.height} loading="lazy" decoding="async" />
           ) : null}
           {card.tag ? <span className={styles.cardTag}>{card.tag}</span> : null}
           <b className={styles.cardTitle}>{card.title}</b>
@@ -293,7 +285,7 @@ function SectionMediaFigure({ media, r }: { media: SectionMedia; r: V2Resolvers 
   if (media.video) {
     return (
       <figure className={styles.videoFig}>
-        <video controls muted playsInline preload="metadata" poster={media.video.poster} src={media.video.src} />
+        <video controls playsInline preload="metadata" poster={media.video.poster ? r.asset(media.video.poster) : undefined} src={r.asset(media.video.src)} />
         {media.caption ? <figcaption className={styles.caption}>{media.caption}</figcaption> : null}
       </figure>
     );
@@ -417,7 +409,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
 
       <Faq items={howto.faq} title="Questions" r={r} />
       <CtaBand
-        href="/app/create"
+        href={howto.cta?.href ?? "/app/create"}
         lead={howto.cta?.lead ?? "Upload a product photo, see the price before you start, and keep every version in your library."}
         note={howto.cta?.note}
         r={r}

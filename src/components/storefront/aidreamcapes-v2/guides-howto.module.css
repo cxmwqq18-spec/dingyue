@@ -297,8 +297,8 @@
 .frame video {
   display: block;
   width: 100%;
-  aspect-ratio: 9 / 14;
-  object-fit: cover;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
   background: #000;
 }
 .frame img {
@@ -349,8 +349,10 @@
 .subCard video {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 11;
-  object-fit: cover;
+  max-height: 520px;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
 }
 .subBar {
   display: flex;
@@ -383,8 +385,9 @@
 .videoFig video {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  max-height: 520px;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
   background: #000;
   border-radius: 18px;
   border: 1px solid var(--line-2);
