@@ -279,7 +279,7 @@ export async function AidreamcapesPartnerProgramPage({ success, creditsApplied, 
               <div className="prp-form prp-success">
                 <h3>Log in to apply</h3>
                 <p>Free credits go straight onto your creator account, so we review applications from logged-in accounts only.</p>
-                <p className="prp-hint">No account yet? Registration takes about a minute and includes free starter credits.</p>
+                <p className="prp-hint">No account yet? Registration takes about a minute; grants of 20&ndash;60 credits are reviewed by hand after you apply.</p>
                 <a className="prp-btn-primary" href={`/login?next=${encodeURIComponent("/partners")}`}><Send aria-hidden="true" />Log in to apply</a>
               </div>
             )}
