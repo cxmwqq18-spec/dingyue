@@ -69,13 +69,16 @@ function contentRestHash(contentJson) {
   return hash(rest);
 }
 // Non-string seo.jsonLd shape (node types, keys, arrays) must stay identical.
+// Every string collapses to a marker at any depth, so replacing string values
+// never moves this hash.
+function shapeify(value) {
+  if (typeof value === "string") return "__string__";
+  if (Array.isArray(value)) return value.map(shapeify);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((key) => [key, shapeify(value[key])]));
+  return value;
+}
 function graphShapeHash(graph) {
-  return hash(graph.map((node) => {
-    if (!node || typeof node !== "object") return node;
-    const shape = {};
-    for (const [key, value] of Object.entries(node)) shape[key] = typeof value === "string" ? "__string__" : Array.isArray(value) ? value.map((item) => typeof item === "string" ? "__string__" : (item && typeof item === "object" ? Object.fromEntries(Object.entries(item).map(([k, v]) => [k, typeof v === "string" ? "__string__" : v])) : v)) : value;
-    return shape;
-  }));
+  return hash(shapeify(graph));
 }
 
 const db = new PrismaClient();

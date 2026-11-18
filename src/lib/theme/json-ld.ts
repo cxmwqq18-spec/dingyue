@@ -541,7 +541,10 @@ function pageTitle(site: Site, page: Pick<ThemePage, "id" | "slug" | "title" | "
 }
 
 function pageDescription(site: Site, page: Pick<ThemePage, "id" | "title">, context?: StorefrontContext): string {
-  return context?.seo.description || cleanSchemaText(site, page.title);
+  // Prefer the shared brand description over the page title: a description
+  // that just repeats the title adds nothing and can conflict with the
+  // Organization.description facts.
+  return context?.seo.description || cleanSchemaText(site, site.branding.description) || cleanSchemaText(site, page.title);
 }
 
 function aidreamcapesEuThemeSlug(site: Site, pagePath: string): string | undefined {
@@ -1333,7 +1336,9 @@ function editorialVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   const description = cleanSchemaText(input.site, hero.settings.videoDescription, pageDescriptionValue);
   const uploadDate = normalizedUploadDate(hero.settings.videoUploadDate) || normalizedUploadDate(input.page.updatedAt);
   if (!uploadDate) return [];
-  const duration = iso8601Duration(numericSetting(hero.settings.videoDurationSeconds, 15));
+  // VideoObject.duration is optional for Google: omit it rather than invent a
+  // length the media does not have.
+  const durationSeconds = numericSetting(hero.settings.videoDurationSeconds, 0);
   return [{
     "@type": "VideoObject",
     "@id": `${pageUrl}#video`,
@@ -1341,7 +1346,7 @@ function editorialVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
     description,
     thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl)],
     uploadDate,
-    duration,
+    ...(durationSeconds > 0 ? { duration: iso8601Duration(durationSeconds) } : {}),
     contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
     url: pageUrl,
     mainEntityOfPage: pageUrl,
@@ -1368,7 +1373,7 @@ function aidreamcapesEuVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
     inLanguage: "fr-FR",
     thumbnailUrl: [absoluteUrl(input.site, input.routeMode, media.posterUrl)],
     ...(uploadDate ? { uploadDate } : {}),
-    duration: iso8601Duration(media.durationSeconds),
+    ...(media.durationSeconds && media.durationSeconds > 0 ? { duration: iso8601Duration(media.durationSeconds) } : {}),
     contentUrl: absoluteUrl(input.site, input.routeMode, media.videoUrl),
     encodingFormat: "video/mp4",
     width: media.width,
@@ -1396,6 +1401,7 @@ function aidreamcapesVideoFeatureObjectSchemas(input: JsonLdInput): JsonLdNode[]
     if (!videoUrl || !thumbnailUrl) return [];
     const name = cleanSchemaText(input.site, section.settings.title, pageTitleValue);
     const description = cleanSchemaText(input.site, section.settings.subtitle, pageDescriptionValue);
+    const durationSeconds = numericSetting(section.settings.videoDurationSeconds, 0);
     return [{
       "@type": "VideoObject",
       "@id": `${pageUrl}#video-${index + 1}`,
@@ -1403,7 +1409,7 @@ function aidreamcapesVideoFeatureObjectSchemas(input: JsonLdInput): JsonLdNode[]
       description,
       thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl)],
       uploadDate,
-      duration: iso8601Duration(numericSetting(section.settings.videoDurationSeconds, 15)),
+      ...(durationSeconds > 0 ? { duration: iso8601Duration(durationSeconds) } : {}),
       contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
       encodingFormat: mediaEncodingFormat(videoUrl),
       url: pageUrl,
@@ -1437,7 +1443,7 @@ function spanishVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
       description,
       thumbnailUrl: [absoluteUrl(input.site, input.routeMode, media.poster)],
       uploadDate,
-      duration: iso8601Duration(media.durationSeconds),
+      ...(media.durationSeconds && media.durationSeconds > 0 ? { duration: iso8601Duration(media.durationSeconds) } : {}),
       contentUrl: absoluteUrl(input.site, input.routeMode, media.video),
       url: pageUrl,
       mainEntityOfPage: pageUrl,

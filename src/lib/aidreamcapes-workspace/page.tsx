@@ -41,6 +41,7 @@ export async function renderAidreamcapesWorkspace({
   invalidPreset = false,
   handoff,
   resumeDraft = false,
+  requireCustomer = false,
 }: {
   routeSlug: "aivideosugc" | "aidreamcapes";
   initialView?: WorkspaceView;
@@ -55,6 +56,7 @@ export async function renderAidreamcapesWorkspace({
   invalidPreset?: boolean;
   handoff?: WorkspaceHandoff;
   resumeDraft?: boolean;
+  requireCustomer?: boolean;
 }) {
   if (!taskId && invalidPreset) notFound();
   const entryCookies = await cookies();
@@ -112,6 +114,9 @@ export async function renderAidreamcapesWorkspace({
     : sceneRouteSlug
     ? `${basePath}/app/create/scene/${encodeURIComponent(sceneRouteSlug)}`
     : returnQuery.size ? `${basePath}/app/create?${returnQuery}` : `${basePath}/app`;
+  // /app is the private library entry: guests get the create funnel, not a
+  // library shell. Send them to login with the destination preserved.
+  if (requireCustomer && !current) redirect(`${accountBase}/login?next=${encodeURIComponent(returnPath)}`);
   return <AidreamcapesWorkspace
     key={initialPreset ? `${initialPreset.presetId}:${initialPreset.sourceUpdatedAt}` : taskId ?? initialActorId ?? "workspace"}
     siteId={AIVIDEOSUGC_SITE_ID}

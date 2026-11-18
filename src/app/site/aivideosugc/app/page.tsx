@@ -8,5 +8,5 @@ export default async function AIVideosUGCWorkspacePage({ searchParams }: {
 }) {
   const query = await searchParams;
   const taskId = typeof query.task === "string" ? query.task : undefined;
-  return renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", taskId });
+  return renderAidreamcapesWorkspace({ routeSlug: "aivideosugc", taskId, requireCustomer: true });
 }

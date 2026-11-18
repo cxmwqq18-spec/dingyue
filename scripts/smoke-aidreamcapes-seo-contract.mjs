@@ -360,6 +360,27 @@ for (const path of ["/cookies", "/digital-delivery", "/platforms"]) {
   );
 }
 
+// Alt text and raw-markdown gates: every content image carries an alt
+// attribute (empty is a deliberate decorative choice, junk copy is not) and
+// visible copy never surfaces raw markdown like [text](url) or **bold**.
+const altJunkPattern = /\b(?:visual reference|source reference|gallery image|image \d+|production framing|mydreamshoots)\b/i;
+for (const path of ["/", "/ai-video-generation", "/guides/how-do-ai-video", "/guides/workspace-guide", "/trust-and-safety"]) {
+  const response = await get(path);
+  assert.equal(response.status(), 200, `${path}: alt gate page status ${response.status()}`);
+  const html = await response.text();
+  const $ = load(html);
+  const images = $("img").toArray();
+  assert(images.length > 0, `${path}: alt gate expects images`);
+  for (const img of images) {
+    const alt = $(img).attr("alt");
+    assert(typeof alt === "string", `${path}: <img> without alt attribute: ${$(img).attr("src")}`);
+    assert(!altJunkPattern.test(alt), `${path}: junk alt copy: ${JSON.stringify(alt)}`);
+  }
+  const visibleText = $("body").clone().remove("script,style").text();
+  assert(!/\*\*[^*\n]{1,120}\*\*/.test(visibleText), `${path}: raw **bold** markdown is visible`);
+  assert(!/\[[^\]\n]{1,120}\]\((?:\/|https?:)[^)\n]{1,160}\)/.test(visibleText), `${path}: raw [text](url) markdown is visible`);
+}
+
 const login = await get("/login");
 assert.equal(login.status(), 200, `login status: ${login.status()}`);
 const loginHtml = await login.text();

@@ -1,6 +1,7 @@
 import type { V2Resolvers } from "./types";
 import { BRAND_NAME, Crumbs, CtaBand, Faq, Img, RichText } from "./parts";
 import { GuidesSubtitleCompare } from "./guides-subtitle-comparison";
+import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import styles from "./guides-howto.module.css";
 
 /* Public how-to tutorial pages under /guides/how-do-*. Content ships from the
@@ -88,6 +89,12 @@ function cleanTitle(value: string) {
   return value.replace(/\s*→\s*$/, "");
 }
 
+// Weak or production-facing alt copy degrades to caller context or an empty
+// decorative alt, never to junk copy.
+function guideAlt(value: string | undefined, fallback: string): string {
+  return storefrontMeaningfulAlt(value) || fallback;
+}
+
 function Frames({ frames, r }: { frames: DemoFrame[]; r: V2Resolvers }) {
   return (
     <div className={styles.media}>
@@ -100,7 +107,7 @@ function Frames({ frames, r }: { frames: DemoFrame[]; r: V2Resolvers }) {
               <video controls playsInline preload="metadata" poster={frame.video.poster ? r.asset(frame.video.poster) : undefined} src={r.asset(frame.video.src)} />
             ) : frame.image ? (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={r.asset(frame.image.src)} alt={frame.image.alt} width={frame.image.width} height={frame.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(frame.image.src)} alt={guideAlt(frame.image.alt, frame.tag ?? "")} width={frame.image.width} height={frame.image.height} loading="lazy" decoding="async" />
             ) : null}
           </span>
         </span>
@@ -158,7 +165,7 @@ function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
           {demo.list.map((item) => (
             <li key={item.title} className={item.primary ? styles.listPrimary : undefined}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(item.image.src)} alt={guideAlt(item.image.alt, item.title)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
               <span className={styles.listText}>
                 <b>{item.title}</b>
                 <span className={styles.listSub}>{item.sub}</span>
@@ -173,7 +180,7 @@ function DemoVisuals({ demo, r }: { demo: Demo; r: V2Resolvers }) {
           {demo.gallery.map((item) => (
             <figure key={item.image.src + (item.caption ?? "")}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+              <img src={r.asset(item.image.src)} alt={guideAlt(item.image.alt, item.caption ?? demo.title)} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
               {item.ok ? <span className={styles.galleryOk} aria-hidden="true">✓</span> : null}
               {item.caption ? <figcaption>{item.caption}</figcaption> : null}
             </figure>
@@ -227,7 +234,7 @@ function ReferenceCards({ cards, r }: { cards: InfoCard[]; r: V2Resolvers }) {
         <article key={card.title}>
           {card.image ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={r.asset(card.image.src)} alt={card.image.alt} width={card.image.width} height={card.image.height} loading="lazy" decoding="async" />
+            <img src={r.asset(card.image.src)} alt={guideAlt(card.image.alt, card.title)} width={card.image.width} height={card.image.height} loading="lazy" decoding="async" />
           ) : null}
           {card.tag ? <span className={styles.cardTag}>{card.tag}</span> : null}
           <b className={styles.cardTitle}>{card.title}</b>
@@ -293,7 +300,7 @@ function SectionMediaFigure({ media, r }: { media: SectionMedia; r: V2Resolvers 
   if (media.image) {
     return (
       <figure className="article-section-media">
-        <Img image={media.image} r={r} />
+        <Img image={media.image} r={r} fallbackAlt={media.caption} />
         {media.caption ? <figcaption className={styles.caption}>{media.caption}</figcaption> : null}
       </figure>
     );
@@ -332,7 +339,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
         {howto.image ? (
           <div className="wrap">
             <figure className={styles.heroFigure}>
-              <Img eager image={howto.image} r={r} />
+              <Img eager image={howto.image} r={r} fallbackAlt={howto.h1} />
             </figure>
           </div>
         ) : null}

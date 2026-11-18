@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import type { V2Resolvers } from "./types";
 import { RichText } from "./parts";
+import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import styles from "./guides-tutorial.module.css";
 
 /* Public workspace tutorial for /guides. Ships as complete static HTML from
@@ -147,7 +148,7 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={item.src}
-                          alt={item.alt}
+                          alt={storefrontMeaningfulAlt(item.alt) || item.caption || chapter.title}
                           width={item.width}
                           height={item.height}
                           loading="lazy"

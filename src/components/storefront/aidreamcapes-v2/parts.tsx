@@ -2,6 +2,7 @@ import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-li
 import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsiveImagePropsFor, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
+import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import type { CSSProperties, ReactNode } from "react";
 import "./numbered-cards.css";
 import "./thematic-links.css";
@@ -51,12 +52,15 @@ function mergeSrcSets(stored: string | undefined, generated: string | undefined)
 
 // `srcSet`/`sizes` are optional. A page that has no generated variant set for an
 // image keeps its single source and renders exactly the attributes it rendered before.
-export function Img({ image, r, className, eager, style, srcSet, sizes }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean; style?: CSSProperties; srcSet?: string; sizes?: string }) {
+// The alt text is passed through the shared meaningful-alt quality rules: weak
+// or production-facing wording degrades to `fallbackAlt` (caller context) or an
+// empty decorative alt, never to junk copy.
+export function Img({ image, r, className, eager, style, srcSet, sizes, fallbackAlt }: { image: V2Image; r: V2Resolvers; className?: string; eager?: boolean; style?: CSSProperties; srcSet?: string; sizes?: string; fallbackAlt?: string }) {
   const resolvedSrcSet = mergeSrcSets(image.srcSet ? resolveSrcSet(image.srcSet, r) : undefined, srcSet);
   const resolvedSizes = sizes ?? (image.srcSet ? image.sizes : undefined);
   return (
     <img
-      alt={image.alt}
+      alt={storefrontMeaningfulAlt(image.alt) || fallbackAlt?.trim() || ""}
       className={className}
       decoding="async"
       fetchPriority={eager ? "high" : undefined}
