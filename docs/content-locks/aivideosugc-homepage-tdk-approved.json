@@ -1,10 +1,14 @@
 {
-  "lockVersion": 1,
-  "lockedAt": "2026-10-17",
+  "lockVersion": 2,
+  "lockedAt": "2026-11-18",
   "policy": {
     "owner": "AIVideosUGC site owner",
-    "rule": "The homepage title, keywords, and description are locked to this approved baseline. Do not change these fields unless the site owner explicitly requests a TDK change.",
-    "sourceOfTruth": "PostgreSQL LivePage.contentJson.seo for site_aidreamcapes / site_aidreamcapes_home"
+    "rule": "The homepage title, keywords, and description are locked to this approved baseline. Do not change these fields unless the site owner explicitly requests a TDK change; an approved change must update this lock file in the same reviewed change.",
+    "sourceOfTruth": "PostgreSQL LivePage.contentJson.seo for site_aidreamcapes / site_aidreamcapes_home",
+    "enforcement": [
+      "npm run guard:aivideosugc-home-tdk",
+      "scripts/deploy-aidreamcapes-release.mjs runs the same guard before every application release"
+    ]
   },
   "site": {
     "id": "site_aidreamcapes",
@@ -16,8 +20,18 @@
     "pageType": "home"
   },
   "seo": {
-    "title": "AI UGC Video and Image Ads Generator | AivideosUGC",
+    "title": "AI UGC Video and Image Ads Generator | AIVideosUGC",
     "keywords": "AI UGC ads,AI UGC video ads,AI UGC image ads,AI UGC ad Generator,AI Generated UGC ads,AI Actors ads",
-    "description": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with Ai video agent and Ai actors ,ready-to-use video templates."
-  }
+    "description": "Turn product URL, image, or prompt into UGC video in minutes with AIVideosUGC, actors & templates. Free trial; first video $1, HD, no watermark, no subscription.",
+    "twitterDescription": "Turn product URL, image, or prompt into UGC video in minutes with AIVideosUGC, actors & templates. Free trial; first video $1, HD, no watermark, no subscription.",
+    "canonicalPath": "/",
+    "robots": "index,follow"
+  },
+  "approvedChanges": [
+    {
+      "date": "2026-11-18",
+      "approvedBy": "AIVideosUGC site owner",
+      "change": "Homepage description replaced with the owner-supplied UGC video copy. Title and keywords unchanged."
+    }
+  ]
 }

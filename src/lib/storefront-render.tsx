@@ -41,7 +41,7 @@ import { toThemeRuntimeAssetRelational } from "@/lib/stores/asset-store";
 import { getCustomerBySessionRelational } from "@/lib/stores/customer-store";
 import { getCustomerAccountSummaryRuntimeRelational } from "@/lib/stores/customer-account-runtime";
 import { toAssetUploadRelational, toCustomerModelRelational } from "@/lib/stores/prisma-mappers";
-import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontCustomerJobDetailStateForSite, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite } from "@/lib/stores/site-store";
+import { getCustomerWorkspaceBootstrapRelational, getCustomerWorkspaceSiteShellRelational, getPublishedVideoGenerationNavigationForSite, getSiteIdBySlugRelational, getStorefrontCustomerJobDetailStateForSite, getStorefrontPublicCreativePacksForSite, getStorefrontPublicNavigationDataForSite, getStorefrontPublicVideoThemesForSite as getCachedPublicVideoThemesForSite, publishedHomepageNavigation } from "@/lib/stores/site-store";
 import { readWorkspaceJobSummariesRelational, WORKSPACE_RELATED_JOB_SUMMARY_LIMIT, WORKSPACE_VIDEO_FRAME_ASSET_LIMIT } from "@/lib/workspace-runtime-jobs";
 import { assertLiveDraftPage, createPublishedSiteSnapshot, isAidreamcapesSite as isAidreamcapesCapabilitySite, isPrimaryMydreamshootsSite as isPrimaryMydreamshootsCapabilitySite, loadPublishedSiteSnapshotBySiteId, resolvePublishedRouteDisposition, resolvePublishedStorefrontContext, usesAiGenerationPublicRoutes } from "@/lib/storefront-context";
 import type { StorefrontContext } from "@/lib/storefront-context/types";
@@ -3529,7 +3529,7 @@ export async function renderStorefrontPage({
           // Use the same current relational homepage navigation that the public
           // footer renders, so Organization.sameAs can never drift into a second list.
           aidreamcapesNavigation: currentSite.id === "site_aidreamcapes"
-            ? (currentSite.pages.find((candidate) => candidate.slug === "/") as (ThemePage & { liveContentJson?: ThemePageJson & { siteNavigation?: AidreamcapesV2Navigation } }) | undefined)?.liveContentJson?.siteNavigation
+            ? publishedHomepageNavigation(publishedSnapshot)
             : undefined
         }),
     lightweightChrome: false

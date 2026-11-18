@@ -48,6 +48,9 @@ if (prebuiltBuild) {
 const git = (...argv) => execFileSync("git", argv, { encoding: "utf8" }).trim();
 assert.equal(git("rev-parse", "origin/main"), commit, "Release must equal origin/main");
 assert.equal(git("ls-remote", "origin", "refs/heads/main").split(/\s/)[0], commit, "GitHub main must contain this exact commit");
+// Editable TDK is owner-locked. An application release may not ship while the
+// live homepage title/keywords/description differs from the approved lock.
+execFileSync(process.execPath, ["scripts/guard-aivideosugc-home-tdk.mjs"], { stdio: "inherit" });
 const sourcePaths = ["package.json", "package-lock.json", "next.config.mjs", "next-env.d.ts", "postcss.config.mjs", "tailwind.config.ts", "tsconfig.json", "tsconfig.typecheck.json", "eslint.config.mjs", "server.mjs", "data/saas-fonts.json", "data/saas-theme-packages.json", "data/saas-theme1-package.json", "prisma", "scripts", "src"];
 const productionAssetPaths = [
   // Self-hosted font subsets referenced by the root layout stylesheet.

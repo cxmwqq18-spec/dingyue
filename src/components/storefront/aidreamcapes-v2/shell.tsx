@@ -7,7 +7,7 @@ import { aidreamcapesV2ResponsiveImagePropsFor } from "@/lib/aidreamcapes-v2-res
 import type { AidreamcapesPartnerBadge, AidreamcapesV2Navigation, ThemeNavLink, SectionInstance } from "@/lib/types";
 import { AidreamcapesV2MenuBehavior } from "./behavior";
 import type { V2Company } from "./company";
-import { BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
+import { BRAND_ALT, BRAND_ICON, BRAND_NAME, CompanyDetails, withStartLinks } from "./parts";
 import { aidreamcapesV2ThemeCssHref } from "./styles";
 import type { V2Resolvers } from "./types";
 import { copyLabel } from "./types";
@@ -30,7 +30,7 @@ function MenuLink({ link, r }: { link: ThemeNavLink; r: V2Resolvers }) {
   if (link.image || link.description) {
     return (
       <WorkspaceEntryLink className="mi" href={r.href(link.href)}>
-        {link.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(link.image, "120px", r.asset)} alt="" decoding="async" height={46} loading="lazy" src={r.asset(link.image)} width={46} /> : null}
+        {link.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(link.image, "120px", r.asset)} alt={link.alt ?? link.label} decoding="async" height={46} loading="lazy" src={r.asset(link.image)} width={46} /> : null}
         <div>
           <b>{link.label}</b>
           {link.description ? <span>{link.description}</span> : null}
@@ -53,7 +53,7 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
     <header className="site">
       <div className="wrap hbar">
         <WorkspaceEntryLink aria-label={copyLabel(r, "AIVideosUGC home")} className="logo" href={r.href("/")}>
-          <img alt="" className="logo-mark" height={28} src={r.asset(BRAND_ICON)} width={28} />
+          <img alt={BRAND_ALT} className="logo-mark" height={28} src={r.asset(BRAND_ICON)} width={28} />
           {BRAND_NAME}
         </WorkspaceEntryLink>
         <nav aria-label={copyLabel(r, "Main")} className="main" id="adc2-main-nav">
@@ -96,7 +96,7 @@ export function AidreamcapesV2Header({ navigation, r, headerAccount, headerCusto
                       <div className="popc">
                         {menu.popular.map((item) => (
                           <WorkspaceEntryLink href={r.href(item.href)} key={item.href}>
-                            {item.image ? <img alt="" decoding="async" loading="lazy" src={r.asset(item.image)} /> : null}
+                            {item.image ? <img alt={item.alt ?? item.label} decoding="async" loading="lazy" src={r.asset(item.image)} /> : null}
                             {item.label}
                           </WorkspaceEntryLink>
                         ))}
@@ -161,7 +161,7 @@ export function AidreamcapesV2Footer({ navigation, r, company, articles = [], ar
         <div className="fgrid seo">
           <div>
             <WorkspaceEntryLink className="logo" href={r.href("/")}>
-              <img alt="" className="logo-mark" height={28} loading="lazy" src={r.asset(BRAND_ICON)} width={28} />
+              <img alt={BRAND_ALT} className="logo-mark" height={28} loading="lazy" src={r.asset(BRAND_ICON)} width={28} />
               {BRAND_NAME}
             </WorkspaceEntryLink>
             <p style={{ marginTop: 12, maxWidth: 280 }}>{navigation.footer.tagline}</p>

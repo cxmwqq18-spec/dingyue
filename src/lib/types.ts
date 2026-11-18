@@ -75,6 +75,8 @@ export interface ThemeNavLink {
   description?: string;
   /** Optional thumbnail image path shown next to the label (Aidreamcapes v2 menus). */
   image?: string;
+  /** Optional alt text for the thumbnail; falls back to the visible label. */
+  alt?: string;
 }
 
 /** Aidreamcapes.com v2 header/footer navigation, stored in ThemeSettings. */

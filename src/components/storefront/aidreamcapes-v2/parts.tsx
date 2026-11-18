@@ -664,7 +664,7 @@ const ToolIcon = ({ group }: { group?: string }) => (
 export function ToolLink({ tool, r }: { tool: V2Tool; r: V2Resolvers }) {
   return (
     <div className="mi">
-      {tool.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(tool.image.src, "46px", r.asset)} alt="" decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
+      {tool.image ? <img {...aidreamcapesV2ResponsiveImagePropsFor(tool.image.src, "46px", r.asset)} alt={tool.alt ?? tool.label} decoding="async" height={46} loading="lazy" src={r.asset(tool.image.src)} width={46} /> : <ToolIcon group={tool.group} />}
       <div>
         <b><WorkspaceEntryLink className="card-title" href={r.href(tool.href)}>{tool.label}</WorkspaceEntryLink></b>
         <span>{tool.description}</span>
@@ -742,6 +742,9 @@ const UploadIcon = () => (
 
 // The storefront's name and icon (the brand was renamed from Aidreamcapes to AIVideosUGC).
 export const BRAND_NAME = "AIVIDEOSUGC";
+// Logo alt text uses the brand word the site owner approved, not the all-caps
+// display styling used on the button label.
+export const BRAND_ALT = "AIVideosUGC";
 export const BRAND_ICON = "/assets/sites/site_aidreamcapes/brand/aivideosugc-icon-64.png?v=20261011ugc";
 
 // The AIVideosUGC v2 shell is rendered only for site_aidreamcapes. Its

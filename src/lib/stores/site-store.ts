@@ -3061,7 +3061,7 @@ export async function getCustomerWorkspaceSiteShellRelational(slug: string): Pro
   }, Number(process.env.STOREFRONT_WORKSPACE_BOOTSTRAP_CACHE_TTL_MS ?? 60_000));
 }
 
-function publishedHomepageNavigation(
+export function publishedHomepageNavigation(
   snapshot: { pages: Array<{ slug: string; publishedJson?: unknown }> } | undefined
 ): AidreamcapesV2Navigation | undefined {
   if (!snapshot) return undefined;

@@ -295,6 +295,7 @@
     "remediate:aidreamcapes-eu-save-the-date:apply-local": "node scripts/finalize-aidreamcapes-eu-save-the-date-remediation.mjs --apply",
     "smoke:aidreamcapes-eu-save-the-date": "node scripts/smoke-aidreamcapes-eu-save-the-date-remediation.mjs && node scripts/smoke-aidreamcapes-eu-save-the-date-browser.mjs",
     "guard:aidreamcapes-eu-homepage": "node scripts/guard-aidreamcapes-eu-homepage-integrity.mjs",
+    "guard:aivideosugc-home-tdk": "node scripts/guard-aivideosugc-home-tdk.mjs",
     "smoke:aidreamcapes-eu-regression": "npm run guard:aidreamcapes-eu-homepage && node scripts/check-aidreamcapes-eu-home-reviews-faq.mjs && node scripts/check-aidreamcapes-eu-home-assets.mjs && node scripts/smoke-aidreamcapes-eu-regression.mjs",
     "smoke:mydreamshoots-route-entity-contract": "node scripts/smoke-mydreamshoots-route-entity-contract.mjs",
     "guard:mydreamshoots-page-copy-contract": "node scripts/guard-mydreamshoots-page-copy-contract.mjs",
