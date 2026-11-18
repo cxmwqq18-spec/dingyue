@@ -172,6 +172,26 @@ function leafPaths(value, prefix = "") {
   }
   return [prefix || "/"];
 }
+function diffJsonPaths(sourceValue, targetValue, prefix = "") {
+  if (hash(sourceValue) === hash(targetValue)) return [];
+  const sourceArray = Array.isArray(sourceValue);
+  const targetArray = Array.isArray(targetValue);
+  // Arrays are one compare-and-set unit. Emitting per-index deletes can shift
+  // later indexes while the manifest is being applied, creating false
+  // conflicts and leaving partially edited arrays behind.
+  if (sourceArray || targetArray) return [{ fieldPath: prefix || "/", nextValue: sourceValue, currentValue: targetValue }];
+  const sourceObject = sourceValue !== null && typeof sourceValue === "object";
+  const targetObject = targetValue !== null && typeof targetValue === "object";
+  if (sourceObject && targetObject) {
+    const keys = [...new Set([...Object.keys(sourceValue), ...Object.keys(targetValue)])].sort();
+    return keys.flatMap((key) => diffJsonPaths(
+      sourceValue[key],
+      targetValue[key],
+      `${prefix}/${key.replaceAll("~", "~0").replaceAll("/", "~1")}`
+    ));
+  }
+  return [{ fieldPath: prefix || "/", nextValue: sourceValue, currentValue: targetValue }];
+}
 function rowOperations(sourceRow, targetRow, type, spec, baselineMap) {
   const source = publicRow(sourceRow, spec);
   const targetRowPublic = targetRow ? publicRow(targetRow, spec) : undefined;
@@ -180,11 +200,8 @@ function rowOperations(sourceRow, targetRow, type, spec, baselineMap) {
   const operations = [];
   for (const field of spec.fields.filter((name) => name !== "id" && name !== "siteId")) {
     if (spec.json?.includes(field)) {
-      const paths = [...new Set([...leafPaths(source[field]), ...leafPaths(targetRowPublic[field])])];
-      for (const fieldPath of paths) {
-        const nextValue = getPointer(source[field], fieldPath);
-        const currentValue = getPointer(targetRowPublic[field], fieldPath);
-        if (hash(nextValue) === hash(currentValue)) continue;
+      const paths = diffJsonPaths(source[field], targetRowPublic[field]);
+      for (const { fieldPath, nextValue, currentValue } of paths) {
         const baseline = baselineMap.get(`${type}|${identity(sourceRow, spec)}|${field}|${fieldPath}`);
         operations.push({ entityType: type, entityKey: identity(sourceRow, spec), field, fieldPath, operation: nextValue === undefined ? "delete" : "upsert", baseHash: baseline?.valueHash ?? hash(currentValue), previousValue: currentValue, ...(nextValue === undefined ? {} : { value: nextValue }), ...(asset ? { asset } : {}) });
       }
