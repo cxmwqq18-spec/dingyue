@@ -65,7 +65,7 @@ import { isRenderableAidreamcapesImageThemeContentJson } from "@/lib/aidreamcape
 import { indexableSeoPageEntriesForSite } from "@/lib/seo-indexing";
 import { isBlockedPublicVideoThemeSlugForSite } from "@/lib/video-theme-public-scope";
 import { mydreamshootsVideoWatchPagesForState, type MyDreamShootsVideoWatchPage } from "@/lib/mydreamshoots-video-watch";
-import type { CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
+import type { AidreamcapesV2Navigation, CreativePack, CreativePackCategory, CustomerSession, MediaAsset, PlatformState, Price, Product, PublicCustomer, PublishedHomepageShowcaseItem, PublishedLeafRouteProjection, PublishedVideoNavigationProjection, SectionBlockInstance, SectionInstance, Site, SiteAiApp, ThemePage, ThemePageJson, ThemeRuntimeData, ToolMenuItem, VideoTheme, VideoThemeCategory } from "@/lib/types";
 
 const jobDetailSlug = "/app/jobs/detail";
 const dreamshootPartnerTemplateSlugs = new Set([
@@ -3525,7 +3525,12 @@ export async function renderStorefrontPage({
             route.disposition === "render" && route.status === "published" && "canonicalPath" in route
               ? [route.canonicalPath]
               : []
-          )
+          ),
+          // Use the same current relational homepage navigation that the public
+          // footer renders, so Organization.sameAs can never drift into a second list.
+          aidreamcapesNavigation: currentSite.id === "site_aidreamcapes"
+            ? (currentSite.pages.find((candidate) => candidate.slug === "/") as (ThemePage & { liveContentJson?: ThemePageJson & { siteNavigation?: AidreamcapesV2Navigation } }) | undefined)?.liveContentJson?.siteNavigation
+            : undefined
         }),
     lightweightChrome: false
   });

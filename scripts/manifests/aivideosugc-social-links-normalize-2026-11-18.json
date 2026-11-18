@@ -1,0 +1,75 @@
+{
+  "applyDate": "2026-11-18",
+  "manifest": "aivideosugc-social-links-normalize-2026-11-18",
+  "siteId": "site_aidreamcapes",
+  "intent": "The AIVideosUGC footer renders its social profiles from current site navigation data, but ThemeSettings still carried two legacy scalar sets pointing at @aidreamcapes accounts. Owner directive: the footer links are the single authority. This manifest aligns every legacy social URL field in ThemeSettings to the same nine public profiles the footer renders. It does not add a new social list; the navigation socialLinks stay canonical and are only asserted.",
+  "themeSettings": {
+    "siteId": "site_aidreamcapes",
+    "table": "ThemeSettings"
+  },
+  "footerSocialLinks": [
+    { "key": "facebook", "label": "Facebook", "href": "https://www.facebook.com/AiVideosUGC/" },
+    { "key": "instagram", "label": "Instagram", "href": "https://www.instagram.com/aivideosugc/" },
+    { "key": "pinterest", "label": "Pinterest", "href": "https://www.pinterest.com/AiVideosUGC/" },
+    { "key": "x", "label": "X", "href": "https://x.com/AiVideosUGC" },
+    { "key": "youtube", "label": "YouTube", "href": "https://www.youtube.com/@AiVideosUGC" },
+    { "key": "tiktok", "label": "TikTok", "href": "https://www.tiktok.com/@aivideosugc" },
+    { "key": "reddit", "label": "Reddit", "href": "https://www.reddit.com/user/AiVideosUGC/" },
+    { "key": "whatsapp", "label": "WhatsApp", "href": "https://whatsapp.com/channel/0029VbEAEkJKbYMG01djdZ36" },
+    { "key": "discord", "label": "Discord", "href": "https://discord.gg/F52827j3Nm" }
+  ],
+  "operations": [
+    {
+      "id": "global-footer-legacy-scalars",
+      "path": ["globalSections", "footer", "settings"],
+      "expectedCurrentUrls": {
+        "facebookUrl": "https://www.facebook.com/aidreamcapes",
+        "instagramUrl": "https://www.instagram.com/aidreamcapes",
+        "pinterestUrl": "https://www.pinterest.com/aidreamcapes",
+        "youtubeUrl": "https://www.youtube.com/@aidreamcapes",
+        "twitterUrl": "https://x.com/aidreamcapes",
+        "xUrl": "https://x.com/aidreamcapes",
+        "tiktokUrl": "https://www.tiktok.com/@aidreamcapes",
+        "threadsUrl": "https://www.threads.com/@aidreamcapes"
+      },
+      "nextUrls": {
+        "facebookUrl": "https://www.facebook.com/AiVideosUGC/",
+        "instagramUrl": "https://www.instagram.com/aivideosugc/",
+        "pinterestUrl": "https://www.pinterest.com/AiVideosUGC/",
+        "youtubeUrl": "https://www.youtube.com/@AiVideosUGC",
+        "twitterUrl": "https://x.com/AiVideosUGC",
+        "xUrl": "https://x.com/AiVideosUGC",
+        "tiktokUrl": "https://www.tiktok.com/@aivideosugc",
+        "threadsUrl": ""
+      }
+    },
+    {
+      "id": "saas-settings-current",
+      "path": ["saasSettingsCurrent"],
+      "expectedCurrentUrls": {
+        "facebookUrl": "https://www.facebook.com/aidreamcapes/",
+        "facebook_url": "https://www.facebook.com/aidreamcapes/",
+        "instagramUrl": "https://www.instagram.com/aidreamcapes/",
+        "instagram_url": "https://www.instagram.com/aidreamcapes/",
+        "pinterestUrl": "https://www.pinterest.com/Aidreamcapes/",
+        "pinterest_url": "https://www.pinterest.com/Aidreamcapes/",
+        "youtubeUrl": "https://www.youtube.com/@Aidreamcapes",
+        "youtube_url": "https://www.youtube.com/@Aidreamcapes",
+        "threadsUrl": "https://www.threads.com/@aidreamcapes",
+        "threads_url": "https://www.threads.com/@aidreamcapes"
+      },
+      "nextUrls": {
+        "facebookUrl": "https://www.facebook.com/AiVideosUGC/",
+        "facebook_url": "https://www.facebook.com/AiVideosUGC/",
+        "instagramUrl": "https://www.instagram.com/aivideosugc/",
+        "instagram_url": "https://www.instagram.com/aivideosugc/",
+        "pinterestUrl": "https://www.pinterest.com/AiVideosUGC/",
+        "pinterest_url": "https://www.pinterest.com/AiVideosUGC/",
+        "youtubeUrl": "https://www.youtube.com/@AiVideosUGC",
+        "youtube_url": "https://www.youtube.com/@AiVideosUGC",
+        "threadsUrl": "",
+        "threads_url": ""
+      }
+    }
+  ]
+}

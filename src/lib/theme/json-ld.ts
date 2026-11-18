@@ -26,7 +26,7 @@ import {
   AIDREAMSHOOTS_HOMEPAGE_VIDEO_TITLES,
   aidreamshootsVideoTopicSlugForPath
 } from "@/lib/aidreamshoots-video-media";
-import type { CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
+import type { AidreamcapesV2Navigation, CreativePack, Product, SectionBlockInstance, Site, ThemePage, ThemePageJson, ThemeSettingValue, VideoTheme } from "@/lib/types";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -41,6 +41,8 @@ type JsonLdInput = {
   videoThemes?: VideoTheme[];
   context: StorefrontContext;
   publishedRoutePaths?: readonly string[];
+  /** Current footer navigation, i.e. the same relational data the public footer renders. */
+  aidreamcapesNavigation?: AidreamcapesV2Navigation;
 };
 
 function cleanText(value: unknown, fallback = ""): string {
@@ -460,7 +462,7 @@ function homepageOfferCatalogSchema(site: Site, routeMode: "host" | "path"): Jso
   };
 }
 
-function organizationSchema(site: Site, routeMode: "host" | "path", context?: StorefrontContext, pagePath?: string): JsonLdNode {
+function organizationSchema(site: Site, routeMode: "host" | "path", context?: StorefrontContext, pagePath?: string, aidreamcapesNavigation?: AidreamcapesV2Navigation): JsonLdNode {
   const profile = storefrontCompanyProfile(context);
   const address = companyAddressSchema(profile);
   const identifiers = companyIdentifiers(profile);
@@ -473,17 +475,15 @@ function organizationSchema(site: Site, routeMode: "host" | "path", context?: St
       .filter((value): value is string => typeof value === "string" && /^https?:\/\//i.test(value.trim()))
       .map((value) => value.trim())
     : [];
-  const aidreamcapesPublicSocialProfiles = site.id === "site_aidreamcapes"
-    ? [
-        "https://www.instagram.com/aidreamcapes",
-        "https://www.facebook.com/aidreamcapes",
-        "https://www.pinterest.com/aidreamcapes",
-        "https://www.youtube.com/@aidreamcapes",
-        "https://x.com/aidreamcapes",
-        "https://www.tiktok.com/@aidreamcapes"
-      ]
+  // The public footer is the single authority for social profiles. Read the
+  // same relational navigation row the footer renders instead of keeping a
+  // second hardcoded brand list in code that can drift from the visible links.
+  const aidreamcapesFooterSocialProfiles = site.id === "site_aidreamcapes"
+    ? (aidreamcapesNavigation?.footer?.socialLinks ?? [])
+      .map((link) => (typeof link?.href === "string" ? link.href.trim() : ""))
+      .filter((href) => /^https?:\/\//i.test(href))
     : [];
-  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs, ...aidreamcapesPublicSocialProfiles]));
+  const sameAs = Array.from(new Set([...profileSameAs, ...footerSameAs, ...aidreamcapesFooterSocialProfiles]));
   const isAboutPage = pagePath === "/about-us" && isMydreamshootsComSite(site);
   const originalLogo = storefrontOriginalLogoUrl(site);
   const logo = originalLogo
@@ -1990,7 +1990,7 @@ function aidreamcapesV2JsonLd(input: JsonLdInput, storedGraph: JsonLdNode[]): Js
   const publicPath = aidreamcapesPublicActorUrl(pagePath).split(/[?#]/)[0] || "/";
   const hasStoredBreadcrumb = storedGraph.some((node) => jsonLdNodeHasType(node, "BreadcrumbList"));
   const graph: Array<JsonLdNode | undefined> = [
-    organizationSchema(input.site, input.routeMode, input.context, input.pagePath),
+    organizationSchema(input.site, input.routeMode, input.context, input.pagePath, input.aidreamcapesNavigation),
     publicPath === "/" ? websiteSchema(input.site, input.routeMode) : undefined,
     storefrontApplicationSchema(input, title, description),
     ...(hasStoredBreadcrumb || publicPath.split("/").filter(Boolean).length === 0
@@ -2025,7 +2025,7 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
   const title = euRouteSeo?.title || seoQualityOverride?.title || pageTitle(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const description = euRouteSeo?.description || seoQualityOverride?.description || pageDescription(resolvedInput.site, resolvedInput.page, resolvedInput.context);
   const graph: Array<JsonLdNode | undefined> = [
-    organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath),
+    organizationSchema(resolvedInput.site, resolvedInput.routeMode, resolvedInput.context, resolvedInput.pagePath, resolvedInput.aidreamcapesNavigation),
     ...websiteSchemaNodesForRoute(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath),
     storefrontApplicationSchema(resolvedInput, title, description),
     breadcrumbs(resolvedInput.site, resolvedInput.routeMode, resolvedInput.pagePath, title, resolvedInput.publishedRoutePaths),

@@ -198,6 +198,16 @@ const homepageNodes = flattenJsonLd(parseJsonLd(homepageHtml));
 const homepageApplication = homepageNodes.find((node) => node["@type"] === "SoftwareApplication" && /#app$/.test(String(node["@id"] || "")));
 const homepageOrganization = homepageNodes.find((node) => node["@type"] === "Organization");
 const homepageCatalog = homepageNodes.find((node) => node["@type"] === "OfferCatalog") ?? homepageOrganization?.hasOfferCatalog;
+// The footer is the single authority for social profiles; Organization.sameAs must mirror it.
+const homepageFooterSocialLinks = new Set(homepageDom('ul[data-social-links="true"] a').toArray().map((node) => homepageDom(node).attr("href")?.trim()).filter((href) => /^https?:\/\//i.test(href)));
+const homepageSameAs = Array.isArray(homepageOrganization?.sameAs) ? homepageOrganization.sameAs.filter((url) => typeof url === "string") : [];
+assert(homepageFooterSocialLinks.size > 0, "homepage footer must render its social links from current navigation data");
+for (const url of homepageFooterSocialLinks) {
+  assert(homepageSameAs.includes(url), `homepage footer social link ${url} is missing from Organization.sameAs`);
+}
+for (const url of homepageSameAs) {
+  assert(homepageFooterSocialLinks.has(url), `homepage Organization.sameAs ${url} is not one of the footer social links`);
+}
 assert.equal(homepageApplication?.applicationCategory, "MultimediaApplication", "homepage application category");
 assert.equal(homepageCatalog?.name, "AIVideosUGC AI image and video plans", "homepage OfferCatalog name");
 assert(Array.isArray(homepageApplication?.offers) && homepageApplication.offers.every((offer) => offer["@type"] === "Offer"), "application offers must not be an OfferCatalog");

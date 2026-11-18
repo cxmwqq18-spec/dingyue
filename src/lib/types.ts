@@ -101,7 +101,16 @@ export interface AidreamcapesV2Navigation {
     legal: ThemeNavLink[];
     copyright: string;
     partnerBadges?: AidreamcapesPartnerBadge[];
+    /** Public social profiles rendered in the footer; also the Organization sameAs source. */
+    socialLinks?: AidreamcapesV2SocialLink[];
   };
+}
+
+/** One public social profile rendered in the Aidreamcapes v2 footer. */
+export interface AidreamcapesV2SocialLink {
+  key: string;
+  label: string;
+  href: string;
 }
 
 /** Friend-link badge shown at the bottom of the Aidreamcapes v2 footer (data-driven). */
