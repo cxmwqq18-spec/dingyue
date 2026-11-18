@@ -35,6 +35,7 @@ function MediaFigure({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
       <figure className="v-detail-media">
         <AidreamcapesVideoPreview
           alt={card.label}
+          controls
           dialogSrc={r.asset(card.video.src)}
           height={card.video.height}
           poster={card.video.poster ? r.asset(card.video.poster.src) : undefined}
@@ -104,7 +105,7 @@ function ReferenceAssets({ card, r }: { card: MediaDetail["card"]; r: V2Resolver
           ))}
         </dl>
       ) : null}
-      <p className="v-detail-refs-note">{card.kind === "photo"
+      <p className="v-detail-refs-note">{card.kind === "photo" || !card.video?.src
         ? "These are the assets and settings this result used. Open the workspace to build your own version."
         : "These are the assets and settings this result used. The example video is the result, not an input."}</p>
     </section>

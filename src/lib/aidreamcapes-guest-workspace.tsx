@@ -156,7 +156,12 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
     alternates: { canonical },
     robots: { index: true, follow: true },
     openGraph: {
-      type: detail.kind === "video" ? "video.other" : "website",
+      // A video-kind card whose video file is missing renders as a still
+      // example (image hero, no player). Claiming video.other there made
+      // Google keep a video record for a page with no video at all — the
+      // "video URL: N/A" rows in the video indexing report. The claim follows
+      // the actual file, so re-attaching the video restores it automatically.
+      type: detail.kind === "video" && detail.card.video?.src ? "video.other" : "website",
       title,
       description: mediaDetailDescription(detail.card),
       url: canonical,

@@ -7,6 +7,10 @@ import { LazyStorefrontVideo } from "@/components/storefront/lazy-storefront-vid
 type AidreamcapesVideoPreviewProps = {
   alt: string;
   className?: string;
+  /** Show the browser's native video controls. The ambient loop stays muted
+   * autoplay either way; controls let the visitor pause, scrub and unmute the
+   * hero clip directly instead of only through the sound-on dialog. */
+  controls?: boolean;
   /** Source for the sound-on dialog. Defaults to `src`; pass the full-quality
    * file here when `src` is a lightweight ambient loop (the 10s preview). */
   dialogSrc?: string;
@@ -22,6 +26,7 @@ type AidreamcapesVideoPreviewProps = {
 export function AidreamcapesVideoPreview({
   alt,
   className = "",
+  controls = false,
   dialogSrc,
   deferLoading = false,
   height = 720,
@@ -75,6 +80,13 @@ export function AidreamcapesVideoPreview({
           aria-label={alt}
           autoPlay
           className={videoClassName}
+          {...(controls ? {
+            // Native controls receive their own clicks; without stopping the
+            // propagation here, every tap on play or mute also bubbles to the
+            // wrapper and pops the sound-on dialog open over the visitor.
+            onClick: (event: React.MouseEvent) => event.stopPropagation(),
+            controls: true
+          } : {})}
           deferLoading={deferLoading}
           height={height}
           loop
@@ -86,10 +98,15 @@ export function AidreamcapesVideoPreview({
           width={width}
         />
         <span className="pointer-events-none absolute inset-0 grid place-items-center bg-black/0 transition group-hover:bg-black/20">
-          <span className="flex items-center gap-2 rounded-full border border-white/35 bg-black/55 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white opacity-0 backdrop-blur-md transition group-hover:opacity-100">
-            <PlayCircle aria-hidden="true" className="h-4 w-4" strokeWidth={1.7} />
-            Preview with sound
-          </span>
+          {/* With native controls the click toggles playback in place, so the
+              sound dialog is reached with Enter instead; the hover hint that
+              promised a click would lie about that. */}
+          {!controls && (
+            <span className="flex items-center gap-2 rounded-full border border-white/35 bg-black/55 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white opacity-0 backdrop-blur-md transition group-hover:opacity-100">
+              <PlayCircle aria-hidden="true" className="h-4 w-4" strokeWidth={1.7} />
+              Preview with sound
+            </span>
+          )}
         </span>
       </div>
 
