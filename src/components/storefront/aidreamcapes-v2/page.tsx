@@ -1118,8 +1118,8 @@ function ProseSections({ sections, r }: { sections: V2Section[]; r: V2Resolvers 
       {sections.map((section) => (
         <div key={section.h2}>
           <h2>{section.h2}</h2>
-          {section.paras.map((para, index) => <p key={index}>{para}</p>)}
-          {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} /></figure> : null}
+          {section.paras.map((para, index) => <p key={index}><RichText r={r} text={para} /></p>)}
+          {section.img ? <figure className="article-section-media"><Img image={section.img} r={r} fallbackAlt={section.h2} /></figure> : null}
         </div>
       ))}
     </div>

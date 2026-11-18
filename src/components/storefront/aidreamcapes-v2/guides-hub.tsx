@@ -1,5 +1,6 @@
 import type { V2Resolvers } from "./types";
-import { Crumbs } from "./parts";
+import { Crumbs, RichText } from "./parts";
+import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import styles from "./guides-hub.module.css";
 
 /* Public portal hub for /guides. Ships as complete static HTML from the
@@ -104,12 +105,12 @@ export function GuidesHubPage({ data, r }: { data: GuidesHubData; r: V2Resolvers
               <a className={styles.card} href={r.href(item.href)} key={item.href}>
                 <span className={styles.thumb}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={r.asset(item.image.src)} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+                  <img src={r.asset(item.image.src)} alt={storefrontMeaningfulAlt(item.image.alt) || item.title} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
                 </span>
                 <span className={styles.cardPad}>
                   <span className={styles.read}>{item.minutes} read</span>
                   <h3><span className={styles.cardTag}>{item.tool}:</span> {item.title}</h3>
-                  <span className={styles.cardBody}>{item.body}</span>
+                  <span className={styles.cardBody}><RichText text={item.body} r={r} /></span>
                   <span className={styles.go}>Read the tutorial →</span>
                 </span>
               </a>

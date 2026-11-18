@@ -1,6 +1,8 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Clapperboard, Film, Play, Sparkles, UserRound } from "lucide-react";
 import { Fragment } from "react";
+import { RichText } from "./parts";
+import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import type { V2Data, V2Resolvers } from "./types";
 
 type LandingLayout = "ai-twin-landing" | "text-to-video-landing";
@@ -85,7 +87,7 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
         {item.kind === "cards" ? <div className={`landing-cards ${item.cards?.length === 6 ? "six" : ""}`}>
           {item.cards?.map((card, index) => <article className="landing-card" key={`${card.title}-${index}`}>
             <span className="landing-card-number">{String(index + 1).padStart(2, "0")}</span>
-            <h3>{card.title}</h3><p>{card.body}</p>
+            <h3>{card.title}</h3><p><RichText r={r} text={card.body} /></p>
             {card.image ? picture(card.image, "landing-card-image") : null}
             {card.href && card.label ? link(card.href, card.label) : null}
           </article>)}
@@ -93,7 +95,7 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
 
         {item.kind === "steps" ? <div className="landing-steps">
           {item.cards?.map((card, index) => <article className="landing-step" key={card.title}>
-            <div className="landing-step-copy"><span className="landing-card-number">{String(index + 1).padStart(2, "0")}</span><h3>{card.title}</h3><p>{card.body}</p></div>
+            <div className="landing-step-copy"><span className="landing-card-number">{String(index + 1).padStart(2, "0")}</span><h3>{card.title}</h3><p><RichText r={r} text={card.body} /></p></div>
             {card.image ? picture(card.image, "landing-step-image") : null}
           </article>)}
         </div> : null}
@@ -109,7 +111,7 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
         {item.kind === "gallery" ? <div className="landing-gallery">
           {item.cards?.map((card, index) => <article className={`landing-gallery-card gallery-${index + 1}`} key={card.title}>
             {card.image ? picture(card.image) : null}<div className="landing-gallery-caption">
-              {card.tag ? <span className="landing-pill">{card.tag}</span> : null}<h3>{card.title}</h3><p>{card.body}</p>
+              {card.tag ? <span className="landing-pill">{card.tag}</span> : null}<h3>{card.title}</h3><p><RichText r={r} text={card.body} /></p>
             </div>
           </article>)}
         </div> : null}
@@ -117,7 +119,7 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
         {item.kind === "storyboard" ? <div className="landing-storyboard">
           <div className="landing-storyboard-head"><span><Clapperboard size={18} />{item.eyebrow}</span><span>{item.note}</span></div>
           <div className="landing-shot-grid">{item.cards?.map((card, index) => <article className="landing-shot" key={card.title}>
-            <div className="landing-shot-image">{card.image ? picture(card.image) : null}<span>{String(index + 1).padStart(2, "0")}</span></div><h3>{card.title}</h3><p>{card.body}</p>
+            <div className="landing-shot-image">{card.image ? picture(card.image) : null}<span>{String(index + 1).padStart(2, "0")}</span></div><h3>{card.title}</h3><p><RichText r={r} text={card.body} /></p>
           </article>)}</div>
           <div className="landing-timeline"><Play aria-hidden="true" size={15} />{item.cards?.map((card, index) => <span key={`${card.title}-timeline`} style={{ flexGrow: index === 1 ? 1.2 : 1 }} />)}<small>{item.note}</small></div>
         </div> : null}
@@ -129,13 +131,13 @@ function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers 
         </div> : null}
 
         {item.kind === "faq" ? <div className="landing-faq">
-          {item.cards?.map((card) => <details key={card.title}><summary>{card.title}<ArrowDown aria-hidden="true" size={17} /></summary><p>{card.body}</p></details>)}
+          {item.cards?.map((card) => <details key={card.title}><summary>{card.title}<ArrowDown aria-hidden="true" size={17} /></summary><p><RichText r={r} text={card.body} /></p></details>)}
         </div> : null}
 
         {item.kind === "related" ? <div className="landing-related">
           {item.cards?.map((card, index) => <WorkspaceEntryLink className="landing-related-card" href={r.href(card.href || "/ai-video-generation")} key={card.title}>
             <span className="landing-related-icon">{index % 3 === 0 ? <Film /> : index % 3 === 1 ? <UserRound /> : <Clapperboard />}</span>
-            <span><b>{card.title}</b><small>{card.body}</small></span><ArrowRight aria-hidden="true" size={18} />
+            <span><b>{card.title}</b><small><RichText r={r} text={card.body} /></small></span><ArrowRight aria-hidden="true" size={18} />
           </WorkspaceEntryLink>)}
         </div> : null}
 
@@ -182,7 +184,7 @@ export function AidreamcapesDirectoryLanding({ data, layout, r }: { data: V2Data
 }
 
 function pictureElement(entry: LandingImage, r: V2Resolvers) {
-  return <img alt={entry.alt} decoding="async" fetchPriority="high" src={r.asset(entry.src)} />;
+  return <img alt={storefrontMeaningfulAlt(entry.alt)} decoding="async" fetchPriority="high" src={r.asset(entry.src)} />;
 }
 
 const landingCss = `

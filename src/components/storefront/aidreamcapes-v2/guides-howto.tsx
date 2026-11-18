@@ -251,7 +251,7 @@ function ReferenceCards({ cards, r }: { cards: InfoCard[]; r: V2Resolvers }) {
   );
 }
 
-function ReferenceFlow({ flow }: { flow: { title?: string; lead?: string; items: FlowItem[] } }) {
+function ReferenceFlow({ flow, r }: { flow: { title?: string; lead?: string; items: FlowItem[] }; r: V2Resolvers }) {
   return (
     <div className={styles.flowBlock}>
       {flow.title ? <p className={styles.flowTitle}>{flow.title}</p> : null}
@@ -261,7 +261,7 @@ function ReferenceFlow({ flow }: { flow: { title?: string; lead?: string; items:
           <li key={item.title}>
             <span className={styles.flowNum}>{item.number ?? `0${index + 1}`}</span>
             <b>{item.title}</b>
-            <span className={styles.flowBody}>{item.body}</span>
+            <span className={styles.flowBody}><RichText r={r} text={item.body} /></span>
             {item.note ? <em className={styles.flowNote}>{item.note}</em> : null}
           </li>
         ))}
@@ -359,7 +359,7 @@ export function GuidesHowtoPage({ data, r }: { data: HowtoData; r: V2Resolvers }
               ))}
               {section.media ? <SectionMediaFigure media={section.media} r={r} /> : null}
               {section.cards?.length ? <ReferenceCards cards={section.cards} r={r} /> : null}
-              {section.flow?.items?.length ? <ReferenceFlow flow={section.flow} /> : null}
+              {section.flow?.items?.length ? <ReferenceFlow flow={section.flow} r={r} /> : null}
               {section.panel ? <ReferencePanel panel={section.panel} /> : null}
               {section.bullets?.length ? (
                 <ul>
