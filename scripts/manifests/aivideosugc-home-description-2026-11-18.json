@@ -1,0 +1,18 @@
+{
+  "applyDate": "2026-11-18",
+  "manifest": "aivideosugc-home-description-2026-11-18",
+  "siteId": "site_aidreamcapes",
+  "intent": "The site owner supplied a new homepage description. Only the page description fields change: contentJson.seo.description, seo.twitterDescription, and the stored JSON-LD WebPage.description. Title, keywords, canonical, robots, images, and every other JSON-LD node stay untouched.",
+  "page": {
+    "id": "site_aidreamcapes_home",
+    "slug": "/"
+  },
+  "description": "Turn product URL, image, or prompt into UGC video in minutes with AIVideosUGC, actors & templates. Free trial; first video $1, HD, no watermark, no subscription.",
+  "descriptionLength": 161,
+  "previousDescriptions": [
+    "Turn one product image into UGC video ads and product photos. One-time credit packages from $24 — no subscription, all models and AI actors included, watermark-free export.",
+    "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with AI video agent and AI actors, ready-to-use video templates."
+  ],
+  "expectedCurrentWebPageDescription": "Turn product URL, image, or prompt into authentic, high-converting UGC video ads in minutes with AI video agent and AI actors, ready-to-use video templates.",
+  "expectedCurrentWebPageName": "AI UGC Video and Image Ads Generator | AivideosUGC"
+}
