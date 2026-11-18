@@ -50,7 +50,8 @@ export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r, 
   const eyebrow = text(intro, "eyebrow") || text(policy, "eyebrow") || "Policy";
   const lead = plainText(text(intro, "subtitle") || text(intro, "body"));
   const body = text(policy, "body");
-  const headings = headingsFromHtml(body);
+  const bodyHtml = addHeadingIds(body);
+  const headings = headingsFromHtml(bodyHtml);
   const lastUpdated = text(policy, "lastUpdated");
   const contactEmail = text(policy, "contactEmail") || supportEmail || "";
   const rawSummary = policy?.settings?.summary;
@@ -92,7 +93,7 @@ export function AidreamcapesV2PolicyPage({ sections, pagePath, supportEmail, r, 
               </nav>
             </aside>
           ) : null}
-          <article className="legal-body" dangerouslySetInnerHTML={{ __html: addHeadingIds(body) }} />
+          <article className="legal-body" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         </div>
       </section>
       <section className="sec legal-links-sec">

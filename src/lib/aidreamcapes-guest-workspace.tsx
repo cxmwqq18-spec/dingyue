@@ -152,7 +152,7 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
   const canonical = `${MEDIA_DETAIL_PUBLIC_ORIGIN}${detail.path}`;
   return {
     title: `${title} | AIVideosUGC`,
-    description: mediaDetailDescription(detail.card),
+    description: mediaDetailDescription(detail.card, detail.kind),
     alternates: { canonical },
     robots: { index: true, follow: true },
     openGraph: {
@@ -163,7 +163,7 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
       // the actual file, so re-attaching the video restores it automatically.
       type: detail.kind === "video" && detail.card.video?.src ? "video.other" : "website",
       title,
-      description: mediaDetailDescription(detail.card),
+      description: mediaDetailDescription(detail.card, detail.kind),
       url: canonical,
       images: [{ url: new URL(detail.card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href, alt: detail.card.image.alt || title }],
     },

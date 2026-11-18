@@ -71,7 +71,7 @@ function section(value: unknown): LandingSectionData | undefined {
 
 function LandingSection({ item, r }: { item: LandingSectionData; r: V2Resolvers }) {
   const sectionClass = `landing-section landing-section-${item.kind}${item.kind === "split" ? " landing-split" : ""}`;
-  const picture = (entry: LandingImage, className = "") => <img alt={entry.alt} className={className} decoding="async" loading="lazy" src={r.asset(entry.src)} />;
+  const picture = (entry: LandingImage, className = "") => <img alt={storefrontMeaningfulAlt(entry.alt) || item.title || ""} className={className} decoding="async" loading="lazy" src={r.asset(entry.src)} />;
   const link = (href: string, label: string, className = "landing-link") => <WorkspaceEntryLink className={className} href={r.href(href)}>{label}<ArrowUpRight aria-hidden="true" size={16} /></WorkspaceEntryLink>;
 
   return (

@@ -324,7 +324,7 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     kind,
     slug,
     label: card.label,
-    description: mediaDetailDescription(card),
+    description: mediaDetailDescription(card, kind),
     imagePath: card.image.src,
     ...(card.image.alt ? { imageAlt: card.image.alt } : {}),
     ...(card.video?.src ? { videoPath: card.video.src } : {}),

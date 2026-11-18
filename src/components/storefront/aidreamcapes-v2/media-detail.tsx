@@ -181,7 +181,7 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
       ...(card.video ? [{
         "@type": "VideoObject",
         name: card.label,
-        description: mediaDetailDescription(card),
+        description: mediaDetailDescription(card, detail.kind),
         thumbnailUrl: new URL(card.video.poster?.src ?? card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
         uploadDate: detail.ownerUpdatedAt,
         contentUrl: new URL(card.video.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,

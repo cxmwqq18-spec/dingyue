@@ -121,6 +121,12 @@ try {
     totalHits += hits;
     planned.push({ slug: page.slug, id: row.id, hits, restHashBefore, graphHashBefore, contentJson });
   }
+  // Idempotent re-run: once every page is clean the manifest expectation no
+  // longer matches. Nothing is left to change, so report a noop instead.
+  if (totalHits === 0) {
+    console.log(JSON.stringify({ ok: true, noop: true, reason: "stored seo.jsonLd already free of raw markdown" }, null, 2));
+    process.exit(0);
+  }
   assert.equal(totalHits, manifest.expectedTotalMarkdownHits, `Total hits ${totalHits} != manifest ${manifest.expectedTotalMarkdownHits}; refusing to apply.`);
 
   if (!apply) {

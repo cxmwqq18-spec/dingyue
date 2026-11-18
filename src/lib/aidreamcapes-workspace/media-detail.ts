@@ -125,10 +125,18 @@ export function mediaDetailPrompt(card: Pick<MediaDetailCard, "prompt">): string
   return text.length > 4000 ? `${text.slice(0, 3999).trimEnd()}…` : text;
 }
 
-export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "line" | "prompt">): string {
+export function mediaDetailDescription(card: Pick<MediaDetailCard, "label" | "line" | "prompt" | "video">, kind?: MediaDetailKind): string {
   const intro = mediaDetailIntro(card);
   const label = mediaDetailTitle(card);
-  return (intro ? `${label}: ${intro}` : label).slice(0, 300);
+  if (intro) return `${label}: ${intro}`.slice(0, 300);
+  // A card without a one-line intro would otherwise repeat its label as the
+  // whole search description. Describe what the page actually shows instead:
+  // the finished example plus the prompt behind it. The video claim follows
+  // the real file, never the card kind.
+  const example = kind === "photo" || !card.video?.src
+    ? "an AI product photo example made with AIVideosUGC"
+    : "an AI product video example made with AIVideosUGC";
+  return `${label} — ${example}. See the finished result and copy the prompt to generate your own version with your product photos.`.slice(0, 300);
 }
 
 /**
