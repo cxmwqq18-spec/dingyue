@@ -240,14 +240,18 @@ try {
     const suitcaseCard = (data.examples?.groups ?? []).flatMap((group) => group.items ?? []).find((item) => item?.publicSlug === spec.suitcaseCard.publicSlug);
     assert(suitcaseCard, "Suitcase card missing from the examples groups.");
     const suitcaseAlreadySwapped = suitcaseCard.image?.src === spec.suitcaseCard.afterImage.src;
+    // Categorization-era rows carry the rendered name in `label`; older local
+    // rows carry it in `title`. Both shapes are accepted and both are written.
+    const suitcaseTitleField = typeof suitcaseCard.title === "string" ? "title" : typeof suitcaseCard.label === "string" ? "label" : undefined;
+    assert(suitcaseTitleField, "Suitcase card has neither a title nor a label field; unexpected card shape.");
     if (suitcaseAlreadySwapped) {
-      assert(suitcaseCard.title === spec.suitcaseCard.titleAfter, `Suitcase card title is ${JSON.stringify(suitcaseCard.title)} after a swap; unexpected.`);
+      assert((suitcaseCard.title ?? suitcaseCard.label) === spec.suitcaseCard.titleAfter, `Suitcase card name is ${JSON.stringify(suitcaseCard.title ?? suitcaseCard.label)} after a swap; unexpected.`);
       console.log("[content-alignment] sale template: suitcase card already swapped; idempotent re-run.");
     } else {
       assert(suitcaseCard.image?.src === spec.suitcaseCard.beforeImageSrc, `Suitcase card image is ${JSON.stringify(suitcaseCard.image?.src)}; expected the crossed sneaker photo. Re-run the dry run against this target.`);
-      assert(spec.suitcaseCard.acceptedTitles.includes(suitcaseCard.title), `Suitcase card title is ${JSON.stringify(suitcaseCard.title)}; unexpected state. Re-run the dry run.`);
+      assert(spec.suitcaseCard.acceptedTitles.includes(suitcaseCard.title ?? suitcaseCard.label), `Suitcase card name is ${JSON.stringify(suitcaseCard.title ?? suitcaseCard.label)}; unexpected state. Re-run the dry run.`);
       suitcaseCard.image = { ...suitcaseCard.image, ...spec.suitcaseCard.afterImage };
-      suitcaseCard.title = spec.suitcaseCard.titleAfter;
+      suitcaseCard[suitcaseTitleField] = spec.suitcaseCard.titleAfter;
       if (typeof suitcaseCard.mediaRef === "string") suitcaseCard.mediaRef = spec.suitcaseCard.afterMediaRef;
     }
 
