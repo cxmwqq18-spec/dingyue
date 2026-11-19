@@ -98,6 +98,10 @@ const quote = (s) => `'${String(s).replaceAll("'", "'\\''")}'`;
 const connection = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15", "-o", "ServerAliveInterval=15", "-o", "ServerAliveCountMax=6", "-o", "Compression=yes"];
 if (process.env.SSH_CONFIG_PATH) connection.push("-F", process.env.SSH_CONFIG_PATH);
 if (process.env.AI_PROJECT_SSH_KEY_PATH) connection.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
+// A release performs several SSH/scp/rsync operations in a row. Reusing one
+// multiplexed connection keeps that sequence stable on hosts that throttle
+// new connections, without changing what each operation does.
+if (process.env.AI_PROJECT_SSH_CONTROL_PATH) connection.push("-o", `ControlPath=${process.env.AI_PROJECT_SSH_CONTROL_PATH}`);
 const port = process.env.AI_PROJECT_SSH_PORT || "11765";
 const host = `root@${process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"}`;
 const sshCommand = ["ssh", "-p", port, ...connection].map((arg) => quote(arg)).join(" ");
