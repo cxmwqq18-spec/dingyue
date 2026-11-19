@@ -412,8 +412,18 @@ function openAiVideoContentEndpoint(baseUrl: string, taskId: string, options?: {
 // Jobs that carry reference audio must run against yingling's OpenAI-compatible
 // /v1/videos endpoint (`audio_refs` JSON URL list); the legacy platform task
 // format accepts no audio fields at all.
-function yinglingJobUsesOpenAiVideos(baseUrl: string, audioUrlCount: number) {
-  return isYinglingApiBaseUrl(baseUrl) && audioUrlCount > 0;
+//
+// Seedance 2.0 also uses the OpenAI-compatible endpoint so the gateway can
+// apply `face_processing` to reference images before uploading them upstream.
+// The legacy /v1/video/generations task format does not document that field,
+// and content-review rejections are otherwise surfaced only after submission.
+function yinglingJobUsesOpenAiVideos(baseUrl: string, audioUrlCount: number, model = "") {
+  return isYinglingApiBaseUrl(baseUrl) && (audioUrlCount > 0 || isSeedance2Model(model));
+}
+
+function isSeedance2Model(model: string) {
+  const normalized = model.trim().toLowerCase();
+  return normalized.includes("seedance-2.0") || normalized.includes("seedance-2-0") || normalized.includes("seedance_2_0");
 }
 
 function isGrokImagineVideoModel(model: string) {
@@ -2928,7 +2938,7 @@ async function createVideoTask(params: {
     return task.id;
   }
   const mediaBaseUrl = params.protocol === "lk888-media" ? params.baseUrl.replace(/\/api$/, "") : params.baseUrl;
-  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, params.audioUrls.length);
+  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, params.audioUrls.length, params.model);
   const endpoint = params.protocol === "openai-videos"
     ? openAiVideoCreateEndpoint(params.baseUrl, { yinglingOpenAiVideos })
     : `${mediaBaseUrl}/v1/media/generate`;
@@ -2988,6 +2998,14 @@ async function createVideoTask(params: {
         model: params.model,
         prompt: params.prompt,
         seconds: Number(params.videoParams.duration),
+        // Seedance 2.0 reference images are pre-processed by the gateway by
+        // default. "auto" only masks a face when one is detected, so
+        // product-only references stay untouched. The method defaults to
+        // "grid" (diamond black mesh), which is the least destructive option
+        // and does not change billing.
+        ...(isSeedance2Model(params.model)
+          ? { face_processing: "auto", face_processing_method: "grid" }
+          : {}),
         ...(params.imageUrls.length ? { images: params.imageUrls } : {}),
         ...(params.audioUrls.length ? { audio_refs: params.audioUrls } : {}),
         ...(params.videoParams.aspect_ratio ? { ratio: params.videoParams.aspect_ratio } : {})
@@ -3079,6 +3097,7 @@ async function pollVideoTask(params: {
   baseUrl: string;
   apiKey: string;
   taskId: string;
+  model: string;
   protocol: VideoProviderProtocol;
   providerFamily: VideoModelFamily;
   signal?: AbortSignal;
@@ -3089,7 +3108,7 @@ async function pollVideoTask(params: {
   const startedAt = Date.now();
   let lastStatus = "";
   let firstPoll = true;
-  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, videoAudioAssets(params.payload).length);
+  const yinglingOpenAiVideos = yinglingJobUsesOpenAiVideos(params.baseUrl, videoAudioAssets(params.payload).length, params.model);
   let providerFirstProgressAt = params.timing?.providerFirstProgressAt;
   const providerProgressTiming = (progress: unknown): Record<string, string> | undefined => {
     if (!Number.isFinite(Number(progress))) return undefined;
@@ -3562,6 +3581,7 @@ async function generateVideoWithProvider(params: {
       baseUrl,
       apiKey: providerApiKey,
       taskId,
+      model,
       protocol,
       providerFamily: videoProviderModelFamilyForProvider(provider),
       timing,
@@ -3602,6 +3622,7 @@ async function generateVideoWithProvider(params: {
         baseUrl,
         apiKey: providerApiKey,
         taskId,
+        model,
         protocol,
         providerFamily: videoProviderModelFamilyForProvider(provider),
         timing,
@@ -3644,7 +3665,7 @@ async function generateVideoWithProvider(params: {
     apiKey: providerApiKey,
     taskId,
     protocol,
-    yinglingOpenAiVideos: yinglingJobUsesOpenAiVideos(baseUrl, audioAssetUrls.length),
+    yinglingOpenAiVideos: yinglingJobUsesOpenAiVideos(baseUrl, audioAssetUrls.length, model),
     signal: params.signal,
     timeoutMs
   });

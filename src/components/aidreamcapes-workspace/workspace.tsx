@@ -2782,6 +2782,9 @@ function humanError(code?: string) {
   if (code.includes("local_worker_restarted") || code.includes("local_worker_recovered")) return "Generation was interrupted by a server restart. Please try again.";
   if (code === "workspace_clip_retention_expired") return "This clip was deleted after its 15-day retention period ended. Generate the shot again to create a new version.";
   if (/ai_provider_[a-z_]*timeout/.test(code)) return "The video provider did not respond in time. Please retry this shot.";
+  if (code.includes("内容审核未通过") || /content (?:review|moderation)|sensitive content|policy violation/i.test(code)) {
+    return "This shot was blocked by the video provider's content review. The scene description or a reference image/video was rejected. Edit the description, remove or replace the flagged reference, then submit the shot again.";
+  }
   if (code.startsWith("ai_provider_video_create_failed")) {
     const detail = upstreamProviderMessage(code);
     return detail ? `The video provider rejected this shot: ${detail}` : "The video provider rejected this shot. Please retry.";
