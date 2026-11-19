@@ -53,6 +53,11 @@ type PricingSettingsData = {
 };
 
 const TERM_LABELS: Record<string, string> = { "1": "1 month", "6": "6 months", "12": "12 months" };
+const PAYMENT_METHODS = [
+  { label: "Card", detail: "Visa · Mastercard · Amex" },
+  { label: "Apple Pay", detail: "One-tap on iPhone, iPad, Mac" },
+  { label: "Google Pay", detail: "One-tap on Android and Chrome" }
+];
 
 function parseAmountToCents(label: string | undefined): number | undefined {
   if (typeof label !== "string") return undefined;
@@ -209,6 +214,26 @@ export async function AidreamcapesCheckoutPage({
 
         <section className="aco-grid">
           <article className="aco-summary">
+            {/* The full purchase selector: every package and every credit pack
+                is reachable from this page, so checkout stands on its own. */}
+            <div aria-label="Choose your purchase" className="aco-product-switch" role="group">
+              <div className="aco-switch-group">
+                <span className="aco-switch-label">Packages</span>
+                {tiers.map((item) => (
+                  <Link className={`aco-switch${selection.kind === "tier" && selection.tier.id === item.id ? " is-active" : ""}`} href={`${basePath}/checkout?plan=${encodeURIComponent(item.id)}&term=${termKey}`} key={item.id}>
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+              <div className="aco-switch-group">
+                <span className="aco-switch-label">Credit packs</span>
+                {packs.map((item) => (
+                  <Link className={`aco-switch${selection.kind === "pack" && selection.pack.id === item.id ? " is-active" : ""}`} href={`${basePath}/checkout?pack=${encodeURIComponent(item.id)}`} key={item.id}>
+                    {item.credits.toLocaleString("en-US")} credits
+                  </Link>
+                ))}
+              </div>
+            </div>
             {selection.kind === "pack" ? (
               <>
                 <div className="aco-summary-head">
@@ -278,6 +303,24 @@ export async function AidreamcapesCheckoutPage({
               <span>{selection.kind === "pack" ? selection.pack.name : `AIVideosUGC ${selection.tier.name} · ${TERM_LABELS[termKey] ?? termKey}`}</span>
               <strong>{amountLabel}</strong>
             </div>
+            <div className="aco-methods">
+              <p className="aco-methods-title">Pay with</p>
+              <ul className="aco-method-list">
+                {PAYMENT_METHODS.map((method) => (
+                  <li className="aco-method" key={method.label}>
+                    <b>{method.label}</b>
+                    <span>{method.detail}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="aco-methods-note">
+                Card payments run on <b>Stripe</b>. The secure payment window opens on Stripe&rsquo;s hosted checkout — your card details are entered there and never touch our servers.
+              </p>
+              <p className="aco-methods-trust">
+                <svg aria-hidden="true" fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="11" rx="2" width="18" x="3" y="11"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                SSL-encrypted · PCI-compliant via Stripe · Support: support@aivideosugc.com
+              </p>
+            </div>
             {customer ? (
               <>
                 <div className="aco-account-lines">
@@ -342,6 +385,12 @@ const ACO_CSS = `
 .aco .aco-grid { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.95fr); gap: 20px; margin-top: 36px; }
 .aco .aco-summary, .aco .aco-payment { border: 1px solid var(--aco-line-2); border-radius: 20px; padding: 26px 26px 24px;
   background: linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015) 48%),var(--card, rgba(255,255,255,.03)); }
+.aco .aco-product-switch { display: grid; gap: 8px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--aco-line); }
+.aco .aco-switch-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.aco .aco-switch-label { font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; color: var(--aco-ink-3); margin-right: 4px; }
+.aco .aco-switch { border: 1px solid var(--aco-line-2); border-radius: 999px; padding: 8px 15px; font-size: 13px; font-weight: 650; color: var(--aco-ink-2); background: transparent; transition: border-color .2s, color .2s; }
+.aco .aco-switch:hover { border-color: rgba(255,255,255,.34); color: var(--aco-ink); }
+.aco .aco-switch.is-active { background: rgba(139,92,246,.22); border-color: rgba(168,85,247,.72); color: #ddd0ff; }
 .aco .aco-summary-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .aco .aco-summary-head h2 { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.02em; }
 .aco .aco-badge { border: 1px solid rgba(196,181,253,.3); border-radius: 999px; background: var(--aco-grad); padding: 4px 12px;
@@ -381,6 +430,16 @@ const ACO_CSS = `
   border: 1px solid var(--aco-line); border-radius: 12px; background: rgba(0,0,0,.25); padding: 13px 15px; font-size: 14px; }
 .aco .aco-order-line span { color: var(--aco-ink-2); }
 .aco .aco-order-line strong { font-size: 16px; font-weight: 750; }
+.aco .aco-methods { margin-top: 14px; border: 1px solid var(--aco-line); border-radius: 14px; background: rgba(255,255,255,.025); padding: 14px 16px; }
+.aco .aco-methods-title { margin: 0; color: var(--aco-ink-2); font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+.aco .aco-method-list { display: grid; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+.aco .aco-method { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.aco .aco-method b { font-size: 13.5px; font-weight: 650; color: var(--aco-ink); }
+.aco .aco-method span { font-size: 12px; color: var(--aco-ink-3); text-align: right; }
+.aco .aco-methods-note { margin: 12px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--aco-ink-2); }
+.aco .aco-methods-note b { color: var(--aco-ink); }
+.aco .aco-methods-trust { display: flex; align-items: center; gap: 7px; margin: 10px 0 0; font-size: 11.5px; color: var(--aco-ink-3); }
+.aco .aco-methods-trust svg { flex: 0 0 auto; }
 .aco .aco-account-lines { margin-top: 14px; display: grid; gap: 8px; font-size: 13px; }
 .aco .aco-account-lines div { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .aco .aco-account-lines span { color: var(--aco-ink-3); }

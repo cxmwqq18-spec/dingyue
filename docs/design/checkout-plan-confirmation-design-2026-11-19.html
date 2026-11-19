@@ -58,6 +58,23 @@
   .aco-terms a{min-width:112px;border:0;border-radius:999px;background:transparent;padding:10px 18px;color:var(--ink-2);font-size:13.5px;font-weight:650;text-align:center;cursor:pointer}
   .aco-terms a.is-active{background:var(--grad);color:#fff;box-shadow:0 6px 22px rgba(139,92,246,.22)}
 
+  .aco-product-switch{display:grid;gap:8px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .aco-switch-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .aco-switch-label{font-size:11px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-right:4px}
+  .aco-switch{border:1px solid var(--line-2);border-radius:999px;padding:8px 15px;font-size:13px;font-weight:650;color:var(--ink-2);background:transparent;transition:border-color .2s,color .2s}
+  .aco-switch:hover{border-color:rgba(255,255,255,.34);color:var(--fg)}
+  .aco-switch.is-active{background:rgba(139,92,246,.22);border-color:rgba(168,85,247,.72);color:#ddd0ff}
+
+  .aco-methods{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);padding:14px 16px}
+  .aco-methods-title{margin:0;color:var(--ink-2);font-size:11px;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+  .aco-method-list{display:grid;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+  .aco-method{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .aco-method b{font-size:13.5px;font-weight:650;color:var(--fg)}
+  .aco-method span{font-size:12px;color:var(--ink-3);text-align:right}
+  .aco-methods-note{margin:12px 0 0;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+  .aco-methods-note b{color:var(--fg)}
+  .aco-methods-trust{display:flex;align-items:center;gap:7px;margin:10px 0 0;font-size:11.5px;color:var(--ink-3)}
+
   .aco-amount{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-top:20px}
   .aco-amount strong{font-size:clamp(30px,3vw,40px);line-height:1;font-weight:750;letter-spacing:-.045em;color:var(--fg)}
   .aco-strike{color:var(--ink-3);font-size:15px;text-decoration:line-through}
@@ -153,6 +170,21 @@
   <section class="wrap aco-grid">
     <!-- ============ order summary ============ -->
     <article class="aco-summary">
+      <div aria-label="Choose your purchase" class="aco-product-switch" role="group">
+        <div class="aco-switch-group">
+          <span class="aco-switch-label">Packages</span>
+          <a class="aco-switch" href="#">Starter</a>
+          <a class="aco-switch is-active" href="#">Pro</a>
+          <a class="aco-switch" href="#">Studio</a>
+        </div>
+        <div class="aco-switch-group">
+          <span class="aco-switch-label">Credit packs</span>
+          <a class="aco-switch" href="#">100 credits</a>
+          <a class="aco-switch" href="#">300 credits</a>
+          <a class="aco-switch" href="#">1,000 credits</a>
+        </div>
+      </div>
+
       <div class="aco-summary-head">
         <h2>AIVideosUGC Pro</h2>
         <span class="aco-badge">Most popular</span>
@@ -204,6 +236,20 @@
       <div class="aco-order-line">
         <span class="js-order-label">AIVideosUGC Pro · 6 months</span>
         <strong class="js-order-price">$312</strong>
+      </div>
+
+      <div class="aco-methods">
+        <p class="aco-methods-title">Pay with</p>
+        <ul class="aco-method-list">
+          <li class="aco-method"><b>Card</b><span>Visa · Mastercard · Amex</span></li>
+          <li class="aco-method"><b>Apple Pay</b><span>One-tap on iPhone, iPad, Mac</span></li>
+          <li class="aco-method"><b>Google Pay</b><span>One-tap on Android and Chrome</span></li>
+        </ul>
+        <p class="aco-methods-note">Card payments run on <b>Stripe</b>. The secure payment window opens on Stripe&rsquo;s hosted checkout — your card details are entered there and never touch our servers.</p>
+        <p class="aco-methods-trust">
+          <svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="13"><rect height="11" rx="2" width="18" x="3" y="11"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          SSL-encrypted · PCI-compliant via Stripe · Support: support@aivideosugc.com
+        </p>
       </div>
 
       <!-- state 1 · guest -->
