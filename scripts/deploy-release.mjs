@@ -62,11 +62,13 @@ function runRemote(config) {
     `COMMIT=${commitQ}`,
     `command -v git >/dev/null 2>&1 || { echo 'Remote deployment requires git on the app host.' >&2; exit 127; }`,
     `test -d ${appQ}/.git`,
-    `git -C ${appQ} fetch --prune origin main`,
+    `git -C ${appQ} fetch --prune origin '+refs/heads/main:refs/remotes/origin/main'`,
     `git -C ${appQ} cat-file -e ${commitQ}^{commit}`,
     `test "$(git -C ${appQ} rev-parse origin/main)" = ${commitQ}`,
     `mkdir -p ${rootQ}/releases`,
-    `if [ ! -e ${releaseQ} ]; then git -C ${appQ} worktree add --detach ${releaseQ} ${commitQ}; fi`,
+    // Release hosts can run git versions without worktree support; a tracked
+    // archive extraction produces the identical tree on every git version.
+    `if [ ! -e ${releaseQ} ]; then mkdir -p ${releaseQ} && git -C ${appQ} archive ${commitQ} | tar -x -C ${releaseQ}; fi`,
     `cp ${appQ}/.env.local ${releaseQ}/.env.local`,
     `cp ${releaseQ}/.env.local ${releaseQ}/.env`,
     `cd ${releaseQ}`,
