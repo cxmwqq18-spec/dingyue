@@ -289,6 +289,8 @@ const imageRootPage = slugRows.find((row) => row.slug === "/ai-image-generation"
 const videoRootPage = slugRows.find((row) => row.slug === "/ai-video-generation" && row.index === true);
 const mydreamshootsWorkflow = slugRows.find((row) => row.slug === "/workflow");
 const aidreamcapesWorkflow = aidreamcapesSite.pages.find((page) => normalizePath(page.slug) === "/workflow");
+const aidreamcapesV2Redirects = readJson("src/lib/aidreamcapes-site-v2-redirects.json");
+const aidreamcapesWorkflowRetired = aidreamcapesV2Redirects.some(([from, to]) => from === "/workflow" && to === "/guides");
 
 assert(!duplicateSlugRows.length, "MyDreamShoots page slugs must be unique before sitemap expansion", { duplicateSlugRows });
 assert(
@@ -297,9 +299,9 @@ assert(
   { mydreamshootsWorkflow }
 );
 assert(
-  Boolean(aidreamcapesWorkflow) && aidreamcapesWorkflow.pageType === "content",
-  "Aidreamcapes must expose a standalone /workflow content page",
-  { aidreamcapesWorkflow: aidreamcapesWorkflow && { id: aidreamcapesWorkflow.id, slug: aidreamcapesWorkflow.slug, pageType: aidreamcapesWorkflow.pageType } }
+  Boolean(aidreamcapesWorkflowRetired) && !aidreamcapesWorkflow,
+  "Aidreamcapes /workflow must stay retired per the 2026-10-23 contract: the redirect map sends /workflow to /guides and no LivePage row owns the address",
+  { aidreamcapesWorkflow: aidreamcapesWorkflow && { id: aidreamcapesWorkflow.id, slug: aidreamcapesWorkflow.slug, pageType: aidreamcapesWorkflow.pageType }, aidreamcapesWorkflowRetired }
 );
 for (const pathName of ["/best-packages", "/best-ai-image", "/best-ai-video"]) {
   const row = slugRows.find((item) => item.slug === pathName);
@@ -777,7 +779,8 @@ assert(
     seoIndexing.includes("siteHostCandidates.some((host) => isHostForSite(item, host))") &&
     seoIndexing.includes("getAidreamcapesSitemapUrls") &&
     seoIndexing.includes("isLocalDevelopmentHost") &&
-    seoIndexing.includes("runtime.sites.flatMap((site) => getSitemapUrlsForSite(runtime.state, site))"),
+    seoIndexing.includes("runtime?.sites.find(isDreamshootSite)") &&
+    seoIndexing.includes("runtime.sites.find(isAidreamcapesSite)"),
   "sitemap indexing must expose a host-aware single-site URL selector"
 );
 
