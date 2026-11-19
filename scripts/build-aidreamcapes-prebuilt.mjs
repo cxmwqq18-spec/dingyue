@@ -33,6 +33,7 @@ const root = "/www/wwwroot/aidreamcapes.com";
 const connection = ["-o", "BatchMode=yes", "-o", "ConnectTimeout=15", "-o", "ServerAliveInterval=15", "-o", "ServerAliveCountMax=6", "-o", "Compression=yes"];
 if (process.env.SSH_CONFIG_PATH) connection.push("-F", process.env.SSH_CONFIG_PATH);
 if (process.env.AI_PROJECT_SSH_KEY_PATH) connection.push("-i", process.env.AI_PROJECT_SSH_KEY_PATH);
+if (process.env.AI_PROJECT_SSH_CONTROL_PATH) connection.push("-o", `ControlPath=${process.env.AI_PROJECT_SSH_CONTROL_PATH}`);
 const port = process.env.AI_PROJECT_SSH_PORT || "11765";
 const host = `root@${process.env.AI_PROJECT_SSH_HOST || "204.77.130.125"}`;
 const quote = (value) => `'${String(value).replaceAll("'", "'\\''")}'`;
