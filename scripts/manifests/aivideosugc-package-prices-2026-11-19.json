@@ -1,0 +1,141 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "Draft Product + Price rows behind the /checkout plan-confirmation page: the one-month terms of the Starter, Pro and Studio packages, plus the three one-time credit packs from the pricing page. All prices are one_time with the exact displayed amounts. The Stripe price_ ids and the provider-verified checkout fields stay owned by the admin price-activation flow; until activation these rows are not purchasable and the checkout page shows the activation-pending state. Six- and twelve-month terms are intentionally NOT created here: their monthly-delivery billing shape is an owner decision at activation time, and the checkout page says so honestly.",
+  "products": [
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pkg_starter",
+        "name": "Starter — 200 credits a month",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_package",
+          "planId": "starter",
+          "creditsPerMonth": 200,
+          "summary": "One-time $24 purchase with 200 credits delivered monthly for one month. No subscription."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pkg_starter_1m",
+        "label": "Starter — $24 (200 credits, one month)",
+        "amountCents": 2400,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 200,
+        "status": "active"
+      }
+    },
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pkg_pro",
+        "name": "Pro — 500 credits a month",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_package",
+          "planId": "pro",
+          "creditsPerMonth": 500,
+          "summary": "One-time $59 purchase with 500 credits delivered monthly for one month. No subscription."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pkg_pro_1m",
+        "label": "Pro — $59 (500 credits, one month)",
+        "amountCents": 5900,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 500,
+        "status": "active"
+      }
+    },
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pkg_studio",
+        "name": "Studio — 1,200 credits a month",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_package",
+          "planId": "studio",
+          "creditsPerMonth": 1200,
+          "summary": "One-time $129 purchase with 1,200 credits delivered monthly for one month. No subscription."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pkg_studio_1m",
+        "label": "Studio — $129 (1,200 credits, one month)",
+        "amountCents": 12900,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 1200,
+        "status": "active"
+      }
+    },
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pack_100",
+        "name": "Starter Pack — 100 credits",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_pack_purchase",
+          "packId": "pack-100",
+          "summary": "One-time $14 credit pack with 100 credits, valid for 24 months."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pack_100",
+        "label": "Starter Pack — $14 (100 credits)",
+        "amountCents": 1400,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 100,
+        "status": "active"
+      }
+    },
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pack_300",
+        "name": "Standard Pack — 300 credits",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_pack_purchase",
+          "packId": "pack-300",
+          "summary": "One-time $36 credit pack with 300 credits, valid for 24 months."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pack_300",
+        "label": "Standard Pack — $36 (300 credits)",
+        "amountCents": 3600,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 300,
+        "status": "active"
+      }
+    },
+    {
+      "product": {
+        "id": "prod_aidreamcapes_pack_1000",
+        "name": "Volume Pack — 1,000 credits",
+        "type": "credit_pack",
+        "status": "active",
+        "metadata": {
+          "kind": "credit_pack_purchase",
+          "packId": "pack-1000",
+          "summary": "One-time $99 credit pack with 1,000 credits, valid for 24 months."
+        }
+      },
+      "price": {
+        "id": "price_aidreamcapes_pack_1000",
+        "label": "Volume Pack — $99 (1,000 credits)",
+        "amountCents": 9900,
+        "currency": "usd",
+        "interval": "one_time",
+        "creditsGranted": 1000,
+        "status": "active"
+      }
+    }
+  ]
+}

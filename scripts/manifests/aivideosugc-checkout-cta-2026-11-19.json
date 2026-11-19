@@ -1,0 +1,25 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "Point the pricing-page package and credit-pack buttons plus the homepage package buttons at the /checkout plan-confirmation page instead of the raw workspace entry, so a button click confirms the chosen plan before payment.",
+  "pricing": {
+    "slug": "/pricing",
+    "tierCtaHrefs": {
+      "starter": "/checkout?plan=starter",
+      "pro": "/checkout?plan=pro",
+      "studio": "/checkout?plan=studio"
+    },
+    "packHrefs": {
+      "pack-100": "/checkout?pack=pack-100",
+      "pack-300": "/checkout?pack=pack-300",
+      "pack-1000": "/checkout?pack=pack-1000"
+    }
+  },
+  "home": {
+    "slug": "/",
+    "tierCtaHrefs": {
+      "starter": "/checkout?plan=starter",
+      "pro": "/checkout?plan=pro",
+      "studio": "/checkout?plan=studio"
+    }
+  }
+}

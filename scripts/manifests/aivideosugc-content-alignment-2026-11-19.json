@@ -1,0 +1,64 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "Content alignment fixes from the 2026-11-19 storefront review: drop the unverifiable handle wording from the AI Image guide, rewrite three homepage alts that the production-direction filter blanks, register the retired phone-app address as an alias of the lifestyle-app-recommendation page, and swap the crossed images on the sale-campaign-key-visual cards so the suitcase address shows the suitcase and the sale-banner example shows the banner layout.",
+  "guideHandleWording": {
+    "slug": "/guides/how-do-ai-image",
+    "before": "Name the setting and the product details that must remain recognizable. For the mug, call out its matte navy body, lid shape, and handle; do not add features that are not in the source photo.",
+    "after": "Name the setting and the product details that must remain recognizable. For the mug, call out its matte navy body and lid shape; do not add features that are not in the source photo."
+  },
+  "homeAltRewrites": {
+    "slug": "/",
+    "items": [
+      {
+        "before": "A bakery owner in an apron holds up a fresh loaf to the camera in the shop.",
+        "after": "A bakery owner in an apron shows a fresh loaf inside her shop.",
+        "expectedOccurrences": 2
+      },
+      {
+        "before": "A person holds up a phone showing a simple app screen and explains it to the camera.",
+        "after": "A person shows a phone with a simple app screen and explains how it works.",
+        "expectedOccurrences": 2
+      },
+      {
+        "before": "Close-up of green wireless earbuds",
+        "after": "Green wireless earbuds",
+        "expectedOccurrences": 2
+      }
+    ]
+  },
+  "phoneAppAlias": {
+    "ownerRowSlug": "/ai-video-generation/video-ads",
+    "targetCardSlug": "lifestyle-app-recommendation",
+    "alias": "creator-recommends-a-phone-app",
+    "retiredPath": "/ai-video-generation/creator-recommends-a-phone-app",
+    "removedCardOwnerRowSlug": "/ai-video-generation/home-organization",
+    "removedCardNote": "The image-only shortcut card that owned the retired address leaves workspaceCases in the same change that registers the alias, so pagesOwningSlug resolves to a single claimant and the old address 308s to the live lifestyle-app-recommendation page. The full removed card JSON is captured by the apply script into aivideosugc-content-alignment-2026-11-19-removed.json for restoration."
+  },
+  "saleCardImageSwap": {
+    "ownerRowSlug": "/ai-image-generation/sale-campaign-key-visual",
+    "suitcaseCard": {
+      "publicSlug": "suitcase-with-room-for-the-offer",
+      "acceptedTitles": ["Suitcase With Room for the Offer", "White Leather Sneaker Studio"],
+      "titleAfter": "Suitcase With Room for the Offer",
+      "beforeImageSrc": "/ai-image-generation/img2-tpl-sale-wall-1-r1-640.webp",
+      "afterImage": {
+        "src": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+        "alt": "Adult pulls the same blue hard-shell suitcase through a bright airport terminal; the full suitcase, handle, ridges, and wheels are visible.",
+        "width": 640,
+        "height": 640
+      },
+      "afterMediaRef": "n:guide:f14-sale-steps-result-r2"
+    },
+    "saleBannerCard": {
+      "publicSlug": "sale-banner",
+      "label": "Sale Banner",
+      "beforeImageSrc": "/ai-image-generation/f14-sale-steps-result-r2-640.webp",
+      "afterImage": {
+        "src": "/ai-image-generation/img2-tpl-sale-wall-1-r1-640.webp",
+        "alt": "Plain white low shoe on a blue-gray background, with empty space beside it.",
+        "width": 640,
+        "height": 640
+      }
+    }
+  }
+}

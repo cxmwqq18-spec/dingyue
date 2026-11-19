@@ -38,6 +38,7 @@ import type { PlatformState } from "@/lib/types";
 import { isMydreamshootsEditorialThemeRoute } from "@/lib/mydreamshoots-editorial-routes";
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { renderAidreamcapesPartnerProgramPage } from "@/lib/aidreamcapes-partner-program";
+import { aidreamcapesCheckoutMetadata, renderAidreamcapesCheckoutPage } from "@/lib/aidreamcapes-checkout-page";
 import {
   aidreamcapesMediaDetailMetadata,
   aidreamcapesActorPublicMetadata,
@@ -586,6 +587,9 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const spanishTitle = /(?:aidreamshoots|aidreamcapes)\.eu/i.test(host ?? "");
     return { title: spanishTitle ? "Espacio privado" : "Workspace", robots: { index: false, follow: false } };
   }
+  if (firstSegment === "checkout" && hostSiteSlug === "aidreamcapes") {
+    return aidreamcapesCheckoutMetadata();
+  }
   if ((host?.startsWith("localhost") || host?.startsWith("127.0.0.1")) && ["tools", "account", "app", "collections", "ai-image-generation", "ai-video-generation", "best-packages", "best-ai-image", "best-ai-video"].includes(firstSegment)) {
     return {};
   }
@@ -964,6 +968,13 @@ export default async function HostStorefrontCatchAllPage({
   if (hostSiteSlug === "aidreamcapes" && slug === "/partners") {
     const query = searchParams ? await searchParams : {};
     return renderAidreamcapesPartnerProgramPage({ success: query.partner === "success", creditsApplied: query.credits === "applied", creditsIssue: query.credits === "duplicate" ? "duplicate" : query.credits === "limited" ? "limited" : query.credits === "invalid" ? "invalid" : undefined, duplicate: query.partner === "duplicate", limited: query.partner === "limited", invalid: query.partner === "invalid" });
+  }
+  // The plan-confirmation and checkout page: pricing buttons land here with
+  // the chosen plan in the address. Private route, never indexed.
+  if (hostSiteSlug === "aidreamcapes" && slug === "/checkout") {
+    const query = searchParams ? await searchParams : {};
+    const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
+    return renderAidreamcapesCheckoutPage({ plan: first(query.plan), term: first(query.term), pack: first(query.pack) });
   }
   const state = needsPrivateRuntime
     ? await getHostRuntimeStateWithFallback(hostCandidates)

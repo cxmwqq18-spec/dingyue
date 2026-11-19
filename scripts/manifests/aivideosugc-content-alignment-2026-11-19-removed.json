@@ -1,0 +1,37 @@
+{
+  "siteId": "site_aidreamcapes",
+  "removedAt": "2026-11-19T13:23:54.984Z",
+  "removedCards": [
+    {
+      "slug": "/ai-video-generation/home-organization",
+      "jsonPath": "sections.v2_main.settings.data.workspaceCases[4]",
+      "card": {
+        "href": "/app/create/tool/before-after-video/home#step-video",
+        "kind": "video",
+        "chips": [
+          "apps"
+        ],
+        "image": {
+          "h": 1138,
+          "w": 640,
+          "alt": "Adult South Asian woman with a short silver pixie haircut recommends a generic phone app with a softly blurred abstract interface at a kitchen table.",
+          "src": "/ai-image-generation/tw1-wall-apps-1-640.webp",
+          "kind": "video"
+        },
+        "label": "Creator Recommends a Phone App",
+        "aspect": "9:16",
+        "prompt": "A 15-second vertical 9:16 UGC creator demo for a phone app in a real room.\n\n【Reference】The uploaded product photo is the only product reference. Reproduce the phone app exactly — same shape, proportions, colour, material, finish and details — and never show a second one or a changed part.\n【Overall Style】Believable vertical UGC in a real room: handheld, slightly uneven window light, ordinary objects in the background, visible skin texture, one clumsy moment left in on purpose. Not a studio commercial, not a polished advert.\n【Product Lock】The phone app keeps the same shape, colour, material, finish and details in every frame; nothing is added, removed or recoloured and the quantity never changes.\n【Action Logic】One real action, followed from start to finish in one place, with the product never leaving the frame. Each beat is a step of that action, and no beat invents a different event, a different place or a second product.\n【0.0-3.0s | Hook】Handheld close, half a face entering the frame in a real room: the creator asks one short question to the lens before the phone app is fully shown. The movement is already in progress when the shot starts.\n【3.0-8.0s | Demo】Adult South Asian woman with a short silver pixie haircut recommends a phone app with a softly blurred abstract interface at a kitchen table. One real, slightly imperfect motion, with one small clumsy detail left in on purpose; the camera follows the hands.\n【8.0-12.0s | Evidence】A close insert on the surface and on the result the motion produced: no claim, only what the frame shows.\n【12.0-15.0s | Close】The creator comes back to the lens with the phone app still in frame and says one natural line. No slogan, no call to action, no price.\n【Camera】Handheld at 26mm and 35mm, about one arm's length, gentle breathing sway, one reframe and one short focus hunt that recovers. The camera follows the hands and never leaves the product for long. The six rules of the track: handheld distance, window light with an uneven side, a real room with clutter allowed, a performance that may stumble, skin you can see, and one or two jump cuts that feel hand-edited.\n【Sound】Voice: the creator's own voice, casual and close to the lens, one stumble allowed, five short lines across the film — \"Can a phone app actually work in a real room?\" / \"The haircut recommends it in a real room\" / \"This is the clumsy part, every time\" / \"Look at the surface, not the sales line\" / \"That is how I use it now\". Effects: handling and fabric sounds close to the camera, the room tone of the place. BGM: none. The room tone and the voice carry the film.\n【Continuity】The phone app stays identical from the first frame to the last, the hands keep correct anatomy, and the same light and screen direction carry between beats, so nothing teleports. Final frame: the product centred and unchanged from the first frame.\n【Negative】no readable text, numbers, signs or labels anywhere in the frame; no logos, brand marks or watermark; no extra or swapped product and no changed parts; no distorted hands or warped anatomy; no flicker, colour shift or shape drift of the product; no price, discount badge or promotional graphic; no studio lighting, no perfect skin, no presenter tone, no transition effect.",
+        "duration": 15,
+        "placement": [
+          "/industries/apps",
+          "/industries/home-living",
+          "/platforms/facebook-ads",
+          "/platforms/youtube-shorts-ads"
+        ],
+        "sceneSlug": "creator-recommends-a-phone-app-baa3781603d9",
+        "publicSlug": "creator-recommends-a-phone-app",
+        "detailAliasOf": "lifestyle-app-recommendation"
+      }
+    }
+  ]
+}

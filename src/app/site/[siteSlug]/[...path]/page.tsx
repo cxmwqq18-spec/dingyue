@@ -29,6 +29,7 @@ import { isMydreamshootsSaveDateTopicGroupPathRequest, isMydreamshootsTopicGroup
 import { aidreamcapesLegacyVideoSaveTheDatePath, aidreamshootsLegacyVideoSaveTheDatePath, canonicalSaveTheDatePath, legacySaveTheDatePath, MYDREAMSHOOTS_WEDDING_INVITATION_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_RETIRED_PATH, MYDREAMSHOOTS_WEDDING_INVITATION_SOURCE_PATH } from "@/lib/save-the-date-routes";
 import { dreamshootAiStudioTemplatesForSite } from "@/lib/theme/packages/dreamshoot-ai-studio";
 import { renderAidreamcapesPartnerProgramPage } from "@/lib/aidreamcapes-partner-program";
+import { aidreamcapesCheckoutMetadata, renderAidreamcapesCheckoutPage } from "@/lib/aidreamcapes-checkout-page";
 import {
   aidreamcapesMediaDetailMetadata,
   aidreamcapesActorPublicMetadata,
@@ -393,6 +394,9 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
         images: ["https://www.aivideosugc.com/ai-image-generation/partners-og-card-1200x630.png"]
       }
     };
+  }
+  if (isAidreamcapesPathModeSite(pathModePublicSlug) && requestedSlug === "/checkout") {
+    return aidreamcapesCheckoutMetadata();
   }
   const mediaDetail = isAidreamcapesPathModeSite(pathModePublicSlug) ? parseMediaDetailSegments(path) : undefined;
   if (mediaDetail) {
@@ -776,6 +780,12 @@ export default async function SiteCatchAllPage({
   if (slug === "/how-it-works" && isSpanishAIdreamshootsSlug(publicSlug)) permanentRedirect(routePath("/workflow"));
   const aidreamcapesBlogRedirect = aidreamcapesLegacyBlogRedirectPath(publicSlug, slug);
   if (aidreamcapesBlogRedirect && aidreamcapesBlogRedirect !== slug) permanentRedirect(routePath(aidreamcapesBlogRedirect));
+  if (isAidreamcapesPathModeSite(publicSlug) && slug === "/checkout") {
+    const query = searchParams ? await searchParams : {};
+    const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] : value;
+    const routeBasePath = routePath("/");
+    return renderAidreamcapesCheckoutPage({ plan: first(query.plan), term: first(query.term), pack: first(query.pack), basePath: routeBasePath === "/" ? "" : routeBasePath });
+  }
   if (slug === "/checkout") {
     const query = new URLSearchParams();
     for (const [key, value] of Object.entries(searchParams ? await searchParams : {})) {

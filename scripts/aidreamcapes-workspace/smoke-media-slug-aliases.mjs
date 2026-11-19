@@ -43,7 +43,11 @@ const MANIFESTS = [
   // The 2026-11-17 retirement contract covers five more crawled video detail
   // addresses (tool-style pages) whose cards left the content without alias
   // claims; the mapping lives in RETIRED_HUB_EXAMPLE_ADDRESSES.
-  'scripts/manifests/aidreamcapes-video-tool-slug-retirement-2026-11-17.json'
+  'scripts/manifests/aidreamcapes-video-tool-slug-retirement-2026-11-17.json',
+  // The 2026-11-19 content-alignment change retired the image-only phone-app
+  // shortcut card and registered its address as an alias of the lifestyle
+  // app-recommendation page that carries the finished video.
+  'scripts/manifests/aivideosugc-phone-app-slug-retirement-2026-11-19.json'
 ];
 const entries = [];
 for (const file of MANIFESTS) {
