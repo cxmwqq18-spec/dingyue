@@ -141,166 +141,253 @@
           "type": "aidreamcapes_v2_page",
           "blocks": [],
           "settings": {
-            "layout": "article",
+            "layout": "blog-landing",
             "data": {
-              "h1": "From Product Link to Finished Ad, in Minutes",
-              "id": "blog-from-product-link-to-finished-ad",
-              "eyebrow": "How AIVideosUGC Works",
-              "label": "Product Guide",
-              "minutes": 6,
-              "section": "blog",
-              "lead": "AIVideosUGC turns a product photo, a product link, or a single sentence into a finished creator-style video — no camera crew, no actor booking, and no editing software. This guide shows what happens between your input and the file you can post.",
-              "image": {
-                "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan over a white tee, stands in a warm living room and speaks to camera with his hands clasped.",
-                "src": "/ai-image-generation/actors/dev-640.webp",
-                "sizes": "(max-width: 700px) 100vw, 380px",
-                "width": 640,
-                "height": 1138
-              },
-              "heroMedia": {
-                "kind": "image",
-                "image": {
-                  "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan over a white tee, stands in a warm living room and speaks to camera with his hands clasped.",
-                  "src": "/ai-image-generation/actors/dev-640.webp",
-                  "sizes": "(max-width: 700px) 100vw, 380px",
-                  "width": 640,
-                  "height": 1138
-                }
-              },
-              "breadcrumbs": [
+              "h1": "From product link to",
+              "h1Accent": "finished ad",
+              "h1Suffix": ", in minutes.",
+              "eyebrow": "Now available · BLYDEY INC",
+              "lead": "AIVideosUGC turns a product photo, a product URL, or a single sentence into HD, watermark-free, creator-style video — no camera crew, no human actors, no editing software, and no subscription.",
+              "ctas": [
                 {
-                  "href": "/",
-                  "label": "Home"
+                  "label": "Start free — $1 first video",
+                  "href": "/app/create/starter-offer",
+                  "kind": "primary"
                 },
                 {
-                  "href": "/blog",
-                  "label": "Blog"
-                },
-                {
-                  "href": "/blog/from-product-link-to-finished-ad",
-                  "label": "Product Guide"
+                  "label": "See how it works",
+                  "href": "#how",
+                  "kind": "ghost"
                 }
               ],
-              "startNote": "[Packages from $24 for one month](/pricing). Credits are shown before every job, and a failed job returns its credits automatically — no support ticket required.",
+              "fineprint": [
+                "Usage-based credits",
+                "Failed jobs refunded",
+                "Up to 7 reference photos"
+              ],
+              "console": {
+                "url": "https://www.aivideosugc.com/ai-video-generation/url-to-video",
+                "style": "UGC talking head · 15s · vertical",
+                "steps": [
+                  "Script written",
+                  "AI actor cast",
+                  "Voiceover added",
+                  "Cuts & captions"
+                ],
+                "cost": "20 credits · 15-second video",
+                "ready": "Ready in minutes"
+              },
               "sections": [
                 {
-                  "h2": "Three Ways to Start a Video",
-                  "paras": [
-                    "You do not need to learn prompt engineering before the first video. Start from whatever you already have — a product page, a photo, or a creative brief — and the workspace handles the rest.",
-                    "**URL to Video** turns a public product page into an ad or demo video. Paste a link and the import fills in the product name, photos and details; check them, then choose the presenter and format.",
-                    "**Image to Video** starts from one product photo. Add a short scene description and the model animates the product; a clear photo with the label visible produces the most usable clip.",
-                    "**Text to Video** converts a written brief into an editable storyboard, then generates the shots you keep. It is the right entry when you have a message but no usable photo yet."
+                  "id": "how",
+                  "kind": "inputs",
+                  "kicker": "Three inputs",
+                  "h2": "You don't need to learn prompt engineering first.",
+                  "lead": "Start from whatever you already have — a product page, a photo, or a creative brief.",
+                  "items": [
+                    {
+                      "num": "01",
+                      "icon": "🔗",
+                      "title": "URL to Video",
+                      "text": "Turns a product page directly into an ad or demo video — paste the link and go."
+                    },
+                    {
+                      "num": "02",
+                      "icon": "🖼️",
+                      "title": "Image to Video",
+                      "text": "Starts from a single product photo, then adds a scene description to generate motion content."
+                    },
+                    {
+                      "num": "03",
+                      "icon": "✍️",
+                      "title": "Text to Video",
+                      "text": "Converts a creative brief into an editable storyboard, then generates the selected shots."
+                    }
                   ]
                 },
                 {
-                  "h2": "What the Generator Builds",
-                  "paras": [
-                    "The [video ads generator](/ai-video-generation/video-ads) takes your input and produces the four layers a short ad needs: the script, written as spoken lines rather than ad copy; a presenter who holds or wears the product and talks to camera; the voiceover; and the finish — captions and the frame size you picked, 9:16 for TikTok, Reels and Shorts by default.",
-                    "You still make the decisions that matter: which presenter, what the first three seconds say, how long the clip runs, and whether the product stays the hero. The difference is that changing your mind costs a rerun, not a reshoot.",
-                    "Every job shows its credit cost before it starts. Files download without a watermark, and a failed job returns its credits to your balance automatically."
+                  "kind": "generators",
+                  "kicker": "Generators",
+                  "h2": "One workspace for the whole ad.",
+                  "lead": "Pick the generator that matches what you have today — everything after the input is the same.",
+                  "items": [
+                    {
+                      "icon": "🎬",
+                      "title": "Video Ads Generator",
+                      "text": "Handles the script, presenter, voice, and cut — delivering a finished ad ready to run."
+                    },
+                    {
+                      "icon": "📦",
+                      "title": "Product Video Generator",
+                      "text": "Delivers product video in minutes at a fraction of the cost of a traditional shoot day."
+                    },
+                    {
+                      "icon": "🎞️",
+                      "title": "AI Video Generator",
+                      "text": "Choose scenes, compare shot versions, and assemble video for product pages or social channels."
+                    }
                   ]
                 },
                 {
-                  "h2": "Pick a Presenter Style",
-                  "paras": [
-                    "**AI Actor** pairs an avatar from the directory with your script and voiceover — UGC-style talking-head video without cameras, casting, or a studio.",
-                    "**AI Twin** creates a digital clone that looks, speaks and moves like the person it is built from. Use it for founder-led content and personal brands where the face has to be consistent across every clip.",
-                    "**AI Presenter** covers demos and explainers: product walkthroughs, feature callouts and social content delivered in a natural, conversational register.",
-                    "The goal is not to replace UGC with polished studio production. It is to keep the fast hook, the conversational delivery, the product proof and the clear call to action that make creator video work."
+                  "kind": "presenters",
+                  "kicker": "Presenters",
+                  "h2": "AI actors — without the corporate stock-photo look.",
+                  "lead": "Three presenter options, all generated without cameras, casting, or studios.",
+                  "items": [
+                    {
+                      "badge": "AI Actor",
+                      "badgeClass": "b1",
+                      "title": "Pick an avatar, add a script",
+                      "text": "Pair an avatar with a script and voiceover to generate UGC-style talking-head video — no cameras, casting, or studios required."
+                    },
+                    {
+                      "badge": "AI Twin",
+                      "badgeClass": "b2",
+                      "title": "A digital clone of you",
+                      "text": "Creates a digital clone that looks, speaks, and moves like the user — built for personal brands and founder-led content."
+                    },
+                    {
+                      "badge": "AI Presenter",
+                      "badgeClass": "b3",
+                      "title": "Demos and explainers",
+                      "text": "Covers product explanations, feature demos, and social content in a natural, conversational delivery."
+                    }
+                  ],
+                  "note": "The goal is not to replace UGC with polished studio production, but to preserve the fast hook, conversational delivery, product proof, and clear call to action that make creator video work."
+                },
+                {
+                  "kind": "pricing",
+                  "kicker": "Pricing",
+                  "h2": "No subscription. Usage-based credits. Failed jobs refunded.",
+                  "lead": "Buy once, receive credits monthly. Choose a 1-, 6-, or 12-month package, pay once, and get your credits delivered every month.",
+                  "plans": [
+                    {
+                      "name": "Starter",
+                      "price": "$24",
+                      "per": "/mo",
+                      "credits": "200 credits per month",
+                      "features": [
+                        "URL, image, and text to video",
+                        "AI Actor & AI Presenter",
+                        "HD, watermark-free output",
+                        "Failed jobs auto-refunded"
+                      ],
+                      "cta": "Choose Starter",
+                      "href": "/checkout?plan=starter"
+                    },
+                    {
+                      "name": "Pro",
+                      "price": "$59",
+                      "per": "/mo",
+                      "credits": "500 credits per month",
+                      "features": [
+                        "Everything in Starter",
+                        "AI Twin (digital clone)",
+                        "Up to 7 reference photos",
+                        "Scene comparison & assembly"
+                      ],
+                      "cta": "Choose Pro",
+                      "href": "/checkout?plan=pro",
+                      "popular": true
+                    },
+                    {
+                      "name": "Studio",
+                      "price": "$129",
+                      "per": "/mo",
+                      "credits": "1,200 credits per month",
+                      "features": [
+                        "Everything in Pro",
+                        "Built for weekly ad testing",
+                        "Agency-friendly volume",
+                        "Priority generation queue"
+                      ],
+                      "cta": "Choose Studio",
+                      "href": "/checkout?plan=studio"
+                    }
+                  ],
+                  "credits": [
+                    {
+                      "label": "15-second video",
+                      "value": "20",
+                      "unit": "credits"
+                    },
+                    {
+                      "label": "30-second video",
+                      "value": "40",
+                      "unit": "credits"
+                    },
+                    {
+                      "label": "Single product photo",
+                      "value": "1",
+                      "unit": "credit"
+                    }
+                  ],
+                  "note": "If a job fails, reserved credits return to your balance automatically — no support ticket required.",
+                  "fineprint": "New users get a free trial and a one-time $1 first product video. Creators who post with #AIVideosUGC can also earn free credits."
+                },
+                {
+                  "kind": "audience",
+                  "kicker": "Who it is for",
+                  "h2": "Built for teams that ship more creative and test faster.",
+                  "chips": [
+                    "Ecommerce & D2C brands",
+                    "Dropshippers",
+                    "Small businesses",
+                    "Marketers & agencies",
+                    "Content creators",
+                    "App & SaaS teams"
+                  ],
+                  "tiles": [
+                    {
+                      "icon": "🧪",
+                      "title": "Stores testing weekly",
+                      "text": "Lowers the cost of each creative experiment, so testing new ads every week stays affordable."
+                    },
+                    {
+                      "icon": "💸",
+                      "title": "Small businesses on tight budgets",
+                      "text": "Removes the need for an expensive shoot to produce a product explainer."
+                    },
+                    {
+                      "icon": "⚡",
+                      "title": "For agencies",
+                      "text": "Takes “waiting on assets” off the critical path of the media plan."
+                    }
                   ]
                 },
                 {
-                  "h2": "What a Clip Costs",
+                  "kind": "closing",
+                  "h2": "AI UGC video should start with a link, not a six-month pilot.",
                   "paras": [
-                    "Videos are priced by length: a 15-second clip costs 20 credits and a 30-second clip costs 40. A single product photo costs 1 credit. The quote appears before the job starts, so there is no surprise on the invoice.",
-                    "Packages are one-time purchases with credits delivered monthly for the term: Starter is $24 for 200 credits a month, Pro is $59 for 500, and Studio is $129 for 1,200. Six- and twelve-month terms cost less per month, and credit packs are open to everyone when a month runs short.",
-                    "There is no subscription and no auto-renewal. If a job fails, its credits return to your balance automatically."
-                  ]
-                },
-                {
-                  "h2": "Who It Is For",
-                  "paras": [
-                    "**Ecommerce and D2C brands** testing new creative every week: each variant costs credits instead of a shoot day.",
-                    "**Dropshippers and small businesses** that need a product explainer without booking a crew: one photo is enough to start.",
-                    "**Marketers and agencies** that want \"waiting on assets\" off the media-plan critical path: the same product can be re-cut for TikTok, Reels, Shorts, and feed placements.",
-                    "**Content creators, apps and SaaS teams** shipping launch videos and feature demos with a consistent presenter and voice."
-                  ]
-                },
-                {
-                  "h2": "Why Not a Traditional Shoot",
-                  "paras": [
-                    "Producing a UGC-style product video has traditionally meant booking a shoot, casting a creator, and waiting on editing. AIVideosUGC compresses that into opening a link, uploading an image, or writing a sentence — the difference between a campaign that waits on assets and one that ships on schedule.",
-                    "\"AI UGC video should start with a link, not a six-month pilot,\" says Naruebet Nakphong, founder of BLYDEY INC. Start with what you have, check the cost, and post the first ad this week."
+                    "Producing a UGC-style product video has traditionally meant booking a shoot, casting a creator, and waiting on editing. AIVideosUGC compresses that into opening a link, uploading an image, or writing a sentence — the difference between a campaign that waits on assets and one that ships on schedule."
                   ]
                 }
               ],
-              "checklist": [
-                "Start from what you already have — a product page, one clear photo, or a one-sentence brief.",
-                "Check the credit cost before the job starts; a failed job returns its credits automatically."
-              ],
-              "related": [
-                {
-                  "href": "/templates?kind=video",
-                  "text": "Every finished example ships with the full prompt behind it.",
-                  "label": "Browse every video template"
-                },
-                {
-                  "href": "/blog/ai-ugc-video-ads-guide",
-                  "text": "Write the prompt part by part against a real example.",
-                  "label": "AI Video Tutorial: Product Ad Prompts"
-                },
-                {
-                  "href": "/blog/ai-video-review-checklist",
-                  "text": "Plan the storyboard before you write the prompt.",
-                  "label": "Text to Video Tutorial: Brief the AI Video Agent"
-                }
-              ],
-              "relatedLinks": [
-                {
-                  "href": "/templates?kind=video",
-                  "text": "Every finished example ships with the full prompt behind it.",
-                  "label": "Browse every video template"
-                },
-                {
-                  "href": "/blog/ai-ugc-video-ads-guide",
-                  "text": "Write the prompt part by part against a real example.",
-                  "label": "AI Video Tutorial: Product Ad Prompts"
-                }
-              ],
-              "faq": [
-                {
-                  "q": "Do I need a camera crew or an actor?",
-                  "a": "No. A product link, one product photo, or a written brief is enough. The workspace writes the script, casts an AI presenter, adds the voice and captions, and exports the finished file."
-                },
-                {
-                  "q": "What can I start from?",
-                  "a": "Three inputs: a public product page (URL to Video), a product photo (Image to Video), or a creative brief (Text to Video). Everything else is chosen in the workspace."
-                },
-                {
-                  "q": "How much does a video cost?",
-                  "a": "A 15-second video costs 20 credits and a 30-second video costs 40. Package credits are 200 for $24, 500 for $59, or 1,200 for $129 per month of the term. The cost is shown before every job, and a failed job returns its credits."
-                },
-                {
-                  "q": "Does the file carry a watermark?",
-                  "a": "No. Downloads are watermark-free and can be used in paid ads, on your store, or in client work, subject to each platform's current rules."
-                },
-                {
-                  "q": "Is there a free trial?",
-                  "a": "Yes. New users can start with a free trial and a one-time $1 first product video. Creators who post with #AIVideosUGC can also apply for free credits."
-                }
-              ],
-              "tryBox": {
-                "title": "Try Video Ads",
-                "text": "Short ads for TikTok, Reels and Shorts. Upload one product photo and see the cost before the job starts.",
-                "href": "/app/create/tool/video-ads#step-video",
-                "label": "Make my video",
-                "more": {
-                  "label": "How Video Ads works",
-                  "href": "/ai-video-generation/video-ads"
-                }
+              "founder": {
+                "name": "Naruebet Nakphong",
+                "initials": "NN",
+                "role": "Founder · BLYDEY INC",
+                "paras": [
+                  "We're a small startup, so this is a good fit if you're newer to UGC and want paid work for your portfolio. I'm also looking to connect with a few people taking AI UGC seriously this year.",
+                  "If you're down to trade notes on tools, workflows, or client acquisition — let's connect in the comments or DMs."
+                ]
               },
-              "ctaTitle": "Start With a Link",
-              "ctaLead": "Paste a product page, add a photo, or write one sentence — and see the credit cost before anything renders."
+              "final": {
+                "h2": "Start with a link.",
+                "lead": "Ship your first ad today. Free trial, then a one-time $1 first product video. No subscription, no camera crew, no waiting on assets.",
+                "ctas": [
+                  {
+                    "label": "Try AIVideosUGC free",
+                    "href": "/app/create/starter-offer",
+                    "kind": "primary"
+                  },
+                  {
+                    "label": "View pricing",
+                    "href": "/pricing",
+                    "kind": "ghost"
+                  }
+                ]
+              }
             }
           }
         }
