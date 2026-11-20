@@ -1,6 +1,7 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import type { CSSProperties, ReactNode } from "react";
 import { Img, SecHead } from "./parts";
+import { PosterSwapVideo } from "./poster-swap-video";
 import type { V2Image, V2Resolvers } from "./types";
 import type { HomeBrandTool, HomeBrandToolsDemo, HomeToolVideo } from "./home-brand-tools-types";
 import { HomeBrandToolsBehavior } from "./home-brand-tools-behavior";
@@ -12,11 +13,12 @@ function Icon({ kind }: { kind: "arrow" | "play" | "link" | "spark" | "image" | 
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[kind]} /></svg>;
 }
 
-/** Static poster for the homepage tools section. The section is a landing
- * page, not a watch page: a <video> here made Google report the clip as
- * "video not on a watch page". The dedicated /watch/<slug> page owns playback. */
+/** Clip slot for the homepage tools section. The crawlable markup keeps only
+ * the poster — a <video> on this landing page made Google report the clip as
+ * "video not on a watch page" — while pointing at the slot mounts the player.
+ * The dedicated /watch/<slug> page owns the indexable player. */
 function Clip({ video, r, className }: { video: HomeToolVideo; r: V2Resolvers; className?: string }) {
-  return <img alt={video.poster.alt} className={className} decoding="async" loading="lazy" src={r.asset(video.poster.src)} />;
+  return <PosterSwapVideo alt={video.poster.alt} className={className} poster={r.asset(video.poster.src)} src={r.asset(video.src)} />;
 }
 
 /** Text that the behavior script types out character by character. The full
