@@ -16,6 +16,7 @@ import {
 } from "@/lib/customer-asset-storage";
 import { customerSessionCookie, siteAdminSessionCookie } from "@/lib/session";
 import { verifyWorkerLocalAssetDownload } from "@/lib/worker";
+import { resolveWebVideo } from "@/lib/media-web-transcode";
 
 export const runtime = "nodejs";
 
@@ -189,6 +190,11 @@ function wantsVideoPoster(request: Request): boolean {
 
 function wantsVideoPreview(request: Request): boolean {
   return new URL(request.url).searchParams.get("preview") === "1";
+}
+
+/** 720p playback copy for in-app cards; downloads keep the original file. */
+function wantsWebVideo(request: Request): boolean {
+  return new URL(request.url).searchParams.get("web") === "1";
 }
 
 function videoPosterPathFor(filePath: string): string {
@@ -368,6 +374,16 @@ async function resolveVideoPreview(asset: ResolvedAsset): Promise<{ filePath: st
   }
 }
 
+/**
+ * 720p playback copy (cached next to the original). Used only by the in-app
+ * player; download URLs never pass `web=1`.
+ */
+async function resolveVideoWeb(asset: ResolvedAsset): Promise<ResolvedAsset> {
+  if (!asset.contentType.startsWith("video/") || !asset.filePath) return asset;
+  const web = await resolveWebVideo(asset.filePath);
+  return { ...asset, filePath: web.filePath, size: web.size, contentType: "video/mp4" };
+}
+
 async function readAssetBytes(asset: ResolvedAsset, range?: { start: number; end: number }) {
   if ("bytes" in asset && asset.bytes) {
     const bytes = new Uint8Array(asset.bytes);
@@ -503,7 +519,9 @@ export async function GET(_request: Request, { params }: { params: Promise<{ pat
           ...(await resolveVideoPreview(asset)),
           contentType: "video/mp4"
         }
-      : asset;
+      : wantsWebVideo(_request)
+        ? await resolveVideoWeb(asset)
+        : asset;
     const range = parseByteRange(_request.headers.get("range"), servedAsset.size);
     if (range === "unsatisfiable") {
       return new Response(null, {
@@ -564,7 +582,9 @@ export async function HEAD(_request: Request, { params }: { params: Promise<{ pa
           ...(await resolveVideoPreview(asset)),
           contentType: "video/mp4"
         }
-      : asset;
+      : wantsWebVideo(_request)
+        ? await resolveVideoWeb(asset)
+        : asset;
     const accelResponse = xAccelAssetResponse(servedAsset);
     if (accelResponse) return accelResponse;
     return new Response(null, {

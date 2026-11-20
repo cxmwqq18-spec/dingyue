@@ -21,6 +21,11 @@ function renderRoot() {
   return path.join(process.cwd(), "data", "aidreamcapes-workspace-render");
 }
 
+/** Shared root for nginx X-Accel mapping of render files (transcodes, posters). */
+export function workspaceRenderRoot(): string {
+  return renderRoot();
+}
+
 function outputUrl(task: WorkspaceTask, kind: Exclude<WorkspaceOutputKind, "clip">, renderId?: string) {
   return `/api/sites/${task.siteId}/aivideosugc/tasks/${task.taskId}/output?kind=${kind}${renderId ? `&renderId=${encodeURIComponent(renderId)}` : ""}`;
 }

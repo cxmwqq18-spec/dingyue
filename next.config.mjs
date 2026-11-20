@@ -205,7 +205,7 @@ const nextConfig = {
         headers: publicApiHeaders
       },
       {
-        source: "/api/:path((?!local-assets(?:/|$)|site-slugs/[^/]+/storefront-section(?:/|$)).*)",
+        source: "/api/:path((?!local-assets(?:/|$)|site-slugs/[^/]+/storefront-section(?:/|$)|sites/[^/]+/aivideosugc/tasks/[^/]+/output(?:/|$)|sites/[^/]+/customers/[^/]+/assets/[^/]+/download(?:/|$)).*)",
         headers: noindexPrivateHeaders
       },
       {

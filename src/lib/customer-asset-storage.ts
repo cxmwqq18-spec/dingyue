@@ -343,6 +343,18 @@ export function deleteCustomerAssetFile(storageKey: string): { deleted: boolean;
   const existed = fs.existsSync(filePath);
   fs.rmSync(filePath, { force: true });
   fs.rmSync(customerAssetWatermarkMarkerPath(storageKey), { force: true });
+  // Posters and web copies live next to the source as <file>.<hash>.<kind>;
+  // the retention sweep has to remove them with the original or they linger.
+  const base = path.basename(filePath);
+  const sidecarPattern = new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\.[a-f0-9]{16}\\.(?:poster\\.jpg|web\\.mp4|preview\\.mp4)$`);
+  try {
+    for (const entry of fs.readdirSync(path.dirname(filePath))) {
+      if (!sidecarPattern.test(entry)) continue;
+      fs.rmSync(path.join(path.dirname(filePath), entry), { force: true });
+    }
+  } catch {
+    // The directory may already be gone; retention still reports success.
+  }
   pruneEmptyAssetDirectories(path.dirname(filePath));
   return { deleted: existed, path: filePath };
 }
