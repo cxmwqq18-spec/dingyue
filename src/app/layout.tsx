@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
 import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
+import { ChunkLoadRecovery } from "@/components/storefront/chunk-load-recovery";
 import "./globals.css";
 
 /**
@@ -64,6 +65,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <link rel="stylesheet" href="/fonts/aivideosugc-fonts.css?v=20261121" />
       </head>
       <body translate="yes">
+        <ChunkLoadRecovery />
         {children}
       </body>
     </html>
