@@ -1,5 +1,6 @@
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { Adc2VideoPreview } from "./video-preview-card";
+import { SeoPosterVideo } from "./seo-poster-video";
 import { aidreamcapesV2ResponsiveImageProps, aidreamcapesV2ResponsivePosterSrc } from "@/lib/aidreamcapes-v2-responsive-images";
 import type { ReactNode } from "react";
 import { Img } from "./parts";
@@ -86,7 +87,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
             <div className="hx-filters">{(block.presentation?.sceneTabsV3 ?? [["all", "t016"], ["beauty", "t017"], ["clothing", "t018"], ["tech", "t019"], ["home", "t020"]].map(([key, text]) => ({ key, label: c[text] }))).map((tab, index) => <button type="button" aria-pressed={index === 0} className={index === 0 ? "is-selected" : undefined} data-home-local={`filter-${tab.key}`} data-hx-filter={tab.key} key={tab.key}>{tab.label}</button>)}</div>
             <div className="hx-scene-grid">{(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], category: (block.presentation?.sceneCategories?.[key] ?? []).join(" "), publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => {
               const className = `hx-scene-card${index === 0 ? " is-selected" : ""}`;
-              const body = <><span className="photo">{card.video ? <video src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster?.src ?? "")} muted loop playsInline preload="none" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}{card.category ? <span className="hx-scene-chip">{card.category}</span> : null}</span><b>{card.title}</b></>;
+              const body = <><span className="photo">{card.video ? <img alt={card.title} decoding="async" loading="lazy" src={r.asset(card.video.poster?.src ?? card.image.src)} /> : <Img image={card.image} r={r} />}{card.category ? <span className="hx-scene-chip">{card.category}</span> : null}</span><b>{card.title}</b></>;
               // A card with a live detail slug is a plain SSR link; the legacy
               // select-and-preview button stays only for cards without one.
               return card.detailHref
@@ -94,13 +95,13 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
                 : <button type="button" className={className} data-home-local={card.key} data-hx-filter-tags={card.category} data-hx-select-group="scene" data-hx-select-value={card.key} aria-pressed={index === 0} key={card.key}>{body}</button>;
             })}</div>
             {(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], publicSlug: "", image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map((card, index) => <div className="hx-selector-footer" data-hx-panel-group="scene" data-hx-panel-value={card.key} hidden={index !== 0} key={card.key}>
-              <button type="button" className="hx-selected" data-home-local={`preview-${card.key}`} data-hx-dialog={previewId(card.key)}>{card.video ? <video src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster?.src ?? "")} muted loop playsInline preload="none" data-hx-video aria-hidden="true" /> : <Img image={card.image} r={r} />}<span><small>{c.t027}</small>{card.title}</span></button>
+              <button type="button" className="hx-selected" data-home-local={`preview-${card.key}`} data-hx-dialog={previewId(card.key)}>{card.video ? <img alt={card.title} decoding="async" loading="lazy" src={r.asset(card.video.poster?.src ?? card.image.src)} /> : <Img image={card.image} r={r} />}<span><small>{c.t027}</small>{card.title}</span></button>
               <WorkspaceEntryLink className="hx-button" data-action-block={after} data-home-cta={card.key} href={destination(card.key)}>{c.t029}</WorkspaceEntryLink>
             </div>)}
           </div>
         </div>
         {(block.presentation?.sceneCardsV3 ?? scenes.map(([key, image, title]) => ({ key, title: c[title], image: m[image], video: null as null | { src: string; poster: V2Image }, detailHref: "" }))).map(card => <Preview id={previewId(card.key)} title={card.title} close={c.uiClose} images={card.video ? [] : [card.image]} r={r} key={card.key}>
-          {card.video ? <video className="hx-dialog-video" src={r.asset(card.video.src)} data-deferred-poster={r.asset(card.video.poster?.src ?? "")} controls muted loop playsInline preload="none" data-hx-video /> : null}
+          {card.video ? <SeoPosterVideo alt={card.title} className="hx-dialog-video" muted poster={card.video.poster ? r.asset(card.video.poster.src) : undefined} src={r.asset(card.video.src)} /> : null}
           <p>{c.t028}</p>
           {card.detailHref ? <WorkspaceEntryLink className="hx-detail-link" href={r.href(card.detailHref)}>Open the video detail page <span aria-hidden="true">→</span></WorkspaceEntryLink> : null}
         </Preview>)}
@@ -155,7 +156,7 @@ export function HomeExperienceSection({ experience, after, campaign, r }: {
                       <div className="hx-flow-shot hx-flow-shot-video">
                         <span className="hx-flow-num" aria-hidden="true">3</span>
                         {video ? <a className="hx-flow-video" href={`/ai-video-generation/${video.src.split("/").pop()?.replace(/\.mp4$/, "") ?? ""}`} aria-label={video.name ?? c[presenter.tab]}>
-                          <video aria-hidden="true" autoPlay={index === 0} data-hx-preview height={video.height} loop muted playsInline preload={index === 0 ? "auto" : "none"} poster={index === 0 ? r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? "")) : undefined} data-deferred-poster={index === 0 ? undefined : r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? ""))} src={r.asset(video.previewSrc ?? video.src)} width={video.width} />
+                          <img alt={video.name ?? c[presenter.tab]} decoding="async" height={video.height} loading={index === 0 ? "eager" : "lazy"} src={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? ""))} width={video.width} />
                         </a> : <Img image={m[presenter.actorMedia]} r={r} />}
                         <div className="hx-flow-cap"><b>{c[showcase.cards.video]}</b><span>{c[showcase.cards.videoSub]}</span></div>
                       </div>

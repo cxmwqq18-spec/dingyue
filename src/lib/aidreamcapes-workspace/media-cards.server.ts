@@ -206,6 +206,8 @@ export type MediaDetailSitemapEntry = {
   imagePath: string;
   imageAlt?: string;
   videoPath?: string;
+  /** Poster frame the watch page and VideoObject use. */
+  videoPosterPath?: string;
   durationSeconds?: number;
   updatedAt: Date;
 };
@@ -328,6 +330,7 @@ export async function listAidreamcapesMediaDetailEntries(): Promise<MediaDetailS
     imagePath: card.image.src,
     ...(card.image.alt ? { imageAlt: card.image.alt } : {}),
     ...(card.video?.src ? { videoPath: card.video.src } : {}),
+    ...(card.video?.src ? { videoPosterPath: card.video.poster?.src ?? card.image.src } : {}),
     ...(card.duration !== undefined ? { durationSeconds: Number(card.duration) || undefined } : {}),
     updatedAt
   }));

@@ -1,6 +1,7 @@
 import type { V2Resolvers } from "./types";
 import { BRAND_NAME, Crumbs, CtaBand, Faq, Img, RichText } from "./parts";
 import { GuidesSubtitleCompare } from "./guides-subtitle-comparison";
+import { SeoPosterVideo } from "./seo-poster-video";
 import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import styles from "./guides-howto.module.css";
 
@@ -104,7 +105,7 @@ function Frames({ frames, r }: { frames: DemoFrame[]; r: V2Resolvers }) {
           <span className={styles.frame}>
             {frame.tag ? <span className={styles.frameTag}>{frame.tag}</span> : null}
             {frame.video ? (
-              <video controls playsInline preload="metadata" poster={frame.video.poster ? r.asset(frame.video.poster) : undefined} src={r.asset(frame.video.src)} />
+              <SeoPosterVideo alt={guideAlt(frame.image?.alt, frame.tag ?? "Guide example")} poster={frame.video.poster ? r.asset(frame.video.poster) : undefined} src={r.asset(frame.video.src)} />
             ) : frame.image ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img src={r.asset(frame.image.src)} alt={guideAlt(frame.image.alt, frame.tag ?? "")} width={frame.image.width} height={frame.image.height} loading="lazy" decoding="async" />
@@ -292,7 +293,7 @@ function SectionMediaFigure({ media, r }: { media: SectionMedia; r: V2Resolvers 
   if (media.video) {
     return (
       <figure className={styles.videoFig}>
-        <video controls playsInline preload="metadata" poster={media.video.poster ? r.asset(media.video.poster) : undefined} src={r.asset(media.video.src)} />
+        <SeoPosterVideo alt={media.caption ?? "Guide example"} poster={media.video.poster ? r.asset(media.video.poster) : undefined} src={r.asset(media.video.src)} />
         {media.caption ? <figcaption className={styles.caption}>{media.caption}</figcaption> : null}
       </figure>
     );

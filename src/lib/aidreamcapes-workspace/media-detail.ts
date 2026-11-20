@@ -61,6 +61,19 @@ export function mediaDetailPath(kind: MediaDetailKind, slug: string | undefined)
   return `/${MEDIA_DETAIL_ROOT[kind]}/${slug}`;
 }
 
+/**
+ * Dedicated watch page for a video card.
+ *
+ * Google indexes a video only when its page is a watch page: the video is the
+ * main content, the page exists for that video, and VideoObject.url points at
+ * it. The template detail page keeps the prompt, references and related cards,
+ * so it is an entry page, not a watch page. Photos have no watch page.
+ */
+export function mediaWatchPath(kind: MediaDetailKind, slug: string | undefined): string | undefined {
+  if (kind !== "video" || !slug || !MEDIA_DETAIL_SLUG_PATTERN.test(slug)) return undefined;
+  return `/watch/${slug}`;
+}
+
 /** Matches exactly the two-segment detail route (`/ai-video-generation/<slug>`). */
 export function parseMediaDetailSegments(segments: readonly string[]): { kind: MediaDetailKind; slug: string } | undefined {
   if (segments.length !== 2) return undefined;

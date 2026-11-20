@@ -3,6 +3,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import { PartnerApplicationForm, type PartnerApplicationField } from "@/components/storefront/partner-application-form";
 import { AidreamcapesBlogFilter, type AidreamcapesBlogCard } from "@/components/storefront/aidreamcapes-blog-filter";
 import { AidreamcapesResponsiveImage } from "@/components/storefront/aidreamcapes-responsive-image";
+import { SeoPosterVideo } from "@/components/storefront/aidreamcapes-v2/seo-poster-video";
 import type {
   SectionBlockInstance,
   SectionInstance,
@@ -345,7 +346,7 @@ function VideoSection({ section, resolveAsset }: { section: SectionInstance; res
   const subtitleUrl = setting(section, "subtitleUrl");
   const subtitleLanguage = setting(section, "subtitleLanguage", "en");
   const subtitleLabel = setting(section, "subtitleLabel", "English subtitles");
-  return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="video"><div className="ac-container"><div className="ac-video-layout"><div><Eyebrow tone="cyan">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "subtitle") ? <p className="ac-copy">{setting(section, "subtitle")}</p> : null}</div>{video || poster ? <div className="ac-video-frame">{video && videoType ? <video controls height={videoHeight} poster={poster ? resolveAsset(poster) : undefined} preload="metadata" width={videoWidth}><source src={resolvedVideo} type={videoType} />{subtitleUrl ? <track default kind="subtitles" label={subtitleLabel} src={resolveAsset(subtitleUrl)} srcLang={subtitleLanguage} /> : null}</video> : poster ? <ImageFrame src={resolveAsset(poster)} alt={setting(section, "title")} /> : null}</div> : null}</div></div></section>;
+  return <section className="ac-section ac-section-tight" id={setting(section, "anchor", section.type)} data-aidreamcapes-public-section="video"><div className="ac-container"><div className="ac-video-layout"><div><Eyebrow tone="cyan">{setting(section, "eyebrow")}</Eyebrow><h2 className="ac-display-md">{setting(section, "title")}</h2>{setting(section, "subtitle") ? <p className="ac-copy">{setting(section, "subtitle")}</p> : null}</div>{video || poster ? <div className="ac-video-frame">{video && videoType ? <SeoPosterVideo alt={setting(section, "title")} height={videoHeight} poster={poster ? resolveAsset(poster) : undefined} src={resolvedVideo} width={videoWidth} tracks={subtitleUrl ? [{ src: resolveAsset(subtitleUrl), srcLang: subtitleLanguage, label: subtitleLabel, default: true }] : undefined} /> : poster ? <ImageFrame src={resolveAsset(poster)} alt={setting(section, "title")} /> : null}</div> : null}</div></div></section>;
 }
 
 function ConversionSection({ section, resolveHref }: { section: SectionInstance; resolveHref: Resolve }) {

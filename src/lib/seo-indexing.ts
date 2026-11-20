@@ -2,7 +2,7 @@ import { aidreamcapesTemplateSitemapMedia } from "./aidreamcapes-template-sitema
 import { aidreamcapesV2ResponsivePosterSrc } from "./aidreamcapes-v2-responsive-images";
 import { resolveDirectoryMedia } from "@/lib/aidreamcapes-workspace/media-placement.server";
 import { listAidreamcapesMediaDetailEntries, listAidreamcapesExampleGalleryEntries } from "@/lib/aidreamcapes-workspace/media-cards.server";
-import { mediaDetailPath } from "@/lib/aidreamcapes-workspace/media-detail";
+import { mediaDetailPath, mediaWatchPath } from "@/lib/aidreamcapes-workspace/media-detail";
 import { readStorefrontPlatformStateFromDatabase, readStorefrontPublicIndexingStateByHostFromDatabase } from "@/lib/storefront-state";
 import fs from "node:fs";
 import nodePath from "node:path";
@@ -2224,19 +2224,31 @@ export async function getStorefrontSitemapPayloadForHost(hosts: string | null | 
       const lastmod = media.updatedAt.toISOString();
       const thumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.imagePath}`;
       const imageText = media.imageAlt ?? media.label;
+      // The detail page is the template/prompt entry, not a watch page. A
+      // <video:video> entry here tells Google this page is a video watch page,
+      // which is exactly the "video not on a watch page" report. The video
+      // entry belongs on /watch/<slug>, the page that owns the player.
       entries.push({
         loc,
         images: [{ loc: thumbnailLoc, title: imageText, caption: imageText }],
-        ...(media.videoPath ? {
-          video: {
-            thumbnailLoc,
-            title: media.label,
-            description: media.description,
-            contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
-            publicationDate: lastmod,
-            ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
-          }
-        } : {}),
+        lastmod
+      });
+      const watchPath = mediaWatchPath(media.kind, media.slug);
+      if (!watchPath || !media.videoPath) continue;
+      const watchLoc = `${AIDREAMCAPES_ORIGIN}${watchPath}`;
+      if (entries.some((entry) => entry.loc === watchLoc)) continue;
+      const watchThumbnailLoc = `${AIDREAMCAPES_ORIGIN}${media.videoPosterPath ?? media.imagePath}`;
+      entries.push({
+        loc: watchLoc,
+        images: [{ loc: watchThumbnailLoc, title: imageText, caption: imageText }],
+        video: {
+          thumbnailLoc: watchThumbnailLoc,
+          title: media.label,
+          description: media.description,
+          contentLoc: `${AIDREAMCAPES_ORIGIN}${media.videoPath}`,
+          publicationDate: lastmod,
+          ...(media.durationSeconds ? { duration: String(media.durationSeconds) } : {})
+        },
         lastmod
       });
     }

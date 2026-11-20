@@ -14,12 +14,23 @@ import {
 } from "@/lib/mydreamshoots-video-watch";
 import { getStorefrontVideoWatchPagesForHost } from "@/lib/seo-indexing";
 import { normalizePublicSeoDescription, normalizePublicSeoTitle } from "@/lib/storefront-seo-text";
+import { aidreamcapesMediaWatchMetadata, renderAidreamcapesMediaWatchPage } from "@/lib/aidreamcapes-guest-workspace";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 function videoDuration(seconds: number): string {
   return `PT${Math.max(1, Math.floor(seconds))}S`;
+}
+
+function isAivideosugcHost(value: string | null | undefined): boolean {
+  const host = value?.split(",")[0]?.trim().toLowerCase().replace(/:\d+$/, "") ?? "";
+  return host === "www.aivideosugc.com" || host === "aivideosugc.com";
+}
+
+async function isAivideosugcRequest(): Promise<boolean> {
+  const requestHeaders = await headers();
+  return [requestHeaders.get("x-forwarded-host"), requestHeaders.get("host")].some(isAivideosugcHost);
 }
 
 function videoJsonLd(video: MyDreamShootsVideoWatchPage) {
@@ -77,6 +88,9 @@ async function videoForRequest(slug: string): Promise<MyDreamShootsVideoWatchPag
 
 export async function generateMetadata({ params }: { params: Promise<{ videoSlug: string }> }): Promise<Metadata> {
   const { videoSlug } = await params;
+  if (await isAivideosugcRequest()) {
+    return (await aidreamcapesMediaWatchMetadata({ slug: videoSlug })) ?? { robots: { index: false, follow: false } };
+  }
   const video = await videoForRequest(videoSlug);
   if (!video) {
     return { robots: { index: false, follow: false } };
@@ -114,6 +128,9 @@ export default async function MyDreamShootsVideoWatchPage({
   params: Promise<{ videoSlug: string }>;
 }) {
   const { videoSlug } = await params;
+  if (await isAivideosugcRequest()) {
+    return renderAidreamcapesMediaWatchPage({ slug: videoSlug });
+  }
   const video = await videoForRequest(videoSlug);
   if (!video) notFound();
 

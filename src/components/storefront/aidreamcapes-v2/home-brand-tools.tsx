@@ -12,11 +12,11 @@ function Icon({ kind }: { kind: "arrow" | "play" | "link" | "spark" | "image" | 
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[kind]} /></svg>;
 }
 
-/** Looping silent preview clip. Playback is gated by the behavior script
- * (IntersectionObserver) so off-screen clips never load or decode; the poster
- * is gated the same way because <video poster> has no native lazy load. */
+/** Static poster for the homepage tools section. The section is a landing
+ * page, not a watch page: a <video> here made Google report the clip as
+ * "video not on a watch page". The dedicated /watch/<slug> page owns playback. */
 function Clip({ video, r, className }: { video: HomeToolVideo; r: V2Resolvers; className?: string }) {
-  return <video className={className} src={r.asset(video.src)} data-deferred-poster={r.asset(video.poster?.src ?? "")} muted loop playsInline preload="none" data-tools-video aria-hidden="true" />;
+  return <img alt={video.poster.alt} className={className} decoding="async" loading="lazy" src={r.asset(video.poster.src)} />;
 }
 
 /** Text that the behavior script types out character by character. The full

@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import type { V2Resolvers } from "./types";
 import { RichText } from "./parts";
+import { SeoPosterVideo } from "./seo-poster-video";
 import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import styles from "./guides-tutorial.module.css";
 
@@ -135,12 +136,10 @@ export function GuidesTutorialPage({ data, r }: { data: GuideData; r: V2Resolver
                   {chapter.media.map((item) => (
                     <figure className={styles.figure} key={item.src}>
                       {item.video ? (
-                        <video
+                        <SeoPosterVideo
+                          alt={item.alt}
                           className={styles.video}
-                          controls
                           muted
-                          playsInline
-                          preload="metadata"
                           poster={item.poster}
                           src={item.src}
                         />

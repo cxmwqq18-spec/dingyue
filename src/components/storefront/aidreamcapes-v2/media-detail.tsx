@@ -1,5 +1,4 @@
 import type { AidreamcapesV2Navigation } from "@/lib/types";
-import { AidreamcapesVideoPreview } from "@/components/storefront/aidreamcapes-video-preview";
 import { StorefrontJsonLd } from "@/components/storefront/storefront-json-ld";
 import { WorkspaceEntryLink } from "@/components/aidreamcapes-workspace/entry-link";
 import { WorkspaceEntryBehavior } from "@/components/aidreamcapes-workspace/entry-behavior";
@@ -8,11 +7,11 @@ import type { MediaPlacementGroup } from "@/lib/aidreamcapes-workspace/media-pla
 import {
   MEDIA_DETAIL_PUBLIC_ORIGIN,
   mediaDetailCrumbs,
-  mediaDetailDescription,
   mediaDetailIntro,
   mediaDetailParameters,
   mediaDetailPrompt,
   mediaDetailReferences,
+  mediaWatchPath,
   type MediaDetailKind
 } from "@/lib/aidreamcapes-workspace/media-detail";
 import type { V2Resolvers } from "./types";
@@ -28,21 +27,28 @@ import { MediaDetailPromptCopy } from "./media-detail-prompt-copy";
 function MediaFigure({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   const { card } = detail;
   if (card.video) {
-    // The ambient loop plays the lightweight 10-second preview clip when one
-    // exists; the full-quality file (5-7MB) loads only when the visitor opens
-    // the sound-on dialog, instead of auto-downloading on every detail view.
+    // The detail page is the template/prompt entry, not the watch page. It
+    // shows the poster and links to /watch/<slug>, which owns the player and
+    // the VideoObject. Keeping a <video> here made Google report the video as
+    // "not on a watch page" even though this page is not a watch page.
+    const watchPath = mediaWatchPath("video", detail.slug);
     return (
       <figure className="v-detail-media">
-        <AidreamcapesVideoPreview
-          alt={card.label}
-          controls
-          dialogSrc={r.asset(card.video.src)}
-          height={card.video.height}
-          poster={card.video.poster ? r.asset(card.video.poster.src) : undefined}
-          src={r.asset(card.video.previewSrc ?? card.video.src)}
-          videoClassName="block w-full h-auto"
-          width={card.video.width}
-        />
+        <a
+          aria-label={`Watch ${card.label}`}
+          className="v-detail-watch"
+          href={watchPath ? r.href(watchPath) : r.href(detail.path)}
+        >
+          <img
+            alt={card.video.poster?.alt || card.image.alt || card.label}
+            decoding="async"
+            height={card.video.height ?? card.image.h}
+            loading="eager"
+            src={r.asset(card.video.poster?.src ?? card.image.src)}
+            width={card.video.width ?? card.image.w}
+          />
+          <span className="v-detail-watch-cta">▶ Watch full video</span>
+        </a>
       </figure>
     );
   }
@@ -90,7 +96,15 @@ function ReferenceAssets({ card, r }: { card: MediaDetail["card"]; r: V2Resolver
         <ul className="v-detail-refs-videos">
           {references.videos.map((video, index) => (
             <li key={`v-detail-ref-video-${index}`}>
-              <video aria-label={`Reference clip ${index + 1}`} controls loop muted playsInline poster={video.poster ? r.asset(video.poster) : undefined} preload="none" src={r.asset(video.src)} />
+              {/* Reference clips are inputs, not the page's main video. A
+                  poster link keeps them out of the crawlable <video> set. */}
+              <a href={r.asset(video.src)} rel="noreferrer" target="_blank" aria-label={`Open reference clip ${index + 1}`}>
+                {video.poster ? (
+                  <img alt={video.alt || `Reference clip ${index + 1}`} decoding="async" loading="lazy" src={r.asset(video.poster)} />
+                ) : (
+                  <span>{`Reference clip ${index + 1}`}</span>
+                )}
+              </a>
             </li>
           ))}
         </ul>
@@ -178,16 +192,9 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
       })) },
       { "@type": "ImageObject", name: card.label, contentUrl: new URL(card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
         url: `${MEDIA_DETAIL_PUBLIC_ORIGIN}${detail.path}` },
-      ...(card.video ? [{
-        "@type": "VideoObject",
-        name: card.label,
-        description: mediaDetailDescription(card, detail.kind),
-        thumbnailUrl: new URL(card.video.poster?.src ?? card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
-        uploadDate: detail.ownerUpdatedAt,
-        contentUrl: new URL(card.video.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
-        ...(card.duration ? { duration: `PT${Math.round(Number(card.duration))}S` } : {}),
-        isFamilyFriendly: true,
-      }] : []),
+      // VideoObject lives on /watch/<slug>. This page is the template/prompt
+      // entry, and declaring a video here is what produced the GSC "video not
+      // on a watch page" report.
     ],
   };
   const specs = [
@@ -204,6 +211,9 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;align-items:start;padding:24px 0 8px}
 #media-detail .v-detail-media{margin:0;border-radius:18px;overflow:hidden;background:#0d1220;box-shadow:0 18px 60px rgba(10,16,32,.18)}
 #media-detail .v-detail-media img,#media-detail .v-detail-media video{display:block;width:100%;height:auto}
+#media-detail .v-detail-watch{display:block;position:relative;text-decoration:none;color:inherit}
+#media-detail .v-detail-watch-cta{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(8,12,24,.78);color:#fff;font-size:13px;font-weight:700;backdrop-filter:blur(8px)}
+#media-detail .v-detail-watch:hover .v-detail-watch-cta{background:rgba(8,12,24,.92)}
 #media-detail .v-detail-media-col{display:grid;gap:18px;align-content:start;min-width:0}
 #media-detail .v-detail-refs{padding:16px 18px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 #media-detail .v-detail-refs-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
@@ -294,6 +304,9 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
               <WorkspaceEntryLink className="btn btn-grad" entry={detail.cta.entry} href={r.href(detail.cta.href)}>
                 {`${detail.kind === "photo" ? "Use this template" : "Make a video like this"} →`}
               </WorkspaceEntryLink>
+              {detail.kind === "video" && card.video?.src && mediaWatchPath("video", detail.slug) ? (
+                <a className="btn" href={r.href(mediaWatchPath("video", detail.slug)!)}>Watch full video</a>
+              ) : null}
               <a className="btn" href={r.href(detail.ownerPath)}>Browse the full directory</a>
             </div>
             <p className="v-detail-note">{detail.kind === "photo"

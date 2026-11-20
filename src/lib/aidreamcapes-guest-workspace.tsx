@@ -1,12 +1,13 @@
 import { aidreamcapesWorkspaceEntry, renderAidreamcapesWorkspace } from "@/lib/aidreamcapes-workspace/page";
 import { AidreamcapesMediaDetailPage } from "@/components/storefront/aidreamcapes-v2/media-detail";
+import { AidreamcapesMediaWatchPage } from "@/components/storefront/aidreamcapes-v2/media-watch";
 import { headers } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { AIVIDEOSUGC_SITE_ID } from "@/lib/aidreamcapes-workspace/types";
 import { resolveWorkspacePublicScenePreset, resolveWorkspaceScenePreset, resolveWorkspaceLegacyTemplatePreset } from "@/lib/aidreamcapes-workspace/presets.server";
 import { workspaceMediaRoutePath } from "@/lib/aidreamcapes-workspace/preset-contract";
-import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
+import { MEDIA_DETAIL_PUBLIC_ORIGIN, mediaDetailDescription, mediaDetailTitle, mediaWatchPath, type MediaDetailKind } from "@/lib/aidreamcapes-workspace/media-detail";
 import { loadAidreamcapesChrome, resolveMediaDetail } from "@/lib/aidreamcapes-workspace/media-detail.server";
 import { getCurrentCustomerForSite } from "@/lib/api-auth";
 import { resolveMediaPlacements } from "@/lib/aidreamcapes-workspace/media-placement.server";
@@ -140,6 +141,82 @@ export async function renderAidreamcapesMediaDetailPage({ kind, slug, basePath =
   );
 }
 
+/**
+ * Public watch page for a single video. This is the page Google indexes as a
+ * watch page: the video is the main content and VideoObject.url points here.
+ * The detail page stays the template/prompt entry and links to this page.
+ */
+export async function renderAidreamcapesMediaWatchPage({ slug, basePath = "" }: {
+  slug: string;
+  basePath?: string;
+}) {
+  const [detail, chrome, customer] = await Promise.all([
+    resolveMediaDetail("video", slug),
+    loadAidreamcapesChrome(),
+    getCurrentCustomerForSite(AIVIDEOSUGC_SITE_ID),
+  ]);
+  if (!detail || !detail.card.video?.src || !chrome) notFound();
+  if (detail.slug !== slug) permanentRedirect(`${basePath === "/" ? "" : basePath}${mediaWatchPath("video", detail.slug)}`);
+  const prefix = basePath === "/" ? "" : basePath;
+  const headerAccount = customer ? { href: `${prefix}/account`, label: "My account" } : undefined;
+  const headerCustomer = customer
+    ? {
+        balance: customer.customer.balance,
+        email: customer.customer.email,
+        name: customer.customer.name,
+        profile: customer.customer.profile
+      }
+    : undefined;
+  return (
+    <AidreamcapesMediaWatchPage
+      detail={detail}
+      headerAccount={headerAccount}
+      headerCustomer={headerCustomer}
+      navigation={chrome.navigation as AidreamcapesV2Navigation}
+      r={publicResolvers(basePath)}
+      siteId={AIVIDEOSUGC_SITE_ID}
+      company={aidreamcapesV2Company(chrome.identity)}
+      articles={chrome.articles}
+      articlesTitle={chrome.articlesTitle}
+    />
+  );
+}
+
+/** Metadata for the public watch page; the canonical is the watch URL. */
+export async function aidreamcapesMediaWatchMetadata({ slug }: {
+  slug: string;
+}): Promise<Metadata | undefined> {
+  const detail = await resolveMediaDetail("video", slug);
+  if (!detail || !detail.card.video?.src) return undefined;
+  const title = mediaDetailTitle(detail.card);
+  const watchPath = mediaWatchPath("video", detail.slug);
+  if (!watchPath) return undefined;
+  const canonical = `${MEDIA_DETAIL_PUBLIC_ORIGIN}${watchPath}`;
+  const description = mediaDetailDescription(detail.card, detail.kind);
+  return {
+    title: `${title} | Watch | AIVideosUGC`,
+    description,
+    alternates: { canonical },
+    robots: { index: true, follow: true, "max-image-preview": "large" },
+    openGraph: {
+      type: "video.other",
+      title,
+      description,
+      url: canonical,
+      images: [{
+        url: new URL(detail.card.video.poster?.src ?? detail.card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href,
+        alt: detail.card.image.alt || title
+      }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [new URL(detail.card.video.poster?.src ?? detail.card.image.src, MEDIA_DETAIL_PUBLIC_ORIGIN).href]
+    }
+  };
+}
+
 /** Metadata for a public media detail page; derived cards are not indexed yet. */
 export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
   kind: MediaDetailKind;
@@ -156,12 +233,11 @@ export async function aidreamcapesMediaDetailMetadata({ kind, slug }: {
     alternates: { canonical },
     robots: { index: true, follow: true },
     openGraph: {
-      // A video-kind card whose video file is missing renders as a still
-      // example (image hero, no player). Claiming video.other there made
-      // Google keep a video record for a page with no video at all — the
-      // "video URL: N/A" rows in the video indexing report. The claim follows
-      // the actual file, so re-attaching the video restores it automatically.
-      type: detail.kind === "video" && detail.card.video?.src ? "video.other" : "website",
+      // The detail page is the template/prompt entry, not the watch page. The
+      // video.other claim lives on /watch/<slug>, where the player and
+      // VideoObject are. Keeping it here made Google treat a non-watch page as
+      // a video page, which is exactly the "video not on a watch page" signal.
+      type: "website",
       title,
       description: mediaDetailDescription(detail.card, detail.kind),
       url: canonical,

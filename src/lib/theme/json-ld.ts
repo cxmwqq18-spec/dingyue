@@ -1386,41 +1386,6 @@ function aidreamcapesEuVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   }];
 }
 
-function aidreamcapesVideoFeatureObjectSchemas(input: JsonLdInput): JsonLdNode[] {
-  if (!isAidreamcapesSite(input.site) || !hasPageSections(input.pageJson)) return [];
-  const pageUrl = absoluteUrl(input.site, input.routeMode, schemaPagePath(input.site, input.routeMode, input.pagePath));
-  const uploadDate = normalizedUploadDate(input.page.updatedAt);
-  if (!pageUrl || !uploadDate) return [];
-  const pageTitleValue = pageTitle(input.site, input.page, input.context);
-  const pageDescriptionValue = pageDescription(input.site, input.page, input.context);
-  return input.pageJson.sectionsOrder.flatMap((sectionId, index) => {
-    const section = input.pageJson?.sections[sectionId];
-    if (section?.type !== "video_feature") return [];
-    const videoUrl = videoMediaPath(section.settings.videoUrl);
-    const thumbnailUrl = imageMediaPath(section.settings.imageUrl) || imageMediaPath(section.settings.posterUrl);
-    if (!videoUrl || !thumbnailUrl) return [];
-    const name = cleanSchemaText(input.site, section.settings.title, pageTitleValue);
-    const description = cleanSchemaText(input.site, section.settings.subtitle, pageDescriptionValue);
-    const durationSeconds = numericSetting(section.settings.videoDurationSeconds, 0);
-    return [{
-      "@type": "VideoObject",
-      "@id": `${pageUrl}#video-${index + 1}`,
-      name,
-      description,
-      thumbnailUrl: [absoluteUrl(input.site, input.routeMode, thumbnailUrl)],
-      uploadDate,
-      ...(durationSeconds > 0 ? { duration: iso8601Duration(durationSeconds) } : {}),
-      contentUrl: absoluteUrl(input.site, input.routeMode, videoUrl),
-      encodingFormat: mediaEncodingFormat(videoUrl),
-      url: pageUrl,
-      mainEntityOfPage: pageUrl,
-      isPartOf: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#website` },
-      publisher: { "@id": `${storefrontBaseUrl(input.site, input.routeMode)}#organization` },
-      potentialAction: { "@type": "WatchAction", target: pageUrl }
-    }];
-  });
-}
-
 function spanishVideoObjectSchemas(input: JsonLdInput): JsonLdNode[] {
   if (!isAidreamshootsStorefrontSite(input.site) || !input.context.seo.index) return [];
   const requestedSlug = aidreamshootsVideoTopicSlugForPath(input.pagePath);
@@ -2047,7 +2012,10 @@ export function buildStorefrontJsonLd(input: JsonLdInput): JsonLdNode[] {
     ...collectionPageSchema(resolvedInput, title, description),
     ...editorialVideoObjectSchemas(resolvedInput),
     ...aidreamcapesEuVideoObjectSchemas(resolvedInput),
-    ...aidreamcapesVideoFeatureObjectSchemas(resolvedInput),
+    // AIVideosUGC video_feature sections are article/landing-page content, not
+    // watch pages. Emitting VideoObject here is what produced the GSC "video
+    // not on a watch page" rows for blog, guides and hub pages. The dedicated
+    // /watch/<slug> page owns the VideoObject now.
     ...spanishVideoObjectSchemas(resolvedInput),
     ...homeVideoObjectSchemas(resolvedInput),
     ...serviceOrProductSchema(resolvedInput, title, description)

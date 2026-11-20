@@ -955,11 +955,12 @@ function sameServerStorefrontUrl(request: NextRequest): URL {
   if (hostSlug === "aidreamcapes" && /^\/google[a-z0-9]+\.html$/i.test(upstreamUrl.pathname)) {
     return upstreamUrl;
   }
-  // Video watch pages are standalone routes for all three storefront hosts.
+  // Video watch pages are standalone routes for every storefront host.
   // Keep them on the top-level App Router path so they do not fall through to
   // the database-backed storefront catch-all and lose their site-specific
-  // video indexing contract.
-  if (["mydreamshoots", "aidreamshoots", "aidreamcapes-eu"].includes(hostSlug) && upstreamUrl.pathname.startsWith("/watch/")) return upstreamUrl;
+  // video indexing contract. AIVideosUGC (hostSlug "aidreamcapes") now owns
+  // /watch/<slug> for its example videos.
+  if (["mydreamshoots", "aidreamshoots", "aidreamcapes-eu", "aidreamcapes"].includes(hostSlug) && upstreamUrl.pathname.startsWith("/watch/")) return upstreamUrl;
   // Keep the directory renderer for its complete published shell, while the
   // category query lets its metadata resolve the requested image theme.
   const imageThemeMatch = upstreamUrl.pathname.match(/^\/ai-image-generation\/([^/]+)$/);
