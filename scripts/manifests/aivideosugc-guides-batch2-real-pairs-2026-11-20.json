@@ -1,0 +1,194 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T10:51:14.621Z",
+  "applying": true,
+  "editCount": 30,
+  "pages": [
+    "/guides/how-do-subtitle-studio",
+    "/guides/how-do-ai-image",
+    "/guides/how-do-url-to-video",
+    "/guides/how-do-product-links"
+  ],
+  "edits": [
+    {
+      "slug": "ai-image",
+      "field": "demo.gallery[0].image",
+      "beforeHash": "fe8e3e5f771e30d180eac5e8912a34ec9a1fcd844a559a39cbdedd2d8c95636d",
+      "afterHash": "b12110433be8e546c71282ef5075577c404067b72985af04fe16e270acd5a856"
+    },
+    {
+      "slug": "ai-image",
+      "field": "demo.gallery[1].image",
+      "beforeHash": "d3bf690383883c919838ec7bc8a43f823fc79223a559857b1765e3532b7a0322",
+      "afterHash": "97bf7f2362da28c08f2ab67850bb8dc5c57a5223255276931e1dd043d7b2259e"
+    },
+    {
+      "slug": "ai-image",
+      "field": "demo.gallery[1].caption",
+      "beforeHash": "dedc2fa56f7bea5965e27fc20a9ea4aa712ff4149ebdae6c864d725f4b05d7f6",
+      "afterHash": "13cf13bfd7fb7ceec1bd4984ad5f6dca5a62ef908a4d4607edece27b1a3f06a5"
+    },
+    {
+      "slug": "ai-image",
+      "field": "demo.lead",
+      "beforeHash": "1dfefc034fd1c33b18f1ffa853591c66db843c096d8b70ffa0363d17f2fd1634",
+      "afterHash": "8193afadd52124f446c73713a41716ea5dba5019f1aba569408affde7c1f2f68"
+    },
+    {
+      "slug": "ai-image",
+      "field": "intro[1]",
+      "beforeHash": "8318b307d7a6614394368caba86cb6f3f88e5f816ec0920fd79879d253e48be6",
+      "afterHash": "0eb108f5c846b42460a9273038105cb64035fce6ed262a1304030aa04c48feab"
+    },
+    {
+      "slug": "ai-image",
+      "field": "steps[3].body",
+      "beforeHash": "6b23c5644c89fde66577fc8672d872e24b93b829d5e6f6dc814b72726fef207c",
+      "afterHash": "02741e070ffec693facc60c0d583250cb63f1c9b7ab7bb7249b41036ad971cb6"
+    },
+    {
+      "slug": "ai-image",
+      "field": "steps[4].body",
+      "beforeHash": "1394eab08c23201cf07b54a87dcff15e4b394e224b315b55d7310d3687a7022f",
+      "afterHash": "8606ebf4c79f50ed6fe4570f32a55a722cdef52d7fd2cc8d30d1cf7eac224cda"
+    },
+    {
+      "slug": "product-links",
+      "field": "image",
+      "beforeHash": "991bc1ba6c30a9f0948c9c44a1e2a5f649c0190192f29cf5be8f8dd3a78c102a",
+      "afterHash": "054770d2c28e0fbdfa13fec81e1dd899e0bff5156c730a1b110650cbf170f2e2"
+    },
+    {
+      "slug": "product-links",
+      "field": "intro[1]",
+      "beforeHash": "73c2700d10f0779a04045ea789e17c7e0ba701a16a4e299afc4789cb1340fac3",
+      "afterHash": "5e1cfe5f59cc7b17a1c432a5cd2bbfe1fe6b5a84ce594f07fa2f2930c22b37c2"
+    },
+    {
+      "slug": "product-links",
+      "field": "demo.lead",
+      "beforeHash": "0106c63f9f5703a1218f94eb6294350affa333d02705ae721dcc1b970e617f24",
+      "afterHash": "4d163c9962e517e4b84a60daa34ccd6e4d7504b321c921abf3dc6463145f0492"
+    },
+    {
+      "slug": "product-links",
+      "field": "demo.urlCard",
+      "beforeHash": "5d6e6f0a59c0ab66d3d92e38a64d81dd503a925d198ba2b3a9666047c0d838e1",
+      "afterHash": "f4e4d73a4c76f0ebe6402ec4980df9523d93d728d2b3ade904a7b507e10e6fc3"
+    },
+    {
+      "slug": "product-links",
+      "field": "steps[3].body",
+      "beforeHash": "dd711a5d6903f1fe16893509f0a12e2ebf087674a268f3d6bd02c823bc058590",
+      "afterHash": "b96226d2dc8571c882280d0699db4f95d49aa749676b20d7de7002f115801a47"
+    },
+    {
+      "slug": "product-links",
+      "field": "steps[4].body",
+      "beforeHash": "516b9964e51e89bfbaba6ccc52365bc3946b685948f1b76264164e2663512189",
+      "afterHash": "e6fe73b98dd8038e270cb80bad5f479e29616b398e64f92d41c0d34c146d1743"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.subtitles.before.video",
+      "beforeHash": "af9d5247220c15c6b0ec1568404b414666e1798a665c23c57aceb5e1384eab05",
+      "afterHash": "b59c1c3ca03ff2368fcb6b44b9f78ed9b8718bb1b4c3d4d8ef227ca1795ebbc6"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.subtitles.before.lines",
+      "beforeHash": "6374ce13b72c2224cd64df47ba519a9520117e5c6ee147135b8c543860194cbb",
+      "afterHash": "11f3c412c6a4be543379df24bc19ea4bd54419dd9281971883632e0f4129b21b"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.subtitles.after.video",
+      "beforeHash": "5f0b5e0e3627d1a36391f958ff8d3381d714f1cbb81876c888385cef3c2f1a79",
+      "afterHash": "2860832d76e616bf7c6a71e9d113cb7a87f90e522db0621353c7a22da6676751"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.subtitles.after.label",
+      "beforeHash": "5d66f7418bd315291cb0d2e7c5c9c01ba92483b92e4ec4b3fcc97679917a2998",
+      "afterHash": "3ebc8de018ce32f8e0625c9128b435e873f9b5480c13bee86c65156a4d1140df"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.subtitles.after.lines",
+      "beforeHash": "c3c3f8e9e759aa3f2b5d1311b0dc9be1e4c4bbee21e3cfef5750bc2bb7489fd0",
+      "afterHash": "cd236552c0468531c1f7cbd4e2b0d782e6efe008030c4f6955dfc049466dd818"
+    },
+    {
+      "slug": "subtitle",
+      "field": "demo.lead",
+      "beforeHash": "4c37e28d5e88c8b3817a1c065420637e63bbc82b74e8b6b1d5a25dc1b6a52591",
+      "afterHash": "bdbda1f12f9c89f7f9b2dffe863e56581293ae75424463df480d6fc4a1b3d5a1"
+    },
+    {
+      "slug": "subtitle",
+      "field": "image",
+      "beforeHash": "5feb2293c217b56f751df94d9d46059a930a8fca9ac70a6518dbb8383270ac89",
+      "afterHash": "4953a2c7e034d14d656c440f00207f8d3ec0e6a980e3bd1b8181ef006d40426a"
+    },
+    {
+      "slug": "subtitle",
+      "field": "intro[1]",
+      "beforeHash": "a8e153403ce7694d90f73c70ff4f30b7e05b61fcfcccb7b55ab671c112057a86",
+      "afterHash": "c9f3b7fe3a30e055d3e4a95088fbb5eff11f7f27a77e1a5c1e499487e5f68530"
+    },
+    {
+      "slug": "subtitle",
+      "field": "steps[1].body",
+      "beforeHash": "d089a4b0d9dc4fafecc824a8020613011775bc0e363e3f9be0ec1c69cb0b0dc3",
+      "afterHash": "f79cfca5cf0be6669aeddce3197d176ceba2906887e7666c8c135f64067e8b33"
+    },
+    {
+      "slug": "subtitle",
+      "field": "steps[4].body",
+      "beforeHash": "4f2f2e6941bbdbfb1582b5c640923be7f4c5725991a5bb810acc6272683413b9",
+      "afterHash": "da44ed5c6657f137321ca5ec368f0305b305e6c1f7af2baeb59acc42084c58c8"
+    },
+    {
+      "slug": "subtitle",
+      "field": "checklist[3]",
+      "beforeHash": "10db82177bb5387e6b7598cc7e9c166ad4a2bc98fac5924c494fedba2a20dd40",
+      "afterHash": "83083dc3c1822fa8621dcf6b575cf91e21572c62b6d92b76474146bc7df6b6c6"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "image",
+      "beforeHash": "7b1f969c3470f4459a749907cc09861e970d36e38f3ba71cde13850055b0a325",
+      "afterHash": "700f911c85bbade8994151e90f6f2f0ff807e637b81f8d373ae513de23ffa2b6"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "demo.urlCard",
+      "beforeHash": "00f84ab78b32e8d19d5f6bed6a54740679621f5ed911128e78cb026d1848f79f",
+      "afterHash": "61cd667151a21e146b154b923a614cc4a8e010ea98e654af835aa2a06f147fe8"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "demo.lead",
+      "beforeHash": "e7a8e37e9cdf72d5d59274cd42cffeba36434d1930d2b1a931dde2380cc43d2c",
+      "afterHash": "7b7bc0bbbec91e2bb4c89894f70e08307631209938d3e6e9715c8bf6ae560596"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "intro[1]",
+      "beforeHash": "3cfce5f0098ba0c1f4f0f7cdb383cd7bdd1e0464c961cedd900d86ff3f5f3473",
+      "afterHash": "14796a0068c3ecf0adc63574fef7c55812f9d8a63f9e4eb42737ba5e464830a5"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "steps[1].body",
+      "beforeHash": "a5ffa05c524df41b87c037365e374d0b678733af21ef3aae42a19cc95709b29f",
+      "afterHash": "2e99cec55725d2db975bc785b3e1fc2a36b50a977a8f25bf0fdf32200ea3e996"
+    },
+    {
+      "slug": "url-to-video",
+      "field": "faq[1]",
+      "beforeHash": "60bbef22a439d68b8b790eac6c153cec344fb93e3fb6989745789a67329677a3",
+      "afterHash": "b550dde46e72668f499ce327964ed3ff5fa16449bd0baae41b60dc194835256a"
+    }
+  ]
+}
