@@ -1,0 +1,325 @@
+{
+  "siteId": "site_aidreamcapes",
+  "description": "New blog article for /blog: 'From Product Link to Finished Ad, in Minutes' — a product guide adapted from the owner-provided page. Creates the article LivePage row and appends its card to the /blog hub list. Cover image: the site's AI actor portrait /ai-image-generation/actors/dev-640.webp (640x1138).",
+  "article": {
+    "id": "aidreamcapes_v2_blog_from_product_link_to_finished_ad",
+    "slug": "/blog/from-product-link-to-finished-ad",
+    "title": "From Product Link to Finished Ad in Minutes | AIVideosUGC",
+    "pageType": "article",
+    "contentJson": {
+      "version": 2,
+      "pageType": "article",
+      "sectionsOrder": [
+        "v2_main"
+      ],
+      "contentContract": {
+        "seoSource": "LivePage.contentJson",
+        "mediaSource": "LivePage.contentJson",
+        "sourceRevision": "aidreamcapes-site-v2"
+      },
+      "mediaManifest": [
+        {
+          "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan over a white tee, stands in a warm living room and speaks to camera with his hands clasped.",
+          "src": "/ai-image-generation/actors/dev-640.webp",
+          "width": 640,
+          "height": 1138
+        }
+      ],
+      "seo": {
+        "index": true,
+        "title": "From Product Link to Finished Ad in Minutes | AIVideosUGC",
+        "description": "How AIVideosUGC turns a product link, one photo, or a single sentence into a finished creator-style video: three inputs, one workspace, credits shown before every job.",
+        "keywords": "product link to video, AI video ads generator, URL to video, product video generator, AI UGC video",
+        "primaryKeyword": "product link to video",
+        "canonical": "https://www.aivideosugc.com/blog/from-product-link-to-finished-ad",
+        "canonicalPath": "/blog/from-product-link-to-finished-ad",
+        "ogImage": "/ai-image-generation/actors/dev-640.webp",
+        "ogImageAlt": "Adult South Asian man in his thirties with glasses and a beige cardigan speaks to camera in a warm living room.",
+        "twitterDescription": "Paste a product link, add a photo, or write one sentence — AIVideosUGC builds the script, presenter, voice and captions, and shows the credit cost first.",
+        "robots": {
+          "index": true,
+          "follow": true,
+          "maxImagePreview": "large"
+        },
+        "jsonLd": {
+          "@graph": [
+            {
+              "@id": "https://www.aivideosugc.com/#organization",
+              "url": "https://www.aivideosugc.com/",
+              "name": "AIVideosUGC",
+              "@type": "Organization"
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "item": "https://www.aivideosugc.com/",
+                  "name": "Home",
+                  "@type": "ListItem",
+                  "position": 1
+                },
+                {
+                  "item": "https://www.aivideosugc.com/blog",
+                  "name": "Blog",
+                  "@type": "ListItem",
+                  "position": 2
+                },
+                {
+                  "item": "https://www.aivideosugc.com/blog/from-product-link-to-finished-ad",
+                  "name": "Product Guide",
+                  "@type": "ListItem",
+                  "position": 3
+                }
+              ]
+            },
+            {
+              "@type": "BlogPosting",
+              "image": "/ai-image-generation/actors/dev-640.webp",
+              "author": {
+                "@id": "https://www.aivideosugc.com/#organization"
+              },
+              "headline": "From Product Link to Finished Ad, in Minutes",
+              "publisher": {
+                "@id": "https://www.aivideosugc.com/#organization"
+              },
+              "inLanguage": "en",
+              "description": "How AIVideosUGC turns a product link, one photo, or a single sentence into a finished creator-style video: three inputs, one workspace, credits shown before every job.",
+              "dateModified": "2026-11-20",
+              "datePublished": "2026-11-20",
+              "mainEntityOfPage": "https://www.aivideosugc.com/blog/from-product-link-to-finished-ad"
+            },
+            {
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "name": "Do I need a camera crew or an actor?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "No. A product link, one product photo, or a written brief is enough. The workspace writes the script, casts an AI presenter, adds the voice and captions, and exports the finished file.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "What can I start from?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "Three inputs: a public product page (URL to Video), a product photo (Image to Video), or a creative brief (Text to Video). Everything else is chosen in the workspace.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "How much does a video cost?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "A 15-second video costs 20 credits and a 30-second video costs 40. Package credits are 200 for $24, 500 for $59, or 1,200 for $129 per month of the term. The cost is shown before every job, and a failed job returns its credits.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "Does the file carry a watermark?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "No. Downloads are watermark-free and can be used in paid ads, on your store, or in client work, subject to each platform's current rules.",
+                    "@type": "Answer"
+                  }
+                },
+                {
+                  "name": "Is there a free trial?",
+                  "@type": "Question",
+                  "acceptedAnswer": {
+                    "text": "Yes. New users can start with a free trial and a one-time $1 first product video. Creators who post with #AIVideosUGC can also apply for free credits.",
+                    "@type": "Answer"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sections": {
+        "v2_main": {
+          "type": "aidreamcapes_v2_page",
+          "blocks": [],
+          "settings": {
+            "layout": "article",
+            "data": {
+              "h1": "From Product Link to Finished Ad, in Minutes",
+              "id": "blog-from-product-link-to-finished-ad",
+              "eyebrow": "How AIVideosUGC Works",
+              "label": "Product Guide",
+              "minutes": 6,
+              "section": "blog",
+              "lead": "AIVideosUGC turns a product photo, a product link, or a single sentence into a finished creator-style video — no camera crew, no actor booking, and no editing software. This guide shows what happens between your input and the file you can post.",
+              "image": {
+                "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan over a white tee, stands in a warm living room and speaks to camera with his hands clasped.",
+                "src": "/ai-image-generation/actors/dev-640.webp",
+                "sizes": "(max-width: 700px) 100vw, 380px",
+                "width": 640,
+                "height": 1138
+              },
+              "heroMedia": {
+                "kind": "image",
+                "image": {
+                  "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan over a white tee, stands in a warm living room and speaks to camera with his hands clasped.",
+                  "src": "/ai-image-generation/actors/dev-640.webp",
+                  "sizes": "(max-width: 700px) 100vw, 380px",
+                  "width": 640,
+                  "height": 1138
+                }
+              },
+              "breadcrumbs": [
+                {
+                  "href": "/",
+                  "label": "Home"
+                },
+                {
+                  "href": "/blog",
+                  "label": "Blog"
+                },
+                {
+                  "href": "/blog/from-product-link-to-finished-ad",
+                  "label": "Product Guide"
+                }
+              ],
+              "startNote": "[Packages from $24 for one month](/pricing). Credits are shown before every job, and a failed job returns its credits automatically — no support ticket required.",
+              "sections": [
+                {
+                  "h2": "Three Ways to Start a Video",
+                  "paras": [
+                    "You do not need to learn prompt engineering before the first video. Start from whatever you already have — a product page, a photo, or a creative brief — and the workspace handles the rest.",
+                    "**URL to Video** turns a public product page into an ad or demo video. Paste a link and the import fills in the product name, photos and details; check them, then choose the presenter and format.",
+                    "**Image to Video** starts from one product photo. Add a short scene description and the model animates the product; a clear photo with the label visible produces the most usable clip.",
+                    "**Text to Video** converts a written brief into an editable storyboard, then generates the shots you keep. It is the right entry when you have a message but no usable photo yet."
+                  ]
+                },
+                {
+                  "h2": "What the Generator Builds",
+                  "paras": [
+                    "The [video ads generator](/ai-video-generation/video-ads) takes your input and produces the four layers a short ad needs: the script, written as spoken lines rather than ad copy; a presenter who holds or wears the product and talks to camera; the voiceover; and the finish — captions and the frame size you picked, 9:16 for TikTok, Reels and Shorts by default.",
+                    "You still make the decisions that matter: which presenter, what the first three seconds say, how long the clip runs, and whether the product stays the hero. The difference is that changing your mind costs a rerun, not a reshoot.",
+                    "Every job shows its credit cost before it starts. Files download without a watermark, and a failed job returns its credits to your balance automatically."
+                  ]
+                },
+                {
+                  "h2": "Pick a Presenter Style",
+                  "paras": [
+                    "**AI Actor** pairs an avatar from the directory with your script and voiceover — UGC-style talking-head video without cameras, casting, or a studio.",
+                    "**AI Twin** creates a digital clone that looks, speaks and moves like the person it is built from. Use it for founder-led content and personal brands where the face has to be consistent across every clip.",
+                    "**AI Presenter** covers demos and explainers: product walkthroughs, feature callouts and social content delivered in a natural, conversational register.",
+                    "The goal is not to replace UGC with polished studio production. It is to keep the fast hook, the conversational delivery, the product proof and the clear call to action that make creator video work."
+                  ]
+                },
+                {
+                  "h2": "What a Clip Costs",
+                  "paras": [
+                    "Videos are priced by length: a 15-second clip costs 20 credits and a 30-second clip costs 40. A single product photo costs 1 credit. The quote appears before the job starts, so there is no surprise on the invoice.",
+                    "Packages are one-time purchases with credits delivered monthly for the term: Starter is $24 for 200 credits a month, Pro is $59 for 500, and Studio is $129 for 1,200. Six- and twelve-month terms cost less per month, and credit packs are open to everyone when a month runs short.",
+                    "There is no subscription and no auto-renewal. If a job fails, its credits return to your balance automatically."
+                  ]
+                },
+                {
+                  "h2": "Who It Is For",
+                  "paras": [
+                    "**Ecommerce and D2C brands** testing new creative every week: each variant costs credits instead of a shoot day.",
+                    "**Dropshippers and small businesses** that need a product explainer without booking a crew: one photo is enough to start.",
+                    "**Marketers and agencies** that want \"waiting on assets\" off the media-plan critical path: the same product can be re-cut for TikTok, Reels, Shorts, and feed placements.",
+                    "**Content creators, apps and SaaS teams** shipping launch videos and feature demos with a consistent presenter and voice."
+                  ]
+                },
+                {
+                  "h2": "Why Not a Traditional Shoot",
+                  "paras": [
+                    "Producing a UGC-style product video has traditionally meant booking a shoot, casting a creator, and waiting on editing. AIVideosUGC compresses that into opening a link, uploading an image, or writing a sentence — the difference between a campaign that waits on assets and one that ships on schedule.",
+                    "\"AI UGC video should start with a link, not a six-month pilot,\" says Naruebet Nakphong, founder of BLYDEY INC. Start with what you have, check the cost, and post the first ad this week."
+                  ]
+                }
+              ],
+              "checklist": [
+                "Start from what you already have — a product page, one clear photo, or a one-sentence brief.",
+                "Check the credit cost before the job starts; a failed job returns its credits automatically."
+              ],
+              "related": [
+                {
+                  "href": "/templates?kind=video",
+                  "text": "Every finished example ships with the full prompt behind it.",
+                  "label": "Browse every video template"
+                },
+                {
+                  "href": "/blog/ai-ugc-video-ads-guide",
+                  "text": "Write the prompt part by part against a real example.",
+                  "label": "AI Video Tutorial: Product Ad Prompts"
+                },
+                {
+                  "href": "/blog/ai-video-review-checklist",
+                  "text": "Plan the storyboard before you write the prompt.",
+                  "label": "Text to Video Tutorial: Brief the AI Video Agent"
+                }
+              ],
+              "relatedLinks": [
+                {
+                  "href": "/templates?kind=video",
+                  "text": "Every finished example ships with the full prompt behind it.",
+                  "label": "Browse every video template"
+                },
+                {
+                  "href": "/blog/ai-ugc-video-ads-guide",
+                  "text": "Write the prompt part by part against a real example.",
+                  "label": "AI Video Tutorial: Product Ad Prompts"
+                }
+              ],
+              "faq": [
+                {
+                  "q": "Do I need a camera crew or an actor?",
+                  "a": "No. A product link, one product photo, or a written brief is enough. The workspace writes the script, casts an AI presenter, adds the voice and captions, and exports the finished file."
+                },
+                {
+                  "q": "What can I start from?",
+                  "a": "Three inputs: a public product page (URL to Video), a product photo (Image to Video), or a creative brief (Text to Video). Everything else is chosen in the workspace."
+                },
+                {
+                  "q": "How much does a video cost?",
+                  "a": "A 15-second video costs 20 credits and a 30-second video costs 40. Package credits are 200 for $24, 500 for $59, or 1,200 for $129 per month of the term. The cost is shown before every job, and a failed job returns its credits."
+                },
+                {
+                  "q": "Does the file carry a watermark?",
+                  "a": "No. Downloads are watermark-free and can be used in paid ads, on your store, or in client work, subject to each platform's current rules."
+                },
+                {
+                  "q": "Is there a free trial?",
+                  "a": "Yes. New users can start with a free trial and a one-time $1 first product video. Creators who post with #AIVideosUGC can also apply for free credits."
+                }
+              ],
+              "tryBox": {
+                "title": "Try Video Ads",
+                "text": "Short ads for TikTok, Reels and Shorts. Upload one product photo and see the cost before the job starts.",
+                "href": "/app/create/tool/video-ads#step-video",
+                "label": "Make my video",
+                "more": {
+                  "label": "How Video Ads works",
+                  "href": "/ai-video-generation/video-ads"
+                }
+              },
+              "ctaTitle": "Start With a Link",
+              "ctaLead": "Paste a product page, add a photo, or write one sentence — and see the credit cost before anything renders."
+            }
+          }
+        }
+      }
+    }
+  },
+  "hub": {
+    "slug": "/blog",
+    "card": {
+      "href": "/blog/from-product-link-to-finished-ad",
+      "image": {
+        "alt": "Adult South Asian man in his thirties with glasses and a short beard, wearing a beige cardigan, speaks to camera in a warm living room.",
+        "src": "/ai-image-generation/actors/dev-640.webp",
+        "width": 640,
+        "height": 1138
+      },
+      "title": "From Product Link to Finished Ad, in Minutes",
+      "minutes": 6,
+      "summary": "Three inputs, one workspace: what happens between a product link and a finished creator-style ad, and what each clip costs."
+    }
+  }
+}
