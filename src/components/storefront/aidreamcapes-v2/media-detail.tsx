@@ -18,6 +18,7 @@ import type { V2Resolvers } from "./types";
 import type { V2Company } from "./company";
 import type { AidreamcapesFooterArticle } from "./latest-articles";
 import { AidreamcapesV2Shell, type AidreamcapesHeaderCustomer } from "./shell";
+import { MediaDetailPlay } from "./media-detail-play";
 import { MediaDetailPromptCopy } from "./media-detail-prompt-copy";
 
 // Public media detail page. Complete server-rendered HTML: the card, its media,
@@ -27,28 +28,22 @@ import { MediaDetailPromptCopy } from "./media-detail-prompt-copy";
 function MediaFigure({ detail, r }: { detail: MediaDetail; r: V2Resolvers }) {
   const { card } = detail;
   if (card.video) {
-    // The detail page is the template/prompt entry, not the watch page. It
-    // shows the poster and links to /watch/<slug>, which owns the player and
-    // the VideoObject. Keeping a <video> here made Google report the video as
-    // "not on a watch page" even though this page is not a watch page.
+    // The detail page is the template/prompt entry, not the watch page. The
+    // SSR markup keeps only the poster (a crawlable <video> here made Google
+    // report the video as "not on a watch page"); the player mounts on the
+    // first click, and /watch/<slug> remains the indexable video page.
     const watchPath = mediaWatchPath("video", detail.slug);
     return (
       <figure className="v-detail-media">
-        <a
-          aria-label={`Watch ${card.label}`}
-          className="v-detail-watch"
-          href={watchPath ? r.href(watchPath) : r.href(detail.path)}
-        >
-          <img
-            alt={card.video.poster?.alt || card.image.alt || card.label}
-            decoding="async"
-            height={card.video.height ?? card.image.h}
-            loading="eager"
-            src={r.asset(card.video.poster?.src ?? card.image.src)}
-            width={card.video.width ?? card.image.w}
-          />
-          <span className="v-detail-watch-cta">▶ Watch full video</span>
-        </a>
+        <MediaDetailPlay
+          label={card.label}
+          posterAlt={card.video.poster?.alt || card.image.alt || card.label}
+          posterSrc={r.asset(card.video.poster?.src ?? card.image.src)}
+          videoSrc={r.asset(card.video.src)}
+          watchHref={watchPath ? r.href(watchPath) : undefined}
+          width={card.video.width ?? card.image.w}
+          height={card.video.height ?? card.image.h}
+        />
       </figure>
     );
   }
@@ -211,9 +206,14 @@ export function AidreamcapesMediaDetailPage({ detail, navigation, r, company, ar
 #media-detail .v-detail{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;align-items:start;padding:24px 0 8px}
 #media-detail .v-detail-media{margin:0;border-radius:18px;overflow:hidden;background:#0d1220;box-shadow:0 18px 60px rgba(10,16,32,.18)}
 #media-detail .v-detail-media img,#media-detail .v-detail-media video{display:block;width:100%;height:auto}
-#media-detail .v-detail-watch{display:block;position:relative;text-decoration:none;color:inherit}
-#media-detail .v-detail-watch-cta{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(8,12,24,.78);color:#fff;font-size:13px;font-weight:700;backdrop-filter:blur(8px)}
-#media-detail .v-detail-watch:hover .v-detail-watch-cta{background:rgba(8,12,24,.92)}
+#media-detail .v-detail-play{position:relative}
+#media-detail .v-detail-play-poster{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
+#media-detail .v-detail-play-poster img{transition:opacity .18s ease}
+#media-detail .v-detail-play-poster:hover img{opacity:.92}
+#media-detail .v-detail-play-cta{position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:rgba(8,12,24,.78);color:#fff;font-size:13px;font-weight:700;backdrop-filter:blur(8px)}
+#media-detail .v-detail-play-poster:hover .v-detail-play-cta{background:rgba(8,12,24,.92)}
+#media-detail .v-detail-play-link{display:inline-flex;align-items:center;gap:6px;margin:10px 2px 0;font-size:13px;font-weight:600;color:var(--purple)}
+#media-detail .v-detail-play-link:hover{text-decoration:underline;text-underline-offset:3px}
 #media-detail .v-detail-media-col{display:grid;gap:18px;align-content:start;min-width:0}
 #media-detail .v-detail-refs{padding:16px 18px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
 #media-detail .v-detail-refs-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
