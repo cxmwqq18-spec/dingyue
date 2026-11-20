@@ -1,0 +1,327 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T10:17:02.405Z",
+  "applying": true,
+  "editCount": 52,
+  "pages": [
+    "/guides/how-do-ai-video",
+    "/guides/how-do-image-to-video",
+    "/guides/how-do-text-to-video",
+    "/guides/how-do-ai-avatar",
+    "/guides"
+  ],
+  "edits": [
+    {
+      "slug": "/guides",
+      "path": "hub/howTos0/image",
+      "beforeHash": "2692afac60e5cd658adf4ce7eb016564730c98d835ce06e07541cb96268f97e9",
+      "afterHash": "f882bd313cdd2ed845ff15baa8af3a0487936bc1bd784c1c39e6de8ce84a6a07"
+    },
+    {
+      "slug": "/guides",
+      "path": "hub/howTos1/image",
+      "beforeHash": "f1f66b21b5b0744a2f69d8fae7056ab5ca8ab0afdbe1f1797a9408551d21926c",
+      "afterHash": "76c5235ca290ee3838da7b76fc8d59ab8cd234180dd9103810ce914cb97093b0"
+    },
+    {
+      "slug": "/guides",
+      "path": "hub/howTos4/image",
+      "beforeHash": "d74517048270459cfe0d5cd7c52a08378e505624a31e6cee4cacf6b67eebf9c0",
+      "afterHash": "6a5e1f077574df2215a19aa26f8c539934ee0015dd99bbb0bb8a16f7edb377a0"
+    },
+    {
+      "slug": "/guides",
+      "path": "hub/howTos7/image",
+      "beforeHash": "93a5b9ece2ee2addf489cd3571aed861a23dae5a6eada9d4b52a3fbcfd728b0c",
+      "afterHash": "73a428e896a97d4a5e73d383565c10503900cc6f55cf046f696d5cc6b7646fad"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/intro/1",
+      "beforeHash": "725bc8ccddae39aaa8319f102700290f5cee8e116eb347134dd698a29ba00a4f",
+      "afterHash": "9475f8e965ff3b9f9c0487732639e1a70dd5ccbad0122285f4eb69b6ad105308"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/demo/title",
+      "beforeHash": "c0b6cd4a388a79e39eb534cc966fc6fdca14642492f85d12701da705af795321",
+      "afterHash": "d42f5ef27b40155071fb13c1d1a79c7cb638238d2105e0a1278f2f12c72809d2"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/demo/lead",
+      "beforeHash": "1fd60e29b0542fafd98b97c9c6de130714ea7e52a31273deab408cecebc71f3b",
+      "afterHash": "256edec8f8aefc3122937b19188117883d2dd036ef3b0bebcbe37829e238fbc1"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/demo/frames/0/tag",
+      "beforeHash": "5df56cd79005fe016f973a367ced317dd99257e8cfd8bd4390e43f27c981bbd5",
+      "afterHash": "e9ce542229672a9cc1cbc78438e4102b6225e6775147270e04186537f7e69abb"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/demo/frames",
+      "beforeHash": "f3f22eddacc31cac6d446cf84b2d5cfdb961c3a2914289b27f443289a838a0e9",
+      "afterHash": "5226c2280337bcd4e07fc7849089a1552a49770cabe951d3abd92b294fd796b6"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/steps/2/body",
+      "beforeHash": "cc09c7daaeb1027fa51aa1cbd4910fd680b388e7b51fa2287b9fcb7a0d45995a",
+      "afterHash": "e99f61d165744a073987d4035fbe02087dcf6467599c22904bfcf2cdae6e1b9e"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/tip/body",
+      "beforeHash": "95df701cab745a1c0b7b01efbe5b17910660e08e7b507fcc23cafe8776124b99",
+      "afterHash": "04f94aea7deadae3950952a0c13c7cc9d4112dcf69e7e6ba07f6b4971a6c1b24"
+    },
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "path": "howto/faq/1",
+      "beforeHash": "0731a51931c4ea4145dde377b10d466c3847aae6d16b1be70870a2e3eeec436f",
+      "afterHash": "75736fe8ab994270a77ebe39e0da466560a06232121eabd37a64b04f9ca26227"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/intro/1",
+      "beforeHash": "6f6c4778dcf62fa62a2d33fb1b51e683e0b561955a9f05ccde9c0ff25dedbbdc",
+      "afterHash": "319c79e6b2233ac7a6260d44b004db1cea797bc97ac9ea5b07ffdad6ca113967"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/title",
+      "beforeHash": "c1ed78bc3a1b1356f2b2212cee66396632d06473483b122c67aa6cb385d31be7",
+      "afterHash": "8e8707b7aa83975780a1ae0fe4f9813a61307fa220ebf0956210fe64d9386c69"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/lead",
+      "beforeHash": "e7cd1013d6b3527384eba3a303aeb660f691d46404cc7945db4c6047bf74f3a9",
+      "afterHash": "6fea02929b2e21d83358b50785e29a3fe304b3ebc4604b8c6b1f84e8cc75bad0"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/frames/0/tag",
+      "beforeHash": "cf1fbb72102cf92c1537de8d6fbcb6542ec142625712e221044f7e4910bd03b9",
+      "afterHash": "6a425dba7818f0f2fe685a3945326911c5b5530872657a349dbb05b5638fd0d1"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/frames/0/image",
+      "beforeHash": "a83bd76745445bea329a3bc2c3107b380cd1f2efd73a96debe493c2698336973",
+      "afterHash": "76c5235ca290ee3838da7b76fc8d59ab8cd234180dd9103810ce914cb97093b0"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/frames/1/tag",
+      "beforeHash": "6b7b9a786ddc35216ec9d6a637e0e0b3a82c056fec9f5c8d1417847b5ec8fb94",
+      "afterHash": "793345d256f08a77bf0812c06019f876b3b5d3ddb3a4aa04c716b0c8dc5d5b90"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/frames/1/video",
+      "beforeHash": "d73da2b28548edf99c860842fdc1fb0786558e5f440e7defd07c9e15a8c5e26f",
+      "afterHash": "d36a5b59c956665dbcd28f4e0bcbe5573c376e267f7d74ef1841416e3d188189"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/demo/prompt",
+      "beforeHash": "4e11f6fc982bdc86736ba5ec2579298fe05cc1de9bbb986e08710397e0c607e3",
+      "afterHash": "5bd1a584205d489b8eb37238e4c176d301eb3d7bf689e4d14e0923084eb16dd4"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/steps/2/body",
+      "beforeHash": "4f68d737e936c54bcf9989e40d0fdf4b4c227b46c03ae7cb9f1c7f759a7f53dd",
+      "afterHash": "fc792f0478732e7ad604402ee5374b2a84d515fbf1f0cdcaa977049c535f9441"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/tip",
+      "beforeHash": "112c36db3e3d49ea9a42f8874b8a70788cd98f6e0a02bd13e766a029d564d8c9",
+      "afterHash": "f44de8d6291b54bb3caa789dbba3430ecb4f87208b96287c40707afa1eee43c5"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "path": "howto/faq/2",
+      "beforeHash": "9e5dac334f3864374d06be5dbe6b4b27b5c56974908a7ad4739b4866d5762c3a",
+      "afterHash": "a89eb38fa9fb0cdd34808580bae06d4459198e8543fa01972a9ced74ff513afa"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/intro/0",
+      "beforeHash": "c3c7f2ffe725cf615b2a14e202654d259d911bb434c54a2ca2ef4e823c0fddfd",
+      "afterHash": "37341b3d68d9f2785c8254edba4742ff478aa36fd020037a393795090ee55652"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/intro/1",
+      "beforeHash": "2a68474525580d00aa8e7fbd558b6359a4230dfda83663ebce23e78bc513bb0c",
+      "afterHash": "3066c4e1fef1288221a3159467a35502478bb3778f7bff21f86ad5996c8002aa"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/image",
+      "beforeHash": "6940d3f54eeed707f8c78bc8999146ca2a0058c399e245515bc732b4e4fedd27",
+      "afterHash": "37493442ceab6686d714e8f485718fbf90a834ac0209e2a0e0248e5b7cba4dac"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/title",
+      "beforeHash": "3482f00bcb007f21ae595e529b7c7146b9516719659eec1b63246b38b2cf0ed0",
+      "afterHash": "b88825476dc3d671a30c21d362a92b8ad183c2a6384cdd0d4b6e3e9cad068d17"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/lead",
+      "beforeHash": "1a43c72505f2cdf3b35585aa88692a96bc6a943c8266c3a3e0b179e187e5c6c1",
+      "afterHash": "1d1a0ed4104abb77e962839972415aa0c30b14a5ba6caf70bdbaac2fa0fc6ddb"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/frames/0/tag",
+      "beforeHash": "4ee48c39497563144622ce8e13a144e251b7d92a253f31d3aebc7d5e41c4474b",
+      "afterHash": "9ed9cd7ef3a0c68a94709371b8ea9e2693b64bad3c27f3003a2ee684ed12c098"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/frames/0/image",
+      "beforeHash": "f9f83483e11d68a67daa047f343e597275cd5d559435a81f4b57f80b6fc7963f",
+      "afterHash": "4c05df3661e9b5db0470111ea62282bfd9acbb7abde19bd0d0fc6379323670a5"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/frames/1/tag",
+      "beforeHash": "2774c11be74d24c1266adbcc2adb1fdbf259f05ec1a13c0ec0629fe982a48ea7",
+      "afterHash": "793345d256f08a77bf0812c06019f876b3b5d3ddb3a4aa04c716b0c8dc5d5b90"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/frames/1/video",
+      "beforeHash": "24d74dbc63356485aa6e53c81e4d4bc18ed2908687726f75ee20abf6507a5cd1",
+      "afterHash": "8abec4f526d8ab12b776817fe200c14b17005d02eef68c2355cd6edce88d5b99"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/demo/prompt",
+      "beforeHash": "99171e7dc30a67a24015583029caef608b63c46ec2445ef646c9f424fa9074e9",
+      "afterHash": "7dae44c57d8bab10975ae78ab94629ae91a1e4fb30b5f21572677815998a13bb"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/steps/1/body",
+      "beforeHash": "6d73628a507525a9cfb6095a166bf5c10ebde503df2ac44dcef7f83d51943bba",
+      "afterHash": "811483764ad38f78fcc4467c37ab9c04205b87f8a386d6b67355a3ab7cc8e722"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/steps/2/body",
+      "beforeHash": "33fa4c118f6f38b6e7d134a6a5d8d647f7ab48f2782c24ec6ea6353c7743868a",
+      "afterHash": "575168dc01d09431e10ca00eb628def3f221bb4179f769fa8c8242a737f63ab0"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/steps/4/body",
+      "beforeHash": "c6c5937d5a5bfa8990a51be78a5bb91c7db66f7e8556e586e0a82c3a5b18ccdb",
+      "afterHash": "9c354dd70a5fd8935d2b7d6bfc5619c564ea460ff52758da18e03eb83908e11e"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "howto/checklist/4",
+      "beforeHash": "3adb4a03571832e33ad92c70b5b627f4577c6e9f49740fe814cf48d44365e525",
+      "afterHash": "d9fd4b90ebee157229314f91aca7382cb011a4c6e658b4fe1602bdb20ddb649a"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "seo/ogImage",
+      "beforeHash": "dcbc020045d56e34417cf2308a0d1dc51f9815a24f11da2f9a015fcef741851b",
+      "afterHash": "b4d79c07ace190f96edea2b0a2c1d4a9861567ae9abd77d8cbd182bf1da2fd3e"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "path": "seo/jsonLd graph image",
+      "beforeHash": "9696e32c556e55cfbf5a6bd3a3bc281574828cc16c8d3b3d9c345fe290e58243",
+      "afterHash": "1eb5b8fd0899ff615ffb8098508a5facb17e81d037ba12e7c086a2425dc5b9ad"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/intro/1",
+      "beforeHash": "e2b78948683f560622dfda5b5ca742037e8d0dd36039261e3838ffde0c7456c6",
+      "afterHash": "d19756dfe45bdb17a4caacfb223e8652772005f854a02c827c7306644c7c92ad"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/title",
+      "beforeHash": "ca8dc81aba5017cdb881c662a16f8a5e57ef85b5804bf311714428276ada4c46",
+      "afterHash": "5b048e36a8d413a0825e385c0015e538e48ce0d61d601602e48cb70e5cf13bd3"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/lead",
+      "beforeHash": "37c9b4ed27352b9287a1a326d0f755b103d77afa34e33b400ba43eeaadae3d2e",
+      "afterHash": "678b3ab871355138a9361d5831d82df152448955a1bc3ec3e31d7dcfcef41b36"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/panel/input",
+      "beforeHash": "d08c2ba315c95d459e7bebce95e54523f8eaa1f9a2977d53e927cc68103e1c3c",
+      "afterHash": "e19948e198ec8703de17d302f695efbb830d7098e8c2a5238ca96ee8949e9c4b"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/result/frames/0/tag",
+      "beforeHash": "2774c11be74d24c1266adbcc2adb1fdbf259f05ec1a13c0ec0629fe982a48ea7",
+      "afterHash": "c267ceb9744d02a70777e9b16127b14de569a413d47ccd3eecdff6c1a57127df"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/result/frames/0/video",
+      "beforeHash": "b331055447f8c4c6d9e8322b042a0dd7d0b7a17dd7b21ee3a4225187f10c2f4d",
+      "afterHash": "a5dbb365af2fbeb3b3a710247d65d9627ebcce76d4d519946de653af48aae7f8"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/demo/result/prompt",
+      "beforeHash": "b7a7329ee09baec8680ef4957fdbf2455fe0f23b0ddfd4d2c4004d716f30146c",
+      "afterHash": "eb4f70a0f09cad30dd7607e009750d0643ff50e6b1bfbdbdccdcead50059102d"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/steps/1/body",
+      "beforeHash": "5758e550c43ffd3734512837671e731e39d6c7758e800a306015d633c56b00b4",
+      "afterHash": "fcc195d0e46cd5912761c7751246ae6ce4f456b24f9e4cae528c3103f3a0a7a7"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/steps/5/body",
+      "beforeHash": "36a7999af29a8952d36b5cb0e28fcaf52d6b7479507b1e94d69dbe8926634759",
+      "afterHash": "97711064091522aac59679fa30e9ac84c39dbb38c9175fd3db2846fe90fab550"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/sections/0/flow/items/0/body",
+      "beforeHash": "c05bc99a4aa1a4e62ca3f0b9530b1be14f435e02b77d4436b1a664e80d8d148e",
+      "afterHash": "32c3ed972035c5b23e76775b14907b4f31ab76b5ee79c1c37de4640412e8c6de"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/sections/0/flow/items/1/body",
+      "beforeHash": "062a000acc83ee010bfbbac58c947da41bc38013a0a94b077a0d7c401708579d",
+      "afterHash": "9e5f9c984496f8b79903d1d843fcb45fac5f4d88cab5ea287fe798afb96a3d18"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/sections/0/paras/0",
+      "beforeHash": "116ff64c3e12d9ba8e82054ba1f36273e595defa00f3635b465939601cc937c3",
+      "afterHash": "473ff7638c326a60107fd3db6eda571fea421a6e6f89f34066c3b0f12e9ed2a6"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "path": "howto/faq/2",
+      "beforeHash": "24f4d2ce950378adce5c4f86778c56cfe1a69e4b41661120f90caa51e10e75ab",
+      "afterHash": "13034adb2fa6f4880ef2910d0905624f664d249c46c0f6a21399d2b21aa3d74d"
+    }
+  ]
+}

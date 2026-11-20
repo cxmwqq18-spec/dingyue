@@ -1,0 +1,42 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T10:19:18.092Z",
+  "applying": true,
+  "editCount": 4,
+  "pages": [
+    "/guides/how-do-ai-video",
+    "/guides/how-do-image-to-video",
+    "/guides/how-do-text-to-video",
+    "/guides/how-do-ai-avatar"
+  ],
+  "edits": [
+    {
+      "slug": "/guides/how-do-ai-avatar",
+      "stepsBeforeHash": "ca68d1bc7cdd6fe9c0b8bc57eb0df5f35a9337560b29bc431e8ae242ac367948",
+      "stepsAfterHash": "0f036b538816a1615796160ce58c3f0411ebf9ec269f1623b7f9208f9d7ecb18",
+      "faqBeforeHash": "7da95bd7f5b607328d1ee70ad163b836057b2aa6f86cfcd11aacaf121d416689",
+      "faqAfterHash": "2b5e8155bc087fc8c9361f07e5b0200ac3974e4e83603334a2234be8223b8a37"
+    },
+    {
+      "slug": "/guides/how-do-ai-video",
+      "stepsBeforeHash": "10bdaa929b885df1e65906d35020ff3b0187764383b36c6c158ce3d3a0fe2ec1",
+      "stepsAfterHash": "018ee181a0ff69e5e55885033083121713abb61dd713fc17ceee095e5c94b287",
+      "faqBeforeHash": "249a650081bb3ac455cbeae6160a526386be08e09508524b9f54c864c2ce523a",
+      "faqAfterHash": "419abb8821820a6f16a717da29b0a460e7eafdbd53d5d27c5fec0f6145fee298"
+    },
+    {
+      "slug": "/guides/how-do-image-to-video",
+      "stepsBeforeHash": "6a486281d83b8d4ce6a8e5c41e4bdad652151d66c60189c52393080a48d2b815",
+      "stepsAfterHash": "cc72a486dcd5fa98a4781ed1dd3380972e1dfc71552d237008085ac619c5dba2",
+      "faqBeforeHash": "f6f8fdd80068b1af43e46a47f3ac59227978964875822c2276248330b75e04da",
+      "faqAfterHash": "f6f8fdd80068b1af43e46a47f3ac59227978964875822c2276248330b75e04da"
+    },
+    {
+      "slug": "/guides/how-do-text-to-video",
+      "stepsBeforeHash": "67d2dd8f9b67458918314e0ad61f52d83abcd44ed277e17f440b255250f764d0",
+      "stepsAfterHash": "e0f0c1bfb7b6b575fbe5bc5430858069d5ab799396e19182209c428aa0d1beef",
+      "faqBeforeHash": "0024a25c9c1167f9fd9632727b703797f3555e79657c877e8665b08eb6d521ad",
+      "faqAfterHash": "4667139d87259e9d828a8502c0f2e517c371b430fc7b5900404aeab8da066087"
+    }
+  ]
+}
