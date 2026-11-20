@@ -1,0 +1,97 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T05:18:40.350Z",
+  "applying": true,
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_seo_cluster_16c14c5d039ab2378b22aa5e",
+      "slug": "/blog/ai-product-photography-guide",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph",
+      "baseUpdatedAt": "2026-11-12T15:18:11.096Z",
+      "baseGraphHash": "0be402da0138613e0e014802640f8d0bf25cef3c03a62d9768da0f6e0018a44d",
+      "nextGraphHash": "22db954fd30ad12b5740257e8f93fd477fd96e252bea8389ddfe52549fc81a8b",
+      "removed": [
+        {
+          "name": "Green Notebook Desk Ritual — AIVideosUGC example",
+          "contentUrl": "/ai-video-generation/green-notebook-desk-ritual.mp4",
+          "uploadDate": "2026-11-01",
+          "duration": "PT30S"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_seo_cluster_e34b58e6fbfcce51b117243c",
+      "slug": "/blog/ai-ugc-video-ads-guide",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph",
+      "baseUpdatedAt": "2026-11-12T15:18:11.078Z",
+      "baseGraphHash": "3ed1367779aeb45d9ed880dc1815c05ac814d3f943a548443c50323c38fecb90",
+      "nextGraphHash": "1206e349a09297cc2c52b879ccddd7c8d969f68209fbf24a6f20ce8b2be36253",
+      "removed": [
+        {
+          "name": "Black Milk Frother Morning Demo — AIVideosUGC example",
+          "contentUrl": "/ai-video-generation/black-milk-frother-morning-demo.mp4",
+          "uploadDate": "2026-11-01",
+          "duration": "PT29S"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_seo_cluster_3da30b1f28d0f4203f0d2f5b",
+      "slug": "/blog/ai-video-review-checklist",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph",
+      "baseUpdatedAt": "2026-11-12T15:18:11.136Z",
+      "baseGraphHash": "220efe76f6ca2b5250e3595722c27c7afc1a920544d0188299cf10c829d08fa4",
+      "nextGraphHash": "d78c35aaefac7f0e7ebba35a44e5ef2338afb97dc0bbda17833b3a49b0ef030b",
+      "removed": [
+        {
+          "name": "Magnetic Power Bank Snap-On Unboxing — AIVideosUGC example",
+          "contentUrl": "/ai-video-generation/magnetic-power-bank-snap-on-unboxing.mp4",
+          "uploadDate": "2026-11-01",
+          "duration": "PT30S"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_v2_blog_model_photos_without_a_photoshoot",
+      "slug": "/blog/model-photos-without-a-photoshoot",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph",
+      "baseUpdatedAt": "2026-11-12T15:18:11.146Z",
+      "baseGraphHash": "634253bd40a477a742aa67b35cea308fc1f645bc6c6a6aa0792b36767a0cd827",
+      "nextGraphHash": "c632a00c4d008cae9a7f4bdadbac1b9ffa66e1111270d7537201ddab07f31a84",
+      "removed": [
+        {
+          "name": "Washed Graphic Tee Fit Check — AIVideosUGC example",
+          "contentUrl": "/ai-video-generation/washed-graphic-tee-fit-check.mp4",
+          "uploadDate": "2026-11-01",
+          "duration": "PT30S"
+        }
+      ]
+    },
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_v2_blog_unboxing_videos_for_launches",
+      "slug": "/blog/unboxing-videos-for-launches",
+      "field": "contentJson",
+      "path": "/seo/jsonLd/@graph",
+      "baseUpdatedAt": "2026-11-12T15:18:11.126Z",
+      "baseGraphHash": "0d3cbb289b73347595c2f6e9e1beac4f99ba33fe0d01c42ece1a1e2a54da8f0a",
+      "nextGraphHash": "e0c7dfcf61706d1bdfafdf08b9966b4b6a9d6a6bc29c184543eaeafb6096204e",
+      "removed": [
+        {
+          "name": "Sealed Box Order Unboxing — AIVideosUGC example",
+          "contentUrl": "/ai-video-generation/sealed-box-order-unboxing.mp4",
+          "uploadDate": "2026-11-01",
+          "duration": "PT30S"
+        }
+      ]
+    }
+  ]
+}
