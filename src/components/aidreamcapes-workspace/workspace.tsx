@@ -2781,6 +2781,18 @@ function humanError(code?: string) {
   if (code === "workspace_render_failed") return "The final assembly didn't finish. Your generated clips are saved — open the task and retry the render.";
   if (code.includes("local_worker_restarted") || code.includes("local_worker_recovered")) return "Generation was interrupted by a server restart. Please try again.";
   if (code === "workspace_clip_retention_expired") return "This clip was deleted after its 15-day retention period ended. Generate the shot again to create a new version.";
+  if (code.startsWith("workspace_shot_failed")) {
+    const reason = code.replace(/^workspace_shot_failed:?\s*/, "").trim();
+    if (reason.includes("provider_rejected_reference")) {
+      const detail = reason.split(":").slice(2).join(":").trim();
+      return `The provider rejected this shot's reference image during content review.${detail ? ` ${detail}` : ""} Choose another safe image and try again.`;
+    }
+    return reason ? `This shot failed: ${reason}` : "This shot failed. Generate it again.";
+  }
+  if (code.includes("provider_rejected_reference")) {
+    const detail = code.split(":").slice(2).join(":").trim();
+    return `The provider rejected this shot's reference image during content review.${detail ? ` ${detail}` : ""} Choose another safe image and try again.`;
+  }
   if (/ai_provider_[a-z_]*timeout/.test(code)) return "The video provider did not respond in time. Please retry this shot.";
   if (code.includes("内容审核未通过") || /content (?:review|moderation)|sensitive content|policy violation/i.test(code)) {
     return "This shot was blocked by the video provider's content review. The scene description or a reference image/video was rejected. Edit the description, remove or replace the flagged reference, then submit the shot again.";

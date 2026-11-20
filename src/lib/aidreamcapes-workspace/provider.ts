@@ -660,7 +660,19 @@ export async function refreshShotGeneration(args: { siteId: string; customerId: 
   const job = await prisma.generationJob.findFirst({ where: { id: args.generationJobId, siteId: args.siteId, customerId: args.customerId } });
   if (!job) throw new WorkspaceError("workspace_generation_not_found", 404);
   const result = job.resultJson as Record<string, unknown> | null;
-  if (job.status === "failed") return { status: "fail" as const, error: typeof result?.error === "string" ? result.error : "workspace_clip_generation_failed" };
+  if (job.status === "failed") {
+    // Keep the provider's own reason. The platform layer classifies the
+    // upstream rejection (for example a reference image that failed content
+    // review) and writes a customer-readable message into costTrace; the shot
+    // must not fall back to the generic "no result" code and hide it.
+    const failure = (result?.costTrace as Record<string, unknown> | undefined)?.providerFailure as Record<string, unknown> | undefined;
+    const code = typeof failure?.code === "string" ? failure.code.trim() : "";
+    const message = typeof failure?.customerMessage === "string" ? failure.customerMessage.trim() : "";
+    if (code || message) {
+      return { status: "fail" as const, error: ["ai_provider_video_failed", code, message].filter(Boolean).join(": ") };
+    }
+    return { status: "fail" as const, error: typeof result?.error === "string" ? result.error : "workspace_clip_generation_failed" };
+  }
   if (job.status !== "succeeded") return { status: job.status === "running" ? "run" as const : "pending" as const };
   const asset = await prisma.assetUpload.findFirst({ where: { jobId: job.id, siteId: args.siteId, customerId: args.customerId, role: "output", mimeType: { startsWith: "video/" }, deletedAt: null }, select: { id: true } });
   if (!asset) return { status: "fail" as const, error: "workspace_clip_output_missing" };

@@ -137,7 +137,13 @@ export async function renderTaskVideo(args: { task: WorkspaceTask; onProgress?: 
   // Resolve only the selected, current versions. Never silently substitute older successful versions.
   const clips = task.storyboard.shots.map((shot) => {
     const version = shot.versions.find((version) => version.vid === shot.curVer);
-    if (!version || version.status !== "done" || !version.clipUrl) throw new WorkspaceError("workspace_shot_not_ready", 409, { shotId: shot.shotId });
+    if (!version || version.status !== "done" || !version.clipUrl) {
+      // Never mask a known provider failure behind the generic "generate the
+      // shot first" message: the failed version carries the real reason (for
+      // example a reference image rejected by content review).
+      if (version?.status === "fail" && version.error) throw new WorkspaceError(`workspace_shot_failed: ${version.error}`, 409, { shotId: shot.shotId });
+      throw new WorkspaceError("workspace_shot_not_ready", 409, { shotId: shot.shotId });
+    }
     if (isWorkspaceStabilityMockMode()) {
       if ((version as typeof version & { mock?: boolean }).mock !== true || version.modelId !== "aivideosugc-stability-mock" ||
           version.clipUrl !== mockShotClipUrl(task, shot.shotId, version.vid)) {
