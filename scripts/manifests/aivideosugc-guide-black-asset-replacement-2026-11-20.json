@@ -1,0 +1,56 @@
+{
+  "siteId": "site_aidreamcapes",
+  "generatedAt": "2026-11-20T06:52:29.158Z",
+  "applying": true,
+  "operations": [
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_v2_guide_ad_sizes_by_platform",
+      "slug": "/guides/ad-sizes-by-platform",
+      "field": "contentJson",
+      "changes": [
+        {
+          "path": "/sections/v2_main/settings/data/sections/8/alt",
+          "baseHash": "b8dcef6152765116a9c414caba9cf3543c7e8a1e6c5c3f5a249f03bcca7de00e",
+          "nextHash": "1f0356b2903e0d0f6a83a35b3039b412eb0f0061d4dada9be30952eb127d11d6"
+        },
+        {
+          "path": "/sections/v2_main/settings/data/sections/8/img",
+          "baseHash": "a4776d9ad556e1b3a9e2596e30fbc1452769dfa3a92bf3231203e18667bc4d9f",
+          "nextHash": "c142e2e48a1c242ac0549fa79a6cdd0e9123a30735827005f402d9387ddb6d96"
+        },
+        {
+          "path": "/mediaManifest/5",
+          "baseHash": "be17a5599490f6a48594b08001381d608896590af61da907a1134eea16370def",
+          "nextHash": "0a747811f9b7d6dd2eb1c09d5566512ea3fa2e7d0f2c0f193105e9c3429e1d95"
+        }
+      ],
+      "removedAsset": {
+        "src": "/ai-image-generation/fx05-guide-square-640.webp",
+        "alt": "Adult Black man with short hair holds a plain white product centered in a square feed composition."
+      }
+    },
+    {
+      "entityType": "live_page",
+      "id": "aidreamcapes_v2_blog_model_photos_without_a_photoshoot",
+      "slug": "/blog/model-photos-without-a-photoshoot",
+      "field": "contentJson",
+      "changes": [
+        {
+          "path": "/sections/v2_main/settings/data/sections/7/img",
+          "baseHash": "04fee4ab3b099bba0381e5518b97ca703f2e1c2fc0cc16f5bff22ed83f29be44",
+          "nextHash": "088947c3fbffc33277eb570013dad74deebc3a812f6628bfc2f90b87eec38172"
+        },
+        {
+          "path": "/mediaManifest",
+          "baseHash": "84ee8382726a2c8186447378e69142aa564c9aabae197739072704698b714278",
+          "nextHash": "f3ed05cf744b302f3ecccb12cae0c2220d44cb6afeb96251a2f2d9cc9926318d"
+        }
+      ],
+      "removedAsset": {
+        "src": "/ai-image-generation/fx05-model-setting-640.webp",
+        "alt": "Adult Black woman with short natural hair wearing a plain gray hoodie by a brick wall."
+      }
+    }
+  ]
+}
