@@ -32,10 +32,12 @@ export function assertWorkspaceSite(siteId: string) {
 function assertWritable() {
   if ([process.env.DATABASE_TARGET, process.env.DINGYUE_ENV].some(value => value?.trim().toLowerCase() === "remote-readonly")) throw new WorkspaceError("workspace_database_readonly", 403);
 }
-export async function listTasks(siteId: string, customerId: string, options: { limit?: number; offset?: number; filter?: "subtitle_ready"; query?: string } = {}): Promise<StoredTask[]> {
-  assertWorkspaceSite(siteId);
-  const limit = Math.min(Math.max(Math.trunc(options.limit ?? 100), 1), 100);
-  const offset = Math.max(Math.trunc(options.offset ?? 0), 0);
+/**
+ * The Library pages one screen at a time, so the list request also reports how
+ * many tasks the filter matches. Both queries share one WHERE fragment; the
+ * count is a single indexed aggregate over the same customer/site scope.
+ */
+function taskListScope(options: { filter?: "subtitle_ready"; query?: string } = {}): Prisma.Sql {
   // subtitle_ready keeps the Subtitle Studio pager meaningful: it pages over
   // the finished videos themselves instead of the whole task window, so the
   // studio shows the same complete set on every visit.
@@ -47,8 +49,19 @@ export async function listTasks(siteId: string, customerId: string, options: { l
   const search = rawQuery
     ? Prisma.sql`AND ("data"->>'title' ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`} OR ("data"->'input')::text ILIKE ${`%${rawQuery.replace(/([%_\\])/g, "\\$1")}%`})`
     : Prisma.sql``;
-  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${ready} ${search} ORDER BY "updatedAt" DESC, "id" DESC LIMIT ${limit} OFFSET ${offset}`;
+  return Prisma.sql`${ready} ${search}`;
+}
+export async function listTasks(siteId: string, customerId: string, options: { limit?: number; offset?: number; filter?: "subtitle_ready"; query?: string } = {}): Promise<StoredTask[]> {
+  assertWorkspaceSite(siteId);
+  const limit = Math.min(Math.max(Math.trunc(options.limit ?? 100), 1), 100);
+  const offset = Math.max(Math.trunc(options.offset ?? 0), 0);
+  const rows = await prisma.$queryRaw<Row[]>`SELECT "data", "revision", "createdAt", "updatedAt" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${taskListScope(options)} ORDER BY "updatedAt" DESC, "id" DESC LIMIT ${limit} OFFSET ${offset}`;
   return rows.map(read);
+}
+export async function countTasks(siteId: string, customerId: string, options: { filter?: "subtitle_ready"; query?: string } = {}): Promise<number> {
+  assertWorkspaceSite(siteId);
+  const rows = await prisma.$queryRaw<{ total: bigint }[]>`SELECT count(*)::bigint AS "total" FROM "AidreamcapesVideoTask" WHERE "siteId" = ${AIVIDEOSUGC_SITE_ID} AND "customerId" = ${customerId} ${taskListScope(options)}`;
+  return Number(rows[0]?.total ?? 0);
 }
 export async function getTask(siteId: string, customerId: string, taskId: string): Promise<StoredTask> {
   assertWorkspaceSite(siteId);

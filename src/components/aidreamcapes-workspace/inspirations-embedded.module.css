@@ -183,10 +183,14 @@
 .cardImage {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
+  flex: none;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
   background: #111;
 }
 .cardImage img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;

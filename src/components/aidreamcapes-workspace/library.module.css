@@ -524,3 +524,46 @@
     height: 28px;
   }
 }
+
+/* ---- Poster-first video: the card paints a JPEG; the mp4 mounts on play ---- */
+.stagePoster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+.stagePoster img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.stagePlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.stagePlay > span {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: rgba(12, 9, 22, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.stagePoster:hover .stagePlay > span,
+.stagePoster:focus-visible .stagePlay > span {
+  background: rgba(96, 53, 255, 0.82);
+  transform: scale(1.05);
+}
