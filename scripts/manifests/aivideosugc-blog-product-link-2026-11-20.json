@@ -156,7 +156,7 @@
                 },
                 {
                   "label": "See how it works",
-                  "href": "#how",
+                  "href": "/guides/how-do-url-to-video",
                   "kind": "ghost"
                 }
               ],
@@ -175,7 +175,8 @@
                   "Cuts & captions"
                 ],
                 "cost": "20 credits · 15-second video",
-                "ready": "Ready in minutes"
+                "ready": "Ready in minutes",
+                "href": "/app/create/url-to-video"
               },
               "sections": [
                 {

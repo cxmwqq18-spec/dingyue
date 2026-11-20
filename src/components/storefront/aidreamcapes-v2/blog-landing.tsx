@@ -36,7 +36,7 @@ type LandingData = {
   lead: string;
   ctas: LandingCta[];
   fineprint: string[];
-  console: { url: string; style: string; steps: string[]; cost: string; ready: string };
+  console: { url: string; style: string; steps: string[]; cost: string; ready: string; href?: string };
   sections: LandingSection[];
   founder: { name: string; initials: string; role: string; paras: string[] };
   final: { h2: string; lead: string; ctas: LandingCta[] };
@@ -206,7 +206,7 @@ export function BlogLandingPage({ data, r }: { data: LandingData; r: V2Resolvers
                 <span className="blp-tag">STYLE</span>
                 <span className="blp-url">{data.console.style}</span>
               </div>
-              <button className="blp-gen" type="button">Generate video ad</button>
+              <a className="blp-gen" href={r.href(data.console.href ?? "/app/create/url-to-video")}>Generate video ad</a>
               <div className="blp-steps">
                 {data.console.steps.map((step) => <div className="blp-step" key={step}><b>✓</b>{step}<span className="blp-bar" /></div>)}
               </div>
@@ -287,7 +287,7 @@ const BLP_CSS = `
 .adc2 .blp .blp-field{background:rgba(255,255,255,.04);border:1px solid var(--blp-line);border-radius:12px;padding:13px 15px;font-size:13.5px;color:#c9c9dc;display:flex;align-items:center;gap:10px;margin-bottom:12px;overflow:hidden}
 .adc2 .blp .blp-field .blp-tag{font-size:10.5px;font-weight:800;letter-spacing:.07em;padding:3px 8px;border-radius:6px;background:rgba(124,92,255,.2);color:#c3b3ff;flex-shrink:0}
 .adc2 .blp .blp-field .blp-url{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#9d9db4}
-.adc2 .blp .blp-gen{width:100%;margin:16px 0 18px;padding:13px;border-radius:11px;border:0;background:linear-gradient(135deg,var(--blp-accent),#9b7bff);color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(124,92,255,.36)}
+.adc2 .blp .blp-gen{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;margin:16px 0 18px;padding:13px;border-radius:11px;border:0;background:linear-gradient(135deg,var(--blp-accent),#9b7bff);color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(124,92,255,.36)}
 .adc2 .blp .blp-steps{display:grid;gap:9px;margin-bottom:18px}
 .adc2 .blp .blp-step{display:flex;align-items:center;gap:10px;font-size:13px;color:#bfbfd2}
 .adc2 .blp .blp-step b{width:18px;height:18px;border-radius:50%;background:rgba(34,211,197,.14);color:var(--blp-accent-2);display:grid;place-items:center;font-size:11px;flex-shrink:0}
