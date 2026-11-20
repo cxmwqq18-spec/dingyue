@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { isSpanishStorefrontRequestIdentity } from "@/lib/spanish-storefronts";
 import { storefrontLocaleForRequestIdentity } from "@/lib/storefront-locale";
+import { aidreamcapesV2ThemeCssHref } from "@/components/storefront/aidreamcapes-v2/styles";
 import "./globals.css";
 
 /**
@@ -40,10 +41,19 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     : isSpanishStorefrontRequestIdentity(requestIdentity)
       ? "es"
       : "en";
+  const isAidreamcapesHost = /^(?:www\.)?(?:aivideosugc|aidreamcapes)\.com$/i.test(
+    host.split(",")[0]?.trim().toLowerCase().split(":")[0] ?? ""
+  );
+  const aidreamcapesThemeCssHref = isAidreamcapesHost ? aidreamcapesV2ThemeCssHref() : undefined;
   return (
     <html lang={language} suppressHydrationWarning translate="yes">
       <head>
         <meta httpEquiv="Content-Language" content={language} />
+        {/* The storefront theme stylesheet must be requested with the document:
+          * when it arrives after the first paint, the unstyled shell reflows
+          (measured as CLS on throttled connections). The page still renders
+          the same link; React dedupes it by URL. */}
+        {aidreamcapesThemeCssHref ? <link rel="stylesheet" precedence="high" href={aidreamcapesThemeCssHref} /> : null}
         {/* Fonts are self-hosted subsets of the previous Google Fonts css2
           response (latin and latin-ext only; the storefront copy is English,
           and Spanish accents sit inside the latin range). Same-origin fonts
