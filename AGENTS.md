@@ -1,5 +1,21 @@
 # Repository Development Contract
 
+## Mandatory Change Approval Gate (hard rule)
+
+Before changing any user-visible interaction, playback/display behavior,
+aspect ratio/layout, navigation, checkout/pricing flow, customer-facing copy,
+or SEO-visible content, read and follow
+`~/.agents/skills/site-change-approval-gate/SKILL.md`:
+
+1. Propose the change (what, affected URLs, before → after, risks, rollback)
+   and wait for the site owner's explicit approval. Do not implement or ship
+   unapproved user-visible changes.
+2. After implementing, deliver a before/after comparison table with verifiable
+   evidence (URLs, measured values/HTML snippets, unaffected-contract checks).
+3. Restoring previous behavior counts as a change and needs the same approval.
+4. Only one session may release to a given host at a time; content and code
+   releases must not create 404/500 windows.
+
 All changes to public storefront data, pages, SEO, media, navigation, sitemap,
 robots, JSON-LD, preview, and publishing flows must comply with
 [`docs/standards/site-data-seo-single-publication-contract.md`](docs/standards/site-data-seo-single-publication-contract.md).
