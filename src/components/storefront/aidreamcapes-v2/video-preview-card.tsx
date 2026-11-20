@@ -41,6 +41,13 @@ export function Adc2VideoPreview({ media, ariaLabel, showDuration = false, poste
 
   useEffect(() => {
     const element = boxRef.current;
+    // The first visible row must play without waiting for an observer
+    // callback: cards above the fold mount immediately after hydration.
+    if (posterEager) {
+      setMounted(true);
+      setVisible(true);
+      return;
+    }
     if (!element || typeof IntersectionObserver === "undefined") {
       setMounted(true);
       setVisible(true);
