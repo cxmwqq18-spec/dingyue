@@ -4,6 +4,7 @@ import { mediaCardHref } from "@/lib/aidreamcapes-workspace/media-detail";
 import { mediaCardCanonicalSlug } from "@/lib/aidreamcapes-workspace/media-card-canonical";
 import { storefrontMeaningfulAlt } from "@/lib/storefront-media-alt";
 import type { CSSProperties, ReactNode } from "react";
+import { PosterSwapVideo } from "./poster-swap-video";
 import "./numbered-cards.css";
 import "./thematic-links.css";
 import { AIDREAMCAPES_V2_COLLAGE_SIZES, AIDREAMCAPES_V2_TEMPLATE_CARD_SIZES } from "./image-sizes";
@@ -877,11 +878,22 @@ export function Single({ image, r }: { image: V2Image; r: V2Resolvers }) {
   );
 }
 
-// An example clip: nothing is downloaded until the visitor presses play.
+// An example clip in the page hero: the poster ships in the SSR document and
+// the muted looping player mounts and autoplays as soon as it reaches the
+// viewport; native controls stay available for seeking. Google's video
+// indexing is unaffected because the crawlable markup carries no <video>.
 export function VideoPlayer({ video, r }: { video: V2Video; r: V2Resolvers }) {
   return (
     <figure className="vid">
-      <video aria-label={video.name ?? video.poster.alt} controls height={video.height} playsInline poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? ""))} preload="none" src={r.asset(video.src)} width={video.width} />
+      <PosterSwapVideo
+        alt={video.name ?? video.poster.alt}
+        controls
+        eager
+        height={video.height}
+        poster={r.asset(aidreamcapesV2ResponsivePosterSrc(video.poster?.src ?? ""))}
+        src={r.asset(video.src)}
+        width={video.width}
+      />
     </figure>
   );
 }

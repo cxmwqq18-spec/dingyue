@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 export function PosterSwapVideo({
   alt,
   className,
+  controls = false,
   eager = false,
   height,
   poster,
@@ -26,6 +27,8 @@ export function PosterSwapVideo({
 }: {
   alt: string;
   className?: string;
+  /** Keep the native control bar on the mounted player (seek / mute). */
+  controls?: boolean;
   eager?: boolean;
   height?: number;
   poster: string;
@@ -64,6 +67,7 @@ export function PosterSwapVideo({
           aria-label={alt}
           autoPlay
           className={className}
+          controls={controls || undefined}
           height={height}
           loop
           muted
