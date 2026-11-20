@@ -567,3 +567,21 @@
   background: rgba(96, 53, 255, 0.82);
   transform: scale(1.05);
 }
+
+.stagePreparing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(12, 9, 22, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}

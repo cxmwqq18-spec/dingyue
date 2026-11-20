@@ -78,6 +78,9 @@ export function LibraryTaskCard({
   // <video> for every card made the library fetch metadata from 100MB+ files
   // on first paint.
   const [playing, setPlaying] = useState(false);
+  // The first play may transcode the 720p copy; keep a label on the stage
+  // until the browser can actually play it.
+  const [playReady, setPlayReady] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
 
   // Media can arrive later, and the active frame has to stay in range.
@@ -88,6 +91,7 @@ export function LibraryTaskCard({
   // Switching frames or receiving a fresh render returns to the poster.
   useEffect(() => {
     setPlaying(false);
+    setPlayReady(false);
   }, [active, media.length]);
 
   const imageCount = useMemo(() => media.filter((item) => item.kind === "image").length, [media]);
@@ -150,7 +154,10 @@ export function LibraryTaskCard({
                   // customer asks to play it.
                   index === active
                     ? playing
-                      ? <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={videoWebUrl(item.url)} />
+                      ? <>
+                        <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={videoWebUrl(item.url)} onCanPlay={() => setPlayReady(true)} onPlaying={() => setPlayReady(true)} onWaiting={() => setPlayReady(false)} />
+                        {!playReady && <span className={styles.stagePreparing} role="status">Preparing 720p preview…</span>}
+                      </>
                       : <button type="button" className={styles.stagePoster} onClick={() => setPlaying(true)} aria-label={`Play ${title}`}>
                         <img loading="lazy" decoding="async" src={videoPosterUrl(item.url)} alt="" />
                         <span className={styles.stagePlay}><span><Play size={22} fill="currentColor" /></span></span>
