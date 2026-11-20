@@ -1,4 +1,8 @@
 import { NextResponse } from "next/server";
+import fs from "node:fs";
+import fsp from "node:fs/promises";
+import path from "node:path";
+import { Readable } from "node:stream";
 import { hasCustomerSession, hasSiteAdminSession, requireCustomerMutation } from "@/lib/api-auth";
 import { StoreError } from "@/lib/server-store";
 import {
@@ -7,9 +11,63 @@ import {
   readCustomerAssetFileByStorageKey,
   recordCustomerAssetDownloadRelational
 } from "@/lib/stores/asset-store";
+import { customerAssetFilePath, customerAssetRoot } from "@/lib/customer-asset-storage";
 import { generateVideoPosterBytes } from "@/lib/media-watermark";
+import { resolveVideoPosterFile, resolveWebVideo } from "@/lib/media-web-transcode";
 import { signWorkerAssetDownload } from "@/lib/worker";
 import type { NextRequest } from "next/server";
+
+const previewImmutableCache = "private, max-age=86400, immutable";
+
+function customerAssetAccelPath(filePath: string): string | undefined {
+  const configured = process.env.CUSTOMER_ASSET_X_ACCEL_PREFIX?.trim();
+  if (!configured) return undefined;
+  const root = customerAssetRoot();
+  const relative = path.relative(root, filePath);
+  if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) return undefined;
+  const prefix = configured.endsWith("/") ? configured : `${configured}/`;
+  return `${prefix}${relative.split(path.sep).map(encodeURIComponent).join("/")}`;
+}
+
+/** Serve a cached sidecar (poster/web copy) with range support and X-Accel. */
+async function serveAssetFile(request: Request, filePath: string, contentType: string, size: number, disposition: string): Promise<Response> {
+  const range = parseByteRange(request.headers.get("range"), size);
+  if (range === "unsatisfiable") {
+    return new Response(null, {
+      status: 416,
+      headers: { "Accept-Ranges": "bytes", "Content-Range": `bytes */${size}`, "Cache-Control": previewImmutableCache }
+    });
+  }
+  const accel = customerAssetAccelPath(filePath);
+  if (accel) {
+    return new Response(null, {
+      headers: {
+        "Content-Type": contentType,
+        "Content-Disposition": disposition,
+        "Accept-Ranges": "bytes",
+        "Cache-Control": previewImmutableCache,
+        "X-Robots-Tag": "noindex, nofollow",
+        "X-Accel-Redirect": accel
+      }
+    });
+  }
+  const headers: Record<string, string> = {
+    "Content-Type": contentType,
+    "Content-Disposition": disposition,
+    "Accept-Ranges": "bytes",
+    "Cache-Control": previewImmutableCache,
+    "X-Robots-Tag": "noindex, nofollow"
+  };
+  if (range) {
+    headers["Content-Range"] = `bytes ${range.start}-${range.end}/${size}`;
+    headers["Content-Length"] = String(range.end - range.start + 1);
+  } else {
+    headers["Content-Length"] = String(size);
+  }
+  const handle = await fsp.open(filePath, "r");
+  const stream = handle.createReadStream(range ? { start: range.start, end: range.end, autoClose: true } : { autoClose: true });
+  return new Response(Readable.toWeb(stream) as ReadableStream<Uint8Array>, { status: range ? 206 : 200, headers });
+}
 
 function parseByteRange(header: string | null, size: number): { start: number; end: number } | "unsatisfiable" | undefined {
   if (!header?.startsWith("bytes=") || size <= 0) return undefined;
@@ -55,6 +113,7 @@ export async function GET(
   const isWorkerDownload = url.searchParams.get("worker") === "1";
   const isInlinePreview = url.searchParams.get("preview") === "1";
   const wantsPoster = url.searchParams.get("poster") === "1";
+  const wantsWeb = url.searchParams.get("web") === "1";
   const expiresAt = url.searchParams.get("expiresAt") ?? "";
   const signature = url.searchParams.get("signature") ?? "";
   const workerSignatureValid = Boolean(
@@ -71,6 +130,18 @@ export async function GET(
   }
   try {
     const { asset } = await getCustomerAssetRelational({ siteId, customerId, assetId });
+    // When the file is local, posters and 720p playback copies are generated
+    // once and cached next to it; the full file is only read for downloads.
+    const localPath = asset.storageKey ? customerAssetFilePath(asset.storageKey) : undefined;
+    const localVideo = localPath && asset.mimeType.startsWith("video/") && fs.existsSync(localPath) ? localPath : undefined;
+    if (localVideo && wantsPoster) {
+      const poster = await resolveVideoPosterFile(localVideo);
+      return await serveAssetFile(request, poster.filePath, "image/jpeg", poster.size, `inline; filename="${asset.id}.jpg"`);
+    }
+    if (localVideo && wantsWeb) {
+      const web = await resolveWebVideo(localVideo);
+      return await serveAssetFile(request, web.filePath, "video/mp4", web.size, `inline; filename="${asset.id}-preview.mp4"`);
+    }
     const result = await readCustomerAssetFileByStorageKey({ siteId, customerId, asset });
     const mimeType = result.mimeType || result.asset.mimeType;
     if (wantsPoster && mimeType.startsWith("video/")) {

@@ -15,6 +15,11 @@ function videoPosterUrl(src: string): string {
   return `${src}${src.includes("?") ? "&" : "?"}poster=1`;
 }
 
+/** 720p playback copy; the download link keeps the original file. */
+function videoWebUrl(src: string): string {
+  return `${src}${src.includes("?") ? "&" : "?"}web=1`;
+}
+
 export interface LibraryTaskCardProps {
   title: string;
   statusLabel: string;
@@ -145,7 +150,7 @@ export function LibraryTaskCard({
                   // customer asks to play it.
                   index === active
                     ? playing
-                      ? <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={item.url} />
+                      ? <video className={styles.stageVideo} controls autoPlay playsInline poster={videoPosterUrl(item.url)} src={videoWebUrl(item.url)} />
                       : <button type="button" className={styles.stagePoster} onClick={() => setPlaying(true)} aria-label={`Play ${title}`}>
                         <img loading="lazy" decoding="async" src={videoPosterUrl(item.url)} alt="" />
                         <span className={styles.stagePlay}><span><Play size={22} fill="currentColor" /></span></span>
@@ -163,6 +168,7 @@ export function LibraryTaskCard({
           <div className={styles.stageChips}>
             {imageCount > 0 && <span className={styles.stageChip}>{imageCount === 1 ? "1 photo" : `${imageCount} photos`}</span>}
             {hasVideo && <span className={styles.stageChip}>Video</span>}
+            {hasVideo && <span className={styles.stageChip}>720p preview</span>}
             <span className={styles.stageChip}>{aspect} · {duration}s</span>
           </div>
         )}
